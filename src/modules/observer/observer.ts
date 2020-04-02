@@ -4,18 +4,18 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../../Config';
+import { Config } from '../../config';
 import { IJodit, SnapshotType } from '../../types';
-import { Component } from '../Component';
-import { Snapshot } from '../Snapshot';
-import { Stack } from '../Stack';
-import { Command } from './command';
+import { Component } from '../component';
+import { Snapshot } from '../snapshot';
+import { Stack } from '../../core/stack';
+import { Command } from '../../core/command';
 
 /**
  * @property {object} observer module settings {@link Observer|Observer}
  * @property {int} observer.timeout=100 Delay on every change
  */
-declare module '../../Config' {
+declare module '../../config' {
 	interface Config {
 		observer: {
 			timeout: number;

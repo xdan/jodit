@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { css, ctrlKey, dataBind, splitArray } from '../modules/helpers/';
-import { Plugin } from '../modules/Plugin';
-import { Dom } from '../modules/Dom';
+import { Config } from '../config';
+import { css, ctrlKey, dataBind, splitArray } from '../core/helpers/';
+import { Plugin } from '../modules/plugin';
+import { Dom } from '../modules/dom';
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		draggableTags: string | string[];
 	}

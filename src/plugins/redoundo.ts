@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import * as consts from '../constants';
-import { Plugin } from '../modules/Plugin';
+import { Config } from '../config';
+import * as consts from '../core/constants';
+import { Plugin } from '../modules/plugin';
 import { IControlType } from '../types/toolbar';
 import { IJodit } from '../types';
 

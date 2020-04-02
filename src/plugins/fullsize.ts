@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import * as consts from '../constants';
-import { css } from '../modules/helpers/';
+import { Config } from '../config';
+import * as consts from '../core/constants';
+import { css } from '../core/helpers/';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IControlType } from '../types/toolbar';
 import { IJodit, IViewWithToolbar } from '../types';
@@ -36,7 +36,7 @@ import { IJodit, IViewWithToolbar } from '../types';
  * ```
  */
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		fullsize: boolean;
 		globalFullsize: boolean;

@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import * as consts from '../constants';
-import { MAY_BE_REMOVED_WITH_KEY } from '../constants';
-import { Dom } from '../modules/Dom';
-import { call, isString, normalizeNode, trim } from '../modules/helpers/';
+import * as consts from '../core/constants';
+import { MAY_BE_REMOVED_WITH_KEY } from '../core/constants';
+import { Dom } from '../modules/dom';
+import { call, isString, normalizeNode, trim } from '../core/helpers/';
 import { IJodit } from '../types';
-import { Plugin } from '../modules/Plugin';
+import { Plugin } from '../modules/plugin';
 
 /**
  * Plug-in process entering Backspace key

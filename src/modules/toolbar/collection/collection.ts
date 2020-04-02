@@ -24,10 +24,10 @@ import {
 import { IViewBased } from '../../../types/view';
 import { ToolbarBreak } from '../break';
 import { ToolbarSeparator } from '../separator';
-import { Dom } from '../../Dom';
-import { Component } from '../../Component';
-import { Config } from '../../../Config';
-import { isFunction, isJoditObject, isToolbarButtonObject } from '../../helpers/checker';
+import { Dom } from '../../dom';
+import { Component } from '../../component';
+import { Config } from '../../../config';
+import { isFunction, isJoditObject, isToolbarButtonObject } from '../../../core/helpers/checker';
 import { makeButton } from '../factory';
 
 export class ToolbarCollection<T extends IViewBased = IViewBased>

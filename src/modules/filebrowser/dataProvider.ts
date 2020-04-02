@@ -16,12 +16,12 @@ import {
 	IAjax
 } from '../../types';
 
-import { error, extend, normalizeRelativePath } from '../helpers';
-import { Ajax } from '../Ajax';
+import { error, extend, normalizeRelativePath } from '../../core/helpers';
+import { Ajax } from '../ajax';
 
 export const DEFAULT_SOURCE_NAME = 'default';
 
-const possableRules = [
+const possibleRules = [
 	'allowFiles',
 	'allowFileMove',
 	'allowFileUpload',
@@ -44,7 +44,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		const rule = 'allow' + action;
 
 		if (process.env.NODE_ENV !== 'production') {
-			if (!possableRules.includes(rule)) {
+			if (!possibleRules.includes(rule)) {
 				throw error('Wrong action ' + action);
 			}
 		}

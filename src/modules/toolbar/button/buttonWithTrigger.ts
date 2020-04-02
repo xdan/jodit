@@ -2,10 +2,10 @@ import { ToolbarButton } from './button';
 import { ToolbarIcon } from '../icon';
 import { IControlTypeStrong } from '../../../types';
 import { Popup } from '../../popup/popup';
-import { camelCase } from '../../helpers/string';
+import { camelCase } from '../../../core/helpers/string';
 import { PopupList } from '../../popup/list';
-import { attr } from '../../helpers/utils';
-import { isFunction } from '../../helpers/checker';
+import { attr } from '../../../core/helpers/utils';
+import { isFunction } from '../../../core/helpers/checker';
 
 export class ToolbarButtonWithTrigger extends ToolbarButton {
 	/** @override */

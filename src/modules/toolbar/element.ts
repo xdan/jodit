@@ -9,13 +9,13 @@ import {
 	IToolbarCollection,
 	IToolbarElement
 } from '../../types/toolbar';
-import { Component, STATUSES } from '../Component';
+import { Component, STATUSES } from '../component';
 import { ToolbarIcon } from './icon';
-import { Dom } from '../Dom';
+import { Dom } from '../dom';
 import { IViewBased } from '../../types';
-import { trim } from '../helpers/string';
-import { isString } from '../helpers/checker';
-import { css } from '../helpers';
+import { trim } from '../../core/helpers/string';
+import { isString } from '../../core/helpers/checker';
+import { css } from '../../core/helpers';
 
 export abstract class ToolbarElement<T extends IViewBased = IViewBased, N = unknown>
 	extends Component<T>

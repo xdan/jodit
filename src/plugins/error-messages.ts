@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { Dom } from '../modules/Dom';
-import { css } from '../modules/helpers';
+import { Config } from '../config';
+import { Dom } from '../modules/dom';
+import { css } from '../core/helpers';
 import { IJodit } from '../types';
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		showMessageErrors: boolean;
 		showMessageErrorTime: number;

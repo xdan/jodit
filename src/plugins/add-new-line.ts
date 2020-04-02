@@ -4,16 +4,16 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { Dom } from '../modules/Dom';
-import { offset, position } from '../modules/helpers/size';
+import { Config } from '../config';
+import { Dom } from '../modules/dom';
+import { offset, position } from '../core/helpers/size';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IBound, IJodit } from '../types';
-import { Plugin } from '../modules/Plugin';
-import { call } from '../modules/helpers/utils';
-import { scrollIntoView } from '../modules/helpers';
+import { Plugin } from '../modules/plugin';
+import { call } from '../core/helpers/utils';
+import { scrollIntoView } from '../core/helpers';
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		addNewLine: boolean;
 		addNewLineTagsTriggers: string[];

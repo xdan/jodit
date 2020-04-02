@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../../Config';
+import { Config } from '../../config';
 import { ToolbarIcon } from '../toolbar/icon';
 
 import {
@@ -21,11 +21,11 @@ import { IControlType } from '../../types/toolbar';
 import { IDictionary } from '../../types/types';
 import { IUploader } from '../../types/uploader';
 import { IViewBased } from '../../types/view';
-import { humanSizeToBytes } from '../helpers';
+import { humanSizeToBytes } from '../../core/helpers';
 import { ITEM_CLASS as IC } from './consts';
 import { IJodit } from '../../types';
 
-declare module '../../Config' {
+declare module '../../config' {
 	interface Config {
 		/**
 		 * Filebrowser module settings

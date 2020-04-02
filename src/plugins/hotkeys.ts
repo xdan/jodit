@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { Plugin } from '../modules/Plugin';
-import { normalizeKeyAliases } from '../modules/helpers/normalize';
+import { Config } from '../config';
+import { Plugin } from '../modules/plugin';
+import { normalizeKeyAliases } from '../core/helpers/normalize';
 import { IDictionary, IJodit } from '../types';
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		commandToHotkeys: IDictionary<string | string[]>;
 	}

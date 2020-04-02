@@ -4,16 +4,16 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { IS_IE, MODE_WYSIWYG } from '../constants';
-import { Plugin } from '../modules/Plugin';
-import { css } from '../modules/helpers/css';
-import { offset } from '../modules/helpers/size';
+import { Config } from '../config';
+import { IS_IE, MODE_WYSIWYG } from '../core/constants';
+import { Plugin } from '../modules/plugin';
+import { css } from '../core/helpers/css';
+import { offset } from '../core/helpers/size';
 import { IBound } from '../types/types';
-import { Dom } from '../modules/Dom';
+import { Dom } from '../modules/dom';
 import { IJodit } from '../types';
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		/**
 		 * @type {boolean}

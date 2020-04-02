@@ -4,29 +4,26 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export { Ajax } from './Ajax';
-export { EventsNative } from './events/eventsNative';
-export { Component } from './Component';
-export { ContextMenu } from './ContextMenu';
+export { Ajax } from './ajax';
+export { Component } from './component';
+export { ContextMenu } from './contextMenu';
 export { Alert, Confirm, Prompt, Dialog } from './dialog/';
-export { Dom } from './Dom';
-export { Plugin } from './Plugin';
-export { Create } from './Create';
+export { Dom } from './dom';
+export { Plugin } from './plugin';
+export { Create } from './create';
 export { FileBrowser } from './filebrowser/fileBrowser';
-import * as Helpers from './helpers/';
+import * as Helpers from '../core/helpers/';
 export { Helpers };
-export { ImageEditor } from './ImageEditor';
+export { ImageEditor } from './imageEditor';
 export { Observer } from './observer/observer';
-export { ProgressBar } from './ProgressBar';
-export { Select } from './Selection';
-export { Storage } from './storage/storage';
-export { Snapshot } from './Snapshot';
-export { Table } from './Table';
+export { ProgressBar } from './progressBar';
+export { Select } from './selection';
+export { Snapshot } from './snapshot';
+export { Table } from './table';
 export { ToolbarIcon } from './toolbar/icon';
 export { ToolbarEditorCollection } from './toolbar/collection/editorCollection';
 export { ToolbarCollection } from './toolbar/collection/collection';
 export { ToolbarButton } from './toolbar/button/button';
-export { Stack } from './Stack';
-export { Widget } from './Widget';
-export { Uploader } from './Uploader';
-export { PluginSystem } from './PluginSystem';
+export { Widget } from './widget';
+export { Uploader } from './uploader';
+export { PluginSystem } from '../core/pluginSystem';

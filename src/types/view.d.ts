@@ -92,6 +92,7 @@ interface IViewBased<T = IViewOptions> extends IPanel<T> {
 	options: T;
 
 	events: IEventsNative;
+
 	create: ICreate;
 	async: IAsync;
 

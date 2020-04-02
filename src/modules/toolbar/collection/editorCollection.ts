@@ -6,10 +6,10 @@
 
 import { ToolbarCollection } from './collection';
 import { IJodit } from '../../../types/jodit';
-import * as consts from '../../../constants';
-import { Dom } from '../../Dom';
+import * as consts from '../../../core/constants';
+import { Dom } from '../../dom';
 import { IDictionary, IToolbarButton, IViewBased } from '../../../types';
-import { css, isFunction } from '../../helpers';
+import { css, isFunction } from '../../../core/helpers';
 
 export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 	/** @override */

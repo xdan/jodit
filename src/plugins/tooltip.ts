@@ -5,10 +5,10 @@
  */
 
 import { IJodit } from '../types';
-import { offset } from '../modules/helpers/size';
-import { css } from '../modules/helpers';
-import { Plugin } from '../modules/Plugin';
-import { Dom } from '../modules/Dom';
+import { offset } from '../core/helpers/size';
+import { css } from '../core/helpers';
+import { Plugin } from '../modules/plugin';
+import { Dom } from '../modules/dom';
 
 export class tooltip extends Plugin {
 	private isOpened = false;

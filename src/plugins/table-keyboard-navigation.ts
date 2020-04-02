@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import * as consts from '../constants';
-import { Dom } from '../modules/Dom';
-import { Table } from '../modules/Table';
+import * as consts from '../core/constants';
+import { Dom } from '../modules/dom';
+import { Table } from '../modules/table';
 import { IJodit } from '../types';
 
 /**

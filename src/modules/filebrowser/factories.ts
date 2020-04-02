@@ -6,7 +6,7 @@
 
 import { IContextMenu, IFileBrowserDataProvider, IFileBrowserOptions, IViewBased } from '../../types';
 import DataProvider from './dataProvider';
-import { ContextMenu } from '../ContextMenu';
+import { ContextMenu } from '../contextMenu';
 
 export function makeDataProvider(parent: IViewBased, options: IFileBrowserOptions): IFileBrowserDataProvider {
 	return new DataProvider(parent, options);

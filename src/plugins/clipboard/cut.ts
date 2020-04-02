@@ -5,9 +5,9 @@
  */
 
 import { IControlType, IJodit, IPlugin } from '../../types';
-import { Config } from '../../Config';
-import { TEXT_HTML, TEXT_PLAIN } from '../../constants';
-import { stripTags } from '../../modules/helpers/html';
+import { Config } from '../../config';
+import { TEXT_HTML, TEXT_PLAIN } from '../../core/constants';
+import { stripTags } from '../../core/helpers/html';
 import { getDataTransfer } from './paste';
 
 Config.prototype.controls.cut = {

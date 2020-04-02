@@ -6,10 +6,10 @@ import {
 	IViewBased,
 	Nullable
 } from '../../../types';
-import { attr, call } from '../../helpers/utils';
-import { isFunction, isJoditObject, isString } from '../../helpers/checker';
-import { Dom } from '../../Dom';
-import { asArray } from '../../helpers/array';
+import { attr, call } from '../../../core/helpers/utils';
+import { isFunction, isJoditObject, isString } from '../../../core/helpers/checker';
+import { Dom } from '../../dom';
+import { asArray } from '../../../core/helpers/array';
 
 export class ToolbarButton<T extends IViewBased = IViewBased>
 	extends ToolbarElement<T>

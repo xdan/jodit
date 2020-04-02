@@ -5,9 +5,9 @@
  */
 
 import { IViewOptions, IViewWithToolbar } from './view';
-import { Config } from '../Config';
+import { Config } from '../config';
 import { Observer } from '../modules/observer/observer';
-import { Select } from '../modules/Selection';
+import { Select } from '../modules/selection';
 import { CustomCommand, IStatusBar, IStorage, Modes } from './';
 import { IUploader } from './uploader';
 import { IFileBrowser } from './fileBrowser';

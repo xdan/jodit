@@ -4,14 +4,14 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import * as consts from '../constants';
-import { css } from '../modules/helpers/css';
-import { Dom } from '../modules/Dom';
+import { Config } from '../config';
+import * as consts from '../core/constants';
+import { css } from '../core/helpers/css';
+import { Dom } from '../modules/dom';
 import { IJodit } from '../types';
-import { Plugin } from '../modules/Plugin';
-import { MAY_BE_REMOVED_WITH_KEY } from '../constants';
-import { attr } from '../modules/helpers/utils';
+import { Plugin } from '../modules/plugin';
+import { MAY_BE_REMOVED_WITH_KEY } from '../core/constants';
+import { attr } from '../core/helpers/utils';
 
 /**
  * Show placeholder
@@ -27,7 +27,7 @@ import { attr } from '../modules/helpers/utils';
  * });
  * ```
  */
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		showPlaceholder: boolean;
 		useInputsPlaceholder: boolean;

@@ -4,15 +4,15 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { KEY_DOWN, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_UP } from '../constants';
+import { Config } from '../config';
+import { KEY_DOWN, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_UP } from '../core/constants';
 import { Alert } from '../modules/dialog/';
 import { IControlType } from '../types/toolbar';
 import { IJodit } from '../types';
 import { Dom } from '../modules';
-import { attr } from '../modules/helpers/utils';
+import { attr } from '../core/helpers/utils';
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		specialCharacters: string[];
 		usePopupForSpecialCharacters: boolean;

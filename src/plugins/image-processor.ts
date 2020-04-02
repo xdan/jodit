@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { $$ } from '../modules/helpers/';
+import { $$ } from '../core/helpers/';
 import { IJodit } from '../types';
 
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';

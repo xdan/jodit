@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
+import { Config } from '../config';
 import { Alert, Confirm, Dialog } from '../modules/dialog/';
-import { Dom } from '../modules/Dom';
+import { Dom } from '../modules/dom';
 import {
 	$$,
 	css,
@@ -14,9 +14,9 @@ import {
 	val,
 	clearCenterAlign,
 	attr
-} from '../modules/helpers/';
+} from '../core/helpers/';
 import { ToolbarIcon } from '../modules/toolbar/icon';
-import { Widget } from '../modules/Widget';
+import { Widget } from '../modules/widget';
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
 import { Popup } from '../modules/popup/popup';
@@ -59,7 +59,7 @@ import {
  * ```
  */
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		image: {
 			openOnDblClick: boolean;

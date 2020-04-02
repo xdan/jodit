@@ -4,15 +4,15 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../../Config';
+import { Config } from '../../config';
 import { IDialogOptions } from '../../types/dialog';
-import { KEY_ESC } from '../../constants';
+import { KEY_ESC } from '../../core/constants';
 import { IDictionary, IJodit, IToolbarCollection } from '../../types';
 import { IControlType } from '../../types/toolbar';
 import { IViewBased } from '../../types/view';
-import { $$, asArray, css, isJoditObject } from '../helpers/';
+import { $$, asArray, css, isJoditObject } from '../../core/helpers/';
 import { ViewWithToolbar } from '../view/viewWithToolbar';
-import { Dom } from '../Dom';
+import { Dom } from '../dom';
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}
@@ -23,7 +23,7 @@ import { Dom } from '../Dom';
  * @property {Buttons} dialog.buttons=['close.dialog', 'fullsize.dialog']
  */
 
-declare module '../../Config' {
+declare module '../../config' {
 	interface Config {
 		dialog: IDialogOptions;
 	}
@@ -771,5 +771,5 @@ export class Dialog extends ViewWithToolbar {
 }
 
 import { fullsize } from '../../plugins';
-import { STATUSES } from '../Component';
-import { splitArray } from '../helpers/array/splitArray';
+import { STATUSES } from '../component';
+import { splitArray } from '../../core/helpers/array/splitArray';

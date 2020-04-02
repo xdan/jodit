@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../../Config';
+import { Config } from '../../config';
 import {
 	INSERT_AS_HTML,
 	INSERT_AS_TEXT,
@@ -13,7 +13,7 @@ import {
 	IS_IE,
 	TEXT_HTML,
 	TEXT_PLAIN
-} from '../../constants';
+} from '../../core/constants';
 
 import { Confirm, Dialog, Alert } from '../../modules/dialog/';
 
@@ -28,14 +28,14 @@ import {
 	type,
 	stripTags,
 	isString
-} from '../../modules/helpers/';
+} from '../../core/helpers/';
 
-import { Dom } from '../../modules/Dom';
+import { Dom } from '../../modules/dom';
 import { IControlType, IJodit } from '../../types';
-import { nl2br } from '../../modules/helpers/html/nl2br';
+import { nl2br } from '../../core/helpers/html/nl2br';
 import { pluginKey as clipboardPluginKey } from './cut';
 
-declare module '../../Config' {
+declare module '../../config' {
 	interface Config {
 		/**
 		 * Ask before paste HTML in WYSIWYG mode

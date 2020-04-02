@@ -17,6 +17,7 @@ import hu from './hu';
 import id from './id';
 import it from './it';
 import ja from './ja';
+import ko from './ko';
 import nl from './nl';
 import pl from './pl';
 import pt_br from './pt_br';
@@ -37,6 +38,7 @@ const exp: IDictionary<IDictionary<string>> = {
 	id,
 	it,
 	ja,
+	ko,
 	nl,
 	pl,
 	pt_br,

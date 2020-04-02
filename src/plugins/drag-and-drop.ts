@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { TEXT_HTML, TEXT_PLAIN } from '../constants';
-import { Dom } from '../modules/Dom';
-import { attr, css, ctrlKey, dataBind } from '../modules/helpers';
-import { Plugin } from '../modules/Plugin';
+import { TEXT_HTML, TEXT_PLAIN } from '../core/constants';
+import { Dom } from '../modules/dom';
+import { attr, css, ctrlKey, dataBind } from '../core/helpers';
+import { Plugin } from '../modules/plugin';
 import { IPoint } from '../types/types';
 import { getDataTransfer } from './clipboard';
 

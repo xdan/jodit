@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config, OptionsDefault } from '../../Config';
-import * as consts from '../../constants';
+import { Config, OptionsDefault } from '../../config';
+import * as consts from '../../core/constants';
 import { Dialog } from '../dialog/dialog';
 import { Confirm } from '../dialog/confirm';
 import { Prompt } from '../dialog/prompt';
@@ -27,24 +27,24 @@ import {
 
 import { IDictionary, ImageEditorActionBox } from '../../types/types';
 import { IUploader, IUploaderOptions } from '../../types/uploader';
-import { ImageEditor } from '../ImageEditor';
-import { Storage } from '../storage/storage';
-import { each } from '../helpers/each';
-import { normalizePath } from '../helpers/normalize/';
-import { $$ } from '../helpers/selector';
-import { ctrlKey } from '../helpers/ctrlKey';
-import { extend } from '../helpers/extend';
+import { ImageEditor } from '../imageEditor';
+import { Storage } from '../../core/storage/storage';
+import { each } from '../../core/helpers/each';
+import { normalizePath } from '../../core/helpers/normalize/';
+import { $$ } from '../../core/helpers/selector';
+import { ctrlKey } from '../../core/helpers/ctrlKey';
+import { extend } from '../../core/helpers/extend';
 import { ViewWithToolbar } from '../view/viewWithToolbar';
 import { IJodit, IStorage } from '../../types';
 import './config';
-import { Dom } from '../Dom';
+import { Dom } from '../dom';
 import { Alert } from '../dialog';
 import contextMenu from './builders/contextMenu';
-import { ObserveObject } from '../events/observeObject';
+import { ObserveObject } from '../../core/events/observeObject';
 import { FileBrowserItem } from './builders/item';
-import { isValidName } from '../helpers/checker/isValidName';
+import { isValidName } from '../../core/helpers/checker/isValidName';
 import { F_CLASS, ICON_LOADER, ITEM_CLASS } from './consts';
-import { attr, error } from '../helpers';
+import { attr, error } from '../../core/helpers';
 import { makeDataProvider } from './factories';
 
 const DEFAULT_SOURCE_NAME = 'default',

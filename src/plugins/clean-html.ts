@@ -4,18 +4,18 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
+import { Config } from '../config';
 import {
 	INVISIBLE_SPACE,
 	INVISIBLE_SPACE_REG_EXP,
 	INVISIBLE_SPACE_REG_EXP as INV_REG,
 	SPACE_REG_EXP,
 	IS_INLINE
-} from '../constants';
-import { Dom } from '../modules/Dom';
-import { normalizeNode, trim } from '../modules/helpers/';
+} from '../core/constants';
+import { Dom } from '../modules/dom';
+import { normalizeNode, trim } from '../core/helpers/';
 import { HTMLTagNames, IDictionary, IJodit } from '../types';
-import { Plugin } from '../modules/Plugin';
+import { Plugin } from '../modules/plugin';
 
 /**
  * @property {object} cleanHTML {@link cleanHtml|cleanHtml}'s options
@@ -64,7 +64,7 @@ import { Plugin } from '../modules/Plugin';
  * });
  * ```
  */
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		cleanHTML: {
 			timeout: number;

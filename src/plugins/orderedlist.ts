@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { Dom } from '../modules/Dom';
+import { Config } from '../config';
+import { Dom } from '../modules/dom';
 import { IControlType, IJodit } from '../types';
-import { Plugin } from '../modules/Plugin';
+import { Plugin } from '../modules/plugin';
 
 function exec(editor: IJodit, event: Node | false, control: IControlType) {
 	editor.events.fire(

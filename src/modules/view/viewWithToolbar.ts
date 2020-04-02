@@ -6,9 +6,9 @@
 
 import { IViewWithToolbar } from '../../types/view';
 import { View } from './view';
-import { splitArray } from '../helpers/array';
-import { STATUSES } from '../Component';
-import { Dom } from '../Dom';
+import { splitArray } from '../../core/helpers/array';
+import { STATUSES } from '../component';
+import { Dom } from '../dom';
 import { Buttons, IToolbarCollection } from '../../types';
 import { makeCollection } from '../toolbar/factory';
 

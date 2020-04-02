@@ -4,18 +4,18 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { INVISIBLE_SPACE, MODE_WYSIWYG } from '../constants';
-import { ContextMenu } from '../modules/ContextMenu';
-import { Dom } from '../modules/Dom';
-import { getXPathByElement } from '../modules/helpers/selector';
-import { Plugin } from '../modules/Plugin';
+import { Config } from '../config';
+import { INVISIBLE_SPACE, MODE_WYSIWYG } from '../core/constants';
+import { ContextMenu } from '../modules/contextMenu';
+import { Dom } from '../modules/dom';
+import { getXPathByElement } from '../core/helpers/selector';
+import { Plugin } from '../modules/plugin';
 import { IControlType, IControlTypeStrong, IToolbarButton } from '../types/toolbar';
-import { trim } from '../modules/helpers/string';
-import { attr } from '../modules/helpers/utils';
+import { trim } from '../core/helpers/string';
+import { attr } from '../core/helpers/utils';
 import { makeButton } from '../modules/toolbar/factory';
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		showXPathInStatusbar: boolean;
 	}

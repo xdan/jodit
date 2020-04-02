@@ -4,14 +4,14 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import * as consts from '../constants';
+import { Config } from '../config';
+import * as consts from '../core/constants';
 import { Buttons, IControlType, IToolbarCollection } from '../types/toolbar';
-import { splitArray } from '../modules/helpers/array';
+import { splitArray } from '../core/helpers/array';
 import { IJodit } from '../types';
 import { makeCollection } from '../modules/toolbar/factory';
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		/**
 		 * Mobile timeout for CLICK emulation

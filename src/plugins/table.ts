@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import * as consts from '../constants';
-import { Plugin } from '../modules/Plugin';
-import { Dom } from '../modules/Dom';
-import { Table } from '../modules/Table';
+import { Config } from '../config';
+import * as consts from '../core/constants';
+import { Plugin } from '../modules/plugin';
+import { Dom } from '../modules/dom';
+import { Table } from '../modules/table';
 import {
 	$$,
 	attr,
@@ -16,13 +16,13 @@ import {
 	getContentWidth,
 	offset,
 	scrollIntoView
-} from '../modules/helpers/';
+} from '../core/helpers/';
 import { IControlType } from '../types/toolbar';
 import { IBound, IDictionary } from '../types/types';
 import { IJodit } from '../types';
 import { alignElement } from './justify';
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		/**
 		 * Use module {@link TableProcessor|TableProcessor}

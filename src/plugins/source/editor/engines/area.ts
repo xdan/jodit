@@ -5,9 +5,9 @@
  */
 
 import { IJodit, ISourceEditor } from '../../../../types';
-import { css } from '../../../../modules/helpers';
+import { css } from '../../../../core/helpers';
 import { Dom } from '../../../../modules';
-import { SourceEditor } from '../SourceEditor';
+import { SourceEditor } from '../sourceEditor';
 
 export class TextAreaEditor extends SourceEditor<HTMLTextAreaElement>
 	implements ISourceEditor {

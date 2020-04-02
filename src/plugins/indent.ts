@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { BR, PARAGRAPH } from '../constants';
-import { Dom } from '../modules/Dom';
+import { Config } from '../config';
+import { BR, PARAGRAPH } from '../core/constants';
+import { Dom } from '../modules/dom';
 import { IControlType } from '../types/toolbar';
 import { HTMLTagNames, IJodit } from '../types';
-import { attr } from '../modules/helpers/utils';
+import { attr } from '../core/helpers/utils';
 
 Config.prototype.controls.indent = {
 	tooltip: 'Increase Indent'
@@ -45,7 +45,7 @@ Config.prototype.controls.outdent = {
 	tooltip: 'Decrease Indent'
 } as IControlType;
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		indentMargin: number;
 	}

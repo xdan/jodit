@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import * as consts from '../../constants';
-import { MODE_SOURCE } from '../../constants';
-import { Plugin } from '../../modules/Plugin';
+import * as consts from '../../core/constants';
+import { MODE_SOURCE } from '../../core/constants';
+import { Plugin } from '../../modules/plugin';
 import { IJodit, ISourceEditor, markerInfo } from '../../types';
-import { Dom } from '../../modules/Dom';
-import { isString, loadNext } from '../../modules/helpers';
+import { Dom } from '../../modules/dom';
+import { isString, loadNext } from '../../core/helpers';
 import { createSourceEditor } from './editor/factory';
 
 /**

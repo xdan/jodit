@@ -5,10 +5,11 @@
  */
 
 import { IViewBased } from '../../types/view';
-import { Dom } from '../Dom';
-import { css, offset } from '../helpers/';
-import { Component, STATUSES } from '../Component';
+import { Dom } from '../dom';
+import { css, offset } from '../../core/helpers/';
+import { Component, STATUSES } from '../component';
 import { IControlTypeStrong, IPopup } from '../../types';
+import { fireEach } from '../../core/global';
 
 export class Popup extends Component implements IPopup {
 	private calcPosition() {
@@ -16,7 +17,7 @@ export class Popup extends Component implements IPopup {
 			return;
 		}
 
-		const popup: HTMLElement = this.container;
+		const popup = this.container;
 
 		const offsetContainer = offset(
 			this.jodit.container as HTMLDivElement,
@@ -124,7 +125,7 @@ export class Popup extends Component implements IPopup {
 		rightAlign?: boolean,
 		noStandardActions: boolean = false
 	) {
-		Jodit.fireEach('beforeOpenPopup closeAllPopups', this, content); // close popups in another editors too
+		fireEach('beforeOpenPopup closeAllPopups', this, content); // close popups in another editors too
 
 		noStandardActions || this.jodit.events.on('closeAllPopups', this.close);
 		this.jodit.markOwner(this.container);

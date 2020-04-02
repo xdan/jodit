@@ -5,8 +5,8 @@
  */
 
 import { IFileBrowserItemElement, IFileBrowserItemWrapper } from '../../../types';
-import { extend } from '../../helpers/extend';
-import { normalizePath, normalizeURL } from '../../helpers/normalize';
+import { extend } from '../../../core/helpers/extend';
+import { normalizePath, normalizeURL } from '../../../core/helpers/normalize';
 
 export class FileBrowserItem implements IFileBrowserItemWrapper {
 	private constructor(readonly data: IFileBrowserItemElement) {

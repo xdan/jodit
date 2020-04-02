@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../../Config';
-import * as consts from '../../constants';
+import { Config } from '../../config';
+import * as consts from '../../core/constants';
 import { IControlType, IJodit } from '../../types';
 
-declare module '../../Config' {
+declare module '../../config' {
 	interface Config {
 		sourceEditor: 'area' | 'ace';
 		/**

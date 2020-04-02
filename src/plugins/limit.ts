@@ -3,16 +3,16 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import { Config } from '../Config';
+import { Config } from '../config';
 import {
 	COMMAND_KEYS,
 	INVISIBLE_SPACE_REG_EXP,
 	SPACE_REG_EXP
-} from '../constants';
+} from '../core/constants';
 import { IJodit, SnapshotType } from '../types';
-import { stripTags } from '../modules/helpers/html';
+import { stripTags } from '../core/helpers/html';
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		limitWords: false | number;
 		limitChars: false | number;

@@ -5,7 +5,7 @@
  */
 
 import { Dialog } from '../../dialog';
-import { Dom } from '../../Dom';
+import { Dom } from '../../dom';
 import { ToolbarIcon } from '../..';
 import { F_CLASS, ICON_LOADER, ITEM_CLASS } from '../consts';
 
@@ -247,5 +247,5 @@ export default (self: FileBrowser) => {
 };
 
 import { FileBrowser } from '../fileBrowser';
-import { attr, error } from '../../helpers';
+import { attr, error } from '../../../core/helpers';
 import { makeContextMenu } from '../factories';

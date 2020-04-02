@@ -4,16 +4,16 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { defaultLanguage } from '../modules/helpers/defaultLanguage';
-import { css } from '../modules/helpers/css';
+import { Config } from '../config';
+import { defaultLanguage } from '../core/helpers/defaultLanguage';
+import { css } from '../core/helpers/css';
 import { IJodit } from '../types';
-import { isPromise } from '../modules/helpers/checker';
+import { isPromise } from '../core/helpers/checker';
 import { Dom } from '../modules';
-import { error } from '../modules/helpers';
-import { MODE_SOURCE } from '../constants';
+import { error } from '../core/helpers';
+import { MODE_SOURCE } from '../core/constants';
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		editHTMLDocumentMode: boolean;
 		iframeDefaultSrc: string;

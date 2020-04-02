@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { Widget } from '../modules/Widget';
+import { Config } from '../config';
+import { Widget } from '../modules/widget';
 import TabsWidget = Widget.TabsWidget;
 import ColorPickerWidget = Widget.ColorPickerWidget;
-import { Dom } from '../modules/Dom';
-import { css, normalizeColor } from '../modules/helpers/';
+import { Dom } from '../modules/dom';
+import { css, normalizeColor } from '../core/helpers/';
 import { IDictionary, IJodit } from '../types';
 import { IControlType } from '../types/toolbar';
 

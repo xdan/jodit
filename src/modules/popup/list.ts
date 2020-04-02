@@ -13,7 +13,7 @@ import {
 } from '../../types/toolbar';
 
 import { IViewBased } from '../../types/view';
-import { each, isString, splitArray } from '../helpers/';
+import { each, isString, splitArray } from '../../core/helpers/';
 import { Popup } from './popup';
 
 export class PopupList extends Popup {

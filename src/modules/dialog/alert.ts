@@ -74,5 +74,5 @@ export const Alert = (
 	return dialog;
 };
 
-import { asArray } from '../helpers/array';
-import { Dom } from '../Dom';
+import { asArray } from '../../core/helpers/array';
+import { Dom } from '../dom';

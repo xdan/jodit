@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { Widget } from '../modules/Widget';
+import { Config } from '../config';
+import { Widget } from '../modules/widget';
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
-import { Dom } from '../modules/Dom';
+import { Dom } from '../modules/dom';
 import {
 	attr,
 	clearCenterAlign,
@@ -16,9 +16,9 @@ import {
 	isString,
 	offset,
 	splitArray
-} from '../modules/helpers/';
-import { Plugin } from '../modules/Plugin';
-import { Table } from '../modules/Table';
+} from '../core/helpers/';
+import { Plugin } from '../modules/plugin';
+import { Table } from '../modules/table';
 import { Popup } from '../modules/popup/popup';
 import { Buttons, IDictionary, IJodit, IPopup, IToolbarCollection } from '../types';
 import { IControlType } from '../types/toolbar';
@@ -26,7 +26,7 @@ import { IBound } from '../types/types';
 import { ToolbarCollection } from '../modules';
 import { makeCollection } from '../modules/toolbar/factory';
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		popup: IDictionary<Array<IControlType | string>>;
 		toolbarInline: boolean;

@@ -4,17 +4,17 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import * as consts from '../constants';
-import { MODE_WYSIWYG } from '../constants';
-import { Dom } from '../modules/Dom';
+import { Config } from '../config';
+import * as consts from '../core/constants';
+import { MODE_WYSIWYG } from '../core/constants';
+import { Dom } from '../modules/dom';
 import { ToolbarIcon } from '../modules/toolbar/icon';
-import { Plugin } from '../modules/Plugin';
-import { trim } from '../modules/helpers/string';
+import { Plugin } from '../modules/plugin';
+import { trim } from '../core/helpers/string';
 import { ISelectionRange, markerInfo } from '../types/types';
 import { IJodit } from '../types';
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		/**
 		 * Enable custom search plugin

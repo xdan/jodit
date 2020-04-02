@@ -5,7 +5,7 @@
  */
 
 import { ISourceEditor } from '../../../../types';
-import { SourceEditor } from '../SourceEditor';
+import { SourceEditor } from '../sourceEditor';
 
 export class CustomEditor extends SourceEditor<HTMLTextAreaElement>
 	implements ISourceEditor {

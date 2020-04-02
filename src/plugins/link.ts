@@ -4,16 +4,16 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { Dom } from '../modules/Dom';
+import { Config } from '../config';
+import { Dom } from '../modules/dom';
 import {
 	attr,
 	convertMediaURLToVideoEmbed,
 	isURL,
 	refs,
 	stripTags
-} from '../modules/helpers/';
-import { Select } from '../modules/Selection';
+} from '../core/helpers/';
+import { Select } from '../modules/selection';
 import { IDictionary, IJodit } from '../types';
 import { IControlType } from '../types/toolbar';
 
@@ -26,7 +26,7 @@ import { IControlType } from '../types/toolbar';
  * if it was done on the link is removed like command `unlink`
  */
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		link: {
 			formTemplate: (editor: IJodit) => string;

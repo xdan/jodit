@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { Dom } from '../modules/Dom';
-import { css, normalizeSize } from '../modules/helpers/';
+import { Config } from '../config';
+import { Dom } from '../modules/dom';
+import { css, normalizeSize } from '../core/helpers/';
 import { IControlType } from '../types/toolbar';
 import { IJodit } from '../types';
 

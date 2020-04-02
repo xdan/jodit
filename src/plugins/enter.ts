@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import * as consts from '../constants';
-import { Dom } from '../modules/Dom';
-import { $$, scrollIntoView } from '../modules/helpers/';
+import * as consts from '../core/constants';
+import { Dom } from '../modules/dom';
+import { $$, scrollIntoView } from '../core/helpers/';
 import { HTMLTagNames, IJodit } from '../types';
-import { Plugin } from '../modules/Plugin';
-import { INVISIBLE_SPACE } from '../constants';
+import { Plugin } from '../modules/plugin';
+import { INVISIBLE_SPACE } from '../core/constants';
 
 /**
  * Insert default paragraph

@@ -4,16 +4,16 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import * as consts from '../constants';
-import { IS_IE } from '../constants';
+import { Config } from '../config';
+import * as consts from '../core/constants';
+import { IS_IE } from '../core/constants';
 import { IBound } from '../types/types';
-import { Dom } from '../modules/Dom';
-import { $$ } from '../modules/helpers/selector';
-import { offset, innerWidth } from '../modules/helpers/size';
-import { attr, css } from '../modules/helpers';
+import { Dom } from '../modules/dom';
+import { $$ } from '../core/helpers/selector';
+import { offset, innerWidth } from '../core/helpers/size';
+import { attr, css } from '../core/helpers';
 import { IJodit } from '../types';
-import { Plugin } from '../modules/Plugin';
+import { Plugin } from '../modules/plugin';
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table
@@ -23,7 +23,7 @@ import { Plugin } from '../modules/Plugin';
 /**
  * @property{boolean} useIframeResizer=true Use true frame for editing iframe size
  */
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		useIframeResizer: boolean;
 		useTableResizer: boolean;

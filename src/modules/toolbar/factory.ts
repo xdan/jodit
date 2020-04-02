@@ -5,7 +5,7 @@
  */
 
 import { IControlTypeStrong, IToolbarButton, IToolbarCollection, IViewBased } from '../../types';
-import { isJoditObject } from '../helpers/checker';
+import { isJoditObject } from '../../core/helpers/checker';
 import { ToolbarCollection } from './collection/collection';
 import { ToolbarEditorCollection } from './collection/editorCollection';
 import { ToolbarButton } from './button/button';

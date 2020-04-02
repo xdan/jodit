@@ -5,9 +5,9 @@
  */
 
 import { IJodit, ISourceEditor } from '../../../../types';
-import * as consts from '../../../../constants';
-import { isString, loadNext } from '../../../../modules/helpers';
-import { SourceEditor } from '../SourceEditor';
+import * as consts from '../../../../core/constants';
+import { isString, loadNext } from '../../../../core/helpers';
+import { SourceEditor } from '../sourceEditor';
 
 export class AceEditor extends SourceEditor<AceAjax.Editor>
 	implements ISourceEditor {

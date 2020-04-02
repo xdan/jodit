@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from '../constants';
-import { Plugin } from '../modules/Plugin';
-import { Dom } from '../modules/Dom';
+import { Config } from '../config';
+import { INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from '../core/constants';
+import { Plugin } from '../modules/plugin';
+import { Dom } from '../modules/dom';
 
-declare module '../Config' {
+declare module '../config' {
 	interface Config {
 		showCharsCounter: boolean;
 		showWordsCounter: boolean;

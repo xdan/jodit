@@ -6,11 +6,15 @@
 
 import { IAsync, IComponent, IDictionary, IEventsNative, IProgressBar } from '../../types';
 import { IViewBased, IViewOptions } from '../../types/view';
-import { Component } from '../Component';
-import { EventsNative } from '../events/eventsNative';
+import { Component } from '../component';
+import { EventsNative } from '../../core/events/eventsNative';
 import { Panel } from './panel';
-import { Storage } from '../storage';
-import { error, i18n } from '../../modules/helpers';
+import { Storage } from '../../core/storage';
+import { error, i18n, isFunction } from '../../core/helpers';
+import { BASE_PATH } from '../../core/constants';
+import { Async } from '../../core/async';
+import { ProgressBar } from '../progressBar';
+import { modules } from '../../core/global';
 
 declare let appVersion: string;
 
@@ -95,12 +99,14 @@ export class View extends Panel implements IViewBased {
 	}
 
 	getInstance<T = Component>(moduleName: string, options?: object): T {
-		if (typeof Jodit.modules[moduleName] !== 'function') {
+		const module = modules[moduleName] as any;
+
+		if (isFunction(module)) {
 			throw error('Need real module name');
 		}
 
 		if (this.__modulesInstances[moduleName] === undefined) {
-			this.__modulesInstances[moduleName] = new Jodit.modules[moduleName](
+			this.__modulesInstances[moduleName] = new module(
 				this.jodit || this,
 				options
 			);
@@ -165,8 +171,3 @@ export class View extends Panel implements IViewBased {
 		super.destruct();
 	}
 }
-
-import { Jodit } from '../../Jodit';
-import { BASE_PATH } from '../../constants';
-import { Async } from '../Async';
-import { ProgressBar } from '../ProgressBar';
