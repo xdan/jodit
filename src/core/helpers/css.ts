@@ -9,7 +9,7 @@ import { isPlainObject } from './checker/isPlainObject';
 import { isNumeric } from './checker/isNumeric';
 import { normilizeCSSValue } from './normalize/normilizeCSSValue';
 import { camelCase } from './string/camelCase';
-import { fromCamelCase } from './string/fromCamelCase';
+import { kebabCase } from './string/kebabCase';
 
 /**
  * Get the value of a computed style property for the first element in the set of matched elements or set one or
@@ -62,7 +62,7 @@ export const css = (
 		return '';
 	}
 
-	const key2: string = fromCamelCase(key as string) as string,
+	const key2: string = kebabCase(key as string) as string,
 		doc: Document = element.ownerDocument || document,
 		win = doc ? doc.defaultView || (doc as any).parentWindow : false;
 

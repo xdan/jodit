@@ -42,7 +42,7 @@ import {
 import { ViewWithToolbar } from './modules/view/viewWithToolbar';
 
 import { STATUSES } from './modules/component';
-import { instances, pluginSystem, modules } from './core/global';
+import { instances, pluginSystem, modules, lang } from './core/global';
 
 const SAFE_COUNT_CHANGE_CALL = 10;
 
@@ -125,10 +125,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	static defaultOptions: Config;
+
 	static plugins: IPluginSystem = pluginSystem;
 	static modules: IDictionary<Function> = modules;
 	static instances: IDictionary<IJodit> = instances;
-	static lang: any = {};
+	static lang: any = lang;
 
 	private __defaultStyleDisplayKey = 'data-jodit-default-style-display';
 	private __defaultClassesKey = 'data-jodit-default-classes';

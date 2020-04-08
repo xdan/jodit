@@ -126,6 +126,27 @@ describe('Test helpers', function() {
 				}
 			});
 		});
+
+		describe('isNumber', function() {
+			it('Should check value is a number', function() {
+				const values = [
+					'cmd+ alt+s',
+					false,
+					false,
+					false,
+					10,
+					true,
+					11.33,
+					true
+				];
+
+				for (let i = 0; i < values.length; i += 2) {
+					expect(values[i + 1]).equals(
+						Jodit.modules.Helpers.isNumber(values[i])
+					);
+				}
+			});
+		});
 	});
 
 	describe('String', function() {

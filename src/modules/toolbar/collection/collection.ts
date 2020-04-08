@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import "./collection.less";
+import './collection.less';
 
 import {
 	IDictionary,
@@ -27,8 +27,14 @@ import { ToolbarSeparator } from '../separator';
 import { Dom } from '../../dom';
 import { Component } from '../../component';
 import { Config } from '../../../config';
-import { isFunction, isJoditObject, isToolbarButtonObject } from '../../../core/helpers/checker';
+import {
+	isFunction,
+	isJoditObject,
+	isString,
+	isToolbarButtonObject
+} from '../../../core/helpers/checker';
 import { makeButton } from '../factory';
+import autobind from 'autobind-decorator';
 
 export class ToolbarCollection<T extends IViewBased = IViewBased>
 	extends Component<T>
@@ -83,23 +89,24 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 
 	build(
 		buttons: Buttons,
-		parentContainer: HTMLElement,
+		parentContainer?: HTMLElement,
 		target?: HTMLElement
 	) {
 		this.applyContainerOptions();
 
-		this.jodit.events.off('rebuildToolbar');
 		this.jodit.events.on('afterInit rebuildToolbar', () =>
 			this.build(buttons, parentContainer, target)
 		);
 
-		this.__parentContainer = parentContainer;
+		if (parentContainer) {
+			this.__parentContainer = parentContainer;
+		}
 
 		let lastBtnSeparator: boolean = false;
 		this.clear();
 
 		buttons
-			.map(this.getControlType.bind(this))
+			.map(this.getControlType)
 			.forEach((buttonControl: IControlTypeStrong) => {
 				let button: IToolbarElement | null = null;
 
@@ -131,7 +138,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 				}
 			});
 
-		if (this.container.parentNode !== parentContainer) {
+		if (parentContainer && this.container.parentNode !== parentContainer) {
 			parentContainer.appendChild(this.container);
 		}
 
@@ -144,12 +151,12 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		);
 
 		this.jodit.container.classList.toggle(
-			'jodit_text_icons',
+			'jodit-text-icons',
 			this.jodit.options.textIcons
 		);
 
 		this.container.classList.toggle(
-			'jodit_text_icons',
+			'jodit-text-icons',
 			this.jodit.options.textIcons
 		);
 
@@ -165,19 +172,21 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		).toLowerCase();
 
 		this.container.classList.add(
-			'jodit_toolbar_size-' +
+			'jodit-toolbar_size-' +
 				(['middle', 'large', 'small'].indexOf(bs) !== -1
 					? bs
 					: 'middle')
 		);
 	}
 
+	@autobind
 	private getControlType(button: IControlType | string): IControlTypeStrong {
 		let buttonControl: IControlTypeStrong;
+
 		const controls: Controls =
 			this.jodit.options.controls || Config.defaultOptions.controls;
 
-		if (typeof button !== 'string') {
+		if (!isString(button)) {
 			buttonControl = { name: 'empty', ...button };
 			if (controls[buttonControl.name] !== undefined) {
 				buttonControl = <IControlTypeStrong>{
@@ -266,7 +275,8 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		this.__elements.length = 0;
 	}
 
-	immediateUpdate = () => {
+	@autobind
+	immediateUpdate() {
 		if (this.isDestructed || this.jodit.isLocked()) {
 			return;
 		}
@@ -276,7 +286,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		) as IToolbarButton[]).forEach(button => button.update());
 
 		this.jodit.events && this.jodit.events.fire('updateToolbar');
-	};
+	}
 
 	update = this.jodit.async.debounce(
 		this.immediateUpdate,
@@ -297,24 +307,23 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	constructor(jodit: IViewBased) {
 		super(<T>jodit);
 
-		this.container = this.jodit.create.element('div');
-		this.container.classList.add('jodit-toolbar__collection');
-
+		this.container = this.jodit.create.div('jodit-toolbar__collection');
 		this.initEvents();
 	}
 
-	private initEvents = () => {
+	private initEvents() {
 		this.jodit.events
 			.on(this.jodit.ownerWindow, 'mousedown touchend', this.closeAll)
 			.on(this.listenEvents, this.update)
 			.on('afterSetMode focus', this.immediateUpdate);
-	};
+	}
 
-	private closeAll = () => {
+	@autobind
+	private closeAll() {
 		this.jodit &&
 			this.jodit.events &&
 			this.jodit.events.fire('closeAllPopups');
-	};
+	}
 
 	/** @override **/
 	destruct() {

@@ -5,6 +5,7 @@
  */
 
 export * from './hasBrowserColorPicker';
+export * from './isEqual';
 export * from './isFunction';
 export * from './isHTML';
 export * from './isHTMLFromWord';
@@ -12,6 +13,7 @@ export * from './isInitable';
 export * from './isInt';
 export * from './isJoditObject';
 export * from './isLicense';
+export * from './isNumber';
 export * from './isNumeric';
 export * from './isPlainObject';
 export * from './isString';

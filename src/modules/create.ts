@@ -9,7 +9,7 @@ import { isPlainObject } from '../core/helpers/checker/isPlainObject';
 import { each } from '../core/helpers/each';
 import { asArray } from '../core/helpers/array/asArray';
 import { Dom } from './dom';
-import { css, isFunction, isJoditObject, refs } from '../core/helpers';
+import { css, isFunction, isJoditObject, kebabCase, refs } from '../core/helpers';
 import { Attributes, Children, ICreate } from '../types/create';
 
 export class Create implements ICreate {
@@ -41,18 +41,18 @@ export class Create implements ICreate {
 			if (isPlainObject(value) && key === 'style') {
 				css(elm, <IDictionary<string>>value);
 			} else {
-				elm.setAttribute(key, value.toString());
+				elm.setAttribute(kebabCase(key), value.toString());
 			}
 		});
 	};
 
 	element<K extends keyof HTMLElementTagNameMap>(
 		tagName: K,
-		childrenOrAttributes?: Children
+		children?: Children
 	): HTMLElementTagNameMap[K];
 	element<K extends keyof HTMLElementTagNameMap>(
 		tagName: K,
-		childrenOrAttributes?: Attributes,
+		attributes?: Attributes,
 		children?: Children
 	): HTMLElementTagNameMap[K];
 	element(

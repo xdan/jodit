@@ -16,11 +16,11 @@ interface ICreate {
 
 	element<K extends keyof HTMLElementTagNameMap>(
 		tagName: K,
-		childrenOrAttributes?: Children
+		children?: Children
 	): HTMLElementTagNameMap[K];
 	element<K extends keyof HTMLElementTagNameMap>(
 		tagName: K,
-		childrenOrAttributes?: Attributes,
+		attributes?: Attributes,
 		children?: Children
 	): HTMLElementTagNameMap[K];
 	element(

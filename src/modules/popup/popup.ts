@@ -117,18 +117,11 @@ export class Popup extends Component implements IPopup {
 	 * Open popup
 	 *
 	 * @param {HTMLElement} content
-	 * @param {boolean} [rightAlign=false] Open popup on right side
-	 * @param {boolean} [noStandardActions=false] No call standarts action
 	 */
 	open(
-		content: string | HTMLElement | IControlTypeStrong,
-		rightAlign?: boolean,
-		noStandardActions: boolean = false
+		content: HTMLElement
 	) {
 		fireEach('beforeOpenPopup closeAllPopups', this, content); // close popups in another editors too
-
-		noStandardActions || this.jodit.events.on('closeAllPopups', this.close);
-		this.jodit.markOwner(this.container);
 
 		this.container.classList.add(this.className + '_open');
 		this.doOpen(content);
@@ -139,21 +132,9 @@ export class Popup extends Component implements IPopup {
 			this.firstInFocus();
 		}
 
-		if (rightAlign !== undefined) {
-			this.container.classList.toggle('jodit_right', rightAlign);
-		}
-
-		if (!noStandardActions && this.container.parentNode) {
-			this.jodit.events.fire(
-				this.container.parentNode,
-				'afterOpenPopup',
-				this.container
-			);
-		}
-
 		this.isOpened = true;
 
-		!noStandardActions && this.calcPosition();
+		this.calcPosition();
 	}
 
 	/**
@@ -195,6 +176,7 @@ export class Popup extends Component implements IPopup {
 		super(jodit);
 
 		this.container = this.jodit.create.div(className);
+		this.jodit.markOwner(this.container);
 
 		this.jodit.events
 			.on(
@@ -226,6 +208,7 @@ export class Popup extends Component implements IPopup {
 			'resize',
 			this.throttleCalcPosition
 		);
+
 		Dom.safeRemove(this.container);
 		delete this.container;
 

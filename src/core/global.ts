@@ -25,7 +25,18 @@ export function fireEach(events: string, ...args: any[]) {
 	});
 }
 
+let counter = 1;
 
-export const pluginSystem =  new PluginSystem();
+/**
+ * Generate global unique uid
+ */
+export function uniqueUid(): string {
+	counter += 10 * (Math.random() + 1);
+	return Math.round(counter).toString(16);
+}
 
-export const modules: IDictionary<Function>  =  {};
+export const pluginSystem = new PluginSystem();
+
+export const modules: IDictionary<Function> = {};
+
+export const lang: IDictionary<IDictionary<string>> = {};

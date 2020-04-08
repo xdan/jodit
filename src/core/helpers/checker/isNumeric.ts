@@ -4,13 +4,15 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import { isString } from './isString';
+
 /**
  * Check value has numeric format
  *
  * @param value
  */
 export const isNumeric = (value: number | string): boolean => {
-    if (typeof value === 'string') {
+    if (isString(value)) {
         if (!value.match(/^([+\-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
             return false;
         }
@@ -18,5 +20,5 @@ export const isNumeric = (value: number | string): boolean => {
         value = parseFloat(value);
     }
 
-    return !isNaN(value) && isFinite(value);
+    return typeof value === 'number' && !isNaN(value) && isFinite(value);
 };

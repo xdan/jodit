@@ -22,7 +22,14 @@ export interface IDestructible {
 	destruct(jodit?: IJodit): any;
 }
 
-export type ComponentStatus = number;
+export type Statuses = {
+	beforeInit: 'beforeInit';
+	ready: 'ready';
+	beforeDestruct: 'beforeDestruct';
+	destructed: 'destructed';
+};
+
+export type ComponentStatus = keyof Statuses;
 
 export interface IContainer {
 	container: HTMLElement;
@@ -30,12 +37,21 @@ export interface IContainer {
 
 interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 	jodit: T;
+	componentName: string;
+	uid: string;
+
+
 	isDestructed: boolean;
 	isInDestruct: boolean;
 	isReady: boolean;
 
 	componentStatus: ComponentStatus;
 	setStatus(componentStatus: ComponentStatus): void;
+
+	hookStatus(
+		status: keyof Statuses,
+		callback: (component: IComponent) => void
+	): void;
 }
 
 export type NodeCondition = (

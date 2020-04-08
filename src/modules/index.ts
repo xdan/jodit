@@ -4,6 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+export * from '../core/events';
 export { Ajax } from './ajax';
 export { Component } from './component';
 export { ContextMenu } from './contextMenu';

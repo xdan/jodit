@@ -360,8 +360,6 @@ export class inlinePopup extends Plugin {
 	private targetContainer!: HTMLDivElement;
 	private container!: HTMLDivElement;
 
-	private _hiddenClass = 'jodit_toolbar_popup-inline-target-hidden';
-
 	private __getRect!: () => IBound;
 
 	// was started selection
@@ -435,8 +433,6 @@ export class inlinePopup extends Plugin {
 			return;
 		}
 
-		this.popup.target.classList.remove(this._hiddenClass);
-
 		const selectionCenterLeft = rect.left + rect.width / 2;
 
 		const workplacePosition = offset(
@@ -489,7 +485,7 @@ export class inlinePopup extends Plugin {
 			targetTop - (workplacePosition.top + workplacePosition.height) >
 				diff
 		) {
-			this.popup.target.classList.add(this._hiddenClass);
+			this.popup.close();
 		}
 	};
 
@@ -526,7 +522,7 @@ export class inlinePopup extends Plugin {
 		this.isOpened = true;
 		this.isTargetAction = true;
 
-		const windSize: IBound = this.calcWindSizes();
+		const size = this.calcWindSizes();
 
 		this.targetContainer.parentNode ||
 			this.jodit.ownerDocument.body.appendChild(this.targetContainer);
@@ -537,11 +533,11 @@ export class inlinePopup extends Plugin {
 			elm
 		);
 
-		this.popup.open(this.container, false, true);
+		this.popup.open(this.container, rect);
 
 		this.__getRect = rect;
 
-		this.calcPosition(rect(), windSize);
+		this.calcPosition(rect(), size);
 
 		return true;
 	};

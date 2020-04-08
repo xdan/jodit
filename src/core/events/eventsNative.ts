@@ -194,17 +194,17 @@ export class EventsNative implements IEventsNative {
 	 * ```
 	 */
 	on(
-		subjectOrEvents: string,
-		eventsOrCallback: CallbackFunction,
-		handlerOrSelector?: void,
+		events: string,
+		callback: CallbackFunction,
+		_?: void,
 		selector?: string,
 		onTop?: boolean
 	): EventsNative;
 
 	on(
-		subjectOrEvents: object,
-		eventsOrCallback: string,
-		handlerOrSelector: CallbackFunction,
+		subject: object,
+		events: string,
+		handle: CallbackFunction,
 		selector?: string,
 		onTop?: boolean
 	): EventsNative;
@@ -367,10 +367,10 @@ export class EventsNative implements IEventsNative {
 	 * parent.events.off('someGlobalEvents');
 	 * ```
 	 */
-	off(subjectOrEvents: string, eventsOrCallback?: () => void): EventsNative;
+	off(events: string, callback?: () => void): EventsNative;
 	off(
-		subjectOrEvents: object,
-		eventsOrCallback?: string,
+		subject: object,
+		events?: string,
 		handler?: () => void
 	): EventsNative;
 	off(

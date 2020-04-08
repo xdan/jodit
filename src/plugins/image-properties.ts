@@ -609,8 +609,7 @@ export function imageProperties(editor: IJodit) {
 							},
 							image,
 							popup.close
-						),
-						true
+						)
 					);
 					event.stopPropagation();
 				});

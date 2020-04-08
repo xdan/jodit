@@ -5,18 +5,28 @@
  */
 
 import { IViewBased } from '../types/view';
-import { ComponentStatus, IComponent } from '../types/types';
-import { isJoditObject } from '../core/helpers/checker/isJoditObject';
+import {
+	ComponentStatus,
+	IComponent,
+	IDictionary,
+	Statuses
+} from '../types/types';
+import { isJoditObject } from '../core/helpers/checker/';
+import { kebabCase } from '../core/helpers/string';
+import { uniqueUid } from '../core/global';
 
-export const STATUSES = {
-	beforeInit: 0,
-	ready: 1,
-	beforeDestruct: 2,
-	destructed: 3
+export const STATUSES: Statuses = {
+	beforeInit: 'beforeInit',
+	ready: 'ready',
+	beforeDestruct: 'beforeDestruct',
+	destructed: 'destructed'
 };
 
 export abstract class Component<T extends IViewBased = IViewBased>
 	implements IComponent<T> {
+	componentName!: string;
+	uid!: string;
+
 	jodit!: T;
 
 	private __componentStatus: ComponentStatus = STATUSES.beforeInit;
@@ -26,11 +36,17 @@ export abstract class Component<T extends IViewBased = IViewBased>
 	}
 
 	set componentStatus(componentStatus: ComponentStatus) {
-		this.__componentStatus = componentStatus;
+		this.setStatus(componentStatus);
 	}
 
 	setStatus(componentStatus: ComponentStatus) {
 		this.__componentStatus = componentStatus;
+
+		const cbList = this.onStatusLst && this.onStatusLst[this.__componentStatus];
+
+		if (cbList) {
+			cbList.forEach(cb => cb(this));
+		}
 	}
 
 	get isReady(): boolean {
@@ -48,8 +64,9 @@ export abstract class Component<T extends IViewBased = IViewBased>
 	 * Component is destructing
 	 */
 	get isInDestruct(): boolean {
-		return [STATUSES.beforeDestruct, STATUSES.destructed].includes(
-			this.componentStatus
+		return (
+			STATUSES.beforeDestruct === this.componentStatus ||
+			STATUSES.destructed === this.componentStatus
 		);
 	}
 
@@ -68,6 +85,9 @@ export abstract class Component<T extends IViewBased = IViewBased>
 	}
 
 	constructor(jodit?: T) {
+		this.componentName = 'jodit-' + kebabCase(this.constructor.name);
+		this.uid = 'jodit-uid-' + uniqueUid();
+
 		if (jodit && jodit instanceof Component) {
 			this.jodit = jodit;
 
@@ -76,4 +96,27 @@ export abstract class Component<T extends IViewBased = IViewBased>
 			}
 		}
 	}
+
+	/**
+	 * Add hook on status
+	 *
+	 * @param status
+	 * @param callback
+	 */
+	hookStatus(
+		status: keyof Statuses,
+		callback: (component: Component) => void
+	): void {
+		if (!this.onStatusLst) {
+			this.onStatusLst = {};
+		}
+
+		if (!this.onStatusLst[status]) {
+			this.onStatusLst[status] = [];
+		}
+
+		this.onStatusLst[status].push(callback);
+	}
+
+	private onStatusLst!: IDictionary<Function[]>;
 }

@@ -1,17 +1,11 @@
-import { IControlTypeStrong } from './toolbar';
-import { IComponent } from './types';
+import { IBound, IDestructible } from './types';
 
-export interface IPopup extends IComponent {
+export interface IPopup extends IDestructible {
+	container: HTMLElement;
+
 	isOpened: boolean;
 
-	container: HTMLElement;
-	target: HTMLElement;
+	open(content: HTMLElement, getBound: () => IBound): void;
 
-	open(
-		content: string | HTMLElement | IControlTypeStrong,
-		rightAlign?: boolean,
-		noStandardActions?: boolean
-	): void;
-
-	close(current?: HTMLElement | IPopup): void;
+	close(): void;
 }

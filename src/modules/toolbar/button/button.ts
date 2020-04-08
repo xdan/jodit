@@ -1,4 +1,5 @@
 import './button.less';
+
 import { createIcon, ToolbarElement } from '../element';
 import {
 	IControlTypeStrong,
@@ -6,10 +7,16 @@ import {
 	IViewBased,
 	Nullable
 } from '../../../types';
-import { attr, call } from '../../../core/helpers/utils';
-import { isFunction, isJoditObject, isString } from '../../../core/helpers/checker';
+import {
+	asArray,
+	attr,
+	call,
+	isFunction,
+	isJoditObject,
+	isString
+} from '../../../core/helpers/';
 import { Dom } from '../../dom';
-import { asArray } from '../../../core/helpers/array';
+import { ToolbarIcon } from '../icon';
 
 export class ToolbarButton<T extends IViewBased = IViewBased>
 	extends ToolbarElement<T>
@@ -238,7 +245,13 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		container.appendChild(textContainer);
 
 		const clearName = this.clearName(control.name);
-		container.appendChild(createIcon(this.jodit, clearName, control));
+		const icon: string = control ? control.icon || control.name : clearName;
+
+		if (this.jodit.options.textIcons || !ToolbarIcon.exists(icon)) {
+			textContainer.textContent = control.name;
+		} else {
+			container.appendChild(createIcon(this.jodit, clearName, control));
+		}
 
 		return container;
 	}

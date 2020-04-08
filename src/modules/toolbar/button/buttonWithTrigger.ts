@@ -3,9 +3,11 @@ import { ToolbarIcon } from '../icon';
 import { IControlTypeStrong } from '../../../types';
 import { Popup } from '../../popup/popup';
 import { camelCase } from '../../../core/helpers/string';
-import { PopupList } from '../../popup/list';
 import { attr } from '../../../core/helpers/utils';
-import { isFunction } from '../../../core/helpers/checker';
+import { isFunction, isString } from '../../../core/helpers/checker';
+import { PopupMenu } from '../../popup/menu';
+import { makeCollection } from '../factory';
+import { position } from '../../../core/helpers/size/position';
 
 export class ToolbarButtonWithTrigger extends ToolbarButton {
 	/** @override */
@@ -37,15 +39,31 @@ export class ToolbarButtonWithTrigger extends ToolbarButton {
 		// 	false;
 
 		if (control.list) {
-			const list = new PopupList(this.jodit, this.container, this.target);
+			const
+				list = control.list,
+				menu = new PopupMenu(this.jodit),
+				toolbar = makeCollection(this.jodit);
 
-			list.open(control);
+			const buttons = Array.isArray(list) ? list : Object.keys(list).map((key) => {
+				const value = list[key] || {};
 
-			this.jodit.events.fire('closeAllPopups', list.container);
+				return {
+					name: key,
+					...value
+				};
+			});
+
+			toolbar.build(buttons);
+
+			menu.open(toolbar.container, () => {
+				return position(this.container);
+			});
+
+			this.jodit.events.fire('closeAllPopups', menu.container);
 
 			attr(this.container, 'aria-expanded', true);
 
-			this.jodit.events.on(list, 'afterClose', () => {
+			this.jodit.events.on(menu, 'afterClose', () => {
 				attr(this.container, 'aria-expanded', false);
 			});
 
@@ -76,7 +94,7 @@ export class ToolbarButtonWithTrigger extends ToolbarButton {
 				);
 
 				if (popupElm) {
-					popup.open(popupElm);
+					popup.open(isString(popupElm) ? this.jodit.create.fromHTML(popupElm) : popupElm);
 				}
 			}
 

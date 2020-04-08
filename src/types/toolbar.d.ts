@@ -149,7 +149,7 @@ interface IControlType<
 	 *  });
 	 *  ```
 	 */
-	list?: IDictionary<string> | string[] | string;
+	list?: IDictionary<string> | string[];
 
 	/**
 	 * The command executes when the button is pressed. Allowed all
@@ -254,15 +254,15 @@ interface IControlTypeStrong extends IControlType {
 	name: string;
 }
 
-interface IControlTypeStrongList extends IControlTypeStrong {
-	list: IDictionary<string> | string[] | string;
-}
-
 export type Controls = IDictionary<IControlType>;
 
 export type Buttons = Array<string | IControlType>;
 
 export type ButtonsOption = Buttons | string;
+
+interface IControlTypeStrongList extends IControlTypeStrong {
+	list: IDictionary<string> | string[];
+}
 
 interface IToolbarElement extends IComponent, IContainer, IFocusable {
 	parentToolbar?: IToolbarCollection;
@@ -285,7 +285,7 @@ interface IToolbarCollection extends IComponent, IContainer {
 
 	removeChild(button: IToolbarElement): void;
 
-	build(buttons: Buttons, container: HTMLElement, target?: HTMLElement): void;
+	build(buttons: Buttons, container?: HTMLElement, target?: HTMLElement): void;
 
 	getButtonsList(): string[];
 

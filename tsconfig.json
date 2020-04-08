@@ -9,6 +9,9 @@
 		"strictFunctionTypes": true,
 		"strictBindCallApply": true,
 		"strictPropertyInitialization": true,
+		"experimentalDecorators": true,
+
+		"allowJs": true,
 
 		"noImplicitAny": true,
 		"noImplicitReturns": true,
@@ -23,8 +26,6 @@
 
 		"lib": ["es5", "esnext", "dom", "scripthost"]
 	},
-
-	"files": ["node_modules/@types/ace"],
 
 	"exclude": ["node_modules", "build"]
 }

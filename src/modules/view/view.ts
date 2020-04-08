@@ -4,7 +4,13 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IAsync, IComponent, IDictionary, IEventsNative, IProgressBar } from '../../types';
+import {
+	IAsync,
+	IComponent,
+	IDictionary,
+	IEventsNative,
+	IProgressBar
+} from '../../types';
 import { IViewBased, IViewOptions } from '../../types/view';
 import { Component } from '../component';
 import { EventsNative } from '../../core/events/eventsNative';
@@ -27,7 +33,6 @@ export class View extends Panel implements IViewBased {
 	markOwner(elm: HTMLElement): void {
 		elm.setAttribute('data-editor_id', this.id);
 	}
-
 
 	workplace!: HTMLDivElement;
 
@@ -74,7 +79,7 @@ export class View extends Panel implements IViewBased {
 	options!: IViewOptions;
 
 	events: IEventsNative;
-	async : IAsync = new Async();
+	async: IAsync = new Async();
 
 	/**
 	 * Internationalization method. Uses Jodit.lang object
@@ -98,21 +103,25 @@ export class View extends Panel implements IViewBased {
 		}
 	}
 
+	/**
+	 * Make one instance of one module
+	 *
+	 * @param moduleName
+	 * @param options
+	 */
 	getInstance<T = Component>(moduleName: string, options?: object): T {
-		const module = modules[moduleName] as any;
+		const module = modules[moduleName] as any,
+			mi = this.__modulesInstances;
 
-		if (isFunction(module)) {
+		if (!isFunction(module)) {
 			throw error('Need real module name');
 		}
 
-		if (this.__modulesInstances[moduleName] === undefined) {
-			this.__modulesInstances[moduleName] = new module(
-				this.jodit || this,
-				options
-			);
+		if (mi[moduleName] === undefined) {
+			mi[moduleName] = new module(this.jodit || this, options);
 		}
 
-		return this.__modulesInstances[moduleName] as any;
+		return mi[moduleName] as any;
 	}
 
 	/**

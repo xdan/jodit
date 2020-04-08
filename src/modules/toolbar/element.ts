@@ -84,14 +84,6 @@ export function createIcon(
 ): HTMLElement {
 	const icon: string = control ? control.icon || control.name : clearName;
 
-	if (jodit.options.textIcons) {
-		return jodit.create.fromHTML(
-			`<span class="jodit_icon">${jodit.i18n(
-				control ? control.name : clearName
-			)}</span>`
-		);
-	}
-
 	let iconSVG: string | void | HTMLElement = jodit.events.fire(
 		'getIcon',
 		icon,

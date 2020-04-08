@@ -37,7 +37,7 @@ export class ContextMenu extends Component implements IContextMenu {
 	 * @method show
 	 * @param {number} x Global coordinate by X
 	 * @param {number} y Global coordinate by Y
-	 * @param {Action[]} actions Array with plainobjects {icon: 'bin', title: 'Delete', exec: function () { do smth}}
+	 * @param {Action[]} actions Array with plain objects {icon: 'bin', title: 'Delete', exec: function () { do smth}}
 	 * @param {number} zIndex
 	 * @example
 	 * ```javascript

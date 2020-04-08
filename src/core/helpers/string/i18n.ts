@@ -2,6 +2,7 @@ import { IDictionary, ILanguageOptions } from '../../../types';
 import { Config } from '../../../config';
 import { defaultLanguage as defineLanguage } from '../defaultLanguage';
 import { ucfirst, isString } from '../index';
+import { lang } from '../../global';
 
 /**
  * Simple variant sprintf function
@@ -90,13 +91,13 @@ export const i18n = (key: string, params?: Array<string | number>, options?: ILa
 			return;
 		};
 
-	if (Jodit.lang[language] !== undefined) {
-		store = Jodit.lang[language];
+	if (lang[language] !== undefined) {
+		store = lang[language];
 	} else {
-		if (Jodit.lang[defaultLanguage] !== undefined) {
-			store = Jodit.lang[defaultLanguage];
+		if (lang[defaultLanguage] !== undefined) {
+			store = lang[defaultLanguage];
 		} else {
-			store = Jodit.lang.en;
+			store = lang.en;
 		}
 	}
 
@@ -116,8 +117,8 @@ export const i18n = (key: string, params?: Array<string | number>, options?: ILa
 		return result;
 	}
 
-	if ( Jodit.lang.en && typeof Jodit.lang.en[key] === 'string' && Jodit.lang.en[key]) {
-		return parse(Jodit.lang.en[key]);
+	if (lang.en && typeof lang.en[key] === 'string' && lang.en[key]) {
+		return parse(lang.en[key]);
 	}
 
 	if (debug) {
@@ -130,5 +131,3 @@ export const i18n = (key: string, params?: Array<string | number>, options?: ILa
 
 	return parse(key);
 };
-
-import { Jodit } from "../../../jodit"

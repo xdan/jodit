@@ -6,6 +6,7 @@
 
 import { IJodit } from '../../../types';
 import { IToolbarButton } from '../../../types';
+import { isFunction } from './isFunction';
 
 /**
  * Check if element is instance of Jodit
@@ -14,7 +15,7 @@ export const isJoditObject = (jodit: unknown): jodit is IJodit => {
 	if (
 		jodit &&
 		jodit instanceof Object &&
-		typeof jodit.constructor === 'function' &&
+		isFunction(jodit.constructor) &&
 		(jodit instanceof Jodit || (jodit as IJodit).isJodit)
 	) {
 		return true;
@@ -30,7 +31,7 @@ export const isToolbarButtonObject = (button: unknown): button is IToolbarButton
 	if (
 		button &&
 		button instanceof Object &&
-		typeof button.constructor === 'function' &&
+		isFunction(button.constructor) &&
 		(button instanceof ToolbarButton || (button as IToolbarButton).isToolbarButton)
 	) {
 		return true;
@@ -41,3 +42,4 @@ export const isToolbarButtonObject = (button: unknown): button is IToolbarButton
 
 import { Jodit } from '../../../jodit';
 import { ToolbarButton } from '../../../modules/toolbar/button/button';
+
