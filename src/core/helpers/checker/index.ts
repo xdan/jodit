@@ -19,5 +19,6 @@ export * from './isPlainObject';
 export * from './isString';
 export * from './isURL';
 export * from './isValidName';
+export * from './isVoid';
 export * from './isWindow';
 export * from './isPromise';

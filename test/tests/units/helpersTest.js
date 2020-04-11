@@ -53,6 +53,24 @@ describe('Test helpers', function() {
 	});
 
 	describe('Checkers', function() {
+		describe('isVoid', function() {
+			it('Should check value is undefned or null', function() {
+				const values = [
+					[1, false],
+					[undefined, true],
+					[null, true],
+					['0', false],
+					[false, false]
+				];
+
+				for (let i = 0, value = values[i]; i < values.length; i += 1) {
+					expect(value[1]).equals(
+						Jodit.modules.Helpers.isVoid(value[0])
+					);
+				}
+			});
+		});
+
 		describe('isInt', function() {
 			it('Should check value is int or not', function() {
 				const values = [
@@ -336,6 +354,51 @@ describe('Test helpers', function() {
 						);
 					}
 				});
+			});
+		});
+	});
+
+	describe('Object', function () {
+		describe('get', function() {
+			it('Should get value from keyChain else return null', function() {
+				const obj = {
+					a1: 2,
+					a: {
+						b1: [
+							{
+								key: 5
+							}
+						],
+						b: {
+							c: {
+								d: {
+									e: 1
+								},
+								e: false
+							}
+						}
+					}
+				};
+
+				const values = [
+					['', null],
+					[undefined, null],
+					[null, null],
+					['a1', 2],
+					['a', obj.a],
+					['a2', null],
+					['a.b.c.d.e', 1],
+					['a.b.c.e', false],
+					['a.b.r.d.e', null],
+					['a.b1.0.key', 5],
+					['a.b1.0.key1', null],
+				];
+
+				for (let i = 0, value = values[i]; i < values.length; i += 1) {
+					expect(value[1]).equals(
+						Jodit.modules.Helpers.get(value[0])
+					);
+				}
 			});
 		});
 	});

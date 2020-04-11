@@ -5,6 +5,7 @@ describe('Test object observer', function() {
 			disabled: false,
 			some: {
 				element: {
+					enable: true,
 					one: 1,
 					two: 2
 				}
@@ -12,50 +13,139 @@ describe('Test object observer', function() {
 		};
 	}
 
+	const get = Jodit.modules.Helpers.get;
 	const stringify = Jodit.modules.Helpers.stringify;
 	const isEqual = Jodit.modules.Helpers.isEqual;
 
+	const A = function(result, keyA, keyB) {
+		function A() {
+			this.setStatus('ready');
+		}
+
+		function __() {
+			this.constructor = A;
+		}
+		__.prototype = Jodit.modules.Component.prototype;
+		A.prototype = new __();
+
+		A.prototype.methodA = function() {
+			result.push(['A', get(keyA, this)]);
+		};
+
+		A.prototype.methodB = function() {
+			result.push(['B', get(keyB || keyA, this)]);
+		};
+
+		A.prototype.state = getTestObject();
+
+		return A;
+	};
+
 	describe('Test watch decorator', function() {
+		it('Should add watcher to whole field object', function() {
+			const result = [],
+				AClass = A(result, 'state.editable');
+
+			Jodit.decorators.watch('state')(AClass.prototype, 'methodA');
+
+			const a = new AClass();
+
+			a.state = Object.assign({}, a.state, {
+				editable: false
+			});
+
+			a.state = Object.assign({}, a.state, {
+				editable: true
+			});
+
+			expect(result).to.deep.equal([
+				['A', false],
+				['A', true]
+			]);
+		});
+
 		it('Should add watcher to some field in Component', function() {
-			const result = [];
+			const result = [],
+				AClass = A(result, 'state.some.element.enable');
 
-			const A = (function() {
-				function A() {
-					this.setStatus('ready');
-				}
-
-				function __() {
-					this.constructor = A;
-				}
-				__.prototype = Jodit.modules.Component.prototype;
-				A.prototype = new __();
-
-				A.prototype.update = function() {
-					result.push(this.state.block.subBlock.enable);
-				};
-
-				A.prototype.state = {
-					block: {
-						subBlock: {
-							enable: true
-						}
-					}
-				};
-
-				return A;
-			})();
-
-			Jodit.decorators.watch('state.block.subBlock.enable')(
-				A.prototype,
-				'update'
+			Jodit.decorators.watch('state.some.element.enable')(
+				AClass.prototype,
+				'methodA'
 			);
 
-			const a = new A();
+			const a = new AClass();
 
-			a.state.block.subBlock.enable = false;
-			a.state.block.subBlock.enable = true;
+			a.state.some.element.enable = false;
+			a.state.some.element.enable = true;
 
-			expect(result).to.deep.equal([false, true]);
+			expect(result).to.deep.equal([
+				['A', false],
+				['A', true]
+			]);
+		});
+
+		describe('Add several watchers', function() {
+			describe('on same fields', function() {
+				it('Should call all handlers', function() {
+					const result = [],
+						AClass = A(result, 'state.some.element.enable');
+
+					Jodit.decorators.watch('state.some.element.enable')(
+						AClass.prototype,
+						'methodA'
+					);
+
+					Jodit.decorators.watch('state.some.element.enable')(
+						AClass.prototype,
+						'methodB'
+					);
+
+					const a = new AClass();
+
+					a.state.some.element.enable = false;
+					a.state.some.element.enable = true;
+
+					expect(result).to.deep.equal([
+						['A', false],
+						['B', false],
+						['A', true],
+						['B', true]
+					]);
+				});
+			});
+
+			describe('on different fields', function() {
+				it('Should call only matched handlers', function() {
+					const result = [],
+						AClass = A(
+							result,
+							'state.some.element.one',
+							'state.some.element.two'
+						);
+
+					Jodit.decorators.watch('state.some.element.one')(
+						AClass.prototype,
+						'methodA'
+					);
+
+					Jodit.decorators.watch('state.some.element.two')(
+						AClass.prototype,
+						'methodB'
+					);
+
+					const a = new AClass();
+
+					a.state.some.element.enable = false; // indifferent
+
+					a.state.some.element.one = 2; // call methodA
+					a.state.some.element.two = 3; // call methodB
+
+					expect(result).to.deep.equal([
+						['A', 2],
+						['B', 3]
+					]);
+				});
+			});
 		});
 	});
 
@@ -67,12 +157,12 @@ describe('Test object observer', function() {
 			expect(stringify(a)).equals('{}');
 
 			expect(stringify(b)).equals(
-				'{"editable":true,"disabled":false,"some":{"element":{"one":1,"two":2}}}'
+				'{"editable":true,"disabled":false,"some":{"element":{"enable":true,"one":1,"two":2}}}'
 			);
 
 			b.b = b;
 			expect(stringify(b)).equals(
-				'{"editable":true,"disabled":false,"some":{"element":{"one":1,"two":2}},"b":"[refObject]"}'
+				'{"editable":true,"disabled":false,"some":{"element":{"enable":true,"one":1,"two":2}},"b":"[refObject]"}'
 			);
 		});
 	});

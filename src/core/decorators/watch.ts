@@ -30,10 +30,10 @@ export function watch(observeFields: string[] | string) {
 				let value: any = component[key];
 
 				if (value instanceof ObserveObject) {
-					value.on('change', callback);
-				} else if (isPlainObject(value)) {
+					value.on(`change.${field}`, callback);
+				} else if (isPlainObject(value) && parts.length > 1) {
 					component[key] = ObserveObject.create(value, [key]);
-					component[key].on('change', callback);
+					component[key].on(`change.${field}`, callback);
 				} else {
 					Object.defineProperty(component, key, {
 						set(v: any): void {
