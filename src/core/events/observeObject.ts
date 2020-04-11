@@ -31,13 +31,26 @@ export class ObserveObject {
 						);
 
 						if (isPlainObject(value)) {
-							value = new ObserveObject(value, prefix, this.onEvents);
+							value = new ObserveObject(
+								value,
+								prefix,
+								this.onEvents
+							);
 						}
 
 						data[key] = value;
 
+						const sum: string[] = [];
+
 						this.fire(
-							['change', `change.${prefix.join('.')}`],
+							[
+								'change',
+								...prefix.reduce((rs, p) => {
+									sum.push(p);
+									rs.push(`change.${sum.join('.')}`);
+									return rs;
+								}, [] as string[])
+							],
 							prefix.join('.'),
 							value.valueOf ? value.valueOf() : value
 						);
@@ -49,7 +62,11 @@ export class ObserveObject {
 			});
 
 			if (isPlainObject(data[key])) {
-				const value = new ObserveObject(data[key], prefix, this.onEvents);
+				const value = new ObserveObject(
+					data[key],
+					prefix,
+					this.onEvents
+				);
 				data[key] = value;
 			}
 		});

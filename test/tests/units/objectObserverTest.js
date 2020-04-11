@@ -147,6 +147,29 @@ describe('Test object observer', function() {
 				});
 			});
 		});
+
+		describe('On change field', function() {
+			it('Should fire change all parent field', function() {
+				const result = [],
+					AClass = A(result, 'state.some.element.one');
+
+				Jodit.decorators.watch('state.some')(
+					AClass.prototype,
+					'methodA'
+				);
+
+				const a = new AClass();
+
+				a.state.some.element.one = 5;
+				a.state.some.element.one = 15;
+				a.state.some.element.one = 15;
+
+				expect(result).to.deep.equal([
+					['A', 5],
+					['A', 15]
+				]);
+			});
+		});
 	});
 
 	describe('Test safe stringify', function() {
@@ -301,7 +324,11 @@ describe('Test object observer', function() {
 
 				data.some.element.test = 2;
 
-				expect(counter).to.deep.equal(['some', 'some.element.test']);
+				expect(counter).to.deep.equal([
+					'some',
+					'some.element.test',
+					'some.element.test'
+				]);
 			});
 		});
 	});

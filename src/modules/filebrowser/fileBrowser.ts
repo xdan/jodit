@@ -6,10 +6,10 @@
 
 import { Config, OptionsDefault } from '../../config';
 import * as consts from '../../core/constants';
-import { Dialog } from '../dialog/dialog';
-import { Confirm } from '../dialog/confirm';
-import { Prompt } from '../dialog/prompt';
-import { ToolbarIcon } from '../toolbar/icon';
+import { Dialog } from '../dialog/';
+import { Confirm } from '../dialog/';
+import { Prompt } from '../dialog/';
+import { ToolbarIcon } from '..';
 
 import {
 	IFileBrowser,
@@ -22,29 +22,36 @@ import {
 	IFileBrowserState,
 	IFileBrowserItem,
 	IFileBrowserFolder,
-	IFileBrowserDataProvider
-} from '../../types/fileBrowser';
+	IFileBrowserDataProvider,
+	IJodit, IStorage
+} from '../../types/';
 
-import { IDictionary, ImageEditorActionBox } from '../../types/types';
-import { IUploader, IUploaderOptions } from '../../types/uploader';
+import {
+	IDictionary,
+	ImageEditorActionBox,
+	IUploader,
+	IUploaderOptions
+} from '../../types/';
 import { ImageEditor } from '../imageEditor';
-import { Storage } from '../../core/storage/storage';
-import { each } from '../../core/helpers/each';
-import { normalizePath } from '../../core/helpers/normalize/';
-import { $$ } from '../../core/helpers/selector';
-import { ctrlKey } from '../../core/helpers/ctrlKey';
-import { extend } from '../../core/helpers/extend';
+import { Storage } from '../../core/storage/';
+import {
+	each,
+	normalizePath,
+	$$,
+	ctrlKey,
+	extend,
+	isValidName,
+	attr,
+	error
+} from '../../core/helpers/';
 import { ViewWithToolbar } from '../view/viewWithToolbar';
-import { IJodit, IStorage } from '../../types';
 import './config';
 import { Dom } from '../dom';
 import { Alert } from '../dialog';
 import contextMenu from './builders/contextMenu';
-import { ObserveObject } from '../../core/events/observeObject';
+import { ObserveObject } from '../../core/events/';
 import { FileBrowserItem } from './builders/item';
-import { isValidName } from '../../core/helpers/checker/isValidName';
 import { F_CLASS, ICON_LOADER, ITEM_CLASS } from './consts';
-import { attr, error } from '../../core/helpers';
 import { makeDataProvider } from './factories';
 
 const DEFAULT_SOURCE_NAME = 'default',
