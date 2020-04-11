@@ -16,6 +16,7 @@ import { Jodit as DefaultJodit } from './jodit';
 
 import Languages from './langs/index';
 
+import * as decorators from './core/decorators';
 import * as consts from './core/constants';
 import * as Modules from './modules/index';
 import * as Plugins from './plugins/index';
@@ -44,6 +45,15 @@ Object.keys(Modules)
 	.forEach((key: string) => {
 		DefaultJodit.modules[key] = (Modules as any)[key];
 	});
+
+// Decorators
+Object.keys(decorators)
+	.filter(esFilter)
+	.forEach((key: string) => {
+		DefaultJodit.decorators[key] = (decorators as any)[key];
+	});
+
+
 
 ['Confirm', 'Alert', 'Prompt'].forEach((key: string) => {
 	(DefaultJodit as any)[key] = (Modules as any)[key];

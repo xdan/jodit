@@ -101,6 +101,8 @@ export const INSERT_CLEAR_HTML = 'insert_clear_html';
 export const INSERT_AS_TEXT = 'insert_as_text';
 export const INSERT_ONLY_TEXT = 'insert_only_text';
 
+export const SAFE_COUNT_CHANGE_CALL = 10;
+
 export const IS_MAC =
 	typeof window !== 'undefined' &&
 	/Mac|iPod|iPhone|iPad/.test(window.navigator.platform);

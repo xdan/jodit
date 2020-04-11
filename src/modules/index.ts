@@ -20,6 +20,7 @@ export { Observer } from './observer/observer';
 export { ProgressBar } from './progressBar';
 export { Select } from './selection';
 export { Snapshot } from './snapshot';
+export { StatusBar } from './statusBar';
 export { Table } from './table';
 export { ToolbarIcon } from './toolbar/icon';
 export { ToolbarEditorCollection } from './toolbar/collection/editorCollection';

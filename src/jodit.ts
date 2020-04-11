@@ -6,7 +6,7 @@
 
 import { Config, configFactory } from './config';
 import * as consts from './core/constants';
-import { Dom } from './modules/dom';
+import { Dom, Observer, Select, StatusBar } from './modules/';
 
 import {
 	asArray,
@@ -20,12 +20,8 @@ import {
 	isFunction
 } from './core/helpers/';
 
-import { JoditArray } from './core/helpers/joditArray';
-import { JoditObject } from './core/helpers/joditObject';
-import { Observer } from './modules/observer/observer';
-import { Select } from './modules/selection';
-import { StatusBar } from './modules/statusBar';
-import { Storage } from './core/storage/storage';
+import { JoditArray, JoditObject } from './core/helpers/';
+import { Storage } from './core/storage/';
 
 import {
 	CustomCommand,
@@ -46,8 +42,6 @@ import { ViewWithToolbar } from './modules/view/viewWithToolbar';
 
 import { STATUSES } from './modules/component';
 import { instances, pluginSystem, modules, lang } from './core/global';
-
-const SAFE_COUNT_CHANGE_CALL = 10;
 
 /**
  * Class Jodit. Main class
@@ -131,6 +125,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	static plugins: IPluginSystem = pluginSystem;
 	static modules: IDictionary<Function> = modules;
+	static decorators: IDictionary<Function> = {};
 	static instances: IDictionary<IJodit> = instances;
 	static lang: any = lang;
 
@@ -438,7 +433,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		if (
 			old_value !== new_value &&
-			this.__callChangeCount < SAFE_COUNT_CHANGE_CALL
+			this.__callChangeCount < consts.SAFE_COUNT_CHANGE_CALL
 		) {
 			this.setElementValue(new_value);
 			this.__callChangeCount += 1;

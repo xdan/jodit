@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import { isString } from './checker';
+
 /**
  * Try define user language
  *
@@ -11,7 +13,7 @@
  * @param defaultLanguage
  */
 export const defaultLanguage = (language?: string, defaultLanguage: string = 'en'): string => {
-	if (language !== 'auto' && typeof language === 'string') {
+	if (language !== 'auto' && isString(language)) {
 		return language;
 	}
 

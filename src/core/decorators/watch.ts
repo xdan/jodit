@@ -1,17 +1,19 @@
-import { splitArray } from '../helpers/array/splitArray';
 import { IDictionary } from '../../types';
-import { isFunction, isPlainObject } from '../helpers/checker';
-import { ObserveObject } from '../events/observeObject';
-import { Component } from '../../modules';
-import { STATUSES } from '../../modules/component';
+import { error, isFunction, isPlainObject, splitArray } from '../helpers';
+import { ObserveObject } from '../events';
+import { Component, STATUSES } from '../../modules/component';
 
+/**
+ * Watch decorator. Added observer for some change in field value
+ * @param observeFields
+ */
 export function watch(observeFields: string[] | string) {
 	return function<T extends Component & IDictionary>(
 		target: T,
 		propertyKey: string
 	) {
 		if (!isFunction(target[propertyKey])) {
-			return;
+			throw error('Handler must be a Function');
 		}
 
 		target.hookStatus(STATUSES.ready, (component: IDictionary) => {

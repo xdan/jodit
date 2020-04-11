@@ -15,6 +15,50 @@ describe('Test object observer', function() {
 	const stringify = Jodit.modules.Helpers.stringify;
 	const isEqual = Jodit.modules.Helpers.isEqual;
 
+	describe('Test watch decorator', function() {
+		it('Should add watcher to some field in Component', function() {
+			const result = [];
+
+			const A = (function() {
+				function A() {
+					this.setStatus('ready');
+				}
+
+				function __() {
+					this.constructor = A;
+				}
+				__.prototype = Jodit.modules.Component.prototype;
+				A.prototype = new __();
+
+				A.prototype.update = function() {
+					result.push(this.state.block.subBlock.enable);
+				};
+
+				A.prototype.state = {
+					block: {
+						subBlock: {
+							enable: true
+						}
+					}
+				};
+
+				return A;
+			})();
+
+			Jodit.decorators.watch('state.block.subBlock.enable')(
+				A.prototype,
+				'update'
+			);
+
+			const a = new A();
+
+			a.state.block.subBlock.enable = false;
+			a.state.block.subBlock.enable = true;
+
+			expect(result).to.deep.equal([false, true]);
+		});
+	});
+
 	describe('Test safe stringify', function() {
 		it('Should safe stringify any circular object to string', function() {
 			const a = {},
