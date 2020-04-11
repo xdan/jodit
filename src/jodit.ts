@@ -11,13 +11,13 @@ import { Dom } from './modules/dom';
 import {
 	asArray,
 	css,
-	inArray,
 	isDestructable,
 	isPromise,
 	normalizeKeyAliases,
 	error,
 	isString,
-	attr, isFunction
+	attr,
+	isFunction
 } from './core/helpers/';
 
 import { JoditArray } from './core/helpers/joditArray';
@@ -36,7 +36,10 @@ import {
 	IViewOptions,
 	IWorkPlace,
 	markerInfo,
-	Modes, IFileBrowser, IJodit, IUploader
+	Modes,
+	IFileBrowser,
+	IJodit,
+	IUploader
 } from './types';
 
 import { ViewWithToolbar } from './modules/view/viewWithToolbar';
@@ -791,11 +794,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			return;
 		}
 
-		this.__mode = inArray(data.mode, [
+		this.__mode = [
 			consts.MODE_SOURCE,
 			consts.MODE_WYSIWYG,
 			consts.MODE_SPLIT
-		])
+		].includes(data.mode)
 			? data.mode
 			: consts.MODE_WYSIWYG;
 
@@ -837,11 +840,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	toggleMode() {
 		let mode: number = this.getMode();
 		if (
-			inArray(mode + 1, [
+			[
 				consts.MODE_SOURCE,
 				consts.MODE_WYSIWYG,
 				this.options.useSplitMode ? consts.MODE_SPLIT : 9
-			])
+			].includes(mode + 1)
 		) {
 			mode += 1;
 		} else {

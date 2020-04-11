@@ -5,5 +5,4 @@
  */
 
 export { asArray } from './asArray';
-export { inArray } from './inArray';
 export { splitArray } from './splitArray';
