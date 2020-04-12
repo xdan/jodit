@@ -1330,12 +1330,18 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 						this.setCurrentPlace(place);
 					}
 				})
+				.on(editor, 'compositionend', () => {
+					this.setEditorValue();
+				})
 				.on(
 					editor,
 					'selectionchange selectionstart keydown keyup keypress dblclick mousedown mouseup ' +
 						'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
 					(event: Event): false | void => {
 						if (this.options.readonly) {
+							return;
+						}
+						if (event instanceof KeyboardEvent && event.isComposing) {
 							return;
 						}
 
