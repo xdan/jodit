@@ -34,14 +34,14 @@ export const Prompt = (
 ): Dialog => {
 	const dialog: Dialog = new Dialog(),
 		cancelButton: HTMLAnchorElement = dialog.create.fromHTML(
-			'<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
+			'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
 				ToolbarIcon.getIcon('cancel') +
 				'<span>' +
 				dialog.i18n('Cancel') +
 				'</span></a>'
 		) as HTMLAnchorElement,
 		okButton: HTMLAnchorElement = dialog.create.fromHTML(
-			'<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
+			'<a href="javascript:void(0)" style="float:left;" class="jodit-button">' +
 				ToolbarIcon.getIcon('check') +
 				'<span>' +
 				dialog.i18n('Ok') +

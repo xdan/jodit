@@ -41,7 +41,7 @@ export const Alert = (
 		dialog = new Dialog(),
 		container = dialog.create.div(className),
 		okButton: HTMLAnchorElement = dialog.create.fromHTML(
-			'<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
+			'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
 			ToolbarIcon.getIcon('cancel') +
 			'<span>' +
 			dialog.i18n('Ok') +

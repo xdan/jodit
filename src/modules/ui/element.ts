@@ -1,14 +1,26 @@
-import { Component } from '../component';
-import { IContainer, IViewBased } from '../../types';
+import { Component, STATUSES } from '../component';
+import { IUIElement, IViewBased, Nullable } from '../../types';
 
-export abstract class UIElement extends Component implements IContainer {
+export abstract class UIElement<T extends IViewBased = IViewBased> extends Component<T> implements IUIElement {
 	container!: HTMLElement;
-	parentElement: UIElement | null = null;
+	parentElement: Nullable<IUIElement> = null;
+
+	setParentElement(parentElement: Nullable<IUIElement>): void {
+		this.parentElement = parentElement;
+	}
 
 	/**
 	 * Update UI from state
 	 */
 	update(): void {};
+
+	/**
+	 * Append container to element
+	 * @param element
+	 */
+	appendTo(element: HTMLElement): void {
+		element.appendChild(this.container);
+	}
 
 	/**
 	 * Valid name only with valid chars
@@ -24,7 +36,7 @@ export abstract class UIElement extends Component implements IContainer {
 		return this.jodit.create.div(this.componentName);
 	}
 
-	constructor(jodit: IViewBased) {
+	constructor(jodit: T) {
 		super(jodit);
 
 		this.container = this.createContainer();
@@ -32,5 +44,9 @@ export abstract class UIElement extends Component implements IContainer {
 		Object.defineProperty(this.container, 'component', {
 			value: this
 		});
+
+		if (this.constructor.name === UIElement.name) {
+			this.setStatus(STATUSES.ready);
+		}
 	}
 }

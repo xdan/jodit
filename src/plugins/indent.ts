@@ -23,7 +23,7 @@ const getKey = (direction: string) =>
 	direction === 'rtl' ? 'marginRight' : 'marginLeft';
 
 Config.prototype.controls.outdent = {
-	isDisable: (editor: IJodit): boolean => {
+	isDisabled: (editor: IJodit): boolean => {
 		const current: Node | false = editor.selection.current();
 
 		if (current) {

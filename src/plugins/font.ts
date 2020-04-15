@@ -29,7 +29,9 @@ Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
 		'72',
 		'96'
 	],
+
 	template: (editor, key: string, value: string) => value,
+
 	tooltip: 'Font size',
 	isActiveChild: (editor, control: IControlType): boolean => {
 		const current: Node | false = editor.selection.current();

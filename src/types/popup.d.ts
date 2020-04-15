@@ -1,11 +1,13 @@
-import { IBound, IDestructible } from './types';
+import { IBound, IDestructible, Nullable } from './types';
 
 export interface IPopup extends IDestructible {
 	container: HTMLElement;
 
 	isOpened: boolean;
 
-	open(content: HTMLElement, getBound: () => IBound): void;
+	open(content: Nullable<HTMLElement>, getBound: () => IBound): void;
+
+	setContent(content: HTMLElement): void;
 
 	close(): void;
 }

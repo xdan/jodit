@@ -52,6 +52,7 @@ export class ObserveObject {
 								}, [] as string[])
 							],
 							prefix.join('.'),
+							oldValue,
 							value.valueOf ? value.valueOf() : value
 						);
 					}

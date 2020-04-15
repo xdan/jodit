@@ -5,14 +5,26 @@
  */
 
 import { Config } from '../../config';
-import { IDialogOptions } from '../../types/dialog';
+import {
+	IControlType,
+	IViewBased,
+	IDialogOptions,
+	IDictionary,
+	IJodit,
+	IToolbarCollection
+} from '../../types/';
 import { KEY_ESC } from '../../core/constants';
-import { IDictionary, IJodit, IToolbarCollection } from '../../types';
-import { IControlType } from '../../types/toolbar';
-import { IViewBased } from '../../types/view';
-import { $$, asArray, css, isJoditObject } from '../../core/helpers/';
+import {
+	$$,
+	asArray,
+	css,
+	isJoditObject,
+	splitArray
+} from '../../core/helpers/';
 import { ViewWithToolbar } from '../view/viewWithToolbar';
 import { Dom } from '../dom';
+import { STATUSES } from '../component';
+import { fullsize } from '../../plugins/fullsize';
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}
@@ -44,27 +56,9 @@ Config.prototype.controls.dialog = {
 			(dialog as Dialog).close();
 		}
 	},
-	fullsize: {
-		icon: 'fullsize',
-		getLabel: (editor, btn: IControlType, button): boolean | void => {
-			if (
-				Config.prototype.controls.fullsize &&
-				Config.prototype.controls.fullsize.getLabel &&
-				typeof Config.prototype.controls.fullsize.getLabel ===
-					'function'
-			) {
-				return Config.prototype.controls.fullsize.getLabel(
-					editor,
-					btn,
-					button
-				);
-			}
 
-			return;
-		},
-		exec: dialog => {
-			dialog.toggleFullSize();
-		}
+	fullsize: {
+		...Config.prototype.controls.fullsize
 	}
 } as IDictionary<IControlType>;
 
@@ -400,7 +394,7 @@ export class Dialog extends ViewWithToolbar {
 	 * dialog.setTitle('Hello world');
 	 * dialog.setContent('<form><input id="someText" type="text" /></form>');
 	 * dialog.setFooter([
-	 *  $('<a class="jodit_button">OK</a>').click(function () {
+	 *  $('<a class="jodit-button">OK</a>').click(function () {
 	 *      alert($('someText').val())
 	 *      dialog.close();
 	 *  })
@@ -578,7 +572,7 @@ export class Dialog extends ViewWithToolbar {
 	 * //You can close dialog two ways
 	 * var dialog = new Jodit.modules.Dialog();
 	 * dialog.open('Hello world!', 'Title');
-	 * var $close = Jodit.modules.helper.dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">
+	 * var $close = Jodit.modules.helper.dom('<a href="javascript:void(0)" style="float:left;" class="jodit-button">
 	 *     <i class="icon icon-check"></i>&nbsp;' + Jodit.prototype.i18n('Ok') + '</a>');
 	 * $close.addEventListener('click', function () {
 	 *     dialog.close();
@@ -718,10 +712,9 @@ export class Dialog extends ViewWithToolbar {
 
 		self.container.addEventListener('close_dialog', self.close as any);
 
-		self.toolbar.build(
-			splitArray(self.options.buttons),
-			self.dialogbox_toolbar
-		);
+		self.toolbar
+			.build(splitArray(self.options.buttons))
+			.appendTo(self.dialogbox_toolbar);
 
 		self.events
 			.on(this.window, 'mouseup', self.onMouseUp)
@@ -769,7 +762,3 @@ export class Dialog extends ViewWithToolbar {
 		super.destruct();
 	}
 }
-
-import { fullsize } from '../../plugins';
-import { STATUSES } from '../component';
-import { splitArray } from '../../core/helpers/array/splitArray';

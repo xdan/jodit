@@ -36,6 +36,10 @@ describe('Test object observer', function() {
 			result.push(['B', get(keyB || keyA, this)]);
 		};
 
+		A.prototype.methodC = function(key, oldValue, newValue) {
+			result.push(['C', oldValue, newValue]);
+		};
+
 		A.prototype.state = getTestObject();
 
 		return A;
@@ -169,6 +173,25 @@ describe('Test object observer', function() {
 					['A', 15]
 				]);
 			});
+			it('Should add in handler - old value as first argument', function() {
+				const result = [],
+					AClass = A(result, 'state.some.element.one');
+
+				Jodit.decorators.watch('state.some')(
+					AClass.prototype,
+					'methodC'
+				);
+
+				const a = new AClass();
+
+				a.state.some.element.one = 5;
+				a.state.some.element.one = 15;
+
+				expect(result).to.deep.equal([
+					['C', 1, 5],
+					['C', 5, 15]
+				]);
+			});
 		});
 	});
 
@@ -299,6 +322,26 @@ describe('Test object observer', function() {
 				data.some.element.one = 2;
 
 				expect(counter).to.deep.equal(['some.element.one']);
+			});
+			it('Should fire event with old and new Value', function() {
+				const counter = [];
+
+				const data = Jodit.modules.ObserveObject.create(
+					getTestObject()
+				);
+
+				data.on('change.some.element.one', function(key, oldValue, newValue) {
+					counter.push(key, oldValue, newValue);
+				});
+
+
+				data.some.element.one = 2;
+				data.some.element.one = 3;
+
+				expect(counter).to.deep.equal([
+					'some.element.one', 1, 2,
+					'some.element.one', 2, 3
+				]);
 			});
 		});
 

@@ -95,7 +95,7 @@ describe('Toolbar', function() {
 
 			const toolbar = document.querySelector('.jodit_toolbar');
 			const defaultContainer = editor.container.querySelector(
-				'.jodit_toolbar_container'
+				'.jodit__toolbar-box'
 			);
 
 			expect(null).does.not.equal(toolbar);
@@ -112,7 +112,7 @@ describe('Toolbar', function() {
 
 				const toolbar = document.querySelector('.jodit_toolbar');
 				const defaultContainer = editor.container.querySelector(
-					'.jodit_toolbar_container'
+					'.jodit__toolbar-box'
 				);
 
 				editor.toggleFullSize(true);
@@ -134,7 +134,7 @@ describe('Toolbar', function() {
 				expect(toolbar).is.not.null;
 
 				const defaultContainer = editor.container.querySelector(
-					'.jodit_toolbar_container'
+					'.jodit__toolbar-box'
 				);
 				expect(defaultContainer).is.not.null;
 

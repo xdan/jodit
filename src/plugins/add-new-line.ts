@@ -5,13 +5,9 @@
  */
 
 import { Config } from '../config';
-import { Dom } from '../modules/dom';
-import { offset, position } from '../core/helpers/size';
-import { ToolbarIcon } from '../modules/toolbar/icon';
+import { Dom, Plugin, ToolbarIcon } from '../modules/';
+import { offset, position, call, scrollIntoView } from '../core/helpers/';
 import { IBound, IJodit } from '../types';
-import { Plugin } from '../modules/plugin';
-import { call } from '../core/helpers/utils';
-import { scrollIntoView } from '../core/helpers';
 
 declare module '../config' {
 	interface Config {
@@ -170,7 +166,10 @@ export class addNewLine extends Plugin {
 			.on(
 				editor.editor,
 				'mousemove' + '.' + ns,
-				editor.async.debounce(this.onMouseMove, editor.defaultTimeout * 3)
+				editor.async.debounce(
+					this.onMouseMove,
+					editor.defaultTimeout * 3
+				)
 			);
 	}
 

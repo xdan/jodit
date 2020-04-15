@@ -1,262 +1,266 @@
 import './button.less';
 
-import { createIcon, ToolbarElement } from '../element';
 import {
 	IControlTypeStrong,
 	IToolbarButton,
 	IViewBased,
 	Nullable
 } from '../../../types';
-import {
-	asArray,
-	attr,
-	call,
-	isFunction,
-	isJoditObject,
-	isString
-} from '../../../core/helpers/';
-import { Dom } from '../../dom';
+import { UIButton, UIButtonState } from '../../ui/button';
 import { ToolbarIcon } from '../icon';
+import { watch } from '../../../core/decorators';
+import { Dom } from '../../dom';
+import { PopupMenu } from '../../popup/';
+import { makeCollection } from '../factory';
+import {
+	isFunction,
+	isString,
+	position,
+	camelCase,
+	attr,
+	isJoditObject,
+	call
+} from '../../../core/helpers/';
+import { ToolbarCollection } from '../..';
+import { STATUSES } from '../../component';
 
-export class ToolbarButton<T extends IViewBased = IViewBased>
-	extends ToolbarElement<T>
+export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	implements IToolbarButton {
-	/**
-	 * ToolbarElement is button
-	 */
-	isToolbarButton: true = true;
+	state = {
+		...UIButtonState(),
+		hasTrigger: false
+	};
+
+	trigger!: HTMLElement;
 
 	/**
-	 * Valid name only with valid chars
+	 * Button element
 	 */
-	protected clearName(name: string): string {
-		return name.replace(/[^a-zA-Z0-9]/g, '_');
-	}
-
-	get textContainer(): HTMLElement {
+	get button(): HTMLElement {
 		return this.container.querySelector(
-			'.jodit-toolbar__button-text'
+			`button.${this.componentName}__button`
 		) as HTMLElement;
 	}
 
-	get trigger(): Nullable<HTMLElement> {
-		return this.container.querySelector('.jodit-toolbar__button-trigger');
-	}
-
-	get button(): HTMLElement {
-		return (
-			(this.container.querySelector(
-				'.jodit_toolbar__button'
-			) as HTMLElement) || this.container
-		);
-	}
-
-	/**
-	 * Disable/Enable button
-	 * @param disable
-	 */
-	setDisabled(disable: boolean) {
-		if (this.__isDisabled === disable) {
-			return;
-		}
-
-		this.__isDisabled = disable;
-		this.container.classList.toggle('jodit_disabled', disable);
-
-		if (!disable) {
-			attr(this.container, 'disabled', null);
-		} else {
-			if (!this.container.hasAttribute('disabled')) {
-				attr(this.container, 'disabled', 'disabled');
-			}
-		}
-	}
-
-	private __isDisabled: boolean = false;
-
-	/**
-	 * Button is disabled
-	 */
-	isDisabled(): boolean {
-		return this.__isDisabled;
-	}
-
-	/**
-	 * Set active state on button
-	 * @param enable
-	 */
-	setActive(active: boolean) {
-		if (this.__isActive === active) {
-			return;
-		}
-
-		this.__isActive = active;
-
-		this.container.classList.toggle('jodit_active', active);
-	}
-
-	private __isActive: boolean = false;
-
-	/**
-	 * Button is active
-	 */
-	isActive(): boolean {
-		return this.__isActive;
-	}
-
-	/**
-	 * Update content
-	 */
+	/** @override **/
 	update(): void {
-		const { control } = this;
+		const { control, parentElement, state } = this;
 
-		if (isFunction(control.getLabel)) {
-			control.getLabel(this.jodit, control, this);
+		if (parentElement instanceof ToolbarCollection) {
+			state.disabled = Boolean(parentElement.shouldBeDisabled(this));
+			state.activated = Boolean(parentElement.shouldBeActive(this));
 		}
 
-		if (isFunction(control.getContent)) {
-			Dom.detach(this.container);
-
-			const content = control.getContent(this.jodit, control, this);
-
-			this.container.appendChild(
-				isString(content)
-					? this.jodit.create.fromHTML(content)
-					: content
-			);
-		}
-
-		this.parentToolbar &&
-			this.setDisabled(this.parentToolbar.shouldBeDisabled(this));
-
-		if (this.parentToolbar && !this.isDisabled()) {
-			this.setActive(this.parentToolbar.shouldBeActive(this));
-		}
-
-		let tabIndex = '-1';
-
-		if (this.jodit.options.allowTabNavigation) {
-			tabIndex = '0';
-		}
-
-		attr(this.container, 'tabindex', tabIndex);
-	}
-
-	constructor(
-		jodit: T,
-		readonly control: IControlTypeStrong,
-		readonly target?: HTMLElement
-	) {
-		super(jodit, control, target);
-
-		const clearName = this.clearName(control.name);
-		this.container.classList.add('jodit_toolbar__item_' + clearName);
-
-		this.update();
-		this.initTooltip();
-
-		this.jodit.events
-			.on(this.button, `click.${clearName}`, this.onAction.bind(this))
-			.on(this.button, `mousedown.${clearName}`, (e: MouseEvent) => {
-				e.preventDefault();
-			})
-			.on(
-				`click-${this.clearName}-btn.${clearName}`,
-				this.onAction.bind(this)
-			);
-	}
-
-	protected initTooltip() {
-		const { control } = this;
-		const tooltipText = this.tooltipText();
-
-		if (this.jodit.options.showTooltip && control.tooltip) {
-			if (!this.jodit.options.useNativeTooltip) {
-				const to =
-					this.jodit.options.showTooltipDelay ||
-					this.jodit.defaultTimeout;
-
-				let timeout: number = 0;
-
-				this.jodit.events
-					.on(this.container, 'mouseenter', () => {
-						timeout = this.jodit.async.setTimeout(
-							() =>
-								!this.isDisabled() &&
-								this.jodit?.events.fire(
-									'showTooltip',
-									this.container,
-									tooltipText
-								),
-							{
-								timeout: to,
-								label: 'tooltip'
-							}
-						);
-					})
-					.on(this.container, 'mouseleave', () => {
-						this.jodit.async.clearTimeout(timeout);
-						this.jodit.events.fire('hideTooltip');
-					});
+		if (this.jodit.options.textIcons) {
+			state.icon = UIButtonState().icon;
+			state.text = control.name;
+		} else {
+			if (control.iconURL) {
+				state.icon.iconURL = control.iconURL;
 			} else {
-				this.container.setAttribute('title', tooltipText);
+				const name = control.icon || control.name;
+				state.icon.name = ToolbarIcon.exists(name) ? name : '';
 			}
 
-			this.container.setAttribute('aria-label', tooltipText);
-		}
-	}
-
-	private tooltipText(): string {
-		if (!this.control.tooltip) {
-			return '';
+			if (!control.iconURL && !state.icon.name) {
+				state.text = control.name;
+			}
 		}
 
-		return (
-			this.jodit.i18n(this.control.tooltip) +
-			(this.control.hotkeys
-				? '<br>' + asArray(this.control.hotkeys).join(' ')
-				: '')
-		);
-	}
+		if (control.tooltip) {
+			state.tooltip = this.jodit.i18n(control.tooltip);
+		}
 
-	destruct(): any {
-		this.jodit.events
-			.off(this.container, `click.${this.clearName}`)
-			.off(`click-${this.clearName}-btn.${this.clearName}`);
+		state.hasTrigger = Boolean(control.list || control.popup);
 
-		this.trigger &&
-			this.jodit.events.off(this.trigger, `click.${this.clearName}`);
+		state.size =
+			this.jodit.options.toolbarButtonSize || UIButtonState().size;
 
-		return super.destruct();
+		if (isFunction(control.update)) {
+			control.update(this);
+		}
+
+		super.update();
 	}
 
 	/** @override */
-	protected createContainer(control: IControlTypeStrong): HTMLElement {
-		const container = this.jodit.create.element('button');
+	protected onChangeText(): void {
+		if (isFunction(this.control.template)) {
+			this.text.innerHTML = this.control.template(
+				this.jodit,
+				this.control.name,
+				this.state.text
+			);
+		} else {
+			super.onChangeText();
+		}
+	}
 
-		attr(container, 'role', 'button');
+	/** @override */
+	protected createContainer(): HTMLElement {
+		const cn = this.componentName;
+		const container = this.jodit.create.span(cn),
+			button = super.createContainer();
 
-		container.classList.add('jodit-toolbar__button', 'jodit-toolbar__item');
+		button.classList.remove(cn);
+		button.classList.add(cn + '__button');
 
-		const textContainer = this.jodit.create.span(
-			'jodit-toolbar__button-text'
+		container.appendChild(button);
+
+		this.trigger = this.jodit.create.fromHTML(
+			`<span class="${cn}__trigger">${ToolbarIcon.getIcon(
+				'chevron'
+			)}</span>`
 		);
 
-		container.appendChild(textContainer);
-
-		const clearName = this.clearName(control.name);
-		const icon: string = control ? control.icon || control.name : clearName;
-
-		if (this.jodit.options.textIcons || !ToolbarIcon.exists(icon)) {
-			textContainer.textContent = control.name;
-		} else {
-			container.appendChild(createIcon(this.jodit, clearName, control));
-		}
+		this.jodit.events.on(
+			this.trigger,
+			`click`,
+			this.onTriggerClick.bind(this)
+		);
 
 		return container;
 	}
 
-	protected onAction(originalEvent: MouseEvent) {
+	/** @override */
+	focus() {
+		this.container.querySelector('button')?.focus();
+	}
+
+	@watch('state.hasTrigger')
+	protected onChangeHasTrigger() {
+		if (this.state.hasTrigger) {
+			this.container.appendChild(this.trigger);
+		} else {
+			Dom.safeRemove(this.trigger);
+		}
+
+		this.container.classList.toggle(
+			this.componentName + '_with-trigger',
+			this.state.hasTrigger
+		);
+	}
+
+	/** @override */
+	protected onChangeDisabled(): void {
+		const dsb = this.state.disabled ? 'disabled' : null;
+
+		attr(this.trigger, 'disabled', dsb);
+		attr(this.button, 'disabled', dsb);
+		attr(this.container, 'disabled', dsb);
+	}
+
+	constructor(
+		jodit: IViewBased,
+		readonly control: IControlTypeStrong,
+		readonly target: Nullable<HTMLElement> = null
+	) {
+		super(jodit);
+
+		this.container.classList.add(
+			`${this.componentName}_${this.clearName(control.name)}`
+		);
+
+		// Prevent lost focus
+		this.jodit.events.on(this.button, 'mousedown', (e: MouseEvent) =>
+			e.preventDefault()
+		);
+
+		this.onAction(this.onClick);
+
+		this.setStatus(STATUSES.ready);
+	}
+
+	/**
+	 * Click on trigger button
+	 */
+	protected onTriggerClick() {
+		const { control } = this;
+
+		if (control.list) {
+			const list = control.list,
+				menu = new PopupMenu(this.jodit),
+				toolbar = makeCollection(this.jodit);
+
+			const getButton = (key: string, value: string | number) => ({
+				name: key.toString(),
+				template: control.template,
+				exec: control.exec,
+				command: control.command,
+				isActive: control.isActiveChild,
+				isDisabled: control.isChildDisabled,
+				mode: control.mode,
+				args: [...[control.args || []], key, value]
+			});
+
+			toolbar.build(
+				Array.isArray(list)
+					? list.map(getButton)
+					: Object.keys(list).map(getButton)
+			);
+
+			menu.open(toolbar.container, () => position(this.container));
+
+			this.state.activated = true;
+
+			this.jodit.events.on(menu, 'afterClose', () => {
+				this.state.activated = false;
+			});
+
+			return;
+		}
+
+		if (isFunction(control.popup)) {
+			const popup = new PopupMenu(this.jodit);
+
+			if (
+				this.jodit.events.fire(
+					camelCase(`before-${control.name}-open-popup`),
+					this.target,
+					control,
+					popup
+				) !== false
+			) {
+				const popupElm = control.popup(
+					this.jodit,
+					this.target || false,
+					control,
+					popup.close,
+					this
+				);
+
+				if (popupElm) {
+					popup.open(
+						isString(popupElm)
+							? this.jodit.create.fromHTML(popupElm)
+							: popupElm,
+						() => position(this.container)
+					);
+				}
+			}
+
+			/**
+			 * Fired after popup was opened for some control button
+			 * @event after{CONTROLNAME}OpenPopup
+			 */
+
+			/**
+			 * Close all opened popups
+			 *
+			 * @event closeAllPopups
+			 */
+			this.jodit.events.fire(
+				camelCase(`after-${control.name}-open-popup`),
+				popup.container
+			);
+		}
+	}
+
+	/**
+	 * Click handler
+	 * @param originalEvent
+	 */
+	protected onClick(originalEvent: MouseEvent) {
 		const { control } = this;
 
 		if (isFunction(control.exec)) {
@@ -270,8 +274,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 			this.jodit?.events.fire('synchro');
 
-			if (this.parentToolbar) {
-				this.parentToolbar.immediateUpdate();
+			if (this.parentElement) {
+				this.parentElement.update();
 			}
 
 			/**

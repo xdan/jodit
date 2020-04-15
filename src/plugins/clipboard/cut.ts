@@ -12,13 +12,13 @@ import { getDataTransfer } from './paste';
 
 Config.prototype.controls.cut = {
 	command: 'cut',
-	isDisable: (editor: IJodit) => editor.selection.isCollapsed(),
+	isDisabled: (editor: IJodit) => editor.selection.isCollapsed(),
 	tooltip: 'Cut selection'
 } as IControlType;
 
 Config.prototype.controls.copy = {
 	command: 'copy',
-	isDisable: (editor: IJodit) => editor.selection.isCollapsed(),
+	isDisabled: (editor: IJodit) => editor.selection.isCollapsed(),
 	tooltip: 'Copy selection'
 } as IControlType;
 

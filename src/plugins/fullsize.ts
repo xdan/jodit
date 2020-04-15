@@ -7,9 +7,7 @@
 import { Config } from '../config';
 import * as consts from '../core/constants';
 import { css } from '../core/helpers/';
-import { ToolbarIcon } from '../modules/toolbar/icon';
-import { IControlType } from '../types/toolbar';
-import { IJodit, IViewWithToolbar } from '../types';
+import { IViewWithToolbar, IControlType, IViewBased } from '../types';
 
 /**
  * Fullsize plugin
@@ -45,24 +43,27 @@ declare module '../config' {
 
 Config.prototype.fullsize = false;
 Config.prototype.globalFullsize = true;
+
 Config.prototype.controls.fullsize = {
-	exec: (editor: IJodit) => {
+	exec: (editor: IViewBased) => {
 		editor.toggleFullSize();
 	},
-	isActive: (editor: IJodit) => editor.isFullSize(),
-	getLabel: (editor: IJodit, btn, button) => {
-		const mode: string = editor.isFullSize() ? 'shrink' : 'fullsize';
 
-		if (button) {
-			button.textContainer.innerHTML = !editor.options.textIcons
-				? ToolbarIcon.getIcon(mode)
-				: `<span>${editor.i18n(mode)}</span>`;
-			(button.textContainer.firstChild as HTMLElement).classList.add(
-				'jodit_icon'
-			);
+	update(button) {
+		const editor = button.jodit,
+			mode = editor.isFullSize() ? 'shrink' : 'fullsize';
+
+		button.state.activated = editor.isFullSize();
+
+		if (editor.options.textIcons) {
+			button.state.text = editor.i18n(mode);
+		} else {
+			button.state.icon.name = mode
 		}
 	},
+
 	tooltip: 'Open editor in fullsize',
+
 	mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
 } as IControlType;
 
@@ -95,7 +96,6 @@ export function fullsize(editor: IViewWithToolbar) {
 				}
 			}
 		},
-
 		/**
 		 * Change editor's state between FullSize and normal
 		 * @param enable
@@ -106,9 +106,7 @@ export function fullsize(editor: IViewWithToolbar) {
 			}
 
 			if (enable === undefined) {
-				enable = !editor.container.classList.contains(
-					'jodit_fullsize'
-				);
+				enable = !editor.container.classList.contains('jodit_fullsize');
 			}
 
 			editor.options.fullsize = enable;
@@ -119,9 +117,12 @@ export function fullsize(editor: IViewWithToolbar) {
 
 			if (editor.toolbar) {
 				if (!enable) {
-					editor.toolbar.getParentContainer()?.appendChild(editor.toolbar.container);
+					editor.toolbar
+						.getParentContainer()
+						?.appendChild(editor.toolbar.container);
 				} else {
-					editor.container.querySelector('.jodit_toolbar_container')
+					editor.container
+						.querySelector('.jodit__toolbar-box')
 						?.appendChild(editor.toolbar.container);
 				}
 

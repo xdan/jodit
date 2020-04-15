@@ -12,13 +12,13 @@ import { IJodit } from '../types';
 
 Config.prototype.controls.redo = {
 	mode: consts.MODE_SPLIT,
-	isDisable: (editor: IJodit): boolean => !editor.observer.stack.canRedo(),
+	isDisabled: (editor: IJodit): boolean => !editor.observer.stack.canRedo(),
 	tooltip: 'Redo'
 } as IControlType;
 
 Config.prototype.controls.undo = {
 	mode: consts.MODE_SPLIT,
-	isDisable: (editor: IJodit): boolean => !editor.observer.stack.canUndo(),
+	isDisabled: (editor: IJodit): boolean => !editor.observer.stack.canUndo(),
 	tooltip: 'Undo'
 } as IControlType;
 

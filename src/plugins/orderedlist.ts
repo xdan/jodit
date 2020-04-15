@@ -22,6 +22,7 @@ Config.prototype.controls.ul = {
 	exec,
 	tags: ['ul'],
 	tooltip: 'Insert Unordered List',
+
 	list: {
 		default: 'Default',
 		circle: 'Circle',
@@ -35,6 +36,7 @@ Config.prototype.controls.ol = {
 	exec,
 	tags: ['ol'],
 	tooltip: 'Insert Ordered List',
+
 	list: {
 		default: 'Default',
 		'lower-alpha': 'Lower Alpha',

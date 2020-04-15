@@ -4,12 +4,17 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IControlTypeStrong, IToolbarButton, IToolbarCollection, IViewBased } from '../../types';
-import { isJoditObject } from '../../core/helpers/checker';
+import {
+	IControlTypeStrong,
+	IToolbarButton,
+	IToolbarCollection,
+	IViewBased,
+	Nullable
+} from '../../types';
+import { isJoditObject } from '../../core/helpers/';
 import { ToolbarCollection } from './collection/collection';
 import { ToolbarEditorCollection } from './collection/editorCollection';
 import { ToolbarButton } from './button/button';
-import { ToolbarButtonWithTrigger } from './button/buttonWithTrigger';
 
 /**
  * Collection factory
@@ -34,14 +39,10 @@ export function makeCollection(jodit: IViewBased): IToolbarCollection {
  * @param control
  * @param [target]
  */
-export function makeButton(jodit: IViewBased, control: IControlTypeStrong, target?: HTMLElement): IToolbarButton {
-	let button;
-
-	if (control.list || control.popup) {
-		button = new ToolbarButtonWithTrigger(jodit, control, target);
-	} else {
-		button = new ToolbarButton(jodit, control, target);
-	}
-
-	return button;
+export function makeButton(
+	jodit: IViewBased,
+	control: IControlTypeStrong,
+	target: Nullable<HTMLElement> = null
+): IToolbarButton {
+	return new ToolbarButton(jodit, control, target);
 }

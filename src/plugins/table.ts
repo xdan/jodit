@@ -6,9 +6,7 @@
 
 import { Config } from '../config';
 import * as consts from '../core/constants';
-import { Plugin } from '../modules/plugin';
-import { Dom } from '../modules/dom';
-import { Table } from '../modules/table';
+import { Plugin, Dom, Table } from '../modules/';
 import {
 	$$,
 	attr,
@@ -17,9 +15,7 @@ import {
 	offset,
 	scrollIntoView
 } from '../core/helpers/';
-import { IControlType } from '../types/toolbar';
-import { IBound, IDictionary } from '../types/types';
-import { IJodit } from '../types';
+import { IBound, IDictionary, IControlType, IJodit } from '../types/';
 import { alignElement } from './justify';
 
 declare module '../config' {
@@ -254,14 +250,14 @@ Config.prototype.controls.table = {
 			}
 		);
 
-		if (button && button.parentToolbar) {
+		if (button && button.parentElement) {
 			editor.events
 				.off(
-					button.parentToolbar.container as object,
+					button.parentElement.container,
 					'afterOpenPopup.tableGenerator'
 				)
 				.on(
-					button.parentToolbar.container as object,
+					button.parentElement.container,
 					'afterOpenPopup.tableGenerator',
 					() => {
 						generateRows(default_rows_count);

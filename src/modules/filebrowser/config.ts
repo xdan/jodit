@@ -565,7 +565,7 @@ Config.prototype.controls.filebrowser = {
 		exec: () => {
 			// do nothing
 		},
-		isDisable: (browser: IFileBrowser): boolean =>
+		isDisabled: (browser: IFileBrowser): boolean =>
 			!browser.dataProvider.canI('FileUpload'),
 
 		getContent: (
@@ -600,7 +600,7 @@ Config.prototype.controls.filebrowser = {
 
 	remove: {
 		icon: 'bin',
-		isDisable: (browser: IFileBrowser): boolean => {
+		isDisabled: (browser: IFileBrowser): boolean => {
 			return (
 				!browser.state.activeElements.length ||
 				!browser.dataProvider.canI('FileRemove')
@@ -619,7 +619,7 @@ Config.prototype.controls.filebrowser = {
 
 	select: {
 		icon: 'check',
-		isDisable: (browser: IFileBrowser): boolean =>
+		isDisabled: (browser: IFileBrowser): boolean =>
 			!browser.state.activeElements.length,
 		exec: (editor: IViewBased) => {
 			editor.events.fire('select.filebrowser');
@@ -628,7 +628,7 @@ Config.prototype.controls.filebrowser = {
 
 	edit: {
 		icon: 'pencil',
-		isDisable: (browser: IFileBrowser): boolean => {
+		isDisabled: (browser: IFileBrowser): boolean => {
 			const selected = browser.state.activeElements;
 
 			return (

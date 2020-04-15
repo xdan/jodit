@@ -86,7 +86,7 @@ describe('Test image', function() {
 					'click',
 					0,
 					dialog.querySelectorAll(
-						'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						'.jodit_dialog_footer .jodit-button.jodit_status_success'
 					)[0]
 				);
 
@@ -134,7 +134,7 @@ describe('Test image', function() {
 					'click',
 					0,
 					dialog.querySelectorAll(
-						'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						'.jodit_dialog_footer .jodit-button.jodit_status_success'
 					)[0]
 				);
 
@@ -183,7 +183,7 @@ describe('Test image', function() {
 					'click',
 					0,
 					dialog.querySelectorAll(
-						'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						'.jodit_dialog_footer .jodit-button.jodit_status_success'
 					)[0]
 				);
 
@@ -231,7 +231,7 @@ describe('Test image', function() {
 					'click',
 					0,
 					dialog.querySelectorAll(
-						'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						'.jodit_dialog_footer .jodit-button.jodit_status_success'
 					)[0]
 				);
 
@@ -278,7 +278,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+							'.jodit_dialog_footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -323,7 +323,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+							'.jodit_dialog_footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -368,7 +368,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+							'.jodit_dialog_footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -413,7 +413,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+							'.jodit_dialog_footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -471,7 +471,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+							'.jodit_dialog_footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -539,7 +539,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+							'.jodit_dialog_footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -578,7 +578,7 @@ describe('Test image', function() {
 					'click',
 					0,
 					dialog.querySelectorAll(
-						'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						'.jodit_dialog_footer .jodit-button.jodit_status_success'
 					)[0]
 				);
 
@@ -617,7 +617,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+							'.jodit_dialog_footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -662,7 +662,7 @@ describe('Test image', function() {
 					'click',
 					0,
 					dialog.querySelectorAll(
-						'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						'.jodit_dialog_footer .jodit-button.jodit_status_success'
 					)[0]
 				);
 
@@ -705,7 +705,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+							'.jodit_dialog_footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -753,7 +753,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+							'.jodit_dialog_footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -800,7 +800,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+							'.jodit_dialog_footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -861,7 +861,7 @@ describe('Test image', function() {
 							'click',
 							0,
 							dialog.querySelectorAll(
-								'.jodit_dialog_footer .jodit_button.jodit_status_success'
+								'.jodit_dialog_footer .jodit-button.jodit_status_success'
 							)[0]
 						);
 
@@ -929,7 +929,7 @@ describe('Test image', function() {
 							'click',
 							0,
 							dialog.querySelectorAll(
-								'.jodit_dialog_footer .jodit_button.jodit_status_success'
+								'.jodit_dialog_footer .jodit-button.jodit_status_success'
 							)[0]
 						);
 
@@ -990,7 +990,7 @@ describe('Test image', function() {
 								'click',
 								0,
 								dialog.querySelectorAll(
-									'.jodit_dialog_footer .jodit_button.jodit_status_success'
+									'.jodit_dialog_footer .jodit-button.jodit_status_success'
 								)[0]
 							);
 
@@ -1027,12 +1027,12 @@ describe('Test image', function() {
 					expect(dialog).is.not.null;
 
 					const fb = dialog.querySelector(
-						'.jodit_button.jodit_rechange'
+						'.jodit-button.jodit_rechange'
 					);
 					expect(fb).is.not.null;
 
 					const edit = dialog.querySelector(
-						'.jodit_button.jodit_rechange'
+						'.jodit-button.jodit_rechange'
 					);
 					expect(edit).is.not.null;
 
@@ -1070,12 +1070,12 @@ describe('Test image', function() {
 							']'
 					);
 
-					expect(dialog.querySelector('.jodit_button.jodit_rechange'))
+					expect(dialog.querySelector('.jodit-button.jodit_rechange'))
 						.is.not.null;
 
 					expect(
 						dialog.querySelector(
-							'.jodit_button.jodit_use_image_editor'
+							'.jodit-button.jodit_use_image_editor'
 						)
 					).is.not.null;
 				});
@@ -1099,7 +1099,7 @@ describe('Test image', function() {
 						);
 
 						const rechange = dialog.querySelector(
-							'.jodit_button.jodit_rechange'
+							'.jodit-button.jodit_rechange'
 						);
 
 						expect(rechange).is.not.null;
@@ -1135,7 +1135,7 @@ describe('Test image', function() {
 							expect(dialog).is.not.null;
 
 							const edi = dialog.querySelector(
-								'.jodit_button.jodit_use_image_editor'
+								'.jodit-button.jodit_use_image_editor'
 							);
 							expect(edi).is.not.null;
 
@@ -1150,7 +1150,7 @@ describe('Test image', function() {
 							simulateEvent(
 								'click',
 								0,
-								dialog2.querySelector('a.jodit_button')
+								dialog2.querySelector('a.jodit-button')
 							);
 
 							const dialog3 = editor.ownerDocument.querySelector(
@@ -1163,7 +1163,7 @@ describe('Test image', function() {
 							simulateEvent(
 								'click',
 								0,
-								dialog3.querySelector('a.jodit_button')
+								dialog3.querySelector('a.jodit-button')
 							);
 
 							const dialog4 = editor.ownerDocument.querySelector(
@@ -1176,7 +1176,7 @@ describe('Test image', function() {
 							simulateEvent(
 								'click',
 								0,
-								dialog4.querySelector('a.jodit_button')
+								dialog4.querySelector('a.jodit-button')
 							);
 
 							expect(

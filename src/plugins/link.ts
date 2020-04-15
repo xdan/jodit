@@ -62,11 +62,11 @@ Config.prototype.link = {
 				<input ref="nofollow_checkbox" class="jodit_checkbox" name="nofollow" type="checkbox"/>
 				<span>${i18n('No follow')}</span>
 			</label>
-			<div class="jodit_buttons">
-				<button ref="unlink" class="jodit_button jodit_unlink_button" type="button">${i18n(
+			<div class="jodit-buttons">
+				<button ref="unlink" class="jodit-button jodit_unlink_button" type="button">${i18n(
 					'Unlink'
 				)}</button>
-				<button ref="insert" class="jodit_button jodit_link_insert_button" type="submit">${i18n(
+				<button ref="insert" class="jodit-button jodit_link_insert_button" type="submit">${i18n(
 					'Insert'
 				)}</button>
 			</div>

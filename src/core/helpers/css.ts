@@ -52,6 +52,7 @@ export const css = (
 
 		if (isPlainObject(key)) {
 			const keys: string[] = Object.keys(key);
+
 			for (let j = 0; j < keys.length; j += 1) {
 				setValue(element, camelCase(keys[j]), (key as any)[keys[j]]);
 			}

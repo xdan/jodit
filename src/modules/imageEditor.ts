@@ -410,7 +410,7 @@ export class ImageEditor extends Component {
 
 		// btn group
 
-		$$('.jodit_button_group', self.editor).forEach(group => {
+		$$('.jodit-button_group', self.editor).forEach(group => {
 			const input = group.querySelector('input') as HTMLInputElement;
 			self.jodit.events.on(
 				group,
@@ -801,7 +801,7 @@ export class ImageEditor extends Component {
 
 		this.buttons = [
 			this.jodit.create.fromHTML(
-				'<button data-action="reset" type="button" class="jodit_button">' +
+				'<button data-action="reset" type="button" class="jodit-button">' +
 					gi('update') +
 					'&nbsp;' +
 					i('Reset') +
@@ -809,7 +809,7 @@ export class ImageEditor extends Component {
 			),
 
 			this.jodit.create.fromHTML(
-				'<button data-action="save" type="button" class="jodit_button jodit_button_success">' +
+				'<button data-action="save" type="button" class="jodit-button jodit-button_success">' +
 					gi('save') +
 					'&nbsp;' +
 					i('Save') +
@@ -817,7 +817,7 @@ export class ImageEditor extends Component {
 			),
 
 			this.jodit.create.fromHTML(
-				'<button data-action="saveas" type="button" class="jodit_button jodit_button_success">' +
+				'<button data-action="saveas" type="button" class="jodit-button jodit-button_success">' +
 					gi('save') +
 					'&nbsp;' +
 					i('Save as ...') +
@@ -836,17 +836,17 @@ export class ImageEditor extends Component {
 			active: boolean = true
 		) => `<div class="jodit_form_group">
 			<label>${i(label)}</label>
-			<div class="jodit_button_group jodit_button_radio_group">
+			<div class="jodit-button_group jodit-button_radio_group">
 				<input ${act(
 					active,
 					'checked'
 				)} type="checkbox" class="${jie}_${className} jodit_input"/>
 
-				<button type="button" data-yes="1" class="jodit_button jodit_status_success">${i(
+				<button type="button" data-yes="1" class="jodit-button jodit_status_success">${i(
 					'Yes'
 				)}</button>
 
-				<button type="button" class="jodit_button jodit_status_danger">${i(
+				<button type="button" class="jodit-button jodit_status_danger">${i(
 					'No'
 				)}</button>
 			</div>

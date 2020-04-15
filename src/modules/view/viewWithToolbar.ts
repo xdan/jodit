@@ -4,14 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IViewWithToolbar } from '../../types/view';
+import { IViewWithToolbar, Buttons, IToolbarCollection } from '../../types/';
 import { View } from './view';
-import { splitArray } from '../../core/helpers/array';
+import { splitArray, isString } from '../../core/helpers/';
 import { STATUSES } from '../component';
 import { Dom } from '../dom';
-import { Buttons, IToolbarCollection } from '../../types';
 import { makeCollection } from '../toolbar/factory';
-import { UIList } from '../ui/list/list';
 
 export class ViewWithToolbar extends View implements IViewWithToolbar {
 	private __toolbar = makeCollection(this);
@@ -35,32 +33,27 @@ export class ViewWithToolbar extends View implements IViewWithToolbar {
 		}
 
 		let toolbarContainer: HTMLElement | null = container.querySelector(
-			'.jodit_toolbar_container'
+			'.jodit__toolbar-box'
 		);
 
 		if (!toolbarContainer) {
-			toolbarContainer = this.create.div('jodit_toolbar_container');
+			toolbarContainer = this.create.div('jodit__toolbar-box');
 
 			Dom.appendChildFirst(container, toolbarContainer);
 		}
 
 		if (
 			Dom.isHTMLElement(this.options.toolbar, this.jodit.ownerWindow) ||
-			typeof this.options.toolbar === 'string'
+			isString(this.options.toolbar)
 		) {
 			toolbarContainer = this.resolveElement(this.options.toolbar);
 		}
 
 		const buttons = splitArray(this.options.buttons) as Buttons;
 
-		const list = new UIList(this);
-		list.build(buttons);
-		this.ownerDocument.body.appendChild(list.container);
-
-		this.toolbar.build(
-			buttons.concat(this.options.extraButtons),
-			toolbarContainer
-		);
+		this.toolbar
+			.build(buttons.concat(this.options.extraButtons))
+			.appendTo(toolbarContainer);
 	}
 
 	destruct() {

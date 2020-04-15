@@ -14,19 +14,12 @@ import { IDictionary, IJodit } from '../types';
 import { IControlType } from '../types/toolbar';
 
 Config.prototype.controls.brush = {
-	isActive: (editor: IJodit, control: IControlType, button): boolean => {
-		if (!button) {
-			return true;
-		}
+	update(button): void {
+		const editor = button.jodit as IJodit;
 
-		const current: Node | false = editor.selection.current(),
-			icon = button.container.querySelector('svg');
+		const current: Node | false = editor.selection.current();
 
-		if (icon && icon.style.fill) {
-			icon.style.removeProperty('fill');
-		}
-
-		if (current && !button.isDisabled()) {
+		if (current && !button.state.disabled) {
 			const currentBpx: HTMLElement =
 				(Dom.closest(
 					current,
@@ -43,17 +36,20 @@ Config.prototype.controls.brush = {
 				bgHEX = css(currentBpx, 'background-color').toString();
 
 			if (colorHEX !== css(editor.editor, 'color').toString()) {
-				icon && (icon.style.fill = colorHEX);
-				return true;
+				button.state.icon.fill = colorHEX;
+				button.state.activated = true;
+				return;
 			}
 
 			if (bgHEX !== css(editor.editor, 'background-color').toString()) {
-				icon && (icon.style.fill = bgHEX);
-				return true;
+				button.state.icon.fill = bgHEX;
+				button.state.activated = true;
+				return;
 			}
 		}
 
-		return false;
+		button.state.icon.fill = '';
+		button.state.activated = false;
 	},
 
 	popup: (

@@ -4,12 +4,13 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Buttons, ButtonsOption, Controls, IControlType, IProgressBar, IToolbarCollection } from './toolbar';
+import { Buttons, ButtonsOption, Controls, IProgressBar, IToolbarCollection } from './toolbar';
 import { IComponent, IDictionary } from './types';
 import { Attributes, ICreate } from './create';
 import { IEventsNative } from './events';
 import { IStorage } from './storage';
 import { IAsync } from './async';
+import { IUIButtonState } from './ui';
 
 interface ILanguageOptions {
 	language?: string;
@@ -20,7 +21,7 @@ interface ILanguageOptions {
 interface IToolbarOptions {
 	theme?: string;
 	toolbar?: boolean | string | HTMLElement;
-	toolbarButtonSize?: 'small' | 'middle' | 'large'
+	toolbarButtonSize?: IUIButtonState['size']
 	textIcons?: boolean;
 
 	extraButtons: Buttons;

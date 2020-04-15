@@ -17,9 +17,9 @@ export function watch(observeFields: string[] | string) {
 		}
 
 		target.hookStatus(STATUSES.ready, (component: IDictionary) => {
-			const callback = (key: string = '') => {
+			const callback = (key: string, ...args: any[]) => {
 				if (!component.isInDestruct) {
-					component[propertyKey](key);
+					component[propertyKey](key, ...args);
 				}
 			};
 
@@ -37,7 +37,9 @@ export function watch(observeFields: string[] | string) {
 				} else {
 					Object.defineProperty(component, key, {
 						set(v: any): void {
-							if (value === v) {
+							const oldValue = value;
+
+							if (oldValue === v) {
 								return;
 							}
 
@@ -48,7 +50,7 @@ export function watch(observeFields: string[] | string) {
 								value.on('change.' + field, callback);
 							}
 
-							callback();
+							callback(key, oldValue, value);
 						},
 						get(): any {
 							return value;

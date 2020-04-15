@@ -129,7 +129,7 @@ export class pasteStorage extends Plugin {
 		this.dialog = new Dialog(this.jodit);
 
 		const pasteButton: HTMLAnchorElement = this.jodit.create.fromHTML(
-			'<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
+			'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
 				'<span>' +
 				this.jodit.i18n('Paste') +
 				'</span>' +
@@ -139,7 +139,7 @@ export class pasteStorage extends Plugin {
 		pasteButton.addEventListener('click', this.paste);
 
 		const cancelButton: HTMLAnchorElement = this.jodit.create.fromHTML(
-			'<a href="javascript:void(0)" style="float:right; margin-right: 10px;" class="jodit_button">' +
+			'<a href="javascript:void(0)" style="float:right; margin-right: 10px;" class="jodit-button">' +
 				'<span>' +
 				this.jodit.i18n('Cancel') +
 				'</span>' +

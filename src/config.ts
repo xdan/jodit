@@ -1078,17 +1078,17 @@ Config.prototype.controls = {
 					`<form class="jodit_form">
 					<div class="jodit jodit_form_group">
 						<input class="jodit_input" required name="code" placeholder="http://" type="url"/>
-						<button class="jodit_button" type="submit">${editor.i18n('Insert')}</button>
+						<button class="jodit-button" type="submit">${editor.i18n('Insert')}</button>
 					</div>
 				</form>`
 				) as HTMLFormElement,
 				bycode = editor.create.fromHTML(
 					`<form class="jodit_form">
 									<div class="jodit_form_group">
-										<textarea class="jodit_textarea" required name="code" placeholder="${editor.i18n(
+										<textarea class="jodit-textarea" required name="code" placeholder="${editor.i18n(
 											'Embed code'
 										)}"></textarea>
-										<button class="jodit_button" type="submit">${editor.i18n('Insert')}</button>
+										<button class="jodit-button" type="submit">${editor.i18n('Insert')}</button>
 									</div>
 								</form>`
 				) as HTMLFormElement,

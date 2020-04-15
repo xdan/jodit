@@ -1,106 +1,54 @@
 @import (reference) '../../../styles/variables';
 @import (reference) '../../../styles/mixins';
+@import (reference) '../../ui/button/button';
 
-@color-button-background-hover: #dde4ef;
+.jodit-toolbar-button {
+	margin: 4px 2px;
+	border-radius: 3px;
+	border: 1px solid transparent;
 
-.button-size(@size, @plus: 20px) {
-	min-width: @size + @plus;
-	height: @size + @plus;
-
-	.jodit_icon {
-		width: @size;
-		height: @size;
-	}
-
-	&.jodit-toolbar__button,
-	.jodit-toolbar__button {
-		min-width: @size + @plus;
-		height: @size + @plus;
-	}
-
-	.jodit-toolbar__item-trigger {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		width: @size;
-		height: 100%;
-
-		svg {
-			width: @size - @plus / 5;
-		}
-	}
-}
-
-.button-state() {
-	&:hover {
-		background-color: @color-button-background-hover;
-		outline: 0;
-		opacity: 1;
-	}
-
-	&:active,
-	&.jodit-toolbar__button_active {
-		background-color: fade(@color-button-background-hover, 40);
-		outline: 0;
-	}
-}
-
-.jodit-toolbar {
-	&__button,
-	&__item {
-		box-sizing: border-box;
-		user-select: none;
-		background-clip: padding-box;
-		text-decoration: none;
-
-		outline: 0;
-	}
+	.jodit-ui-button();
 
 	&__button {
-		padding: 0;
-		position: relative;
-		text-align: center;
-
-		background: 0 0;
-		text-transform: none;
-		font-style: normal;
-		box-shadow: none;
-		border: 0;
-
-		.button-state();
+		.jodit-ui-button_clear();
 	}
 
-	&__item {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin: 4px 2px;
+	.trigger-size(@size) {
+		width: @icon_middle_size + 5px;
 
-		.jodit-toolbar__button {
+		svg {
+			width: @icon_middle_size - 3px;
+		}
+	}
+
+	&__trigger {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		border-radius: 0 3px 3px 0;
+
+		opacity: 0.4;
+		height: 100%;
+
+		.trigger-size(@icon_middle_size);
+	}
+
+	&_small &__trigger {
+		.trigger-size(@icon_small_size);
+	}
+
+	&_large &__trigger {
+		.trigger-size(@icon_large_size);
+	}
+
+	&_with-trigger {
+		.jodit-toolbar-button__button {
 			margin: 0;
 		}
-
-		border-radius: 3px;
-		border: 1px solid transparent;
 
 		&:hover {
 			border-color: @color-button-background-hover;
 		}
-
-		.button-size(@icon_middle_size);
-
-		&_small {
-			.button-size(@icon_small_size);
-		}
-
-		&_large {
-			.button-size(@icon_large_size);
-		}
-	}
-
-	&__item-trigger {
-		opacity: 0.4;
-		.button-state();
 	}
 }

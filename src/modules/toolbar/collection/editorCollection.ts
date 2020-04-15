@@ -5,10 +5,9 @@
  */
 
 import { ToolbarCollection } from './collection';
-import { IJodit } from '../../../types/jodit';
 import * as consts from '../../../core/constants';
 import { Dom } from '../../dom';
-import { IDictionary, IToolbarButton, IViewBased } from '../../../types';
+import { IDictionary, IToolbarButton, IViewBased, IJodit } from '../../../types';
 import { css, isFunction } from '../../../core/helpers';
 
 export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
@@ -94,11 +93,6 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 		}
 
 		return false;
-	}
-
-	/** @override */
-	getTarget(): Node | void {
-		return this.jodit.selection.current() || undefined;
 	}
 
 	private checkActiveStatus = (

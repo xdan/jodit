@@ -5,19 +5,17 @@
  */
 
 import {
-	CanUndef,
 	HTMLTagNames,
 	IComponent,
-	IContainer,
 	IDestructible,
 	IDictionary,
 	Modes,
 	Nullable
 } from './types';
-import { IButton, IFocusable } from './form';
 import { IViewBased } from './view';
 import { IJodit } from './jodit';
 import { IFileBrowser } from './fileBrowser';
+import { IUIButton, IUIList } from './ui';
 
 interface IControlType<
 	T = IJodit | IViewBased | IFileBrowser,
@@ -27,6 +25,8 @@ interface IControlType<
 	mode?: Modes;
 	hotkeys?: string | string[];
 	data?: IDictionary;
+
+	update?: (button: IToolbarButton) => void,
 	isInput?: boolean;
 
 	/**
@@ -92,7 +92,7 @@ interface IControlType<
 	 *              exec: function (a, b, btn) {
 	 *                  btn.data.active = !btn.data.active;
 	 *              },
-	 *              isDisable: function (editor, btn) {
+	 *              isDisabled: function (editor, btn) {
 	 *                  return !!btn.data.enable;
 	 *              }
 	 *          }
@@ -111,12 +111,6 @@ interface IControlType<
 		control: IControlType<T, Button>,
 		button?: Button
 	) => boolean;
-
-	getLabel?: (
-		editor: T,
-		control: IControlType<T, Button>,
-		button?: Button
-	) => boolean | void;
 
 	/**
 	 * Drop-down list. A hash or array. You must specify the command which will be submitted for the hash key
@@ -264,44 +258,27 @@ interface IControlTypeStrongList extends IControlTypeStrong {
 	list: IDictionary<string> | string[];
 }
 
-interface IToolbarElement extends IComponent, IContainer, IFocusable {
-	parentToolbar?: IToolbarCollection;
-	setParentToolbar(parentToolbar: IToolbarCollection | null): void;
-}
-
-interface IToolbarButton extends IToolbarElement, IButton {
-	textContainer: HTMLElement;
-	trigger: Nullable<HTMLElement>;
-	target?: HTMLElement;
-
+interface IToolbarButton extends IUIButton {
+	trigger: HTMLElement;
+	state: IUIButton['state'] & {
+		hasTrigger: boolean;
+	}
 	control: IControlTypeStrong;
-	isToolbarButton: true;
 
-	update(): void;
+	target: Nullable<HTMLElement>;
 }
 
-interface IToolbarCollection extends IComponent, IContainer {
-	appendChild(button: IToolbarElement): void;
-
-	removeChild(button: IToolbarElement): void;
-
-	build(buttons: Buttons, container?: HTMLElement, target?: HTMLElement): void;
-
+interface IToolbarCollection extends IUIList {
 	getButtonsList(): string[];
-
-	clear(): void;
 
 	setDirection(direction: 'rtl' | 'ltr'): void;
 
-	getParentContainer(): HTMLElement;
+	getParentContainer(): Nullable<HTMLElement>;
 
 	firstButton: Nullable<IToolbarButton>;
 
-	update(): void;
-	immediateUpdate(): void;
-
-	shouldBeDisabled(button: IToolbarButton): boolean;
-	shouldBeActive(button: IToolbarButton): boolean;
+	shouldBeDisabled(button: IToolbarButton): boolean | void;
+	shouldBeActive(button: IToolbarButton): boolean | void;
 }
 
 export interface IStatusBar extends IComponent {

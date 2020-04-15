@@ -6,9 +6,8 @@
 
 import { Config } from '../config';
 import * as consts from '../core/constants';
-import { Buttons, IControlType, IToolbarCollection } from '../types/toolbar';
-import { splitArray } from '../core/helpers/array';
-import { IJodit } from '../types';
+import { Buttons, IControlType, IToolbarCollection, IJodit } from '../types/';
+import { splitArray } from '../core/helpers/';
 import { makeCollection } from '../modules/toolbar/factory';
 
 declare module '../config' {
@@ -57,14 +56,13 @@ Config.prototype.controls.dots = {
 							| Array<string | IControlType>
 							| undefined = editor.events.fire(
 							'getDiffButtons.mobile',
-							button.parentToolbar
+							button.parentElement
 						);
 
 						if (buttons && store) {
-							store.toolbar.build(
-								splitArray(buttons),
-								store.container
-							);
+							store.toolbar
+								.build(splitArray(buttons))
+								.appendTo(store.container);
 						}
 					}
 				}
@@ -115,17 +113,16 @@ export function mobile(editor: IJodit) {
 				}
 			}
 		})
-		.on('getDiffButtons.mobile', (toolbar: IToolbarCollection):
-			| void
-			| Buttons => {
-			if (toolbar === editor.toolbar) {
-				return splitArray(editor.options.buttons).filter(
-					(i) => {
+		.on(
+			'getDiffButtons.mobile',
+			(toolbar: IToolbarCollection): void | Buttons => {
+				if (toolbar === editor.toolbar) {
+					return splitArray(editor.options.buttons).filter(i => {
 						return store.indexOf(i) < 0;
-					}
-				);
+					});
+				}
 			}
-		});
+		);
 
 	if (editor.options.toolbarAdaptive) {
 		editor.events
@@ -152,12 +149,17 @@ export function mobile(editor: IJodit) {
 
 					if (newStore.toString() !== store.toString()) {
 						store = newStore;
-
-						editor.toolbar.build(
-							store.concat(editor.options.extraButtons),
+						const container =
 							editor.toolbar.container.parentElement ||
-								editor.toolbar.getParentContainer()
-						);
+							editor.toolbar.getParentContainer();
+
+						if (container) {
+							editor.toolbar
+								.build(
+									store.concat(editor.options.extraButtons)
+								)
+								.appendTo(container);
+						}
 					}
 				}
 			)

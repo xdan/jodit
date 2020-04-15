@@ -5,10 +5,9 @@
  */
 
 import { Config } from '../config';
-import { Widget } from '../modules/widget';
+import { Widget, Dom, Plugin, Table, PopupMenu, ToolbarCollection } from '../modules/';
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
-import { Dom } from '../modules/dom';
 import {
 	attr,
 	clearCenterAlign,
@@ -17,13 +16,17 @@ import {
 	offset,
 	splitArray
 } from '../core/helpers/';
-import { Plugin } from '../modules/plugin';
-import { Table } from '../modules/table';
-import { Popup } from '../modules/popup/popup';
-import { Buttons, IDictionary, IJodit, IPopup, IToolbarCollection } from '../types';
-import { IControlType } from '../types/toolbar';
-import { IBound } from '../types/types';
-import { ToolbarCollection } from '../modules';
+
+import {
+	Buttons,
+	IDictionary,
+	IJodit,
+	IPopup,
+	IToolbarCollection,
+	IControlType,
+	IBound
+} from '../types';
+
 import { makeCollection } from '../modules/toolbar/factory';
 
 declare module '../config' {
@@ -508,10 +511,9 @@ export class inlinePopup extends Plugin {
 		type: string,
 		elm?: HTMLElement
 	): boolean => {
-		if (
-			!this.jodit.options.toolbarInline ||
-			!this.jodit.options.popup[type.toLowerCase()]
-		) {
+		const data = this.jodit.options.popup[type.toLowerCase()];
+
+		if (!this.jodit.options.toolbarInline || !data) {
 			return false;
 		}
 
@@ -527,11 +529,7 @@ export class inlinePopup extends Plugin {
 		this.targetContainer.parentNode ||
 			this.jodit.ownerDocument.body.appendChild(this.targetContainer);
 
-		this.toolbar.build(
-			this.jodit.options.popup[type.toLowerCase()],
-			this.container,
-			elm
-		);
+		this.toolbar.build(data, elm).appendTo(this.container);
 
 		this.popup.open(this.container, rect);
 
@@ -542,22 +540,23 @@ export class inlinePopup extends Plugin {
 		return true;
 	};
 
-	private hidePopup = (root?: HTMLElement | Popup) => {
+	private hidePopup = (root?: HTMLElement | PopupMenu) => {
 		if (this.isDestructed) {
 			return;
 		}
 
-		if (
-			root &&
-			(Dom.isNode(root, this.jodit.editorWindow || window) ||
-				root instanceof Popup) &&
-			Dom.isOrContains(
-				this.target,
-				root instanceof Popup ? root.target : root
-			)
-		) {
-			return;
-		}
+		// TODO
+		// if (
+		// 	root &&
+		// 	(Dom.isNode(root, this.jodit.editorWindow || window) ||
+		// 		root instanceof PopupMenu) &&
+		// 	Dom.isOrContains(
+		// 		this.target,
+		// 		root instanceof PopupMenu ? root.target : root
+		// 	)
+		// ) {
+		// 	return;
+		// }
 
 		this.isTargetAction = false;
 		this.isOpened = false;
@@ -658,11 +657,8 @@ export class inlinePopup extends Plugin {
 
 		this.container = editor.create.div();
 
-		this.popup = new Popup(
-			editor,
-			this.target,
-			undefined,
-			'jodit_toolbar_popup-inline'
+		this.popup = new PopupMenu(
+			editor
 		);
 
 		editor.events
@@ -675,18 +671,27 @@ export class inlinePopup extends Plugin {
 			)
 			.on('beforeOpenPopup hidePopup afterSetMode', this.hidePopup)
 			.on('recalcPositionPopup', this.reCalcPosition)
-			.on('getDiffButtons.mobile', (_toolbar: ToolbarCollection):
-				| void
-				| Buttons => {
-				if (this.toolbar === _toolbar) {
-					return splitArray(editor.options.buttons)
-						.filter((item) => {
-							const name = isString(item) ? item : item.name;
+			.on(
+				'getDiffButtons.mobile',
+				(_toolbar: ToolbarCollection): void | Buttons => {
+					if (this.toolbar === _toolbar) {
+						return splitArray(editor.options.buttons).filter(
+							item => {
+								const name = isString(item) ? item : item.name;
 
-							return name && name !== '|' && name !== '\n' && this.toolbar.getButtonsList().indexOf(name) < 0
-						});
+								return (
+									name &&
+									name !== '|' &&
+									name !== '\n' &&
+									this.toolbar
+										.getButtonsList()
+										.indexOf(name) < 0
+								);
+							}
+						);
+					}
 				}
-			})
+			)
 			.on('selectionchange', this.onChangeSelection)
 			.on('afterCommand afterExec', () => {
 				if (this.isOpened && this.isSelectionPopup) {

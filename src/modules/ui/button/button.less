@@ -1,2 +1,77 @@
+@import (reference) '../../../styles/variables';
+@import (reference) '../../../styles/mixins';
+
+@color-button-background-hover: #dde4ef;
+
+.button-size(@size, @plus: 20px) {
+	min-width: @size + @plus;
+	height: @size + @plus;
+
+	.jodit-icon {
+		width: @size;
+		height: @size;
+	}
+
+	& &__button {
+		min-width: @size + @plus;
+		height: @size + @plus;
+	}
+}
+
+.button-state() {
+	&:active:not([disabled]),
+	&[aria-pressed='true']:not([disabled]),
+	&_active:not([disabled]) {
+		background-color: fade(@color-button-background-hover, 40);
+		outline: 0;
+	}
+
+	&:hover:not([disabled]) {
+		background-color: @color-button-background-hover;
+		outline: 0;
+		opacity: 1;
+	}
+
+	&[disabled] {
+		opacity: 0.3;
+	}
+}
+
+.jodit-ui-button_clear {
+	padding: 0;
+	position: relative;
+	text-align: center;
+
+	background: 0 0;
+	text-transform: none;
+	font-style: normal;
+	box-shadow: none;
+	border: 0;
+
+	box-sizing: border-box;
+	user-select: none;
+	background-clip: padding-box;
+	text-decoration: none;
+
+	outline: 0;
+}
+
 .jodit-ui-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.jodit-ui-button_clear();
+
+	.button-state();
+
+	.button-size(@icon_middle_size);
+
+	&_small {
+		.button-size(@icon_small_size);
+	}
+
+	&_large {
+		.button-size(@icon_large_size);
+	}
 }

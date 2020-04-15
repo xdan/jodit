@@ -171,25 +171,25 @@ export function paste(editor: IJodit) {
 			editor.markOwner(dialog.container);
 
 			const keep = dialog.create.fromHTML(
-				`<a href="javascript:void(0)" class="jodit_button jodit_button_primary"><span>${editor.i18n(
+				`<a href="javascript:void(0)" class="jodit-button jodit-button_primary"><span>${editor.i18n(
 					'Keep'
 				)}</span></a>`
 			) as HTMLAnchorElement;
 
 			const clear = dialog.create.fromHTML(
-				`<a href="javascript:void(0)" class="jodit_button"><span>${editor.i18n(
+				`<a href="javascript:void(0)" class="jodit-button"><span>${editor.i18n(
 					clearButton
 				)}</span></a>`
 			) as HTMLAnchorElement;
 
 			const clear2 = dialog.create.fromHTML(
-				`<a href="javascript:void(0)" class="jodit_button"><span>${editor.i18n(
+				`<a href="javascript:void(0)" class="jodit-button"><span>${editor.i18n(
 					clear2Button
 				)}</span></a>`
 			) as HTMLAnchorElement;
 
 			const cancel = dialog.create.fromHTML(
-				`<a href="javascript:void(0)" class="jodit_button"><span>${editor.i18n(
+				`<a href="javascript:void(0)" class="jodit-button"><span>${editor.i18n(
 					'Cancel'
 				)}</span></a>`
 			) as HTMLAnchorElement;

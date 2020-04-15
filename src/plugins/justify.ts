@@ -5,17 +5,18 @@
  */
 
 import { Config } from '../config';
-import { Dom } from '../modules/dom';
+import { Dom } from '../modules/';
 import { css } from '../core/helpers/';
-import { ToolbarIcon } from '../modules/toolbar/icon';
-import { IControlType } from '../types/toolbar';
-import { IJodit } from '../types';
+import { IJodit, IControlType } from '../types';
 
 Config.prototype.controls.align = {
 	name: 'left',
 	tooltip: 'Align',
-	getLabel: (editor: IJodit, btn, button): boolean => {
-		const current: Node | false = editor.selection.current();
+
+	update(button): void {
+		const editor = button.jodit as IJodit,
+			control = button.control,
+			current: Node | false = editor.selection.current();
 
 		if (current) {
 			const currentBox: HTMLElement =
@@ -28,31 +29,29 @@ Config.prototype.controls.align = {
 			let currentValue: string = css(currentBox, 'text-align').toString();
 
 			if (
-				btn.defaultValue &&
-				btn.defaultValue.indexOf(currentValue) !== -1
+				control.defaultValue &&
+				control.defaultValue.indexOf(currentValue) !== -1
 			) {
 				currentValue = 'left';
 			}
 
 			if (
-				button &&
-				btn.data &&
-				btn.data.currentValue !== currentValue &&
-				btn.list &&
-				(btn.list as string[]).indexOf(currentValue) !== -1
+				control.data &&
+				control.data.currentValue !== currentValue &&
+				control.list &&
+				(control.list as string[]).indexOf(currentValue) !== -1
 			) {
-				button.textContainer.innerHTML = !editor.options.textIcons
-					? ToolbarIcon.getIcon(currentValue, '')
-					: `<span>${currentValue}</span>`;
-				(button.textContainer.firstChild as HTMLElement).classList.add(
-					'jodit_icon'
-				);
-				btn.data.currentValue = currentValue;
+				if (editor.options.textIcons) {
+					button.state.text = editor.i18n(currentValue);
+				} else {
+					button.state.icon.name = currentValue;
+				}
+
+				control.data.currentValue = currentValue;
 			}
 		}
-
-		return false;
 	},
+
 	isActive: (editor: IJodit, btn): boolean => {
 		const current: Node | false = editor.selection.current();
 
@@ -73,10 +72,12 @@ Config.prototype.controls.align = {
 
 		return false;
 	},
+
 	defaultValue: ['left', 'start', 'inherit'],
 	data: {
 		currentValue: 'left'
 	},
+
 	list: ['center', 'left', 'right', 'justify']
 } as IControlType;
 
@@ -119,7 +120,7 @@ Config.prototype.controls.right = {
  * @param editor
  */
 export const clearAlign = (node: Node, editor: IJodit) => {
-	Dom.each(node, (elm) => {
+	Dom.each(node, elm => {
 		if (Dom.isHTMLElement(elm, editor.editorWindow)) {
 			if (elm.style.textAlign) {
 				elm.style.textAlign = '';
@@ -129,7 +130,7 @@ export const clearAlign = (node: Node, editor: IJodit) => {
 				}
 			}
 		}
-	})
+	});
 };
 
 /**

@@ -9,25 +9,18 @@ import {
 	IControlType,
 	IControlTypeStrongList,
 	IToolbarButton,
-	IToolbarCollection
-} from '../../types/toolbar';
+	IToolbarCollection,
+	IViewBased, Nullable
+} from '../../types/';
 
-import { IViewBased } from '../../types/view';
 import { each, isString, splitArray } from '../../core/helpers/';
-import { Popup } from './popup';
+import { PopupMenu } from './menu';
 
-export class PopupList extends Popup {
+export class PopupList extends PopupMenu {
 	private defaultControl = {
 		template: (editor: IViewBased, key: string, value: string) =>
 			this.jodit.i18n(value)
 	};
-
-	protected doClose() {
-		if (this.toolbar) {
-			this.toolbar.destruct();
-			delete this.toolbar;
-		}
-	}
 
 	doOpen(control: IControlTypeStrongList) {
 		this.toolbar = makeCollection(this.jodit);
@@ -86,14 +79,14 @@ export class PopupList extends Popup {
 				const template =
 					control.template || this.defaultControl.template;
 
-				button.textContainer.innerHTML = template(
+				button.text.innerHTML = template(
 					this.jodit,
 					key.toString(),
 					value.toString()
 				);
 			}
 
-			this.toolbar.appendChild(button);
+			this.toolbar.append(button);
 		});
 
 		this.container.appendChild(this.toolbar.container);
@@ -111,10 +104,10 @@ export class PopupList extends Popup {
 	constructor(
 		jodit: IViewBased,
 		readonly target: HTMLElement,
-		readonly current?: HTMLElement,
-		readonly className: string = 'jodit_toolbar_list'
+		readonly current: Nullable<HTMLElement> = null,
+		readonly className: string = 'jodit-toolbar__list'
 	) {
-		super(jodit, target, current, className);
+		super(jodit);
 	}
 
 	destruct() {
@@ -122,7 +115,7 @@ export class PopupList extends Popup {
 			return;
 		}
 
-		this.doClose();
+		this.toolbar?.destruct();
 
 		super.destruct();
 	}

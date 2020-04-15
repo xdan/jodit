@@ -14,16 +14,15 @@ if (process.env.TARGET_ES !== 'es2018' && typeof window !== 'undefined') {
 
 import { Jodit as DefaultJodit } from './jodit';
 
-import Languages from './langs/index';
+import Languages from './langs/';
 
 import * as decorators from './core/decorators';
 import * as consts from './core/constants';
-import * as Modules from './modules/index';
-import * as Plugins from './plugins/index';
-import * as Icons from './styles/icons/index';
+import * as Modules from './modules/';
+import * as Plugins from './plugins/';
+import * as Icons from './styles/icons/';
 
 import { Config, OptionsDefault } from './config';
-import { ToolbarIcon } from './modules/toolbar/icon';
 
 // copy constants in Jodit
 Object.keys(consts).forEach((key: string) => {
@@ -36,7 +35,7 @@ const esFilter = (key: string): boolean => key !== '__esModule';
 Object.keys(Icons)
 	.filter(esFilter)
 	.forEach((key: string) => {
-		ToolbarIcon.setIcon(key.replace('_', '-'), (Icons as any)[key]);
+		Modules.ToolbarIcon.setIcon(key.replace('_', '-'), (Icons as any)[key]);
 	});
 
 // Modules

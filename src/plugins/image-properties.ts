@@ -5,21 +5,20 @@
  */
 
 import { Config } from '../config';
-import { Alert, Confirm, Dialog } from '../modules/dialog/';
-import { Dom } from '../modules/dom';
 import {
-	$$,
-	css,
-	trim,
-	val,
-	clearCenterAlign,
-	attr
-} from '../core/helpers/';
-import { ToolbarIcon } from '../modules/toolbar/icon';
-import { Widget } from '../modules/widget';
+	Alert,
+	Confirm,
+	Dialog,
+	Dom,
+	Widget,
+	PopupMenu,
+	ToolbarIcon
+} from '../modules/';
+import { $$, css, trim, val, clearCenterAlign, attr } from '../core/helpers/';
+
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
-import { Popup } from '../modules/popup/popup';
+
 import {
 	IDictionary,
 	IFileBrowser,
@@ -27,6 +26,7 @@ import {
 	IJodit,
 	IUploaderData
 } from '../types/';
+import { position } from '../core/helpers';
 
 /**
  * Plug-in for image editing window
@@ -138,17 +138,17 @@ export function imageProperties(editor: IJodit) {
 			dialog = new Dialog(editor),
 			buttons = {
 				check: dom(
-					`<a href="javascript:void(0)" class="jodit_button  jodit_status_success">${gi(
+					`<a href="javascript:void(0)" class="jodit-button  jodit_status_success">${gi(
 						'check'
 					)}<span>${i18n('Ok')}</span></a>`
 				),
 				cancel: dom(
-					`<a href="javascript:void(0)" class="jodit_button  jodit_status_primary">${gi(
+					`<a href="javascript:void(0)" class="jodit-button  jodit_status_primary">${gi(
 						'cancel'
 					)}<span>${i18n('Cancel')}</span></a>`
 				),
 				remove: dom(
-					`<a href="javascript:void(0)" class="jodit_button">${gi(
+					`<a href="javascript:void(0)" class="jodit-button">${gi(
 						'bin'
 					)}<span>${i18n('Delete')}</span></a>`
 				)
@@ -256,11 +256,11 @@ export function imageProperties(editor: IJodit) {
 										class="jodit_input_group-buttons"
 										style="${hasFbUrl ? '' : 'display: none'}"
 									>
-											<a class="jodit_button jodit_rechange" href="javascript:void(0)">${gi(
+											<a class="jodit-button jodit_rechange" href="javascript:void(0)">${gi(
 												'image'
 											)}</a>
 											<a
-												class="jodit_button jodit_use_image_editor" href="javascript:void(0)"
+												class="jodit-button jodit_use_image_editor" href="javascript:void(0)"
 												style="${hasEditor ? '' : 'display: none'}"
 											>${gi('crop')}</a>
 									</div>
@@ -569,7 +569,7 @@ export function imageProperties(editor: IJodit) {
 				imagebtn.addEventListener('mousedown', (event: MouseEvent) => {
 					imagebtn.classList.toggle('active');
 
-					const popup = new Popup(editor, imagebtn);
+					const popup = new PopupMenu(editor);
 
 					popup.open(
 						FileSelectorWidget(
@@ -609,7 +609,8 @@ export function imageProperties(editor: IJodit) {
 							},
 							image,
 							popup.close
-						)
+						),
+						() => position(imagebtn)
 					);
 					event.stopPropagation();
 				});
@@ -832,7 +833,7 @@ export function imageProperties(editor: IJodit) {
 				}
 			}
 
-			if (!attr(image,'style')) {
+			if (!attr(image, 'style')) {
 				image.removeAttribute('style');
 			}
 

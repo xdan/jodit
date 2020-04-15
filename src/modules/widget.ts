@@ -462,7 +462,7 @@ export namespace Widget {
 								'Alternative text'
 							)}"/>
 						</div>
-						<div style="text-align: right"><button class="jodit_button">${editor.i18n(
+						<div style="text-align: right"><button class="jodit-button">${editor.i18n(
 							'Insert'
 						)}</button></div>
 					</form>`

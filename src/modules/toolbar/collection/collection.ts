@@ -3,41 +3,25 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
-import './collection.less';
-
-import {
-	IDictionary,
-	IToolbarButton,
-	IToolbarCollection,
-	IToolbarElement,
-	Nullable
-} from '../../../types';
-
-import {
-	Buttons,
-	Controls,
-	IControlType,
-	IControlTypeStrong
-} from '../../../types/toolbar';
-
-import { IViewBased } from '../../../types/view';
-import { ToolbarBreak } from '../break';
-import { ToolbarSeparator } from '../separator';
-import { Dom } from '../../dom';
-import { Component } from '../../component';
-import { Config } from '../../../config';
-import {
-	isFunction,
-	isJoditObject,
-	isString,
-	isToolbarButtonObject
-} from '../../../core/helpers/checker';
-import { makeButton } from '../factory';
 import autobind from 'autobind-decorator';
 
+import {
+	IToolbarButton,
+	IToolbarCollection,
+	IUIButton,
+	Nullable,
+	IControlTypeStrong,
+	IViewBased
+} from '../../../types/';
+
+import { isFunction, isJoditObject, get } from '../../../core/helpers/';
+
+import { ToolbarButton } from '../..';
+import { UIList } from '../../ui';
+import { makeButton } from '../factory';
+
 export class ToolbarCollection<T extends IViewBased = IViewBased>
-	extends Component<T>
+	extends UIList<T>
 	implements IToolbarCollection {
 	readonly listenEvents =
 		'changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
@@ -47,183 +31,50 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	 * Helper for getting full plain button list
 	 */
 	getButtonsList(): string[] {
-		return this.__elements
-			.map(a => (isToolbarButtonObject(a) ? a.control.name : ''))
+		return this.elements
+			.map(a => get<string>('control.name', a) || '')
 			.filter(a => a !== '');
 	}
-
-	private __elements: IToolbarElement[] = [];
-
-	private __parentContainer!: HTMLElement;
 
 	/**
 	 * First button in list
 	 */
 	get firstButton(): Nullable<IToolbarButton> {
-		const button = this.__elements.find(
-			isToolbarButtonObject
+		const button = this.elements.find(
+			a => a instanceof ToolbarButton
 		) as IToolbarButton;
+
 		return button || null;
 	}
 
 	/**
 	 * Returns parent container
 	 */
-	getParentContainer(): HTMLElement {
-		return this.__parentContainer;
+	getParentContainer(): Nullable<HTMLElement> {
+		return this.parentElement?.container || null;
 	}
 
-	appendChild(elements: IToolbarElement) {
-		this.__elements.push(elements);
-		elements.setParentToolbar(this);
+	protected makeButton(control: IControlTypeStrong, target: Nullable<HTMLElement> = null): IUIButton {
+		return makeButton(this.jodit, control, target);
 	}
 
-	removeChild(element: IToolbarElement) {
-		const index = this.__elements.indexOf(element);
-
-		if (index !== -1) {
-			this.__elements.splice(index, 1);
-			element.setParentToolbar(null);
-		}
-	}
-
-	build(
-		buttons: Buttons,
-		parentContainer?: HTMLElement,
-		target?: HTMLElement
-	) {
-		this.applyContainerOptions();
-
-		this.jodit.events.on('afterInit rebuildToolbar', () =>
-			this.build(buttons, parentContainer, target)
-		);
-
-		if (parentContainer) {
-			this.__parentContainer = parentContainer;
-		}
-
-		let lastBtnSeparator: boolean = false;
-		this.clear();
-
-		buttons
-			.map(this.getControlType)
-			.forEach((buttonControl: IControlTypeStrong) => {
-				let button: IToolbarElement | null = null;
-
-				if (
-					this.jodit.options.removeButtons.indexOf(
-						buttonControl.name
-					) !== -1
-				) {
-					return;
-				}
-
-				switch (buttonControl.name) {
-					case '\n':
-						button = new ToolbarBreak(this.jodit);
-						break;
-					case '|':
-						if (!lastBtnSeparator) {
-							lastBtnSeparator = true;
-							button = new ToolbarSeparator(this.jodit);
-						}
-						break;
-					default:
-						lastBtnSeparator = false;
-						button = makeButton(this.jodit, buttonControl);
-				}
-
-				if (button) {
-					this.appendChild(button);
-				}
-			});
-
-		if (parentContainer && this.container.parentNode !== parentContainer) {
-			parentContainer.appendChild(this.container);
-		}
-
-		this.immediateUpdate();
-	}
-
-	private applyContainerOptions() {
-		this.container.classList.add(
-			'jodit_' + (this.jodit.options.theme || 'default') + '_theme'
-		);
-
-		this.jodit.container.classList.toggle(
-			'jodit-text-icons',
-			this.jodit.options.textIcons
-		);
-
-		this.container.classList.toggle(
-			'jodit-text-icons',
-			this.jodit.options.textIcons
-		);
-
-		if (this.jodit.options.zIndex) {
-			this.container.style.zIndex = parseInt(
-				this.jodit.options.zIndex.toString(),
-				10
-			).toString();
-		}
-
-		const bs = (
-			this.jodit.options.toolbarButtonSize || 'middle'
-		).toLowerCase();
-
-		this.container.classList.add(
-			'jodit-toolbar_size-' +
-				(['middle', 'large', 'small'].indexOf(bs) !== -1
-					? bs
-					: 'middle')
-		);
-	}
-
-	@autobind
-	private getControlType(button: IControlType | string): IControlTypeStrong {
-		let buttonControl: IControlTypeStrong;
-
-		const controls: Controls =
-			this.jodit.options.controls || Config.defaultOptions.controls;
-
-		if (!isString(button)) {
-			buttonControl = { name: 'empty', ...button };
-			if (controls[buttonControl.name] !== undefined) {
-				buttonControl = <IControlTypeStrong>{
-					...controls[buttonControl.name],
-					...buttonControl
-				};
-			}
-		} else {
-			const list = button.split(/\./);
-
-			let store: IDictionary<IControlType> = controls;
-
-			if (list.length > 1) {
-				if (controls[list[0]] !== undefined) {
-					store = controls[list[0]] as IDictionary<IControlType>;
-					button = list[1];
-				}
-			}
-
-			if (store[button] !== undefined) {
-				buttonControl = { name: button, ...store[button] };
-			} else {
-				buttonControl = {
-					name: button,
-					command: button,
-					tooltip: button
-				};
-			}
-		}
-
-		return buttonControl;
-	}
+	// protected applyContainerOptions() {
+	// 	this.container.classList.add(
+	// 		'jodit_' + (this.jodit.options.theme || 'default') + '_theme'
+	// 	);
+	//
+	// 	if (this.jodit.options.zIndex) {
+	// 		this.container.style.zIndex = parseInt(
+	// 			this.jodit.options.zIndex.toString(),
+	// 			10
+	// 		).toString();
+	// 	}
+	// }
 
 	/**
 	 * Button should be active
 	 */
-	shouldBeActive(button: IToolbarButton): boolean {
+	shouldBeActive(button: IToolbarButton): boolean | void {
 		if (isJoditObject(this.jodit) && !this.jodit.editorIsActive) {
 			return false;
 		}
@@ -232,13 +83,13 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 			return button.control.isActive(this.jodit, button.control, button);
 		}
 
-		return false;
+		return undefined;
 	}
 
 	/**
 	 * Button should be disabled
 	 */
-	shouldBeDisabled(button: IToolbarButton): boolean {
+	shouldBeDisabled(button: IToolbarButton): boolean | void {
 		if (this.jodit.options.disabled) {
 			return true;
 		}
@@ -246,14 +97,14 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		if (
 			this.jodit.options.readonly &&
 			(!this.jodit.options.activeButtonsInReadOnly ||
-				this.jodit.options.activeButtonsInReadOnly.indexOf(
+				this.jodit.options.activeButtonsInReadOnly.includes(
 					button.control.name
-				) === -1)
+				))
 		) {
 			return true;
 		}
 
-		let isDisabled: boolean = false;
+		let isDisabled: boolean | void = undefined;
 
 		if (isFunction(button.control.isDisabled)) {
 			isDisabled = button.control.isDisabled(
@@ -266,24 +117,13 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		return isDisabled;
 	}
 
-	clear() {
-		[...this.__elements].forEach(element => {
-			this.removeChild(element);
-			element.destruct();
-		});
-
-		this.__elements.length = 0;
-	}
-
 	@autobind
 	immediateUpdate() {
 		if (this.isDestructed || this.jodit.isLocked()) {
 			return;
 		}
 
-		(this.__elements.filter(
-			isToolbarButtonObject
-		) as IToolbarButton[]).forEach(button => button.update());
+		super.update();
 
 		this.jodit.events && this.jodit.events.fire('updateToolbar');
 	}
@@ -292,8 +132,6 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		this.immediateUpdate,
 		this.jodit.defaultTimeout
 	);
-
-	container: HTMLElement;
 
 	/**
 	 * Set direction
@@ -306,8 +144,6 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 
 	constructor(jodit: IViewBased) {
 		super(<T>jodit);
-
-		this.container = this.jodit.create.div('jodit-toolbar__collection');
 		this.initEvents();
 	}
 
@@ -336,10 +172,6 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 			.off(this.listenEvents, this.update)
 			.off('afterSetMode focus', this.immediateUpdate);
 
-		this.clear();
-
-		Dom.safeRemove(this.container);
-		delete this.container;
 		super.destruct();
 	}
 }

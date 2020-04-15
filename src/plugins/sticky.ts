@@ -6,12 +6,9 @@
 
 import { Config } from '../config';
 import { IS_IE, MODE_WYSIWYG } from '../core/constants';
-import { Plugin } from '../modules/plugin';
-import { css } from '../core/helpers/css';
-import { offset } from '../core/helpers/size';
-import { IBound } from '../types/types';
-import { Dom } from '../modules/dom';
-import { IJodit } from '../types';
+import { Plugin, Dom } from '../modules/';
+import { css, offset } from '../core/helpers/';
+import { IBound, IJodit } from '../types/';
 
 declare module '../config' {
 	interface Config {
@@ -130,9 +127,13 @@ export class sticky extends Plugin {
 						);
 
 				if (jodit.options.toolbarSticky && jodit.options.toolbar === true) {
-					doSticky
-						? this.addSticky(jodit.toolbar.getParentContainer())
-						: this.removeSticky(jodit.toolbar.getParentContainer());
+					const container = jodit.toolbar.getParentContainer();
+
+					if (container) {
+						doSticky
+							? this.addSticky(container)
+							: this.removeSticky(container);
+					}
 				}
 
 				jodit.events.fire('toggleSticky', doSticky);

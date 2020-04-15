@@ -4,7 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary } from '../../types';
+import { IControlTypeStrong, IDictionary, IViewBased } from '../../types';
+import { css, isString, trim } from '../../core/helpers';
 
 export class ToolbarIcon {
 	private static icons: IDictionary<string> = {};
@@ -48,4 +49,44 @@ export class ToolbarIcon {
 	): void {
 		this.icons[name.replace('_', '-')] = value;
 	}
+}
+
+export function createIcon(
+	jodit: IViewBased,
+	clearName: string,
+	control?: IControlTypeStrong
+): HTMLElement {
+	const icon: string = control ? control.icon || control.name : clearName;
+
+	let iconSVG: string | void | HTMLElement = jodit.events.fire(
+		'getIcon',
+		icon,
+		control,
+		clearName
+	);
+
+	let iconElement: HTMLElement;
+
+	if (control && control.iconURL && iconSVG === undefined) {
+		iconElement = jodit.create.element('span');
+		css(
+			iconElement,
+			'backgroundImage',
+			'url(' + control.iconURL.replace('{basePath}', jodit.basePath) + ')'
+		);
+	} else {
+		if (iconSVG === undefined) {
+			iconSVG = ToolbarIcon.getIcon(
+				ToolbarIcon.exists(icon) ? icon : 'empty'
+			);
+		}
+
+		iconElement = isString(iconSVG)
+			? jodit.create.fromHTML(trim(iconSVG))
+			: iconSVG;
+	}
+
+	iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
+
+	return iconElement;
 }

@@ -23,7 +23,8 @@ import {
 	IFileBrowserItem,
 	IFileBrowserFolder,
 	IFileBrowserDataProvider,
-	IJodit, IStorage
+	IJodit,
+	IStorage
 } from '../../types/';
 
 import {
@@ -412,7 +413,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 			const header = this.create.div();
 
-			this.toolbar.build(this.options.buttons, header);
+			this.toolbar
+				.build(this.options.buttons)
+				.appendTo(header);
 
 			this.dialog.dialogbox_header.classList.add(F_CLASS + '_title_box');
 			this.dialog.open(this.browser, header);
@@ -611,7 +614,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 						) {
 							this.tree.appendChild(
 								create.a(
-									'jodit_button addfolder',
+									'jodit-button addfolder',
 									{
 										href: 'javascript:void(0)',
 										'data-path': normalizePath(

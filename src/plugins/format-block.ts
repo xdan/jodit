@@ -5,14 +5,15 @@
  */
 
 import { Config } from '../config';
-import { Dom } from '../modules/dom';
-import { HTMLTagNames, IJodit, markerInfo } from '../types';
-import { IControlType } from '../types/toolbar';
+import { Dom } from '../modules/';
+import { HTMLTagNames, IJodit, markerInfo, IControlType } from '../types';
 
 Config.prototype.controls.paragraph = {
 	command: 'formatBlock',
-	getLabel: (editor: IJodit, btn, button): boolean => {
-		const current: Node | false = editor.selection.current();
+	update(button): boolean {
+		const editor = button.jodit as IJodit,
+			control = button.control,
+			current: Node | false = editor.selection.current();
 
 		if (current && editor.options.textIcons) {
 			const currentBox: HTMLElement =
@@ -22,24 +23,22 @@ Config.prototype.controls.paragraph = {
 						editor.editor
 					) as HTMLElement) || editor.editor,
 				currentValue: string = currentBox.nodeName.toLowerCase(),
-				list = btn.list as any;
+				list = control.list as any;
 
 			if (
 				button &&
-				btn.data &&
-				btn.data.currentValue !== currentValue &&
-				btn.list &&
+				control.data &&
+				control.data.currentValue !== currentValue &&
+				control.list &&
 				list[currentValue]
 			) {
-				button.textContainer.innerHTML = `<span>${editor.i18n(
-					list[currentValue]
-				)}</span>`;
+				if (editor.options.textIcons) {
+					button.state.text = editor.i18n(currentValue);
+				} else {
+					button.state.icon.name = currentValue;
+				}
 
-				(button.textContainer.firstChild as HTMLElement).classList.add(
-					'jodit_icon'
-				);
-
-				btn.data.currentValue = currentValue;
+				control.data.currentValue = currentValue;
 			}
 		}
 
@@ -173,9 +172,12 @@ export function formatBlock(editor: IJodit) {
 					}
 				} else {
 					if (!editor.selection.isCollapsed()) {
-						editor.selection.applyCSS({}, {
-							alternativeNodeName: <HTMLTagNames>third
-						});
+						editor.selection.applyCSS(
+							{},
+							{
+								alternativeNodeName: <HTMLTagNames>third
+							}
+						);
 					} else {
 						Dom.wrapInline(current, <HTMLTagNames>third, editor);
 					}
