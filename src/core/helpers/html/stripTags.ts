@@ -7,7 +7,7 @@
 import { isString } from '../checker';
 import { $$ } from '../selector';
 import { trim } from '../string';
-import { Dom } from '../../../modules/dom';
+import { Dom } from '../../dom';
 
 /**
  * Extract plain text from HTML text

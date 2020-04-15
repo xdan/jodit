@@ -5,7 +5,7 @@
  */
 
 import { IS_IE } from '../constants';
-import { IDictionary } from '../../types/types';
+import { IDictionary } from '../../types/';
 import { isString } from './checker';
 import { attr } from './utils';
 

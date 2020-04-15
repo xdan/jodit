@@ -6,10 +6,7 @@
 
 import { Config, OptionsDefault } from '../../config';
 import * as consts from '../../core/constants';
-import { Dialog } from '../dialog/';
-import { Confirm } from '../dialog/';
-import { Prompt } from '../dialog/';
-import { ToolbarIcon } from '..';
+import { Dialog, Confirm, Prompt, Alert } from '../dialog/';
 
 import {
 	IFileBrowser,
@@ -24,15 +21,13 @@ import {
 	IFileBrowserFolder,
 	IFileBrowserDataProvider,
 	IJodit,
-	IStorage
-} from '../../types/';
-
-import {
+	IStorage,
 	IDictionary,
 	ImageEditorActionBox,
 	IUploader,
 	IUploaderOptions
 } from '../../types/';
+
 import { ImageEditor } from '../imageEditor';
 import { Storage } from '../../core/storage/';
 import {
@@ -46,14 +41,16 @@ import {
 	error
 } from '../../core/helpers/';
 import { ViewWithToolbar } from '../view/viewWithToolbar';
+
 import './config';
-import { Dom } from '../dom';
-import { Alert } from '../dialog';
+
+import { Dom } from '../../core/dom';
 import contextMenu from './builders/contextMenu';
 import { ObserveObject } from '../../core/events/';
 import { FileBrowserItem } from './builders/item';
 import { F_CLASS, ICON_LOADER, ITEM_CLASS } from './consts';
 import { makeDataProvider } from './factories';
+import { Icon } from '../../core/ui';
 
 const DEFAULT_SOURCE_NAME = 'default',
 	ITEM_ACTIVE_CLASS = ITEM_CLASS + '-active-true';
@@ -622,7 +619,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 										),
 										'data-source': sourceName
 									},
-									ToolbarIcon.getIcon('plus') +
+									Icon.get('plus') +
 										' ' +
 										this.i18n('Add folder')
 								)
@@ -683,7 +680,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 											'jodit_icon_folder jodit_icon_folder_rename',
 										title: this.i18n('Rename')
 									},
-									ToolbarIcon.getIcon('pencil')
+									Icon.get('pencil')
 								)
 							);
 						}
@@ -700,7 +697,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 											'jodit_icon_folder jodit_icon_folder_remove',
 										title: this.i18n('Delete')
 									},
-									ToolbarIcon.getIcon('cancel')
+									Icon.get('cancel')
 								)
 							);
 						}

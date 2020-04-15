@@ -5,8 +5,8 @@
  */
 
 import * as consts from '../core/constants';
-import { Dom } from '../modules/dom';
-import { Table } from '../modules/table';
+import { Dom } from '../core/dom';
+import { Table } from '../modules/';
 import { IJodit } from '../types';
 
 /**

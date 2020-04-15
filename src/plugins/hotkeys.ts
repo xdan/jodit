@@ -5,8 +5,8 @@
  */
 
 import { Config } from '../config';
-import { Plugin } from '../modules/plugin';
-import { normalizeKeyAliases } from '../core/helpers/normalize';
+import { Plugin } from '../core/plugin';
+import { normalizeKeyAliases } from '../core/helpers/';
 import { IDictionary, IJodit } from '../types';
 
 declare module '../config' {

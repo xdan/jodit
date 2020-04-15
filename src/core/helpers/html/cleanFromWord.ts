@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Dom } from '../../../modules/dom';
+import { Dom } from '../../dom';
 import { trim } from '../string';
 
 /**

@@ -6,9 +6,8 @@
 
 import { Config } from '../config';
 import * as consts from '../core/constants';
-import { $$ } from '../core/helpers/selector';
+import { $$, attr } from '../core/helpers/';
 import { IJodit } from '../types';
-import { attr } from '../core/helpers/utils';
 
 declare module '../config' {
 	interface Config {

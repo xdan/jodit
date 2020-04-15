@@ -6,10 +6,10 @@
 
 import { Config } from '../../config';
 import { IJodit, SnapshotType } from '../../types';
-import { Component } from '../component';
-import { Snapshot } from '../snapshot';
-import { Stack } from '../../core/stack';
-import { Command } from '../../core/command';
+import { Component } from '../../core/component';
+import { Snapshot } from './snapshot';
+import { Stack } from './stack';
+import { Command } from './command';
 
 /**
  * @property {object} observer module settings {@link Observer|Observer}

@@ -11,9 +11,9 @@ import {
 	IEventsNative,
 	IProgressBar
 } from '../../types';
-import { IViewBased, IViewOptions } from '../../types/view';
-import { Component } from '../component';
-import { EventsNative } from '../../core/events/eventsNative';
+import { IViewBased, IViewOptions } from '../../types/';
+import { Component } from '../../core/component';
+import { EventsNative } from '../../core/events/';
 import { Panel } from './panel';
 import { Storage } from '../../core/storage';
 import { error, i18n, isFunction } from '../../core/helpers';

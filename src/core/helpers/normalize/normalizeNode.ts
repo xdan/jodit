@@ -5,7 +5,7 @@
  */
 
 import { INVISIBLE_SPACE_REG_EXP } from '../../constants';
-import { Dom } from '../../../modules/dom';
+import { Dom } from '../../dom';
 
 export const normalizeNode = (node: Node | null) => {
 	if (!node) {

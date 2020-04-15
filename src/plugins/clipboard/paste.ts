@@ -30,9 +30,9 @@ import {
 	isString
 } from '../../core/helpers/';
 
-import { Dom } from '../../modules/dom';
+import { Dom } from '../../core/dom';
 import { IControlType, IJodit } from '../../types';
-import { nl2br } from '../../core/helpers/html/nl2br';
+import { nl2br } from '../../core/helpers';
 import { pluginKey as clipboardPluginKey } from './cut';
 
 declare module '../../config' {

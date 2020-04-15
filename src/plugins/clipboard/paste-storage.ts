@@ -5,10 +5,10 @@
  */
 
 import { KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP } from '../../core/constants';
-import { Dialog } from '../../modules/dialog/dialog';
-import { Plugin } from '../../modules/plugin';
-import { Dom } from '../../modules/dom';
-import { attr } from '../../core/helpers/utils';
+import { Dialog } from '../../modules/dialog/';
+import { Plugin } from '../../core/plugin';
+import { Dom } from '../../core/dom';
+import { attr } from '../../core/helpers/';
 
 /**
  * Show dialog choose content to paste

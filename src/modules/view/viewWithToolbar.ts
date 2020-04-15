@@ -7,8 +7,8 @@
 import { IViewWithToolbar, Buttons, IToolbarCollection } from '../../types/';
 import { View } from './view';
 import { splitArray, isString } from '../../core/helpers/';
-import { STATUSES } from '../component';
-import { Dom } from '../dom';
+import { STATUSES } from '../../core/component';
+import { Dom } from '../../core/dom';
 import { makeCollection } from '../toolbar/factory';
 
 export class ViewWithToolbar extends View implements IViewWithToolbar {

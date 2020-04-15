@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Component, STATUSES } from './component';
-import { Dom } from './dom';
+import { Component, STATUSES } from '../core/component';
+import { Dom } from '../core/dom';
 import { IJodit, IStatusBar } from '../types';
 
 export class StatusBar extends Component implements IStatusBar {

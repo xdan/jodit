@@ -5,7 +5,6 @@
  */
 
 import { Config } from '../../config';
-import { ToolbarIcon } from '../toolbar/icon';
 
 import {
 	IFileBrowser,
@@ -14,16 +13,17 @@ import {
 	IFileBrowserItem,
 	IFileBrowserOptions,
 	ISource,
-	ISourceFile
-} from '../../types/fileBrowser';
+	ISourceFile,
+	IControlType,
+	IDictionary,
+	IUploader,
+	IViewBased,
+	IJodit
+} from '../../types/';
 
-import { IControlType } from '../../types/toolbar';
-import { IDictionary } from '../../types/types';
-import { IUploader } from '../../types/uploader';
-import { IViewBased } from '../../types/view';
 import { humanSizeToBytes } from '../../core/helpers';
 import { ITEM_CLASS as IC } from './consts';
-import { IJodit } from '../../types';
+import { Icon } from '../../core/ui';
 
 declare module '../../config' {
 	interface Config {
@@ -574,7 +574,7 @@ Config.prototype.controls.filebrowser = {
 		): HTMLElement => {
 			const btn: HTMLElement = filebrowser.create.fromHTML(
 					'<span class="jodit_upload_button">' +
-						ToolbarIcon.getIcon('plus') +
+						Icon.get('plus') +
 						'<input type="file" accept="' +
 						(filebrowser.state.onlyImages ? 'image/*' : '*') +
 						'" tabindex="-1" dir="auto" multiple=""/>' +

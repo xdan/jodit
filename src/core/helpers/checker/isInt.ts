@@ -4,7 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-
 import { isNumeric } from './isNumeric';
 
 /**

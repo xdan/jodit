@@ -5,9 +5,9 @@
  */
 
 import { Config } from '../config';
-import { Dom } from '../modules/dom';
+import { Dom } from '../core/dom';
 import { IControlType, IJodit } from '../types';
-import { Plugin } from '../modules/plugin';
+import { Plugin } from '../core/plugin';
 
 function exec(editor: IJodit, event: Node | false, control: IControlType) {
 	editor.events.fire(

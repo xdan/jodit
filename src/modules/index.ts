@@ -5,13 +5,13 @@
  */
 
 export * from '../core/events';
-export { Ajax } from './ajax';
-export { Component } from './component';
+export { Ajax } from '../core/ajax';
+export { Component } from '../core/component';
 export { ContextMenu } from './contextMenu';
 export { Alert, Confirm, Prompt, Dialog } from './dialog/';
-export { Dom } from './dom';
-export { Plugin } from './plugin';
-export { Create } from './create';
+export { Dom } from '../core/dom';
+export { Plugin } from '../core/plugin';
+export { Create } from '../core/create';
 export * from './popup';
 export { FileBrowser } from './filebrowser/fileBrowser';
 import * as Helpers from '../core/helpers/';
@@ -19,11 +19,11 @@ export { Helpers };
 export { ImageEditor } from './imageEditor';
 export { Observer } from './observer/observer';
 export { ProgressBar } from './progressBar';
-export { Select } from './selection';
-export { Snapshot } from './snapshot';
+export { Select } from '../core/selection';
+export { Snapshot } from './observer/snapshot';
 export { StatusBar } from './statusBar';
 export { Table } from './table';
-export { ToolbarIcon } from './toolbar/icon';
+export { Icon } from '../core/ui/icon';
 export { ToolbarEditorCollection } from './toolbar/collection/editorCollection';
 export { ToolbarCollection } from './toolbar/collection/collection';
 export { ToolbarButton } from './toolbar/button/button';

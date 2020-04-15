@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { isURL } from './checker/isURL';
+import { isURL } from './checker/';
 import { parseQuery } from './parseQuery';
 
 /**

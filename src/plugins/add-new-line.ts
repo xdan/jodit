@@ -5,7 +5,7 @@
  */
 
 import { Config } from '../config';
-import { Dom, Plugin, ToolbarIcon } from '../modules/';
+import { Dom, Icon, Plugin } from '../modules/';
 import { offset, position, call, scrollIntoView } from '../core/helpers/';
 import { IBound, IJodit } from '../types';
 
@@ -59,9 +59,7 @@ export class addNewLine extends Plugin {
 	private line = this.jodit.create.fromHTML(
 		`<div role="button" tabIndex="-1" title="${this.jodit.i18n(
 			'Break'
-		)}" class="jodit-add-new-line"><span>${ToolbarIcon.getIcon(
-			'enter'
-		)}</span></div>`
+		)}" class="jodit-add-new-line"><span>${Icon.get('enter')}</span></div>`
 	) as HTMLDivElement;
 
 	private isMatchedTag = new RegExp(

@@ -16,8 +16,7 @@ import {
 
 import { isFunction, isJoditObject, get } from '../../../core/helpers/';
 
-import { ToolbarButton } from '../..';
-import { UIList } from '../../ui';
+import { UIList } from '../../../core/ui';
 import { makeButton } from '../factory';
 
 export class ToolbarCollection<T extends IViewBased = IViewBased>
@@ -40,9 +39,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	 * First button in list
 	 */
 	get firstButton(): Nullable<IToolbarButton> {
-		const button = this.elements.find(
-			a => a instanceof ToolbarButton
-		) as IToolbarButton;
+		const button = this.elements.find(a => a.isButton) as IToolbarButton;
 
 		return button || null;
 	}

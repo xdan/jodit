@@ -5,7 +5,7 @@
  */
 
 import { Config } from '../config';
-import { Dom } from '../modules/dom';
+import { Dom } from '../core/dom';
 import {
 	attr,
 	convertMediaURLToVideoEmbed,
@@ -13,9 +13,8 @@ import {
 	refs,
 	stripTags
 } from '../core/helpers/';
-import { Select } from '../modules/selection';
-import { IDictionary, IJodit } from '../types';
-import { IControlType } from '../types/toolbar';
+import { Select } from '../core/selection';
+import { IDictionary, IJodit, IControlType } from '../types';
 
 /**
  * @property {object}  link `{@link link|link}` plugin's options

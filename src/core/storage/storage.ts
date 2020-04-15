@@ -5,7 +5,7 @@
  */
 
 import { IStorage, StorageValueType } from '../../types';
-import { camelCase } from '../helpers/string';
+import { camelCase } from '../helpers/';
 import { canUsePersistentStorage, LocalStorageProvider } from './engines/localStorageProvider';
 import { MemoryStorageProvider } from './engines/memoryStorageProvider';
 

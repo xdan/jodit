@@ -6,12 +6,11 @@
 
 import { Config } from '../config';
 import * as consts from '../core/constants';
-import { css } from '../core/helpers/css';
-import { Dom } from '../modules/dom';
+import { css, attr } from '../core/helpers/';
+import { Dom } from '../core/dom';
 import { IJodit } from '../types';
-import { Plugin } from '../modules/plugin';
+import { Plugin } from '../core/plugin';
 import { MAY_BE_REMOVED_WITH_KEY } from '../core/constants';
-import { attr } from '../core/helpers/utils';
 
 /**
  * Show placeholder

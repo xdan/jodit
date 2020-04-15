@@ -7,13 +7,11 @@
 import { Config } from '../config';
 import * as consts from '../core/constants';
 import { IS_IE } from '../core/constants';
-import { IBound } from '../types/types';
-import { Dom } from '../modules/dom';
-import { $$ } from '../core/helpers/selector';
-import { offset, innerWidth } from '../core/helpers/size';
-import { attr, css } from '../core/helpers';
+import { IBound } from '../types/';
+import { Dom } from '../core/dom';
+import { $$, attr, css, offset, innerWidth } from '../core/helpers/';
 import { IJodit } from '../types';
-import { Plugin } from '../modules/plugin';
+import { Plugin } from '../core/plugin';
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table

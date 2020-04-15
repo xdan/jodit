@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 import { Dialog } from './dialog';
-import { ToolbarIcon } from '../toolbar/icon';
+import { Icon } from '../../core/ui';
 
 /**
  * Show `Prompt` dialog. Work without Jodit object
@@ -35,14 +35,14 @@ export const Prompt = (
 	const dialog: Dialog = new Dialog(),
 		cancelButton: HTMLAnchorElement = dialog.create.fromHTML(
 			'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
-				ToolbarIcon.getIcon('cancel') +
+				Icon.get('cancel') +
 				'<span>' +
 				dialog.i18n('Cancel') +
 				'</span></a>'
 		) as HTMLAnchorElement,
 		okButton: HTMLAnchorElement = dialog.create.fromHTML(
 			'<a href="javascript:void(0)" style="float:left;" class="jodit-button">' +
-				ToolbarIcon.getIcon('check') +
+				Icon.get('check') +
 				'<span>' +
 				dialog.i18n('Ok') +
 				'</span></a>'

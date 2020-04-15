@@ -5,15 +5,15 @@
  */
 
 import { IControlTypeStrong, IDictionary, IViewBased } from '../../types';
-import { css, isString, trim } from '../../core/helpers';
+import { css, isString, trim } from '../helpers';
 
-export class ToolbarIcon {
+export class Icon {
 	private static icons: IDictionary<string> = {};
 
-	private static get(name: string): string | undefined {
-		return ToolbarIcon.icons[name] ||
-			ToolbarIcon.icons[name.replace(/-/g, '_')] ||
-			ToolbarIcon.icons[name.toLowerCase()];
+	private static getIcon(name: string): string | undefined {
+		return Icon.icons[name] ||
+			Icon.icons[name.replace(/-/g, '_')] ||
+			Icon.icons[name.toLowerCase()];
 	}
 
 	/**
@@ -21,7 +21,7 @@ export class ToolbarIcon {
 	 * @param name
 	 */
 	static exists(name: string): boolean {
-		return this.get(name) !== undefined;
+		return this.getIcon(name) !== undefined;
 	}
 
 	/**
@@ -30,7 +30,7 @@ export class ToolbarIcon {
 	 * @param name icon
 	 * @param [defaultValue='<span></span>']
 	 */
-	static getIcon(
+	static get(
 		name: string,
 		defaultValue: string = '<span></span>'
 	): string {
@@ -43,7 +43,7 @@ export class ToolbarIcon {
 	 * @param name
 	 * @param value
 	 */
-	static setIcon(
+	static set(
 		name: string,
 		value: string
 	): void {
@@ -76,8 +76,8 @@ export function createIcon(
 		);
 	} else {
 		if (iconSVG === undefined) {
-			iconSVG = ToolbarIcon.getIcon(
-				ToolbarIcon.exists(icon) ? icon : 'empty'
+			iconSVG = Icon.get(
+				Icon.exists(icon) ? icon : 'empty'
 			);
 		}
 

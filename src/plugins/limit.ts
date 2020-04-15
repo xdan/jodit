@@ -10,7 +10,7 @@ import {
 	SPACE_REG_EXP
 } from '../core/constants';
 import { IJodit, SnapshotType } from '../types';
-import { stripTags } from '../core/helpers/html';
+import { stripTags } from '../core/helpers';
 
 declare module '../config' {
 	interface Config {

@@ -4,7 +4,7 @@ import {
 	IControlTypeStrong,
 	IDictionary
 } from '../../../types';
-import { isString } from '../../../core/helpers/';
+import { isString } from '../../helpers';
 
 /**
  * Get control for button name

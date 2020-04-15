@@ -4,7 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 import { Dialog } from './dialog';
-import { ToolbarIcon } from '../toolbar/icon';
+import { asArray } from '../../core/helpers/';
+import { Dom } from '../../core/dom';
+import { Icon } from '../../core/ui';
 
 /**
  * Show `alert` dialog. Work without Jodit object
@@ -42,7 +44,7 @@ export const Alert = (
 		container = dialog.create.div(className),
 		okButton: HTMLAnchorElement = dialog.create.fromHTML(
 			'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
-			ToolbarIcon.getIcon('cancel') +
+			Icon.get('cancel') +
 			'<span>' +
 			dialog.i18n('Ok') +
 			'</span></a>'
@@ -73,6 +75,3 @@ export const Alert = (
 
 	return dialog;
 };
-
-import { asArray } from '../../core/helpers/array';
-import { Dom } from '../dom';

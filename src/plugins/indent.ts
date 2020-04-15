@@ -6,10 +6,9 @@
 
 import { Config } from '../config';
 import { BR, PARAGRAPH } from '../core/constants';
-import { Dom } from '../modules/dom';
-import { IControlType } from '../types/toolbar';
-import { HTMLTagNames, IJodit } from '../types';
-import { attr } from '../core/helpers/utils';
+import { Dom } from '../core/dom';
+import { IControlType, HTMLTagNames, IJodit } from '../types/';
+import { attr } from '../core/helpers';
 
 Config.prototype.controls.indent = {
 	tooltip: 'Increase Indent'

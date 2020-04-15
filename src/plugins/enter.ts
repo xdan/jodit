@@ -5,10 +5,10 @@
  */
 
 import * as consts from '../core/constants';
-import { Dom } from '../modules/dom';
+import { Dom } from '../core/dom';
 import { $$, scrollIntoView } from '../core/helpers/';
 import { HTMLTagNames, IJodit } from '../types';
-import { Plugin } from '../modules/plugin';
+import { Plugin } from '../core/plugin';
 import { INVISIBLE_SPACE } from '../core/constants';
 
 /**

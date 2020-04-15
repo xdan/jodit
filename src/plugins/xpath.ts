@@ -6,13 +6,11 @@
 
 import { Config } from '../config';
 import { INVISIBLE_SPACE, MODE_WYSIWYG } from '../core/constants';
-import { ContextMenu } from '../modules/contextMenu';
-import { Dom } from '../modules/dom';
-import { getXPathByElement } from '../core/helpers/selector';
-import { Plugin } from '../modules/plugin';
-import { IControlType, IControlTypeStrong, IToolbarButton } from '../types/toolbar';
-import { trim } from '../core/helpers/string';
-import { attr } from '../core/helpers/utils';
+import { ContextMenu } from '../modules/';
+import { Dom } from '../core/dom';
+import { getXPathByElement, trim, attr } from '../core/helpers/';
+import { Plugin } from '../core/plugin';
+import { IControlType, IControlTypeStrong, IToolbarButton } from '../types';
 import { makeButton } from '../modules/toolbar/factory';
 
 declare module '../config' {

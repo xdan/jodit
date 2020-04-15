@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IJodit, SnapshotType } from '../types';
-import { Component } from './component';
-import { Dom } from './dom';
+import { IJodit, SnapshotType } from '../../types';
+import { Component } from '../../core/component';
+import { Dom } from '../../core/dom';
 
 /**
  * Module for creating snapshot of editor which includes html content and the current selection

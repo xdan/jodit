@@ -9,7 +9,7 @@ import {
 	IAsync,
 	IAsyncParams
 } from '../types';
-import { setTimeout, clearTimeout } from './helpers/async';
+import { setTimeout, clearTimeout } from './helpers/';
 
 export class Async implements IAsync {
 	private timers: Map<number | string | Function, number> = new Map();

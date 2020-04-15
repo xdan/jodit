@@ -17,7 +17,7 @@ import {
 } from '../../types';
 
 import { error, extend, normalizeRelativePath } from '../../core/helpers';
-import { Ajax } from '../ajax';
+import { Ajax } from '../../core/ajax';
 
 export const DEFAULT_SOURCE_NAME = 'default';
 

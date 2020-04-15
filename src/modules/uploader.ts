@@ -18,11 +18,10 @@ import {
 	IUploaderOptions,
 	IViewBased
 } from '../types/';
-import { Ajax } from './ajax';
-import { attr, browser, error, extend, isPlainObject } from '../core/helpers/';
-import { Dom } from './dom';
-import { isJoditObject } from '../core/helpers/checker/isJoditObject';
-import { Component, STATUSES } from './component';
+import { Ajax } from '../core/ajax';
+import { attr, browser, error, extend, isPlainObject, isJoditObject } from '../core/helpers/';
+import { Dom } from '../core/dom';
+import { Component, STATUSES } from '../core/component';
 
 declare module '../config' {
 	interface Config {

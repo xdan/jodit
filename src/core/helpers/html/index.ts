@@ -8,3 +8,4 @@ export * from './applyStyles';
 export * from './cleanFromWord';
 export * from './htmlspecialchars';
 export * from './stripTags';
+export * from './nl2br';

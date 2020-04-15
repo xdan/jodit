@@ -5,10 +5,10 @@
  */
 
 import * as consts from './core/constants';
-import { Widget } from './modules/widget';
+import { Icon, Widget } from './modules/';
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
-import { Dom } from './modules/dom';
+import { Dom } from './core/dom';
 import {
 	$$,
 	convertMediaURLToVideoEmbed,
@@ -17,20 +17,21 @@ import {
 	isURL,
 	normalizeLicense,
 	trim,
-	val
+	val,
+	extend
 } from './core/helpers/';
-import { ToolbarIcon } from './modules/toolbar/icon';
 import {
 	IExtraPlugin,
 	IDictionary,
 	IJodit,
 	IViewOptions,
 	NodeFunction,
-	Attributes, ButtonsOption
+	Attributes,
+	ButtonsOption,
+	IFileBrowserCallBackData,
+	Controls,
+	IControlType
 } from './types';
-import { IFileBrowserCallBackData } from './types/fileBrowser';
-import { Controls, IControlType } from './types/toolbar';
-import { extend } from './core/helpers/extend';
 
 /**
  * Default Editor's Configuration
@@ -1104,13 +1105,9 @@ Config.prototype.controls = {
 				tab[editor.i18n('Link')] = bylink;
 				tab[editor.i18n('Code')] = bycode;
 			} else {
+				tab[Icon.get('link') + '&nbsp;' + editor.i18n('Link')] = bylink;
 				tab[
-					ToolbarIcon.getIcon('link') + '&nbsp;' + editor.i18n('Link')
-				] = bylink;
-				tab[
-					ToolbarIcon.getIcon('source') +
-						'&nbsp;' +
-						editor.i18n('Code')
+					Icon.get('source') + '&nbsp;' + editor.i18n('Code')
 				] = bycode;
 			}
 

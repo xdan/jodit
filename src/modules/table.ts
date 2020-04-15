@@ -15,7 +15,7 @@
  */
 
 import * as consts from '../core/constants';
-import { Dom } from './dom';
+import { Dom } from '../core/dom';
 import { $$, attr, each, trim } from '../core/helpers/';
 import { ICreate } from '../types';
 

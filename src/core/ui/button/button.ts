@@ -10,8 +10,8 @@ import {
 import watch from '../../../core/decorators/watch';
 import { STATUSES } from '../../component';
 import { Dom } from '../../dom';
-import { ToolbarIcon } from '../..';
-import { css, attr } from '../../../core/helpers';
+import { css, attr } from '../../helpers';
+import { Icon } from '../icon';
 
 export const UIButtonState = (): IUIButtonState => ({
 	size: 'middle',
@@ -27,6 +27,11 @@ export const UIButtonState = (): IUIButtonState => ({
 });
 
 export class UIButton extends UIElement implements IUIButton {
+	/**
+	 * Marker for buttons
+	 */
+	isButton: true = true;
+
 	state = UIButtonState();
 
 	/**
@@ -59,7 +64,7 @@ export class UIButton extends UIElement implements IUIButton {
 
 	@watch('state.activated')
 	protected onChangeActivated(): void {
-		attr(this.container, 'aria-pressed', this.state.activated || null);
+		attr(this.container, 'aria-pressed', this.state.activated);
 	}
 
 	@watch('state.tooltip')
@@ -94,7 +99,7 @@ export class UIButton extends UIElement implements IUIButton {
 						')'
 				);
 			} else {
-				const svg = ToolbarIcon.getIcon(this.state.icon.name);
+				const svg = Icon.get(this.state.icon.name);
 
 				if (svg) {
 					iconElement = this.jodit.create.fromHTML(svg.trim());

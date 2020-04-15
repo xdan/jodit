@@ -7,12 +7,10 @@
 import { Config } from '../config';
 import * as consts from '../core/constants';
 import { MODE_WYSIWYG } from '../core/constants';
-import { Dom } from '../modules/dom';
-import { ToolbarIcon } from '../modules/toolbar/icon';
-import { Plugin } from '../modules/plugin';
-import { trim } from '../core/helpers/string';
-import { ISelectionRange, markerInfo } from '../types/types';
-import { IJodit } from '../types';
+import { Dom } from '../core/dom';
+import { Plugin } from '../core/plugin';
+import { ISelectionRange, markerInfo, IJodit } from '../types/';
+import { Icon } from '../core/ui';
 
 declare module '../config' {
 	interface Config {
@@ -124,13 +122,13 @@ export class search extends Plugin {
 					<span>0/0</span>
 				</div>
 				<div class="jodit_search_buttons">
-					<button tabindex="0" type="button" class="jodit_search_buttons-next">${ToolbarIcon.getIcon(
+					<button tabindex="0" type="button" class="jodit_search_buttons-next">${Icon.get(
 						'angle-down'
 					)}</button>
-					<button tabindex="0" type="button" class="jodit_search_buttons-prev">${ToolbarIcon.getIcon(
+					<button tabindex="0" type="button" class="jodit_search_buttons-prev">${Icon.get(
 						'angle-up'
 					)}</button>
-					<button tabindex="0" type="button" class="jodit_search_buttons-cancel">${ToolbarIcon.getIcon(
+					<button tabindex="0" type="button" class="jodit_search_buttons-cancel">${Icon.get(
 						'cancel'
 					)}</button>
 					<button tabindex="0" type="button" class="jodit_search_buttons-replace">${this.jodit.i18n(

@@ -5,10 +5,9 @@
  */
 
 import { Config } from '../config';
-import { Dom } from '../modules/dom';
+import { Dom } from '../core/dom';
 import { css, normalizeSize } from '../core/helpers/';
-import { IControlType } from '../types/toolbar';
-import { IJodit } from '../types';
+import { IControlType, IJodit } from '../types/';
 
 Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
 	command: 'fontSize',

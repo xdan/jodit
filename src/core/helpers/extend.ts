@@ -7,7 +7,7 @@
 import { JoditObject } from './joditObject';
 import { JoditArray } from './joditArray';
 import { type } from './type';
-import { isPlainObject } from './checker/isPlainObject';
+import { isPlainObject } from './checker/';
 
 /**
  * Copy the values of all of the enumerable own properties from one or more source objects to a

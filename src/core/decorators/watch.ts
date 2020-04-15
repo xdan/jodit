@@ -1,7 +1,7 @@
 import { IDictionary } from '../../types';
 import { error, isFunction, isPlainObject, splitArray } from '../helpers';
 import { ObserveObject } from '../events';
-import { Component, STATUSES } from '../../modules/component';
+import { Component, STATUSES } from '../component';
 
 /**
  * Watch decorator. Added observer for some change in field value

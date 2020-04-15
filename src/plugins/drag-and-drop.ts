@@ -5,10 +5,10 @@
  */
 
 import { TEXT_HTML, TEXT_PLAIN } from '../core/constants';
-import { Dom } from '../modules/dom';
+import { Dom } from '../core/dom';
 import { attr, css, ctrlKey, dataBind } from '../core/helpers';
-import { Plugin } from '../modules/plugin';
-import { IPoint } from '../types/types';
+import { Plugin } from '../core/plugin';
+import { IPoint } from '../types/';
 import { getDataTransfer } from './clipboard';
 
 /**

@@ -5,10 +5,8 @@
  */
 
 import { Config } from '../config';
-import { defaultLanguage } from '../core/helpers/defaultLanguage';
-import { css } from '../core/helpers/css';
+import { isPromise, css, defaultLanguage } from '../core/helpers/';
 import { IJodit } from '../types';
-import { isPromise } from '../core/helpers/checker';
 import { Dom } from '../modules';
 import { error } from '../core/helpers';
 import { MODE_SOURCE } from '../core/constants';

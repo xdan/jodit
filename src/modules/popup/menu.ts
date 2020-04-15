@@ -1,8 +1,8 @@
 import "./menu.less";
 
-import { Component } from '../component';
+import { Component } from '../../core/component';
 import { IBound, IPopup, Nullable } from '../../types';
-import { Dom } from '../dom';
+import { Dom } from '../../core/dom';
 import { camelCase, css } from '../../core/helpers';
 
 import autobind from 'autobind-decorator';

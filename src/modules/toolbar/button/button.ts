@@ -6,10 +6,9 @@ import {
 	IViewBased,
 	Nullable
 } from '../../../types';
-import { UIButton, UIButtonState } from '../../ui/button';
-import { ToolbarIcon } from '../icon';
+import { UIButton, UIButtonState } from '../../../core/ui/button';
 import { watch } from '../../../core/decorators';
-import { Dom } from '../../dom';
+import { Dom } from '../../../core/dom';
 import { PopupMenu } from '../../popup/';
 import { makeCollection } from '../factory';
 import {
@@ -21,8 +20,8 @@ import {
 	isJoditObject,
 	call
 } from '../../../core/helpers/';
-import { ToolbarCollection } from '../..';
-import { STATUSES } from '../../component';
+import { Icon, ToolbarCollection } from '../..';
+import { STATUSES } from '../../../core/component';
 
 export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	implements IToolbarButton {
@@ -59,7 +58,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 				state.icon.iconURL = control.iconURL;
 			} else {
 				const name = control.icon || control.name;
-				state.icon.name = ToolbarIcon.exists(name) ? name : '';
+				state.icon.name = Icon.exists(name) ? name : '';
 			}
 
 			if (!control.iconURL && !state.icon.name) {
@@ -108,9 +107,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		container.appendChild(button);
 
 		this.trigger = this.jodit.create.fromHTML(
-			`<span class="${cn}__trigger">${ToolbarIcon.getIcon(
-				'chevron'
-			)}</span>`
+			`<span class="${cn}__trigger">${Icon.get('chevron')}</span>`
 		);
 
 		this.jodit.events.on(

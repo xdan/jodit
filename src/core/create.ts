@@ -4,13 +4,27 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary, IJodit, IPanel } from '../types';
-import { isPlainObject } from '../core/helpers/checker/isPlainObject';
-import { each } from '../core/helpers/each';
-import { asArray } from '../core/helpers/array/asArray';
+import {
+	IDictionary,
+	IJodit,
+	IPanel,
+	Attributes,
+	Children,
+	ICreate
+} from '../types';
+
+import {
+	isPlainObject,
+	each,
+	asArray,
+	css,
+	isFunction,
+	isJoditObject,
+	kebabCase,
+	refs
+} from './helpers/';
+
 import { Dom } from './dom';
-import { css, isFunction, isJoditObject, kebabCase, refs } from '../core/helpers';
-import { Attributes, Children, ICreate } from '../types/create';
 
 export class Create implements ICreate {
 	inside!: Create;
@@ -65,8 +79,7 @@ export class Create implements ICreate {
 		if (this.jodit.options.direction) {
 			const direction = this.jodit.options.direction.toLowerCase();
 
-			elm.style.direction =
-				direction === 'rtl' ? 'rtl' : 'ltr';
+			elm.style.direction = direction === 'rtl' ? 'rtl' : 'ltr';
 		}
 
 		if (this.insideCreator) {

@@ -5,7 +5,7 @@
  */
 
 import { Config } from '../config';
-import { css } from '../core/helpers/css';
+import { css } from '../core/helpers/';
 import { IJodit, IPointBound } from '../types';
 
 declare module '../config' {

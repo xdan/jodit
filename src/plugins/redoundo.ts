@@ -6,9 +6,8 @@
 
 import { Config } from '../config';
 import * as consts from '../core/constants';
-import { Plugin } from '../modules/plugin';
-import { IControlType } from '../types/toolbar';
-import { IJodit } from '../types';
+import { Plugin } from '../core/plugin';
+import { IControlType, IJodit } from '../types/';
 
 Config.prototype.controls.redo = {
 	mode: consts.MODE_SPLIT,

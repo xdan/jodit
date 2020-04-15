@@ -6,7 +6,7 @@
 
 import { Config } from '../config';
 import { IDictionary, IRequest, IViewBased } from '../types';
-import { each, error, extend, isPlainObject, parseQuery } from '../core/helpers';
+import { each, error, extend, isPlainObject, parseQuery } from './helpers';
 
 /**
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings
@@ -36,7 +36,7 @@ import { each, error, extend, isPlainObject, parseQuery } from '../core/helpers'
  */
 
 import { AjaxOptions, IAjax } from '../types';
-import { buildQuery } from '../core/helpers/buildQuery';
+import { buildQuery } from './helpers/buildQuery';
 
 declare module '../config' {
 	interface Config {

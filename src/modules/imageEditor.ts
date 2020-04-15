@@ -9,14 +9,13 @@ import {
 	ImageEditorActionBox,
 	IJodit,
 	ImageEditorOptions,
-	ImageAction
+	ImageAction, IViewBased
 } from '../types';
-import { IViewBased } from '../types/view';
-import { Component } from './component';
+import { Component } from '../core/component';
 import { Alert, Dialog, Prompt } from './dialog/';
 import { $$, attr, css, trim } from '../core/helpers/';
-import { ToolbarIcon } from './toolbar/icon';
-import { Dom } from './dom';
+import { Dom } from '../core/dom';
+import { Icon } from '../core/ui';
 
 declare module '../config' {
 	interface Config {
@@ -82,7 +81,7 @@ Config.prototype.imageeditor = {
 };
 
 const jie = 'jodit_image_editor';
-const gi = ToolbarIcon.getIcon.bind(ToolbarIcon);
+const gi = Icon.get.bind(Icon);
 
 /**
  * The module allows you toWYSIWYG edit the image: resize or cut any part of it

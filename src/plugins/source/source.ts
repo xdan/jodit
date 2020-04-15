@@ -6,9 +6,9 @@
 
 import * as consts from '../../core/constants';
 import { MODE_SOURCE } from '../../core/constants';
-import { Plugin } from '../../modules/plugin';
+import { Plugin } from '../../core/plugin';
 import { IJodit, ISourceEditor, markerInfo } from '../../types';
-import { Dom } from '../../modules/dom';
+import { Dom } from '../../core/dom';
 import { isString, loadNext } from '../../core/helpers';
 import { createSourceEditor } from './editor/factory';
 

@@ -12,10 +12,10 @@ import {
 	SPACE_REG_EXP,
 	IS_INLINE
 } from '../core/constants';
-import { Dom } from '../modules/dom';
+import { Dom } from '../modules/';
 import { normalizeNode, trim } from '../core/helpers/';
 import { HTMLTagNames, IDictionary, IJodit } from '../types';
-import { Plugin } from '../modules/plugin';
+import { Plugin } from '../core/plugin';
 
 /**
  * @property {object} cleanHTML {@link cleanHtml|cleanHtml}'s options

@@ -3,6 +3,7 @@ import { IComponent, IContainer, IDestructible, IDictionary, Nullable } from './
 import { Buttons } from './toolbar';
 
 export interface IUIElement extends IContainer, IDestructible {
+	isButton: boolean;
 	parentElement: Nullable<IUIElement>;
 	update(): void;
 	setParentElement(parentElement: Nullable<IUIElement>): void;
@@ -26,6 +27,8 @@ export interface IUIButton extends IComponent, IUIElement, IFocusable {
 	state: IUIButtonState;
 	text: HTMLElement;
 	icon: HTMLElement;
+
+	isButton: true;
 
 	onAction(callback: (event: MouseEvent) => void): IUIButton;
 }

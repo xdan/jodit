@@ -6,10 +6,10 @@
 
 import * as consts from '../core/constants';
 import { MAY_BE_REMOVED_WITH_KEY } from '../core/constants';
-import { Dom } from '../modules/dom';
+import { Dom } from '../modules/';
 import { call, isString, normalizeNode, trim } from '../core/helpers/';
 import { IJodit } from '../types';
-import { Plugin } from '../modules/plugin';
+import { Plugin } from '../core/plugin';
 
 /**
  * Plug-in process entering Backspace key

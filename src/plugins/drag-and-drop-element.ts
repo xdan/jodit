@@ -6,8 +6,8 @@
 
 import { Config } from '../config';
 import { css, ctrlKey, dataBind, splitArray } from '../core/helpers/';
-import { Plugin } from '../modules/plugin';
-import { Dom } from '../modules/dom';
+import { Plugin } from '../core/plugin';
+import { Dom } from '../core/dom';
 
 declare module '../config' {
 	interface Config {

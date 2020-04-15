@@ -5,7 +5,7 @@
  */
 
 import { Dialog } from './dialog';
-import { ToolbarIcon } from '../toolbar/icon';
+import { Icon } from '../../core/ui';
 
 /**
  * Show `confirm` dialog. Work without Jodit object
@@ -44,7 +44,7 @@ export const Confirm = (
 
 	const $cancel: HTMLAnchorElement = dialog.create.fromHTML(
 		'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
-			ToolbarIcon.getIcon('cancel') +
+			Icon.get('cancel') +
 			'<span>' +
 			dialog.i18n('Cancel') +
 			'</span>' +
@@ -67,7 +67,7 @@ export const Confirm = (
 
 	const $ok: HTMLAnchorElement = dialog.create.fromHTML(
 		'<a href="javascript:void(0)" style="float:left;" class="jodit-button">' +
-			ToolbarIcon.getIcon('check') +
+			Icon.get('check') +
 			'<span>' +
 			dialog.i18n('Yes') +
 			'</span>' +

@@ -5,8 +5,8 @@
  */
 
 import { IProgressBar } from '../types';
-import { Component } from './component';
-import { Dom } from './dom';
+import { Component } from '../core/component';
+import { Dom } from '../core/dom';
 
 export class ProgressBar extends Component implements IProgressBar {
 	/**

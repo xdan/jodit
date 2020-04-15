@@ -5,15 +5,19 @@
  */
 
 import { Dialog } from '../../dialog';
-import { Dom } from '../../dom';
-import { ToolbarIcon } from '../..';
+import { Dom } from '../../../core/dom';
 import { F_CLASS, ICON_LOADER, ITEM_CLASS } from '../consts';
+
+import { FileBrowser } from '../fileBrowser';
+import { attr, error } from '../../../core/helpers';
+import { makeContextMenu } from '../factories';
+import { Icon } from '../../../core/ui';
 
 const CLASS_PREVIEW = F_CLASS + '_preview_',
 	preview_tpl_next = (next = 'next', right = 'right') =>
 		`<a href="javascript:void(0)" class="${CLASS_PREVIEW}navigation ${CLASS_PREVIEW}navigation-${next}">` +
 		'' +
-		ToolbarIcon.getIcon('angle-' + right) +
+		Icon.get('angle-' + right) +
 		'</a>';
 
 export default (self: FileBrowser) => {
@@ -245,7 +249,3 @@ export default (self: FileBrowser) => {
 		return false;
 	};
 };
-
-import { FileBrowser } from '../fileBrowser';
-import { attr, error } from '../../../core/helpers';
-import { makeContextMenu } from '../factories';

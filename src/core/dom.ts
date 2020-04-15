@@ -4,10 +4,9 @@
  * Copyright 2013-2020 Valeriy Chupurnov https://xdsoft.net
  */
 
-import * as consts from '../core/constants';
+import * as consts from './constants';
 import { HTMLTagNames, ICreate, IJodit, NodeCondition } from '../types';
-import { css, dataBind, isString } from '../core/helpers/';
-import { trim } from '../core/helpers/string';
+import { css, dataBind, isString, trim } from './helpers';
 
 export class Dom {
 	/**
@@ -349,7 +348,9 @@ export class Dom {
 	 * @param node
 	 */
 	static isHTMLElement(node: unknown, win: Window): node is HTMLElement {
-		return Dom.isNode(node, win) && node instanceof (win as any).HTMLElement;
+		return (
+			Dom.isNode(node, win) && node instanceof (win as any).HTMLElement
+		);
 	}
 
 	/**

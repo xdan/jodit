@@ -4,12 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IViewBased } from '../types/view';
-import { Component, STATUSES } from './component';
-import { css } from '../core/helpers/css';
-import { ToolbarIcon } from './toolbar/icon';
-import { Dom } from './dom';
-import { IContextMenu, IContextMenuAction } from '../types';
+import { IViewBased, IContextMenu, IContextMenuAction } from '../types/';
+import { Component, STATUSES } from '../core/component';
+import { css } from '../core/helpers/';
+import { Dom } from '../core/dom';
+import { Icon } from '../core/ui';
 
 /**
  * Module to generate context menu
@@ -71,7 +70,7 @@ export class ContextMenu extends Component implements IContextMenu {
 
 			const action = this.jodit.create.fromHTML(
 				`<a title="${title}" data-icon="${item.icon}"  href="javascript:void(0)">` +
-					(item.icon ? ToolbarIcon.getIcon(item.icon) : '') +
+					(item.icon ? Icon.get(item.icon) : '') +
 					'<span></span></a>'
 			) as HTMLAnchorElement;
 

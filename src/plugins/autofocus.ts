@@ -5,7 +5,7 @@
  */
 
 import { Config } from '../config';
-import { Dom } from '../modules/dom';
+import { Dom } from '../core/dom';
 import { IJodit } from '../types';
 
 declare module '../config' {

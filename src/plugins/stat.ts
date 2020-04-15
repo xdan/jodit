@@ -6,8 +6,8 @@
 
 import { Config } from '../config';
 import { INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from '../core/constants';
-import { Plugin } from '../modules/plugin';
-import { Dom } from '../modules/dom';
+import { Plugin } from '../core/plugin';
+import { Dom } from '../core/dom';
 
 declare module '../config' {
 	interface Config {

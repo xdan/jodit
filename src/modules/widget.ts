@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IJodit } from '../types/jodit';
+import { IJodit } from '../types/';
 
 import {
 	IDictionary,
@@ -15,7 +15,7 @@ import {
 	IUploaderData
 } from '../types/';
 
-import { Dom } from './dom';
+import { Dom } from '../core/dom';
 import {
 	$$,
 	each,
@@ -27,7 +27,7 @@ import {
 	hasBrowserColorPicker,
 	attr
 } from '../core/helpers/';
-import { ToolbarIcon } from './toolbar/icon';
+import { Icon } from '../core/ui';
 
 export namespace Widget {
 	/**
@@ -55,17 +55,15 @@ export namespace Widget {
 	): HTMLDivElement => {
 		const valueHex = normalizeColor(coldColor),
 			form: HTMLDivElement = editor.create.div('jodit_colorpicker'),
-			iconEye: string = editor.options.textIcons
-				? ''
-				: ToolbarIcon.getIcon('eye'),
+			iconEye: string = editor.options.textIcons ? '' : Icon.get('eye'),
 			iconEraser: string = editor.options.textIcons
 				? `<span>${editor.i18n('eraser')}</span>`
-				: ToolbarIcon.getIcon('eraser'),
+				: Icon.get('eraser'),
 			iconPalette: string = editor.options.textIcons
 				? `<span>${editor.i18n('palette')}</span>`
-				: ToolbarIcon.getIcon('palette'),
+				: Icon.get('palette'),
 			setColor = (target: HTMLElement, color: string) => {
-				target.innerHTML = ToolbarIcon.getIcon('eye');
+				target.innerHTML = Icon.get('eye');
 				target.classList.add('active');
 
 				const colorRGB: IRGB | null = hexToRgb(color);
@@ -426,9 +424,7 @@ export namespace Widget {
 				}
 			);
 
-			const icon = editor.options.textIcons
-				? ''
-				: ToolbarIcon.getIcon('upload');
+			const icon = editor.options.textIcons ? '' : Icon.get('upload');
 			tabs[icon + editor.i18n('Upload')] = dragbox;
 		}
 
@@ -437,9 +433,7 @@ export namespace Widget {
 				editor.options.filebrowser.ajax.url ||
 				editor.options.filebrowser.items.url
 			) {
-				const icon = editor.options.textIcons
-					? ''
-					: ToolbarIcon.getIcon('folder');
+				const icon = editor.options.textIcons ? '' : Icon.get('folder');
 				tabs[icon + editor.i18n('Browse')] = () => {
 					close && close();
 					if (callbacks.filebrowser) {
@@ -478,14 +472,14 @@ export namespace Widget {
 				(Dom.isTag(elm, 'img') || $$('img', elm).length)
 			) {
 				currentImage = elm.tagName === 'IMG' ? elm : $$('img', elm)[0];
-				val(form, 'input[name=url]', attr(currentImage,'src'));
-				val(form, 'input[name=text]', attr(currentImage,'alt'));
+				val(form, 'input[name=url]', attr(currentImage, 'src'));
+				val(form, 'input[name=text]', attr(currentImage, 'alt'));
 				button.textContent = editor.i18n('Update');
 			}
 
 			if (elm && Dom.isTag(elm, 'a')) {
-				val(form, 'input[name=url]', attr(elm,'href'));
-				val(form, 'input[name=text]', attr(elm,'title'));
+				val(form, 'input[name=url]', attr(elm, 'href'));
+				val(form, 'input[name=text]', attr(elm, 'title'));
 				button.textContent = editor.i18n('Update');
 			}
 
@@ -514,9 +508,7 @@ export namespace Widget {
 				false
 			);
 
-			const icon = editor.options.textIcons
-				? ''
-				: ToolbarIcon.getIcon('link');
+			const icon = editor.options.textIcons ? '' : Icon.get('link');
 
 			tabs[icon + ' URL'] = form;
 		}

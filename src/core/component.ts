@@ -4,16 +4,16 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IViewBased } from '../types/view';
 import {
 	ComponentStatus,
 	IComponent,
 	IDictionary,
-	Statuses
-} from '../types/types';
-import { isJoditObject } from '../core/helpers/checker/';
-import { kebabCase } from '../core/helpers/string';
-import { uniqueUid } from '../core/global';
+	Statuses,
+	IViewBased
+} from '../types';
+
+import { kebabCase, isJoditObject } from './helpers/';
+import { uniqueUid } from './global';
 
 export const STATUSES: Statuses = {
 	beforeInit: 'beforeInit',
@@ -42,7 +42,8 @@ export abstract class Component<T extends IViewBased = IViewBased>
 	setStatus(componentStatus: ComponentStatus) {
 		this.__componentStatus = componentStatus;
 
-		const cbList = this.onStatusLst && this.onStatusLst[this.__componentStatus];
+		const cbList =
+			this.onStatusLst && this.onStatusLst[this.__componentStatus];
 
 		if (cbList) {
 			cbList.forEach(cb => cb(this));

@@ -8,9 +8,8 @@
  * The module editor's event manager
  */
 
-import { CallbackFunction, EventHandlerBlock } from '../../types';
+import { CallbackFunction, EventHandlerBlock, IEventsNative } from '../../types';
 import { defaultNameSpace, EventHandlersStore } from './store';
-import { IEventsNative } from '../../types/events';
 import { error } from '../helpers';
 
 export class EventsNative implements IEventsNative {

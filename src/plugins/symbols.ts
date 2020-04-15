@@ -5,10 +5,15 @@
  */
 
 import { Config } from '../config';
-import { KEY_DOWN, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_UP } from '../core/constants';
+import {
+	KEY_DOWN,
+	KEY_ENTER,
+	KEY_LEFT,
+	KEY_RIGHT,
+	KEY_UP
+} from '../core/constants';
 import { Alert } from '../modules/dialog/';
-import { IControlType } from '../types/toolbar';
-import { IJodit } from '../types';
+import { IControlType, IJodit } from '../types/';
 import { Dom } from '../modules';
 import { attr } from '../core/helpers/utils';
 

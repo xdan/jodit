@@ -4,22 +4,28 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import * as consts from '../core/constants';
+import * as consts from './constants';
 import {
 	INVISIBLE_SPACE,
 	INVISIBLE_SPACE_REG_EXP_END as INV_END,
 	INVISIBLE_SPACE_REG_EXP_START as INV_START
-} from '../core/constants';
+} from './constants';
 
 import { HTMLTagNames, IDictionary, IJodit, markerInfo } from '../types';
 import { Dom } from './dom';
-import { css } from '../core/helpers/css';
-import { normalizeNode, normilizeCSSValue } from '../core/helpers/normalize';
-import { $$ } from '../core/helpers/selector';
-import { isFunction, isPlainObject, isString } from '../core/helpers/checker';
-import { each } from '../core/helpers/each';
-import { trim } from '../core/helpers/string';
-import { attr, error } from '../core/helpers';
+import {
+	attr,
+	error,
+	trim,
+	each,
+	isFunction,
+	isPlainObject,
+	isString,
+	$$,
+	css,
+	normalizeNode,
+	normilizeCSSValue
+} from './helpers';
 
 type WindowSelection = Selection | null;
 

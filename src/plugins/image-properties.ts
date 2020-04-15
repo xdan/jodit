@@ -12,9 +12,17 @@ import {
 	Dom,
 	Widget,
 	PopupMenu,
-	ToolbarIcon
+	Icon
 } from '../modules/';
-import { $$, css, trim, val, clearCenterAlign, attr } from '../core/helpers/';
+import {
+	$$,
+	css,
+	trim,
+	val,
+	clearCenterAlign,
+	attr,
+	position
+} from '../core/helpers/';
 
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
@@ -26,7 +34,6 @@ import {
 	IJodit,
 	IUploaderData
 } from '../types/';
-import { position } from '../core/helpers';
 
 /**
  * Plug-in for image editing window
@@ -106,7 +113,7 @@ Config.prototype.image = {
  */
 export function imageProperties(editor: IJodit) {
 	const i18n = editor.i18n,
-		gi = ToolbarIcon.getIcon.bind(ToolbarIcon),
+		gi = Icon.get.bind(Icon),
 		opt = editor.options,
 		dom = editor.create.fromHTML.bind(editor.create);
 

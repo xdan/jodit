@@ -40,7 +40,7 @@ import {
 
 import { ViewWithToolbar } from './modules/view/viewWithToolbar';
 
-import { STATUSES } from './modules/component';
+import { STATUSES } from './core/component';
 import { instances, pluginSystem, modules, lang } from './core/global';
 
 /**
@@ -50,9 +50,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Define if object is Jodit
 	 */
-	get isJodit(): true {
-		return true;
-	}
+	isJodit: true = true;
 
 	/**
 	 * Plain text editor's value

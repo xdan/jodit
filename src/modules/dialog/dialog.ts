@@ -22,8 +22,8 @@ import {
 	splitArray
 } from '../../core/helpers/';
 import { ViewWithToolbar } from '../view/viewWithToolbar';
-import { Dom } from '../dom';
-import { STATUSES } from '../component';
+import { Dom } from '../../core/dom';
+import { STATUSES } from '../../core/component';
 import { fullsize } from '../../plugins/fullsize';
 
 /**

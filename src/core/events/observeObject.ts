@@ -5,7 +5,7 @@
  */
 
 import { CallbackFunction, IDictionary } from '../../types';
-import { isPlainObject, isEqual } from '../helpers/checker';
+import { isPlainObject, isEqual } from '../helpers';
 
 export class ObserveObject {
 	protected constructor(

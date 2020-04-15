@@ -5,8 +5,7 @@
  */
 
 import { Config } from '../config';
-import { IDictionary, IJodit } from '../types';
-import { IControlType } from '../types/toolbar';
+import { IDictionary, IJodit, IControlType } from '../types';
 
 Config.prototype.controls.subscript = {
 	tags: ['sub'],

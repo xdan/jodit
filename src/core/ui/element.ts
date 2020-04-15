@@ -2,6 +2,11 @@ import { Component, STATUSES } from '../component';
 import { IUIElement, IViewBased, Nullable } from '../../types';
 
 export abstract class UIElement<T extends IViewBased = IViewBased> extends Component<T> implements IUIElement {
+	/**
+	 * Is not a button
+	 */
+	isButton: boolean = false;
+
 	container!: HTMLElement;
 	parentElement: Nullable<IUIElement> = null;
 

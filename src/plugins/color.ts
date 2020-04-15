@@ -5,13 +5,11 @@
  */
 
 import { Config } from '../config';
-import { Widget } from '../modules/widget';
+import { Widget, Dom } from '../modules/';
 import TabsWidget = Widget.TabsWidget;
 import ColorPickerWidget = Widget.ColorPickerWidget;
-import { Dom } from '../modules/dom';
 import { css, normalizeColor } from '../core/helpers/';
-import { IDictionary, IJodit } from '../types';
-import { IControlType } from '../types/toolbar';
+import { IDictionary, IJodit, IControlType } from '../types';
 
 Config.prototype.controls.brush = {
 	update(button): void {

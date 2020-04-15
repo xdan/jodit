@@ -5,7 +5,7 @@
  */
 
 import { Config } from '../config';
-import { Dom } from '../modules/dom';
+import { Dom } from '../core/dom';
 import { css } from '../core/helpers';
 import { IJodit } from '../types';
 

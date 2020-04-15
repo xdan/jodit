@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { colorToHex } from '../color/colorToHex';
-import { trim } from '../string/trim';
+import { colorToHex } from '../color/';
+import { trim } from '../string/';
 
 /**
  * Convert rgba and short HEX color to Full text color. #fff to #FFFFFF
