@@ -3,7 +3,9 @@
 
 @color-button-background-hover: #dde4ef;
 
-.button-size(@size, @plus: 20px) {
+.button-size(@size) {
+	@plus: (@size - 4px) * 2;
+
 	min-width: @size + @plus;
 	min-height: @size + @plus;
 
@@ -12,7 +14,7 @@
 		height: @size;
 	}
 
-	& &__button {
+	button {
 		min-width: @size + @plus;
 		min-height: @size + @plus;
 	}
@@ -60,9 +62,16 @@
 }
 
 .jodit-ui-button {
-	display: flex;
-	justify-content: stretch;
-	align-items: center;
+	&,
+	&__button {
+		display: flex;
+		justify-content: stretch;
+		align-items: center;
+	}
+
+	&__button {
+		justify-content: center;
+	}
 
 	.jodit-ui-button_clear();
 

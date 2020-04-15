@@ -33,7 +33,8 @@ export class StatusBar extends Component implements IStatusBar {
 	}
 
 	private findEmpty(inTheRight: boolean = false): HTMLDivElement | void {
-		const items = this.container.querySelectorAll('.jodit_statusbar_item' + (inTheRight ? '.jodit_statusbar_item-right' : ''));
+		const items = this.container.querySelectorAll('.jodit-statusbar__item' + (inTheRight ? '.jodit-statusbar__item-right' : ''));
+
 		for (let i = 0; i < items.length; i += 1) {
 			if (!items[i].innerHTML.trim().length) {
 				return items[i] as HTMLDivElement;
@@ -48,10 +49,10 @@ export class StatusBar extends Component implements IStatusBar {
 	 * @param inTheRight
 	 */
 	append(child: HTMLElement, inTheRight: boolean = false) {
-		const wrapper = this.findEmpty(inTheRight) || this.jodit.create.div('jodit_statusbar_item');
+		const wrapper = this.findEmpty(inTheRight) || this.jodit.create.div('jodit-statusbar__item');
 
 		if (inTheRight) {
-			wrapper.classList.add('jodit_statusbar_item-right');
+			wrapper.classList.add('jodit-statusbar__item-right');
 		}
 
 		wrapper.appendChild(child);
@@ -63,7 +64,7 @@ export class StatusBar extends Component implements IStatusBar {
 
 	constructor(jodit: IJodit, readonly target: HTMLElement) {
 		super(jodit);
-		this.container = jodit.create.div('jodit_statusbar');
+		this.container = jodit.create.div('jodit-statusbar');
 
 		target.appendChild(this.container);
 		this.hide();

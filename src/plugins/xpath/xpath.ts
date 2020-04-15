@@ -3,17 +3,18 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+import "./xpath.less"
 
-import { Config } from '../config';
-import { INVISIBLE_SPACE, MODE_WYSIWYG } from '../core/constants';
-import { ContextMenu } from '../modules/';
-import { Dom } from '../core/dom';
-import { getXPathByElement, trim, attr } from '../core/helpers/';
-import { Plugin } from '../core/plugin';
-import { IControlType, IControlTypeStrong, IToolbarButton } from '../types';
-import { makeButton } from '../modules/toolbar/factory';
+import { Config } from '../../config';
+import { INVISIBLE_SPACE, MODE_WYSIWYG } from '../../core/constants';
+import { ContextMenu } from '../../modules';
+import { Dom } from '../../core/dom';
+import { getXPathByElement, trim, attr } from '../../core/helpers';
+import { Plugin } from '../../core/plugin';
+import { IControlType, IControlTypeStrong, IToolbarButton } from '../../types';
+import { makeButton } from '../../modules/toolbar/factory';
 
-declare module '../config' {
+declare module '../../config' {
 	interface Config {
 		showXPathInStatusbar: boolean;
 	}
@@ -99,19 +100,19 @@ export class xpath extends Plugin {
 		name: string,
 		title: string
 	): HTMLElement => {
-		const li = this.jodit.create.fromHTML(
-			`<li><a role="button" data-path="${path}" href="javascript:void(0)" title="${title}" tabindex="-1"'>${trim(
+		const item = this.jodit.create.fromHTML(
+			`<span class="jodit-xpath__item"><a role="button" data-path="${path}" href="javascript:void(0)" title="${title}" tabindex="-1"'>${trim(
 				name
-			)}</a></li>`
+			)}</a></span>`
 		) as HTMLLIElement;
 
-		const a = li.firstChild as HTMLAnchorElement;
+		const a = item.firstChild as HTMLAnchorElement;
 
 		this.jodit.events
 			.on(a, 'click', this.onSelectPath.bind(this, bindElement))
 			.on(a, 'contextmenu', this.onContext.bind(this, bindElement));
 
-		return li;
+		return item;
 	};
 
 	private selectAllButton!: IToolbarButton;
@@ -130,6 +131,8 @@ export class xpath extends Plugin {
 			name: 'selectall',
 			...this.jodit.options.controls.selectall
 		} as IControlTypeStrong);
+
+		this.selectAllButton.state.size = "small";
 
 		this.container &&
 			this.container.insertBefore(
@@ -192,8 +195,7 @@ export class xpath extends Plugin {
 
 	afterInit() {
 		if (this.jodit.options.showXPathInStatusbar) {
-			this.container = this.jodit.create.element('ul');
-			this.container.classList.add('jodit_xpath');
+			this.container = this.jodit.create.div('jodit-xpath');
 
 			this.jodit.events
 				.off('.xpath')

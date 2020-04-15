@@ -6,12 +6,14 @@
 
 @import (reference) '../mixins';
 
-.jodit_statusbar {
+.jodit-statusbar {
 	.font();
 	font-size: @font-size-small;
 
 	display: flex;
 	justify-content: flex-start;
+	align-items: center;
+
 	border: 1px solid @color-border;
 	border-top: 0;
 	background-color: @color-toolbar;
@@ -23,58 +25,15 @@
 		order: 1;
 	}
 
-	.jodit_statusbar_item {
+	.jodit-statusbar__item {
 		line-height: 1.57142857em;
 		margin: 0 @padding-default 0 0;
 		padding: 0;
 		order: 0;
 
-		&.jodit_statusbar_item-right {
+		&.jodit-statusbar__item-right {
 			margin: 0 0 0 @padding-default;
 			order: 2;
-		}
-
-		ul,
-		li {
-			position: relative;
-			margin: 0;
-			padding: 0;
-			list-style: none;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-
-			li {
-				margin-right: @padding-default / 2;
-			}
-		}
-
-		ul {
-			justify-content: flex-start;
-		}
-
-		span,
-		a {
-			user-select: none;
-			display: inline-block;
-			vertical-align: baseline;
-			text-align: left;
-			white-space: nowrap;
-			padding: 2px 3px;
-			line-height: @padding-default;
-			outline: 0;
-			border: 0;
-			color: @color-text;
-
-			span {
-				padding: 0;
-			}
-		}
-		svg {
-			width: @font-size-small;
-			height: @font-size-small;
-			display: inline-block;
-			vertical-align: top;
 		}
 
 		a {
@@ -90,6 +49,6 @@
 		}
 	}
 }
-.jodit_disabled .jodit_statusbar {
+.jodit_disabled .jodit-statusbar {
 	opacity: 0.4;
 }

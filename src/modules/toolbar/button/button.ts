@@ -166,6 +166,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		this.onAction(this.onClick);
 
 		this.setStatus(STATUSES.ready);
+
+		this.update();
 	}
 
 	/**
