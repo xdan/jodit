@@ -5,6 +5,8 @@
  */
 import autobind from 'autobind-decorator';
 
+import "./collection.less";
+
 import {
 	IToolbarButton,
 	IToolbarCollection,

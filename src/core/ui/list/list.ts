@@ -25,7 +25,7 @@ export class UIList<T extends IViewBased = IViewBased> extends UIElement<T>
 	mode: IUIList['mode'] = "horizontal";
 
 	@watch('mode')
-	onChangeMode(oldValue: string = '') {
+	onChangeMode(key: string = '', oldValue: string = '') {
 		const cl = this.container.classList;
 
 		cl.remove(kebabCase(`jodit${UIList.name}`) + '_' + oldValue);
