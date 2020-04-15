@@ -428,7 +428,7 @@ describe('Link plugin', function() {
 						'submit',
 						0,
 						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'
+							'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit-form'
 						)
 					);
 
@@ -440,7 +440,7 @@ describe('Link plugin', function() {
 						'submit',
 						0,
 						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'
+							'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit-form'
 						)
 					);
 
@@ -623,7 +623,7 @@ describe('Link plugin', function() {
 								'submit',
 								0,
 								editor.container.querySelector(
-									'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'
+									'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit-form'
 								)
 							);
 
@@ -723,7 +723,7 @@ describe('Link plugin', function() {
 								'submit',
 								0,
 								editor.container.querySelector(
-									'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'
+									'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit-form'
 								)
 							);
 
@@ -926,7 +926,7 @@ describe('Link plugin', function() {
 							'.jodit_toolbar_popup'
 						);
 
-						const form = popup.querySelector('.jodit_form');
+						const form = popup.querySelector('.jodit-form');
 						expect(form).is.not.null;
 
 						const input = form.querySelector(

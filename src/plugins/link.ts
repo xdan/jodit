@@ -44,21 +44,21 @@ Config.prototype.link = {
 	formTemplate: (editor): string => {
 		const i18n = editor.i18n.bind(editor);
 
-		return `<form class="jodit_form">
-			<div class="jodit_form_group">
+		return `<form class="jodit-form">
+			<div class="jodit-form__group">
 				<input ref="url_input" class="jodit_input" required type="text" name="url" placeholder="http://" type="text"/>
 			</div>
-			<div ref="content_input_box" class="jodit_form_group">
+			<div ref="content_input_box" class="jodit-form__group">
 				<input ref="content_input" class="jodit_input" name="text" placeholder="${i18n(
 					'Text'
 				)}" type="text"/>
 			</div>
 			<label ref="target_checkbox_box">
-				<input ref="target_checkbox" class="jodit_checkbox" name="target" type="checkbox"/>
+				<input ref="target_checkbox" class="jodit-checkbox" name="target" type="checkbox"/>
 				<span>${i18n('Open in new tab')}</span>
 			</label>
 			<label ref="nofollow_checkbox_box">
-				<input ref="nofollow_checkbox" class="jodit_checkbox" name="nofollow" type="checkbox"/>
+				<input ref="nofollow_checkbox" class="jodit-checkbox" name="nofollow" type="checkbox"/>
 				<span>${i18n('No follow')}</span>
 			</label>
 			<div class="jodit-buttons">

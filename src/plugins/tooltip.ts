@@ -8,6 +8,7 @@ import { IJodit } from '../types';
 import { css, offset } from '../core/helpers';
 import { Plugin } from '../core/plugin';
 import { Dom } from '../core/dom';
+import { getContainer } from '../core/global';
 
 export class tooltip extends Plugin {
 	private isOpened = false;
@@ -16,7 +17,7 @@ export class tooltip extends Plugin {
 
 	afterInit(jodit: IJodit) {
 		this.container = jodit.create.div('jodit_tooltip');
-		this.jodit.ownerDocument.body.appendChild(this.container);
+		getContainer(this.jodit, tooltip.name).appendChild(this.container);
 
 		let timeout = 0;
 		jodit.events

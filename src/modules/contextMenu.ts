@@ -9,6 +9,8 @@ import { Component, STATUSES } from '../core/component';
 import { css } from '../core/helpers/';
 import { Dom } from '../core/dom';
 import { Icon } from '../core/ui';
+import { getContainer } from '../core/global';
+import contextMenu from './filebrowser/builders/contextMenu';
 
 /**
  * Module to generate context menu
@@ -95,7 +97,7 @@ export class ContextMenu extends Component implements IContextMenu {
 
 		this.jodit.markOwner(this.context);
 
-		this.jodit?.ownerDocument.body.appendChild(this.context);
+		getContainer(this.jodit, contextMenu.name).appendChild(this.context);
 	}
 
 	constructor(editor: IViewBased) {

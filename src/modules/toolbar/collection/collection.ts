@@ -14,10 +14,19 @@ import {
 	IViewBased
 } from '../../../types/';
 
-import { isFunction, isJoditObject, get } from '../../../core/helpers/';
+import {
+	isFunction,
+	isJoditObject,
+	get,
+	camelCase
+} from '../../../core/helpers/';
 
 import { UIList } from '../../../core/ui';
 import { makeButton } from '../factory';
+import { getContainer } from '../../../core/global';
+import { PopupMenu } from '../../popup';
+import { Dom } from '../../../core/dom';
+import { STATUSES } from '../../../core/component';
 
 export class ToolbarCollection<T extends IViewBased = IViewBased>
 	extends UIList<T>
@@ -51,7 +60,10 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		return this.parentElement?.container || null;
 	}
 
-	protected makeButton(control: IControlTypeStrong, target: Nullable<HTMLElement> = null): IUIButton {
+	protected makeButton(
+		control: IControlTypeStrong,
+		target: Nullable<HTMLElement> = null
+	): IUIButton {
 		return makeButton(this.jodit, control, target);
 	}
 
@@ -142,20 +154,28 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	constructor(jodit: IViewBased) {
 		super(<T>jodit);
 		this.initEvents();
+		this.setStatus(STATUSES.ready);
 	}
 
 	private initEvents() {
 		this.jodit.events
-			.on(this.jodit.ownerWindow, 'mousedown touchend', this.closeAll)
+			.on(
+				this.jodit.ownerWindow,
+				'mousedown touchend',
+				this.closeAllPopups
+			)
 			.on(this.listenEvents, this.update)
 			.on('afterSetMode focus', this.immediateUpdate);
 	}
 
 	@autobind
-	private closeAll() {
-		this.jodit &&
-			this.jodit.events &&
-			this.jodit.events.fire('closeAllPopups');
+	private closeAllPopups(e: MouseEvent) {
+		const box = getContainer(this.jodit, PopupMenu.name);
+		if (e.target && Dom.isOrContains(box, e.target as Node)) {
+			return;
+		}
+
+		this.jodit?.events?.fire(camelCase('close-all-popups'));
 	}
 
 	/** @override **/
@@ -165,7 +185,11 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		}
 
 		this.jodit.events
-			.off(this.jodit.ownerWindow, 'mousedown touchstart', this.closeAll)
+			.off(
+				this.jodit.ownerWindow,
+				'mousedown touchstart',
+				this.closeAllPopups
+			)
 			.off(this.listenEvents, this.update)
 			.off('afterSetMode focus', this.immediateUpdate);
 

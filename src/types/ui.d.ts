@@ -34,6 +34,8 @@ export interface IUIButton extends IComponent, IUIElement, IFocusable {
 }
 
 export interface IUIList extends IUIElement {
+	mode: "vertical" | "horizontal";
+
 	elements: IUIElement[];
 	append(elm: IUIElement): void;
 

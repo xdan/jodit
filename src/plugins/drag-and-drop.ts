@@ -10,6 +10,7 @@ import { attr, css, ctrlKey, dataBind } from '../core/helpers';
 import { Plugin } from '../core/plugin';
 import { IPoint } from '../types/';
 import { getDataTransfer } from './clipboard';
+import { getContainer } from '../core/global';
 
 /**
  * Process drag and drop image from FileBrowser and movev image inside the editor
@@ -35,7 +36,7 @@ export class DragAndDrop extends Plugin {
 	private onDrag = (event: DragEvent) => {
 		if (this.draggable) {
 			if (!this.draggable.parentNode) {
-				this.jodit.ownerDocument.body.appendChild(this.draggable);
+				getContainer(this.jodit, DragAndDrop.name).appendChild(this.draggable);
 			}
 
 			this.jodit.events.fire('hidePopup');

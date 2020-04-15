@@ -5,7 +5,14 @@
  */
 
 import { Config } from '../config';
-import { Widget, Dom, Plugin, Table, PopupMenu, ToolbarCollection } from '../modules/';
+import {
+	Widget,
+	Dom,
+	Plugin,
+	Table,
+	PopupMenu,
+	ToolbarCollection
+} from '../modules/';
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
 import {
@@ -28,6 +35,7 @@ import {
 } from '../types';
 
 import { makeCollection } from '../modules/toolbar/factory';
+import { getContainer } from '../core/global';
 
 declare module '../config' {
 	interface Config {
@@ -521,13 +529,14 @@ export class inlinePopup extends Plugin {
 			return true;
 		}
 
-		this.isOpened = true;
 		this.isTargetAction = true;
 
 		const size = this.calcWindSizes();
 
 		this.targetContainer.parentNode ||
-			this.jodit.ownerDocument.body.appendChild(this.targetContainer);
+			getContainer(this.jodit, inlinePopup.name).appendChild(
+				this.targetContainer
+			);
 
 		this.toolbar.build(data, elm).appendTo(this.container);
 
@@ -559,7 +568,6 @@ export class inlinePopup extends Plugin {
 		// }
 
 		this.isTargetAction = false;
-		this.isOpened = false;
 		this.popup.close();
 
 		Dom.safeRemove(this.targetContainer);
@@ -618,8 +626,6 @@ export class inlinePopup extends Plugin {
 		}
 	};
 
-	isOpened: boolean = false;
-
 	private onChangeSelection = () => {
 		if (!this.jodit.options.toolbarInline || !this.jodit.isEditorMode()) {
 			return;
@@ -657,9 +663,7 @@ export class inlinePopup extends Plugin {
 
 		this.container = editor.create.div();
 
-		this.popup = new PopupMenu(
-			editor
-		);
+		this.popup = new PopupMenu(editor);
 
 		editor.events
 			.on(
@@ -694,7 +698,7 @@ export class inlinePopup extends Plugin {
 			)
 			.on('selectionchange', this.onChangeSelection)
 			.on('afterCommand afterExec', () => {
-				if (this.isOpened && this.isSelectionPopup) {
+				if (this.popup.isOpened && this.isSelectionPopup) {
 					this.onChangeSelection();
 				}
 			})

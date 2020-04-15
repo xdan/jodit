@@ -1,21 +1,22 @@
-import "./menu.less";
-
-import { Component } from '../../core/component';
-import { IBound, IPopup, Nullable } from '../../types';
-import { Dom } from '../../core/dom';
-import { camelCase, css } from '../../core/helpers';
+import './menu.less';
 
 import autobind from 'autobind-decorator';
 
-export class PopupMenu extends Component implements IPopup {
-	isOpened: boolean = false;
+import { IBound, IPopup, Nullable } from '../../types';
+import { Dom } from '../../core/dom';
+import { camelCase, css } from '../../core/helpers';
+import { getContainer } from '../../core/global';
+import { UIElement } from '../../core/ui';
 
-	container: HTMLElement = this.jodit.create.div('jodit-popup__menu');
+export class PopupMenu extends UIElement implements IPopup {
+	isOpened: boolean = false;
 
 	private getBound!: () => IBound;
 
 	setContent(content: HTMLElement): void {
-		const box: HTMLElement = this.jodit.create.div('jodit-popup__menu-content');
+		const box: HTMLElement = this.jodit.create.div(
+			`${this.componentName}__content`
+		);
 		Dom.detach(this.container);
 		box.appendChild(content);
 		this.container.appendChild(box);
@@ -35,16 +36,18 @@ export class PopupMenu extends Component implements IPopup {
 		this.getBound = getBound;
 
 		content && this.setContent(content);
-		this.jodit.ownerDocument.body.appendChild(this.container);
+		getContainer(this.jodit, PopupMenu.name).appendChild(this.container);
 
 		this.updatePosition();
 
 		const up = this.updatePosition;
+
 		this.jodit.events
 			.on(camelCase('close-all-popups'), this.close)
 			.on('resize', up)
 			.on(this.jodit.ownerWindow, 'scroll', up)
-			.on(this.jodit.ownerWindow, 'resize', up);
+			.on(this.jodit.ownerWindow, 'resize', up)
+			.fire(this, 'afterOpen');
 	}
 
 	@autobind
@@ -55,15 +58,19 @@ export class PopupMenu extends Component implements IPopup {
 			left: pos.left,
 			top: pos.top + pos.height
 		});
-	};
+	}
 
 	@autobind
 	close(): void {
+		if (!this.isOpened) {
+			return;
+		}
+
 		const up = this.updatePosition;
 
 		this.jodit.events
 			.off(camelCase('close-all-popups'), this.close)
-			.off( 'resize', up)
+			.off('resize', up)
 			.off(this.jodit.ownerWindow, 'scroll', up)
 			.off(this.jodit.ownerWindow, 'resize', up)
 			.fire(this, 'afterClose');

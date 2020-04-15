@@ -1,5 +1,6 @@
 import { Component, STATUSES } from '../component';
 import { IUIElement, IViewBased, Nullable } from '../../types';
+import { Dom } from '../dom';
 
 export abstract class UIElement<T extends IViewBased = IViewBased> extends Component<T> implements IUIElement {
 	/**
@@ -53,5 +54,11 @@ export abstract class UIElement<T extends IViewBased = IViewBased> extends Compo
 		if (this.constructor.name === UIElement.name) {
 			this.setStatus(STATUSES.ready);
 		}
+	}
+
+	destruct(): any {
+		Dom.safeRemove(this.container);
+		this.setParentElement(null);
+		return super.destruct();
 	}
 }

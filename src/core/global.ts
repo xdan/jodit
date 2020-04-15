@@ -4,8 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary, IJodit } from '../types';
+import { IDictionary, IJodit, IViewBased } from '../types';
 import { PluginSystem } from './pluginSystem';
+import { Dom } from './dom';
+import { kebabCase } from './helpers/string';
 
 export const instances: IDictionary<IJodit> = {};
 
@@ -40,3 +42,37 @@ export const pluginSystem = new PluginSystem();
 export const modules: IDictionary<Function> = {};
 
 export const lang: IDictionary<IDictionary<string>> = {};
+
+const boxes = new WeakMap<IViewBased, IDictionary<HTMLElement>>();
+
+/**
+ * Create unique box(HTMLCotainer) and remove it after destroy
+ *
+ * @param jodit
+ * @param name
+ */
+export function getContainer(jodit: IViewBased, name: string): HTMLElement {
+	const data = boxes.get(jodit) || {};
+
+	if (!data[name]) {
+		const box = jodit.create.div(`jodit-${kebabCase(name)}-container`);
+
+		jodit.ownerDocument.body.appendChild(box);
+
+		data[name] = box;
+
+		jodit.events.on('beforeDestruct', () => {
+			Dom.safeRemove(box);
+			delete data[name];
+
+			if (Object.keys(data).length) {
+				boxes.delete(jodit);
+			}
+		});
+
+
+		boxes.set(jodit, data);
+	}
+
+	return data[name];
+}

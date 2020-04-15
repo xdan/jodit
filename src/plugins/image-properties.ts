@@ -176,7 +176,7 @@ export function imageProperties(editor: IJodit) {
 												!opt.image.editSize
 													? 'display:none'
 													: ''
-											}" class="jodit_form_group jodit_properties_image_sizes">
+											}" class="jodit-form__group jodit_properties_image_sizes">
 												<input type="number" class="imageWidth jodit_input"/>
 												<a class="jodit_lock_helper jodit_lock_size" href="javascript:void(0)">${gi(
 													'lock'
@@ -192,7 +192,7 @@ export function imageProperties(editor: IJodit) {
 			positionTab = dom(
 				`<div style="${
 					!opt.image.editMargins ? 'display:none' : ''
-				}" class="jodit_form_group">
+				}" class="jodit-form__group">
 								<label>${i18n('Margins')}</label>
 								<div class="jodit_grid jodit_vertical_middle">
 									<input class="jodit_col-lg-1-5 margins marginTop jodit_input" data-id="marginTop" type="text" placeholder="${i18n(
@@ -214,32 +214,32 @@ export function imageProperties(editor: IJodit) {
 							</div>
 							<div style="${
 								!opt.image.editStyle ? 'display:none' : ''
-							}" class="jodit_form_group">
+							}" class="jodit-form__group">
 								<label>${i18n('Styles')}</label>
 								<input type="text" class="style jodit_input"/>
 							</div>
 							<div style="${
 								!opt.image.editClass ? 'display:none' : ''
-							}" class="jodit_form_group">
+							}" class="jodit-form__group">
 								<label for="classes">${i18n('Classes')}</label>
 								<input type="text" class="classes jodit_input"/>
 							</div>
 							<div style="${
 								!opt.image.editId ? 'display:none' : ''
-							}" class="jodit_form_group">
+							}" class="jodit-form__group">
 								<label for="id">Id</label>
 								<input type="text" class="id jodit_input"/>
 							</div>
 							<div
 								style="${!opt.image.editBorderRadius ? 'display:none' : ''}"
-								class="jodit_form_group"
+								class="jodit-form__group"
 							>
 								<label for="border_radius">${i18n('Border radius')}</label>
 								<input type="number" class="border_radius jodit_input"/>
 							</div>
 							<div
 								style="${!opt.image.editAlign ? 'display:none' : ''}"
-								class="jodit_form_group"
+								class="jodit-form__group"
 							>
 								<label for="align">${i18n('Align')}</label>
 								<select class="select align jodit_select">
@@ -255,7 +255,7 @@ export function imageProperties(editor: IJodit) {
 			mainTab = dom(
 				`<div style="${
 					!opt.image.editSrc ? 'display:none' : ''
-				}" class="jodit_form_group">
+				}" class="jodit-form__group">
 								<label>${i18n('Src')}</label>
 								<div class="jodit_input_group">
 									<input class="jodit_input imageSrc" type="text"/>
@@ -275,27 +275,27 @@ export function imageProperties(editor: IJodit) {
 							</div>
 							<div style="${
 								!opt.image.editTitle ? 'display:none' : ''
-							}" class="jodit_form_group">
+							}" class="jodit-form__group">
 								<label for="imageTitle">${i18n('Title')}</label>
 								<input type="text" class="imageTitle jodit_input"/>
 							</div>
 							<div style="${
 								!opt.image.editAlt ? 'display:none' : ''
-							}" class="jodit_form_group">
+							}" class="jodit-form__group">
 								<label for="imageAlt">${i18n('Alternative')}</label>
 								<input type="text" class="imageAlt jodit_input"/>
 							</div>
 							<div style="${
 								!opt.image.editLink ? 'display:none' : ''
-							}" class="jodit_form_group">
+							}" class="jodit-form__group">
 								<label for="imageLink">${i18n('Link')}</label>
 								<input type="text" class="imageLink jodit_input"/>
 							</div>
 							<div style="${
 								!opt.image.editLink ? 'display:none' : ''
-							}" class="jodit_form_group">
+							}" class="jodit-form__group">
 								<label class="jodit_vertical_middle">
-									<input type="checkbox" class="imageLinkOpenInNewTab jodit_checkbox"/>
+									<input type="checkbox" class="imageLinkOpenInNewTab jodit-checkbox"/>
 									<span>${i18n('Open link in new tab')}</span>
 								</label>
 							</div>`

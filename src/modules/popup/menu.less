@@ -1,20 +1,12 @@
 @import (reference) '../../styles/variables';
 @import (reference) '../../styles/mixins';
 
-.jodit-popup {
-	&__menu {
-		position: fixed;
+.jodit-popup-menu {
+	position: fixed;
+	border: 1px solid @color-border;
 
-		.jodit-toolbar {
-			&__collection {
-				flex-direction: column;
-			}
-		}
-	}
-
-	&__menu-content {
+	&__content {
 		padding: @padding-default;
 		background: @color-background-default;
-		min-width: 100px;
 	}
 }

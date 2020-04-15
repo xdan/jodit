@@ -22,6 +22,8 @@ interface IControlType<
 	Button = IToolbarButton
 > {
 	name?: string;
+	text?: string;
+
 	mode?: Modes;
 	hotkeys?: string | string[];
 	data?: IDictionary;

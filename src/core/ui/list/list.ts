@@ -16,15 +16,31 @@ import { UIBreak } from '../break';
 import { UISeparator } from '../separator';
 import { getStrongControlTypes } from '../helpers/getStrongControlTypes';
 import { STATUSES } from '../../component';
+import { kebabCase } from '../../helpers/string';
+import { watch  }from '../../decorators';
 
 export class UIList<T extends IViewBased = IViewBased> extends UIElement<T>
 	implements IUIList {
 	elements: IUIElement[] = [];
+	mode: IUIList['mode'] = "horizontal";
+
+	@watch('mode')
+	onChangeMode(oldValue: string = '') {
+		const cl = this.container.classList;
+
+		cl.remove(kebabCase(`jodit${UIList.name}`) + '_' + oldValue);
+		cl.add(kebabCase(`jodit${UIList.name}`) + '_' + this.mode);
+	}
 
 	constructor(jodit: T) {
 		super(jodit);
-		this.container.classList.add('jodit-ui-list');
-		this.setStatus(STATUSES.ready);
+		this.container.classList.add(kebabCase(`jodit${UIList.name}`));
+
+		this.onChangeMode();
+
+		if (this.constructor.name === UIList.name) {
+			this.setStatus(STATUSES.ready);
+		}
 	}
 
 	/**

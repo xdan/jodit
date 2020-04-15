@@ -5,8 +5,21 @@
  */
 
 import { Config } from '../config';
-import { IDictionary, IRequest, IViewBased } from '../types';
-import { each, error, extend, isPlainObject, parseQuery } from './helpers';
+import {
+	IDictionary,
+	IRequest,
+	IViewBased,
+	AjaxOptions,
+	IAjax
+} from '../types';
+import {
+	each,
+	error,
+	extend,
+	isPlainObject,
+	parseQuery,
+	buildQuery
+} from './helpers';
 
 /**
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings
@@ -34,9 +47,6 @@ import { each, error, extend, isPlainObject, parseQuery } from './helpers';
  * @property {function} defaultAjaxOptions.xhr=function () { return new XMLHttpRequest(); } Callback for creating
  * the XMLHttpRequest object.
  */
-
-import { AjaxOptions, IAjax } from '../types';
-import { buildQuery } from './helpers/buildQuery';
 
 declare module '../config' {
 	interface Config {

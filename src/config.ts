@@ -5,10 +5,11 @@
  */
 
 import * as consts from './core/constants';
-import { Icon, Widget } from './modules/';
+import { Widget } from './modules/widget';
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
 import { Dom } from './core/dom';
+import { Icon } from './core/ui';
 import {
 	$$,
 	convertMediaURLToVideoEmbed,
@@ -30,7 +31,8 @@ import {
 	ButtonsOption,
 	IFileBrowserCallBackData,
 	Controls,
-	IControlType
+	IControlType,
+	IUIButtonState
 } from './types';
 
 /**
@@ -132,7 +134,7 @@ export class Config implements IViewOptions {
 	 * });
 	 * ```
 	 */
-	toolbarButtonSize: 'small' | 'middle' | 'large' = 'middle';
+	toolbarButtonSize: IUIButtonState['size'] = 'middle';
 
 	/**
 	 * Allow navigation in the toolbar of the editor by Tab key
@@ -1076,16 +1078,16 @@ Config.prototype.controls = {
 	video: {
 		popup: (editor: IJodit, current, control, close) => {
 			const bylink = editor.create.fromHTML(
-					`<form class="jodit_form">
-					<div class="jodit jodit_form_group">
+					`<form class="jodit-form">
+					<div class="jodit jodit-form__group">
 						<input class="jodit_input" required name="code" placeholder="http://" type="url"/>
 						<button class="jodit-button" type="submit">${editor.i18n('Insert')}</button>
 					</div>
 				</form>`
 				) as HTMLFormElement,
 				bycode = editor.create.fromHTML(
-					`<form class="jodit_form">
-									<div class="jodit_form_group">
+					`<form class="jodit-form">
+									<div class="jodit-form__group">
 										<textarea class="jodit-textarea" required name="code" placeholder="${editor.i18n(
 											'Embed code'
 										)}"></textarea>

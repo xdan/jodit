@@ -833,7 +833,7 @@ export class ImageEditor extends Component {
 			label: string,
 			className: string,
 			active: boolean = true
-		) => `<div class="jodit_form_group">
+		) => `<div class="jodit-form__group">
 			<label>${i(label)}</label>
 			<div class="jodit-button_group jodit-button_radio_group">
 				<input ${act(
@@ -889,13 +889,13 @@ export class ImageEditor extends Component {
 													${i('Resize')}
 												</div>
 												<div class="${jie}_slider-content">
-													<div class="jodit_form_group">
+													<div class="jodit-form__group">
 														<label for="${jie}_width">
 															${i('Width')}
 														</label>
 														<input type="number" class="${jie}_width jodit_input"/>
 													</div>
-													<div class="jodit_form_group">
+													<div class="jodit-form__group">
 														<label for="${jie}_height">
 															${i('Height')}
 														</label>

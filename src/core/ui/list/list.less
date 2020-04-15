@@ -7,8 +7,14 @@
 		flex-shrink: 0;
 		flex-wrap: wrap;
 
-		background: @color-toolbar;
+		background-color: @color-toolbar;
 		border: 1px solid @color-border;
+
+		&_vertical {
+			flex-direction: column;
+			background-color: transparent;
+			border: 0;
+		}
 	}
 
 	&-separator {

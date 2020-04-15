@@ -8,6 +8,7 @@ import { Config } from '../config';
 import { css, ctrlKey, dataBind, splitArray } from '../core/helpers/';
 import { Plugin } from '../core/plugin';
 import { Dom } from '../core/dom';
+import { getContainer } from '../core/global';
 
 declare module '../config' {
 	interface Config {
@@ -95,8 +96,8 @@ export class DragAndDropElement extends Plugin {
 
 		if (!this.draggable.parentNode) {
 			css(this.draggable, {
-				'z-index': 100000000000000,
-				'pointer-events': 'none',
+				zIndex: 10000000000000,
+				pointerEvents: 'none',
 				position: 'fixed',
 				display: 'inline-block',
 				left: event.clientX,
@@ -105,7 +106,9 @@ export class DragAndDropElement extends Plugin {
 				height: this.draggable.offsetHeight
 			});
 
-			this.jodit.ownerDocument.body.appendChild(this.draggable);
+			getContainer(this.jodit, DragAndDropElement.name).appendChild(
+				this.draggable
+			);
 		}
 
 		css(this.draggable, {

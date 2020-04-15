@@ -4,6 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+@import (reference) '../mixins';
 @import (reference) '../variables';
 
 .jodit_table_resizer {
@@ -57,47 +58,42 @@
 	}
 }
 
-.jodit_form_inserter {
-	.jodit_form-table-creator-box {
+.jodit-form__inserter {
+	.jodit-form__table-creator-box {
 		display: flex;
 
 		@media (max-width: @screen-sm) {
 			flex-direction: column;
 		}
 
-		.jodit_form-container {
+		.jodit-form__container {
 			padding: 0;
 			margin: 0;
 			min-width: 180px;
 			font-size: 0;
 
-			> div {
-				width: @width_element_default;
-				height: @height_element_default;
-				box-sizing: border-box;
-				display: inline-block;
-				position: relative;
-				vertical-align: top;
-
-				&:after {
-					content: '';
-					position: absolute;
-					top: 0;
-					left: 0;
+			& > div {
+				& > span {
+					.size(@width_element_default, @width_element_default);
 					display: inline-block;
-					width: 12px;
-					height: 12px;
-					border: 1px solid #ccc;
-				}
+					box-sizing: border-box;
+					border: 1px solid @color-border;
+					margin-left: 2px;
+					margin-bottom: 2px;
 
-				&.hovered:after {
-					background: @color-background-hover;
-					border: solid 1px @color-border-active;
+					&:first-child {
+						margin-left: 0;
+					}
+
+					&.hovered {
+						background: @color-background-hover;
+						border-color: @color-background-hover;
+					}
 				}
 			}
 		}
 
-		.jodit_form-options {
+		.jodit-form__options {
 			font-size: @font-size-default;
 
 			label {

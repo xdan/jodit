@@ -5,7 +5,7 @@
 
 .button-size(@size, @plus: 20px) {
 	min-width: @size + @plus;
-	height: @size + @plus;
+	min-height: @size + @plus;
 
 	.jodit-icon {
 		width: @size;
@@ -14,22 +14,25 @@
 
 	& &__button {
 		min-width: @size + @plus;
-		height: @size + @plus;
+		min-height: @size + @plus;
 	}
 }
 
 .button-state() {
-	&:active:not([disabled]),
-	&[aria-pressed='true']:not([disabled]),
-	&_active:not([disabled]) {
-		background-color: fade(@color-button-background-hover, 40);
-		outline: 0;
-	}
-
 	&:hover:not([disabled]) {
 		background-color: @color-button-background-hover;
 		outline: 0;
 		opacity: 1;
+	}
+
+	&:active:not([disabled]),
+	&[aria-pressed='true']:not([disabled]) {
+		background-color: fade(@color-button-background-hover, 40);
+		outline: 0;
+	}
+
+	&[aria-pressed='true']:hover:not([disabled]) {
+		background-color: fade(@color-button-background-hover, 60);
 	}
 
 	&[disabled] {
@@ -58,7 +61,7 @@
 
 .jodit-ui-button {
 	display: flex;
-	justify-content: center;
+	justify-content: stretch;
 	align-items: center;
 
 	.jodit-ui-button_clear();
@@ -66,6 +69,13 @@
 	.button-state();
 
 	.button-size(@icon_middle_size);
+
+	&__text:not(:empty) {
+		.font();
+		display: block;
+		padding: 0 @padding-default;
+		text-align: left;
+	}
 
 	&_small {
 		.button-size(@icon_small_size);

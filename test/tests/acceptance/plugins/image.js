@@ -39,7 +39,7 @@ describe('Process Images plugins', function() {
 					'submit',
 					0,
 					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_form'
+						'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit-form'
 					)
 				);
 
@@ -57,7 +57,7 @@ describe('Process Images plugins', function() {
 					'submit',
 					0,
 					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_form'
+						'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit-form'
 					)
 				);
 
@@ -103,7 +103,7 @@ describe('Process Images plugins', function() {
 						'submit',
 						0,
 						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_form'
+							'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit-form'
 						)
 					);
 

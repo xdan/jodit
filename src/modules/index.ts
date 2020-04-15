@@ -5,7 +5,6 @@
  */
 
 export * from '../core/events';
-export { Ajax } from '../core/ajax';
 export { Component } from '../core/component';
 export { ContextMenu } from './contextMenu';
 export { Alert, Confirm, Prompt, Dialog } from './dialog/';

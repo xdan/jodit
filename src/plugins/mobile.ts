@@ -7,7 +7,7 @@
 import { Config } from '../config';
 import * as consts from '../core/constants';
 import { Buttons, IControlType, IToolbarCollection, IJodit } from '../types/';
-import { splitArray } from '../core/helpers/';
+import { camelCase, splitArray } from '../core/helpers/';
 import { makeCollection } from '../modules/toolbar/factory';
 
 declare module '../config' {
@@ -154,6 +154,8 @@ export function mobile(editor: IJodit) {
 							editor.toolbar.getParentContainer();
 
 						if (container) {
+							editor.events.fire(camelCase('close-all-popups'));
+
 							editor.toolbar
 								.build(
 									store.concat(editor.options.extraButtons)

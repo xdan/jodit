@@ -176,7 +176,6 @@ export class UIButton extends UIElement implements IUIButton {
 
 	destruct(): any {
 		this.jodit.events.off(this.container);
-		Dom.safeRemove(this.container);
 		return super.destruct();
 	}
 

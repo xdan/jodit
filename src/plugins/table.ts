@@ -59,7 +59,7 @@ Config.prototype.controls.table = {
 
 				Object.keys(classList).forEach((classes: string) => {
 					out.push(
-						`<label class="jodit_vertical_middle"><input class="jodit_checkbox" value="${classes}" type="checkbox"/>${classList[classes]}</label>`
+						`<label class="jodit_vertical_middle"><input class="jodit-checkbox" value="${classes}" type="checkbox"/>${classList[classes]}</label>`
 					);
 				});
 			}
@@ -67,13 +67,13 @@ Config.prototype.controls.table = {
 		};
 
 		const form: HTMLFormElement = editor.create.fromHTML(
-				'<form class="jodit_form jodit_form_inserter">' +
-					'<label class="jodit_form_center">' +
+				'<form class="jodit-form jodit-form__inserter">' +
+					'<label class="jodit-form__center">' +
 					'<span>1</span> &times; <span>1</span>' +
 					'</label>' +
-					'<div class="jodit_form-table-creator-box">' +
-					'<div class="jodit_form-container"></div>' +
-					'<div class="jodit_form-options">' +
+					'<div class="jodit-form__table-creator-box">' +
+					'<div class="jodit-form__container"></div>' +
+					'<div class="jodit-form__options">' +
 					generateExtraClasses() +
 					'</div>' +
 					'</div>' +
@@ -81,51 +81,30 @@ Config.prototype.controls.table = {
 			) as HTMLFormElement,
 			rows: HTMLSpanElement = form.querySelectorAll('span')[0],
 			cols: HTMLSpanElement = form.querySelectorAll('span')[1],
-			blocksContainer: HTMLDivElement = form.querySelector(
-				'.jodit_form-container'
+			blocksContainer = form.querySelector(
+				'.jodit-form__container'
 			) as HTMLDivElement,
-			mainBox: HTMLDivElement = form.querySelector(
-				'.jodit_form-table-creator-box'
+			options = form.querySelector(
+				'.jodit-form__options'
 			) as HTMLDivElement,
-			options: HTMLDivElement = form.querySelector(
-				'.jodit_form-options'
-			) as HTMLDivElement,
-			cells: HTMLDivElement[] = [];
+			cells: HTMLElement[] = [];
 
-		const generateRows = (need_rows: number) => {
-			const cnt: number = need_rows * default_cols_count;
+		const cnt = default_rows_count * default_cols_count;
 
-			if (cells.length > cnt) {
-				for (let i = cnt; i < cells.length; i += 1) {
-					Dom.safeRemove(cells[i]);
-					delete cells[i];
-				}
-				cells.length = cnt;
+		for (let i = 0; i < cnt; i += 1) {
+			if (!cells[i]) {
+				cells.push(
+					editor.create.element('span', {
+						dataIndex: i
+					})
+				);
 			}
-
-			for (let i = 0; i < cnt; i += 1) {
-				if (!cells[i]) {
-					const div = editor.create.div();
-
-					div.setAttribute('data-index', i.toString());
-					cells.push(div);
-				}
-			}
-
-			cells.forEach((cell: HTMLDivElement) => {
-				blocksContainer.appendChild(cell);
-			});
-
-			const width = (cells[0].offsetWidth || 18) * default_cols_count;
-
-			blocksContainer.style.width = width + 'px';
-			mainBox.style.width = width + options.offsetWidth + 1 + 'px';
-		};
+		}
 
 		const mouseenter = (e: MouseEvent, index?: number): void => {
 			const dv = e.target;
 
-			if (!Dom.isTag(dv, 'div')) {
+			if (!Dom.isTag(dv, 'span')) {
 				return;
 			}
 
@@ -163,7 +142,7 @@ Config.prototype.controls.table = {
 				e.preventDefault();
 				e.stopImmediatePropagation();
 
-				if (!Dom.isTag(dv, 'div')) {
+				if (!Dom.isTag(dv, 'span')) {
 					return;
 				}
 
@@ -251,23 +230,19 @@ Config.prototype.controls.table = {
 		);
 
 		if (button && button.parentElement) {
-			editor.events
-				.off(
-					button.parentElement.container,
-					'afterOpenPopup.tableGenerator'
-				)
-				.on(
-					button.parentElement.container,
-					'afterOpenPopup.tableGenerator',
-					() => {
-						generateRows(default_rows_count);
-						if (cells[0]) {
-							cells[0].className = 'hovered';
-						}
-					},
-					'',
-					true
-				);
+			for (let i = 0; i < default_rows_count; i += 1) {
+				const row = editor.create.div();
+
+				for (let j = 0; j < default_cols_count; j += 1) {
+					row.appendChild(cells[i * default_cols_count + j])
+				}
+
+				blocksContainer.appendChild(row);
+			}
+
+			if (cells[0]) {
+				cells[0].className = 'hovered';
+			}
 		}
 
 		return form;

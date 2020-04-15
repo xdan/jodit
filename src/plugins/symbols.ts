@@ -304,7 +304,7 @@ export class symbols {
 				i < editor.options.specialCharacters.length;
 
 			) {
-				const tr: HTMLTableRowElement = editor.create.element('tr');
+				const tr = editor.create.element('tr');
 
 				for (
 					let j: number = 0;
@@ -312,9 +312,7 @@ export class symbols {
 					i < editor.options.specialCharacters.length;
 					j += 1, i += 1
 				) {
-					const td: HTMLTableCellElement = editor.create.element(
-							'td'
-						),
+					const td = editor.create.element('td'),
 						a = editor.create.fromHTML(
 							`<a
 											data-index="${i}"
@@ -329,6 +327,7 @@ export class symbols {
 					td.appendChild(a);
 					tr.appendChild(td);
 				}
+
 				body.appendChild(tr);
 			}
 
@@ -359,11 +358,11 @@ export class symbols {
 					const target = e.target;
 
 					if (Dom.isTag(target, 'a')) {
-						const index: number = parseInt(
+						const index = parseInt(
 								attr(target, '-index') || '0',
 								10
 							),
-							jIndex: number = parseInt(
+							jIndex = parseInt(
 								attr(target, 'data-index-j') || '0',
 								10
 							);

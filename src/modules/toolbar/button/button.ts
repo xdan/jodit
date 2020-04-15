@@ -52,7 +52,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 
 		if (this.jodit.options.textIcons) {
 			state.icon = UIButtonState().icon;
-			state.text = control.name;
+			state.text = control.text || control.name;
 		} else {
 			if (control.iconURL) {
 				state.icon.iconURL = control.iconURL;
@@ -62,7 +62,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 			}
 
 			if (!control.iconURL && !state.icon.name) {
-				state.text = control.name;
+				state.text = control.text || control.name;
 			}
 		}
 
@@ -179,21 +179,31 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 				menu = new PopupMenu(this.jodit),
 				toolbar = makeCollection(this.jodit);
 
-			const getButton = (key: string, value: string | number) => ({
-				name: key.toString(),
-				template: control.template,
-				exec: control.exec,
-				command: control.command,
-				isActive: control.isActiveChild,
-				isDisabled: control.isChildDisabled,
-				mode: control.mode,
-				args: [...[control.args || []], key, value]
-			});
+			toolbar.mode = 'vertical';
+
+			const getButton = (key: string, value: string | number) => {
+				const childControl: IControlTypeStrong = {
+					name: key.toString(),
+					template: control.template,
+					exec: control.exec,
+					command: control.command,
+					isActive: control.isActiveChild,
+					isDisabled: control.isChildDisabled,
+					mode: control.mode,
+					args: [...(control.args ? control.args : []), key, value]
+				};
+
+				if (isString(value)) {
+					childControl.text = value;
+				}
+
+				return childControl;
+			};
 
 			toolbar.build(
 				Array.isArray(list)
 					? list.map(getButton)
-					: Object.keys(list).map(getButton)
+					: Object.keys(list).map((key) => getButton(key, list[key]))
 			);
 
 			menu.open(toolbar.container, () => position(this.container));

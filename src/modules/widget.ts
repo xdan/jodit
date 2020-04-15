@@ -54,7 +54,7 @@ export namespace Widget {
 		coldColor: string
 	): HTMLDivElement => {
 		const valueHex = normalizeColor(coldColor),
-			form: HTMLDivElement = editor.create.div('jodit_colorpicker'),
+			form: HTMLDivElement = editor.create.div('jodit-colorpicker'),
 			iconEye: string = editor.options.textIcons ? '' : Icon.get('eye'),
 			iconEraser: string = editor.options.textIcons
 				? `<span>${editor.i18n('eraser')}</span>`
@@ -84,7 +84,7 @@ export namespace Widget {
 				if (isPlainObject(colors)) {
 					Object.keys(colors).forEach(key => {
 						stack.push(
-							'<div class="jodit_colorpicker_group jodit_colorpicker_group-' +
+							'<div class="jodit-colorpicker__group jodit-colorpicker__group-' +
 								key +
 								'">'
 						);
@@ -447,11 +447,11 @@ export namespace Widget {
 
 		if (callbacks.url) {
 			const form = editor.create.fromHTML(
-					`<form onsubmit="return false;" class="jodit_form">
-						<div class="jodit_form_group">
+					`<form onsubmit="return false;" class="jodit-form">
+						<div class="jodit-form__group">
 							<input class="jodit_input" type="text" required name="url" placeholder="http://"/>
 						</div>
-						<div class="jodit_form_group">
+						<div class="jodit-form__group">
 							<input class="jodit_input" type="text" name="text" placeholder="${editor.i18n(
 								'Alternative text'
 							)}"/>

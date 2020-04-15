@@ -22,6 +22,7 @@ import { Ajax } from '../core/ajax';
 import { attr, browser, error, extend, isPlainObject, isJoditObject } from '../core/helpers/';
 import { Dom } from '../core/dom';
 import { Component, STATUSES } from '../core/component';
+import { getContainer } from '../core/global';
 
 declare module '../config' {
 	interface Config {
@@ -555,7 +556,7 @@ export class Uploader extends Component implements IUploader {
 							contenteditable: true
 						});
 
-						this.jodit.ownerDocument.body.appendChild(div);
+						getContainer(this.jodit, Uploader.name).appendChild(div);
 
 						const selection =
 								this.jodit && isJoditObject(this.jodit)

@@ -538,7 +538,7 @@ describe('Toolbar', function() {
 				'mousedown',
 				0,
 				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-brush .jodit_colorpicker > a > svg'
+					'.jodit_toolbar_btn.jodit_toolbar_btn-brush .jodit-colorpicker > a > svg'
 				)
 			);
 			expect(editor.value).equals('text2text');
@@ -760,7 +760,7 @@ describe('Toolbar', function() {
 
 			popup.querySelector('input[name=code]').value =
 				'sddhttps://www.youtube.com/watch?v=7CcEYRfxUOQ'; // try wrong url
-			simulateEvent('submit', 0, popup.querySelector('.jodit_form'));
+			simulateEvent('submit', 0, popup.querySelector('.jodit-form'));
 
 			expect(
 				popup.querySelectorAll('input[name=code].jodit_error').length
@@ -768,7 +768,7 @@ describe('Toolbar', function() {
 
 			popup.querySelector('input[name=code]').value =
 				'https://www.youtube.com/watch?v=7CcEYRfxUOQ';
-			simulateEvent('submit', 0, popup.querySelector('.jodit_form'));
+			simulateEvent('submit', 0, popup.querySelector('.jodit-form'));
 
 			expect(sortAttributes(editor.value)).equals(
 				'<iframe allowfullscreen="" frameborder="0" height="345" src="https://www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe>'
@@ -900,11 +900,11 @@ describe('Toolbar', function() {
 					simulateEvent(
 						'mousemove',
 						0,
-						list.querySelectorAll('.jodit_form-container div')[14]
+						list.querySelectorAll('.jodit-form__container div')[14]
 					);
 					expect(
 						list.querySelectorAll(
-							'.jodit_form-container div.hovered'
+							'.jodit-form__container div.hovered'
 						).length
 					).equals(10);
 				});
@@ -931,7 +931,7 @@ describe('Toolbar', function() {
 						);
 
 						const divs = list.querySelectorAll(
-							'.jodit_form-container div'
+							'.jodit-form__container div'
 						);
 
 						expect(divs.length).to.be.above(10);
@@ -940,7 +940,7 @@ describe('Toolbar', function() {
 
 						expect(
 							list.querySelectorAll(
-								'.jodit_form-container div.hovered'
+								'.jodit-form__container div.hovered'
 							).length
 						).equals(10);
 					});
@@ -2265,7 +2265,7 @@ describe('Toolbar', function() {
 							'mousedown',
 							0,
 							popupColor.querySelector(
-								'.jodit_colorpicker_group>a'
+								'.jodit-colorpicker__group>a'
 							)
 						);
 

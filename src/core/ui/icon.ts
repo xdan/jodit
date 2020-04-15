@@ -34,7 +34,7 @@ export class Icon {
 		name: string,
 		defaultValue: string = '<span></span>'
 	): string {
-		return this.get(name) || defaultValue;
+		return this.getIcon(name) || defaultValue;
 	}
 
 	/**

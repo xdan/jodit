@@ -84,10 +84,6 @@ export class addNewLine extends Plugin {
 
 		this.isShown = true;
 
-		if (this.jodit.container.classList.contains('jodit_popup_active')) {
-			return;
-		}
-
 		this.jodit.async.clearTimeout(this.timeout);
 		this.line.classList.toggle('jodit-add-new-line_after', !this.preview);
 		this.jodit.container.appendChild(this.line);

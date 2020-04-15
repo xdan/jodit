@@ -111,11 +111,8 @@ Config.prototype.controls.paragraph = {
 		return false;
 	},
 
-	template: (editor: IJodit, key: string, value: string) => {
-		return `<${key} class="jodit_list_element"><span>${editor.i18n(
-			value
-		)}</span></${key}></li>`;
-	},
+	template: (e: IJodit, key: string, value: string) =>
+		`<${key}><span>${e.i18n(value)}</span></${key}>`,
 
 	tooltip: 'Insert format block'
 } as IControlType;
