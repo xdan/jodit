@@ -1,4 +1,4 @@
-import "./about.less";
+import './about.less';
 
 import { Config } from '../../config';
 import { IControlType, IJodit } from '../../types';
@@ -16,23 +16,23 @@ Config.prototype.controls.about = {
 			`<div class="jodit-about">
 					<div>${i18n('Jodit Editor')} v.${editor.getVersion()}</div>
 					<div>${i18n(
-				'License: %s',
-				!isLicense(editor.options.license)
-					? 'MIT'
-					: normalizeLicense(editor.options.license)
-			)}</div>
+						'License: %s',
+						!isLicense(editor.o.license)
+							? 'MIT'
+							: normalizeLicense(editor.o.license)
+					)}</div>
 					<div>
 						<a href="https://xdsoft.net/jodit/" target="_blank">http://xdsoft.net/jodit/</a>
 					</div>
 					<div>
 						<a href="https://xdsoft.net/jodit/doc/" target="_blank">${i18n(
-				"Jodit User's Guide"
-			)}</a>
+							"Jodit User's Guide"
+						)}</a>
 						${i18n('contains detailed help for using')}
 					</div>
 					<div>${i18n(
-				'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.'
-			)}</div>
+						'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.'
+					)}</div>
 				</div>`
 		);
 		dialog.open();

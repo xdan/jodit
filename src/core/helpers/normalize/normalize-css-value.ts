@@ -7,22 +7,22 @@
 import { isNumeric } from '../checker/';
 
 export const normalizeCssValue = (
-    key: string,
-    value: string | number
+	key: string,
+	value: string | number
 ): string | number => {
-    switch (key.toLowerCase()) {
-        case 'font-weight':
-            switch (value.toString().toLowerCase()) {
-                case 'bold':
-                    return 700;
-                case 'normal':
-                    return 400;
-                case 'heavy':
-                    return 900;
-            }
+	switch (key.toLowerCase()) {
+		case 'font-weight':
+			switch (value.toString().toLowerCase()) {
+				case 'bold':
+					return 700;
+				case 'normal':
+					return 400;
+				case 'heavy':
+					return 900;
+			}
 
-            return isNumeric(value) ? +value : value;
-    }
+			return isNumeric(value) ? +value : value;
+	}
 
-    return value;
+	return value;
 };

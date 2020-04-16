@@ -101,14 +101,11 @@ Config.prototype.controls.eraser = {
  */
 export class cleanHtml extends Plugin {
 	protected afterInit(jodit: IJodit): void {
-		jodit.events
+		jodit.e
 			.off('.cleanHtml')
 			.on(
 				'change.cleanHtml afterSetMode.cleanHtml afterInit.cleanHtml mousedown.cleanHtml keydown.cleanHtml',
-				jodit.async.debounce(
-					this.onChange,
-					jodit.options.cleanHTML.timeout
-				)
+				jodit.async.debounce(this.onChange, jodit.o.cleanHTML.timeout)
 			)
 			.on('keyup.cleanHtml', this.onKeyUpCleanUp)
 			.on('beforeCommand.cleanHtml', this.beforeCommand)
@@ -120,11 +117,11 @@ export class cleanHtml extends Plugin {
 			return;
 		}
 
-		const editor = this.jodit;
+		const editor = this.j;
 
 		const current = editor.selection.current();
 
-		const replaceOldTags = editor.options.cleanHTML.replaceOldTags;
+		const replaceOldTags = editor.o.cleanHTML.replaceOldTags;
 
 		if (replaceOldTags && current) {
 			const tags = Object.keys(replaceOldTags).join('|');
@@ -145,7 +142,7 @@ export class cleanHtml extends Plugin {
 					Dom.replace(
 						oldParent as HTMLElement,
 						tagName as HTMLTagNames,
-						editor.create.inside,
+						editor.c.inside,
 						true,
 						false
 					);
@@ -167,15 +164,15 @@ export class cleanHtml extends Plugin {
 		remove.forEach(Dom.safeRemove);
 
 		if (remove.length || work) {
-			editor.events && editor.events.fire('syncho');
+			editor.events && editor.e.fire('syncho');
 		}
 	};
 
 	private allowEdit(): boolean {
 		return !(
-			this.jodit.isInDestruct ||
-			!this.jodit.isEditorMode() ||
-			this.jodit.getReadOnly()
+			this.j.isInDestruct ||
+			!this.j.isEditorMode() ||
+			this.j.getReadOnly()
 		);
 	}
 
@@ -196,11 +193,11 @@ export class cleanHtml extends Plugin {
 		}
 
 		if (
-			this.jodit.options.cleanHTML.fillEmptyParagraph &&
-			Dom.isBlock(nodeElm, this.jodit.editorWindow) &&
+			this.j.o.cleanHTML.fillEmptyParagraph &&
+			Dom.isBlock(nodeElm, this.j.editorWindow) &&
 			Dom.isEmpty(nodeElm, /^(img|svg|canvas|input|textarea|form|br)$/)
 		) {
-			const br = this.jodit.create.inside.element('br');
+			const br = this.j.c.inside.element('br');
 
 			nodeElm.appendChild(br);
 			work = true;
@@ -289,16 +286,16 @@ export class cleanHtml extends Plugin {
 	}
 
 	private allowTagsHash: IDictionary | false = cleanHtml.getHash(
-		this.jodit.options.cleanHTML.allowTags
+		this.j.o.cleanHTML.allowTags
 	);
 
 	private denyTagsHash: IDictionary | false = cleanHtml.getHash(
-		this.jodit.options.cleanHTML.denyTags
+		this.j.o.cleanHTML.denyTags
 	);
 
 	// remove invisible chars if node has another chars
 	private onKeyUpCleanUp = () => {
-		const editor = this.jodit;
+		const editor = this.j;
 
 		if (!this.allowEdit()) {
 			return;
@@ -354,34 +351,32 @@ export class cleanHtml extends Plugin {
 	};
 
 	private onInsertHorizontalLine() {
-		const hr: HTMLHRElement | null = this.jodit.editor.querySelector(
+		const hr: HTMLHRElement | null = this.j.editor.querySelector(
 			'hr[id=null]'
 		);
 
 		if (hr) {
 			let node = Dom.next(
 				hr,
-				node => Dom.isBlock(node, this.jodit.editorWindow),
-				this.jodit.editor,
+				node => Dom.isBlock(node, this.j.editorWindow),
+				this.j.editor,
 				false
 			) as Node | null;
 
 			if (!node) {
-				node = this.jodit.create.inside.element(
-					this.jodit.options.enter
-				);
+				node = this.j.c.inside.element(this.j.o.enter);
 
 				if (node) {
 					Dom.after(hr, node as HTMLElement);
 				}
 			}
 
-			this.jodit.selection.setCursorIn(node);
+			this.j.selection.setCursorIn(node);
 		}
 	}
 
 	private onRemoveFormat() {
-		const sel = this.jodit.selection;
+		const sel = this.j.selection;
 		const current = sel.current();
 
 		if (!current) {
@@ -389,7 +384,7 @@ export class cleanHtml extends Plugin {
 		}
 
 		const up = (node: Node | null) =>
-			node && Dom.up(node, Dom.isInlineBlock, this.jodit.editor);
+			node && Dom.up(node, Dom.isInlineBlock, this.j.editor);
 
 		let parentNode = up(current),
 			anotherParent = parentNode;
@@ -413,7 +408,7 @@ export class cleanHtml extends Plugin {
 		}
 
 		if (parentNode) {
-			const tmp = this.jodit.create.inside.text(INVISIBLE_SPACE);
+			const tmp = this.j.c.inside.text(INVISIBLE_SPACE);
 			range.insertNode(tmp);
 			const insideParent = Dom.isOrContains(parentNode, tmp, true);
 			Dom.safeRemove(tmp);
@@ -424,10 +419,10 @@ export class cleanHtml extends Plugin {
 				parentNode.parentNode &&
 				parentNode.parentNode !== fragment
 			) {
-				const second = this.jodit.selection.splitSelection(
+				const second = this.j.selection.splitSelection(
 					parentNode as HTMLElement
 				);
-				this.jodit.selection.setCursorAfter(second || parentNode);
+				this.j.selection.setCursorAfter(second || parentNode);
 
 				if (Dom.isEmpty(parentNode)) {
 					Dom.safeRemove(parentNode);
@@ -489,7 +484,7 @@ export class cleanHtml extends Plugin {
 			case Node.TEXT_NODE:
 				if (
 					!onlyRemoveFont &&
-					this.jodit.options.cleanHTML.replaceNBSP &&
+					this.j.o.cleanHTML.replaceNBSP &&
 					Dom.isText(elm) &&
 					elm.nodeValue !== null &&
 					elm.nodeValue.match(SPACE_REG_EXP)
@@ -524,24 +519,24 @@ export class cleanHtml extends Plugin {
 			!cleanHtml.hasNotEmptyTextSibling(node, true) &&
 			Dom.up(
 				node,
-				node => Dom.isBlock(node, this.jodit.editorWindow),
-				this.jodit.editor
+				node => Dom.isBlock(node, this.j.editorWindow),
+				this.j.editor
 			) !==
 				Dom.up(
 					current,
-					node => Dom.isBlock(node, this.jodit.editorWindow),
-					this.jodit.editor
+					node => Dom.isBlock(node, this.j.editorWindow),
+					this.j.editor
 				)
 		) {
 			return true;
 		}
 
 		return (
-			this.jodit.options.cleanHTML.removeEmptyElements &&
+			this.j.o.cleanHTML.removeEmptyElements &&
 			current !== false &&
 			Dom.isElement(node) &&
 			node.nodeName.match(IS_INLINE) !== null &&
-			!this.jodit.selection.isMarker(node) &&
+			!this.j.selection.isMarker(node) &&
 			trim((node as Element).innerHTML).length === 0 &&
 			!Dom.isOrContains(node, current)
 		);
@@ -562,6 +557,6 @@ export class cleanHtml extends Plugin {
 	}
 
 	protected beforeDestruct(jodit: IJodit): void {
-		this.jodit.events.off('.cleanHtml');
+		this.j.e.off('.cleanHtml');
 	}
 }

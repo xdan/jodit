@@ -150,7 +150,7 @@ export function paste(editor: IJodit) {
 		): Dialog | void => {
 			if (
 				editor.events &&
-				editor.events.fire(
+				editor.e.fire(
 					'beforeOpenPasteDialog',
 					msg,
 					title,
@@ -170,46 +170,46 @@ export function paste(editor: IJodit) {
 
 			editor.markOwner(dialog.container);
 
-			const keep = dialog.create.fromHTML(
+			const keep = dialog.c.fromHTML(
 				`<a href="javascript:void(0)" class="jodit-button jodit-button_primary"><span>${editor.i18n(
 					'Keep'
 				)}</span></a>`
 			) as HTMLAnchorElement;
 
-			const clear = dialog.create.fromHTML(
+			const clear = dialog.c.fromHTML(
 				`<a href="javascript:void(0)" class="jodit-button"><span>${editor.i18n(
 					clearButton
 				)}</span></a>`
 			) as HTMLAnchorElement;
 
-			const clear2 = dialog.create.fromHTML(
+			const clear2 = dialog.c.fromHTML(
 				`<a href="javascript:void(0)" class="jodit-button"><span>${editor.i18n(
 					clear2Button
 				)}</span></a>`
 			) as HTMLAnchorElement;
 
-			const cancel = dialog.create.fromHTML(
+			const cancel = dialog.c.fromHTML(
 				`<a href="javascript:void(0)" class="jodit-button"><span>${editor.i18n(
 					'Cancel'
 				)}</span></a>`
 			) as HTMLAnchorElement;
 
-			editor.events.on(keep, 'click', () => {
+			editor.e.on(keep, 'click', () => {
 				dialog.close();
 				callback && callback(true);
 			});
 
-			editor.events.on(clear, 'click', () => {
+			editor.e.on(clear, 'click', () => {
 				dialog.close();
 				callback && callback(false);
 			});
 
-			editor.events.on(clear2, 'click', () => {
+			editor.e.on(clear2, 'click', () => {
 				dialog.close();
 				callback && callback(0);
 			});
 
-			editor.events.on(cancel, 'click', () => {
+			editor.e.on(cancel, 'click', () => {
 				dialog.close();
 			});
 
@@ -402,7 +402,7 @@ export function paste(editor: IJodit) {
 			}
 
 			if (event.type !== 'drop') {
-				const div = editor.create.div('', {
+				const div = editor.c.div('', {
 					tabindex: -1,
 					contenteditable: true,
 					style: {
@@ -462,7 +462,7 @@ export function paste(editor: IJodit) {
 		}
 	};
 
-	editor.events
+	editor.e
 		.off('paste.paste')
 		.on('paste.paste', (event: ClipboardEvent | DragEvent):
 			| false
@@ -476,14 +476,14 @@ export function paste(editor: IJodit) {
 			 * @example
 			 * ```javascript
 			 * var editor = new Jodit("#redactor");
-			 * editor.events.on('beforePaste', function (event) {
+			 * editor.e.on('beforePaste', function (event) {
 			 *     return false; // deny paste
 			 * });
 			 * ```
 			 */
 			if (
 				beforePaste(event) === false ||
-				editor.events.fire('beforePaste', event) === false
+				editor.e.fire('beforePaste', event) === false
 			) {
 				event.preventDefault();
 				return false;
@@ -540,7 +540,7 @@ export function paste(editor: IJodit) {
 					 * @example
 					 * ```javascript
 					 * var editor = new Jodit("#redactor");
-					 * editor.events.on('beforePaste', function (event) {
+					 * editor.e.on('beforePaste', function (event) {
 					 *     return false; // deny paste
 					 * });
 					 * ```
@@ -550,7 +550,7 @@ export function paste(editor: IJodit) {
 					const buffer = editor.buffer.get(clipboardPluginKey);
 
 					if (buffer !== clipboard_html) {
-						const result = editor.events.fire(
+						const result = editor.e.fire(
 							'processPaste',
 							event,
 							clipboard_html,
@@ -590,18 +590,18 @@ export function paste(editor: IJodit) {
 			 * @example
 			 * ```javascript
 			 * var editor = new Jodit("#redactor");
-			 * editor.events.on('afterPaste', function (event) {
+			 * editor.e.on('afterPaste', function (event) {
 			 *     return false; // deny paste
 			 * });
 			 * ```
 			 */
-			if (editor.events.fire('afterPaste', event) === false) {
+			if (editor.e.fire('afterPaste', event) === false) {
 				return false;
 			}
 		});
 
 	if (opt.nl2brInPlainText) {
-		editor.events
+		editor.e
 			.off('processPaste.paste')
 			.on(
 				'processPaste.paste',

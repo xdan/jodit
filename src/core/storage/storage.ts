@@ -6,7 +6,10 @@
 
 import { IStorage, StorageValueType } from '../../types';
 import { camelCase } from '../helpers/';
-import { canUsePersistentStorage, LocalStorageProvider } from './engines/local-storage-provider';
+import {
+	canUsePersistentStorage,
+	LocalStorageProvider
+} from './engines/local-storage-provider';
 import { MemoryStorageProvider } from './engines/memory-storage-provider';
 
 export const StorageKey: string = 'Jodit_';
@@ -30,7 +33,7 @@ export class Storage<T = StorageValueType> implements IStorage<T> {
 		return this.provider.clear();
 	}
 
-	protected constructor(readonly provider: IStorage<T>, suffix ?: string) {
+	protected constructor(readonly provider: IStorage<T>, suffix?: string) {
 		if (suffix) {
 			this.prefix += suffix;
 		}

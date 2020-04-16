@@ -21,7 +21,8 @@ export default {
 	'Open in new tab': 'Otwórz w nowej zakładce',
 	'Open editor in fullsize': 'Otwórz edytor w pełnym rozmiarze',
 	'Clear Formatting': 'Wyczyść formatowanie',
-	'Fill color or set the text color': 'Kolor wypełnienia lub ustaw kolor tekstu',
+	'Fill color or set the text color':
+		'Kolor wypełnienia lub ustaw kolor tekstu',
 	Redo: 'Ponów',
 	Undo: 'Cofnij',
 	Bold: 'Pogrubienie',
@@ -227,9 +228,10 @@ export default {
 	preview: 'podgląd',
 	download: 'pobierz',
 	'Paste from clipboard': 'Wklej ze schowka',
-	'Your browser doesn\'t support direct access to the clipboard.': 'Twoja przeglądarka nie obsługuje schowka',
+	"Your browser doesn't support direct access to the clipboard.":
+		'Twoja przeglądarka nie obsługuje schowka',
 	'Copy selection': 'Kopiuj zaznaczenie',
-	'copy': 'kopiuj',
+	copy: 'kopiuj',
 	'Border radius': 'Zaokrąglenie krawędzi',
-	'Show all': 'Pokaż wszystkie',
+	'Show all': 'Pokaż wszystkie'
 } as IDictionary<string>;

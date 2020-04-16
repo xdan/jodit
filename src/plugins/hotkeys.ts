@@ -123,11 +123,11 @@ export class hotkeys extends Plugin {
 	};
 
 	afterInit(editor: IJodit): void {
-		const commands: string[] = Object.keys(editor.options.commandToHotkeys);
+		const commands: string[] = Object.keys(editor.o.commandToHotkeys);
 
 		commands.forEach((commandName: string) => {
 			const shortcuts: string | string[] | void =
-				editor.options.commandToHotkeys[commandName];
+				editor.o.commandToHotkeys[commandName];
 
 			if (shortcuts) {
 				editor.registerHotkeyToCommand(shortcuts, commandName);
@@ -136,14 +136,14 @@ export class hotkeys extends Plugin {
 
 		let itIsHotkey: boolean = false;
 
-		editor.events
+		editor.e
 			.off('.hotkeys')
 			.on(
 				'keydown.hotkeys',
 				(event: KeyboardEvent): void | false => {
 					const shortcut: string = this.onKeyPress(event);
 
-					const resultOfFire = this.jodit.events.fire(
+					const resultOfFire = this.j.e.fire(
 						shortcut + '.hotkey',
 						event.type
 					);
@@ -151,7 +151,7 @@ export class hotkeys extends Plugin {
 					if (resultOfFire === false) {
 						itIsHotkey = true;
 
-						editor.events.stopPropagation('keydown');
+						editor.e.stopPropagation('keydown');
 
 						return false;
 					}
@@ -165,7 +165,7 @@ export class hotkeys extends Plugin {
 				(): void | false => {
 					if (itIsHotkey) {
 						itIsHotkey = false;
-						editor.events.stopPropagation('keyup');
+						editor.e.stopPropagation('keyup');
 						return false;
 					}
 				},
@@ -176,7 +176,7 @@ export class hotkeys extends Plugin {
 	}
 	beforeDestruct(jodit: IJodit): void {
 		if (jodit.events) {
-			jodit.events.off('.hotkeys');
+			jodit.e.off('.hotkeys');
 		}
 	}
 }

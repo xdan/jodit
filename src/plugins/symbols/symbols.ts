@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import "./symbols.less";
+import './symbols.less';
 
 import { Config } from '../../config';
 import {
@@ -245,16 +245,16 @@ Config.prototype.controls.symbol = {
 	hotkeys: ['ctrl+shift+i', 'cmd+shift+i'],
 	tooltip: 'Insert Special Character',
 	popup: (editor: IJodit, current, control, close): any => {
-		const container: HTMLElement | undefined = editor.events.fire(
+		const container: HTMLElement | undefined = editor.e.fire(
 			'generateSpecialCharactersTable.symbols'
 		);
 		if (container) {
-			if (editor.options.usePopupForSpecialCharacters) {
-				const box = editor.create.div();
+			if (editor.o.usePopupForSpecialCharacters) {
+				const box = editor.c.div();
 
 				box.classList.add('jodit-symbols');
 				box.appendChild(container);
-				editor.events.on(container, 'close_dialog', close);
+				editor.e.on(container, 'close_dialog', close);
 				return box;
 			} else {
 				const dialog = Alert(
@@ -269,7 +269,7 @@ Config.prototype.controls.symbol = {
 				);
 
 				a && a.focus();
-				editor.events.on('beforeDestruct', () => {
+				editor.e.on('beforeDestruct', () => {
 					dialog && dialog.close();
 				});
 			}
@@ -284,8 +284,8 @@ export class symbols {
 	private countInRow: number = 17;
 
 	constructor(editor: IJodit) {
-		editor.events.on('generateSpecialCharactersTable.symbols', () => {
-			const container: HTMLDivElement = editor.create.fromHTML(
+		editor.e.on('generateSpecialCharactersTable.symbols', () => {
+			const container: HTMLDivElement = editor.c.fromHTML(
 					'<div class="jodit-symbols__container">' +
 						'<div class="jodit-symbols__container_table"><table><tbody></tbody></table></div>' +
 						'<div class="jodit-symbols__container_preview"><div class="jodit-symbols__preview"></div></div>' +
@@ -300,28 +300,24 @@ export class symbols {
 				body: HTMLTableSectionElement = table.tBodies[0],
 				chars: HTMLAnchorElement[] = [];
 
-			for (
-				let i: number = 0;
-				i < editor.options.specialCharacters.length;
-
-			) {
-				const tr = editor.create.element('tr');
+			for (let i: number = 0; i < editor.o.specialCharacters.length; ) {
+				const tr = editor.c.element('tr');
 
 				for (
 					let j: number = 0;
 					j < this.countInRow &&
-					i < editor.options.specialCharacters.length;
+					i < editor.o.specialCharacters.length;
 					j += 1, i += 1
 				) {
-					const td = editor.create.element('td'),
-						a = editor.create.fromHTML(
+					const td = editor.c.element('td'),
+						a = editor.c.fromHTML(
 							`<a
 											data-index="${i}"
 											data-index-j="${j}"
 											href="javascript:void(0)"
 											role="option"
 											tabindex="-1"
-									>${editor.options.specialCharacters[i]}</a>`
+									>${editor.o.specialCharacters[i]}</a>`
 						) as HTMLAnchorElement;
 
 					chars.push(a);
@@ -334,7 +330,7 @@ export class symbols {
 
 			const self: symbols = this;
 
-			editor.events
+			editor.e
 				.on(chars, 'focus', function(this: HTMLAnchorElement) {
 					preview.innerHTML = this.innerHTML;
 				})
@@ -345,7 +341,7 @@ export class symbols {
 					if (Dom.isTag(this, 'a')) {
 						editor.selection.focus();
 						editor.selection.insertHTML(this.innerHTML);
-						editor.events.fire(this, 'close_dialog');
+						editor.e.fire(this, 'close_dialog');
 						e && e.preventDefault();
 						e && e.stopImmediatePropagation();
 					}
@@ -411,7 +407,7 @@ export class symbols {
 								chars[newIndex] && chars[newIndex].focus();
 								break;
 							case KEY_ENTER:
-								editor.events.fire(target, 'mousedown');
+								editor.e.fire(target, 'mousedown');
 								e.stopImmediatePropagation();
 								e.preventDefault();
 								break;

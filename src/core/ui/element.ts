@@ -2,7 +2,9 @@ import { Component, STATUSES } from '../component';
 import { IUIElement, IViewBased, Nullable } from '../../types';
 import { Dom } from '../dom';
 
-export abstract class UIElement<T extends IViewBased = IViewBased> extends Component<T> implements IUIElement {
+export abstract class UIElement<T extends IViewBased = IViewBased>
+	extends Component<T>
+	implements IUIElement {
 	/**
 	 * Is not a button
 	 */
@@ -18,7 +20,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased> extends Compo
 	/**
 	 * Update UI from state
 	 */
-	update(): void {};
+	update(): void {}
 
 	/**
 	 * Append container to element
@@ -40,7 +42,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased> extends Compo
 	 * Create main HTML container
 	 */
 	protected createContainer(): HTMLElement {
-		return this.jodit.create.div(this.componentName);
+		return this.j.c.div(this.componentName);
 	}
 
 	constructor(jodit?: T) {

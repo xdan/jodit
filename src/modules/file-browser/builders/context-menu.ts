@@ -21,11 +21,11 @@ const CLASS_PREVIEW = F_CLASS + '_preview_',
 		'</a>';
 
 export default (self: FileBrowser) => {
-	if (!self.options.contextMenu) {
+	if (!self.o.contextMenu) {
 		return () => {};
 	}
 
-	const contextmenu = makeContextMenu(self.jodit || self);
+	const contextmenu = makeContextMenu(self.j || self);
 
 	return function(this: HTMLElement, e: DragEvent): boolean | void {
 		let item: HTMLElement = this,
@@ -60,7 +60,7 @@ export default (self: FileBrowser) => {
 								icon: 'italic',
 								title: 'Rename',
 								exec: async () => {
-									self.events.fire(
+									self.e.fire(
 										'fileRename.filebrowser',
 										ga('data-name'),
 										ga('data-path'),
@@ -93,23 +93,21 @@ export default (self: FileBrowser) => {
 								title: 'Preview',
 								exec: () => {
 									const preview = new Dialog(self),
-										temp_content = self.create.div(
+										temp_content = self.c.div(
 											F_CLASS + '_preview',
 											ICON_LOADER
 										),
-										preview_box = self.create.div(
+										preview_box = self.c.div(
 											F_CLASS + '_preview_box'
 										),
-										next = self.create.fromHTML(
+										next = self.c.fromHTML(
 											preview_tpl_next()
 										),
-										prev = self.create.fromHTML(
+										prev = self.c.fromHTML(
 											preview_tpl_next('prev', 'left')
 										),
 										addLoadHandler = (src: string) => {
-											const image = self.create.element(
-												'img'
-											);
+											const image = self.c.element('img');
 
 											image.setAttribute('src', src);
 
@@ -118,7 +116,7 @@ export default (self: FileBrowser) => {
 													return;
 												}
 
-												self.events.off(image, 'load');
+												self.e.off(image, 'load');
 
 												Dom.detach(temp_content);
 
@@ -159,56 +157,52 @@ export default (self: FileBrowser) => {
 												);
 											};
 
-											self.events.on(
-												image,
-												'load',
-												onload
-											);
+											self.e.on(image, 'load', onload);
 
 											if (image.complete) {
 												onload();
 											}
 										};
 
-									self.events.on(
-										[next, prev],
-										'click',
-										function(this: HTMLElement) {
-											if (
-												this.classList.contains(
-													CLASS_PREVIEW +
-														'navigation-next'
+									self.e.on([next, prev], 'click', function(
+										this: HTMLElement
+									) {
+										if (
+											this.classList.contains(
+												CLASS_PREVIEW +
+													'navigation-next'
+											)
+										) {
+											item = <HTMLElement>(
+												Dom.nextWithClass(
+													item,
+													ITEM_CLASS
 												)
-											) {
-												item = <HTMLElement>(
-													Dom.nextWithClass(
-														item,
-														ITEM_CLASS
-													)
-												);
-											} else {
-												item = <HTMLElement>(
-													Dom.prevWithClass(
-														item,
-														ITEM_CLASS
-													)
-												);
-											}
-
-											if (!item) {
-												throw error('Need element');
-											}
-
-											Dom.detach(temp_content);
-											Dom.detach(preview_box);
-
-											temp_content.innerHTML = ICON_LOADER;
-
-											addLoadHandler(ga('href'));
+											);
+										} else {
+											item = <HTMLElement>(
+												Dom.prevWithClass(
+													item,
+													ITEM_CLASS
+												)
+											);
 										}
-									);
 
-									preview.container.classList.add(F_CLASS + '_preview_dialog');
+										if (!item) {
+											throw error('Need element');
+										}
+
+										Dom.detach(temp_content);
+										Dom.detach(preview_box);
+
+										temp_content.innerHTML = ICON_LOADER;
+
+										addLoadHandler(ga('href'));
+									});
+
+									preview.container.classList.add(
+										F_CLASS + '_preview_dialog'
+									);
 									preview.setContent(temp_content);
 									preview.setPosition();
 									preview.open();
@@ -230,7 +224,7 @@ export default (self: FileBrowser) => {
 							const url = ga('href');
 
 							if (url) {
-								self.ownerWindow.open(url);
+								self.ow.open(url);
 							}
 						}
 					}
@@ -239,7 +233,7 @@ export default (self: FileBrowser) => {
 			);
 		}, self.defaultTimeout);
 
-		self?.events.on('beforeDestruct', () => {
+		self?.e.on('beforeDestruct', () => {
 			contextmenu.destruct();
 		});
 

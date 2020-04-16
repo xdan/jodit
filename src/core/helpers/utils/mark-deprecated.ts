@@ -17,9 +17,16 @@ export const cns = console;
  * @param names
  * @param ctx
  */
-export function markDeprecated(method: Function, names: string[] = [''], ctx: any = null) {
+export function markDeprecated(
+	method: Function,
+	names: string[] = [''],
+	ctx: any = null
+) {
 	return (...args: any[]) => {
-		cns.warn(`Method "${names[0]}" deprecated.` + (names[1] ? ` Use "${names[1]}" instead` : ''));
+		cns.warn(
+			`Method "${names[0]}" deprecated.` +
+				(names[1] ? ` Use "${names[1]}" instead` : '')
+		);
 		return method.call(ctx, ...args);
 	};
 }

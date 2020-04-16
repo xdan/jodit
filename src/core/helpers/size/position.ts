@@ -26,7 +26,7 @@ export function position(
 		yPos = 0,
 		el: HTMLElement | null = elm;
 
-	const doc: Document = elm.ownerDocument || jodit?.ownerDocument || document;
+	const doc: Document = elm.ownerDocument || jodit?.od || document;
 
 	while (el) {
 		if (el.tagName == 'BODY') {

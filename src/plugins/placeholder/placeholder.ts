@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import "./placeholder.less";
+import './placeholder.less';
 
 import { Config } from '../../config';
 import * as consts from '../../core/constants';
@@ -68,27 +68,27 @@ export class placeholder extends Plugin {
 	private placeholderElm!: HTMLElement;
 
 	protected afterInit(editor: IJodit): void {
-		if (!editor.options.showPlaceholder) {
+		if (!editor.o.showPlaceholder) {
 			return;
 		}
 
 		this.toggle = editor.async.debounce(
 			this.toggle.bind(this),
-			this.jodit.defaultTimeout / 10
+			this.j.defaultTimeout / 10
 		);
 
-		this.placeholderElm = editor.create.fromHTML(
+		this.placeholderElm = editor.c.fromHTML(
 			`<span style="display: none;" class="jodit-placeholder">${editor.i18n(
-				editor.options.placeholder
+				editor.o.placeholder
 			)}</span>`
 		);
 
-		if (editor.options.direction === 'rtl') {
+		if (editor.o.direction === 'rtl') {
 			this.placeholderElm.style.right = '0px';
 			this.placeholderElm.style.direction = 'rtl';
 		}
 
-		editor.events
+		editor.e
 			.on('readonly', (isReadOnly: boolean) => {
 				if (isReadOnly) {
 					this.hide();
@@ -102,19 +102,19 @@ export class placeholder extends Plugin {
 	}
 
 	private addEvents = () => {
-		const editor = this.jodit;
+		const editor = this.j;
 
 		if (
-			editor.options.useInputsPlaceholder &&
+			editor.o.useInputsPlaceholder &&
 			editor.element.hasAttribute('placeholder')
 		) {
 			this.placeholderElm.innerHTML =
 				attr(editor.element, 'placeholder') || '';
 		}
 
-		editor.events.fire('placeholder', this.placeholderElm.innerHTML);
+		editor.e.fire('placeholder', this.placeholderElm.innerHTML);
 
-		editor.events
+		editor.e
 			.off('.placeholder')
 			.on(
 				'change.placeholder focus.placeholder keyup.placeholder mouseup.placeholder keydown.placeholder ' +
@@ -127,9 +127,9 @@ export class placeholder extends Plugin {
 	};
 
 	private show() {
-		const editor = this.jodit;
+		const editor = this.j;
 
-		if (editor.options.readonly) {
+		if (editor.o.readonly) {
 			return;
 		}
 
@@ -182,7 +182,7 @@ export class placeholder extends Plugin {
 	}
 
 	private toggle() {
-		const editor = this.jodit;
+		const editor = this.j;
 
 		if (!editor.editor || editor.isInDestruct) {
 			return;
@@ -237,6 +237,6 @@ export class placeholder extends Plugin {
 	protected beforeDestruct(jodit: IJodit): void {
 		this.hide();
 
-		this.jodit.events.off('.placeholder').off(window, 'load', this.toggle);
+		this.j.e.off('.placeholder').off(window, 'load', this.toggle);
 	}
 }

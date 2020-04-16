@@ -13,7 +13,6 @@ export const parseQuery = (queryString: string): IDictionary<string> => {
 	const query: IDictionary<string> = {},
 		a = queryString.substr(1).split('&');
 
-
 	for (let i = 0; i < a.length; i += 1) {
 		const keyValue = a[i].split('=');
 		query[decodeURIComponent(keyValue[0])] = decodeURIComponent(

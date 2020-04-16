@@ -13,9 +13,8 @@ import { isFunction } from './is-function';
  * @param value
  */
 export const isInitable = (value: unknown): value is IInitable => {
-	return  value && isFunction((value as IInitable).init);
+	return value && isFunction((value as IInitable).init);
 };
-
 
 /**
  * Check value has method destruct
@@ -23,5 +22,5 @@ export const isInitable = (value: unknown): value is IInitable => {
  * @param value
  */
 export const isDestructable = (value: unknown): value is IDestructible => {
-	return  value && isFunction((value as IDestructible).destruct);
+	return value && isFunction((value as IDestructible).destruct);
 };

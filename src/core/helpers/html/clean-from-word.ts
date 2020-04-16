@@ -12,81 +12,85 @@ import { trim } from '../string';
  * content that matches the look and feel of the site.
  */
 export const cleanFromWord = (html: string): string => {
-    if (html.indexOf('<html ') !== -1) {
-        html = html.substring(html.indexOf('<html '), html.length);
-        html = html.substring(
-            0,
-            html.lastIndexOf('</html>') + '</html>'.length
-        );
-    }
+	if (html.indexOf('<html ') !== -1) {
+		html = html.substring(html.indexOf('<html '), html.length);
+		html = html.substring(
+			0,
+			html.lastIndexOf('</html>') + '</html>'.length
+		);
+	}
 
-    let convertedString: string = '';
+	let convertedString: string = '';
 
-    try {
-        const div = document.createElement('div');
-        div.innerHTML = html;
+	try {
+		const div = document.createElement('div');
+		div.innerHTML = html;
 
-        const marks: Node[] = [];
+		const marks: Node[] = [];
 
-        if (div.firstChild) {
-            Dom.all(div, node => {
-                if (!node) {
-                    return;
-                }
-                switch (node.nodeType) {
-                    case Node.ELEMENT_NODE:
-                        switch (node.nodeName) {
-                            case 'STYLE':
-                            case 'LINK':
-                            case 'META':
-                                marks.push(node);
-                                break;
+		if (div.firstChild) {
+			Dom.all(div, node => {
+				if (!node) {
+					return;
+				}
+				switch (node.nodeType) {
+					case Node.ELEMENT_NODE:
+						switch (node.nodeName) {
+							case 'STYLE':
+							case 'LINK':
+							case 'META':
+								marks.push(node);
+								break;
 
-                            case 'W:SDT':
-                            case 'W:SDTPR':
-                            case 'FONT':
-                                Dom.unwrap(node);
-                                break;
+							case 'W:SDT':
+							case 'W:SDTPR':
+							case 'FONT':
+								Dom.unwrap(node);
+								break;
 
-                            default:
-                                Array.from((node as Element).attributes)
-                                    .forEach((attr: Attr) => {
-                                        if (
-                                            [
-                                                'src',
-                                                'href',
-                                                'rel',
-                                                'content',
-                                            ].indexOf(attr.name.toLowerCase()) ===
-                                            -1
-                                        ) {
-                                            (node as Element).removeAttribute(
-                                                attr.name
-                                            );
-                                        }
-                                    });
-                        }
-                        break;
-                    case Node.TEXT_NODE:
-                        break;
-                    default:
-                        marks.push(node);
-                }
-            });
-        }
+							default:
+								Array.from(
+									(node as Element).attributes
+								).forEach((attr: Attr) => {
+									if (
+										[
+											'src',
+											'href',
+											'rel',
+											'content'
+										].indexOf(attr.name.toLowerCase()) ===
+										-1
+									) {
+										(node as Element).removeAttribute(
+											attr.name
+										);
+									}
+								});
+						}
+						break;
+					case Node.TEXT_NODE:
+						break;
+					default:
+						marks.push(node);
+				}
+			});
+		}
 
-        marks.forEach(Dom.safeRemove);
+		marks.forEach(Dom.safeRemove);
 
-        convertedString = div.innerHTML;
-    } catch (e) {}
+		convertedString = div.innerHTML;
+	} catch (e) {}
 
-    if (convertedString) {
-        html = convertedString;
-    }
+	if (convertedString) {
+		html = convertedString;
+	}
 
-    html = html.split(/(\n)/).filter(trim).join('\n');
+	html = html
+		.split(/(\n)/)
+		.filter(trim)
+		.join('\n');
 
-    return html
-        .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
-        .replace(/<!--[^>]*>/g, '');
+	return html
+		.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
+		.replace(/<!--[^>]*>/g, '');
 };

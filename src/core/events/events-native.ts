@@ -161,8 +161,8 @@ export class EventsNative implements IEventsNative {
 	 *
 	 * @example
 	 * ```javascript
-	 * parent.events.on('openDialog closeDialog', function () {
-	 *     if (parent.events.current === 'closeDialog') {
+	 * parent.e.on('openDialog closeDialog', function () {
+	 *     if (parent.e.current === 'closeDialog') {
 	 *         alert('Dialog was closed');
 	 *     } else {
 	 *         alert('Dialog was opened');
@@ -348,24 +348,24 @@ export class EventsNative implements IEventsNative {
 	 * @example
 	 * ```javascript
 	 * var a = {name: "Anton"};
-	 * parent.events.on(a, 'open', function () {
+	 * parent.e.on(a, 'open', function () {
 	 *     alert(this.name);
 	 * });
 	 *
-	 * parent.events.fire(a, 'open');
-	 * parent.events.off(a, 'open');
+	 * parent.e.fire(a, 'open');
+	 * parent.e.off(a, 'open');
 	 * var b = {name: "Ivan"}, hndlr = function () {
 	 *  alert(this.name);
 	 * };
-	 * parent.events.on(b, 'open close', hndlr);
-	 * parent.events.fire(a, 'open');
-	 * parent.events.off(a, 'open', hndlr);
-	 * parent.events.fire(a, 'close');
-	 * parent.events.on('someGlobalEvents', function () {
+	 * parent.e.on(b, 'open close', hndlr);
+	 * parent.e.fire(a, 'open');
+	 * parent.e.off(a, 'open', hndlr);
+	 * parent.e.fire(a, 'close');
+	 * parent.e.on('someGlobalEvents', function () {
 	 *   console.log(this); // parent
 	 * });
-	 * parent.events.fire('someGlobalEvents');
-	 * parent.events.off('someGlobalEvents');
+	 * parent.e.fire('someGlobalEvents');
+	 * parent.e.off('someGlobalEvents');
 	 * ```
 	 */
 	off(events: string, callback?: () => void): this;
@@ -510,7 +510,7 @@ export class EventsNative implements IEventsNative {
 	 * @example
 	 * ```javascript
 	 * var dialog = new Jodit.modules.Dialog();
-	 * parent.events.on('afterClose', function () {
+	 * parent.e.on('afterClose', function () {
 	 *     dialog.destruct(); // will be removed from DOM
 	 * });
 	 * dialog.open('Hello world!!!');

@@ -1,4 +1,4 @@
-import "./tabs.less";
+import './tabs.less';
 import { IDictionary, IJodit } from '../../../types';
 import { $$, each } from '../../../core/helpers';
 
@@ -12,7 +12,7 @@ import { $$, each } from '../../../core/helpers';
  *
  * @example
  * ```javascript
- * let tabs = widget.create('Tabs', {
+ * let tabs = widget.c('Tabs', {
  *    'Images': '<div>Images</div>',
  *    'Title 2': Jodit.modules.Helpers.dom('<div>Some content</div>'),
  *    'Color Picker': ColorPickerWidget(editor, function (color) {
@@ -26,9 +26,9 @@ export const TabsWidget = (
 	tabs: IDictionary<(() => void) | HTMLElement>,
 	state?: { __activeTab: string }
 ): HTMLDivElement => {
-	const box: HTMLDivElement = editor.create.div('jodit_tabs'),
-		tabBox: HTMLDivElement = editor.create.div('jodit_tabs_wrapper'),
-		buttons: HTMLDivElement = editor.create.div('jodit_tabs_buttons'),
+	const box: HTMLDivElement = editor.c.div('jodit_tabs'),
+		tabBox: HTMLDivElement = editor.c.div('jodit_tabs_wrapper'),
+		buttons: HTMLDivElement = editor.c.div('jodit_tabs_buttons'),
 		nameToTab: IDictionary<{
 			button: HTMLElement;
 			tab: HTMLElement;
@@ -41,8 +41,8 @@ export const TabsWidget = (
 	box.appendChild(tabBox);
 
 	each<(() => void) | HTMLElement>(tabs, (name: string, tabOptions) => {
-		const tab = editor.create.div('jodit_tab'),
-			button = editor.create.element('a', {
+		const tab = editor.c.div('jodit_tab'),
+			button = editor.c.element('a', {
 				href: 'javascript:void(0);'
 			});
 
@@ -58,12 +58,12 @@ export const TabsWidget = (
 		if (typeof tabOptions !== 'function') {
 			tab.appendChild(tabOptions);
 		} else {
-			tab.appendChild(editor.create.div('jodit_tab_empty'));
+			tab.appendChild(editor.c.div('jodit_tab_empty'));
 		}
 
 		tabBox.appendChild(tab);
 
-		editor.events.on(button, 'mousedown touchend', (e: MouseEvent) => {
+		editor.e.on(button, 'mousedown touchend', (e: MouseEvent) => {
 			$$('a', buttons).forEach(a => {
 				a.classList.remove('active');
 			});

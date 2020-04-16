@@ -4,6 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from "./area";
-export * from "./ace";
+export * from './area';
+export * from './ace';
 //export * from "./custom"; // You can add here another source editor

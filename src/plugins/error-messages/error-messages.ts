@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import "./errors-messages.less";
+import './errors-messages.less';
 
 import { Config } from '../../config';
 import { Dom } from '../../core/dom';
@@ -36,22 +36,21 @@ Config.prototype.showMessageErrorOffsetPx = 3;
  * Plugin toWYSIWYG display pop-up messages in the lower right corner of the editor
  */
 export function errorMessages(editor: IJodit) {
-	if (editor.options.showMessageErrors) {
+	if (editor.o.showMessageErrors) {
 		let height: number;
 
-		const messagesBox: HTMLDivElement = editor.create.div(
+		const messagesBox: HTMLDivElement = editor.c.div(
 				'jodit_error_box_for_messages'
 			),
 			recalcOffsets = () => {
 				height = 5;
-				Array.from(<NodeListOf<HTMLElement>>(
-					messagesBox.childNodes
-				)).forEach((elm: HTMLElement) => {
+				Array.from(
+					<NodeListOf<HTMLElement>>messagesBox.childNodes
+				).forEach((elm: HTMLElement) => {
 					css(messagesBox, 'bottom', height + 'px');
 
 					height +=
-						elm.offsetWidth +
-						editor.options.showMessageErrorOffsetPx;
+						elm.offsetWidth + editor.o.showMessageErrorOffsetPx;
 				});
 			};
 
@@ -65,12 +64,12 @@ export function errorMessages(editor: IJodit) {
 		 * options.showMessageErrorTime = 2000
 		 * @example
 		 * ```javascript
-		 * parent.events.fire('errorMessage', 'Error 123. File has not been upload');
-		 * parent.events.fire('errorMessage', 'You can upload file', 'info', 4000);
-		 * parent.events.fire('errorMessage', 'File was uploaded', 'success', 4000);
+		 * parent.e.fire('errorMessage', 'Error 123. File has not been upload');
+		 * parent.e.fire('errorMessage', 'You can upload file', 'info', 4000);
+		 * parent.e.fire('errorMessage', 'File was uploaded', 'success', 4000);
 		 * ```
 		 */
-		editor.events
+		editor.e
 			.on('beforeDestruct', () => {
 				Dom.safeRemove(messagesBox);
 			})
@@ -79,7 +78,7 @@ export function errorMessages(editor: IJodit) {
 				(message: string, className: string, timeout: number) => {
 					editor.workplace.appendChild(messagesBox);
 
-					const newmessage = editor.create.div(
+					const newmessage = editor.c.div(
 						'active ' + (className || ''),
 						message
 					);
@@ -95,7 +94,7 @@ export function errorMessages(editor: IJodit) {
 							Dom.safeRemove(newmessage);
 							recalcOffsets();
 						}, 300);
-					}, timeout || editor.options.showMessageErrorTime);
+					}, timeout || editor.o.showMessageErrorTime);
 				}
 			);
 	}

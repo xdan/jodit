@@ -11,11 +11,11 @@ import { HTMLTagNames, IJodit, markerInfo, IControlType } from '../types';
 Config.prototype.controls.paragraph = {
 	command: 'formatBlock',
 	update(button): boolean {
-		const editor = button.jodit as IJodit,
+		const editor = button.j as IJodit,
 			control = button.control,
 			current: Node | false = editor.selection.current();
 
-		if (current && editor.options.textIcons) {
+		if (current && editor.o.textIcons) {
 			const currentBox: HTMLElement =
 					(Dom.closest(
 						current,
@@ -32,7 +32,7 @@ Config.prototype.controls.paragraph = {
 				control.list &&
 				list[currentValue]
 			) {
-				if (editor.options.textIcons) {
+				if (editor.o.textIcons) {
 					button.state.text = editor.i18n(currentValue);
 				} else {
 					button.state.icon.name = currentValue;
@@ -142,7 +142,7 @@ export function formatBlock(editor: IJodit) {
 				if ((!currentBox || Dom.isTag(currentBox, 'li')) && current) {
 					currentBox = Dom.wrapInline(
 						current,
-						editor.options.enter,
+						editor.o.enter,
 						editor
 					);
 				}
@@ -154,7 +154,7 @@ export function formatBlock(editor: IJodit) {
 
 				if (!currentBox.tagName.match(/TD|TH|TBODY|TABLE|THEAD/i)) {
 					if (
-						third === editor.options.enterBlock.toLowerCase() &&
+						third === editor.o.enterBlock.toLowerCase() &&
 						Dom.isTag(currentBox.parentNode, 'li')
 					) {
 						Dom.unwrap(currentBox);
@@ -162,7 +162,7 @@ export function formatBlock(editor: IJodit) {
 						Dom.replace(
 							currentBox,
 							third as HTMLTagNames,
-							editor.create.inside,
+							editor.c.inside,
 							true,
 							false
 						);
@@ -185,8 +185,8 @@ export function formatBlock(editor: IJodit) {
 			});
 
 			if (!work) {
-				const br = editor.create.inside.element('br');
-				const currentBox = editor.create.inside.element(third, br);
+				const br = editor.c.inside.element('br');
+				const currentBox = editor.c.inside.element(third, br);
 				editor.selection.insertNode(currentBox, false);
 				editor.selection.setCursorIn(currentBox);
 			}

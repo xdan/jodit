@@ -228,9 +228,10 @@ export default {
 	preview: 'Ön izleme',
 	download: 'İndir',
 	'Paste from clipboard': 'Panodan yapıştır ',
-	'Your browser doesn\'t support direct access to the clipboard.': 'Tarayıcınız pano doğrudan erişim desteklemiyor.',
+	"Your browser doesn't support direct access to the clipboard.":
+		'Tarayıcınız pano doğrudan erişim desteklemiyor.',
 	'Copy selection': 'Kopya seçimi',
-	'copy': 'kopya',
+	copy: 'kopya',
 	'Border radius': 'Sınır yarıçapı',
-	'Show all': 'Tümünü Göster ',
+	'Show all': 'Tümünü Göster '
 } as IDictionary<string>;

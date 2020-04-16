@@ -64,10 +64,10 @@ export class PluginSystem implements IPluginSystem {
 	 * @param jodit
 	 */
 	async init(jodit: IJodit): Promise<void> {
-		const extrasList: IExtraPlugin[] = jodit.options.extraPlugins.map(s => {
+		const extrasList: IExtraPlugin[] = jodit.o.extraPlugins.map(s => {
 				return isString(s) ? { name: s.toLowerCase() } : s;
 			}),
-			disableList = splitArray(jodit.options.disablePlugins).map(s =>
+			disableList = splitArray(jodit.o.disablePlugins).map(s =>
 				s.toLowerCase()
 			),
 			doneList: string[] = [],
@@ -195,7 +195,7 @@ export class PluginSystem implements IPluginSystem {
 		jodit: IJodit,
 		plugins: PluginInstance[]
 	) {
-		jodit.events.on('beforeDestruct', () => {
+		jodit.e.on('beforeDestruct', () => {
 			plugins.forEach(instance => {
 				if (isDestructable(instance)) {
 					instance.destruct(jodit);

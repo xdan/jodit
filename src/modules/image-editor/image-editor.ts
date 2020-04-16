@@ -4,14 +4,15 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import "./image-editor.less";
+import './image-editor.less';
 
 import { Config } from '../../config';
 import {
 	ImageEditorActionBox,
 	IJodit,
 	ImageEditorOptions,
-	ImageAction, IViewBased
+	ImageAction,
+	IViewBased
 } from '../../types';
 import { Component } from '../../core/component';
 import { Alert, Dialog, Prompt } from '../dialog';
@@ -200,7 +201,7 @@ export class ImageEditor extends Component {
 			this.image.offsetWidth ||
 			this.image.naturalWidth;
 
-		this.new_w = this.calcValueByPercent(w, this.options.cropDefaultWidth);
+		this.new_w = this.calcValueByPercent(w, this.o.cropDefaultWidth);
 
 		const h =
 			this.cropImage.offsetHeight ||
@@ -210,10 +211,7 @@ export class ImageEditor extends Component {
 		if (this.cropUseRatio) {
 			this.new_h = this.new_w / this.ratio;
 		} else {
-			this.new_h = this.calcValueByPercent(
-				h,
-				this.options.cropDefaultHeight
-			);
+			this.new_h = this.calcValueByPercent(h, this.o.cropDefaultHeight);
 		}
 
 		css(this.cropHandler, {
@@ -224,7 +222,7 @@ export class ImageEditor extends Component {
 			top: h / 2 - this.new_h / 2
 		});
 
-		this.jodit.events.fire(this.cropHandler, 'updatesize');
+		this.j.e.fire(this.cropHandler, 'updatesize');
 	};
 
 	private updateCropBox = () => {
@@ -251,7 +249,7 @@ export class ImageEditor extends Component {
 
 	private setHandlers = () => {
 		const self: ImageEditor = this;
-		self.jodit.events
+		self.j.e
 			.on(
 				[
 					self.editor.querySelector('.jodit_bottomright'),
@@ -280,11 +278,11 @@ export class ImageEditor extends Component {
 					}
 				}
 			)
-			.off(this.jodit.ownerWindow, `.${jie}` + self.jodit.id)
+			.off(this.j.ow, `.${jie}` + self.j.id)
 			.on(
-				this.jodit.ownerWindow,
-				`mousemove.${jie}` + self.jodit.id,
-				this.jodit.async.throttle((e: MouseEvent) => {
+				this.j.ow,
+				`mousemove.${jie}` + self.j.id,
+				this.j.async.throttle((e: MouseEvent) => {
 					if (self.clicked) {
 						self.diff_x = e.clientX - self.start_x;
 						self.diff_y = e.clientY - self.start_y;
@@ -311,20 +309,17 @@ export class ImageEditor extends Component {
 						}
 
 						if (self.activeTab === 'resize') {
-							if (self.new_w > self.options.resizeMinWidth) {
+							if (self.new_w > self.o.resizeMinWidth) {
 								css(self.image, 'width', self.new_w + 'px');
 								self.widthInput.value = self.new_w.toString();
 							}
 
-							if (self.new_h > self.options.resizeMinHeight) {
+							if (self.new_h > self.o.resizeMinHeight) {
 								css(self.image, 'height', self.new_h + 'px');
 								self.heightInput.value = self.new_h.toString();
 							}
 
-							this.jodit.events.fire(
-								self.resizeHandler,
-								'updatesize'
-							);
+							this.j.e.fire(self.resizeHandler, 'updatesize');
 						} else {
 							if (self.target !== self.cropHandler) {
 								if (
@@ -380,10 +375,7 @@ export class ImageEditor extends Component {
 									self.top_y + self.diff_y
 								);
 							}
-							this.jodit.events.fire(
-								self.cropHandler,
-								'updatesize'
-							);
+							this.j.e.fire(self.cropHandler, 'updatesize');
 						}
 
 						e.stopImmediatePropagation();
@@ -391,16 +383,15 @@ export class ImageEditor extends Component {
 				}, 5)
 			)
 
-			.on(this.jodit.ownerWindow, `resize.${jie}` + self.jodit.id, () => {
-				this.jodit.events.fire(self.resizeHandler, 'updatesize');
+			.on(this.j.ow, `resize.${jie}` + self.j.id, () => {
+				this.j.e.fire(self.resizeHandler, 'updatesize');
 				self.showCrop();
-				this.jodit.events.fire(self.cropHandler, 'updatesize');
+				this.j.e.fire(self.cropHandler, 'updatesize');
 			})
 
 			.on(
-				this.jodit.ownerWindow,
-				`mouseup.${jie} ${self.jodit.id} keydown.${jie}` +
-					self.jodit.id,
+				this.j.ow,
+				`mouseup.${jie} ${self.j.id} keydown.${jie}` + self.j.id,
 				(e: MouseEvent) => {
 					if (self.clicked) {
 						self.clicked = false;
@@ -413,18 +404,18 @@ export class ImageEditor extends Component {
 
 		$$('.jodit-button_group', self.editor).forEach(group => {
 			const input = group.querySelector('input') as HTMLInputElement;
-			self.jodit.events.on(
+			self.j.e.on(
 				group,
 				'click change',
 				function(this: HTMLButtonElement) {
 					input.checked = !input.checked;
-					self.jodit.events.fire(input, 'change');
+					self.j.e.fire(input, 'change');
 				},
 				'button'
 			);
 		});
 
-		self.jodit.events
+		self.j.e
 			.on(
 				this.editor,
 				'click.' + jie,
@@ -456,46 +447,46 @@ export class ImageEditor extends Component {
 			.on(
 				self.widthInput,
 				`change.${jie} mousedown.${jie} keydown.${jie}`,
-				self.jodit.async.debounce(() => {
+				self.j.async.debounce(() => {
 					const value: number = parseInt(self.widthInput.value, 10);
 					let another: number;
-					if (value > self.options.min_width) {
+					if (value > self.o.min_width) {
 						css(self.image, 'width', value + 'px');
 
 						if (self.resizeUseRatio) {
 							another = Math.round(value / self.ratio);
-							if (another > self.options.min_height) {
+							if (another > self.o.min_height) {
 								css(self.image, 'height', another + 'px');
 								self.heightInput.value = another.toString();
 							}
 						}
 					}
-					this.jodit.events.fire(self.resizeHandler, 'updatesize');
+					this.j.e.fire(self.resizeHandler, 'updatesize');
 				}, 200)
 			)
 			.on(
 				self.heightInput,
 				`change.${jie} mousedown.${jie} keydown.${jie}`,
-				self.jodit.async.debounce(() => {
+				self.j.async.debounce(() => {
 					if (this.isDestructed) {
 						return;
 					}
 
 					const value: number = parseInt(self.heightInput.value, 10);
 					let another: number;
-					if (value > self.options.min_height) {
+					if (value > self.o.min_height) {
 						css(self.image, 'height', value + 'px');
 
 						if (self.resizeUseRatio) {
 							another = Math.round(value * self.ratio);
 
-							if (another > self.options.min_width) {
+							if (another > self.o.min_width) {
 								css(self.image, 'width', another + 'px');
 								self.widthInput.value = another.toString();
 							}
 						}
 					}
-					this.jodit.events.fire(self.resizeHandler, 'updatesize');
+					this.j.e.fire(self.resizeHandler, 'updatesize');
 				}, 200)
 			);
 
@@ -519,7 +510,7 @@ export class ImageEditor extends Component {
 			});
 		}
 
-		self.jodit.events
+		self.j.e
 			.on(self.resizeHandler, 'updatesize', () => {
 				css(self.resizeHandler, {
 					top: 0,
@@ -598,12 +589,12 @@ export class ImageEditor extends Component {
 				switch (attr(button, '-action')) {
 					case 'saveas':
 						Prompt(
-							self.jodit.i18n('Enter new name'),
-							self.jodit.i18n('Save in new file'),
+							self.j.i18n('Enter new name'),
+							self.j.i18n('Save in new file'),
 							(name: string): false | void => {
 								if (!trim(name)) {
 									Alert(
-										self.jodit.i18n(
+										self.j.i18n(
 											'The name should not be empty'
 										)
 									);
@@ -633,10 +624,7 @@ export class ImageEditor extends Component {
 							});
 							self.widthInput.value = self.naturalWidth.toString();
 							self.heightInput.value = self.naturalHeight.toString();
-							self.jodit.events.fire(
-								self.resizeHandler,
-								'updatesize'
-							);
+							self.j.e.fire(self.resizeHandler, 'updatesize');
 						} else {
 							self.showCrop();
 						}
@@ -647,6 +635,9 @@ export class ImageEditor extends Component {
 	};
 
 	options: ImageEditorOptions;
+	get o(): this['options'] {
+		return this.options;
+	}
 
 	onSave!: (
 		name: void | string,
@@ -686,7 +677,7 @@ export class ImageEditor extends Component {
 	 *		 }
 	 * });
 	 * jodit.imageeditor.open('http://xdsoft.net/jodit/images/test.png', function (name, data, success, failed) {
-	 *		 var img = jodit.node.create('img');
+	 *		 var img = jodit.node.c('img');
 	 *		 img.setAttribute('src', 'http://xdsoft.net/jodit/images/test.png');
 	 *		 if (box.action !== 'resize') {
 	 *					return failed('Sorry it is work only in resize mode. For croping use FileBrowser');
@@ -707,10 +698,10 @@ export class ImageEditor extends Component {
 			failed: (error: Error) => void
 		) => void
 	): Promise<Dialog> => {
-		return this.jodit.async.promise<Dialog>(resolve => {
+		return this.j.async.promise<Dialog>(resolve => {
 			const timestamp = new Date().getTime();
 
-			this.image = this.jodit.create.element('img');
+			this.image = this.j.c.element('img');
 
 			$$('img,.jodit_icon-loader', this.resize_box).forEach(
 				Dom.safeRemove
@@ -723,11 +714,11 @@ export class ImageEditor extends Component {
 			this.onSave = save;
 
 			this.resize_box.appendChild(
-				this.jodit.create.element('i', { class: 'jodit_icon-loader' })
+				this.j.c.element('i', { class: 'jodit_icon-loader' })
 			);
 
 			this.crop_box.appendChild(
-				this.jodit.create.element('i', { class: 'jodit_icon-loader' })
+				this.j.c.element('i', { class: 'jodit_icon-loader' })
 			);
 
 			if (/\?/.test(url)) {
@@ -766,11 +757,11 @@ export class ImageEditor extends Component {
 					this.showCrop();
 				}
 
-				this.jodit.events.fire(this.resizeHandler, 'updatesize');
-				this.jodit.events.fire(this.cropHandler, 'updatesize');
+				this.j.e.fire(this.resizeHandler, 'updatesize');
+				this.j.e.fire(this.cropHandler, 'updatesize');
 
 				this.dialog.setPosition();
-				this.jodit.events.fire('afterImageEditor');
+				this.j.e.fire('afterImageEditor');
 
 				resolve(this.dialog);
 			};
@@ -788,7 +779,7 @@ export class ImageEditor extends Component {
 
 		this.options =
 			editor && (editor as IJodit).options
-				? (editor as IJodit).options.imageeditor
+				? (editor as IJodit).o.imageeditor
 				: Config.defaultOptions.imageeditor;
 
 		const o = this.options;
@@ -801,7 +792,7 @@ export class ImageEditor extends Component {
 		const c = this.cropUseRatio;
 
 		this.buttons = [
-			this.jodit.create.fromHTML(
+			this.j.c.fromHTML(
 				'<button data-action="reset" type="button" class="jodit-button">' +
 					gi('update') +
 					'&nbsp;' +
@@ -809,7 +800,7 @@ export class ImageEditor extends Component {
 					'</button>'
 			),
 
-			this.jodit.create.fromHTML(
+			this.j.c.fromHTML(
 				'<button data-action="save" type="button" class="jodit-button jodit-button_success">' +
 					gi('save') +
 					'&nbsp;' +
@@ -817,7 +808,7 @@ export class ImageEditor extends Component {
 					'</button>'
 			),
 
-			this.jodit.create.fromHTML(
+			this.j.c.fromHTML(
 				'<button data-action="saveas" type="button" class="jodit-button jodit-button_success">' +
 					gi('save') +
 					'&nbsp;' +
@@ -853,7 +844,7 @@ export class ImageEditor extends Component {
 			</div>
 		</div>`;
 
-		this.editor = this.jodit.create.fromHTML(
+		this.editor = this.j.c.fromHTML(
 			`<form class="${jie} jodit-properties">
 							<div class="jodit_grid">
 								<div class="jodit_col-lg-3-4">
@@ -959,7 +950,7 @@ export class ImageEditor extends Component {
 		this.dialog = new Dialog(editor);
 		this.dialog.setContent(this.editor);
 
-		this.dialog.setSize(this.options.width, this.options.height);
+		this.dialog.setSize(this.o.width, this.o.height);
 		this.dialog.setTitle(this.buttons);
 
 		this.setHandlers();
@@ -986,8 +977,8 @@ export class ImageEditor extends Component {
 		delete this.cropHandler;
 		delete this.editor;
 
-		if (this.jodit.events) {
-			this.jodit.events.off(`.${jie}`);
+		if (this.j.events) {
+			this.j.e.off(`.${jie}`);
 		}
 
 		super.destruct();

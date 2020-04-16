@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import "./inline-popup.less";
+import './inline-popup.less';
 
 import { Config } from '../../config';
 import {
@@ -57,7 +57,7 @@ Config.prototype.popup = {
 				const href = attr(current as HTMLElement, 'href');
 
 				if (current && href) {
-					editor.ownerWindow.open(href);
+					editor.ow.open(href);
 				}
 			}
 		} as IControlType,
@@ -76,7 +76,7 @@ Config.prototype.popup = {
 			tooltip: 'Delete',
 			exec: (editor: IJodit, image: Node) => {
 				editor.selection.removeNode(image);
-				editor.events.fire('hidePopup');
+				editor.e.fire('hidePopup');
 			}
 		}
 	],
@@ -86,7 +86,7 @@ Config.prototype.popup = {
 			tooltip: 'Delete',
 			exec: (editor: IJodit, image: Node) => {
 				editor.selection.removeNode(image);
-				editor.events.fire('hidePopup');
+				editor.e.fire('hidePopup');
 			}
 		}
 	],
@@ -97,7 +97,7 @@ Config.prototype.popup = {
 			tooltip: 'Delete',
 			exec: (editor: IJodit, image: Node) => {
 				editor.selection.removeNode(image);
-				editor.events.fire('hidePopup');
+				editor.e.fire('hidePopup');
 			}
 		},
 		{
@@ -105,7 +105,7 @@ Config.prototype.popup = {
 			exec(editor: IJodit, current: Node) {
 				const tagName: string = (current as HTMLElement).tagName.toLowerCase();
 				if (tagName === 'img') {
-					editor.events.fire('openImageProperties', current);
+					editor.e.fire('openImageProperties', current);
 				}
 			},
 			tooltip: 'Edit'
@@ -131,7 +131,7 @@ Config.prototype.popup = {
 
 				css(image, 'vertical-align', command);
 
-				editor.events.fire('recalcPositionPopup');
+				editor.e.fire('recalcPositionPopup');
 			}
 		},
 		{
@@ -177,7 +177,7 @@ Config.prototype.popup = {
 					clearCenterAlign(image);
 				}
 
-				editor.events.fire('recalcPositionPopup');
+				editor.e.fire('recalcPositionPopup');
 			},
 			tooltip: 'Horizontal align'
 		}
@@ -351,7 +351,7 @@ Config.prototype.popup = {
 						: '';
 
 				editor.execCommand(command, false, table);
-				editor.events.fire('hidePopup');
+				editor.e.fire('hidePopup');
 			},
 			tooltip: 'Delete'
 		}
@@ -376,8 +376,8 @@ export class inlinePopup extends Plugin {
 	// was started selection
 	private isSelectionStarted = false;
 
-	private onSelectionEnd = this.jodit.async.debounce(() => {
-		if (this.isDestructed || !this.jodit.isEditorMode()) {
+	private onSelectionEnd = this.j.async.debounce(() => {
+		if (this.isDestructed || !this.j.isEditorMode()) {
 			return;
 		}
 
@@ -389,7 +389,7 @@ export class inlinePopup extends Plugin {
 
 		this.isSelectionStarted = false;
 		this.isTargetAction = false;
-	}, this.jodit.defaultTimeout);
+	}, this.j.defaultTimeout);
 
 	private isTargetAction: boolean = false;
 
@@ -400,9 +400,8 @@ export class inlinePopup extends Plugin {
 	private isSelectionPopup: boolean = false;
 
 	private calcWindSizes = (): IBound => {
-		const win: Window = this.jodit.ownerWindow;
-		const docElement: HTMLElement | null = this.jodit.ownerDocument
-			.documentElement;
+		const win: Window = this.j.ow;
+		const docElement: HTMLElement | null = this.j.od.documentElement;
 
 		if (!docElement) {
 			return {
@@ -413,7 +412,7 @@ export class inlinePopup extends Plugin {
 			};
 		}
 
-		const body: HTMLElement = this.jodit.ownerDocument.body;
+		const body: HTMLElement = this.j.od.body;
 		const scrollTop: number =
 			win.pageYOffset || docElement.scrollTop || body.scrollTop;
 
@@ -447,9 +446,9 @@ export class inlinePopup extends Plugin {
 		const selectionCenterLeft = rect.left + rect.width / 2;
 
 		const workplacePosition = offset(
-			this.jodit.workplace,
-			this.jodit,
-			this.jodit.ownerDocument,
+			this.j.workplace,
+			this.j,
+			this.j.od,
 			true
 		);
 
@@ -459,9 +458,9 @@ export class inlinePopup extends Plugin {
 		this.target.style.left = selectionCenterLeft + 'px';
 		this.target.style.top = targetTop + 'px';
 
-		if (this.jodit.isFullSize()) {
+		if (this.j.isFullSize()) {
 			this.target.style.zIndex = css(
-				this.jodit.container,
+				this.j.container,
 				'zIndex'
 			).toString();
 		}
@@ -502,7 +501,7 @@ export class inlinePopup extends Plugin {
 
 	private isExcludedTarget(type: string): boolean {
 		return (
-			splitArray(this.jodit.options.toolbarInlineDisableFor)
+			splitArray(this.j.o.toolbarInlineDisableFor)
 				.map(a => a.toLowerCase())
 				.indexOf(type.toLowerCase()) !== -1
 		);
@@ -519,9 +518,9 @@ export class inlinePopup extends Plugin {
 		type: string,
 		elm?: HTMLElement
 	): boolean => {
-		const data = this.jodit.options.popup[type.toLowerCase()];
+		const data = this.j.o.popup[type.toLowerCase()];
 
-		if (!this.jodit.options.toolbarInline || !data) {
+		if (!this.j.o.toolbarInline || !data) {
 			return false;
 		}
 
@@ -534,7 +533,7 @@ export class inlinePopup extends Plugin {
 		const size = this.calcWindSizes();
 
 		this.targetContainer.parentNode ||
-			getContainer(this.jodit, inlinePopup.name).appendChild(
+			getContainer(this.j, inlinePopup.name).appendChild(
 				this.targetContainer
 			);
 
@@ -557,7 +556,7 @@ export class inlinePopup extends Plugin {
 		// TODO
 		// if (
 		// 	root &&
-		// 	(Dom.isNode(root, this.jodit.editorWindow || window) ||
+		// 	(Dom.isNode(root, this.j.editorWindow || window) ||
 		// 		root instanceof PopupMenu) &&
 		// 	Dom.isOrContains(
 		// 		this.target,
@@ -574,7 +573,7 @@ export class inlinePopup extends Plugin {
 	};
 
 	private onSelectionStart = (event: MouseEvent) => {
-		if (this.isDestructed || !this.jodit.isEditorMode()) {
+		if (this.isDestructed || !this.j.isEditorMode()) {
 			return;
 		}
 
@@ -582,9 +581,7 @@ export class inlinePopup extends Plugin {
 		this.isSelectionPopup = false;
 
 		if (!this.isSelectionStarted) {
-			const elements: string = Object.keys(this.jodit.options.popup).join(
-					'|'
-				),
+			const elements: string = Object.keys(this.j.o.popup).join('|'),
 				target: HTMLElement | false = Dom.isTag(
 					event.target as Node,
 					'img'
@@ -593,13 +590,13 @@ export class inlinePopup extends Plugin {
 					: (Dom.closest(
 							event.target as Node,
 							elements,
-							this.jodit.editor
+							this.j.editor
 					  ) as HTMLTableElement);
 
 			if (
 				!target ||
 				!this.showPopup(
-					() => offset(target, this.jodit, this.jodit.editorDocument),
+					() => offset(target, this.j, this.j.editorDocument),
 					target.nodeName,
 					target
 				)
@@ -610,7 +607,7 @@ export class inlinePopup extends Plugin {
 	};
 
 	private hideIfCollapsed(): boolean {
-		if (this.jodit.selection.isCollapsed()) {
+		if (this.j.selection.isCollapsed()) {
 			this.hidePopup();
 			return true;
 		}
@@ -627,7 +624,7 @@ export class inlinePopup extends Plugin {
 	};
 
 	private onChangeSelection = () => {
-		if (!this.jodit.options.toolbarInline || !this.jodit.isEditorMode()) {
+		if (!this.j.o.toolbarInline || !this.j.isEditorMode()) {
 			return;
 		}
 
@@ -635,15 +632,15 @@ export class inlinePopup extends Plugin {
 			return;
 		}
 
-		if (this.jodit.options.popup.selection !== undefined) {
-			const sel = this.jodit.selection.sel;
+		if (this.j.o.popup.selection !== undefined) {
+			const sel = this.j.selection.sel;
 
 			if (sel && sel.rangeCount) {
 				this.isSelectionPopup = true;
 				const range = sel.getRangeAt(0);
 
 				this.showPopup(
-					() => offset(range, this.jodit, this.jodit.editorDocument),
+					() => offset(range, this.j, this.j.editorDocument),
 					'selection'
 				);
 			}
@@ -655,17 +652,17 @@ export class inlinePopup extends Plugin {
 	init(editor: IJodit) {
 		this.toolbar = makeCollection(editor);
 
-		this.target = editor.create.div('jodit-popup-inline__target');
-		this.targetContainer = editor.create.div(
+		this.target = editor.c.div('jodit-popup-inline__target');
+		this.targetContainer = editor.c.div(
 			'jodit-popup-inline__container',
 			this.target
 		);
 
-		this.container = editor.create.div();
+		this.container = editor.c.div();
 
 		this.popup = new PopupMenu(editor);
 
-		editor.events
+		editor.e
 			.on(
 				this.target,
 				'mousedown keydown touchstart',
@@ -679,20 +676,16 @@ export class inlinePopup extends Plugin {
 				'getDiffButtons.mobile',
 				(_toolbar: ToolbarCollection): void | Buttons => {
 					if (this.toolbar === _toolbar) {
-						return splitArray(editor.options.buttons).filter(
-							item => {
-								const name = isString(item) ? item : item.name;
+						return splitArray(editor.o.buttons).filter(item => {
+							const name = isString(item) ? item : item.name;
 
-								return (
-									name &&
-									name !== '|' &&
-									name !== '\n' &&
-									this.toolbar
-										.getButtonsList()
-										.indexOf(name) < 0
-								);
-							}
-						);
+							return (
+								name &&
+								name !== '|' &&
+								name !== '\n' &&
+								this.toolbar.getButtonsList().indexOf(name) < 0
+							);
+						});
 					}
 				}
 			)
@@ -722,21 +715,21 @@ export class inlinePopup extends Plugin {
 
 			.on('mousedown keydown touchstart', this.onSelectionStart);
 
-		editor.events.on('afterInit changePlace', () => {
-			editor.events
+		editor.e.on('afterInit changePlace', () => {
+			editor.e
 				.off('.inlinePopup')
 				.on(
-					[editor.ownerWindow, editor.editor],
+					[editor.ow, editor.editor],
 					'scroll.inlinePopup resize.inlinePopup',
 					this.reCalcPosition
 				)
 				.on(
-					[editor.ownerWindow],
+					[editor.ow],
 					'mouseup.inlinePopup keyup.inlinePopup touchend.inlinePopup',
 					this.onSelectionEnd
 				)
 				.on(
-					[editor.ownerWindow],
+					[editor.ow],
 					'mousedown.inlinePopup keydown.inlinePopup touchstart.inlinePopup',
 					this.checkIsTargetEvent
 				);
@@ -754,15 +747,11 @@ export class inlinePopup extends Plugin {
 		Dom.safeRemove(this.targetContainer);
 
 		editor.events &&
-			editor.events
-				.off([editor.ownerWindow], 'scroll resize', this.reCalcPosition)
+			editor.e
+				.off([editor.ow], 'scroll resize', this.reCalcPosition)
+				.off([editor.ow], 'mouseup keyup touchend', this.onSelectionEnd)
 				.off(
-					[editor.ownerWindow],
-					'mouseup keyup touchend',
-					this.onSelectionEnd
-				)
-				.off(
-					[editor.ownerWindow],
+					[editor.ow],
 					'mousedown keydown touchstart',
 					this.checkIsTargetEvent
 				);

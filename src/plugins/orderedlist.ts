@@ -10,7 +10,7 @@ import { IControlType, IJodit } from '../types';
 import { Plugin } from '../core/plugin';
 
 function exec(editor: IJodit, event: Node | false, control: IControlType) {
-	editor.events.fire(
+	editor.e.fire(
 		'insertList',
 		control.command as string,
 		control.args && control.args[0]
@@ -52,7 +52,7 @@ Config.prototype.controls.ol = {
  */
 export class orderedlist extends Plugin {
 	protected afterInit(jodit: IJodit): void {
-		jodit.events.on('insertList', (command: string): false | void => {
+		jodit.e.on('insertList', (command: string): false | void => {
 			let ul = Dom.up(
 				jodit.selection.current() as Node,
 				(tag: Node | null) => tag && /^UL|OL$/i.test(tag.nodeName),
@@ -60,8 +60,8 @@ export class orderedlist extends Plugin {
 			) as HTMLUListElement;
 
 			if (!ul) {
-				ul = this.jodit.create.inside.element('ul');
-				const items = this.jodit.selection.wrapInTag('li');
+				ul = this.j.c.inside.element('ul');
+				const items = this.j.selection.wrapInTag('li');
 				items.forEach(li => {
 					ul.appendChild(li);
 				});
@@ -75,7 +75,7 @@ export class orderedlist extends Plugin {
 
 	private unwrapIfHasParent(ul: HTMLUListElement): void {
 		if (Dom.isTag(ul.parentNode, 'p')) {
-			const selection = this.jodit.selection.save();
+			const selection = this.j.selection.save();
 
 			Dom.unwrap(ul.parentNode);
 
@@ -85,10 +85,9 @@ export class orderedlist extends Plugin {
 				}
 			});
 
-			this.jodit.selection.restore(selection);
+			this.j.selection.restore(selection);
 		}
-	};
-
-	protected beforeDestruct(jodit: IJodit): void {
 	}
+
+	protected beforeDestruct(jodit: IJodit): void {}
 }

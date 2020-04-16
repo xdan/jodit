@@ -226,9 +226,10 @@ export default {
 	preview: '预览',
 	download: '下载',
 	'Paste from clipboard': '粘贴从剪贴板',
-	'Your browser doesn\'t support direct access to the clipboard.': '你浏览器不支持直接访问的剪贴板。',
+	"Your browser doesn't support direct access to the clipboard.":
+		'你浏览器不支持直接访问的剪贴板。',
 	'Copy selection': '复制的选择',
-	'copy': '复制',
+	copy: '复制',
 	'Border radius': '边界半径',
-	'Show all': '显示所有',
+	'Show all': '显示所有'
 } as IDictionary<string>;

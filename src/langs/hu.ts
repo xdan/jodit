@@ -231,9 +231,10 @@ export default {
 	preview: 'előnézet',
 	download: 'Letöltés',
 	'Paste from clipboard': 'Illessze be a vágólap',
-	'Your browser doesn\'t support direct access to the clipboard.': 'A böngésző nem támogatja a közvetlen hozzáférést biztosít a vágólapra.',
+	"Your browser doesn't support direct access to the clipboard.":
+		'A böngésző nem támogatja a közvetlen hozzáférést biztosít a vágólapra.',
 	'Copy selection': 'Másolás kiválasztása',
-	'copy': 'másolás',
+	copy: 'másolás',
 	'Border radius': 'Határ sugár',
-	'Show all': 'Összes',
+	'Show all': 'Összes'
 } as IDictionary<string>;

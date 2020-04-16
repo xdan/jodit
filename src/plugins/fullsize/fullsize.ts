@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import "./fullsize.less";
+import './fullsize.less';
 
 import { Config } from '../../config';
 import * as consts from '../../core/constants';
@@ -29,9 +29,9 @@ import { IViewWithToolbar, IControlType, IViewBased } from '../../types';
  * @example
  * ```javascript
  * var editor = new Jodit();
- * editor.events.fire('toggleFullSize');
- * editor.events.fire('toggleFullSize', true); // fullsize
- * editor.events.fire('toggleFullSize', false); // usual mode
+ * editor.e.fire('toggleFullSize');
+ * editor.e.fire('toggleFullSize', true); // fullsize
+ * editor.e.fire('toggleFullSize', false); // usual mode
  * ```
  */
 
@@ -51,15 +51,15 @@ Config.prototype.controls.fullsize = {
 	},
 
 	update(button) {
-		const editor = button.jodit,
+		const editor = button.j,
 			mode = editor.isFullSize() ? 'shrink' : 'fullsize';
 
 		button.state.activated = editor.isFullSize();
 
-		if (editor.options.textIcons) {
+		if (editor.o.textIcons) {
 			button.state.text = editor.i18n(mode);
 		} else {
-			button.state.icon.name = mode
+			button.state.icon.name = mode;
 		}
 	},
 
@@ -85,8 +85,8 @@ export function fullsize(editor: IViewWithToolbar) {
 					oldHeight = css(editor.container, 'height') as number;
 					oldWidth = css(editor.container, 'width') as number;
 					css(editor.container, {
-						height: editor.ownerWindow.innerHeight,
-						width: editor.ownerWindow.innerWidth
+						height: editor.ow.innerHeight,
+						width: editor.ow.innerWidth
 					});
 					wasToggled = true;
 				} else if (wasToggled) {
@@ -110,7 +110,7 @@ export function fullsize(editor: IViewWithToolbar) {
 				enable = !editor.container.classList.contains('jodit_fullsize');
 			}
 
-			editor.options.fullsize = enable;
+			editor.o.fullsize = enable;
 
 			shown = enable;
 
@@ -130,7 +130,7 @@ export function fullsize(editor: IViewWithToolbar) {
 				css(editor.toolbar.container, 'width', 'auto');
 			}
 
-			if (editor.options.globalFullsize) {
+			if (editor.o.globalFullsize) {
 				let node = editor.container.parentNode as HTMLElement;
 
 				while (node && node.nodeType !== Node.DOCUMENT_NODE) {
@@ -144,11 +144,11 @@ export function fullsize(editor: IViewWithToolbar) {
 			editor.events?.fire('afterResize');
 		};
 
-	if (editor.options.globalFullsize) {
-		editor.events.on(editor.ownerWindow, 'resize', resize);
+	if (editor.o.globalFullsize) {
+		editor.e.on(editor.ow, 'resize', resize);
 	}
 
-	editor.events
+	editor.e
 		.on('afterInit afterOpen', () => {
 			editor.toggleFullSize(editor?.options?.fullsize);
 		})
@@ -157,7 +157,6 @@ export function fullsize(editor: IViewWithToolbar) {
 			toggle(false);
 		})
 		.on('beforeDestruct', () => {
-			editor.events &&
-				editor.events.off(editor.ownerWindow, 'resize', resize);
+			editor.events && editor.e.off(editor.ow, 'resize', resize);
 		});
 }

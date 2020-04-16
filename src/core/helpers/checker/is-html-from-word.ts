@@ -11,9 +11,9 @@
  * @return {boolean}
  */
 export const isHtmlFromWord = (data: string): boolean => {
-    return (
-        data.search(/<meta.*?Microsoft Excel\s[\d].*?>/) !== -1 ||
-        data.search(/<meta.*?Microsoft Word\s[\d].*?>/) !== -1 ||
-        (data.search(/style="[^"]*mso-/) !== -1 && data.search(/<font/) !== -1)
-    );
+	return (
+		data.search(/<meta.*?Microsoft Excel\s[\d].*?>/) !== -1 ||
+		data.search(/<meta.*?Microsoft Word\s[\d].*?>/) !== -1 ||
+		(data.search(/style="[^"]*mso-/) !== -1 && data.search(/<font/) !== -1)
+	);
 };

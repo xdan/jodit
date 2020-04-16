@@ -228,9 +228,10 @@ export default {
 	preview: 'תצוגה מקדימה',
 	download: 'הורד',
 	'Paste from clipboard': 'להדביק מהלוח',
-	'Your browser doesn\'t support direct access to the clipboard.': 'הדפדפן שלך לא תומך גישה ישירה ללוח.',
+	"Your browser doesn't support direct access to the clipboard.":
+		'הדפדפן שלך לא תומך גישה ישירה ללוח.',
 	'Copy selection': 'העתק בחירה',
-	'copy': 'העתק',
+	copy: 'העתק',
 	'Border radius': 'רדיוס הגבול',
-	'Show all': 'הצג את כל',
+	'Show all': 'הצג את כל'
 } as IDictionary<string>;

@@ -17,17 +17,24 @@ export abstract class SourceEditor<T> {
 		readonly fromWYSIWYG: CallbackFunction
 	) {}
 
+	/**
+	 * Short alias for this.jodit
+	 */
+	get j(): this['jodit'] {
+		return this.jodit;
+	}
+
 	abstract init(editor: IJodit): void;
 
 	isReady: boolean = false;
 	protected onReady() {
 		this.isReady = true;
-		this.jodit.events.fire(this, 'ready');
+		this.j.e.fire(this, 'ready');
 	}
 
 	onReadyAlways(onReady: CallbackFunction) {
 		if (!this.isReady) {
-			this.jodit.events?.on(this, 'ready', onReady);
+			this.j.events?.on(this, 'ready', onReady);
 		} else {
 			onReady();
 		}

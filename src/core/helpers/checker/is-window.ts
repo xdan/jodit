@@ -5,5 +5,5 @@
  */
 
 export const isWindow = (obj: any): boolean => {
-    return obj !== null && obj === obj.window;
+	return obj !== null && obj === obj.window;
 };

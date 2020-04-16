@@ -12,7 +12,7 @@
  * @return {string}
  */
 export const htmlspecialchars = (html: string): string => {
-    const tmp = document.createElement('div');
-    tmp.textContent = html;
-    return tmp.innerHTML;
+	const tmp = document.createElement('div');
+	tmp.textContent = html;
+	return tmp.innerHTML;
 };

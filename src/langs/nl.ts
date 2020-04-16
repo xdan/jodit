@@ -230,9 +230,10 @@ export default {
 	preview: 'voorvertoning',
 	download: 'Download',
 	'Paste from clipboard': 'Plakken van klembord',
-	'Your browser doesn\'t support direct access to the clipboard.': 'Uw browser ondersteunt geen directe toegang tot het klembord.',
+	"Your browser doesn't support direct access to the clipboard.":
+		'Uw browser ondersteunt geen directe toegang tot het klembord.',
 	'Copy selection': 'Selectie kopiëren',
-	'copy': 'kopiëren',
+	copy: 'kopiëren',
 	'Border radius': 'Border radius',
-	'Show all': 'Toon alle',
+	'Show all': 'Toon alle'
 } as IDictionary<string>;

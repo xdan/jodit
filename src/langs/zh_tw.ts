@@ -226,9 +226,10 @@ export default {
 	preview: '預覽',
 	download: '下載',
 	'Paste from clipboard': 'วางจากคลิปบอร์ด',
-	'Your browser doesn\'t support direct access to the clipboard.': 'ของเบราว์เซอร์ไม่สนับสนุนโดยตรงเข้าไปยังคลิปบอร์ด',
+	"Your browser doesn't support direct access to the clipboard.":
+		'ของเบราว์เซอร์ไม่สนับสนุนโดยตรงเข้าไปยังคลิปบอร์ด',
 	'Copy selection': 'คัดลอกส่วนที่เลือก',
-	'copy': 'คัดลอก',
+	copy: 'คัดลอก',
 	'Border radius': 'เส้นขอบรัศมี',
-	'Show all': 'แสดงทั้งหมด',
+	'Show all': 'แสดงทั้งหมด'
 } as IDictionary<string>;

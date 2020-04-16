@@ -10,7 +10,7 @@
  * @return {string}
  */
 export const camelCase = (key: string): string => {
-    return key.replace(/([-_])(.)/g, (m, code, letter) => {
-        return letter.toUpperCase();
-    });
+	return key.replace(/([-_])(.)/g, (m, code, letter) => {
+		return letter.toUpperCase();
+	});
 };

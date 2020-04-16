@@ -37,7 +37,7 @@ export abstract class View extends Panel implements IViewBased {
 	markOwner(elm: HTMLElement): void {
 		attr(elm, 'data-editor_id', this.id);
 
-		Object.defineProperty(elm, 'component', {
+		!elm.component && Object.defineProperty(elm, 'component', {
 			value: this
 		});
 	}
@@ -48,8 +48,8 @@ export abstract class View extends Panel implements IViewBased {
 	 * Get path for loading extra staff
 	 */
 	get basePath(): string {
-		if (this.options.basePath) {
-			return this.options.basePath;
+		if (this.o.basePath) {
+			return this.o.basePath;
 		}
 
 		return BASE_PATH;
@@ -84,14 +84,15 @@ export abstract class View extends Panel implements IViewBased {
 
 	options!: IViewOptions;
 
+	events: IEventsNative;
+
 	/**
-	 * Short alias for options
+	 * Short alias for events
 	 */
-	get o(): this['options'] {
-		return this.options;
+	get e(): this['events'] {
+		return this.events;
 	}
 
-	events: IEventsNative;
 	async: IAsync = new Async();
 
 	/**
@@ -101,7 +102,7 @@ export abstract class View extends Panel implements IViewBased {
 	 * @param params
 	 */
 	i18n(text: string, ...params: Array<string | number>): string {
-		return i18n(text, params, this?.jodit?.options || this?.options);
+		return i18n(text, params, this?.j?.options || this?.options);
 	}
 
 	/**
@@ -112,7 +113,7 @@ export abstract class View extends Panel implements IViewBased {
 		super.toggleFullSize(isFullSize);
 
 		if (this.events) {
-			this.events.fire('toggleFullSize', isFullSize);
+			this.e.fire('toggleFullSize', isFullSize);
 		}
 	}
 
@@ -131,7 +132,7 @@ export abstract class View extends Panel implements IViewBased {
 		}
 
 		if (mi[moduleName] === undefined) {
-			mi[moduleName] = new module(this.jodit || this, options);
+			mi[moduleName] = new module(this.j || this, options);
 		}
 
 		return mi[moduleName] as any;
@@ -170,7 +171,7 @@ export abstract class View extends Panel implements IViewBased {
 
 		this.jodit = jodit || this;
 
-		this.events = jodit?.events || new EventsNative(this.ownerDocument);
+		this.events = jodit?.events || new EventsNative(this.od);
 
 		this.buffer = jodit?.buffer || Storage.makeStorage();
 	}
@@ -186,7 +187,7 @@ export abstract class View extends Panel implements IViewBased {
 		}
 
 		if (this.events) {
-			this.events.destruct();
+			this.e.destruct();
 			delete this.events;
 		}
 

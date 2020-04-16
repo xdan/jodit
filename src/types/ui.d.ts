@@ -1,5 +1,11 @@
 import { IFocusable } from './form';
-import { IComponent, IContainer, IDestructible, IDictionary, Nullable } from './types';
+import {
+	IComponent,
+	IContainer,
+	IDestructible,
+	IDictionary,
+	Nullable
+} from './types';
 import { Buttons } from './toolbar';
 
 export interface IUIElement extends IContainer, IDestructible {
@@ -11,7 +17,7 @@ export interface IUIElement extends IContainer, IDestructible {
 }
 
 export interface IUIButtonState {
-	size: "tiny" | "xsmall" | "small" | "middle" | "large";
+	size: 'tiny' | 'xsmall' | 'small' | 'middle' | 'large';
 	disabled: boolean;
 	activated: boolean;
 	icon: {
@@ -34,7 +40,7 @@ export interface IUIButtonStatePartial {
 
 export interface IUIButton extends IComponent, IUIElement, IFocusable {
 	state: IUIButtonState;
-	setState(state: IUIButtonStatePartial): this
+	setState(state: IUIButtonStatePartial): this;
 
 	text: HTMLElement;
 	icon: HTMLElement;
@@ -45,7 +51,7 @@ export interface IUIButton extends IComponent, IUIElement, IFocusable {
 }
 
 export interface IUIList extends IUIElement {
-	mode: "vertical" | "horizontal";
+	mode: 'vertical' | 'horizontal';
 
 	elements: IUIElement[];
 	append(elm: IUIElement): void;

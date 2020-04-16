@@ -6,7 +6,7 @@
 
 import { IDictionary } from '../../types';
 
-type eachCallback<T, N> = ((this: T, key: N, value: T) => boolean | void);
+type eachCallback<T, N> = (this: T, key: N, value: T) => boolean | void;
 
 export function each<T>(obj: T[], callback: eachCallback<T, number>): boolean;
 

@@ -6,7 +6,8 @@
 
 import { IStorage, StorageValueType } from '../../../types';
 
-export class MemoryStorageProvider<T = StorageValueType> implements IStorage<T> {
+export class MemoryStorageProvider<T = StorageValueType>
+	implements IStorage<T> {
 	private data: Map<string, T> = new Map();
 
 	set(key: string, value: T) {

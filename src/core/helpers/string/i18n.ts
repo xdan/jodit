@@ -18,12 +18,13 @@ export const sprintf = (str: string, args?: Array<string | number>): string => {
 	const reg = /%([sd])/g;
 
 	let fnd = reg.exec(str);
-	let res = str, i = 0;
+	let res = str,
+		i = 0;
 
 	while (fnd && args[i] !== undefined) {
 		res = res.replace(fnd[0], args[i].toString());
 		i += 1;
-		fnd = reg.exec(str)
+		fnd = reg.exec(str);
 	}
 
 	return res;
@@ -58,14 +59,24 @@ export const sprintf = (str: string, args?: Array<string | number>): string => {
  * console.log(Jodit.prototype.i18n('Hello world', 'mr.Perkins', 'day')) //Hello mr.Perkins Good day
  * ```
  */
-export const i18n = (key: string, params?: Array<string | number>, options?: ILanguageOptions, safe: boolean = process.env.NODE_ENV === 'production'): string => {
-	const debug: boolean = Boolean(options !== undefined && options.debugLanguage);
+export const i18n = (
+	key: string,
+	params?: Array<string | number>,
+	options?: ILanguageOptions,
+	safe: boolean = process.env.NODE_ENV === 'production'
+): string => {
+	const debug: boolean = Boolean(
+		options !== undefined && options.debugLanguage
+	);
 
 	let store: IDictionary;
 
-	const
-		parse = (value: string): string => (params && params.length) ? sprintf(value, params) : value,
-		defaultLanguage = defineLanguage(Config.defaultOptions.language, Config.defaultOptions.language),
+	const parse = (value: string): string =>
+			params && params.length ? sprintf(value, params) : value,
+		defaultLanguage = defineLanguage(
+			Config.defaultOptions.language,
+			Config.defaultOptions.language
+		),
 		language = defineLanguage(options?.language, defaultLanguage),
 		tryGet = (store: IDictionary): string | undefined => {
 			if (!store) {

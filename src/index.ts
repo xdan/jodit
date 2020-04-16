@@ -52,8 +52,6 @@ Object.keys(decorators)
 		DefaultJodit.decorators[key] = (decorators as any)[key];
 	});
 
-
-
 ['Confirm', 'Alert', 'Prompt'].forEach((key: string) => {
 	(DefaultJodit as any)[key] = (Modules as any)[key];
 });

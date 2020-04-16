@@ -60,7 +60,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			return this.editor.innerText || '';
 		}
 
-		const div = this.create.inside.div();
+		const div = this.c.inside.div();
 		div.innerHTML = this.getElementValue();
 
 		return div.innerText || '';
@@ -84,8 +84,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @return {number}
 	 */
 	get defaultTimeout(): number {
-		return this.options && this.options.observer
-			? this.options.observer.timeout
+		return this.options && this.o.observer
+			? this.o.observer.timeout
 			: Jodit.defaultOptions.observer.timeout;
 	}
 
@@ -283,7 +283,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	getNativeEditorValue(): string {
 		let value: string;
 
-		value = this.events.fire('beforeGetNativeEditorValue');
+		value = this.e.fire('beforeGetNativeEditorValue');
 
 		if (isString(value)) {
 			return value;
@@ -301,7 +301,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param value
 	 */
 	setNativeEditorValue(value: string) {
-		if (this.events.fire('beforeSetNativeEditorValue', value)) {
+		if (this.e.fire('beforeSetNativeEditorValue', value)) {
 			return;
 		}
 
@@ -322,14 +322,14 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * @example
 		 * ```javascript
 		 * var editor = new Jodit("#redactor");
-		 * editor.events.on('beforeGetValueFromEditor', function () {
+		 * editor.e.on('beforeGetValueFromEditor', function () {
 		 *     return editor.editor.innerHTML.replace(/a/g, 'b');
 		 * });
 		 * ```
 		 */
 		let value: string;
 
-		value = this.events.fire('beforeGetValueFromEditor');
+		value = this.e.fire('beforeGetValueFromEditor');
 
 		if (value !== undefined) {
 			return value;
@@ -360,14 +360,14 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * @example
 		 * ```javascript
 		 * var editor = new Jodit("#redactor");
-		 * editor.events.on('afterGetValueFromEditor', function (new_value) {
+		 * editor.e.on('afterGetValueFromEditor', function (new_value) {
 		 *     new_value.value = new_value.value.replace('a', 'b');
 		 * });
 		 * ```
 		 */
 		const new_value: { value: string } = { value };
 
-		this.events.fire('afterGetValueFromEditor', new_value);
+		this.e.fire('afterGetValueFromEditor', new_value);
 
 		return new_value.value;
 	}
@@ -390,15 +390,15 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * @example
 		 * ```javascript
 		 * var editor = new Jodit("#redactor");
-		 * editor.events.on('beforeSetValueToEditor', function (old_value) {
+		 * editor.e.on('beforeSetValueToEditor', function (old_value) {
 		 *     return old_value.value.replace('a', 'b');
 		 * });
-		 * editor.events.on('beforeSetValueToEditor', function () {
+		 * editor.e.on('beforeSetValueToEditor', function () {
 		 *     return false; // disable setEditorValue method
 		 * });
 		 * ```
 		 */
-		const newValue: string | undefined | false = this.events.fire(
+		const newValue: string | undefined | false = this.e.fire(
 			'beforeSetValueToEditor',
 			value
 		);
@@ -437,8 +437,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.__callChangeCount += 1;
 
 			try {
-				this.events.fire('change', new_value, old_value);
-				this.events.fire(this.observer, 'change', new_value, old_value);
+				this.e.fire('change', new_value, old_value);
+				this.e.fire(this.observer, 'change', new_value, old_value);
 			} finally {
 				this.__callChangeCount = 0;
 			}
@@ -529,8 +529,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		if (typeof command !== 'function') {
 			const hotkeys: string | string[] | void =
-				this.options.commandToHotkeys[commandName] ||
-				this.options.commandToHotkeys[commandNameOriginal] ||
+				this.o.commandToHotkeys[commandName] ||
+				this.o.commandToHotkeys[commandNameOriginal] ||
 				command.hotkeys;
 
 			if (hotkeys) {
@@ -553,7 +553,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			.map(hotkey => hotkey + '.hotkey')
 			.join(' ');
 
-		this.events.off(shortcuts).on(shortcuts, () => {
+		this.e.off(shortcuts).on(shortcuts, () => {
 			return this.execCommand(commandName); // because need `beforeCommand`
 		});
 	}
@@ -581,7 +581,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		showUI: any = false,
 		value: null | any = null
 	) {
-		if (this.options.readonly && command !== 'selectall') {
+		if (this.o.readonly && command !== 'selectall') {
 			return;
 		}
 
@@ -596,9 +596,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * @param {string} third The third option is for the team
 		 * @example
 		 * ```javascript
-		 * parent.events.on('beforeCommand', function (command) {
+		 * parent.e.on('beforeCommand', function (command) {
 		 *  if (command === 'justifyCenter') {
-		 *      var p = parent.create.element('p')
+		 *      var p = parent.c.element('p')
 		 *      parent.selection.insertNode(p)
 		 *      parent.selection.setCursorIn(p);
 		 *      p.style.textAlign = 'justyfy';
@@ -607,7 +607,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * })
 		 * ```
 		 */
-		result = this.events.fire('beforeCommand', command, showUI, value);
+		result = this.e.fire('beforeCommand', command, showUI, value);
 
 		if (result !== false) {
 			result = this.execCustomCommands(command, showUI, value);
@@ -636,7 +636,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * @param {*} second The second parameter for the command
 		 * @param {*} third The third option is for the team
 		 */
-		this.events.fire('afterCommand', command, showUI, value);
+		this.e.fire('afterCommand', command, showUI, value);
 
 		this.setEditorValue(); // synchrony
 
@@ -740,7 +740,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			return this.getMode();
 		}
 
-		const active: Element | null = this.ownerDocument.activeElement;
+		const active: Element | null = this.od.activeElement;
 
 		if (
 			active &&
@@ -778,12 +778,12 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * @example
 		 * ```javascript
 		 * var editor = new Jodit("#redactor");
-		 * editor.events.on('beforeSetMode', function (data) {
+		 * editor.e.on('beforeSetMode', function (data) {
 		 *     data.mode = Jodit.MODE_SOURCE; // not respond to the mode change. Always make the source code mode
 		 * });
 		 * ```
 		 */
-		if (this.events.fire('beforeSetMode', data) === false) {
+		if (this.e.fire('beforeSetMode', data) === false) {
 			return;
 		}
 
@@ -795,7 +795,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			? data.mode
 			: consts.MODE_WYSIWYG;
 
-		if (this.options.saveModeInStorage) {
+		if (this.o.saveModeInStorage) {
 			this.storage.set('jodit_default_mode', this.mode);
 		}
 
@@ -811,13 +811,13 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * @example
 		 * ```javascript
 		 * var editor = new Jodit("#redactor");
-		 * editor.events.on('afterSetMode', function () {
+		 * editor.e.on('afterSetMode', function () {
 		 *     editor.setEditorValue(''); // clear editor's value after change mode
 		 * });
 		 * ```
 		 */
 		if (oldmode !== this.getMode()) {
-			this.events.fire('afterSetMode');
+			this.e.fire('afterSetMode');
 		}
 	}
 
@@ -836,7 +836,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			[
 				consts.MODE_SOURCE,
 				consts.MODE_WYSIWYG,
-				this.options.useSplitMode ? consts.MODE_SPLIT : 9
+				this.o.useSplitMode ? consts.MODE_SPLIT : 9
 			].includes(mode + 1)
 		) {
 			mode += 1;
@@ -855,7 +855,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param {boolean} isDisabled
 	 */
 	setDisabled(isDisabled: boolean) {
-		this.options.disabled = isDisabled;
+		this.o.disabled = isDisabled;
 
 		const readOnly: boolean = this.__wasReadOnly;
 
@@ -865,7 +865,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		if (this.editor) {
 			this.editor.setAttribute('aria-disabled', isDisabled.toString());
 			this.container.classList.toggle('jodit_disabled', isDisabled);
-			this.events.fire('disabled', isDisabled);
+			this.e.fire('disabled', isDisabled);
 		}
 	}
 
@@ -873,7 +873,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * Return true if editor in disabled mode
 	 */
 	getDisabled(): boolean {
-		return this.options.disabled;
+		return this.o.disabled;
 	}
 
 	/**
@@ -890,7 +890,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		this.__wasReadOnly = isReadOnly;
-		this.options.readonly = isReadOnly;
+		this.o.readonly = isReadOnly;
 
 		if (isReadOnly) {
 			this.editor && this.editor.removeAttribute('contenteditable');
@@ -898,14 +898,14 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.editor && this.editor.setAttribute('contenteditable', 'true');
 		}
 
-		this.events && this.events.fire('readonly', isReadOnly);
+		this.events && this.e.fire('readonly', isReadOnly);
 	}
 
 	/**
 	 * Return true if editor in read-only mode
 	 */
 	getReadOnly(): boolean {
-		return this.options.readonly;
+		return this.o.readonly;
 	}
 
 	/**
@@ -930,10 +930,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/** @override **/
 	protected initOwners(): void {
 		// in iframe it can be changed
-		this.editorWindow = this.options.ownerWindow;
+		this.editorWindow = this.o.ownerWindow;
 
-		this.ownerDocument = this.options.ownerDocument;
-		this.ownerWindow = this.options.ownerWindow;
+		this.ownerDocument = this.o.ownerDocument;
+		this.ownerWindow = this.o.ownerWindow;
 	}
 
 	/**
@@ -956,14 +956,14 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.setStatus(STATUSES.beforeInit);
 
 		if (this.options?.events) {
-			Object.keys(this.options.events).forEach((key: string) =>
-				this.events.on(key, this.options.events[key])
+			Object.keys(this.o.events).forEach((key: string) =>
+				this.e.on(key, this.o.events[key])
 			);
 		}
 
-		this.events.on(this.ownerWindow, 'resize', () => {
+		this.e.on(this.ow, 'resize', () => {
 			if (this.events) {
-				this.events.fire('resize');
+				this.e.fire('resize');
 			}
 		});
 
@@ -971,9 +971,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		this.initPlugins();
 
-		this.events.on('changePlace', () => {
-			this.setReadOnly(this.options.readonly);
-			this.setDisabled(this.options.disabled);
+		this.e.on('changePlace', () => {
+			this.setReadOnly(this.o.readonly);
+			this.setDisabled(this.o.disabled);
 		});
 
 		this.places.length = 0;
@@ -983,14 +983,14 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		const init = () => {
 			if (this.events) {
-				this.events.fire('afterInit', this);
+				this.e.fire('afterInit', this);
 			}
 
 			this.afterInitHook();
 
 			this.setStatus(STATUSES.ready);
 
-			this.events.fire('afterConstructor', this);
+			this.e.fire('afterConstructor', this);
 		};
 
 		if (isPromise(addPlaceResult)) {
@@ -1044,18 +1044,18 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			});
 		}
 
-		let container = this.create.div('jodit-container');
+		let container = this.c.div('jodit-container');
 
 		container.classList.add('jodit-container');
 		container.classList.add(
-			'jodit_' + (this.options.theme || 'default') + '_theme'
+			'jodit_' + (this.o.theme || 'default') + '_theme'
 		);
 
 		container.setAttribute('contenteditable', 'false');
 
 		let buffer: null | string = null;
 
-		if (this.options.inline) {
+		if (this.o.inline) {
 			if (['TEXTAREA', 'INPUT'].indexOf(element.nodeName) === -1) {
 				container = element as HTMLDivElement;
 				element.setAttribute(
@@ -1085,7 +1085,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			element.style.display = 'none';
 		}
 
-		const workplace = this.create.div('jodit-workplace', {
+		const workplace = this.c.div('jodit-workplace', {
 			contenteditable: false
 		});
 		container.appendChild(workplace);
@@ -1096,10 +1096,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			element.parentNode.insertBefore(container, element);
 		}
 
-		const editor = this.create.div('jodit-wysiwyg', {
+		const editor = this.c.div('jodit-wysiwyg', {
 			contenteditable: true,
 			'aria-disabled': false,
-			tabindex: this.options.tabIndex
+			tabindex: this.o.tabIndex
 		});
 
 		workplace.appendChild(editor);
@@ -1112,7 +1112,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			statusbar,
 			options: this.isReady ? configFactory(options) : this.options,
 			observer: new Observer(this),
-			editorWindow: this.ownerWindow
+			editorWindow: this.ow
 		};
 
 		this.elementToPlace.set(editor, currentPlace);
@@ -1140,7 +1140,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				this.elementToPlace.set(this.editor, currentPlace);
 			}
 
-			this.events.fire('afterAddPlace', currentPlace);
+			this.e.fire('afterAddPlace', currentPlace);
 		};
 
 		if (isPromise(initResult)) {
@@ -1168,14 +1168,14 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.buildToolbar(place.container);
 
 		if (this.isReady) {
-			this.events.fire('changePlace', place);
+			this.e.fire('changePlace', place);
 		}
 	}
 
 	private initPlugins(): void {
 		this.beforeInitHook();
 
-		this.events.fire('beforeInit', this);
+		this.e.fire('beforeInit', this);
 
 		try {
 			Jodit.plugins.init(this);
@@ -1199,9 +1199,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				buffer !== null && this.setEditorValue(buffer); // inline mode
 			}
 
-			let mode = this.options.defaultMode;
+			let mode = this.o.defaultMode;
 
-			if (this.options.saveModeInStorage) {
+			if (this.o.saveModeInStorage) {
 				const localMode = this.storage.get('jodit_default_mode');
 
 				if (typeof localMode === 'string') {
@@ -1211,12 +1211,12 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 			this.setMode(mode);
 
-			if (this.options.readonly) {
+			if (this.o.readonly) {
 				this.__wasReadOnly = false;
 				this.setReadOnly(true);
 			}
 
-			if (this.options.disabled) {
+			if (this.o.disabled) {
 				this.setDisabled(true);
 			}
 
@@ -1225,7 +1225,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				this.editorDocument.execCommand(
 					'defaultParagraphSeparator',
 					false,
-					this.options.enter.toLowerCase()
+					this.o.enter.toLowerCase()
 				);
 			} catch {}
 
@@ -1262,10 +1262,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	private createEditor(): void | Promise<any> {
 		const defaultEditorArea = this.editor;
 
-		const stayDefault:
-			| boolean
-			| undefined
-			| Promise<void> = this.events.fire('createEditor', this);
+		const stayDefault: boolean | undefined | Promise<void> = this.e.fire(
+			'createEditor',
+			this
+		);
 
 		const init = () => {
 			if (this.isInDestruct) {
@@ -1276,17 +1276,17 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				Dom.safeRemove(defaultEditorArea);
 			}
 
-			if (this.options.editorCssClass) {
-				this.editor.classList.add(this.options.editorCssClass);
+			if (this.o.editorCssClass) {
+				this.editor.classList.add(this.o.editorCssClass);
 			}
 
-			if (this.options.style) {
-				css(this.editor, this.options.style);
+			if (this.o.style) {
+				css(this.editor, this.o.style);
 			}
 
 			const editor = this.editor;
 			// proxy events
-			this.events
+			this.e
 				.on('synchro', () => {
 					this.setEditorValue();
 				})
@@ -1308,15 +1308,18 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 					'selectionchange selectionstart keydown keyup keypress dblclick mousedown mouseup ' +
 						'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
 					(event: Event): false | void => {
-						if (this.options.readonly) {
+						if (this.o.readonly) {
 							return;
 						}
-						if (event instanceof KeyboardEvent && event.isComposing) {
+						if (
+							event instanceof KeyboardEvent &&
+							event.isComposing
+						) {
 							return;
 						}
 
-						if (this.events && this.events.fire) {
-							if (this.events.fire(event.type, event) === false) {
+						if (this.events && this.e.fire) {
+							if (this.e.fire(event.type, event) === false) {
 								return false;
 							}
 
@@ -1325,16 +1328,14 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 					}
 				);
 
-			if (this.options.spellcheck) {
+			if (this.o.spellcheck) {
 				this.editor.setAttribute('spellcheck', 'true');
 			}
 
 			// direction
-			if (this.options.direction) {
+			if (this.o.direction) {
 				const direction =
-					this.options.direction.toLowerCase() === 'rtl'
-						? 'rtl'
-						: 'ltr';
+					this.o.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
 
 				this.editor.style.direction = direction;
 				this.container.style.direction = direction;
@@ -1344,11 +1345,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				this.toolbar.setDirection(direction);
 			}
 
-			if (this.options.triggerChangeEvent) {
-				this.events.on(
+			if (this.o.triggerChangeEvent) {
+				this.e.on(
 					'change',
 					this.async.debounce(() => {
-						this.events && this.events.fire(this.element, 'change');
+						this.events && this.e.fire(this.element, 'change');
 					}, this.defaultTimeout)
 				);
 			}
@@ -1381,12 +1382,12 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * @example
 		 * ```javascript
 		 * var editor = new Jodit("#redactor");
-		 * editor.events.on('beforeDestruct', function (data) {
+		 * editor.e.on('beforeDestruct', function (data) {
 		 *     return false;
 		 * });
 		 * ```
 		 */
-		if (this.events.fire('beforeDestruct') === false) {
+		if (this.e.fire('beforeDestruct') === false) {
 			return;
 		}
 
@@ -1406,10 +1407,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		delete this.selection;
 		this.__selectionLocked = null;
 
-		this.events.off(this.ownerWindow, 'resize');
-		this.events.off(this.ownerWindow);
-		this.events.off(this.ownerDocument);
-		this.events.off(this.ownerDocument.body);
+		this.e.off(this.ow, 'resize');
+		this.e.off(this.ow);
+		this.e.off(this.od);
+		this.e.off(this.od.body);
 
 		this.components.forEach(component => {
 			if (isDestructable(component) && !component.isInDestruct) {
@@ -1459,9 +1460,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 				!statusbar.isInDestruct && statusbar.destruct();
 
-				this.events.off(container);
-				this.events.off(element);
-				this.events.off(editor);
+				this.e.off(container);
+				this.e.off(element);
+				this.e.off(editor);
 
 				Dom.safeRemove(workplace);
 				Dom.safeRemove(editor);

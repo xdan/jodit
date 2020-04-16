@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import "./add-new-line.less";
+import './add-new-line.less';
 
 import { Config } from '../../config';
 import { Dom, Icon, Plugin } from '../../modules';
@@ -57,14 +57,14 @@ const ns = 'addnewline';
  * @param {Jodit} editor
  */
 export class addNewLine extends Plugin {
-	private line = this.jodit.create.fromHTML(
-		`<div role="button" tabIndex="-1" title="${this.jodit.i18n(
+	private line = this.j.c.fromHTML(
+		`<div role="button" tabIndex="-1" title="${this.j.i18n(
 			'Break'
 		)}" class="jodit-add-new-line"><span>${Icon.get('enter')}</span></div>`
 	) as HTMLDivElement;
 
 	private isMatchedTag = new RegExp(
-		'^(' + this.jodit.options.addNewLineTagsTriggers.join('|') + ')$',
+		'^(' + this.j.o.addNewLineTagsTriggers.join('|') + ')$',
 		'i'
 	);
 
@@ -75,20 +75,16 @@ export class addNewLine extends Plugin {
 	private isShown: boolean = false;
 
 	private show() {
-		if (
-			this.isShown ||
-			this.jodit.options.readonly ||
-			this.jodit.isLocked()
-		) {
+		if (this.isShown || this.j.o.readonly || this.j.isLocked()) {
 			return;
 		}
 
 		this.isShown = true;
 
-		this.jodit.async.clearTimeout(this.timeout);
+		this.j.async.clearTimeout(this.timeout);
 		this.line.classList.toggle('jodit-add-new-line_after', !this.preview);
-		this.jodit.container.appendChild(this.line);
-		this.line.style.width = this.jodit.editor.clientWidth + 'px';
+		this.j.container.appendChild(this.line);
+		this.line.style.width = this.j.editor.clientWidth + 'px';
 	}
 
 	private hideForce = () => {
@@ -97,7 +93,7 @@ export class addNewLine extends Plugin {
 		}
 
 		this.isShown = false;
-		this.jodit.async.clearTimeout(this.timeout);
+		this.j.async.clearTimeout(this.timeout);
 		this.lineInFocus = false;
 		Dom.safeRemove(this.line);
 	};
@@ -107,7 +103,7 @@ export class addNewLine extends Plugin {
 			return;
 		}
 
-		this.timeout = this.jodit.async.setTimeout(this.hideForce, {
+		this.timeout = this.j.async.setTimeout(this.hideForce, {
 			timeout: 500,
 			label: 'add-new-line-hide'
 		});
@@ -116,24 +112,24 @@ export class addNewLine extends Plugin {
 	private canGetFocus = (elm: Node | null): boolean => {
 		return (
 			elm !== null &&
-			Dom.isBlock(elm, this.jodit.editorWindow) &&
+			Dom.isBlock(elm, this.j.editorWindow) &&
 			!/^(img|table|iframe|hr)$/i.test(elm.nodeName)
 		);
 	};
 
 	protected afterInit(editor: IJodit): void {
-		if (!editor.options.addNewLine) {
+		if (!editor.o.addNewLine) {
 			return;
 		}
 
-		editor.events
+		editor.e
 			.on(this.line, 'mousemove', (e: MouseEvent) => {
 				e.stopPropagation();
 			})
 			.on(this.line, 'mousedown touchstart', this.onClickLine)
 			.on('change', this.hideForce)
 			.on(this.line, 'mouseenter', () => {
-				this.jodit.async.clearTimeout(this.timeout);
+				this.j.async.clearTimeout(this.timeout);
 				this.lineInFocus = true;
 			})
 			.on(this.line, 'mouseleave', () => {
@@ -145,13 +141,13 @@ export class addNewLine extends Plugin {
 	}
 
 	private addEventListeners() {
-		const editor = this.jodit;
+		const editor = this.j;
 
-		editor.events
+		editor.e
 			.off(editor.editor, '.' + ns)
 			.off(editor.container, '.' + ns)
 			.on(
-				[editor.ownerWindow, editor.editorWindow, editor.editor],
+				[editor.ow, editor.editorWindow, editor.editor],
 				`scroll` + '.' + ns,
 				this.hideForce
 			)
@@ -169,8 +165,8 @@ export class addNewLine extends Plugin {
 	}
 
 	private onClickLine = (e: MouseEvent) => {
-		const editor = this.jodit;
-		const p = editor.create.inside.element(editor.options.enter);
+		const editor = this.j;
+		const p = editor.c.inside.element(editor.o.enter);
 
 		if (this.preview && this.current && this.current.parentNode) {
 			this.current.parentNode.insertBefore(p, this.current);
@@ -181,18 +177,18 @@ export class addNewLine extends Plugin {
 		editor.selection.setCursorIn(p);
 		scrollIntoView(p, editor.editor, editor.editorDocument);
 
-		editor.events.fire('synchro');
+		editor.e.fire('synchro');
 		this.hideForce();
 
 		e.preventDefault();
 	};
 
 	private onDblClickEditor = (e: MouseEvent) => {
-		const editor = this.jodit;
+		const editor = this.j;
 
 		if (
-			!editor.options.readonly &&
-			editor.options.addNewLineOnDBLClick &&
+			!editor.o.readonly &&
+			editor.o.addNewLineOnDBLClick &&
 			e.target === editor.editor &&
 			editor.selection.isCollapsed()
 		) {
@@ -204,7 +200,7 @@ export class addNewLine extends Plugin {
 
 			const top = e.pageY - editor.editorWindow.pageYOffset;
 
-			const p = editor.create.inside.element(editor.options.enter);
+			const p = editor.c.inside.element(editor.o.enter);
 
 			if (
 				Math.abs(top - editorBound.top) <
@@ -225,7 +221,7 @@ export class addNewLine extends Plugin {
 	};
 
 	private onMouseMove = (e: MouseEvent) => {
-		const editor = this.jodit;
+		const editor = this.j;
 
 		let currentElement: HTMLElement | null = editor.editorDocument.elementFromPoint(
 			e.clientX,
@@ -268,18 +264,18 @@ export class addNewLine extends Plugin {
 			}
 		}
 
-		const pos = position(currentElement, this.jodit);
+		const pos = position(currentElement, this.j);
 
 		let top: false | number = false;
 
 		let { clientY } = e;
 
-		if (this.jodit.iframe) {
-			const { top } = position(this.jodit.iframe, this.jodit, true);
+		if (this.j.iframe) {
+			const { top } = position(this.j.iframe, this.j, true);
 			clientY += top;
 		}
 
-		const delta = this.jodit.options.addNewLineDeltaShow;
+		const delta = this.j.o.addNewLineDeltaShow;
 
 		if (Math.abs(clientY - pos.top) <= delta) {
 			top = pos.top;
@@ -310,21 +306,14 @@ export class addNewLine extends Plugin {
 	};
 
 	protected beforeDestruct(): void {
-		this.jodit.async.clearTimeout(this.timeout);
-		this.jodit.events.off(this.line);
-		this.jodit.events.off('changePlace', this.addEventListeners);
+		this.j.async.clearTimeout(this.timeout);
+		this.j.e.off(this.line);
+		this.j.e.off('changePlace', this.addEventListeners);
 
 		Dom.safeRemove(this.line);
 
-		this.jodit.events
-			.off(
-				[
-					this.jodit.ownerWindow,
-					this.jodit.editorWindow,
-					this.jodit.editor
-				],
-				'.' + ns
-			)
-			.off(this.jodit.container, '.' + ns);
+		this.j.e
+			.off([this.j.ow, this.j.editorWindow, this.j.editor], '.' + ns)
+			.off(this.j.container, '.' + ns);
 	}
 }

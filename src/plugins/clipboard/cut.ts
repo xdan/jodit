@@ -29,7 +29,7 @@ export const pluginKey = 'clipboard';
  */
 export class clipboard implements IPlugin {
 	init(editor: IJodit): void {
-		editor.events
+		editor.e
 			.off(`copy.${pluginKey} cut.${pluginKey}`)
 			.on(`copy.${pluginKey} cut.${pluginKey}`, (event: ClipboardEvent):
 				| false

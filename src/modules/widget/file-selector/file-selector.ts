@@ -1,4 +1,11 @@
-import { IDictionary, IFileBrowser, IFileBrowserCallBackData, IJodit, IUploader, IUploaderData } from '../../../types';
+import {
+	IDictionary,
+	IFileBrowser,
+	IFileBrowserCallBackData,
+	IJodit,
+	IUploader,
+	IUploaderData
+} from '../../../types';
 import { isFunction, $$, attr, val } from '../../../core/helpers';
 import { Icon } from '../../../core/ui';
 import { Dom } from '../../../core/dom';
@@ -23,7 +30,7 @@ import { TabsWidget } from '../';
  * ```javascript
  * let widget = new Jodit.modules.Widget(editor);
  *
- * return widget.create('ImageSelector', {
+ * return widget.c('ImageSelector', {
  *      url: function (url, alt) {
  *          editor.selections.insertImage(url);
  *      },
@@ -40,9 +47,7 @@ import { TabsWidget } from '../';
 interface ImageSelectorCallbacks {
 	url?: (this: IJodit, url: string, alt: string) => void;
 	filebrowser?: (data: IFileBrowserCallBackData) => void;
-	upload?:
-		| ((this: IJodit, data: IFileBrowserCallBackData) => void)
-		| true;
+	upload?: ((this: IJodit, data: IFileBrowserCallBackData) => void) | true;
 }
 
 /**
@@ -68,20 +73,19 @@ export const FileSelectorWidget = (
 
 	if (
 		callbacks.upload &&
-		editor.options.uploader &&
-		(editor.options.uploader.url ||
-			editor.options.uploader.insertImageAsBase64URI)
+		editor.o.uploader &&
+		(editor.o.uploader.url || editor.o.uploader.insertImageAsBase64URI)
 	) {
-		const dragbox = editor.create.fromHTML(
+		const dragbox = editor.c.fromHTML(
 			'<div class="jodit_draganddrop_file_box">' +
-			`<strong>${editor.i18n(
-				isImage ? 'Drop image' : 'Drop file'
-			)}</strong>` +
-			`<span><br>${editor.i18n('or click')}</span>` +
-			`<input type="file" accept="${
-				isImage ? 'image/*' : '*'
-			}" tabindex="-1" dir="auto" multiple=""/>` +
-			'</div>'
+				`<strong>${editor.i18n(
+					isImage ? 'Drop image' : 'Drop file'
+				)}</strong>` +
+				`<span><br>${editor.i18n('or click')}</span>` +
+				`<input type="file" accept="${
+					isImage ? 'image/*' : '*'
+				}" tabindex="-1" dir="auto" multiple=""/>` +
+				'</div>'
 		);
 
 		editor.getInstance<IUploader>('Uploader').bind(
@@ -89,52 +93,50 @@ export const FileSelectorWidget = (
 			(resp: IUploaderData) => {
 				let handler = isFunction(callbacks.upload)
 					? callbacks.upload
-					: editor.options.uploader.defaultHandlerSuccess;
+					: editor.o.uploader.defaultHandlerSuccess;
 
 				if (typeof handler === 'function') {
 					handler.call(editor, resp);
 				}
 			},
 			(error: Error) => {
-				editor.events.fire('errorMessage', error.message);
+				editor.e.fire('errorMessage', error.message);
 			}
 		);
 
-		const icon = editor.options.textIcons ? '' : Icon.get('upload');
+		const icon = editor.o.textIcons ? '' : Icon.get('upload');
 		tabs[icon + editor.i18n('Upload')] = dragbox;
 	}
 
 	if (callbacks.filebrowser) {
-		if (
-			editor.options.filebrowser.ajax.url ||
-			editor.options.filebrowser.items.url
-		) {
-			const icon = editor.options.textIcons ? '' : Icon.get('folder');
+		if (editor.o.filebrowser.ajax.url || editor.o.filebrowser.items.url) {
+			const icon = editor.o.textIcons ? '' : Icon.get('folder');
 			tabs[icon + editor.i18n('Browse')] = () => {
 				close && close();
 				if (callbacks.filebrowser) {
-					(editor.getInstance(
-						'FileBrowser'
-					) as IFileBrowser).open(callbacks.filebrowser, isImage);
+					(editor.getInstance('FileBrowser') as IFileBrowser).open(
+						callbacks.filebrowser,
+						isImage
+					);
 				}
 			};
 		}
 	}
 
 	if (callbacks.url) {
-		const form = editor.create.fromHTML(
-			`<form onsubmit="return false;" class="jodit-form">
+		const form = editor.c.fromHTML(
+				`<form onsubmit="return false;" class="jodit-form">
 						<div class="jodit-form__group">
 							<input class="jodit_input" type="text" required name="url" placeholder="http://"/>
 						</div>
 						<div class="jodit-form__group">
 							<input class="jodit_input" type="text" name="text" placeholder="${editor.i18n(
-				'Alternative text'
-			)}"/>
+								'Alternative text'
+							)}"/>
 						</div>
 						<div style="text-align: right"><button class="jodit-button">${editor.i18n(
-				'Insert'
-			)}</button></div>
+							'Insert'
+						)}</button></div>
 					</form>`
 			) as HTMLFormElement,
 			button = form.querySelector('button') as HTMLButtonElement,
@@ -184,7 +186,7 @@ export const FileSelectorWidget = (
 			false
 		);
 
-		const icon = editor.options.textIcons ? '' : Icon.get('link');
+		const icon = editor.o.textIcons ? '' : Icon.get('link');
 
 		tabs[icon + ' URL'] = form;
 	}

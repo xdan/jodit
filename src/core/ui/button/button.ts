@@ -67,7 +67,7 @@ export class UIButton extends UIElement implements IUIButton {
 
 	@watch('state.text')
 	protected onChangeText(): void {
-		this.text.textContent = this.jodit.i18n(this.state.text);
+		this.text.textContent = this.j.i18n(this.state.text);
 	}
 
 	@watch('state.disabled')
@@ -82,7 +82,7 @@ export class UIButton extends UIElement implements IUIButton {
 
 	@watch('state.tooltip')
 	protected onChangeTooltip(): void {
-		if (this.jodit.options.useNativeTooltip) {
+		if (this.j.o.useNativeTooltip) {
 			attr(this.container, 'title', this.state.tooltip);
 		}
 
@@ -99,7 +99,7 @@ export class UIButton extends UIElement implements IUIButton {
 
 		if (state.icon) {
 			if (state.icon.iconURL) {
-				iconElement = jodit.create.element('span');
+				iconElement = jodit.c.element('span');
 
 				css(
 					iconElement,
@@ -115,7 +115,7 @@ export class UIButton extends UIElement implements IUIButton {
 				const svg = Icon.get(this.state.icon.name);
 
 				if (svg) {
-					iconElement = this.jodit.create.fromHTML(svg.trim());
+					iconElement = this.j.c.fromHTML(svg.trim());
 					iconElement.classList.add(
 						'jodit-icon_' + this.clearName(this.state.icon.name)
 					);
@@ -142,7 +142,7 @@ export class UIButton extends UIElement implements IUIButton {
 	 * Element has focus
 	 */
 	isFocused(): boolean {
-		const { activeElement } = this.jodit.ownerDocument;
+		const { activeElement } = this.j.od;
 
 		return Boolean(
 			activeElement && Dom.isOrContains(this.container, activeElement)
@@ -153,11 +153,11 @@ export class UIButton extends UIElement implements IUIButton {
 	protected createContainer(): HTMLElement {
 		let tabIndex = -1;
 
-		if (this.jodit.options.allowTabNavigation) {
+		if (this.j.o.allowTabNavigation) {
 			tabIndex = 0;
 		}
 
-		const button = this.jodit.create.element('button', {
+		const button = this.j.c.element('button', {
 			class: this.componentName,
 			type: 'button',
 			role: 'button',
@@ -165,13 +165,13 @@ export class UIButton extends UIElement implements IUIButton {
 			ariaPressed: false
 		});
 
-		this.text = this.jodit.create.span(this.componentName + '__text');
-		this.icon = this.jodit.create.span(this.componentName + '__icon');
+		this.text = this.j.c.span(this.componentName + '__text');
+		this.icon = this.j.c.span(this.componentName + '__icon');
 
 		button.appendChild(this.text);
 		button.appendChild(this.icon);
 
-		this.jodit.events.on(button, `click`, this.onActionFire.bind(this));
+		this.j.e.on(button, `click`, this.onActionFire.bind(this));
 
 		return button;
 	}
@@ -188,7 +188,7 @@ export class UIButton extends UIElement implements IUIButton {
 	}
 
 	destruct(): any {
-		this.jodit.events.off(this.container);
+		this.j.e.off(this.container);
 		return super.destruct();
 	}
 
@@ -196,26 +196,21 @@ export class UIButton extends UIElement implements IUIButton {
 	 * Add tooltip to button
 	 */
 	protected initTooltip() {
-		if (
-			this.jodit.options.showTooltip &&
-			!this.jodit.options.useNativeTooltip
-		) {
-			const to =
-				this.jodit.options.showTooltipDelay ||
-				this.jodit.defaultTimeout;
+		if (this.j.o.showTooltip && !this.j.o.useNativeTooltip) {
+			const to = this.j.o.showTooltipDelay || this.j.defaultTimeout;
 
 			let timeout: number = 0;
 
-			this.jodit.events
+			this.j.e
 				.on(this.container, 'mouseenter', () => {
 					if (!this.state.tooltip) {
 						return;
 					}
 
-					timeout = this.jodit.async.setTimeout(
+					timeout = this.j.async.setTimeout(
 						() =>
 							!this.state.disabled &&
-							this.jodit?.events.fire(
+							this.j?.e.fire(
 								'showTooltip',
 								this.container,
 								this.state.tooltip
@@ -227,8 +222,8 @@ export class UIButton extends UIElement implements IUIButton {
 					);
 				})
 				.on(this.container, 'mouseleave', () => {
-					this.jodit.async.clearTimeout(timeout);
-					this.jodit.events.fire('hideTooltip');
+					this.j.async.clearTimeout(timeout);
+					this.j.e.fire('hideTooltip');
 				});
 		}
 	}

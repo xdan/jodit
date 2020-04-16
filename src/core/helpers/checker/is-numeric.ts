@@ -12,13 +12,13 @@ import { isString } from './is-string';
  * @param value
  */
 export const isNumeric = (value: number | string): boolean => {
-    if (isString(value)) {
-        if (!value.match(/^([+\-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
-            return false;
-        }
+	if (isString(value)) {
+		if (!value.match(/^([+\-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
+			return false;
+		}
 
-        value = parseFloat(value);
-    }
+		value = parseFloat(value);
+	}
 
-    return typeof value === 'number' && !isNaN(value) && isFinite(value);
+	return typeof value === 'number' && !isNaN(value) && isFinite(value);
 };

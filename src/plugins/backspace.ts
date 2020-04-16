@@ -31,18 +31,18 @@ export class backspace extends Plugin {
 
 			if (
 				(!html.length || html === '<br>') &&
-				!Dom.isCell(box, this.jodit.editorWindow) &&
+				!Dom.isCell(box, this.j.editorWindow) &&
 				box.parentNode &&
-				container !== this.jodit.editor
+				container !== this.j.editor
 			) {
 				parent = box.parentNode;
-				this.jodit.selection.removeNode(box);
+				this.j.selection.removeNode(box);
 			} else {
 				break;
 			}
 
 			box = parent as HTMLElement | null;
-		} while (box && box !== this.jodit.editor);
+		} while (box && box !== this.j.editor);
 	}
 
 	private removeChar(
@@ -87,13 +87,9 @@ export class backspace extends Plugin {
 
 				range.setStart(box.node, startOffset);
 				range.collapse(true);
-				this.jodit.selection.selectRange(range);
+				this.j.selection.selectRange(range);
 
-				nextElement = Dom.findInline(
-					box.node,
-					toLeft,
-					this.jodit.editor
-				);
+				nextElement = Dom.findInline(box.node, toLeft, this.j.editor);
 
 				if (value.length) {
 					let setRange: boolean = false;
@@ -113,9 +109,9 @@ export class backspace extends Plugin {
 				} else {
 					range.setStartBefore(box.node);
 					range.collapse(true);
-					this.jodit.selection.selectRange(range);
+					this.j.selection.selectRange(range);
 
-					this.jodit.selection.removeNode(box.node);
+					this.j.selection.removeNode(box.node);
 
 					box.node = nextElement;
 				}
@@ -139,7 +135,7 @@ export class backspace extends Plugin {
 
 	private removePotential(node: Node | null): false | void {
 		if (node && this.potentialRemovable.test(node.nodeName)) {
-			this.jodit.selection.removeNode(node);
+			this.j.selection.removeNode(node);
 			return false;
 		}
 	}
@@ -166,7 +162,7 @@ export class backspace extends Plugin {
 				box.node = workElement.parentNode;
 			}
 
-			if (box.node === this.jodit.editor) {
+			if (box.node === this.j.editor) {
 				return false;
 			}
 
@@ -212,7 +208,7 @@ export class backspace extends Plugin {
 	};
 
 	protected afterInit(jodit: IJodit): void {
-		jodit.events
+		jodit.e
 			.on('afterCommand', (command: string) => {
 				if (command === 'delete') {
 					this.afterCommand();
@@ -229,7 +225,7 @@ export class backspace extends Plugin {
 	}
 
 	private afterCommand(): void {
-		const jodit = this.jodit;
+		const jodit = this.j;
 
 		const current: Node | false = jodit.selection.current();
 
@@ -250,7 +246,7 @@ export class backspace extends Plugin {
 		}
 	}
 	private onDelete(toLeft: boolean): false | void {
-		const jodit = this.jodit;
+		const jodit = this.j;
 
 		if (!jodit.selection.isFocused()) {
 			jodit.selection.focus();
@@ -268,9 +264,9 @@ export class backspace extends Plugin {
 			return false;
 		}
 
-		const fakeNode = jodit.create.inside.text(consts.INVISIBLE_SPACE);
+		const fakeNode = jodit.c.inside.text(consts.INVISIBLE_SPACE);
 
-		const marker = jodit.create.inside.span();
+		const marker = jodit.c.inside.span();
 
 		try {
 			range.insertNode(fakeNode);
@@ -327,7 +323,7 @@ export class backspace extends Plugin {
 			);
 
 			if (!prevBox && container && container.parentNode) {
-				prevBox = jodit.create.inside.element(jodit.options.enter);
+				prevBox = jodit.c.inside.element(jodit.o.enter);
 
 				let boxNode: Node = container;
 

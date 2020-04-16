@@ -17,12 +17,12 @@ import { UISeparator } from '../separator';
 import { getStrongControlTypes } from '../helpers/getStrongControlTypes';
 import { STATUSES } from '../../component';
 import { kebabCase } from '../../helpers/string';
-import { watch  }from '../../decorators';
+import { watch } from '../../decorators';
 
 export class UIList<T extends IViewBased = IViewBased> extends UIElement<T>
 	implements IUIList {
 	elements: IUIElement[] = [];
-	mode: IUIList['mode'] = "horizontal";
+	mode: IUIList['mode'] = 'horizontal';
 
 	@watch('mode')
 	onChangeMode(key: string = '', oldValue: string = '') {
@@ -58,38 +58,39 @@ export class UIList<T extends IViewBased = IViewBased> extends UIElement<T>
 
 		let lastBtnSeparator: boolean = false;
 
-		getStrongControlTypes(items, this.jodit.options.controls).forEach(
-			control => {
-				let elm: Nullable<IUIElement> = null;
+		getStrongControlTypes(items, this.j.o.controls).forEach(control => {
+			let elm: Nullable<IUIElement> = null;
 
-				switch (control.name) {
-					case '\n':
-						elm = new UIBreak(this.jodit);
-						break;
+			switch (control.name) {
+				case '\n':
+					elm = new UIBreak(this.j);
+					break;
 
-					case '|':
-						if (!lastBtnSeparator) {
-							lastBtnSeparator = true;
-							elm = new UISeparator(this.jodit);
-						}
-						break;
+				case '|':
+					if (!lastBtnSeparator) {
+						lastBtnSeparator = true;
+						elm = new UISeparator(this.j);
+					}
+					break;
 
-					default:
-						lastBtnSeparator = false;
-						elm = this.makeButton(control, target);
-				}
-
-				elm && this.append(elm);
+				default:
+					lastBtnSeparator = false;
+					elm = this.makeButton(control, target);
 			}
-		);
+
+			elm && this.append(elm);
+		});
 
 		this.update();
 
 		return this;
 	}
 
-	protected makeButton(control: IControlTypeStrong, target: Nullable<HTMLElement>): IUIButton {
-		return new UIButton(this.jodit);
+	protected makeButton(
+		control: IControlTypeStrong,
+		target: Nullable<HTMLElement>
+	): IUIButton {
+		return new UIButton(this.j);
 	}
 
 	append(elm: IUIElement): void {

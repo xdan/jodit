@@ -30,20 +30,20 @@ export const Confirm = (
 	callback?: (yes: boolean) => void
 ): Dialog => {
 	const dialog = new Dialog(),
-		$div: HTMLDivElement = dialog.create.fromHTML(
+		$div: HTMLDivElement = dialog.c.fromHTML(
 			'<form class="jodit-dialog_prompt"></form>'
 		) as HTMLDivElement,
-		$label: HTMLLabelElement = dialog.create.element('label');
+		$label: HTMLLabelElement = dialog.c.element('label');
 
 	if (isFunction(title)) {
 		callback = title;
 		title = undefined;
 	}
 
-	$label.appendChild(dialog.create.fromHTML(msg));
+	$label.appendChild(dialog.c.fromHTML(msg));
 	$div.appendChild($label);
 
-	const $cancel: HTMLAnchorElement = dialog.create.fromHTML(
+	const $cancel: HTMLAnchorElement = dialog.c.fromHTML(
 		'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
 			Icon.get('cancel') +
 			'<span>' +
@@ -66,7 +66,7 @@ export const Confirm = (
 		dialog.close();
 	};
 
-	const $ok: HTMLAnchorElement = dialog.create.fromHTML(
+	const $ok: HTMLAnchorElement = dialog.c.fromHTML(
 		'<a href="javascript:void(0)" style="float:left;" class="jodit-button">' +
 			Icon.get('check') +
 			'<span>' +

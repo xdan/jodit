@@ -4,11 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import {
-	CallbackFunction,
-	IAsync,
-	IAsyncParams
-} from '../types';
+import { CallbackFunction, IAsync, IAsyncParams } from '../types';
 import { setTimeout, clearTimeout } from './helpers/';
 
 export class Async implements IAsync {
@@ -56,7 +52,7 @@ export class Async implements IAsync {
 	 * @example
 	 * ```javascript
 	 * var jodit = new Jodit('.editor');
-	 *	jodit.events.on('mousemove', jodit.async.debounce(function() {
+	 *	jodit.e.on('mousemove', jodit.async.debounce(function() {
 	 *     // Do expensive things
 	 * }, 100));
 	 * ```
@@ -64,11 +60,9 @@ export class Async implements IAsync {
 	 * @param fn
 	 * @param timeout
 	 */
-	debounce(
-		fn: CallbackFunction,
-		timeout: number
-	): CallbackFunction {
-		let timer: number = 0, lastArgs: any[];
+	debounce(fn: CallbackFunction, timeout: number): CallbackFunction {
+		let timer: number = 0,
+			lastArgs: any[];
 
 		return (...args: any[]) => {
 			lastArgs = args;
@@ -95,15 +89,12 @@ export class Async implements IAsync {
 	 * @example
 	 * ```javascript
 	 * var jodit = new Jodit('.editor');
-	 * jodit.events.on(document.body, 'scroll', jodit.async.throttle(function() {
+	 * jodit.e.on(document.body, 'scroll', jodit.async.throttle(function() {
 	 *     // Do expensive things
 	 * }, 100));
 	 * ```
 	 */
-	throttle(
-		fn: CallbackFunction,
-		timeout: number,
-	): CallbackFunction {
+	throttle(fn: CallbackFunction, timeout: number): CallbackFunction {
 		let timer: number | null = null,
 			needInvoke: boolean,
 			callee: () => void,
@@ -133,8 +124,7 @@ export class Async implements IAsync {
 				callee();
 			}
 		};
-	};
-
+	}
 
 	private promisesRejections: Set<Function> = new Set();
 

@@ -7,25 +7,29 @@
 import { ToolbarCollection } from './collection';
 import * as consts from '../../../core/constants';
 import { Dom } from '../../../core/dom';
-import { IDictionary, IToolbarButton, IViewBased, IJodit } from '../../../types';
+import {
+	IDictionary,
+	IToolbarButton,
+	IViewBased,
+	IJodit
+} from '../../../types';
 import { css, isFunction } from '../../../core/helpers';
 
 export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 	/** @override */
-	shouldBeDisabled(button: IToolbarButton): boolean  {
+	shouldBeDisabled(button: IToolbarButton): boolean {
 		const disabled = super.shouldBeDisabled(button);
 
 		if (disabled !== undefined) {
 			return disabled;
 		}
 
-		const mode: number = button.control.mode === undefined
+		const mode: number =
+			button.control.mode === undefined
 				? consts.MODE_WYSIWYG
 				: button.control.mode;
 
-		return !(
-			mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode()
-		);
+		return !(mode === consts.MODE_SPLIT || mode === this.j.getRealMode());
 	}
 
 	/** @override */
@@ -36,8 +40,8 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 			return active;
 		}
 
-		const element: false | Node = this.jodit.selection
-			? this.jodit.selection.current()
+		const element: false | Node = this.j.selection
+			? this.j.selection.current()
 			: false;
 
 		if (!element) {
@@ -62,7 +66,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 							return true;
 						}
 					},
-					this.jodit.editor
+					this.j.editor
 				)
 			) {
 				return true;
@@ -85,7 +89,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 							);
 						}
 					},
-					this.jodit.editor
+					this.j.editor
 				)
 			) {
 				return true;
@@ -108,7 +112,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 			const cssValue = cssObject[cssProperty];
 
 			if (isFunction(cssValue)) {
-				if (cssValue(this.jodit, css(node, cssProperty).toString())) {
+				if (cssValue(this.j, css(node, cssProperty).toString())) {
 					matches += 1;
 				}
 			} else {

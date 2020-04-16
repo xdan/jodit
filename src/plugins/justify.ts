@@ -14,7 +14,7 @@ Config.prototype.controls.align = {
 	tooltip: 'Align',
 
 	update(button): void {
-		const editor = button.jodit as IJodit,
+		const editor = button.j as IJodit,
 			control = button.control,
 			current: Node | false = editor.selection.current();
 
@@ -41,7 +41,7 @@ Config.prototype.controls.align = {
 				control.list &&
 				(control.list as string[]).indexOf(currentValue) !== -1
 			) {
-				if (editor.options.textIcons) {
+				if (editor.o.textIcons) {
 					button.state.text = editor.i18n(currentValue);
 				} else {
 					button.state.icon.name = currentValue;
@@ -187,7 +187,7 @@ export function justify(editor: IJodit) {
 			if (!currentBox) {
 				currentBox = Dom.wrapInline(
 					current,
-					editor.options.enterBlock,
+					editor.o.enterBlock,
 					editor
 				) as HTMLElement;
 			}

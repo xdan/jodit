@@ -11,8 +11,8 @@
  * @return {string}
  */
 export const normalizeSize = (value: string | number): string => {
-    if (/^[0-9]+$/.test(value.toString())) {
-        return value + 'px';
-    }
-    return value.toString();
+	if (/^[0-9]+$/.test(value.toString())) {
+		return value + 'px';
+	}
+	return value.toString();
 };

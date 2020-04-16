@@ -15,7 +15,7 @@ const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
  * @param {Jodit} editor
  */
 export function imageProcessor(editor: IJodit) {
-	editor.events.on(
+	editor.e.on(
 		'change afterInit changePlace',
 		editor.async.debounce(() => {
 			if (editor.editor) {
@@ -27,8 +27,8 @@ export function imageProcessor(editor: IJodit) {
 								'load',
 								function ElementOnLoad() {
 									editor.events &&
-										editor.events.fire &&
-										editor.events.fire('resize');
+										editor.e.fire &&
+										editor.e.fire('resize');
 									elm.removeEventListener(
 										'load',
 										ElementOnLoad
@@ -37,7 +37,7 @@ export function imageProcessor(editor: IJodit) {
 							);
 						}
 
-						editor.events.on(elm, 'mousedown touchstart', () => {
+						editor.e.on(elm, 'mousedown touchstart', () => {
 							editor.selection.select(elm);
 						});
 					}

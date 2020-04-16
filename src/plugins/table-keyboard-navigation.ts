@@ -15,7 +15,7 @@ import { IJodit } from '../types';
  * @param {Jodit} editor
  */
 export function tableKeyboardNavigation(editor: IJodit) {
-	editor.events
+	editor.e
 		.off('.tableKeyboardNavigation')
 		.on('keydown.tableKeyboardNavigation', (event: KeyboardEvent):
 			| false
@@ -115,7 +115,7 @@ export function tableKeyboardNavigation(editor: IJodit) {
 										'tr'
 								  ) as HTMLTableRowElement),
 							sibling === 'next',
-							editor.create.inside
+							editor.c.inside
 						);
 						next = (Dom as any)[sibling](
 							block,
@@ -155,7 +155,7 @@ export function tableKeyboardNavigation(editor: IJodit) {
 
 			if (next) {
 				if (!next.firstChild) {
-					const first = editor.create.inside.element('br');
+					const first = editor.c.inside.element('br');
 					next.appendChild(first);
 					editor.selection.setCursorBefore(first);
 				} else {

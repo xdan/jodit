@@ -10,7 +10,7 @@ export { autofocus } from './autofocus';
 export { backspace } from './backspace';
 export { bold } from './bold';
 export { cleanHtml } from './clean-html';
-export { clipboard, paste, pasteStorage }  from './clipboard';
+export { clipboard, paste, pasteStorage } from './clipboard';
 export { color } from './color';
 export { DragAndDrop } from './drag-and-drop';
 export { DragAndDropElement } from './drag-and-drop-element';

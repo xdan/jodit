@@ -48,13 +48,13 @@ Config.prototype.controls.dots = {
 
 		if (store === undefined) {
 			store = {
-				container: editor.create.div(),
+				container: editor.c.div(),
 				toolbar: makeCollection(editor),
 				rebuild: () => {
 					if (button) {
 						const buttons:
 							| Array<string | IControlType>
-							| undefined = editor.events.fire(
+							| undefined = editor.e.fire(
 							'getDiffButtons.mobile',
 							button.parentElement
 						);
@@ -70,7 +70,7 @@ Config.prototype.controls.dots = {
 
 			let w = 32;
 
-			const size = editor.options.toolbarButtonSize;
+			const size = editor.o.toolbarButtonSize;
 
 			if (size === 'large') {
 				w = 36;
@@ -96,15 +96,13 @@ Config.prototype.controls.dots = {
 export function mobile(editor: IJodit) {
 	let timeout: number = 0,
 		now: number,
-		store: Array<string | IControlType> = splitArray(
-			editor.options.buttons
-		);
+		store: Array<string | IControlType> = splitArray(editor.o.buttons);
 
-	editor.events
+	editor.e
 		.on('touchend', (e: TouchEvent) => {
 			if (e.changedTouches && e.changedTouches.length) {
 				now = new Date().getTime();
-				if (now - timeout > editor.options.mobileTapTimeout) {
+				if (now - timeout > editor.o.mobileTapTimeout) {
 					timeout = now;
 					editor.selection.insertCursorAtPoint(
 						e.changedTouches[0].clientX,
@@ -117,19 +115,19 @@ export function mobile(editor: IJodit) {
 			'getDiffButtons.mobile',
 			(toolbar: IToolbarCollection): void | Buttons => {
 				if (toolbar === editor.toolbar) {
-					return splitArray(editor.options.buttons).filter(i => {
+					return splitArray(editor.o.buttons).filter(i => {
 						return store.indexOf(i) < 0;
 					});
 				}
 			}
 		);
 
-	if (editor.options.toolbarAdaptive) {
-		editor.events
+	if (editor.o.toolbarAdaptive) {
+		editor.e
 			.on(
 				'resize afterInit recalcAdaptive changePlace afterAddPlace',
 				() => {
-					if (!editor.options.toolbar) {
+					if (!editor.o.toolbar) {
 						return;
 					}
 
@@ -137,14 +135,14 @@ export function mobile(editor: IJodit) {
 
 					let newStore: Array<string | IControlType> = [];
 
-					if (width >= editor.options.sizeLG) {
-						newStore = splitArray(editor.options.buttons);
-					} else if (width >= editor.options.sizeMD) {
-						newStore = splitArray(editor.options.buttonsMD);
-					} else if (width >= editor.options.sizeSM) {
-						newStore = splitArray(editor.options.buttonsSM);
+					if (width >= editor.o.sizeLG) {
+						newStore = splitArray(editor.o.buttons);
+					} else if (width >= editor.o.sizeMD) {
+						newStore = splitArray(editor.o.buttonsMD);
+					} else if (width >= editor.o.sizeSM) {
+						newStore = splitArray(editor.o.buttonsSM);
 					} else {
-						newStore = splitArray(editor.options.buttonsXS);
+						newStore = splitArray(editor.o.buttonsXS);
 					}
 
 					if (newStore.toString() !== store.toString()) {
@@ -154,19 +152,15 @@ export function mobile(editor: IJodit) {
 							editor.toolbar.getParentContainer();
 
 						if (container) {
-							editor.events.fire(camelCase('close-all-popups'));
+							editor.e.fire(camelCase('close-all-popups'));
 
 							editor.toolbar
-								.build(
-									store.concat(editor.options.extraButtons)
-								)
+								.build(store.concat(editor.o.extraButtons))
 								.appendTo(container);
 						}
 					}
 				}
 			)
-			.on(editor.ownerWindow, 'load', () =>
-				editor.events.fire('recalcAdaptive')
-			);
+			.on(editor.ow, 'load', () => editor.e.fire('recalcAdaptive'));
 	}
 }

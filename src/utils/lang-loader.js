@@ -3,20 +3,22 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-const ts = require("typescript");
-const vm = require("vm");
+const ts = require('typescript');
+const vm = require('vm');
 
 let keys = [];
 
-module.exports = function (source) {
+module.exports = function(source) {
 	this.cacheable && this.cacheable(true);
 
 	let result = [];
 
 	try {
-		const transpile = ts.transpileModule(source, { compilerOptions: {
+		const transpile = ts.transpileModule(source, {
+			compilerOptions: {
 				module: ts.ModuleKind.ES2015
-		}});
+			}
+		});
 
 		const es5export = 'result = ';
 		const content = transpile.outputText
@@ -27,8 +29,7 @@ module.exports = function (source) {
 
 		try {
 			vm.runInNewContext(content, box);
-		}
-		catch(e) {
+		} catch (e) {
 			vm.runInNewContext('var exports={};' + content, box);
 		}
 
@@ -45,7 +46,6 @@ module.exports = function (source) {
 		if (this.resourcePath.indexOf('en.ts') !== -1) {
 			result = keys; // for English file return keys
 		}
-
 	} catch (e) {
 		throw new Error('Error in lang-loader: ' + e.message);
 	}
@@ -54,4 +54,3 @@ module.exports = function (source) {
 };
 
 module.exports.seperable = true;
-

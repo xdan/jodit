@@ -49,8 +49,7 @@ const exp: IDictionary<IDictionary<string>> = {
 };
 
 /* Unpack array to hash */
-const
-	get = (value: IDictionary) => value.default || value,
+const get = (value: IDictionary) => value.default || value,
 	hashLang: IDictionary = {};
 
 if (Array.isArray(get(en))) {

@@ -44,7 +44,7 @@ export const appendScript = (
 	url: string,
 	callback: (this: HTMLElement, e?: Event) => any
 ): CallbackAndElement => {
-	const script = jodit.create.element('script');
+	const script = jodit.c.element('script');
 
 	script.type = 'text/javascript';
 
@@ -56,7 +56,7 @@ export const appendScript = (
 		script.src = completeUrl(url);
 	}
 
-	jodit.ownerDocument.body.appendChild(script);
+	jodit.od.body.appendChild(script);
 
 	return {
 		callback,
@@ -85,7 +85,7 @@ export const appendScriptAsync = cacheLoaders(
 export const appendStyleAsync = cacheLoaders(
 	(jodit: IViewBased, url: string): Promise<HTMLElement> => {
 		return new Promise((resolve, reject) => {
-			const link = jodit.create.element('link');
+			const link = jodit.c.element('link');
 
 			link.rel = 'stylesheet';
 			link.media = 'all';
@@ -98,7 +98,7 @@ export const appendStyleAsync = cacheLoaders(
 
 			link.href = completeUrl(url);
 
-			jodit.ownerDocument.body.appendChild(link);
+			jodit.od.body.appendChild(link);
 		});
 	}
 );

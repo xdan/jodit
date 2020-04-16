@@ -37,9 +37,10 @@ export interface IContainer {
 
 interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 	jodit: T;
+	j: this['jodit'];
+
 	componentName: string;
 	uid: string;
-
 
 	isDestructed: boolean;
 	isInDestruct: boolean;
@@ -73,7 +74,7 @@ export interface IPoint {
 	y: number;
 }
 
-export interface IPointBound extends IPoint{
+export interface IPointBound extends IPoint {
 	w: number;
 	h: number;
 }

@@ -14,14 +14,14 @@ import { KEY_ALIASES } from '../../constants';
  * @param keys
  */
 export const normalizeKeyAliases = (keys: string): string => {
-    const memory: IDictionary<boolean> = {};
+	const memory: IDictionary<boolean> = {};
 
-    return keys
-        .replace(/\+\+/g, '+add')
-        .split(/[\s]*\+[\s]*/)
-        .map(key => trim(key.toLowerCase()))
-        .map(key => KEY_ALIASES[key] || key)
-        .sort()
-        .filter(key => !memory[key] && key !== '' && (memory[key] = true))
-        .join('+');
+	return keys
+		.replace(/\+\+/g, '+add')
+		.split(/[\s]*\+[\s]*/)
+		.map(key => trim(key.toLowerCase()))
+		.map(key => KEY_ALIASES[key] || key)
+		.sort()
+		.filter(key => !memory[key] && key !== '' && (memory[key] = true))
+		.join('+');
 };

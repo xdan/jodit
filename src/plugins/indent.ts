@@ -32,7 +32,7 @@ Config.prototype.controls.outdent = {
 				editor.editor
 			) as HTMLElement | false;
 
-			const key = getKey(editor.options.direction);
+			const key = getKey(editor.o.direction);
 
 			if (currentBox && currentBox.style && currentBox.style[key]) {
 				return parseInt(currentBox.style[key], 10) <= 0;
@@ -61,7 +61,7 @@ Config.prototype.indentMargin = 10;
  * @param {Jodit} editor
  */
 export function indent(editor: IJodit) {
-	const key = getKey(editor.options.direction);
+	const key = getKey(editor.o.direction);
 
 	const callback = (command: string): void | false => {
 		const indentedBoxes: HTMLElement[] = [];
@@ -77,7 +77,7 @@ export function indent(editor: IJodit) {
 				  ) as HTMLElement)
 				: false;
 
-			const enter = editor.options.enter;
+			const enter = editor.o.enter;
 
 			if (!currentBox && current) {
 				currentBox = Dom.wrapInline(
@@ -102,8 +102,7 @@ export function indent(editor: IJodit) {
 					: 0;
 
 				value +=
-					editor.options.indentMargin *
-					(command === 'outdent' ? -1 : 1);
+					editor.o.indentMargin * (command === 'outdent' ? -1 : 1);
 
 				currentBox.style[key] = value > 0 ? value + 'px' : '';
 

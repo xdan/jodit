@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import "./xpath.less"
+import './xpath.less';
 
 import { Config } from '../../config';
 import { INVISIBLE_SPACE, MODE_WYSIWYG } from '../../core/constants';
@@ -34,27 +34,27 @@ Config.prototype.showXPathInStatusbar = true;
 export class xpath extends Plugin {
 	private onContext = (bindElement: Node, event: MouseEvent) => {
 		if (!this.menu) {
-			this.menu = new ContextMenu(this.jodit);
+			this.menu = new ContextMenu(this.j);
 		}
 
 		this.menu.show(event.clientX, event.clientY, [
 			{
 				icon: 'bin',
-				title: bindElement === this.jodit.editor ? 'Clear' : 'Remove',
+				title: bindElement === this.j.editor ? 'Clear' : 'Remove',
 				exec: () => {
-					if (bindElement !== this.jodit.editor) {
+					if (bindElement !== this.j.editor) {
 						Dom.safeRemove(bindElement);
 					} else {
-						this.jodit.value = '';
+						this.j.value = '';
 					}
-					this.jodit.setEditorValue();
+					this.j.setEditorValue();
 				}
 			},
 			{
 				icon: 'select-all',
 				title: 'Select',
 				exec: () => {
-					this.jodit.selection.select(bindElement);
+					this.j.selection.select(bindElement);
 				}
 			}
 		]);
@@ -63,33 +63,27 @@ export class xpath extends Plugin {
 	};
 
 	private onSelectPath = (bindElement: Node, event: MouseEvent) => {
-		this.jodit.selection.focus();
+		this.j.selection.focus();
 
 		const path = attr(event.target as HTMLElement, '-path') || '/';
 
 		if (path === '/') {
-			this.jodit.execCommand('selectall');
+			this.j.execCommand('selectall');
 			return false;
 		}
 
 		try {
-			const elm: Node | null = this.jodit.editorDocument
-				.evaluate(
-					path,
-					this.jodit.editor,
-					null,
-					XPathResult.ANY_TYPE,
-					null
-				)
+			const elm: Node | null = this.j.editorDocument
+				.evaluate(path, this.j.editor, null, XPathResult.ANY_TYPE, null)
 				.iterateNext();
 
 			if (elm) {
-				this.jodit.selection.select(elm);
+				this.j.selection.select(elm);
 				return false;
 			}
 		} catch {}
 
-		this.jodit.selection.select(bindElement);
+		this.j.selection.select(bindElement);
 
 		return false;
 	};
@@ -100,7 +94,7 @@ export class xpath extends Plugin {
 		name: string,
 		title: string
 	): HTMLElement => {
-		const item = this.jodit.create.fromHTML(
+		const item = this.j.c.fromHTML(
 			`<span class="jodit-xpath__item"><a role="button" data-path="${path}" href="javascript:void(0)" title="${title}" tabindex="-1"'>${trim(
 				name
 			)}</a></span>`
@@ -108,7 +102,7 @@ export class xpath extends Plugin {
 
 		const a = item.firstChild as HTMLAnchorElement;
 
-		this.jodit.events
+		this.j.e
 			.on(a, 'click', this.onSelectPath.bind(this, bindElement))
 			.on(a, 'contextmenu', this.onContext.bind(this, bindElement));
 
@@ -127,12 +121,12 @@ export class xpath extends Plugin {
 	private appendSelectAll = () => {
 		this.removeSelectAll();
 
-		this.selectAllButton = makeButton(this.jodit, {
+		this.selectAllButton = makeButton(this.j, {
 			name: 'selectall',
-			...this.jodit.options.controls.selectall
+			...this.j.o.controls.selectall
 		} as IControlTypeStrong);
 
-		this.selectAllButton.state.size = "tiny";
+		this.selectAllButton.state.size = 'tiny';
 
 		this.container &&
 			this.container.insertBefore(
@@ -146,7 +140,7 @@ export class xpath extends Plugin {
 			return;
 		}
 
-		const current: Node | false = this.jodit.selection.current();
+		const current: Node | false = this.j.selection.current();
 
 		if (this.container) {
 			this.container.innerHTML = INVISIBLE_SPACE;
@@ -158,17 +152,17 @@ export class xpath extends Plugin {
 			Dom.up(
 				current,
 				(elm: Node | null) => {
-					if (elm && this.jodit.editor !== elm && !Dom.isText(elm)) {
+					if (elm && this.j.editor !== elm && !Dom.isText(elm)) {
 						name = elm.nodeName.toLowerCase();
 						xpth = getXPathByElement(
 							elm as HTMLElement,
-							this.jodit.editor
+							this.j.editor
 						).replace(/^\//, '');
 						li = this.tpl(
 							elm,
 							xpth,
 							name,
-							this.jodit.i18n('Select %s', name)
+							this.j.i18n('Select %s', name)
 						);
 
 						this.container &&
@@ -178,26 +172,26 @@ export class xpath extends Plugin {
 							);
 					}
 				},
-				this.jodit.editor
+				this.j.editor
 			);
 		}
 
 		this.appendSelectAll();
 	};
 
-	private calcPath: () => void = this.jodit.async.debounce(
+	private calcPath: () => void = this.j.async.debounce(
 		this.calcPathImd,
-		this.jodit.defaultTimeout * 2
+		this.j.defaultTimeout * 2
 	);
 
 	container!: HTMLElement;
 	menu: ContextMenu | null = null;
 
 	afterInit() {
-		if (this.jodit.options.showXPathInStatusbar) {
-			this.container = this.jodit.create.div('jodit-xpath');
+		if (this.j.o.showXPathInStatusbar) {
+			this.container = this.j.c.div('jodit-xpath');
 
-			this.jodit.events
+			this.j.e
 				.off('.xpath')
 				.on(
 					'mouseup.xpath change.xpath keydown.xpath changeSelection.xpath',
@@ -206,13 +200,13 @@ export class xpath extends Plugin {
 				.on(
 					'afterSetMode.xpath afterInit.xpath changePlace.xpath',
 					() => {
-						if (!this.jodit.options.showXPathInStatusbar) {
+						if (!this.j.o.showXPathInStatusbar) {
 							return;
 						}
 
-						this.jodit.statusbar.append(this.container);
+						this.j.statusbar.append(this.container);
 
-						if (this.jodit.getRealMode() === MODE_WYSIWYG) {
+						if (this.j.getRealMode() === MODE_WYSIWYG) {
 							this.calcPath();
 						} else {
 							if (this.container) {
@@ -228,8 +222,8 @@ export class xpath extends Plugin {
 	}
 
 	beforeDestruct(): void {
-		if (this.jodit && this.jodit.events) {
-			this.jodit.events.off('.xpath');
+		if (this.j && this.j.events) {
+			this.j.e.off('.xpath');
 		}
 
 		this.removeSelectAll();

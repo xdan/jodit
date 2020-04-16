@@ -36,20 +36,19 @@ export class DragAndDrop extends Plugin {
 	private onDrag = (event: DragEvent) => {
 		if (this.draggable) {
 			if (!this.draggable.parentNode) {
-				getContainer(this.jodit, DragAndDrop.name).appendChild(this.draggable);
+				getContainer(this.j, DragAndDrop.name).appendChild(
+					this.draggable
+				);
 			}
 
-			this.jodit.events.fire('hidePopup');
+			this.j.e.fire('hidePopup');
 
 			css(this.draggable, {
 				left: event.clientX + 20,
 				top: event.clientY + 20
 			});
 
-			this.jodit.selection.insertCursorAtPoint(
-				event.clientX,
-				event.clientY
-			);
+			this.j.selection.insertCursorAtPoint(event.clientX, event.clientY);
 
 			event.preventDefault();
 			event.stopPropagation();
@@ -63,13 +62,13 @@ export class DragAndDrop extends Plugin {
 			!event.dataTransfer.files.length
 		) {
 			if (!this.isFragmentFromEditor && !this.draggable) {
-				this.jodit.events.fire('paste', event);
+				this.j.e.fire('paste', event);
 				event.preventDefault();
 				event.stopPropagation();
 				return false;
 			}
 
-			const sel = this.jodit.selection.sel;
+			const sel = this.j.selection.sel;
 			const range: Range | null =
 				this.bufferRange ||
 				(sel && sel.rangeCount ? sel.getRangeAt(0) : null);
@@ -87,7 +86,7 @@ export class DragAndDrop extends Plugin {
 							? ['a', 'href']
 							: ['img', 'src'];
 
-					fragment = this.jodit.create.inside.element(tagName);
+					fragment = this.j.c.inside.element(tagName);
 
 					fragment.setAttribute(
 						field,
@@ -102,30 +101,27 @@ export class DragAndDrop extends Plugin {
 					fragment = dataBind(this.draggable, 'target');
 				}
 			} else if (this.getText(event)) {
-				fragment = this.jodit.create.inside.fromHTML(
+				fragment = this.j.c.inside.fromHTML(
 					this.getText(event) as string
 				);
 			}
 
 			sel && sel.removeAllRanges();
 
-			this.jodit.selection.insertCursorAtPoint(
-				event.clientX,
-				event.clientY
-			);
+			this.j.selection.insertCursorAtPoint(event.clientX, event.clientY);
 
 			if (fragment) {
-				this.jodit.selection.insertNode(fragment, false, false);
+				this.j.selection.insertNode(fragment, false, false);
 
 				if (range && fragment.firstChild && fragment.lastChild) {
 					range.setStartBefore(fragment.firstChild);
 					range.setEndAfter(fragment.lastChild);
-					this.jodit.selection.selectRange(range);
-					this.jodit.events.fire('synchro');
+					this.j.selection.selectRange(range);
+					this.j.e.fire('synchro');
 				}
 
-				if (Dom.isTag(fragment, 'img') && this.jodit.events) {
-					this.jodit.events.fire('afterInsertImage', fragment);
+				if (Dom.isTag(fragment, 'img') && this.j.events) {
+					this.j.e.fire('afterInsertImage', fragment);
 				}
 			}
 
@@ -141,14 +137,14 @@ export class DragAndDrop extends Plugin {
 		this.onDragEnd(); // remove olddraggable
 
 		this.isFragmentFromEditor = Dom.isOrContains(
-			this.jodit.editor,
+			this.j.editor,
 			target,
 			true
 		);
 		this.isCopyMode = this.isFragmentFromEditor ? ctrlKey(event) : true; // we can move only element from editor
 
 		if (this.isFragmentFromEditor) {
-			const sel = this.jodit.selection.sel;
+			const sel = this.j.selection.sel;
 			const range: Range | null =
 				sel && sel.rangeCount ? sel.getRangeAt(0) : null;
 			if (range) {
@@ -192,17 +188,17 @@ export class DragAndDrop extends Plugin {
 	};
 
 	afterInit() {
-		this.jodit.events
+		this.j.e
 			.off(window, '.DragAndDrop')
 			.off('.DragAndDrop')
 			.off(
-				[window, this.jodit.editorDocument, this.jodit.editor],
+				[window, this.j.editorDocument, this.j.editor],
 				'dragstart.DragAndDrop',
 				this.onDragStart
 			)
 			.on(window, 'dragover.DragAndDrop', this.onDrag)
 			.on(
-				[window, this.jodit.editorDocument, this.jodit.editor],
+				[window, this.j.editorDocument, this.j.editor],
 				'dragstart.DragAndDrop',
 				this.onDragStart
 			)
@@ -217,11 +213,11 @@ export class DragAndDrop extends Plugin {
 	beforeDestruct() {
 		this.onDragEnd();
 
-		this.jodit.events
+		this.j.e
 			.off(window, '.DragAndDrop')
 			.off('.DragAndDrop')
 			.off(
-				[window, this.jodit.editorDocument, this.jodit.editor],
+				[window, this.j.editorDocument, this.j.editor],
 				'dragstart.DragAndDrop',
 				this.onDragStart
 			);

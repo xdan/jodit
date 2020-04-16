@@ -18,7 +18,9 @@ import {
 	extend,
 	isPlainObject,
 	parseQuery,
-	buildQuery
+	buildQuery,
+	isString,
+	isFunction
 } from './helpers';
 
 /**
@@ -86,17 +88,14 @@ export class Ajax implements IAjax {
 		obj: string | IDictionary<string | object> | FormData,
 		prefix?: string
 	): string | FormData {
-		if (
-			this.options.queryBuild &&
-			typeof this.options.queryBuild === 'function'
-		) {
-			return this.options.queryBuild.call(this, obj, prefix);
+		if (isFunction(this.o.queryBuild)) {
+			return this.o.queryBuild.call(this, obj, prefix);
 		}
 
 		if (
-			typeof obj === 'string' ||
-			((this.jodit.ownerWindow as any).FormData &&
-				obj instanceof (this.jodit.ownerWindow as any).FormData)
+			isString(obj) ||
+			((this.j.ow as any).FormData &&
+				obj instanceof (this.j.ow as any).FormData)
 		) {
 			return obj as string | FormData;
 		}
@@ -109,8 +108,16 @@ export class Ajax implements IAjax {
 	response!: string;
 
 	options: AjaxOptions;
+	get o(): this['options'] {
+		return this.options;
+	}
 
-	jodit: IViewBased;
+	/**
+	 * Alias for this.jodit
+	 */
+	get j(): this['jodit'] {
+		return this.jodit;
+	}
 
 	abort(): Ajax {
 		try {
@@ -134,7 +141,7 @@ export class Ajax implements IAjax {
 				const __parse = (resp: string): object => {
 					let result: object | null = null;
 
-					if (this.options.dataType === 'json') {
+					if (this.o.dataType === 'json') {
 						result = JSON.parse(resp);
 					}
 
@@ -184,29 +191,28 @@ export class Ajax implements IAjax {
 								this.xhr,
 								error(
 									this.xhr.statusText ||
-										this.jodit.i18n('Connection error!')
+										this.j.i18n('Connection error!')
 								)
 							);
 						}
 					}
 				};
 
-				this.xhr.withCredentials =
-					this.options.withCredentials || false;
+				this.xhr.withCredentials = this.o.withCredentials || false;
 
 				const { url, data, method } = this.prepareRequest();
 
 				this.xhr.open(method, url, true);
 
-				if (this.options.contentType && this.xhr.setRequestHeader) {
+				if (this.o.contentType && this.xhr.setRequestHeader) {
 					this.xhr.setRequestHeader(
 						'Content-type',
-						this.options.contentType
+						this.o.contentType
 					);
 				}
 
-				if (this.options.headers && this.xhr.setRequestHeader) {
-					each(this.options.headers, (key, value) => {
+				if (this.o.headers && this.xhr.setRequestHeader) {
+					each(this.o.headers, (key, value) => {
 						this.xhr.setRequestHeader(key, value);
 					});
 				}
@@ -220,13 +226,13 @@ export class Ajax implements IAjax {
 	}
 
 	prepareRequest(): IRequest {
-		if (!this.options.url) {
+		if (!this.o.url) {
 			throw error('Need URL for AJAX request');
 		}
 
-		let url: string = this.options.url;
-		const data = this.options.data;
-		const method = (this.options.method || 'get').toLowerCase();
+		let url: string = this.o.url;
+		const data = this.o.data;
+		const method = (this.o.method || 'get').toLowerCase();
 
 		if (method === 'get' && data && isPlainObject(data)) {
 			const qIndex = url.indexOf('?');
@@ -238,7 +244,7 @@ export class Ajax implements IAjax {
 					'?' +
 					buildQuery({ ...urlData, ...(data as IDictionary) });
 			} else {
-				url += '?' + buildQuery(this.options.data as IDictionary);
+				url += '?' + buildQuery(this.o.data as IDictionary);
 			}
 		}
 
@@ -254,9 +260,7 @@ export class Ajax implements IAjax {
 		return request;
 	}
 
-	constructor(editor: IViewBased, options: AjaxOptions) {
-		this.jodit = editor;
-
+	constructor(readonly jodit: IViewBased, options: AjaxOptions) {
 		this.options = extend(
 			true,
 			{},
@@ -264,13 +268,13 @@ export class Ajax implements IAjax {
 			options
 		) as AjaxOptions;
 
-		if (this.options.xhr) {
-			this.xhr = this.options.xhr();
+		if (this.o.xhr) {
+			this.xhr = this.o.xhr();
 		}
 
-		editor &&
-			editor.events &&
-			editor.events.on('beforeDestruct', () => {
+		jodit &&
+			jodit.events &&
+			jodit.e.on('beforeDestruct', () => {
 				this.abort();
 			});
 	}

@@ -1,4 +1,9 @@
-import { Buttons, Controls, IControlTypeStrong, IDictionary } from '../../../types';
+import {
+	Buttons,
+	Controls,
+	IControlTypeStrong,
+	IDictionary
+} from '../../../types';
 import { getControlType } from './getControlType';
 import { Config } from '../../../config';
 
@@ -18,9 +23,6 @@ export function getStrongControlTypes(
 		  });
 
 	return elements.map(item =>
-		getControlType(
-			item,
-			controls || Config.defaultOptions.controls
-		)
+		getControlType(item, controls || Config.defaultOptions.controls)
 	);
 }

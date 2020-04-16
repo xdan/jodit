@@ -218,15 +218,16 @@ export default {
 	'The image has been successfully uploaded to the host!':
 		"L'image a été téléchargée avec succès sur le serveur!null",
 	palette: 'Palette',
-	'There are no files': 'Il n\'y a aucun fichier dans ce répertoire.',
+	'There are no files': "Il n'y a aucun fichier dans ce répertoire.",
 	Rename: 'renommer',
 	'Enter new name': 'Entrez un nouveau nom',
 	preview: 'Aperçu',
 	download: 'Télécharger',
 	'Paste from clipboard': 'Coller à partir du presse-papiers',
-	'Your browser doesn\'t support direct access to the clipboard.': 'Votre navigateur ne prend pas en charge l\'accès direct à la presse-papiers.',
+	"Your browser doesn't support direct access to the clipboard.":
+		"Votre navigateur ne prend pas en charge l'accès direct à la presse-papiers.",
 	'Copy selection': 'Copier la sélection',
-	'copy': 'copie',
+	copy: 'copie',
 	'Border radius': 'Rayon des frontières',
-	'Show all': 'Afficher tous les',
+	'Show all': 'Afficher tous les'
 } as IDictionary<string>;

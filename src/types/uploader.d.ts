@@ -110,7 +110,7 @@ export type BuildDataResult =
  *            }
  *         },
  *         error: function (e) {
- *             this.events.fire('errorMessage', [e.getMessage(), 'error', 4000])
+ *             this.e.fire('errorMessage', [e.getMessage(), 'error', 4000])
  *         }
  *     }
  * })
@@ -170,7 +170,7 @@ export interface IUploaderOptions<T> {
 	format: string;
 	method: string;
 
-  filesVariableName: (i: number) => string;
+	filesVariableName: (i: number) => string;
 	pathVariableName: string;
 	withCredentials: boolean;
 

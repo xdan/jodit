@@ -11,19 +11,19 @@ import { SourceEditor } from '../sourceEditor';
 
 export class TextAreaEditor extends SourceEditor<HTMLTextAreaElement>
 	implements ISourceEditor {
-	private autosize = this.jodit.async.debounce(() => {
+	private autosize = this.j.async.debounce(() => {
 		this.instance.style.height = 'auto';
 		this.instance.style.height = this.instance.scrollHeight + 'px';
-	}, this.jodit.defaultTimeout);
+	}, this.j.defaultTimeout);
 
 	init(editor: IJodit): any {
-		this.instance = editor.create.element('textarea', {
+		this.instance = editor.c.element('textarea', {
 			class: 'jodit-source__mirror'
 		});
 
 		this.container.appendChild(this.instance);
 
-		editor.events
+		editor.e
 			.on(
 				this.instance,
 				'mousedown keydown touchstart input',
@@ -39,7 +39,7 @@ export class TextAreaEditor extends SourceEditor<HTMLTextAreaElement>
 			)
 			.on('afterSetMode.source', this.autosize)
 			.on(this.instance, 'mousedown focus', (e: Event) => {
-				editor.events.fire(e.type, e);
+				editor.e.fire(e.type, e);
 			});
 
 		this.autosize();
@@ -68,8 +68,8 @@ export class TextAreaEditor extends SourceEditor<HTMLTextAreaElement>
 
 			this.setValue(
 				value.substring(0, startPos) +
-				raw +
-				value.substring(endPos, value.length)
+					raw +
+					value.substring(endPos, value.length)
 			);
 		} else {
 			this.setValue(value + raw);

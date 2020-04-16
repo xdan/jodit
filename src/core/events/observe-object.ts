@@ -63,11 +63,7 @@ export class ObserveObject {
 			});
 
 			if (isPlainObject(data[key])) {
-				data[key] = new ObserveObject(
-					data[key],
-					prefix,
-					this.onEvents
-				);
+				data[key] = new ObserveObject(data[key], prefix, this.onEvents);
 			}
 		});
 	}

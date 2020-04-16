@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import "./table.less";
+import './table.less';
 
 import { Config } from '../../config';
 import * as consts from '../../core/constants';
@@ -49,7 +49,7 @@ Config.prototype.controls.table = {
 				control.data && control.data.cols ? control.data.cols : 10;
 
 		const generateExtraClasses = (): string => {
-			if (!editor.options.useExtraClassesOptions) {
+			if (!editor.o.useExtraClassesOptions) {
 				return '';
 			}
 
@@ -67,7 +67,7 @@ Config.prototype.controls.table = {
 			return out.join('');
 		};
 
-		const form: HTMLFormElement = editor.create.fromHTML(
+		const form: HTMLFormElement = editor.c.fromHTML(
 				'<form class="jodit-form jodit-form__inserter">' +
 					'<label class="jodit-form__center">' +
 					'<span>1</span> &times; <span>1</span>' +
@@ -95,7 +95,7 @@ Config.prototype.controls.table = {
 		for (let i = 0; i < cnt; i += 1) {
 			if (!cells[i]) {
 				cells.push(
-					editor.create.element('span', {
+					editor.c.element('span', {
 						dataIndex: i
 					})
 				);
@@ -134,7 +134,7 @@ Config.prototype.controls.table = {
 
 		blocksContainer.addEventListener('mousemove', mouseenter);
 
-		editor.events.on(
+		editor.e.on(
 			blocksContainer,
 			'touchstart mousedown',
 			(e: MouseEvent) => {
@@ -152,7 +152,7 @@ Config.prototype.controls.table = {
 				const rows_count = Math.ceil((k + 1) / default_cols_count),
 					cols_count = (k % default_cols_count) + 1;
 
-				const crt = editor.create.inside,
+				const crt = editor.c.inside,
 					tbody = crt.element('tbody'),
 					table = crt.element('table');
 
@@ -232,10 +232,10 @@ Config.prototype.controls.table = {
 
 		if (button && button.parentElement) {
 			for (let i = 0; i < default_rows_count; i += 1) {
-				const row = editor.create.div();
+				const row = editor.c.div();
 
 				for (let j = 0; j < default_cols_count; j += 1) {
-					row.appendChild(cells[i * default_cols_count + j])
+					row.appendChild(cells[i * default_cols_count + j]);
 				}
 
 				blocksContainer.appendChild(row);
@@ -257,7 +257,7 @@ Config.prototype.controls.table = {
 export class TableProcessor extends Plugin {
 	private isCell = (tag: Node | null): tag is HTMLTableCellElement => {
 		return (
-			(Dom.isHTMLElement(tag, this.jodit.editorWindow) &&
+			(Dom.isHTMLElement(tag, this.j.editorWindow) &&
 				Dom.isTag(tag, 'td')) ||
 			Dom.isTag(tag, 'th')
 		);
@@ -267,7 +267,7 @@ export class TableProcessor extends Plugin {
 	 * Now editor has rtl direction
 	 */
 	private get isRTL(): boolean {
-		return this.jodit.options.direction === 'rtl';
+		return this.j.o.direction === 'rtl';
 	}
 
 	private key: string = 'table_processor_observer';
@@ -278,17 +278,17 @@ export class TableProcessor extends Plugin {
 	private resizeHandler!: HTMLElement;
 
 	private showResizeHandle() {
-		this.jodit.async.clearTimeout(this.hideTimeout);
-		this.jodit.workplace.appendChild(this.resizeHandler);
+		this.j.async.clearTimeout(this.hideTimeout);
+		this.j.workplace.appendChild(this.resizeHandler);
 	}
 
 	private hideResizeHandle() {
-		this.hideTimeout = this.jodit.async.setTimeout(
+		this.hideTimeout = this.j.async.setTimeout(
 			() => {
 				Dom.safeRemove(this.resizeHandler);
 			},
 			{
-				timeout: this.jodit.defaultTimeout,
+				timeout: this.j.defaultTimeout,
 				label: 'hideResizer'
 			}
 		);
@@ -296,16 +296,16 @@ export class TableProcessor extends Plugin {
 
 	private createResizeHandle = () => {
 		if (!this.resizeHandler) {
-			this.resizeHandler = this.jodit.create.div('jodit-table-resizer');
+			this.resizeHandler = this.j.c.div('jodit-table-resizer');
 
-			this.jodit.events
+			this.j.e
 				.on(
 					this.resizeHandler,
 					'mousedown.table touchstart.table',
 					this.onHandleMouseDown.bind(this)
 				)
 				.on(this.resizeHandler, 'mouseenter.table', () => {
-					this.jodit.async.clearTimeout(this.hideTimeout);
+					this.j.async.clearTimeout(this.hideTimeout);
 				});
 		}
 	};
@@ -326,15 +326,15 @@ export class TableProcessor extends Plugin {
 	private onHandleMouseDown(event: MouseEvent) {
 		this.drag = true;
 
-		this.jodit.events.on(
-			this.jodit.editorWindow,
+		this.j.e.on(
+			this.j.editorWindow,
 			'mousemove.table touchmove.table',
 			this.onMouseMove
 		);
 
 		this.startX = event.clientX;
 
-		this.jodit.lock(this.key);
+		this.j.lock(this.key);
 		this.resizeHandler.classList.add('jodit-table-resizer-moved');
 
 		let box: ClientRect,
@@ -390,9 +390,9 @@ export class TableProcessor extends Plugin {
 
 		const workplacePosition: IBound = offset(
 			(this.resizeHandler.parentNode ||
-				this.jodit.ownerDocument.documentElement) as HTMLElement,
-			this.jodit,
-			this.jodit.ownerDocument,
+				this.j.od.documentElement) as HTMLElement,
+			this.j,
+			this.j.od,
 			true
 		);
 
@@ -405,14 +405,12 @@ export class TableProcessor extends Plugin {
 		}
 
 		this.resizeDelta =
-			x -
-			this.startX +
-			(!this.jodit.options.iframe ? 0 : workplacePosition.left);
+			x - this.startX + (!this.j.o.iframe ? 0 : workplacePosition.left);
 
 		this.resizeHandler.style.left =
-			x - (this.jodit.options.iframe ? 0 : workplacePosition.left) + 'px';
+			x - (this.j.o.iframe ? 0 : workplacePosition.left) + 'px';
 
-		const sel = this.jodit.selection.sel;
+		const sel = this.j.selection.sel;
 
 		sel && sel.removeAllRanges();
 
@@ -424,7 +422,7 @@ export class TableProcessor extends Plugin {
 	private onMouseUp = () => {
 		if (this.selectMode || this.drag) {
 			this.selectMode = false;
-			this.jodit.unlock();
+			this.j.unlock();
 		}
 
 		if (!this.resizeHandler || !this.drag) {
@@ -433,8 +431,8 @@ export class TableProcessor extends Plugin {
 
 		this.drag = false;
 
-		this.jodit.events.off(
-			this.jodit.editorWindow,
+		this.j.e.off(
+			this.j.editorWindow,
 			'mousemove.table touchmove.table',
 			this.onMouseMove
 		);
@@ -448,8 +446,8 @@ export class TableProcessor extends Plugin {
 			this.resizeTable();
 		}
 
-		this.jodit.setEditorValue();
-		this.jodit.selection.focus();
+		this.j.setEditorValue();
+		this.j.selection.focus();
 	};
 
 	private resizeColumns() {
@@ -487,7 +485,7 @@ export class TableProcessor extends Plugin {
 		const width = this.workTable.offsetWidth,
 			parentWidth = getContentWidth(
 				this.workTable.parentNode as HTMLElement,
-				this.jodit.editorWindow
+				this.j.editorWindow
 			);
 
 		// for RTL use mirror logic
@@ -502,9 +500,8 @@ export class TableProcessor extends Plugin {
 			const side = this.isRTL ? 'marginRight' : 'marginLeft';
 
 			const margin = parseInt(
-				this.jodit.editorWindow.getComputedStyle(this.workTable)[
-					side
-				] || '0',
+				this.j.editorWindow.getComputedStyle(this.workTable)[side] ||
+					'0',
 				10
 			);
 
@@ -528,7 +525,7 @@ export class TableProcessor extends Plugin {
 	) {
 		const cells: HTMLTableCellElement[] = table
 			? Table.getAllSelectedCells(table)
-			: Table.getAllSelectedCells(this.jodit.editor);
+			: Table.getAllSelectedCells(this.j.editor);
 
 		if (cells.length) {
 			cells.forEach((cell: HTMLTableCellElement) => {
@@ -557,7 +554,7 @@ export class TableProcessor extends Plugin {
 		this.workTable = Dom.up(
 			cell,
 			(elm: Node | null) => Dom.isTag(elm, 'table'),
-			this.jodit.editor
+			this.j.editor
 		) as HTMLTableElement;
 	}
 
@@ -577,7 +574,7 @@ export class TableProcessor extends Plugin {
 		offsetX: number = 0,
 		delta: number = 0
 	) {
-		const box = offset(cell, this.jodit, this.jodit.editorDocument);
+		const box = offset(cell, this.j, this.j.editorDocument);
 
 		if (offsetX > consts.NEARBY && offsetX < box.width - consts.NEARBY) {
 			this.hideResizeHandle();
@@ -585,16 +582,12 @@ export class TableProcessor extends Plugin {
 		}
 
 		const workplacePosition: IBound = offset(
-				this.jodit.workplace,
-				this.jodit,
-				this.jodit.ownerDocument,
+				this.j.workplace,
+				this.j,
+				this.j.od,
 				true
 			),
-			parentBox: IBound = offset(
-				table,
-				this.jodit,
-				this.jodit.editorDocument
-			);
+			parentBox: IBound = offset(table, this.j, this.j.editorDocument);
 
 		this.resizeHandler.style.left =
 			(offsetX <= consts.NEARBY ? box.left : box.left + box.width) -
@@ -645,7 +638,7 @@ export class TableProcessor extends Plugin {
 			)
 		) {
 			command = command.replace('table', '');
-			const cells = Table.getAllSelectedCells(this.jodit.editor);
+			const cells = Table.getAllSelectedCells(this.j.editor);
 			if (cells.length) {
 				const cell: HTMLTableCellElement | undefined = cells.shift();
 
@@ -656,21 +649,21 @@ export class TableProcessor extends Plugin {
 				const table = Dom.closest(
 					cell,
 					'table',
-					this.jodit.editor
+					this.j.editor
 				) as HTMLTableElement;
 
 				switch (command) {
 					case 'splitv':
-						Table.splitVertical(table, this.jodit.create.inside);
+						Table.splitVertical(table, this.j.c.inside);
 						break;
 					case 'splitg':
-						Table.splitHorizontal(table, this.jodit.create.inside);
+						Table.splitHorizontal(table, this.j.c.inside);
 						break;
 					case 'merge':
 						Table.mergeSelected(table);
 						break;
 					case 'empty':
-						Table.getAllSelectedCells(this.jodit.editor).forEach(
+						Table.getAllSelectedCells(this.j.editor).forEach(
 							td => (td.innerHTML = '')
 						);
 						break;
@@ -692,7 +685,7 @@ export class TableProcessor extends Plugin {
 							table,
 							cell.cellIndex,
 							command === 'addcolumnafter',
-							this.jodit.create.inside
+							this.j.c.inside
 						);
 						break;
 					case 'addrowafter':
@@ -701,7 +694,7 @@ export class TableProcessor extends Plugin {
 							table,
 							cell.parentNode as HTMLTableRowElement,
 							command === 'addrowafter',
-							this.jodit.create.inside
+							this.j.c.inside
 						);
 						break;
 				}
@@ -715,19 +708,15 @@ export class TableProcessor extends Plugin {
 	 * @param {Jodit} editor
 	 */
 	afterInit(editor: IJodit): void {
-		if (!editor.options.useTableProcessor) {
+		if (!editor.o.useTableProcessor) {
 			return;
 		}
 
-		editor.events
-			.off(this.jodit.ownerWindow, '.table')
+		editor.e
+			.off(this.j.ow, '.table')
 			.off('.table')
-			.on(
-				this.jodit.ownerWindow,
-				'mouseup.table touchend.table',
-				this.onMouseUp
-			)
-			.on(this.jodit.ownerWindow, 'scroll.table', () => {
+			.on(this.j.ow, 'mouseup.table touchend.table', this.onMouseUp)
+			.on(this.j.ow, 'scroll.table', () => {
 				if (this.drag) {
 					const parent = Dom.up(
 						this.workCell,
@@ -742,7 +731,7 @@ export class TableProcessor extends Plugin {
 				}
 			})
 			.on(
-				this.jodit.ownerWindow,
+				this.j.ow,
 				'mousedown.table touchend.table',
 				(event: MouseEvent) => {
 					// need use event['originalEvent'] because of IE can not set target from
@@ -750,7 +739,7 @@ export class TableProcessor extends Plugin {
 					const current_cell: HTMLTableCellElement = Dom.closest(
 						(event as any).originalEvent.target as HTMLElement,
 						'TD|TH',
-						this.jodit.editor
+						this.j.editor
 					) as HTMLTableCellElement;
 
 					let table: HTMLTableElement | null = null;
@@ -759,7 +748,7 @@ export class TableProcessor extends Plugin {
 						table = Dom.closest(
 							current_cell,
 							'table',
-							this.jodit.editor
+							this.j.editor
 						) as HTMLTableElement;
 					}
 
@@ -767,7 +756,7 @@ export class TableProcessor extends Plugin {
 						this.deSelectAll(
 							table,
 							current_cell instanceof
-								(this.jodit.editorWindow as any)
+								(this.j.editorWindow as any)
 									.HTMLTableCellElement
 								? current_cell
 								: false
@@ -826,12 +815,12 @@ export class TableProcessor extends Plugin {
 
 		let start: HTMLTableCellElement;
 
-		this.jodit.events
+		this.j.e
 			.on(
 				table,
 				'mousedown.table touchstart.table',
 				(event: MouseEvent) => {
-					if (this.jodit.options.readonly) {
+					if (this.j.o.readonly) {
 						return;
 					}
 
@@ -843,9 +832,7 @@ export class TableProcessor extends Plugin {
 
 					if (cell) {
 						if (!cell.firstChild) {
-							cell.appendChild(
-								this.jodit.create.inside.element('br')
-							);
+							cell.appendChild(this.j.c.inside.element('br'));
 						}
 
 						start = cell;
@@ -866,11 +853,11 @@ export class TableProcessor extends Plugin {
 				table,
 				'mousemove.table touchmove.table',
 				(event: MouseEvent) => {
-					if (this.jodit.options.readonly) {
+					if (this.j.o.readonly) {
 						return;
 					}
 
-					if (this.drag || this.jodit.isLockedNotBy(this.key)) {
+					if (this.drag || this.j.isLockedNotBy(this.key)) {
 						return;
 					}
 
@@ -886,9 +873,9 @@ export class TableProcessor extends Plugin {
 
 					if (this.selectMode) {
 						if (cell !== start) {
-							this.jodit.lock(this.key);
+							this.j.lock(this.key);
 
-							const sel = this.jodit.selection.sel;
+							const sel = this.j.selection.sel;
 							sel && sel.removeAllRanges();
 
 							if (event.preventDefault) {
@@ -915,19 +902,19 @@ export class TableProcessor extends Plugin {
 						const max = box[bound[1][0]][bound[1][1]],
 							min = box[bound[0][0]][bound[0][1]];
 
-						this.jodit.events.fire(
+						this.j.e.fire(
 							'showPopup',
 							table,
 							(): IBound => {
 								const minOffset: IBound = offset(
 									min,
-									this.jodit,
-									this.jodit.editorDocument
+									this.j,
+									this.j.editorDocument
 								);
 								const maxOffset: IBound = offset(
 									max,
-									this.jodit,
-									this.jodit.editorDocument
+									this.j,
+									this.j.editorDocument
 								);
 
 								return {
@@ -957,16 +944,16 @@ export class TableProcessor extends Plugin {
 
 	private onAfterCommand(command: string) {
 		if (/^justify/.test(command)) {
-			$$('[data-jodit-selected-cell]', this.jodit.editor).forEach(elm =>
-				alignElement(command, elm, this.jodit)
+			$$('[data-jodit-selected-cell]', this.j.editor).forEach(elm =>
+				alignElement(command, elm, this.j)
 			);
 		}
 	}
 
 	beforeDestruct(jodit: IJodit): void {
 		if (jodit.events) {
-			jodit.events.off(this.jodit.ownerWindow, '.table');
-			jodit.events.off('.table');
+			jodit.e.off(this.j.ow, '.table');
+			jodit.e.off('.table');
 		}
 	}
 }

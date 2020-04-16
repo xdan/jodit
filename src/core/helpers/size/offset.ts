@@ -17,12 +17,18 @@ export const offset = (
 	doc: Document,
 	recurse: boolean = false
 ): IBound => {
-	let rect:ClientRect
+	let rect: ClientRect;
 	try {
 		rect = elm.getBoundingClientRect();
-	}
-	catch(e) {
-		rect = { top:0, bottom:0, left:0, right:0, width:0, height:0 } as ClientRect
+	} catch (e) {
+		rect = {
+			top: 0,
+			bottom: 0,
+			left: 0,
+			right: 0,
+			width: 0,
+			height: 0
+		} as ClientRect;
 	}
 
 	const body = doc.body,
@@ -42,19 +48,8 @@ export const offset = (
 
 	const iframe = (jodit as IJodit).iframe;
 
-	if (
-		!recurse &&
-		jodit &&
-		jodit.options &&
-		jodit.options.iframe &&
-		iframe
-	) {
-		const { top, left } = offset(
-			iframe,
-			jodit,
-			jodit.ownerDocument,
-			true
-		);
+	if (!recurse && jodit && jodit.options && jodit.o.iframe && iframe) {
+		const { top, left } = offset(iframe, jodit, jodit.od, true);
 
 		topValue = rect.top + top;
 		leftValue = rect.left + left;

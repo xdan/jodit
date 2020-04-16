@@ -28,7 +28,7 @@ interface IControlType<
 	hotkeys?: string | string[];
 	data?: IDictionary;
 
-	update?: (button: IToolbarButton) => void,
+	update?: (button: IToolbarButton) => void;
 	isInput?: boolean;
 
 	/**
@@ -136,8 +136,8 @@ interface IControlType<
 	 *                 this.setEditorValue('');
 	 *                 return;
 	 *             }
-	 *             this.selection.insertNode(this.create.element(key, ''));
-	 *             this.events.fire('errorMessage', 'Was inserted ' + value);
+	 *             this.selection.insertNode(this.c.element(key, ''));
+	 *             this.e.fire('errorMessage', 'Was inserted ' + value);
 	 *        },
 	 *        template: function (key, value) {
 	 *            return '<div>' + value + '</div>';
@@ -264,7 +264,7 @@ interface IToolbarButton extends IUIButton {
 	trigger: HTMLElement;
 	state: IUIButton['state'] & {
 		hasTrigger: boolean;
-	}
+	};
 	control: IControlTypeStrong;
 
 	target: Nullable<HTMLElement>;

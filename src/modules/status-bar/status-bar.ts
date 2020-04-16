@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import "./status-bar.less";
+import './status-bar.less';
 
 import { Component, STATUSES } from '../../core/component';
 import { Dom } from '../../core/dom';
@@ -34,7 +34,10 @@ export class StatusBar extends Component implements IStatusBar {
 	}
 
 	private findEmpty(inTheRight: boolean = false): HTMLDivElement | void {
-		const items = this.container.querySelectorAll('.jodit-statusbar__item' + (inTheRight ? '.jodit-statusbar__item-right' : ''));
+		const items = this.container.querySelectorAll(
+			'.jodit-statusbar__item' +
+				(inTheRight ? '.jodit-statusbar__item-right' : '')
+		);
 
 		for (let i = 0; i < items.length; i += 1) {
 			if (!items[i].innerHTML.trim().length) {
@@ -50,7 +53,8 @@ export class StatusBar extends Component implements IStatusBar {
 	 * @param inTheRight
 	 */
 	append(child: HTMLElement, inTheRight: boolean = false) {
-		const wrapper = this.findEmpty(inTheRight) || this.jodit.create.div('jodit-statusbar__item');
+		const wrapper =
+			this.findEmpty(inTheRight) || this.j.c.div('jodit-statusbar__item');
 
 		if (inTheRight) {
 			wrapper.classList.add('jodit-statusbar__item-right');
@@ -60,12 +64,12 @@ export class StatusBar extends Component implements IStatusBar {
 
 		this.container.appendChild(wrapper);
 		this.show();
-		this.jodit.events.fire('resize');
+		this.j.e.fire('resize');
 	}
 
 	constructor(jodit: IJodit, readonly target: HTMLElement) {
 		super(jodit);
-		this.container = jodit.create.div('jodit-statusbar');
+		this.container = jodit.c.div('jodit-statusbar');
 
 		target.appendChild(this.container);
 		this.hide();

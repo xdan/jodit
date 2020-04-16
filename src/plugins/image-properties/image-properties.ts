@@ -3,17 +3,10 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import "./image-properties.less";
+import './image-properties.less';
 
 import { Config } from '../../config';
-import {
-	Alert,
-	Confirm,
-	Dialog,
-	Dom,
-	PopupMenu,
-	Icon
-} from '../../modules';
+import { Alert, Confirm, Dialog, Dom, PopupMenu, Icon } from '../../modules';
 import {
 	$$,
 	css,
@@ -113,7 +106,7 @@ export function imageProperties(editor: IJodit) {
 	const i18n = editor.i18n,
 		gi = Icon.get.bind(Icon),
 		opt = editor.options,
-		dom = editor.create.fromHTML.bind(editor.create);
+		dom = editor.c.fromHTML.bind(editor.c);
 
 	/**
 	 * Open dialog editing image properties
@@ -121,7 +114,7 @@ export function imageProperties(editor: IJodit) {
 	 * @example
 	 * ```javascript
 	 * var editor = new Jodit('#editor');
-	 *     img = editor.create.inside.element('img');
+	 *     img = editor.c.inside.element('img');
 	 *
 	 * img.setAttribute('src', 'images/someimage.png');
 	 * editor.{@link Selection~select|select}(img);
@@ -462,7 +455,7 @@ export function imageProperties(editor: IJodit) {
 
 		update();
 
-		editor.events.on(dialog, 'afterClose', () => {
+		editor.e.on(dialog, 'afterClose', () => {
 			dialog.destruct();
 
 			if (image.parentNode && opt.image.selectImageAfterClose) {
@@ -480,9 +473,9 @@ export function imageProperties(editor: IJodit) {
 				'.jodit_use_image_editor',
 				mainTab
 			) as HTMLAnchorElement[]).forEach((btn: HTMLAnchorElement) => {
-				editor.events.on(btn, 'mousedown touchstart', () => {
+				editor.e.on(btn, 'mousedown touchstart', () => {
 					const url: string = attr(image, 'src') || '',
-						a = editor.create.element('a'),
+						a = editor.c.element('a'),
 						loadExternal = () => {
 							if (a.host !== location.host) {
 								Confirm(
@@ -633,7 +626,7 @@ export function imageProperties(editor: IJodit) {
 			jodit_lock_size.addEventListener('click', function() {
 				lockSize = !lockSize;
 				this.innerHTML = gi(lockSize ? 'lock' : 'unlock');
-				editor.events.fire($w, 'change');
+				editor.e.fire($w, 'change');
 			});
 		}
 
@@ -670,7 +663,7 @@ export function imageProperties(editor: IJodit) {
 			}
 		};
 
-		editor.events.on(
+		editor.e.on(
 			[$w, $h],
 			'change keydown mousedown paste',
 			(event: any) => {
@@ -860,22 +853,22 @@ export function imageProperties(editor: IJodit) {
 		return false;
 	};
 
-	editor.events
+	editor.e
 		.on('beforeDestruct', () => {
-			editor.events.off(editor.editor, '.imageproperties');
+			editor.e.off(editor.editor, '.imageproperties');
 		})
 		.on('afterInit changePlace', () => {
-			editor.events.off(editor.editor, '.imageproperties');
+			editor.e.off(editor.editor, '.imageproperties');
 
 			if (opt.image.openOnDblClick) {
-				editor.events.on(
+				editor.e.on(
 					editor.editor,
 					'dblclick.imageproperties',
 					open,
 					'img'
 				);
 			} else {
-				editor.events.on(
+				editor.e.on(
 					editor.editor,
 					'dblclick.imageproperties',
 					function(this: HTMLImageElement, event: MouseEvent) {

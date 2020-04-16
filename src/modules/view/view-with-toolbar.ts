@@ -23,12 +23,12 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	 * @param element
 	 */
 	setPanel(element: HTMLElement | string): void {
-		this.jodit.options.toolbar = element;
+		this.j.o.toolbar = element;
 		this.buildToolbar(this.container);
 	}
 
 	protected buildToolbar(container: HTMLElement) {
-		if (!this.options.toolbar) {
+		if (!this.o.toolbar) {
 			return;
 		}
 
@@ -37,22 +37,22 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 		);
 
 		if (!toolbarContainer) {
-			toolbarContainer = this.create.div('jodit__toolbar-box');
+			toolbarContainer = this.c.div('jodit__toolbar-box');
 
 			Dom.appendChildFirst(container, toolbarContainer);
 		}
 
 		if (
-			Dom.isHTMLElement(this.options.toolbar, this.jodit.ownerWindow) ||
-			isString(this.options.toolbar)
+			Dom.isHTMLElement(this.o.toolbar, this.j.ow) ||
+			isString(this.o.toolbar)
 		) {
-			toolbarContainer = this.resolveElement(this.options.toolbar);
+			toolbarContainer = this.resolveElement(this.o.toolbar);
 		}
 
-		const buttons = splitArray(this.options.buttons) as Buttons;
+		const buttons = splitArray(this.o.buttons) as Buttons;
 
 		this.toolbar
-			.build(buttons.concat(this.options.extraButtons))
+			.build(buttons.concat(this.o.extraButtons))
 			.appendTo(toolbarContainer);
 	}
 

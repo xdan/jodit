@@ -198,7 +198,7 @@ export function font(editor: IJodit) {
 				break;
 		}
 
-		editor.events.fire('synchro');
+		editor.e.fire('synchro');
 
 		return false;
 	};

@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import "./tooltip.less";
+import './tooltip.less';
 
 import { IJodit } from '../../types';
 import { css, offset } from '../../core/helpers';
@@ -18,11 +18,11 @@ export class tooltip extends Plugin {
 	container!: HTMLElement;
 
 	afterInit(jodit: IJodit) {
-		this.container = jodit.create.div('jodit-tooltip');
-		getContainer(this.jodit, tooltip.name).appendChild(this.container);
+		this.container = jodit.c.div('jodit-tooltip');
+		getContainer(this.j, tooltip.name).appendChild(this.container);
 
 		let timeout = 0;
-		jodit.events
+		jodit.e
 			.off('.tooltip')
 			.on(
 				'showTooltip.tooltip',
@@ -36,14 +36,14 @@ export class tooltip extends Plugin {
 				() => {
 					timeout = jodit.async.setTimeout(
 						() => this.close(),
-						this.jodit.defaultTimeout
+						this.j.defaultTimeout
 					);
 				}
 			);
 	}
 
 	beforeDestruct(jodit: IJodit): void {
-		jodit?.events.off('.tooltip');
+		jodit?.e.off('.tooltip');
 		this.close();
 		Dom.safeRemove(this.container);
 	}
@@ -57,12 +57,7 @@ export class tooltip extends Plugin {
 	}
 
 	private calcPosition(target: HTMLElement) {
-		const bound = offset(
-			target,
-			this.jodit,
-			this.jodit.ownerDocument,
-			true
-		);
+		const bound = offset(target, this.j, this.j.od, true);
 
 		css(this.container, {
 			left: bound.left - this.container.offsetWidth / 2 + bound.width / 2,

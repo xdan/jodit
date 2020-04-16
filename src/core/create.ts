@@ -7,10 +7,10 @@
 import {
 	IDictionary,
 	IJodit,
-	IPanel,
 	Attributes,
 	Children,
-	ICreate
+	ICreate,
+	IPanel
 } from '../types';
 
 import {
@@ -30,9 +30,9 @@ export class Create implements ICreate {
 	inside!: Create;
 
 	private get doc(): Document {
-		return this.insideCreator && isJoditObject(this.jodit)
-			? this.jodit.editorDocument
-			: this.jodit.ownerDocument;
+		return this.insideCreator && isJoditObject(this.j)
+			? this.j.editorDocument
+			: this.j.od;
 	}
 
 	constructor(
@@ -42,6 +42,13 @@ export class Create implements ICreate {
 		if (!insideCreator) {
 			this.inside = new Create(jodit, true);
 		}
+	}
+
+	/**
+	 * Short alias for jodit
+	 */
+	get j(): this['jodit'] {
+		return this.jodit;
 	}
 
 	/**
@@ -76,14 +83,14 @@ export class Create implements ICreate {
 	): HTMLElement {
 		const elm = this.doc.createElement(tagName.toLowerCase());
 
-		if (this.jodit.options.direction) {
-			const direction = this.jodit.options.direction.toLowerCase();
+		if (this.j.o.direction) {
+			const direction = this.j.o.direction.toLowerCase();
 
 			elm.style.direction = direction === 'rtl' ? 'rtl' : 'ltr';
 		}
 
 		if (this.insideCreator) {
-			const ca = this.jodit.options.createAttributes;
+			const ca = this.j.o.createAttributes;
 
 			if (ca && ca[tagName.toLowerCase()]) {
 				const attrs = ca[tagName.toLowerCase()];

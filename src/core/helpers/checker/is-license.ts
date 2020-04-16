@@ -5,6 +5,6 @@
  */
 
 export const isLicense = (license: any): boolean =>
-    typeof license === 'string' &&
-    license.length === 32 &&
-    /^[a-z0-9]+$/.test(license);
+	typeof license === 'string' &&
+	license.length === 32 &&
+	/^[a-z0-9]+$/.test(license);

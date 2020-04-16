@@ -5,8 +5,7 @@
  */
 
 export const normalizeRelativePath = (path: string) => {
-	const
-		sections = path.split('/'),
+	const sections = path.split('/'),
 		builder = sections.reduce((builder, section) => {
 			switch (section) {
 				case '': {

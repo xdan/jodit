@@ -2,5 +2,5 @@ import { IDictionary } from '../types';
 
 export default {
 	'Type something': 'Start writing...',
-	pencil: 'Edit',
+	pencil: 'Edit'
 } as IDictionary<string>;

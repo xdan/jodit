@@ -5,7 +5,7 @@ export default {
 	// About
 	'About Jodit': 'О Jodit',
 	'Jodit Editor': 'Редактор Jodit',
-	'Jodit User\'s Guide': 'Jodit Руководство пользователя',
+	"Jodit User's Guide": 'Jodit Руководство пользователя',
 	'contains detailed help for using':
 		'содержит детальную информацию по использованию',
 	'For information about the license, please go to our website:':
@@ -230,9 +230,10 @@ export default {
 	preview: 'Предпросмотр',
 	download: 'Скачать',
 	'Paste from clipboard': 'Вставить из буфера обмена',
-	'Your browser doesn\'t support direct access to the clipboard.': 'Ваш браузер не поддерживает прямой доступ к буферу обмена.',
+	"Your browser doesn't support direct access to the clipboard.":
+		'Ваш браузер не поддерживает прямой доступ к буферу обмена.',
 	'Copy selection': 'Скопировать выделенное',
-	'copy': 'копия',
+	copy: 'копия',
 	'Border radius': 'Радиус границы',
-	'Show all': 'Показать все',
+	'Show all': 'Показать все'
 } as IDictionary<string>;

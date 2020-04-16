@@ -46,7 +46,7 @@ export function media(editor: IJodit) {
 		} else {
 			let wrapper: HTMLElement;
 
-			wrapper = editor.create.inside.fromHTML(
+			wrapper = editor.c.inside.fromHTML(
 				`<${mediaFakeTag} data-jodit-temp="1" contenteditable="false" draggable="true" data-${keyFake}="1"></${mediaFakeTag}>`
 			);
 
@@ -66,7 +66,7 @@ export function media(editor: IJodit) {
 			element = wrapper;
 		}
 
-		editor.events
+		editor.e
 			.off(element, 'mousedown.select touchstart.select')
 			.on(element, 'mousedown.select touchstart.select', () => {
 				editor.selection.setCursorAfter(element);
@@ -74,7 +74,7 @@ export function media(editor: IJodit) {
 	};
 
 	if (mediaInFakeBlock) {
-		editor.events
+		editor.e
 			.on('afterGetValueFromEditor', (data: { value: string }) => {
 				const rxp = new RegExp(
 					`<${mediaFakeTag}[^>]+data-${keyFake}[^>]+>(.+?)</${mediaFakeTag}>`,

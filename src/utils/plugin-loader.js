@@ -3,9 +3,9 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-const ts = require("typescript");
+const ts = require('typescript');
 
-module.exports = function (source) {
+module.exports = function(source) {
 	this.cacheable && this.cacheable(true);
 
 	// let result = [];
@@ -26,4 +26,3 @@ module.exports = function (source) {
 };
 
 module.exports.seperable = true;
-

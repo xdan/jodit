@@ -65,6 +65,13 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		readonly options: IFileBrowserOptions
 	) {}
 
+	/**
+	 * Alias for options
+	 */
+	get o(): this['options'] {
+		return this.options;
+	}
+
 	private ajaxInstances: IAjax[] = [];
 
 	/**
@@ -82,10 +89,8 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		const opts: IFileBrowserAjaxOptions = extend(
 			true,
 			{},
-			this.options.ajax,
-			this.options[name] !== undefined
-				? this.options[name]
-				: this.options.ajax
+			this.o.ajax,
+			this.options[name] !== undefined ? this.options[name] : this.o.ajax
 		);
 
 		if (opts.prepareData) {
@@ -119,21 +124,21 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		path: string = this.currentPath,
 		source: string = this.currentSource
 	): Promise<void> {
-		if (!this.options.permissions) {
+		if (!this.o.permissions) {
 			return Promise.resolve();
 		}
 
-		this.options.permissions.data.path = path;
-		this.options.permissions.data.source = source;
+		this.o.permissions.data.path = path;
+		this.o.permissions.data.source = source;
 
-		if (this.options.permissions.url) {
+		if (this.o.permissions.url) {
 			return this.get('permissions').then(resp => {
 				let process:
 					| ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)
-					| undefined = (this.options.permissions as any).process;
+					| undefined = (this.o.permissions as any).process;
 
 				if (!process) {
-					process = this.options.ajax.process;
+					process = this.o.ajax.process;
 				}
 
 				if (process) {
@@ -182,12 +187,12 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 		await this.permissions(path, source);
 
-		if (!this.options.folder) {
+		if (!this.o.folder) {
 			return Promise.reject('Set Folder Api options');
 		}
 
-		this.options.folder.data.path = path;
-		this.options.folder.data.source = source;
+		this.o.folder.data.path = path;
+		this.o.folder.data.source = source;
 
 		return this.get('folder');
 	}
@@ -215,10 +220,10 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		return this.get(
 			action,
 			(resp: IFileBrowserAnswer) => {
-				if (this.options.isSuccess(resp)) {
+				if (this.o.isSuccess(resp)) {
 					success(resp.data.path, resp.data.name, resp.data.source);
 				} else {
-					onFailed(error(this.options.getMessage(resp)));
+					onFailed(error(this.o.getMessage(resp)));
 				}
 			},
 			onFailed
@@ -238,13 +243,13 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		path: string,
 		source: string
 	): Promise<IFileBrowserAnswer> {
-		if (!this.options.create) {
+		if (!this.o.c) {
 			return Promise.reject('Set Create api options');
 		}
 
-		this.options.create.data.source = source;
-		this.options.create.data.path = path;
-		this.options.create.data.name = name;
+		this.o.c.data.source = source;
+		this.o.c.data.path = path;
+		this.o.c.data.name = name;
 
 		return this.get('create').then(resp => {
 			this.currentPath = path;
@@ -297,13 +302,13 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		file: string,
 		source: string
 	): Promise<IFileBrowserAnswer> {
-		if (!this.options.fileRemove) {
+		if (!this.o.fileRemove) {
 			return Promise.reject('Set fileRemove api options');
 		}
 
-		this.options.fileRemove.data.path = path;
-		this.options.fileRemove.data.name = file;
-		this.options.fileRemove.data.source = source;
+		this.o.fileRemove.data.path = path;
+		this.o.fileRemove.data.name = file;
+		this.o.fileRemove.data.source = source;
 
 		return this.get('fileRemove');
 	}
@@ -320,13 +325,13 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		file: string,
 		source: string
 	): Promise<IFileBrowserAnswer> {
-		if (!this.options.folderRemove) {
+		if (!this.o.folderRemove) {
 			return Promise.reject('Set folderRemove api options');
 		}
 
-		this.options.folderRemove.data.path = path;
-		this.options.folderRemove.data.name = file;
-		this.options.folderRemove.data.source = source;
+		this.o.folderRemove.data.path = path;
+		this.o.folderRemove.data.name = file;
+		this.o.folderRemove.data.source = source;
 
 		return this.get('folderRemove');
 	}
@@ -345,14 +350,14 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		newname: string,
 		source: string
 	): Promise<IFileBrowserAnswer> {
-		if (!this.options.folderRename) {
+		if (!this.o.folderRename) {
 			return Promise.reject('Set folderRename api options');
 		}
 
-		this.options.folderRename.data.path = path;
-		this.options.folderRename.data.name = name;
-		this.options.folderRename.data.newname = newname;
-		this.options.folderRename.data.source = source;
+		this.o.folderRename.data.path = path;
+		this.o.folderRename.data.name = name;
+		this.o.folderRename.data.newname = newname;
+		this.o.folderRename.data.source = source;
 
 		return this.get('folderRename');
 	}
@@ -371,14 +376,14 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		newname: string,
 		source: string
 	): Promise<IFileBrowserAnswer> {
-		if (!this.options.fileRename) {
+		if (!this.o.fileRename) {
 			return Promise.reject('Set fileRename api options');
 		}
 
-		this.options.fileRename.data.path = path;
-		this.options.fileRename.data.name = name;
-		this.options.fileRename.data.newname = newname;
-		this.options.fileRename.data.source = source;
+		this.o.fileRename.data.path = path;
+		this.o.fileRename.data.name = name;
+		this.o.fileRename.data.newname = newname;
+		this.o.fileRename.data.source = source;
 
 		return this.get('fileRename');
 	}
@@ -398,26 +403,26 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		newname: string | void,
 		box: ImageBox | void
 	): Promise<IFileBrowserAnswer> {
-		if (!this.options.crop) {
-			this.options.crop = {
+		if (!this.o.crop) {
+			this.o.crop = {
 				data: {}
 			};
 		}
-		if (this.options.crop.data === undefined) {
-			this.options.crop.data = {
+		if (this.o.crop.data === undefined) {
+			this.o.crop.data = {
 				action: 'crop'
 			};
 		}
 
-		this.options.crop.data.newname = newname || name;
+		this.o.crop.data.newname = newname || name;
 
 		if (box) {
-			this.options.crop.data.box = box;
+			this.o.crop.data.box = box;
 		}
 
-		this.options.crop.data.path = path;
-		this.options.crop.data.name = name;
-		this.options.crop.data.source = source;
+		this.o.crop.data.path = path;
+		this.o.crop.data.name = name;
+		this.o.crop.data.source = source;
 
 		return this.get('crop');
 	}
@@ -438,26 +443,26 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		newname: string | void,
 		box: ImageBox | void
 	): Promise<IFileBrowserAnswer> {
-		if (!this.options.resize) {
-			this.options.resize = {
+		if (!this.o.resize) {
+			this.o.resize = {
 				data: {}
 			};
 		}
-		if (this.options.resize.data === undefined) {
-			this.options.resize.data = {
+		if (this.o.resize.data === undefined) {
+			this.o.resize.data = {
 				action: 'resize'
 			};
 		}
 
-		this.options.resize.data.newname = newname || name;
+		this.o.resize.data.newname = newname || name;
 
 		if (box) {
-			this.options.resize.data.box = box;
+			this.o.resize.data.box = box;
 		}
 
-		this.options.resize.data.path = path;
-		this.options.resize.data.name = name;
-		this.options.resize.data.source = source;
+		this.o.resize.data.path = path;
+		this.o.resize.data.name = name;
+		this.o.resize.data.source = source;
 
 		return this.get('resize');
 	}

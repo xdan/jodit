@@ -6,7 +6,10 @@ const fs = require('fs');
  * @param {string[]} entries
  */
 function resolve(entries) {
-	return entries.reduce((files, entry) => files.concat(resolveFiles(entry)), [])
+	return entries.reduce(
+		(files, entry) => files.concat(resolveFiles(entry)),
+		[]
+	);
 }
 
 function resolveFiles(directory) {
@@ -20,11 +23,11 @@ function resolveFiles(directory) {
 		if (fs.lstatSync(filename).isFile()) {
 			entries.push(filename.replace(rootPath, '.'));
 		} else {
-			Object.assign(entries, resolveFiles(filename))
+			Object.assign(entries, resolveFiles(filename));
 		}
 
 		return entries;
-	}, [])
+	}, []);
 }
 
 /**
@@ -35,7 +38,14 @@ function resolveFiles(directory) {
  * @returns string[]
  */
 function filter(files, checker) {
-	return files.filter((file) => checker(path.extname(file).toLowerCase().substr(1)));
+	return files.filter(file =>
+		checker(
+			path
+				.extname(file)
+				.toLowerCase()
+				.substr(1)
+		)
+	);
 }
 
 module.exports = {

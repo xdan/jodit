@@ -4,9 +4,14 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import "./paste-storage.less";
+import './paste-storage.less';
 
-import { KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP } from '../../../core/constants';
+import {
+	KEY_DOWN,
+	KEY_ENTER,
+	KEY_UP,
+	SPACE_REG_EXP
+} from '../../../core/constants';
 import { Dialog } from '../../../modules/dialog';
 import { Plugin } from '../../../core/plugin';
 import { Dom } from '../../../core/dom';
@@ -27,8 +32,8 @@ export class pasteStorage extends Plugin {
 	private dialog: Dialog | null = null;
 
 	private paste = () => {
-		this.jodit.selection.focus();
-		this.jodit.selection.insertHTML(this.list[this.currentIndex]);
+		this.j.selection.focus();
+		this.j.selection.insertHTML(this.list[this.currentIndex]);
 
 		if (this.currentIndex !== 0) {
 			const buffer = this.list[0];
@@ -38,7 +43,7 @@ export class pasteStorage extends Plugin {
 		}
 
 		this.dialog && this.dialog.close();
-		this.jodit.setEditorValue();
+		this.j.setEditorValue();
 	};
 
 	private onKeyDown = (e: KeyboardEvent) => {
@@ -108,7 +113,7 @@ export class pasteStorage extends Plugin {
 		}
 
 		this.list.forEach((html: string, index: number) => {
-			const a: HTMLElement = this.jodit.create.element('a');
+			const a: HTMLElement = this.j.c.element('a');
 			a.textContent = index + 1 + '. ' + html.replace(SPACE_REG_EXP, '');
 
 			a.addEventListener('keydown', this.onKeyDown);
@@ -122,55 +127,53 @@ export class pasteStorage extends Plugin {
 
 		this.dialog && this.dialog.open();
 
-		this.jodit.async.setTimeout(() => {
+		this.j.async.setTimeout(() => {
 			this.selectIndex(0);
 		}, 100);
 	};
 
 	private createDialog() {
-		this.dialog = new Dialog(this.jodit);
+		this.dialog = new Dialog(this.j);
 
-		const pasteButton: HTMLAnchorElement = this.jodit.create.fromHTML(
+		const pasteButton: HTMLAnchorElement = this.j.c.fromHTML(
 			'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
 				'<span>' +
-				this.jodit.i18n('Paste') +
+				this.j.i18n('Paste') +
 				'</span>' +
 				'</a>'
 		) as HTMLAnchorElement;
 
 		pasteButton.addEventListener('click', this.paste);
 
-		const cancelButton: HTMLAnchorElement = this.jodit.create.fromHTML(
+		const cancelButton: HTMLAnchorElement = this.j.c.fromHTML(
 			'<a href="javascript:void(0)" style="float:right; margin-right: 10px;" class="jodit-button">' +
 				'<span>' +
-				this.jodit.i18n('Cancel') +
+				this.j.i18n('Cancel') +
 				'</span>' +
 				'</a>'
 		) as HTMLAnchorElement;
 
 		cancelButton.addEventListener('click', this.dialog.close);
 
-		this.container = this.jodit.create.div();
+		this.container = this.j.c.div();
 		this.container.classList.add('jodit-paste-storage');
-		this.listBox = this.jodit.create.div();
-		this.previewBox = this.jodit.create.div();
+		this.listBox = this.j.c.div();
+		this.previewBox = this.j.c.div();
 
 		this.container.appendChild(this.listBox);
 		this.container.appendChild(this.previewBox);
 
-		this.dialog.setTitle(this.jodit.i18n('Choose Content to Paste'));
+		this.dialog.setTitle(this.j.i18n('Choose Content to Paste'));
 		this.dialog.setContent(this.container);
 		this.dialog.setFooter([pasteButton, cancelButton]);
 
-		this.jodit.events.on(
+		this.j.e.on(
 			this.listBox,
 			'click dblclick',
 			(e: MouseEvent) => {
 				const a: HTMLAnchorElement | null = e.target as HTMLAnchorElement;
 				if (Dom.isTag(a, 'a') && a.hasAttribute('data-index')) {
-					this.selectIndex(
-						parseInt(attr(a, '-index') || '0', 10)
-					);
+					this.selectIndex(parseInt(attr(a, '-index') || '0', 10));
 				}
 
 				if (e.type === 'dblclick') {
@@ -184,7 +187,7 @@ export class pasteStorage extends Plugin {
 	}
 
 	afterInit() {
-		this.jodit.events
+		this.j.e
 			.off('afterCopy.paste-storage')
 			.on('afterCopy.paste-storage', (html: string) => {
 				if (this.list.indexOf(html) !== -1) {
@@ -197,7 +200,7 @@ export class pasteStorage extends Plugin {
 				}
 			});
 
-		this.jodit.registerCommand('showPasteStorage', {
+		this.j.registerCommand('showPasteStorage', {
 			exec: this.showDialog,
 			hotkeys: ['ctrl+shift+v', 'cmd+shift+v']
 		});

@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import "./resizer.less";
+import './resizer.less';
 
 import { Config } from '../../config';
 import * as consts from '../../core/constants';
@@ -81,7 +81,7 @@ export class resizer extends Plugin {
 	private height: number = 0;
 	private ratio: number = 0;
 
-	private rect = this.jodit.create.fromHTML(
+	private rect = this.j.c.fromHTML(
 		`<div class="jodit-resizer">
 				<i class="jodit-resizer-topleft"></i>
 				<i class="jodit-resizer-topright"></i>
@@ -97,14 +97,14 @@ export class resizer extends Plugin {
 
 	protected afterInit(editor: IJodit): void {
 		$$('i', this.rect).forEach((resizeHandle: HTMLElement) => {
-			editor.events.on(
+			editor.e.on(
 				resizeHandle,
 				'mousedown.resizer touchstart.resizer',
 				this.onClickHandle.bind(this, resizeHandle)
 			);
 		});
 
-		editor.events
+		editor.e
 			.on('readonly', (isReadOnly: boolean) => {
 				if (isReadOnly) {
 					this.hide();
@@ -135,11 +135,11 @@ export class resizer extends Plugin {
 	}
 
 	private addEventListeners() {
-		const editor = this.jodit;
+		const editor = this.j;
 
-		editor.events
+		editor.e
 			.off(editor.editor, '.resizer')
-			.off(editor.ownerWindow, '.resizer')
+			.off(editor.ow, '.resizer')
 			.on(editor.editor, 'keydown.resizer', (e: KeyboardEvent) => {
 				if (
 					this.isShown &&
@@ -150,13 +150,13 @@ export class resizer extends Plugin {
 					this.onDelete(e);
 				}
 			})
-			.on(editor.ownerWindow, 'resize.resizer', this.updateSize)
+			.on(editor.ow, 'resize.resizer', this.updateSize)
 			.on(
-				editor.ownerWindow,
+				editor.ow,
 				'mouseup.resizer keydown.resizer touchend.resizer',
 				this.onClickOutside
 			)
-			.on([editor.ownerWindow, editor.editor], 'scroll.resizer', () => {
+			.on([editor.ow, editor.editor], 'scroll.resizer', () => {
 				if (this.isShown && !this.isResized) {
 					this.hide();
 				}
@@ -186,12 +186,12 @@ export class resizer extends Plugin {
 		this.start_x = e.clientX;
 		this.start_y = e.clientY;
 
-		this.jodit.events.fire('hidePopup');
+		this.j.e.fire('hidePopup');
 
-		this.jodit.lock(this.LOCK_KEY);
+		this.j.lock(this.LOCK_KEY);
 
-		this.jodit.events.on(
-			this.jodit.ownerWindow,
+		this.j.e.on(
+			this.j.ow,
 			'mousemove.resizer touchmove.resizer',
 			this.onResize
 		);
@@ -224,14 +224,8 @@ export class resizer extends Plugin {
 					new_w = Math.round(new_h * this.ratio);
 				}
 
-				if (
-					new_w >
-					innerWidth(this.jodit.editor, this.jodit.ownerWindow)
-				) {
-					new_w = innerWidth(
-						this.jodit.editor,
-						this.jodit.ownerWindow
-					);
+				if (new_w > innerWidth(this.j.editor, this.j.ow)) {
+					new_w = innerWidth(this.j.editor, this.j.ow);
 					new_h = Math.round(new_w / this.ratio);
 				}
 			} else {
@@ -241,7 +235,7 @@ export class resizer extends Plugin {
 					this.height + (className.match(/top/) ? -1 : 1) * diff_y;
 			}
 
-			if (new_w > this.jodit.options.resizer.min_width) {
+			if (new_w > this.j.o.resizer.min_width) {
 				if (new_w < (this.rect.parentNode as HTMLElement).offsetWidth) {
 					css(this.element, 'width', new_w);
 				} else {
@@ -249,7 +243,7 @@ export class resizer extends Plugin {
 				}
 			}
 
-			if (new_h > this.jodit.options.resizer.min_height) {
+			if (new_h > this.j.o.resizer.min_height) {
 				css(this.element, 'height', new_h);
 			}
 
@@ -267,13 +261,13 @@ export class resizer extends Plugin {
 	private onClickOutside = (e: MouseEvent) => {
 		if (this.isShown) {
 			if (this.isResized) {
-				this.jodit.unlock();
+				this.j.unlock();
 				this.isResized = false;
-				this.jodit.setEditorValue();
+				this.j.setEditorValue();
 				e.stopImmediatePropagation();
 
-				this.jodit.events.off(
-					this.jodit.ownerWindow,
+				this.j.e.off(
+					this.j.ow,
 					'mousemove.resizer touchmove.resizer',
 					this.onResize
 				);
@@ -289,7 +283,7 @@ export class resizer extends Plugin {
 		}
 
 		if (this.element.tagName !== 'JODIT') {
-			this.jodit.selection.select(this.element);
+			this.j.selection.select(this.element);
 		} else {
 			Dom.safeRemove(this.element);
 			this.hide();
@@ -298,7 +292,7 @@ export class resizer extends Plugin {
 	}
 
 	private onChangeEditor() {
-		const editor = this.jodit;
+		const editor = this.j;
 
 		if (this.isShown) {
 			if (!this.element || !this.element.parentNode) {
@@ -318,11 +312,11 @@ export class resizer extends Plugin {
 					if (
 						!(elm as any)[keyBInd] &&
 						((Dom.isTag(elm, 'iframe') &&
-							editor.options.useIframeResizer) ||
+							editor.o.useIframeResizer) ||
 							(Dom.isTag(elm, 'img') &&
-								editor.options.useImageResizer) ||
+								editor.o.useImageResizer) ||
 							(Dom.isTag(elm, 'table') &&
-								editor.options.useTableResizer))
+								editor.o.useTableResizer))
 					) {
 						(elm as any)[keyBInd] = true;
 						this.bind(elm);
@@ -347,7 +341,7 @@ export class resizer extends Plugin {
 			) {
 				element = element.parentNode as HTMLElement;
 			} else {
-				wrapper = this.jodit.create.inside.fromHTML(
+				wrapper = this.j.c.inside.fromHTML(
 					'<jodit ' +
 						'data-jodit-temp="1" ' +
 						'contenteditable="false" ' +
@@ -374,10 +368,10 @@ export class resizer extends Plugin {
 				element = wrapper;
 			}
 
-			this.jodit.events
+			this.j.e
 				.off(element, 'mousedown.select touchstart.select')
 				.on(element, 'mousedown.select touchstart.select', () => {
-					this.jodit.selection.select(element);
+					this.j.selection.select(element);
 				})
 				.off(element, 'changesize')
 				.on(element, 'changesize', () => {
@@ -386,7 +380,7 @@ export class resizer extends Plugin {
 				});
 		}
 
-		this.jodit.events
+		this.j.e
 			.on(element, 'dragstart', this.hide)
 			.on(element, 'mousedown', (event: MouseEvent) => {
 				// for IE don't show native resizer
@@ -404,7 +398,7 @@ export class resizer extends Plugin {
 			this.show();
 
 			if (Dom.isTag(this.element, 'img') && !this.element.complete) {
-				this.jodit.events.on(this.element, 'load', this.updateSize);
+				this.j.e.on(this.element, 'load', this.updateSize);
 			}
 		}
 	};
@@ -417,16 +411,15 @@ export class resizer extends Plugin {
 		if (this.element && this.rect) {
 			const workplacePosition: IBound = offset(
 					(this.rect.parentNode ||
-						this.jodit.ownerDocument
-							.documentElement) as HTMLElement,
-					this.jodit,
-					this.jodit.ownerDocument,
+						this.j.od.documentElement) as HTMLElement,
+					this.j,
+					this.j.od,
 					true
 				),
 				pos: IBound = offset(
 					this.element,
-					this.jodit,
-					this.jodit.editorDocument
+					this.j,
+					this.j.editorDocument
 				),
 				left: number = parseInt(this.rect.style.left || '0', 10),
 				top: number = parseInt(this.rect.style.top || '0', 10),
@@ -452,12 +445,12 @@ export class resizer extends Plugin {
 					height: this.element.offsetHeight
 				});
 
-				if (this.jodit.events) {
-					this.jodit.events.fire(this.element, 'changesize');
+				if (this.j.events) {
+					this.j.e.fire(this.element, 'changesize');
 
 					// check for first init. Ex. inlinePopup hides when it was fired
 					if (!isNaN(left)) {
-						this.jodit.events.fire('resize');
+						this.j.e.fire('resize');
 					}
 				}
 			}
@@ -465,7 +458,7 @@ export class resizer extends Plugin {
 	};
 
 	private showSizeViewer(w: number, h: number) {
-		if (!this.jodit.options.resizer.showSize) {
+		if (!this.j.o.resizer.showSize) {
 			return;
 		}
 
@@ -480,8 +473,8 @@ export class resizer extends Plugin {
 		this.sizeViewer.style.opacity = '1';
 		this.sizeViewer.textContent = `${w} x ${h}`;
 
-		this.jodit.async.setTimeout(this.hideSizeViewer, {
-			timeout: this.jodit.options.resizer.hideSizeTimeout,
+		this.j.async.setTimeout(this.hideSizeViewer, {
+			timeout: this.j.o.resizer.hideSizeTimeout,
 			label: 'hideSizeViewer'
 		});
 	}
@@ -490,22 +483,19 @@ export class resizer extends Plugin {
 	 * Show resizer
 	 */
 	private show() {
-		if (this.jodit.options.readonly || this.isShown) {
+		if (this.j.o.readonly || this.isShown) {
 			return;
 		}
 
 		this.isShown = true;
 
 		if (!this.rect.parentNode) {
-			this.jodit.markOwner(this.rect);
-			this.jodit.workplace.appendChild(this.rect);
+			this.j.markOwner(this.rect);
+			this.j.workplace.appendChild(this.rect);
 		}
 
-		if (this.jodit.isFullSize()) {
-			this.rect.style.zIndex = css(
-				this.jodit.container,
-				'zIndex'
-			).toString();
+		if (this.j.isFullSize()) {
+			this.rect.style.zIndex = css(this.j.container, 'zIndex').toString();
 		}
 
 		this.updateSize();
@@ -528,8 +518,6 @@ export class resizer extends Plugin {
 	protected beforeDestruct(jodit: IJodit): void {
 		this.hide();
 
-		this.jodit.events
-			.off(this.jodit.ownerWindow, '.resizer')
-			.off('.resizer');
+		this.j.e.off(this.j.ow, '.resizer').off('.resizer');
 	}
 }

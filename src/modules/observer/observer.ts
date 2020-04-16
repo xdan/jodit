@@ -79,9 +79,7 @@ export class Observer extends Component<IJodit> {
 	}
 
 	private changeStack() {
-		this.jodit &&
-			!this.jodit.isInDestruct &&
-			this.jodit.events?.fire('changeStack');
+		this.j && !this.j.isInDestruct && this.j.events?.fire('changeStack');
 	}
 
 	constructor(editor: IJodit) {
@@ -93,7 +91,7 @@ export class Observer extends Component<IJodit> {
 			editor.defaultTimeout
 		);
 
-		editor.events.on('afterAddPlace.observer', () => {
+		editor.e.on('afterAddPlace.observer', () => {
 			if (this.isInDestruct) {
 				return;
 			}
@@ -115,13 +113,13 @@ export class Observer extends Component<IJodit> {
 					() => {
 						if (
 							this.startValue.html ===
-							this.jodit.getNativeEditorValue()
+							this.j.getNativeEditorValue()
 						) {
 							this.startValue = this.snapshot.make();
 						}
 					}
 				)
-				.on(this,'change.observer', () => {
+				.on(this, 'change.observer', () => {
 					if (!this.snapshot.isBlocked) {
 						onChangeStack();
 					}
@@ -130,8 +128,8 @@ export class Observer extends Component<IJodit> {
 	}
 
 	destruct(): any {
-		if (this.jodit.events) {
-			this.jodit.events.off('.observer');
+		if (this.j.events) {
+			this.j.e.off('.observer');
 		}
 
 		this.snapshot.destruct();

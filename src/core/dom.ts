@@ -58,7 +58,7 @@ export class Dom {
 		} while (needFindNext);
 
 		const wrapper =
-			typeof tag === 'string' ? editor.create.inside.element(tag) : tag;
+			typeof tag === 'string' ? editor.c.inside.element(tag) : tag;
 
 		if (first.parentNode) {
 			first.parentNode.insertBefore(wrapper, first);
@@ -97,7 +97,7 @@ export class Dom {
 		const selInfo = editor.selection.save();
 
 		const wrapper =
-			typeof tag === 'string' ? editor.create.inside.element(tag) : tag;
+			typeof tag === 'string' ? editor.c.inside.element(tag) : tag;
 
 		if (!current.parentNode) {
 			return null;

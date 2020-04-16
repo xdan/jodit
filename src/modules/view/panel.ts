@@ -15,7 +15,14 @@ export abstract class Panel extends Component implements IPanel {
 	protected __isFullSize: boolean = false;
 
 	ownerDocument!: Document;
+	get od(): this['ownerDocument'] {
+		return this.ownerDocument;
+	}
+
 	ownerWindow!: Window;
+	get ow(): this['ownerWindow'] {
+		return this.ownerWindow;
+	}
 
 	container: HTMLDivElement;
 
@@ -24,7 +31,22 @@ export abstract class Panel extends Component implements IPanel {
 	 */
 	create: Create;
 
+	/**
+	 * Short alias for create
+	 */
+	get c(): this['create'] {
+		return this.create;
+	}
+
 	abstract options: IViewOptions;
+
+	/**
+	 * Short alias for options
+	 */
+	get o(): this['options'] {
+		return this.options;
+	}
+
 	protected initOptions(options?: IViewOptions): void {
 		this.options = { ...(this.options || {}), ...options };
 	}
@@ -43,9 +65,7 @@ export abstract class Panel extends Component implements IPanel {
 
 		if (isString(element)) {
 			try {
-				resolved = this.ownerDocument.querySelector(
-					element
-				) as HTMLInputElement;
+				resolved = this.od.querySelector(element) as HTMLInputElement;
 			} catch {
 				throw error(
 					'String "' + element + '" should be valid HTML selector'
@@ -76,14 +96,14 @@ export abstract class Panel extends Component implements IPanel {
 		this.initOptions(options);
 		this.initOwners();
 
-		if (jodit && jodit.ownerDocument) {
-			this.ownerDocument = jodit.ownerDocument;
-			this.ownerWindow = jodit.ownerWindow;
+		if (jodit && jodit.od) {
+			this.ownerDocument = jodit.od;
+			this.ownerWindow = jodit.ow;
 		}
 
 		this.create = new Create(this);
 
-		this.container = this.create.div();
+		this.container = this.c.div();
 	}
 
 	isLocked = (): boolean => this.__whoLocked !== '';

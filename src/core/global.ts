@@ -22,7 +22,7 @@ export function fireEach(events: string, ...args: any[]) {
 		const editor = instances[key];
 
 		if (!editor.isDestructed && editor.events) {
-			editor.events.fire(events, ...args);
+			editor.e.fire(events, ...args);
 		}
 	});
 }
@@ -55,13 +55,13 @@ export function getContainer(jodit: IViewBased, name: string): HTMLElement {
 	const data = boxes.get(jodit) || {};
 
 	if (!data[name]) {
-		const box = jodit.create.div(`jodit-${kebabCase(name)}-container`);
+		const box = jodit.c.div(`jodit-${kebabCase(name)}-container`);
 
-		jodit.ownerDocument.body.appendChild(box);
+		jodit.od.body.appendChild(box);
 
 		data[name] = box;
 
-		jodit.events.on('beforeDestruct', () => {
+		jodit.e.on('beforeDestruct', () => {
 			Dom.safeRemove(box);
 			delete data[name];
 
@@ -69,7 +69,6 @@ export function getContainer(jodit: IViewBased, name: string): HTMLElement {
 				boxes.delete(jodit);
 			}
 		});
-
 
 		boxes.set(jodit, data);
 	}

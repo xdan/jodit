@@ -6,7 +6,7 @@ export default {
 	Advanced: '高度な設定',
 	'About Jodit': 'Joditについて',
 	'Jodit Editor': 'Jodit Editor',
-	"Jodit User's Guide": "Jodit ユーザーズ・ガイド",
+	"Jodit User's Guide": 'Jodit ユーザーズ・ガイド',
 	'contains detailed help for using': '詳しい使い方',
 	'For information about the license, please go to our website:':
 		'ライセンス詳細についてはJodit Webサイトを確認ください：',
@@ -84,8 +84,7 @@ export default {
 	Ok: '確定',
 
 	// plugin paste
-	'Your code is similar to HTML. Keep as HTML?':
-		'HTMLコードを保持しますか？',
+	'Your code is similar to HTML. Keep as HTML?': 'HTMLコードを保持しますか？',
 	'Paste as HTML': 'HTMLで貼付け',
 	Keep: 'HTMLを保持',
 	Clean: 'Clean',
@@ -216,7 +215,8 @@ export default {
 	'Split horizontal': 'セルの分割（水平方向）',
 	'You can only edit your own images. Download this image on the host?':
 		'You can only edit your own images. Download this image on the host?',
-	'The image has been successfully uploaded to the host!': 'The image has been successfully uploaded to the host!',
+	'The image has been successfully uploaded to the host!':
+		'The image has been successfully uploaded to the host!',
 	palette: 'パレット',
 	pencil: '鉛筆',
 	'There are no files': 'There are no files',
@@ -225,9 +225,10 @@ export default {
 	preview: 'プレビュー',
 	download: 'ダウンロード',
 	'Paste from clipboard': '貼り付け',
-	'Your browser doesn\'t support direct access to the clipboard.': 'お使いのブラウザはクリップボードを使用できません',
+	"Your browser doesn't support direct access to the clipboard.":
+		'お使いのブラウザはクリップボードを使用できません',
 	'Copy selection': 'コピー',
-	'copy': 'copy',
+	copy: 'copy',
 	'Border radius': '角の丸み',
-	'Show all': '全て表示',
+	'Show all': '全て表示'
 } as IDictionary<string>;

@@ -12,4 +12,4 @@
  * @return {boolean}
  */
 export const isHTML = (str: string): boolean =>
-    /<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m.test(str);
+	/<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m.test(str);

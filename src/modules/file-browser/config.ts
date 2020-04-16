@@ -133,7 +133,7 @@ declare module '../../config' {
 		 * @property {object} filebrowser.crop Settings for AJAX connections toWYSIWYG the server toWYSIWYG crop image.
 		 * By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром
 		 * action=create
-		 * @property {object} filebrowser.create Settings for AJAX connections toWYSIWYG the server toWYSIWYG create
+		 * @property {object} filebrowser.c Settings for AJAX connections toWYSIWYG the server toWYSIWYG create
 		 * the category . By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax}
 		 * c параметром action=create
 		 * @property {object} filebrowser.move Settings for AJAX connections toWYSIWYG the server for the moving
@@ -529,7 +529,7 @@ Config.prototype.filebrowser = {
 		filebrowser: IFileBrowser,
 		data: IFileBrowserCallBackData
 	) => {
-		const jodit = filebrowser.jodit as IJodit;
+		const jodit = filebrowser.j as IJodit;
 
 		if (jodit && jodit.isJodit) {
 			if (data.files && data.files.length) {
@@ -541,11 +541,11 @@ Config.prototype.filebrowser = {
 						jodit.selection.insertImage(
 							url,
 							null,
-							jodit.options.imageDefaultWidth
+							jodit.o.imageDefaultWidth
 						);
 					} else {
 						jodit.selection.insertNode(
-							jodit.create.inside.fromHTML(
+							jodit.c.inside.fromHTML(
 								`<a href="${url}" title="${url}">${url}</a>`
 							)
 						);
@@ -572,7 +572,7 @@ Config.prototype.controls.filebrowser = {
 			filebrowser: IFileBrowser,
 			control: IControlType
 		): HTMLElement => {
-			const btn: HTMLElement = filebrowser.create.fromHTML(
+			const btn: HTMLElement = filebrowser.c.fromHTML(
 					'<span class="jodit_upload_button">' +
 						Icon.get('plus') +
 						'<input type="file" accept="' +
@@ -584,7 +584,7 @@ Config.prototype.controls.filebrowser = {
 					'input'
 				) as HTMLInputElement;
 
-			filebrowser.events
+			filebrowser.e
 				.on('updateToolbar', () => {
 					if (control && control.isDisabled) {
 						control.isDisabled(filebrowser, control)
@@ -607,13 +607,13 @@ Config.prototype.controls.filebrowser = {
 			);
 		},
 		exec: (editor: IViewBased) => {
-			editor.events.fire('fileRemove.filebrowser');
+			editor.e.fire('fileRemove.filebrowser');
 		}
 	} as IControlType,
 
 	update: {
 		exec: (editor: IViewBased) => {
-			editor.events.fire('update.filebrowser');
+			editor.e.fire('update.filebrowser');
 		}
 	} as IControlType,
 
@@ -622,7 +622,7 @@ Config.prototype.controls.filebrowser = {
 		isDisabled: (browser: IFileBrowser): boolean =>
 			!browser.state.activeElements.length,
 		exec: (editor: IViewBased) => {
-			editor.events.fire('select.filebrowser');
+			editor.e.fire('select.filebrowser');
 		}
 	} as IControlType,
 
@@ -641,7 +641,7 @@ Config.prototype.controls.filebrowser = {
 			);
 		},
 		exec: editor => {
-			editor.events.fire('edit.filebrowser');
+			editor.e.fire('edit.filebrowser');
 		}
 	} as IControlType,
 
@@ -650,7 +650,7 @@ Config.prototype.controls.filebrowser = {
 		isActive: (filebrowser: IFileBrowser): boolean =>
 			filebrowser.state.view === 'tiles',
 		exec: (filebrowser: IFileBrowser) => {
-			filebrowser.events.fire('view.filebrowser', 'tiles');
+			filebrowser.e.fire('view.filebrowser', 'tiles');
 		}
 	} as IControlType,
 
@@ -659,26 +659,23 @@ Config.prototype.controls.filebrowser = {
 		isActive: (filebrowser: IFileBrowser): boolean =>
 			filebrowser.state.view === 'list',
 		exec: (filebrowser: IFileBrowser) => {
-			filebrowser.events.fire('view.filebrowser', 'list');
+			filebrowser.e.fire('view.filebrowser', 'list');
 		}
 	} as IControlType,
 
 	filter: {
 		isInput: true,
 		getContent: (filebrowser: IFileBrowser): HTMLElement => {
-			const input: HTMLInputElement = filebrowser.create.element(
-				'input',
-				{
-					class: 'jodit_input',
-					placeholder: filebrowser.i18n('Filter')
-				}
-			);
+			const input: HTMLInputElement = filebrowser.c.element('input', {
+				class: 'jodit_input',
+				placeholder: filebrowser.i18n('Filter')
+			});
 
-			filebrowser.events.on(
+			filebrowser.e.on(
 				input,
 				'keydown mousedown',
 				filebrowser.async.debounce(() => {
-					filebrowser.events.fire('filter.filebrowser', input.value);
+					filebrowser.e.fire('filter.filebrowser', input.value);
 				}, filebrowser.defaultTimeout)
 			);
 
@@ -689,7 +686,7 @@ Config.prototype.controls.filebrowser = {
 	sort: {
 		isInput: true,
 		getContent: (fb: IFileBrowser): HTMLElement => {
-			const select: HTMLSelectElement = fb.create.fromHTML(
+			const select: HTMLSelectElement = fb.c.fromHTML(
 				'<select class="jodit_input jodit_select">' +
 					`<option value="changed-asc">${fb.i18n(
 						'Sort by changed'
@@ -712,14 +709,14 @@ Config.prototype.controls.filebrowser = {
 					'</select>'
 			) as HTMLSelectElement;
 
-			fb.events
+			fb.e
 				.on('sort.filebrowser', (value: string) => {
 					if (select.value !== value) {
 						select.value = value;
 					}
 				})
 				.on(select, 'change', () => {
-					fb.events.fire('sort.filebrowser', select.value);
+					fb.e.fire('sort.filebrowser', select.value);
 				});
 
 			return select;

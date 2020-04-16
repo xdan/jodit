@@ -166,7 +166,7 @@ Config.prototype.editHTMLDocumentMode = false;
 export function iframe(editor: IJodit) {
 	const opt = editor.options;
 
-	editor.events
+	editor.e
 		.on('afterSetMode', () => {
 			if (editor.isEditorMode()) {
 				editor.selection.focus();
@@ -190,11 +190,7 @@ export function iframe(editor: IJodit) {
 						)}">
 						<head>
 							<title>${opt.iframeTitle}</title>
-							${
-							opt.iframeBaseUrl
-									? `<base href="${opt.iframeBaseUrl}"/>`
-									: ''
-							}
+							${opt.iframeBaseUrl ? `<base href="${opt.iframeBaseUrl}"/>` : ''}
 						</head>
 						<body class="jodit-wysiwyg" style="outline:none"></body>
 					</html>`
@@ -225,7 +221,7 @@ export function iframe(editor: IJodit) {
 				return;
 			}
 
-			const iframe = editor.create.element('iframe');
+			const iframe = editor.c.element('iframe');
 
 			iframe.style.display = 'block';
 			iframe.src = 'about:blank';
@@ -237,7 +233,7 @@ export function iframe(editor: IJodit) {
 			editor.workplace.appendChild(iframe);
 			editor.iframe = iframe;
 
-			const result = editor.events.fire(
+			const result = editor.e.fire(
 				'generateDocumentStructure.iframe',
 				null,
 				editor
@@ -257,7 +253,8 @@ export function iframe(editor: IJodit) {
 					Dom.toggleAttribute(
 						doc.body,
 						'contenteditable',
-						editor.getMode() !== MODE_SOURCE && !editor.getReadOnly()
+						editor.getMode() !== MODE_SOURCE &&
+							!editor.getReadOnly()
 					);
 				};
 
@@ -298,7 +295,7 @@ export function iframe(editor: IJodit) {
 
 					editor.editor = doc.documentElement;
 
-					editor.events
+					editor.e
 						.on('beforeGetNativeEditorValue', (): string =>
 							clearMarkers(doc.documentElement.outerHTML)
 						)
@@ -327,7 +324,7 @@ export function iframe(editor: IJodit) {
 					editor.editor = doc.body as HTMLBodyElement;
 				}
 
-				editor.events.on(
+				editor.e.on(
 					'afterSetMode afterInit afterAddPlace',
 					toggleEditable
 				);
@@ -350,7 +347,7 @@ export function iframe(editor: IJodit) {
 						}
 					}, editor.defaultTimeout / 2);
 
-					editor.events
+					editor.e
 						.on(
 							'change afterInit afterSetMode resize',
 							resizeIframe
@@ -377,7 +374,7 @@ export function iframe(editor: IJodit) {
 
 				// throw events in our world
 				if (doc.documentElement) {
-					editor.events
+					editor.e
 						.on(doc.documentElement, 'mousedown touchend', () => {
 							if (!editor.selection.isFocused()) {
 								editor.selection.focus();
@@ -391,7 +388,7 @@ export function iframe(editor: IJodit) {
 							editor.editorWindow,
 							'mousedown touchstart keydown keyup touchend click mouseup mousemove scroll',
 							(e: Event) => {
-									editor.events?.fire(editor.ownerWindow, e);
+								editor.events?.fire(editor.ow, e);
 							}
 						);
 				}

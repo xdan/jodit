@@ -14,9 +14,7 @@ export class PopupMenu extends UIElement implements IPopup {
 	private getBound!: () => IBound;
 
 	setContent(content: HTMLElement): void {
-		const box: HTMLElement = this.jodit.create.div(
-			`${this.componentName}__content`
-		);
+		const box: HTMLElement = this.j.c.div(`${this.componentName}__content`);
 		Dom.detach(this.container);
 		box.appendChild(content);
 		this.container.appendChild(box);
@@ -29,24 +27,24 @@ export class PopupMenu extends UIElement implements IPopup {
 	 * @param getBound
 	 */
 	open(content: Nullable<HTMLElement>, getBound: () => IBound): void {
-		this.jodit.events.fire(camelCase('close-all-popups'));
-		this.jodit.markOwner(this.container);
+		this.j.e.fire(camelCase('close-all-popups'));
+		this.j.markOwner(this.container);
 
 		this.isOpened = true;
 		this.getBound = getBound;
 
 		content && this.setContent(content);
-		getContainer(this.jodit, PopupMenu.name).appendChild(this.container);
+		getContainer(this.j, PopupMenu.name).appendChild(this.container);
 
 		this.updatePosition();
 
 		const up = this.updatePosition;
 
-		this.jodit.events
+		this.j.e
 			.on(camelCase('close-all-popups'), this.close)
 			.on('resize', up)
-			.on(this.jodit.ownerWindow, 'scroll', up)
-			.on(this.jodit.ownerWindow, 'resize', up)
+			.on(this.j.ow, 'scroll', up)
+			.on(this.j.ow, 'resize', up)
 			.fire(this, 'afterOpen');
 	}
 
@@ -68,11 +66,11 @@ export class PopupMenu extends UIElement implements IPopup {
 
 		const up = this.updatePosition;
 
-		this.jodit.events
+		this.j.e
 			.off(camelCase('close-all-popups'), this.close)
 			.off('resize', up)
-			.off(this.jodit.ownerWindow, 'scroll', up)
-			.off(this.jodit.ownerWindow, 'resize', up)
+			.off(this.j.ow, 'scroll', up)
+			.off(this.j.ow, 'resize', up)
 			.fire(this, 'afterClose');
 
 		this.isOpened = false;

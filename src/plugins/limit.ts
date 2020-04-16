@@ -40,14 +40,13 @@ Config.prototype.limitHTML = false;
  * @param jodit
  */
 export function limit(jodit: IJodit) {
-	if (jodit && (jodit.options.limitWords || jodit.options.limitChars)) {
+	if (jodit && (jodit.o.limitWords || jodit.o.limitChars)) {
 		const callback = (
 			event: KeyboardEvent | null,
 			inputText: string = ''
 		): void | boolean => {
 			const text: string =
-				inputText ||
-				(jodit.options.limitHTML ? jodit.value : jodit.text);
+				inputText || (jodit.o.limitHTML ? jodit.value : jodit.text);
 
 			const words: string[] = text
 				.replace(INVISIBLE_SPACE_REG_EXP, '')
@@ -58,18 +57,15 @@ export function limit(jodit: IJodit) {
 				return;
 			}
 
-			if (
-				jodit.options.limitWords &&
-				jodit.options.limitWords <= words.length
-			) {
-				return jodit.options.limitWords === words.length;
+			if (jodit.o.limitWords && jodit.o.limitWords <= words.length) {
+				return jodit.o.limitWords === words.length;
 			}
 
 			if (
-				jodit.options.limitChars &&
-				jodit.options.limitChars <= words.join('').length
+				jodit.o.limitChars &&
+				jodit.o.limitChars <= words.join('').length
 			) {
-				return jodit.options.limitChars === words.join('').length;
+				return jodit.o.limitChars === words.join('').length;
 			}
 
 			return;
@@ -77,7 +73,7 @@ export function limit(jodit: IJodit) {
 
 		let snapshot: SnapshotType | null = null;
 
-		jodit.events
+		jodit.e
 			.off('.limit')
 			.on('beforePaste.limit', () => {
 				snapshot = jodit.observer.snapshot.make();
@@ -96,9 +92,7 @@ export function limit(jodit: IJodit) {
 					if (
 						callback(
 							null,
-							jodit.options.limitHTML
-								? newValue
-								: stripTags(newValue)
+							jodit.o.limitHTML ? newValue : stripTags(newValue)
 						) === false
 					) {
 						jodit.value = oldValue;

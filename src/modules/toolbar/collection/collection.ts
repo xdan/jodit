@@ -5,7 +5,7 @@
  */
 import autobind from 'autobind-decorator';
 
-import "./collection.less";
+import './collection.less';
 
 import {
 	IToolbarButton,
@@ -66,17 +66,17 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		control: IControlTypeStrong,
 		target: Nullable<HTMLElement> = null
 	): IUIButton {
-		return makeButton(this.jodit, control, target);
+		return makeButton(this.j, control, target);
 	}
 
 	// protected applyContainerOptions() {
 	// 	this.container.classList.add(
-	// 		'jodit_' + (this.jodit.options.theme || 'default') + '_theme'
+	// 		'jodit_' + (this.j.o.theme || 'default') + '_theme'
 	// 	);
 	//
-	// 	if (this.jodit.options.zIndex) {
+	// 	if (this.j.o.zIndex) {
 	// 		this.container.style.zIndex = parseInt(
-	// 			this.jodit.options.zIndex.toString(),
+	// 			this.j.o.zIndex.toString(),
 	// 			10
 	// 		).toString();
 	// 	}
@@ -86,12 +86,12 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	 * Button should be active
 	 */
 	shouldBeActive(button: IToolbarButton): boolean | void {
-		if (isJoditObject(this.jodit) && !this.jodit.editorIsActive) {
+		if (isJoditObject(this.j) && !this.j.editorIsActive) {
 			return false;
 		}
 
 		if (isFunction(button.control.isActive)) {
-			return button.control.isActive(this.jodit, button.control, button);
+			return button.control.isActive(this.j, button.control, button);
 		}
 
 		return undefined;
@@ -101,16 +101,14 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	 * Button should be disabled
 	 */
 	shouldBeDisabled(button: IToolbarButton): boolean | void {
-		if (this.jodit.options.disabled) {
+		if (this.j.o.disabled) {
 			return true;
 		}
 
 		if (
-			this.jodit.options.readonly &&
-			(!this.jodit.options.activeButtonsInReadOnly ||
-				this.jodit.options.activeButtonsInReadOnly.includes(
-					button.control.name
-				))
+			this.j.o.readonly &&
+			(!this.j.o.activeButtonsInReadOnly ||
+				this.j.o.activeButtonsInReadOnly.includes(button.control.name))
 		) {
 			return true;
 		}
@@ -119,7 +117,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 
 		if (isFunction(button.control.isDisabled)) {
 			isDisabled = button.control.isDisabled(
-				this.jodit,
+				this.j,
 				button.control,
 				button
 			);
@@ -130,19 +128,16 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 
 	@autobind
 	immediateUpdate() {
-		if (this.isDestructed || this.jodit.isLocked()) {
+		if (this.isDestructed || this.j.isLocked()) {
 			return;
 		}
 
 		super.update();
 
-		this.jodit.events && this.jodit.events.fire('updateToolbar');
+		this.j.events && this.j.e.fire('updateToolbar');
 	}
 
-	update = this.jodit.async.debounce(
-		this.immediateUpdate,
-		this.jodit.defaultTimeout
-	);
+	update = this.j.async.debounce(this.immediateUpdate, this.j.defaultTimeout);
 
 	/**
 	 * Set direction
@@ -160,24 +155,20 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	}
 
 	private initEvents() {
-		this.jodit.events
-			.on(
-				this.jodit.ownerWindow,
-				'mousedown touchend',
-				this.closeAllPopups
-			)
+		this.j.e
+			.on(this.j.ow, 'mousedown touchend', this.closeAllPopups)
 			.on(this.listenEvents, this.update)
 			.on('afterSetMode focus', this.immediateUpdate);
 	}
 
 	@autobind
 	private closeAllPopups(e: MouseEvent) {
-		const box = getContainer(this.jodit, PopupMenu.name);
+		const box = getContainer(this.j, PopupMenu.name);
 		if (e.target && Dom.isOrContains(box, e.target as Node)) {
 			return;
 		}
 
-		this.jodit?.events?.fire(camelCase('close-all-popups'));
+		this.j?.events?.fire(camelCase('close-all-popups'));
 	}
 
 	/** @override **/
@@ -186,12 +177,8 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 			return;
 		}
 
-		this.jodit.events
-			.off(
-				this.jodit.ownerWindow,
-				'mousedown touchstart',
-				this.closeAllPopups
-			)
+		this.j.e
+			.off(this.j.ow, 'mousedown touchstart', this.closeAllPopups)
 			.off(this.listenEvents, this.update)
 			.off('afterSetMode focus', this.immediateUpdate);
 

@@ -79,7 +79,7 @@ Config.prototype.sourceEditorCDNUrlsJS = [
 
 Config.prototype.beautifyHTMLCDNUrlsJS = [
 	'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.11.0/beautify.min.js',
-	'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.11.0/beautify-html.min.js',
+	'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.11.0/beautify-html.min.js'
 ];
 
 Config.prototype.controls.source = {

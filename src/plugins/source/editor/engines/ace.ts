@@ -14,7 +14,7 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 	className = 'jodit_ace_editor';
 
 	private aceExists() {
-		return (this.jodit.ownerWindow as any).ace !== undefined;
+		return (this.j.ow as any).ace !== undefined;
 	}
 
 	/**
@@ -23,11 +23,11 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 	 * @private
 	 */
 	private proxyOnFocus = (e: MouseEvent) => {
-		this.jodit.events.fire('focus', e);
+		this.j.e.fire('focus', e);
 	};
 
 	private proxyOnMouseDown = (e: MouseEvent) => {
-		this.jodit.events.fire('mousedown', e);
+		this.j.e.fire('mousedown', e);
 	};
 
 	private get undoManager(): null | AceAjax.UndoManager {
@@ -37,12 +37,9 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 	}
 
 	private updateButtons() {
-		if (
-			this.undoManager &&
-			this.jodit.getRealMode() === consts.MODE_SOURCE
-		) {
-			this.jodit.events.fire('canRedo', this.undoManager.hasRedo());
-			this.jodit.events.fire('canUndo', this.undoManager.hasUndo());
+		if (this.undoManager && this.j.getRealMode() === consts.MODE_SOURCE) {
+			this.j.e.fire('canRedo', this.undoManager.hasRedo());
+			this.j.e.fire('canUndo', this.undoManager.hasUndo());
 		}
 	}
 
@@ -113,36 +110,33 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 				return;
 			}
 
-			const fakeMirror = this.jodit.create.div(
-				'jodit-source__mirror-fake'
-			);
+			const fakeMirror = this.j.c.div('jodit-source__mirror-fake');
 
 			this.container.appendChild(fakeMirror);
 
-			this.instance = ((editor.ownerWindow as any)
-				.ace as AceAjax.Ace).edit(fakeMirror);
-
-			this.instance.setTheme(
-				editor.options.sourceEditorNativeOptions.theme
+			this.instance = ((editor.ow as any).ace as AceAjax.Ace).edit(
+				fakeMirror
 			);
 
+			this.instance.setTheme(editor.o.sourceEditorNativeOptions.theme);
+
 			this.instance.renderer.setShowGutter(
-				editor.options.sourceEditorNativeOptions.showGutter
+				editor.o.sourceEditorNativeOptions.showGutter
 			);
 
 			this.instance
 				.getSession()
-				.setMode(editor.options.sourceEditorNativeOptions.mode);
+				.setMode(editor.o.sourceEditorNativeOptions.mode);
 
 			this.instance.setHighlightActiveLine(
-				editor.options.sourceEditorNativeOptions.highlightActiveLine
+				editor.o.sourceEditorNativeOptions.highlightActiveLine
 			);
 
 			this.instance.getSession().setUseWrapMode(true);
 			this.instance.setOption('indentedSoftWrap', false);
 			this.instance.setOption(
 				'wrap',
-				editor.options.sourceEditorNativeOptions.wrap
+				editor.o.sourceEditorNativeOptions.wrap
 			);
 
 			this.instance.getSession().setUseWorker(false);
@@ -157,12 +151,12 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 				this.setValue(this.getValue());
 			}
 
-			const onResize = this.jodit.async.debounce(() => {
+			const onResize = this.j.async.debounce(() => {
 				if (editor.isInDestruct) {
 					return;
 				}
 
-				if (editor.options.height !== 'auto') {
+				if (editor.o.height !== 'auto') {
 					this.instance.setOption(
 						'maxLines',
 						editor.workplace.offsetHeight /
@@ -173,16 +167,16 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 				}
 
 				this.instance.resize();
-			}, this.jodit.defaultTimeout * 2);
+			}, this.j.defaultTimeout * 2);
 
-			editor.events.on('afterResize afterSetMode', onResize);
+			editor.e.on('afterResize afterSetMode', onResize);
 
 			onResize();
 
 			this.onReady();
 		};
 
-		editor.events
+		editor.e
 			.on('afterSetMode', () => {
 				if (
 					editor.getRealMode() !== consts.MODE_SOURCE &&
@@ -218,7 +212,7 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 
 		// global add ace editor in browser
 		if (!this.aceExists()) {
-			loadNext(editor, editor.options.sourceEditorCDNUrlsJS).then(() => {
+			loadNext(editor, editor.o.sourceEditorCDNUrlsJS).then(() => {
 				if (!editor.isInDestruct) {
 					tryInitAceEditor();
 				}
@@ -232,12 +226,12 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 		this.instance.off('mousedown', this.proxyOnMouseDown);
 		this.instance.destroy();
 
-		this.jodit?.events?.off('aceInited.source');
+		this.j?.events?.off('aceInited.source');
 	}
 
 	setValue(value: string) {
-		if (this.jodit.options.beautifyHTML) {
-			const html = this.jodit.events.fire('beautifyHTML', value);
+		if (this.j.o.beautifyHTML) {
+			const html = this.j.e.fire('beautifyHTML', value);
 
 			if (isString(html)) {
 				value = html;

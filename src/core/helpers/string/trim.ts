@@ -14,7 +14,7 @@ import { SPACE_REG_EXP_END, SPACE_REG_EXP_START } from '../../constants';
  * @return {string}
  */
 export const trim = (value: string): string => {
-    return value
-        .replace(SPACE_REG_EXP_START, '')
-        .replace(SPACE_REG_EXP_END, '');
+	return value
+		.replace(SPACE_REG_EXP_START, '')
+		.replace(SPACE_REG_EXP_END, '');
 };

@@ -33,28 +33,28 @@ export const Prompt = (
 	defaultValue?: string
 ): Dialog => {
 	const dialog: Dialog = new Dialog(),
-		cancelButton: HTMLAnchorElement = dialog.create.fromHTML(
+		cancelButton: HTMLAnchorElement = dialog.c.fromHTML(
 			'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
 				Icon.get('cancel') +
 				'<span>' +
 				dialog.i18n('Cancel') +
 				'</span></a>'
 		) as HTMLAnchorElement,
-		okButton: HTMLAnchorElement = dialog.create.fromHTML(
+		okButton: HTMLAnchorElement = dialog.c.fromHTML(
 			'<a href="javascript:void(0)" style="float:left;" class="jodit-button">' +
 				Icon.get('check') +
 				'<span>' +
 				dialog.i18n('Ok') +
 				'</span></a>'
 		) as HTMLAnchorElement,
-		form: HTMLFormElement = dialog.create.element('form', {
+		form: HTMLFormElement = dialog.c.element('form', {
 			class: 'jodit-dialog_prompt'
 		}),
-		inputElement: HTMLInputElement = dialog.create.element('input', {
+		inputElement: HTMLInputElement = dialog.c.element('input', {
 			autofocus: true,
 			class: 'jodit_input'
 		}),
-		labelElement: HTMLLabelElement = dialog.create.element(
+		labelElement: HTMLLabelElement = dialog.c.element(
 			'label'
 		) as HTMLLabelElement;
 
@@ -67,7 +67,7 @@ export const Prompt = (
 		inputElement.setAttribute('placeholder', placeholder);
 	}
 
-	labelElement.appendChild(dialog.create.text(msg));
+	labelElement.appendChild(dialog.c.text(msg));
 
 	form.appendChild(labelElement);
 	form.appendChild(inputElement);

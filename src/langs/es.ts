@@ -228,9 +228,10 @@ export default {
 	preview: 'avance',
 	download: 'Descargar',
 	'Paste from clipboard': 'Pegar desde el portapapeles',
-	'Your browser doesn\'t support direct access to the clipboard.': 'Su navegador no soporta el acceso directo en el portapapeles.',
+	"Your browser doesn't support direct access to the clipboard.":
+		'Su navegador no soporta el acceso directo en el portapapeles.',
 	'Copy selection': 'Selección de copia',
-	'copy': 'copia',
+	copy: 'copia',
 	'Border radius': 'Radio frontera',
-	'Show all': 'Mostrar todos los',
+	'Show all': 'Mostrar todos los'
 } as IDictionary<string>;

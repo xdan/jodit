@@ -657,8 +657,8 @@ export class Config implements IViewOptions {
 	 *                 this.val('');
 	 *                 return;
 	 *             }
-	 *             this.selection.insertNode(this.create.element(key, ''));
-	 *             this.events.fire('errorMessage', 'Was inserted ' + value);
+	 *             this.selection.insertNode(this.c.element(key, ''));
+	 *             this.e.fire('errorMessage', 'Was inserted ' + value);
 	 *        },
 	 *        template: function (key, value) {
 	 *            return '<div>' + value + '</div>';
@@ -867,13 +867,13 @@ Config.prototype.controls = {
 			const mywindow: Window | null = window.open('', 'PRINT');
 
 			if (mywindow) {
-				if (editor.options.iframe) {
+				if (editor.o.iframe) {
 					/**
 					 * @event generateDocumentStructure.iframe
 					 * @property {Document} doc Iframe document
 					 * @property {Jodit} editor
 					 */
-					editor.events.fire(
+					editor.e.fire(
 						'generateDocumentStructure.iframe',
 						mywindow.document,
 						editor
@@ -883,7 +883,7 @@ Config.prototype.controls = {
 				} else {
 					mywindow.document.write(
 						'<!doctype html><html lang="' +
-							defaultLanguage(editor.options.language) +
+							defaultLanguage(editor.o.language) +
 							'"><head><title></title></head>' +
 							'<body>' +
 							editor.value +
@@ -939,7 +939,7 @@ Config.prototype.controls = {
 								editor.selection.insertImage(
 									data.baseurl + file,
 									null,
-									editor.options.imageDefaultWidth
+									editor.o.imageDefaultWidth
 								)
 							);
 
@@ -950,7 +950,7 @@ Config.prototype.controls = {
 						editor.selection.restore(selInfo);
 
 						const image: HTMLImageElement =
-							sourceImage || editor.create.inside.element('img');
+							sourceImage || editor.c.inside.element('img');
 
 						image.setAttribute('src', url);
 						image.setAttribute('alt', text);
@@ -959,7 +959,7 @@ Config.prototype.controls = {
 							await editor.selection.insertImage(
 								image,
 								null,
-								editor.options.imageDefaultWidth
+								editor.o.imageDefaultWidth
 							);
 						}
 
@@ -983,7 +983,7 @@ Config.prototype.controls = {
 		) => {
 			const insert = (url: string, title: string = '') => {
 				editor.selection.insertNode(
-					editor.create.inside.fromHTML(
+					editor.c.inside.fromHTML(
 						`<a href="${url}" title="${title}">${title || url}</a>`
 					)
 				);
@@ -1038,7 +1038,7 @@ Config.prototype.controls = {
 
 	video: {
 		popup: (editor: IJodit, current, control, close) => {
-			const bylink = editor.create.fromHTML(
+			const bylink = editor.c.fromHTML(
 					`<form class="jodit-form">
 					<div class="jodit jodit-form__group">
 						<input class="jodit_input" required name="code" placeholder="http://" type="url"/>
@@ -1046,7 +1046,7 @@ Config.prototype.controls = {
 					</div>
 				</form>`
 				) as HTMLFormElement,
-				bycode = editor.create.fromHTML(
+				bycode = editor.c.fromHTML(
 					`<form class="jodit-form">
 									<div class="jodit-form__group">
 										<textarea class="jodit-textarea" required name="code" placeholder="${editor.i18n(
@@ -1064,7 +1064,7 @@ Config.prototype.controls = {
 					close();
 				};
 
-			if (editor.options.textIcons) {
+			if (editor.o.textIcons) {
 				tab[editor.i18n('Link')] = bylink;
 				tab[editor.i18n('Code')] = bycode;
 			} else {

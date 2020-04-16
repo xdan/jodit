@@ -132,7 +132,7 @@ export const KEY_ALIASES: IDictionary<string> = {
 };
 
 export const BASE_PATH: string = ((): string => {
-	if (typeof document  === 'undefined') {
+	if (typeof document === 'undefined') {
 		return '';
 	}
 
@@ -143,9 +143,7 @@ export const BASE_PATH: string = ((): string => {
 		return removeScriptName(script.src);
 	}
 
-	const scripts = document.querySelectorAll<HTMLScriptElement>(
-		'script[src]'
-	);
+	const scripts = document.querySelectorAll<HTMLScriptElement>('script[src]');
 
 	if (scripts && scripts.length) {
 		return removeScriptName(scripts[scripts.length - 1].src);

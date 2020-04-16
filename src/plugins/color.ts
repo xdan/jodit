@@ -12,7 +12,7 @@ import { ColorPickerWidget, TabsWidget } from '../modules/widget';
 
 Config.prototype.controls.brush = {
 	update(button): void {
-		const editor = button.jodit as IJodit;
+		const editor = button.j as IJodit;
 
 		const current: Node | false = editor.selection.current();
 
@@ -100,7 +100,7 @@ Config.prototype.controls.brush = {
 			colorHEX
 		);
 
-		if (editor.options.colorPickerDefaultTab === 'background') {
+		if (editor.o.colorPickerDefaultTab === 'background') {
 			tabs = {
 				Background: backgroundTag,
 				Text: colorTab

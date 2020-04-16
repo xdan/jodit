@@ -39,22 +39,21 @@ export const Alert = (
 		title = undefined;
 	}
 
-	const
-		dialog = new Dialog(),
-		container = dialog.create.div(className),
-		okButton: HTMLAnchorElement = dialog.create.fromHTML(
+	const dialog = new Dialog(),
+		container = dialog.c.div(className),
+		okButton: HTMLAnchorElement = dialog.c.fromHTML(
 			'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
-			Icon.get('cancel') +
-			'<span>' +
-			dialog.i18n('Ok') +
-			'</span></a>'
+				Icon.get('cancel') +
+				'<span>' +
+				dialog.i18n('Ok') +
+				'</span></a>'
 		) as HTMLAnchorElement;
 
 	asArray(msg).forEach(oneMessage => {
 		container.appendChild(
 			Dom.isNode(oneMessage, dialog.window)
 				? oneMessage
-				: dialog.create.fromHTML(oneMessage)
+				: dialog.c.fromHTML(oneMessage)
 		);
 	});
 

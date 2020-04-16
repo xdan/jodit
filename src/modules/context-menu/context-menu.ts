@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import "./context-menu.less";
+import './context-menu.less';
 
 import { IViewBased, IContextMenu, IContextMenuAction } from '../../types';
 import { Component, STATUSES } from '../../core/component';
@@ -30,7 +30,7 @@ export class ContextMenu extends Component implements IContextMenu {
 	 */
 	hide = () => {
 		Dom.safeRemove(this.context);
-		this.jodit.events.off(this.jodit.ownerWindow, this.evnts, this.hide);
+		this.j.e.off(this.j.ow, this.evnts, this.hide);
 	};
 
 	/**
@@ -69,9 +69,9 @@ export class ContextMenu extends Component implements IContextMenu {
 				return;
 			}
 
-			const title = self.jodit.i18n(item.title || '');
+			const title = self.j.i18n(item.title || '');
 
-			const action = this.jodit.create.fromHTML(
+			const action = this.j.c.fromHTML(
 				`<a title="${title}" data-icon="${item.icon}"  href="javascript:void(0)">` +
 					(item.icon ? Icon.get(item.icon) : '') +
 					'<span></span></a>'
@@ -94,17 +94,17 @@ export class ContextMenu extends Component implements IContextMenu {
 			top: y
 		});
 
-		this.jodit.events.on(this.jodit.ownerWindow, this.evnts, self.hide);
+		this.j.e.on(this.j.ow, this.evnts, self.hide);
 
-		this.jodit.markOwner(this.context);
+		this.j.markOwner(this.context);
 
-		getContainer(this.jodit, contextMenu.name).appendChild(this.context);
+		getContainer(this.j, contextMenu.name).appendChild(this.context);
 	}
 
 	constructor(editor: IViewBased) {
 		super(editor);
 
-		this.context = editor.create.div('jodit-context-menu');
+		this.context = editor.c.div('jodit-context-menu');
 		this.context.classList.add('jodit-context-menu_show');
 	}
 
@@ -117,7 +117,7 @@ export class ContextMenu extends Component implements IContextMenu {
 		Dom.safeRemove(this.context);
 		delete this.context;
 
-		this.jodit.events.off(this.jodit.ownerWindow, this.evnts, this.hide);
+		this.j.e.off(this.j.ow, this.evnts, this.hide);
 		super.destruct();
 	}
 }

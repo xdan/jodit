@@ -11,9 +11,11 @@ export class Icon {
 	private static icons: IDictionary<string> = {};
 
 	private static getIcon(name: string): string | undefined {
-		return Icon.icons[name] ||
+		return (
+			Icon.icons[name] ||
 			Icon.icons[name.replace(/-/g, '_')] ||
-			Icon.icons[name.toLowerCase()];
+			Icon.icons[name.toLowerCase()]
+		);
 	}
 
 	/**
@@ -30,10 +32,7 @@ export class Icon {
 	 * @param name icon
 	 * @param [defaultValue='<span></span>']
 	 */
-	static get(
-		name: string,
-		defaultValue: string = '<span></span>'
-	): string {
+	static get(name: string, defaultValue: string = '<span></span>'): string {
 		return this.getIcon(name) || defaultValue;
 	}
 
@@ -43,10 +42,7 @@ export class Icon {
 	 * @param name
 	 * @param value
 	 */
-	static set(
-		name: string,
-		value: string
-	): void {
+	static set(name: string, value: string): void {
 		this.icons[name.replace('_', '-')] = value;
 	}
 }
@@ -58,7 +54,7 @@ export function createIcon(
 ): HTMLElement {
 	const icon: string = control ? control.icon || control.name : clearName;
 
-	let iconSVG: string | void | HTMLElement = jodit.events.fire(
+	let iconSVG: string | void | HTMLElement = jodit.e.fire(
 		'getIcon',
 		icon,
 		control,
@@ -68,7 +64,7 @@ export function createIcon(
 	let iconElement: HTMLElement;
 
 	if (control && control.iconURL && iconSVG === undefined) {
-		iconElement = jodit.create.element('span');
+		iconElement = jodit.c.element('span');
 		css(
 			iconElement,
 			'backgroundImage',
@@ -76,13 +72,11 @@ export function createIcon(
 		);
 	} else {
 		if (iconSVG === undefined) {
-			iconSVG = Icon.get(
-				Icon.exists(icon) ? icon : 'empty'
-			);
+			iconSVG = Icon.get(Icon.exists(icon) ? icon : 'empty');
 		}
 
 		iconElement = isString(iconSVG)
-			? jodit.create.fromHTML(trim(iconSVG))
+			? jodit.c.fromHTML(trim(iconSVG))
 			: iconSVG;
 	}
 

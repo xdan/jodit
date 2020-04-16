@@ -89,15 +89,11 @@ export class Snapshot extends Component<IJodit> {
 	private calcHierarchyLadder(elm: Node | null): number[] {
 		const counts: number[] = [];
 
-		if (
-			!elm ||
-			!elm.parentNode ||
-			!Dom.isOrContains(this.jodit.editor, elm)
-		) {
+		if (!elm || !elm.parentNode || !Dom.isOrContains(this.j.editor, elm)) {
 			return [];
 		}
 
-		while (elm && elm !== this.jodit.editor) {
+		while (elm && elm !== this.j.editor) {
 			if (elm) {
 				counts.push(Snapshot.countNodesBeforeInParent(elm));
 			}
@@ -108,7 +104,7 @@ export class Snapshot extends Component<IJodit> {
 	}
 
 	private getElementByLadder(ladder: number[]): Node {
-		let n: Node = this.jodit.editor as Node,
+		let n: Node = this.j.editor as Node,
 			i: number;
 
 		for (i = 0; n && i < ladder.length; i += 1) {
@@ -139,9 +135,9 @@ export class Snapshot extends Component<IJodit> {
 			}
 		};
 
-		snapshot.html = this.jodit.getNativeEditorValue();
+		snapshot.html = this.j.getNativeEditorValue();
 
-		const sel = this.jodit.selection.sel;
+		const sel = this.j.selection.sel;
 
 		if (sel && sel.rangeCount) {
 			const range = sel.getRangeAt(0),
@@ -159,15 +155,12 @@ export class Snapshot extends Component<IJodit> {
 
 			if (
 				!startContainer.length &&
-				range.startContainer !== this.jodit.editor
+				range.startContainer !== this.j.editor
 			) {
 				startOffset = 0;
 			}
 
-			if (
-				!endContainer.length &&
-				range.endContainer !== this.jodit.editor
-			) {
+			if (!endContainer.length && range.endContainer !== this.j.editor) {
 				endOffset = 0;
 			}
 
@@ -191,9 +184,9 @@ export class Snapshot extends Component<IJodit> {
 	restore(snapshot: SnapshotType) {
 		this.isBlocked = true;
 
-		const value = this.jodit.getNativeEditorValue();
+		const value = this.j.getNativeEditorValue();
 		if (value !== snapshot.html) {
-			this.jodit.setEditorValue(snapshot.html);
+			this.j.setEditorValue(snapshot.html);
 		}
 
 		this.restoreOnlySelection(snapshot);
@@ -209,7 +202,7 @@ export class Snapshot extends Component<IJodit> {
 	restoreOnlySelection(snapshot: SnapshotType): void {
 		try {
 			if (snapshot.range) {
-				const range = this.jodit.editorDocument.createRange();
+				const range = this.j.editorDocument.createRange();
 
 				range.setStart(
 					this.getElementByLadder(snapshot.range.startContainer),
@@ -221,13 +214,11 @@ export class Snapshot extends Component<IJodit> {
 					snapshot.range.endOffset
 				);
 
-				this.jodit.selection.selectRange(range);
+				this.j.selection.selectRange(range);
 			}
 		} catch (__ignore) {
-			this.jodit.editor.lastChild &&
-				this.jodit.selection.setCursorAfter(
-					this.jodit.editor.lastChild
-				);
+			this.j.editor.lastChild &&
+				this.j.selection.setCursorAfter(this.j.editor.lastChild);
 
 			if (process.env.NODE_ENV !== 'production') {
 				console.warn('Broken snapshot', __ignore);

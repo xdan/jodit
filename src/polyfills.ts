@@ -18,5 +18,5 @@ if (!Array.from) {
 if (!Array.prototype.includes) {
 	Array.prototype.includes = function(value: any) {
 		return this.indexOf(value) > -1;
-	}
+	};
 }

@@ -7,7 +7,7 @@
 import { AceEditor, TextAreaEditor } from './engines';
 import { CallbackFunction, IJodit, ISourceEditor } from '../../../types';
 
-export function createSourceEditor (
+export function createSourceEditor(
 	type: 'ace' | 'mirror' | 'area',
 	editor: IJodit,
 	container: HTMLElement,
@@ -18,16 +18,26 @@ export function createSourceEditor (
 
 	switch (type) {
 		case 'ace':
-			sourceEditor = new AceEditor(editor, container, toWYSIWYG, fromWYSIWYG);
+			sourceEditor = new AceEditor(
+				editor,
+				container,
+				toWYSIWYG,
+				fromWYSIWYG
+			);
 			break;
 
 		default:
-			sourceEditor = new TextAreaEditor(editor, container, toWYSIWYG, fromWYSIWYG);
+			sourceEditor = new TextAreaEditor(
+				editor,
+				container,
+				toWYSIWYG,
+				fromWYSIWYG
+			);
 	}
 
 	sourceEditor.init(editor);
 	sourceEditor.onReadyAlways(() => {
-		sourceEditor.setReadOnly(editor.options.readonly);
+		sourceEditor.setReadOnly(editor.o.readonly);
 	});
 
 	return sourceEditor;

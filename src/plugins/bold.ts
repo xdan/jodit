@@ -74,15 +74,12 @@ export function bold(editor: IJodit) {
 				: cssOptions[key];
 		});
 
-		editor.selection.applyCSS(
-			cssRules,
-			{
-				alternativeNodeName: control.tags ? control.tags[0] : undefined,
-				rules: control.css
-			}
-		);
+		editor.selection.applyCSS(cssRules, {
+			alternativeNodeName: control.tags ? control.tags[0] : undefined,
+			rules: control.css
+		});
 
-		editor.events.fire('synchro');
+		editor.e.fire('synchro');
 
 		return false;
 	};

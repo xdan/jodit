@@ -50,7 +50,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 			state.activated = Boolean(parentElement.shouldBeActive(this));
 		}
 
-		if (this.jodit.options.textIcons) {
+		if (this.j.o.textIcons) {
 			state.icon = UIButtonState().icon;
 			state.text = control.text || control.name;
 		} else {
@@ -67,13 +67,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		}
 
 		if (control.tooltip) {
-			state.tooltip = this.jodit.i18n(control.tooltip);
+			state.tooltip = this.j.i18n(control.tooltip);
 		}
 
 		state.hasTrigger = Boolean(control.list || control.popup);
 
-		state.size =
-			this.jodit.options.toolbarButtonSize || UIButtonState().size;
+		state.size = this.j.o.toolbarButtonSize || UIButtonState().size;
 
 		if (isFunction(control.update)) {
 			control.update(this);
@@ -86,7 +85,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	protected onChangeText(): void {
 		if (isFunction(this.control.template)) {
 			this.text.innerHTML = this.control.template(
-				this.jodit,
+				this.j,
 				this.control.name,
 				this.state.text
 			);
@@ -98,7 +97,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	/** @override */
 	protected createContainer(): HTMLElement {
 		const cn = this.componentName;
-		const container = this.jodit.create.span(cn),
+		const container = this.j.c.span(cn),
 			button = super.createContainer();
 
 		button.classList.remove(cn);
@@ -106,15 +105,11 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 
 		container.appendChild(button);
 
-		this.trigger = this.jodit.create.fromHTML(
+		this.trigger = this.j.c.fromHTML(
 			`<span class="${cn}__trigger">${Icon.get('chevron')}</span>`
 		);
 
-		this.jodit.events.on(
-			this.trigger,
-			`click`,
-			this.onTriggerClick.bind(this)
-		);
+		this.j.e.on(this.trigger, `click`, this.onTriggerClick.bind(this));
 
 		return container;
 	}
@@ -159,7 +154,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		);
 
 		// Prevent lost focus
-		this.jodit.events.on(this.button, 'mousedown', (e: MouseEvent) =>
+		this.j.e.on(this.button, 'mousedown', (e: MouseEvent) =>
 			e.preventDefault()
 		);
 
@@ -178,8 +173,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 
 		if (control.list) {
 			const list = control.list,
-				menu = new PopupMenu(this.jodit),
-				toolbar = makeCollection(this.jodit);
+				menu = new PopupMenu(this.j),
+				toolbar = makeCollection(this.j);
 
 			toolbar.mode = 'vertical';
 
@@ -205,14 +200,14 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 			toolbar.build(
 				Array.isArray(list)
 					? list.map(getButton)
-					: Object.keys(list).map((key) => getButton(key, list[key]))
+					: Object.keys(list).map(key => getButton(key, list[key]))
 			);
 
 			menu.open(toolbar.container, () => position(this.container));
 
 			this.state.activated = true;
 
-			this.jodit.events.on(menu, 'afterClose', () => {
+			this.j.e.on(menu, 'afterClose', () => {
 				this.state.activated = false;
 			});
 
@@ -220,10 +215,10 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		}
 
 		if (isFunction(control.popup)) {
-			const popup = new PopupMenu(this.jodit);
+			const popup = new PopupMenu(this.j);
 
 			if (
-				this.jodit.events.fire(
+				this.j.e.fire(
 					camelCase(`before-${control.name}-open-popup`),
 					this.target,
 					control,
@@ -231,7 +226,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 				) !== false
 			) {
 				const popupElm = control.popup(
-					this.jodit,
+					this.j,
 					this.target || false,
 					control,
 					popup.close,
@@ -241,7 +236,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 				if (popupElm) {
 					popup.open(
 						isString(popupElm)
-							? this.jodit.create.fromHTML(popupElm)
+							? this.j.c.fromHTML(popupElm)
 							: popupElm,
 						() => position(this.container)
 					);
@@ -258,7 +253,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 			 *
 			 * @event closeAllPopups
 			 */
-			this.jodit.events.fire(
+			this.j.e.fire(
 				camelCase(`after-${control.name}-open-popup`),
 				popup.container
 			);
@@ -274,14 +269,14 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 
 		if (isFunction(control.exec)) {
 			control.exec(
-				this.jodit,
+				this.j,
 				this.target || false,
 				control,
 				originalEvent,
 				this.container as HTMLLIElement
 			);
 
-			this.jodit?.events.fire('synchro');
+			this.j?.e.fire('synchro');
 
 			if (this.parentElement) {
 				this.parentElement.update();
@@ -291,24 +286,22 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 			 * Fired after calling `button.exec` function
 			 * @event afterExec
 			 */
-			this.jodit?.events.fire('closeAllPopups afterExec');
+			this.j?.e.fire('closeAllPopups afterExec');
 
 			return;
 		}
 
 		if (control.command || control.name) {
 			call(
-				isJoditObject(this.jodit)
-					? this.jodit.execCommand.bind(this.jodit)
-					: this.jodit.ownerDocument.execCommand.bind(
-							this.jodit.ownerDocument
-					  ),
+				isJoditObject(this.j)
+					? this.j.execCommand.bind(this.j)
+					: this.j.od.execCommand.bind(this.j.od),
 				control.command || control.name,
 				(control.args && control.args[0]) || false,
 				(control.args && control.args[1]) || null
 			);
 
-			this.jodit.events.fire('closeAllPopups');
+			this.j.e.fire('closeAllPopups');
 		}
 	}
 }

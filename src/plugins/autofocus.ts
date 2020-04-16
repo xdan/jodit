@@ -25,8 +25,8 @@ Config.prototype.autofocus = false;
  * @param {Jodit} editor
  */
 export function autofocus(editor: IJodit) {
-	editor.events.on('afterInit', () => {
-		if (editor.options.autofocus) {
+	editor.e.on('afterInit', () => {
+		if (editor.o.autofocus) {
 			if (editor.defaultTimeout) {
 				editor.async.setTimeout(editor.selection.focus, 300);
 			} else {
@@ -35,22 +35,22 @@ export function autofocus(editor: IJodit) {
 		}
 	});
 
-	editor.events.on('afterInit afterAddPlace', () => {
-		editor.events
+	editor.e.on('afterInit afterAddPlace', () => {
+		editor.e
 			.off(editor.editor, 'mousedown.autofocus')
 			.on(editor.editor, 'mousedown.autofocus', (e: MouseEvent) => {
-			if (
-				editor.isEditorMode() &&
-				e.target &&
-				Dom.isBlock(e.target as Node, editor.editorWindow) &&
-				!(e.target as HTMLElement).childNodes.length
-			) {
-				if (editor.editor === e.target) {
-					editor.selection.focus();
-				} else {
-					editor.selection.setCursorIn(e.target as HTMLElement);
+				if (
+					editor.isEditorMode() &&
+					e.target &&
+					Dom.isBlock(e.target as Node, editor.editorWindow) &&
+					!(e.target as HTMLElement).childNodes.length
+				) {
+					if (editor.editor === e.target) {
+						editor.selection.focus();
+					} else {
+						editor.selection.setCursorIn(e.target as HTMLElement);
+					}
 				}
-			}
-		});
+			});
 	});
 }

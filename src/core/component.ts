@@ -28,6 +28,9 @@ export abstract class Component<T extends IViewBased = IViewBased>
 	uid!: string;
 
 	jodit!: T;
+	get j(): this['jodit'] {
+		return this.jodit;
+	}
 
 	private __componentStatus: ComponentStatus = STATUSES.beforeInit;
 
@@ -78,8 +81,8 @@ export abstract class Component<T extends IViewBased = IViewBased>
 	destruct(): any {
 		this.setStatus(STATUSES.beforeDestruct);
 
-		if (isJoditObject(this.jodit)) {
-			this.jodit.components.delete(this);
+		if (isJoditObject(this.j)) {
+			this.j.components.delete(this);
 		}
 
 		if (this.jodit) {

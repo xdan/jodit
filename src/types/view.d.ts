@@ -4,7 +4,13 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Buttons, ButtonsOption, Controls, IProgressBar, IToolbarCollection } from './toolbar';
+import {
+	Buttons,
+	ButtonsOption,
+	Controls,
+	IProgressBar,
+	IToolbarCollection
+} from './toolbar';
 import { IComponent, IDictionary } from './types';
 import { Attributes, ICreate } from './create';
 import { IEventsNative } from './events';
@@ -21,7 +27,7 @@ interface ILanguageOptions {
 interface IToolbarOptions {
 	theme?: string;
 	toolbar?: boolean | string | HTMLElement;
-	toolbarButtonSize?: IUIButtonState['size']
+	toolbarButtonSize?: IUIButtonState['size'];
 	textIcons?: boolean;
 
 	extraButtons: Buttons;
@@ -58,12 +64,15 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 	createAttributes?: IDictionary<Attributes | NodeFunction>;
 }
 
-interface IPanel<T = IViewOptions>  extends IComponent {
+interface IPanel<T = IViewOptions> extends IComponent {
 	container: HTMLElement;
 	create: ICreate;
 
 	ownerDocument: Document;
+	od: this['ownerDocument'];
+
 	ownerWindow: Window;
+	ow: this['ownerWindow'];
 
 	isLockedNotBy(name: string): boolean;
 	isLocked(): boolean;
@@ -75,6 +84,7 @@ interface IPanel<T = IViewOptions>  extends IComponent {
 	toggleFullSize(isFullSize?: boolean): void;
 
 	options: T;
+	o: this['options'];
 }
 
 interface IViewBased<T = IViewOptions> extends IPanel<T> {
@@ -93,11 +103,14 @@ interface IViewBased<T = IViewOptions> extends IPanel<T> {
 
 	options: T;
 	// alias
-	o: IViewBased['options'];
+	o: this['options'];
 
 	events: IEventsNative;
+	e: this['events'];
 
 	create: ICreate;
+	c: this['create'];
+
 	async: IAsync;
 
 	i18n: (text: string, ...params: Array<string | number>) => string;

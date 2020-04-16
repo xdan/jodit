@@ -9,7 +9,6 @@ import { SourceEditor } from '../sourceEditor';
 
 export class CustomEditor extends SourceEditor<HTMLTextAreaElement>
 	implements ISourceEditor {
-
 	init(): any {
 		this.onReady();
 	}

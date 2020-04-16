@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import "./dialog.less";
+import './dialog.less';
 
 import { Config } from '../../config';
 import {
@@ -111,7 +111,7 @@ export class Dialog extends ViewWithToolbar {
 		asArray<ContentItem | ContentItem[]>(elements).forEach(
 			(elm: ContentItem | ContentItem[]): any => {
 				if (Array.isArray(elm)) {
-					const div = this.create.div('jodit-dialog__column');
+					const div = this.c.div('jodit-dialog__column');
 
 					elements_list.push(div);
 					root.appendChild(div);
@@ -120,7 +120,7 @@ export class Dialog extends ViewWithToolbar {
 				}
 
 				const element: HTMLElement =
-					typeof elm === 'string' ? this.create.fromHTML(elm) : elm;
+					typeof elm === 'string' ? this.c.fromHTML(elm) : elm;
 
 				elements_list.push(element);
 
@@ -139,17 +139,17 @@ export class Dialog extends ViewWithToolbar {
 
 	private onMouseUp = () => {
 		if (this.draggable || this.resizable) {
-			this.events.off(this.window, 'mousemove', this.onMouseMove);
+			this.e.off(this.window, 'mousemove', this.onMouseMove);
 
 			this.draggable = false;
 			this.resizable = false;
 			this.unlockSelect();
-			if (this.jodit && this.jodit.events) {
+			if (this.j && this.j.events) {
 				/**
 				 * Fired when dialog box is finished to resizing
 				 * @event endResize
 				 */
-				this.jodit.events.fire(this, 'endResize endMove');
+				this.j.e.fire(this, 'endResize endMove');
 			}
 		}
 	};
@@ -162,7 +162,7 @@ export class Dialog extends ViewWithToolbar {
 		const target: HTMLElement = e.target as HTMLElement;
 
 		if (
-			!this.options.draggable ||
+			!this.o.draggable ||
 			(target && target.nodeName.match(/^(INPUT|SELECT)$/))
 		) {
 			return;
@@ -179,32 +179,32 @@ export class Dialog extends ViewWithToolbar {
 
 		this.lockSelect();
 
-		this.events.on(this.window, 'mousemove', this.onMouseMove);
+		this.e.on(this.window, 'mousemove', this.onMouseMove);
 
-		if (this.jodit && this.jodit.events) {
+		if (this.j && this.j.events) {
 			/**
 			 * Fired when dialog box is started moving
 			 * @event startMove
 			 */
-			this.jodit.events.fire(this, 'startMove');
+			this.j.e.fire(this, 'startMove');
 		}
 	};
 
 	private onMouseMove = (e: MouseEvent) => {
-		if (this.draggable && this.options.draggable) {
+		if (this.draggable && this.o.draggable) {
 			this.setPosition(
 				this.startPoint.x + e.clientX - this.startX,
 				this.startPoint.y + e.clientY - this.startY
 			);
 
-			if (this.jodit && this.jodit.events) {
+			if (this.j && this.j.events) {
 				/**
 				 * Fired when dialog box is moved
 				 * @event move
 				 * @param {int} dx Delta X
 				 * @param {int} dy Delta Y
 				 */
-				this.jodit.events.fire(
+				this.j.e.fire(
 					this,
 					'move',
 					e.clientX - this.startX,
@@ -216,19 +216,19 @@ export class Dialog extends ViewWithToolbar {
 			e.preventDefault();
 		}
 
-		if (this.resizable && this.options.resizable) {
+		if (this.resizable && this.o.resizable) {
 			this.setSize(
 				this.startPoint.w + e.clientX - this.startX,
 				this.startPoint.h + e.clientY - this.startY
 			);
-			if (this.jodit && this.jodit.events) {
+			if (this.j && this.j.events) {
 				/**
 				 * Fired when dialog box is resized
 				 * @event resizeDialog
 				 * @param {int} dx Delta X
 				 * @param {int} dy Delta Y
 				 */
-				this.jodit.events.fire(
+				this.j.e.fire(
 					this,
 					'resizeDialog',
 					e.clientX - this.startX,
@@ -261,7 +261,7 @@ export class Dialog extends ViewWithToolbar {
 	private onResize = () => {
 		if (
 			this.options &&
-			this.options.resizable &&
+			this.o.resizable &&
 			!this.moved &&
 			this.isOpened() &&
 			!this.offsetX &&
@@ -280,12 +280,12 @@ export class Dialog extends ViewWithToolbar {
 
 		this.lockSelect();
 
-		if (this.jodit.events) {
+		if (this.j.events) {
 			/**
 			 * Fired when dialog box is started resizing
 			 * @event startResize
 			 */
-			this.jodit.events.fire(this, 'startResize');
+			this.j.e.fire(this, 'startResize');
 		}
 	}
 
@@ -473,7 +473,10 @@ export class Dialog extends ViewWithToolbar {
 			);
 		}
 
-		this.container.classList.toggle('jodit-dialog__box_fullsize', condition);
+		this.container.classList.toggle(
+			'jodit-dialog__box_fullsize',
+			condition
+		);
 
 		[this.destination, this.destination.parentNode].forEach(
 			(box: Node | null) => {
@@ -514,8 +517,8 @@ export class Dialog extends ViewWithToolbar {
 		 *
 		 * @event beforeOpen
 		 */
-		if (this.jodit && this.jodit.events) {
-			if (this.jodit.events.fire(this, 'beforeOpen') === false) {
+		if (this.j && this.j.events) {
+			if (this.j.e.fire(this, 'beforeOpen') === false) {
 				return;
 			}
 		}
@@ -539,7 +542,7 @@ export class Dialog extends ViewWithToolbar {
 		this.setPosition(this.offsetX, this.offsetY);
 		this.setMaxZIndex();
 
-		if (this.options.fullsize) {
+		if (this.o.fullsize) {
 			this.maximization(true);
 		}
 
@@ -548,8 +551,8 @@ export class Dialog extends ViewWithToolbar {
 		 *
 		 * @event afterOpen
 		 */
-		if (this.jodit && this.jodit.events) {
-			this.jodit.events.fire('afterOpen', this);
+		if (this.j && this.j.events) {
+			this.j.e.fire('afterOpen', this);
 		}
 	}
 
@@ -605,8 +608,8 @@ export class Dialog extends ViewWithToolbar {
 		 * @event beforeClose
 		 * @this {Dialog} current dialog
 		 */
-		if (this.jodit && this.jodit.events) {
-			this.jodit.events.fire('beforeClose', this);
+		if (this.j && this.j.events) {
+			this.j.e.fire('beforeClose', this);
 		}
 
 		this.container &&
@@ -627,18 +630,18 @@ export class Dialog extends ViewWithToolbar {
 		 * @event afterClose
 		 * @this {Dialog} current dialog
 		 */
-		this.jodit?.events?.fire(this, 'afterClose');
-		this.jodit?.events?.fire(this.ownerWindow, 'joditCloseDialog');
+		this.j?.events?.fire(this, 'afterClose');
+		this.j?.events?.fire(this.ow, 'joditCloseDialog');
 	};
 
 	constructor(jodit?: IViewBased, options: any = Config.prototype.dialog) {
 		super(jodit, options);
 
 		if (isJoditObject(jodit)) {
-			this.window = jodit.ownerWindow;
-			this.document = jodit.ownerDocument;
+			this.window = jodit.ow;
+			this.document = jodit.od;
 
-			jodit.events.on('beforeDestruct', () => {
+			jodit.e.on('beforeDestruct', () => {
 				this.destruct();
 			});
 		}
@@ -647,16 +650,16 @@ export class Dialog extends ViewWithToolbar {
 
 		const opt =
 			jodit && jodit.options
-				? (jodit as IJodit).options.dialog
+				? (jodit as IJodit).o.dialog
 				: Config.prototype.dialog;
 
 		self.options = { ...opt, ...self.options } as IDialogOptions;
 
 		Dom.safeRemove(self.container);
 
-		self.container = this.create.fromHTML(
+		self.container = this.c.fromHTML(
 			'<div style="z-index:' +
-				self.options.zIndex +
+				self.o.zIndex +
 				'" class="jodit jodit-dialog__box">' +
 				'<div class="jodit-dialog__overlay"></div>' +
 				'<div class="jodit-dialog">' +
@@ -666,16 +669,16 @@ export class Dialog extends ViewWithToolbar {
 				'</div>' +
 				'<div class="jodit-dialog__content"></div>' +
 				'<div class="jodit-dialog__footer"></div>' +
-				(self.options.resizable
+				(self.o.resizable
 					? '<div class="jodit-dialog__resizer"></div>'
 					: '') +
 				'</div>' +
 				'</div>'
 		) as HTMLDivElement;
 
-		if (jodit && (<IJodit>jodit).options.theme) {
+		if (jodit && (<IJodit>jodit).o.theme) {
 			self.container.classList.add(
-				'jodit_' + (jodit.options.theme || 'default') + '_theme'
+				'jodit_' + (jodit.o.theme || 'default') + '_theme'
 			);
 		}
 
@@ -683,7 +686,7 @@ export class Dialog extends ViewWithToolbar {
 			(<IViewBased>jodit).markOwner(self.container);
 		}
 
-		Object.defineProperty(self.container, 'component', {
+		!self.container.component && Object.defineProperty(self.container, 'component', {
 			value: self
 		});
 
@@ -716,10 +719,10 @@ export class Dialog extends ViewWithToolbar {
 		self.container.addEventListener('close_dialog', self.close as any);
 
 		self.toolbar
-			.build(splitArray(self.options.buttons))
+			.build(splitArray(self.o.buttons))
 			.appendTo(self.dialogbox_toolbar);
 
-		self.events
+		self.e
 			.on(this.window, 'mouseup', self.onMouseUp)
 			.on(this.window, 'keydown', self.onKeyDown)
 			.on(this.window, 'resize', self.onResize);
@@ -734,7 +737,7 @@ export class Dialog extends ViewWithToolbar {
 				self.onHeaderMouseDown.bind(self)
 			);
 
-		if (self.options.resizable) {
+		if (self.o.resizable) {
 			self.resizer.addEventListener(
 				'mousedown',
 				self.onResizerMouseDown.bind(self)
@@ -755,7 +758,7 @@ export class Dialog extends ViewWithToolbar {
 		this.setStatus(STATUSES.beforeDestruct);
 
 		if (this.events) {
-			this.events
+			this.e
 				.off(this.window, 'mousemove', this.onMouseMove)
 				.off(this.window, 'mouseup', this.onMouseUp)
 				.off(this.window, 'keydown', this.onKeyDown)

@@ -146,7 +146,7 @@ export default {
 	'Sort by name': 'Ordenar por nome',
 	'Sort by size': 'Ordenar por tamanho',
 	'Add folder': 'Adicionar pasta',
-	'Split': 'Dividir',
+	Split: 'Dividir',
 	'Split vertical': 'Dividir vertical',
 	'Split horizontal': 'Dividir horizontal',
 	Merge: 'Mesclar',
@@ -229,9 +229,10 @@ export default {
 	preview: 'preview',
 	download: 'Baixar',
 	'Paste from clipboard': 'Colar da área de transferência',
-	'Your browser doesn\'t support direct access to the clipboard.': 'O seu navegador não oferece suporte a acesso direto para a área de transferência.',
+	"Your browser doesn't support direct access to the clipboard.":
+		'O seu navegador não oferece suporte a acesso direto para a área de transferência.',
 	'Copy selection': 'Selecção de cópia',
-	'copy': 'cópia',
+	copy: 'cópia',
 	'Border radius': 'Border radius',
-	'Show all': 'Mostrar todos os',
+	'Show all': 'Mostrar todos os'
 } as IDictionary<string>;

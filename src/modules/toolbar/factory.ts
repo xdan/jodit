@@ -25,7 +25,7 @@ export function makeCollection(jodit: IViewBased): IToolbarCollection {
 		? new ToolbarEditorCollection(jodit)
 		: new ToolbarCollection(jodit);
 
-	if (jodit.options.textIcons) {
+	if (jodit.o.textIcons) {
 		collection.container.classList.add('jodit_text_icons');
 	}
 

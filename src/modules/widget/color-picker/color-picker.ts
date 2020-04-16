@@ -36,12 +36,12 @@ export const ColorPickerWidget = (
 	coldColor: string
 ): HTMLDivElement => {
 	const valueHex = normalizeColor(coldColor),
-		form: HTMLDivElement = editor.create.div('jodit-color-picker'),
-		iconEye: string = editor.options.textIcons ? '' : Icon.get('eye'),
-		iconEraser: string = editor.options.textIcons
+		form: HTMLDivElement = editor.c.div('jodit-color-picker'),
+		iconEye: string = editor.o.textIcons ? '' : Icon.get('eye'),
+		iconEraser: string = editor.o.textIcons
 			? `<span>${editor.i18n('eraser')}</span>`
 			: Icon.get('eraser'),
-		iconPalette: string = editor.options.textIcons
+		iconPalette: string = editor.o.textIcons
 			? `<span>${editor.i18n('palette')}</span>`
 			: Icon.get('palette'),
 		setColor = (target: HTMLElement, color: string) => {
@@ -94,29 +94,25 @@ export const ColorPickerWidget = (
 		};
 
 	form.appendChild(
-		editor.create.fromHTML(
-			'<div>' + eachColor(editor.options.colors) + '</div>'
-		)
+		editor.c.fromHTML('<div>' + eachColor(editor.o.colors) + '</div>')
 	);
 
 	form.appendChild(
-		editor.create.fromHTML(
+		editor.c.fromHTML(
 			'<a ' +
-				(editor.options.textIcons ? 'class="jodit_text_icon"' : '') +
+				(editor.o.textIcons ? 'class="jodit_text_icon"' : '') +
 				' data-color="" href="javascript:void(0)">' +
 				iconEraser +
 				'</a>'
 		)
 	);
 
-	if (editor.options.showBrowserColorPicker && hasBrowserColorPicker()) {
+	if (editor.o.showBrowserColorPicker && hasBrowserColorPicker()) {
 		form.appendChild(
-			editor.create.fromHTML(
+			editor.c.fromHTML(
 				'<span>' +
 					'<em ' +
-					(editor.options.textIcons
-						? 'class="jodit_text_icon"'
-						: '') +
+					(editor.o.textIcons ? 'class="jodit_text_icon"' : '') +
 					'>' +
 					iconPalette +
 					'</em>' +
@@ -125,7 +121,7 @@ export const ColorPickerWidget = (
 			)
 		);
 
-		editor.events.on(form, 'change', (e: MouseEvent) => {
+		editor.e.on(form, 'change', (e: MouseEvent) => {
 			e.stopPropagation();
 
 			let target: HTMLInputElement = e.target as HTMLInputElement;
@@ -148,7 +144,7 @@ export const ColorPickerWidget = (
 		});
 	}
 
-	editor.events.on(form, 'mousedown touchend', (e: MouseEvent) => {
+	editor.e.on(form, 'mousedown touchend', (e: MouseEvent) => {
 		e.stopPropagation();
 
 		let target: HTMLElement = e.target as HTMLElement;
@@ -191,4 +187,4 @@ export const ColorPickerWidget = (
 	});
 
 	return form;
-}
+};

@@ -53,7 +53,7 @@ export class DragAndDropElement extends Plugin {
 			}
 
 			target = target.parentNode;
-		} while (target && target !== this.jodit.editor);
+		} while (target && target !== this.j.editor);
 
 		if (!last) {
 			return;
@@ -68,14 +68,10 @@ export class DragAndDropElement extends Plugin {
 		this.draggable = last.cloneNode(true) as HTMLElement;
 		dataBind(this.draggable, 'target', last);
 
-		this.jodit.events.on(
-			this.jodit.editor,
-			'mousemove touchmove',
-			this.onDrag
-		);
+		this.j.e.on(this.j.editor, 'mousemove touchmove', this.onDrag);
 	};
 
-	private onDrag = this.jodit.async.throttle((event: DragEvent) => {
+	private onDrag = this.j.async.throttle((event: DragEvent) => {
 		if (!this.draggable) {
 			return;
 		}
@@ -92,7 +88,7 @@ export class DragAndDropElement extends Plugin {
 		}
 
 		this.wasMoved = true;
-		this.jodit.events.fire('hidePopup hideResizer');
+		this.j.e.fire('hidePopup hideResizer');
 
 		if (!this.draggable.parentNode) {
 			css(this.draggable, {
@@ -106,7 +102,7 @@ export class DragAndDropElement extends Plugin {
 				height: this.draggable.offsetHeight
 			});
 
-			getContainer(this.jodit, DragAndDropElement.name).appendChild(
+			getContainer(this.j, DragAndDropElement.name).appendChild(
 				this.draggable
 			);
 		}
@@ -116,8 +112,8 @@ export class DragAndDropElement extends Plugin {
 			top: event.clientY
 		});
 
-		this.jodit.selection.insertCursorAtPoint(event.clientX, event.clientY);
-	}, this.jodit.defaultTimeout);
+		this.j.selection.insertCursorAtPoint(event.clientX, event.clientY);
+	}, this.j.defaultTimeout);
 
 	private onDragEnd = () => {
 		if (this.isInDestruct) {
@@ -129,11 +125,7 @@ export class DragAndDropElement extends Plugin {
 			this.draggable = null;
 			this.wasMoved = false;
 
-			this.jodit.events.off(
-				this.jodit.editor,
-				'mousemove touchmove',
-				this.onDrag
-			);
+			this.j.e.off(this.j.editor, 'mousemove touchmove', this.onDrag);
 		}
 	};
 
@@ -151,18 +143,18 @@ export class DragAndDropElement extends Plugin {
 			fragment = fragment.cloneNode(true) as HTMLElement;
 		}
 
-		this.jodit.selection.insertNode(fragment, true, false);
+		this.j.selection.insertNode(fragment, true, false);
 
-		if (Dom.isTag(fragment, 'img') && this.jodit.events) {
-			this.jodit.events.fire('afterInsertImage', fragment);
+		if (Dom.isTag(fragment, 'img') && this.j.events) {
+			this.j.e.fire('afterInsertImage', fragment);
 		}
 
-		this.jodit.events.fire('synchro');
+		this.j.e.fire('synchro');
 	};
 
 	protected afterInit() {
-		this.dragList = this.jodit.options.draggableTags
-			? splitArray(this.jodit.options.draggableTags)
+		this.dragList = this.j.o.draggableTags
+			? splitArray(this.j.o.draggableTags)
 					.filter(item => item)
 					.map((item: string) => item.toLowerCase())
 			: [];
@@ -171,15 +163,15 @@ export class DragAndDropElement extends Plugin {
 			return;
 		}
 
-		this.jodit.events
+		this.j.e
 			.on(
-				this.jodit.editor,
+				this.j.editor,
 				'mousedown touchstart dragstart',
 				this.onDragStart
 			)
 			.on('mouseup touchend', this.onDrop)
 			.on(
-				[this.jodit.editorWindow, this.jodit.ownerWindow],
+				[this.j.editorWindow, this.j.ow],
 				'mouseup touchend',
 				this.onDragEnd
 			);
@@ -188,10 +180,10 @@ export class DragAndDropElement extends Plugin {
 	protected beforeDestruct() {
 		this.onDragEnd();
 
-		this.jodit.events
-			.off(this.jodit.editor, 'mousemove touchmove', this.onDrag)
+		this.j.e
+			.off(this.j.editor, 'mousemove touchmove', this.onDrag)
 			.off(
-				this.jodit.editor,
+				this.j.editor,
 				'mousedown touchstart dragstart',
 				this.onDragStart
 			)

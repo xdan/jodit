@@ -8,7 +8,7 @@ export interface ISourceEditor extends IDestructible, IInitable {
 	getSelectionStart(): number;
 	setSelectionRange(start: number, end: number): void;
 
-	setPlaceHolder(title: string): void
+	setPlaceHolder(title: string): void;
 
 	focus(): void;
 

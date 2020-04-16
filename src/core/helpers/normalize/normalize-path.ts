@@ -18,11 +18,11 @@ export const normalizePath = (...path: string[]) => {
 			part = part.replace(/([^:])[\\\/]+/g, '$1/');
 
 			if (index) {
-				part = part.replace(/^\//, '')
+				part = part.replace(/^\//, '');
 			}
 
 			if (index !== path.length - 1) {
-				part = part.replace(/\/$/, '')
+				part = part.replace(/\/$/, '');
 			}
 
 			return part;

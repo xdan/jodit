@@ -216,9 +216,10 @@ export default {
 	preview: 'معاينة',
 	download: 'تحميل',
 	'Paste from clipboard': 'لصق من الحافظة',
-	'Your browser doesn\'t support direct access to the clipboard.': 'متصفحك لا يدعم إمكانية الوصول المباشر إلى الحافظة.',
+	"Your browser doesn't support direct access to the clipboard.":
+		'متصفحك لا يدعم إمكانية الوصول المباشر إلى الحافظة.',
 	'Copy selection': 'نسخ التحديد',
-	'copy': 'نسخ',
+	copy: 'نسخ',
 	'Border radius': 'دائرة نصف قطرها الحدود',
-	'Show all': 'عرض كل',
+	'Show all': 'عرض كل'
 } as IDictionary<string>;

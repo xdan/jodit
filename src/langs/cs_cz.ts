@@ -228,9 +228,10 @@ export default {
 	download: 'Stažení',
 
 	'Paste from clipboard': 'Vložit ze schránky',
-	'Your browser doesn\'t support direct access to the clipboard.': 'Váš prohlížeč nepodporuje přímý přístup do schránky.',
+	"Your browser doesn't support direct access to the clipboard.":
+		'Váš prohlížeč nepodporuje přímý přístup do schránky.',
 	'Copy selection': 'Kopírovat výběr',
-	'copy': 'kopírování',
+	copy: 'kopírování',
 	'Border radius': 'Border radius',
-	'Show all': 'Zobrazit všechny',
+	'Show all': 'Zobrazit všechny'
 } as IDictionary<string>;

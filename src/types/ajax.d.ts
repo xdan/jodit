@@ -1,7 +1,8 @@
 import { IDestructible, IDictionary } from './types';
 import { IViewBased } from './view';
 
-export type DataVariant = | IDictionary<string>
+export type DataVariant =
+	| IDictionary<string>
 	| null
 	| FormData
 	| string
@@ -19,6 +20,7 @@ export interface IAjax extends IDestructible {
 	response: string;
 
 	options: AjaxOptions;
+	o: this['options'];
 
 	jodit: IViewBased;
 
@@ -36,7 +38,6 @@ export interface AjaxOptions {
 	url?: string;
 
 	data: DataVariant;
-
 
 	contentType?: string | false;
 

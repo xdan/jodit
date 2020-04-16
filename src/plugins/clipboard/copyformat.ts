@@ -53,7 +53,6 @@ const getStyle = (
 				box.parentNode as HTMLElement,
 				defaultStyles
 			);
-
 		} else {
 			result = undefined;
 		}
@@ -86,18 +85,17 @@ Config.prototype.controls.copyformat = {
 		if (current) {
 			if (editor.buffer.exists(pluginKey)) {
 				editor.buffer.set(pluginKey, false);
-				editor.events.off(editor.editor, 'mouseup.' + pluginKey);
+				editor.e.off(editor.editor, 'mouseup.' + pluginKey);
 			} else {
 				const defaultStyles: IDictionary<string | number> = {},
 					box: HTMLElement =
 						(Dom.up(
 							current,
-							(elm: Node | null) =>
-								elm && !Dom.isText(elm),
+							(elm: Node | null) => elm && !Dom.isText(elm),
 							editor.editor
 						) as HTMLElement) || editor.editor;
 
-				const ideal = editor.create.inside.span();
+				const ideal = editor.c.inside.span();
 
 				editor.editor.appendChild(ideal);
 
@@ -128,14 +126,10 @@ Config.prototype.controls.copyformat = {
 						}
 					}
 
-					editor.events.off(editor.editor, 'mouseup.' + pluginKey);
+					editor.e.off(editor.editor, 'mouseup.' + pluginKey);
 				};
 
-				editor.events.on(
-					editor.editor,
-					'mouseup.' + pluginKey,
-					onMouseDown
-				);
+				editor.e.on(editor.editor, 'mouseup.' + pluginKey, onMouseDown);
 
 				editor.buffer.set(pluginKey, true);
 			}

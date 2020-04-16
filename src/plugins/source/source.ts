@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import "./source.less";
+import './source.less';
 
 import * as consts from '../../core/constants';
 import { MODE_SOURCE } from '../../core/constants';
@@ -42,7 +42,7 @@ export class source extends Plugin {
 	private fromWYSIWYG = (force: boolean | string = false) => {
 		if (!this.__lock || force === true) {
 			this.__lock = true;
-			const new_value = this.jodit.getEditorValue(false);
+			const new_value = this.j.getEditorValue(false);
 
 			if (new_value !== this.getMirrorValue()) {
 				this.setMirrorValue(new_value);
@@ -64,7 +64,7 @@ export class source extends Plugin {
 		}
 
 		this.__lock = true;
-		this.jodit.setEditorValue(value);
+		this.j.setEditorValue(value);
 		this.__lock = false;
 		this.__oldMirrorValue = value;
 	};
@@ -101,7 +101,7 @@ export class source extends Plugin {
 	private onSelectAll = (command: string): void | false => {
 		if (
 			command.toLowerCase() === 'selectall' &&
-			this.jodit.getRealMode() === MODE_SOURCE
+			this.j.getRealMode() === MODE_SOURCE
 		) {
 			this.selectAll();
 			return false;
@@ -130,16 +130,15 @@ export class source extends Plugin {
 	}
 
 	private saveSelection = () => {
-		if (this.jodit.getRealMode() === consts.MODE_WYSIWYG) {
-			this.selInfo = this.jodit.selection.save() || [];
-			this.jodit.setEditorValue();
+		if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
+			this.selInfo = this.j.selection.save() || [];
+			this.j.setEditorValue();
 			this.fromWYSIWYG(true);
-
 		} else {
 			this.selInfo.length = 0;
 			const value: string = this.getMirrorValue();
 			if (this.getSelectionStart() === this.getSelectionEnd()) {
-				const marker = this.jodit.selection.marker(true);
+				const marker = this.j.selection.marker(true);
 
 				this.selInfo[0] = {
 					startId: marker.id,
@@ -158,10 +157,10 @@ export class source extends Plugin {
 						value.substr(selectionStart)
 				);
 			} else {
-				const markerStart: HTMLSpanElement = this.jodit.selection.marker(
+				const markerStart: HTMLSpanElement = this.j.selection.marker(
 					true
 				);
-				const markerEnd: HTMLSpanElement = this.jodit.selection.marker(
+				const markerEnd: HTMLSpanElement = this.j.selection.marker(
 					false
 				);
 
@@ -203,9 +202,9 @@ export class source extends Plugin {
 			return;
 		}
 
-		if (this.jodit.getRealMode() === consts.MODE_WYSIWYG) {
+		if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
 			this.__lock = true;
-			this.jodit.selection.restore(this.selInfo);
+			this.j.selection.restore(this.selInfo);
 			this.__lock = false;
 			return;
 		}
@@ -228,8 +227,8 @@ export class source extends Plugin {
 				);
 			}
 
-			if (this.jodit.options.beautifyHTML) {
-				const html = this.jodit.events.fire('beautifyHTML', value);
+			if (this.j.o.beautifyHTML) {
+				const html = this.j.e.fire('beautifyHTML', value);
 				if (isString(html)) {
 					value = html;
 				}
@@ -271,19 +270,24 @@ export class source extends Plugin {
 	};
 
 	private onReadonlyReact = () => {
-		this.sourceEditor.setReadOnly(this.jodit.options.readonly);
+		this.sourceEditor.setReadOnly(this.j.o.readonly);
 	};
 
 	private initSourceEditor(editor: IJodit) {
-		if (editor.options.sourceEditor !== 'area') {
-			const sourceEditor = createSourceEditor(editor.options.sourceEditor, editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
+		if (editor.o.sourceEditor !== 'area') {
+			const sourceEditor = createSourceEditor(
+				editor.o.sourceEditor,
+				editor,
+				this.mirrorContainer,
+				this.toWYSIWYG,
+				this.fromWYSIWYG
+			);
 
 			sourceEditor.onReadyAlways(() => {
 				this.sourceEditor?.destruct();
 				this.sourceEditor = sourceEditor;
 				editor.events?.fire('sourceEditorReady', editor);
 			});
-
 		} else {
 			this.sourceEditor.onReadyAlways(() => {
 				editor.events?.fire('sourceEditorReady', editor);
@@ -292,18 +296,24 @@ export class source extends Plugin {
 	}
 
 	afterInit(editor: IJodit): void {
-		this.mirrorContainer = editor.create.div('jodit-source');
+		this.mirrorContainer = editor.c.div('jodit-source');
 		editor.workplace.appendChild(this.mirrorContainer);
 
-		editor.events.on('afterAddPlace changePlace afterInit', () => {
+		editor.e.on('afterAddPlace changePlace afterInit', () => {
 			editor.workplace.appendChild(this.mirrorContainer);
 		});
 
-		this.sourceEditor = createSourceEditor('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
+		this.sourceEditor = createSourceEditor(
+			'area',
+			editor,
+			this.mirrorContainer,
+			this.toWYSIWYG,
+			this.fromWYSIWYG
+		);
 
 		const addListeners = () => {
 			// save restore selection
-			editor.events
+			editor.e
 				.off('beforeSetMode.source afterSetMode.source')
 				.on('beforeSetMode.source', this.saveSelection)
 				.on('afterSetMode.source', this.restoreSelection);
@@ -312,16 +322,13 @@ export class source extends Plugin {
 		addListeners();
 		this.onReadonlyReact();
 
-		editor.events
-			.on(
-				'insertHTML.source',
-				(html: string): void | false => {
-					if (!editor.options.readonly && !this.jodit.isEditorMode()) {
-						this.insertHTML(html);
-						return false;
-					}
+		editor.e
+			.on('insertHTML.source', (html: string): void | false => {
+				if (!editor.o.readonly && !this.j.isEditorMode()) {
+					this.insertHTML(html);
+					return false;
 				}
-			)
+			})
 			.on('readonly.source', this.onReadonlyReact)
 			.on('placeholder.source', (text: string) => {
 				this.sourceEditor.setPlaceHolder(text);
@@ -329,16 +336,16 @@ export class source extends Plugin {
 			.on('beforeCommand.source', this.onSelectAll)
 			.on('change.source', this.fromWYSIWYG);
 
-		editor.events.on('beautifyHTML', (html) => html);
+		editor.e.on('beautifyHTML', html => html);
 
-		if (editor.options.beautifyHTML) {
+		if (editor.o.beautifyHTML) {
 			const addEventListener = () => {
-				const html_beautify = (editor.ownerWindow as any).html_beautify;
+				const html_beautify = (editor.ow as any).html_beautify;
 
 				if (html_beautify && !editor.isInDestruct) {
 					editor.events
 						?.off('beautifyHTML')
-						?.on('beautifyHTML', (html) => html_beautify(html));
+						?.on('beautifyHTML', html => html_beautify(html));
 
 					return true;
 				}
@@ -347,10 +354,9 @@ export class source extends Plugin {
 			};
 
 			if (!addEventListener()) {
-				loadNext(
-					editor,
-					editor.options.beautifyHTMLCDNUrlsJS
-				).then(addEventListener);
+				loadNext(editor, editor.o.beautifyHTMLCDNUrlsJS).then(
+					addEventListener
+				);
 			}
 		}
 

@@ -12,7 +12,10 @@ import { isString } from './checker';
  * @param language
  * @param defaultLanguage
  */
-export const defaultLanguage = (language?: string, defaultLanguage: string = 'en'): string => {
+export const defaultLanguage = (
+	language?: string,
+	defaultLanguage: string = 'en'
+): string => {
 	if (language !== 'auto' && isString(language)) {
 		return language;
 	}
@@ -22,7 +25,7 @@ export const defaultLanguage = (language?: string, defaultLanguage: string = 'en
 	}
 
 	if (navigator.language) {
-		return navigator.language.substr(0, 2)
+		return navigator.language.substr(0, 2);
 	}
 
 	return defaultLanguage;

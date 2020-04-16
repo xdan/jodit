@@ -26,8 +26,8 @@ export const insertParagraph = (
 	wrapperTag: HTMLTagNames,
 	style?: CSSStyleDeclaration
 ): HTMLElement => {
-	const p = editor.create.inside.element(wrapperTag),
-		helper_node = editor.create.inside.element('br');
+	const p = editor.c.inside.element(wrapperTag),
+		helper_node = editor.c.inside.element('br');
 
 	p.appendChild(helper_node);
 
@@ -64,19 +64,16 @@ export class enter extends Plugin {
 
 	afterInit(editor: IJodit): void {
 		// use 'enter' option if no set
-		this.defaultTag = editor.options.enter.toLowerCase() as
-			| 'p'
-			| 'div'
-			| 'br';
+		this.defaultTag = editor.o.enter.toLowerCase() as 'p' | 'div' | 'br';
 		this.brMode = this.defaultTag === consts.BR.toLowerCase();
 
-		if (!editor.options.enterBlock) {
-			editor.options.enterBlock = this.brMode
+		if (!editor.o.enterBlock) {
+			editor.o.enterBlock = this.brMode
 				? consts.PARAGRAPH
 				: (this.defaultTag as 'p' | 'div');
 		}
 
-		editor.events
+		editor.e
 			.off('.enter')
 			.on('change.enter', this.checkWrapper)
 			.on('keydown.enter', (event: KeyboardEvent): false | void => {
@@ -87,10 +84,7 @@ export class enter extends Plugin {
 					 *
 					 * @event beforeEnter
 					 */
-					const beforeEnter = editor.events.fire(
-						'beforeEnter',
-						event
-					);
+					const beforeEnter = editor.e.fire('beforeEnter', event);
 
 					if (beforeEnter !== undefined) {
 						return beforeEnter;
@@ -110,11 +104,11 @@ export class enter extends Plugin {
 	}
 
 	private checkWrapper = (): false | void => {
-		if (!this.jodit.isEditorMode() || true) {
+		if (!this.j.isEditorMode() || true) {
 			return;
 		}
 
-		let current = this.jodit.selection.current(false) as Node;
+		let current = this.j.selection.current(false) as Node;
 
 		let currentBox = this.getBlockWrapper(current);
 
@@ -124,14 +118,14 @@ export class enter extends Plugin {
 	};
 
 	private onEnter(event: KeyboardEvent): false | void {
-		const editor = this.jodit,
+		const editor = this.j,
 			sel = editor.selection,
 			defaultTag = this.defaultTag;
 
 		let current = sel.current(false) as Node;
 
 		if (!current || current === editor.editor) {
-			current = editor.create.inside.text(INVISIBLE_SPACE);
+			current = editor.c.inside.text(INVISIBLE_SPACE);
 			sel.insertNode(current);
 			sel.select(current);
 		}
@@ -199,7 +193,7 @@ export class enter extends Plugin {
 		tagReg = consts.IS_BLOCK
 	): HTMLElement | false {
 		let node = current;
-		const root = this.jodit.editor;
+		const root = this.j.editor;
 
 		do {
 			if (!node || node === root) {
@@ -228,12 +222,12 @@ export class enter extends Plugin {
 		if (
 			this.brMode ||
 			shiftKeyPressed ||
-			Dom.closest(current, 'PRE|BLOCKQUOTE', this.jodit.editor)
+			Dom.closest(current, 'PRE|BLOCKQUOTE', this.j.editor)
 		) {
-			const br = this.jodit.create.inside.element('br');
+			const br = this.j.c.inside.element('br');
 
-			this.jodit.selection.insertNode(br, true);
-			scrollIntoView(br, this.jodit.editor, this.jodit.editorDocument);
+			this.j.selection.insertNode(br, true);
+			scrollIntoView(br, this.j.editor, this.j.editorDocument);
 
 			return false;
 		}
@@ -245,35 +239,27 @@ export class enter extends Plugin {
 		Dom.up(
 			needWrap,
 			node => {
-				if (
-					node &&
-					node.hasChildNodes() &&
-					node !== this.jodit.editor
-				) {
+				if (node && node.hasChildNodes() && node !== this.j.editor) {
 					needWrap = node;
 				}
 			},
-			this.jodit.editor
+			this.j.editor
 		);
 
-		const currentBox = Dom.wrapInline(
-			needWrap,
-			this.jodit.options.enter,
-			this.jodit
-		);
+		const currentBox = Dom.wrapInline(needWrap, this.j.o.enter, this.j);
 
 		if (Dom.isEmpty(currentBox)) {
-			const helper_node = this.jodit.create.inside.element('br');
+			const helper_node = this.j.c.inside.element('br');
 
 			currentBox.appendChild(helper_node);
-			this.jodit.selection.setCursorBefore(helper_node);
+			this.j.selection.setCursorBefore(helper_node);
 		}
 
 		return currentBox;
 	}
 
 	private hasPreviousBlock(current: Node): boolean {
-		const editor = this.jodit;
+		const editor = this.j;
 
 		return Boolean(
 			Dom.prev(
@@ -287,11 +273,11 @@ export class enter extends Plugin {
 	}
 
 	private checkUnsplittableBox(currentBox: HTMLElement): false | void {
-		const editor = this.jodit,
+		const editor = this.j,
 			sel = editor.selection;
 
 		if (!Dom.canSplitBlock(currentBox, editor.editorWindow)) {
-			const br = editor.create.inside.element('br');
+			const br = editor.c.inside.element('br');
 
 			sel.insertNode(br, false);
 			sel.setCursorAfter(br);
@@ -306,7 +292,7 @@ export class enter extends Plugin {
 		const ul: HTMLUListElement = Dom.closest(
 			currentBox,
 			'ol|ul',
-			this.jodit.editor
+			this.j.editor
 		) as HTMLUListElement;
 
 		// If there is no LI element before
@@ -317,7 +303,7 @@ export class enter extends Plugin {
 				ul
 			)
 		) {
-			fakeTextNode = this.jodit.selection.setCursorBefore(ul);
+			fakeTextNode = this.j.selection.setCursorBefore(ul);
 			// If there is no LI element after
 		} else if (
 			!Dom.next(
@@ -326,9 +312,9 @@ export class enter extends Plugin {
 				ul
 			)
 		) {
-			fakeTextNode = this.jodit.selection.setCursorAfter(ul);
+			fakeTextNode = this.j.selection.setCursorAfter(ul);
 		} else {
-			const leftRange = this.jodit.selection.createRange();
+			const leftRange = this.j.selection.createRange();
 			leftRange.setStartBefore(ul);
 			leftRange.setEndAfter(currentBox);
 			const fragment = leftRange.extractContents();
@@ -337,12 +323,12 @@ export class enter extends Plugin {
 				ul.parentNode.insertBefore(fragment, ul);
 			}
 
-			fakeTextNode = this.jodit.selection.setCursorBefore(ul);
+			fakeTextNode = this.j.selection.setCursorBefore(ul);
 		}
 
 		Dom.safeRemove(currentBox);
 
-		insertParagraph(this.jodit, fakeTextNode, this.defaultTag);
+		insertParagraph(this.j, fakeTextNode, this.defaultTag);
 
 		if (!$$('li', ul).length) {
 			Dom.safeRemove(ul);
@@ -350,6 +336,6 @@ export class enter extends Plugin {
 	}
 
 	beforeDestruct(editor: IJodit): void {
-		editor.events.off('keydown.enter');
+		editor.e.off('keydown.enter');
 	}
 }

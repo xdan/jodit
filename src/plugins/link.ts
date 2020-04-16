@@ -91,7 +91,7 @@ Config.prototype.controls.unlink = {
 			Dom.unwrap(anchor);
 		}
 
-		editor.events.fire('hidePopup');
+		editor.e.fire('hidePopup');
 	},
 	tooltip: 'Unlink'
 } as IControlType;
@@ -114,8 +114,8 @@ Config.prototype.controls.link = {
 				noFollowCheckbox,
 				formTemplate,
 				formClassName
-			} = editor.options.link,
-			form = editor.create.fromHTML(formTemplate(editor), {
+			} = editor.o.link,
+			form = editor.c.fromHTML(formTemplate(editor), {
 				target_checkbox_box: openInNewTabCheckbox,
 				nofollow_checkbox_box: noFollowCheckbox
 			}) as HTMLFormElement;
@@ -133,7 +133,7 @@ Config.prototype.controls.link = {
 		let { content_input } = elements as IDictionary<HTMLInputElement>;
 
 		if (!content_input) {
-			content_input = editor.create.element('input', {
+			content_input = editor.c.element('input', {
 				type: 'hidden',
 				ref: 'content_input'
 			});
@@ -190,7 +190,7 @@ Config.prototype.controls.link = {
 		const snapshot = editor.observer.snapshot.make();
 
 		if (unlink) {
-			editor.events.on(unlink, 'click', (e: MouseEvent) => {
+			editor.e.on(unlink, 'click', (e: MouseEvent) => {
 				editor.observer.snapshot.restore(snapshot);
 
 				if (link) {
@@ -202,7 +202,7 @@ Config.prototype.controls.link = {
 			});
 		}
 
-		editor.events.on(form, 'submit', (event: Event) => {
+		editor.e.on(form, 'submit', (event: Event) => {
 			event.preventDefault();
 			event.stopImmediatePropagation();
 
@@ -225,7 +225,7 @@ Config.prototype.controls.link = {
 						'a'
 					) as HTMLAnchorElement[];
 				} else {
-					const a = editor.create.inside.element('a');
+					const a = editor.c.inside.element('a');
 					editor.selection.insertNode(a);
 					links = [a];
 				}
@@ -279,9 +279,9 @@ Config.prototype.controls.link = {
  * @module plugins/link
  */
 export function link(jodit: IJodit) {
-	if (jodit.options.link.followOnDblClick) {
-		jodit.events.on('afterInit changePlace', () => {
-			jodit.events.off('dblclick.link').on(
+	if (jodit.o.link.followOnDblClick) {
+		jodit.e.on('afterInit changePlace', () => {
+			jodit.e.off('dblclick.link').on(
 				jodit.editor,
 				'dblclick.link',
 				function(this: HTMLAnchorElement, e: MouseEvent) {
@@ -297,22 +297,22 @@ export function link(jodit: IJodit) {
 		});
 	}
 
-	if (jodit.options.link.processPastedLink) {
-		jodit.events.on(
+	if (jodit.o.link.processPastedLink) {
+		jodit.e.on(
 			'processPaste.link',
 			(event: ClipboardEvent, html: string): HTMLAnchorElement | void => {
 				if (isURL(html)) {
-					if (jodit.options.link.processVideoLink) {
+					if (jodit.o.link.processVideoLink) {
 						const embed = convertMediaUrlToVideoEmbed(html);
 
 						if (embed !== html) {
-							return jodit.create.inside.fromHTML(
+							return jodit.c.inside.fromHTML(
 								embed
 							) as HTMLAnchorElement;
 						}
 					}
 
-					const a = jodit.create.inside.element('a');
+					const a = jodit.c.inside.element('a');
 
 					a.setAttribute('href', html);
 					a.textContent = html;
@@ -323,8 +323,8 @@ export function link(jodit: IJodit) {
 		);
 	}
 
-	if (jodit.options.link.removeLinkAfterFormat) {
-		jodit.events.on('afterCommand.link', (command: string) => {
+	if (jodit.o.link.removeLinkAfterFormat) {
+		jodit.e.on('afterCommand.link', (command: string) => {
 			const sel: Select = jodit.selection;
 
 			let newtag: Node, node: Node | false;
@@ -336,11 +336,11 @@ export function link(jodit: IJodit) {
 				}
 				if (Dom.isTag(node, 'a')) {
 					if (node.innerHTML === node.textContent) {
-						newtag = jodit.create.inside.text(
+						newtag = jodit.c.inside.text(
 							(node as HTMLElement).innerHTML
 						);
 					} else {
-						newtag = jodit.create.inside.element('span');
+						newtag = jodit.c.inside.element('span');
 						(newtag as HTMLElement).innerHTML = (node as HTMLElement).innerHTML;
 					}
 
