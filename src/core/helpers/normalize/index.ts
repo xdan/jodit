@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from './normalizeKeyAliases';
-export * from './normalizeLicense';
-export * from './normalizeNode';
-export * from './normalizePath';
-export * from './normalizeRelativePath';
-export * from './normalizeSize';
-export * from './normalizeURL';
-export * from './normilizeCSSValue';
-export * from './normalizeColor';
+export * from './normalize-key-aliases';
+export * from './normalize-license';
+export * from './normalize-node';
+export * from './normalize-path';
+export * from './normalize-relative-path';
+export * from './normalize-size';
+export * from './normalize-url';
+export * from './normalize-css-value';
+export * from './normalize-color';

@@ -5,7 +5,7 @@
  */
 
 import { IDictionary, IJodit, IViewBased } from '../types';
-import { PluginSystem } from './pluginSystem';
+import { PluginSystem } from './plugin-system';
 import { Dom } from './dom';
 import { kebabCase } from './helpers/string';
 

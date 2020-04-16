@@ -11,7 +11,7 @@ describe('Test image', function() {
 					editor.editor.querySelector('img')
 				);
 				const dialog = editor.ownerDocument.querySelector(
-					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+					'.jodit.jodit-dialog__box.active[data-editor_id=' +
 						editor.id +
 						']'
 				);
@@ -34,7 +34,7 @@ describe('Test image', function() {
 						editor.editor.querySelector('img')
 					);
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -58,7 +58,7 @@ describe('Test image', function() {
 				);
 
 				const dialog = editor.ownerDocument.querySelector(
-					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+					'.jodit.jodit-dialog__box.active[data-editor_id=' +
 						editor.id +
 						']'
 				);
@@ -86,7 +86,7 @@ describe('Test image', function() {
 					'click',
 					0,
 					dialog.querySelectorAll(
-						'.jodit_dialog_footer .jodit-button.jodit_status_success'
+						'.jodit-dialog__footer .jodit-button.jodit_status_success'
 					)[0]
 				);
 
@@ -108,7 +108,7 @@ describe('Test image', function() {
 					editor.editor.querySelector('img')
 				);
 				const dialog = editor.ownerDocument.querySelector(
-					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+					'.jodit.jodit-dialog__box.active[data-editor_id=' +
 						editor.id +
 						']'
 				);
@@ -134,7 +134,7 @@ describe('Test image', function() {
 					'click',
 					0,
 					dialog.querySelectorAll(
-						'.jodit_dialog_footer .jodit-button.jodit_status_success'
+						'.jodit-dialog__footer .jodit-button.jodit_status_success'
 					)[0]
 				);
 
@@ -156,7 +156,7 @@ describe('Test image', function() {
 					editor.editor.querySelector('img')
 				);
 				const dialog = editor.ownerDocument.querySelector(
-					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+					'.jodit.jodit-dialog__box.active[data-editor_id=' +
 						editor.id +
 						']'
 				);
@@ -183,7 +183,7 @@ describe('Test image', function() {
 					'click',
 					0,
 					dialog.querySelectorAll(
-						'.jodit_dialog_footer .jodit-button.jodit_status_success'
+						'.jodit-dialog__footer .jodit-button.jodit_status_success'
 					)[0]
 				);
 
@@ -205,7 +205,7 @@ describe('Test image', function() {
 					editor.editor.querySelector('img')
 				);
 				const dialog = editor.ownerDocument.querySelector(
-					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+					'.jodit.jodit-dialog__box.active[data-editor_id=' +
 						editor.id +
 						']'
 				);
@@ -231,7 +231,7 @@ describe('Test image', function() {
 					'click',
 					0,
 					dialog.querySelectorAll(
-						'.jodit_dialog_footer .jodit-button.jodit_status_success'
+						'.jodit-dialog__footer .jodit-button.jodit_status_success'
 					)[0]
 				);
 
@@ -254,7 +254,7 @@ describe('Test image', function() {
 						editor.editor.querySelector('img')
 					);
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -278,7 +278,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit-button.jodit_status_success'
+							'.jodit-dialog__footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -299,7 +299,7 @@ describe('Test image', function() {
 						editor.editor.querySelector('img')
 					);
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -323,7 +323,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit-button.jodit_status_success'
+							'.jodit-dialog__footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -344,7 +344,7 @@ describe('Test image', function() {
 						editor.editor.querySelector('img')
 					);
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -368,7 +368,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit-button.jodit_status_success'
+							'.jodit-dialog__footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -389,7 +389,7 @@ describe('Test image', function() {
 						editor.editor.querySelector('img')
 					);
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -413,7 +413,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit-button.jodit_status_success'
+							'.jodit-dialog__footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -437,7 +437,7 @@ describe('Test image', function() {
 						editor.editor.querySelector('img')
 					);
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -471,7 +471,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit-button.jodit_status_success'
+							'.jodit-dialog__footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -492,7 +492,7 @@ describe('Test image', function() {
 						editor.editor.querySelector('img')
 					);
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -539,7 +539,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit-button.jodit_status_success'
+							'.jodit-dialog__footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -563,7 +563,7 @@ describe('Test image', function() {
 				);
 
 				const dialog = editor.ownerDocument.querySelector(
-					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+					'.jodit.jodit-dialog__box.active[data-editor_id=' +
 						editor.id +
 						']'
 				);
@@ -578,7 +578,7 @@ describe('Test image', function() {
 					'click',
 					0,
 					dialog.querySelectorAll(
-						'.jodit_dialog_footer .jodit-button.jodit_status_success'
+						'.jodit-dialog__footer .jodit-button.jodit_status_success'
 					)[0]
 				);
 
@@ -602,7 +602,7 @@ describe('Test image', function() {
 					);
 
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -617,7 +617,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit-button.jodit_status_success'
+							'.jodit-dialog__footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -646,7 +646,7 @@ describe('Test image', function() {
 				);
 
 				const dialog = editor.ownerDocument.querySelector(
-					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+					'.jodit.jodit-dialog__box.active[data-editor_id=' +
 						editor.id +
 						']'
 				);
@@ -662,7 +662,7 @@ describe('Test image', function() {
 					'click',
 					0,
 					dialog.querySelectorAll(
-						'.jodit_dialog_footer .jodit-button.jodit_status_success'
+						'.jodit-dialog__footer .jodit-button.jodit_status_success'
 					)[0]
 				);
 
@@ -683,7 +683,7 @@ describe('Test image', function() {
 					);
 
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -705,7 +705,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit-button.jodit_status_success'
+							'.jodit-dialog__footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -727,7 +727,7 @@ describe('Test image', function() {
 					);
 
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -753,7 +753,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit-button.jodit_status_success'
+							'.jodit-dialog__footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -775,7 +775,7 @@ describe('Test image', function() {
 					);
 
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -800,7 +800,7 @@ describe('Test image', function() {
 						'click',
 						0,
 						dialog.querySelectorAll(
-							'.jodit_dialog_footer .jodit-button.jodit_status_success'
+							'.jodit-dialog__footer .jodit-button.jodit_status_success'
 						)[0]
 					);
 
@@ -826,7 +826,7 @@ describe('Test image', function() {
 						expect(area.id).equals(editor.id);
 
 						const dialog = editor.ownerDocument.querySelector(
-							'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							'.jodit.jodit-dialog__box.active[data-editor_id=' +
 								editor.id +
 								']'
 						);
@@ -861,7 +861,7 @@ describe('Test image', function() {
 							'click',
 							0,
 							dialog.querySelectorAll(
-								'.jodit_dialog_footer .jodit-button.jodit_status_success'
+								'.jodit-dialog__footer .jodit-button.jodit_status_success'
 							)[0]
 						);
 
@@ -887,7 +887,7 @@ describe('Test image', function() {
 						simulateEvent('dblclick', 0, img);
 
 						const dialog = editor.ownerDocument.querySelector(
-							'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							'.jodit.jodit-dialog__box.active[data-editor_id=' +
 								editor.id +
 								']'
 						);
@@ -929,7 +929,7 @@ describe('Test image', function() {
 							'click',
 							0,
 							dialog.querySelectorAll(
-								'.jodit_dialog_footer .jodit-button.jodit_status_success'
+								'.jodit-dialog__footer .jodit-button.jodit_status_success'
 							)[0]
 						);
 
@@ -954,7 +954,7 @@ describe('Test image', function() {
 							simulateEvent('dblclick', 0, img);
 
 							const dialog = editor.ownerDocument.querySelector(
-								'.jodit.jodit_dialog_box.active[data-editor_id=' +
+								'.jodit.jodit-dialog__box.active[data-editor_id=' +
 									editor.id +
 									']'
 							);
@@ -990,7 +990,7 @@ describe('Test image', function() {
 								'click',
 								0,
 								dialog.querySelectorAll(
-									'.jodit_dialog_footer .jodit-button.jodit_status_success'
+									'.jodit-dialog__footer .jodit-button.jodit_status_success'
 								)[0]
 							);
 
@@ -1019,7 +1019,7 @@ describe('Test image', function() {
 						editor.editor.querySelector('img')
 					);
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -1065,7 +1065,7 @@ describe('Test image', function() {
 						editor.editor.querySelector('img')
 					);
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -1093,7 +1093,7 @@ describe('Test image', function() {
 						);
 
 						const dialog = editor.ownerDocument.querySelector(
-							'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							'.jodit.jodit-dialog__box.active[data-editor_id=' +
 								editor.id +
 								']'
 						);
@@ -1128,7 +1128,7 @@ describe('Test image', function() {
 							);
 
 							const dialog = editor.ownerDocument.querySelector(
-								'.jodit.jodit_dialog_box.active[data-editor_id=' +
+								'.jodit.jodit-dialog__box.active[data-editor_id=' +
 									editor.id +
 									']'
 							);
@@ -1142,7 +1142,7 @@ describe('Test image', function() {
 							simulateEvent('mousedown', 0, edi);
 
 							const dialog2 = editor.ownerDocument.querySelector(
-								'.jodit.jodit_dialog_box.active.jodit_modal'
+								'.jodit.jodit-dialog__box.active.jodit-modal'
 							);
 							expect(dialog2).is.not.null;
 							expect(dialog2).does.not.equal(dialog);
@@ -1154,7 +1154,7 @@ describe('Test image', function() {
 							);
 
 							const dialog3 = editor.ownerDocument.querySelector(
-								'.jodit.jodit_dialog_box.active.jodit_modal'
+								'.jodit.jodit-dialog__box.active.jodit-modal'
 							);
 
 							expect(dialog3).is.not.null;
@@ -1167,7 +1167,7 @@ describe('Test image', function() {
 							);
 
 							const dialog4 = editor.ownerDocument.querySelector(
-								'.jodit.jodit_dialog_box.active.jodit_modal'
+								'.jodit.jodit-dialog__box.active.jodit-modal'
 							);
 
 							expect(dialog4).is.not.null;
@@ -1201,7 +1201,7 @@ describe('Test image', function() {
 
 		simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 		const dialogs = document.querySelectorAll(
-			'.jodit.jodit_dialog_box.active'
+			'.jodit.jodit-dialog__box.active'
 		);
 
 		expect(dialogs.length).equals(0);
@@ -1219,7 +1219,7 @@ describe('Test image', function() {
 			simulateEvent('click', 0, img);
 
 			const resizer = editor.ownerDocument.querySelector(
-				'.jodit_resizer[data-editor_id=' + editor.id + ']'
+				'.jodit-resizer[data-editor_id=' + editor.id + ']'
 			);
 
 			expect(resizer).is.not.null;
@@ -1237,7 +1237,7 @@ describe('Test image', function() {
 				simulateEvent('click', 0, img);
 
 				const resizer = document.querySelector(
-					'.jodit_resizer[data-editor_id=' + editor.id + ']'
+					'.jodit-resizer[data-editor_id=' + editor.id + ']'
 				);
 
 				expect(resizer).is.not.null;
@@ -1257,7 +1257,7 @@ describe('Test image', function() {
 		simulateEvent('click', 0, td);
 
 		const resizer = document.querySelector(
-			'.jodit_resizer[data-editor_id=' + editor.id + ']'
+			'.jodit-resizer[data-editor_id=' + editor.id + ']'
 		);
 
 		expect(resizer).is.not.null;
@@ -1335,7 +1335,7 @@ describe('Test image', function() {
 				simulateEvent('click', 0, editor.editor.querySelector('img'));
 
 				const resizer = document.querySelector(
-					'.jodit_resizer[data-editor_id=text_area0]'
+					'.jodit-resizer[data-editor_id=text_area0]'
 				);
 				expect(resizer).is.not.null;
 
@@ -1378,7 +1378,7 @@ describe('Test image', function() {
 				expect(popup.parentNode.parentNode !== null).is.true;
 				//
 				const resizer = editor.ownerDocument.querySelector(
-					'.jodit_resizer[data-editor_id=text_area1]'
+					'.jodit-resizer[data-editor_id=text_area1]'
 				);
 				expect(resizer).is.not.null;
 				//
@@ -1430,7 +1430,7 @@ describe('Test image', function() {
 					);
 
 					const resizer = document.querySelector(
-						'.jodit_resizer[data-editor_id=' + editor.id + ']'
+						'.jodit-resizer[data-editor_id=' + editor.id + ']'
 					);
 					expect(resizer).is.not.null;
 
@@ -1491,7 +1491,7 @@ describe('Test image', function() {
 						);
 
 						const resizer = document.querySelector(
-							'.jodit_resizer[data-editor_id=' + editor.id + ']'
+							'.jodit-resizer[data-editor_id=' + editor.id + ']'
 						);
 						expect(resizer).is.not.null;
 
@@ -1546,7 +1546,7 @@ describe('Test image', function() {
 					const img = editor.editor.querySelector('img');
 					simulateEvent(['mousedown', 'mouseup', 'click'], 0, img);
 					const resizer = document.querySelector(
-						'.jodit_resizer[data-editor_id=' + editor.id + ']'
+						'.jodit-resizer[data-editor_id=' + editor.id + ']'
 					);
 					expect(resizer).is.not.null;
 

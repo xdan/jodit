@@ -870,7 +870,7 @@ export class Dom {
 	 */
 	static isTag<K extends keyof HTMLElementTagNameMap>(
 		node: Node | null | false | EventTarget,
-		tag: K
+		tag: K | 'svg' | 'path'
 	): node is HTMLElementTagNameMap[K] {
 		return (
 			Dom.isElement(node) &&

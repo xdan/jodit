@@ -6,7 +6,7 @@ describe('Test editor size plugin', function() {
 		});
 
 		expect(
-			editor.container.querySelectorAll('.jodit_editor_resize').length
+			editor.container.querySelectorAll('.jodit-editor__resize').length
 		).equals(1);
 	});
 
@@ -90,7 +90,7 @@ describe('Test editor size plugin', function() {
 						height: 300,
 						iframe: true
 					});
-					const handle = editor.container.querySelector('.jodit_editor_resize');
+					const handle = editor.container.querySelector('.jodit-editor__resize');
 
 					expect(handle).is.not.null;
 					editor.toggleFullSize(true);
@@ -185,7 +185,7 @@ describe('Test editor size plugin', function() {
 				expect(editor.container.offsetHeight).equals(300);
 
 				const handle = editor.container.querySelector(
-					'.jodit_editor_resize'
+					'.jodit-editor__resize'
 				);
 
 				simulateEvent('mousedown', 0, handle, function(options) {
@@ -214,7 +214,7 @@ describe('Test editor size plugin', function() {
 					});
 
 					const handle = editor.container.querySelector(
-						'.jodit_editor_resize'
+						'.jodit-editor__resize'
 					);
 
 					expect(editor.container.offsetHeight).equals(300);
@@ -248,7 +248,7 @@ describe('Test editor size plugin', function() {
 						box.style.width = '400px';
 
 						const handle = editor.container.querySelector(
-							'.jodit_editor_resize'
+							'.jodit-editor__resize'
 						);
 
 						expect(editor.container.offsetHeight).equals(300);

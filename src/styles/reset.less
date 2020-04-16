@@ -1,4 +1,6 @@
-.jodit_wysiwyg {
+@import (reference) './variables';
+
+.jodit-wysiwyg {
 	outline: 0;
 
 	&::selection,
@@ -8,7 +10,7 @@
 	}
 }
 
-.jodit_container:not(.jodit_inline) .jodit_wysiwyg {
+.jodit-container:not(.jodit_inline) .jodit-wysiwyg {
 	margin: 0;
 	padding: @padding-default;
 

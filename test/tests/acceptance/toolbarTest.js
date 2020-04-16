@@ -538,7 +538,7 @@ describe('Toolbar', function() {
 				'mousedown',
 				0,
 				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-brush .jodit-colorpicker > a > svg'
+					'.jodit_toolbar_btn.jodit_toolbar_btn-brush .jodit-color-picker > a > svg'
 				)
 			);
 			expect(editor.value).equals('text2text');
@@ -1475,7 +1475,7 @@ describe('Toolbar', function() {
 			let node = editor.container.parentNode;
 
 			while (node && node.nodeType !== Node.DOCUMENT_NODE) {
-				expect(node.classList.contains('jodit_fullsize_box')).equals(
+				expect(node.classList.contains('jodit-fullsize_box')).equals(
 					true
 				);
 				node = node.parentNode;
@@ -2183,7 +2183,7 @@ describe('Toolbar', function() {
 					);
 
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -2265,7 +2265,7 @@ describe('Toolbar', function() {
 							'mousedown',
 							0,
 							popupColor.querySelector(
-								'.jodit-colorpicker__group>a'
+								'.jodit-color-picker__group>a'
 							)
 						);
 
@@ -2618,7 +2618,7 @@ describe('Toolbar', function() {
 				);
 
 				const dialog = editor.ownerDocument.querySelector(
-					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+					'.jodit.jodit-dialog__box.active[data-editor_id=' +
 						editor.id +
 						']'
 				);
@@ -2627,7 +2627,7 @@ describe('Toolbar', function() {
 
 				expect(3).equals(
 					dialog.querySelectorAll(
-						'.jodit_dialog_header .jodit_dialog_header-title .jodit_toolbar_btn'
+						'.jodit-dialog__header .jodit-dialog__header-title .jodit_toolbar_btn'
 					).length
 				);
 			});
@@ -2693,7 +2693,7 @@ describe('Toolbar', function() {
 
 				editor.value = 'third';
 
-				const editPlaces = editor.ownerDocument.querySelectorAll('.jodit_wysiwyg');
+				const editPlaces = editor.ownerDocument.querySelectorAll('.jodit-wysiwyg');
 				expect(editPlaces.length).equals(3);
 
 				simulateEvent('focus', 0, editPlaces[0]);

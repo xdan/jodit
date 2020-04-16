@@ -11,13 +11,13 @@ describe('Jodit FileBrowser Tests', function() {
 				filebrowser.open(function() {});
 
 				expect(
-					document.querySelectorAll('.jodit_dialog_box.active').length
+					document.querySelectorAll('.jodit-dialog__box.active').length
 				).equals(1);
 
 				filebrowser.close();
 
 				expect(
-					document.querySelectorAll('.jodit_dialog_box.active').length
+					document.querySelectorAll('.jodit-dialog__box.active').length
 				).equals(0);
 
 				filebrowser.destruct();
@@ -38,7 +38,7 @@ describe('Jodit FileBrowser Tests', function() {
 
 			expect(
 				editor.ownerDocument.querySelectorAll(
-					'.jodit_dialog_box.active[data-editor_id=' + editor.id + ']'
+					'.jodit-dialog__box.active[data-editor_id=' + editor.id + ']'
 				).length
 			).equals(1);
 
@@ -1107,7 +1107,7 @@ describe('Jodit FileBrowser Tests', function() {
 						const context = document.body.querySelector(
 							'[data-editor_id="' +
 							editor.id +
-							'"].jodit_context_menu.jodit_context_menu-show'
+							'"].jodit-context-menu.jodit-context-menu_show'
 						);
 
 						expect(context).is.not.null;
@@ -1155,7 +1155,7 @@ describe('Jodit FileBrowser Tests', function() {
 							const context = document.body.querySelector(
 								'[data-editor_id="' +
 								editor.id +
-								'"].jodit_context_menu.jodit_context_menu-show'
+								'"].jodit-context-menu.jodit-context-menu_show'
 							);
 
 							expect(context).is.not.null;
@@ -1163,7 +1163,7 @@ describe('Jodit FileBrowser Tests', function() {
 							editor.events.on(
 								'previewOpenedAndLoaded',
 								function() {
-									const dlgSel = '[data-editor_id="' + editor.id + '"].jodit.jodit_dialog_box.jodit_filebrowser_preview_dialog.active ';
+									const dlgSel = '[data-editor_id="' + editor.id + '"].jodit.jodit-dialog__box.jodit_filebrowser_preview_dialog.active ';
 
 									const dialog = editor.ownerDocument.querySelector(dlgSel);
 

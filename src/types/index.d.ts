@@ -3,7 +3,7 @@ export * from './async';
 export * from './create';
 export * from './dialog';
 export * from './events';
-export * from './fileBrowser';
+export * from './file-browser';
 export * from './jodit';
 export * from './plugin';
 export * from './popup';

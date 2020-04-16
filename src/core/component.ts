@@ -39,6 +39,10 @@ export abstract class Component<T extends IViewBased = IViewBased>
 		this.setStatus(componentStatus);
 	}
 
+	/**
+	 * Set component status
+	 * @param componentStatus
+	 */
 	setStatus(componentStatus: ComponentStatus) {
 		this.__componentStatus = componentStatus;
 

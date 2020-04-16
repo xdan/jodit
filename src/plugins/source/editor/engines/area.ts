@@ -18,7 +18,7 @@ export class TextAreaEditor extends SourceEditor<HTMLTextAreaElement>
 
 	init(editor: IJodit): any {
 		this.instance = editor.create.element('textarea', {
-			class: 'jodit_source_mirror'
+			class: 'jodit-source__mirror'
 		});
 
 		this.container.appendChild(this.instance);

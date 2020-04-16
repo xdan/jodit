@@ -38,7 +38,7 @@ import {
 	IUploader
 } from './types';
 
-import { ViewWithToolbar } from './modules/view/viewWithToolbar';
+import { ViewWithToolbar } from './modules/view/view-with-toolbar';
 
 import { STATUSES } from './core/component';
 import { instances, pluginSystem, modules, lang } from './core/global';
@@ -766,8 +766,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				mode: <Modes>parseInt(mode.toString(), 10)
 			},
 			modeClasses = [
-				'jodit_wysiwyg_mode',
-				'jodit_source_mode',
+				'jodit-wysiwyg_mode',
+				'jodit-source__mode',
 				'jodit_split_mode'
 			];
 
@@ -1044,9 +1044,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			});
 		}
 
-		let container = this.create.div('jodit_container');
+		let container = this.create.div('jodit-container');
 
-		container.classList.add('jodit_container');
+		container.classList.add('jodit-container');
 		container.classList.add(
 			'jodit_' + (this.options.theme || 'default') + '_theme'
 		);
@@ -1069,7 +1069,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			}
 
 			container.classList.add('jodit_inline');
-			container.classList.add('jodit_container');
+			container.classList.add('jodit-container');
 		}
 
 		// actual for inline mode
@@ -1085,7 +1085,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			element.style.display = 'none';
 		}
 
-		const workplace = this.create.div('jodit_workplace', {
+		const workplace = this.create.div('jodit-workplace', {
 			contenteditable: false
 		});
 		container.appendChild(workplace);
@@ -1096,7 +1096,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			element.parentNode.insertBefore(container, element);
 		}
 
-		const editor = this.create.div('jodit_wysiwyg', {
+		const editor = this.create.div('jodit-wysiwyg', {
 			contenteditable: true,
 			'aria-disabled': false,
 			tabindex: this.options.tabIndex

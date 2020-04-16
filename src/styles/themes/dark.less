@@ -7,7 +7,7 @@
 @import (reference) '../variables';
 
 .jodit_dark_theme {
-	&.jodit_container {
+	&.jodit-container {
 		background-color: @dark_background_color;
 	}
 
@@ -15,11 +15,11 @@
 		background-color: @dark_background_color;
 	}
 
-	&.jodit_container.jodit_disabled {
+	&.jodit-container.jodit_disabled {
 		background-color: @dark_background_color;
 	}
 
-	&.jodit_container:not(.jodit_inline) .jodit_workplace {
+	&.jodit-container:not(.jodit_inline) .jodit-workplace {
 		border-color: @dark_background_color;
 	}
 
@@ -88,8 +88,8 @@
 		stroke: @dark_icon_color;
 	}
 
-	.jodit_wysiwyg_iframe,
-	.jodit_wysiwyg {
+	.jodit-wysiwyg_iframe,
+	.jodit-wysiwyg {
 		background-color: @dark_background_color;
 		color: @dark_text_color;
 
@@ -135,7 +135,7 @@
 		color: @dark_text_color;
 	}
 
-	.jodit_placeholder {
+	.jodit-placeholder {
 		color: fade(@dark_text_color, 80%);
 	}
 
@@ -163,7 +163,7 @@
 		}
 	}
 
-	.jodit_resizer > i {
+	.jodit-resizer > i {
 		background: @dark_toolbar_seperator_color3;
 		border-color: @dark_icon_color;
 	}
@@ -173,11 +173,11 @@
 		background-color: @dark_text_color;
 	}
 
-	&.jodit_dialog_box .jodit_dialog {
+	&.jodit-dialog__box .jodit-dialog {
 		background-color: @dark_background_color;
 
 		.jodit_filebrowser_files.active .jodit_filebrowser_files_item,
-		.jodit_dialog_header {
+		.jodit-dialog__header {
 			border-color: @dark_border_color;
 		}
 

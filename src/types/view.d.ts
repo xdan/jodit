@@ -82,6 +82,7 @@ interface IViewBased<T = IViewOptions> extends IPanel<T> {
 	 * @property {string} ID attribute for source element, id add {id}_editor it's editor's id
 	 */
 	id: string;
+
 	markOwner(elm: HTMLElement): void;
 
 	basePath: string;
@@ -91,6 +92,8 @@ interface IViewBased<T = IViewOptions> extends IPanel<T> {
 	progressbar: IProgressBar;
 
 	options: T;
+	// alias
+	o: IViewBased['options'];
 
 	events: IEventsNative;
 
@@ -106,8 +109,6 @@ interface IViewBased<T = IViewOptions> extends IPanel<T> {
 	getVersion: () => string;
 
 	components: Set<IComponent>;
-
-	workplace: HTMLDivElement;
 }
 
 interface IViewWithToolbar<T = IViewOptions> extends IViewBased<T> {

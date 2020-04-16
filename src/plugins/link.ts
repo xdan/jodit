@@ -8,7 +8,7 @@ import { Config } from '../config';
 import { Dom } from '../core/dom';
 import {
 	attr,
-	convertMediaURLToVideoEmbed,
+	convertMediaUrlToVideoEmbed,
 	isURL,
 	refs,
 	stripTags
@@ -303,7 +303,7 @@ export function link(jodit: IJodit) {
 			(event: ClipboardEvent, html: string): HTMLAnchorElement | void => {
 				if (isURL(html)) {
 					if (jodit.options.link.processVideoLink) {
-						const embed = convertMediaURLToVideoEmbed(html);
+						const embed = convertMediaUrlToVideoEmbed(html);
 
 						if (embed !== html) {
 							return jodit.create.inside.fromHTML(

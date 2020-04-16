@@ -24,7 +24,7 @@ import {
 	$$,
 	css,
 	normalizeNode,
-	normilizeCSSValue
+	normalizeCssValue
 } from './helpers';
 
 type WindowSelection = Selection | null;
@@ -1227,7 +1227,7 @@ export class Select {
 						if (
 							mode === UNWRAP ||
 							css(elm, rule) ===
-								normilizeCSSValue(
+								normalizeCssValue(
 									rule,
 									cssRules[rule] as string
 								)

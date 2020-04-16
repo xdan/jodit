@@ -32,9 +32,9 @@ describe('Test Inline mode', function() {
 				expect(editor.container).equals(div);
 				expect(editor.container.classList.contains('jodit_inline')).is
 					.true;
-				expect(editor.container.querySelector('.jodit_workplace')).is
+				expect(editor.container.querySelector('.jodit-workplace')).is
 					.not.null;
-				expect(editor.container.querySelector('.jodit_wysiwyg')).is.not
+				expect(editor.container.querySelector('.jodit-wysiwyg')).is.not
 					.null;
 				expect(editor.ownerWindow.getComputedStyle(div).display).equals(
 					'block'
@@ -61,9 +61,9 @@ describe('Test Inline mode', function() {
 				expect(editor.container).equals(div);
 				expect(editor.container.classList.contains('jodit_inline')).is
 					.true;
-				expect(editor.container.querySelector('.jodit_workplace')).is
+				expect(editor.container.querySelector('.jodit-workplace')).is
 					.not.null;
-				expect(editor.container.querySelector('.jodit_wysiwyg')).is.not
+				expect(editor.container.querySelector('.jodit-wysiwyg')).is.not
 					.null;
 				expect(editor.ownerWindow.getComputedStyle(div).display).equals(
 					'block'
@@ -321,7 +321,7 @@ describe('Test Inline mode', function() {
 
 					expect(
 						popup.parentNode.classList.contains(
-							'jodit_toolbar_popup-inline-target-hidden'
+							'jodit-popup-inline__target-hidden'
 						)
 					).is.true;
 
@@ -330,7 +330,7 @@ describe('Test Inline mode', function() {
 
 					expect(
 						popup.parentNode.classList.contains(
-							'jodit_toolbar_popup-inline-target-hidden'
+							'jodit-popup-inline__target-hidden'
 						)
 					).is.false;
 				});

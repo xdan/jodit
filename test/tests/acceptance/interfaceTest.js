@@ -14,7 +14,7 @@ describe('Test interface', function() {
 			simulateEvent('mousedown', 0, aboutButton);
 
 			const dialog = editor.ownerDocument.querySelector(
-				'.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']'
+				'.jodit.jodit-dialog__box.active[data-editor_id=' + editor.id + ']'
 			);
 
 			expect(dialog).is.not.null;
@@ -39,7 +39,7 @@ describe('Test interface', function() {
 				simulateEvent('mousedown', 0, aboutButton);
 
 				const dialog = editor.ownerDocument.querySelector(
-					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+					'.jodit.jodit-dialog__box.active[data-editor_id=' +
 						area.id +
 						']'
 				);

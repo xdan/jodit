@@ -1,3 +1,3 @@
-export * from './engines/memoryStorageProvider';
-export * from './engines/localStorageProvider';
+export * from './engines/memory-storage-provider';
+export * from './engines/local-storage-provider';
 export * from './storage';

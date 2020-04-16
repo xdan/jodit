@@ -83,7 +83,7 @@ describe('Test editor indent plugin', function() {
     </pre>
     `;
 
-		const children = editor.container.querySelector('.jodit_wysiwyg')
+		const children = editor.container.querySelector('.jodit-wysiwyg')
 			.children;
 		const el1 = children[0];
 		const el1Child = el1.querySelector('i');
@@ -122,7 +122,7 @@ describe('Test editor indent plugin', function() {
     `;
 
 		const children = editor.container.querySelectorAll(
-			'.jodit_wysiwyg dt,.jodit_wysiwyg dd'
+			'.jodit-wysiwyg dt,.jodit-wysiwyg dd'
 		);
 
 		const el1 = children[0];

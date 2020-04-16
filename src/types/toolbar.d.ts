@@ -14,7 +14,7 @@ import {
 } from './types';
 import { IViewBased } from './view';
 import { IJodit } from './jodit';
-import { IFileBrowser } from './fileBrowser';
+import { IFileBrowser } from './file-browser';
 import { IUIButton, IUIList } from './ui';
 
 interface IControlType<

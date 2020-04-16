@@ -24,8 +24,9 @@ export abstract class UIElement<T extends IViewBased = IViewBased> extends Compo
 	 * Append container to element
 	 * @param element
 	 */
-	appendTo(element: HTMLElement): void {
+	appendTo(element: HTMLElement): this {
 		element.appendChild(this.container);
+		return this;
 	}
 
 	/**
@@ -42,7 +43,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased> extends Compo
 		return this.jodit.create.div(this.componentName);
 	}
 
-	constructor(jodit: T) {
+	constructor(jodit?: T) {
 		super(jodit);
 
 		this.container = this.createContainer();

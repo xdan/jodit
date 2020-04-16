@@ -1,0 +1,293 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) '../../styles/variables';
+@import (reference) '../../styles/mixins';
+
+.jodit-dialog__box {
+	.font();
+
+	&.jodit-dialog__box-moved {
+		user-select: none;
+	}
+
+	box-sizing: border-box;
+	* {
+		box-sizing: border-box;
+	}
+
+	.jodit_elfinder {
+		&,
+		& * {
+			box-sizing: initial;
+		}
+	}
+
+	position: absolute;
+	display: none;
+	width: 0;
+	height: 0;
+	border: 0;
+	will-change: left, top, width, height;
+
+	.jodit-dialog__overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: @z-index-dialog-overlay;
+		text-align: center;
+		white-space: nowrap;
+		overflow: auto;
+		display: none;
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+
+	&.jodit-modal .jodit-dialog__overlay {
+		display: block;
+	}
+
+	&.active {
+		display: block;
+	}
+
+	.jodit-dialog {
+		z-index: @z-index-dialog;
+
+		display: flex;
+		flex-flow: column nowrap;
+
+		white-space: normal;
+		text-align: left;
+
+		position: fixed;
+		left: 0;
+		top: 0;
+
+		background-color: #fff;
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
+			0 6px 6px rgba(0, 0, 0, 0.23);
+
+		min-width: 200px;
+		min-height: 100px;
+		max-height: 100%;
+
+		@media (max-width: @screen-xs) {
+			max-width: 100%;
+			width: 100% !important;
+			height: 100% !important;
+			top: 0 !important;
+			left: 0 !important;
+		}
+
+		.jodit-dialog_prompt {
+			max-width: 300px;
+			min-width: 200px;
+			padding: 10px;
+			word-break: break-all;
+
+			label {
+				margin-bottom: 5px;
+				display: block;
+			}
+		}
+
+		.jodit-dialog_alert {
+			max-width: 300px;
+			min-width: 200px;
+			padding: 10px;
+			word-break: break-all;
+		}
+
+		.jodit-dialog__header {
+			display: flex;
+			justify-content: space-between;
+			text-align: left;
+
+			cursor: move;
+			height: 48px;
+			overflow: hidden;
+
+			color: #222222;
+			border-bottom: 1px solid @color-border;
+
+			.jodit-dialog__header-toolbar,
+			.jodit-dialog__header-title {
+				display: flex;
+				align-items: center;
+				flex-shrink: 3;
+				font-size: 18px;
+				margin: 0;
+				font-weight: 400;
+				line-height: 48px;
+
+				vertical-align: top;
+				@media (max-width: @screen-xs) {
+					padding-left: 0;
+				}
+
+				padding: 0 @padding-default;
+			}
+
+			.jodit-button {
+				margin-left: 10px;
+			}
+
+			.jodit-dialog__header-button {
+				color: #222222;
+				font-size: 28px;
+
+				transition: background-color 0.2s ease 0s;
+				flex-basis: 48px;
+				height: 48px;
+
+				line-height: 48px;
+				text-decoration: none;
+				text-align: center;
+
+				&:hover {
+					background-color: @color-background-button-hover;
+				}
+			}
+
+			.jodit_toolbar {
+				background: transparent;
+				border: 0;
+				box-shadow: none;
+
+				> li.jodit_toolbar_btn {
+					.jodit_input {
+						padding-left: @padding-default;
+						width: auto;
+					}
+				}
+			}
+		}
+
+		.jodit-dialog__content {
+			flex: 1 0;
+			min-height: 100px;
+			overflow: auto;
+
+			.jodit-form__group {
+				margin-bottom: 10px;
+				padding: 0 10px;
+
+				&:first-child {
+					margin-top: 10px;
+				}
+
+				label {
+					display: inline-block;
+					max-width: 100%;
+					margin-bottom: 5px;
+					font-weight: 700;
+				}
+
+				.jodit_input_group {
+					display: table;
+					border-collapse: separate;
+					width: 100%;
+
+					> * {
+						vertical-align: middle;
+						display: table-cell;
+						height: 34px;
+					}
+
+					> input {
+						margin: 0 !important;
+
+						&:not([class*='col-']) {
+							width: 100%;
+						}
+					}
+
+					&-buttons {
+						width: 1%;
+						font-size: 0;
+						white-space: nowrap;
+						vertical-align: middle;
+
+						> .jodit-button {
+							border: 1px solid @color-border;
+							margin-left: -1px;
+							height: 34px;
+							line-height: 34px;
+							border-radius: 0;
+						}
+					}
+				}
+			}
+		}
+		.jodit-dialog__footer {
+			padding: @padding-default;
+			display: none;
+		}
+
+		&.with_footer .jodit-dialog__footer {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: nowrap;
+
+			.jodit-button {
+				margin-right: @padding-default;
+
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
+
+		.jodit-dialog__resizer {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+
+			cursor: se-resize;
+
+			width: 7px;
+			height: 7px;
+			display: inline-block;
+
+			background-image: data-uri('../../styles/icons/resizer.png');
+
+			&:hover {
+				border-color: rgba(0, 0, 0, 0.6);
+			}
+		}
+
+		@media (max-width: @screen-xs) {
+			.jodit-dialog__resizer {
+				display: none;
+			}
+		}
+	}
+
+	&.jodit_fullsize .jodit-dialog {
+		top: 0 !important;
+		bottom: 0 !important;
+		left: 0 !important;
+		right: 0 !important;
+		width: 100% !important;
+		height: 100% !important;
+		.jodit-dialog__resizer {
+			display: none;
+		}
+	}
+}
+
+@media (max-width: @screen-sm) {
+	.jodit-dialog__header_title,
+	.jodit-dialog__header_fullsize,
+	.jodit-dialog__header .jodit_toolbar_btn-filter,
+	.jodit-dialog__header .jodit_toolbar_btn-sort,
+	.jodit-dialog__header .jodit_toolbar_btn-separator,
+	.jodit-dialog__header .jodit_input {
+		display: none !important;
+	}
+}

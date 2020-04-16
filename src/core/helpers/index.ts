@@ -15,24 +15,24 @@ export * from './normalize';
 export * from './size';
 export * from './string';
 
-export * from './appendScript';
+export * from './append-script';
 export * from './browser';
-export * from './convertMediaURLToVideoEmbed';
+export * from './convert-media-url-to-video-embed';
 export * from './css';
-export * from './ctrlKey';
-export * from './dataBind';
-export * from './defaultLanguage';
+export * from './ctrl-key';
+export * from './data-bind';
+export * from './default-language';
 export * from './each';
-export * from './completeUrl';
-export * from './humanSizeToBytes';
+export * from './complete-url';
+export * from './human-size-to-bytes';
 
-export * from './joditArray';
-export * from './joditObject';
+export * from './jodit-array';
+export * from './jodit-object';
 
-export * from './parseQuery';
-export * from './buildQuery';
+export * from './parse-query';
+export * from './build-query';
 
-export * from './scrollIntoView';
+export * from './scroll-into-view';
 export * from './selector';
 export * from './type';
 export * from './val';

@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+import "./source.less";
 
 import * as consts from '../../core/constants';
 import { MODE_SOURCE } from '../../core/constants';
@@ -291,7 +292,7 @@ export class source extends Plugin {
 	}
 
 	afterInit(editor: IJodit): void {
-		this.mirrorContainer = editor.create.div('jodit_source');
+		this.mirrorContainer = editor.create.div('jodit-source');
 		editor.workplace.appendChild(this.mirrorContainer);
 
 		editor.events.on('afterAddPlace changePlace afterInit', () => {

@@ -48,7 +48,7 @@ export const Prompt = (
 				'</span></a>'
 		) as HTMLAnchorElement,
 		form: HTMLFormElement = dialog.create.element('form', {
-			class: 'jodit_prompt'
+			class: 'jodit-dialog_prompt'
 		}),
 		inputElement: HTMLInputElement = dialog.create.element('input', {
 			autofocus: true,

@@ -6,8 +6,8 @@
 
 import { IStorage, StorageValueType } from '../../types';
 import { camelCase } from '../helpers/';
-import { canUsePersistentStorage, LocalStorageProvider } from './engines/localStorageProvider';
-import { MemoryStorageProvider } from './engines/memoryStorageProvider';
+import { canUsePersistentStorage, LocalStorageProvider } from './engines/local-storage-provider';
+import { MemoryStorageProvider } from './engines/memory-storage-provider';
 
 export const StorageKey: string = 'Jodit_';
 

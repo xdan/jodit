@@ -1,0 +1,115 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) '../../styles/mixins';
+@import (reference) '../../styles/variables';
+
+.jodit-table-resizer {
+	cursor: col-resize;
+	position: absolute;
+	z-index: 3;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-left: -5px;
+
+	&:after {
+		content: '';
+		display: block;
+		height: 100%;
+		width: 0;
+		border: 0;
+	}
+
+	&-moved {
+		background-color: @color-background-selection;
+		z-index: 2;
+
+		&:after {
+			border-right: 1px solid @color-border-moved;
+		}
+	}
+}
+
+.jodit-wysiwyg {
+	table {
+		width: 100%;
+		border: none;
+		border-collapse: collapse;
+		table-layout: fixed;
+		empty-cells: show;
+		max-width: 100%;
+
+		tr {
+			user-select: none;
+			th,
+			td {
+				border: 1px solid #ddd;
+				text-align: left;
+				vertical-align: middle;
+				user-select: text;
+				&[data-jodit-selected-cell] {
+					border: 1px double @color-border-selected;
+				}
+			}
+		}
+	}
+}
+
+.jodit-form__inserter {
+	.jodit-form__table-creator-box {
+		display: flex;
+
+		@media (max-width: @screen-sm) {
+			flex-direction: column;
+		}
+
+		.jodit-form__container {
+			padding: 0;
+			margin: 0;
+			min-width: 180px;
+			font-size: 0;
+
+			& > div {
+				& > span {
+					.size(@width_element_default, @width_element_default);
+					display: inline-block;
+					box-sizing: border-box;
+					border: 1px solid @color-border;
+					margin-left: 2px;
+					margin-bottom: 2px;
+
+					&:first-child {
+						margin-left: 0;
+					}
+
+					&.hovered {
+						background: @color-background-hover;
+						border-color: @color-background-hover;
+					}
+				}
+			}
+		}
+
+		.jodit-form__options {
+			font-size: @font-size-default;
+
+			label {
+				text-align: left;
+				padding-top: 0;
+				input {
+					margin-right: @padding-default;
+				}
+			}
+		}
+	}
+
+	label {
+		text-align: center;
+		font-size: 14px;
+		padding: 8px;
+		margin: 0;
+	}
+}

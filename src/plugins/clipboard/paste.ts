@@ -23,7 +23,7 @@ import {
 	cleanFromWord,
 	htmlspecialchars,
 	isHTML,
-	isHTMLFromWord,
+	isHtmlFromWord,
 	trim,
 	type,
 	stripTags,
@@ -334,7 +334,7 @@ export function paste(editor: IJodit) {
 					isHTML(html) &&
 					buffer !== trimFragment(html)
 				) {
-					if (opt.processPasteFromWord && isHTMLFromWord(html)) {
+					if (opt.processPasteFromWord && isHtmlFromWord(html)) {
 						const pasteFromWordByType = (method: string) => {
 							if (method === INSERT_AS_HTML) {
 								html = applyStyles(html);

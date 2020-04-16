@@ -12,7 +12,7 @@ describe('Stat plugin', function() {
 
 			editor.value = '<p>Simple text</p><p>Simple text</p>';
 			const statusbar = editor.container.querySelector(
-				'.jodit_statusbar'
+				'.jodit-statusbar'
 			);
 
 			expect(statusbar).is.not.null;
@@ -38,7 +38,7 @@ describe('Stat plugin', function() {
 
 				editor.value = '<p>Simple text</p>';
 				const statusbar = editor.container.querySelector(
-					'.jodit_statusbar'
+					'.jodit-statusbar'
 				);
 
 				expect(statusbar).is.not.null;
@@ -65,7 +65,7 @@ describe('Stat plugin', function() {
 
 				editor.value = '<p>Simple text</p>';
 				const statusbar = editor.container.querySelector(
-					'.jodit_statusbar'
+					'.jodit-statusbar'
 				);
 
 				expect(statusbar).is.not.null;
@@ -93,7 +93,7 @@ describe('Stat plugin', function() {
 
 				editor.value = '<p>Simple text</p>';
 				const statusbar = editor.container.querySelector(
-					'.jodit_statusbar'
+					'.jodit-statusbar'
 				);
 
 				expect(statusbar).is.not.null;

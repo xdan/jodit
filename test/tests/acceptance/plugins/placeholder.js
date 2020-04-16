@@ -8,9 +8,9 @@ describe('Placeholder plugin', function() {
 			const editor = new Jodit(area);
 
 			expect(
-				editor.container.querySelectorAll('.jodit_placeholder')
+				editor.container.querySelectorAll('.jodit-placeholder')
 					.length &&
-					editor.container.querySelector('.jodit_placeholder').style
+					editor.container.querySelector('.jodit-placeholder').style
 						.display === 'block'
 			).is.true;
 		});
@@ -22,7 +22,7 @@ describe('Placeholder plugin', function() {
 			area.value = '111';
 			const editor = new Jodit(area);
 			expect(
-				!editor.container.querySelectorAll('.jodit_placeholder').length
+				!editor.container.querySelectorAll('.jodit-placeholder').length
 			).is.true;
 		});
 
@@ -33,7 +33,7 @@ describe('Placeholder plugin', function() {
 				const editor = new Jodit(area);
 
 				expect(
-					editor.container.querySelector('.jodit_placeholder')
+					editor.container.querySelector('.jodit-placeholder')
 				).is.not.null;
 			});
 		});
@@ -44,7 +44,7 @@ describe('Placeholder plugin', function() {
 				area.value = '<ul><li><br></li></ul>';
 				const editor = new Jodit(area);
 				expect(
-					editor.container.querySelector('.jodit_placeholder')
+					editor.container.querySelector('.jodit-placeholder')
 				).is.null;
 			});
 		});
@@ -58,16 +58,16 @@ describe('Placeholder plugin', function() {
 			editor.value = '';
 
 			expect(
-				editor.container.querySelectorAll('.jodit_placeholder')
+				editor.container.querySelectorAll('.jodit-placeholder')
 					.length &&
-					editor.container.querySelector('.jodit_placeholder').style
+					editor.container.querySelector('.jodit-placeholder').style
 						.display === 'block'
 			).is.true;
 
 			editor.selection.insertNode(editor.create.inside.text('test'));
 
 			expect(
-				!editor.container.querySelectorAll('.jodit_placeholder').length
+				!editor.container.querySelectorAll('.jodit-placeholder').length
 			).is.true;
 		});
 	});
@@ -80,9 +80,9 @@ describe('Placeholder plugin', function() {
 			editor.editor.style.fontSize = '12px';
 			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 			expect(
-				editor.container.querySelectorAll('.jodit_placeholder')
+				editor.container.querySelectorAll('.jodit-placeholder')
 					.length &&
-					editor.container.querySelector('.jodit_placeholder').style
+					editor.container.querySelector('.jodit-placeholder').style
 						.fontSize === '12px'
 			).is.true;
 		});
@@ -98,11 +98,11 @@ describe('Placeholder plugin', function() {
 			});
 
 			expect(
-				!editor.container.querySelectorAll('.jodit_placeholder').length
+				!editor.container.querySelectorAll('.jodit-placeholder').length
 			).is.true;
 			editor.value = 'test';
 			expect(
-				!editor.container.querySelectorAll('.jodit_placeholder').length
+				!editor.container.querySelectorAll('.jodit-placeholder').length
 			).is.true;
 		});
 	});

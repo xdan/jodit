@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import './styles/bundle.less';
+import './styles/index.less';
 
 declare function require(moduleName: string): any;
 

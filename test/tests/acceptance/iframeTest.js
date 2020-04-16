@@ -120,7 +120,7 @@ describe('Iframe mode', function() {
 						).equals(
 							'<html class="jodit" dir="" lang="en" spellcheck="true">' +
 								'<head><title>Hi</title></head>' +
-								'<body class="jodit_wysiwyg" style="outline:none" ></body>' +
+								'<body class="jodit-wysiwyg" style="outline:none" ></body>' +
 								'</html>'
 						);
 					});
@@ -139,7 +139,7 @@ describe('Iframe mode', function() {
 							).equals(
 								'<html class="jodit" dir="" lang="en" spellcheck="true">' +
 									'<head><title>Hi</title></head>' +
-									'<body class="jodit_wysiwyg" style="outline:none" >' +
+									'<body class="jodit-wysiwyg" style="outline:none" >' +
 									'<strong>Test</strong></body></html>'
 							);
 						});

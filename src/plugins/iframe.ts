@@ -196,7 +196,7 @@ export function iframe(editor: IJodit) {
 									: ''
 							}
 						</head>
-						<body class="jodit_wysiwyg" style="outline:none"></body>
+						<body class="jodit-wysiwyg" style="outline:none"></body>
 					</html>`
 				);
 
@@ -229,7 +229,7 @@ export function iframe(editor: IJodit) {
 
 			iframe.style.display = 'block';
 			iframe.src = 'about:blank';
-			iframe.className = 'jodit_wysiwyg_iframe';
+			iframe.className = 'jodit-wysiwyg_iframe';
 			iframe.setAttribute('allowtransparency', 'true');
 			iframe.setAttribute('tabindex', opt.tabIndex.toString());
 			iframe.setAttribute('frameborder', '0');

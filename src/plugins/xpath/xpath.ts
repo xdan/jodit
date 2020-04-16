@@ -132,7 +132,7 @@ export class xpath extends Plugin {
 			...this.jodit.options.controls.selectall
 		} as IControlTypeStrong);
 
-		this.selectAllButton.state.size = "small";
+		this.selectAllButton.state.size = "tiny";
 
 		this.container &&
 			this.container.insertBefore(

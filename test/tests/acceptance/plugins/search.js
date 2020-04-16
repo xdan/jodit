@@ -10,7 +10,7 @@ describe('Search plugin', function() {
 			});
 			const search = editor.container.querySelector('.jodit_search');
 			expect(false).equals(
-				search.classList.contains('jodit_search-active')
+				search.classList.contains('jodit-search__active')
 			);
 			simulateEvent('keydown', Jodit.KEY_F, editor.editor, function(
 				options
@@ -18,11 +18,11 @@ describe('Search plugin', function() {
 				options.ctrlKey = true;
 			});
 			expect(true).equals(
-				search.classList.contains('jodit_search-active')
+				search.classList.contains('jodit-search__active')
 			);
 			expect(true).equals(
 				editor.ownerDocument.activeElement ===
-				search.querySelector('.jodit_search-query')
+				search.querySelector('.jodit-search__query')
 			);
 		});
 	});
@@ -37,7 +37,7 @@ describe('Search plugin', function() {
 
 			const search = editor.container.querySelector('.jodit_search');
 			expect(false).equals(
-				search.classList.contains('jodit_search-active')
+				search.classList.contains('jodit-search__active')
 			);
 			simulateEvent('keydown', Jodit.KEY_H, editor.editor, function(
 				options
@@ -45,14 +45,14 @@ describe('Search plugin', function() {
 				options.ctrlKey = true;
 			});
 			expect(true).equals(
-				search.classList.contains('jodit_search-active')
+				search.classList.contains('jodit-search__active')
 			);
 			expect(true).equals(
-				search.classList.contains('jodit_search-and-replace')
+				search.classList.contains('jodit-search__and-replace')
 			);
 			expect(true).equals(
 				editor.ownerDocument.activeElement ===
-				search.querySelector('.jodit_search-query')
+				search.querySelector('.jodit-search__query')
 			);
 		});
 
@@ -70,7 +70,7 @@ describe('Search plugin', function() {
 					'.jodit_search'
 				);
 				expect(false).equals(
-					search.classList.contains('jodit_search-active')
+					search.classList.contains('jodit-search__active')
 				);
 				simulateEvent(
 					'keydown',
@@ -82,24 +82,24 @@ describe('Search plugin', function() {
 				);
 
 				expect(true).equals(
-					search.classList.contains('jodit_search-active')
+					search.classList.contains('jodit-search__active')
 				);
 
 				expect(true).equals(
-					search.classList.contains('jodit_search-and-replace')
+					search.classList.contains('jodit-search__and-replace')
 				);
 
 				expect(true).equals(
 					editor.ownerDocument.activeElement ===
-					search.querySelector('.jodit_search-query')
+					search.querySelector('.jodit-search__query')
 				);
 
-				const query = search.querySelector('.jodit_search-query');
+				const query = search.querySelector('.jodit-search__query');
 				const replace = search.querySelector(
-					'.jodit_search-replace'
+					'.jodit-search__replace'
 				);
 				const replaceButton = search.querySelector(
-					'.jodit_search_buttons-replace'
+					'.jodit-search__buttons-replace'
 				);
 
 				query.value = 't';
@@ -134,7 +134,7 @@ describe('Search plugin', function() {
 
 			const search = editor.container.querySelector('.jodit_search');
 			expect(false).equals(
-				search.classList.contains('jodit_search-active')
+				search.classList.contains('jodit-search__active')
 			);
 
 			// press ctrl(cmd) + f
@@ -145,11 +145,11 @@ describe('Search plugin', function() {
 			});
 
 			expect(true).equals(
-				search.classList.contains('jodit_search-active')
+				search.classList.contains('jodit-search__active')
 			);
 			expect(true).equals(
 				editor.ownerDocument.activeElement ===
-				search.querySelector('.jodit_search-query')
+				search.querySelector('.jodit-search__query')
 			);
 
 			editor.selection.removeMarkers();
@@ -192,7 +192,7 @@ describe('Search plugin', function() {
 			const search = editor.container.querySelector('.jodit_search');
 
 			expect(false).equals(
-				search.classList.contains('jodit_search-active')
+				search.classList.contains('jodit-search__active')
 			);
 
 			// press ctrl(cmd) + f
@@ -203,11 +203,11 @@ describe('Search plugin', function() {
 			});
 
 			expect(true).equals(
-				search.classList.contains('jodit_search-active')
+				search.classList.contains('jodit-search__active')
 			);
 			expect(true).equals(
 				editor.ownerDocument.activeElement ===
-				search.querySelector('.jodit_search-query')
+				search.querySelector('.jodit-search__query')
 			);
 
 			editor.selection.removeMarkers();
@@ -262,7 +262,7 @@ describe('Search plugin', function() {
 				);
 
 				expect(false).equals(
-					search.classList.contains('jodit_search-active')
+					search.classList.contains('jodit-search__active')
 				);
 
 				// press ctrl(cmd) + f
@@ -276,11 +276,11 @@ describe('Search plugin', function() {
 				);
 
 				expect(true).equals(
-					search.classList.contains('jodit_search-active')
+					search.classList.contains('jodit-search__active')
 				);
 				expect(true).equals(
 					editor.ownerDocument.activeElement ===
-					search.querySelector('.jodit_search-query')
+					search.querySelector('.jodit-search__query')
 				);
 
 				editor.selection.removeMarkers();
@@ -331,7 +331,7 @@ describe('Search plugin', function() {
 
 			const search = editor.container.querySelector('.jodit_search');
 			expect(false).equals(
-				search.classList.contains('jodit_search-active')
+				search.classList.contains('jodit-search__active')
 			);
 			simulateEvent('keydown', Jodit.KEY_F, editor.editor, function(
 				options
@@ -340,20 +340,20 @@ describe('Search plugin', function() {
 			});
 
 			expect(true).equals(
-				search.classList.contains('jodit_search-active')
+				search.classList.contains('jodit-search__active')
 			);
 			expect(true).equals(
 				editor.ownerDocument.activeElement ===
-				search.querySelector('.jodit_search-query')
+				search.querySelector('.jodit-search__query')
 			);
 			simulateEvent(
 				'keydown',
 				Jodit.KEY_ESC,
-				search.querySelector('.jodit_search-query')
+				search.querySelector('.jodit-search__query')
 			);
 
 			expect(false).equals(
-				search.classList.contains('jodit_search-active')
+				search.classList.contains('jodit-search__active')
 			);
 			expect('ex').equals(sel.toString());
 		});

@@ -12,7 +12,7 @@ describe('Dialog system tests', function() {
 
 			simulateEvent('mousedown', 0, about);
 
-			const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active');
+			const dialog = editor.ownerDocument.querySelector('.jodit.jodit-dialog__box.active');
 			expect(dialog).is.not.null;
 
 			expect(dialog.innerHTML.indexOf('xdsoft.net') !== -1).is.true;
@@ -30,7 +30,7 @@ describe('Dialog system tests', function() {
 
 				simulateEvent('mousedown', 0, about);
 
-				const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active');
+				const dialog = editor.ownerDocument.querySelector('.jodit.jodit-dialog__box.active');
 				expect(dialog).is.not.null;;
 
 				expect(dialog.innerHTML.indexOf('xdsoft.net') !== -1).is.true;
@@ -40,7 +40,7 @@ describe('Dialog system tests', function() {
 
 				simulateEvent('mousedown', 0, close);
 
-				expect(editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active')).is.null;
+				expect(editor.ownerDocument.querySelector('.jodit.jodit-dialog__box.active')).is.null;
 
 				expect(Jodit.modules.Helpers.css(dialog, 'display')).equals('none');
 			});
@@ -59,7 +59,7 @@ describe('Dialog system tests', function() {
 		describe('Show not string', function() {
 			it('Should show dialog with toString value', function() {
 				const dialog = Jodit.Alert(111);
-				expect(dialog.dialog.querySelector('.jodit_dialog_content').textContent).equals('111');
+				expect(dialog.dialog.querySelector('.jodit-dialog__content').textContent).equals('111');
 				dialog.close();
 			});
 		});
@@ -94,7 +94,7 @@ describe('Dialog system tests', function() {
 				editor.value = '<img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="margin:10px;border:1px solid red;width:100px;height:100px;"/>';
 				simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
-				const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active');
+				const dialog = editor.ownerDocument.querySelector('.jodit.jodit-dialog__box.active');
 
 				expect(dialog.style.display).does.not.equal('none');
 				expect(dialog.querySelectorAll('input.margins[disabled]').length).equals(3);
@@ -111,7 +111,7 @@ describe('Dialog system tests', function() {
 				editor.value = '<img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="margin:10px 5px;border:1px solid red;width:100px;height:100px;"/>';
 				simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
-				const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active');
+				const dialog = editor.ownerDocument.querySelector('.jodit.jodit-dialog__box.active');
 
 				expect(dialog.style.display).does.not.equal('none');
 				expect(dialog.querySelectorAll('input.margins[disabled]').length).equals(0);

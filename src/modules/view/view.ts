@@ -16,25 +16,31 @@ import { Component } from '../../core/component';
 import { EventsNative } from '../../core/events/';
 import { Panel } from './panel';
 import { Storage } from '../../core/storage';
-import { error, i18n, isFunction } from '../../core/helpers';
+import { attr, error, i18n, isFunction } from '../../core/helpers';
 import { BASE_PATH } from '../../core/constants';
 import { Async } from '../../core/async';
-import { ProgressBar } from '../progressBar';
+import { ProgressBar } from '..';
 import { modules } from '../../core/global';
 
 declare let appVersion: string;
 
-export class View extends Panel implements IViewBased {
+export abstract class View extends Panel implements IViewBased {
 	/**
 	 * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
 	 */
 	id: string;
 
+	/**
+	 * Mark element for debugging
+	 * @param elm
+	 */
 	markOwner(elm: HTMLElement): void {
-		elm.setAttribute('data-editor_id', this.id);
-	}
+		attr(elm, 'data-editor_id', this.id);
 
-	workplace!: HTMLDivElement;
+		Object.defineProperty(elm, 'component', {
+			value: this
+		});
+	}
 
 	components: Set<IComponent> = new Set();
 
@@ -49,7 +55,7 @@ export class View extends Panel implements IViewBased {
 		return BASE_PATH;
 	}
 
-	version: string = appVersion; // from webpack.config.js
+	readonly version: string = appVersion; // from webpack.config.js
 
 	private __modulesInstances: IDictionary<Component> = {};
 
@@ -77,6 +83,13 @@ export class View extends Panel implements IViewBased {
 	progressbar: IProgressBar = new ProgressBar(this);
 
 	options!: IViewOptions;
+
+	/**
+	 * Short alias for options
+	 */
+	get o(): this['options'] {
+		return this.options;
+	}
 
 	events: IEventsNative;
 	async: IAsync = new Async();

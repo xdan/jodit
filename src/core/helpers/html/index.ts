@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from './applyStyles';
-export * from './cleanFromWord';
+export * from './apply-styles';
+export * from './clean-from-word';
 export * from './htmlspecialchars';
-export * from './stripTags';
+export * from './strip-tags';
 export * from './nl2br';

@@ -5,18 +5,13 @@
  */
 
 import * as consts from './core/constants';
-import { Widget } from './modules/widget';
-import TabsWidget = Widget.TabsWidget;
-import FileSelectorWidget = Widget.FileSelectorWidget;
 import { Dom } from './core/dom';
 import { Icon } from './core/ui';
 import {
 	$$,
-	convertMediaURLToVideoEmbed,
+	convertMediaUrlToVideoEmbed,
 	defaultLanguage,
-	isLicense,
 	isURL,
-	normalizeLicense,
 	trim,
 	val,
 	extend
@@ -34,6 +29,7 @@ import {
 	IControlType,
 	IUIButtonState
 } from './types';
+import { FileSelectorWidget, TabsWidget } from './modules/widget';
 
 /**
  * Default Editor's Configuration
@@ -305,7 +301,7 @@ export class Config implements IViewOptions {
 	 * })
 	 * ```
 	 */
-	direction: string = '';
+	direction: 'rtl' | 'ltr' | '' = '';
 
 	/**
 	 * Language by default. if `auto` language set by document.documentElement.lang ||
@@ -904,42 +900,6 @@ Config.prototype.controls = {
 		tooltip: 'Print'
 	} as IControlType,
 
-	about: {
-		exec: (editor: IJodit) => {
-			const dialog: any = editor.getInstance('Dialog'),
-				i18n = editor.i18n.bind(editor);
-
-			dialog.setTitle(i18n('About Jodit'));
-
-			dialog.setContent(
-				`<div class="jodit_about">
-					<div>${i18n('Jodit Editor')} v.${editor.getVersion()}</div>
-					<div>${i18n(
-						'License: %s',
-						!isLicense(editor.options.license)
-							? 'MIT'
-							: normalizeLicense(editor.options.license)
-					)}</div>
-					<div>
-						<a href="https://xdsoft.net/jodit/" target="_blank">http://xdsoft.net/jodit/</a>
-					</div>
-					<div>
-						<a href="https://xdsoft.net/jodit/doc/" target="_blank">${i18n(
-							"Jodit User's Guide"
-						)}</a>
-						${i18n('contains detailed help for using')}
-					</div>
-					<div>${i18n(
-						'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.'
-					)}</div>
-				</div>`
-			);
-			dialog.open();
-		},
-		tooltip: 'About Jodit',
-		mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
-	} as IControlType,
-
 	hr: {
 		command: 'insertHorizontalRule',
 		tags: ['hr'],
@@ -1075,6 +1035,7 @@ Config.prototype.controls = {
 		tags: ['a'],
 		tooltip: 'Insert file'
 	} as IControlType,
+
 	video: {
 		popup: (editor: IJodit, current, control, close) => {
 			const bylink = editor.create.fromHTML(
@@ -1142,7 +1103,7 @@ Config.prototype.controls = {
 					return false;
 				}
 				insertCode(
-					convertMediaURLToVideoEmbed(val(bylink, 'input[name=code]'))
+					convertMediaUrlToVideoEmbed(val(bylink, 'input[name=code]'))
 				);
 				return false;
 			});

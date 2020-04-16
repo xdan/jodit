@@ -7,24 +7,24 @@
 @import (reference) './mixins';
 
 .jodit,
-.jodit_container {
+.jodit-container {
 	&,
 	* {
 		box-sizing: border-box;
 	}
-	.jodit_workplace {
+	.jodit-workplace {
 		position: relative;
 		overflow: auto;
 
-		.jodit_wysiwyg,
-		.jodit_wysiwyg_iframe {
+		.jodit-wysiwyg,
+		.jodit-wysiwyg_iframe {
 			height: 100%;
 			width: 100%;
 		}
 	}
 }
 
-.jodit_container:not(.jodit_inline) {
+.jodit-container:not(.jodit_inline) {
 	.font();
 
 	background: @color-background-default;
@@ -32,16 +32,16 @@
 	&.jodit_disabled {
 		background: @color-background-gray;
 
-		.jodit_workplace {
+		.jodit-workplace {
 			opacity: 0.4;
 		}
 	}
 
-	.jodit_workplace {
+	.jodit-workplace {
 		border: 1px solid @color-border;
 	}
 
-	.jodit__toolbar-box:not(:empty) + .jodit_workplace {
+	.jodit__toolbar-box:not(:empty) + .jodit-workplace {
 		border-top-width: 0;
 	}
 }

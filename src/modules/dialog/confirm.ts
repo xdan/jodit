@@ -6,6 +6,7 @@
 
 import { Dialog } from './dialog';
 import { Icon } from '../../core/ui';
+import { isFunction } from '../../core/helpers/checker';
 
 /**
  * Show `confirm` dialog. Work without Jodit object
@@ -30,11 +31,11 @@ export const Confirm = (
 ): Dialog => {
 	const dialog = new Dialog(),
 		$div: HTMLDivElement = dialog.create.fromHTML(
-			'<form class="jodit_prompt"></form>'
+			'<form class="jodit-dialog_prompt"></form>'
 		) as HTMLDivElement,
 		$label: HTMLLabelElement = dialog.create.element('label');
 
-	if (typeof title === 'function') {
+	if (isFunction(title)) {
 		callback = title;
 		title = undefined;
 	}

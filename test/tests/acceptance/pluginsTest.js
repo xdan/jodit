@@ -575,7 +575,7 @@ describe('Test plugins', function() {
 						const dialog = editor.ownerDocument.querySelector(
 							'[data-editor_id=' +
 								area.id +
-								'].jodit.jodit_dialog_box.active'
+								'].jodit.jodit-dialog__box.active'
 						);
 
 						expect(dialog.style.display).does.not.equal('none');
@@ -588,7 +588,7 @@ describe('Test plugins', function() {
 							const imageEditor = editor.ownerDocument.querySelector(
 								'[data-editor_id=' +
 									area.id +
-									'].jodit.jodit_dialog_box.active .jodit_image_editor'
+									'].jodit.jodit-dialog__box.active .jodit_image_editor'
 							);
 							expect(imageEditor).is.not.null;
 
@@ -719,7 +719,7 @@ describe('Test plugins', function() {
 						const dialog = editor.ownerDocument.querySelector(
 							'[data-editor_id=' +
 								area.id +
-								'].jodit.jodit_dialog_box.active'
+								'].jodit.jodit-dialog__box.active'
 						);
 
 						expect(dialog.style.display).does.not.equal('none');
@@ -732,7 +732,7 @@ describe('Test plugins', function() {
 							const imageEditor = editor.ownerDocument.querySelector(
 								'[data-editor_id=' +
 									area.id +
-									'].jodit.jodit_dialog_box.active .jodit_image_editor'
+									'].jodit.jodit-dialog__box.active .jodit_image_editor'
 							);
 
 							expect(imageEditor).is.not.null;
@@ -874,7 +874,7 @@ describe('Test plugins', function() {
 						const dialog = editor.ownerDocument.querySelector(
 							'[data-editor_id=' +
 								area.id +
-								'].jodit.jodit_dialog_box.active'
+								'].jodit.jodit-dialog__box.active'
 						);
 
 						expect(dialog.style.display).does.not.equal('none');
@@ -887,7 +887,7 @@ describe('Test plugins', function() {
 							const imageEditor = editor.ownerDocument.querySelector(
 								'[data-editor_id=' +
 									area.id +
-									'].jodit.jodit_dialog_box.active .jodit_image_editor'
+									'].jodit.jodit-dialog__box.active .jodit_image_editor'
 							);
 							expect(imageEditor).is.not.null;
 
@@ -1017,7 +1017,7 @@ describe('Test plugins', function() {
 						const dialog = editor.ownerDocument.querySelector(
 							'[data-editor_id=' +
 								area.id +
-								'].jodit.jodit_dialog_box.active'
+								'].jodit.jodit-dialog__box.active'
 						);
 
 						expect(dialog.style.display).does.not.equal('none');
@@ -1030,7 +1030,7 @@ describe('Test plugins', function() {
 							const imageEditor = editor.ownerDocument.querySelector(
 								'[data-editor_id=' +
 									area.id +
-									'].jodit.jodit_dialog_box.active .jodit_image_editor'
+									'].jodit.jodit-dialog__box.active .jodit_image_editor'
 							);
 							expect(imageEditor).is.not.null;
 
@@ -1214,7 +1214,7 @@ describe('Test plugins', function() {
 					simulateEvent('mouseenter', 0, button.querySelector('a'));
 
 					let tooltip = editor.ownerDocument.querySelector(
-						'.jodit_tooltip'
+						'.jodit-tooltip'
 					);
 					expect(null).does.not.equal(tooltip);
 					const title = tooltip.textContent;
@@ -1236,7 +1236,7 @@ describe('Test plugins', function() {
 					simulateEvent('mouseenter', 0, button.querySelector('a'));
 
 					tooltip = editor.ownerDocument.querySelector(
-						'.jodit_tooltip'
+						'.jodit-tooltip'
 					);
 					expect(null).does.not.equal(tooltip);
 					simulateEvent('mouseleave', 0, button.querySelector('a'));
@@ -1381,7 +1381,7 @@ describe('Test plugins', function() {
 
 			simulateEvent('mousedown', 0, btn);
 			const dialog = editor.ownerDocument.querySelector(
-				'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
+				'.jodit-dialog__box.active.jodit-modal .jodit-dialog__content .jodit-symbols'
 			);
 			expect(null).does.not.equal(dialog);
 		});
@@ -1402,7 +1402,7 @@ describe('Test plugins', function() {
 
 				simulateEvent('mousedown', 0, btn);
 				const dialog = editor.ownerDocument.querySelector(
-					'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
+					'.jodit-dialog__box.active.jodit-modal .jodit-dialog__content .jodit-symbols'
 				);
 				expect(null).does.not.equal(dialog);
 
@@ -1427,7 +1427,7 @@ describe('Test plugins', function() {
 
 					simulateEvent('mousedown', 0, btn);
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
+						'.jodit-dialog__box.active.jodit-modal .jodit-dialog__content .jodit-symbols'
 					);
 					expect(null).does.not.equal(dialog);
 
@@ -1463,7 +1463,7 @@ describe('Test plugins', function() {
 
 					simulateEvent('mousedown', 0, btn);
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
+						'.jodit-dialog__box.active.jodit-modal .jodit-dialog__content .jodit-symbols'
 					);
 					expect(null).does.not.equal(dialog);
 
@@ -1501,7 +1501,7 @@ describe('Test plugins', function() {
 
 					simulateEvent('mousedown', 0, btn);
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
+						'.jodit-dialog__box.active.jodit-modal .jodit-dialog__content .jodit-symbols'
 					);
 					expect(null).does.not.equal(dialog);
 
@@ -1553,7 +1553,7 @@ describe('Test plugins', function() {
 
 					simulateEvent('mousedown', 0, btn);
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
+						'.jodit-dialog__box.active.jodit-modal .jodit-dialog__content .jodit-symbols'
 					);
 					expect(null).does.not.equal(dialog);
 
@@ -1605,7 +1605,7 @@ describe('Test plugins', function() {
 
 					simulateEvent('mousedown', 0, btn);
 					let dialog = editor.ownerDocument.querySelector(
-						'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
+						'.jodit-dialog__box.active.jodit-modal .jodit-dialog__content .jodit-symbols'
 					);
 
 					expect(null).does.not.equal(dialog);
@@ -1618,7 +1618,7 @@ describe('Test plugins', function() {
 
 					simulateEvent('mousedown', 0, btn);
 					dialog = editor.ownerDocument.querySelector(
-						'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
+						'.jodit-dialog__box.active.jodit-modal .jodit-dialog__content .jodit-symbols'
 					);
 
 					expect(null).does.not.equal(dialog);
@@ -1655,7 +1655,7 @@ describe('Test plugins', function() {
 
 				simulateEvent('mousedown', 0, btn);
 				const dialog = editor.ownerDocument.querySelector(
-					'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
+					'.jodit-dialog__box.active.jodit-modal .jodit-dialog__content .jodit-symbols'
 				);
 				expect(null).equals(dialog);
 
@@ -2084,7 +2084,7 @@ describe('Test plugins', function() {
 					editor.value = '<p>Simple text</p>';
 
 					const statusbar = editor.container.querySelector(
-						'.jodit_statusbar'
+						'.jodit-statusbar'
 					);
 
 					expect(
@@ -2107,7 +2107,7 @@ describe('Test plugins', function() {
 					);
 
 					const statusbar = editor.container.querySelector(
-						'.jodit_statusbar ul'
+						'.jodit-statusbar ul'
 					);
 
 					expect(statusbar).is.not.null;
@@ -2133,7 +2133,7 @@ describe('Test plugins', function() {
 						);
 
 						const statusbar = editor.container.querySelector(
-							'.jodit_statusbar ul'
+							'.jodit-statusbar ul'
 						);
 
 						expect(statusbar).is.not.null;
@@ -2169,7 +2169,7 @@ describe('Test plugins', function() {
 						);
 
 						const statusbar = editor.container.querySelector(
-							'.jodit_statusbar ul'
+							'.jodit-statusbar ul'
 						);
 
 						expect(statusbar).is.not.null;
@@ -2222,7 +2222,7 @@ describe('Test plugins', function() {
 						);
 
 						const statusbar = editor.container.querySelector(
-							'.jodit_statusbar ul'
+							'.jodit-statusbar ul'
 						);
 
 						expect(statusbar).is.not.null;
@@ -2237,7 +2237,7 @@ describe('Test plugins', function() {
 						);
 
 						const context = editor.ownerDocument.querySelector(
-							'.jodit_context_menu[data-editor_id=' +
+							'.jodit-context-menu[data-editor_id=' +
 								editor.id +
 								']'
 						);
@@ -2274,7 +2274,7 @@ describe('Test plugins', function() {
 					data.shiftKey = true;
 				});
 				const dialog = editor.ownerDocument.querySelector(
-					'.jodit.jodit_dialog_box.active[data-editor=' +
+					'.jodit.jodit-dialog__box.active[data-editor=' +
 						editor.id +
 						']'
 				);
@@ -2327,7 +2327,7 @@ describe('Test plugins', function() {
 				});
 
 				const dialog = editor.ownerDocument.querySelector(
-					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+					'.jodit.jodit-dialog__box.active[data-editor_id=' +
 						editor.id +
 						']'
 				);
@@ -2377,7 +2377,7 @@ describe('Test plugins', function() {
 					);
 
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -2386,18 +2386,18 @@ describe('Test plugins', function() {
 					simulateEvent(
 						'click',
 						0,
-						dialog.querySelectorAll('.jodit_paste_storage a')[1]
+						dialog.querySelectorAll('.jodit-paste-storage a')[1]
 					);
 					expect(
 						dialog
-							.querySelectorAll('.jodit_paste_storage a')[1]
+							.querySelectorAll('.jodit-paste-storage a')[1]
 							.classList.contains('jodit_active')
 					).is.true;
 
 					simulateEvent(
 						'dblclick',
 						0,
-						dialog.querySelectorAll('.jodit_paste_storage a')[1]
+						dialog.querySelectorAll('.jodit-paste-storage a')[1]
 					);
 
 					expect(
@@ -2451,7 +2451,7 @@ describe('Test plugins', function() {
 					);
 
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active[data-editor_id=' +
 							editor.id +
 							']'
 					);
@@ -2460,51 +2460,51 @@ describe('Test plugins', function() {
 					simulateEvent(
 						'click',
 						0,
-						dialog.querySelectorAll('.jodit_paste_storage a')[0]
+						dialog.querySelectorAll('.jodit-paste-storage a')[0]
 					);
 					expect(
 						dialog
-							.querySelectorAll('.jodit_paste_storage a')[0]
+							.querySelectorAll('.jodit-paste-storage a')[0]
 							.classList.contains('jodit_active')
 					).is.true;
 
 					simulateEvent(
 						'keydown',
 						Jodit.KEY_UP,
-						dialog.querySelectorAll('.jodit_paste_storage a')[0]
+						dialog.querySelectorAll('.jodit-paste-storage a')[0]
 					);
 					expect(
 						dialog
-							.querySelectorAll('.jodit_paste_storage a')[1]
+							.querySelectorAll('.jodit-paste-storage a')[1]
 							.classList.contains('jodit_active')
 					).is.true;
 
 					simulateEvent(
 						'keydown',
 						Jodit.KEY_UP,
-						dialog.querySelectorAll('.jodit_paste_storage a')[1]
+						dialog.querySelectorAll('.jodit-paste-storage a')[1]
 					);
 					expect(
 						dialog
-							.querySelectorAll('.jodit_paste_storage a')[0]
+							.querySelectorAll('.jodit-paste-storage a')[0]
 							.classList.contains('jodit_active')
 					).is.true;
 
 					simulateEvent(
 						'keydown',
 						Jodit.KEY_DOWN,
-						dialog.querySelectorAll('.jodit_paste_storage a')[0]
+						dialog.querySelectorAll('.jodit-paste-storage a')[0]
 					);
 					expect(
 						dialog
-							.querySelectorAll('.jodit_paste_storage a')[1]
+							.querySelectorAll('.jodit-paste-storage a')[1]
 							.classList.contains('jodit_active')
 					).is.true;
 
 					simulateEvent(
 						'keydown',
 						Jodit.KEY_ENTER,
-						dialog.querySelectorAll('.jodit_paste_storage a')[0]
+						dialog.querySelectorAll('.jodit-paste-storage a')[0]
 					);
 
 					expect(

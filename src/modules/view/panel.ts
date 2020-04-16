@@ -8,7 +8,7 @@ import { Component } from '../../core/component';
 import { IPanel, IViewBased, IViewOptions } from '../../types/';
 import { Dom } from '../../core/dom';
 import { Create } from '../../core/create';
-import { error } from '../../core/helpers';
+import { error, isString } from '../../core/helpers';
 
 export abstract class Panel extends Component implements IPanel {
 	protected __whoLocked: string | false = '';
@@ -41,7 +41,7 @@ export abstract class Panel extends Component implements IPanel {
 	protected resolveElement(element: string | HTMLElement): HTMLElement {
 		let resolved = element;
 
-		if (typeof element === 'string') {
+		if (isString(element)) {
 			try {
 				resolved = this.ownerDocument.querySelector(
 					element

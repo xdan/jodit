@@ -1,6 +1,6 @@
 import { IDictionary, ILanguageOptions } from '../../../types';
 import { Config } from '../../../config';
-import { defaultLanguage as defineLanguage } from '../defaultLanguage';
+import { defaultLanguage as defineLanguage } from '../default-language';
 import { ucfirst, isString } from '../index';
 import { lang } from '../../global';
 

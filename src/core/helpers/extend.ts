@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { JoditObject } from './joditObject';
-import { JoditArray } from './joditArray';
+import { JoditObject } from './jodit-object';
+import { JoditArray } from './jodit-array';
 import { type } from './type';
 import { isPlainObject } from './checker/';
 

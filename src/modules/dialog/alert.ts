@@ -32,7 +32,7 @@ export const Alert = (
 	msg: string | HTMLElement,
 	title?: string | (() => void | false),
 	callback?: string | ((dialog: Dialog) => void | false),
-	className: string = 'jodit_alert'
+	className: string = 'jodit-dialog_alert'
 ): Dialog => {
 	if (typeof title === 'function') {
 		callback = title;

@@ -1,8 +1,8 @@
 describe('Tables Jodit Editor Tests', function() {
 	describe('Methods', function() {
-		it('After init container must has one element .jodit_table_resizer', function() {
+		it('After init container must has one element .jodit-table-resizer', function() {
 			const editor = new Jodit(appendTestArea());
-			expect(editor.editor.querySelector('.jodit_table_resizer')).equals(
+			expect(editor.editor.querySelector('.jodit-table-resizer')).equals(
 				null
 			);
 
@@ -27,7 +27,7 @@ describe('Tables Jodit Editor Tests', function() {
 			});
 
 			expect(
-				editor.container.querySelectorAll('.jodit_table_resizer').length
+				editor.container.querySelectorAll('.jodit-table-resizer').length
 			).equals(1);
 		});
 
@@ -56,7 +56,7 @@ describe('Tables Jodit Editor Tests', function() {
 			);
 
 			expect(
-				editor.container.querySelectorAll('.jodit_table_resizer').length
+				editor.container.querySelectorAll('.jodit-table-resizer').length
 			).equals(1);
 		});
 
@@ -1305,7 +1305,7 @@ describe('Tables Jodit Editor Tests', function() {
 						);
 
 						const resizer = editor.container.querySelector(
-							'.jodit_table_resizer'
+							'.jodit-table-resizer'
 						);
 						expect(resizer).is.not.null;
 
@@ -1372,7 +1372,7 @@ describe('Tables Jodit Editor Tests', function() {
 				simulateEvent(
 					'mousedown',
 					1,
-					editor.container.querySelector('.jodit_table_resizer'),
+					editor.container.querySelector('.jodit-table-resizer'),
 					function(options) {
 						options.clientX = box.left;
 						options.pageX = 0;
@@ -1390,7 +1390,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 				expect(
 					parseInt(
-						editor.container.querySelector('.jodit_table_resizer')
+						editor.container.querySelector('.jodit-table-resizer')
 							.style.left,
 						10
 					) < 55
@@ -1419,7 +1419,7 @@ describe('Tables Jodit Editor Tests', function() {
 					simulateEvent(
 						'mousedown',
 						1,
-						editor.container.querySelector('.jodit_table_resizer'),
+						editor.container.querySelector('.jodit-table-resizer'),
 						function(options) {
 							options.clientX = box.left;
 							options.pageX = 0;
@@ -1478,7 +1478,7 @@ describe('Tables Jodit Editor Tests', function() {
 							'mousedown',
 							1,
 							editor.container.querySelector(
-								'.jodit_table_resizer'
+								'.jodit-table-resizer'
 							),
 							function(options) {
 								options.clientX = box.left;
@@ -1553,7 +1553,7 @@ describe('Tables Jodit Editor Tests', function() {
 							'mousedown',
 							1,
 							editor.container.querySelector(
-								'.jodit_table_resizer'
+								'.jodit-table-resizer'
 							),
 							function(options) {
 								options.clientX = box.left;
@@ -1629,7 +1629,7 @@ describe('Tables Jodit Editor Tests', function() {
 								'mousedown',
 								1,
 								editor.container.querySelector(
-									'.jodit_table_resizer'
+									'.jodit-table-resizer'
 								),
 								function(options) {
 									options.clientX = box.left;
@@ -1702,7 +1702,7 @@ describe('Tables Jodit Editor Tests', function() {
 				simulateEvent(
 					'mousedown',
 					1,
-					editor.container.querySelector('.jodit_table_resizer'),
+					editor.container.querySelector('.jodit-table-resizer'),
 					function(options) {
 						options.clientX = box.left + box.width;
 					}
@@ -1753,7 +1753,7 @@ describe('Tables Jodit Editor Tests', function() {
 							'mousedown',
 							1,
 							editor.container.querySelector(
-								'.jodit_table_resizer'
+								'.jodit-table-resizer'
 							),
 							function(options) {
 								options.clientX = box.left;
@@ -1823,7 +1823,7 @@ describe('Tables Jodit Editor Tests', function() {
 						);
 
 						const resizer = editor.ownerDocument.querySelector(
-							'.jodit_resizer[data-editor_id=should_show_resizer_for_this_image]'
+							'.jodit-resizer[data-editor_id=should_show_resizer_for_this_image]'
 						);
 
 						expect(resizer).is.not.null;

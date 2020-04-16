@@ -9,7 +9,7 @@ import { Config } from '../config';
 import { Select } from '../core/selection';
 import { CustomCommand, IStatusBar, IStorage, Modes } from './';
 import { IUploader } from './uploader';
-import { IFileBrowser } from './fileBrowser';
+import { IFileBrowser } from './file-browser';
 import { Observer } from '../modules';
 
 interface IWorkPlace {

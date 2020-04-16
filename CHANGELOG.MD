@@ -1,4 +1,27 @@
 # Changelog
+## 3.4
+Big refactoring release.
+* All `less` files were moved near with TS. Classnaming was changed closer to BEM.
+* Removed `PopupList` and `Popup`. Instead use only `PopupMenu`.
+* Added `ui.button` and `ui.list` for working with buttons. `toolbar.button` extends `ui.button`.
+UIButton - is reactive:
+```js
+const button = new UIButton();
+button.state.activated = true; // will automatically change setAttribute('area-pressed', 'true')
+button.state.icon = 'plus'; // will add `svg` icon in container
+
+// or use `setState`
+button
+    .setState({
+        text: "Click me"
+    })
+    .onAction(() => {
+        Jodit.Alert('Click');
+    })
+    .appendTo(document.body); // will append it inside the body
+```
+* Added `watch` decorator.
+* All filenames were renamed to kebab-case.
 
 ## 3.3.24
 ### BugFix
@@ -103,7 +126,7 @@ console.log(editor.value);
 // <head>
 //     <title>Hello world!</title>
 // </head>
-// <body class="jodit_wysiwyg" style="outline:none">test test <a href="#">test</a></body>
+// <body class="jodit-wysiwyg" style="outline:none">test test <a href="#">test</a></body>
 // </html>
 ```
 

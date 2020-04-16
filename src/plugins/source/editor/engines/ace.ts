@@ -114,7 +114,7 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 			}
 
 			const fakeMirror = this.jodit.create.div(
-				'jodit_source_mirror-fake'
+				'jodit-source__mirror-fake'
 			);
 
 			this.container.appendChild(fakeMirror);

@@ -274,22 +274,6 @@ if (String.prototype.repeat === undefined) {
 	};
 }
 
-(function(e) {
-	e.matches ||
-		(e.matches =
-			e['matchesSelector'] !== undefined
-				? e['matchesSelector']
-				: function(selector) {
-						const matches = this.ownerDocument.querySelectorAll(
-								selector
-							),
-							th = this;
-						return Array.prototype.some.call(matches, function(e) {
-							return e === th;
-						});
-				  });
-})(Element.prototype);
-
 const expect = typeof chai !== 'undefined' ? chai.expect : function() {},
 	stuff = [];
 
@@ -313,7 +297,7 @@ function removeStuff() {
 	stuff.length = 0;
 
 	Array.from(
-		document.querySelectorAll('.jodit.jodit_dialog_box.active')
+		document.querySelectorAll('.jodit.jodit-dialog__box.active')
 	).forEach(function(dialog) {
 		simulateEvent('close_dialog', 0, dialog);
 	});

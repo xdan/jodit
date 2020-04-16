@@ -1,3 +1,3 @@
-export * from "./eventsNative";
-export * from "./observeObject";
+export * from "./events-native";
+export * from "./observe-object";
 export * from "./store";

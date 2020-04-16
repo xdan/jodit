@@ -13,7 +13,7 @@ import {
 } from '../../types';
 import { isJoditObject } from '../../core/helpers/';
 import { ToolbarCollection } from './collection/collection';
-import { ToolbarEditorCollection } from './collection/editorCollection';
+import { ToolbarEditorCollection } from './collection/editor-collection';
 import { ToolbarButton } from './button/button';
 
 /**

@@ -5,6 +5,7 @@ import {
 	CanUndef,
 	IUIButton,
 	IUIButtonState,
+	IUIButtonStatePartial,
 	IViewBased
 } from '../../../types';
 import watch from '../../../core/decorators/watch';
@@ -35,6 +36,15 @@ export class UIButton extends UIElement implements IUIButton {
 	state = UIButtonState();
 
 	/**
+	 * Set state
+	 * @param state
+	 */
+	setState(state: IUIButtonStatePartial): this {
+		Object.assign(this.state, state);
+		return this;
+	}
+
+	/**
 	 * DOM container for text content
 	 */
 	text!: HTMLElement;
@@ -45,7 +55,10 @@ export class UIButton extends UIElement implements IUIButton {
 	icon!: HTMLElement;
 
 	@watch('state.size')
-	protected onChangeSize(ignore?: string, oldSize: string = this.state.size): void {
+	protected onChangeSize(
+		ignore?: string,
+		oldSize: string = this.state.size
+	): void {
 		const cl = this.container.classList;
 
 		cl.remove(this.componentName + '_' + oldSize);
@@ -226,7 +239,7 @@ export class UIButton extends UIElement implements IUIButton {
 	 * Add action handler
 	 * @param originalEvent
 	 */
-	onAction(callback: (originalEvent: MouseEvent) => void): IUIButton {
+	onAction(callback: (originalEvent: MouseEvent) => void): this {
 		this.actionHandlers.push(callback);
 		return this;
 	}
@@ -236,6 +249,8 @@ export class UIButton extends UIElement implements IUIButton {
 	 * @param originalEvent
 	 */
 	private onActionFire(originalEvent: MouseEvent): void {
-		this.actionHandlers.forEach(callback => callback.call(this, originalEvent));
+		this.actionHandlers.forEach(callback =>
+			callback.call(this, originalEvent)
+		);
 	}
 }

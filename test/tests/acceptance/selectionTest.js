@@ -597,7 +597,7 @@ describe('Selection Module Tests', function() {
 			editor.setMode(Jodit.MODE_SOURCE);
 
 			const mirror = editor.container.querySelector(
-				'textarea.jodit_source_mirror'
+				'textarea.jodit-source__mirror'
 			);
 
 			expect(mirror.value).equals('<p>test</p>');
@@ -682,7 +682,7 @@ describe('Selection Module Tests', function() {
 			editor.value = '<p>test</p>';
 
 			const mirror = editor.container.querySelector(
-				'textarea.jodit_source_mirror'
+				'textarea.jodit-source__mirror'
 			);
 			mirror.setSelectionRange(5, 5);
 
@@ -709,7 +709,7 @@ describe('Selection Module Tests', function() {
 			editor.setMode(Jodit.MODE_SOURCE);
 
 			const mirror = editor.container.querySelector(
-				'textarea.jodit_source_mirror'
+				'textarea.jodit-source__mirror'
 			);
 
 			expect(mirror.value).equals('<p>test</p>');
@@ -727,7 +727,7 @@ describe('Selection Module Tests', function() {
 				editor.value = '<p>test</p>';
 
 				const mirror = editor.container.querySelector(
-					'textarea.jodit_source_mirror'
+					'textarea.jodit-source__mirror'
 				);
 				mirror.setSelectionRange(2, 8);
 
@@ -748,7 +748,7 @@ describe('Selection Module Tests', function() {
 			editor.value = '<a>11</a>';
 
 			const mirror = editor.container.querySelector(
-				'textarea.jodit_source_mirror'
+				'textarea.jodit-source__mirror'
 			);
 			mirror.setSelectionRange(4, 4);
 

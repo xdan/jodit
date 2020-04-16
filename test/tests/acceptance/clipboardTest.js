@@ -21,7 +21,7 @@ describe('Clipboard text', function() {
 			expect(editor.value).equals('');
 
 			const dialog = editor.ownerDocument.querySelector(
-				'.jodit.jodit_dialog_box.active.jodit_modal[data-editor_id=' +
+				'.jodit.jodit-dialog__box.active.jodit-modal[data-editor_id=' +
 				editor.id +
 				']'
 			);
@@ -60,7 +60,7 @@ describe('Clipboard text', function() {
 				expect(editor.value).equals('');
 
 				const dialog = editor.ownerDocument.querySelector(
-					'.jodit.jodit_dialog_box.active.jodit_modal[data-editor_id=' +
+					'.jodit.jodit-dialog__box.active.jodit-modal[data-editor_id=' +
 					editor.id +
 					']'
 				);
@@ -100,7 +100,7 @@ describe('Clipboard text', function() {
 					expect(editor.value).equals('');
 
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit_dialog_box.active.jodit_modal[data-editor_id=' +
+						'.jodit.jodit-dialog__box.active.jodit-modal[data-editor_id=' +
 						editor.id +
 						']'
 					);
@@ -133,7 +133,7 @@ describe('Clipboard text', function() {
 			expect(editor.value).equals('test');
 
 			const dialog = editor.ownerDocument.querySelector(
-				'.jodit.jodit_dialog_box.active.jodit_modal[data-editor_id=' +
+				'.jodit.jodit-dialog__box.active.jodit-modal[data-editor_id=' +
 				editor.id +
 				']'
 			);

@@ -7,11 +7,11 @@ export interface IUIElement extends IContainer, IDestructible {
 	parentElement: Nullable<IUIElement>;
 	update(): void;
 	setParentElement(parentElement: Nullable<IUIElement>): void;
-	appendTo(element: HTMLElement): void;
+	appendTo(element: HTMLElement): this;
 }
 
 export interface IUIButtonState {
-	size: "small" | "middle" | "large";
+	size: "tiny" | "xsmall" | "small" | "middle" | "large";
 	disabled: boolean;
 	activated: boolean;
 	icon: {
@@ -23,14 +23,25 @@ export interface IUIButtonState {
 	tooltip: string;
 }
 
+export interface IUIButtonStatePartial {
+	size?: IUIButtonState['size'];
+	disabled?: boolean;
+	activated?: boolean;
+	icon?: IUIButtonState['icon'];
+	text?: string;
+	tooltip?: string;
+}
+
 export interface IUIButton extends IComponent, IUIElement, IFocusable {
 	state: IUIButtonState;
+	setState(state: IUIButtonStatePartial): this
+
 	text: HTMLElement;
 	icon: HTMLElement;
 
 	isButton: true;
 
-	onAction(callback: (event: MouseEvent) => void): IUIButton;
+	onAction(callback: (event: MouseEvent) => void): this;
 }
 
 export interface IUIList extends IUIElement {

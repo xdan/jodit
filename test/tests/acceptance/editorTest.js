@@ -106,7 +106,7 @@ describe('Jodit Editor Tests', function() {
 			expect(area.style.display).equals('none');
 
 			if (!editor.options.iframe) {
-				expect(editor.editor).equals(document.querySelector('.jodit_wysiwyg'));
+				expect(editor.editor).equals(document.querySelector('.jodit-wysiwyg'));
 			} else {
 				expect(editor.editor).equals(editor.editorDocument.body);
 			}

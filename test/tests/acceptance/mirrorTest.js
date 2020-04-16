@@ -27,7 +27,7 @@ describe('CodeMirror editor source code', function() {
 						return false;
 					},
 					sourceEditorReady: function(editor) {
-						expect(editor.container.querySelectorAll('.jodit_source_mirror-fake').length).equals(1);
+						expect(editor.container.querySelectorAll('.jodit-source__mirror-fake').length).equals(1);
 						__done.call(editor);
 					}
 				}

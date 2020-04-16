@@ -6,7 +6,7 @@
 
 import { IDictionary } from '../../types';
 import { isPlainObject, isNumeric } from './checker/';
-import { normilizeCSSValue } from './normalize/';
+import { normalizeCssValue } from './normalize/';
 import { camelCase, kebabCase } from './string/';
 
 /**
@@ -43,7 +43,7 @@ export const css = (
 			if (
 				_value !== undefined &&
 				css(elm, _key, undefined, true) !==
-					normilizeCSSValue(_key, _value)
+					normalizeCssValue(_key, _value)
 			) {
 				(elm.style as any)[_key] = _value;
 			}
@@ -85,7 +85,7 @@ export const css = (
 		result = parseInt(result.toString(), 10);
 	}
 
-	return normilizeCSSValue(key as string, result);
+	return normalizeCssValue(key as string, result);
 };
 
 /**

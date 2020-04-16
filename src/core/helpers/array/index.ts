@@ -4,5 +4,5 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export { asArray } from './asArray';
-export { splitArray } from './splitArray';
+export { asArray } from './as-array';
+export { splitArray } from './split-array';
