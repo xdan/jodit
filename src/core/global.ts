@@ -7,7 +7,7 @@
 import { IDictionary, IJodit, IViewBased } from '../types';
 import { PluginSystem } from './plugin-system';
 import { Dom } from './dom';
-import { kebabCase } from './helpers/string';
+import { kebabCase } from './helpers/';
 
 export const instances: IDictionary<IJodit> = {};
 

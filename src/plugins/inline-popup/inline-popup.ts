@@ -9,8 +9,8 @@ import { Config } from '../../config';
 import {
 	Dom,
 	Plugin,
-	Table,
 	PopupMenu,
+	Table,
 	ToolbarCollection
 } from '../../modules';
 
@@ -539,7 +539,7 @@ export class inlinePopup extends Plugin {
 
 		this.toolbar.build(data, elm).appendTo(this.container);
 
-		this.popup.open(this.container, rect);
+		this.popup.setContent(this.container).open(rect);
 
 		this.__getRect = rect;
 
@@ -548,7 +548,7 @@ export class inlinePopup extends Plugin {
 		return true;
 	};
 
-	private hidePopup = (root?: HTMLElement | PopupMenu) => {
+	private hidePopup = (root?: HTMLElement) => {
 		if (this.isDestructed) {
 			return;
 		}

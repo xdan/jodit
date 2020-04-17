@@ -22,7 +22,7 @@ import {
 	isJoditObject,
 	splitArray
 } from '../../core/helpers/';
-import { ViewWithToolbar } from '../view/view-with-toolbar';
+import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 import { Dom } from '../../core/dom';
 import { STATUSES } from '../../core/component';
 import { fullsize } from '../../plugins/fullsize/fullsize';

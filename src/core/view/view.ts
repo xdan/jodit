@@ -11,16 +11,16 @@ import {
 	IEventsNative,
 	IProgressBar
 } from '../../types';
-import { IViewBased, IViewOptions } from '../../types/';
-import { Component } from '../../core/component';
-import { EventsNative } from '../../core/events/';
+import { IViewBased, IViewOptions } from '../../types';
+import { Component } from '../component';
+import { EventsNative } from '../events';
 import { Panel } from './panel';
-import { Storage } from '../../core/storage';
-import { attr, error, i18n, isFunction } from '../../core/helpers';
-import { BASE_PATH } from '../../core/constants';
-import { Async } from '../../core/async';
-import { ProgressBar } from '..';
-import { modules } from '../../core/global';
+import { Storage } from '../storage';
+import { attr, error, i18n, isFunction } from '../helpers';
+import { BASE_PATH } from '../constants';
+import { Async } from '../async';
+import { ProgressBar } from '../../modules';
+import { modules } from '../global';
 
 declare let appVersion: string;
 

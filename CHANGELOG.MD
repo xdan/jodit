@@ -22,6 +22,13 @@ button
 ```
 * Added `watch` decorator.
 * All filenames were renamed to kebab-case.
+* Added short aliases for. Can be used as chain - `this.j.e.on`
+  *  `this.jodit` => `this.j`
+  *  `this.options` => `this.o`
+  *  `this.create` => `this.c`
+  *  `this.events` => `this.e`
+  *  `this.ownerDocument` => `this.od`
+  *  `this.ownerWindow` => `this.ow`
 
 ## 3.3.24
 ### BugFix

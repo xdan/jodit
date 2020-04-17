@@ -5,13 +5,9 @@
  */
 import './context-menu.less';
 
-import { IViewBased, IContextMenu, IContextMenuAction } from '../../types';
-import { Component, STATUSES } from '../../core/component';
-import { css } from '../../core/helpers';
-import { Dom } from '../../core/dom';
+import { IContextMenu, IContextMenuAction } from '../../types';
 import { Icon } from '../../core/ui';
-import { getContainer } from '../../core/global';
-import contextMenu from '../file-browser/builders/context-menu';
+import { PopupMenu } from '../../core/ui/popup';
 
 /**
  * Module to generate context menu
@@ -19,50 +15,25 @@ import contextMenu from '../file-browser/builders/context-menu';
  * @module ContextMenu
  * @param {Object} parent Jodit main object
  */
-export class ContextMenu extends Component implements IContextMenu {
-	private context: HTMLElement;
-	private evnts = 'mousedown joditCloseDialog scroll';
-
-	/**
-	 * Hide context menu
-	 *
-	 * @method hide
-	 */
-	hide = () => {
-		Dom.safeRemove(this.context);
-		this.j.e.off(this.j.ow, this.evnts, this.hide);
-	};
-
+export class ContextMenu extends PopupMenu implements IContextMenu {
 	/**
 	 * Generate and show context menu
 	 *
-	 * @method show
-	 * @param {number} x Global coordinate by X
-	 * @param {number} y Global coordinate by Y
-	 * @param {Action[]} actions Array with plain objects {icon: 'bin', title: 'Delete', exec: function () { do smth}}
-	 * @param {number} zIndex
+	 * @param x Global coordinate by X
+	 * @param y Global coordinate by Y
+	 * @param actions Array with plain objects {icon: 'bin', title: 'Delete', exec: function () { do smth}}
 	 * @example
 	 * ```javascript
 	 * parent.show(e.clientX, e.clientY, [{icon: 'bin', title: 'Delete', exec: function () { alert(1) }]);
 	 * ```
 	 */
-	show(
-		x: number,
-		y: number,
-		actions: Array<false | IContextMenuAction>,
-		zIndex?: number
-	) {
-		const self = this;
+	show(x: number, y: number, actions: Array<false | IContextMenuAction>) {
+		const self = this,
+			content = this.j.c.div('jodit-context-menu__actions');
 
 		if (!Array.isArray(actions)) {
 			return;
 		}
-
-		if (zIndex) {
-			this.context.style.zIndex = zIndex.toString();
-		}
-
-		Dom.detach(this.context);
 
 		actions.forEach(item => {
 			if (!item) {
@@ -79,45 +50,18 @@ export class ContextMenu extends Component implements IContextMenu {
 
 			const span = action.querySelector('span') as HTMLSpanElement;
 
-			action.addEventListener('mousedown', (e: MouseEvent) => {
+			this.j.e.on(action, 'click', (e: MouseEvent) => {
 				item.exec?.call(self, e);
-				self.hide();
+				self.close();
 				return false;
 			});
 
 			span.textContent = title;
-			self.context.appendChild(action);
+			content.appendChild(action);
 		});
 
-		css(self.context, {
-			left: x,
-			top: y
-		});
-
-		this.j.e.on(this.j.ow, this.evnts, self.hide);
-
-		this.j.markOwner(this.context);
-
-		getContainer(this.j, contextMenu.name).appendChild(this.context);
-	}
-
-	constructor(editor: IViewBased) {
-		super(editor);
-
-		this.context = editor.c.div('jodit-context-menu');
-		this.context.classList.add('jodit-context-menu_show');
-	}
-
-	destruct() {
-		if (this.isInDestruct) {
-			return;
-		}
-
-		this.setStatus(STATUSES.beforeDestruct);
-		Dom.safeRemove(this.context);
-		delete this.context;
-
-		this.j.e.off(this.j.ow, this.evnts, this.hide);
-		super.destruct();
+		super
+			.setContent(content)
+			.open(() => ({ left: x, top: y, width: 0, height: 0 }), true);
 	}
 }

@@ -26,7 +26,7 @@ import {
 import { UIList } from '../../../core/ui';
 import { makeButton } from '../factory';
 import { getContainer } from '../../../core/global';
-import { PopupMenu } from '../../popup';
+import { PopupMenu } from '../../../core/ui/popup';
 import { Dom } from '../../../core/dom';
 import { STATUSES } from '../../../core/component';
 

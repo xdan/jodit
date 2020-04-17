@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Component } from '../../core/component';
-import { IPanel, IViewBased, IViewOptions } from '../../types/';
-import { Dom } from '../../core/dom';
-import { Create } from '../../core/create';
-import { error, isString } from '../../core/helpers';
+import { Component } from '../component';
+import { IPanel, IViewBased, IViewOptions } from '../../types';
+import { Dom } from '../dom';
+import { Create } from '../create';
+import { error, isString } from '../helpers';
 
 export abstract class Panel extends Component implements IPanel {
 	protected __whoLocked: string | false = '';

@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IViewWithToolbar, Buttons, IToolbarCollection } from '../../types/';
+import { IViewWithToolbar, Buttons, IToolbarCollection } from '../../types';
 import { View } from './view';
-import { splitArray, isString } from '../../core/helpers/';
-import { STATUSES } from '../../core/component';
-import { Dom } from '../../core/dom';
-import { makeCollection } from '../toolbar/factory';
+import { splitArray, isString } from '../helpers';
+import { STATUSES } from '../component';
+import { Dom } from '../dom';
+import { makeCollection } from '../../modules/toolbar/factory';
 
 export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	private __toolbar = makeCollection(this);

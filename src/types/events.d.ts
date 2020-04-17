@@ -49,8 +49,8 @@ interface IEventsNative {
 	 * ```
 	 */
 	on(
-		subjectOrEvents: string,
-		eventsOrCallback: CallbackFunction,
+		events: string,
+		handler: CallbackFunction,
 		handlerOrSelector?: void,
 		selector?: string,
 		onTop?: boolean
@@ -58,8 +58,8 @@ interface IEventsNative {
 
 	on(
 		subjectOrEvents: object,
-		eventsOrCallback: string,
-		handlerOrSelector: CallbackFunction,
+		events: string,
+		handler: CallbackFunction,
 		selector?: string,
 		onTop?: boolean
 	): IEventsNative;

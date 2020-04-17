@@ -564,52 +564,56 @@ export function imageProperties(editor: IJodit) {
 
 		($$('.jodit_rechange', mainTab) as HTMLAnchorElement[]).forEach(
 			(imagebtn: HTMLAnchorElement) => {
-				imagebtn.addEventListener('mousedown', (event: MouseEvent) => {
+				editor.e.on(imagebtn, 'mousedown', (event: MouseEvent) => {
 					imagebtn.classList.toggle('active');
 
 					const popup = new PopupMenu(editor);
 
-					popup.open(
-						FileSelectorWidget(
-							editor,
-							{
-								upload: (data: IFileBrowserCallBackData) => {
-									if (data.files && data.files.length) {
-										image.setAttribute(
-											'src',
-											data.baseurl + data.files[0]
-										);
-									}
-
-									update();
-
-									popup.close();
-								},
-
-								filebrowser: (
-									data: IFileBrowserCallBackData
-								) => {
-									if (
-										data &&
-										Array.isArray(data.files) &&
-										data.files.length
-									) {
-										image.setAttribute(
-											'src',
-											data.files[0]
-										);
-
-										popup.close();
+					popup
+						.setContent(
+							FileSelectorWidget(
+								editor,
+								{
+									upload: (
+										data: IFileBrowserCallBackData
+									) => {
+										if (data.files && data.files.length) {
+											image.setAttribute(
+												'src',
+												data.baseurl + data.files[0]
+											);
+										}
 
 										update();
+
+										popup.close();
+									},
+
+									filebrowser: (
+										data: IFileBrowserCallBackData
+									) => {
+										if (
+											data &&
+											Array.isArray(data.files) &&
+											data.files.length
+										) {
+											image.setAttribute(
+												'src',
+												data.files[0]
+											);
+
+											popup.close();
+
+											update();
+										}
 									}
-								}
-							},
-							image,
-							popup.close
-						),
-						() => position(imagebtn)
-					);
+								},
+								image,
+								popup.close
+							)
+						)
+						.open(() => position(imagebtn));
+
 					event.stopPropagation();
 				});
 			}

@@ -34,8 +34,8 @@ export default (self: FileBrowser) => {
 
 		self.async.setTimeout(() => {
 			contextmenu.show(
-				e.pageX,
-				e.pageY,
+				e.clientX,
+				e.clientY,
 				[
 					ga('data-is-file') !== '1' &&
 					opt.editImage &&
@@ -228,8 +228,7 @@ export default (self: FileBrowser) => {
 							}
 						}
 					}
-				],
-				self.dialog.getZIndex() + 1
+				]
 			);
 		}, self.defaultTimeout);
 

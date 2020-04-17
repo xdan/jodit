@@ -5,9 +5,12 @@ export interface IPopup extends IDestructible {
 
 	isOpened: boolean;
 
-	open(content: Nullable<HTMLElement>, getBound: () => IBound): void;
+	open(
+		getBound: () => IBound,
+		keepPosition?: boolean
+	): this;
 
-	setContent(content: HTMLElement): void;
+	setContent(content: HTMLElement): this;
 
-	close(): void;
+	close(): this;
 }

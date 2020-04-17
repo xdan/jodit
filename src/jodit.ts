@@ -38,7 +38,7 @@ import {
 	IUploader
 } from './types';
 
-import { ViewWithToolbar } from './modules/view/view-with-toolbar';
+import { ViewWithToolbar } from './core/view/view-with-toolbar';
 
 import { STATUSES } from './core/component';
 import { instances, pluginSystem, modules, lang } from './core/global';

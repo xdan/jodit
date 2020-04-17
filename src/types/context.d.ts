@@ -10,9 +10,6 @@ export interface IContextMenu extends IDestructible {
 	show(
 		x: number,
 		y: number,
-		actions: Array<false | IContextMenuAction>,
-		zIndex?: number
+		actions: Array<false | IContextMenuAction>
 	): void;
-
-	hide(): void;
 }

@@ -9,7 +9,7 @@ import {
 import { UIButton, UIButtonState } from '../../../core/ui/button';
 import { watch } from '../../../core/decorators';
 import { Dom } from '../../../core/dom';
-import { PopupMenu } from '../../popup/';
+import { PopupMenu } from '../../../core/ui/popup/';
 import { makeCollection } from '../factory';
 import {
 	isFunction,
@@ -203,7 +203,9 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 					: Object.keys(list).map(key => getButton(key, list[key]))
 			);
 
-			menu.open(toolbar.container, () => position(this.container));
+			menu.setContent(toolbar.container).open(() =>
+				position(this.container)
+			);
 
 			this.state.activated = true;
 
@@ -234,12 +236,13 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 				);
 
 				if (popupElm) {
-					popup.open(
-						isString(popupElm)
-							? this.j.c.fromHTML(popupElm)
-							: popupElm,
-						() => position(this.container)
-					);
+					popup
+						.setContent(
+							isString(popupElm)
+								? this.j.c.fromHTML(popupElm)
+								: popupElm
+						)
+						.open(() => position(this.container));
 				}
 			}
 

@@ -11,7 +11,7 @@ export { Alert, Confirm, Prompt, Dialog } from './dialog/';
 export { Dom } from '../core/dom';
 export { Plugin } from '../core/plugin';
 export { Create } from '../core/create';
-export * from './popup';
+export * from '../core/ui/popup';
 export { FileBrowser } from './file-browser/file-browser';
 import * as Helpers from '../core/helpers/';
 export { Helpers };

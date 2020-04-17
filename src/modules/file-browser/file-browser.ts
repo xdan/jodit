@@ -41,7 +41,7 @@ import {
 	attr,
 	error
 } from '../../core/helpers/';
-import { ViewWithToolbar } from '../view/view-with-toolbar';
+import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 
 import './config';
 
