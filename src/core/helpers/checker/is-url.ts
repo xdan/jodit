@@ -11,7 +11,7 @@
  * @param {string} str
  * @return {boolean}
  */
-export const isURL = (str: string) => {
+export function isURL(str: string): boolean {
 	const pattern = new RegExp(
 		'^(https?:\\/\\/)' + // protocol
 		'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
@@ -23,4 +23,4 @@ export const isURL = (str: string) => {
 	); // fragment locator
 
 	return pattern.test(str);
-};
+}

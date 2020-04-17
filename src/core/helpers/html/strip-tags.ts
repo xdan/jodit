@@ -15,10 +15,10 @@ import { Dom } from '../../dom';
  * @param html
  * @param doc
  */
-export const stripTags = (
+export function stripTags(
 	html: string | Node,
 	doc: Document = document
-): string => {
+): string {
 	const tmp: HTMLDivElement = doc.createElement('div');
 
 	if (isString(html)) {
@@ -45,4 +45,4 @@ export const stripTags = (
 	});
 
 	return trim(tmp.innerText) || '';
-};
+}

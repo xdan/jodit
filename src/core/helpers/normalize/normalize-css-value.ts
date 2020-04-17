@@ -6,10 +6,10 @@
 
 import { isNumeric } from '../checker/';
 
-export const normalizeCssValue = (
+export function normalizeCssValue(
 	key: string,
 	value: string | number
-): string | number => {
+): string | number {
 	switch (key.toLowerCase()) {
 		case 'font-weight':
 			switch (value.toString().toLowerCase()) {

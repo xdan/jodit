@@ -5,13 +5,14 @@
  */
 
 import { isNumeric } from './is-numeric';
+import { isString } from './is-string';
 
 /**
  * Check value is Int
  * @param value
  */
-export const isInt = (value: number | string): boolean => {
-	if (typeof value === 'string' && isNumeric(value)) {
+export function isInt(value: number | string): boolean {
+	if (isString(value) && isNumeric(value)) {
 		value = parseFloat(value);
 	}
 

@@ -9,11 +9,11 @@ import { trim } from '../string';
 import { KEY_ALIASES } from '../../constants';
 
 /**
- * Normalize keys to some standart name
+ * Normalize keys to some standard name
  *
  * @param keys
  */
-export const normalizeKeyAliases = (keys: string): string => {
+export function normalizeKeyAliases(keys: string): string {
 	const memory: IDictionary<boolean> = {};
 
 	return keys
@@ -24,4 +24,4 @@ export const normalizeKeyAliases = (keys: string): string => {
 		.sort()
 		.filter(key => !memory[key] && key !== '' && (memory[key] = true))
 		.join('+');
-};
+}

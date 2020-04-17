@@ -10,7 +10,7 @@ import { isFunction } from './is-function';
 /**
  * Check if element is instance of Jodit
  */
-export const isJoditObject = (jodit: unknown): jodit is IJodit => {
+export function isJoditObject(jodit: unknown): jodit is IJodit {
 	return Boolean(
 		jodit &&
 			jodit instanceof Object &&

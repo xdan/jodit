@@ -8,7 +8,7 @@
  * Check if name has normal format
  * @param name
  */
-export const isValidName = (name: string): boolean => {
+export function isValidName(name: string): boolean {
 	if (!name.length) {
 		return false;
 	}
@@ -18,4 +18,4 @@ export const isValidName = (name: string): boolean => {
 	}
 
 	return true;
-};
+}

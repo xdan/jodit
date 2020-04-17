@@ -8,6 +8,6 @@
  * Check value is String
  * @param value
  */
-export const isString = (value: unknown): value is string => {
+export function isString(value: unknown): value is string {
 	return typeof value === 'string';
-};
+}

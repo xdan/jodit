@@ -11,7 +11,7 @@ import { trim } from '../string';
  * The method automatically cleans up content from Microsoft Word and other HTML sources to ensure clean, compliant
  * content that matches the look and feel of the site.
  */
-export const cleanFromWord = (html: string): string => {
+export function cleanFromWord(html: string): string {
 	if (html.indexOf('<html ') !== -1) {
 		html = html.substring(html.indexOf('<html '), html.length);
 		html = html.substring(

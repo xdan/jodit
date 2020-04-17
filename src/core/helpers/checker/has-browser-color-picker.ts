@@ -10,7 +10,7 @@
  * @method hasBrowserColorPicker
  * @return {boolean}
  */
-export const hasBrowserColorPicker = (): boolean => {
+export function hasBrowserColorPicker(): boolean {
 	let supportsColor = true;
 
 	try {
@@ -24,4 +24,4 @@ export const hasBrowserColorPicker = (): boolean => {
 	}
 
 	return supportsColor;
-};
+}

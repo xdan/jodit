@@ -26,7 +26,7 @@ function normalizeCSS(s: string) {
 		});
 }
 
-export const applyStyles = (html: string): string => {
+export function applyStyles(html: string): string {
 	if (html.indexOf('<html ') === -1) {
 		return html;
 	}

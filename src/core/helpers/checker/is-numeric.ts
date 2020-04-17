@@ -11,7 +11,7 @@ import { isString } from './is-string';
  *
  * @param value
  */
-export const isNumeric = (value: number | string): boolean => {
+export function isNumeric(value: number | string): boolean {
 	if (isString(value)) {
 		if (!value.match(/^([+\-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
 			return false;

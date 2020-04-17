@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import { isString } from './is-string';
+
 export const isLicense = (license: any): boolean =>
-	typeof license === 'string' &&
-	license.length === 32 &&
-	/^[a-z0-9]+$/.test(license);
+	isString(license) && license.length === 32 && /^[a-z0-9]+$/.test(license);
