@@ -6,20 +6,10 @@
 
 import { Config } from '../config';
 import { Dom } from '../core/dom';
-import { IControlType, IJodit } from '../types';
-import { Plugin } from '../core/plugin';
-
-function exec(editor: IJodit, event: Node | false, control: IControlType) {
-	editor.e.fire(
-		'insertList',
-		control.command as string,
-		control.args && control.args[0]
-	);
-}
+import { IControlType, IJodit, markerInfo } from '../types';
 
 Config.prototype.controls.ul = {
 	command: 'insertUnorderedList',
-	exec,
 	tags: ['ul'],
 	tooltip: 'Insert Unordered List',
 
@@ -33,7 +23,6 @@ Config.prototype.controls.ul = {
 
 Config.prototype.controls.ol = {
 	command: 'insertOrderedList',
-	exec,
 	tags: ['ol'],
 	tooltip: 'Insert Ordered List',
 
@@ -50,44 +39,77 @@ Config.prototype.controls.ol = {
 /**
  * Process commands insertOrderedList and insertUnOrderedList
  */
-export class orderedlist extends Plugin {
-	protected afterInit(jodit: IJodit): void {
-		jodit.e.on('insertList', (command: string): false | void => {
-			let ul = Dom.up(
-				jodit.selection.current() as Node,
+/**
+ * Process commands insertOrderedList and insertUnOrderedList
+ */
+export function orderedlist(editor: IJodit) {
+	const isOurCommand = (command: string) =>
+			/insert(un)?orderedlist/i.test(command),
+		getWrapper = (): HTMLElement | false => {
+			return Dom.up(
+				editor.selection.current() as Node,
 				(tag: Node | null) => tag && /^UL|OL$/i.test(tag.nodeName),
-				jodit.editor
-			) as HTMLUListElement;
+				editor.editor
+			);
+		},
+		listStyleTypeEqual = (el: HTMLElement, listStyleType: string) => {
+			const value = el.style.listStyleType;
 
-			if (!ul) {
-				ul = this.j.c.inside.element('ul');
-				const items = this.j.selection.wrapInTag('li');
-				items.forEach(li => {
-					ul.appendChild(li);
-				});
+			return (
+				value === listStyleType ||
+				(!value && listStyleType === 'default')
+			);
+		},
+		setListStyleType = (el: HTMLElement, value: string) => {
+			if (value === 'default') {
+				el.style.removeProperty('list-style-type');
+			} else {
+				el.style.setProperty('list-style-type', value);
 			}
+		};
 
-			ul && this.unwrapIfHasParent(ul);
+	editor.e
+		.on('beforeCommand', (command: string, listStyleType: string):
+			| false
+			| void => {
+			if (isOurCommand(command) && listStyleType) {
+				const ul = getWrapper();
 
-			jodit.setEditorValue();
-		});
-	}
-
-	private unwrapIfHasParent(ul: HTMLUListElement): void {
-		if (Dom.isTag(ul.parentNode, 'p')) {
-			const selection = this.j.selection.save();
-
-			Dom.unwrap(ul.parentNode);
-
-			Array.from(ul.childNodes).forEach(li => {
-				if (Dom.isTag(li.lastChild, 'br')) {
-					Dom.safeRemove(li.lastChild);
+				if (ul && !listStyleTypeEqual(ul, listStyleType)) {
+					if (
+						(Dom.isTag(ul, 'ul') && /unordered/i.test(command)) ||
+						(Dom.isTag(ul, 'ol') && !/unordered/i.test(command))
+					) {
+						setListStyleType(ul, listStyleType);
+						return false;
+					}
 				}
-			});
+			}
+		})
+		.on('afterCommand', (command: string, listStyleType: string):
+			| false
+			| void => {
+			if (isOurCommand(command)) {
+				const ul = getWrapper();
 
-			this.j.selection.restore(selection);
-		}
-	}
+				if (ul) {
+					setListStyleType(ul, listStyleType);
+				}
 
-	protected beforeDestruct(jodit: IJodit): void {}
+				if (ul && Dom.isTag(ul.parentNode, 'p')) {
+					const selection: markerInfo[] = editor.selection.save();
+
+					Dom.unwrap(ul.parentNode);
+
+					Array.from(ul.childNodes).forEach((li: Node) => {
+						if (Dom.isTag(li.lastChild, 'br')) {
+							Dom.safeRemove(li.lastChild);
+						}
+					});
+
+					editor.selection.restore(selection);
+				}
+				editor.setEditorValue();
+			}
+		});
 }
