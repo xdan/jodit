@@ -77,7 +77,7 @@ export class enter extends Plugin {
 			.off('.enter')
 			.on('change.enter', this.checkWrapper)
 			.on('keydown.enter', (event: KeyboardEvent): false | void => {
-				if (event.which === consts.KEY_ENTER) {
+				if (event.key === consts.KEY_ENTER) {
 					/**
 					 * Fired on processing `Enter` key. If return some value, plugin `enter` will do nothing.
 					 * if return false - prevent default Enter behavior

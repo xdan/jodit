@@ -5,6 +5,8 @@
  */
 import './dialog.less';
 
+import autobind from 'autobind-decorator';
+
 import { Config, OptionsDefault } from '../../config';
 import {
 	IControlType,
@@ -13,7 +15,10 @@ import {
 	IDictionary,
 	IJodit,
 	IToolbarCollection,
-	IContainer
+	IContainer,
+	IDialog,
+	ContentItem,
+	Content
 } from '../../types/';
 import { KEY_ESC } from '../../core/constants';
 import {
@@ -31,7 +36,6 @@ import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 import { Dom } from '../../core/dom';
 import { STATUSES } from '../../core/component';
 import { fullsize } from '../../plugins/fullsize/fullsize';
-import autobind from 'autobind-decorator';
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}
@@ -69,16 +73,13 @@ Config.prototype.controls.dialog = {
 	}
 } as IDictionary<IControlType>;
 
-type ContentItem = string | HTMLElement | IContainer;
-type Content = ContentItem | ContentItem[] | Array<ContentItem | ContentItem[]>;
-
 /**
  * Module to generate dialog windows
  *
  * @param {Object} parent Jodit main object
  * @param {Object} [opt] Extend Options
  */
-export class Dialog extends ViewWithToolbar {
+export class Dialog extends ViewWithToolbar implements IDialog {
 	/**
 	 * @property {HTMLDivElement} resizer
 	 */
@@ -192,7 +193,7 @@ export class Dialog extends ViewWithToolbar {
 
 		this.lockSelect();
 
-		this.e.on(this.window, 'mousemove', this.onMouseMove);
+		this.addGlobalListeners();
 
 		if (this.j && this.j.events) {
 			/**
@@ -254,13 +255,9 @@ export class Dialog extends ViewWithToolbar {
 		}
 	}
 
-	/**
-	 *
-	 * @param {MouseEvent} e
-	 */
 	@autobind
 	private onKeyDown(e: KeyboardEvent): void {
-		if (this.isOpened() && e.which === KEY_ESC) {
+		if (this.isOpened && e.key === KEY_ESC) {
 			const me = this.getMaxZIndexDialog();
 
 			if (me) {
@@ -278,7 +275,7 @@ export class Dialog extends ViewWithToolbar {
 			this.options &&
 			this.o.resizable &&
 			!this.moved &&
-			this.isOpened() &&
+			this.isOpened &&
 			!this.offsetX &&
 			!this.offsetY
 		) {
@@ -296,7 +293,7 @@ export class Dialog extends ViewWithToolbar {
 
 		this.lockSelect();
 
-		this.e.on(this.window, 'mousemove', this.onMouseMove);
+		this.addGlobalListeners();
 
 		if (this.j.events) {
 			/**
@@ -305,6 +302,28 @@ export class Dialog extends ViewWithToolbar {
 			 */
 			this.j.e.fire(this, 'startResize');
 		}
+	}
+
+	private addGlobalListeners(): void {
+		const self = this;
+
+		self.e
+			.on(self.window, 'mousemove', self.onMouseMove)
+			.on(self.container, 'close_dialog', self.close)
+			.on(self.window, 'mouseup', self.onMouseUp)
+			.on(self.window, 'keydown', self.onKeyDown)
+			.on(self.window, 'resize', self.onResize);
+	}
+
+	private removeGlobalListeners(): void {
+		const self = this;
+
+		self.e
+			.off(self.window, 'mousemove', self.onMouseMove)
+			.off(self.container, 'close_dialog', self.close)
+			.off(self.window, 'mouseup', self.onMouseUp)
+			.off(self.window, 'keydown', self.onKeyDown)
+			.off(self.window, 'resize', self.onResize);
 	}
 
 	options!: IDialogOptions;
@@ -316,10 +335,10 @@ export class Dialog extends ViewWithToolbar {
 
 	workplace!: HTMLDivElement;
 
-	public dialogbox_header!: HTMLHeadingElement;
-	public dialogbox_content!: HTMLDivElement;
-	public dialogbox_footer!: HTMLDivElement;
-	public dialogbox_toolbar!: HTMLDivElement;
+	private dialogbox_header!: HTMLHeadingElement;
+	private dialogbox_content!: HTMLDivElement;
+	private dialogbox_footer!: HTMLDivElement;
+	private dialogbox_toolbar!: HTMLDivElement;
 
 	document: Document = document;
 	window: Window = window;
@@ -330,13 +349,15 @@ export class Dialog extends ViewWithToolbar {
 	 * @param {number} [w] - The width of the window
 	 * @param {number} [h] - The height of the window
 	 */
-	setSize(w?: number | string, h?: number | string) {
+	setSize(w?: number | string, h?: number | string): this {
 		if (w) {
 			css(this.dialog, 'width', w);
 		}
 		if (h) {
 			css(this.dialog, 'height', h);
 		}
+
+		return this;
 	}
 
 	/**
@@ -346,7 +367,7 @@ export class Dialog extends ViewWithToolbar {
 	 * @param {Number} [x] - Position px Horizontal
 	 * @param {Number} [y] - Position px Vertical
 	 */
-	setPosition(x?: number, y?: number) {
+	setPosition(x?: number, y?: number): this {
 		const w: number = this.window.innerWidth,
 			h: number = this.window.innerHeight;
 
@@ -369,6 +390,8 @@ export class Dialog extends ViewWithToolbar {
 
 		this.dialog.style.left = (x || left) + 'px';
 		this.dialog.style.top = (y || top) + 'px';
+
+		return this;
 	}
 
 	/**
@@ -379,13 +402,14 @@ export class Dialog extends ViewWithToolbar {
 	 * @example
 	 * ```javascript
 	 * var dialog = new Jodi.modules.Dialog(parent);
-	 * dialog.setTitle('Hello world');
-	 * dialog.setTitle(['Hello world', '<button>OK</button>', $('<div>some</div>')]);
+	 * dialog.setHeader('Hello world');
+	 * dialog.setHeader(['Hello world', '<button>OK</button>', $('<div>some</div>')]);
 	 * dialog.open();
 	 * ```
 	 */
-	setTitle(content: Content) {
+	setHeader(content: Content): this {
 		this.setElements(this.dialogbox_header, content);
+		return this;
 	}
 
 	/**
@@ -396,13 +420,14 @@ export class Dialog extends ViewWithToolbar {
 	 * @example
 	 * ```javascript
 	 * var dialog = new Jodi.modules.Dialog(parent);
-	 * dialog.setTitle('Hello world');
+	 * dialog.setHeader('Hello world');
 	 * dialog.setContent('<form onsubmit="alert(1);"><input type="text" /></form>');
 	 * dialog.open();
 	 * ```
 	 */
-	setContent(content: Content) {
+	setContent(content: Content): this {
 		this.setElements(this.dialogbox_content, content);
+		return this;
 	}
 
 	/**
@@ -413,7 +438,7 @@ export class Dialog extends ViewWithToolbar {
 	 * @example
 	 * ```javascript
 	 * var dialog = new Jodi.modules.Dialog(parent);
-	 * dialog.setTitle('Hello world');
+	 * dialog.setHeader('Hello world');
 	 * dialog.setContent('<form><input id="someText" type="text" /></form>');
 	 * dialog.setFooter([
 	 *  $('<a class="jodit-button">OK</a>').click(function () {
@@ -424,9 +449,10 @@ export class Dialog extends ViewWithToolbar {
 	 * dialog.open();
 	 * ```
 	 */
-	setFooter(content: Content) {
+	setFooter(content: Content): this {
 		this.setElements(this.dialogbox_footer, content);
 		this.dialog.classList.toggle('jodit-dialog_footer_true', !!content);
+		return this;
 	}
 
 	/**
@@ -453,7 +479,7 @@ export class Dialog extends ViewWithToolbar {
 				dlg = (dialog as any).component as Dialog;
 				zIndex = parseInt(css(dialog, 'zIndex') as string, 10);
 
-				if (dlg.isOpened() && !isNaN(zIndex) && zIndex > maxZi) {
+				if (dlg.isOpened && !isNaN(zIndex) && zIndex > maxZi) {
 					res = dlg;
 					maxZi = zIndex;
 				}
@@ -517,7 +543,7 @@ export class Dialog extends ViewWithToolbar {
 	 *
 	 * @param {string|string[]|Element|Element[]} [content]  specifies the contents of the dialog box.
 	 * Can be false или undefined. see {@link Dialog~setContent|setContent}
-	 * @param {string|string[]|Element|Element[]} [title]  specifies the title of the dialog box, @see setTitle
+	 * @param {string|string[]|Element|Element[]} [title]  specifies the title of the dialog box, @see setHeader
 	 * @param {boolean} [destroyAfter] true - After closing the window , the destructor will be called.
 	 * see {@link Dialog~destruct|destruct}
 	 * @param {boolean} [modal] - true window will be opened in modal mode
@@ -529,7 +555,7 @@ export class Dialog extends ViewWithToolbar {
 		title?: Content,
 		destroyAfter?: boolean,
 		modal?: boolean
-	) {
+	): this {
 		/**
 		 * Called before the opening of the dialog box
 		 *
@@ -537,14 +563,14 @@ export class Dialog extends ViewWithToolbar {
 		 */
 		if (this.j && this.j.events) {
 			if (this.j.e.fire(this, 'beforeOpen') === false) {
-				return;
+				return this;
 			}
 		}
 
 		this.destroyAfterClose = destroyAfter === true;
 
 		if (title !== undefined) {
-			this.setTitle(title);
+			this.setHeader(title);
 		}
 
 		if (content) {
@@ -552,6 +578,7 @@ export class Dialog extends ViewWithToolbar {
 		}
 
 		this.container.classList.add('jodit-dialog_active');
+		this.isOpened = true;
 
 		if (modal) {
 			this.container.classList.add('jodit-modal');
@@ -572,20 +599,14 @@ export class Dialog extends ViewWithToolbar {
 		if (this.j && this.j.events) {
 			this.j.e.fire('afterOpen', this);
 		}
+
+		return this;
 	}
 
 	/**
-	 * Open if the current window
-	 *
-	 * @return {boolean} - true window open
+	 * True, if dialog was opened
 	 */
-	isOpened(): boolean {
-		return (
-			!this.isDestructed &&
-			this.container &&
-			this.container.classList.contains('jodit-dialog_active')
-		);
-	}
+	isOpened: boolean = false;
 
 	/**
 	 * Closes the dialog box , if you want to call the method {@link Dialog~destruct|destruct}
@@ -610,9 +631,10 @@ export class Dialog extends ViewWithToolbar {
 	 * this.dispatchEvent(event)">Close</a>', 'Title');
 	 * ```
 	 */
-	close = (e?: MouseEvent) => {
-		if (this.isDestructed) {
-			return;
+	@autobind
+	close(e?: MouseEvent): this {
+		if (this.isDestructed || !this.isOpened) {
+			return this;
 		}
 
 		if (e) {
@@ -626,17 +648,19 @@ export class Dialog extends ViewWithToolbar {
 		 * @event beforeClose
 		 * @this {Dialog} current dialog
 		 */
-		if (this.j && this.j.events) {
+		if (this.j && this.j.e) {
 			this.j.e.fire('beforeClose', this);
 		}
 
-		this.container &&
-			this.container.classList &&
-			this.container.classList.remove('jodit-dialog_active');
+		this?.container?.classList.remove('jodit-dialog_active');
+
+		this.isOpened = false;
 
 		if (this.iSetMaximization) {
 			this.maximization(false);
 		}
+
+		this.removeGlobalListeners();
 
 		if (this.destroyAfterClose) {
 			this.destruct();
@@ -648,9 +672,11 @@ export class Dialog extends ViewWithToolbar {
 		 * @event afterClose
 		 * @this {Dialog} current dialog
 		 */
-		this.j?.events?.fire(this, 'afterClose');
-		this.j?.events?.fire(this.ow, 'joditCloseDialog');
-	};
+		this.j?.e?.fire(this, 'afterClose');
+		this.j?.e?.fire(this.ow, 'joditCloseDialog');
+
+		return this;
+	}
 
 	constructor(jodit?: IViewBased, options: any = {}) {
 		super(jodit, options);
@@ -778,11 +804,7 @@ export class Dialog extends ViewWithToolbar {
 		this.setStatus(STATUSES.beforeDestruct);
 
 		if (this.events) {
-			this.e
-				.off(this.window, 'mousemove', this.onMouseMove)
-				.off(this.window, 'mouseup', this.onMouseUp)
-				.off(this.window, 'keydown', this.onKeyDown)
-				.off(this.window, 'resize', this.onResize);
+			this.removeGlobalListeners();
 		}
 
 		super.destruct();

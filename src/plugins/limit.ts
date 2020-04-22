@@ -53,7 +53,7 @@ export function limit(jodit: IJodit) {
 				.split(SPACE_REG_EXP)
 				.filter((e: string) => e.length);
 
-			if (event && COMMAND_KEYS.indexOf(event.which) !== -1) {
+			if (event && COMMAND_KEYS.includes(event.key)) {
 				return;
 			}
 

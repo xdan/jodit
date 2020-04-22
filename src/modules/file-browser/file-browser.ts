@@ -26,7 +26,7 @@ import {
 	IDictionary,
 	ImageEditorActionBox,
 	IUploader,
-	IUploaderOptions,
+	IUploaderOptions, IDialog
 } from '../../types/';
 
 import { ImageEditor } from '..';
@@ -39,7 +39,7 @@ import {
 	extend,
 	isValidName,
 	attr,
-	error
+	error, isFunction
 } from '../../core/helpers/';
 import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 
@@ -269,7 +269,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 					isImages
 				} as IFileBrowserCallBackData;
 
-				if (typeof callback !== 'function') {
+				if (!isFunction(callback)) {
 					this.o.defaultCallback(this, data);
 				} else {
 					callback(data);
@@ -290,7 +290,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 	options!: IFileBrowserOptions;
 
-	dialog!: Dialog;
+	dialog!: IDialog;
 
 	/**
 	 * Container for set/get value
@@ -304,7 +304,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	 * @return {boolean}
 	 */
 	isOpened(): boolean {
-		return this.dialog.isOpened() && this.browser.style.display !== 'none';
+		return this.dialog.isOpened && this.browser.style.display !== 'none';
 	}
 
 	/**
@@ -413,7 +413,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 			this.toolbar.build(this.o.buttons).appendTo(header);
 
-			this.dialog.dialogbox_header.classList.add(F_CLASS + '_title_box');
 			this.dialog.open(this.browser, header);
 
 			this.e.fire('sort.filebrowser', this.state.sortBy);

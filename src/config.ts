@@ -625,7 +625,7 @@ export class Config implements IViewOptions {
 	 *                 div = document.createElement('div'),
 	 *                 text = document.createElement('textarea');
 	 *             div.textContent = this.val();
-	 *             dialog.setTitle('Source code');
+	 *             dialog.setHeader('Source code');
 	 *             dialog.setContent(text);
 	 *             dialog.setSize(400, 300);
 	 *             dom(text)

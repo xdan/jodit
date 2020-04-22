@@ -935,7 +935,7 @@ export class ImageEditor extends Component {
 		this.dialog.setContent(this.editor);
 
 		this.dialog.setSize(this.o.width, this.o.height);
-		this.dialog.setTitle([this.buttons.reset, this.buttons.save, this.buttons.saveas]);
+		this.dialog.setHeader([this.buttons.reset, this.buttons.save, this.buttons.saveas]);
 
 		this.setHandlers();
 	}

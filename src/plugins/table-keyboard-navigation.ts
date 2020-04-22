@@ -23,11 +23,11 @@ export function tableKeyboardNavigation(editor: IJodit) {
 			let current: Element, block: HTMLElement;
 
 			if (
-				event.which === consts.KEY_TAB ||
-				event.which === consts.KEY_LEFT ||
-				event.which === consts.KEY_RIGHT ||
-				event.which === consts.KEY_UP ||
-				event.which === consts.KEY_DOWN
+				event.key === consts.KEY_TAB ||
+				event.key === consts.KEY_LEFT ||
+				event.key === consts.KEY_RIGHT ||
+				event.key === consts.KEY_UP ||
+				event.key === consts.KEY_DOWN
 			) {
 				current = editor.selection.current() as Element;
 
@@ -44,32 +44,32 @@ export function tableKeyboardNavigation(editor: IJodit) {
 
 				const range = editor.selection.range;
 
-				if (event.which !== consts.KEY_TAB && current !== block) {
+				if (event.key !== consts.KEY_TAB && current !== block) {
 					if (
-						((event.which === consts.KEY_LEFT ||
-							event.which === consts.KEY_UP) &&
+						((event.key === consts.KEY_LEFT ||
+							event.key === consts.KEY_UP) &&
 							(Dom.prev(
 								current,
 								(elm: Node | null) =>
-									event.which === consts.KEY_UP
+									event.key === consts.KEY_UP
 										? Dom.isTag(elm, 'br')
 										: !!elm,
 								block
 							) ||
-								(event.which !== consts.KEY_UP &&
+								(event.key !== consts.KEY_UP &&
 									Dom.isText(current) &&
 									range.startOffset !== 0))) ||
-						((event.which === consts.KEY_RIGHT ||
-							event.which === consts.KEY_DOWN) &&
+						((event.key === consts.KEY_RIGHT ||
+							event.key === consts.KEY_DOWN) &&
 							(Dom.next(
 								current,
 								(elm: Node | null) =>
-									event.which === consts.KEY_DOWN
+									event.key === consts.KEY_DOWN
 										? Dom.isTag(elm, 'br')
 										: !!elm,
 								block
 							) ||
-								(event.which !== consts.KEY_DOWN &&
+								(event.key !== consts.KEY_DOWN &&
 									Dom.isText(current) &&
 									current.nodeValue &&
 									range.startOffset !==
@@ -89,12 +89,12 @@ export function tableKeyboardNavigation(editor: IJodit) {
 			) as HTMLTableElement;
 			let next: HTMLTableCellElement | null = null;
 
-			switch (event.which) {
+			switch (event.key) {
 				case consts.KEY_TAB:
 				// case consts.KEY_RIGHT:
 				case consts.KEY_LEFT:
 					const sibling: string =
-						event.which === consts.KEY_LEFT || event.shiftKey
+						event.key === consts.KEY_LEFT || event.shiftKey
 							? 'prev'
 							: 'next';
 
@@ -140,7 +140,7 @@ export function tableKeyboardNavigation(editor: IJodit) {
 								}
 							}
 						);
-						if (event.which === consts.KEY_UP) {
+						if (event.key === consts.KEY_UP) {
 							if (matrix[i - 1] !== undefined) {
 								next = matrix[i - 1][j];
 							}
@@ -159,13 +159,13 @@ export function tableKeyboardNavigation(editor: IJodit) {
 					next.appendChild(first);
 					editor.selection.setCursorBefore(first);
 				} else {
-					if (event.which === consts.KEY_TAB) {
+					if (event.key === consts.KEY_TAB) {
 						editor.selection.select(next, true);
 					} else {
 						editor.selection.setCursorIn(
 							next,
-							event.which === consts.KEY_RIGHT ||
-								event.which === consts.KEY_DOWN
+							event.key === consts.KEY_RIGHT ||
+								event.key === consts.KEY_DOWN
 						);
 					}
 				}

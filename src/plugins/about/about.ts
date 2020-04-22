@@ -10,7 +10,7 @@ Config.prototype.controls.about = {
 		const dialog: any = editor.getInstance('Dialog'),
 			i18n = editor.i18n.bind(editor);
 
-		dialog.setTitle(i18n('About Jodit'));
+		dialog.setHeader(i18n('About Jodit'));
 
 		dialog.setContent(
 			`<div class="jodit-about">

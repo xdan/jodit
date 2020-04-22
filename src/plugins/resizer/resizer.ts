@@ -143,7 +143,7 @@ export class resizer extends Plugin {
 			.on(editor.editor, 'keydown.resizer', (e: KeyboardEvent) => {
 				if (
 					this.isShown &&
-					e.which === consts.KEY_DELETE &&
+					e.key === consts.KEY_DELETE &&
 					this.element &&
 					!Dom.isTag(this.element, 'table')
 				) {

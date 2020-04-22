@@ -564,10 +564,11 @@ export class search extends Plugin {
 								return;
 							}
 
-							switch (e.which) {
+							switch (e.key) {
 								case consts.KEY_ESC:
 									this.close();
 									break;
+
 								case consts.KEY_F3:
 									if (self.queryInput.value) {
 										editor.e.fire(
@@ -575,6 +576,7 @@ export class search extends Plugin {
 												? 'searchNext'
 												: 'searchPrevious'
 										);
+
 										e.preventDefault();
 									}
 									break;
@@ -620,14 +622,16 @@ export class search extends Plugin {
 					this.queryInput,
 					'keydown',
 					this.j.async.debounce((e: KeyboardEvent) => {
-						switch (e.which) {
+						switch (e.key) {
 							case consts.KEY_ENTER:
 								e.preventDefault();
 								e.stopImmediatePropagation();
 								if (editor.e.fire('searchNext')) {
 									this.close();
 								}
+
 								break;
+
 							default:
 								this.updateCounters();
 								break;

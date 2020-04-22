@@ -48,18 +48,18 @@ export class pasteStorage extends Plugin {
 
 	private onKeyDown = (e: KeyboardEvent) => {
 		let index: number = this.currentIndex;
-		if ([KEY_UP, KEY_DOWN, KEY_ENTER].indexOf(e.which) === -1) {
+		if ([KEY_UP, KEY_DOWN, KEY_ENTER].indexOf(e.key) === -1) {
 			return;
 		}
 
-		if (e.which === KEY_UP) {
+		if (e.key === KEY_UP) {
 			if (index === 0) {
 				index = this.list.length - 1;
 			} else {
 				index -= 1;
 			}
 		}
-		if (e.which === KEY_DOWN) {
+		if (e.key === KEY_DOWN) {
 			if (index === this.list.length - 1) {
 				index = 0;
 			} else {
@@ -67,7 +67,7 @@ export class pasteStorage extends Plugin {
 			}
 		}
 
-		if (e.which === KEY_ENTER) {
+		if (e.key === KEY_ENTER) {
 			this.paste();
 			return;
 		}
@@ -163,7 +163,7 @@ export class pasteStorage extends Plugin {
 		this.container.appendChild(this.listBox);
 		this.container.appendChild(this.previewBox);
 
-		this.dialog.setTitle(this.j.i18n('Choose Content to Paste'));
+		this.dialog.setHeader(this.j.i18n('Choose Content to Paste'));
 		this.dialog.setContent(this.container);
 		this.dialog.setFooter([pasteButton, cancelButton]);
 

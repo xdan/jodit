@@ -670,7 +670,7 @@ export function imageProperties(editor: IJodit) {
 			}
 		);
 
-		dialog.setTitle(i18n('Image properties'));
+		dialog.setHeader(i18n('Image properties'));
 
 		dialog.setContent(prop);
 

@@ -366,16 +366,16 @@ export class symbols {
 
 						let newIndex: number;
 
-						switch (e.which) {
+						switch (e.key) {
 							case KEY_UP:
 							case KEY_DOWN:
 								newIndex =
-									e.which === KEY_UP
+									e.key === KEY_UP
 										? index - self.countInRow
 										: index + self.countInRow;
 								if (chars[newIndex] === undefined) {
 									newIndex =
-										e.which === KEY_UP
+										e.key === KEY_UP
 											? Math.floor(
 													chars.length /
 														self.countInRow
@@ -394,12 +394,10 @@ export class symbols {
 							case KEY_RIGHT:
 							case KEY_LEFT:
 								newIndex =
-									e.which === KEY_LEFT
-										? index - 1
-										: index + 1;
+									e.key === KEY_LEFT ? index - 1 : index + 1;
 								if (chars[newIndex] === undefined) {
 									newIndex =
-										e.which === KEY_LEFT
+										e.key === KEY_LEFT
 											? chars.length - 1
 											: 0;
 								}

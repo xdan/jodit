@@ -19,27 +19,19 @@ export const IS_BLOCK = /^(PRE|DIV|P|LI|H[1-6]|BLOCKQUOTE|TD|TH|TABLE|BODY|HTML|
 export const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB)$/i;
 export const MAY_BE_REMOVED_WITH_KEY = /^(IMG|BR|IFRAME|SCRIPT|INPUT|TEXTAREA|HR|JODIT|JODIT-MEDIA)$/i;
 
-export const KEY_BACKSPACE = 8;
-export const KEY_TAB = 9;
-export const KEY_ENTER = 13;
-export const KEY_ESC = 27;
+export const KEY_BACKSPACE = 'Backspace';
+export const KEY_TAB = 'Tab';
+export const KEY_ENTER = 'Enter';
+export const KEY_ESC = 'Escape';
 
-export const KEY_LEFT = 37;
-export const KEY_UP = 38;
-export const KEY_RIGHT = 39;
-export const KEY_DOWN = 40;
+export const KEY_LEFT = 'ArrowLeft';
+export const KEY_UP = 'ArrowUp';
+export const KEY_RIGHT = 'ArrowRight';
+export const KEY_DOWN = 'ArrowDown';
 
-export const KEY_DELETE = 46;
+export const KEY_DELETE = 'Delete';
 
-export const KEY_F = 70;
-export const KEY_R = 82;
-export const KEY_H = 72;
-export const KEY_Y = 89;
-export const KEY_V = 86;
-export const KEY_Z = 90;
-
-export const KEY_F3 = 114;
-// export const KEY_CTRL       = 17;
+export const KEY_F3 = 'F3';
 
 export const NEARBY = 5;
 export const ACCURACY = 10;

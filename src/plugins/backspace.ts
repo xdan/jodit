@@ -216,10 +216,10 @@ export class backspace extends Plugin {
 			})
 			.on('keydown', (event: KeyboardEvent): false | void => {
 				if (
-					event.which === consts.KEY_BACKSPACE ||
-					event.which === consts.KEY_DELETE
+					event.key === consts.KEY_BACKSPACE ||
+					event.key === consts.KEY_DELETE
 				) {
-					return this.onDelete(event.which === consts.KEY_BACKSPACE);
+					return this.onDelete(event.key === consts.KEY_BACKSPACE);
 				}
 			});
 	}

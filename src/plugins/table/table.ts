@@ -794,7 +794,7 @@ export class TableProcessor extends Plugin {
 				});
 			})
 			.on('keydown.table', (event: KeyboardEvent) => {
-				if (event.which === consts.KEY_TAB) {
+				if (event.key === consts.KEY_TAB) {
 					($$('table', editor.editor) as HTMLTableElement[]).forEach(
 						(table: HTMLTableElement) => {
 							this.deSelectAll(table);

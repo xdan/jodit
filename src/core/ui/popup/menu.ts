@@ -40,6 +40,7 @@ export class PopupMenu extends UIElement implements IPopup {
 		this.j.markOwner(this.container);
 
 		this.isOpened = true;
+		this.addGlobalListeners();
 
 		this.getBound = !keepPosition ? getBound : this.getKeepBound(getBound);
 
@@ -47,13 +48,7 @@ export class PopupMenu extends UIElement implements IPopup {
 
 		this.updatePosition();
 
-		const up = this.updatePosition;
-
 		this.j.e
-			.on(camelCase('close-all-popups'), this.close)
-			.on('resize', up)
-			.on(this.j.ow, 'scroll', up)
-			.on(this.j.ow, 'resize', up)
 			.fire(this, 'afterOpen');
 
 		return this;
@@ -114,19 +109,34 @@ export class PopupMenu extends UIElement implements IPopup {
 			return this;
 		}
 
-		const up = this.updatePosition;
-
-		this.j.e
-			.off(camelCase('close-all-popups'), this.close)
-			.off('resize', up)
-			.off(this.j.ow, 'scroll', up)
-			.off(this.j.ow, 'resize', up)
-			.fire(this, 'afterClose', this);
+		this.removeGlobalListeners();
 
 		this.isOpened = false;
 		Dom.safeRemove(this.container);
 
 		return this;
+	}
+
+	private addGlobalListeners(): void {
+		const up = this.updatePosition, j = this.j;
+
+		j.e
+			.on(camelCase('close-all-popups'), this.close)
+			.on('escape', this.close)
+			.on('resize', up)
+			.on(j.ow, 'scroll', up)
+			.on(j.ow, 'resize', up);
+	}
+
+	private removeGlobalListeners(): void {
+		const up = this.updatePosition, j = this.j;
+
+		j.e
+			.off(camelCase('close-all-popups'), this.close)
+			.off('escape', this.close)
+			.off('resize', up)
+			.off(j.ow, 'scroll', up)
+			.off(j.ow, 'resize', up);
 	}
 
 	constructor(jodit?: IViewBased) {
