@@ -119,7 +119,7 @@ export class sticky extends Plugin {
 					!(jodit.o.toolbarDisableStickyForMobile && this.isMobile());
 
 			if (jodit.o.toolbarSticky && jodit.o.toolbar === true) {
-				const container = jodit.toolbar.getParentContainer();
+				const container = jodit.toolbarContainer;
 
 				if (container) {
 					doSticky

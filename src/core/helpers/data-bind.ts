@@ -3,24 +3,35 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+import { Component } from '../component';
 
-const dataBindKey = 'JoditDataBindKey';
+const store = new WeakMap();
 
-export const dataBind = (elm: any, key: string, value?: any) => {
-	let store = elm[dataBindKey];
+/**
+ *
+ * @param elm
+ * @param key
+ * @param value
+ */
+export const dataBind = <T = any>(elm: object, key: string, value?: T): T => {
+	let itemStore = store.get(elm);
 
-	if (!store) {
-		store = {};
-		Object.defineProperty(elm, dataBindKey, {
-			enumerable: false,
-			configurable: true,
-			value: store
-		});
+	if (!itemStore) {
+		itemStore = {};
+		store.set(elm, itemStore);
+
+		if (elm instanceof Component) {
+			elm?.j?.e?.on('beforeDestruct', () => {
+				store.delete(elm);
+			});
+		}
 	}
 
 	if (value === undefined) {
-		return store[key];
+		return itemStore[key];
 	}
 
-	store[key] = value;
+	itemStore[key] = value;
+
+	return value;
 };

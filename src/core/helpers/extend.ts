@@ -6,8 +6,7 @@
 
 import { JoditObject } from './jodit-object';
 import { JoditArray } from './jodit-array';
-import { type } from './type';
-import { isPlainObject } from './checker/';
+import { isFunction, isPlainObject } from './checker/';
 
 /**
  * Copy the values of all of the enumerable own properties from one or more source objects to a
@@ -84,7 +83,7 @@ export function extend(this: any, ...args: any[]): any {
 		i += 1;
 	}
 
-	if (typeof target !== 'object' && type(target) === 'function') {
+	if (typeof target !== 'object' && isFunction(target)) {
 		target = {};
 	}
 

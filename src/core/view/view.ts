@@ -22,8 +22,6 @@ import { Async } from '../async';
 import { ProgressBar } from '../../modules';
 import { modules } from '../global';
 
-declare let appVersion: string;
-
 export abstract class View extends Panel implements IViewBased {
 	/**
 	 * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
@@ -37,7 +35,7 @@ export abstract class View extends Panel implements IViewBased {
 	markOwner(elm: HTMLElement): void {
 		attr(elm, 'data-editor_id', this.id);
 
-		!elm.component && Object.defineProperty(elm, 'component', {
+		!elm.component && Object.defineProperty(elm, 'jodit', {
 			value: this
 		});
 	}

@@ -1756,6 +1756,7 @@ describe('Test plugins', function() {
 					);
 				});
 			});
+
 			describe('Add ctrl+shift+i to default ctrl+i shortcut for italic command', function() {
 				it('Should work with each of shortcuts', function() {
 					const area = appendTestArea(),
@@ -1824,6 +1825,7 @@ describe('Test plugins', function() {
 				);
 			});
 		});
+
 		describe('Create editor in page with long text', function() {
 			describe('and scroll page to bottom', function() {
 				it('Should add to editor class `jodit_sticky` and toolbar must be always on the top', function() {
@@ -1852,6 +1854,7 @@ describe('Test plugins', function() {
 							.getBoundingClientRect().top
 					);
 				});
+
 				describe('On mobile devices - with toolbarDisableStickyForMobile = true', function() {
 					it('Should not add to editor class `jodit_sticky`', function() {
 						getBox().style.width = '370px'; // IPhone 7
@@ -1878,6 +1881,7 @@ describe('Test plugins', function() {
 						getBox().style.width = 'auto'; // IPhone 7
 					});
 				});
+
 				describe('In iframe mode', function() {
 					it('Should work some way', function() {
 						const editor = new Jodit(appendTestArea(), {
@@ -1902,6 +1906,7 @@ describe('Test plugins', function() {
 						);
 					});
 				});
+
 				describe('add offset for toolbar', function() {
 					it('Should add offset for sticky toolbar', function() {
 						const area = appendTestArea(),
@@ -1927,6 +1932,7 @@ describe('Test plugins', function() {
 						);
 					});
 				});
+
 				describe('with toolbarSticky false', function() {
 					it('Should do nothing with toolbar', function() {
 						const area = appendTestArea(),

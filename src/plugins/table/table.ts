@@ -132,12 +132,9 @@ Config.prototype.controls.table = {
 			rows.textContent = rows_count.toString();
 		};
 
-		blocksContainer.addEventListener('mousemove', mouseenter);
-
-		editor.e.on(
-			blocksContainer,
-			'touchstart mousedown',
-			(e: MouseEvent) => {
+		editor.e
+			.on(blocksContainer, 'mousemove', mouseenter)
+			.on(blocksContainer, 'touchstart mousedown', (e: MouseEvent) => {
 				const dv = e.target;
 
 				e.preventDefault();
@@ -227,8 +224,7 @@ Config.prototype.controls.table = {
 				}
 
 				close();
-			}
-		);
+			});
 
 		if (button && button.parentElement) {
 			for (let i = 0; i < default_rows_count; i += 1) {

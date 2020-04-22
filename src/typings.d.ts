@@ -12,3 +12,7 @@ declare module '*.svg' {
 interface HTMLElement {
 	component: any;
 }
+
+declare const appVersion: string;
+
+declare const isProd: string;

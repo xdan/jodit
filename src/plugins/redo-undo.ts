@@ -24,7 +24,7 @@ Config.prototype.controls.undo = {
 /**
  * Custom process Redo and Undo functionality
  */
-export class redoundo extends Plugin {
+export class redoUndo extends Plugin {
 	beforeDestruct() {
 		// do nothing
 	}

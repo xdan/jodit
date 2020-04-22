@@ -55,32 +55,12 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		return button || null;
 	}
 
-	/**
-	 * Returns parent container
-	 */
-	getParentContainer(): Nullable<HTMLElement> {
-		return this.parentElement?.container || null;
-	}
-
 	protected makeButton(
 		control: IControlTypeStrong,
 		target: Nullable<HTMLElement> = null
 	): IUIButton {
 		return makeButton(this.j, control, target);
 	}
-
-	// protected applyContainerOptions() {
-	// 	this.container.classList.add(
-	// 		'jodit_' + (this.j.o.theme || 'default') + '_theme'
-	// 	);
-	//
-	// 	if (this.j.o.zIndex) {
-	// 		this.container.style.zIndex = parseInt(
-	// 			this.j.o.zIndex.toString(),
-	// 			10
-	// 		).toString();
-	// 	}
-	// }
 
 	/**
 	 * Button should be active

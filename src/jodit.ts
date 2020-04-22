@@ -625,7 +625,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 						showUI,
 						value
 					);
-				} catch {}
+				} catch(e) {
+					if (!isProd) {
+						throw e;
+					}
+				}
 			}
 		}
 
@@ -1165,7 +1169,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		this.currentPlace = place;
 
-		this.buildToolbar(place.container);
+		this.buildToolbar();
 
 		if (this.isReady) {
 			this.e.fire('changePlace', place);

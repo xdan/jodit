@@ -6,19 +6,24 @@
 
 import './image-editor.less';
 
+import autobind from 'autobind-decorator';
+
 import { Config } from '../../config';
 import {
 	ImageEditorActionBox,
 	IJodit,
 	ImageEditorOptions,
 	ImageAction,
-	IViewBased
+	IViewBased,
+	IUIButton,
+	IDictionary
 } from '../../types';
 import { Component } from '../../core/component';
 import { Alert, Dialog, Prompt } from '../dialog';
 import { $$, attr, css, trim } from '../../core/helpers';
 import { Dom } from '../../core/dom';
 import { Icon } from '../../core/ui';
+import { Button } from '../../core/ui/button';
 
 declare module '../../config' {
 	interface Config {
@@ -119,7 +124,7 @@ export class ImageEditor extends Component {
 	private diff_x: number = 0;
 	private diff_y: number = 0;
 
-	private buttons: HTMLElement[];
+	private buttons: IDictionary<IUIButton>;
 
 	private editor: HTMLElement;
 
@@ -573,11 +578,8 @@ export class ImageEditor extends Component {
 				self.updateCropBox();
 			});
 
-		self.buttons.forEach(button => {
-			button.addEventListener('mousedown', e => {
-				e.stopImmediatePropagation();
-			});
-			button.addEventListener('click', () => {
+		Object.values(self.buttons).forEach(button => {
+			button.onAction(() => {
 				const data = {
 					action: self.activeTab,
 					box:
@@ -586,8 +588,8 @@ export class ImageEditor extends Component {
 							: self.cropBox
 				} as ImageEditorActionBox;
 
-				switch (attr(button, '-action')) {
-					case 'saveas':
+				switch (button) {
+					case self.buttons.saveas:
 						Prompt(
 							self.j.i18n('Enter new name'),
 							self.j.i18n('Save in new file'),
@@ -611,12 +613,12 @@ export class ImageEditor extends Component {
 							}
 						);
 						break;
-					case 'save':
+					case self.buttons.save:
 						self.onSave(undefined, data, self.hide, (e: Error) => {
 							Alert(e.message);
 						});
 						break;
-					case 'reset':
+					case self.buttons.reset:
 						if (self.activeTab === 'resize') {
 							css(self.image, {
 								width: null,
@@ -651,9 +653,10 @@ export class ImageEditor extends Component {
 	 *
 	 * @method hide
 	 */
-	hide = () => {
+	@autobind
+	hide() {
 		this.dialog.close();
-	};
+	}
 
 	/**
 	 * Open image editor
@@ -689,7 +692,8 @@ export class ImageEditor extends Component {
 	 * });
 	 * ```
 	 */
-	open = (
+	@autobind
+	open(
 		url: string,
 		save: (
 			newname: string | void,
@@ -697,7 +701,7 @@ export class ImageEditor extends Component {
 			success: () => void,
 			failed: (error: Error) => void
 		) => void
-	): Promise<Dialog> => {
+	): Promise<Dialog> {
 		return this.j.async.promise<Dialog>(resolve => {
 			const timestamp = new Date().getTime();
 
@@ -772,7 +776,7 @@ export class ImageEditor extends Component {
 				onload();
 			}
 		});
-	};
+	}
 
 	constructor(editor: IViewBased) {
 		super(editor);
@@ -791,31 +795,11 @@ export class ImageEditor extends Component {
 		const r = this.resizeUseRatio;
 		const c = this.cropUseRatio;
 
-		this.buttons = [
-			this.j.c.fromHTML(
-				'<button data-action="reset" type="button" class="jodit-button">' +
-					gi('update') +
-					'&nbsp;' +
-					i('Reset') +
-					'</button>'
-			),
-
-			this.j.c.fromHTML(
-				'<button data-action="save" type="button" class="jodit-button jodit-button_success">' +
-					gi('save') +
-					'&nbsp;' +
-					i('Save') +
-					'</button>'
-			),
-
-			this.j.c.fromHTML(
-				'<button data-action="saveas" type="button" class="jodit-button jodit-button_success">' +
-					gi('save') +
-					'&nbsp;' +
-					i('Save as ...') +
-					'</button>'
-			)
-		];
+		this.buttons = {
+			reset: Button(this.j, 'update', 'Reset'),
+			save: Button(this.j, 'save', 'Save'),
+			saveas: Button(this.j, 'save', 'Save as ...')
+		};
 
 		this.activeTab = o.resize ? 'resize' : 'crop';
 
@@ -951,7 +935,7 @@ export class ImageEditor extends Component {
 		this.dialog.setContent(this.editor);
 
 		this.dialog.setSize(this.o.width, this.o.height);
-		this.dialog.setTitle(this.buttons);
+		this.dialog.setTitle([this.buttons.reset, this.buttons.save, this.buttons.saveas]);
 
 		this.setHandlers();
 	}

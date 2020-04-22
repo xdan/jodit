@@ -329,6 +329,10 @@ function appendTestArea(id, noput) {
 	return textarea;
 }
 
+function getJodit() {
+	return new Jodit(appendTestArea());
+}
+
 /**
  * Create empty DIV block and but it inside Box
  *
@@ -570,20 +574,29 @@ function simulateEvent(type, keyCodeArg, element, options) {
 	element.dispatchEvent(evt);
 }
 
+function getOpenedPopup(editor) {
+	const popups = editor.ownerDocument.querySelectorAll('[role="popup"][data-editor_id="' + editor.id + '"]');
+	return popups.length ? popups[popups.length - 1] : null;
+}
+
 /**
  * Click and trigger some button event
  *
  * @param {string} buttonName
  * @param {Jodit|HTMLElement} joditOrElement
  */
-function clickButton(buttonName, joditOrElement) {
+function clickButton(buttonName, joditOrElement, role = "button") {
 	simulateEvent(
-		'mousedown',
+		'click',
 		0,
 		(joditOrElement.isJodit ? joditOrElement.container : joditOrElement).querySelector(
-			'.jodit_toolbar_btn.jodit_toolbar_btn-' + buttonName
+			'.jodit-toolbar-button.jodit-toolbar-button_' + buttonName + ' [role="' + role + '"]'
 		)
 	);
+}
+
+function clickTrigger(buttonName, joditOrElement) {
+	clickButton(buttonName, joditOrElement, 'trigger');
 }
 
 /**

@@ -507,59 +507,6 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 	});
 
-	describe('insertUnorderedList', function() {
-		it('Run command insertUnorderedList should wrap or replace all paragraphs to ul>li', function() {
-			const editor = new Jodit(appendTestArea());
-			editor.value = '<p>test</p><p>test</p><p>test</p>';
-
-			editor.execCommand('selectAll');
-			editor.execCommand('insertUnorderedList');
-
-			expect(editor.value).equals(
-				'<ul><li>test</li><li>test</li><li>test</li></ul>'
-			);
-		});
-		it('If press Enter inside <li> in the end it should create new <li> and cursor must be in it', function() {
-			const editor = new Jodit(appendTestArea());
-			editor.value = '<ul><li>test</li></ul>';
-
-			const sel = editor.selection.sel,
-				range = editor.selection.createRange();
-
-			range.setStart(editor.editor.firstChild.firstChild.firstChild, 4);
-			range.collapse(true);
-
-			sel.removeAllRanges();
-			sel.addRange(range);
-
-			simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-
-			editor.selection.insertNode(editor.create.inside.text(' a '));
-
-			expect(editor.value).equals(
-				'<ul><li>test</li><li> a <br></li></ul>'
-			);
-		});
-		it('If press Enter inside <li> inside some text should split that text and created new <li> and cursor must be in it', function() {
-			const editor = new Jodit(appendTestArea());
-			editor.value = '<ul><li>test</li></ul>';
-
-			const sel = editor.selection.sel,
-				range = editor.selection.createRange();
-
-			range.setStart(editor.editor.firstChild.firstChild.firstChild, 2);
-			range.collapse(true);
-
-			sel.removeAllRanges();
-			sel.addRange(range);
-
-			simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-
-			editor.selection.insertNode(editor.create.inside.text(' a '));
-
-			expect(editor.value).equals('<ul><li>te</li><li> a st</li></ul>');
-		});
-	});
 	describe('formatBlock', function() {
 		it('Should wrap or replace container to specialize tag', function() {
 			const editor = new Jodit(appendTestArea());

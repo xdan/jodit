@@ -116,11 +116,11 @@ export class pasteStorage extends Plugin {
 			const a: HTMLElement = this.j.c.element('a');
 			a.textContent = index + 1 + '. ' + html.replace(SPACE_REG_EXP, '');
 
-			a.addEventListener('keydown', this.onKeyDown);
+			this.j.e.on(a,'keydown', this.onKeyDown);
 
-			a.setAttribute('href', 'javascript:void(0)');
-			a.setAttribute('data-index', index.toString());
-			a.setAttribute('tab-index', '-1');
+			attr(a,'href', 'javascript:void(0)');
+			attr(a,'data-index', index.toString());
+			attr(a,'tab-index', '-1');
 
 			this.listBox && this.listBox.appendChild(a);
 		});
@@ -143,7 +143,7 @@ export class pasteStorage extends Plugin {
 				'</a>'
 		) as HTMLAnchorElement;
 
-		pasteButton.addEventListener('click', this.paste);
+		this.j.e.on(pasteButton,'click', this.paste);
 
 		const cancelButton: HTMLAnchorElement = this.j.c.fromHTML(
 			'<a href="javascript:void(0)" style="float:right; margin-right: 10px;" class="jodit-button">' +
@@ -153,7 +153,7 @@ export class pasteStorage extends Plugin {
 				'</a>'
 		) as HTMLAnchorElement;
 
-		cancelButton.addEventListener('click', this.dialog.close);
+		this.j.e.on(cancelButton, 'click', this.dialog.close);
 
 		this.container = this.j.c.div();
 		this.container.classList.add('jodit-paste-storage');

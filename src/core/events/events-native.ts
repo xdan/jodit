@@ -205,6 +205,14 @@ export class EventsNative implements IEventsNative {
 	): this;
 
 	on(
+		subject: HTMLElement,
+		events: string,
+		handle: CallbackFunction,
+		selector?: string,
+		onTop?: boolean
+	): this;
+
+	on(
 		subject: object,
 		events: string,
 		handle: CallbackFunction,

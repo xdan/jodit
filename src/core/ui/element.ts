@@ -13,8 +13,29 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	container!: HTMLElement;
 	parentElement: Nullable<IUIElement> = null;
 
-	setParentElement(parentElement: Nullable<IUIElement>): void {
+	setParentElement(parentElement: Nullable<IUIElement>): this {
 		this.parentElement = parentElement;
+		return this;
+	}
+
+	/**
+	 * Set/remove BEM class modification
+	 *
+	 * @param name
+	 * @param value if null, mod will be removed
+	 */
+	setMod(name: string, value: string | boolean | null): this {
+		const mod = `${this.componentName}_${name}`,
+			cl = this.container.classList;
+
+		cl.forEach(className => {
+			if (className.indexOf(mod) === 0) {
+				cl.remove(className);
+			}
+		});
+
+		value !== null && value !== '' && cl.add(`${mod}_${value}`);
+		return this;
 	}
 
 	/**

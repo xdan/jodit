@@ -5,9 +5,8 @@
  */
 
 import { Config } from '../config';
-import { isPromise, css, defaultLanguage } from '../core/helpers/';
+import { isPromise, css, defaultLanguage, attr } from '../core/helpers/';
 import { IJodit } from '../types';
-import { Dom } from '../modules';
 import { error } from '../core/helpers';
 import { MODE_SOURCE } from '../core/constants';
 
@@ -250,11 +249,12 @@ export function iframe(editor: IJodit) {
 				const docMode = opt.editHTMLDocumentMode;
 
 				const toggleEditable = () => {
-					Dom.toggleAttribute(
+					attr(
 						doc.body,
 						'contenteditable',
-						editor.getMode() !== MODE_SOURCE &&
-							!editor.getReadOnly()
+						(editor.getMode() !== MODE_SOURCE &&
+							!editor.getReadOnly()) ||
+							null
 					);
 				};
 

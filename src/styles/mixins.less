@@ -38,7 +38,11 @@
 			stroke: @color;
 		}
 
-		&:hover {
+		[disabled] {
+			opacity: 0.7;
+		}
+
+		&:hover:not([disabled]) {
 			background-color: @background_hover;
 			color: @color_hover;
 
@@ -48,7 +52,7 @@
 			}
 		}
 
-		&:active {
+		&:active:not([disabled]) {
 			background-color: @background_active;
 			color: @color_active;
 

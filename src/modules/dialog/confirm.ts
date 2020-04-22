@@ -6,7 +6,7 @@
 
 import { Dialog } from './dialog';
 import { Icon } from '../../core/ui';
-import { isFunction } from '../../core/helpers/checker';
+import { isFunction } from '../../core/helpers';
 
 /**
  * Show `confirm` dialog. Work without Jodit object
@@ -52,10 +52,11 @@ export const Confirm = (
 			'</a>'
 	) as HTMLAnchorElement;
 
-	$cancel.addEventListener('click', () => {
+	dialog.e.on($cancel, 'click', () => {
 		if (callback) {
 			callback(false);
 		}
+
 		dialog.close();
 	});
 
@@ -63,6 +64,7 @@ export const Confirm = (
 		if (callback) {
 			callback(true);
 		}
+
 		dialog.close();
 	};
 
@@ -75,9 +77,9 @@ export const Confirm = (
 			'</a>'
 	) as HTMLAnchorElement;
 
-	$ok.addEventListener('click', onok);
+	dialog.e.on($ok, 'click', onok);
 
-	$div.addEventListener('submit', () => {
+	dialog.e.on($div, 'submit', () => {
 		onok();
 		return false;
 	});

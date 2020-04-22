@@ -57,7 +57,15 @@ interface IEventsNative {
 	): IEventsNative;
 
 	on(
-		subjectOrEvents: object,
+		subject: HTMLElement,
+		events: string,
+		handler: CallbackFunction,
+		selector?: string,
+		onTop?: boolean
+	): IEventsNative;
+
+	on(
+		subject: object,
 		events: string,
 		handler: CallbackFunction,
 		selector?: string,

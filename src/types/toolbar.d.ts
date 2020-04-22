@@ -275,8 +275,6 @@ interface IToolbarCollection extends IUIList {
 
 	setDirection(direction: 'rtl' | 'ltr'): void;
 
-	getParentContainer(): Nullable<HTMLElement>;
-
 	firstButton: Nullable<IToolbarButton>;
 
 	shouldBeDisabled(button: IToolbarButton): boolean | void;

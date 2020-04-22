@@ -11,11 +11,12 @@ import {
 import watch from '../../../core/decorators/watch';
 import { STATUSES } from '../../component';
 import { Dom } from '../../dom';
-import { css, attr } from '../../helpers';
+import { css, attr, isString } from '../../helpers';
 import { Icon } from '../icon';
 
 export const UIButtonState = (): IUIButtonState => ({
 	size: 'middle',
+	status: '',
 	disabled: false,
 	activated: false,
 	icon: {
@@ -55,19 +56,23 @@ export class UIButton extends UIElement implements IUIButton {
 	icon!: HTMLElement;
 
 	@watch('state.size')
-	protected onChangeSize(
-		ignore?: string,
-		oldSize: string = this.state.size
-	): void {
-		const cl = this.container.classList;
+	protected onChangeSize(): void {
+		this.setMod('size', this.state.size);
+	}
 
-		cl.remove(this.componentName + '_' + oldSize);
-		cl.add(this.componentName + '_' + this.state.size);
+	@watch('state.status')
+	protected onChangeStatus(): void {
+		this.setMod('status', this.state.status);
 	}
 
 	@watch('state.text')
 	protected onChangeText(): void {
 		this.text.textContent = this.j.i18n(this.state.text);
+	}
+
+	@watch('state.text')
+	protected onChangeTextSetMode(): void {
+		this.setMod('text-icons', Boolean(this.state.text.trim().length));
 	}
 
 	@watch('state.disabled')
@@ -99,7 +104,7 @@ export class UIButton extends UIElement implements IUIButton {
 
 		if (state.icon) {
 			if (state.icon.iconURL) {
-				iconElement = jodit.c.element('span');
+				iconElement = jodit.c.span();
 
 				css(
 					iconElement,
@@ -112,7 +117,7 @@ export class UIButton extends UIElement implements IUIButton {
 						')'
 				);
 			} else {
-				const svg = Icon.get(this.state.icon.name);
+				const svg = Icon.get(this.state.icon.name, '');
 
 				if (svg) {
 					iconElement = this.j.c.fromHTML(svg.trim());
@@ -156,20 +161,21 @@ export class UIButton extends UIElement implements IUIButton {
 		if (this.j.o.allowTabNavigation) {
 			tabIndex = 0;
 		}
+		const cn = this.componentName;
 
 		const button = this.j.c.element('button', {
-			class: this.componentName,
+			class: cn,
 			type: 'button',
 			role: 'button',
 			tabIndex,
 			ariaPressed: false
 		});
 
-		this.text = this.j.c.span(this.componentName + '__text');
-		this.icon = this.j.c.span(this.componentName + '__icon');
+		this.icon = this.j.c.span(cn + '__icon');
+		this.text = this.j.c.span(cn + '__text');
 
-		button.appendChild(this.text);
 		button.appendChild(this.icon);
+		button.appendChild(this.text);
 
 		this.j.e.on(button, `click`, this.onActionFire.bind(this));
 
@@ -181,6 +187,7 @@ export class UIButton extends UIElement implements IUIButton {
 
 		this.initTooltip();
 		this.onChangeSize();
+		this.onChangeStatus();
 
 		if (this.constructor.name === UIButton.name) {
 			this.setStatus(STATUSES.ready);
@@ -248,4 +255,27 @@ export class UIButton extends UIElement implements IUIButton {
 			callback.call(this, originalEvent)
 		);
 	}
+}
+
+export function Button(jodit: IViewBased, icon: string): IUIButton;
+export function Button(jodit: IViewBased, icon: string, text: string, status?: string): IUIButton;
+export function Button(jodit: IViewBased, state: IUIButtonStatePartial, status?: string): IUIButton;
+export function Button(jodit: IViewBased, stateOrText: string | IUIButtonStatePartial, text?: string, status?: string): IUIButton {
+	const button = new UIButton(jodit);
+
+	if (isString(stateOrText)) {
+		if (status) {
+			button.state.status = status;
+		}
+
+		if (text) {
+			button.state.text = text;
+		}
+
+		button.state.icon.name = stateOrText;
+	} else {
+		button.setState(stateOrText);
+	}
+
+	return button;
 }

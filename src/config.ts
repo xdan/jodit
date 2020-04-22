@@ -1074,7 +1074,7 @@ Config.prototype.controls = {
 				] = bycode;
 			}
 
-			bycode.addEventListener('submit', event => {
+			editor.e.on(bycode, 'submit', event => {
 				event.preventDefault();
 
 				if (!trim(val(bycode, 'textarea[name=code]'))) {
@@ -1091,8 +1091,9 @@ Config.prototype.controls = {
 				return false;
 			});
 
-			bylink.addEventListener('submit', event => {
+			editor.e.on(bylink, 'submit', event => {
 				event.preventDefault();
+
 				if (!isURL(val(bylink, 'input[name=code]'))) {
 					(bylink.querySelector(
 						'input[name=code]'

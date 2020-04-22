@@ -7,7 +7,7 @@ import './fullsize.less';
 
 import { Config } from '../../config';
 import * as consts from '../../core/constants';
-import { css } from '../../core/helpers';
+import { css, isJoditObject } from '../../core/helpers';
 import { IViewWithToolbar, IControlType, IViewBased } from '../../types';
 
 /**
@@ -97,6 +97,7 @@ export function fullsize(editor: IViewWithToolbar) {
 				}
 			}
 		},
+
 		/**
 		 * Change editor's state between FullSize and normal
 		 * @param enable
@@ -117,16 +118,7 @@ export function fullsize(editor: IViewWithToolbar) {
 			editor.container.classList.toggle('jodit_fullsize', enable);
 
 			if (editor.toolbar) {
-				if (!enable) {
-					editor.toolbar
-						.getParentContainer()
-						?.appendChild(editor.toolbar.container);
-				} else {
-					editor.container
-						.querySelector('.jodit__toolbar-box')
-						?.appendChild(editor.toolbar.container);
-				}
-
+				isJoditObject(editor) && editor.toolbarContainer.appendChild(editor.toolbar.container);
 				css(editor.toolbar.container, 'width', 'auto');
 			}
 

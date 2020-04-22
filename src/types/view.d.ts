@@ -126,6 +126,7 @@ interface IViewBased<T = IViewOptions> extends IPanel<T> {
 
 interface IViewWithToolbar<T = IViewOptions> extends IViewBased<T> {
 	toolbar: IToolbarCollection;
+	toolbarContainer: HTMLElement;
 
 	setPanel(element: HTMLElement | string): void;
 }

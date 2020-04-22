@@ -26,7 +26,7 @@ import {
 	IDictionary,
 	ImageEditorActionBox,
 	IUploader,
-	IUploaderOptions
+	IUploaderOptions,
 } from '../../types/';
 
 import { ImageEditor } from '..';
@@ -379,7 +379,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	): Promise<void> => {
 		this.state.onlyImages = onlyImages;
 
-		return new Promise((resolve, reject) => {
+		return this.async.promise((resolve, reject) => {
 			if (!this.o.items || !this.o.items.url) {
 				throw error('Need set options.filebrowser.ajax.url');
 			}
@@ -1127,6 +1127,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			extend(
 				true,
 				{},
+				editor?.options,
 				self.options,
 				Config.defaultOptions.filebrowser,
 				options,

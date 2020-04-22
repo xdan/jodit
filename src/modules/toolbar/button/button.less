@@ -3,20 +3,20 @@
 @import (reference) '../../../core/ui/button/button';
 
 .jodit-toolbar-button {
-	border-radius: 3px;
-	border: 1px solid transparent;
-
 	.jodit-ui-button();
+
+	border: 1px solid transparent;
+	padding: 0;
 
 	&__button {
 		.jodit-ui-button_clear();
 	}
 
 	.trigger-size(@size) {
-		width: @icon_middle_size + 5px;
+		width: @size + @size / 2;
 
 		svg {
-			width: @icon_middle_size - 3px;
+			width: @size - 3px;
 		}
 	}
 
@@ -33,11 +33,19 @@
 		.trigger-size(@icon_middle_size);
 	}
 
-	&_small &__trigger {
+	&_size_tiny &__trigger {
+		.trigger-size(@icon_tiny_size);
+	}
+
+	&_size_xsmall &__trigger {
+		.trigger-size(@icon_xsmall_size);
+	}
+
+	&_size_small &__trigger {
 		.trigger-size(@icon_small_size);
 	}
 
-	&_large &__trigger {
+	&_size_large &__trigger {
 		.trigger-size(@icon_large_size);
 	}
 

@@ -6,7 +6,7 @@
 
 import { completeUrl } from './complete-url';
 import { IViewBased } from '../../types';
-import { isString } from './checker';
+import { isFunction, isString } from './checker';
 
 export type Loader = (jodit: IViewBased, url: string) => Promise<any>;
 
@@ -48,8 +48,8 @@ export const appendScript = (
 
 	script.type = 'text/javascript';
 
-	if (callback !== undefined) {
-		script.addEventListener('load', callback);
+	if (isFunction(callback)) {
+		jodit.e.on(script, 'load', callback);
 	}
 
 	if (!script.src) {
@@ -71,7 +71,7 @@ export const appendScriptAsync = cacheLoaders(
 	(jodit: IViewBased, url: string) => {
 		return new Promise((resolve, reject) => {
 			const { element } = appendScript(jodit, url, resolve);
-			element.addEventListener('error', reject);
+			jodit.e.on(element, 'error', reject);
 		});
 	}
 );
@@ -93,8 +93,7 @@ export const appendStyleAsync = cacheLoaders(
 
 			const callback = () => resolve(link);
 
-			link.addEventListener('load', callback);
-			link.addEventListener('error', reject);
+			jodit.e.on(link, 'load', callback).on(link, 'error', reject);
 
 			link.href = completeUrl(url);
 

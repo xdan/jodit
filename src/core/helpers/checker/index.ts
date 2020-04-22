@@ -9,7 +9,7 @@ export * from './is-equal';
 export * from './is-function';
 export * from './is-html';
 export * from './is-html-from-word';
-export * from './is-initable';
+export * from './is-imp-interface';
 export * from './is-int';
 export * from './is-jodit-object';
 export * from './is-license';

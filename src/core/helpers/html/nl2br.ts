@@ -10,4 +10,4 @@
  */
 export function nl2br(html: string): string {
 	return html.replace(/([^>])([\n\r]+)/g, '$1<br/>$2');
-};
+}

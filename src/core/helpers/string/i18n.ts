@@ -1,7 +1,7 @@
 import { IDictionary, ILanguageOptions } from '../../../types';
 import { Config } from '../../../config';
 import { defaultLanguage as defineLanguage } from '../default-language';
-import { ucfirst, isString } from '../index';
+import { ucfirst, isString, error } from '../index';
 import { lang } from '../../global';
 
 /**
@@ -65,6 +65,10 @@ export const i18n = (
 	options?: ILanguageOptions,
 	safe: boolean = process.env.NODE_ENV === 'production'
 ): string => {
+	if (!isString(key)) {
+		throw error('i18n: Need string in first argument');
+	}
+
 	const debug: boolean = Boolean(
 		options !== undefined && options.debugLanguage
 	);

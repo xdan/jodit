@@ -32,7 +32,7 @@ Config.prototype.toolbarAdaptive = true;
 Config.prototype.controls.dots = {
 	mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
 	popup: (
-		editor,
+		editor: IJodit,
 		current: false | Node,
 		control: IControlType,
 		close,
@@ -63,22 +63,14 @@ Config.prototype.controls.dots = {
 							store.toolbar
 								.build(splitArray(buttons))
 								.appendTo(store.container);
+
+
+							let w = editor.toolbar.firstButton?.container.offsetWidth || 36;
+							store.container.style.width = (w + 4) * 3 + 'px';
 						}
 					}
 				}
 			};
-
-			let w = 32;
-
-			const size = editor.o.toolbarButtonSize;
-
-			if (size === 'large') {
-				w = 36;
-			} else if (size === 'small') {
-				w = 24;
-			}
-
-			store.container.style.width = w * 3 + 'px';
 
 			control.data = store;
 		}
@@ -147,17 +139,12 @@ export function mobile(editor: IJodit) {
 
 					if (newStore.toString() !== store.toString()) {
 						store = newStore;
-						const container =
-							editor.toolbar.container.parentElement ||
-							editor.toolbar.getParentContainer();
 
-						if (container) {
-							editor.e.fire(camelCase('close-all-popups'));
+						editor.e.fire(camelCase('close-all-popups'));
 
-							editor.toolbar
-								.build(store.concat(editor.o.extraButtons))
-								.appendTo(container);
-						}
+						editor.toolbar.build(
+							store.concat(editor.o.extraButtons)
+						);
 					}
 				}
 			)

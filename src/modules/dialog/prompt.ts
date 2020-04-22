@@ -5,6 +5,7 @@
  */
 import { Dialog } from './dialog';
 import { Icon } from '../../core/ui';
+import { attr } from '../../core/helpers';
 
 /**
  * Show `Prompt` dialog. Work without Jodit object
@@ -32,7 +33,7 @@ export const Prompt = (
 	placeholder?: string,
 	defaultValue?: string
 ): Dialog => {
-	const dialog: Dialog = new Dialog(),
+	const dialog = new Dialog(),
 		cancelButton: HTMLAnchorElement = dialog.c.fromHTML(
 			'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
 				Icon.get('cancel') +
@@ -64,7 +65,7 @@ export const Prompt = (
 	}
 
 	if (placeholder) {
-		inputElement.setAttribute('placeholder', placeholder);
+		attr(inputElement,'placeholder', placeholder);
 	}
 
 	labelElement.appendChild(dialog.c.text(msg));
@@ -72,7 +73,7 @@ export const Prompt = (
 	form.appendChild(labelElement);
 	form.appendChild(inputElement);
 
-	cancelButton.addEventListener('click', dialog.close, false);
+	dialog.e.on(cancelButton, 'click', dialog.close);
 
 	const onclick = () => {
 		if (
@@ -84,9 +85,7 @@ export const Prompt = (
 		}
 	};
 
-	okButton.addEventListener('click', onclick);
-
-	form.addEventListener('submit', () => {
+	dialog.e.on(okButton, 'click', onclick).on(form, 'submit', () => {
 		onclick();
 		return false;
 	});

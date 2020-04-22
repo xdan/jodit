@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 import { Dialog } from './dialog';
-import { asArray } from '../../core/helpers/';
+import { asArray, isFunction } from '../../core/helpers/';
 import { Dom } from '../../core/dom';
 import { Icon } from '../../core/ui';
 
@@ -34,7 +34,7 @@ export const Alert = (
 	callback?: string | ((dialog: Dialog) => void | false),
 	className: string = 'jodit-dialog_alert'
 ): Dialog => {
-	if (typeof title === 'function') {
+	if (isFunction(title)) {
 		callback = title;
 		title = undefined;
 	}
@@ -57,12 +57,8 @@ export const Alert = (
 		);
 	});
 
-	okButton.addEventListener('click', () => {
-		if (
-			!callback ||
-			typeof callback !== 'function' ||
-			callback(dialog) !== false
-		) {
+	dialog.e.on(okButton, 'click', () => {
+		if (!callback || !isFunction(callback) || callback(dialog) !== false) {
 			dialog.close();
 		}
 	});

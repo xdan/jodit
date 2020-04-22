@@ -12,12 +12,15 @@ export interface IUIElement extends IContainer, IDestructible {
 	isButton: boolean;
 	parentElement: Nullable<IUIElement>;
 	update(): void;
-	setParentElement(parentElement: Nullable<IUIElement>): void;
+	setParentElement(parentElement: Nullable<IUIElement>): this;
 	appendTo(element: HTMLElement): this;
+
+	setMod(name: string, value: string | boolean | null): this;
 }
 
 export interface IUIButtonState {
 	size: 'tiny' | 'xsmall' | 'small' | 'middle' | 'large';
+	status: string;
 	disabled: boolean;
 	activated: boolean;
 	icon: {
@@ -33,7 +36,10 @@ export interface IUIButtonStatePartial {
 	size?: IUIButtonState['size'];
 	disabled?: boolean;
 	activated?: boolean;
-	icon?: IUIButtonState['icon'];
+	icon?: {
+		name: string;
+		fill?: string;
+	};
 	text?: string;
 	tooltip?: string;
 }

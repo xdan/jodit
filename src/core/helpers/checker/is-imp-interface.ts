@@ -4,8 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDestructible, IInitable } from '../../../types';
+import { IContainer, IDestructible, IInitable } from '../../../types';
 import { isFunction } from './is-function';
+import { Dom } from '../../dom';
 
 /**
  * Check value has method init
@@ -23,4 +24,12 @@ export function isInitable(value: unknown): value is IInitable {
  */
 export function isDestructable(value: unknown): value is IDestructible {
 	return value && isFunction((value as IDestructible).destruct);
+}
+
+/**
+ * Check value is instant that implements IContainer
+ * @param value
+ */
+export function hasContainer(value: unknown): value is IContainer {
+	return value && Dom.isElement((value as IContainer).container);
 }

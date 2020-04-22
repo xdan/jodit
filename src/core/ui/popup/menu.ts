@@ -2,9 +2,9 @@ import './menu.less';
 
 import autobind from 'autobind-decorator';
 
-import { IBound, IPopup } from '../../../types';
+import { IBound, IPopup, IViewBased } from '../../../types';
 import { Dom } from '../../dom';
-import { camelCase, css, position } from '../../helpers';
+import { attr, camelCase, css, position } from '../../helpers';
 import { getContainer } from '../../global';
 import { UIElement } from '../';
 
@@ -36,7 +36,7 @@ export class PopupMenu extends UIElement implements IPopup {
 	 * @param keepPosition
 	 */
 	open(getBound: getBoundFunc, keepPosition: boolean = false): this {
-		this.j.e.fire(camelCase('close-all-popups'));
+		// this.j.e.fire(camelCase('close-all-popups'));
 		this.j.markOwner(this.container);
 
 		this.isOpened = true;
@@ -127,6 +127,11 @@ export class PopupMenu extends UIElement implements IPopup {
 		Dom.safeRemove(this.container);
 
 		return this;
+	}
+
+	constructor(jodit?: IViewBased) {
+		super(jodit);
+		attr(this.container, 'role', 'popup');
 	}
 
 	/** @override **/

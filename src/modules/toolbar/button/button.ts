@@ -1,7 +1,10 @@
 import './button.less';
 
 import {
+	Controls,
+	IControlType,
 	IControlTypeStrong,
+	IControlTypeStrongList,
 	IToolbarButton,
 	IViewBased,
 	Nullable
@@ -27,6 +30,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	implements IToolbarButton {
 	state = {
 		...UIButtonState(),
+		theme: 'toolbar',
+		currentValue: '',
 		hasTrigger: false
 	};
 
@@ -50,28 +55,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 			state.activated = Boolean(parentElement.shouldBeActive(this));
 		}
 
-		if (this.j.o.textIcons) {
-			state.icon = UIButtonState().icon;
-			state.text = control.text || control.name;
-		} else {
-			if (control.iconURL) {
-				state.icon.iconURL = control.iconURL;
-			} else {
-				const name = control.icon || control.name;
-				state.icon.name = Icon.exists(name) ? name : '';
-			}
-
-			if (!control.iconURL && !state.icon.name) {
-				state.text = control.text || control.name;
-			}
-		}
-
-		if (control.tooltip) {
-			state.tooltip = this.j.i18n(control.tooltip);
-		}
-
-		state.hasTrigger = Boolean(control.list || control.popup);
-
 		state.size = this.j.o.toolbarButtonSize || UIButtonState().size;
 
 		if (isFunction(control.update)) {
@@ -92,6 +75,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		} else {
 			super.onChangeText();
 		}
+
+		this.setMod('text-icons', Boolean(this.text.innerText.trim().length));
 	}
 
 	/** @override */
@@ -100,13 +85,17 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		const container = this.j.c.span(cn),
 			button = super.createContainer();
 
+		attr(container, 'role', 'listitem');
+
 		button.classList.remove(cn);
 		button.classList.add(cn + '__button');
 
 		container.appendChild(button);
 
 		this.trigger = this.j.c.fromHTML(
-			`<span class="${cn}__trigger">${Icon.get('chevron')}</span>`
+			`<span role="trigger" class="${cn}__trigger">${Icon.get(
+				'chevron'
+			)}</span>`
 		);
 
 		this.j.e.on(this.trigger, `click`, this.onTriggerClick.bind(this));
@@ -127,10 +116,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 			Dom.safeRemove(this.trigger);
 		}
 
-		this.container.classList.toggle(
-			this.componentName + '_with-trigger',
-			this.state.hasTrigger
-		);
+		this.setMod('with-trigger', this.state.hasTrigger || null);
 	}
 
 	/** @override */
@@ -159,61 +145,49 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		);
 
 		this.onAction(this.onClick);
-
 		this.setStatus(STATUSES.ready);
 
+		this.initFromControl();
 		this.update();
+	}
+
+	/**
+	 * Init constant data from control
+	 */
+	private initFromControl(): void {
+		const {control, state} = this;
+
+		if (this.j.o.textIcons) {
+			state.icon = UIButtonState().icon;
+			state.text = control.text || control.name;
+		} else {
+			if (control.iconURL) {
+				state.icon.iconURL = control.iconURL;
+			} else {
+				const name = control.icon || control.name;
+				state.icon.name = Icon.exists(name) ? name : '';
+			}
+
+			if (!control.iconURL && !state.icon.name) {
+				state.text = control.text || control.name;
+			}
+		}
+
+		if (control.tooltip) {
+			state.tooltip = this.j.i18n(control.tooltip);
+		}
+
+		state.hasTrigger = Boolean(control.list || control.popup);
 	}
 
 	/**
 	 * Click on trigger button
 	 */
-	protected onTriggerClick() {
+	protected onTriggerClick(): void {
 		const { control } = this;
 
 		if (control.list) {
-			const list = control.list,
-				menu = new PopupMenu(this.j),
-				toolbar = makeCollection(this.j);
-
-			toolbar.mode = 'vertical';
-
-			const getButton = (key: string, value: string | number) => {
-				const childControl: IControlTypeStrong = {
-					name: key.toString(),
-					template: control.template,
-					exec: control.exec,
-					command: control.command,
-					isActive: control.isActiveChild,
-					isDisabled: control.isChildDisabled,
-					mode: control.mode,
-					args: [...(control.args ? control.args : []), key, value]
-				};
-
-				if (isString(value)) {
-					childControl.text = value;
-				}
-
-				return childControl;
-			};
-
-			toolbar.build(
-				Array.isArray(list)
-					? list.map(getButton)
-					: Object.keys(list).map(key => getButton(key, list[key]))
-			);
-
-			menu.setContent(toolbar.container).open(() =>
-				position(this.container)
-			);
-
-			this.state.activated = true;
-
-			this.j.e.on(menu, 'afterClose', () => {
-				this.state.activated = false;
-			});
-
-			return;
+			return this.openControlList(control as IControlTypeStrongList);
 		}
 
 		if (isFunction(control.popup)) {
@@ -264,11 +238,82 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	}
 
 	/**
+	 * Create and open popup list
+	 * @param control
+	 */
+	private openControlList(control: IControlTypeStrongList): void {
+		const controls: Controls | void = this.jodit.options.controls,
+			getControl = (key: string): IControlType | void =>
+				controls && controls[key];
+
+		const list = control.list,
+			menu = new PopupMenu(this.j),
+			toolbar = makeCollection(this.j);
+
+		toolbar.mode = 'vertical';
+
+		const getButton = (
+			key: string,
+			value: string | number | object
+		): IControlTypeStrong => {
+			if (isString(value) && getControl(value)) {
+				return {
+					name: value.toString(),
+					...getControl(value)
+				};
+			}
+
+			if (isString(key) && getControl(key)) {
+				return {
+					name: key.toString(),
+					...getControl(key),
+					...(typeof value === 'object' ? value : {})
+				};
+			}
+
+			const childControl: IControlTypeStrong = {
+				name: key.toString(),
+				template: control.template,
+				exec: control.exec,
+				command: control.command,
+				isActive: control.isActiveChild,
+				isDisabled: control.isChildDisabled,
+				mode: control.mode,
+				args: [...(control.args ? control.args : []), key, value]
+			};
+
+			if (isString(value)) {
+				childControl.text = value;
+			}
+
+			return childControl;
+		};
+
+		toolbar.build(
+			Array.isArray(list)
+				? list.map(getButton)
+				: Object.keys(list).map(key => getButton(key, list[key]))
+		);
+
+		menu.setContent(toolbar.container).open(() => position(this.container));
+
+		this.state.activated = true;
+
+		this.j.e.on(menu, 'afterClose', () => {
+			this.state.activated = false;
+		});
+	}
+
+	/**
 	 * Click handler
 	 * @param originalEvent
 	 */
-	protected onClick(originalEvent: MouseEvent) {
+	protected onClick(originalEvent: MouseEvent): void {
 		const { control } = this;
+
+		if (isFunction(control.popup)) {
+			return this.onTriggerClick();
+		}
 
 		if (isFunction(control.exec)) {
 			control.exec(

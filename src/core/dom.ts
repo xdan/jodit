@@ -6,7 +6,7 @@
 
 import * as consts from './constants';
 import { HTMLTagNames, ICreate, IJodit, NodeCondition } from '../types';
-import { css, dataBind, isString, trim } from './helpers';
+import { css, dataBind, isFunction, isString, trim } from './helpers';
 
 export class Dom {
 	/**
@@ -96,8 +96,7 @@ export class Dom {
 	): HTMLElement | null => {
 		const selInfo = editor.selection.save();
 
-		const wrapper =
-			typeof tag === 'string' ? editor.c.inside.element(tag) : tag;
+		const wrapper = isString(tag) ? editor.c.inside.element(tag) : tag;
 
 		if (!current.parentNode) {
 			return null;
@@ -622,13 +621,13 @@ export class Dom {
 	 * @param {callback} node
 	 * @param {function} condition
 	 * @param {Node} root Root element
-	 * @return {boolean|Node|HTMLElement|HTMLTableCellElement|HTMLTableElement} Return false if condition not be true
+	 * @return {boolean|HTMLElement} Return false if condition not be true
 	 */
 	static up(
 		node: Node,
 		condition: NodeCondition,
 		root: Node
-	): false | Node | HTMLElement | HTMLTableCellElement | HTMLTableElement {
+	): false | HTMLElement {
 		let start = node;
 
 		if (!node) {
@@ -637,7 +636,7 @@ export class Dom {
 
 		do {
 			if (condition(start)) {
-				return start;
+				return start as HTMLElement;
 			}
 
 			if (start === root || !start.parentNode) {
@@ -662,10 +661,10 @@ export class Dom {
 		node: Node,
 		tags: string | NodeCondition | RegExp,
 		root: HTMLElement
-	): Node | HTMLTableElement | HTMLElement | false | HTMLTableCellElement {
+	): false | HTMLElement {
 		let condition: NodeCondition;
 
-		if (typeof tags === 'function') {
+		if (isFunction(tags)) {
 			condition = tags;
 		} else if (tags instanceof RegExp) {
 			condition = (tag: Node | null) => tag && tags.test(tag.nodeName);
@@ -689,7 +688,9 @@ export class Dom {
 		const child = root.firstChild;
 
 		if (child) {
-			root.insertBefore(newElement, child);
+			if (child !== newElement) {
+				root.insertBefore(newElement, child);
+			}
 		} else {
 			root.appendChild(newElement);
 		}
@@ -701,7 +702,7 @@ export class Dom {
 	 * @param elm
 	 * @param newElement
 	 */
-	static after(elm: HTMLElement, newElement: HTMLElement | DocumentFragment) {
+	static after(elm: HTMLElement, newElement: HTMLElement | DocumentFragment): void {
 		const parentNode: Node | null = elm.parentNode;
 
 		if (!parentNode) {
@@ -722,7 +723,7 @@ export class Dom {
 	 * @param {Node} to
 	 * @param {boolean} inStart
 	 */
-	static moveContent(from: Node, to: Node, inStart: boolean = false) {
+	static moveContent(from: Node, to: Node, inStart: boolean = false): void {
 		const fragment: DocumentFragment = (
 			from.ownerDocument || document
 		).createDocumentFragment();
@@ -788,10 +789,9 @@ export class Dom {
 	/**
 	 * Check root contains child or equal child
 	 *
-	 * @param {Node} root
-	 * @param {Node} child
-	 * @param {boolean} onlyContains
-	 * @return {boolean}
+	 * @param root
+	 * @param child
+	 * @param [onlyContains]
 	 */
 	static isOrContains = (
 		root: Node,
@@ -807,30 +807,10 @@ export class Dom {
 
 	/**
 	 * Safe remove element from DOM
-	 *
 	 * @param node
 	 */
 	static safeRemove(node: Node | false | null | void) {
 		node && node.parentNode && node.parentNode.removeChild(node);
-	}
-
-	/**
-	 * Add or remove attribute
-	 *
-	 * @param elm
-	 * @param attr
-	 * @param enable
-	 */
-	static toggleAttribute(
-		elm: HTMLElement,
-		attr: string,
-		enable: boolean | number
-	) {
-		if (enable !== false) {
-			elm.setAttribute(attr, enable.toString());
-		} else {
-			elm.removeAttribute(attr);
-		}
 	}
 
 	/**

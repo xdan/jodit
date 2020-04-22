@@ -1,10 +1,9 @@
 @import (reference) '../../../styles/variables';
+@import (reference) '../../../core/ui/list/list';
 
+.jodit-toolbar-collection,
 .jodit-toolbar-editor-collection {
-	&.jodit-ui-list_horizontal {
-		background-color: @color-toolbar;
-		border: 1px solid @color-border;
-	}
+	.jodit-ui-list();
 
 	.jodit-toolbar-button {
 		margin: 4px 2px;

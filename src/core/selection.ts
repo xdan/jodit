@@ -699,7 +699,7 @@ export class Select {
 			image.removeEventListener('load', onload);
 		};
 
-		image.addEventListener('load', onload);
+		this.j.e.on(image, 'load', onload);
 
 		if (image.complete) {
 			onload();

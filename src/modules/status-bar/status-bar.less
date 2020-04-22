@@ -26,6 +26,12 @@
 	}
 
 	.jodit-statusbar__item {
+		&,
+		& > span {
+			.font();
+			font-size: @font-size-small;
+		}
+
 		line-height: 1.57142857em;
 		margin: 0 @padding-default 0 0;
 		padding: 0;

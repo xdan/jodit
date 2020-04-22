@@ -15,7 +15,7 @@ import { IDictionary } from '../../../types';
 export function isPlainObject <T>(
 	obj: any | IDictionary<T>
 ): obj is IDictionary<T> {
-	if (typeof obj !== 'object' || obj.nodeType || isWindow(obj)) {
+	if (!obj || typeof obj !== 'object' || obj.nodeType || isWindow(obj)) {
 		return false;
 	}
 

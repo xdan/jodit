@@ -25,6 +25,7 @@ import {
 	IUploaderData
 } from '../../types';
 import { FileSelectorWidget, TabsWidget } from '../../modules/widget';
+import { Button } from '../../core/ui/button';
 
 /**
  * Plug-in for image editing window
@@ -135,21 +136,8 @@ export function imageProperties(editor: IJodit) {
 		const image = this as HTMLImageElement,
 			dialog = new Dialog(editor),
 			buttons = {
-				check: dom(
-					`<a href="javascript:void(0)" class="jodit-button  jodit_status_success">${gi(
-						'check'
-					)}<span>${i18n('Ok')}</span></a>`
-				),
-				cancel: dom(
-					`<a href="javascript:void(0)" class="jodit-button  jodit_status_primary">${gi(
-						'cancel'
-					)}<span>${i18n('Cancel')}</span></a>`
-				),
-				remove: dom(
-					`<a href="javascript:void(0)" class="jodit-button">${gi(
-						'bin'
-					)}<span>${i18n('Delete')}</span></a>`
-				)
+				check: Button(editor, 'check', 'Save'),
+				remove: Button(editor, 'bin', 'Delete')
 			},
 			prop = dom(
 				`<form class="jodit-properties">
@@ -463,7 +451,7 @@ export function imageProperties(editor: IJodit) {
 			}
 		});
 
-		buttons.remove.addEventListener('click', () => {
+		buttons.remove.onAction(() => {
 			editor.selection.removeNode(image);
 			dialog.close();
 		});
@@ -686,7 +674,7 @@ export function imageProperties(editor: IJodit) {
 
 		dialog.setContent(prop);
 
-		buttons.check.addEventListener('click', () => {
+		buttons.check.onAction(() => {
 			// styles
 			if (opt.image.editStyle) {
 				if (val(prop, '.style')) {
@@ -843,9 +831,8 @@ export function imageProperties(editor: IJodit) {
 
 			dialog.close();
 		});
-		buttons.cancel.addEventListener('click', () => dialog.close());
 
-		dialog.setFooter([[buttons.cancel, buttons.remove], buttons.check]);
+		dialog.setFooter([buttons.remove, buttons.check]);
 
 		dialog.setSize(500);
 		dialog.open();
