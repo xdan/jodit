@@ -157,7 +157,7 @@ describe('Test position/offset helpers', function() {
 
 				createPoint(pos.left, pos.top, '#cdf', true);
 
-				expect(pos.top - jodit.toolbar.container.offsetHeight).equals(394);
+				expect(pos.top - jodit.toolbar.container.offsetHeight).equals(396);
 				expect(pos.left).equals(261);
 			});
 		});
@@ -187,7 +187,7 @@ describe('Test position/offset helpers', function() {
 
 			expect(
 				pos.top - box.offsetTop - iframe.contentWindow.scrollY - jodit.toolbar.container.offsetHeight
-			).equals(814);
+			).equals(816);
 			expect(pos.left).equals(251);
 		});
 
@@ -218,7 +218,7 @@ describe('Test position/offset helpers', function() {
 						jodit.ownerWindow.scrollY -
 						jodit.editorWindow.scrollY -
 						jodit.toolbar.container.offsetHeight
-				).equals(254);
+				).equals(256);
 				expect(pos.left).equals(251);
 
 				createPoint(pos.left, pos.top, '#cdf');

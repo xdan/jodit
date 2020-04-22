@@ -1,6 +1,13 @@
 import './tabs.less';
-import { IDictionary, IJodit } from '../../../types';
-import { $$, each } from '../../../core/helpers';
+import { IDictionary, IJodit, IUIButton } from '../../../types';
+import { $$, isFunction } from '../../../core/helpers';
+import { Button } from '../../../core/ui';
+
+export type TabOption = {
+	icon?: string;
+	name: string;
+	content: HTMLElement | (() => void);
+};
 
 /**
  * Build tabs system
@@ -23,16 +30,17 @@ import { $$, each } from '../../../core/helpers';
  */
 export const TabsWidget = (
 	editor: IJodit,
-	tabs: IDictionary<(() => void) | HTMLElement>,
+	tabs: TabOption[],
 	state?: { __activeTab: string }
 ): HTMLDivElement => {
-	const box: HTMLDivElement = editor.c.div('jodit_tabs'),
-		tabBox: HTMLDivElement = editor.c.div('jodit_tabs_wrapper'),
-		buttons: HTMLDivElement = editor.c.div('jodit_tabs_buttons'),
+	const box: HTMLDivElement = editor.c.div('jodit-tabs'),
+		tabBox: HTMLDivElement = editor.c.div('jodit-tabs__wrapper'),
+		buttons: HTMLDivElement = editor.c.div('jodit-tabs__buttons'),
 		nameToTab: IDictionary<{
-			button: HTMLElement;
+			button: IUIButton;
 			tab: HTMLElement;
-		}> = {};
+		}> = {},
+		buttonList: IUIButton[] = [];
 
 	let firstTab: string = '',
 		tabcount: number = 0;
@@ -40,48 +48,45 @@ export const TabsWidget = (
 	box.appendChild(buttons);
 	box.appendChild(tabBox);
 
-	each<(() => void) | HTMLElement>(tabs, (name: string, tabOptions) => {
-		const tab = editor.c.div('jodit_tab'),
-			button = editor.c.element('a', {
-				href: 'javascript:void(0);'
-			});
+	tabs.forEach(({ icon, name, content }) => {
+		const tab = editor.c.div('jodit-tab'),
+			button = Button(editor, icon || name, name);
 
 		if (!firstTab) {
-			firstTab = name.toString();
+			firstTab = name;
 		}
 
-		button.innerHTML = /<svg/.test(name.toString())
-			? name
-			: editor.i18n(name.toString());
-		buttons.appendChild(button);
+		buttons.appendChild(button.container);
+		buttonList.push(button);
 
-		if (typeof tabOptions !== 'function') {
-			tab.appendChild(tabOptions);
+		button.container.classList.add('jodit-tabs__button', 'jodit-tabs__button_columns_' + tabs.length);
+
+		if (!isFunction(content)) {
+			tab.appendChild(content);
 		} else {
-			tab.appendChild(editor.c.div('jodit_tab_empty'));
+			tab.appendChild(editor.c.div('jodit-tab_empty'));
 		}
 
 		tabBox.appendChild(tab);
 
-		editor.e.on(button, 'mousedown touchend', (e: MouseEvent) => {
-			$$('a', buttons).forEach(a => {
-				a.classList.remove('active');
-			});
-			$$('.jodit_tab', tabBox).forEach(a => {
-				a.classList.remove('active');
+		button.onAction(() => {
+			buttonList.forEach(b => {
+				b.state.activated = false;
 			});
 
-			button.classList.add('active');
-			tab.classList.add('active');
+			$$('.jodit-tab', tabBox).forEach(a => {
+				a.classList.remove('jodit-tab_active');
+			});
 
-			if (typeof tabOptions === 'function') {
-				tabOptions.call(editor);
+			button.state.activated = true;
+			tab.classList.add('jodit-tab_active');
+
+			if (isFunction(content)) {
+				content.call(editor);
 			}
 
-			e.stopPropagation();
-
 			if (state) {
-				state.__activeTab = name.toString();
+				state.__activeTab = name;
 			}
 
 			return false;
@@ -103,13 +108,13 @@ export const TabsWidget = (
 		a.style.width = (100 / tabcount).toFixed(10) + '%';
 	});
 
-	if (!state || !state.__activeTab || !nameToTab[state.__activeTab]) {
-		nameToTab[firstTab].button.classList.add('active');
-		nameToTab[firstTab].tab.classList.add('active');
-	} else {
-		nameToTab[state.__activeTab].button.classList.add('active');
-		nameToTab[state.__activeTab].tab.classList.add('active');
-	}
+	const tab =
+		!state || !state.__activeTab || !nameToTab[state.__activeTab]
+			? firstTab
+			: state.__activeTab;
+
+	nameToTab[tab].button.state.activated = true;
+	nameToTab[tab].tab.classList.add('jodit-tab_active');
 
 	return box;
 };

@@ -6,7 +6,7 @@
 
 @import (reference) '../../styles/mixins';
 
-.jodit-statusbar {
+.jodit-status-bar {
 	.font();
 	font-size: @font-size-small;
 
@@ -14,8 +14,6 @@
 	justify-content: flex-start;
 	align-items: center;
 
-	border: 1px solid @color-border;
-	border-top: 0;
 	background-color: @color-toolbar;
 	padding: 0 @padding-default / 2;
 
@@ -25,7 +23,7 @@
 		order: 1;
 	}
 
-	.jodit-statusbar__item {
+	.jodit-status-bar__item {
 		&,
 		& > span {
 			.font();
@@ -37,7 +35,7 @@
 		padding: 0;
 		order: 0;
 
-		&.jodit-statusbar__item-right {
+		&.jodit-status-bar__item-right {
 			margin: 0 0 0 @padding-default;
 			order: 2;
 		}
@@ -55,6 +53,11 @@
 		}
 	}
 }
-.jodit_disabled .jodit-statusbar {
+
+.jodit-workplace + .jodit-status-bar:not(:empty) {
+	border-top: 1px solid @color-border;
+}
+
+.jodit_disabled .jodit-status-bar {
 	opacity: 0.4;
 }

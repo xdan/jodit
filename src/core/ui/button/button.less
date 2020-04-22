@@ -79,14 +79,23 @@
 
 	.button-size(@icon_middle_size);
 
-	&__icon:not(:empty) {
-		display: inline-flex;
+	&__icon {
+		display: none;
+
+		&:not(:empty) {
+			display: inline-flex;
+		}
 	}
 
-	&__text:not(:empty) {
-		.font();
-		display: inline-flex;
-		text-align: left;
+	&__text {
+		display: none;
+
+		&:not(:empty) {
+			.font();
+			display: inline-flex;
+			flex: 1;
+			justify-content: center;
+		}
 	}
 
 	&__icon:not(:empty) + &__text:not(:empty) {

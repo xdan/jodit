@@ -5,8 +5,8 @@
  */
 
 import { Dialog } from './dialog';
-import { Icon } from '../../core/ui';
 import { isFunction } from '../../core/helpers';
+import { Button } from '../../core/ui';
 
 /**
  * Show `confirm` dialog. Work without Jodit object
@@ -43,16 +43,9 @@ export const Confirm = (
 	$label.appendChild(dialog.c.fromHTML(msg));
 	$div.appendChild($label);
 
-	const $cancel: HTMLAnchorElement = dialog.c.fromHTML(
-		'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
-			Icon.get('cancel') +
-			'<span>' +
-			dialog.i18n('Cancel') +
-			'</span>' +
-			'</a>'
-	) as HTMLAnchorElement;
+	const $cancel = Button(dialog, 'cancel', 'Cancel');
 
-	dialog.e.on($cancel, 'click', () => {
+	$cancel.onAction(() => {
 		if (callback) {
 			callback(false);
 		}
@@ -68,16 +61,9 @@ export const Confirm = (
 		dialog.close();
 	};
 
-	const $ok: HTMLAnchorElement = dialog.c.fromHTML(
-		'<a href="javascript:void(0)" style="float:left;" class="jodit-button">' +
-			Icon.get('check') +
-			'<span>' +
-			dialog.i18n('Yes') +
-			'</span>' +
-			'</a>'
-	) as HTMLAnchorElement;
+	const $ok = Button(dialog, 'check', 'Yes');
 
-	dialog.e.on($ok, 'click', onok);
+	$ok.onAction(onok);
 
 	dialog.e.on($div, 'submit', () => {
 		onok();

@@ -12,7 +12,7 @@ import {
 import { UIButton, UIButtonState } from '../../../core/ui/button';
 import { watch } from '../../../core/decorators';
 import { Dom } from '../../../core/dom';
-import { PopupMenu } from '../../../core/ui/popup/';
+import { Popup } from '../../../core/ui/popup/';
 import { makeCollection } from '../factory';
 import {
 	isFunction,
@@ -29,7 +29,7 @@ import { STATUSES } from '../../../core/component';
 export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	implements IToolbarButton {
 	state = {
-		...UIButtonState(),
+			...UIButtonState(),
 		theme: 'toolbar',
 		currentValue: '',
 		hasTrigger: false
@@ -48,14 +48,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 
 	/** @override **/
 	update(): void {
-		const { control, parentElement, state } = this;
+		const { control, state } = this, tc = this.closest(ToolbarCollection) as ToolbarCollection;
 
-		if (parentElement instanceof ToolbarCollection) {
-			state.disabled = Boolean(parentElement.shouldBeDisabled(this));
-			state.activated = Boolean(parentElement.shouldBeActive(this));
+		if (tc) {
+			state.disabled = Boolean(tc.shouldBeDisabled(this));
+			state.activated = Boolean(tc.shouldBeActive(this));
 		}
-
-		state.size = this.j.o.toolbarButtonSize || UIButtonState().size;
 
 		if (isFunction(control.update)) {
 			control.update(this);
@@ -157,6 +155,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	private initFromControl(): void {
 		const {control, state} = this;
 
+		this.updateSize();
+
 		if (this.j.o.textIcons) {
 			state.icon = UIButtonState().icon;
 			state.text = control.text || control.name;
@@ -191,7 +191,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		}
 
 		if (isFunction(control.popup)) {
-			const popup = new PopupMenu(this.j);
+			const popup = new Popup(this.j);
 
 			if (
 				this.j.e.fire(
@@ -247,7 +247,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 				controls && controls[key];
 
 		const list = control.list,
-			menu = new PopupMenu(this.j),
+			menu = new Popup(this.j),
 			toolbar = makeCollection(this.j);
 
 		toolbar.mode = 'vertical';

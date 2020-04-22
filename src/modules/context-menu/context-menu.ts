@@ -7,7 +7,7 @@ import './context-menu.less';
 
 import { IContextMenu, IContextMenuAction } from '../../types';
 import { Icon } from '../../core/ui';
-import { PopupMenu } from '../../core/ui/popup';
+import { Popup } from '../../core/ui/popup';
 
 /**
  * Module to generate context menu
@@ -15,7 +15,7 @@ import { PopupMenu } from '../../core/ui/popup';
  * @module ContextMenu
  * @param {Object} parent Jodit main object
  */
-export class ContextMenu extends PopupMenu implements IContextMenu {
+export class ContextMenu extends Popup implements IContextMenu {
 	/**
 	 * Generate and show context menu
 	 *

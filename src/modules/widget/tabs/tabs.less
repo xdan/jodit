@@ -7,109 +7,49 @@
 @import (reference) '../../../styles/variables';
 @import (reference) '../../../styles/mixins';
 
-.jodit_tabs {
+.jodit-tabs {
 	.font();
 
-	.jodit_tabs_buttons {
+	.jodit-tabs__buttons {
 		line-height: 18px;
 		margin-bottom: 5px;
 		margin-top: 4px;
 		display: flex;
+		justify-content: center;
+
+		> * {
+			margin-left: @padding-default;
+
+			&:first-child {
+				margin-left: 0;
+			}
+		}
 
 		@media (max-width: @screen-sm) {
 			display: block;
 		}
+	}
 
-		> a {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: @padding-default / 2 @padding-default * 2;
+	&__button {
+		min-width: 80px;
+		&_columns_3 {
+			width: 100% / 3;
+		}
 
-			font-size: 11px;
-			font-weight: bold;
-			text-align: center;
-			white-space: nowrap;
-			height: 29px;
-			line-height: 27px;
-			text-decoration: none;
-
-			position: relative;
-			vertical-align: middle;
-			transition: background 0.1s linear;
-
-			text-overflow: ellipsis;
-			overflow: hidden;
-
-			box-shadow: none;
-
-			background-color: @color-background-tab;
-			color: @color-tab;
-			border: 1px solid @color-border-tab;
-
-			outline: none;
-
-			@media (max-width: @screen-sm) {
-				width: 100% !important;
-				border-radius: 0 !important;
-			}
-
-			& + a {
-				margin-left: -1px;
-
-				@media (max-width: @screen-sm) {
-					margin-left: 0;
-					margin-top: -1px;
-				}
-			}
-
-			i,
-			svg {
-				width: 16px;
-				height: 16px;
-				display: inline-block;
-				vertical-align: sub;
-				margin-right: 5px;
-				fill: @color-tab;
-			}
-
-			&:hover {
-				border: 1px solid @color-border-tab_hover;
-				color: @color-tab_hover;
-				box-shadow: none;
-				background-color: @color-background-gray-hover;
-				outline: none;
-
-				i,
-				svg {
-					fill: @color-tab_hover;
-				}
-			}
-
-			&:active,
-			&.active {
-				outline: none;
-				background: @color-background-tab_active;
-				border: 1px solid @color-border-tab_active;
-				color: @color-tab_active;
-
-				i,
-				svg {
-					fill: @color-tab_active;
-				}
-			}
+		&_columns_2 {
+			width: 50%;
 		}
 	}
 
-	.jodit_tabs_wrapper {
-		.jodit_tab {
+	.jodit-tabs__wrapper {
+		.jodit-tab {
 			display: none;
 
-			&.active {
+			&.jodit-tab_active {
 				display: block;
 			}
 
-			.jodit_tab_empty {
+			&.jodit-tab_empty {
 				min-width: 220px;
 				min-height: 100px;
 			}

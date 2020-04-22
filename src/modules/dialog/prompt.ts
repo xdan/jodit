@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 import { Dialog } from './dialog';
-import { Icon } from '../../core/ui';
+import { Button } from '../../core/ui';
 import { attr } from '../../core/helpers';
 
 /**
@@ -34,20 +34,8 @@ export const Prompt = (
 	defaultValue?: string
 ): Dialog => {
 	const dialog = new Dialog(),
-		cancelButton: HTMLAnchorElement = dialog.c.fromHTML(
-			'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
-				Icon.get('cancel') +
-				'<span>' +
-				dialog.i18n('Cancel') +
-				'</span></a>'
-		) as HTMLAnchorElement,
-		okButton: HTMLAnchorElement = dialog.c.fromHTML(
-			'<a href="javascript:void(0)" style="float:left;" class="jodit-button">' +
-				Icon.get('check') +
-				'<span>' +
-				dialog.i18n('Ok') +
-				'</span></a>'
-		) as HTMLAnchorElement,
+		cancelButton = Button(dialog, 'cancel', 'Cancel'),
+		okButton = Button(dialog, 'check', 'Ok'),
 		form: HTMLFormElement = dialog.c.element('form', {
 			class: 'jodit-dialog_prompt'
 		}),
@@ -73,7 +61,7 @@ export const Prompt = (
 	form.appendChild(labelElement);
 	form.appendChild(inputElement);
 
-	dialog.e.on(cancelButton, 'click', dialog.close);
+	cancelButton.onAction(dialog.close);
 
 	const onclick = () => {
 		if (
@@ -85,7 +73,9 @@ export const Prompt = (
 		}
 	};
 
-	dialog.e.on(okButton, 'click', onclick).on(form, 'submit', () => {
+	okButton.onAction(onclick);
+
+	dialog.e.on(form, 'submit', () => {
 		onclick();
 		return false;
 	});

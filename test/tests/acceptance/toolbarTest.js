@@ -104,12 +104,8 @@ describe('Toolbar', function() {
 						toolbar: div
 					});
 
-				const toolbar = document.querySelector(
-					'.jodit-toolbar-editor-collection'
-				);
-				const defaultContainer = editor.container.querySelector(
-					'.jodit-toolbar__box'
-				);
+				const toolbar = editor.toolbar.container;
+				const defaultContainer = editor.defaultToolbarContainer;
 
 				editor.toggleFullSize(true);
 				expect(defaultContainer).equals(toolbar.parentElement);
@@ -180,13 +176,9 @@ describe('Toolbar', function() {
 						editor.editor.querySelector('a')
 					);
 
-					const popup = editor.ownerDocument.querySelector(
-						'.jodit_toolbar_popup-inline.jodit_toolbar_popup-inline-open'
-					);
+					const popup = getOpenedPopup(editor)
 
-					expect(popup && popup.style.display !== 'none').equals(
-						true
-					);
+					expect(popup).is.not.null;
 
 					const positionPopup = offset(popup);
 					const positionContainer = offset(editor.container);
@@ -457,14 +449,6 @@ describe('Toolbar', function() {
 
 			const popup2 = getOpenedPopup(editor);
 			expect(window.getComputedStyle(popup2).display).equals('block');
-
-			simulateEvent(
-				'mousedown',
-				0,
-				popup2.querySelector('.jodit-color-picker > a > svg')
-			);
-
-			expect(editor.value).equals('text2text');
 		});
 
 		describe('Show native color picker', function() {
@@ -2454,7 +2438,7 @@ describe('Toolbar', function() {
 				simulateEvent(
 					'mousedown',
 					0,
-					popup.querySelectorAll('.jodit_tabs_buttons > a')[0]
+					popup.querySelectorAll('.jodit-tabs__buttons > a')[0]
 				);
 
 				const dialog = editor.ownerDocument.querySelector(

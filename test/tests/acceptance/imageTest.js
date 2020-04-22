@@ -68,10 +68,10 @@ describe('Test image', function() {
 				simulateEvent(
 					'mousedown',
 					0,
-					dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+					dialog.querySelectorAll('.jodit-tabs__buttons a')[1]
 				);
 
-				const tab = dialog.querySelector('.jodit_tab.active');
+				const tab = dialog.querySelector('.jodit-tab.active');
 				expect(tab).is.not.null;
 				expect(tab.querySelector('.border_radius')).does.not.equal(
 					null
@@ -118,10 +118,10 @@ describe('Test image', function() {
 				simulateEvent(
 					'mousedown',
 					0,
-					dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+					dialog.querySelectorAll('.jodit-tabs__buttons a')[1]
 				);
 
-				const tab = dialog.querySelector('.jodit_tab.active');
+				const tab = dialog.querySelector('.jodit-tab.active');
 				expect(tab).is.not.null;
 				expect(tab.querySelector('.classes')).is.not.null;
 
@@ -166,10 +166,10 @@ describe('Test image', function() {
 				simulateEvent(
 					'mousedown',
 					0,
-					dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+					dialog.querySelectorAll('.jodit-tabs__buttons a')[1]
 				);
 
-				const tab = dialog.querySelector('.jodit_tab.active');
+				const tab = dialog.querySelector('.jodit-tab.active');
 				expect(tab).is.not.null;
 				expect(tab.querySelector('.style')).is.not.null;
 
@@ -215,10 +215,10 @@ describe('Test image', function() {
 				simulateEvent(
 					'mousedown',
 					0,
-					dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+					dialog.querySelectorAll('.jodit-tabs__buttons a')[1]
 				);
 
-				const tab = dialog.querySelector('.jodit_tab.active');
+				const tab = dialog.querySelector('.jodit-tab.active');
 				expect(tab).is.not.null;
 				expect(tab.querySelector('.id')).is.not.null;
 
@@ -262,10 +262,10 @@ describe('Test image', function() {
 					simulateEvent(
 						'mousedown',
 						0,
-						dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+						dialog.querySelectorAll('.jodit-tabs__buttons a')[1]
 					);
 
-					const tab = dialog.querySelector('.jodit_tab.active');
+					const tab = dialog.querySelector('.jodit-tab.active');
 					expect(tab).is.not.null;
 					expect(tab.querySelector('.align')).is.not.null;
 
@@ -307,10 +307,10 @@ describe('Test image', function() {
 					simulateEvent(
 						'mousedown',
 						0,
-						dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+						dialog.querySelectorAll('.jodit-tabs__buttons a')[1]
 					);
 
-					const tab = dialog.querySelector('.jodit_tab.active');
+					const tab = dialog.querySelector('.jodit-tab.active');
 					expect(tab).is.not.null;
 					expect(tab.querySelector('.align')).is.not.null;
 
@@ -352,10 +352,10 @@ describe('Test image', function() {
 					simulateEvent(
 						'mousedown',
 						0,
-						dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+						dialog.querySelectorAll('.jodit-tabs__buttons a')[1]
 					);
 
-					const tab = dialog.querySelector('.jodit_tab.active');
+					const tab = dialog.querySelector('.jodit-tab.active');
 					expect(tab).is.not.null;
 					expect(tab.querySelector('.align')).is.not.null;
 
@@ -397,10 +397,10 @@ describe('Test image', function() {
 					simulateEvent(
 						'mousedown',
 						0,
-						dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+						dialog.querySelectorAll('.jodit-tabs__buttons a')[1]
 					);
 
-					const tab = dialog.querySelector('.jodit_tab.active');
+					const tab = dialog.querySelector('.jodit-tab.active');
 					expect(tab).is.not.null;
 					expect(tab.querySelector('.align')).is.not.null;
 
@@ -445,10 +445,10 @@ describe('Test image', function() {
 					simulateEvent(
 						'mousedown',
 						0,
-						dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+						dialog.querySelectorAll('.jodit-tabs__buttons a')[1]
 					);
 
-					const tab = dialog.querySelector('.jodit_tab.active');
+					const tab = dialog.querySelector('.jodit-tab.active');
 
 					expect(tab.querySelector('.marginTop')).does.not.equal(
 						null
@@ -500,10 +500,10 @@ describe('Test image', function() {
 					simulateEvent(
 						'mousedown',
 						0,
-						dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+						dialog.querySelectorAll('.jodit-tabs__buttons a')[1]
 					);
 
-					const tab = dialog.querySelector('.jodit_tab.active');
+					const tab = dialog.querySelector('.jodit-tab.active');
 
 					const locker = tab.querySelector(
 						'.jodit_lock_helper.jodit_lock_margin'
@@ -567,7 +567,7 @@ describe('Test image', function() {
 						editor.id +
 						']'
 				);
-				const tab = dialog.querySelector('.jodit_tab.active');
+				const tab = dialog.querySelector('.jodit-tab.active');
 
 				expect(tab).is.not.null;
 				expect(tab.querySelector('.imageTitle')).is.not.null;
@@ -606,7 +606,7 @@ describe('Test image', function() {
 							editor.id +
 							']'
 					);
-					const tab = dialog.querySelector('.jodit_tab.active');
+					const tab = dialog.querySelector('.jodit-tab.active');
 
 					expect(tab).is.not.null;
 					expect(tab.querySelector('.imageAlt')).does.not.equal(null);
@@ -650,7 +650,7 @@ describe('Test image', function() {
 						editor.id +
 						']'
 				);
-				const tab = dialog.querySelector('.jodit_tab.active');
+				const tab = dialog.querySelector('.jodit-tab.active');
 
 				expect(tab).is.not.null;
 				expect(tab.querySelector('.imageLink')).is.not.null;
@@ -687,7 +687,7 @@ describe('Test image', function() {
 							editor.id +
 							']'
 					);
-					const tab = dialog.querySelector('.jodit_tab.active');
+					const tab = dialog.querySelector('.jodit-tab.active');
 
 					expect(tab).is.not.null;
 					expect(tab.querySelector('.imageLink')).does.not.equal(
@@ -731,7 +731,7 @@ describe('Test image', function() {
 							editor.id +
 							']'
 					);
-					const tab = dialog.querySelector('.jodit_tab.active');
+					const tab = dialog.querySelector('.jodit-tab.active');
 
 					expect(tab).is.not.null;
 					expect(tab.querySelector('.imageLink')).does.not.equal(
@@ -779,7 +779,7 @@ describe('Test image', function() {
 							editor.id +
 							']'
 					);
-					const tab = dialog.querySelector('.jodit_tab.active');
+					const tab = dialog.querySelector('.jodit-tab.active');
 
 					expect(tab).is.not.null;
 					expect(tab.querySelector('.imageLink')).does.not.equal(

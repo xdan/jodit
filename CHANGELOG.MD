@@ -20,6 +20,8 @@ button
     })
     .appendTo(document.body); // will append it inside the body
 ```
+* In `tsconfig` added decorators supports.
+Methods which need binding binds with `@autobind` decorator.
 * Added `watch` decorator.
 * All filenames were renamed to kebab-case.
 * Added short aliases for. Can be used as chain - `this.j.e.on`
@@ -29,6 +31,7 @@ button
   *  `this.events` => `this.e`
   *  `this.ownerDocument` => `this.od`
   *  `this.ownerWindow` => `this.ow`
+* Change name `Dialog`.`setTitle` to `Dialog`.`setHeader`
 
 ## 3.3.24
 ### BugFix

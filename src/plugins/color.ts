@@ -7,8 +7,8 @@
 import { Config } from '../config';
 import { Dom } from '../modules/';
 import { css, normalizeColor } from '../core/helpers/';
-import { IDictionary, IJodit, IControlType } from '../types';
-import { ColorPickerWidget, TabsWidget } from '../modules/widget';
+import { IJodit, IControlType } from '../types';
+import { ColorPickerWidget, TabOption, TabsWidget } from '../modules/widget';
 
 Config.prototype.controls.brush = {
 	update(button): void {
@@ -57,7 +57,7 @@ Config.prototype.controls.brush = {
 	) => {
 		let colorHEX: string = '',
 			bg_color: string = '',
-			tabs: IDictionary<HTMLElement>,
+			tabs: TabOption[] = [],
 			currentElement: HTMLElement | null = null;
 
 		if (
@@ -100,16 +100,17 @@ Config.prototype.controls.brush = {
 			colorHEX
 		);
 
-		if (editor.o.colorPickerDefaultTab === 'background') {
-			tabs = {
-				Background: backgroundTag,
-				Text: colorTab
-			};
-		} else {
-			tabs = {
-				Text: colorTab,
-				Background: backgroundTag
-			};
+		tabs = [
+			{
+				name: 'Background', content: backgroundTag
+			},
+			{
+				name: 'Text', content: colorTab
+			},
+		]
+
+		if (editor.o.colorPickerDefaultTab !== 'background') {
+			tabs = tabs.reverse();
 		}
 
 		return TabsWidget(editor, tabs, currentElement as any);

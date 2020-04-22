@@ -18,6 +18,7 @@ import {
 } from '../../core/helpers';
 import { IBound, IDictionary, IControlType, IJodit } from '../../types';
 import { alignElement } from '../justify';
+import { position } from '../../core/helpers/size/position';
 
 declare module '../../config' {
 	interface Config {
@@ -902,24 +903,25 @@ export class TableProcessor extends Plugin {
 							'showPopup',
 							table,
 							(): IBound => {
-								const minOffset: IBound = offset(
+								const minOffset: IBound = position(
 									min,
-									this.j,
-									this.j.editorDocument
+									this.j
 								);
-								const maxOffset: IBound = offset(
+
+								const maxOffset: IBound = position(
 									max,
-									this.j,
-									this.j.editorDocument
+									this.j
 								);
 
 								return {
 									left: minOffset.left,
 									top: minOffset.top,
+
 									width:
 										maxOffset.left -
 										minOffset.left +
 										maxOffset.width,
+
 									height:
 										maxOffset.top -
 										minOffset.top +

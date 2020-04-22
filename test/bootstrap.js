@@ -523,6 +523,10 @@ function fillBoxBr(count) {
 	}
 }
 
+const codes = {
+	13: 'Enter'
+};
+
 /**
  *
  * @param type
@@ -546,8 +550,10 @@ function simulateEvent(type, keyCodeArg, element, options) {
 	const evt = (element.ownerDocument || document).createEvent('HTMLEvents');
 
 	evt.initEvent(type, true, true);
+
 	evt.keyCode = keyCodeArg;
 	evt.which = keyCodeArg;
+	evt.key = codes[keyCodeArg];
 
 	if (options) {
 		options(evt);

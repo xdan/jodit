@@ -65,7 +65,7 @@ describe('Jodit FileBrowser Tests', function() {
 			expect(
 				editor.container
 					.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_tabs_buttons .active'
+						'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit-tabs__buttons .active'
 					)
 					.textContent.trim()
 			).equals('Browse');
@@ -94,7 +94,7 @@ describe('Jodit FileBrowser Tests', function() {
 
 			expect(
 				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_tabs_buttons .active'
+					'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit-tabs__buttons .active'
 				).textContent
 			).equals('Upload');
 		});

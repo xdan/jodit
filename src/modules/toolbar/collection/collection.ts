@@ -19,15 +19,11 @@ import {
 import {
 	isFunction,
 	isJoditObject,
-	get,
-	camelCase
+	get
 } from '../../../core/helpers/';
 
 import { UIList } from '../../../core/ui';
 import { makeButton } from '../factory';
-import { getContainer } from '../../../core/global';
-import { PopupMenu } from '../../../core/ui/popup';
-import { Dom } from '../../../core/dom';
 import { STATUSES } from '../../../core/component';
 
 export class ToolbarCollection<T extends IViewBased = IViewBased>
@@ -136,19 +132,9 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 
 	private initEvents() {
 		this.j.e
-			.on(this.j.ow, 'mousedown touchend', this.closeAllPopups)
+			// .on(this.j.ow, 'mousedown touchend', this.closeAllPopups)
 			.on(this.listenEvents, this.update)
 			.on('afterSetMode focus', this.immediateUpdate);
-	}
-
-	@autobind
-	private closeAllPopups(e: MouseEvent) {
-		const box = getContainer(this.j, PopupMenu.name);
-		if (e.target && Dom.isOrContains(box, e.target as Node)) {
-			return;
-		}
-
-		this.j?.events?.fire(camelCase('close-all-popups'));
 	}
 
 	/** @override **/
@@ -158,7 +144,6 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		}
 
 		this.j.e
-			.off(this.j.ow, 'mousedown touchstart', this.closeAllPopups)
 			.off(this.listenEvents, this.update)
 			.off('afterSetMode focus', this.immediateUpdate);
 

@@ -1,50 +1,37 @@
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
 import './inline-popup.less';
 
-import { Config } from '../../config';
+import { Plugin } from '../../core/plugin';
 import {
-	Dom,
-	Plugin,
-	PopupMenu,
-	Table,
-	ToolbarCollection
-} from '../../modules';
-
-import {
-	attr,
-	clearCenterAlign,
-	css,
-	isString,
-	offset,
-	splitArray
-} from '../../core/helpers';
-
-import {
-	Buttons,
+	IBound,
+	IControlType,
 	IDictionary,
 	IJodit,
 	IPopup,
 	IToolbarCollection,
-	IControlType,
-	IBound
+	IUIButtonState
 } from '../../types';
-
 import { makeCollection } from '../../modules/toolbar/factory';
-import { getContainer } from '../../core/global';
+import { Popup } from '../../core/ui/popup';
+import { Config } from '../../config';
+import { attr } from '../../core/helpers/utils';
+import { isString } from '../../core/helpers/checker';
+import { clearCenterAlign, css, splitArray } from '../../core/helpers';
+import { Dom, Table } from '../../modules';
 import { ColorPickerWidget, TabsWidget } from '../../modules/widget';
+import { debounce } from '../../core/decorators';
+import autobind from 'autobind-decorator';
+import { position } from '../../core/helpers/size/position';
 
 declare module '../../config' {
 	interface Config {
 		popup: IDictionary<Array<IControlType | string>>;
 		toolbarInline: boolean;
+		toolbarInlineButtonSize: IUIButtonState['size'];
 		toolbarInlineDisableFor: string | string[];
 	}
 }
 
+Config.prototype.toolbarInlineButtonSize = 'small';
 Config.prototype.toolbarInline = true;
 Config.prototype.toolbarInlineDisableFor = [];
 
@@ -242,11 +229,11 @@ Config.prototype.popup = {
 					br_color
 				);
 
-				$tab = TabsWidget(editor, {
-					Background: $bg,
-					Text: $cl,
-					Border: $br
-				} as IDictionary<HTMLElement>);
+				$tab = TabsWidget(editor, [
+					{ name: 'Background', content: $bg },
+					{ name: 'Text', content: $cl },
+					{ name: 'Border', content: $br }
+				]);
 
 				return $tab;
 			},
@@ -355,405 +342,146 @@ Config.prototype.popup = {
 			},
 			tooltip: 'Delete'
 		}
+	],
+	selection: [
+		'bold',
+		'underline',
+		'italic',
+		'ul',
+		'ol',
+		'\n',
+		'outdent',
+		'indent',
+		'fontsize',
+		'brush',
+		'cut',
+		'\n',
+		'paragraph',
+		'link',
+		'align',
+		'dots'
 	]
 } as IDictionary<Array<IControlType | string>>;
 
-/**
- * Support inline toolbar
- *
- * @param {Jodit} editor
- */
 export class inlinePopup extends Plugin {
-	private toolbar!: IToolbarCollection;
-	private popup!: IPopup;
+	private toolbar: IToolbarCollection = makeCollection(this.jodit);
+	private popup: IPopup = new Popup(this.jodit);
 
-	private target!: HTMLDivElement;
-	private targetContainer!: HTMLDivElement;
-	private container!: HTMLDivElement;
-
-	private __getRect!: () => IBound;
-
-	// was started selection
-	private isSelectionStarted = false;
-
-	private onSelectionEnd = this.j.async.debounce(() => {
-		if (this.isDestructed || !this.j.isEditorMode()) {
-			return;
-		}
-
-		if (this.isSelectionStarted) {
-			if (!this.isTargetAction) {
-				this.onChangeSelection();
-			}
-		}
-
-		this.isSelectionStarted = false;
-		this.isTargetAction = false;
-	}, this.j.defaultTimeout);
-
-	private isTargetAction: boolean = false;
-
-	/**
-	 * Popup was opened for some selection text (not for image or link)
-	 * @type {boolean}
-	 */
-	private isSelectionPopup: boolean = false;
-
-	private calcWindSizes = (): IBound => {
-		const win: Window = this.j.ow;
-		const docElement: HTMLElement | null = this.j.od.documentElement;
-
-		if (!docElement) {
-			return {
-				left: 0,
-				top: 0,
-				width: 0,
-				height: 0
-			};
-		}
-
-		const body: HTMLElement = this.j.od.body;
-		const scrollTop: number =
-			win.pageYOffset || docElement.scrollTop || body.scrollTop;
-
-		const clientTop: number = docElement.clientTop || body.clientTop || 0;
-
-		const scrollLeft: number =
-			win.pageXOffset || docElement.scrollLeft || body.scrollLeft;
-
-		const clientLeft: number =
-			docElement.clientLeft || body.clientLeft || 0;
-
-		const windWidth: number =
-			docElement.clientWidth + scrollLeft - clientLeft;
-
-		const windHeight: number =
-			docElement.clientHeight + scrollTop - clientTop;
-
-		return {
-			left: clientLeft,
-			top: clientTop,
-			width: windWidth,
-			height: windHeight
-		};
-	};
-
-	private calcPosition = (rect: IBound, windowSize: IBound) => {
-		if (this.isDestructed) {
-			return;
-		}
-
-		const selectionCenterLeft = rect.left + rect.width / 2;
-
-		const workplacePosition = offset(
-			this.j.workplace,
-			this.j,
-			this.j.od,
-			true
-		);
-
-		let targetTop: number = rect.top + rect.height + 10;
-		const diff = 50;
-
-		this.target.style.left = selectionCenterLeft + 'px';
-		this.target.style.top = targetTop + 'px';
-
-		if (this.j.isFullSize()) {
-			this.target.style.zIndex = css(
-				this.j.container,
-				'zIndex'
-			).toString();
-		}
-
-		const halfWidthPopup: number = this.container.offsetWidth / 2;
-		let marginLeft: number = -halfWidthPopup;
-		this.popup.container.classList.remove('jodit_toolbar_popup-inline-top');
-
-		if (targetTop + this.container.offsetHeight > windowSize.height) {
-			targetTop = rect.top - this.container.offsetHeight - 10;
-			this.target.style.top = targetTop + 'px';
-			this.popup.container.classList.add(
-				'jodit_toolbar_popup-inline-top'
+	protected afterInit(jodit: IJodit): void {
+		this.j.e
+			.on(
+				'showPopup',
+				(elm: HTMLElement | string, rect: () => IBound) => {
+					this.showPopupWithToolbar(
+						rect,
+						isString(elm) ? elm : elm.nodeName,
+						isString(elm) ? undefined : elm
+					);
+				}
+			)
+			.on(
+				this.j.editorDocument,
+				'selectionchange',
+				this.onSelectionChange
 			);
-		}
-
-		if (selectionCenterLeft - halfWidthPopup < 0) {
-			marginLeft = -(rect.width / 2 + rect.left);
-		}
-
-		if (selectionCenterLeft + halfWidthPopup > windowSize.width) {
-			marginLeft = -(
-				this.container.offsetWidth -
-				(windowSize.width - selectionCenterLeft)
-			);
-		}
-
-		this.container.style.marginLeft = marginLeft + 'px';
-
-		if (
-			workplacePosition.top - targetTop > diff ||
-			targetTop - (workplacePosition.top + workplacePosition.height) >
-				diff
-		) {
-			this.popup.close();
-		}
-	};
-
-	private isExcludedTarget(type: string): boolean {
-		return (
-			splitArray(this.j.o.toolbarInlineDisableFor)
-				.map(a => a.toLowerCase())
-				.indexOf(type.toLowerCase()) !== -1
-		);
 	}
 
-	private reCalcPosition = () => {
-		if (this.__getRect) {
-			this.calcPosition(this.__getRect(), this.calcWindSizes());
-		}
-	};
+	@debounce()
+	private onSelectionChange(): void {
+		this.popup.close();
+		const node = this.j.selection.current();
 
-	private showPopup = (
+		if (!node) {
+			return;
+		}
+
+		const sel = this.j.selection.sel,
+			range = this.j.selection.range;
+
+		if (sel?.isCollapsed) {
+			const elements: string = Object.keys(this.j.o.popup).join('|'),
+				target: HTMLElement | false = Dom.isTag(node, 'img')
+					? node
+					: Dom.closest(node, elements, this.j.editor);
+
+			if (target && this.canShowPopupForType(target.nodeName.toLowerCase())) {
+				this.showPopupWithToolbar(
+					() => position(target),
+					target.nodeName.toLowerCase(),
+					target
+				);
+			}
+		} else {
+			this.showPopupWithToolbar(
+				() => range.getBoundingClientRect(),
+				'selection'
+			);
+		}
+	}
+
+	/**
+	 * Show inline popup with some toolbar
+	 *
+	 * @param rect
+	 * @param type - selection, img, a etc.
+	 * @param elm
+	 */
+	@autobind
+	private showPopupWithToolbar(
 		rect: () => IBound,
 		type: string,
 		elm?: HTMLElement
-	): boolean => {
-		const data = this.j.o.popup[type.toLowerCase()];
+	): boolean {
+		type = type.toLowerCase();
+
+		if (!this.canShowPopupForType(type)) {
+			return false;
+		}
+
+		const data = this.j.o.popup[type];
+
+		this.toolbar.buttonSize = this.j.o.toolbarInlineButtonSize;
+		this.toolbar.build(data, elm);
+		this.popup.setContent(this.toolbar.container).open(rect);
+
+		return true;
+	}
+
+	/**
+	 * Can show popup for this type
+	 * @param type
+	 */
+	private canShowPopupForType(type: string): boolean {
+		const data = this.j.o.popup[type];
 
 		if (!this.j.o.toolbarInline || !data) {
 			return false;
 		}
 
 		if (this.isExcludedTarget(type)) {
-			return true;
+			return false;
 		}
-
-		this.isTargetAction = true;
-
-		const size = this.calcWindSizes();
-
-		this.targetContainer.parentNode ||
-			getContainer(this.j, inlinePopup.name).appendChild(
-				this.targetContainer
-			);
-
-		this.toolbar.build(data, elm).appendTo(this.container);
-
-		this.popup.setContent(this.container).open(rect);
-
-		this.__getRect = rect;
-
-		this.calcPosition(rect(), size);
 
 		return true;
-	};
-
-	private hidePopup = (root?: HTMLElement) => {
-		if (this.isDestructed) {
-			return;
-		}
-
-		// TODO
-		// if (
-		// 	root &&
-		// 	(Dom.isNode(root, this.j.editorWindow || window) ||
-		// 		root instanceof PopupMenu) &&
-		// 	Dom.isOrContains(
-		// 		this.target,
-		// 		root instanceof PopupMenu ? root.target : root
-		// 	)
-		// ) {
-		// 	return;
-		// }
-
-		this.isTargetAction = false;
-		this.popup.close();
-
-		Dom.safeRemove(this.targetContainer);
-	};
-
-	private onSelectionStart = (event: MouseEvent) => {
-		if (this.isDestructed || !this.j.isEditorMode()) {
-			return;
-		}
-
-		this.isTargetAction = false;
-		this.isSelectionPopup = false;
-
-		if (!this.isSelectionStarted) {
-			const elements: string = Object.keys(this.j.o.popup).join('|'),
-				target: HTMLElement | false = Dom.isTag(
-					event.target as Node,
-					'img'
-				)
-					? (event.target as HTMLImageElement)
-					: (Dom.closest(
-							event.target as Node,
-							elements,
-							this.j.editor
-					  ) as HTMLTableElement);
-
-			if (
-				!target ||
-				!this.showPopup(
-					() => offset(target, this.j, this.j.editorDocument),
-					target.nodeName,
-					target
-				)
-			) {
-				this.isSelectionStarted = true;
-			}
-		}
-	};
-
-	private hideIfCollapsed(): boolean {
-		if (this.j.selection.isCollapsed()) {
-			this.hidePopup();
-			return true;
-		}
-
-		return false;
 	}
 
-	private checkIsTargetEvent = () => {
-		if (!this.isTargetAction) {
-			this.hidePopup();
-		} else {
-			this.isTargetAction = false;
-		}
-	};
-
-	private onChangeSelection = () => {
-		if (!this.j.o.toolbarInline || !this.j.isEditorMode()) {
-			return;
-		}
-
-		if (this.hideIfCollapsed()) {
-			return;
-		}
-
-		if (this.j.o.popup.selection !== undefined) {
-			const sel = this.j.selection.sel;
-
-			if (sel && sel.rangeCount) {
-				this.isSelectionPopup = true;
-				const range = sel.getRangeAt(0);
-
-				this.showPopup(
-					() => offset(range, this.j, this.j.editorDocument),
-					'selection'
-				);
-			}
-		}
-	};
-
-	afterInit(jodit: IJodit): void {}
-
-	init(editor: IJodit) {
-		this.toolbar = makeCollection(editor);
-
-		this.target = editor.c.div('jodit-popup-inline__target');
-		this.targetContainer = editor.c.div(
-			'jodit-popup-inline__container',
-			this.target
+	/**
+	 * For some elements do not show popup
+	 * @param type
+	 */
+	private isExcludedTarget(type: string): boolean {
+		return (
+			splitArray(this.j.o.toolbarInlineDisableFor)
+				.map(a => a.toLowerCase())
+				.includes(type)
 		);
-
-		this.container = editor.c.div();
-
-		this.popup = new PopupMenu(editor);
-
-		editor.e
-			.on(
-				this.target,
-				'mousedown keydown touchstart',
-				(e: MouseEvent) => {
-					e.stopPropagation();
-				}
-			)
-			.on('beforeOpenPopup hidePopup afterSetMode', this.hidePopup)
-			.on('recalcPositionPopup', this.reCalcPosition)
-			.on(
-				'getDiffButtons.mobile',
-				(_toolbar: ToolbarCollection): void | Buttons => {
-					if (this.toolbar === _toolbar) {
-						return splitArray(editor.o.buttons).filter(item => {
-							const name = isString(item) ? item : item.name;
-
-							return (
-								name &&
-								name !== '|' &&
-								name !== '\n' &&
-								this.toolbar.getButtonsList().indexOf(name) < 0
-							);
-						});
-					}
-				}
-			)
-			.on('selectionchange', this.onChangeSelection)
-			.on('afterCommand afterExec', () => {
-				if (this.popup.isOpened && this.isSelectionPopup) {
-					this.onChangeSelection();
-				}
-			})
-			.on(
-				'showPopup',
-				(elm: HTMLElement | string, rect: () => IBound) => {
-					const elementName: string = (typeof elm === 'string'
-						? elm
-						: elm.nodeName
-					).toLowerCase();
-
-					this.isSelectionPopup = false;
-
-					this.showPopup(
-						rect,
-						elementName,
-						typeof elm === 'string' ? undefined : elm
-					);
-				}
-			)
-
-			.on('mousedown keydown touchstart', this.onSelectionStart);
-
-		editor.e.on('afterInit changePlace', () => {
-			editor.e
-				.off('.inlinePopup')
-				.on(
-					[editor.ow, editor.editor],
-					'scroll.inlinePopup resize.inlinePopup',
-					this.reCalcPosition
-				)
-				.on(
-					[editor.ow],
-					'mouseup.inlinePopup keyup.inlinePopup touchend.inlinePopup',
-					this.onSelectionEnd
-				)
-				.on(
-					[editor.ow],
-					'mousedown.inlinePopup keydown.inlinePopup touchstart.inlinePopup',
-					this.checkIsTargetEvent
-				);
-		});
 	}
 
-	beforeDestruct(editor: IJodit) {
-		this.popup && this.popup.destruct();
-		delete this.popup;
-		this.toolbar && this.toolbar.destruct();
-		delete this.toolbar;
-
-		Dom.safeRemove(this.target);
-		Dom.safeRemove(this.container);
-		Dom.safeRemove(this.targetContainer);
-
-		editor.events &&
-			editor.e
-				.off([editor.ow], 'scroll resize', this.reCalcPosition)
-				.off([editor.ow], 'mouseup keyup touchend', this.onSelectionEnd)
-				.off(
-					[editor.ow],
-					'mousedown keydown touchstart',
-					this.checkIsTargetEvent
-				);
+	protected beforeDestruct(jodit: IJodit): void {
+		this.j.e.off(
+			this.j.editorDocument,
+			'selectionchange',
+			this.onSelectionChange
+		);
 	}
 }

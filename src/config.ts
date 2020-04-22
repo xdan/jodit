@@ -6,7 +6,6 @@
 
 import * as consts from './core/constants';
 import { Dom } from './core/dom';
-import { Icon } from './core/ui';
 import {
 	$$,
 	convertMediaUrlToVideoEmbed,
@@ -29,7 +28,7 @@ import {
 	IControlType,
 	IUIButtonState
 } from './types';
-import { FileSelectorWidget, TabsWidget } from './modules/widget';
+import { FileSelectorWidget, TabOption, TabsWidget } from './modules/widget';
 
 /**
  * Default Editor's Configuration
@@ -60,25 +59,6 @@ export class Config implements IViewOptions {
 			inline: true,
 			toolbar: false,
 			toolbarInline: true,
-			popup: {
-				selection: [
-					'bold',
-					'underline',
-					'italic',
-					'ul',
-					'ol',
-					'outdent',
-					'indent',
-					'\n',
-					'fontsize',
-					'brush',
-					'paragraph',
-					'link',
-					'align',
-					'cut',
-					'dots'
-				]
-			},
 			showXPathInStatusbar: false,
 			showCharsCounter: false,
 			showWordsCounter: false,
@@ -735,7 +715,7 @@ export class Config implements IViewOptions {
 		'link',
 		'|',
 		'align',
-		'|',
+		'\n',
 		'undo',
 		'redo',
 		'|',
@@ -764,6 +744,7 @@ export class Config implements IViewOptions {
 		'|',
 		'image',
 		'table',
+		'\n',
 		'link',
 		'|',
 		'align',
@@ -786,7 +767,7 @@ export class Config implements IViewOptions {
 		'brush',
 		'paragraph',
 		'eraser',
-		'|',
+		'\n',
 		'align',
 		'|',
 		'undo',
@@ -812,7 +793,7 @@ export class Config implements IViewOptions {
 	 * shows a INPUT[type=color] to open the browser color picker, on the right bottom of widget color picker
 	 * @type {boolean}
 	 */
-	showBrowserColorPicker: boolean = false;
+	showBrowserColorPicker: boolean = true;
 
 	private static __defaultOptions: Config;
 	static get defaultOptions(): Config {
@@ -1056,7 +1037,7 @@ Config.prototype.controls = {
 									</div>
 								</form>`
 				) as HTMLFormElement,
-				tab: IDictionary<HTMLFormElement> = {},
+				tabs: TabOption[] = [],
 				selinfo = editor.selection.save(),
 				insertCode = (code: string) => {
 					editor.selection.restore(selinfo);
@@ -1064,15 +1045,18 @@ Config.prototype.controls = {
 					close();
 				};
 
-			if (editor.o.textIcons) {
-				tab[editor.i18n('Link')] = bylink;
-				tab[editor.i18n('Code')] = bycode;
-			} else {
-				tab[Icon.get('link') + '&nbsp;' + editor.i18n('Link')] = bylink;
-				tab[
-					Icon.get('source') + '&nbsp;' + editor.i18n('Code')
-				] = bycode;
-			}
+			tabs.push(
+				{
+					icon: 'link',
+					name: 'Link',
+					content: bylink
+				},
+				{
+					icon: 'source',
+					name: 'Code',
+					content: bycode
+				}
+			);
 
 			editor.e.on(bycode, 'submit', event => {
 				event.preventDefault();
@@ -1109,7 +1093,7 @@ Config.prototype.controls = {
 				return false;
 			});
 
-			return TabsWidget(editor, tab);
+			return TabsWidget(editor, tabs);
 		},
 
 		tags: ['iframe'],

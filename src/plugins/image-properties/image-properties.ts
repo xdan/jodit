@@ -6,7 +6,7 @@
 import './image-properties.less';
 
 import { Config } from '../../config';
-import { Alert, Confirm, Dialog, Dom, PopupMenu, Icon } from '../../modules';
+import { Alert, Confirm, Dialog, Dom, Popup, Icon } from '../../modules';
 import {
 	$$,
 	css,
@@ -18,13 +18,15 @@ import {
 } from '../../core/helpers';
 
 import {
-	IDictionary,
 	IFileBrowser,
 	IFileBrowserCallBackData,
 	IJodit,
 	IUploaderData
 } from '../../types';
-import { FileSelectorWidget, TabsWidget } from '../../modules/widget';
+import {
+	FileSelectorWidget,
+	TabsWidget
+} from '../../modules/widget';
 import { Button } from '../../core/ui/button';
 
 /**
@@ -431,14 +433,15 @@ export function imageProperties(editor: IJodit) {
 		let lockSize: boolean = true,
 			lockMargin: boolean = true;
 
-		const tabs: IDictionary<HTMLElement> = {},
-			tabsbox: HTMLElement | null = prop.querySelector('.tabsbox');
-
-		tabs['Image'] = mainTab;
-		tabs['Advanced'] = positionTab;
+		const tabsbox: HTMLElement | null = prop.querySelector('.tabsbox');
 
 		if (tabsbox) {
-			tabsbox.appendChild(TabsWidget(editor, tabs));
+			tabsbox.appendChild(
+				TabsWidget(editor, [
+					{ name: 'Image', content: mainTab },
+					{ name: 'Advanced', content: positionTab }
+				])
+			);
 		}
 
 		update();
@@ -555,7 +558,7 @@ export function imageProperties(editor: IJodit) {
 				editor.e.on(imagebtn, 'mousedown', (event: MouseEvent) => {
 					imagebtn.classList.toggle('active');
 
-					const popup = new PopupMenu(editor);
+					const popup = new Popup(editor);
 
 					popup
 						.setContent(

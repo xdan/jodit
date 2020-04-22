@@ -2,14 +2,14 @@
 
 .jodit-ui-list {
 	display: flex;
-	flex: 0 0 auto;
-	flex-shrink: 0;
-	flex-wrap: wrap;
+	flex-direction: column;
 
 	&_mode_vertical {
-		flex-direction: column;
-		background-color: transparent;
-		border: 0;
+		.jodit-ui-group {
+			flex-direction: column;
+			background-color: transparent;
+			border: 0;
+		}
 	}
 }
 

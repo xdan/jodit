@@ -11,6 +11,7 @@ import { css, offset } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { Dom } from '../../core/dom';
 import { getContainer } from '../../core/global';
+import autobind from 'autobind-decorator';
 
 export class tooltip extends Plugin {
 	private isOpened = false;
@@ -31,6 +32,7 @@ export class tooltip extends Plugin {
 					this.open(target, content);
 				}
 			)
+			.on('escape.tooltip', this.close)
 			.on(
 				'hideTooltip.tooltip change.tooltip updateToolbar.tooltip scroll.tooltip changePlace.tooltip hidePopup.tooltip closeAllPopups.tooltip',
 				() => {
@@ -66,6 +68,7 @@ export class tooltip extends Plugin {
 		});
 	}
 
+	@autobind
 	private close(): void {
 		if (this.isOpened) {
 			this.isOpened = false;

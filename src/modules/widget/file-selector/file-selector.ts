@@ -1,5 +1,4 @@
 import {
-	IDictionary,
 	IFileBrowser,
 	IFileBrowserCallBackData,
 	IJodit,
@@ -7,9 +6,8 @@ import {
 	IUploaderData
 } from '../../../types';
 import { isFunction, $$, attr, val } from '../../../core/helpers';
-import { Icon } from '../../../core/ui';
 import { Dom } from '../../../core/dom';
-import { TabsWidget } from '../';
+import { TabOption, TabsWidget } from '../';
 
 /**
  * Generate 3 tabs
@@ -69,7 +67,7 @@ export const FileSelectorWidget = (
 ): HTMLDivElement => {
 	let currentImage: any;
 
-	const tabs: IDictionary<HTMLElement> | IDictionary<() => void> = {};
+	const tabs: TabOption[] = [];
 
 	if (
 		callbacks.upload &&
@@ -104,22 +102,29 @@ export const FileSelectorWidget = (
 			}
 		);
 
-		const icon = editor.o.textIcons ? '' : Icon.get('upload');
-		tabs[icon + editor.i18n('Upload')] = dragbox;
+		tabs.push({
+			icon: 'upload',
+			name: 'Upload',
+			content: dragbox,
+		});
 	}
 
 	if (callbacks.filebrowser) {
 		if (editor.o.filebrowser.ajax.url || editor.o.filebrowser.items.url) {
-			const icon = editor.o.textIcons ? '' : Icon.get('folder');
-			tabs[icon + editor.i18n('Browse')] = () => {
-				close && close();
-				if (callbacks.filebrowser) {
-					(editor.getInstance('FileBrowser') as IFileBrowser).open(
-						callbacks.filebrowser,
-						isImage
-					);
-				}
-			};
+			tabs.push({
+				icon: 'folder',
+				name: 'Browse',
+				content: () => {
+					close && close();
+
+					if (callbacks.filebrowser) {
+						(editor.getInstance('FileBrowser') as IFileBrowser).open(
+							callbacks.filebrowser,
+							isImage
+						);
+					}
+				},
+			});
 		}
 	}
 
@@ -186,9 +191,11 @@ export const FileSelectorWidget = (
 			false
 		);
 
-		const icon = editor.o.textIcons ? '' : Icon.get('link');
-
-		tabs[icon + ' URL'] = form;
+		tabs.push({
+			icon: 'link',
+			name: 'URL',
+			content: form,
+		});
 	}
 
 	return TabsWidget(editor, tabs);

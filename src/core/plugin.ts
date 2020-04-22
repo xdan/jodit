@@ -19,6 +19,8 @@ export abstract class Plugin extends Component<IJodit> implements IPlugin {
 		jodit.e
 			.on('afterInit', this.afterInit.bind(this, jodit))
 			.on('beforeDestruct', this.destruct);
+
+		this.setStatus(STATUSES.ready);
 	}
 
 	init(jodit: IJodit) {}

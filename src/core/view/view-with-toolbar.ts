@@ -3,12 +3,9 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import "./view-with-toolbar.less";
+import './view-with-toolbar.less';
 
-import {
-	IViewWithToolbar,
-	IToolbarCollection, Buttons
-} from '../../types';
+import { IViewWithToolbar, IToolbarCollection, Buttons } from '../../types';
 import { View } from './view';
 import { isString, splitArray } from '../helpers';
 import { STATUSES } from '../component';
@@ -25,8 +22,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	/**
 	 * Container for toolbar
 	 */
-	get toolbarContainer(): HTMLElement
-	{
+	get toolbarContainer(): HTMLElement {
 		if (
 			!this.o.fullsize &&
 			(isString(this.o.toolbar) ||
@@ -35,7 +31,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 			return this.resolveElement(this.o.toolbar);
 		}
 
-		Dom.appendChildFirst(this.container, this.defaultToolbarContainer);
+		this.o.toolbar && Dom.appendChildFirst(this.container, this.defaultToolbarContainer);
 		return this.defaultToolbarContainer;
 	}
 

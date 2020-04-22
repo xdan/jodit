@@ -19,6 +19,25 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	}
 
 	/**
+	 * Find match parent
+	 * @param type
+	 */
+	closest<T extends Function>(type: T): Nullable<UIElement> {
+		let pe = this.parentElement;
+
+		while (pe) {
+			if (pe instanceof type) {
+				return pe as UIElement;
+			}
+
+			pe = pe.parentElement;
+		}
+
+		return null;
+	};
+
+
+	/**
 	 * Set/remove BEM class modification
 	 *
 	 * @param name

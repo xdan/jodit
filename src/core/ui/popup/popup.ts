@@ -1,4 +1,4 @@
-import './menu.less';
+import './popup.less';
 
 import autobind from 'autobind-decorator';
 
@@ -10,7 +10,7 @@ import { UIElement } from '../';
 
 type getBoundFunc = () => IBound;
 
-export class PopupMenu extends UIElement implements IPopup {
+export class Popup extends UIElement implements IPopup {
 	isOpened: boolean = false;
 
 	private getBound!: () => IBound;
@@ -44,12 +44,11 @@ export class PopupMenu extends UIElement implements IPopup {
 
 		this.getBound = !keepPosition ? getBound : this.getKeepBound(getBound);
 
-		getContainer(this.j, PopupMenu.name).appendChild(this.container);
+		getContainer(this.jodit, Popup.name).appendChild(this.container);
 
 		this.updatePosition();
 
-		this.j.e
-			.fire(this, 'afterOpen');
+		this.j.e.fire(this, 'afterOpen');
 
 		return this;
 	}
@@ -117,24 +116,48 @@ export class PopupMenu extends UIElement implements IPopup {
 		return this;
 	}
 
+	/**
+	 * Close popup if click was in outside
+	 * @param e
+	 */
+	@autobind
+	private closeOnOutsideClick(e: MouseEvent): void {
+		if (!this.isOpened) {
+			return;
+		}
+
+		if (e.target && Dom.isOrContains(this.container, e.target as Node)) {
+			return;
+		}
+
+		this.close();
+	}
+
 	private addGlobalListeners(): void {
-		const up = this.updatePosition, j = this.j;
+		const up = this.updatePosition,
+			j = this.j;
 
 		j.e
 			.on(camelCase('close-all-popups'), this.close)
 			.on('escape', this.close)
 			.on('resize', up)
+			.on('mousedown touchstart', this.closeOnOutsideClick)
+			.on(j.ow, 'mousedown touchstart', this.closeOnOutsideClick)
+			.on(j.ow, 'mousedown touchstart', this.closeOnOutsideClick)
 			.on(j.ow, 'scroll', up)
 			.on(j.ow, 'resize', up);
 	}
 
 	private removeGlobalListeners(): void {
-		const up = this.updatePosition, j = this.j;
+		const up = this.updatePosition,
+			j = this.j;
 
 		j.e
 			.off(camelCase('close-all-popups'), this.close)
 			.off('escape', this.close)
 			.off('resize', up)
+			.off('mousedown touchstart', this.closeOnOutsideClick)
+			.off(j.ow, 'mousedown touchstart', this.closeOnOutsideClick)
 			.off(j.ow, 'scroll', up)
 			.off(j.ow, 'resize', up);
 	}

@@ -13,6 +13,7 @@ import { STATUSES } from '../../component';
 import { Dom } from '../../dom';
 import { css, attr, isString } from '../../helpers';
 import { Icon } from '../icon';
+import { UIList } from '..';
 
 export const UIButtonState = (): IUIButtonState => ({
 	size: 'middle',
@@ -60,6 +61,21 @@ export class UIButton extends UIElement implements IUIButton {
 		this.setMod('size', this.state.size);
 	}
 
+	/**
+	 * Set size from parent list
+	 */
+	@watch('parentElement')
+	protected updateSize(): void {
+		let pe = this.closest(UIList) as UIList;
+
+		if (pe) {
+			this.state.size = pe.buttonSize;
+			return;
+		}
+
+		this.state.size = this.j.o.toolbarButtonSize || UIButtonState().size;
+	}
+
 	@watch('state.status')
 	protected onChangeStatus(): void {
 		this.setMod('status', this.state.status);
@@ -96,6 +112,10 @@ export class UIButton extends UIElement implements IUIButton {
 
 	@watch('state.icon')
 	protected onChangeIcon(): void {
+		if (this.j.o.textIcons) {
+			return;
+		}
+
 		Dom.detach(this.icon);
 
 		const { jodit, state } = this;
@@ -186,6 +206,7 @@ export class UIButton extends UIElement implements IUIButton {
 		super(jodit);
 
 		this.initTooltip();
+		this.updateSize();
 		this.onChangeSize();
 		this.onChangeStatus();
 
@@ -258,12 +279,28 @@ export class UIButton extends UIElement implements IUIButton {
 }
 
 export function Button(jodit: IViewBased, icon: string): IUIButton;
-export function Button(jodit: IViewBased, icon: string, text: string, status?: string): IUIButton;
-export function Button(jodit: IViewBased, state: IUIButtonStatePartial, status?: string): IUIButton;
-export function Button(jodit: IViewBased, stateOrText: string | IUIButtonStatePartial, text?: string, status?: string): IUIButton {
+export function Button(
+	jodit: IViewBased,
+	icon: string,
+	text: string,
+	status?: string
+): IUIButton;
+export function Button(
+	jodit: IViewBased,
+	state: IUIButtonStatePartial,
+	status?: string
+): IUIButton;
+export function Button(
+	jodit: IViewBased,
+	stateOrText: string | IUIButtonStatePartial,
+	text?: string,
+	status?: string
+): IUIButton {
 	const button = new UIButton(jodit);
 
 	if (isString(stateOrText)) {
+		button.state.icon.name = stateOrText;
+
 		if (status) {
 			button.state.status = status;
 		}
@@ -271,8 +308,6 @@ export function Button(jodit: IViewBased, stateOrText: string | IUIButtonStatePa
 		if (text) {
 			button.state.text = text;
 		}
-
-		button.state.icon.name = stateOrText;
 	} else {
 		button.setState(stateOrText);
 	}

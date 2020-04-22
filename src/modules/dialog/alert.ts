@@ -6,7 +6,7 @@
 import { Dialog } from './dialog';
 import { asArray, isFunction } from '../../core/helpers/';
 import { Dom } from '../../core/dom';
-import { Icon } from '../../core/ui';
+import { Button } from '../../core/ui';
 
 /**
  * Show `alert` dialog. Work without Jodit object
@@ -41,13 +41,7 @@ export const Alert = (
 
 	const dialog = new Dialog(),
 		container = dialog.c.div(className),
-		okButton: HTMLAnchorElement = dialog.c.fromHTML(
-			'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
-				Icon.get('cancel') +
-				'<span>' +
-				dialog.i18n('Ok') +
-				'</span></a>'
-		) as HTMLAnchorElement;
+		okButton = Button(dialog, 'cancel', 'Ok');
 
 	asArray(msg).forEach(oneMessage => {
 		container.appendChild(
@@ -57,7 +51,7 @@ export const Alert = (
 		);
 	});
 
-	dialog.e.on(okButton, 'click', () => {
+	okButton.onAction(() => {
 		if (!callback || !isFunction(callback) || callback(dialog) !== false) {
 			dialog.close();
 		}

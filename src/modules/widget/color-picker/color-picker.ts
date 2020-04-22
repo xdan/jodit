@@ -38,9 +38,6 @@ export const ColorPickerWidget = (
 	const valueHex = normalizeColor(coldColor),
 		form: HTMLDivElement = editor.c.div('jodit-color-picker'),
 		iconEye: string = editor.o.textIcons ? '' : Icon.get('eye'),
-		iconEraser: string = editor.o.textIcons
-			? `<span>${editor.i18n('eraser')}</span>`
-			: Icon.get('eraser'),
 		iconPalette: string = editor.o.textIcons
 			? `<span>${editor.i18n('palette')}</span>`
 			: Icon.get('palette'),
@@ -97,25 +94,11 @@ export const ColorPickerWidget = (
 		editor.c.fromHTML('<div>' + eachColor(editor.o.colors) + '</div>')
 	);
 
-	form.appendChild(
-		editor.c.fromHTML(
-			'<a ' +
-				(editor.o.textIcons ? 'class="jodit_text_icon"' : '') +
-				' data-color="" href="javascript:void(0)">' +
-				iconEraser +
-				'</a>'
-		)
-	);
-
 	if (editor.o.showBrowserColorPicker && hasBrowserColorPicker()) {
 		form.appendChild(
 			editor.c.fromHTML(
-				'<span>' +
-					'<em ' +
-					(editor.o.textIcons ? 'class="jodit_text_icon"' : '') +
-					'>' +
+				'<span class="jodit-color-picker__native">' +
 					iconPalette +
-					'</em>' +
 					'<input type="color" value=""/>' +
 					'</span>'
 			)

@@ -373,6 +373,7 @@ export class symbols {
 									e.key === KEY_UP
 										? index - self.countInRow
 										: index + self.countInRow;
+
 								if (chars[newIndex] === undefined) {
 									newIndex =
 										e.key === KEY_UP
@@ -391,6 +392,7 @@ export class symbols {
 
 								chars[newIndex] && chars[newIndex].focus();
 								break;
+
 							case KEY_RIGHT:
 							case KEY_LEFT:
 								newIndex =
@@ -404,6 +406,7 @@ export class symbols {
 
 								chars[newIndex] && chars[newIndex].focus();
 								break;
+
 							case KEY_ENTER:
 								editor.e.fire(target, 'mousedown');
 								e.stopImmediatePropagation();
