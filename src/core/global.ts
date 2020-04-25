@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary, IJodit, IViewBased } from '../types';
+import { IComponent, IDictionary, IJodit } from '../types';
 import { PluginSystem } from './plugin-system';
 import { Dom } from './dom';
 import { kebabCase } from './helpers/';
@@ -43,7 +43,7 @@ export const modules: IDictionary<Function> = {};
 
 export const lang: IDictionary<IDictionary<string>> = {};
 
-const boxes = new WeakMap<IViewBased, IDictionary<HTMLElement>>();
+const boxes = new WeakMap<IComponent, IDictionary<HTMLElement>>();
 
 /**
  * Create unique box(HTMLCotainer) and remove it after destroy
@@ -51,7 +51,7 @@ const boxes = new WeakMap<IViewBased, IDictionary<HTMLElement>>();
  * @param jodit
  * @param name
  */
-export function getContainer(jodit: IViewBased, name: string): HTMLElement {
+export function getContainer(jodit: IComponent, name: string): HTMLElement {
 	const data = boxes.get(jodit) || {};
 
 	if (!data[name]) {
@@ -61,7 +61,7 @@ export function getContainer(jodit: IViewBased, name: string): HTMLElement {
 
 		data[name] = box;
 
-		jodit.e.on('beforeDestruct', () => {
+		jodit.hookStatus('beforeDestruct', () => {
 			Dom.safeRemove(box);
 			delete data[name];
 

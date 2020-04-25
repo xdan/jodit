@@ -2,6 +2,8 @@ import { IJodit } from './jodit';
 import { IDestructible, IInitable } from './types';
 
 export class IPlugin implements IDestructible, IInitable {
+	jodit: IJodit;
+
 	requires?: string[];
 	hasStyle?: boolean;
 

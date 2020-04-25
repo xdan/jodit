@@ -7,10 +7,7 @@ import autobind from 'autobind-decorator';
 
 import { Dom, Plugin, Popup, ToolbarCollection } from '../../modules';
 
-import {
-	isString,
-	splitArray
-} from '../../core/helpers';
+import { isString, splitArray } from '../../core/helpers';
 
 import {
 	Buttons,
@@ -178,7 +175,7 @@ export class inlinePopup2 extends Plugin {
 								name &&
 								name !== '|' &&
 								name !== '\n' &&
-								this.toolbar.getButtonsList().indexOf(name) < 0
+								!this.toolbar.getButtonsNames().includes(name)
 							);
 						});
 					}

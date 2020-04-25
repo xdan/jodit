@@ -27,7 +27,8 @@ import {
 	trim,
 	type,
 	stripTags,
-	isString
+	isString,
+	markOwner
 } from '../../core/helpers/';
 
 import { Dom } from '../../core/dom';
@@ -168,7 +169,7 @@ export function paste(editor: IJodit) {
 				callback
 			);
 
-			editor.markOwner(dialog.container);
+			markOwner(editor, dialog.container);
 
 			const keep = dialog.c.fromHTML(
 				`<a href="javascript:void(0)" class="jodit-button jodit-button_primary"><span>${editor.i18n(

@@ -436,7 +436,7 @@ function sortStyles(matches) {
 		})
 		.sort(function(a, b) {
 			if (a < b) {
-				return - 1;
+				return -1;
 			}
 
 			return a > b ? 1 : 0;
@@ -536,13 +536,13 @@ const codes = {
  */
 function simulateEvent(type, keyCodeArg, element, options) {
 	if (Array.isArray(type)) {
-		return type.forEach(function (event) {
+		return type.forEach(function(event) {
 			simulateEvent(event, keyCodeArg, element, options);
 		});
 	}
 
 	if (Array.isArray(element)) {
-		return element.forEach(function (elm) {
+		return element.forEach(function(elm) {
 			simulateEvent(type, keyCodeArg, elm, options);
 		});
 	}
@@ -581,7 +581,9 @@ function simulateEvent(type, keyCodeArg, element, options) {
 }
 
 function getOpenedPopup(editor) {
-	const popups = editor.ownerDocument.querySelectorAll('[role="popup"][data-editor_id="' + editor.id + '"]');
+	const popups = editor.ownerDocument.querySelectorAll(
+		'[role="popup"][data-editor_id="' + editor.id + '"]'
+	);
 	return popups.length ? popups[popups.length - 1] : null;
 }
 
@@ -590,13 +592,27 @@ function getOpenedPopup(editor) {
  *
  * @param {string} buttonName
  * @param {Jodit|HTMLElement} joditOrElement
+ * @param {string} role
+ * @param {boolean} last
  */
-function clickButton(buttonName, joditOrElement, role = "button") {
+function clickButton(
+	buttonName,
+	joditOrElement,
+	role = 'button',
+	last = false
+) {
 	simulateEvent(
 		'click',
 		0,
-		(joditOrElement.isJodit ? joditOrElement.container : joditOrElement).querySelector(
-			'.jodit-toolbar-button.jodit-toolbar-button_' + buttonName + ' [role="' + role + '"]'
+		(joditOrElement.isJodit
+			? joditOrElement.container
+			: joditOrElement
+		).querySelector(
+			'.jodit-toolbar-button.jodit-toolbar-button_' +
+				buttonName + (last ? ':last-child' : '') +
+				' [role="' +
+				role +
+				'"]'
 		)
 	);
 }
@@ -664,7 +680,9 @@ function createPoint(x, y, color, fixed = false) {
 
 	div.setAttribute(
 		'style',
-		'position: ' + (fixed ? 'fixed': 'absolute') + '; z-index: 1000000000;width: 5px; height: 5px; background: ' +
+		'position: ' +
+			(fixed ? 'fixed' : 'absolute') +
+			'; z-index: 1000000000;width: 5px; height: 5px; background: ' +
 			(color || 'red') +
 			';'
 	);

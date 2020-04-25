@@ -28,6 +28,8 @@ import { STATUSES } from '../../../core/component';
 
 export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	implements IToolbarButton {
+	jodit!: T;
+
 	state = {
 			...UIButtonState(),
 		theme: 'toolbar',
@@ -126,19 +128,60 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		attr(this.container, 'disabled', dsb);
 	}
 
+	/**
+	 * Add tooltip to button
+	 */
+	protected initTooltip() {
+		if (this.j.o.showTooltip && !this.j.o.useNativeTooltip) {
+			const to =
+				this.get<number>('j.o.showTooltipDelay') ||
+				this.get<number>('j.defaultTimeout') ||
+				500;
+
+			let timeout: number = 0;
+
+			this.e
+				.off(this.container, 'mouseenter mouseleave')
+				.on(this.container, 'mouseenter', () => {
+					if (!this.state.tooltip) {
+						return;
+					}
+
+					timeout = this.async.setTimeout(
+						() =>
+							!this.state.disabled &&
+							this.e.fire(
+								'showTooltip',
+								this.container,
+								this.state.tooltip
+							),
+						{
+							timeout: to,
+							label: 'tooltip'
+						}
+					);
+				})
+				.on(this.container, 'mouseleave', () => {
+					this.async.clearTimeout(timeout);
+					this.e.fire('hideTooltip');
+				});
+		}
+	}
+
 	constructor(
 		jodit: IViewBased,
 		readonly control: IControlTypeStrong,
 		readonly target: Nullable<HTMLElement> = null
 	) {
 		super(jodit);
+		this.setParentView(jodit);
 
 		this.container.classList.add(
 			`${this.componentName}_${this.clearName(control.name)}`
 		);
 
 		// Prevent lost focus
-		this.j.e.on(this.button, 'mousedown', (e: MouseEvent) =>
+		jodit.e.on(this.button, 'mousedown', (e: MouseEvent) =>
 			e.preventDefault()
 		);
 
@@ -146,6 +189,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		this.setStatus(STATUSES.ready);
 
 		this.initFromControl();
+		this.initTooltip();
 		this.update();
 	}
 
@@ -156,6 +200,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		const {control, state} = this;
 
 		this.updateSize();
+
+		state.name = control.name;
 
 		if (this.j.o.textIcons) {
 			state.icon = UIButtonState().icon;

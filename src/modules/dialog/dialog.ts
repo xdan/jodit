@@ -29,7 +29,7 @@ import {
 	extend,
 	hasContainer,
 	isJoditObject,
-	isString,
+	isString, markOwner,
 	splitArray
 } from '../../core/helpers/';
 import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
@@ -456,14 +456,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	}
 
 	/**
-	 * Return current Z-index
-	 * @return {number}
-	 */
-	getZIndex(): number {
-		return parseInt(this.container.style.zIndex || '0', 10);
-	}
-
-	/**
 	 * Get dialog instance with maximum z-index displaying it on top of all the dialog boxes
 	 *
 	 * @return {Dialog}
@@ -739,7 +731,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		}
 
 		if (jodit && (<IViewBased>jodit).id) {
-			(<IViewBased>jodit).markOwner(self.container);
+			markOwner(jodit, self.container);
 		}
 
 		self.dialog = self.container.querySelector(

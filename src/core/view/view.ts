@@ -5,40 +5,26 @@
  */
 
 import {
-	IAsync,
 	IComponent,
 	IDictionary,
-	IEventsNative,
 	IProgressBar
 } from '../../types';
 import { IViewBased, IViewOptions } from '../../types';
 import { Component } from '../component';
-import { EventsNative } from '../events';
 import { Panel } from './panel';
 import { Storage } from '../storage';
-import { attr, error, i18n, isFunction } from '../helpers';
+import { error, i18n, isFunction } from '../helpers';
 import { BASE_PATH } from '../constants';
-import { Async } from '../async';
 import { ProgressBar } from '../../modules';
 import { modules } from '../global';
 
 export abstract class View extends Panel implements IViewBased {
+	jodit!: IViewBased;
+
 	/**
 	 * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
 	 */
 	id: string;
-
-	/**
-	 * Mark element for debugging
-	 * @param elm
-	 */
-	markOwner(elm: HTMLElement): void {
-		attr(elm, 'data-editor_id', this.id);
-
-		!elm.component && Object.defineProperty(elm, 'jodit', {
-			value: this
-		});
-	}
 
 	components: Set<IComponent> = new Set();
 
@@ -81,17 +67,6 @@ export abstract class View extends Panel implements IViewBased {
 	progressbar: IProgressBar = new ProgressBar(this);
 
 	options!: IViewOptions;
-
-	events: IEventsNative;
-
-	/**
-	 * Short alias for events
-	 */
-	get e(): this['events'] {
-		return this.events;
-	}
-
-	async: IAsync = new Async();
 
 	/**
 	 * Internationalization method. Uses Jodit.lang object
@@ -166,27 +141,12 @@ export abstract class View extends Panel implements IViewBased {
 		super(jodit, options);
 
 		this.id = jodit?.id || new Date().getTime().toString();
-
-		this.jodit = jodit || this;
-
-		this.events = jodit?.events || new EventsNative(this.od);
-
 		this.buffer = jodit?.buffer || Storage.makeStorage();
 	}
 
 	destruct() {
 		if (this.isDestructed) {
 			return;
-		}
-
-		if (this.async) {
-			this.async.destruct();
-			delete this.async;
-		}
-
-		if (this.events) {
-			this.e.destruct();
-			delete this.events;
 		}
 
 		super.destruct();

@@ -1,5 +1,7 @@
 import './button.less';
 
+import autobind from 'autobind-decorator';
+
 import { UIElement } from '../element';
 import {
 	CanUndef,
@@ -17,19 +19,26 @@ import { UIList } from '..';
 
 export const UIButtonState = (): IUIButtonState => ({
 	size: 'middle',
+	name: '',
+
 	status: '',
 	disabled: false,
 	activated: false,
+
 	icon: {
 		name: 'empty',
 		fill: '',
 		iconURL: ''
 	},
+
 	tooltip: '',
-	text: ''
+	text: '',
+	tabIndex: -1
 });
 
 export class UIButton extends UIElement implements IUIButton {
+	jodit!: IViewBased;
+
 	/**
 	 * Marker for buttons
 	 */
@@ -72,8 +81,6 @@ export class UIButton extends UIElement implements IUIButton {
 			this.state.size = pe.buttonSize;
 			return;
 		}
-
-		this.state.size = this.j.o.toolbarButtonSize || UIButtonState().size;
 	}
 
 	@watch('state.status')
@@ -81,9 +88,15 @@ export class UIButton extends UIElement implements IUIButton {
 		this.setMod('status', this.state.status);
 	}
 
-	@watch('state.text')
+	@watch('state.text jodit')
 	protected onChangeText(): void {
-		this.text.textContent = this.j.i18n(this.state.text);
+		let text = this.state.text;
+
+		if (this.jodit) {
+			text = this.jodit.i18n(text);
+		}
+
+		this.text.textContent = text;
 	}
 
 	@watch('state.text')
@@ -103,16 +116,21 @@ export class UIButton extends UIElement implements IUIButton {
 
 	@watch('state.tooltip')
 	protected onChangeTooltip(): void {
-		if (this.j.o.useNativeTooltip) {
+		if (this.get('j.o.useNativeTooltip')) {
 			attr(this.container, 'title', this.state.tooltip);
 		}
 
 		attr(this.container, 'aria-label', this.state.tooltip);
 	}
 
+	@watch('state.tabIndex')
+	onChangeTabIndex() {
+		attr(this.container, 'tabIndex', this.state.tabIndex);
+	}
+
 	@watch('state.icon')
 	protected onChangeIcon(): void {
-		if (this.j.o.textIcons) {
+		if (this.get('j.o.textIcons')) {
 			return;
 		}
 
@@ -124,7 +142,7 @@ export class UIButton extends UIElement implements IUIButton {
 
 		if (state.icon) {
 			if (state.icon.iconURL) {
-				iconElement = jodit.c.span();
+				iconElement = this.c.span();
 
 				css(
 					iconElement,
@@ -132,7 +150,7 @@ export class UIButton extends UIElement implements IUIButton {
 					'url(' +
 						state.icon.iconURL.replace(
 							'{basePath}',
-							jodit.basePath
+							jodit?.basePath || ''
 						) +
 						')'
 				);
@@ -140,7 +158,7 @@ export class UIButton extends UIElement implements IUIButton {
 				const svg = Icon.get(this.state.icon.name, '');
 
 				if (svg) {
-					iconElement = this.j.c.fromHTML(svg.trim());
+					iconElement = this.c.fromHTML(svg.trim());
 					iconElement.classList.add(
 						'jodit-icon_' + this.clearName(this.state.icon.name)
 					);
@@ -167,7 +185,7 @@ export class UIButton extends UIElement implements IUIButton {
 	 * Element has focus
 	 */
 	isFocused(): boolean {
-		const { activeElement } = this.j.od;
+		const { activeElement } = this.od;
 
 		return Boolean(
 			activeElement && Dom.isOrContains(this.container, activeElement)
@@ -176,28 +194,22 @@ export class UIButton extends UIElement implements IUIButton {
 
 	/** @override */
 	protected createContainer(): HTMLElement {
-		let tabIndex = -1;
-
-		if (this.j.o.allowTabNavigation) {
-			tabIndex = 0;
-		}
 		const cn = this.componentName;
 
-		const button = this.j.c.element('button', {
+		const button = this.c.element('button', {
 			class: cn,
 			type: 'button',
 			role: 'button',
-			tabIndex,
 			ariaPressed: false
 		});
 
-		this.icon = this.j.c.span(cn + '__icon');
-		this.text = this.j.c.span(cn + '__text');
+		this.icon = this.c.span(cn + '__icon');
+		this.text = this.c.span(cn + '__text');
 
 		button.appendChild(this.icon);
 		button.appendChild(this.text);
 
-		this.j.e.on(button, `click`, this.onActionFire.bind(this));
+		this.e.on(button, `click`, this.onActionFire);
 
 		return button;
 	}
@@ -205,7 +217,6 @@ export class UIButton extends UIElement implements IUIButton {
 	constructor(jodit: IViewBased) {
 		super(jodit);
 
-		this.initTooltip();
 		this.updateSize();
 		this.onChangeSize();
 		this.onChangeStatus();
@@ -216,44 +227,8 @@ export class UIButton extends UIElement implements IUIButton {
 	}
 
 	destruct(): any {
-		this.j.e.off(this.container);
+		this.e.off(this.container);
 		return super.destruct();
-	}
-
-	/**
-	 * Add tooltip to button
-	 */
-	protected initTooltip() {
-		if (this.j.o.showTooltip && !this.j.o.useNativeTooltip) {
-			const to = this.j.o.showTooltipDelay || this.j.defaultTimeout;
-
-			let timeout: number = 0;
-
-			this.j.e
-				.on(this.container, 'mouseenter', () => {
-					if (!this.state.tooltip) {
-						return;
-					}
-
-					timeout = this.j.async.setTimeout(
-						() =>
-							!this.state.disabled &&
-							this.j?.e.fire(
-								'showTooltip',
-								this.container,
-								this.state.tooltip
-							),
-						{
-							timeout: to,
-							label: 'tooltip'
-						}
-					);
-				})
-				.on(this.container, 'mouseleave', () => {
-					this.j.async.clearTimeout(timeout);
-					this.j.e.fire('hideTooltip');
-				});
-		}
 	}
 
 	private actionHandlers: Function[] = [];
@@ -271,6 +246,7 @@ export class UIButton extends UIElement implements IUIButton {
 	 * Fire all click handlers
 	 * @param originalEvent
 	 */
+	@autobind
 	private onActionFire(originalEvent: MouseEvent): void {
 		this.actionHandlers.forEach(callback =>
 			callback.call(this, originalEvent)
@@ -282,6 +258,11 @@ export function Button(jodit: IViewBased, icon: string): IUIButton;
 export function Button(
 	jodit: IViewBased,
 	icon: string,
+	text?: string
+): IUIButton;
+export function Button(
+	jodit: IViewBased,
+	icon: string,
 	text: string,
 	status?: string
 ): IUIButton;
@@ -290,6 +271,7 @@ export function Button(
 	state: IUIButtonStatePartial,
 	status?: string
 ): IUIButton;
+
 export function Button(
 	jodit: IViewBased,
 	stateOrText: string | IUIButtonStatePartial,

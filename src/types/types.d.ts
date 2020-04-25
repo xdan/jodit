@@ -6,6 +6,9 @@
 
 import { IViewBased } from './view';
 import { IJodit } from './jodit';
+import { ICreate } from './create';
+import { IAsync } from './async';
+import { IEventsNative } from './events';
 
 export interface IDictionary<T = any> {
 	[key: string]: T;
@@ -36,8 +39,25 @@ export interface IContainer {
 }
 
 interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
-	jodit: T;
+	jodit: CanUndef<T>;
 	j: this['jodit'];
+	setParentView(jodit: T): this;
+
+	ownerDocument: Document;
+	od: this['ownerDocument'];
+
+	ownerWindow: Window;
+	ow: this['ownerWindow'];
+
+	create: ICreate;
+	c: this['create'];
+
+	events: IEventsNative;
+	e: this['events'];
+
+	get<T>(chain: string, obj?: IDictionary): Nullable<T>;
+
+	async: IAsync;
 
 	componentName: string;
 	uid: string;
@@ -203,5 +223,3 @@ export interface EventHandlerBlock {
 export type HTMLTagNames = keyof HTMLElementTagNameMap;
 
 export type Modes = 1 | 2 | 3;
-
-export type TagNames = keyof HTMLElementTagNameMap;

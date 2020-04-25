@@ -7,6 +7,7 @@ import {
 	Nullable
 } from './types';
 import { Buttons } from './toolbar';
+import { IViewBased } from './view';
 
 export interface IUIElement extends IContainer, IDestructible {
 	isButton: boolean;
@@ -22,16 +23,21 @@ export interface IUIElement extends IContainer, IDestructible {
 
 export interface IUIButtonState {
 	size: 'tiny' | 'xsmall' | 'small' | 'middle' | 'large';
+	name: string;
 	status: string;
 	disabled: boolean;
 	activated: boolean;
+
 	icon: {
 		name: string;
 		iconURL: string;
 		fill: string;
 	};
+
 	text: string;
 	tooltip: string;
+
+	tabIndex: number;
 }
 
 export interface IUIButtonStatePartial {
@@ -65,8 +71,13 @@ export interface IUIGroup extends IUIElement {
 }
 
 export interface IUIList extends IUIGroup {
+	jodit: IViewBased;
+
 	mode: 'vertical' | 'horizontal';
 	buttonSize: IUIButtonState['size'];
+
+	buttons: IUIButton[];
+	getButtonsNames(): string[];
 
 	build(
 		items: Buttons | IDictionary<string>,

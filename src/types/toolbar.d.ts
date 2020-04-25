@@ -261,6 +261,8 @@ interface IControlTypeStrongList extends IControlTypeStrong {
 }
 
 interface IToolbarButton extends IUIButton {
+	jodit: IViewBased;
+
 	trigger: HTMLElement;
 	state: IUIButton['state'] & {
 		hasTrigger: boolean;
@@ -271,7 +273,7 @@ interface IToolbarButton extends IUIButton {
 }
 
 interface IToolbarCollection extends IUIList {
-	getButtonsList(): string[];
+	jodit: IViewBased;
 
 	setDirection(direction: 'rtl' | 'ltr'): void;
 
@@ -282,6 +284,8 @@ interface IToolbarCollection extends IUIList {
 }
 
 export interface IStatusBar extends IComponent {
+	jodit: IViewBased;
+
 	show(): void;
 	hide(): void;
 	getHeight(): number;
@@ -289,6 +293,8 @@ export interface IStatusBar extends IComponent {
 }
 
 export interface IProgressBar extends IDestructible {
+	jodit: IViewBased;
+
 	show(): IProgressBar;
 	hide(): IProgressBar;
 	progress(percentage: number): IProgressBar;

@@ -6,9 +6,16 @@
 
 import { Config } from '../config';
 import * as consts from '../core/constants';
-import { Buttons, IControlType, IToolbarCollection, IJodit } from '../types/';
+import {
+	Buttons,
+	IControlType,
+	IToolbarCollection,
+	IJodit,
+	CanUndef
+} from '../types/';
 import { camelCase, splitArray } from '../core/helpers/';
 import { makeCollection } from '../modules/toolbar/factory';
+import { UIList } from '../core/ui';
 
 declare module '../config' {
 	interface Config {
@@ -52,11 +59,11 @@ Config.prototype.controls.dots = {
 				toolbar: makeCollection(editor),
 				rebuild: () => {
 					if (button) {
-						const buttons:
-							| Array<string | IControlType>
-							| undefined = editor.e.fire(
+						const buttons: CanUndef<Array<
+							string | IControlType
+						>> = editor.e.fire(
 							'getDiffButtons.mobile',
-							button.parentElement
+							button.closest(UIList)
 						);
 
 						if (buttons && store) {
@@ -64,8 +71,9 @@ Config.prototype.controls.dots = {
 								.build(splitArray(buttons))
 								.appendTo(store.container);
 
-
-							let w = editor.toolbar.firstButton?.container.offsetWidth || 36;
+							let w =
+								editor.toolbar.firstButton?.container
+									.offsetWidth || 36;
 							store.container.style.width = (w + 4) * 3 + 'px';
 						}
 					}
@@ -107,9 +115,9 @@ export function mobile(editor: IJodit) {
 			'getDiffButtons.mobile',
 			(toolbar: IToolbarCollection): void | Buttons => {
 				if (toolbar === editor.toolbar) {
-					return splitArray(editor.o.buttons).filter(i => {
-						return store.indexOf(i) < 0;
-					});
+					return splitArray(editor.o.buttons).filter(
+						i => !store.includes(i)
+					);
 				}
 			}
 		);

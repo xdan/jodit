@@ -7,36 +7,13 @@
 import { Component } from '../component';
 import { IPanel, IViewBased, IViewOptions } from '../../types';
 import { Dom } from '../dom';
-import { Create } from '../create';
 import { error, isString } from '../helpers';
 
 export abstract class Panel extends Component implements IPanel {
 	protected __whoLocked: string | false = '';
 	protected __isFullSize: boolean = false;
 
-	ownerDocument!: Document;
-	get od(): this['ownerDocument'] {
-		return this.ownerDocument;
-	}
-
-	ownerWindow!: Window;
-	get ow(): this['ownerWindow'] {
-		return this.ownerWindow;
-	}
-
 	container: HTMLDivElement;
-
-	/**
-	 * @property {Create} Native DOM element creator
-	 */
-	create: Create;
-
-	/**
-	 * Short alias for create
-	 */
-	get c(): this['create'] {
-		return this.create;
-	}
 
 	abstract options: IViewOptions;
 
@@ -49,11 +26,6 @@ export abstract class Panel extends Component implements IPanel {
 
 	protected initOptions(options?: IViewOptions): void {
 		this.options = { ...(this.options || {}), ...options };
-	}
-
-	protected initOwners(): void {
-		this.ownerDocument = window.document;
-		this.ownerWindow = window;
 	}
 
 	/**
@@ -90,18 +62,15 @@ export abstract class Panel extends Component implements IPanel {
 		return resolved;
 	}
 
-	protected constructor(jodit?: IViewBased, options?: IViewOptions) {
-		super(jodit);
+	protected constructor(view?: IViewBased, options?: IViewOptions) {
+		super();
+
+		if (view) {
+			this.setParentView(view);
+		}
 
 		this.initOptions(options);
 		this.initOwners();
-
-		if (jodit && jodit.od) {
-			this.ownerDocument = jodit.od;
-			this.ownerWindow = jodit.ow;
-		}
-
-		this.create = new Create(this);
 
 		this.container = this.c.div();
 	}

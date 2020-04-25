@@ -1,4 +1,4 @@
-import { IDictionary } from '../../../types';
+import { IDictionary, Nullable } from '../../../types';
 import { isString, isVoid } from '../checker';
 
 /**
@@ -22,7 +22,7 @@ import { isString, isVoid } from '../checker';
  * @param chain
  * @param obj
  */
-export function get<T>(chain: string, obj: IDictionary): null | T {
+export function get<T>(chain: string, obj: IDictionary): Nullable<T> {
 	if (!isString(chain) || !chain.length) {
 		return null;
 	}

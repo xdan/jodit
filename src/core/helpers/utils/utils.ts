@@ -5,6 +5,7 @@
  */
 
 import { isFunction } from '../checker';
+import { IViewBased } from '../../../types';
 
 /**
  * Call function with parameters
@@ -62,4 +63,17 @@ export function attr(
 	}
 
 	return elm.getAttribute(key);
+}
+
+/**
+ * Mark element for debugging
+ * @param elm
+ */
+export function markOwner(jodit: IViewBased, elm: HTMLElement): void {
+	attr(elm, 'data-editor_id', jodit.id);
+
+	!elm.component &&
+		Object.defineProperty(elm, 'jodit', {
+			value: jodit
+		});
 }

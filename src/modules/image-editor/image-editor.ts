@@ -96,6 +96,8 @@ const gi = Icon.get.bind(Icon);
  *
  */
 export class ImageEditor extends Component {
+	jodit!: IViewBased;
+
 	private resizeUseRatio: boolean = true;
 	private cropUseRatio: boolean = true;
 

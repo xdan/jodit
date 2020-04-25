@@ -12,10 +12,8 @@ import {
 	IToolbarCollection
 } from './toolbar';
 import { IComponent, IDictionary } from './types';
-import { Attributes, ICreate } from './create';
-import { IEventsNative } from './events';
+import { Attributes } from './create';
 import { IStorage } from './storage';
-import { IAsync } from './async';
 import { IUIButtonState } from './ui';
 
 interface ILanguageOptions {
@@ -66,13 +64,6 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 
 interface IPanel<T = IViewOptions> extends IComponent {
 	container: HTMLElement;
-	create: ICreate;
-
-	ownerDocument: Document;
-	od: this['ownerDocument'];
-
-	ownerWindow: Window;
-	ow: this['ownerWindow'];
 
 	isLockedNotBy(name: string): boolean;
 	isLocked(): boolean;
@@ -88,12 +79,12 @@ interface IPanel<T = IViewOptions> extends IComponent {
 }
 
 interface IViewBased<T = IViewOptions> extends IPanel<T> {
+	jodit: IViewBased;
+
 	/**
 	 * @property {string} ID attribute for source element, id add {id}_editor it's editor's id
 	 */
 	id: string;
-
-	markOwner(elm: HTMLElement): void;
 
 	basePath: string;
 
@@ -104,14 +95,6 @@ interface IViewBased<T = IViewOptions> extends IPanel<T> {
 	options: T;
 	// alias
 	o: this['options'];
-
-	events: IEventsNative;
-	e: this['events'];
-
-	create: ICreate;
-	c: this['create'];
-
-	async: IAsync;
 
 	i18n: (text: string, ...params: Array<string | number>) => string;
 

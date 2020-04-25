@@ -1,5 +1,7 @@
 import './inline-popup.less';
 
+import autobind from 'autobind-decorator';
+
 import { Plugin } from '../../core/plugin';
 import {
 	IBound,
@@ -13,14 +15,10 @@ import {
 import { makeCollection } from '../../modules/toolbar/factory';
 import { Popup } from '../../core/ui/popup';
 import { Config } from '../../config';
-import { attr } from '../../core/helpers/utils';
-import { isString } from '../../core/helpers/checker';
-import { clearCenterAlign, css, splitArray } from '../../core/helpers';
+import { clearCenterAlign, css, splitArray, isString, attr, position } from '../../core/helpers';
 import { Dom, Table } from '../../modules';
 import { ColorPickerWidget, TabsWidget } from '../../modules/widget';
 import { debounce } from '../../core/decorators';
-import autobind from 'autobind-decorator';
-import { position } from '../../core/helpers/size/position';
 
 declare module '../../config' {
 	interface Config {
@@ -367,56 +365,44 @@ export class inlinePopup extends Plugin {
 	private toolbar: IToolbarCollection = makeCollection(this.jodit);
 	private popup: IPopup = new Popup(this.jodit);
 
-	protected afterInit(jodit: IJodit): void {
-		this.j.e
-			.on(
-				'showPopup',
-				(elm: HTMLElement | string, rect: () => IBound) => {
-					this.showPopupWithToolbar(
-						rect,
-						isString(elm) ? elm : elm.nodeName,
-						isString(elm) ? undefined : elm
-					);
-				}
-			)
-			.on(
-				this.j.editorDocument,
-				'selectionchange',
-				this.onSelectionChange
+	@autobind
+	private onClick(e: MouseEvent): void {
+		const node = e.target as Node,
+			elements: string = Object.keys(this.j.o.popup).join('|'),
+			target: HTMLElement | false = Dom.isTag(node, 'img')
+				? node
+				: Dom.closest(node, elements, this.j.editor);
+
+		if (target && this.canShowPopupForType(target.nodeName.toLowerCase())) {
+			this.showPopupWithToolbar(
+				() => position(target),
+				target.nodeName.toLowerCase(),
+				target
 			);
+		}
 	}
 
-	@debounce()
+	@debounce(500)
 	private onSelectionChange(): void {
-		this.popup.close();
+		const sel = this.j.selection.sel,
+			range = this.j.selection.range;
+
+		if (sel?.isCollapsed) {
+			return;
+		}
+
 		const node = this.j.selection.current();
 
 		if (!node) {
 			return;
 		}
 
-		const sel = this.j.selection.sel,
-			range = this.j.selection.range;
+		this.popup.close();
 
-		if (sel?.isCollapsed) {
-			const elements: string = Object.keys(this.j.o.popup).join('|'),
-				target: HTMLElement | false = Dom.isTag(node, 'img')
-					? node
-					: Dom.closest(node, elements, this.j.editor);
-
-			if (target && this.canShowPopupForType(target.nodeName.toLowerCase())) {
-				this.showPopupWithToolbar(
-					() => position(target),
-					target.nodeName.toLowerCase(),
-					target
-				);
-			}
-		} else {
-			this.showPopupWithToolbar(
-				() => range.getBoundingClientRect(),
-				'selection'
-			);
-		}
+		this.showPopupWithToolbar(
+			() => range.getBoundingClientRect(),
+			'selection'
+		);
 	}
 
 	/**
@@ -470,18 +456,39 @@ export class inlinePopup extends Plugin {
 	 * @param type
 	 */
 	private isExcludedTarget(type: string): boolean {
-		return (
-			splitArray(this.j.o.toolbarInlineDisableFor)
-				.map(a => a.toLowerCase())
-				.includes(type)
-		);
+		return splitArray(this.j.o.toolbarInlineDisableFor)
+			.map(a => a.toLowerCase())
+			.includes(type);
+	}
+
+	protected afterInit(jodit: IJodit): void {
+		this.j.e
+			.on(
+				'showPopup',
+				(elm: HTMLElement | string, rect: () => IBound) => {
+					this.showPopupWithToolbar(
+						rect,
+						isString(elm) ? elm : elm.nodeName,
+						isString(elm) ? undefined : elm
+					);
+				}
+			)
+			.on('click', this.onClick)
+			.on(
+				this.j.editorDocument,
+				'selectionchange',
+				this.onSelectionChange
+			);
 	}
 
 	protected beforeDestruct(jodit: IJodit): void {
-		this.j.e.off(
-			this.j.editorDocument,
-			'selectionchange',
-			this.onSelectionChange
-		);
+		this.j.e
+			.off('showPopup')
+			.off('click', this.onClick)
+			.off(
+				this.j.editorDocument,
+				'selectionchange',
+				this.onSelectionChange
+			);
 	}
 }

@@ -6,8 +6,8 @@
 import './context-menu.less';
 
 import { IContextMenu, IContextMenuAction } from '../../types';
-import { Icon } from '../../core/ui';
 import { Popup } from '../../core/ui/popup';
+import { Button } from '../../core/ui/button';
 
 /**
  * Module to generate context menu
@@ -29,7 +29,7 @@ export class ContextMenu extends Popup implements IContextMenu {
 	 */
 	show(x: number, y: number, actions: Array<false | IContextMenuAction>) {
 		const self = this,
-			content = this.j.c.div('jodit-context-menu__actions');
+			content = this.c.div('jodit-context-menu__actions');
 
 		if (!Array.isArray(actions)) {
 			return;
@@ -40,24 +40,16 @@ export class ContextMenu extends Popup implements IContextMenu {
 				return;
 			}
 
-			const title = self.j.i18n(item.title || '');
+			const action = Button(this.jodit, item.icon || 'empty', item.title);
+			this.jodit && action.setParentView(this.jodit);
 
-			const action = this.j.c.fromHTML(
-				`<a title="${title}" data-icon="${item.icon}"  href="javascript:void(0)">` +
-					(item.icon ? Icon.get(item.icon) : '') +
-					'<span></span></a>'
-			) as HTMLAnchorElement;
-
-			const span = action.querySelector('span') as HTMLSpanElement;
-
-			this.j.e.on(action, 'click', (e: MouseEvent) => {
+			action.onAction((e: MouseEvent) => {
 				item.exec?.call(self, e);
 				self.close();
 				return false;
 			});
 
-			span.textContent = title;
-			content.appendChild(action);
+			content.appendChild(action.container);
 		});
 
 		super

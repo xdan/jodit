@@ -1,4 +1,4 @@
-import { IDictionary } from '../../types';
+import { IComponent, IDictionary } from '../../types';
 import { error, isFunction } from '../helpers';
 import { Component, STATUSES } from '../component';
 
@@ -15,10 +15,10 @@ export function debounce(timeout?: number) {
 			throw error('Handler must be a Function');
 		}
 
-		target.hookStatus(STATUSES.ready, (component: Component) => {
-			target[propertyKey] = component.j.async.debounce(
+		target.hookStatus(STATUSES.ready, (component: IComponent) => {
+			target[propertyKey] = component.async.debounce(
 				target[propertyKey].bind(component),
-				timeout || component.j.defaultTimeout
+				timeout || 0
 			);
 		});
 	};

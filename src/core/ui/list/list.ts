@@ -4,12 +4,15 @@ import {
 	Buttons,
 	IControlTypeStrong,
 	IDictionary,
-	IUIButton, IUIButtonState,
-	IUIElement, IUIGroup,
+	IUIButton,
+	IUIButtonState,
+	IUIElement,
+	IUIGroup,
 	IUIList,
 	IViewBased,
 	Nullable
 } from '../../../types';
+
 import { UIButton } from '../button';
 import { getStrongControlTypes } from '../helpers/getStrongControlTypes';
 import { STATUSES } from '../../component';
@@ -19,12 +22,14 @@ import { UISeparator } from '../separator';
 
 export class UIList<T extends IViewBased = IViewBased> extends UIGroup<T>
 	implements IUIList {
+	jodit!: T;
+
 	mode: IUIList['mode'] = 'horizontal';
 	buttonSize: IUIButtonState['size'] = 'middle';
 
 	@watch('mode')
 	onChangeMode() {
-		this.setMod('mode', this.mode)
+		this.setMod('mode', this.mode);
 	}
 
 	constructor(jodit: T) {
@@ -36,10 +41,48 @@ export class UIList<T extends IViewBased = IViewBased> extends UIGroup<T>
 		}
 	}
 
-	protected addGroup(): IUIGroup {
+	/**
+	 * Make new group and append it in list of elements
+	 */
+	private addGroup(): IUIGroup {
 		const group = new UIGroup(this.jodit);
 		this.append(group);
 		return group;
+	}
+
+	/**
+	 * All buttons from list
+	 */
+	get buttons(): IUIButton[] {
+		const walk = (elms: IUIElement[]): IUIButton[] =>
+			elms.reduce((res, elm) => {
+				if (elm instanceof UIGroup) {
+					return res.concat(walk(elm.elements));
+				}
+
+				if (elm instanceof UIButton) {
+					res.push(elm);
+				}
+
+				return res;
+			}, [] as IUIButton[]);
+
+		return walk(this.elements);
+	}
+
+	/**
+	 * Helper for getting full plain button list
+	 */
+	getButtonsNames(): string[] {
+
+
+		return this.buttons
+			.map(
+				a =>
+					(a instanceof UIButton && a.state.name) ||
+					''
+			)
+			.filter(a => a !== '');
 	}
 
 	build(

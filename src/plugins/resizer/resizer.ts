@@ -10,7 +10,14 @@ import * as consts from '../../core/constants';
 import { IS_IE } from '../../core/constants';
 import { IBound } from '../../types';
 import { Dom } from '../../core/dom';
-import { $$, attr, css, offset, innerWidth } from '../../core/helpers';
+import {
+	$$,
+	attr,
+	css,
+	offset,
+	innerWidth,
+	markOwner
+} from '../../core/helpers';
 import { IJodit } from '../../types';
 import { Plugin } from '../../core/plugin';
 
@@ -490,7 +497,7 @@ export class resizer extends Plugin {
 		this.isShown = true;
 
 		if (!this.rect.parentNode) {
-			this.j.markOwner(this.rect);
+			markOwner(this.j, this.rect);
 			this.j.workplace.appendChild(this.rect);
 		}
 

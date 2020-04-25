@@ -16,11 +16,7 @@ import {
 	IViewBased
 } from '../../../types/';
 
-import {
-	isFunction,
-	isJoditObject,
-	get
-} from '../../../core/helpers/';
+import { isFunction, isJoditObject } from '../../../core/helpers/';
 
 import { UIList } from '../../../core/ui';
 import { makeButton } from '../factory';
@@ -29,25 +25,17 @@ import { STATUSES } from '../../../core/component';
 export class ToolbarCollection<T extends IViewBased = IViewBased>
 	extends UIList<T>
 	implements IToolbarCollection {
+	jodit!: T;
+
 	readonly listenEvents =
 		'changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
 		'selectionchange changeSelection focus afterSetMode touchstart focus blur';
 
 	/**
-	 * Helper for getting full plain button list
-	 */
-	getButtonsList(): string[] {
-		return this.elements
-			.map(a => get<string>('control.name', a) || '')
-			.filter(a => a !== '');
-	}
-
-	/**
 	 * First button in list
 	 */
 	get firstButton(): Nullable<IToolbarButton> {
-		const button = this.elements.find(a => a.isButton) as IToolbarButton;
-
+		const [button] = this.buttons as IToolbarButton[];
 		return button || null;
 	}
 
@@ -110,10 +98,10 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 
 		super.update();
 
-		this.j.events && this.j.e.fire('updateToolbar');
+		this.e.fire('updateToolbar');
 	}
 
-	update = this.j.async.debounce(this.immediateUpdate, this.j.defaultTimeout);
+	update = this.async.debounce(this.immediateUpdate, this.j.defaultTimeout);
 
 	/**
 	 * Set direction
@@ -131,7 +119,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	}
 
 	private initEvents() {
-		this.j.e
+		this.e
 			// .on(this.j.ow, 'mousedown touchend', this.closeAllPopups)
 			.on(this.listenEvents, this.update)
 			.on('afterSetMode focus', this.immediateUpdate);
@@ -143,7 +131,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 			return;
 		}
 
-		this.j.e
+		this.e
 			.off(this.listenEvents, this.update)
 			.off('afterSetMode focus', this.immediateUpdate);
 

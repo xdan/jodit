@@ -8,11 +8,14 @@ import { IJodit, IPlugin } from '../types';
 import { Component, STATUSES } from './component';
 
 export abstract class Plugin extends Component<IJodit> implements IPlugin {
+	jodit!: IJodit;
+
 	protected abstract afterInit(jodit: IJodit): void;
 	protected abstract beforeDestruct(jodit: IJodit): void;
 
 	constructor(jodit: IJodit) {
-		super(jodit);
+		super();
+		this.setParentView(jodit);
 
 		this.destruct = this.destruct.bind(this, jodit);
 

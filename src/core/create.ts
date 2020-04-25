@@ -25,18 +25,24 @@ import {
 } from './helpers/';
 
 import { Dom } from './dom';
+import { cache } from './decorators';
 
 export class Create implements ICreate {
 	inside!: Create;
 
+	@cache
 	private get doc(): Document {
+		if (!this.j) {
+			return document;
+		}
+
 		return this.insideCreator && isJoditObject(this.j)
 			? this.j.editorDocument
 			: this.j.od;
 	}
 
 	constructor(
-		readonly jodit: IJodit | IPanel,
+		readonly jodit?: IJodit | IPanel,
 		readonly insideCreator: boolean = false
 	) {
 		if (!insideCreator) {
@@ -83,13 +89,13 @@ export class Create implements ICreate {
 	): HTMLElement {
 		const elm = this.doc.createElement(tagName.toLowerCase());
 
-		if (this.j.o.direction) {
+		if (this?.j?.o.direction) {
 			const direction = this.j.o.direction.toLowerCase();
 
 			elm.style.direction = direction === 'rtl' ? 'rtl' : 'ltr';
 		}
 
-		if (this.insideCreator) {
+		if (this.j && this.insideCreator) {
 			const ca = this.j.o.createAttributes;
 
 			if (ca && ca[tagName.toLowerCase()]) {
@@ -162,16 +168,17 @@ export class Create implements ICreate {
 		return span;
 	}
 
+	a(className?: string, children?: Children): HTMLAnchorElement;
 	a(
 		className?: string,
 		childrenOrAttributes?: Attributes,
 		children?: Children
-	): HTMLSpanElement;
+	): HTMLAnchorElement;
 	a(
 		className?: string,
 		childrenOrAttributes?: Attributes | Children,
 		children?: Children
-	): HTMLSpanElement {
+	): HTMLAnchorElement {
 		const a = this.element('a', <any>childrenOrAttributes, children);
 
 		if (className) {

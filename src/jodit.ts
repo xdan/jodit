@@ -935,8 +935,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	protected initOwners(): void {
 		// in iframe it can be changed
 		this.editorWindow = this.o.ownerWindow;
-
-		this.ownerDocument = this.o.ownerDocument;
 		this.ownerWindow = this.o.ownerWindow;
 	}
 

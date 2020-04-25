@@ -141,6 +141,8 @@ Config.prototype.uploader = {
 } as IUploaderOptions<Uploader>;
 
 export class Uploader extends Component implements IUploader {
+	jodit!: IViewBased;
+
 	/**
 	 * Convert dataURI to Blob
 	 *
@@ -748,7 +750,8 @@ export class Uploader extends Component implements IUploader {
 	}
 
 	constructor(editor: IViewBased, options?: IUploaderOptions<Uploader>) {
-		super(editor);
+		super();
+		this.setParentView(editor);
 
 		this.options = extend(
 			true,

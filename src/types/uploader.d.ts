@@ -6,6 +6,7 @@
  */
 
 import { IComponent, IDictionary } from './types';
+import { IViewBased } from './view';
 
 interface IUploaderData {
 	messages?: string[];
@@ -196,6 +197,8 @@ export interface IUploaderOptions<T> {
 }
 
 export interface IUploader extends IComponent {
+	jodit: IViewBased;
+
 	buildData(data: FormData | IDictionary<string> | string): BuildDataResult;
 
 	send(

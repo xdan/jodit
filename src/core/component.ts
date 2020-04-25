@@ -9,11 +9,16 @@ import {
 	IComponent,
 	IDictionary,
 	Statuses,
-	IViewBased
+	IViewBased,
+	ICreate, CanUndef, IAsync, IEventsNative, Nullable
 } from '../types';
 
-import { kebabCase, isJoditObject } from './helpers/';
+import { kebabCase, isJoditObject, get } from './helpers/';
 import { uniqueUid } from './global';
+import { cache } from './decorators';
+import { Create } from './create';
+import { Async } from './async';
+import { EventsNative } from './events';
 
 export const STATUSES: Statuses = {
 	beforeInit: 'beforeInit',
@@ -27,9 +32,71 @@ export abstract class Component<T extends IViewBased = IViewBased>
 	componentName!: string;
 	uid!: string;
 
-	jodit!: T;
+	jodit!: CanUndef<T>;
 	get j(): this['jodit'] {
 		return this.jodit;
+	}
+
+	setParentView(jodit: T): this {
+		this.jodit = jodit;
+
+		if (isJoditObject(jodit)) {
+			jodit.components.add(this);
+		}
+
+		return this;
+	}
+
+	get ownerDocument(): Document {
+		return this.ow.document;
+	};
+
+	get od(): this['ownerDocument'] {
+		return this.ownerDocument;
+	}
+
+	ownerWindow!: Window;
+	get ow(): this['ownerWindow'] {
+		return this.ownerWindow;
+	}
+
+	async: IAsync = new Async();
+
+	protected initOwners(): void {
+		if (this.jodit && this.jodit.ownerWindow) {
+			this.ownerWindow = this.jodit.ownerWindow;
+		} else {
+			this.ownerWindow = window;
+		}
+	}
+
+	@cache
+	get create(): ICreate {
+		if (this.j) {
+			return this.j.create;
+		}
+
+		return new Create();
+	}
+
+	get c(): this['create'] {
+		return this.create;
+	}
+
+	@cache
+	get events(): IEventsNative {
+		if (this.j) {
+			return this.j.events;
+		}
+
+		return new EventsNative(this.od);
+	}
+
+	/**
+	 * Short alias for events
+	 */
+	get e(): this['events'] {
+		return this.events;
 	}
 
 	private __componentStatus: ComponentStatus = STATUSES.beforeInit;
@@ -57,6 +124,16 @@ export abstract class Component<T extends IViewBased = IViewBased>
 		}
 	}
 
+	/**
+	 * Safe get any field
+	 *
+	 * @param chain
+	 * @param obj
+	 */
+	get<T>(chain: string, obj?: IDictionary): Nullable<T> {
+		return get<T>(chain, obj || this);
+	}
+
 	get isReady(): boolean {
 		return this.componentStatus === STATUSES.ready;
 	}
@@ -81,6 +158,14 @@ export abstract class Component<T extends IViewBased = IViewBased>
 	destruct(): any {
 		this.setStatus(STATUSES.beforeDestruct);
 
+		if (this.async) {
+			this.async.destruct();
+		}
+
+		if (this.events) {
+			this.events.destruct();
+		}
+
 		if (isJoditObject(this.j)) {
 			this.j.components.delete(this);
 		}
@@ -96,13 +181,11 @@ export abstract class Component<T extends IViewBased = IViewBased>
 		this.componentName = 'jodit-' + kebabCase(this.constructor.name);
 		this.uid = 'jodit-uid-' + uniqueUid();
 
-		if (jodit && jodit instanceof Component) {
-			this.jodit = jodit;
-
-			if (isJoditObject(jodit)) {
-				jodit.components.add(this);
-			}
+		if (jodit) {
+			this.setParentView(jodit);
 		}
+
+		this.initOwners();
 	}
 
 	/**

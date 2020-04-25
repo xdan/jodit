@@ -5,15 +5,17 @@
  */
 import './progress-bar.less';
 
-import { IJodit, IProgressBar } from '../../types';
+import { IJodit, IProgressBar, IViewBased } from '../../types';
 import { Component } from '../../core/component';
 import { Dom } from '../../core/dom';
 
 export class ProgressBar extends Component implements IProgressBar {
+	jodit!: IViewBased;
+
 	/**
 	 * progress_bar Progress bar
 	 */
-	private progressBar = this.j.c.div('jodit-progressbar', this.j.c.div());
+	private progressBar = this.c.div('jodit-progressbar', this.c.div());
 
 	/**
 	 * Show progress bar
@@ -32,6 +34,11 @@ export class ProgressBar extends Component implements IProgressBar {
 	progress(percentage: number): IProgressBar {
 		this.progressBar.style.width = percentage.toFixed(2) + '%';
 		return this;
+	}
+
+	constructor(jodit: IViewBased) {
+		super();
+		this.setParentView(jodit)
 	}
 
 	destruct(): any {

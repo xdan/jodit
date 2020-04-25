@@ -55,7 +55,7 @@ describe('Toolbar', function() {
 					buttons: ['image', 'alert_some']
 				});
 
-				expect(editor.toolbar.getButtonsList().toString()).equals(
+				expect(editor.toolbar.getButtonsNames().toString()).equals(
 					'image,alert_some'
 				);
 
@@ -170,13 +170,9 @@ describe('Toolbar', function() {
 
 					editor.value = 'asas <a href="#">test</a>';
 
-					simulateEvent(
-						'mousedown',
-						0,
-						editor.editor.querySelector('a')
-					);
+					simulateEvent('click', 0, editor.editor.querySelector('a'));
 
-					const popup = getOpenedPopup(editor)
+					const popup = getOpenedPopup(editor);
 
 					expect(popup).is.not.null;
 
@@ -195,18 +191,14 @@ describe('Toolbar', function() {
 				const editor = new Jodit(appendTestArea(), {
 					disablePlugins: 'mobile'
 				});
-				simulateEvent(
-					'mousedown',
-					0,
-					editor.container.querySelector('.jodit_toolbar_btn-video')
-				);
 
-				const popup = editor.ownerDocument.querySelector(
-					'.jodit_toolbar_popup'
-				);
+				clickButton('video', editor);
 
-				expect(popup && popup.style.display === 'block').is.true;
+				const popup = getOpenedPopup(editor);
+
+				expect(popup).is.not.null;
 			});
+
 			describe('in the left side', function() {
 				it('Should open popup in toolbar with float by left editor side', function() {
 					const editor = new Jodit(appendTestArea(), {
@@ -214,17 +206,9 @@ describe('Toolbar', function() {
 						disablePlugins: 'mobile'
 					});
 
-					simulateEvent(
-						'mousedown',
-						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn-video'
-						)
-					);
+					clickButton('video', editor);
 
-					const popup = editor.ownerDocument.querySelector(
-						'.jodit_toolbar_popup[data-editor_id=' + editor.id + ']'
-					);
+					const popup = getOpenedPopup(editor);
 
 					expect(popup).is.not.null;
 
@@ -236,41 +220,25 @@ describe('Toolbar', function() {
 					);
 				});
 			});
+
 			describe('in the right side', function() {
 				it('Should open popup in toolbar with float by left editor side', function() {
 					const editor = new Jodit(appendTestArea(), {
 						width: 300,
-						buttons: [
-							'video',
-							'video',
-							'video',
-							'video',
-							'video',
-							'video',
-							'video',
-							'video',
-							'video'
-						],
+						buttons: ['video', 'video', 'video', 'video'],
 						disablePlugins: 'mobile'
 					});
 
-					simulateEvent(
-						'mousedown',
-						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn-video:last-child'
-						)
-					);
+					clickButton('video', editor, 'button', true);
 
-					const popup = editor.ownerDocument.querySelector(
-						'.jodit_toolbar_popup[data-editor_id=' + editor.id + ']'
-					);
+					const popup = getOpenedPopup(editor);
 
 					expect(popup).is.not.null;
 
 					const positionPopup = offset(popup);
 					const positionContainer = offset(editor.container);
 
+					debugger;
 					expect(
 						Math.abs(
 							positionPopup.left +
@@ -1416,7 +1384,7 @@ describe('Toolbar', function() {
 						});
 
 						expect(
-							editor.toolbar.getButtonsList().toString()
+							editor.toolbar.getButtonsNames().toString()
 						).equals('indent,outdent,bold,adddate,dots,adddate');
 					});
 				});

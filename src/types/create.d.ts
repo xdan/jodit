@@ -29,10 +29,10 @@ interface ICreate {
 		children?: Children
 	): HTMLElement;
 
-	div(className?: string, childrenOrAttributes?: Children): HTMLDivElement;
+	div(className?: string, children?: Children): HTMLDivElement;
 	div(
 		className?: string,
-		childrenOrAttributes?: Attributes,
+		attributes?: Attributes,
 		children?: Children
 	): HTMLDivElement;
 	div(
@@ -41,10 +41,10 @@ interface ICreate {
 		children?: Children
 	): HTMLDivElement;
 
-	span(className?: string, childrenOrAttributes?: Children): HTMLSpanElement;
+	span(className?: string, children?: Children): HTMLSpanElement;
 	span(
 		className?: string,
-		childrenOrAttributes?: Attributes,
+		attributes?: Attributes,
 		children?: Children
 	): HTMLSpanElement;
 	span(
@@ -52,6 +52,18 @@ interface ICreate {
 		childrenOrAttributes?: Attributes | Children,
 		children?: Children
 	): HTMLSpanElement;
+
+	a(className?: string, children?: Children): HTMLAnchorElement;
+	a(
+		className?: string,
+		attributes?: Attributes,
+		children?: Children
+	): HTMLAnchorElement;
+	a(
+		className?: string,
+		childrenOrAttributes?: Attributes | Children,
+		children?: Children
+	): HTMLAnchorElement;
 
 	/**
 	 * Create text node

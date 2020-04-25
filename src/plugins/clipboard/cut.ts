@@ -28,6 +28,8 @@ export const pluginKey = 'clipboard';
  * Clipboard plugin - cut and copy functionality
  */
 export class clipboard implements IPlugin {
+	jodit!: IJodit;
+
 	init(editor: IJodit): void {
 		editor.e
 			.off(`copy.${pluginKey} cut.${pluginKey}`)
