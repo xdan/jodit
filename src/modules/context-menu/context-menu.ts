@@ -29,7 +29,7 @@ export class ContextMenu extends Popup implements IContextMenu {
 	 */
 	show(x: number, y: number, actions: Array<false | IContextMenuAction>) {
 		const self = this,
-			content = this.c.div('jodit-context-menu__actions');
+			content = this.j.c.div('jodit-context-menu__actions');
 
 		if (!Array.isArray(actions)) {
 			return;

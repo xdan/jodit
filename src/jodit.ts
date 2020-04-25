@@ -6,7 +6,7 @@
 
 import { Config, configFactory } from './config';
 import * as consts from './core/constants';
-import { Dom, Observer, Select, StatusBar } from './modules/';
+import { Create, Dom, Observer, Select, StatusBar } from './modules/';
 
 import {
 	asArray,
@@ -35,7 +35,7 @@ import {
 	Modes,
 	IFileBrowser,
 	IJodit,
-	IUploader
+	IUploader, ICreate
 } from './types';
 
 import { ViewWithToolbar } from './core/view/view-with-toolbar';
@@ -61,7 +61,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			return this.editor.innerText || '';
 		}
 
-		const div = this.c.inside.div();
+		const div = this.createInside.div();
 		div.innerHTML = this.getElementValue();
 
 		return div.innerText || '';
@@ -142,6 +142,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @type {Storage}
 	 */
 	readonly storage = Storage.makeStorage(true, this.id);
+
+	readonly createInside: ICreate = new Create(this.editorDocument);
 
 	/**
 	 * Editor has focus in this time

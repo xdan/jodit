@@ -281,7 +281,7 @@ export class search extends Plugin {
 					rng.setEnd(bound.endContainer, bound.endOffset as number);
 					rng.deleteContents();
 
-					const textNode: Node = this.j.c.inside.text(
+					const textNode: Node = this.j.createInside.text(
 						this.replaceInput.value
 					);
 

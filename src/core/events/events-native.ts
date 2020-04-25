@@ -376,12 +376,12 @@ export class EventsNative implements IEventsNative {
 	 * parent.e.off('someGlobalEvents');
 	 * ```
 	 */
-	off(events: string, callback?: () => void): this;
-	off(subject: object, events?: string, handler?: () => void): this;
+	off(events: string, callback?: CallbackFunction): this;
+	off(subject: object, events?: string, handler?: CallbackFunction): this;
 	off(
 		subjectOrEvents: object | string,
-		eventsOrCallback?: string | (() => void),
-		handler?: () => void
+		eventsOrCallback?: string | CallbackFunction,
+		handler?: CallbackFunction
 	): this {
 		const subject: object = isString(subjectOrEvents)
 			? this
@@ -640,6 +640,7 @@ export class EventsNative implements IEventsNative {
 		if (doc) {
 			this.doc = doc;
 		}
+
 		this.__key += new Date().getTime();
 	}
 

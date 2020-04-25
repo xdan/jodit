@@ -23,8 +23,8 @@ export class Popup extends UIElement implements IPopup {
 	setContent(content: HTMLElement | string): this {
 		Dom.detach(this.container);
 
-		const box = this.c.div(`${this.componentName}__content`);
-		box.appendChild(isString(content) ? this.c.fromHTML(content) : content);
+		const box = this.j.c.div(`${this.componentName}__content`);
+		box.appendChild(isString(content) ? this.j.c.fromHTML(content) : content);
 		this.container.appendChild(box);
 
 		return this;
@@ -49,7 +49,7 @@ export class Popup extends UIElement implements IPopup {
 
 		this.updatePosition();
 
-		this.e.fire(this, 'afterOpen');
+		this.j.e.fire(this, 'afterOpen');
 
 		return this;
 	}
@@ -137,7 +137,7 @@ export class Popup extends UIElement implements IPopup {
 	private addGlobalListeners(): void {
 		const up = this.updatePosition, ow = this.ow;
 
-		this.e
+		this.j.e
 			.on(camelCase('close-all-popups'), this.close)
 			.on('escape', this.close)
 			.on('resize', up)
@@ -151,7 +151,7 @@ export class Popup extends UIElement implements IPopup {
 	private removeGlobalListeners(): void {
 		const up = this.updatePosition, ow = this.ow;
 
-		this.e
+		this.j.e
 			.off(camelCase('close-all-popups'), this.close)
 			.off('escape', this.close)
 			.off('resize', up)

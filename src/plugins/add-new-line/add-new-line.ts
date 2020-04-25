@@ -166,7 +166,7 @@ export class addNewLine extends Plugin {
 
 	private onClickLine = (e: MouseEvent) => {
 		const editor = this.j;
-		const p = editor.c.inside.element(editor.o.enter);
+		const p = editor.createInside.element(editor.o.enter);
 
 		if (this.preview && this.current && this.current.parentNode) {
 			this.current.parentNode.insertBefore(p, this.current);
@@ -200,7 +200,7 @@ export class addNewLine extends Plugin {
 
 			const top = e.pageY - editor.editorWindow.pageYOffset;
 
-			const p = editor.c.inside.element(editor.o.enter);
+			const p = editor.createInside.element(editor.o.enter);
 
 			if (
 				Math.abs(top - editorBound.top) <

@@ -81,11 +81,12 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	 * Create main HTML container
 	 */
 	protected createContainer(): HTMLElement {
-		return this.c.div(this.componentName);
+		return this.j.c.div(this.componentName);
 	}
 
-	constructor(jodit?: T) {
+	constructor(jodit: T) {
 		super(jodit);
+
 		this.container = this.createContainer();
 
 		Object.defineProperty(this.container, 'component', {

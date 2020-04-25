@@ -7,7 +7,7 @@
 import { IViewOptions, IViewWithToolbar } from './view';
 import { Config } from '../config';
 import { Select } from '../core/selection';
-import { CustomCommand, IStatusBar, IStorage, Modes } from './';
+import { CustomCommand, ICreate, IStatusBar, IStorage, Modes } from './';
 import { IUploader } from './uploader';
 import { IFileBrowser } from './file-browser';
 import { Observer } from '../modules';
@@ -47,15 +47,10 @@ interface IJodit extends IViewWithToolbar {
 	value: string;
 	text: string;
 
-	/**
-	 * @property {HTMLDocument} editorDocument
-	 */
 	editorDocument: HTMLDocument;
-
-	/**
-	 * @property {Window} editorWindow
-	 */
 	editorWindow: Window;
+
+	createInside: ICreate;
 
 	/**
 	 * @property {Select} selection

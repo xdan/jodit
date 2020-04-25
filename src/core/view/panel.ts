@@ -5,9 +5,10 @@
  */
 
 import { Component } from '../component';
-import { IPanel, IViewBased, IViewOptions } from '../../types';
+import { ICreate, IPanel, IViewBased, IViewOptions } from '../../types';
 import { Dom } from '../dom';
 import { error, isString } from '../helpers';
+import { Create } from '../create';
 
 export abstract class Panel extends Component implements IPanel {
 	protected __whoLocked: string | false = '';
@@ -22,6 +23,11 @@ export abstract class Panel extends Component implements IPanel {
 	 */
 	get o(): this['options'] {
 		return this.options;
+	}
+
+	create: ICreate = new Create(this.od);
+	get c(): this['create'] {
+		return this.create;
 	}
 
 	protected initOptions(options?: IViewOptions): void {
@@ -68,11 +74,7 @@ export abstract class Panel extends Component implements IPanel {
 	}
 
 	protected constructor(view?: IViewBased, options?: IViewOptions) {
-		super();
-
-		if (view) {
-			this.setParentView(view);
-		}
+		super(view);
 
 		this.initOptions(options);
 		this.initOwners();

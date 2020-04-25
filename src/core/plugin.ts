@@ -6,6 +6,7 @@
 
 import { IJodit, IPlugin } from '../types';
 import { Component, STATUSES } from './component';
+import autobind from 'autobind-decorator';
 
 export abstract class Plugin extends Component<IJodit> implements IPlugin {
 	jodit!: IJodit;
@@ -14,10 +15,7 @@ export abstract class Plugin extends Component<IJodit> implements IPlugin {
 	protected abstract beforeDestruct(jodit: IJodit): void;
 
 	constructor(jodit: IJodit) {
-		super();
-		this.setParentView(jodit);
-
-		this.destruct = this.destruct.bind(this, jodit);
+		super(jodit);
 
 		jodit.e
 			.on('afterInit', this.afterInit.bind(this, jodit))
@@ -28,6 +26,7 @@ export abstract class Plugin extends Component<IJodit> implements IPlugin {
 
 	init(jodit: IJodit) {}
 
+	@autobind
 	destruct() {
 		if (!this.isDestructed) {
 			this.setStatus(STATUSES.beforeDestruct);

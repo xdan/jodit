@@ -5,6 +5,7 @@
  */
 
 import {
+	IAsync,
 	IComponent,
 	IDictionary,
 	IProgressBar
@@ -15,12 +16,11 @@ import { Panel } from './panel';
 import { Storage } from '../storage';
 import { error, i18n, isFunction } from '../helpers';
 import { BASE_PATH } from '../constants';
-import { ProgressBar } from '../../modules';
+import { EventsNative, ProgressBar } from '../../modules';
 import { modules } from '../global';
+import { Async } from '../async';
 
 export abstract class View extends Panel implements IViewBased {
-	jodit!: IViewBased;
-
 	/**
 	 * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
 	 */
@@ -52,6 +52,13 @@ export abstract class View extends Panel implements IViewBased {
 	get defaultTimeout(): number {
 		return 100;
 	}
+
+	events: EventsNative = new EventsNative(this.od);
+	get e(): this['events'] {
+		return this.events;
+	};
+
+	async: IAsync = new Async();
 
 	/**
 	 * Some extra data inside editor
@@ -141,12 +148,23 @@ export abstract class View extends Panel implements IViewBased {
 		super(jodit, options);
 
 		this.id = jodit?.id || new Date().getTime().toString();
+
 		this.buffer = jodit?.buffer || Storage.makeStorage();
 	}
 
 	destruct() {
 		if (this.isDestructed) {
 			return;
+		}
+
+		if (this.async) {
+			this.async.destruct();
+			delete this.async;
+		}
+
+		if (this.events) {
+			this.e.destruct();
+			delete this.events;
 		}
 
 		super.destruct();

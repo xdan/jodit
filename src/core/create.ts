@@ -6,11 +6,10 @@
 
 import {
 	IDictionary,
-	IJodit,
 	Attributes,
 	Children,
 	ICreate,
-	IPanel
+	CanUndef, NodeFunction
 } from '../types';
 
 import {
@@ -19,43 +18,16 @@ import {
 	asArray,
 	css,
 	isFunction,
-	isJoditObject,
 	kebabCase,
 	refs
 } from './helpers/';
 
 import { Dom } from './dom';
-import { cache } from './decorators';
 
 export class Create implements ICreate {
-	inside!: Create;
+	readonly createAttributes: CanUndef<IDictionary<Attributes | NodeFunction>>;
 
-	@cache
-	private get doc(): Document {
-		if (!this.j) {
-			return document;
-		}
-
-		return this.insideCreator && isJoditObject(this.j)
-			? this.j.editorDocument
-			: this.j.od;
-	}
-
-	constructor(
-		readonly jodit?: IJodit | IPanel,
-		readonly insideCreator: boolean = false
-	) {
-		if (!insideCreator) {
-			this.inside = new Create(jodit, true);
-		}
-	}
-
-	/**
-	 * Short alias for jodit
-	 */
-	get j(): this['jodit'] {
-		return this.jodit;
-	}
+	constructor(readonly doc: Document) {}
 
 	/**
 	 * Apply some object key-value to HTMLElement
@@ -89,14 +61,8 @@ export class Create implements ICreate {
 	): HTMLElement {
 		const elm = this.doc.createElement(tagName.toLowerCase());
 
-		if (this?.j?.o.direction) {
-			const direction = this.j.o.direction.toLowerCase();
-
-			elm.style.direction = direction === 'rtl' ? 'rtl' : 'ltr';
-		}
-
-		if (this.j && this.insideCreator) {
-			const ca = this.j.o.createAttributes;
+		if (this.createAttributes) {
+			const ca = this.createAttributes;
 
 			if (ca && ca[tagName.toLowerCase()]) {
 				const attrs = ca[tagName.toLowerCase()];

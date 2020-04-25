@@ -16,7 +16,7 @@ export function debounce(timeout?: number) {
 		}
 
 		target.hookStatus(STATUSES.ready, (component: IComponent) => {
-			target[propertyKey] = component.async.debounce(
+			target[propertyKey] = component.j.async.debounce(
 				target[propertyKey].bind(component),
 				timeout || 0
 			);

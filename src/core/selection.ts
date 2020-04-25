@@ -199,7 +199,7 @@ export class Select {
 			newRange.collapse(atStart);
 		}
 
-		const marker: HTMLSpanElement = this.j.c.inside.span();
+		const marker: HTMLSpanElement = this.j.createInside.span();
 
 		marker.id =
 			consts.MARKER_CLASS +
@@ -216,7 +216,7 @@ export class Select {
 			atStart ? 'start' : 'end'
 		);
 
-		marker.appendChild(this.j.c.inside.text(consts.INVISIBLE_SPACE));
+		marker.appendChild(this.j.createInside.text(consts.INVISIBLE_SPACE));
 
 		if (newRange) {
 			if (
@@ -585,8 +585,8 @@ export class Select {
 			return;
 		}
 
-		const node = this.j.c.inside.div(),
-			fragment = this.j.c.inside.fragment();
+		const node = this.j.createInside.div(),
+			fragment = this.j.createInside.fragment();
 
 		let lastChild: Node | null, lastEditorElement: Node | null;
 
@@ -643,7 +643,7 @@ export class Select {
 				lastChild === lastEditorElement &&
 				Dom.isElement(lastChild)
 			) {
-				this.area.appendChild(this.j.c.inside.element('br'));
+				this.area.appendChild(this.j.createInside.element('br'));
 			}
 			this.setCursorAfter(lastChild);
 		}
@@ -664,7 +664,7 @@ export class Select {
 		defaultWidth: number | string | null
 	) {
 		const image: HTMLImageElement =
-			typeof url === 'string' ? this.j.c.inside.element('img') : url;
+			typeof url === 'string' ? this.j.createInside.element('img') : url;
 
 		if (typeof url === 'string') {
 			image.setAttribute('src', url);
@@ -781,7 +781,7 @@ export class Select {
 					if (current.firstChild) {
 						current = current.firstChild;
 					} else {
-						const currentB = this.j.c.inside.text(INVISIBLE_SPACE);
+						const currentB = this.j.createInside.text(INVISIBLE_SPACE);
 
 						current.appendChild(currentB);
 						current = currentB;
@@ -825,7 +825,7 @@ export class Select {
 		let fakeNode: Text | false = false;
 
 		if (!Dom.isText(node)) {
-			fakeNode = this.j.c.inside.text(consts.INVISIBLE_SPACE);
+			fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
 			range.setStartAfter(node);
 			range.insertNode(fakeNode);
 			range.selectNode(fakeNode);
@@ -948,7 +948,7 @@ export class Select {
 		let fakeNode: Text | false = false;
 
 		if (!Dom.isText(node)) {
-			fakeNode = this.j.c.inside.text(consts.INVISIBLE_SPACE);
+			fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
 			range.setStartBefore(node);
 			range.collapse(true);
 			range.insertNode(fakeNode);
@@ -1000,7 +1000,7 @@ export class Select {
 		} while (start);
 
 		if (!start) {
-			const fakeNode = this.j.c.inside.text(consts.INVISIBLE_SPACE);
+			const fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
 			if (!/^(img|br|input)$/i.test(last.nodeName)) {
 				last.appendChild(fakeNode);
 				last = fakeNode;
@@ -1085,7 +1085,7 @@ export class Select {
 		if (sel && sel.rangeCount > 0) {
 			const range = sel.getRangeAt(0);
 			const clonedSelection = range.cloneContents();
-			const div = this.j.c.inside.div();
+			const div = this.j.createInside.div();
 
 			div.appendChild(clonedSelection);
 
@@ -1131,7 +1131,7 @@ export class Select {
 					tagOrCallback(font);
 				} else {
 					result.push(
-						Dom.replace(font, tagOrCallback, this.j.c.inside)
+						Dom.replace(font, tagOrCallback, this.j.createInside)
 					);
 				}
 			} finally {
@@ -1279,9 +1279,9 @@ export class Select {
 			}
 
 			if (alternativeNodeName === defaultTag || !clearStyle) {
-				const node = this.j.c.inside.element(alternativeNodeName);
+				const node = this.j.createInside.element(alternativeNodeName);
 
-				node.appendChild(this.j.c.inside.text(consts.INVISIBLE_SPACE));
+				node.appendChild(this.j.createInside.text(consts.INVISIBLE_SPACE));
 
 				this.insertNode(node, false, false);
 
@@ -1416,7 +1416,7 @@ export class Select {
 
 				if (mode === WRAP) {
 					css(
-						Dom.replace(font, alternativeNodeName, this.j.c.inside),
+						Dom.replace(font, alternativeNodeName, this.j.createInside),
 						cssRules && alternativeNodeName === defaultTag
 							? cssRules
 							: {}
@@ -1448,7 +1448,7 @@ export class Select {
 		let br: HTMLElement | null = null;
 
 		if (cursorOnTheRight || cursorOnTheLeft) {
-			br = this.j.c.inside.element('br');
+			br = this.j.createInside.element('br');
 
 			range.insertNode(br);
 

@@ -545,7 +545,7 @@ Config.prototype.filebrowser = {
 						);
 					} else {
 						jodit.selection.insertNode(
-							jodit.c.inside.fromHTML(
+							jodit.createInside.fromHTML(
 								`<a href="${url}" title="${url}">${url}</a>`
 							)
 						);

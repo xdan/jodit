@@ -5,10 +5,6 @@
  */
 
 import { IViewBased } from './view';
-import { IJodit } from './jodit';
-import { ICreate } from './create';
-import { IAsync } from './async';
-import { IEventsNative } from './events';
 
 export interface IDictionary<T = any> {
 	[key: string]: T;
@@ -22,7 +18,7 @@ export interface IInitable {
 }
 
 export interface IDestructible {
-	destruct(jodit?: IJodit): any;
+	destruct(jodit?: IViewBased): any;
 }
 
 export type Statuses = {
@@ -39,25 +35,16 @@ export interface IContainer {
 }
 
 interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
-	jodit: CanUndef<T>;
+	jodit: T;
 	j: this['jodit'];
 	setParentView(jodit: T): this;
 
 	ownerDocument: Document;
 	od: this['ownerDocument'];
-
 	ownerWindow: Window;
 	ow: this['ownerWindow'];
 
-	create: ICreate;
-	c: this['create'];
-
-	events: IEventsNative;
-	e: this['events'];
-
 	get<T>(chain: string, obj?: IDictionary): Nullable<T>;
-
-	async: IAsync;
 
 	componentName: string;
 	uid: string;
@@ -65,10 +52,8 @@ interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 	isDestructed: boolean;
 	isInDestruct: boolean;
 	isReady: boolean;
-
 	componentStatus: ComponentStatus;
 	setStatus(componentStatus: ComponentStatus): void;
-
 	hookStatus(
 		status: keyof Statuses,
 		callback: (component: IComponent) => void

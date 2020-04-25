@@ -46,7 +46,7 @@ export function media(editor: IJodit) {
 		} else {
 			let wrapper: HTMLElement;
 
-			wrapper = editor.c.inside.fromHTML(
+			wrapper = editor.createInside.fromHTML(
 				`<${mediaFakeTag} data-jodit-temp="1" contenteditable="false" draggable="true" data-${keyFake}="1"></${mediaFakeTag}>`
 			);
 

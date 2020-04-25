@@ -86,7 +86,7 @@ export class DragAndDrop extends Plugin {
 							? ['a', 'href']
 							: ['img', 'src'];
 
-					fragment = this.j.c.inside.element(tagName);
+					fragment = this.j.createInside.element(tagName);
 
 					fragment.setAttribute(
 						field,
@@ -101,7 +101,7 @@ export class DragAndDrop extends Plugin {
 					fragment = dataBind(this.draggable, 'target');
 				}
 			} else if (this.getText(event)) {
-				fragment = this.j.c.inside.fromHTML(
+				fragment = this.j.createInside.fromHTML(
 					this.getText(event) as string
 				);
 			}

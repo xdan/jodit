@@ -12,8 +12,6 @@ export type Attributes = IDictionary<
 export type Children = string | Array<string | Node> | Node;
 
 interface ICreate {
-	inside: ICreate;
-
 	element<K extends keyof HTMLElementTagNameMap>(
 		tagName: K,
 		children?: Children

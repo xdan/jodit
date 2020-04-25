@@ -931,7 +931,7 @@ Config.prototype.controls = {
 						editor.selection.restore(selInfo);
 
 						const image: HTMLImageElement =
-							sourceImage || editor.c.inside.element('img');
+							sourceImage || editor.createInside.element('img');
 
 						image.setAttribute('src', url);
 						image.setAttribute('alt', text);
@@ -964,7 +964,7 @@ Config.prototype.controls = {
 		) => {
 			const insert = (url: string, title: string = '') => {
 				editor.selection.insertNode(
-					editor.c.inside.fromHTML(
+					editor.createInside.fromHTML(
 						`<a href="${url}" title="${title}">${title || url}</a>`
 					)
 				);

@@ -55,7 +55,7 @@ export function getContainer(jodit: IComponent, name: string): HTMLElement {
 	const data = boxes.get(jodit) || {};
 
 	if (!data[name]) {
-		const box = jodit.c.div(`jodit-${kebabCase(name)}-container jodit-box`);
+		const box = jodit.j.c.div(`jodit-${kebabCase(name)}-container jodit-box`);
 
 		jodit.od.body.appendChild(box);
 

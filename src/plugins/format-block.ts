@@ -162,7 +162,7 @@ export function formatBlock(editor: IJodit) {
 						Dom.replace(
 							currentBox,
 							third as HTMLTagNames,
-							editor.c.inside,
+							editor.createInside,
 							true,
 							false
 						);
@@ -185,8 +185,8 @@ export function formatBlock(editor: IJodit) {
 			});
 
 			if (!work) {
-				const br = editor.c.inside.element('br');
-				const currentBox = editor.c.inside.element(third, br);
+				const br = editor.createInside.element('br');
+				const currentBox = editor.createInside.element(third, br);
 				editor.selection.insertNode(currentBox, false);
 				editor.selection.setCursorIn(currentBox);
 			}

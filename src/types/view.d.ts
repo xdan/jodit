@@ -12,9 +12,12 @@ import {
 	IToolbarCollection
 } from './toolbar';
 import { IComponent, IDictionary } from './types';
-import { Attributes } from './create';
+import { Attributes, ICreate } from './create';
+import { IEventsNative } from './events';
 import { IStorage } from './storage';
+import { IAsync } from './async';
 import { IUIButtonState } from './ui';
+import { EventsNative } from '../core/events';
 
 interface ILanguageOptions {
 	language?: string;
@@ -74,15 +77,16 @@ interface IPanel<T = IViewOptions> extends IComponent {
 	isFullSize: () => boolean;
 	toggleFullSize(isFullSize?: boolean): void;
 
+	create: ICreate;
+	c: this['create'];
+
 	options: T;
 	o: this['options'];
 }
 
 interface IViewBased<T = IViewOptions> extends IPanel<T> {
-	jodit: IViewBased;
-
 	/**
-	 * @property {string} ID attribute for source element, id add {id}_editor it's editor's id
+	 * ID attribute for source element, id add {id}_editor it's editor's id
 	 */
 	id: string;
 
@@ -91,6 +95,11 @@ interface IViewBased<T = IViewOptions> extends IPanel<T> {
 	buffer: IStorage;
 
 	progressbar: IProgressBar;
+
+	events: EventsNative;
+	e: this['events'];
+
+	async: IAsync;
 
 	options: T;
 	// alias

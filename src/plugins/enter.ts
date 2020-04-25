@@ -26,8 +26,8 @@ export const insertParagraph = (
 	wrapperTag: HTMLTagNames,
 	style?: CSSStyleDeclaration
 ): HTMLElement => {
-	const p = editor.c.inside.element(wrapperTag),
-		helper_node = editor.c.inside.element('br');
+	const p = editor.createInside.element(wrapperTag),
+		helper_node = editor.createInside.element('br');
 
 	p.appendChild(helper_node);
 
@@ -125,7 +125,7 @@ export class enter extends Plugin {
 		let current = sel.current(false) as Node;
 
 		if (!current || current === editor.editor) {
-			current = editor.c.inside.text(INVISIBLE_SPACE);
+			current = editor.createInside.text(INVISIBLE_SPACE);
 			sel.insertNode(current);
 			sel.select(current);
 		}
@@ -224,7 +224,7 @@ export class enter extends Plugin {
 			shiftKeyPressed ||
 			Dom.closest(current, 'PRE|BLOCKQUOTE', this.j.editor)
 		) {
-			const br = this.j.c.inside.element('br');
+			const br = this.j.createInside.element('br');
 
 			this.j.selection.insertNode(br, true);
 			scrollIntoView(br, this.j.editor, this.j.editorDocument);
@@ -249,7 +249,7 @@ export class enter extends Plugin {
 		const currentBox = Dom.wrapInline(needWrap, this.j.o.enter, this.j);
 
 		if (Dom.isEmpty(currentBox)) {
-			const helper_node = this.j.c.inside.element('br');
+			const helper_node = this.j.createInside.element('br');
 
 			currentBox.appendChild(helper_node);
 			this.j.selection.setCursorBefore(helper_node);
@@ -277,7 +277,7 @@ export class enter extends Plugin {
 			sel = editor.selection;
 
 		if (!Dom.canSplitBlock(currentBox, editor.editorWindow)) {
-			const br = editor.c.inside.element('br');
+			const br = editor.createInside.element('br');
 
 			sel.insertNode(br, false);
 			sel.setCursorAfter(br);

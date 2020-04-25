@@ -225,7 +225,7 @@ Config.prototype.controls.link = {
 						'a'
 					) as HTMLAnchorElement[];
 				} else {
-					const a = editor.c.inside.element('a');
+					const a = editor.createInside.element('a');
 					editor.selection.insertNode(a);
 					links = [a];
 				}
@@ -306,13 +306,13 @@ export function link(jodit: IJodit) {
 						const embed = convertMediaUrlToVideoEmbed(html);
 
 						if (embed !== html) {
-							return jodit.c.inside.fromHTML(
+							return jodit.createInside.fromHTML(
 								embed
 							) as HTMLAnchorElement;
 						}
 					}
 
-					const a = jodit.c.inside.element('a');
+					const a = jodit.createInside.element('a');
 
 					a.setAttribute('href', html);
 					a.textContent = html;
@@ -336,11 +336,11 @@ export function link(jodit: IJodit) {
 				}
 				if (Dom.isTag(node, 'a')) {
 					if (node.innerHTML === node.textContent) {
-						newtag = jodit.c.inside.text(
+						newtag = jodit.createInside.text(
 							(node as HTMLElement).innerHTML
 						);
 					} else {
-						newtag = jodit.c.inside.element('span');
+						newtag = jodit.createInside.element('span');
 						(newtag as HTMLElement).innerHTML = (node as HTMLElement).innerHTML;
 					}
 

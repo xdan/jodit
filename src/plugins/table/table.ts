@@ -14,11 +14,12 @@ import {
 	call,
 	getContentWidth,
 	offset,
-	scrollIntoView
+	scrollIntoView,
+	position
 } from '../../core/helpers';
 import { IBound, IDictionary, IControlType, IJodit } from '../../types';
 import { alignElement } from '../justify';
-import { position } from '../../core/helpers/size/position';
+import autobind from 'autobind-decorator';
 
 declare module '../../config' {
 	interface Config {
@@ -150,7 +151,7 @@ Config.prototype.controls.table = {
 				const rows_count = Math.ceil((k + 1) / default_cols_count),
 					cols_count = (k % default_cols_count) + 1;
 
-				const crt = editor.c.inside,
+				const crt = editor.createInside,
 					tbody = crt.element('tbody'),
 					table = crt.element('table');
 
@@ -378,7 +379,8 @@ export class TableProcessor extends Plugin {
 		return false;
 	}
 
-	private onMouseMove = (event: MouseEvent) => {
+	@autobind
+	private onMouseMove(event: MouseEvent) {
 		if (!this.drag) {
 			return;
 		}
@@ -651,10 +653,10 @@ export class TableProcessor extends Plugin {
 
 				switch (command) {
 					case 'splitv':
-						Table.splitVertical(table, this.j.c.inside);
+						Table.splitVertical(table, this.j.createInside);
 						break;
 					case 'splitg':
-						Table.splitHorizontal(table, this.j.c.inside);
+						Table.splitHorizontal(table, this.j.createInside);
 						break;
 					case 'merge':
 						Table.mergeSelected(table);
@@ -682,7 +684,7 @@ export class TableProcessor extends Plugin {
 							table,
 							cell.cellIndex,
 							command === 'addcolumnafter',
-							this.j.c.inside
+							this.j.createInside
 						);
 						break;
 					case 'addrowafter':
@@ -691,7 +693,7 @@ export class TableProcessor extends Plugin {
 							table,
 							cell.parentNode as HTMLTableRowElement,
 							command === 'addrowafter',
-							this.j.c.inside
+							this.j.createInside
 						);
 						break;
 				}
@@ -829,7 +831,7 @@ export class TableProcessor extends Plugin {
 
 					if (cell) {
 						if (!cell.firstChild) {
-							cell.appendChild(this.j.c.inside.element('br'));
+							cell.appendChild(this.j.createInside.element('br'));
 						}
 
 						start = cell;
@@ -903,15 +905,9 @@ export class TableProcessor extends Plugin {
 							'showPopup',
 							table,
 							(): IBound => {
-								const minOffset: IBound = position(
-									min,
-									this.j
-								);
+								const minOffset: IBound = position(min, this.j);
 
-								const maxOffset: IBound = position(
-									max,
-									this.j
-								);
+								const maxOffset: IBound = position(max, this.j);
 
 								return {
 									left: minOffset.left,

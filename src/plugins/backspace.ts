@@ -264,9 +264,9 @@ export class backspace extends Plugin {
 			return false;
 		}
 
-		const fakeNode = jodit.c.inside.text(consts.INVISIBLE_SPACE);
+		const fakeNode = jodit.createInside.text(consts.INVISIBLE_SPACE);
 
-		const marker = jodit.c.inside.span();
+		const marker = jodit.createInside.span();
 
 		try {
 			range.insertNode(fakeNode);
@@ -323,7 +323,7 @@ export class backspace extends Plugin {
 			);
 
 			if (!prevBox && container && container.parentNode) {
-				prevBox = jodit.c.inside.element(jodit.o.enter);
+				prevBox = jodit.createInside.element(jodit.o.enter);
 
 				let boxNode: Node = container;
 

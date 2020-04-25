@@ -15,4 +15,4 @@ interface HTMLElement {
 
 declare const appVersion: string;
 
-declare const isProd: string;
+declare const isProd: boolean;

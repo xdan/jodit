@@ -5,9 +5,9 @@
  * Copyright 2013-2020 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { CallbackFunction } from './types';
+import { CallbackFunction, IDestructible } from './types';
 
-interface IEventsNative {
+interface IEventsNative extends IDestructible {
 	/**
 	 * Get current event name
 	 *
@@ -167,6 +167,4 @@ interface IEventsNative {
 		eventsList?: string | any | Event,
 		...args: any[]
 	): any;
-
-	destruct(): void;
 }

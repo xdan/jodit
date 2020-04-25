@@ -98,10 +98,10 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 
 		super.update();
 
-		this.e.fire('updateToolbar');
+		this.j.e.fire('updateToolbar');
 	}
 
-	update = this.async.debounce(this.immediateUpdate, this.j.defaultTimeout);
+	update = this.j.async.debounce(this.immediateUpdate, this.j.defaultTimeout);
 
 	/**
 	 * Set direction
@@ -119,7 +119,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	}
 
 	private initEvents() {
-		this.e
+		this.j.e
 			// .on(this.j.ow, 'mousedown touchend', this.closeAllPopups)
 			.on(this.listenEvents, this.update)
 			.on('afterSetMode focus', this.immediateUpdate);
@@ -131,7 +131,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 			return;
 		}
 
-		this.e
+		this.j.e
 			.off(this.listenEvents, this.update)
 			.off('afterSetMode focus', this.immediateUpdate);
 

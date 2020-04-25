@@ -348,7 +348,7 @@ export class resizer extends Plugin {
 			) {
 				element = element.parentNode as HTMLElement;
 			} else {
-				wrapper = this.j.c.inside.fromHTML(
+				wrapper = this.j.createInside.fromHTML(
 					'<jodit ' +
 						'data-jodit-temp="1" ' +
 						'contenteditable="false" ' +

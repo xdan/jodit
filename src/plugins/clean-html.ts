@@ -142,7 +142,7 @@ export class cleanHtml extends Plugin {
 					Dom.replace(
 						oldParent as HTMLElement,
 						tagName as HTMLTagNames,
-						editor.c.inside,
+						editor.createInside,
 						true,
 						false
 					);
@@ -197,7 +197,7 @@ export class cleanHtml extends Plugin {
 			Dom.isBlock(nodeElm, this.j.editorWindow) &&
 			Dom.isEmpty(nodeElm, /^(img|svg|canvas|input|textarea|form|br)$/)
 		) {
-			const br = this.j.c.inside.element('br');
+			const br = this.j.createInside.element('br');
 
 			nodeElm.appendChild(br);
 			work = true;
@@ -364,7 +364,7 @@ export class cleanHtml extends Plugin {
 			) as Node | null;
 
 			if (!node) {
-				node = this.j.c.inside.element(this.j.o.enter);
+				node = this.j.createInside.element(this.j.o.enter);
 
 				if (node) {
 					Dom.after(hr, node as HTMLElement);
@@ -408,7 +408,7 @@ export class cleanHtml extends Plugin {
 		}
 
 		if (parentNode) {
-			const tmp = this.j.c.inside.text(INVISIBLE_SPACE);
+			const tmp = this.j.createInside.text(INVISIBLE_SPACE);
 			range.insertNode(tmp);
 			const insideParent = Dom.isOrContains(parentNode, tmp, true);
 			Dom.safeRemove(tmp);

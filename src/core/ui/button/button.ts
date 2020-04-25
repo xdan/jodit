@@ -142,7 +142,7 @@ export class UIButton extends UIElement implements IUIButton {
 
 		if (state.icon) {
 			if (state.icon.iconURL) {
-				iconElement = this.c.span();
+				iconElement = this.j.c.span();
 
 				css(
 					iconElement,
@@ -158,7 +158,7 @@ export class UIButton extends UIElement implements IUIButton {
 				const svg = Icon.get(this.state.icon.name, '');
 
 				if (svg) {
-					iconElement = this.c.fromHTML(svg.trim());
+					iconElement = this.j.c.fromHTML(svg.trim());
 					iconElement.classList.add(
 						'jodit-icon_' + this.clearName(this.state.icon.name)
 					);
@@ -196,20 +196,20 @@ export class UIButton extends UIElement implements IUIButton {
 	protected createContainer(): HTMLElement {
 		const cn = this.componentName;
 
-		const button = this.c.element('button', {
+		const button = this.j.c.element('button', {
 			class: cn,
 			type: 'button',
 			role: 'button',
 			ariaPressed: false
 		});
 
-		this.icon = this.c.span(cn + '__icon');
-		this.text = this.c.span(cn + '__text');
+		this.icon = this.j.c.span(cn + '__icon');
+		this.text = this.j.c.span(cn + '__text');
 
 		button.appendChild(this.icon);
 		button.appendChild(this.text);
 
-		this.e.on(button, `click`, this.onActionFire);
+		this.j.e.on(button, `click`, this.onActionFire);
 
 		return button;
 	}
@@ -227,7 +227,7 @@ export class UIButton extends UIElement implements IUIButton {
 	}
 
 	destruct(): any {
-		this.e.off(this.container);
+		this.j.e.off(this.container);
 		return super.destruct();
 	}
 

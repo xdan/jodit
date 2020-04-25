@@ -96,6 +96,12 @@ Config.prototype.uploader = {
 	},
 
 	defaultHandlerSuccess(this: Uploader, resp: IUploaderData) {
+		const j = this.j;
+
+		if (!isJoditObject(j)) {
+			return;
+		}
+
 		if (resp.files && resp.files.length) {
 			resp.files.forEach((filename, index: number) => {
 				const [tagName, attr]: string[] =
@@ -103,9 +109,7 @@ Config.prototype.uploader = {
 						? ['img', 'src']
 						: ['a', 'href'];
 
-				const elm: HTMLElement = this.j.c.inside.element(
-					<'img' | 'a'>tagName
-				);
+				const elm = j.createInside.element(tagName);
 
 				elm.setAttribute(attr, resp.baseurl + filename);
 
@@ -750,8 +754,7 @@ export class Uploader extends Component implements IUploader {
 	}
 
 	constructor(editor: IViewBased, options?: IUploaderOptions<Uploader>) {
-		super();
-		this.setParentView(editor);
+		super(editor);
 
 		this.options = extend(
 			true,

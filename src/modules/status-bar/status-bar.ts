@@ -7,11 +7,9 @@ import './status-bar.less';
 
 import { Component, STATUSES } from '../../core/component';
 import { Dom } from '../../core/dom';
-import { IJodit, IStatusBar, IViewBased } from '../../types';
+import { IJodit, IStatusBar } from '../../types';
 
 export class StatusBar extends Component implements IStatusBar {
-	jodit!: IViewBased;
-
 	container: HTMLElement;
 
 	/**
@@ -70,8 +68,7 @@ export class StatusBar extends Component implements IStatusBar {
 	}
 
 	constructor(jodit: IJodit, readonly target: HTMLElement) {
-		super();
-		this.setParentView(jodit);
+		super(jodit);
 
 		this.container = jodit.c.div('jodit-status-bar');
 
