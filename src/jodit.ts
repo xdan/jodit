@@ -42,6 +42,7 @@ import { ViewWithToolbar } from './core/view/view-with-toolbar';
 
 import { STATUSES } from './core/component';
 import { instances, pluginSystem, modules, lang } from './core/global';
+import { cache } from './core/decorators';
 
 /**
  * Class Jodit. Main class
@@ -251,6 +252,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * @property {Uploader} uploader
 	 */
+	@cache
 	get uploader(): IUploader {
 		return this.getInstance('Uploader');
 	}
@@ -258,6 +260,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * @property {FileBrowser} filebrowser
 	 */
+	@cache
 	get filebrowser(): IFileBrowser {
 		return this.getInstance('FileBrowser');
 	}

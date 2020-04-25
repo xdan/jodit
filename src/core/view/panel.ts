@@ -29,6 +29,11 @@ export abstract class Panel extends Component implements IPanel {
 	}
 
 	/**
+	 * Can change ownerWindow here
+	 */
+	protected initOwners(): void {}
+
+	/**
 	 * Try to find element by selector
 	 * @param element
 	 */

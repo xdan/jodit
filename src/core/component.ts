@@ -55,20 +55,12 @@ export abstract class Component<T extends IViewBased = IViewBased>
 		return this.ownerDocument;
 	}
 
-	ownerWindow!: Window;
+	ownerWindow: Window = window;
 	get ow(): this['ownerWindow'] {
 		return this.ownerWindow;
 	}
 
 	async: IAsync = new Async();
-
-	protected initOwners(): void {
-		if (this.jodit && this.jodit.ownerWindow) {
-			this.ownerWindow = this.jodit.ownerWindow;
-		} else {
-			this.ownerWindow = window;
-		}
-	}
 
 	@cache
 	get create(): ICreate {
@@ -184,8 +176,6 @@ export abstract class Component<T extends IViewBased = IViewBased>
 		if (jodit) {
 			this.setParentView(jodit);
 		}
-
-		this.initOwners();
 	}
 
 	/**

@@ -68,10 +68,10 @@ export class DragAndDropElement extends Plugin {
 		this.draggable = last.cloneNode(true) as HTMLElement;
 		dataBind(this.draggable, 'target', last);
 
-		this.j.e.on(this.j.editor, 'mousemove touchmove', this.onDrag);
+		this.e.on(this.j.editor, 'mousemove touchmove', this.onDrag);
 	};
 
-	private onDrag = this.j.async.throttle((event: DragEvent) => {
+	private onDrag = this.async.throttle((event: DragEvent) => {
 		if (!this.draggable) {
 			return;
 		}
@@ -88,7 +88,7 @@ export class DragAndDropElement extends Plugin {
 		}
 
 		this.wasMoved = true;
-		this.j.e.fire('hidePopup hideResizer');
+		this.e.fire('hidePopup hideResizer');
 
 		if (!this.draggable.parentNode) {
 			css(this.draggable, {
@@ -125,7 +125,7 @@ export class DragAndDropElement extends Plugin {
 			this.draggable = null;
 			this.wasMoved = false;
 
-			this.j.e.off(this.j.editor, 'mousemove touchmove', this.onDrag);
+			this.e.off(this.j.editor, 'mousemove touchmove', this.onDrag);
 		}
 	};
 
@@ -145,11 +145,11 @@ export class DragAndDropElement extends Plugin {
 
 		this.j.selection.insertNode(fragment, true, false);
 
-		if (Dom.isTag(fragment, 'img') && this.j.events) {
-			this.j.e.fire('afterInsertImage', fragment);
+		if (Dom.isTag(fragment, 'img') && this.events) {
+			this.e.fire('afterInsertImage', fragment);
 		}
 
-		this.j.e.fire('synchro');
+		this.e.fire('synchro');
 	};
 
 	protected afterInit() {
@@ -163,7 +163,7 @@ export class DragAndDropElement extends Plugin {
 			return;
 		}
 
-		this.j.e
+		this.e
 			.on(
 				this.j.editor,
 				'mousedown touchstart dragstart',
@@ -171,7 +171,7 @@ export class DragAndDropElement extends Plugin {
 			)
 			.on('mouseup touchend', this.onDrop)
 			.on(
-				[this.j.editorWindow, this.j.ow],
+				[this.j.editorWindow, this.ow],
 				'mouseup touchend',
 				this.onDragEnd
 			);
@@ -180,7 +180,7 @@ export class DragAndDropElement extends Plugin {
 	protected beforeDestruct() {
 		this.onDragEnd();
 
-		this.j.e
+		this.e
 			.off(this.j.editor, 'mousemove touchmove', this.onDrag)
 			.off(
 				this.j.editor,
