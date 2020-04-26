@@ -10,10 +10,11 @@ import {
 	IDictionary,
 	Statuses,
 	IViewBased,
-	Nullable
+	Nullable,
+	IViewComponent
 } from '../types';
 
-import { kebabCase, isJoditObject, get } from './helpers/';
+import { kebabCase, get } from './helpers/';
 import { uniqueUid } from './global';
 
 export const STATUSES: Statuses = {
@@ -23,29 +24,13 @@ export const STATUSES: Statuses = {
 	destructed: 'destructed'
 };
 
-export abstract class Component<T extends IViewBased = IViewBased>
-	implements IComponent<T> {
+export abstract class Component implements IComponent {
 	componentName!: string;
 	uid!: string;
 
-	jodit!: T;
-	get j(): this['jodit'] {
-		return this.jodit;
-	}
-
-	setParentView(jodit: T): this {
-		this.jodit = jodit;
-
-		if (isJoditObject(jodit)) {
-			jodit.components.add(this);
-		}
-
-		return this;
-	}
-
 	get ownerDocument(): Document {
 		return this.ow.document;
-	};
+	}
 
 	get od(): this['ownerDocument'] {
 		return this.ownerDocument;
@@ -115,24 +100,12 @@ export abstract class Component<T extends IViewBased = IViewBased>
 		);
 	}
 
-	protected constructor(jodit: T) {
+	constructor() {
 		this.componentName = 'jodit-' + kebabCase(this.constructor.name);
 		this.uid = 'jodit-uid-' + uniqueUid();
-
-		jodit && this.setParentView(jodit)
 	}
 
 	destruct(): any {
-		this.setStatus(STATUSES.beforeDestruct);
-
-		if (isJoditObject(this.j)) {
-			this.j.components.delete(this);
-		}
-
-		if (this.jodit) {
-			(<any>this.jodit) = undefined;
-		}
-
 		this.setStatus(STATUSES.destructed);
 	}
 
@@ -158,4 +131,37 @@ export abstract class Component<T extends IViewBased = IViewBased>
 	}
 
 	private onStatusLst!: IDictionary<Function[]>;
+}
+
+export class ViewComponent<T extends IViewBased = IViewBased>
+	extends Component
+	implements IViewComponent<T> {
+	jodit!: T;
+
+	get j(): this['jodit'] {
+		return this.jodit;
+	}
+
+	setParentView(jodit: T): this {
+		this.jodit = jodit;
+
+		jodit.components.add(this);
+
+		return this;
+	}
+
+	constructor(jodit: T) {
+		super();
+		this.setParentView(jodit);
+	}
+
+	destruct(): any {
+		this.j.components.delete(this);
+
+		if (this.jodit) {
+			(<any>this.jodit) = undefined;
+		}
+
+		return super.destruct();
+	}
 }
