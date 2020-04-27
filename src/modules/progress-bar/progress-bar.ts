@@ -6,10 +6,10 @@
 import './progress-bar.less';
 
 import { IJodit, IProgressBar } from '../../types';
-import { Component } from '../../core/component';
+import { ViewComponent } from '../../core/component';
 import { Dom } from '../../core/dom';
 
-export class ProgressBar extends Component implements IProgressBar {
+export class ProgressBar extends ViewComponent implements IProgressBar {
 	/**
 	 * progress_bar Progress bar
 	 */

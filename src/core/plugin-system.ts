@@ -151,10 +151,12 @@ export class PluginSystem implements IPluginSystem {
 			}
 
 			if (isInitable(plugin)) {
+				const req = (plugin as IPlugin).requires;
+
 				if (
-					!plugin.requires ||
-					!plugin.requires.length ||
-					plugin.requires.every(name => doneList.includes(name))
+					!req ||
+					!req.length ||
+					req.every(name => doneList.includes(name))
 				) {
 					plugin.init(jodit);
 					doneList.push(name);

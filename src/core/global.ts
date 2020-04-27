@@ -4,28 +4,18 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IComponent, IDictionary, IJodit } from '../types';
+import {
+	IComponent,
+	IDictionary,
+	IJodit,
+	IViewBased,
+	IViewComponent
+} from '../types';
 import { PluginSystem } from './plugin-system';
 import { Dom } from './dom';
-import { kebabCase } from './helpers/';
+import { isViewObject, kebabCase } from './helpers/';
 
 export const instances: IDictionary<IJodit> = {};
-
-/**
- * Emits events in all instances
- *
- * @param events
- * @param args
- */
-export function fireEach(events: string, ...args: any[]) {
-	Object.keys(instances).forEach(key => {
-		const editor = instances[key];
-
-		if (!editor.isDestructed && editor.events) {
-			editor.e.fire(events, ...args);
-		}
-	});
-}
 
 let counter = 1;
 
@@ -51,11 +41,15 @@ const boxes = new WeakMap<IComponent, IDictionary<HTMLElement>>();
  * @param jodit
  * @param name
  */
-export function getContainer(jodit: IComponent, name: string): HTMLElement {
+export function getContainer(
+	jodit: IViewBased | IViewComponent,
+	name: string
+): HTMLElement {
 	const data = boxes.get(jodit) || {};
 
 	if (!data[name]) {
-		const box = jodit.j.c.div(`jodit-${kebabCase(name)}-container jodit-box`);
+		const c = isViewObject(jodit) ? jodit.c : jodit.j.c;
+		const box = c.div(`jodit-${kebabCase(name)}-container jodit-box`);
 
 		jodit.od.body.appendChild(box);
 

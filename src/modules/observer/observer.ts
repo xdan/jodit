@@ -6,7 +6,7 @@
 
 import { Config } from '../../config';
 import { IJodit, SnapshotType } from '../../types';
-import { Component } from '../../core/component';
+import { ViewComponent } from '../../core/component';
 import { Snapshot } from './snapshot';
 import { Stack } from './stack';
 import { Command } from './command';
@@ -35,7 +35,7 @@ Config.prototype.observer = {
  * @see {@link Snapshot|Snapshot}
  * @params {Jodit} parent Jodit main object
  */
-export class Observer extends Component<IJodit> {
+export class Observer extends ViewComponent<IJodit> {
 	private startValue!: SnapshotType;
 
 	private onChangeStack = () => {

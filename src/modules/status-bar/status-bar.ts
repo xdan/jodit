@@ -5,11 +5,11 @@
  */
 import './status-bar.less';
 
-import { Component, STATUSES } from '../../core/component';
+import { ViewComponent, STATUSES } from '../../core/component';
 import { Dom } from '../../core/dom';
 import { IJodit, IStatusBar } from '../../types';
 
-export class StatusBar extends Component implements IStatusBar {
+export class StatusBar extends ViewComponent implements IStatusBar {
 	container: HTMLElement;
 
 	/**

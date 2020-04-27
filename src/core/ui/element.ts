@@ -1,20 +1,29 @@
-import { Component, STATUSES } from '../component';
+import { ViewComponent, STATUSES } from '../component';
 import { IUIElement, IViewBased, Nullable } from '../../types';
 import { Dom } from '../dom';
 
 export abstract class UIElement<T extends IViewBased = IViewBased>
-	extends Component<T>
+	extends ViewComponent<T>
 	implements IUIElement {
-	/**
-	 * Is not a button
-	 */
-	isButton: boolean = false;
-
 	container!: HTMLElement;
-	parentElement: Nullable<IUIElement> = null;
 
-	setParentElement(parentElement: Nullable<IUIElement>): this {
-		this.parentElement = parentElement;
+	private __parentElement: Nullable<IUIElement> = null;
+	get parentElement(): Nullable<IUIElement> {
+		return this.__parentElement;
+	}
+
+	set parentElement(parentElement: Nullable<IUIElement>) {
+		this.__parentElement = parentElement;
+
+		if (parentElement) {
+			parentElement.hookStatus('beforeDestruct', () => this.destruct());
+		}
+
+		this.updateParentElement(this);
+	}
+
+	updateParentElement(target: IUIElement): this {
+		this.__parentElement?.updateParentElement(target);
 		return this;
 	}
 
@@ -22,12 +31,16 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	 * Find match parent
 	 * @param type
 	 */
-	closest<T extends Function>(type: T): Nullable<UIElement> {
-		let pe = this.parentElement;
+	closest<T extends Function>(type: T | IUIElement): Nullable<IUIElement> {
+		let pe = this.__parentElement,
+			c =
+				typeof type === 'object'
+					? (pe: IUIElement) => pe === type
+					: (pe: IUIElement) => pe instanceof type;
 
 		while (pe) {
-			if (pe instanceof type) {
-				return pe as UIElement;
+			if (c(pe)) {
+				return pe as IUIElement;
 			}
 
 			pe = pe.parentElement;
@@ -100,7 +113,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 
 	destruct(): any {
 		Dom.safeRemove(this.container);
-		this.setParentElement(null);
+		this.parentElement = null;
 		return super.destruct();
 	}
 }

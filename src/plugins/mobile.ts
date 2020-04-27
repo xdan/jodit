@@ -47,7 +47,6 @@ Config.prototype.controls.dots = {
 	) => {
 		let store:
 			| {
-					container: HTMLDivElement;
 					toolbar: IToolbarCollection;
 					rebuild: () => void;
 			  }
@@ -55,7 +54,6 @@ Config.prototype.controls.dots = {
 
 		if (store === undefined) {
 			store = {
-				container: editor.c.div(),
 				toolbar: makeCollection(editor),
 				rebuild: () => {
 					if (button) {
@@ -68,13 +66,13 @@ Config.prototype.controls.dots = {
 
 						if (buttons && store) {
 							store.toolbar
-								.build(splitArray(buttons))
-								.appendTo(store.container);
+								.build(splitArray(buttons));
 
 							let w =
 								editor.toolbar.firstButton?.container
 									.offsetWidth || 36;
-							store.container.style.width = (w + 4) * 3 + 'px';
+
+							store.toolbar.container.style.width = (w + 4) * 3 + 'px';
 						}
 					}
 				}
@@ -85,7 +83,7 @@ Config.prototype.controls.dots = {
 
 		store.rebuild();
 
-		return store.container;
+		return store.toolbar;
 	},
 	tooltip: 'Show all'
 } as IControlType;

@@ -1,21 +1,20 @@
 import { IFocusable } from './form';
 import {
-	IComponent,
 	IContainer,
 	IDestructible,
-	IDictionary,
+	IDictionary, IViewComponent,
 	Nullable
 } from './types';
 import { Buttons } from './toolbar';
 import { IViewBased } from './view';
 
-export interface IUIElement extends IContainer, IDestructible {
-	isButton: boolean;
+export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 	parentElement: Nullable<IUIElement>;
-	closest<T extends Function>(type: T): Nullable<IUIElement>;
+
+	closest<T extends Function>(type: T | IUIElement): Nullable<IUIElement>;
 
 	update(): void;
-	setParentElement(parentElement: Nullable<IUIElement>): this;
+	updateParentElement(target: IUIElement): this;
 	appendTo(element: HTMLElement): this;
 
 	setMod(name: string, value: string | boolean | null): this;
@@ -52,7 +51,7 @@ export interface IUIButtonStatePartial {
 	tooltip?: string;
 }
 
-export interface IUIButton extends IComponent, IUIElement, IFocusable {
+export interface IUIButton extends IViewComponent, IUIElement, IFocusable {
 	state: IUIButtonState;
 	setState(state: IUIButtonStatePartial): this;
 

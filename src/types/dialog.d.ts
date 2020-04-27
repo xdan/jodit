@@ -17,12 +17,21 @@ export type Content = ContentItem | ContentItem[] | Array<ContentItem | ContentI
 
 export interface IDialog extends IComponent, IContainer {
 	isOpened: boolean;
+
+	open(
+		destroyAfter: boolean,
+	): this;
+	open(
+		destroyAfter: boolean,
+		modal: boolean
+	): this;
 	open(
 		content?: Content,
 		title?: Content,
 		destroyAfter?: boolean,
 		modal?: boolean
 	): this;
+
 	close(): this;
 
 	setSize(w?: number | string, h?: number | string): this;

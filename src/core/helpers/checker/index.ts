@@ -6,6 +6,7 @@
 
 export * from './has-browser-color-picker';
 export * from './is-equal';
+export * from './is-boolean';
 export * from './is-function';
 export * from './is-html';
 export * from './is-html-from-word';

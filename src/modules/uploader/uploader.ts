@@ -30,7 +30,7 @@ import {
 	isJoditObject
 } from '../../core/helpers';
 import { Dom } from '../../core/dom';
-import { Component, STATUSES } from '../../core/component';
+import { ViewComponent, STATUSES } from '../../core/component';
 import { getContainer } from '../../core/global';
 
 declare module '../../config' {
@@ -144,7 +144,7 @@ Config.prototype.uploader = {
 	}
 } as IUploaderOptions<Uploader>;
 
-export class Uploader extends Component implements IUploader {
+export class Uploader extends ViewComponent implements IUploader {
 	jodit!: IViewBased;
 
 	/**

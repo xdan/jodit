@@ -4,11 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IJodit, IPlugin } from '../types';
-import { Component, STATUSES } from './component';
 import autobind from 'autobind-decorator';
 
-export abstract class Plugin extends Component<IJodit> implements IPlugin {
+import { IJodit, IPlugin } from '../types';
+import { ViewComponent, STATUSES } from './component';
+
+export abstract class Plugin extends ViewComponent<IJodit> implements IPlugin {
 	jodit!: IJodit;
 
 	protected abstract afterInit(jodit: IJodit): void;

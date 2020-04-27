@@ -1,8 +1,6 @@
 import {
-	IFileBrowser,
 	IFileBrowserCallBackData,
 	IJodit,
-	IUploader,
 	IUploaderData
 } from '../../../types';
 import { isFunction, $$, attr, val } from '../../../core/helpers';
@@ -86,14 +84,14 @@ export const FileSelectorWidget = (
 				'</div>'
 		);
 
-		editor.getInstance<IUploader>('Uploader').bind(
+		editor.uploader.bind(
 			dragbox,
 			(resp: IUploaderData) => {
 				let handler = isFunction(callbacks.upload)
 					? callbacks.upload
 					: editor.o.uploader.defaultHandlerSuccess;
 
-				if (typeof handler === 'function') {
+				if (isFunction(handler)) {
 					handler.call(editor, resp);
 				}
 			},
@@ -105,7 +103,7 @@ export const FileSelectorWidget = (
 		tabs.push({
 			icon: 'upload',
 			name: 'Upload',
-			content: dragbox,
+			content: dragbox
 		});
 	}
 
@@ -118,12 +116,9 @@ export const FileSelectorWidget = (
 					close && close();
 
 					if (callbacks.filebrowser) {
-						(editor.getInstance('FileBrowser') as IFileBrowser).open(
-							callbacks.filebrowser,
-							isImage
-						);
+						editor.filebrowser.open(callbacks.filebrowser, isImage);
 					}
-				},
+				}
 			});
 		}
 	}
@@ -194,7 +189,7 @@ export const FileSelectorWidget = (
 		tabs.push({
 			icon: 'link',
 			name: 'URL',
-			content: form,
+			content: form
 		});
 	}
 

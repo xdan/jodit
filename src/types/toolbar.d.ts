@@ -15,7 +15,7 @@ import {
 import { IViewBased } from './view';
 import { IJodit } from './jodit';
 import { IFileBrowser } from './file-browser';
-import { IUIButton, IUIList } from './ui';
+import { IUIButton, IUIElement, IUIList } from './ui';
 
 interface IControlType<
 	T = IJodit | IViewBased | IFileBrowser,
@@ -241,7 +241,7 @@ interface IControlType<
 		control: IControlType<T, Button>,
 		close: () => void,
 		button: Button
-	) => string | HTMLElement | false;
+	) => string | HTMLElement | IUIElement | false;
 
 	defaultValue?: string | string[];
 }
@@ -270,6 +270,8 @@ interface IToolbarButton extends IUIButton {
 	control: IControlTypeStrong;
 
 	target: Nullable<HTMLElement>;
+
+	toolbar: Nullable<IToolbarCollection>;
 }
 
 interface IToolbarCollection extends IUIList {

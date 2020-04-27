@@ -4,10 +4,13 @@ import { Config } from '../../config';
 import { IControlType, IJodit } from '../../types';
 import { isLicense, normalizeLicense } from '../../core/helpers/';
 import * as consts from '../../core/constants';
+import { Dialog } from '../../modules/dialog';
 
 Config.prototype.controls.about = {
 	exec: (editor: IJodit) => {
-		const dialog: any = editor.getInstance('Dialog'),
+		const dialog = new Dialog({
+				language: editor.o.language
+			}),
 			i18n = editor.i18n.bind(editor);
 
 		dialog.setHeader(i18n('About Jodit'));
@@ -35,7 +38,8 @@ Config.prototype.controls.about = {
 					)}</div>
 				</div>`
 		);
-		dialog.open();
+
+		dialog.open(true);
 	},
 	tooltip: 'About Jodit',
 	mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG

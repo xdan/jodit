@@ -157,11 +157,6 @@ export class ViewComponent<T extends IViewBased = IViewBased>
 
 	destruct(): any {
 		this.j.components.delete(this);
-
-		if (this.jodit) {
-			(<any>this.jodit) = undefined;
-		}
-
 		return super.destruct();
 	}
 }

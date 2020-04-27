@@ -18,7 +18,7 @@ import {
 	IUIButton,
 	IDictionary
 } from '../../types';
-import { Component } from '../../core/component';
+import { ViewComponent } from '../../core/component';
 import { Alert, Dialog, Prompt } from '../dialog';
 import { $$, attr, css, trim } from '../../core/helpers';
 import { Dom } from '../../core/dom';
@@ -95,9 +95,7 @@ const gi = Icon.get.bind(Icon);
  * The module allows you toWYSIWYG edit the image: resize or cut any part of it
  *
  */
-export class ImageEditor extends Component {
-	jodit!: IViewBased;
-
+export class ImageEditor extends ViewComponent {
 	private resizeUseRatio: boolean = true;
 	private cropUseRatio: boolean = true;
 
@@ -933,11 +931,19 @@ export class ImageEditor extends Component {
 			`.${jie}_croper`
 		) as HTMLElement;
 
-		this.dialog = new Dialog(editor);
+		this.dialog = new Dialog({
+			fullsize: this.j.o.fullsize,
+			language: this.j.o.language,
+			buttons: ['dialog.fullsize', 'dialog.close']
+		});
 		this.dialog.setContent(this.editor);
 
 		this.dialog.setSize(this.o.width, this.o.height);
-		this.dialog.setHeader([this.buttons.reset, this.buttons.save, this.buttons.saveas]);
+		this.dialog.setHeader([
+			this.buttons.reset,
+			this.buttons.save,
+			this.buttons.saveas
+		]);
 
 		this.setHandlers();
 	}

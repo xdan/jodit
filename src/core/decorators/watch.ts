@@ -1,7 +1,16 @@
-import { IDictionary } from '../../types';
+import { CanUndef, IDictionary } from '../../types';
 import { error, isFunction, isPlainObject, splitArray } from '../helpers';
 import { ObserveObject } from '../events';
 import { Component, STATUSES } from '../component';
+
+export function getPropertyDescriptor(obj: any, prop: string) : CanUndef<PropertyDescriptor> {
+	let desc;
+	do {
+		desc = Object.getOwnPropertyDescriptor(obj, prop);
+	} while (!desc && (obj = Object.getPrototypeOf(obj)));
+
+	return desc;
+}
 
 /**
  * Watch decorator. Added observer for some change in field value
@@ -35,6 +44,8 @@ export function watch(observeFields: string[] | string) {
 					component[key] = ObserveObject.create(value, [key]);
 					component[key].on(`change.${field}`, callback);
 				} else {
+					const descriptor = getPropertyDescriptor(target, key);
+
 					Object.defineProperty(component, key, {
 						set(v: any): void {
 							const oldValue = value;
@@ -44,6 +55,9 @@ export function watch(observeFields: string[] | string) {
 							}
 
 							value = v;
+							if (descriptor && descriptor.set) {
+								descriptor.set.call(component, v);
+							}
 
 							if (isPlainObject(value)) {
 								value = ObserveObject.create(value, [key]);
@@ -53,6 +67,10 @@ export function watch(observeFields: string[] | string) {
 							callback(key, oldValue, value);
 						},
 						get(): any {
+							if (descriptor && descriptor.get) {
+								return descriptor.get.call(component);
+							}
+
 							return value;
 						}
 					});

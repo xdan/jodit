@@ -5,7 +5,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IComponent, IDictionary } from './types';
+import { IComponent, IDictionary, IViewComponent } from './types';
 import { IViewBased } from './view';
 
 interface IUploaderData {
@@ -196,9 +196,7 @@ export interface IUploaderOptions<T> {
 	contentType: (this: T, requestData: any) => string | false;
 }
 
-export interface IUploader extends IComponent {
-	jodit: IViewBased;
-
+export interface IUploader extends IViewComponent {
 	buildData(data: FormData | IDictionary<string> | string): BuildDataResult;
 
 	send(

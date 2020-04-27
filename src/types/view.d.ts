@@ -11,9 +11,8 @@ import {
 	IProgressBar,
 	IToolbarCollection
 } from './toolbar';
-import { IComponent, IDictionary } from './types';
+import { IComponent, IContainer, IDictionary } from './types';
 import { Attributes, ICreate } from './create';
-import { IEventsNative } from './events';
 import { IStorage } from './storage';
 import { IAsync } from './async';
 import { IUIButtonState } from './ui';
@@ -31,10 +30,10 @@ interface IToolbarOptions {
 	toolbarButtonSize?: IUIButtonState['size'];
 	textIcons?: boolean;
 
-	extraButtons: Buttons;
-	removeButtons: string[];
+	extraButtons?: Buttons;
+	removeButtons?: string[];
 
-	buttons: ButtonsOption;
+	buttons?: ButtonsOption;
 
 	showTooltip?: boolean;
 	showTooltipDelay?: number;
@@ -47,6 +46,8 @@ type NodeFunction = (elm: HTMLElement) => void;
 
 interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 	basePath?: string;
+
+	defaultTimeout?: number;
 
 	disabled?: boolean;
 	readonly?: boolean;
@@ -65,9 +66,7 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 	createAttributes?: IDictionary<Attributes | NodeFunction>;
 }
 
-interface IPanel<T = IViewOptions> extends IComponent {
-	container: HTMLElement;
-
+interface IPanel<T = IViewOptions> extends IComponent, IContainer {
 	isLockedNotBy(name: string): boolean;
 	isLocked(): boolean;
 
@@ -85,6 +84,8 @@ interface IPanel<T = IViewOptions> extends IComponent {
 }
 
 interface IViewBased<T = IViewOptions> extends IPanel<T> {
+	isView: true;
+
 	/**
 	 * ID attribute for source element, id add {id}_editor it's editor's id
 	 */
@@ -109,11 +110,10 @@ interface IViewBased<T = IViewOptions> extends IPanel<T> {
 
 	defaultTimeout: number;
 
-	getInstance<T = IComponent>(moduleName: string, options?: object): T;
-
 	getVersion: () => string;
 
 	components: Set<IComponent>;
+	getInstance<T extends IComponent>(moduleName: string, options?: object): T;
 }
 
 interface IViewWithToolbar<T = IViewOptions> extends IViewBased<T> {

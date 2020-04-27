@@ -2,29 +2,70 @@ import './popup.less';
 
 import autobind from 'autobind-decorator';
 
-import { IBound, IPopup, IViewBased } from '../../../types';
+import { IBound, IPopup, IUIElement, IViewBased } from '../../../types';
 import { Dom } from '../../dom';
-import { attr, camelCase, css, isString, markOwner, position } from '../../helpers';
+import {
+	attr,
+	camelCase,
+	css,
+	isString,
+	markOwner,
+	position
+} from '../../helpers';
 import { getContainer } from '../../global';
 import { UIElement } from '../';
 
 type getBoundFunc = () => IBound;
 
 export class Popup extends UIElement implements IPopup {
-	jodit!: IViewBased;
 	isOpened: boolean = false;
 
 	private getBound!: () => IBound;
+
+	private childrenPopups: Set<IPopup> = new Set();
+
+	updateParentElement(target: IUIElement): this {
+		if (target !== this && target instanceof Popup) {
+			this.childrenPopups.forEach(popup => {
+				if (!target.closest(popup) && popup.isOpened) {
+					popup.close();
+				}
+			});
+
+			if (!this.childrenPopups.has(target)) {
+				this.j.e.on(target, 'beforeClose', () => {
+					this.childrenPopups.delete(target);
+				});
+			}
+
+			this.childrenPopups.add(target);
+		}
+
+		return super.updateParentElement(target);
+	}
 
 	/**
 	 * Set popup content
 	 * @param content
 	 */
-	setContent(content: HTMLElement | string): this {
+	setContent(content: IUIElement | HTMLElement | string): this {
 		Dom.detach(this.container);
 
 		const box = this.j.c.div(`${this.componentName}__content`);
-		box.appendChild(isString(content) ? this.j.c.fromHTML(content) : content);
+
+		let elm: HTMLElement;
+
+		if (content instanceof UIElement) {
+			elm = content.container;
+			content.parentElement = this;
+		} else if (isString(content)) {
+			elm = this.j.c.fromHTML(content);
+		} else {
+			elm = content as HTMLElement;
+		}
+
+		box.appendChild(elm);
+
 		this.container.appendChild(box);
 
 		return this;
@@ -37,15 +78,18 @@ export class Popup extends UIElement implements IPopup {
 	 * @param keepPosition
 	 */
 	open(getBound: getBoundFunc, keepPosition: boolean = false): this {
-		// this.j.e.fire(camelCase('close-all-popups'));
-		this.jodit && markOwner(this.jodit, this.container);
+		markOwner(this.jodit, this.container);
 
 		this.isOpened = true;
 		this.addGlobalListeners();
 
 		this.getBound = !keepPosition ? getBound : this.getKeepBound(getBound);
 
-		getContainer(this.jodit || this, Popup.name).appendChild(this.container);
+		const parentContainer = getContainer(this.jodit, Popup.name);
+
+		if (parentContainer !== this.container.parentElement) {
+			parentContainer.appendChild(this.container);
+		}
 
 		this.updatePosition();
 
@@ -91,13 +135,17 @@ export class Popup extends UIElement implements IPopup {
 	 * Update container position
 	 */
 	@autobind
-	protected updatePosition(): void {
+	updatePosition(): this {
 		const pos = this.getBound();
+
+		this.childrenPopups.forEach(popup => popup.updatePosition());
 
 		css(this.container, {
 			left: pos.left,
 			top: pos.top + pos.height
 		});
+
+		return this;
 	}
 
 	/**
@@ -108,6 +156,10 @@ export class Popup extends UIElement implements IPopup {
 		if (!this.isOpened) {
 			return this;
 		}
+
+		this.childrenPopups.forEach(popup => popup.close());
+
+		this.j.e.fire(this, 'beforeClose');
 
 		this.removeGlobalListeners();
 
@@ -127,7 +179,26 @@ export class Popup extends UIElement implements IPopup {
 			return;
 		}
 
-		if (e.target && Dom.isOrContains(this.container, e.target as Node)) {
+		if (!e.target) {
+			this.close();
+			return;
+		}
+
+		const box = Dom.up(e.target as Node, node => {
+			if (node) {
+				const { component } = node as any;
+				return component && component instanceof Popup;
+			}
+
+			return false;
+		});
+
+		if (
+			box &&
+			box.component &&
+			box.component instanceof Popup &&
+			(box.component === this || box.component.closest(this))
+		) {
 			return;
 		}
 
@@ -135,26 +206,31 @@ export class Popup extends UIElement implements IPopup {
 	}
 
 	private addGlobalListeners(): void {
-		const up = this.updatePosition, ow = this.ow;
+		const up = this.updatePosition,
+			ow = this.ow;
 
 		this.j.e
 			.on(camelCase('close-all-popups'), this.close)
 			.on('escape', this.close)
 			.on('resize', up)
+			.on(this.container, 'scroll', up)
+			.on(this.container, 'mousewheel', up)
 			.on('mousedown touchstart', this.closeOnOutsideClick)
-			.on(ow, 'mousedown touchstart', this.closeOnOutsideClick)
 			.on(ow, 'mousedown touchstart', this.closeOnOutsideClick)
 			.on(ow, 'scroll', up)
 			.on(ow, 'resize', up);
 	}
 
 	private removeGlobalListeners(): void {
-		const up = this.updatePosition, ow = this.ow;
+		const up = this.updatePosition,
+			ow = this.ow;
 
 		this.j.e
 			.off(camelCase('close-all-popups'), this.close)
 			.off('escape', this.close)
 			.off('resize', up)
+			.off(this.container, 'scroll', up)
+			.off(this.container, 'mousewheel', up)
 			.off('mousedown touchstart', this.closeOnOutsideClick)
 			.off(ow, 'mousedown touchstart', this.closeOnOutsideClick)
 			.off(ow, 'scroll', up)

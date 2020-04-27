@@ -26,7 +26,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 		if (
 			!this.o.fullsize &&
 			(isString(this.o.toolbar) ||
-				Dom.isHTMLElement(this.o.toolbar, this.j.ow))
+				Dom.isHTMLElement(this.o.toolbar, this.ow))
 		) {
 			return this.resolveElement(this.o.toolbar);
 		}
@@ -41,7 +41,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	 * @param element
 	 */
 	setPanel(element: HTMLElement | string): void {
-		this.j.o.toolbar = element;
+		this.o.toolbar = element;
 		this.buildToolbar();
 	}
 
@@ -53,10 +53,12 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 			return;
 		}
 
-		const buttons = splitArray(this.o.buttons) as Buttons;
+		const buttons = this.o.buttons
+			? (splitArray(this.o.buttons) as Buttons)
+			: [];
 
 		this.toolbar
-			.build(buttons.concat(this.o.extraButtons))
+			.build(buttons.concat(this.o.extraButtons || []))
 			.appendTo(this.toolbarContainer);
 	}
 

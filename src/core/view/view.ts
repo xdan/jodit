@@ -4,23 +4,20 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import {
-	IAsync,
-	IComponent,
-	IDictionary,
-	IProgressBar
-} from '../../types';
+import { IAsync, IComponent, IProgressBar } from '../../types';
 import { IViewBased, IViewOptions } from '../../types';
-import { Component } from '../component';
 import { Panel } from './panel';
 import { Storage } from '../storage';
 import { error, i18n, isFunction } from '../helpers';
 import { BASE_PATH } from '../constants';
-import { EventsNative, ProgressBar } from '../../modules';
-import { modules } from '../global';
+import { ViewComponent, EventsNative, ProgressBar } from '../../modules';
 import { Async } from '../async';
+import { modules } from '../global';
+import autobind from 'autobind-decorator';
 
 export abstract class View extends Panel implements IViewBased {
+	isView: true = true;
+
 	/**
 	 * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
 	 */
@@ -41,8 +38,6 @@ export abstract class View extends Panel implements IViewBased {
 
 	readonly version: string = appVersion; // from webpack.config.js
 
-	private __modulesInstances: IDictionary<Component> = {};
-
 	/**
 	 * Return default timeout period in milliseconds for some debounce or throttle functions.
 	 * By default return {observer.timeout} options
@@ -50,13 +45,13 @@ export abstract class View extends Panel implements IViewBased {
 	 * @return {number}
 	 */
 	get defaultTimeout(): number {
-		return 100;
+		return this.o.defaultTimeout || 100;
 	}
 
 	events: EventsNative = new EventsNative(this.od);
 	get e(): this['events'] {
 		return this.events;
-	};
+	}
 
 	async: IAsync = new Async();
 
@@ -81,8 +76,9 @@ export abstract class View extends Panel implements IViewBased {
 	 * @param text
 	 * @param params
 	 */
+	@autobind
 	i18n(text: string, ...params: Array<string | number>): string {
-		return i18n(text, params, this?.j?.options || this?.options);
+		return i18n(text, params, this.options);
 	}
 
 	/**
@@ -95,27 +91,6 @@ export abstract class View extends Panel implements IViewBased {
 		if (this.events) {
 			this.e.fire('toggleFullSize', isFullSize);
 		}
-	}
-
-	/**
-	 * Make one instance of one module
-	 *
-	 * @param moduleName
-	 * @param options
-	 */
-	getInstance<T = Component>(moduleName: string, options?: object): T {
-		const module = modules[moduleName] as any,
-			mi = this.__modulesInstances;
-
-		if (!isFunction(module)) {
-			throw error('Need real module name');
-		}
-
-		if (mi[moduleName] === undefined) {
-			mi[moduleName] = new module(this.j || this, options);
-		}
-
-		return mi[moduleName] as any;
 	}
 
 	/**
@@ -135,6 +110,7 @@ export abstract class View extends Panel implements IViewBased {
 			textIcons: false,
 			removeButtons: [],
 			zIndex: 100002,
+			defaultTimeout: 100,
 			fullsize: false,
 			showTooltip: true,
 			useNativeTooltip: false,
@@ -144,12 +120,38 @@ export abstract class View extends Panel implements IViewBased {
 		});
 	}
 
-	constructor(jodit?: IViewBased, options?: IViewOptions) {
-		super(jodit, options);
+	constructor(options?: IViewOptions) {
+		super(options);
 
-		this.id = jodit?.id || new Date().getTime().toString();
+		this.id = new Date().getTime().toString();
+		this.buffer = Storage.makeStorage();
+	}
 
-		this.buffer = jodit?.buffer || Storage.makeStorage();
+	private __modulesInstances: Map<string, IComponent> = new Map();
+	/**
+	 * Make one instance of one module
+	 *
+	 * @param moduleName
+	 * @param options
+	 */
+	getInstance<T extends IComponent>(moduleName: string, options?: object): T {
+		const module = modules[moduleName] as any,
+			mi = this.__modulesInstances;
+
+		if (!isFunction(module)) {
+			throw error('Need real module name');
+		}
+
+		if (!mi.has(moduleName)) {
+			const instance =
+				module.prototype instanceof ViewComponent
+					? new module(this, options)
+					: new module(options);
+
+			mi.set(moduleName, instance);
+		}
+
+		return mi.get(moduleName) as any;
 	}
 
 	destruct() {

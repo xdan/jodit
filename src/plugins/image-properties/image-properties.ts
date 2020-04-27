@@ -18,15 +18,11 @@ import {
 } from '../../core/helpers';
 
 import {
-	IFileBrowser,
 	IFileBrowserCallBackData,
 	IJodit,
 	IUploaderData
 } from '../../types';
-import {
-	FileSelectorWidget,
-	TabsWidget
-} from '../../modules/widget';
+import { FileSelectorWidget, TabsWidget } from '../../modules/widget';
 import { Button } from '../../core/ui/button';
 
 /**
@@ -136,7 +132,11 @@ export function imageProperties(editor: IJodit) {
 		e && e.stopImmediatePropagation();
 
 		const image = this as HTMLImageElement,
-			dialog = new Dialog(editor),
+			dialog = new Dialog({
+				fullsize: editor.o.fullsize,
+				language: editor.o.language,
+				buttons: ['dialog.fullsize', 'dialog.close']
+			}),
 			buttons = {
 				check: Button(editor, 'check', 'Save'),
 				remove: Button(editor, 'bin', 'Delete')
@@ -515,21 +515,18 @@ export function imageProperties(editor: IJodit) {
 
 					a.href = url;
 
-					(editor.getInstance(
-						'FileBrowser'
-					) as IFileBrowser).dataProvider.getPathByUrl(
+					editor.filebrowser.dataProvider.getPathByUrl(
 						a.href.toString(),
 						(path: string, name: string, source: string) => {
-							(editor.getInstance(
-								'FileBrowser'
-							) as IFileBrowser).openImageEditor(
+							editor.filebrowser.openImageEditor(
 								a.href,
 								name,
 								path,
 								source,
 								() => {
 									const timestamp: number = new Date().getTime();
-									image.setAttribute(
+									attr(
+										image,
 										'src',
 										url +
 											(url.indexOf('?') !== -1

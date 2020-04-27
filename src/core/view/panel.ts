@@ -5,7 +5,7 @@
  */
 
 import { Component } from '../component';
-import { ICreate, IPanel, IViewBased, IViewOptions } from '../../types';
+import { ICreate, IPanel, IViewOptions } from '../../types';
 import { Dom } from '../dom';
 import { error, isString } from '../helpers';
 import { Create } from '../create';
@@ -73,8 +73,8 @@ export abstract class Panel extends Component implements IPanel {
 		return resolved;
 	}
 
-	protected constructor(view?: IViewBased, options?: IViewOptions) {
-		super(view);
+	protected constructor(options?: IViewOptions) {
+		super();
 
 		this.initOptions(options);
 		this.initOwners();

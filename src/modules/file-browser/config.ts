@@ -17,11 +17,10 @@ import {
 	IControlType,
 	IDictionary,
 	IUploader,
-	IViewBased,
-	IJodit
+	IViewBased, IJodit
 } from '../../types/';
 
-import { humanSizeToBytes } from '../../core/helpers';
+import { humanSizeToBytes, isString } from '../../core/helpers';
 import { ITEM_CLASS as IC } from './consts';
 import { Icon } from '../../core/ui';
 
@@ -277,15 +276,15 @@ Config.prototype.filebrowser = {
 
 	filter(item: string | ISourceFile, search: string) {
 		search = search.toLowerCase();
-		if (typeof item === 'string') {
+		if (isString(item)) {
 			return item.toLowerCase().indexOf(search) !== -1;
 		}
 
-		if ('string' === typeof item.name) {
+		if (isString(item.name)) {
 			return item.name.toLowerCase().indexOf(search) !== -1;
 		}
 
-		if ('string' === typeof item.file) {
+		if (isString(item.file)) {
 			return item.file.toLowerCase().indexOf(search) !== -1;
 		}
 
@@ -310,16 +309,16 @@ Config.prototype.filebrowser = {
 			return 0;
 		};
 
-		if (typeof a === 'string') {
+		if (isString(a)) {
 			return compareStr(a.toLowerCase(), b.toLowerCase());
 		}
 
 		if (a[sortAttr] === undefined || sortAttr === 'name') {
-			if (typeof a.name === 'string') {
+			if (isString(a.name)) {
 				return compareStr(a.name.toLowerCase(), b.name.toLowerCase());
 			}
 
-			if (typeof a.file === 'string') {
+			if (isString(a.file)) {
 				return compareStr(a.file.toLowerCase(), b.file.toLowerCase());
 			}
 
@@ -525,35 +524,30 @@ Config.prototype.filebrowser = {
 
 	uploader: null, // use default Uploader's settings
 
-	defaultCallback: (
-		filebrowser: IFileBrowser,
+	defaultCallback(
+		this: IJodit,
 		data: IFileBrowserCallBackData
-	) => {
-		const jodit = filebrowser.j as IJodit;
+	) {
 
-		if (jodit && jodit.isJodit) {
 			if (data.files && data.files.length) {
 				data.files.forEach((file, i) => {
 					const url = data.baseurl + file;
 					const isImage = data.isImages ? data.isImages[i] : false;
 
 					if (isImage) {
-						jodit.selection.insertImage(
+						this.selection.insertImage(
 							url,
 							null,
-							jodit.o.imageDefaultWidth
+							this.o.imageDefaultWidth
 						);
 					} else {
-						jodit.selection.insertNode(
-							jodit.createInside.fromHTML(
+						this.selection.insertNode(
+							this.createInside.fromHTML(
 								`<a href="${url}" title="${url}">${url}</a>`
 							)
 						);
 					}
 				});
-
-				filebrowser.close();
-			}
 		}
 	}
 } as IFileBrowserOptions;

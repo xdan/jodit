@@ -5,7 +5,7 @@ import {
 	IControlType,
 	IControlTypeStrong,
 	IControlTypeStrongList,
-	IToolbarButton,
+	IToolbarButton, IToolbarCollection,
 	IViewBased,
 	Nullable
 } from '../../../types';
@@ -38,6 +38,13 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	};
 
 	trigger!: HTMLElement;
+
+	/**
+	 * Get parent toolbar
+	 */
+	get toolbar(): Nullable<IToolbarCollection> {
+		return this.closest(ToolbarCollection) as Nullable<ToolbarCollection>;
+	}
 
 	/**
 	 * Button element
@@ -238,6 +245,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 
 		if (isFunction(control.popup)) {
 			const popup = new Popup(this.j);
+			popup.parentElement = this;
 
 			if (
 				this.j.e.fire(
@@ -295,6 +303,9 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		const list = control.list,
 			menu = new Popup(this.j),
 			toolbar = makeCollection(this.j);
+
+		menu.parentElement = this;
+		toolbar.parentElement = menu;
 
 		toolbar.mode = 'vertical';
 

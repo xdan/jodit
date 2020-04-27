@@ -618,15 +618,15 @@ export class Dom {
 	/**
 	 * It goes through all the elements in ascending order, and checks to see if they meet the predetermined condition
 	 *
-	 * @param {callback} node
-	 * @param {function} condition
-	 * @param {Node} root Root element
+	 * @param node
+	 * @param condition
+	 * @param [root] Root element
 	 * @return {boolean|HTMLElement} Return false if condition not be true
 	 */
 	static up(
 		node: Node,
 		condition: NodeCondition,
-		root: Node
+		root?: Node
 	): false | HTMLElement {
 		let start = node;
 

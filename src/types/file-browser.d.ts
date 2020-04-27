@@ -141,10 +141,9 @@ export interface IFileBrowserOptions extends IViewOptions {
 
 	uploader: null | IUploaderOptions<IUploader>; // use default Uploader's settings
 
-	defaultCallback: (
-		filebrowser: IFileBrowser,
+	defaultCallback(
 		data: IFileBrowserCallBackData
-	) => void;
+	): void;
 	[key: string]: any;
 }
 

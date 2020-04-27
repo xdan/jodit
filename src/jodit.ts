@@ -256,7 +256,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 */
 	@cache
 	get uploader(): IUploader {
-		return this.getInstance('Uploader');
+		return this.getInstance('Uploader', this.o.uploader);
 	}
 
 	/**
@@ -264,7 +264,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 */
 	@cache
 	get filebrowser(): IFileBrowser {
-		return this.getInstance('FileBrowser');
+		return this.getInstance('FileBrowser', this.o.filebrowser);
 	}
 
 	private __mode: Modes = consts.MODE_WYSIWYG;
@@ -951,7 +951,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param {object} options Editor's options
 	 */
 	constructor(element: HTMLElement | string, options?: object) {
-		super(undefined, options as IViewOptions);
+		super(options as IViewOptions);
 
 		try {
 			this.resolveElement(element); // check element valid
@@ -1379,7 +1379,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		this.setStatus(STATUSES.beforeDestruct);
 
-		this.async.clear();
 		this.elementToPlace.clear();
 
 		/**

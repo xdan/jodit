@@ -23,7 +23,7 @@ export class UIGroup<T extends IViewBased = IViewBased> extends UIElement<T>
 	append(elm: IUIElement): void {
 		this.elements.push(elm);
 		this.container.appendChild(elm.container);
-		elm.parentElement = this;
+		elm.parentElement = this
 		elm.update();
 	}
 

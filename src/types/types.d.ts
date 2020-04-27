@@ -35,10 +35,6 @@ export interface IContainer {
 }
 
 interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
-	jodit: T;
-	j: this['jodit'];
-	setParentView(jodit: T): this;
-
 	ownerDocument: Document;
 	od: this['ownerDocument'];
 	ownerWindow: Window;
@@ -58,6 +54,12 @@ interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 		status: keyof Statuses,
 		callback: (component: IComponent) => void
 	): void;
+}
+
+interface IViewComponent<T extends IViewBased = IViewBased> extends IComponent {
+	jodit: T;
+	j: this['jodit'];
+	setParentView(jodit: T): this;
 }
 
 export type NodeCondition = (

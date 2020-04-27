@@ -6,13 +6,16 @@
 
 export * from '../core/events';
 export { Ajax } from '../core/ajax';
-export { Component } from '../core/component';
+export { Component, ViewComponent } from '../core/component';
 export { ContextMenu } from './context-menu/context-menu';
 export { Alert, Confirm, Prompt, Dialog } from './dialog/';
 export { Dom } from '../core/dom';
 export { Plugin } from '../core/plugin';
 export { Create } from '../core/create';
 export * from '../core/ui/popup';
+export { Panel } from '../core/view/panel';
+export { View } from '../core/view/view';
+export { ViewWithToolbar } from '../core/view/view-with-toolbar';
 export { FileBrowser } from './file-browser/file-browser';
 import * as Helpers from '../core/helpers/';
 export { Helpers };

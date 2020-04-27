@@ -10,15 +10,13 @@ import autobind from 'autobind-decorator';
 import { Config, OptionsDefault } from '../../config';
 import {
 	IControlType,
-	IViewBased,
 	IDialogOptions,
 	IDictionary,
-	IJodit,
 	IToolbarCollection,
 	IContainer,
 	IDialog,
 	ContentItem,
-	Content
+	Content, IViewOptions
 } from '../../types/';
 import { KEY_ESC } from '../../core/constants';
 import {
@@ -27,9 +25,8 @@ import {
 	attr,
 	css,
 	extend,
-	hasContainer,
-	isJoditObject,
-	isString, markOwner,
+	hasContainer, isBoolean,
+	isString,
 	splitArray
 } from '../../core/helpers/';
 import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
@@ -157,12 +154,12 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			this.draggable = false;
 			this.resizable = false;
 			this.unlockSelect();
-			if (this.j && this.j.events) {
+			if (this.e) {
 				/**
 				 * Fired when dialog box is finished to resizing
 				 * @event endResize
 				 */
-				this.j.e.fire(this, 'endResize endMove');
+				this.e.fire(this, 'endResize endMove');
 			}
 		}
 	}
@@ -195,12 +192,12 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		this.addGlobalListeners();
 
-		if (this.j && this.j.events) {
+		if (this.e) {
 			/**
 			 * Fired when dialog box is started moving
 			 * @event startMove
 			 */
-			this.j.e.fire(this, 'startMove');
+			this.e.fire(this, 'startMove');
 		}
 	}
 
@@ -212,14 +209,14 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 				this.startPoint.y + e.clientY - this.startY
 			);
 
-			if (this.j && this.j.events) {
+			if (this.e) {
 				/**
 				 * Fired when dialog box is moved
 				 * @event move
 				 * @param {int} dx Delta X
 				 * @param {int} dy Delta Y
 				 */
-				this.j.e.fire(
+				this.e.fire(
 					this,
 					'move',
 					e.clientX - this.startX,
@@ -236,20 +233,22 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 				this.startPoint.w + e.clientX - this.startX,
 				this.startPoint.h + e.clientY - this.startY
 			);
-			if (this.j && this.j.events) {
+
+			if (this.e) {
 				/**
 				 * Fired when dialog box is resized
 				 * @event resizeDialog
 				 * @param {int} dx Delta X
 				 * @param {int} dy Delta Y
 				 */
-				this.j.e.fire(
+				this.e.fire(
 					this,
 					'resizeDialog',
 					e.clientX - this.startX,
 					e.clientY - this.startY
 				);
 			}
+
 			e.stopImmediatePropagation();
 			e.preventDefault();
 		}
@@ -295,12 +294,12 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		this.addGlobalListeners();
 
-		if (this.j.events) {
+		if (this.e) {
 			/**
 			 * Fired when dialog box is started resizing
 			 * @event startResize
 			 */
-			this.j.e.fire(this, 'startResize');
+			this.e.fire(this, 'startResize');
 		}
 	}
 
@@ -530,22 +529,38 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		return condition;
 	}
 
+	open(
+		destroyAfterClose: boolean,
+	): this;
+
+	open(
+		destroyAfterClose: boolean,
+		modal: boolean
+	): this;
+
+	open(
+		content?: Content,
+		title?: Content,
+		destroyAfterClose?: boolean,
+		modal?: boolean
+	): this;
+
 	/**
 	 * It opens a dialog box to center it, and causes the two event.
 	 *
 	 * @param {string|string[]|Element|Element[]} [content]  specifies the contents of the dialog box.
 	 * Can be false или undefined. see {@link Dialog~setContent|setContent}
 	 * @param {string|string[]|Element|Element[]} [title]  specifies the title of the dialog box, @see setHeader
-	 * @param {boolean} [destroyAfter] true - After closing the window , the destructor will be called.
+	 * @param {boolean} [destroyAfterClose] true - After closing the window , the destructor will be called.
 	 * see {@link Dialog~destruct|destruct}
 	 * @param {boolean} [modal] - true window will be opened in modal mode
 	 * @fires {@link event:beforeOpen} id returns 'false' then the window will not open
 	 * @fires {@link event:afterOpen}
 	 */
 	open(
-		content?: Content,
-		title?: Content,
-		destroyAfter?: boolean,
+		contentOrClose?: Content | boolean,
+		titleOrModal?: Content  | boolean,
+		destroyAfterClose?: boolean,
 		modal?: boolean
 	): this {
 		/**
@@ -553,13 +568,22 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		 *
 		 * @event beforeOpen
 		 */
-		if (this.j && this.j.events) {
-			if (this.j.e.fire(this, 'beforeOpen') === false) {
-				return this;
-			}
+		if (this.e.fire(this, 'beforeOpen') === false) {
+			return this;
 		}
 
-		this.destroyAfterClose = destroyAfter === true;
+		if (isBoolean(contentOrClose)) {
+			destroyAfterClose = contentOrClose;
+		}
+
+		if (isBoolean(titleOrModal)) {
+			modal = titleOrModal;
+		}
+
+		this.destroyAfterClose = destroyAfterClose === true;
+
+		const content = isBoolean(contentOrClose) ? undefined : contentOrClose;
+		const title = isBoolean(titleOrModal) ? undefined : titleOrModal;
 
 		if (title !== undefined) {
 			this.setHeader(title);
@@ -585,12 +609,9 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		/**
 		 * Called after the opening of the dialog box
-		 *
 		 * @event afterOpen
 		 */
-		if (this.j && this.j.events) {
-			this.j.e.fire('afterOpen', this);
-		}
+		this.e.fire('afterOpen', this);
 
 		return this;
 	}
@@ -640,8 +661,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		 * @event beforeClose
 		 * @this {Dialog} current dialog
 		 */
-		if (this.j && this.j.e) {
-			this.j.e.fire('beforeClose', this);
+		if (this.e) {
+			this.e.fire('beforeClose', this);
 		}
 
 		this?.container?.classList.remove('jodit-dialog_active');
@@ -664,23 +685,14 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		 * @event afterClose
 		 * @this {Dialog} current dialog
 		 */
-		this.j?.e?.fire(this, 'afterClose');
-		this.j?.e?.fire(this.ow, 'joditCloseDialog');
+		this.e?.fire(this, 'afterClose');
+		this.e?.fire(this.ow, 'joditCloseDialog');
 
 		return this;
 	}
 
-	constructor(jodit?: IViewBased, options: any = {}) {
-		super(jodit, options);
-
-		if (isJoditObject(jodit)) {
-			this.window = jodit.ow;
-			this.document = jodit.od;
-
-			jodit.e.on('beforeDestruct', () => {
-				this.destruct();
-			});
-		}
+	constructor(options?: IViewOptions) {
+		super(options);
 
 		const self: Dialog = this;
 
@@ -688,11 +700,9 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			extend(
 				true,
 				{
-					toolbarButtonSize:
-						jodit?.options.toolbarButtonSize || 'middle'
+					toolbarButtonSize: 'middle'
 				},
 				Config.prototype.dialog,
-				(jodit as IJodit)?.o?.dialog,
 				options
 			)
 		) as IDialogOptions;
@@ -724,15 +734,9 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			value: this
 		});
 
-		if (jodit && (<IJodit>jodit).o.theme) {
-			self.container.classList.add(
-				'jodit_' + (jodit.o.theme || 'default') + '_theme'
-			);
-		}
-
-		if (jodit && (<IViewBased>jodit).id) {
-			markOwner(jodit, self.container);
-		}
+		self.container.classList.add(
+			'jodit_' + (this.o.theme || 'default') + '_theme'
+		);
 
 		self.dialog = self.container.querySelector(
 			'.jodit-dialog'
@@ -760,7 +764,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		self.destination.appendChild(self.container);
 
-		self.toolbar
+		self.o.buttons && self.toolbar
 			.build(splitArray(self.o.buttons))
 			.appendTo(self.dialogbox_toolbar);
 

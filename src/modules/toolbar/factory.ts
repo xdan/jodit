@@ -7,11 +7,11 @@
 import {
 	IControlTypeStrong,
 	IToolbarButton,
-	IToolbarCollection,
+	IToolbarCollection, IUIElement,
 	IViewBased,
 	Nullable
 } from '../../types';
-import { isJoditObject } from '../../core/helpers/';
+import { isJoditObject } from '../../core/helpers';
 import { ToolbarCollection } from './collection/collection';
 import { ToolbarEditorCollection } from './collection/editor-collection';
 import { ToolbarButton } from './button/button';
@@ -20,13 +20,17 @@ import { ToolbarButton } from './button/button';
  * Collection factory
  * @param jodit
  */
-export function makeCollection(jodit: IViewBased): IToolbarCollection {
+export function makeCollection(jodit: IViewBased, parentElement?: IUIElement): IToolbarCollection {
 	const collection = isJoditObject(jodit)
 		? new ToolbarEditorCollection(jodit)
 		: new ToolbarCollection(jodit);
 
 	if (jodit.o.textIcons) {
 		collection.container.classList.add('jodit_text_icons');
+	}
+
+	if (parentElement) {
+		collection.parentElement = parentElement;
 	}
 
 	return collection;

@@ -74,8 +74,6 @@ export class UIList<T extends IViewBased = IViewBased> extends UIGroup<T>
 	 * Helper for getting full plain button list
 	 */
 	getButtonsNames(): string[] {
-
-
 		return this.buttons
 			.map(
 				a =>

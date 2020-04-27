@@ -34,7 +34,6 @@ import { Storage } from '../../core/storage/';
 import {
 	each,
 	normalizePath,
-	$$,
 	ctrlKey,
 	extend,
 	isValidName,
@@ -57,17 +56,6 @@ const DEFAULT_SOURCE_NAME = 'default',
 	ITEM_ACTIVE_CLASS = ITEM_CLASS + '-active-true';
 
 export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
-	/**
-	 * Return default timeout period in milliseconds for some debounce or throttle functions. By default return {observer.timeout} options
-	 *
-	 * @return {number}
-	 */
-	get defaultTimeout(): number {
-		return this.j && this.j !== this
-			? this.j.defaultTimeout
-			: Config.defaultOptions.observer.timeout;
-	}
-
 	private loader = this.c.div(F_CLASS + '_loader', ICON_LOADER);
 	private browser = this.c.div(F_CLASS + ' non-selected');
 	private status_line = this.c.div(F_CLASS + '_status');
@@ -157,7 +145,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				})
 				.catch(e => {
 					this.errorHandler(
-						error(this.j.i18n('Error on load folders'))
+						error(this.i18n('Error on load folders'))
 					);
 
 					error(e);
@@ -269,11 +257,11 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 					isImages
 				} as IFileBrowserCallBackData;
 
-				if (!isFunction(callback)) {
-					this.o.defaultCallback(this, data);
-				} else {
+				if (isFunction(callback)) {
 					callback(data);
 				}
+
+				this.close();
 			}
 
 			return false;
@@ -1083,7 +1071,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			);
 	}
 
-	private initUploader(editor?: IJodit) {
+	private initUploader(editor?: IFileBrowser | IJodit) {
 		const self = this,
 			uploaderOptions: IUploaderOptions<IUploader> = extend(
 				true,
@@ -1111,26 +1099,18 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		});
 	}
 
-	constructor(editor?: IJodit, options?: IFileBrowserOptions) {
-		super(editor, options);
+	constructor(options?: IFileBrowserOptions) {
+		super(options);
 
-		const self: FileBrowser = this,
-			doc: HTMLDocument = editor ? editor.od : document,
-			editorDoc: HTMLDocument = editor ? editor.editorDocument : doc;
-
-		if (editor) {
-			this.id = editor.id;
-		}
+		const self: FileBrowser = this;
 
 		self.options = new OptionsDefault(
 			extend(
 				true,
 				{},
-				editor?.options,
 				self.options,
 				Config.defaultOptions.filebrowser,
-				options,
-				editor ? editor.o.filebrowser : undefined
+				options
 			)
 		) as IFileBrowserOptions;
 
@@ -1138,10 +1118,11 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			this.o.filebrowser.saveStateInStorage
 		);
 
-		self.dataProvider = makeDataProvider(self.j || self, self.options);
+		self.dataProvider = makeDataProvider(self, self.options);
 
-		self.dialog = new Dialog(editor || self, {
+		self.dialog = new Dialog({
 			fullsize: self.o.fullsize,
+			language: this.o.language,
 			buttons: ['dialog.fullsize', 'dialog.close']
 		});
 
@@ -1202,11 +1183,12 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			self.state.sortBy = self.o.sortBy || 'changed-desc';
 		}
 
-		self.dataProvider.currentBaseUrl = $$('base', editorDoc).length
-			? attr($$('base', editorDoc)[0], 'href') || ''
-			: location.protocol + '//' + location.host;
+		// TODO
+		// self.dataProvider.currentBaseUrl = $$('base', editorDoc).length
+		// 	? attr($$('base', editorDoc)[0], 'href') || ''
+		// 	: location.protocol + '//' + location.host;
 
-		self.initUploader(editor);
+		self.initUploader(self);
 	}
 
 	destruct() {

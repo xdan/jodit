@@ -88,15 +88,9 @@ export class UIButton extends UIElement implements IUIButton {
 		this.setMod('status', this.state.status);
 	}
 
-	@watch('state.text jodit')
+	@watch('state.text')
 	protected onChangeText(): void {
-		let text = this.state.text;
-
-		if (this.jodit) {
-			text = this.jodit.i18n(text);
-		}
-
-		this.text.textContent = text;
+		this.text.textContent = this.jodit.i18n(this.state.text);
 	}
 
 	@watch('state.text')

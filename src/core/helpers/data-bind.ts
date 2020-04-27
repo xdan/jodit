@@ -3,7 +3,8 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import { Component } from '../component';
+import { ViewComponent } from '../component';
+import { isViewObject } from './checker';
 
 const store = new WeakMap();
 
@@ -20,11 +21,19 @@ export const dataBind = <T = any>(elm: object, key: string, value?: T): T => {
 		itemStore = {};
 		store.set(elm, itemStore);
 
-		if (elm instanceof Component) {
-			elm?.j?.e?.on('beforeDestruct', () => {
-				store.delete(elm);
-			});
+		let e = undefined;
+
+		if (elm instanceof ViewComponent) {
+			e = elm.j.e;
 		}
+
+		if (isViewObject(elm)) {
+			e = elm.e;
+		}
+
+		e && e.on('beforeDestruct', () => {
+			store.delete(elm);
+		});
 	}
 
 	if (value === undefined) {

@@ -25,7 +25,7 @@ export default (self: FileBrowser) => {
 		return () => {};
 	}
 
-	const contextmenu = makeContextMenu(self.j || self);
+	const contextmenu = makeContextMenu(self);
 
 	return function(this: HTMLElement, e: DragEvent): boolean | void {
 		let item: HTMLElement = this,
@@ -92,7 +92,11 @@ export default (self: FileBrowser) => {
 								icon: 'eye',
 								title: 'Preview',
 								exec: () => {
-									const preview = new Dialog(self),
+									const preview = new Dialog({
+											fullsize: self.o.fullsize,
+											language: self.o.language,
+											buttons: ['dialog.fullsize', 'dialog.close']
+										}),
 										temp_content = self.c.div(
 											F_CLASS + '_preview',
 											ICON_LOADER

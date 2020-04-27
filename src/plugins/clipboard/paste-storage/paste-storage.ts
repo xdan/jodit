@@ -133,7 +133,9 @@ export class pasteStorage extends Plugin {
 	};
 
 	private createDialog() {
-		this.dialog = new Dialog(this.j);
+		this.dialog = new Dialog({
+			language: this.j.o.language
+		});
 
 		const pasteButton: HTMLAnchorElement = this.j.c.fromHTML(
 			'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +

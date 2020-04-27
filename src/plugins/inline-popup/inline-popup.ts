@@ -4,19 +4,27 @@ import autobind from 'autobind-decorator';
 
 import { Plugin } from '../../core/plugin';
 import {
+	Buttons,
 	IBound,
 	IControlType,
 	IDictionary,
 	IJodit,
 	IPopup,
 	IToolbarCollection,
-	IUIButtonState
+	IUIButtonState, Nullable
 } from '../../types';
 import { makeCollection } from '../../modules/toolbar/factory';
 import { Popup } from '../../core/ui/popup';
 import { Config } from '../../config';
-import { clearCenterAlign, css, splitArray, isString, attr, position } from '../../core/helpers';
-import { Dom, Table } from '../../modules';
+import {
+	clearCenterAlign,
+	css,
+	splitArray,
+	isString,
+	attr,
+	position
+} from '../../core/helpers';
+import { Dom, Table, ToolbarCollection } from '../../modules';
 import { ColorPickerWidget, TabsWidget } from '../../modules/widget';
 import { debounce } from '../../core/decorators';
 
@@ -61,7 +69,6 @@ Config.prototype.popup = {
 			tooltip: 'Delete',
 			exec: (editor: IJodit, image: Node) => {
 				editor.selection.removeNode(image);
-				editor.e.fire('hidePopup');
 			}
 		}
 	],
@@ -71,7 +78,6 @@ Config.prototype.popup = {
 			tooltip: 'Delete',
 			exec: (editor: IJodit, image: Node) => {
 				editor.selection.removeNode(image);
-				editor.e.fire('hidePopup');
 			}
 		}
 	],
@@ -82,7 +88,6 @@ Config.prototype.popup = {
 			tooltip: 'Delete',
 			exec: (editor: IJodit, image: Node) => {
 				editor.selection.removeNode(image);
-				editor.e.fire('hidePopup');
 			}
 		},
 		{
@@ -362,8 +367,15 @@ Config.prototype.popup = {
 } as IDictionary<Array<IControlType | string>>;
 
 export class inlinePopup extends Plugin {
-	private toolbar: IToolbarCollection = makeCollection(this.jodit);
+	private type: Nullable<string> = null;
+
 	private popup: IPopup = new Popup(this.jodit);
+	private toolbar: IToolbarCollection = makeCollection(
+		this.jodit,
+		this.popup
+	);
+
+	private isTargetClick: boolean = true;
 
 	@autobind
 	private onClick(e: MouseEvent): void {
@@ -374,11 +386,14 @@ export class inlinePopup extends Plugin {
 				: Dom.closest(node, elements, this.j.editor);
 
 		if (target && this.canShowPopupForType(target.nodeName.toLowerCase())) {
+			this.isTargetClick = true;
 			this.showPopupWithToolbar(
 				() => position(target),
 				target.nodeName.toLowerCase(),
 				target
 			);
+		} else {
+			this.isTargetClick = false;
 		}
 	}
 
@@ -387,17 +402,19 @@ export class inlinePopup extends Plugin {
 		const sel = this.j.selection.sel,
 			range = this.j.selection.range;
 
-		if (sel?.isCollapsed) {
-			return;
-		}
-
 		const node = this.j.selection.current();
 
 		if (!node) {
 			return;
 		}
 
-		this.popup.close();
+		if (sel?.isCollapsed || this.canShowPopupForType(node.nodeName)) {
+			if (!this.isTargetClick && this.popup.isOpened) {
+				this.popup.close();
+			}
+
+			return;
+		}
 
 		this.showPopupWithToolbar(
 			() => range.getBoundingClientRect(),
@@ -424,11 +441,17 @@ export class inlinePopup extends Plugin {
 			return false;
 		}
 
-		const data = this.j.o.popup[type];
+		if (this.type !== type) {
+			const data = this.j.o.popup[type];
 
-		this.toolbar.buttonSize = this.j.o.toolbarInlineButtonSize;
-		this.toolbar.build(data, elm);
-		this.popup.setContent(this.toolbar.container).open(rect);
+			this.toolbar.buttonSize = this.j.o.toolbarInlineButtonSize;
+			this.toolbar.build(data, elm);
+			this.popup.setContent(this.toolbar.container);
+
+			this.type = type;
+		}
+
+		this.popup.open(rect);
 
 		return true;
 	}
@@ -438,7 +461,7 @@ export class inlinePopup extends Plugin {
 	 * @param type
 	 */
 	private canShowPopupForType(type: string): boolean {
-		const data = this.j.o.popup[type];
+		const data = this.j.o.popup[type.toLowerCase()];
 
 		if (!this.j.o.toolbarInline || !data) {
 			return false;
@@ -458,11 +481,28 @@ export class inlinePopup extends Plugin {
 	private isExcludedTarget(type: string): boolean {
 		return splitArray(this.j.o.toolbarInlineDisableFor)
 			.map(a => a.toLowerCase())
-			.includes(type);
+			.includes(type.toLowerCase());
 	}
 
 	protected afterInit(jodit: IJodit): void {
 		this.j.e
+			.on(
+				'getDiffButtons.mobile',
+				(toolbar: ToolbarCollection): void | Buttons => {
+					if (this.toolbar === toolbar) {
+						return splitArray(jodit.o.buttons).filter(item => {
+							const name = isString(item) ? item : item.name;
+
+							return (
+								name &&
+								name !== '|' &&
+								name !== '\n' &&
+								!this.toolbar.getButtonsNames().includes(name)
+							);
+						});
+					}
+				}
+			)
 			.on(
 				'showPopup',
 				(elm: HTMLElement | string, rect: () => IBound) => {
