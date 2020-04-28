@@ -10,6 +10,7 @@ import {
 	IPopup,
 	IUIElement,
 	IViewBased,
+	Nullable,
 	PopupStrategy
 } from '../../../types';
 import { Dom } from '../../dom';
@@ -170,7 +171,10 @@ export class Popup extends UIElement implements IPopup {
 			position(this.container)
 		);
 
-		css(this.container, pos as IDictionary);
+		css(this.container, {
+			left: pos.left,
+			top: pos.top
+		});
 
 		this.childrenPopups.forEach(popup => popup.updatePosition());
 
@@ -200,15 +204,6 @@ export class Popup extends UIElement implements IPopup {
 				top: target.top - container.height
 			};
 
-		const boxInView = (box: IBoundP): boolean => {
-			return (
-				box.top >= view.top &&
-				box.left >= view.left &&
-				box.top + container.height <= view.height &&
-				box.left + container.width <= view.width
-			);
-		};
-
 		const list = Object.keys(x).reduce(
 			(keys, xKey) =>
 				keys.concat(
@@ -219,33 +214,62 @@ export class Popup extends UIElement implements IPopup {
 			[] as PopupStrategy[]
 		);
 
-		const getPointByStrategy = (strategy: PopupStrategy): IBoundP => {
+		const getPointByStrategy = (strategy: PopupStrategy): IBound => {
 			const [xKey, yKey] = kebabCase(strategy).split('-');
 
 			return {
 				left: x[xKey],
-				top: y[yKey]
+				top: y[yKey],
+				width: container.width,
+				height: container.height
 			};
-		};
+		}
 
-		let strategy: PopupStrategy;
+		const getMatchStrategy = (inBox: IBound): Nullable<PopupStrategy> => {
+			let strategy: Nullable<PopupStrategy> = null;
 
-		if (boxInView(getPointByStrategy(defaultStrategy))) {
-			strategy = defaultStrategy;
-		} else {
-			strategy =
-				list.find(
-					(key): CanUndef<string> => {
-						if (boxInView(getPointByStrategy(key))) {
-							return key;
+			if (Popup.boxInView(getPointByStrategy(defaultStrategy), inBox)) {
+				strategy = defaultStrategy;
+			} else {
+				strategy =
+					list.find(
+						(key): CanUndef<string> => {
+							if (
+								Popup.boxInView(getPointByStrategy(key), inBox)
+							) {
+								return key;
+							}
+
+							return;
 						}
+					) || null;
+			}
 
-						return;
-					}
-				) || defaultStrategy;
+			return strategy;
+		}
+
+		let strategy = getMatchStrategy(position(this.j.container));
+
+		if (!strategy || !Popup.boxInView(getPointByStrategy(strategy), view)) {
+			strategy = getMatchStrategy(view) || strategy || defaultStrategy;
 		}
 
 		return getPointByStrategy(strategy);
+	}
+
+	/**
+	 * Check if one box is inside second
+	 *
+	 * @param box
+	 * @param view
+	 */
+	private static boxInView(box: IBound, view: IBound): boolean {
+		return (
+			box.top >= view.top &&
+			box.left >= view.left &&
+			box.top + box.height <= view.top + view.height &&
+			box.left + box.width <= view.left + view.width
+		);
 	}
 
 	/**
