@@ -13,7 +13,6 @@ import { BASE_PATH } from '../constants';
 import { ViewComponent, EventsNative, ProgressBar } from '../../modules';
 import { Async } from '../async';
 import { modules } from '../global';
-import autobind from 'autobind-decorator';
 
 export abstract class View extends Panel implements IViewBased {
 	isView: true = true;
@@ -76,7 +75,6 @@ export abstract class View extends Panel implements IViewBased {
 	 * @param text
 	 * @param params
 	 */
-	@autobind
 	i18n(text: string, ...params: Array<string | number>): string {
 		return i18n(text, params, this.options);
 	}
@@ -147,6 +145,8 @@ export abstract class View extends Panel implements IViewBased {
 				module.prototype instanceof ViewComponent
 					? new module(this, options)
 					: new module(options);
+
+			this.components.add(instance);
 
 			mi.set(moduleName, instance);
 		}

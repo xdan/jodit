@@ -2,10 +2,12 @@ describe('Test position/offset helpers', function() {
 	let box,
 		mainBox = getBox(),
 		iframe = document.createElement('iframe');
+
 	iframe.setAttribute(
 		'style',
 		'position: absolute; left: 0; top: 0; border: 0; width: 2000px; height: 3000px; background: purple; z-index: 1000000;'
 	);
+
 	let mainDoc;
 
 	beforeEach(function() {
@@ -121,8 +123,8 @@ describe('Test position/offset helpers', function() {
 
 			createPoint(pos.left, pos.top, '#cdf', true);
 
-			expect(pos.top).equals(264);
-			expect(pos.left).equals(250);
+			expect(pos.top).equals(254);
+			expect(pos.left).equals(240);
 		});
 
 		describe('In the out of the screen', function() {
@@ -132,9 +134,10 @@ describe('Test position/offset helpers', function() {
 				iframe.contentWindow.scrollTo(0, box.offsetTop + 1500);
 				const pos = Jodit.modules.Helpers.position(span);
 
-				expect(pos.top).equals(-1236);
-				expect(pos.left).equals(250);
 				createPoint(pos.left, pos.top, '#cdf', true);
+
+				expect(pos.top).equals(-1246);
+				expect(pos.left).equals(240);
 			});
 		});
 
@@ -157,8 +160,8 @@ describe('Test position/offset helpers', function() {
 
 				createPoint(pos.left, pos.top, '#cdf', true);
 
-				expect(pos.top - jodit.toolbar.container.offsetHeight).equals(396);
-				expect(pos.left).equals(261);
+				expect(pos.top - jodit.toolbar.container.offsetHeight).equals(386);
+				expect(pos.left).equals(251);
 			});
 		});
 	});

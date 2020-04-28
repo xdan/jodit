@@ -459,7 +459,7 @@ describe('Jodit Editor Tests', function() {
 			describe('Get filebrowser and uploader property from editor', function() {
 				describe('FileBrowser', function() {
 					it('should create instance of Filebrowser  only one time and in lazy mode', function() {
-						const editor = new Jodit(appendTestArea());
+						const editor = getJodit();
 
 						editor.components.forEach(function(cmp) {
 							expect(cmp instanceof Jodit.modules.FileBrowser).is.false;

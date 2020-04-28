@@ -787,7 +787,7 @@ export class ImageEditor extends ViewComponent {
 				: Config.defaultOptions.imageeditor;
 
 		const o = this.options;
-		const i = editor.i18n;
+		const i = editor.i18n.bind(editor);
 
 		this.resizeUseRatio = o.resizeUseRatio;
 		this.cropUseRatio = o.cropUseRatio;

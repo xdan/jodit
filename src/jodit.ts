@@ -954,6 +954,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		super(options as IViewOptions);
 
 		try {
+			// if (!element) {
+			// 	element = this.c.div();
+			// }
+
 			this.resolveElement(element); // check element valid
 		} catch (e) {
 			this.destruct();

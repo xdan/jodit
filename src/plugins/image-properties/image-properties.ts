@@ -102,7 +102,7 @@ Config.prototype.image = {
  * @param {Jodit} editor
  */
 export function imageProperties(editor: IJodit) {
-	const i18n = editor.i18n,
+	const i18n = editor.i18n.bind(editor),
 		gi = Icon.get.bind(Icon),
 		opt = editor.options,
 		dom = editor.c.fromHTML.bind(editor.c);

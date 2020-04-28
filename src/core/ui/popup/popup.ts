@@ -2,7 +2,15 @@ import './popup.less';
 
 import autobind from 'autobind-decorator';
 
-import { IBound, IPopup, IUIElement, IViewBased } from '../../../types';
+import {
+	CanUndef,
+	IBound,
+	IDictionary,
+	IPopup,
+	IUIElement,
+	IViewBased,
+	PopupStrategy
+} from '../../../types';
 import { Dom } from '../../dom';
 import {
 	attr,
@@ -19,11 +27,13 @@ type getBoundFunc = () => IBound;
 
 export class Popup extends UIElement implements IPopup {
 	isOpened: boolean = false;
+	strategy: PopupStrategy = 'leftBottom';
 
 	private getBound!: () => IBound;
 
 	private childrenPopups: Set<IPopup> = new Set();
 
+	/** @override */
 	updateParentElement(target: IUIElement): this {
 		if (target !== this && target instanceof Popup) {
 			this.childrenPopups.forEach(popup => {
@@ -67,6 +77,8 @@ export class Popup extends UIElement implements IPopup {
 		box.appendChild(elm);
 
 		this.container.appendChild(box);
+
+		this.updatePosition();
 
 		return this;
 	}
@@ -136,14 +148,62 @@ export class Popup extends UIElement implements IPopup {
 	 */
 	@autobind
 	updatePosition(): this {
-		const pos = this.getBound();
+		if (!this.isOpened) {
+			return this;
+		}
+
+		const { left, top, width, height } = this.getBound(),
+			pWidth = this.container.offsetWidth,
+			pHeight = this.container.offsetHeight;
+
+		const boxInView = (box: { left: number; top: number }): boolean => {
+			return (
+				box.top >= 0 &&
+				box.left >= 0 &&
+				box.top + pHeight <= this.ow.innerHeight &&
+				box.left + pWidth <= this.ow.innerWidth
+			);
+		};
+
+		const strategies: IDictionary<{ left: number; top: number }> = {
+			leftBottom: {
+				left,
+				top: top + height
+			},
+			rightBottom: {
+				left: left - (pWidth - width),
+				top: top + height
+			},
+			leftTop: {
+				left,
+				top: top - pHeight
+			},
+			rightTop: {
+				left: left - (pWidth - width),
+				top: top - pHeight
+			}
+		};
+
+		let strategy: string;
+
+		if (boxInView(strategies[this.strategy])) {
+			strategy = this.strategy;
+		} else {
+			strategy =
+				Object.keys(strategies).find(
+					(key): CanUndef<string> => {
+						if (boxInView(strategies[key])) {
+							return key;
+						}
+
+						return;
+					}
+				) || this.strategy;
+		}
+
+		css(this.container, strategies[strategy]);
 
 		this.childrenPopups.forEach(popup => popup.updatePosition());
-
-		css(this.container, {
-			left: pos.left,
-			top: pos.top + pos.height
-		});
 
 		return this;
 	}

@@ -56,9 +56,9 @@ export function position(
 	}
 
 	return {
-		left: xPos,
-		top: yPos,
-		width: elm.offsetWidth,
-		height: elm.offsetHeight
+		left: Math.round(xPos),
+		top: Math.round(yPos),
+		width: Math.round(elm.offsetWidth),
+		height: Math.round(elm.offsetHeight)
 	};
 }
