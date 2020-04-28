@@ -64,7 +64,7 @@ describe('Placeholder plugin', function() {
 						.display === 'block'
 			).is.true;
 
-			editor.selection.insertNode(editor.create.inside.text('test'));
+			editor.selection.insertNode(editor.createInside.text('test'));
 
 			expect(
 				!editor.container.querySelectorAll('.jodit-placeholder').length

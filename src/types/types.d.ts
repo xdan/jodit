@@ -76,6 +76,13 @@ export interface IBound {
 	height: number;
 }
 
+export interface IBoundP {
+	top: number;
+	left: number;
+	width?: number;
+	height?: number;
+}
+
 export interface IPoint {
 	x: number;
 	y: number;

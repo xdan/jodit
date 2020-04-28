@@ -4,10 +4,10 @@ describe('Test Creator module', function() {
 			const editor1 = Jodit.make(appendTestArea());
 			const editor2 = Jodit.make(appendTestArea(), {iframe: true});
 
-			const div1 = editor1.create.inside.div();
+			const div1 = editor1.createInside.div();
 			expect(div1.ownerDocument).equals(document);
 
-			const div2 = editor2.create.inside.div();
+			const div2 = editor2.createInside.div();
 			expect(div2.ownerDocument).does.not.equal(document);
 			expect(div2.ownerDocument).equals(editor2.editorDocument);
 
@@ -19,7 +19,7 @@ describe('Test Creator module', function() {
 	describe('createAttributes', function() {
 		it('Should add to every nodes some attributes', function() {
 			const editor = Jodit.make(appendTestArea());
-			const div = editor.create.inside.div();
+			const div = editor.createInside.div();
 			expect(div.className).equals('');
 
 			const editor2 = Jodit.make(appendTestArea(), {
@@ -39,10 +39,10 @@ describe('Test Creator module', function() {
 				}
 			});
 
-			const div2 = editor2.create.inside.div();
+			const div2 = editor2.createInside.div();
 			expect(div2.className).equals('test');
 
-			const ul = editor2.create.inside.element('ul');
+			const ul = editor2.createInside.element('ul');
 			expect(ul.className).equals('ui-test');
 
 			editor2.value = 'test';

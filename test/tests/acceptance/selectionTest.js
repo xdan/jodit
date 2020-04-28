@@ -271,7 +271,7 @@ describe('Selection Module Tests', function() {
 						range.collapse(true);
 						editor.selection.selectRange(range);
 						editor.selection.insertNode(
-							editor.create.inside.text('a')
+							editor.createInside.text('a')
 						);
 
 						range.setStart(editor.editor.firstChild.firstChild, 4);
@@ -300,13 +300,13 @@ describe('Selection Module Tests', function() {
 							editor.selection.selectRange(range);
 
 							editor.selection.insertNode(
-								editor.create.inside.text(Jodit.INVISIBLE_SPACE)
+								editor.createInside.text(Jodit.INVISIBLE_SPACE)
 							);
 							editor.selection.insertNode(
-								editor.create.inside.text(Jodit.INVISIBLE_SPACE)
+								editor.createInside.text(Jodit.INVISIBLE_SPACE)
 							);
 							editor.selection.insertNode(
-								editor.create.inside.text(Jodit.INVISIBLE_SPACE)
+								editor.createInside.text(Jodit.INVISIBLE_SPACE)
 							);
 
 							range.setStart(
@@ -339,7 +339,7 @@ describe('Selection Module Tests', function() {
 								range.collapse(true);
 								editor.selection.selectRange(range);
 								editor.selection.insertNode(
-									editor.create.inside.text('a')
+									editor.createInside.text('a')
 								);
 
 								range.setStart(
@@ -370,17 +370,17 @@ describe('Selection Module Tests', function() {
 									editor.selection.selectRange(range);
 
 									editor.selection.insertNode(
-										editor.create.inside.text(
+										editor.createInside.text(
 											Jodit.INVISIBLE_SPACE
 										)
 									);
 									editor.selection.insertNode(
-										editor.create.inside.text(
+										editor.createInside.text(
 											Jodit.INVISIBLE_SPACE
 										)
 									);
 									editor.selection.insertNode(
-										editor.create.inside.text(
+										editor.createInside.text(
 											Jodit.INVISIBLE_SPACE
 										)
 									);
@@ -687,7 +687,7 @@ describe('Selection Module Tests', function() {
 			mirror.setSelectionRange(5, 5);
 
 			editor.setMode(Jodit.MODE_WYSIWYG);
-			editor.selection.insertNode(editor.create.inside.text(' a '));
+			editor.selection.insertNode(editor.createInside.text(' a '));
 
 			expect(editor.value).equals('<p>te a st</p>');
 		});
@@ -735,7 +735,7 @@ describe('Selection Module Tests', function() {
 
 				expect(editor.selection.isCollapsed()).is.false;
 
-				editor.selection.insertNode(editor.create.inside.text(' a '));
+				editor.selection.insertNode(editor.createInside.text(' a '));
 				expect(editor.value).equals(' a ');
 			});
 		});
@@ -754,7 +754,7 @@ describe('Selection Module Tests', function() {
 
 			editor.setMode(Jodit.MODE_WYSIWYG);
 			expect(editor.selection.isCollapsed()).is.true;
-			editor.selection.insertNode(editor.create.inside.text(' a '));
+			editor.selection.insertNode(editor.createInside.text(' a '));
 			expect(editor.value).equals('<a>1 a 1</a>');
 		});
 	});

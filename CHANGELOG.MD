@@ -32,6 +32,8 @@ Methods which need binding binds with `@autobind` decorator.
   *  `this.ownerDocument` => `this.od`
   *  `this.ownerWindow` => `this.ow`
 * Change name `Dialog`.`setTitle` to `Dialog`.`setHeader`
+* Remove `Create.inside` field and instead added `Jodit.createInside`
+* In popups added position strategies: `'leftBottom' | 'rightBottom' | 'leftTop' | 'rightTop'` etc.
 
 ## 3.3.24
 ### BugFix
@@ -51,7 +53,7 @@ Methods which need binding binds with `@autobind` decorator.
 ```js
 const editor = Jodit.make('#editor');
 
-const a = editor.create.inside.element('a');
+const a = editor.createInside.element('a');
 const br = document.createElement('br');
 
 Jodit.modules.Dom.isTag(a, 'a') // true
@@ -104,10 +106,10 @@ const editor2 = Jodit.make('#editor', {
     }
 });
 
-const div2 = editor2.create.inside.div();
+const div2 = editor2.createInside.div();
 expect(div2.className).equals('test');
 
-const ul = editor2.create.inside.element('ul');
+const ul = editor2.createInside.element('ul');
 expect(ul.className).equals('ui-test');
 
 ```

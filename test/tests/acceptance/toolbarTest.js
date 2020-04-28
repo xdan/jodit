@@ -238,7 +238,6 @@ describe('Toolbar', function() {
 					const positionPopup = offset(popup);
 					const positionContainer = offset(editor.container);
 
-					debugger;
 					expect(
 						Math.abs(
 							positionPopup.left +
@@ -498,7 +497,7 @@ describe('Toolbar', function() {
 
 			expect(list.parentNode).is.null;
 
-			editor.selection.insertNode(editor.create.inside.text(' a '));
+			editor.selection.insertNode(editor.createInside.text(' a '));
 
 			expect(editor.value).equals('<h1>tex a ext</h1>');
 		});
@@ -1333,7 +1332,7 @@ describe('Toolbar', function() {
 							{
 								name: 'adddate',
 								exec: function(editor) {
-									const a = editor.create.inside.text('111');
+									const a = editor.createInside.text('111');
 									editor.selection.insertNode(a);
 								}
 							}
@@ -1374,7 +1373,7 @@ describe('Toolbar', function() {
 								{
 									name: 'adddate',
 									exec: function(editor) {
-										const a = editor.create.inside.text(
+										const a = editor.createInside.text(
 											'111'
 										);
 										editor.selection.insertNode(a);

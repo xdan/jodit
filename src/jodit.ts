@@ -35,7 +35,8 @@ import {
 	Modes,
 	IFileBrowser,
 	IJodit,
-	IUploader, ICreate
+	IUploader,
+	ICreate
 } from './types';
 
 import { ViewWithToolbar } from './core/view/view-with-toolbar';
@@ -143,7 +144,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 */
 	readonly storage = Storage.makeStorage(true, this.id);
 
-	readonly createInside: ICreate = new Create(this.editorDocument);
+	readonly createInside: ICreate = new Create(
+		() => this.editorDocument,
+		this.o.createAttributes
+	);
 
 	/**
 	 * Editor has focus in this time
@@ -630,7 +634,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 						showUI,
 						value
 					);
-				} catch(e) {
+				} catch (e) {
 					if (!isProd) {
 						throw e;
 					}

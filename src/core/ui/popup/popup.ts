@@ -5,6 +5,7 @@ import autobind from 'autobind-decorator';
 import {
 	CanUndef,
 	IBound,
+	IBoundP,
 	IDictionary,
 	IPopup,
 	IUIElement,
@@ -17,8 +18,10 @@ import {
 	camelCase,
 	css,
 	isString,
+	kebabCase,
 	markOwner,
-	position
+	position,
+	ucfirst
 } from '../../helpers';
 import { getContainer } from '../../global';
 import { UIElement } from '../';
@@ -29,7 +32,14 @@ export class Popup extends UIElement implements IPopup {
 	isOpened: boolean = false;
 	strategy: PopupStrategy = 'leftBottom';
 
-	private getBound!: () => IBound;
+	viewBound: () => IBound = (): IBound => ({
+		left: 0,
+		top: 0,
+		width: this.ow.innerWidth,
+		height: this.ow.innerHeight
+	});
+
+	private targetBound!: () => IBound;
 
 	private childrenPopups: Set<IPopup> = new Set();
 
@@ -95,7 +105,9 @@ export class Popup extends UIElement implements IPopup {
 		this.isOpened = true;
 		this.addGlobalListeners();
 
-		this.getBound = !keepPosition ? getBound : this.getKeepBound(getBound);
+		this.targetBound = !keepPosition
+			? getBound
+			: this.getKeepBound(getBound);
 
 		const parentContainer = getContainer(this.jodit, Popup.name);
 
@@ -152,60 +164,88 @@ export class Popup extends UIElement implements IPopup {
 			return this;
 		}
 
-		const { left, top, width, height } = this.getBound(),
-			pWidth = this.container.offsetWidth,
-			pHeight = this.container.offsetHeight;
+		const pos = this.calculatePosition(
+			this.targetBound(),
+			this.viewBound(),
+			position(this.container)
+		);
 
-		const boxInView = (box: { left: number; top: number }): boolean => {
+		css(this.container, pos as IDictionary);
+
+		this.childrenPopups.forEach(popup => popup.updatePosition());
+
+		return this;
+	}
+
+	/**
+	 * Calculate start point
+	 *
+	 * @param target
+	 * @param view
+	 * @param container
+	 * @param defaultStrategy
+	 */
+	private calculatePosition(
+		target: IBound,
+		view: IBound,
+		container: IBound,
+		defaultStrategy: PopupStrategy = this.strategy
+	): IBoundP {
+		const x: IDictionary = {
+				left: target.left,
+				right: target.left - (container.width - target.width)
+			},
+			y: IDictionary = {
+				bottom: target.top + target.height,
+				top: target.top - container.height
+			};
+
+		const boxInView = (box: IBoundP): boolean => {
 			return (
-				box.top >= 0 &&
-				box.left >= 0 &&
-				box.top + pHeight <= this.ow.innerHeight &&
-				box.left + pWidth <= this.ow.innerWidth
+				box.top >= view.top &&
+				box.left >= view.left &&
+				box.top + container.height <= view.height &&
+				box.left + container.width <= view.width
 			);
 		};
 
-		const strategies: IDictionary<{ left: number; top: number }> = {
-			leftBottom: {
-				left,
-				top: top + height
-			},
-			rightBottom: {
-				left: left - (pWidth - width),
-				top: top + height
-			},
-			leftTop: {
-				left,
-				top: top - pHeight
-			},
-			rightTop: {
-				left: left - (pWidth - width),
-				top: top - pHeight
-			}
+		const list = Object.keys(x).reduce(
+			(keys, xKey) =>
+				keys.concat(
+					Object.keys(y).map(
+						yKey => `${xKey}${ucfirst(yKey)}` as PopupStrategy
+					)
+				),
+			[] as PopupStrategy[]
+		);
+
+		const getPointByStrategy = (strategy: PopupStrategy): IBoundP => {
+			const [xKey, yKey] = kebabCase(strategy).split('-');
+
+			return {
+				left: x[xKey],
+				top: y[yKey]
+			};
 		};
 
-		let strategy: string;
+		let strategy: PopupStrategy;
 
-		if (boxInView(strategies[this.strategy])) {
-			strategy = this.strategy;
+		if (boxInView(getPointByStrategy(defaultStrategy))) {
+			strategy = defaultStrategy;
 		} else {
 			strategy =
-				Object.keys(strategies).find(
+				list.find(
 					(key): CanUndef<string> => {
-						if (boxInView(strategies[key])) {
+						if (boxInView(getPointByStrategy(key))) {
 							return key;
 						}
 
 						return;
 					}
-				) || this.strategy;
+				) || defaultStrategy;
 		}
 
-		css(this.container, strategies[strategy]);
-
-		this.childrenPopups.forEach(popup => popup.updatePosition());
-
-		return this;
+		return getPointByStrategy(strategy);
 	}
 
 	/**

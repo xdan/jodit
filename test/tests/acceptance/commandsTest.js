@@ -47,7 +47,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.execCommand('formatBlock', false, 'h1');
 
-			editor.selection.insertNode(editor.create.inside.text(' a '));
+			editor.selection.insertNode(editor.createInside.text(' a '));
 
 			expect(editor.value).equals('<h1>te a st</h1>');
 		});
@@ -65,7 +65,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.execCommand('formatBlock', false, 'h1');
 
-			editor.selection.insertNode(editor.create.inside.text(' a '));
+			editor.selection.insertNode(editor.createInside.text(' a '));
 
 			expect(editor.value).equals('<h1>test a </h1>');
 		});
@@ -74,11 +74,11 @@ describe('Commands Jodit Editor Tests', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.value = '';
 
-			editor.selection.insertNode(editor.create.inside.text('test'));
-			editor.selection.insertNode(editor.create.inside.text(' test2'));
-			editor.selection.insertNode(editor.create.inside.text(' test3'));
+			editor.selection.insertNode(editor.createInside.text('test'));
+			editor.selection.insertNode(editor.createInside.text(' test2'));
+			editor.selection.insertNode(editor.createInside.text(' test3'));
 			editor.selection.insertNode(
-				editor.create.inside.element('span', ' test4')
+				editor.createInside.element('span', ' test4')
 			);
 
 			const sel = editor.selection.sel,
@@ -250,11 +250,11 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.execCommand('bold');
 
-			editor.selection.insertNode(editor.create.inside.text('abc'));
+			editor.selection.insertNode(editor.createInside.text('abc'));
 
 			editor.execCommand('bold');
 
-			editor.selection.insertNode(editor.create.inside.text('def'));
+			editor.selection.insertNode(editor.createInside.text('def'));
 
 			expect(editor.value).equals('test<strong>abc</strong>def');
 		});
@@ -481,7 +481,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.execCommand('italic');
 
-			editor.selection.insertNode(editor.create.inside.text('top'));
+			editor.selection.insertNode(editor.createInside.text('top'));
 
 			expect(editor.value).equals('<p>tetopt</p>');
 		});
@@ -500,7 +500,7 @@ describe('Commands Jodit Editor Tests', function() {
 				sel.addRange(range);
 
 				editor.execCommand('underline');
-				editor.selection.insertNode(editor.create.inside.text('data'));
+				editor.selection.insertNode(editor.createInside.text('data'));
 
 				expect(editor.value).equals('<p>te<u>data</u>st</p>');
 			});

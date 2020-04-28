@@ -7,6 +7,7 @@ export interface IPopup extends IUIElement, IDestructible {
 
 	isOpened: boolean;
 	strategy: PopupStrategy;
+	viewBound: () => IBound;
 
 	open(
 		getBound: () => IBound,

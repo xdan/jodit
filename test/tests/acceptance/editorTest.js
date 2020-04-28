@@ -554,7 +554,7 @@ describe('Jodit Editor Tests', function() {
 		it('Current selection element', function() {
 			const editor = new Jodit(appendTestArea()),
 				div = editor.editorDocument.createElement('div'),
-				text = editor.create.inside.text('jingl');
+				text = editor.createInside.text('jingl');
 
 
 			editor.value = '';
@@ -568,7 +568,7 @@ describe('Jodit Editor Tests', function() {
 		it('Insert simple text node in editor', function() {
 			const area = appendTestArea();
 			const editor = new Jodit(area);
-			editor.selection.insertNode(editor.create.inside.text('Test'));
+			editor.selection.insertNode(editor.createInside.text('Test'));
 			expect(editor.value).equals('Test');
 			editor.destruct();
 		});

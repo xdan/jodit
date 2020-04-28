@@ -9,7 +9,8 @@ import {
 	Attributes,
 	Children,
 	ICreate,
-	CanUndef, NodeFunction
+	CanUndef,
+	NodeFunction
 } from '../types';
 
 import {
@@ -25,9 +26,16 @@ import {
 import { Dom } from './dom';
 
 export class Create implements ICreate {
-	readonly createAttributes: CanUndef<IDictionary<Attributes | NodeFunction>>;
+	private get doc(): Document {
+		return isFunction(this.document) ? this.document() : this.document;
+	}
 
-	constructor(readonly doc: Document) {}
+	constructor(
+		readonly document: Document | (() => Document),
+		readonly createAttributes?: CanUndef<
+			IDictionary<Attributes | NodeFunction>
+		>
+	) {}
 
 	/**
 	 * Apply some object key-value to HTMLElement

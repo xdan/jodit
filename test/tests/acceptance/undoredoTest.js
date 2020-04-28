@@ -131,7 +131,7 @@ describe('Undo/Redo behaviors', function() {
 			editor.selection.sel.addRange(range);
 
 			editor.selection.insertNode(
-				editor.create.inside.text('test2')
+				editor.createInside.text('test2')
 			);
 			editor.execCommand('undo');
 			expect(editor.value).equals('test');

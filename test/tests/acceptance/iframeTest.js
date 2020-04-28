@@ -235,7 +235,7 @@ describe('Editor inside iframe', function() {
 
 			expect(editor.create.doc).does.not.equal(document);
 			expect(editor.create.doc).equals(doc);
-			expect(editor.create.inside.doc).equals(doc);
+			expect(editor.createInside.doc).equals(doc);
 
 			editor.destruct();
 			Jodit.modules.Dom.safeRemove(iframe);

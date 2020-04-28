@@ -33,7 +33,7 @@ describe('Test orderedList plugin', function() {
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 					editor.selection.insertNode(
-						editor.create.inside.text(' a ')
+						editor.createInside.text(' a ')
 					);
 
 					expect(editor.value).equals(
@@ -60,7 +60,7 @@ describe('Test orderedList plugin', function() {
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 					editor.selection.insertNode(
-						editor.create.inside.text(' a ')
+						editor.createInside.text(' a ')
 					);
 
 					expect(editor.value).equals(
