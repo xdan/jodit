@@ -582,9 +582,31 @@ function simulateEvent(type, keyCodeArg, element, options) {
 
 function getOpenedPopup(editor) {
 	const popups = editor.ownerDocument.querySelectorAll(
-		'[role="popup"][data-editor_id="' + editor.id + '"]'
+		'[role="popup"][data-editor_id="' + editor.id + '"]:last-child'
 	);
 	return popups.length ? popups[popups.length - 1] : null;
+}
+
+/**
+ * Find button inside element
+ *
+ * @param {Jodit|HTMLElement} joditOrElement
+ * @param {string} buttonName
+ * @param {string} [role]
+ * @param {boolean} [last]
+ * @returns {HTMLElement|null}
+ */
+function getButton(joditOrElement, buttonName, role, last) {
+	const elm = joditOrElement.isJodit ? joditOrElement.container : joditOrElement;
+
+	return elm.querySelector(
+		'.jodit-toolbar-button.jodit-toolbar-button_' +
+			buttonName +
+			(last ? ':last-child' : '') +
+			' [role="' +
+			(role || 'button') +
+			'"]'
+	);
 }
 
 /**
@@ -595,24 +617,15 @@ function getOpenedPopup(editor) {
  * @param {string} role
  * @param {boolean} last
  */
-function clickButton(
-	buttonName,
-	joditOrElement,
-	role = 'button',
-	last = false
-) {
+function clickButton(buttonName, joditOrElement, role, last) {
 	simulateEvent(
 		'click',
 		0,
-		(joditOrElement.isJodit
-			? joditOrElement.container
-			: joditOrElement
-		).querySelector(
-			'.jodit-toolbar-button.jodit-toolbar-button_' +
-				buttonName + (last ? ':last-child' : '') +
-				' [role="' +
-				role +
-				'"]'
+		getButton(
+			joditOrElement,
+			buttonName,
+			role,
+			last
 		)
 	);
 }

@@ -58,6 +58,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 			: [];
 
 		this.toolbar
+			.setRemoveButtons(this.o.removeButtons)
 			.build(buttons.concat(this.o.extraButtons || []))
 			.appendTo(this.toolbarContainer);
 	}

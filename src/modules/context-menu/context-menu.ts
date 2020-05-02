@@ -8,6 +8,7 @@ import './context-menu.less';
 import { IContextMenu, IContextMenuAction } from '../../types';
 import { Popup } from '../../core/ui/popup';
 import { Button } from '../../core/ui/button';
+import { isArray } from '../../core/helpers/checker';
 
 /**
  * Module to generate context menu
@@ -31,7 +32,7 @@ export class ContextMenu extends Popup implements IContextMenu {
 		const self = this,
 			content = this.j.c.div('jodit-context-menu__actions');
 
-		if (!Array.isArray(actions)) {
+		if (!isArray(actions)) {
 			return;
 		}
 

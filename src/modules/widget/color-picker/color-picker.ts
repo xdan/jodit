@@ -7,7 +7,7 @@ import {
 	isPlainObject,
 	hexToRgb,
 	attr,
-	isFunction
+	isFunction, isArray
 } from '../../../core/helpers/';
 import { Icon } from '../../../core/ui';
 import { Dom } from '../../../core/dom';
@@ -70,7 +70,7 @@ export const ColorPickerWidget = (
 					stack.push(eachColor((colors as any)[key]));
 					stack.push('</div>');
 				});
-			} else if (Array.isArray(colors)) {
+			} else if (isArray(colors)) {
 				colors.forEach(color => {
 					stack.push(
 						'<a ' +

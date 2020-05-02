@@ -6,12 +6,13 @@ import {
 } from '../../../types';
 import { getControlType } from './getControlType';
 import { Config } from '../../../config';
+import { isArray } from '../../helpers/checker';
 
 export function getStrongControlTypes(
 	items: Buttons | IDictionary<string>,
 	controls?: Controls
 ): IControlTypeStrong[] {
-	const elements = Array.isArray(items)
+	const elements = isArray(items)
 		? items
 		: Object.keys(items).map(key => {
 				const value = items[key] || {};

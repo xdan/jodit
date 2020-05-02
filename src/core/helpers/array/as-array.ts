@@ -4,4 +4,6 @@
  * @param a
  * @return {Array}
  */
-export const asArray = <T>(a: T[] | T): T[] => (Array.isArray(a) ? a : [a]);
+import { isArray } from '../checker';
+
+export const asArray = <T>(a: T[] | T): T[] => (isArray(a) ? a : [a]);

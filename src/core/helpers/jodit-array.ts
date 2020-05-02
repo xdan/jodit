@@ -21,7 +21,9 @@ export class JoditArray {
 
 	constructor(data: any[]) {
 		extend(true, this, data);
+
 		this.length = data.length;
+
 		const proto: any = Array.prototype as any;
 		[
 			'map',

@@ -27,7 +27,7 @@ import {
 	error,
 	extend,
 	isPlainObject,
-	isJoditObject
+	isJoditObject, isArray
 } from '../../core/helpers';
 import { Dom } from '../../core/dom';
 import { ViewComponent, STATUSES } from '../../core/component';
@@ -82,7 +82,7 @@ Config.prototype.uploader = {
 
 	getMessage(this: Uploader, resp: IUploaderAnswer) {
 		return resp.data.messages !== undefined &&
-			Array.isArray(resp.data.messages)
+			isArray(resp.data.messages)
 			? resp.data.messages.join(' ')
 			: '';
 	},

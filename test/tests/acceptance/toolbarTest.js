@@ -224,8 +224,8 @@ describe('Toolbar', function() {
 			describe('in the right side', function() {
 				it('Should open popup in toolbar with float by left editor side', function() {
 					const editor = new Jodit(appendTestArea(), {
-						width: 300,
-						buttons: ['video', 'video', 'video', 'video'],
+						width: 310,
+						buttons: ['video', 'video', 'video', 'video', 'video'],
 						disablePlugins: 'mobile'
 					});
 
@@ -244,7 +244,7 @@ describe('Toolbar', function() {
 								positionPopup.width -
 								(positionContainer.left +
 									positionContainer.width)
-						) < 2
+						) < 10
 					).is.true;
 				});
 			});
@@ -275,17 +275,9 @@ describe('Toolbar', function() {
 					toolbarAdaptive: false
 				});
 
-				simulateEvent(
-					'mousedown',
-					0,
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_with_dropdownlist.jodit_toolbar_btn-font'
-					)
-				);
+				clickTrigger('font', editor);
 
-				const list = editor.container.querySelector(
-					'.jodit_toolbar_list'
-				);
+				const list = getOpenedPopup(editor);
 
 				expect(
 					list &&
@@ -293,6 +285,7 @@ describe('Toolbar', function() {
 						list.parentNode !== null
 				).is.true;
 			});
+
 			describe('Change defaiult list', function() {
 				it('Should change default FONT list in toolbar', function() {
 					const editor = new Jodit(appendTestArea(), {
@@ -315,17 +308,9 @@ describe('Toolbar', function() {
 						}
 					});
 
-					simulateEvent(
-						'mousedown',
-						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_with_dropdownlist.jodit_toolbar_btn-font'
-						)
-					);
+					clickTrigger('font', editor);
 
-					const list = editor.container.querySelector(
-						'.jodit_toolbar_list'
-					);
+					const list = getOpenedPopup(editor);
 
 					expect(
 						list &&
@@ -335,29 +320,24 @@ describe('Toolbar', function() {
 
 					expect(list.textContent.match('Custom')).is.not.null;
 				});
+
 				it('Should change default FONT size list in toolbar', function() {
 					const editor = new Jodit(appendTestArea(), {
 						toolbarAdaptive: false,
 						controls: {
 							fontsize: {
-								list: '8,9,10'
+								list: Jodit.Array('8,9,10'.split(','))
 							}
 						}
 					});
 
-					simulateEvent(
-						'mousedown',
-						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_with_dropdownlist.jodit_toolbar_btn-fontsize'
-						)
-					);
+					clickTrigger('fontsize', editor);
 
-					const list = editor.container.querySelector(
-						'.jodit_toolbar_list'
-					);
+					const list = getOpenedPopup(editor);
 
-					expect(list.getElementsByTagName('li').length).equals(3);
+					expect(list.getElementsByTagName('button').length).equals(
+						3
+					);
 				});
 			});
 		});
@@ -427,17 +407,9 @@ describe('Toolbar', function() {
 
 					editor.value = 'text2text';
 
-					simulateEvent(
-						'mousedown',
-						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-brush'
-						)
-					);
+					clickTrigger('brush', editor);
 
-					const list = editor.container.querySelector(
-						'.jodit_toolbar_popup'
-					);
+					const list = getOpenedPopup(editor);
 
 					// In two tabs text-color and background-color
 					expect(
@@ -445,6 +417,7 @@ describe('Toolbar', function() {
 					).equals(2);
 				});
 			});
+
 			describe('Disable', function() {
 				it('should open color picker without button - native color picker', function() {
 					const editor = new Jodit(appendTestArea(), {
@@ -453,17 +426,9 @@ describe('Toolbar', function() {
 
 					editor.value = 'text2text';
 
-					simulateEvent(
-						'mousedown',
-						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-brush'
-						)
-					);
+					clickTrigger('brush', editor);
 
-					const list = editor.container.querySelector(
-						'.jodit_toolbar_popup'
-					);
+					const list = getOpenedPopup(editor);
 
 					expect(
 						list.querySelectorAll('input[type="color"]').length
@@ -514,27 +479,18 @@ describe('Toolbar', function() {
 						editor.editor.firstChild.firstChild
 					);
 
-					const fontname = editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_with_dropdownlist.jodit_toolbar_btn-font'
-					);
-					expect(fontname).is.not.null;
-
 					const openFontNameList = function() {
-						simulateEvent('mousedown', 0, fontname);
+						clickTrigger('font', editor);
 
-						return fontname.querySelector(
-							'.jodit_toolbar_list.jodit_toolbar_list-open > ul'
-						);
+						const list = getOpenedPopup(editor);
+
+						return list.querySelectorAll('button');
 					};
 
 					expect(openFontNameList()).is.not.null;
 
-					Array.from(openFontNameList().childNodes).map(function(
-						font,
-						index
-					) {
-						font = openFontNameList().childNodes[index];
-						simulateEvent('mousedown', 0, font);
+					Array.from(openFontNameList()).map(function(font, index) {
+						simulateEvent('click', 0, font);
 
 						const fontFamily = font
 							.querySelector('span[style]')
@@ -550,6 +506,7 @@ describe('Toolbar', function() {
 						);
 					});
 				});
+
 				describe('Extends standart font list', function() {
 					it('Should standart font list elements', function() {
 						const editor = new Jodit(appendTestArea(), {
@@ -569,22 +526,15 @@ describe('Toolbar', function() {
 							editor.editor.firstChild.firstChild
 						);
 
-						const fontname = editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_with_dropdownlist.jodit_toolbar_btn-font'
-						);
-						expect(fontname).is.not.null;
+						clickTrigger('font', editor);
 
-						simulateEvent('mousedown', 0, fontname);
-
-						const list = fontname.querySelector(
-							'.jodit_toolbar_list.jodit_toolbar_list-open > ul'
-						);
+						const list = getOpenedPopup(editor);
 
 						expect(list).is.not.null;
 
-						const font =
-							list.childNodes[list.childNodes.length - 1];
-						simulateEvent('mousedown', 0, font);
+						const buttons = list.querySelectorAll('button'),
+							font = buttons[buttons.length - 1];
+						simulateEvent('click', 0, font);
 
 						expect(sortAttributes(editor.value)).equals(
 							sortAttributes(
@@ -659,12 +609,10 @@ describe('Toolbar', function() {
 
 				editor.value = 'test test <a href="#">test</a>';
 
-				simulateEvent('mousedown', 0, editor.editor.querySelector('a'));
+				simulateEvent('click', 0, editor.editor.querySelector('a'));
 
 				const popup = editor.ownerDocument.querySelector(
-					'.jodit_toolbar_popup-inline.jodit_toolbar_popup-inline-open[data-editor_id=' +
-						editor.id +
-						']'
+					'.jodit-popup[data-editor_id=' + editor.id + ']'
 				);
 
 				expect(popup).is.not.null;
@@ -680,41 +628,24 @@ describe('Toolbar', function() {
 
 					editor.value = 'test test <a href="#">test</a>';
 
-					simulateEvent(
-						'mousedown',
-						0,
-						editor.editor.querySelector('a')
-					);
+					simulateEvent('click', 0, editor.editor.querySelector('a'));
+
 					const popup = editor.ownerDocument.querySelector(
-						'.jodit_toolbar_popup-inline[data-editor_id=' +
-							editor.id +
-							']'
+						'.jodit-popup[data-editor_id=' + editor.id + ']'
 					);
 
 					expect(popup).is.not.null;
-					expect(
-						popup.classList.contains(
-							'jodit_toolbar_popup-inline-open'
-						)
-					).is.true;
 
-					const pencil = popup.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-link a'
-					);
+					const pencil = getButton(popup, 'link');
 					expect(pencil).is.not.null;
 
-					simulateEvent('mousedown', 0, pencil);
-					const subpopup = popup.querySelector(
-						'.jodit_toolbar_popup'
-					);
+					simulateEvent('click', 0, pencil);
+					const subpopup = getOpenedPopup(editor);
 
 					expect(subpopup).is.not.null;
-					expect(subpopup.style.display).equals('block');
-					expect(
-						popup.classList.contains(
-							'jodit_toolbar_popup-inline-open'
-						)
-					).is.true;
+					expect(window.getComputedStyle(subpopup).display).equals(
+						'block'
+					);
 					expect(popup.parentNode.parentNode.parentNode).is.not.null;
 				});
 			});
@@ -724,17 +655,9 @@ describe('Toolbar', function() {
 			describe('Mouse move', function() {
 				it('Should highlight cells in table-creator', function() {
 					const editor = new Jodit(appendTestArea());
-					simulateEvent(
-						'mousedown',
-						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-table'
-						)
-					);
+					clickTrigger('table', editor);
 
-					const list = editor.container.querySelector(
-						'.jodit_toolbar_popup'
-					);
+					const list = getOpenedPopup(editor);
 
 					expect(window.getComputedStyle(list).display).equals(
 						'block'
@@ -743,38 +666,32 @@ describe('Toolbar', function() {
 					simulateEvent(
 						'mousemove',
 						0,
-						list.querySelectorAll('.jodit-form__container div')[14]
+						list.querySelectorAll('.jodit-form__container span')[14]
 					);
+
 					expect(
 						list.querySelectorAll(
-							'.jodit-form__container div.hovered'
+							'.jodit-form__container span.jodit_hovered'
 						).length
 					).equals(10);
 				});
+
 				describe('In iframe mode', function() {
 					it('Should works same way', function() {
 						const editor = new Jodit(appendTestArea(), {
 							iframe: true
 						});
 
-						simulateEvent(
-							'mousedown',
-							0,
-							editor.container.querySelector(
-								'.jodit_toolbar_btn.jodit_toolbar_btn-table'
-							)
-						);
+						clickTrigger('table', editor);
 
-						const list = editor.container.querySelector(
-							'.jodit_toolbar_popup'
-						);
+						const list = getOpenedPopup(editor);
 
 						expect(window.getComputedStyle(list).display).equals(
 							'block'
 						);
 
 						const divs = list.querySelectorAll(
-							'.jodit-form__container div'
+							'.jodit-form__container span'
 						);
 
 						expect(divs.length).to.be.above(10);
@@ -783,7 +700,7 @@ describe('Toolbar', function() {
 
 						expect(
 							list.querySelectorAll(
-								'.jodit-form__container div.hovered'
+								'.jodit-form__container span.jodit_hovered'
 							).length
 						).equals(10);
 					});
@@ -804,12 +721,8 @@ describe('Toolbar', function() {
 						language: 'en'
 					});
 
-				const label1 = editor.container.querySelector(
-						'.jodit_toolbar_btn-source'
-					).textContent,
-					label2 = editor2.container.querySelector(
-						'.jodit_toolbar_btn-source'
-					).textContent;
+				const label1 = getButton(editor, 'source').textContent,
+					label2 = getButton(editor2, 'source').textContent;
 
 				expect(label1).does.not.equal(label2);
 			});
@@ -948,20 +861,14 @@ describe('Toolbar', function() {
 
 		it('Remove default buttons functionality', function() {
 			const editor = new Jodit(appendTestArea());
-			expect(
-				editor.container.querySelectorAll('.jodit_toolbar_btn-source')
-					.length
-			).equals(1);
+			expect(getButton(editor, 'source')).is.not.null;
 			editor.destruct();
 
 			const editor2 = new Jodit(appendTestArea(), {
 				removeButtons: ['source']
 			});
 
-			expect(
-				editor2.container.querySelectorAll('.jodit_toolbar_btn-source')
-					.length
-			).equals(0);
+			expect(getButton(editor2, 'source')).is.null;
 		});
 
 		it('Add own button', function() {
@@ -980,28 +887,24 @@ describe('Toolbar', function() {
 				])
 			});
 
-			expect(
-				editor.container.querySelectorAll(
-					'.jodit_toolbar_btn-insertDate'
-				).length
-			).equals(1);
+			const button = getButton(editor, 'insertDate');
+
+			expect(button).is.not.null;
 
 			editor.value = '';
 
-			simulateEvent(
-				'mousedown',
-				0,
-				editor.container.querySelector('.jodit_toolbar_btn-insertDate')
-			);
+			simulateEvent('click', 0, button);
 			expect(editor.value).equals('Wed Mar 16 2016');
 		});
 
 		it('When cursor inside STRONG tag, Bold button should be selected', function() {
 			const editor = new Jodit(appendTestArea(), {
-				observer: {
-					timeout: 0 // disable delay
-				}
-			});
+					observer: {
+						timeout: 0 // disable delay
+					}
+				}),
+				bold = getButton(editor, 'bold'),
+				italic = getButton(editor, 'italic');
 
 			editor.value =
 				'<strong>test</strong><em>test2</em><i>test3</i><b>test3</b>';
@@ -1017,11 +920,7 @@ describe('Toolbar', function() {
 
 			simulateEvent('mousedown', 0, editor.editor);
 
-			expect(
-				editor.container.querySelectorAll(
-					'.jodit_toolbar_btn-bold.jodit_active'
-				).length
-			).equals(1);
+			expect(bold.getAttribute('aria-pressed')).equals('true');
 
 			range.setStart(editor.editor.firstChild.nextSibling.firstChild, 2);
 			range.collapse(true);
@@ -1030,16 +929,9 @@ describe('Toolbar', function() {
 
 			simulateEvent('mousedown', 0, editor.editor);
 
-			expect(
-				editor.container.querySelectorAll(
-					'.jodit_toolbar_btn-bold.jodit_active'
-				).length
-			).equals(0);
-			expect(
-				editor.container.querySelectorAll(
-					'.jodit_toolbar_btn-italic.jodit_active'
-				).length
-			).equals(1);
+			expect(bold.getAttribute('aria-pressed')).equals('false');
+
+			expect(italic.getAttribute('aria-pressed')).equals('true');
 
 			range.setStart(
 				editor.editor.firstChild.nextSibling.nextSibling.firstChild,
@@ -1051,16 +943,8 @@ describe('Toolbar', function() {
 
 			simulateEvent('mousedown', 0, editor.editor);
 
-			expect(
-				editor.container.querySelectorAll(
-					'.jodit_toolbar_btn-bold.jodit_active'
-				).length
-			).equals(0);
-			expect(
-				editor.container.querySelectorAll(
-					'.jodit_toolbar_btn-italic.jodit_active'
-				).length
-			).equals(1);
+			expect(bold.getAttribute('aria-pressed')).equals('false');
+			expect(italic.getAttribute('aria-pressed')).equals('true');
 
 			range.setStart(
 				editor.editor.firstChild.nextSibling.nextSibling.nextSibling
@@ -1073,16 +957,8 @@ describe('Toolbar', function() {
 
 			simulateEvent('mousedown', 0, editor.editor);
 
-			expect(
-				editor.container.querySelectorAll(
-					'.jodit_toolbar_btn-bold.jodit_active'
-				).length
-			).equals(1);
-			expect(
-				editor.container.querySelectorAll(
-					'.jodit_toolbar_btn-italic.jodit_active'
-				).length
-			).equals(0);
+			expect(bold.getAttribute('aria-pressed')).equals('true');
+			expect(italic.getAttribute('aria-pressed')).equals('false');
 		});
 
 		describe('Disable for mode', function() {
@@ -1232,10 +1108,11 @@ describe('Toolbar', function() {
 
 		it('When cursor inside SPAN tag with style="font-weight: bold" or style="font-weight: 700", Bold button should be selected', function() {
 			const editor = new Jodit(appendTestArea(), {
-				observer: {
-					timeout: 0 // disable delay
-				}
-			});
+					observer: {
+						timeout: 0 // disable delay
+					}
+				}),
+				bold = getButton(editor, 'bold');
 
 			editor.value = '<span style="font-weight: bold">test</span>';
 			editor.selection.focus();
@@ -1249,11 +1126,7 @@ describe('Toolbar', function() {
 
 			simulateEvent('mousedown', 0, editor.editor);
 
-			expect(
-				editor.container.querySelectorAll(
-					'.jodit_toolbar_btn-bold.jodit_active'
-				).length
-			).equals(1);
+			expect(bold.getAttribute('aria-pressed')).equals('true');
 		});
 
 		describe('Check Redo Undo functionality', function() {
@@ -1308,11 +1181,7 @@ describe('Toolbar', function() {
 				}
 			});
 
-			simulateEvent(
-				'mousedown',
-				0,
-				editor.container.querySelector('.jodit_toolbar_btn-fullsize')
-			);
+			clickButton('fullsize', editor);
 
 			let node = editor.container.parentNode;
 

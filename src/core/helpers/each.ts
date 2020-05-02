@@ -5,6 +5,7 @@
  */
 
 import { IDictionary } from '../../types';
+import { isArray } from './checker';
 
 type eachCallback<T, N> = (this: T, key: N, value: T) => boolean | void;
 
@@ -26,7 +27,7 @@ export function each<T>(
 ): boolean {
 	let length: number, keys: string[], i: number;
 
-	if (Array.isArray(obj)) {
+	if (isArray(obj)) {
 		length = obj.length;
 
 		for (i = 0; i < length; i += 1) {

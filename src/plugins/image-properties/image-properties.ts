@@ -14,14 +14,11 @@ import {
 	val,
 	clearCenterAlign,
 	attr,
-	position
+	position,
+	isArray
 } from '../../core/helpers';
 
-import {
-	IFileBrowserCallBackData,
-	IJodit,
-	IUploaderData
-} from '../../types';
+import { IFileBrowserCallBackData, IJodit, IUploaderData } from '../../types';
 import { FileSelectorWidget, TabsWidget } from '../../modules/widget';
 import { Button } from '../../core/ui/button';
 
@@ -582,16 +579,11 @@ export function imageProperties(editor: IJodit) {
 									) => {
 										if (
 											data &&
-											Array.isArray(data.files) &&
+											isArray(data.files) &&
 											data.files.length
 										) {
-											image.setAttribute(
-												'src',
-												data.files[0]
-											);
-
+											attr(image, 'src', data.files[0]);
 											popup.close();
-
 											update();
 										}
 									}

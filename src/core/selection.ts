@@ -24,7 +24,7 @@ import {
 	$$,
 	css,
 	normalizeNode,
-	normalizeCssValue
+	normalizeCssValue, isArray
 } from './helpers';
 
 type WindowSelection = Selection | null;
@@ -238,7 +238,7 @@ export class Select {
 	 * @param {markerInfo[]|null} selectionInfo
 	 */
 	restore(selectionInfo: markerInfo[] | null = []) {
-		if (Array.isArray(selectionInfo)) {
+		if (isArray(selectionInfo)) {
 			let range: Range | false = false;
 
 			selectionInfo.forEach((selection: markerInfo) => {

@@ -5,6 +5,7 @@
  */
 
 export * from './has-browser-color-picker';
+export * from './is-array';
 export * from './is-equal';
 export * from './is-boolean';
 export * from './is-function';

@@ -5,7 +5,8 @@ import {
 	IControlType,
 	IControlTypeStrong,
 	IControlTypeStrongList,
-	IToolbarButton, IToolbarCollection,
+	IToolbarButton,
+	IToolbarCollection,
 	IViewBased,
 	Nullable
 } from '../../../types';
@@ -21,7 +22,8 @@ import {
 	camelCase,
 	attr,
 	isJoditObject,
-	call
+	call,
+	isArray
 } from '../../../core/helpers/';
 import { Icon, ToolbarCollection } from '../..';
 import { STATUSES } from '../../../core/component';
@@ -31,7 +33,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	jodit!: T;
 
 	state = {
-			...UIButtonState(),
+		...UIButtonState(),
 		theme: 'toolbar',
 		currentValue: '',
 		hasTrigger: false
@@ -57,7 +59,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 
 	/** @override **/
 	update(): void {
-		const { control, state } = this, tc = this.closest(ToolbarCollection) as ToolbarCollection;
+		const { control, state } = this,
+			tc = this.closest(ToolbarCollection) as ToolbarCollection;
 
 		if (tc) {
 			state.disabled = Boolean(tc.shouldBeDisabled(this));
@@ -69,6 +72,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		}
 
 		super.update();
+	}
+
+	/** @override */
+	protected onChangeActivated(): void {
+		attr(this.button, 'aria-pressed', this.state.activated);
+		super.onChangeActivated();
 	}
 
 	/** @override */
@@ -204,7 +213,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	 * Init constant data from control
 	 */
 	private initFromControl(): void {
-		const {control, state} = this;
+		const { control, state } = this;
 
 		this.updateSize();
 
@@ -347,7 +356,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		};
 
 		toolbar.build(
-			Array.isArray(list)
+			isArray(list)
 				? list.map(getButton)
 				: Object.keys(list).map(key => getButton(key, list[key]))
 		);

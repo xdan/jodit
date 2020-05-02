@@ -16,7 +16,8 @@ import {
 	IContainer,
 	IDialog,
 	ContentItem,
-	Content, IViewOptions
+	Content,
+	IViewOptions
 } from '../../types/';
 import { KEY_ESC } from '../../core/constants';
 import {
@@ -25,7 +26,9 @@ import {
 	attr,
 	css,
 	extend,
-	hasContainer, isBoolean,
+	hasContainer,
+	isArray,
+	isBoolean,
 	isString,
 	splitArray
 } from '../../core/helpers/';
@@ -114,7 +117,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		asArray<ContentItem | ContentItem[] | IContainer>(elements).forEach(
 			(elm: ContentItem | ContentItem[] | IContainer): any => {
-				if (Array.isArray(elm)) {
+				if (isArray(elm)) {
 					const div = this.c.div('jodit-dialog__column');
 
 					elements_list.push(div);
@@ -529,14 +532,9 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		return condition;
 	}
 
-	open(
-		destroyAfterClose: boolean,
-	): this;
+	open(destroyAfterClose: boolean): this;
 
-	open(
-		destroyAfterClose: boolean,
-		modal: boolean
-	): this;
+	open(destroyAfterClose: boolean, modal: boolean): this;
 
 	open(
 		content?: Content,
@@ -559,7 +557,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 */
 	open(
 		contentOrClose?: Content | boolean,
-		titleOrModal?: Content  | boolean,
+		titleOrModal?: Content | boolean,
 		destroyAfterClose?: boolean,
 		modal?: boolean
 	): this {
@@ -764,9 +762,10 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		self.destination.appendChild(self.container);
 
-		self.o.buttons && self.toolbar
-			.build(splitArray(self.o.buttons))
-			.appendTo(self.dialogbox_toolbar);
+		self.o.buttons &&
+			self.toolbar
+				.build(splitArray(self.o.buttons))
+				.appendTo(self.dialogbox_toolbar);
 
 		self.e
 			.on(self.container, 'close_dialog', self.close as any)

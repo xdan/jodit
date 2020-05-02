@@ -13,7 +13,8 @@ import {
 	isURL,
 	trim,
 	val,
-	extend
+	extend,
+	isArray
 } from './core/helpers/';
 import {
 	IExtraPlugin,
@@ -830,7 +831,7 @@ export const OptionsDefault: any = function(
 			if (
 				isObject &&
 				!['ownerWindow', 'ownerDocument'].includes(key) &&
-				!Array.isArray(defValue)
+				!isArray(defValue)
 			) {
 				self[key] = extend(true, {}, defValue, (opt as any)[key]);
 			} else {

@@ -17,6 +17,7 @@ export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 	updateParentElement(target: IUIElement): this;
 	appendTo(element: HTMLElement): this;
 
+	mods: IDictionary<string | boolean | null>;
 	setMod(name: string, value: string | boolean | null): this;
 }
 
@@ -77,6 +78,9 @@ export interface IUIList extends IUIGroup {
 
 	buttons: IUIButton[];
 	getButtonsNames(): string[];
+
+	removeButtons: string[];
+	setRemoveButtons(removeButtons?: string[]): this;
 
 	build(
 		items: Buttons | IDictionary<string>,

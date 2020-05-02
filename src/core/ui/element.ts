@@ -1,5 +1,5 @@
 import { ViewComponent, STATUSES } from '../component';
-import { IUIElement, IViewBased, Nullable } from '../../types';
+import { IDictionary, IUIElement, IViewBased, Nullable } from '../../types';
 import { Dom } from '../dom';
 
 export abstract class UIElement<T extends IViewBased = IViewBased>
@@ -49,6 +49,8 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		return null;
 	}
 
+	readonly mods: IDictionary<string | boolean | null> = {};
+
 	/**
 	 * Set/remove BEM class modification
 	 *
@@ -56,6 +58,12 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	 * @param value if null, mod will be removed
 	 */
 	setMod(name: string, value: string | boolean | null): this {
+		name = name.toLowerCase();
+
+		if (this.mods[name] === value) {
+			return this;
+		}
+
 		const mod = `${this.componentName}_${name}`,
 			cl = this.container.classList;
 
@@ -65,7 +73,10 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 			}
 		});
 
-		value !== null && value !== '' && cl.add(`${mod}_${value}`);
+		value !== null && value !== '' && cl.add(`${mod}_${value.toString().toLowerCase()}`);
+
+		this.mods[name] = value;
+
 		return this;
 	}
 

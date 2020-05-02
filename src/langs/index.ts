@@ -25,6 +25,7 @@ import ru from './ru';
 import tr from './tr';
 import zh_cn from './zh_cn';
 import zh_tw from './zh_tw';
+import { isArray } from '../core/helpers/checker';
 
 const exp: IDictionary<IDictionary<string>> = {
 	ar,
@@ -52,7 +53,7 @@ const exp: IDictionary<IDictionary<string>> = {
 const get = (value: IDictionary) => value.default || value,
 	hashLang: IDictionary = {};
 
-if (Array.isArray(get(en))) {
+if (isArray(get(en))) {
 	get(en).forEach((key: string, index: number) => {
 		hashLang[index] = key;
 	});
@@ -61,7 +62,7 @@ if (Array.isArray(get(en))) {
 Object.keys(exp).forEach((lang: string) => {
 	const list: unknown = get(exp[lang]);
 
-	if (Array.isArray(list)) {
+	if (isArray(list)) {
 		exp[lang] = {};
 
 		list.forEach((value: string, index: number) => {

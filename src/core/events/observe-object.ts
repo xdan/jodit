@@ -5,7 +5,7 @@
  */
 
 import { CallbackFunction, IDictionary } from '../../types';
-import { isPlainObject, isEqual } from '../helpers';
+import { isPlainObject, isEqual, isArray } from '../helpers';
 
 export class ObserveObject {
 	protected constructor(
@@ -82,7 +82,7 @@ export class ObserveObject {
 	 * @param callback
 	 */
 	on(event: string | string[], callback: CallbackFunction): this {
-		if (Array.isArray(event)) {
+		if (isArray(event)) {
 			event.map(e => this.on(e, callback));
 			return this;
 		}
@@ -99,7 +99,7 @@ export class ObserveObject {
 	private __lockEvent: IDictionary<boolean> = {};
 
 	private fire(event: string | string[], ...attr: any[]) {
-		if (Array.isArray(event)) {
+		if (isArray(event)) {
 			event.map(e => this.fire(e, ...attr));
 			return;
 		}

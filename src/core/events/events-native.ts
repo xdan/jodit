@@ -14,7 +14,7 @@ import {
 	IEventsNative
 } from '../../types';
 import { defaultNameSpace, EventHandlersStore } from './store';
-import { error, isFunction, isString } from '../helpers';
+import { error, isArray, isFunction, isString } from '../helpers';
 
 export class EventsNative implements IEventsNative {
 	readonly __key: string = '__JoditEventsNativeNamespaces';
@@ -251,7 +251,7 @@ export class EventsNative implements IEventsNative {
 			throw error('Need event handler');
 		}
 
-		if (Array.isArray(subject)) {
+		if (isArray(subject)) {
 			subject.forEach((subj: object) => {
 				this.on(subj, events, callback, selector);
 			});

@@ -75,12 +75,14 @@ export class UIList<T extends IViewBased = IViewBased> extends UIGroup<T>
 	 */
 	getButtonsNames(): string[] {
 		return this.buttons
-			.map(
-				a =>
-					(a instanceof UIButton && a.state.name) ||
-					''
-			)
+			.map(a => (a instanceof UIButton && a.state.name) || '')
 			.filter(a => a !== '');
+	}
+
+	removeButtons: string[] = [];
+	setRemoveButtons(removeButtons?: string[]): this {
+		this.removeButtons = removeButtons || [];
+		return this;
 	}
 
 	build(
@@ -93,28 +95,30 @@ export class UIList<T extends IViewBased = IViewBased> extends UIGroup<T>
 
 		let group = this.addGroup();
 
-		getStrongControlTypes(items, this.j.o.controls).forEach(control => {
-			let elm: Nullable<IUIElement> = null;
+		getStrongControlTypes(items, this.j.o.controls)
+			.filter(b => !this.removeButtons.includes(b.name))
+			.forEach(control => {
+				let elm: Nullable<IUIElement> = null;
 
-			switch (control.name) {
-				case '\n':
-					group = this.addGroup();
-					break;
+				switch (control.name) {
+					case '\n':
+						group = this.addGroup();
+						break;
 
-				case '|':
-					if (!lastBtnSeparator) {
-						lastBtnSeparator = true;
-						elm = new UISeparator(this.j);
-					}
-					break;
+					case '|':
+						if (!lastBtnSeparator) {
+							lastBtnSeparator = true;
+							elm = new UISeparator(this.j);
+						}
+						break;
 
-				default:
-					lastBtnSeparator = false;
-					elm = this.makeButton(control, target);
-			}
+					default:
+						lastBtnSeparator = false;
+						elm = this.makeButton(control, target);
+				}
 
-			elm && group.append(elm);
-		});
+				elm && group.append(elm);
+			});
 
 		this.update();
 

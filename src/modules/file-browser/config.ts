@@ -17,10 +17,11 @@ import {
 	IControlType,
 	IDictionary,
 	IUploader,
-	IViewBased, IJodit
+	IViewBased,
+	IJodit
 } from '../../types/';
 
-import { humanSizeToBytes, isString } from '../../core/helpers';
+import { humanSizeToBytes, isArray, isString } from '../../core/helpers';
 import { ITEM_CLASS as IC } from './consts';
 import { Icon } from '../../core/ui';
 
@@ -385,8 +386,7 @@ Config.prototype.filebrowser = {
 	},
 
 	getMessage(this: IFileBrowser, resp: IFileBrowserAnswer) {
-		return resp.data.messages !== undefined &&
-			Array.isArray(resp.data.messages)
+		return resp.data.messages !== undefined && isArray(resp.data.messages)
 			? resp.data.messages.join(' ')
 			: '';
 	},
@@ -524,30 +524,26 @@ Config.prototype.filebrowser = {
 
 	uploader: null, // use default Uploader's settings
 
-	defaultCallback(
-		this: IJodit,
-		data: IFileBrowserCallBackData
-	) {
+	defaultCallback(this: IJodit, data: IFileBrowserCallBackData) {
+		if (data.files && data.files.length) {
+			data.files.forEach((file, i) => {
+				const url = data.baseurl + file;
+				const isImage = data.isImages ? data.isImages[i] : false;
 
-			if (data.files && data.files.length) {
-				data.files.forEach((file, i) => {
-					const url = data.baseurl + file;
-					const isImage = data.isImages ? data.isImages[i] : false;
-
-					if (isImage) {
-						this.selection.insertImage(
-							url,
-							null,
-							this.o.imageDefaultWidth
-						);
-					} else {
-						this.selection.insertNode(
-							this.createInside.fromHTML(
-								`<a href="${url}" title="${url}">${url}</a>`
-							)
-						);
-					}
-				});
+				if (isImage) {
+					this.selection.insertImage(
+						url,
+						null,
+						this.o.imageDefaultWidth
+					);
+				} else {
+					this.selection.insertNode(
+						this.createInside.fromHTML(
+							`<a href="${url}" title="${url}">${url}</a>`
+						)
+					);
+				}
+			});
 		}
 	}
 } as IFileBrowserOptions;

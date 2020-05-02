@@ -6,6 +6,7 @@
 
 import { Config } from '../config';
 import { IDictionary, IJodit, IControlType } from '../types';
+import { isArray } from '../core/helpers';
 
 Config.prototype.controls.subscript = {
 	tags: ['sub'],
@@ -69,7 +70,7 @@ export function bold(editor: IJodit) {
 			cssRules: IDictionary<string> = {};
 
 		Object.keys(cssOptions).forEach((key: string) => {
-			cssRules[key] = Array.isArray(cssOptions[key])
+			cssRules[key] = isArray(cssOptions[key])
 				? (cssOptions[key] as any)[0]
 				: cssOptions[key];
 		});

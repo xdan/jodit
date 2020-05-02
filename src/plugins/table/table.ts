@@ -124,7 +124,7 @@ Config.prototype.controls.table = {
 					cols_count >= (i % default_cols_count) + 1 &&
 					rows_count >= Math.ceil((i + 1) / default_cols_count)
 				) {
-					cells[i].className = 'hovered';
+					cells[i].className = 'jodit_hovered';
 				} else {
 					cells[i].className = '';
 				}

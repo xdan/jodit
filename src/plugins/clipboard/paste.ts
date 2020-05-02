@@ -28,7 +28,7 @@ import {
 	type,
 	stripTags,
 	isString,
-	markOwner
+	markOwner, isArray
 } from '../../core/helpers/';
 
 import { Dom } from '../../core/dom';
@@ -497,7 +497,7 @@ export function paste(editor: IJodit) {
 
 				let types_str: string = '';
 
-				if (Array.isArray(types) || type(types) === 'domstringlist') {
+				if (isArray(types) || type(types) === 'domstringlist') {
 					for (let i = 0; i < types.length; i += 1) {
 						types_str += types[i] + ';';
 					}

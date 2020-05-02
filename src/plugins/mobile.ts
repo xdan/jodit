@@ -65,14 +65,14 @@ Config.prototype.controls.dots = {
 						);
 
 						if (buttons && store) {
-							store.toolbar
-								.build(splitArray(buttons));
+							store.toolbar.build(splitArray(buttons));
 
 							let w =
 								editor.toolbar.firstButton?.container
 									.offsetWidth || 36;
 
-							store.toolbar.container.style.width = (w + 4) * 3 + 'px';
+							store.toolbar.container.style.width =
+								(w + 4) * 3 + 'px';
 						}
 					}
 				}
@@ -148,9 +148,9 @@ export function mobile(editor: IJodit) {
 
 						editor.e.fire(camelCase('close-all-popups'));
 
-						editor.toolbar.build(
-							store.concat(editor.o.extraButtons)
-						);
+						editor.toolbar
+							.setRemoveButtons(editor.o.removeButtons)
+							.build(store.concat(editor.o.extraButtons));
 					}
 				}
 			)
