@@ -62,8 +62,7 @@ export const sprintf = (str: string, args?: Array<string | number>): string => {
 export const i18n = (
 	key: string,
 	params?: Array<string | number>,
-	options?: ILanguageOptions,
-	safe: boolean = process.env.NODE_ENV === 'production'
+	options?: ILanguageOptions
 ): string => {
 	if (!isString(key)) {
 		throw error('i18n: Need string in first argument');
@@ -132,7 +131,7 @@ export const i18n = (
 		return result;
 	}
 
-	if (lang.en && typeof lang.en[key] === 'string' && lang.en[key]) {
+	if (lang.en && isString(lang.en[key]) && lang.en[key]) {
 		return parse(lang.en[key]);
 	}
 
@@ -140,8 +139,8 @@ export const i18n = (
 		return '{' + key + '}';
 	}
 
-	if (!safe && language !== 'en') {
-		throw new TypeError(`i18n need "${key}" in "${language}"`);
+	if (!isProd && language !== 'en') {
+		console.warn(`i18n need "${key}" in "${language}"`);
 	}
 
 	return parse(key);

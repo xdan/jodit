@@ -57,7 +57,7 @@ Config.prototype.controls.fullsize = {
 		button.state.activated = editor.isFullSize();
 
 		if (editor.o.textIcons) {
-			button.state.text = editor.i18n(mode);
+			button.state.text = mode;
 		} else {
 			button.state.icon.name = mode;
 		}

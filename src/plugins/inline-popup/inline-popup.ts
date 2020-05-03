@@ -11,7 +11,8 @@ import {
 	IJodit,
 	IPopup,
 	IToolbarCollection,
-	IUIButtonState, Nullable
+	IUIButtonState,
+	Nullable
 } from '../../types';
 import { makeCollection } from '../../modules/toolbar/factory';
 import { Popup } from '../../core/ui/popup';
@@ -32,6 +33,7 @@ declare module '../../config' {
 	interface Config {
 		popup: IDictionary<Array<IControlType | string>>;
 		toolbarInline: boolean;
+		toolbarInlineForSelection: boolean;
 		toolbarInlineButtonSize: IUIButtonState['size'];
 		toolbarInlineDisableFor: string | string[];
 	}
@@ -39,6 +41,7 @@ declare module '../../config' {
 
 Config.prototype.toolbarInlineButtonSize = 'small';
 Config.prototype.toolbarInline = true;
+Config.prototype.toolbarInlineForSelection = false;
 Config.prototype.toolbarInlineDisableFor = [];
 
 Config.prototype.popup = {
@@ -251,8 +254,8 @@ Config.prototype.popup = {
 				control: IControlType
 			) => {
 				const command: string =
-					control.args && typeof control.args[1] === 'string'
-						? control.args[1].toLowerCase()
+					control.args && isString(control.args[0])
+						? control.args[0].toLowerCase()
 						: '';
 
 				Table.getAllSelectedCells(table).forEach(
@@ -387,6 +390,7 @@ export class inlinePopup extends Plugin {
 
 		if (target && this.canShowPopupForType(target.nodeName.toLowerCase())) {
 			this.isTargetClick = true;
+
 			this.showPopupWithToolbar(
 				() => position(target),
 				target.nodeName.toLowerCase(),
@@ -416,10 +420,12 @@ export class inlinePopup extends Plugin {
 			return;
 		}
 
-		this.showPopupWithToolbar(
-			() => range.getBoundingClientRect(),
-			'selection'
-		);
+		if (this.j.o.toolbarInlineForSelection) {
+			this.showPopupWithToolbar(
+				() => range.getBoundingClientRect(),
+				'selection'
+			);
+		}
 	}
 
 	/**

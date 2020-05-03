@@ -82,11 +82,11 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 
 	/** @override */
 	protected onChangeText(): void {
-		if (isFunction(this.control.template)) {
+		if (!this.control.list && isFunction(this.control.template)) {
 			this.text.innerHTML = this.control.template(
 				this.j,
 				this.control.name,
-				this.state.text
+				this.j.i18n(this.state.text)
 			);
 		} else {
 			super.onChangeText();
@@ -148,7 +148,11 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	 * Add tooltip to button
 	 */
 	protected initTooltip() {
-		if (this.j.o.showTooltip && !this.j.o.useNativeTooltip) {
+		if (
+			!this.j.o.textIcons &&
+			this.j.o.showTooltip &&
+			!this.j.o.useNativeTooltip
+		) {
 			const to =
 				this.get<number>('j.o.showTooltipDelay') ||
 				this.get<number>('j.defaultTimeout') ||
@@ -197,7 +201,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		);
 
 		// Prevent lost focus
-		jodit.e.on(this.button, 'mousedown', (e: MouseEvent) =>
+		jodit.e.on([this.button, this.trigger], 'mousedown', (e: MouseEvent) =>
 			e.preventDefault()
 		);
 
@@ -355,11 +359,13 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 			return childControl;
 		};
 
-		toolbar.build(
-			isArray(list)
-				? list.map(getButton)
-				: Object.keys(list).map(key => getButton(key, list[key]))
-		);
+		toolbar
+			.build(
+				isArray(list)
+					? list.map(getButton)
+					: Object.keys(list).map(key => getButton(key, list[key])),
+				this.target
+			);
 
 		menu.setContent(toolbar.container).open(() => position(this.container));
 
@@ -390,7 +396,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 				this.container as HTMLLIElement
 			);
 
-			this.j?.e.fire('synchro');
+			this.j?.e?.fire('synchro');
 
 			if (this.parentElement) {
 				this.parentElement.update();
@@ -400,7 +406,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 			 * Fired after calling `button.exec` function
 			 * @event afterExec
 			 */
-			this.j?.e.fire('closeAllPopups afterExec');
+			this.j?.e?.fire('closeAllPopups afterExec');
 
 			return;
 		}

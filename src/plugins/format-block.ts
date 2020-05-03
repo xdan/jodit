@@ -33,7 +33,7 @@ Config.prototype.controls.paragraph = {
 				list[currentValue]
 			) {
 				if (editor.o.textIcons) {
-					button.state.text = editor.i18n(currentValue);
+					button.state.text = currentValue;
 				} else {
 					button.state.icon.name = currentValue;
 				}

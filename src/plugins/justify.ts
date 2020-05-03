@@ -42,7 +42,7 @@ Config.prototype.controls.align = {
 				(control.list as string[]).indexOf(currentValue) !== -1
 			) {
 				if (editor.o.textIcons) {
-					button.state.text = editor.i18n(currentValue);
+					button.state.text = currentValue;
 				} else {
 					button.state.icon.name = currentValue;
 				}

@@ -15,7 +15,8 @@ import {
 	clearCenterAlign,
 	attr,
 	position,
-	isArray
+	isArray,
+	markOwner
 } from '../../core/helpers';
 
 import { IFileBrowserCallBackData, IJodit, IUploaderData } from '../../types';
@@ -426,6 +427,8 @@ export function imageProperties(editor: IJodit) {
 				updateAlign();
 				updateStyle();
 			};
+
+		markOwner(editor, dialog.container);
 
 		let lockSize: boolean = true,
 			lockMargin: boolean = true;

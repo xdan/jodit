@@ -60,6 +60,7 @@ export class Config implements IViewOptions {
 			inline: true,
 			toolbar: false,
 			toolbarInline: true,
+			toolbarInlineForSelection: true,
 			showXPathInStatusbar: false,
 			showCharsCounter: false,
 			showWordsCounter: false,

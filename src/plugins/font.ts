@@ -29,9 +29,18 @@ Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
 		'96'
 	],
 
+	exec: (editor, event, control) => {
+		editor.execCommand(
+			control.command as string,
+			false,
+			control.args ? control.args[0] : undefined
+		);
+	},
+
 	template: (editor, key: string, value: string) => value,
 
 	tooltip: 'Font size',
+
 	isActiveChild: (editor, control: IControlType): boolean => {
 		const current: Node | false = editor.selection.current();
 
@@ -48,16 +57,19 @@ Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
 					editor.editor
 				) as HTMLElement) || editor.editor;
 
+
 			const fontSize: number = css(currentBpx, 'font-size') as number;
+
 			return Boolean(
 				fontSize &&
 					control.args &&
-					control.args[1].toString() === fontSize.toString()
+					control.args[0].toString() === fontSize.toString()
 			);
 		}
 
 		return false;
 	},
+
 	isActive: (editor): boolean => {
 		const current: Node | false = editor.selection.current();
 

@@ -232,9 +232,9 @@ const i18nkeys = [];
 const excludeI18nKeys = ['adddate'];
 
 Jodit.prototype.i18n = function(key) {
-	excludeI18nKeys.indexOf(key) === -1 &&
-		i18nkeys.indexOf(key) === -1 &&
-		key.indexOf('<svg') === -1 &&
+	!excludeI18nKeys.includes(key) &&
+		i18nkeys.includes(key) &&
+		!key.includes('<svg') &&
 		i18nkeys.push(key);
 
 	return oldI18n.apply(this, arguments);
@@ -590,13 +590,13 @@ function getOpenedPopup(editor) {
 /**
  * Find button inside element
  *
- * @param {Jodit|HTMLElement} joditOrElement
  * @param {string} buttonName
+ * @param {Jodit|Element} joditOrElement
  * @param {string} [role]
  * @param {boolean} [last]
  * @returns {HTMLElement|null}
  */
-function getButton(joditOrElement, buttonName, role, last) {
+function getButton(buttonName, joditOrElement, role, last) {
 	const elm = joditOrElement.isJodit ? joditOrElement.container : joditOrElement;
 
 	return elm.querySelector(
@@ -622,8 +622,8 @@ function clickButton(buttonName, joditOrElement, role, last) {
 		'click',
 		0,
 		getButton(
-			joditOrElement,
 			buttonName,
+			joditOrElement,
 			role,
 			last
 		)
