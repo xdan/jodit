@@ -40,7 +40,6 @@ export { source } from './source';
 export { stat } from './stat';
 export { sticky } from './sticky/sticky';
 export { symbols } from './symbols/symbols';
-export { tableKeyboardNavigation } from './table-keyboard-navigation';
-export { TableProcessor as table } from './table/table';
+export * from './table';
 export { tooltip } from './tooltip/tooltip';
 export { xpath } from './xpath/xpath';

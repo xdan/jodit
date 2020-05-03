@@ -175,7 +175,7 @@ Config.prototype.popup = {
 			tooltip: 'Horizontal align'
 		}
 	],
-	table: [
+	'table-cells': [
 		{
 			name: 'brush',
 			popup: (editor: IJodit, elm: HTMLTableElement) => {
@@ -511,10 +511,10 @@ export class inlinePopup extends Plugin {
 			)
 			.on(
 				'showPopup',
-				(elm: HTMLElement | string, rect: () => IBound) => {
+				(elm: HTMLElement | string, rect: () => IBound, type?: string) => {
 					this.showPopupWithToolbar(
 						rect,
-						isString(elm) ? elm : elm.nodeName,
+						type || (isString(elm) ? elm : elm.nodeName),
 						isString(elm) ? undefined : elm
 					);
 				}

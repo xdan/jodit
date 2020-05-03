@@ -5,6 +5,8 @@
  */
 import './table.less';
 
+import autobind from 'autobind-decorator';
+
 import { Config } from '../../config';
 import * as consts from '../../core/constants';
 import { Plugin, Dom, Table } from '../../modules';
@@ -14,17 +16,14 @@ import {
 	call,
 	getContentWidth,
 	offset,
-	scrollIntoView,
-	position
+	scrollIntoView
 } from '../../core/helpers';
 import { IBound, IDictionary, IControlType, IJodit } from '../../types';
-import { alignElement } from '../justify';
-import autobind from 'autobind-decorator';
 
 declare module '../../config' {
 	interface Config {
 		/**
-		 * Use module {@link TableProcessor|TableProcessor}
+		 * Use module {@link ResizeTable|ResizeTable}
 		 */
 		useTableProcessor: boolean;
 		useExtraClassesOptions: boolean;
@@ -252,23 +251,13 @@ Config.prototype.controls.table = {
 /**
  * Process tables in editor
  */
-export class TableProcessor extends Plugin {
-	private isCell = (tag: Node | null): tag is HTMLTableCellElement => {
-		return (
-			(Dom.isHTMLElement(tag, this.j.editorWindow) &&
-				Dom.isTag(tag, 'td')) ||
-			Dom.isTag(tag, 'th')
-		);
-	};
-
+export class ResizeTable extends Plugin {
 	/**
 	 * Now editor has rtl direction
 	 */
 	private get isRTL(): boolean {
 		return this.j.o.direction === 'rtl';
 	}
-
-	private key: string = 'table_processor_observer';
 
 	private selectMode: boolean = false;
 
@@ -416,7 +405,7 @@ export class TableProcessor extends Plugin {
 		if (event.preventDefault) {
 			event.preventDefault();
 		}
-	};
+	}
 
 	private onMouseUp = () => {
 		if (this.selectMode || this.drag) {
@@ -465,7 +454,7 @@ export class TableProcessor extends Plugin {
 		const nextTD = call(
 			this.isRTL ? Dom.prev : Dom.next,
 			this.workCell,
-			this.isCell,
+			elm => Dom.isCell(elm, this.j.editorWindow),
 			this.workCell.parentNode as HTMLElement
 		) as HTMLTableCellElement;
 
@@ -509,29 +498,6 @@ export class TableProcessor extends Plugin {
 
 			this.workTable.style[side] =
 				((margin + delta) / parentWidth) * 100 + '%';
-		}
-	}
-
-	/**
-	 *
-	 * @param {HTMLTableElement} [table]
-	 * @param {HTMLTableCellElement} [currentCell]
-	 * @private
-	 */
-	private deSelectAll(
-		table?: HTMLTableElement,
-		currentCell?: HTMLTableCellElement | false
-	) {
-		const cells: HTMLTableCellElement[] = table
-			? Table.getAllSelectedCells(table)
-			: Table.getAllSelectedCells(this.j.editor);
-
-		if (cells.length) {
-			cells.forEach((cell: HTMLTableCellElement) => {
-				if (!currentCell || currentCell !== cell) {
-					Table.restoreSelection(cell);
-				}
-			});
 		}
 	}
 
@@ -605,7 +571,7 @@ export class TableProcessor extends Plugin {
 			const prevTD = call(
 				this.isRTL ? Dom.next : Dom.prev,
 				cell,
-				this.isCell,
+				elm => Dom.isCell(elm, this.j.editorWindow),
 				cell.parentNode as HTMLElement
 			) as HTMLTableCellElement;
 
@@ -618,7 +584,7 @@ export class TableProcessor extends Plugin {
 			const nextTD = call(
 				!this.isRTL ? Dom.next : Dom.prev,
 				cell,
-				this.isCell,
+				elm => Dom.isCell(elm, this.j.editorWindow),
 				cell.parentNode as HTMLElement
 			);
 
@@ -626,81 +592,7 @@ export class TableProcessor extends Plugin {
 		}
 	}
 
-	/**
-	 *
-	 * @param {string} command
-	 */
-	private onExecCommand = (command: string): false | void => {
-		if (
-			/table(splitv|splitg|merge|empty|bin|binrow|bincolumn|addcolumn|addrow)/.test(
-				command
-			)
-		) {
-			command = command.replace('table', '');
-			const cells = Table.getAllSelectedCells(this.j.editor);
-			if (cells.length) {
-				const cell: HTMLTableCellElement | undefined = cells.shift();
-
-				if (!cell) {
-					return;
-				}
-
-				const table = Dom.closest(
-					cell,
-					'table',
-					this.j.editor
-				) as HTMLTableElement;
-
-				switch (command) {
-					case 'splitv':
-						Table.splitVertical(table, this.j.createInside);
-						break;
-					case 'splitg':
-						Table.splitHorizontal(table, this.j.createInside);
-						break;
-					case 'merge':
-						Table.mergeSelected(table);
-						break;
-					case 'empty':
-						Table.getAllSelectedCells(this.j.editor).forEach(
-							td => (td.innerHTML = '')
-						);
-						break;
-					case 'bin':
-						Dom.safeRemove(table);
-						break;
-					case 'binrow':
-						Table.removeRow(
-							table,
-							(cell.parentNode as HTMLTableRowElement).rowIndex
-						);
-						break;
-					case 'bincolumn':
-						Table.removeColumn(table, cell.cellIndex);
-						break;
-					case 'addcolumnafter':
-					case 'addcolumnbefore':
-						Table.appendColumn(
-							table,
-							cell.cellIndex,
-							command === 'addcolumnafter',
-							this.j.createInside
-						);
-						break;
-					case 'addrowafter':
-					case 'addrowbefore':
-						Table.appendRow(
-							table,
-							cell.parentNode as HTMLTableRowElement,
-							command === 'addrowafter',
-							this.j.createInside
-						);
-						break;
-				}
-			}
-			return false;
-		}
-	};
+	private key: string = 'table_processor_observer';
 
 	/**
 	 *
@@ -714,6 +606,15 @@ export class TableProcessor extends Plugin {
 		editor.e
 			.off(this.j.ow, '.table')
 			.off('.table')
+			.on('change.table afterCommand.table afterSetMode.table', () => {
+				($$('table', editor.editor) as HTMLTableElement[]).forEach(
+					(table: HTMLTableElement) => {
+						if (!(table as any)[this.key]) {
+							this.observe(table);
+						}
+					}
+				);
+			})
 			.on(this.j.ow, 'mouseup.table touchend.table', this.onMouseUp)
 			.on(this.j.ow, 'scroll.table', () => {
 				if (this.drag) {
@@ -729,61 +630,6 @@ export class TableProcessor extends Plugin {
 					}
 				}
 			})
-			.on(
-				this.j.ow,
-				'mousedown.table touchend.table',
-				(event: MouseEvent) => {
-					// need use event['originalEvent'] because of IE can not set target from
-					// another window to current window
-					const current_cell: HTMLTableCellElement = Dom.closest(
-						(event as any).originalEvent.target as HTMLElement,
-						'TD|TH',
-						this.j.editor
-					) as HTMLTableCellElement;
-
-					let table: HTMLTableElement | null = null;
-
-					if (this.isCell(current_cell)) {
-						table = Dom.closest(
-							current_cell,
-							'table',
-							this.j.editor
-						) as HTMLTableElement;
-					}
-
-					if (table) {
-						this.deSelectAll(
-							table,
-							current_cell instanceof
-								(this.j.editorWindow as any)
-									.HTMLTableCellElement
-								? current_cell
-								: false
-						);
-					} else {
-						this.deSelectAll();
-					}
-				}
-			)
-			.on('afterGetValueFromEditor.table', (data: { value: string }) => {
-				const rxp = new RegExp(
-					`([\s]*)${consts.JODIT_SELECTED_CELL_MARKER}="1"`,
-					'g'
-				);
-
-				if (rxp.test(data.value)) {
-					data.value = data.value.replace(rxp, '');
-				}
-			})
-			.on('change.table afterCommand.table afterSetMode.table', () => {
-				($$('table', editor.editor) as HTMLTableElement[]).forEach(
-					(table: HTMLTableElement) => {
-						if (!(table as any)[this.key]) {
-							this.observe(table);
-						}
-					}
-				);
-			})
 			.on('beforeSetMode.table', () => {
 				Table.getAllSelectedCells(editor.editor).forEach(td => {
 					Table.restoreSelection(td);
@@ -795,51 +641,13 @@ export class TableProcessor extends Plugin {
 						) as HTMLTableElement
 					);
 				});
-			})
-			.on('keydown.table', (event: KeyboardEvent) => {
-				if (event.key === consts.KEY_TAB) {
-					($$('table', editor.editor) as HTMLTableElement[]).forEach(
-						(table: HTMLTableElement) => {
-							this.deSelectAll(table);
-						}
-					);
-				}
-			})
-			.on('beforeCommand.table', this.onExecCommand.bind(this))
-			.on('afterCommand.table', this.onAfterCommand.bind(this));
+			});
 	}
 
 	private observe(table: HTMLTableElement) {
 		(table as any)[this.key] = true;
 
-		let start: HTMLTableCellElement;
-
 		this.j.e
-			.on(
-				table,
-				'mousedown.table touchstart.table',
-				(event: MouseEvent) => {
-					if (this.j.o.readonly) {
-						return;
-					}
-
-					const cell = Dom.up(
-						event.target as HTMLElement,
-						this.isCell,
-						table
-					) as HTMLTableCellElement;
-
-					if (cell) {
-						if (!cell.firstChild) {
-							cell.appendChild(this.j.createInside.element('br'));
-						}
-
-						start = cell;
-						Table.addSelected(cell);
-						this.selectMode = true;
-					}
-				}
-			)
 			.on(table, 'mouseleave.table', (e: MouseEvent) => {
 				if (
 					this.resizeHandler &&
@@ -852,17 +660,9 @@ export class TableProcessor extends Plugin {
 				table,
 				'mousemove.table touchmove.table',
 				(event: MouseEvent) => {
-					if (this.j.o.readonly) {
-						return;
-					}
-
-					if (this.drag || this.j.isLockedNotBy(this.key)) {
-						return;
-					}
-
 					const cell = Dom.up(
 						event.target as HTMLElement,
-						this.isCell,
+						elm => Dom.isCell(elm, this.j.editorWindow),
 						table
 					) as HTMLTableCellElement;
 
@@ -870,78 +670,11 @@ export class TableProcessor extends Plugin {
 						return;
 					}
 
-					if (this.selectMode) {
-						if (cell !== start) {
-							this.j.lock(this.key);
-
-							const sel = this.j.selection.sel;
-							sel && sel.removeAllRanges();
-
-							if (event.preventDefault) {
-								event.preventDefault();
-							}
-						}
-						this.deSelectAll(table);
-						const bound = Table.getSelectedBound(table, [
-								cell,
-								start
-							]),
-							box = Table.formalMatrix(table);
-
-						for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
-							for (
-								let j = bound[0][1];
-								j <= bound[1][1];
-								j += 1
-							) {
-								Table.addSelected(box[i][j]);
-							}
-						}
-
-						const max = box[bound[1][0]][bound[1][1]],
-							min = box[bound[0][0]][bound[0][1]];
-
-						this.j.e.fire(
-							'showPopup',
-							table,
-							(): IBound => {
-								const minOffset: IBound = position(min, this.j);
-
-								const maxOffset: IBound = position(max, this.j);
-
-								return {
-									left: minOffset.left,
-									top: minOffset.top,
-
-									width:
-										maxOffset.left -
-										minOffset.left +
-										maxOffset.width,
-
-									height:
-										maxOffset.top -
-										minOffset.top +
-										maxOffset.height
-								};
-							}
-						);
-
-						event.stopPropagation();
-					} else {
-						this.calcHandlePosition(table, cell, event.offsetX);
-					}
+					this.calcHandlePosition(table, cell, event.offsetX);
 				}
 			);
 
 		this.createResizeHandle();
-	}
-
-	private onAfterCommand(command: string) {
-		if (/^justify/.test(command)) {
-			$$('[data-jodit-selected-cell]', this.j.editor).forEach(elm =>
-				alignElement(command, elm, this.j)
-			);
-		}
 	}
 
 	beforeDestruct(jodit: IJodit): void {
