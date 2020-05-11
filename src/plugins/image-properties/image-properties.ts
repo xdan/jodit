@@ -143,8 +143,8 @@ export function imageProperties(editor: IJodit) {
 			},
 			prop = dom(
 				`<form class="jodit-properties">
-								<div class="jodit_grid">
-									<div class="jodit_col-lg-2-5">
+								<div class="jodit-grid jodit-grid_xs-column">
+									<div class="jodit_col-lg-2-5 jodit_col-xs-5-5">
 										<div class="jodit-properties_view_box">
 											<div style="${
 												!opt.image.showPreview
@@ -166,7 +166,7 @@ export function imageProperties(editor: IJodit) {
 											</div>
 										</div>
 									</div>
-									<div class="jodit_col-lg-3-5 tabsbox"></div>
+									<div class="jodit_col-lg-3-5 jodit_col-xs-5-5 tabsbox"></div>
 								</div>
 							</form>`
 			),
@@ -175,7 +175,7 @@ export function imageProperties(editor: IJodit) {
 					!opt.image.editMargins ? 'display:none' : ''
 				}" class="jodit-form__group">
 								<label>${i18n('Margins')}</label>
-								<div class="jodit_grid jodit_vertical_middle">
+								<div class="jodit-grid jodit_vertical_middle">
 									<input class="jodit_col-lg-1-5 margins marginTop jodit_input" data-id="marginTop" type="text" placeholder="${i18n(
 										'top'
 									)}"/>
@@ -237,49 +237,49 @@ export function imageProperties(editor: IJodit) {
 				`<div style="${
 					!opt.image.editSrc ? 'display:none' : ''
 				}" class="jodit-form__group">
-								<label>${i18n('Src')}</label>
-								<div class="jodit_input_group">
-									<input class="jodit_input imageSrc" type="text"/>
-									<div
-										class="jodit_input_group-buttons"
-										style="${hasFbUrl ? '' : 'display: none'}"
-									>
-											<a class="jodit-button jodit_rechange" href="javascript:void(0)">${gi(
-												'image'
-											)}</a>
-											<a
-												class="jodit-button jodit_use_image_editor" href="javascript:void(0)"
-												style="${hasEditor ? '' : 'display: none'}"
-											>${gi('crop')}</a>
-									</div>
-								</div>
+						<label>${i18n('Src')}</label>
+						<div class="jodit_input_group">
+							<input class="jodit_input imageSrc" type="text"/>
+							<div
+								class="jodit_input_group-buttons"
+								style="${hasFbUrl ? '' : 'display: none'}"
+							>
+									<a class="jodit-button jodit_rechange" href="javascript:void(0)">${gi(
+										'image'
+									)}</a>
+									<a
+										class="jodit-button jodit_use_image_editor" href="javascript:void(0)"
+										style="${hasEditor ? '' : 'display: none'}"
+									>${gi('crop')}</a>
 							</div>
-							<div style="${
-								!opt.image.editTitle ? 'display:none' : ''
-							}" class="jodit-form__group">
-								<label for="imageTitle">${i18n('Title')}</label>
-								<input type="text" class="imageTitle jodit_input"/>
-							</div>
-							<div style="${
-								!opt.image.editAlt ? 'display:none' : ''
-							}" class="jodit-form__group">
-								<label for="imageAlt">${i18n('Alternative')}</label>
-								<input type="text" class="imageAlt jodit_input"/>
-							</div>
-							<div style="${
-								!opt.image.editLink ? 'display:none' : ''
-							}" class="jodit-form__group">
-								<label for="imageLink">${i18n('Link')}</label>
-								<input type="text" class="imageLink jodit_input"/>
-							</div>
-							<div style="${
-								!opt.image.editLink ? 'display:none' : ''
-							}" class="jodit-form__group">
-								<label class="jodit_vertical_middle">
-									<input type="checkbox" class="imageLinkOpenInNewTab jodit-checkbox"/>
-									<span>${i18n('Open link in new tab')}</span>
-								</label>
-							</div>`
+						</div>
+					</div>
+					<div style="${
+						!opt.image.editTitle ? 'display:none' : ''
+					}" class="jodit-form__group">
+						<label for="imageTitle">${i18n('Title')}</label>
+						<input type="text" class="imageTitle jodit_input"/>
+					</div>
+					<div style="${
+						!opt.image.editAlt ? 'display:none' : ''
+					}" class="jodit-form__group">
+						<label for="imageAlt">${i18n('Alternative')}</label>
+						<input type="text" class="imageAlt jodit_input"/>
+					</div>
+					<div style="${
+						!opt.image.editLink ? 'display:none' : ''
+					}" class="jodit-form__group">
+						<label for="imageLink">${i18n('Link')}</label>
+						<input type="text" class="imageLink jodit_input"/>
+					</div>
+					<div style="${
+						!opt.image.editLink ? 'display:none' : ''
+					}" class="jodit-form__group">
+						<label class="jodit_vertical_middle">
+							<input type="checkbox" class="imageLinkOpenInNewTab jodit-checkbox"/>
+							<span>${i18n('Open link in new tab')}</span>
+						</label>
+					</div>`
 			) as HTMLDivElement,
 			ratio = image.naturalWidth / image.naturalHeight || 1,
 			$w: HTMLInputElement = prop.querySelector(

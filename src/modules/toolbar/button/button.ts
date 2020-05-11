@@ -249,8 +249,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	/**
 	 * Click on trigger button
 	 */
-	protected onTriggerClick(): void {
+	protected onTriggerClick(e: MouseEvent): void {
 		const { control } = this;
+
+		e.buffer = {
+			triggerClick: true
+		};
 
 		if (control.list) {
 			return this.openControlList(control as IControlTypeStrongList);
@@ -384,7 +388,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		const { control } = this;
 
 		if (isFunction(control.popup)) {
-			return this.onTriggerClick();
+			return this.onTriggerClick(originalEvent);
 		}
 
 		if (isFunction(control.exec)) {

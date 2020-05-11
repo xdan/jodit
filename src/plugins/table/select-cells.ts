@@ -21,13 +21,8 @@ export class selectCells extends Plugin {
 		jodit.e
 			.on(
 				[this.j.ow, this.j.editorWindow],
-				'mouseup.table touchend.table',
-				this.onStopSelection
-			)
-			.on(
-				[this.j.ow, this.j.editorWindow],
-				'mousedown.table touchstart.table',
-				this.onMouseClickEverywhere
+				'click.table click.table',
+				this.onRemoveSelection
 			)
 			.on('keydown.table', (event: KeyboardEvent) => {
 				if (event.key === KEY_TAB) {
@@ -39,38 +34,14 @@ export class selectCells extends Plugin {
 			.on('afterCommand.table', this.onAfterCommand)
 
 			.on('change.table afterCommand.table afterSetMode.table', () => {
+				this.onRemoveSelection();
+
 				$$('table', jodit.editor).forEach(table => {
 					if (!dataBind(table, key)) {
 						this.observe(table);
 					}
 				});
 			});
-	}
-
-	/**
-	 * Start selection or remove all selection from cells
-	 */
-	@autobind
-	private onMouseClickEverywhere(event: MouseEvent): void {
-		// need use event['originalEvent'] because of IE can not set target from
-		// another window to current window
-		const cell = Dom.closest(
-			(event as any).originalEvent.target as HTMLElement,
-			['td', 'th'],
-			this.j.editor
-		);
-
-		if (!cell) {
-			return this.unselectCells();
-		}
-
-		const table = Dom.closest(cell, 'table', this.j.editor);
-
-		if (table) {
-			this.unselectCells(table, cell);
-		} else {
-			this.unselectCells();
-		}
 	}
 
 	/**
@@ -85,29 +56,33 @@ export class selectCells extends Plugin {
 	private observe(table: HTMLTableElement) {
 		dataBind(table, key, true);
 
-		this.j.e.on(
-			table,
-			'mousedown.table touchstart.table',
-			this.onStartSelection.bind(this, table)
-		);
+		this.j.e
+			.on(
+				table,
+				'mousedown.table touchstart.table',
+				this.onStartSelection.bind(this, table)
+			)
+			.on(
+				table,
+				'mouseup.table touchend.table',
+				this.onStopSelection.bind(this, table)
+			);
 	}
 
 	/**
 	 * Mouse click inside the table
 	 *
 	 * @param table
-	 * @param event
+	 * @param e
 	 */
-	private onStartSelection(table: HTMLTableElement, event: MouseEvent): void {
+	private onStartSelection(table: HTMLTableElement, e: MouseEvent): void {
 		if (this.j.o.readonly) {
 			return;
 		}
 
-		const cell = Dom.closest(
-			event.target as HTMLElement,
-			['td', 'th'],
-			table
-		);
+		this.unselectCells();
+
+		const cell = Dom.closest(e.target as HTMLElement, ['td', 'th'], table);
 
 		if (!cell) {
 			return;
@@ -127,10 +102,6 @@ export class selectCells extends Plugin {
 			this.onMove.bind(this, table)
 		);
 
-		event.buffer = {
-			isOpenEvent: true
-		}
-
 		this.j.e.fire(
 			'showPopup',
 			table,
@@ -143,9 +114,9 @@ export class selectCells extends Plugin {
 	 * Mouse move inside the table
 	 *
 	 * @param table
-	 * @param event
+	 * @param e
 	 */
-	private onMove(table: HTMLTableElement, event: MouseEvent): void {
+	private onMove(table: HTMLTableElement, e: MouseEvent): void {
 		if (this.j.o.readonly) {
 			return;
 		}
@@ -154,11 +125,16 @@ export class selectCells extends Plugin {
 			return;
 		}
 
-		const cell = Dom.closest(
-			event.target as HTMLElement,
-			['td', 'th'],
-			table
+		const node = this.j.editorDocument.elementFromPoint(
+			e.clientX,
+			e.clientY
 		);
+
+		if (!node) {
+			return;
+		}
+
+		const cell = Dom.closest(node, ['td', 'th'], table);
 
 		if (!cell || !this.selectedCell) {
 			return;
@@ -169,8 +145,8 @@ export class selectCells extends Plugin {
 
 			this.j.selection.clear();
 
-			if (event.preventDefault) {
-				event.preventDefault();
+			if (e.preventDefault) {
+				e.preventDefault();
 			}
 		}
 
@@ -187,10 +163,57 @@ export class selectCells extends Plugin {
 			}
 		}
 
+		this.j.e.fire('hidePopup');
+		e.stopPropagation();
+	}
+
+	/**
+	 * On click in outside - remove selection
+	 */
+	@autobind
+	private onRemoveSelection(e?: MouseEvent): void {
+		if (!e?.buffer?.triggerClick && !this.selectedCell && this.module.getAllSelectedCells().length) {
+			this.j.unlock();
+			this.unselectCells();
+			this.j.e.fire('hidePopup');
+			return;
+		}
+
+		this.selectedCell = null;
+	}
+
+	/**
+	 * Stop selection process
+	 */
+	@autobind
+	private onStopSelection(table: HTMLTableElement, e: MouseEvent): void {
+		if (!this.selectedCell) {
+			return;
+		}
+
+		this.j.unlock();
+
+		const node = this.j.editorDocument.elementFromPoint(
+			e.clientX,
+			e.clientY
+		);
+
+		if (!node) {
+			return;
+		}
+
+		const cell = Dom.closest(node, ['td', 'th'], table);
+
+		if (!cell) {
+			return;
+		}
+
+		const bound = Table.getSelectedBound(table, [cell, this.selectedCell]),
+			box = Table.formalMatrix(table);
+
 		const max = box[bound[1][0]][bound[1][1]],
 			min = box[bound[0][0]][bound[0][1]];
 
-		this.j.e.fire('hidePopup');
 		this.j.e.fire(
 			'showPopup',
 			table,
@@ -210,22 +233,6 @@ export class selectCells extends Plugin {
 			'table-cells'
 		);
 
-		event.stopPropagation();
-	}
-
-	/**
-	 * Stop selection process
-	 */
-	@autobind
-	private onStopSelection(): void {
-		this.j.unlock();
-
-		if (!this.selectedCell) {
-			return;
-		}
-
-		this.selectedCell = null;
-
 		$$('table', this.j.editor).forEach(table => {
 			this.j.e.off(table, 'mousemove.table touchmove.table');
 		});
@@ -239,7 +246,7 @@ export class selectCells extends Plugin {
 	 */
 	private unselectCells(
 		table?: HTMLTableElement,
-		currentCell: Nullable<HTMLTableCellElement> = this.selectedCell
+		currentCell?: Nullable<HTMLTableCellElement>
 	) {
 		const module = this.module;
 		const cells = module.getAllSelectedCells();
@@ -353,18 +360,13 @@ export class selectCells extends Plugin {
 
 	/** @override */
 	protected beforeDestruct(jodit: IJodit): void {
-		this.onStopSelection();
+		this.onRemoveSelection();
 
 		jodit.e
 			.off(
 				[jodit.ow, jodit.editorWindow],
 				'mouseup.table touchend.table',
 				this.onStopSelection
-			)
-			.off(
-				[jodit.ow, jodit.editorWindow],
-				'mousedown.table touchstart.table',
-				this.onMouseClickEverywhere
 			)
 			.off('keydown.table')
 			.off('beforeCommand.table', this.onExecCommand)

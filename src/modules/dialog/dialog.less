@@ -108,8 +108,11 @@
 			justify-content: space-between;
 			text-align: left;
 
+			@media (max-width: @screen-xs) {
+				flex-direction: column;
+			}
+
 			cursor: move;
-			height: 48px;
 			overflow: hidden;
 
 			color: #222222;
@@ -126,11 +129,14 @@
 				line-height: 48px;
 
 				vertical-align: top;
+
+				padding: 0 @padding-default;
+			}
+
+			&-toolbar {
 				@media (max-width: @screen-xs) {
 					padding-left: 0;
 				}
-
-				padding: 0 @padding-default;
 			}
 
 			&-button {

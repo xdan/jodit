@@ -830,7 +830,7 @@ export class ImageEditor extends ViewComponent {
 
 		this.editor = this.j.c.fromHTML(
 			`<form class="${jie} jodit-properties">
-							<div class="jodit_grid">
+							<div class="jodit-grid">
 								<div class="jodit_col-lg-3-4">
 								${
 									o.resize

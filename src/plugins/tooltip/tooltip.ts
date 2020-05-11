@@ -51,6 +51,10 @@ export class tooltip extends Plugin {
 	}
 
 	private open(target: HTMLElement, content: string): void {
+		if (!Dom.up(target, (elm) => elm && elm.nodeName === 'BODY')) {
+			return;
+		}
+
 		this.container.classList.add('jodit-tooltip_visible');
 		this.container.innerHTML = content;
 

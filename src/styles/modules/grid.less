@@ -7,22 +7,49 @@
 @import (reference) '../variables';
 @import (reference) '../mixins';
 
-.jodit_grid {
+.jodit-grid {
 	display: flex;
 	width: 100%;
+
+	&.jodit-grid_column {
+		flex-direction: column;
+	}
+
+	@media (max-width: @screen-xs) {
+		&.jodit-grid_xs-column {
+			flex-direction: column;
+		}
+	}
 
 	[class*='jodit_col-'] {
 		flex: 1 1 auto;
 	}
 
-	.jodit_col-lg {
-		.loop(@counter: 5, @max: 5) when (@counter > 0) {
-			&-@{counter}-@{max} {
+	.jodit_col- {
+		.loop(@counter, @max, @size: lg) when (@counter > 0) {
+			&@{size}-@{counter}-@{max} {
 				width: (100% / @max) * @counter;
 			}
-			.loop((@counter - 1), @max);
+
+			.loop((@counter - 1), @max, @size);
 		}
+
 		.loop(5, 5);
 		.loop(4, 4);
+
+		@media (max-width: @screen-md) {
+			.loop(5, 5, md);
+			.loop(4, 4, md);
+		}
+
+		@media (max-width: @screen-sm) {
+			.loop(5, 5, sm);
+			.loop(4, 4, sm);
+		}
+
+		@media (max-width: @screen-xs) {
+			.loop(5, 5, xs);
+			.loop(4, 4, xs);
+		}
 	}
 }

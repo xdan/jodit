@@ -304,7 +304,7 @@ export class Popup extends UIElement implements IPopup {
 	 */
 	@autobind
 	private closeOnOutsideClick(e: MouseEvent): void {
-		if (!this.isOpened || e.buffer?.isOpenEvent) {
+		if (!this.isOpened) {
 			return;
 		}
 
