@@ -18,8 +18,8 @@ export function debounce(timeout?: number) {
 		target.hookStatus(STATUSES.ready, (component: IViewComponent | IViewBased) => {
 			const async = isViewObject(component) ? component.async : component.j.async;
 
-			target[propertyKey] = async.debounce(
-				target[propertyKey].bind(component),
+			(component as any)[propertyKey] = async.debounce(
+				(component as any)[propertyKey].bind(component),
 				timeout || 0
 			);
 		});

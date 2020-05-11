@@ -2,7 +2,7 @@ describe('Jodit FileBrowser Tests', function() {
 	describe('Constructor/Destructor', function() {
 		describe('Without Jodit', function() {
 			it('Should create dialog and load files', function() {
-				const filebrowser = new Jodit.modules.FileBrowser(null, {
+				const filebrowser = new Jodit.modules.FileBrowser({
 					ajax: {
 						url: 'https://xdsoft.net/jodit/connector/index.php'
 					}
@@ -11,13 +11,13 @@ describe('Jodit FileBrowser Tests', function() {
 				filebrowser.open(function() {});
 
 				expect(
-					document.querySelectorAll('.jodit-dialog__box.active').length
+					document.querySelectorAll('.jodit-dialog__box').length
 				).equals(1);
 
 				filebrowser.close();
 
 				expect(
-					document.querySelectorAll('.jodit-dialog__box.active').length
+					document.querySelectorAll('.jodit-dialog__box').length
 				).equals(0);
 
 				filebrowser.destruct();
@@ -33,12 +33,12 @@ describe('Jodit FileBrowser Tests', function() {
 				}
 			});
 
-			const filebrowser = new Jodit.modules.FileBrowser(editor);
+			const filebrowser = new Jodit.modules.FileBrowser(editor.o.filebrowser);
 			filebrowser.open(function() {});
 
 			expect(
 				editor.ownerDocument.querySelectorAll(
-					'.jodit-dialog__box.active[data-editor_id=' + editor.id + ']'
+					'.jodit-dialog__box'
 				).length
 			).equals(1);
 
@@ -54,20 +54,11 @@ describe('Jodit FileBrowser Tests', function() {
 				}
 			});
 
-			simulateEvent(
-				'mousedown',
-				0,
-				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-image'
-				)
-			);
+			clickButton('image', editor);
 
 			expect(
-				editor.container
-					.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit-tabs__buttons .active'
-					)
-					.textContent.trim()
+				getOpenedPopup(editor).querySelector('[aria-pressed="true"]')
+					.innerText.trim()
 			).equals('Browse');
 		});
 
@@ -84,18 +75,11 @@ describe('Jodit FileBrowser Tests', function() {
 				}
 			});
 
-			simulateEvent(
-				'mousedown',
-				0,
-				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-image'
-				)
-			);
+			clickButton('image', editor);
 
 			expect(
-				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit-tabs__buttons .active'
-				).textContent
+				getOpenedPopup(editor).querySelector('[aria-pressed="true"]')
+					.innerText.trim()
 			).equals('Upload');
 		});
 	});
@@ -103,7 +87,7 @@ describe('Jodit FileBrowser Tests', function() {
 	describe('Change Ajax options', function() {
 		describe('Use GET method instead POST', function() {
 			it('Should add params into url instead body', function(done) {
-				const filebrowser = new Jodit.modules.FileBrowser(null, {
+				const filebrowser = new Jodit.modules.FileBrowser({
 					ajax: {
 						url: 'https://xdsoft.net/jodit/connector/index.php',
 						method: 'GET'
@@ -128,7 +112,7 @@ describe('Jodit FileBrowser Tests', function() {
 
 		describe('Use POST method', function() {
 			it('Should add params only into body', function(done) {
-				const filebrowser = new Jodit.modules.FileBrowser(null, {
+				const filebrowser = new Jodit.modules.FileBrowser({
 					ajax: {
 						url: 'https://xdsoft.net/jodit/connector/index.php',
 						method: 'POST'
@@ -157,7 +141,7 @@ describe('Jodit FileBrowser Tests', function() {
 	describe('Toolbar', function() {
 		describe('Without Jodit', function() {
 			it('Should create filebrowser and show standart toolbar', function(done) {
-				const filebrowser = new Jodit.modules.FileBrowser(null, {
+				const filebrowser = new Jodit.modules.FileBrowser({
 					ajax: {
 						url: 'https://xdsoft.net/jodit/connector/index.php'
 					}

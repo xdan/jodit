@@ -605,6 +605,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			this.maximization(true);
 		}
 
+		this.destination.appendChild(this.container);
+
 		/**
 		 * Called after the opening of the dialog box
 		 * @event afterOpen
@@ -663,6 +665,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			this.e.fire('beforeClose', this);
 		}
 
+		Dom.safeRemove(this.container);
 		this?.container?.classList.remove('jodit-dialog_active');
 
 		this.isOpened = false;
@@ -760,8 +763,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			'.jodit-dialog__header>.jodit-dialog__header-toolbar'
 		) as HTMLDivElement;
 
-		self.destination.appendChild(self.container);
-
 		self.o.buttons &&
 			self.toolbar
 				.build(splitArray(self.o.buttons))
@@ -794,6 +795,12 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	destruct() {
 		if (this.isInDestruct) {
 			return;
+		}
+
+		this.setStatus(STATUSES.beforeDestruct);
+
+		if (this.isOpened) {
+			this.close();
 		}
 
 		this.setStatus(STATUSES.beforeDestruct);

@@ -6,16 +6,12 @@ describe('Test interface', function() {
 					toolbarAdaptive: false
 				});
 
-			const aboutButton = editor.container.querySelector(
-				'.jodit_toolbar_btn.jodit_toolbar_btn-about'
-			);
+			const aboutButton = getButton('about', editor);
 
 			expect(aboutButton).is.not.null;
-			simulateEvent('mousedown', 0, aboutButton);
+			simulateEvent('click', 0, aboutButton);
 
-			const dialog = editor.ownerDocument.querySelector(
-				'.jodit.jodit-dialog__box.active[data-editor_id=' + editor.id + ']'
-			);
+			const dialog = getOpenedDialog(editor);
 
 			expect(dialog).is.not.null;
 
@@ -31,18 +27,13 @@ describe('Test interface', function() {
 						license: '12345678901234567890123456789022', // don't use this key - it is wrong
 						toolbarAdaptive: false
 					});
-				const aboutButton = editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-about'
-				);
+
+				const aboutButton = getButton('about', editor);
 
 				expect(aboutButton).is.not.null;
-				simulateEvent('mousedown', 0, aboutButton);
+				simulateEvent('click', 0, aboutButton);
 
-				const dialog = editor.ownerDocument.querySelector(
-					'.jodit.jodit-dialog__box.active[data-editor_id=' +
-						area.id +
-						']'
-				);
+				const dialog = getOpenedDialog(editor)
 				expect(dialog).is.not.null;
 
 				expect(

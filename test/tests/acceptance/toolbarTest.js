@@ -1642,11 +1642,7 @@ describe('Toolbar', function() {
 				editor.value = '<img alt="" src="../artio.jpg"/>';
 				editor.selection.focus();
 
-				simulateEvent(
-					'click',
-					0,
-					editor.editor.querySelector('img')
-				);
+				simulateEvent('click', 0, editor.editor.querySelector('img'));
 
 				const popup = getOpenedPopup(editor);
 
@@ -1657,7 +1653,7 @@ describe('Toolbar', function() {
 
 			describe('and click in opened popup on pencil button', function() {
 				it('Should Open edit image dialog', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value = '<img alt="" src="../artio.jpg"/>';
 					editor.selection.focus();
@@ -1687,15 +1683,23 @@ describe('Toolbar', function() {
 		});
 
 		it('Open inline popup after click inside the cell', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 
 			editor.value = '<table>' + '<tr><td>1</td></tr>' + '</table>';
 
-			simulateEvent('click', 0, editor.editor.querySelector('td'));
+			const td = editor.editor.querySelector('td'),
+				pos = Jodit.modules.Helpers.position(td);
+
+			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
+				Object.assign(e, {
+					clientX: pos.left,
+					clientY: pos.top
+				});
+			});
 
 			const popup = getOpenedPopup(editor);
 
-			expect(popup && popup.parentNode.parentNode !== null).is.true;
+			expect(popup).is.not.null;
 		});
 
 		describe('Table button', function() {
@@ -1706,25 +1710,47 @@ describe('Toolbar', function() {
 					editor.value =
 						'<table>' + '<tr><td>2</td></tr>' + '</table>';
 
-					const td = editor.editor.querySelector('td');
+					const td = editor.editor.querySelector('td'),
+						pos = Jodit.modules.Helpers.position(td);
 
-					simulateEvent('mousedown', 0, td);
+					simulateEvent(
+						['mousedown', 'mouseup', 'click'],
+						0,
+						td,
+						e => {
+							Object.assign(e, {
+								clientX: pos.left,
+								clientY: pos.top
+							});
+						}
+					);
 
-					expect(td.hasAttribute(Jodit.JODIT_SELECTED_CELL_MARKER)).is
-						.true;
+					expect([td]).deep.equals(
+						editor.getInstance('Table').getAllSelectedCells()
+					);
 				});
 
 				describe('and press brush button', function() {
 					it('Should Select table cell and fill it in yellow', function() {
-						const editor = new Jodit(appendTestArea());
+						const editor = getJodit();
 
 						editor.value =
 							'<table>' + '<tr><td>3</td></tr>' + '</table>';
 
-						const td = editor.editor.querySelector('td');
+						const td = editor.editor.querySelector('td'),
+							pos = Jodit.modules.Helpers.position(td);
 
-						simulateEvent('click', 0, td);
-						simulateEvent('mousemove', 0, td);
+						simulateEvent(
+							['mousedown', 'mouseup', 'click'],
+							0,
+							td,
+							e => {
+								Object.assign(e, {
+									clientX: pos.left,
+									clientY: pos.top
+								});
+							}
+						);
 
 						const popup = getOpenedPopup(editor);
 
@@ -1740,9 +1766,9 @@ describe('Toolbar', function() {
 						).equals('block');
 
 						simulateEvent(
-							'click',
+							'mousedown',
 							0,
-							popupColor.querySelector('button')
+							popupColor.querySelector('a')
 						);
 
 						expect(
@@ -1763,10 +1789,15 @@ describe('Toolbar', function() {
 				'<tr><td style="vertical-align: middle">3</td></tr>' +
 				'</table>';
 
-			const td = editor.editor.querySelector('td');
+			const td = editor.editor.querySelector('td'),
+				pos = Jodit.modules.Helpers.position(td);
 
-			simulateEvent('mousedown', 0, td);
-			simulateEvent('click', 0, td);
+			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
+				Object.assign(e, {
+					clientX: pos.left,
+					clientY: pos.top
+				});
+			});
 
 			const popup = getOpenedPopup(editor);
 			expect(popup && popup.parentNode.parentNode !== null).is.true;
@@ -1782,20 +1813,23 @@ describe('Toolbar', function() {
 		});
 
 		it('Select table cell and split it by vertical', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 
 			editor.value =
 				'<table style="width: 300px;">' +
 				'<tr><td>3</td></tr>' +
 				'</table>';
 
-			const td = editor.editor.querySelector('td');
+			const td = editor.editor.querySelector('td'),
+				pos = Jodit.modules.Helpers.position(td);
 
-			simulateEvent('mousedown', 0, td);
-			simulateEvent('click', 0, td);
-
+			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
+				Object.assign(e, {
+					clientX: pos.left,
+					clientY: pos.top
+				});
+			});
 			const popup = getOpenedPopup(editor);
-
 			clickTrigger('splitv', popup);
 
 			const list = getOpenedPopup(editor);
@@ -1808,17 +1842,22 @@ describe('Toolbar', function() {
 		});
 
 		it('Select table cell and split it by horizontal', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 
 			editor.value =
 				'<table style="width: 300px;">' +
 				'<tr><td>5</td></tr>' +
 				'</table>';
 
-			const td = editor.editor.querySelector('td');
+			const td = editor.editor.querySelector('td'),
+				pos = Jodit.modules.Helpers.position(td);
 
-			simulateEvent('mousedown', 0, td);
-			simulateEvent('click', 0, td);
+			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
+				Object.assign(e, {
+					clientX: pos.left,
+					clientY: pos.top
+				});
+			});
 
 			const popup = getOpenedPopup(editor);
 
@@ -1840,22 +1879,32 @@ describe('Toolbar', function() {
 				'<tr><td>5</td><td>6</td></tr>' +
 				'</table>';
 
-			const td = editor.editor.querySelector('td');
+			const td = editor.editor.querySelector('td'),
+				next = editor.editor.querySelectorAll('td')[1],
+				pos = Jodit.modules.Helpers.position(td);
 
-			simulateEvent('mousedown', 0, td);
-			simulateEvent('click', 0, td);
-			simulateEvent(
-				'mousemove',
-				0,
-				editor.editor.querySelectorAll('td')[1]
-			);
+			simulateEvent('mousedown', 0, td, e => {
+				Object.assign(e, {
+					clientX: pos.left,
+					clientY: pos.top
+				});
+			});
+
+			simulateEvent(['mousemove', 'mouseup'], 0, next, e => {
+				const pos = Jodit.modules.Helpers.position(next);
+
+				Object.assign(e, {
+					clientX: pos.left,
+					clientY: pos.top
+				});
+			});
 
 			const popup = getOpenedPopup(editor);
 
 			clickButton('merge', popup);
 
-			expect(editor.value).equals(
-				'<table style="width: 300px;"><tbody><tr><td >5<br>6</td></tr></tbody></table>'
+			expect(sortAttributes(editor.value)).equals(
+				'<table style="width:300px"><tbody><tr><td>5<br>6</td></tr></tbody></table>'
 			);
 		});
 
@@ -1864,10 +1913,15 @@ describe('Toolbar', function() {
 
 			editor.value = '<table>' + '<tr><td>3</td></tr>' + '</table>';
 
-			const td = editor.editor.querySelector('td');
+			const td = editor.editor.querySelector('td'),
+				pos = Jodit.modules.Helpers.position(td);
 
-			simulateEvent('mousedown', 0, td);
-			simulateEvent('click', 0, td);
+			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
+				Object.assign(e, {
+					clientX: pos.left,
+					clientY: pos.top,
+				});
+			});
 
 			const popup = getOpenedPopup(editor);
 
@@ -1880,10 +1934,11 @@ describe('Toolbar', function() {
 				popupColor && window.getComputedStyle(popupColor).display
 			).equals('block');
 
+
 			simulateEvent('click', 0, popupColor.querySelector('button'));
 
-			expect(editor.value).equals(
-				'<table><tbody><tr><td></td><td >3</td></tr></tbody></table>'
+			expect(sortAttributes(editor.value)).equals(
+				'<table><tbody><tr><td></td><td>3</td></tr></tbody></table>'
 			);
 		});
 
@@ -1892,10 +1947,15 @@ describe('Toolbar', function() {
 
 			editor.value = '<table>' + '<tr><td>3</td></tr>' + '</table>';
 
-			const td = editor.editor.querySelector('td');
+			const td = editor.editor.querySelector('td'),
+				pos = Jodit.modules.Helpers.position(td);
 
-			simulateEvent('mousedown', 0, td);
-			simulateEvent('click', 0, td);
+			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
+				Object.assign(e, {
+					clientX: pos.left,
+					clientY: pos.top,
+				});
+			});
 
 			const popup = getOpenedPopup(editor);
 
@@ -1910,8 +1970,8 @@ describe('Toolbar', function() {
 
 			simulateEvent('click', 0, popupColor.querySelector('button'));
 
-			expect(editor.value).equals(
-				'<table><tbody><tr><td></td></tr><tr><td >3</td></tr></tbody></table>'
+			expect(sortAttributes(editor.value)).equals(
+				'<table><tbody><tr><td></td></tr><tr><td>3</td></tr></tbody></table>'
 			);
 		});
 
@@ -1925,27 +1985,28 @@ describe('Toolbar', function() {
 				'<tr><td>3</td></tr>' +
 				'</table>';
 
-			const td = editor.editor.querySelectorAll('td')[1];
+			const td = editor.editor.querySelectorAll('td')[1],
+				pos = Jodit.modules.Helpers.position(td);
 
-			simulateEvent('mousedown', 0, td);
-			simulateEvent('click', 0, td);
+			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
+				Object.assign(e, {
+					clientX: pos.left,
+					clientY: pos.top,
+				});
+			});
 
 			const popup = getOpenedPopup(editor);
 
 			expect(popup && popup.parentNode.parentNode !== null).is.true;
 
-			clickTrigger('delete', popup)
+			clickTrigger('delete', popup);
 
 			const popupColor = getOpenedPopup(editor);
 			expect(
 				popupColor && window.getComputedStyle(popupColor).display
 			).equals('block');
 
-			simulateEvent(
-				'click',
-				0,
-				popupColor.querySelectorAll('button')[1]
-			);
+			simulateEvent('click', 0, popupColor.querySelectorAll('button')[1]);
 
 			expect(editor.value).equals(
 				'<table><tbody><tr><td>1</td></tr><tr><td>3</td></tr></tbody></table>'
@@ -1964,25 +2025,27 @@ describe('Toolbar', function() {
 
 			const td = editor.editor.querySelectorAll('td')[1];
 
-			simulateEvent('mousedown', 0, td);
-			simulateEvent('click', 0, td);
+			const pos = Jodit.modules.Helpers.position(td);
+
+			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
+				Object.assign(e, {
+					clientX: pos.left,
+					clientY: pos.top,
+				});
+			});
 
 			const popup = getOpenedPopup(editor);
 
 			expect(popup && popup.parentNode.parentNode !== null).is.true;
 
-			clickTrigger('delete', popup)
+			clickTrigger('delete', popup);
 
 			const popupColor = getOpenedPopup(editor);
 			expect(
 				popupColor && window.getComputedStyle(popupColor).display
 			).equals('block');
 
-			simulateEvent(
-				'click',
-				0,
-				popupColor.querySelector('button')
-			);
+			simulateEvent('click', 0, popupColor.querySelector('button'));
 
 			expect(editor.value).equals('');
 
@@ -1993,7 +2056,7 @@ describe('Toolbar', function() {
 	describe('In fileBrowser', function() {
 		describe('Hide buttons ', function() {
 			it('should hide toolbar buttons', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					filebrowser: {
 						buttons: Jodit.Array([
 							'filebrowser.list',
@@ -2006,36 +2069,25 @@ describe('Toolbar', function() {
 					}
 				});
 
+				clickButton('image', editor)
+
+				const popup = getOpenedPopup(editor);
+
+				expect(popup).is.not.null;
+
 				simulateEvent(
-					'mousedown',
+					'click',
 					0,
-					editor.ownerDocument.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-image'
-					)
+					popup.querySelector('button')
 				);
 
-				const popup = editor.ownerDocument.querySelector(
-					'.jodit_toolbar_popup'
-				);
-
-				expect(popup && popup.style.display !== 'none').is.true;
-				simulateEvent(
-					'mousedown',
-					0,
-					popup.querySelectorAll('.jodit-tabs__buttons > a')[0]
-				);
-
-				const dialog = editor.ownerDocument.querySelector(
-					'.jodit.jodit-dialog__box.active[data-editor_id=' +
-						editor.id +
-						']'
-				);
+				const dialog = getOpenedDialog(editor);
 
 				expect(dialog).is.not.null;
 
 				expect(3).equals(
 					dialog.querySelectorAll(
-						'.jodit-dialog__header .jodit-dialog__header-title .jodit_toolbar_btn'
+						'.jodit-dialog__header .jodit-dialog__header-title button'
 					).length
 				);
 			});

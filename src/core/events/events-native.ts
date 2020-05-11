@@ -596,9 +596,10 @@ export class EventsNative implements IEventsNative {
 						event,
 						namespace
 					);
+
 					if (blocks) {
 						try {
-							blocks.every(
+							[...blocks].every(
 								(block: EventHandlerBlock): boolean => {
 									if (this.isStopped(blocks)) {
 										return false;
@@ -620,6 +621,10 @@ export class EventsNative implements IEventsNative {
 									return true;
 								}
 							);
+						} catch (e) {
+							if (!isProd) {
+								throw e;
+							}
 						} finally {
 							this.removeStop(blocks);
 						}

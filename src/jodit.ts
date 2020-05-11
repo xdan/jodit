@@ -702,7 +702,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		if (super.lock(name)) {
 			this.__selectionLocked = this.selection.save();
 			this.editor.classList.add('jodit_disabled');
-			this.events.fire('lock', true);
+			this.e.fire('lock', true);
 			return true;
 		}
 
@@ -720,7 +720,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				this.selection.restore(this.__selectionLocked);
 			}
 
-			this.events.fire('lock', false);
+			this.e.fire('lock', false);
 			return true;
 		}
 
@@ -913,7 +913,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.editor && this.editor.setAttribute('contenteditable', 'true');
 		}
 
-		this.events && this.e.fire('readonly', isReadOnly);
+		this.e && this.e.fire('readonly', isReadOnly);
 	}
 
 	/**
@@ -979,7 +979,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		this.e.on(this.ow, 'resize', () => {
-			if (this.events) {
+			if (this.e) {
 				this.e.fire('resize');
 			}
 		});
@@ -999,7 +999,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		Jodit.instances[this.id] = this;
 
 		const init = () => {
-			if (this.events) {
+			if (this.e) {
 				this.e.fire('afterInit', this);
 			}
 
@@ -1335,7 +1335,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 							return;
 						}
 
-						if (this.events && this.e.fire) {
+						if (this.e && this.e.fire) {
 							if (this.e.fire(event.type, event) === false) {
 								return false;
 							}
@@ -1366,7 +1366,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				this.e.on(
 					'change',
 					this.async.debounce(() => {
-						this.events && this.e.fire(this.element, 'change');
+						this.e && this.e.fire(this.element, 'change');
 					}, this.defaultTimeout)
 				);
 			}

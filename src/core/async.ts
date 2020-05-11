@@ -15,6 +15,10 @@ export class Async implements IAsync {
 		timeout: number | IAsyncParams,
 		...args: any[]
 	): number {
+		if (this.isDestructed) {
+			return 0;
+		}
+
 		let options: IAsyncParams = {};
 
 		if (typeof timeout !== 'number') {
@@ -201,7 +205,9 @@ export class Async implements IAsync {
 		this.promisesRejections.clear();
 	}
 
+	isDestructed: boolean = false;
 	destruct(): any {
 		this.clear();
+		this.isDestructed = true;
 	}
 }

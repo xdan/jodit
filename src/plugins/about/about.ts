@@ -40,6 +40,10 @@ Config.prototype.controls.about = {
 		);
 
 		dialog.open(true);
+
+		editor.e.on('beforeDestruct', () => {
+			dialog.destruct()
+		});
 	},
 	tooltip: 'About Jodit',
 	mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG

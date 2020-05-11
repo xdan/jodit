@@ -16,7 +16,8 @@ import {
 	attr,
 	position,
 	isArray,
-	markOwner
+	markOwner,
+	isString
 } from '../../core/helpers';
 
 import { IFileBrowserCallBackData, IJodit, IUploaderData } from '../../types';
@@ -138,7 +139,7 @@ export function imageProperties(editor: IJodit) {
 				buttons: ['dialog.fullsize', 'dialog.close']
 			}),
 			buttons = {
-				check: Button(editor, 'check', 'Save'),
+				check: Button(editor, 'check', 'Apply'),
 				remove: Button(editor, 'bin', 'Delete')
 			},
 			prop = dom(
@@ -166,7 +167,7 @@ export function imageProperties(editor: IJodit) {
 											</div>
 										</div>
 									</div>
-									<div class="jodit_col-lg-3-5 jodit_col-xs-5-5 tabsbox"></div>
+									<div class="jodit_col-lg-3-5 jodit_col-xs-5-5 jodit-ip-tabsbox"></div>
 								</div>
 							</form>`
 			),
@@ -415,7 +416,7 @@ export function imageProperties(editor: IJodit) {
 					'.imageViewSrc'
 				);
 				if (imageViewSrc) {
-					imageViewSrc.setAttribute('src', attr(image, 'src') || '');
+					attr(imageViewSrc, 'src', attr(image, 'src') || '');
 				}
 			},
 			update = () => {
@@ -435,7 +436,9 @@ export function imageProperties(editor: IJodit) {
 		let lockSize: boolean = true,
 			lockMargin: boolean = true;
 
-		const tabsbox: HTMLElement | null = prop.querySelector('.tabsbox');
+		const tabsbox: HTMLElement | null = prop.querySelector(
+			'.jodit-ip-tabsbox'
+		);
 
 		if (tabsbox) {
 			tabsbox.appendChild(
@@ -486,10 +489,12 @@ export function imageProperties(editor: IJodit) {
 														),
 														() => {
 															if (
-																typeof resp.newfilename ===
-																'string'
+																isString(
+																	resp.newfilename
+																)
 															) {
-																image.setAttribute(
+																attr(
+																	image,
 																	'src',
 																	resp.baseurl +
 																		resp.newfilename
@@ -612,7 +617,7 @@ export function imageProperties(editor: IJodit) {
 			);
 
 		if (jodit_lock_size) {
-			jodit_lock_size.addEventListener('click', function() {
+			editor.e.on(jodit_lock_size, 'click', function() {
 				lockSize = !lockSize;
 				this.innerHTML = gi(lockSize ? 'lock' : 'unlock');
 				editor.e.fire($w, 'change');
@@ -620,7 +625,7 @@ export function imageProperties(editor: IJodit) {
 		}
 
 		if (jodit_lock_margin) {
-			jodit_lock_margin.addEventListener('click', function() {
+			editor.e.on(jodit_lock_margin, 'click', function() {
 				lockMargin = !lockMargin;
 
 				this.innerHTML = gi(lockMargin ? 'lock' : 'unlock');
@@ -674,12 +679,9 @@ export function imageProperties(editor: IJodit) {
 		buttons.check.onAction(() => {
 			// styles
 			if (opt.image.editStyle) {
-				if (val(prop, '.style')) {
-					image.setAttribute('style', val(prop, '.style'));
-				} else {
-					image.removeAttribute('style');
-				}
+				attr(image,'style', val(prop, '.style') || null);
 			}
+
 			// Src
 			if (val(prop, '.imageSrc')) {
 				image.setAttribute('src', val(prop, '.imageSrc'));
@@ -690,7 +692,6 @@ export function imageProperties(editor: IJodit) {
 			}
 
 			// Border radius
-
 			if (
 				val(prop, '.border_radius') !== '0' &&
 				/^[0-9]+$/.test(val(prop, '.border_radius'))
@@ -701,18 +702,10 @@ export function imageProperties(editor: IJodit) {
 			}
 
 			// Title
-			if (val(prop, '.imageTitle')) {
-				image.setAttribute('title', val(prop, '.imageTitle'));
-			} else {
-				image.removeAttribute('title');
-			}
+			attr(image,'title', val(prop, '.imageTitle') || null);
 
 			// Alt
-			if (val(prop, '.imageAlt')) {
-				image.setAttribute('alt', val(prop, '.imageAlt'));
-			} else {
-				image.removeAttribute('alt');
-			}
+			attr(image,'alt', val(prop, '.imageAlt') || null);
 
 			// Link
 			let link: HTMLAnchorElement | null = Dom.closest(
@@ -772,19 +765,11 @@ export function imageProperties(editor: IJodit) {
 			}
 
 			if (opt.image.editClass) {
-				if (val(prop, '.classes')) {
-					image.setAttribute('class', val(prop, '.classes'));
-				} else {
-					image.removeAttribute('class');
-				}
+				attr(image,'class', val(prop, '.classes') || null);
 			}
 
 			if (opt.image.editId) {
-				if (val(prop, '.id')) {
-					image.setAttribute('id', val(prop, '.id'));
-				} else {
-					image.removeAttribute('id');
-				}
+				attr(image,'id', val(prop, '.id') || null);
 			}
 
 			if (opt.image.editAlign) {
@@ -800,8 +785,8 @@ export function imageProperties(editor: IJodit) {
 						css(image, 'float', '');
 						css(image, {
 							display: 'block',
-							'margin-left': 'auto',
-							'margin-right': 'auto'
+							marginLeft: 'auto',
+							marginRight: 'auto'
 						});
 					}
 				} else {
@@ -821,7 +806,7 @@ export function imageProperties(editor: IJodit) {
 			}
 
 			if (!attr(image, 'style')) {
-				image.removeAttribute('style');
+				attr(image,'style',null);
 			}
 
 			editor.setEditorValue();
@@ -833,6 +818,10 @@ export function imageProperties(editor: IJodit) {
 
 		dialog.setSize(500);
 		dialog.open();
+
+		editor.e.on('beforeDestruct', () => {
+			dialog.destruct();
+		});
 
 		if (e) {
 			e.preventDefault();

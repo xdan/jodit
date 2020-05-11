@@ -329,8 +329,10 @@ function appendTestArea(id, noput) {
 	return textarea;
 }
 
-function getJodit() {
-	return new Jodit(appendTestArea());
+function getJodit(options) {
+	const editor =  new Jodit(appendTestArea(), options);
+	window.scrollTo(0, Jodit.modules.Helpers.offset(editor.container, editor, editor.od).top);
+	return editor;
 }
 
 /**
@@ -585,6 +587,12 @@ function getOpenedPopup(editor) {
 		'[role="popup"][data-editor_id="' + editor.id + '"]:last-child'
 	);
 	return popups.length ? popups[popups.length - 1] : null;
+}
+
+function getOpenedDialog(editor) {
+	return editor.ownerDocument.querySelector(
+		'.jodit-dialog__box:last-child'
+	) || null;
 }
 
 /**

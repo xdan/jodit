@@ -27,11 +27,11 @@ export function wait<T extends IViewComponent | IViewBased>(
 					? component.async
 					: component.j.async;
 
-				const realMethod = (target as any)[propertyKey];
+				const realMethod = (component as any)[propertyKey];
 
 				let timeout: number = 0;
 
-				(target as any)[propertyKey] = function callProxy(
+				(component as any)[propertyKey] = function callProxy(
 					...args: any[]
 				): void {
 					async.clearTimeout(timeout);
