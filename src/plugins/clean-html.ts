@@ -71,7 +71,7 @@ declare module '../config' {
 			replaceNBSP: boolean;
 			fillEmptyParagraph: boolean;
 			removeEmptyElements: boolean;
-			replaceOldTags: IDictionary<string> | false;
+			replaceOldTags: IDictionary<HTMLTagNames> | false;
 			allowTags: false | string | IDictionary<string>;
 			denyTags: false | string | IDictionary<string>;
 		};
@@ -124,10 +124,10 @@ export class cleanHtml extends Plugin {
 		const replaceOldTags = editor.o.cleanHTML.replaceOldTags;
 
 		if (replaceOldTags && current) {
-			const tags = Object.keys(replaceOldTags).join('|');
+			const tags = Object.keys(replaceOldTags) as HTMLTagNames[];
 
 			if (editor.selection.isCollapsed()) {
-				const oldParent: Node | false = Dom.closest(
+				const oldParent = Dom.closest(
 					current,
 					tags,
 					editor.editor

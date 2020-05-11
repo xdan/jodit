@@ -50,9 +50,10 @@ interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 	isReady: boolean;
 	componentStatus: ComponentStatus;
 	setStatus(componentStatus: ComponentStatus): void;
+
 	hookStatus(
 		status: keyof Statuses,
-		callback: (component: IComponent) => void
+		callback: (component: this) => void
 	): void;
 }
 
@@ -63,7 +64,7 @@ interface IViewComponent<T extends IViewBased = IViewBased> extends IComponent {
 }
 
 export type NodeCondition = (
-	node: Node | null
+	node: Nullable<Node>
 ) => boolean | null | false | void | '';
 
 /**
@@ -214,6 +215,18 @@ export interface EventHandlerBlock {
 	syntheticCallback: CallbackFunction;
 }
 
+declare global {
+	interface HTMLElementTagNameMap {
+		'jodit': HTMLDivElement;
+	}
+}
+
 export type HTMLTagNames = keyof HTMLElementTagNameMap;
 
 export type Modes = 1 | 2 | 3;
+
+declare global {
+	interface MouseEvent {
+		buffer?: IDictionary;
+	}
+}

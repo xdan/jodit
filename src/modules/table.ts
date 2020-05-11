@@ -16,31 +16,82 @@
 
 import * as consts from '../core/constants';
 import { Dom } from '../core/dom';
-import { $$, attr, each, trim } from '../core/helpers/';
-import { ICreate } from '../types';
+import { $$, attr, cssPath, each, trim } from '../core/helpers/';
+import { ICreate, IJodit } from '../types';
+import { ViewComponent } from '../core/component';
+import { getContainer } from '../core/global';
+import { debounce } from '../core/decorators';
 
-export class Table {
-	static addSelected(td: HTMLTableCellElement) {
-		td.setAttribute(consts.JODIT_SELECTED_CELL_MARKER, '1');
+export class Table extends ViewComponent<IJodit> {
+	private selected: Set<HTMLTableCellElement> = new Set();
+	private static selectedByTable: WeakMap<
+		HTMLTableElement,
+		Set<HTMLTableCellElement>
+	> = new WeakMap();
+
+	@debounce()
+	private recalculateStyles(): void {
+		const style = getContainer(this.j, Table.name, 'style', true);
+		const selectors: string[] = [];
+
+		this.selected.forEach(td => {
+			const selector = cssPath(td);
+			selector && selectors.push(selector);
+		});
+
+		style.innerHTML = selectors.length ? selectors.join(',') + '{border: 1px double #1e88e5;}' : '';
 	}
-	static restoreSelection(td: HTMLTableCellElement) {
-		td.removeAttribute(consts.JODIT_SELECTED_CELL_MARKER);
+
+	addSelection(td: HTMLTableCellElement): void {
+		this.selected.add(td);
+		this.recalculateStyles();
+
+		const table = Dom.closest(td, 'table', this.j.editor);
+
+		if (table) {
+			const cells = Table.selectedByTable.get(table) || new Set();
+			cells.add(td);
+			Table.selectedByTable.set(table, cells);
+		}
+	}
+
+	removeSelection(td: HTMLTableCellElement): void {
+		this.selected.delete(td);
+		this.recalculateStyles();
+
+		const table = Dom.closest(td, 'table', this.j.editor);
+
+		if (table) {
+			const cells = Table.selectedByTable.get(table);
+
+			if (cells) {
+				cells.delete(td);
+
+				if (!cells.size) {
+					Table.selectedByTable.delete(table);
+				}
+			}
+		}
 	}
 
 	/**
 	 * Returns array of selected cells
-	 * @param {HTMLTableElement} table
-	 * @return {HTMLTableCellElement[]}
 	 */
-	static getAllSelectedCells(
-		table: HTMLElement | HTMLTableElement
+	getAllSelectedCells(): HTMLTableCellElement[] {
+		return Array.from(this.selected);
+	}
+
+	static getSelectedCellsByTable(
+		table: HTMLTableElement
 	): HTMLTableCellElement[] {
-		return table
-			? ($$(
-					`td[${consts.JODIT_SELECTED_CELL_MARKER}],th[${consts.JODIT_SELECTED_CELL_MARKER}]`,
-					table
-			  ) as HTMLTableCellElement[])
-			: [];
+		const cells = Table.selectedByTable.get(table);
+		return cells ? Array.from(cells) : [];
+	}
+
+	/** @override **/
+	destruct(): any {
+		this.selected.clear();
+		return super.destruct();
 	}
 
 	/**
@@ -82,7 +133,7 @@ export class Table {
 		) => false | void
 	): HTMLTableCellElement[][] {
 		const matrix: HTMLTableCellElement[][] = [[]];
-		const rows = Array.prototype.slice.call(table.rows);
+		const rows = Array.from(table.rows);
 
 		const setCell = (
 			cell: HTMLTableCellElement,
@@ -124,9 +175,10 @@ export class Table {
 			}
 		};
 
-		for (let i = 0, j; i < rows.length; i += 1) {
-			const cells = Array.prototype.slice.call(rows[i].cells);
-			for (j = 0; j < cells.length; j += 1) {
+		for (let i = 0; i < rows.length; i += 1) {
+			const cells = Array.from<HTMLTableCellElement>(rows[i].cells);
+
+			for (let j = 0; j < cells.length; j += 1) {
 				if (setCell(cells[j], i) === false) {
 					return matrix;
 				}
@@ -385,7 +437,7 @@ export class Table {
 
 		for (i = 0; i < box.length; i += 1) {
 			for (j = 0; j < box[i].length; j += 1) {
-				if (selectedCells.indexOf(box[i][j]) !== -1) {
+				if (selectedCells.includes(box[i][j])) {
 					bound[0][0] = Math.min(i, bound[0][0]);
 					bound[0][1] = Math.min(j, bound[0][1]);
 					bound[1][0] = Math.max(i, bound[1][0]);
@@ -393,6 +445,7 @@ export class Table {
 				}
 			}
 		}
+
 		for (i = bound[0][0]; i <= bound[1][0]; i += 1) {
 			for (k = 1, j = bound[0][1]; j <= bound[1][1]; j += 1) {
 				while (box[i][j - k] && box[i][j] === box[i][j - k]) {
@@ -400,18 +453,21 @@ export class Table {
 					bound[1][1] = Math.max(j - k, bound[1][1]);
 					k += 1;
 				}
+
 				k = 1;
 				while (box[i][j + k] && box[i][j] === box[i][j + k]) {
 					bound[0][1] = Math.min(j + k, bound[0][1]);
 					bound[1][1] = Math.max(j + k, bound[1][1]);
 					k += 1;
 				}
+
 				k = 1;
 				while (box[i - k] && box[i][j] === box[i - k][j]) {
 					bound[0][0] = Math.min(i - k, bound[0][0]);
 					bound[1][0] = Math.max(i - k, bound[1][0]);
 					k += 1;
 				}
+
 				k = 1;
 				while (box[i + k] && box[i][j] === box[i + k][j]) {
 					bound[0][0] = Math.min(i + k, bound[0][0]);
@@ -467,6 +523,7 @@ export class Table {
 		for (i = 0; i < box.length; i += 1) {
 			min = 1000000;
 			not = false;
+
 			for (j = 0; j < box[i].length; j += 1) {
 				if (box[i][j] === undefined) {
 					continue; // broken table
@@ -477,11 +534,13 @@ export class Table {
 				}
 				min = Math.min(min, box[i][j].rowSpan);
 			}
+
 			if (!not) {
 				for (j = 0; j < box[i].length; j += 1) {
 					if (box[i][j] === undefined) {
 						continue; // broken table
 					}
+
 					Table.__mark(
 						box[i][j],
 						'rowspan',
@@ -498,18 +557,21 @@ export class Table {
 				if (box[i][j] === undefined) {
 					continue; // broken table
 				}
+
 				if (
 					box[i][j].hasAttribute('rowspan') &&
 					box[i][j].rowSpan === 1
 				) {
 					box[i][j].removeAttribute('rowspan');
 				}
+
 				if (
 					box[i][j].hasAttribute('colspan') &&
 					box[i][j].colSpan === 1
 				) {
 					box[i][j].removeAttribute('colspan');
 				}
+
 				if (
 					box[i][j].hasAttribute('class') &&
 					!attr(box[i][j], 'class')
@@ -524,13 +586,13 @@ export class Table {
 
 	/**
 	 * It combines all of the selected cells into one. The contents of the cells will also be combined
-	 * @param {HTMLTableElement} table
+	 * @param table
 	 */
 	static mergeSelected(table: HTMLTableElement) {
 		const html: string[] = [],
 			bound: number[][] = Table.getSelectedBound(
 				table,
-				Table.getAllSelectedCells(table)
+				Table.getSelectedCellsByTable(table)
 			);
 
 		let w: number = 0,
@@ -643,7 +705,7 @@ export class Table {
 	/**
 	 * Divides all selected by `jodit_focused_cell` class table cell in 2 parts vertical. Those division into 2 columns
 	 */
-	static splitHorizontal(table: HTMLTableElement, create: ICreate) {
+	static splitHorizontal(table: HTMLTableElement, jodit: IJodit) {
 		let coord: number[],
 			td: HTMLTableCellElement,
 			tr: HTMLTableRowElement,
@@ -652,11 +714,11 @@ export class Table {
 
 		const __marked: HTMLTableCellElement[] = [];
 
-		Table.getAllSelectedCells(table).forEach(
+		Table.getSelectedCellsByTable(table).forEach(
 			(cell: HTMLTableCellElement) => {
-				td = create.element('td');
-				td.appendChild(create.element('br'));
-				tr = create.element('tr');
+				td = jodit.createInside.element('td');
+				td.appendChild(jodit.createInside.element('br'));
+				tr = jodit.createInside.element('tr');
 
 				coord = Table.formalCoordinate(table, cell);
 
@@ -711,7 +773,7 @@ export class Table {
 				}
 
 				Table.__unmark(__marked);
-				Table.restoreSelection(cell);
+				jodit.getInstance<Table>('Table', jodit.o).removeSelection(cell);
 			}
 		);
 		this.normalizeTable(table);
@@ -719,14 +781,13 @@ export class Table {
 
 	/**
 	 * It splits all the selected cells into 2 parts horizontally. Those. are added new row
-	 * @param {HTMLTableElement} table
 	 */
-	static splitVertical(table: HTMLTableElement, create: ICreate) {
+	static splitVertical(table: HTMLTableElement, jodit: IJodit) {
 		let coord: number[], td: HTMLTableCellElement, percentage: number;
 
 		const __marked: HTMLTableCellElement[] = [];
 
-		Table.getAllSelectedCells(table).forEach(
+		Table.getSelectedCellsByTable(table).forEach(
 			(cell: HTMLTableCellElement) => {
 				coord = Table.formalCoordinate(table, cell);
 				if (cell.colSpan < 2) {
@@ -748,8 +809,8 @@ export class Table {
 					Table.__mark(cell, 'colspan', cell.colSpan - 1, __marked);
 				}
 
-				td = create.element('td');
-				td.appendChild(create.element('br'));
+				td = jodit.createInside.element('td');
+				td.appendChild(jodit.createInside.element('br'));
 
 				if (cell.rowSpan > 1) {
 					Table.__mark(td, 'rowspan', cell.rowSpan, __marked);
@@ -767,17 +828,22 @@ export class Table {
 					(percentage * 100).toFixed(consts.ACCURACY) + '%',
 					__marked
 				);
+
 				Table.__mark(
 					td,
 					'width',
 					(percentage * 100).toFixed(consts.ACCURACY) + '%',
 					__marked
 				);
+
 				Table.__unmark(__marked);
 
-				Table.restoreSelection(cell);
+				jodit
+					.getInstance<Table>('Table', jodit.o)
+					.removeSelection(cell);
 			}
 		);
+
 		Table.normalizeTable(table);
 	}
 

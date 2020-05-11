@@ -5,6 +5,7 @@
  */
 
 import {
+	HTMLTagNames,
 	IComponent,
 	IDictionary,
 	IJodit,
@@ -13,7 +14,7 @@ import {
 } from '../types';
 import { PluginSystem } from './plugin-system';
 import { Dom } from './dom';
-import { isViewObject, kebabCase } from './helpers/';
+import { isJoditObject, isViewObject, kebabCase } from './helpers/';
 
 export const instances: IDictionary<IJodit> = {};
 
@@ -40,18 +41,37 @@ const boxes = new WeakMap<IComponent, IDictionary<HTMLElement>>();
  *
  * @param jodit
  * @param name
+ * @param [tag]
  */
-export function getContainer(
+export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 	jodit: IViewBased | IViewComponent,
-	name: string
-): HTMLElement {
+	name: string,
+	tag: T = <T>'div',
+	inside: boolean = false
+): HTMLElementTagNameMap[T] {
 	const data = boxes.get(jodit) || {};
 
 	if (!data[name]) {
-		const c = isViewObject(jodit) ? jodit.c : jodit.j.c;
-		const box = c.div(`jodit-${kebabCase(name)}-container jodit-box`);
+		let c = isViewObject(jodit) ? jodit.c : jodit.j.c,
+			body = jodit.od.body;
 
-		jodit.od.body.appendChild(box);
+		if (
+			inside &&
+			isJoditObject(jodit) &&
+			jodit.od !== jodit.editorDocument
+		) {
+			c = jodit.createInside;
+			body =
+				tag === 'style'
+					? jodit.editorDocument.head
+					: jodit.editorDocument.body;
+		}
+
+		const box = c.element(tag, {
+			className: `jodit-${kebabCase(name)}-container jodit-box`
+		});
+
+		body.appendChild(box);
 
 		data[name] = box;
 
@@ -67,5 +87,5 @@ export function getContainer(
 		boxes.set(jodit, data);
 	}
 
-	return data[name];
+	return data[name] as HTMLElementTagNameMap[T];
 }

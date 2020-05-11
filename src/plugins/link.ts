@@ -83,7 +83,7 @@ Config.prototype.controls.unlink = {
 	exec: (editor: IJodit, current: Node) => {
 		const anchor: HTMLAnchorElement | false = Dom.closest(
 			current,
-			'A',
+			'a',
 			editor.editor
 		) as HTMLAnchorElement;
 
@@ -157,10 +157,10 @@ Config.prototype.controls.link = {
 						editor.editorDocument
 				  );
 
-		if (current && Dom.closest(current, 'A', editor.editor)) {
+		if (current && Dom.closest(current, 'a', editor.editor)) {
 			link = Dom.closest(
 				current,
-				'A',
+				'a',
 				editor.editor
 			) as HTMLAnchorElement;
 		} else {
@@ -332,7 +332,7 @@ export function link(jodit: IJodit) {
 			if (command === 'removeFormat') {
 				node = sel.current();
 				if (node && !Dom.isTag(node, 'a')) {
-					node = Dom.closest(node, 'A', jodit.editor);
+					node = Dom.closest(node, 'a', jodit.editor);
 				}
 				if (Dom.isTag(node, 'a')) {
 					if (node.innerHTML === node.textContent) {

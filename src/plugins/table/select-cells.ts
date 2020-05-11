@@ -1,286 +1,318 @@
-import { Plugin } from '../../core/plugin';
-import { IBound, IJodit } from '../../types';
-import { Dom, Table } from '../../modules';
-import { $$, position } from '../../core/helpers';
-import { alignElement } from '../justify';
-import * as consts from '../../core/constants';
+import autobind from 'autobind-decorator';
 
-export class SelectCells extends Plugin {
+import { Plugin } from '../../core/plugin';
+import { IBound, IJodit, Nullable } from '../../types';
+import { Dom, Table } from '../../modules';
+import { $$, dataBind, position } from '../../core/helpers';
+import { alignElement } from '../justify';
+import { KEY_TAB } from '../../core/constants';
+
+const key = 'table_processor_observer';
+
+export class selectCells extends Plugin {
+	/**
+	 * Shortcut for Table module
+	 */
+	private get module(): Table {
+		return this.j.getInstance<Table>('Table', this.j.o);
+	}
+
 	protected afterInit(jodit: IJodit): void {
 		jodit.e
 			.on(
-				this.j.ow,
-				'mousedown.table touchend.table',
-				(event: MouseEvent) => {
-					// need use event['originalEvent'] because of IE can not set target from
-					// another window to current window
-					const current_cell: HTMLTableCellElement = Dom.closest(
-						(event as any).originalEvent.target as HTMLElement,
-						'TD|TH',
-						this.j.editor
-					) as HTMLTableCellElement;
-
-					let table: HTMLTableElement | null = null;
-
-					if (Dom.isCell(current_cell, this.j.editorWindow)) {
-						table = Dom.closest(
-							current_cell,
-							'table',
-							this.j.editor
-						) as HTMLTableElement;
-					}
-
-					if (table) {
-						this.deSelectAll(
-							table,
-							current_cell instanceof
-								(this.j.editorWindow as any)
-									.HTMLTableCellElement
-								? current_cell
-								: false
-						);
-					} else {
-						this.deSelectAll();
-					}
-				}
+				[this.j.ow, this.j.editorWindow],
+				'mouseup.table touchend.table',
+				this.onStopSelection
+			)
+			.on(
+				[this.j.ow, this.j.editorWindow],
+				'mousedown.table touchstart.table',
+				this.onMouseClickEverywhere
 			)
 			.on('keydown.table', (event: KeyboardEvent) => {
-				if (event.key === consts.KEY_TAB) {
-					($$('table', jodit.editor) as HTMLTableElement[]).forEach(
-						(table: HTMLTableElement) => {
-							this.deSelectAll(table);
-						}
-					);
+				if (event.key === KEY_TAB) {
+					this.unselectCells();
 				}
 			})
-			.on('beforeCommand.table', this.onExecCommand.bind(this))
-			.on('afterCommand.table', this.onAfterCommand.bind(this))
-			.on('afterGetValueFromEditor.table', (data: { value: string }) => {
-				const rxp = new RegExp(
-					`([\s]*)${consts.JODIT_SELECTED_CELL_MARKER}="1"`,
-					'g'
-				);
 
-				if (rxp.test(data.value)) {
-					data.value = data.value.replace(rxp, '');
-				}
-			})
+			.on('beforeCommand.table', this.onExecCommand)
+			.on('afterCommand.table', this.onAfterCommand)
+
 			.on('change.table afterCommand.table afterSetMode.table', () => {
-				($$('table', jodit.editor) as HTMLTableElement[]).forEach(
-					(table: HTMLTableElement) => {
-						if (!(table as any)[this.key]) {
-							this.observe(table);
-						}
+				$$('table', jodit.editor).forEach(table => {
+					if (!dataBind(table, key)) {
+						this.observe(table);
 					}
-				);
+				});
 			});
 	}
 
-	private selectMode: boolean = false;
+	/**
+	 * Start selection or remove all selection from cells
+	 */
+	@autobind
+	private onMouseClickEverywhere(event: MouseEvent): void {
+		// need use event['originalEvent'] because of IE can not set target from
+		// another window to current window
+		const cell = Dom.closest(
+			(event as any).originalEvent.target as HTMLElement,
+			['td', 'th'],
+			this.j.editor
+		);
 
-	private key: string = 'table_processor_observer';
+		if (!cell) {
+			return this.unselectCells();
+		}
 
-	private observe(table: HTMLTableElement) {
-		(table as any)[this.key] = true;
+		const table = Dom.closest(cell, 'table', this.j.editor);
 
-		let start: HTMLTableCellElement;
-
-		this.j.e
-			.on(
-				table,
-				'mousedown.table touchstart.table',
-				(event: MouseEvent) => {
-					if (this.j.o.readonly) {
-						return;
-					}
-
-					const cell = Dom.up(
-						event.target as HTMLElement,
-						elm => Dom.isCell(elm, this.j.editorWindow),
-						table
-					) as HTMLTableCellElement;
-
-					if (cell) {
-						if (!cell.firstChild) {
-							cell.appendChild(this.j.createInside.element('br'));
-						}
-
-						start = cell;
-						Table.addSelected(cell);
-
-						this.j.e.fire(
-							'showPopup',
-							table,
-							(): IBound => position(cell, this.j),
-							'table-cells'
-						);
-
-						this.selectMode = true;
-					}
-				}
-			)
-			.on(
-				table,
-				'mousemove.table touchmove.table',
-				(event: MouseEvent) => {
-					if (this.j.o.readonly) {
-						return;
-					}
-
-					if (this.j.isLockedNotBy(this.key)) {
-						return;
-					}
-
-					const cell = Dom.up(
-						event.target as HTMLElement,
-						elm => Dom.isCell(elm, this.j.editorWindow),
-						table
-					) as HTMLTableCellElement;
-
-					if (!cell) {
-						return;
-					}
-
-					if (this.selectMode) {
-						if (cell !== start) {
-							this.j.lock(this.key);
-
-							const sel = this.j.selection.sel;
-							sel && sel.removeAllRanges();
-
-							if (event.preventDefault) {
-								event.preventDefault();
-							}
-						}
-
-						this.deSelectAll(table);
-
-						const bound = Table.getSelectedBound(table, [
-								cell,
-								start
-							]),
-							box = Table.formalMatrix(table);
-
-						for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
-							for (
-								let j = bound[0][1];
-								j <= bound[1][1];
-								j += 1
-							) {
-								Table.addSelected(box[i][j]);
-							}
-						}
-
-						const max = box[bound[1][0]][bound[1][1]],
-							min = box[bound[0][0]][bound[0][1]];
-
-						this.j.e.fire(
-							'showPopup',
-							table,
-							(): IBound => {
-								const minOffset: IBound = position(min, this.j);
-
-								const maxOffset: IBound = position(max, this.j);
-
-								return {
-									left: minOffset.left,
-									top: minOffset.top,
-
-									width:
-										maxOffset.left -
-										minOffset.left +
-										maxOffset.width,
-
-									height:
-										maxOffset.top -
-										minOffset.top +
-										maxOffset.height
-								};
-							},
-							'table-cells'
-						);
-
-						event.stopPropagation();
-					}
-				}
-			);
+		if (table) {
+			this.unselectCells(table, cell);
+		} else {
+			this.unselectCells();
+		}
 	}
 
 	/**
-	 *
-	 * @param {HTMLTableElement} [table]
-	 * @param {HTMLTableCellElement} [currentCell]
-	 * @private
+	 * First selected cell
 	 */
-	private deSelectAll(
+	private selectedCell: Nullable<HTMLTableCellElement> = null;
+
+	/***
+	 * Add listeners for table
+	 * @param table
+	 */
+	private observe(table: HTMLTableElement) {
+		dataBind(table, key, true);
+
+		this.j.e.on(
+			table,
+			'mousedown.table touchstart.table',
+			this.onStartSelection.bind(this, table)
+		);
+	}
+
+	/**
+	 * Mouse click inside the table
+	 *
+	 * @param table
+	 * @param event
+	 */
+	private onStartSelection(table: HTMLTableElement, event: MouseEvent): void {
+		if (this.j.o.readonly) {
+			return;
+		}
+
+		const cell = Dom.closest(
+			event.target as HTMLElement,
+			['td', 'th'],
+			table
+		);
+
+		if (!cell) {
+			return;
+		}
+
+		if (!cell.firstChild) {
+			cell.appendChild(this.j.createInside.element('br'));
+		}
+
+		this.selectedCell = cell;
+
+		this.module.addSelection(cell);
+
+		this.j.e.on(
+			table,
+			'mousemove.table touchmove.table',
+			this.onMove.bind(this, table)
+		);
+
+		event.buffer = {
+			isOpenEvent: true
+		}
+
+		this.j.e.fire(
+			'showPopup',
+			table,
+			(): IBound => position(cell, this.j),
+			'table-cells'
+		);
+	}
+
+	/**
+	 * Mouse move inside the table
+	 *
+	 * @param table
+	 * @param event
+	 */
+	private onMove(table: HTMLTableElement, event: MouseEvent): void {
+		if (this.j.o.readonly) {
+			return;
+		}
+
+		if (this.j.isLockedNotBy(key)) {
+			return;
+		}
+
+		const cell = Dom.closest(
+			event.target as HTMLElement,
+			['td', 'th'],
+			table
+		);
+
+		if (!cell || !this.selectedCell) {
+			return;
+		}
+
+		if (cell !== this.selectedCell) {
+			this.j.lock(key);
+
+			this.j.selection.clear();
+
+			if (event.preventDefault) {
+				event.preventDefault();
+			}
+		}
+
+		this.unselectCells(table);
+
+		const bound = Table.getSelectedBound(table, [cell, this.selectedCell]),
+			box = Table.formalMatrix(table);
+
+		for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
+			for (let j = bound[0][1]; j <= bound[1][1]; j += 1) {
+				this.j
+					.getInstance<Table>('Table', this.j.o)
+					.addSelection(box[i][j]);
+			}
+		}
+
+		const max = box[bound[1][0]][bound[1][1]],
+			min = box[bound[0][0]][bound[0][1]];
+
+		this.j.e.fire('hidePopup');
+		this.j.e.fire(
+			'showPopup',
+			table,
+			(): IBound => {
+				const minOffset: IBound = position(min, this.j),
+					maxOffset: IBound = position(max, this.j);
+
+				return {
+					left: minOffset.left,
+					top: minOffset.top,
+
+					width: maxOffset.left - minOffset.left + maxOffset.width,
+
+					height: maxOffset.top - minOffset.top + maxOffset.height
+				};
+			},
+			'table-cells'
+		);
+
+		event.stopPropagation();
+	}
+
+	/**
+	 * Stop selection process
+	 */
+	@autobind
+	private onStopSelection(): void {
+		this.j.unlock();
+
+		if (!this.selectedCell) {
+			return;
+		}
+
+		this.selectedCell = null;
+
+		$$('table', this.j.editor).forEach(table => {
+			this.j.e.off(table, 'mousemove.table touchmove.table');
+		});
+	}
+
+	/**
+	 * Remove selection for all cells
+	 *
+	 * @param [table]
+	 * @param [currentCell]
+	 */
+	private unselectCells(
 		table?: HTMLTableElement,
-		currentCell?: HTMLTableCellElement | false
+		currentCell: Nullable<HTMLTableCellElement> = this.selectedCell
 	) {
-		const cells: HTMLTableCellElement[] = table
-			? Table.getAllSelectedCells(table)
-			: Table.getAllSelectedCells(this.j.editor);
+		const module = this.module;
+		const cells = module.getAllSelectedCells();
 
 		if (cells.length) {
-			cells.forEach((cell: HTMLTableCellElement) => {
+			cells.forEach(cell => {
 				if (!currentCell || currentCell !== cell) {
-					Table.restoreSelection(cell);
+					module.removeSelection(cell);
 				}
 			});
 		}
 	}
 
 	/**
-	 *
+	 * Execute custom commands for table
 	 * @param {string} command
 	 */
-	private onExecCommand = (command: string): false | void => {
+	@autobind
+	private onExecCommand(command: string): false | void {
 		if (
 			/table(splitv|splitg|merge|empty|bin|binrow|bincolumn|addcolumn|addrow)/.test(
 				command
 			)
 		) {
 			command = command.replace('table', '');
-			const cells = Table.getAllSelectedCells(this.j.editor);
+
+			const cells = this.module.getAllSelectedCells();
+
 			if (cells.length) {
-				const cell: HTMLTableCellElement | undefined = cells.shift();
+				const cell = cells.shift();
 
 				if (!cell) {
 					return;
 				}
 
-				const table = Dom.closest(
-					cell,
-					'table',
-					this.j.editor
-				) as HTMLTableElement;
+				const table = Dom.closest(cell, 'table', this.j.editor);
+
+				if (!table) {
+					return;
+				}
 
 				switch (command) {
 					case 'splitv':
-						Table.splitVertical(table, this.j.createInside);
+						Table.splitVertical(table, this.j);
 						break;
+
 					case 'splitg':
-						Table.splitHorizontal(table, this.j.createInside);
+						Table.splitHorizontal(table, this.j);
 						break;
+
 					case 'merge':
 						Table.mergeSelected(table);
 						break;
+
 					case 'empty':
-						Table.getAllSelectedCells(this.j.editor).forEach(
-							td => (td.innerHTML = '')
-						);
+						cells.forEach(td => (td.innerHTML = ''));
 						break;
+
 					case 'bin':
 						Dom.safeRemove(table);
 						break;
+
 					case 'binrow':
 						Table.removeRow(
 							table,
 							(cell.parentNode as HTMLTableRowElement).rowIndex
 						);
 						break;
+
 					case 'bincolumn':
 						Table.removeColumn(table, cell.cellIndex);
 						break;
+
 					case 'addcolumnafter':
 					case 'addcolumnbefore':
 						Table.appendColumn(
@@ -290,6 +322,7 @@ export class SelectCells extends Plugin {
 							this.j.createInside
 						);
 						break;
+
 					case 'addrowafter':
 					case 'addrowbefore':
 						Table.appendRow(
@@ -303,15 +336,41 @@ export class SelectCells extends Plugin {
 			}
 			return false;
 		}
-	};
+	}
 
-	private onAfterCommand(command: string) {
+	/**
+	 * Add some align after native command
+	 * @param command
+	 */
+	@autobind
+	private onAfterCommand(command: string): void {
 		if (/^justify/.test(command)) {
-			$$('[data-jodit-selected-cell]', this.j.editor).forEach(elm =>
-				alignElement(command, elm, this.j)
-			);
+			this.module
+				.getAllSelectedCells()
+				.forEach(elm => alignElement(command, elm, this.j));
 		}
 	}
 
-	protected beforeDestruct(jodit: IJodit): void {}
+	/** @override */
+	protected beforeDestruct(jodit: IJodit): void {
+		this.onStopSelection();
+
+		jodit.e
+			.off(
+				[jodit.ow, jodit.editorWindow],
+				'mouseup.table touchend.table',
+				this.onStopSelection
+			)
+			.off(
+				[jodit.ow, jodit.editorWindow],
+				'mousedown.table touchstart.table',
+				this.onMouseClickEverywhere
+			)
+			.off('keydown.table')
+			.off('beforeCommand.table', this.onExecCommand)
+			.off('afterCommand.table', this.onAfterCommand)
+			.off('afterGetValueFromEditor.table')
+			.off('change.table afterCommand.table afterSetMode.table')
+			.off('.table');
+	}
 }

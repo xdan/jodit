@@ -26,7 +26,7 @@ Config.prototype.controls.outdent = {
 		const current: Node | false = editor.selection.current();
 
 		if (current) {
-			const currentBox: HTMLElement | false = Dom.closest(
+			const currentBox = Dom.closest(
 				current,
 				node => Dom.isBlock(node, editor.editorWindow),
 				editor.editor

@@ -225,7 +225,7 @@ export class Popup extends UIElement implements IPopup {
 				width: container.width,
 				height: container.height
 			};
-		}
+		};
 
 		const getMatchStrategy = (inBox: IBound): Nullable<PopupStrategy> => {
 			let strategy: Nullable<PopupStrategy> = null;
@@ -248,7 +248,7 @@ export class Popup extends UIElement implements IPopup {
 			}
 
 			return strategy;
-		}
+		};
 
 		// Try find match position inside Jodit.container
 		let strategy = getMatchStrategy(position(this.j.container));
@@ -304,7 +304,7 @@ export class Popup extends UIElement implements IPopup {
 	 */
 	@autobind
 	private closeOnOutsideClick(e: MouseEvent): void {
-		if (!this.isOpened) {
+		if (!this.isOpened || e.buffer?.isOpenEvent) {
 			return;
 		}
 
@@ -313,21 +313,9 @@ export class Popup extends UIElement implements IPopup {
 			return;
 		}
 
-		const box = Dom.up(e.target as Node, node => {
-			if (node) {
-				const { component } = node as any;
-				return component && component instanceof Popup;
-			}
+		const box = UIElement.closestElement(e.target as Node, Popup);
 
-			return false;
-		});
-
-		if (
-			box &&
-			box.component &&
-			box.component instanceof Popup &&
-			(box.component === this || box.component.closest(this))
-		) {
+		if (box && (this === box || box.closest(this))) {
 			return;
 		}
 

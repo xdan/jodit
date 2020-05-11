@@ -48,6 +48,10 @@ export class Create implements ICreate {
 			if (isPlainObject(value) && key === 'style') {
 				css(elm, <IDictionary<string>>value);
 			} else {
+				if (key === 'className') {
+					key = 'class';
+				}
+
 				elm.setAttribute(kebabCase(key), value.toString());
 			}
 		});

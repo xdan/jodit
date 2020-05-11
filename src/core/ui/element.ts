@@ -49,6 +49,23 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		return null;
 	}
 
+	/**
+	 * Find closest UIElement in DOM
+	 * @param node
+	 */
+	static closestElement(node: Node, type: Function): Nullable<IUIElement> {
+		const elm = Dom.up(node, node => {
+			if (node) {
+				const { component } = node as any;
+				return component && component instanceof type;
+			}
+
+			return false;
+		});
+
+		return elm ? elm?.component : null;
+	}
+
 	readonly mods: IDictionary<string | boolean | null> = {};
 
 	/**

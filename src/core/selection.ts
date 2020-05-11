@@ -113,6 +113,13 @@ export class Select {
 	}
 
 	/**
+	 * Clear all selection
+	 */
+	clear(): void {
+		this.sel?.removeAllRanges();
+	}
+
+	/**
 	 * Remove node element from editor
 	 * @param node
 	 */

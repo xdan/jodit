@@ -141,7 +141,7 @@ export const ColorPickerWidget = (
 		) {
 			target = Dom.closest(
 				target.parentNode,
-				'A',
+				'a',
 				editor.editor
 			) as HTMLElement;
 		}

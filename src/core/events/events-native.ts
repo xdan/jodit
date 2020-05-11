@@ -205,7 +205,7 @@ export class EventsNative implements IEventsNative {
 	): this;
 
 	on(
-		subject: HTMLElement,
+		subjects: HTMLElement[],
 		events: string,
 		handle: CallbackFunction,
 		selector?: string,
@@ -213,7 +213,23 @@ export class EventsNative implements IEventsNative {
 	): this;
 
 	on(
-		subject: object,
+		subject: HTMLElement,
+		events: string,
+		handle: CallbackFunction,
+		selector?: string,
+		onTop?: boolean
+	): this;
+
+	on<T extends object>(
+		subjects: T[],
+		events: string,
+		handle: CallbackFunction,
+		selector?: string,
+		onTop?: boolean
+	): this;
+
+	on<T extends object>(
+		subject: T,
 		events: string,
 		handle: CallbackFunction,
 		selector?: string,

@@ -127,6 +127,8 @@ export function imageProperties(editor: IJodit) {
 			return;
 		}
 
+		editor.e.fire('hidePopup');
+
 		e && e.stopImmediatePropagation();
 
 		const image = this as HTMLImageElement,
@@ -394,7 +396,7 @@ export function imageProperties(editor: IJodit) {
 					val(prop, '.imageAlt', attr(image, 'alt') || '');
 				}
 
-				const a: HTMLAnchorElement | null = Dom.closest(
+				const a = Dom.closest(
 					image,
 					'a',
 					editor.editor

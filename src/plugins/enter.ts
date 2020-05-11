@@ -222,7 +222,7 @@ export class enter extends Plugin {
 		if (
 			this.brMode ||
 			shiftKeyPressed ||
-			Dom.closest(current, 'PRE|BLOCKQUOTE', this.j.editor)
+			Dom.closest(current, ['pre','blockquote'], this.j.editor)
 		) {
 			const br = this.j.createInside.element('br');
 
@@ -291,7 +291,7 @@ export class enter extends Plugin {
 
 		const ul: HTMLUListElement = Dom.closest(
 			currentBox,
-			'ol|ul',
+			['ol','ul'],
 			this.j.editor
 		) as HTMLUListElement;
 

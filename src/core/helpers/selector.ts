@@ -5,7 +5,7 @@
  */
 
 import { IS_IE } from '../constants';
-import { IDictionary } from '../../types/';
+import { HTMLTagNames, IDictionary, Nullable } from '../../types/';
 import { isString } from './checker';
 import { attr } from './utils';
 
@@ -32,10 +32,20 @@ const $$temp = () => {
  *
  * @return {HTMLElement[]}
  */
-export const $$ = (
+export function $$<K extends HTMLTagNames>(
+	selector: K,
+	root: HTMLElement | HTMLDocument
+): HTMLElementTagNameMap[K][];
+
+export function $$(
 	selector: string,
 	root: HTMLElement | HTMLDocument
-): HTMLElement[] => {
+): HTMLElement[];
+
+export function $$(
+	selector: string | HTMLTagNames,
+	root: HTMLElement | HTMLDocument
+): HTMLElement[] {
 	let result: NodeList;
 
 	if (
@@ -62,8 +72,14 @@ export const $$ = (
 	}
 
 	return [].slice.call(result);
-};
+}
 
+/**
+ * Calculate XPath selector
+ *
+ * @param element
+ * @param root
+ */
 export const getXPathByElement = (
 	element: HTMLElement,
 	root: HTMLElement
@@ -109,4 +125,48 @@ export const refs = (root: HTMLElement): IDictionary<HTMLElement> => {
 
 		return def;
 	}, <IDictionary<HTMLElement>>{});
+};
+
+/**
+ * Calculate full CSS selector
+ * @param el
+ */
+export const cssPath = (el: Element): Nullable<string> => {
+	if (!(el instanceof Element)) {
+		return null;
+	}
+
+	const path = [];
+
+	let start: Nullable<Element> = el;
+
+	while (start && start.nodeType === Node.ELEMENT_NODE) {
+		let selector = start.nodeName.toLowerCase();
+
+		if (start.id) {
+			selector += '#' + start.id;
+			path.unshift(selector);
+			break;
+
+		} else {
+			let sib: Nullable<Element> = start,
+				nth = 1;
+
+			do {
+				sib = sib.previousElementSibling;
+
+				if (sib && sib.nodeName.toLowerCase() == selector) {
+					nth++;
+				}
+			} while(sib);
+
+			selector += ':nth-of-type(' + nth + ')';
+		}
+
+		path.unshift(selector);
+
+		start = start.parentNode as Element;
+	}
+
+	return path.join(' > ');
 };

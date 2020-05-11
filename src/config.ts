@@ -977,13 +977,13 @@ Config.prototype.controls = {
 			if (
 				current &&
 				(Dom.isTag(current, 'a') ||
-					Dom.closest(current, 'A', editor.editor))
+					Dom.closest(current, 'a', editor.editor))
 			) {
 				sourceAnchor = Dom.isTag(current, 'a')
 					? current
 					: (Dom.closest(
 							current,
-							'A',
+							'a',
 							editor.editor
 					  ) as HTMLAnchorElement);
 			}

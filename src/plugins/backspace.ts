@@ -382,7 +382,7 @@ export class backspace extends Plugin {
 				if (Dom.isTag(prevBox, 'li')) {
 					const UL: Node | false = Dom.closest(
 						prevBox,
-						'Ul|OL',
+						['ul', 'ol'],
 						jodit.editor
 					);
 

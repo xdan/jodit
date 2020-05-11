@@ -5,6 +5,7 @@ import autobind from 'autobind-decorator';
 import { Plugin } from '../../core/plugin';
 import {
 	Buttons,
+	HTMLTagNames,
 	IBound,
 	IControlType,
 	IDictionary,
@@ -12,6 +13,7 @@ import {
 	IPopup,
 	IToolbarCollection,
 	IUIButtonState,
+	IViewComponent,
 	Nullable
 } from '../../types';
 import { makeCollection } from '../../modules/toolbar/factory';
@@ -27,7 +29,7 @@ import {
 } from '../../core/helpers';
 import { Dom, Table, ToolbarCollection } from '../../modules';
 import { ColorPickerWidget, TabsWidget } from '../../modules/widget';
-import { debounce } from '../../core/decorators';
+import { debounce, wait } from '../../core/decorators';
 
 declare module '../../config' {
 	interface Config {
@@ -178,10 +180,10 @@ Config.prototype.popup = {
 	'table-cells': [
 		{
 			name: 'brush',
-			popup: (editor: IJodit, elm: HTMLTableElement) => {
-				const selected: HTMLTableCellElement[] = Table.getAllSelectedCells(
-					elm
-				);
+			popup: (editor: IJodit) => {
+				const selected: HTMLTableCellElement[] = editor
+					.getInstance<Table>('Table', editor.o)
+					.getAllSelectedCells();
 
 				let $bg: HTMLElement,
 					$cl: HTMLElement,
@@ -258,11 +260,12 @@ Config.prototype.popup = {
 						? control.args[0].toLowerCase()
 						: '';
 
-				Table.getAllSelectedCells(table).forEach(
-					(cell: HTMLTableCellElement) => {
+				editor
+					.getInstance<Table>('Table', editor.o)
+					.getAllSelectedCells()
+					.forEach((cell: HTMLTableCellElement) => {
 						css(cell, 'vertical-align', command);
-					}
-				);
+					});
 			},
 			tooltip: 'Vertical align'
 		},
@@ -378,26 +381,20 @@ export class inlinePopup extends Plugin {
 		this.popup
 	);
 
-	private isTargetClick: boolean = true;
-
 	@autobind
 	private onClick(e: MouseEvent): void {
 		const node = e.target as Node,
-			elements: string = Object.keys(this.j.o.popup).join('|'),
+			elements = Object.keys(this.j.o.popup) as HTMLTagNames[],
 			target: HTMLElement | false = Dom.isTag(node, 'img')
 				? node
 				: Dom.closest(node, elements, this.j.editor);
 
 		if (target && this.canShowPopupForType(target.nodeName.toLowerCase())) {
-			this.isTargetClick = true;
-
-			this.showPopupWithToolbar(
+			this.showPopup(
 				() => position(target),
 				target.nodeName.toLowerCase(),
 				target
 			);
-		} else {
-			this.isTargetClick = false;
 		}
 	}
 
@@ -412,19 +409,12 @@ export class inlinePopup extends Plugin {
 			return;
 		}
 
-		if (sel?.isCollapsed || this.canShowPopupForType(node.nodeName)) {
-			if (!this.isTargetClick && this.popup.isOpened) {
-				this.popup.close();
-			}
-
+		if (sel?.isCollapsed || !this.canShowPopupForType(node.nodeName)) {
 			return;
 		}
 
 		if (this.j.o.toolbarInlineForSelection) {
-			this.showPopupWithToolbar(
-				() => range.getBoundingClientRect(),
-				'selection'
-			);
+			this.showPopup(() => range.getBoundingClientRect(), 'selection');
 		}
 	}
 
@@ -433,13 +423,13 @@ export class inlinePopup extends Plugin {
 	 *
 	 * @param rect
 	 * @param type - selection, img, a etc.
-	 * @param elm
+	 * @param target
 	 */
-	@autobind
-	private showPopupWithToolbar(
+	@wait((ctx: IViewComponent) => !ctx.j.isLocked())
+	private showPopup(
 		rect: () => IBound,
 		type: string,
-		elm?: HTMLElement
+		target?: HTMLElement
 	): boolean {
 		type = type.toLowerCase();
 
@@ -451,7 +441,7 @@ export class inlinePopup extends Plugin {
 			const data = this.j.o.popup[type];
 
 			this.toolbar.buttonSize = this.j.o.toolbarInlineButtonSize;
-			this.toolbar.build(data, elm);
+			this.toolbar.build(data, target);
 			this.popup.setContent(this.toolbar.container);
 
 			this.type = type;
@@ -460,6 +450,14 @@ export class inlinePopup extends Plugin {
 		this.popup.open(rect);
 
 		return true;
+	}
+
+	/**
+	 * Hide opened popup
+	 */
+	@autobind
+	private hidePopup(): void {
+		this.popup.close();
 	}
 
 	/**
@@ -473,11 +471,7 @@ export class inlinePopup extends Plugin {
 			return false;
 		}
 
-		if (this.isExcludedTarget(type)) {
-			return false;
-		}
-
-		return true;
+		return !this.isExcludedTarget(type);
 	}
 
 	/**
@@ -509,10 +503,15 @@ export class inlinePopup extends Plugin {
 					}
 				}
 			)
+			.on('hidePopup', this.hidePopup)
 			.on(
 				'showPopup',
-				(elm: HTMLElement | string, rect: () => IBound, type?: string) => {
-					this.showPopupWithToolbar(
+				(
+					elm: HTMLElement | string,
+					rect: () => IBound,
+					type?: string
+				) => {
+					this.showPopup(
 						rect,
 						type || (isString(elm) ? elm : elm.nodeName),
 						isString(elm) ? undefined : elm

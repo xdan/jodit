@@ -8,12 +8,12 @@ import './add-new-line.less';
 import { Config } from '../../config';
 import { Dom, Icon, Plugin } from '../../modules';
 import { offset, position, call, scrollIntoView } from '../../core/helpers';
-import { IBound, IJodit } from '../../types';
+import { IBound, IJodit, HTMLTagNames, Nullable } from '../../types';
 
 declare module '../../config' {
 	interface Config {
 		addNewLine: boolean;
-		addNewLineTagsTriggers: string[];
+		addNewLineTagsTriggers: HTMLTagNames[];
 		addNewLineOnDBLClick: boolean;
 		addNewLineDeltaShow: number;
 	}
@@ -63,10 +63,13 @@ export class addNewLine extends Plugin {
 		)}" class="jodit-add-new-line"><span>${Icon.get('enter')}</span></div>`
 	) as HTMLDivElement;
 
-	private isMatchedTag = new RegExp(
-		'^(' + this.j.o.addNewLineTagsTriggers.join('|') + ')$',
-		'i'
-	);
+	private isMatchedTag = (node: Nullable<Node>): boolean =>
+		Boolean(
+			node &&
+				this.j.o.addNewLineTagsTriggers.includes(
+					node.nodeName.toLowerCase() as HTMLTagNames
+				)
+		);
 
 	private timeout!: number;
 	private preview: boolean = false;
@@ -239,7 +242,7 @@ export class addNewLine extends Plugin {
 			return;
 		}
 
-		if (!this.isMatchedTag.test(currentElement.nodeName)) {
+		if (!this.isMatchedTag(currentElement)) {
 			currentElement = Dom.closest(
 				currentElement,
 				this.isMatchedTag,
@@ -252,7 +255,7 @@ export class addNewLine extends Plugin {
 			return;
 		}
 
-		if (this.isMatchedTag.test(currentElement.nodeName)) {
+		if (this.isMatchedTag(currentElement)) {
 			const parentBox: Node | false = Dom.up(
 				currentElement,
 				node => Dom.isBlock(node, editor.editorWindow),

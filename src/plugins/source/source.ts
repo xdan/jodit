@@ -197,7 +197,7 @@ export class source extends Plugin {
 		}
 	};
 
-	private restoreSelection = () => {
+	private removeSelection = () => {
 		if (!this.selInfo.length) {
 			return;
 		}
@@ -316,7 +316,7 @@ export class source extends Plugin {
 			editor.e
 				.off('beforeSetMode.source afterSetMode.source')
 				.on('beforeSetMode.source', this.saveSelection)
-				.on('afterSetMode.source', this.restoreSelection);
+				.on('afterSetMode.source', this.removeSelection);
 		};
 
 		addListeners();

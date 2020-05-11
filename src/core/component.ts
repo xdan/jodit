@@ -117,7 +117,7 @@ export abstract class Component implements IComponent {
 	 */
 	hookStatus(
 		status: keyof Statuses,
-		callback: (component: Component) => void
+		callback: (component: this) => void
 	): void {
 		if (!this.onStatusLst) {
 			this.onStatusLst = {};

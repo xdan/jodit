@@ -253,6 +253,13 @@ Config.prototype.controls.table = {
  */
 export class ResizeTable extends Plugin {
 	/**
+	 * Shortcut for Table module
+	 */
+	private get module(): Table {
+		return this.j.getInstance<Table>('Table', this.j.o);
+	}
+
+	/**
 	 * Now editor has rtl direction
 	 */
 	private get isRTL(): boolean {
@@ -631,8 +638,8 @@ export class ResizeTable extends Plugin {
 				}
 			})
 			.on('beforeSetMode.table', () => {
-				Table.getAllSelectedCells(editor.editor).forEach(td => {
-					Table.restoreSelection(td);
+				this.module.getAllSelectedCells().forEach(td => {
+					this.module.removeSelection(td);
 					Table.normalizeTable(
 						Dom.closest(
 							td,

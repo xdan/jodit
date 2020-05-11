@@ -6,7 +6,7 @@
 
 import * as consts from './constants';
 import { HTMLTagNames, ICreate, IJodit, NodeCondition } from '../types';
-import { css, dataBind, isFunction, isString, trim } from './helpers';
+import { css, dataBind, isArray, isFunction, isString, trim } from './helpers';
 
 export class Dom {
 	/**
@@ -623,11 +623,11 @@ export class Dom {
 	 * @param [root] Root element
 	 * @return {boolean|HTMLElement} Return false if condition not be true
 	 */
-	static up(
+	static up<T extends HTMLElement>(
 		node: Node,
 		condition: NodeCondition,
 		root?: Node
-	): false | HTMLElement {
+	): false | T {
 		let start = node;
 
 		if (!node) {
@@ -636,7 +636,7 @@ export class Dom {
 
 		do {
 			if (condition(start)) {
-				return start as HTMLElement;
+				return start as T;
 			}
 
 			if (start === root || !start.parentNode) {
@@ -652,25 +652,38 @@ export class Dom {
 	/**
 	 * Find parent by tag name
 	 *
-	 * @param {Node} node
-	 * @param {String|Function} tags
-	 * @param {HTMLElement} root
-	 * @return {Boolean|Node}
+	 * @param node
+	 * @param tags
+	 * @param root
 	 */
-	static closest(
+	static closest<
+		T extends HTMLElement,
+		K extends HTMLTagNames
+	>(node: Node, tags: K, root: HTMLElement): false | HTMLElementTagNameMap[K];
+
+	static closest<
+		T extends HTMLElement,
+		K extends keyof HTMLElementTagNameMap
+		>(node: Node, tags: K[], root: HTMLElement): false | HTMLElementTagNameMap[K];
+
+	static closest<
+		T extends HTMLElement
+		>(node: Node, tags: NodeCondition, root: HTMLElement): false | T;
+
+	static closest<T extends HTMLElement>(
 		node: Node,
-		tags: string | NodeCondition | RegExp,
+		tags: HTMLTagNames | HTMLTagNames[] | NodeCondition,
 		root: HTMLElement
-	): false | HTMLElement {
+	): false | T {
 		let condition: NodeCondition;
 
 		if (isFunction(tags)) {
 			condition = tags;
-		} else if (tags instanceof RegExp) {
-			condition = (tag: Node | null) => tag && tags.test(tag.nodeName);
-		} else {
+		} else if (isArray(tags)) {
 			condition = (tag: Node | null) =>
-				tag && new RegExp('^(' + tags + ')$', 'i').test(tag.nodeName);
+				tag && tags.includes(tag.nodeName.toLowerCase() as HTMLTagNames);
+		} else {
+			condition = (tag: Node | null) => tag && tags === tag.nodeName.toLowerCase();
 		}
 
 		return Dom.up(node, condition, root);
@@ -702,7 +715,10 @@ export class Dom {
 	 * @param elm
 	 * @param newElement
 	 */
-	static after(elm: HTMLElement, newElement: HTMLElement | DocumentFragment): void {
+	static after(
+		elm: HTMLElement,
+		newElement: HTMLElement | DocumentFragment
+	): void {
 		const parentNode: Node | null = elm.parentNode;
 
 		if (!parentNode) {
@@ -846,15 +862,15 @@ export class Dom {
 	 * Check if element is some tag
 	 *
 	 * @param node
-	 * @param tag
+	 * @param tagName
 	 */
 	static isTag<K extends keyof HTMLElementTagNameMap>(
 		node: Node | null | false | EventTarget,
-		tag: K | 'svg' | 'path'
+		tagName: K | 'svg' | 'path'
 	): node is HTMLElementTagNameMap[K] {
 		return (
 			Dom.isElement(node) &&
-			node.tagName.toLowerCase() === tag.toLowerCase()
+			node.tagName.toLowerCase() === tagName.toLowerCase()
 		);
 	}
 }
