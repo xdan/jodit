@@ -253,7 +253,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		const { control } = this;
 
 		e.buffer = {
-			triggerClick: true
+			actionTrigger: this
 		};
 
 		if (control.list) {

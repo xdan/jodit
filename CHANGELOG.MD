@@ -1,6 +1,17 @@
 # Changelog
 ## 3.4
 Big refactoring release.
+* Split `table` plugin on `select-cells` and `resize-cells` plugins. `useTableProcessor` was removed.
+Instead, use
+```js
+Jodit.make('#editor', {table: {
+	allowCellSelection: true,
+	selectionCellStyle: 'border: 1px double #1e88e5 !important;',
+
+	allowCellResize: true,
+	useExtraClassesOptions: true
+}});
+```
 * All `less` files were moved near with TS. Classnaming was changed closer to BEM.
 * Removed `PopupList` and `Popup`. Instead use only `PopupMenu`.
 * Added `ui.button` and `ui.list` for working with buttons. `toolbar.button` extends `ui.button`.

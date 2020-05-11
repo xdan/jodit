@@ -39,7 +39,7 @@ export class Table extends ViewComponent<IJodit> {
 			selector && selectors.push(selector);
 		});
 
-		style.innerHTML = selectors.length ? selectors.join(',') + '{border: 1px double #1e88e5;}' : '';
+		style.innerHTML = selectors.length ? selectors.join(',') + `{${this.j.o.table.selectionCellStyle}}` : '';
 	}
 
 	addSelection(td: HTMLTableCellElement): void {

@@ -238,12 +238,16 @@ export class UIButton extends UIElement implements IUIButton {
 
 	/**
 	 * Fire all click handlers
-	 * @param originalEvent
+	 * @param e
 	 */
 	@autobind
-	private onActionFire(originalEvent: MouseEvent): void {
+	private onActionFire(e: MouseEvent): void {
+		e.buffer = {
+			actionTrigger: this
+		};
+
 		this.actionHandlers.forEach(callback =>
-			callback.call(this, originalEvent)
+			callback.call(this, e)
 		);
 	}
 }

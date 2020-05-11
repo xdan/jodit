@@ -400,8 +400,21 @@ export class inlinePopup extends Plugin {
 
 	@debounce(500)
 	private onSelectionChange(): void {
-		const sel = this.j.selection.sel,
+		if (!this.j.o.toolbarInlineForSelection) {
+			return;
+		}
+
+		const type = 'selection',
+			sel = this.j.selection.sel,
 			range = this.j.selection.range;
+
+		if (sel?.isCollapsed) {
+			if (this.type === type && this.popup.isOpened) {
+				this.hidePopup();
+			}
+
+			return;
+		}
 
 		const node = this.j.selection.current();
 
@@ -409,13 +422,7 @@ export class inlinePopup extends Plugin {
 			return;
 		}
 
-		if (sel?.isCollapsed || !this.canShowPopupForType(node.nodeName)) {
-			return;
-		}
-
-		if (this.j.o.toolbarInlineForSelection) {
-			this.showPopup(() => range.getBoundingClientRect(), 'selection');
-		}
+		this.showPopup(() => range.getBoundingClientRect(), type);
 	}
 
 	/**

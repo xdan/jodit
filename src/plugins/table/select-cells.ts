@@ -18,6 +18,10 @@ export class selectCells extends Plugin {
 	}
 
 	protected afterInit(jodit: IJodit): void {
+		if (!jodit.o.table.allowCellSelection) {
+			return;
+		}
+
 		jodit.e
 			.on(
 				[this.j.ow, this.j.editorWindow],
@@ -172,7 +176,7 @@ export class selectCells extends Plugin {
 	 */
 	@autobind
 	private onRemoveSelection(e?: MouseEvent): void {
-		if (!e?.buffer?.triggerClick && !this.selectedCell && this.module.getAllSelectedCells().length) {
+		if (!e?.buffer?.actionTrigger && !this.selectedCell && this.module.getAllSelectedCells().length) {
 			this.j.unlock();
 			this.unselectCells();
 			this.j.e.fire('hidePopup');
