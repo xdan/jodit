@@ -82,6 +82,7 @@ Config.prototype.controls.brush = {
 				} else {
 					currentElement.style.backgroundColor = value;
 				}
+
 				close();
 			},
 			bg_color
@@ -95,6 +96,7 @@ Config.prototype.controls.brush = {
 				} else {
 					currentElement.style.color = value;
 				}
+
 				close();
 			},
 			colorHEX

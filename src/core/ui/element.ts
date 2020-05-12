@@ -31,7 +31,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	 * Find match parent
 	 * @param type
 	 */
-	closest<T extends Function>(type: T | IUIElement): Nullable<IUIElement> {
+	closest<T extends IUIElement>(type: Function | IUIElement): Nullable<T> {
 		let pe = this.__parentElement,
 			c =
 				typeof type === 'object'
@@ -40,7 +40,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 
 		while (pe) {
 			if (c(pe)) {
-				return pe as IUIElement;
+				return pe as T;
 			}
 
 			pe = pe.parentElement;

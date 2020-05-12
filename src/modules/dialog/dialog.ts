@@ -23,7 +23,7 @@ import { KEY_ESC } from '../../core/constants';
 import {
 	$$,
 	asArray,
-	attr,
+	attr, camelCase,
 	css,
 	extend,
 	hasContainer,
@@ -36,6 +36,7 @@ import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 import { Dom } from '../../core/dom';
 import { STATUSES } from '../../core/component';
 import { fullsize } from '../../plugins/fullsize/fullsize';
+import { eventEmitter } from '../../core/global';
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}
@@ -561,6 +562,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		destroyAfterClose?: boolean,
 		modal?: boolean
 	): this {
+		eventEmitter.fire(camelCase('close-all-popups'));
+
 		/**
 		 * Called before the opening of the dialog box
 		 *

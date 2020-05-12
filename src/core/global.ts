@@ -15,6 +15,7 @@ import {
 import { PluginSystem } from './plugin-system';
 import { Dom } from './dom';
 import { isJoditObject, isViewObject, kebabCase } from './helpers/';
+import { EventsNative } from './events';
 
 export const instances: IDictionary<IJodit> = {};
 
@@ -89,3 +90,8 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 
 	return data[name] as HTMLElementTagNameMap[T];
 }
+
+/**
+ * Global event emiter
+ */
+export const eventEmitter = new EventsNative();

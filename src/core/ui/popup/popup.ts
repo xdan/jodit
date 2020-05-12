@@ -24,7 +24,7 @@ import {
 	position,
 	ucfirst
 } from '../../helpers';
-import { getContainer } from '../../global';
+import { eventEmitter, getContainer } from '../../global';
 import { UIElement } from '../';
 
 type getBoundFunc = () => IBound;
@@ -326,6 +326,8 @@ export class Popup extends UIElement implements IPopup {
 		const up = this.updatePosition,
 			ow = this.ow;
 
+		eventEmitter.on(camelCase('close-all-popups'), this.close);
+
 		this.j.e
 			.on(camelCase('close-all-popups'), this.close)
 			.on('escape', this.close)
@@ -341,6 +343,8 @@ export class Popup extends UIElement implements IPopup {
 	private removeGlobalListeners(): void {
 		const up = this.updatePosition,
 			ow = this.ow;
+
+		eventEmitter.off(camelCase('close-all-popups'), this.close);
 
 		this.j.e
 			.off(camelCase('close-all-popups'), this.close)
