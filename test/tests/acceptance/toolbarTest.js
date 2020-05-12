@@ -2087,7 +2087,8 @@ describe('Toolbar', function() {
 
 				expect(3).equals(
 					dialog.querySelectorAll(
-						'.jodit-dialog__header .jodit-dialog__header-title button'
+						'.jodit-dialog__header .jodit-dialog__header-title button,' +
+						'.jodit-dialog__header .jodit-dialog__header-title select'
 					).length
 				);
 			});

@@ -92,6 +92,6 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 }
 
 /**
- * Global event emiter
+ * Global event emitter
  */
 export const eventEmitter = new EventsNative();

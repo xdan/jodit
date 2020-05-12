@@ -269,6 +269,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	@cache
 	get filebrowser(): IFileBrowser {
 		return this.getInstance('FileBrowser', {
+			defaultTimeout: this.defaultTimeout,
 			uploader: this.o.uploader,
 			...this.o.filebrowser
 		});

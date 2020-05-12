@@ -9,3 +9,7 @@ import { stringify } from '../string/';
 export function isEqual(a: unknown, b: unknown): boolean {
 	return a === b || stringify(a) === stringify(b);
 }
+
+export function isFastEqual(a: unknown, b: unknown): boolean {
+	return a === b ;
+}

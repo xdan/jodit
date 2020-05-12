@@ -8,7 +8,7 @@ import { IAsync, IComponent, IProgressBar } from '../../types';
 import { IViewBased, IViewOptions } from '../../types';
 import { Panel } from './panel';
 import { Storage } from '../storage';
-import { error, i18n, isFunction } from '../helpers';
+import { error, i18n, isFunction, isVoid } from '../helpers';
 import { BASE_PATH } from '../constants';
 import { ViewComponent, EventsNative, ProgressBar } from '../../modules';
 import { Async } from '../async';
@@ -44,7 +44,7 @@ export abstract class View extends Panel implements IViewBased {
 	 * @return {number}
 	 */
 	get defaultTimeout(): number {
-		return this.o.defaultTimeout || 100;
+		return isVoid(this.o.defaultTimeout) ? 100 : this.o.defaultTimeout;
 	}
 
 	events: EventsNative = new EventsNative(this.od);
@@ -104,16 +104,7 @@ export abstract class View extends Panel implements IViewBased {
 	/** @override */
 	protected initOptions(options?: IViewOptions): void {
 		super.initOptions({
-			extraButtons: [],
-			textIcons: false,
-			removeButtons: [],
-			zIndex: 100002,
-			defaultTimeout: 100,
-			fullsize: false,
-			showTooltip: true,
-			useNativeTooltip: false,
-			buttons: [],
-			globalFullsize: true,
+			...View.defaultOptions,
 			...options
 		});
 	}
@@ -171,4 +162,19 @@ export abstract class View extends Panel implements IViewBased {
 
 		super.destruct();
 	}
+
+	static defaultOptions: IViewOptions;
 }
+
+View.defaultOptions = {
+	extraButtons: [],
+	textIcons: false,
+	removeButtons: [],
+	zIndex: 100002,
+	defaultTimeout: 100,
+	fullsize: false,
+	showTooltip: true,
+	useNativeTooltip: false,
+	buttons: [],
+	globalFullsize: true
+};

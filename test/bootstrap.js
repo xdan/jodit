@@ -242,6 +242,7 @@ Jodit.prototype.i18n = function(key) {
 
 Jodit.defaultOptions.filebrowser.saveStateInStorage = false;
 Jodit.defaultOptions.observer.timeout = 0;
+Jodit.modules.View.defaultOptions.defaultTimeout = 0;
 
 if (Jodit.defaultOptions.cleanHTML) {
 	Jodit.defaultOptions.cleanHTML.timeout = 0;
@@ -605,7 +606,7 @@ function getOpenedDialog(editor) {
  * @returns {HTMLElement|null}
  */
 function getButton(buttonName, joditOrElement, role, last) {
-	const elm = joditOrElement.isJodit ? joditOrElement.container : joditOrElement;
+	const elm = joditOrElement.container || joditOrElement;
 
 	return elm.querySelector(
 		'.jodit-toolbar-button.jodit-toolbar-button_' +

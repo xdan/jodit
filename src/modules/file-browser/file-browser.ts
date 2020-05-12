@@ -557,7 +557,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			})
 
 			.on(
-				'set.elements',
+				'change.elements',
 				this.async.debounce(() => {
 					Dom.detach(files);
 
@@ -577,7 +577,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			)
 
 			.on(
-				'set.folders',
+				'change.folders',
 				this.async.debounce(() => {
 					Dom.detach(this.tree);
 
@@ -1172,6 +1172,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		} else {
 			self.state.view = self.o.view === 'list' ? 'list' : 'tiles';
 		}
+
+		this.state.fire('change.view')	;
 
 		const sortBy = self.storage.get<string>(F_CLASS + '_sortby');
 

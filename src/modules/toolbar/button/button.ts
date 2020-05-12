@@ -104,6 +104,10 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		button.classList.remove(cn);
 		button.classList.add(cn + '__button');
 
+		Object.defineProperty(button, 'component', {
+			value: this
+		});
+
 		container.appendChild(button);
 
 		this.trigger = this.j.c.fromHTML(

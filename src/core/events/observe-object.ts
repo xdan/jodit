@@ -5,7 +5,7 @@
  */
 
 import { CallbackFunction, IDictionary } from '../../types';
-import { isPlainObject, isEqual, isArray } from '../helpers';
+import { isPlainObject, isFastEqual, isArray } from '../helpers';
 
 export class ObserveObject {
 	protected constructor(
@@ -20,22 +20,7 @@ export class ObserveObject {
 				set: value => {
 					const oldValue = data[key];
 
-					const sum: string[] = [];
-					this.fire(
-						[
-							'set',
-							...prefix.reduce((rs, p) => {
-								sum.push(p);
-								rs.push(`set.${sum.join('.')}`);
-								return rs;
-							}, [] as string[])
-						],
-						prefix.join('.'),
-						oldValue,
-						value.valueOf ? value.valueOf() : value
-					);
-
-					if (!isEqual(oldValue, value)) {
+					if (!isFastEqual(oldValue, value)) {
 						this.fire(
 							[
 								'beforeChange',
@@ -113,7 +98,7 @@ export class ObserveObject {
 
 	private __lockEvent: IDictionary<boolean> = {};
 
-	private fire(event: string | string[], ...attr: any[]) {
+	fire(event: string | string[], ...attr: any[]) {
 		if (isArray(event)) {
 			event.map(e => this.fire(e, ...attr));
 			return;
