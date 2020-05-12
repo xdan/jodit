@@ -9,7 +9,7 @@
 @cols: 4;
 @info-background: rgb(233, 233, 233);
 
-.jodit_filebrowser {
+.jodit-filebrowser {
 	font-family: @font-default;
 	height: 100%;
 	display: flex;
@@ -57,11 +57,11 @@
 		color: #b38888;
 		word-break: break-all;
 
-		&.success {
+		&.jodit-filebrowser_success {
 			color: #c5c5c5;
 		}
 
-		&.active {
+		&.jodit-filebrowser_active {
 			visibility: visible;
 			opacity: 1;
 		}
@@ -78,7 +78,7 @@
 			border-radius: 0;
 		}
 
-		&.active {
+		&.jodit-filebrowser_active {
 			display: flex;
 		}
 
@@ -96,7 +96,7 @@
 		}
 	}
 
-	&_tree.active {
+	&_tree.jodit-filebrowser_active {
 		flex-direction: column;
 		width: @first_column;
 		min-width: 200px;
@@ -125,7 +125,7 @@
 			outline: 1px solid slategrey;
 		}
 
-		.jodit_filebrowser_source_title {
+		.jodit-filebrowser_source_title {
 			user-select: none;
 			display: block;
 			padding: 10px;
@@ -141,7 +141,7 @@
 
 		@text-color: #b1b1b1;
 
-		.jodit_filebrowser_tree_item {
+		.jodit-filebrowser_tree_item {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -195,14 +195,14 @@
 
 	@col_size: 150px;
 
-	&_files.active {
+	&_files.jodit-filebrowser_active {
 		width: 100%;
 		overflow-y: auto;
 		padding: 5px;
 		flex-wrap: wrap;
 		align-content: flex-start;
 
-		.jodit_filebrowser_source_title {
+		.jodit-filebrowser_source_title {
 			user-select: none;
 			margin: -10px -10px 0 -10px;
 			display: block;
@@ -216,11 +216,11 @@
 			color: #969696;
 		}
 
-		a + .jodit_filebrowser_source_title {
+		a + .jodit-filebrowser_source_title {
 			margin-top: 10px;
 		}
 
-		.jodit_filebrowser_files_item {
+		.jodit-filebrowser_files_item {
 			width: @col_size;
 			height: @col_size;
 
@@ -277,7 +277,7 @@
 					overflow: hidden;
 					font-size: 0.75em;
 
-					&.jodit_filebrowser_files_item-info-filename {
+					&.jodit-filebrowser_files_item-info-filename {
 						font-weight: bold;
 						font-size: 0.9em;
 					}
@@ -285,21 +285,21 @@
 			}
 
 			&-active-true {
-				.jodit_filebrowser_files_item-info {
+				.jodit-filebrowser_files_item-info {
 					background-color: @color-border-active;
 					color: white;
 					text-shadow: none;
 				}
 			}
 
-			&:hover:not(.jodit_filebrowser_files_item-active-true) {
-				.jodit_filebrowser_files_item-info {
+			&:hover:not(.jodit-filebrowser_files_item-active-true) {
+				.jodit-filebrowser_files_item-info {
 					bottom: -100px;
 				}
 			}
 		}
 
-		&.jodit_filebrowser_files_view-list {
+		&.jodit-filebrowser_files_view-list {
 			scroll-behavior: smooth;
 
 			a {
@@ -320,7 +320,7 @@
 					margin-left: 4px;
 				}
 
-				.jodit_filebrowser_files_item-info {
+				.jodit-filebrowser_files_item-info {
 					padding: 0;
 					position: static;
 					display: inline-block;
@@ -337,15 +337,15 @@
 						height: 100%;
 						font-size: 12px;
 
-						&.jodit_filebrowser_files_item-info-filename {
+						&.jodit-filebrowser_files_item-info-filename {
 							width: 50%;
 						}
 
-						&.jodit_filebrowser_files_item-info-filesize {
+						&.jodit-filebrowser_files_item-info-filesize {
 							width: 25%;
 						}
 
-						&.jodit_filebrowser_files_item-info-filechanged {
+						&.jodit-filebrowser_files_item-info-filechanged {
 							width: 25%;
 						}
 					}
@@ -354,7 +354,7 @@
 				&:hover {
 					background-color: #433b5c;
 
-					.jodit_filebrowser_files_item-info {
+					.jodit-filebrowser_files_item-info {
 						color: #fff;
 						text-shadow: none;
 					}
@@ -398,7 +398,7 @@
 		}
 	}
 
-	&.jodit_filebrowser_title_box {
+	&.jodit-filebrowser_title_box {
 		display: flex;
 		align-items: center;
 		padding-left: @padding-default;

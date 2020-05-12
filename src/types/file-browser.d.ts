@@ -139,7 +139,7 @@ export interface IFileBrowserOptions extends IViewOptions {
 
 	permissions: IFileBrowserAjaxOptions | null;
 
-	uploader: null | IUploaderOptions<IUploader>; // use default Uploader's settings
+	uploader?: IUploaderOptions<IUploader>; // use default Uploader's settings
 
 	defaultCallback(
 		data: IFileBrowserCallBackData

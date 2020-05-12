@@ -54,6 +54,7 @@ export interface IUIButtonStatePartial {
 
 export interface IUIButton extends IViewComponent, IUIElement, IFocusable {
 	state: IUIButtonState;
+
 	setState(state: IUIButtonStatePartial): this;
 
 	text: HTMLElement;

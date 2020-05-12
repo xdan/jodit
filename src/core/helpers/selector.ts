@@ -37,15 +37,15 @@ export function $$<K extends HTMLTagNames>(
 	root: HTMLElement | HTMLDocument
 ): HTMLElementTagNameMap[K][];
 
-export function $$(
+export function $$<T extends HTMLElement>(
 	selector: string,
 	root: HTMLElement | HTMLDocument
-): HTMLElement[];
+): T[];
 
-export function $$(
+export function $$<T extends HTMLElement>(
 	selector: string | HTMLTagNames,
 	root: HTMLElement | HTMLDocument
-): HTMLElement[] {
+): T[] {
 	let result: NodeList;
 
 	if (
@@ -115,16 +115,16 @@ export const getXPathByElement = (
  * Find all `ref` or `data-ref` elements inside HTMLElement
  * @param root
  */
-export const refs = (root: HTMLElement): IDictionary<HTMLElement> => {
+export const refs = <T extends HTMLElement>(root: HTMLElement): IDictionary<T> => {
 	return $$('[ref],[data-ref]', root).reduce((def, child) => {
 		const key = attr(child, '-ref');
 
 		if (key && isString(key)) {
-			def[key] = child;
+			def[key] = child as T;
 		}
 
 		return def;
-	}, <IDictionary<HTMLElement>>{});
+	}, <IDictionary<T>>{});
 };
 
 /**

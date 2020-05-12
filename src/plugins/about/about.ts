@@ -29,7 +29,7 @@ Config.prototype.controls.about = {
 					</div>
 					<div>
 						<a href="https://xdsoft.net/jodit/doc/" target="_blank">${i18n(
-							"Jodit User's Guide"
+							'Jodit User\'s Guide'
 						)}</a>
 						${i18n('contains detailed help for using')}
 					</div>

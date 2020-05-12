@@ -268,7 +268,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 */
 	@cache
 	get filebrowser(): IFileBrowser {
-		return this.getInstance('FileBrowser', this.o.filebrowser);
+		return this.getInstance('FileBrowser', {
+			uploader: this.o.uploader,
+			...this.o.filebrowser
+		});
 	}
 
 	private __mode: Modes = consts.MODE_WYSIWYG;

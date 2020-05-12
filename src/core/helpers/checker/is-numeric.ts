@@ -21,4 +21,4 @@ export function isNumeric(value: number | string): boolean {
 	}
 
 	return typeof value === 'number' && !isNaN(value) && isFinite(value);
-};
+}

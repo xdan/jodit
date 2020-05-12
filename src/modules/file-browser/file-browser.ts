@@ -38,7 +38,7 @@ import {
 	extend,
 	isValidName,
 	attr,
-	error, isFunction
+	error, isFunction, isString
 } from '../../core/helpers/';
 import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 
@@ -78,7 +78,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		path: string = this.dataProvider.currentPath,
 		source: string = this.dataProvider.currentSource
 	): Promise<any> {
-		this.files.classList.add('active');
+		this.files.classList.add('jodit-filebrowser_active');
 		this.files.appendChild(this.loader.cloneNode(true));
 
 		return this.dataProvider
@@ -121,7 +121,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			this.uploader.setSource(source);
 		}
 
-		this.tree.classList.add('active');
+		this.tree.classList.add('jodit-filebrowser_active');
 		Dom.detach(this.tree);
 		this.tree.appendChild(this.loader.cloneNode(true));
 
@@ -140,6 +140,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 							self,
 							resp
 						) as IFileBrowserAnswer;
+
 						this.generateFolderTree(respData.data.sources);
 					}
 				})
@@ -155,7 +156,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 			return Promise.all([tree, items]).catch(error);
 		} else {
-			this.tree.classList.remove('active');
+			this.tree.classList.remove('jodit-filebrowser_active');
 		}
 	}
 
@@ -308,25 +309,25 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	 * ```
 	 */
 	status = (message: string | Error, success?: boolean) => {
-		if (typeof message !== 'string') {
+		if (!isString(message)) {
 			message = message.message;
 		}
 
-		this.status_line.classList.remove('success');
+		this.status_line.classList.remove('jodit-filebrowser_success');
 
-		this.status_line.classList.add('active');
+		this.status_line.classList.add('jodit-filebrowser_active');
 
 		const messageBox = this.c.div();
 		messageBox.textContent = message;
 		this.status_line.appendChild(messageBox);
 
 		if (success) {
-			this.status_line.classList.add('success');
+			this.status_line.classList.add('jodit-filebrowser_success');
 		}
 
 		this.async.setTimeout(
 			() => {
-				this.status_line.classList.remove('active');
+				this.status_line.classList.remove('jodit-filebrowser_active');
 				Dom.detach(this.status_line);
 			},
 			{

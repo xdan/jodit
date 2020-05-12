@@ -145,8 +145,6 @@ Config.prototype.uploader = {
 } as IUploaderOptions<Uploader>;
 
 export class Uploader extends ViewComponent implements IUploader {
-	jodit!: IViewBased;
-
 	/**
 	 * Convert dataURI to Blob
 	 *

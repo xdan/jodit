@@ -17,4 +17,4 @@ export function isInt(value: number | string): boolean {
 	}
 
 	return typeof value === 'number' && Number.isFinite(value) && !(value % 1);
-};
+}

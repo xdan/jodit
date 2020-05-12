@@ -247,7 +247,11 @@ interface IControlType<
 }
 
 interface IControlTypeStrong extends IControlType {
-	name: string;
+	name: NonNullable<IControlType['name']>;
+}
+
+interface IControlTypeContent extends IControlTypeStrong {
+	getContent: NonNullable<IControlTypeStrong['getContent']>;
 }
 
 export type Controls = IDictionary<IControlType>;
@@ -261,17 +265,8 @@ interface IControlTypeStrongList extends IControlTypeStrong {
 }
 
 interface IToolbarButton extends IUIButton {
-	jodit: IViewBased;
-
-	trigger: HTMLElement;
-	state: IUIButton['state'] & {
-		hasTrigger: boolean;
-	};
 	control: IControlTypeStrong;
-
 	target: Nullable<HTMLElement>;
-
-	toolbar: Nullable<IToolbarCollection>;
 }
 
 interface IToolbarCollection extends IUIList {

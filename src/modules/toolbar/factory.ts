@@ -5,22 +5,28 @@
  */
 
 import {
+	IControlTypeContent,
 	IControlTypeStrong,
 	IToolbarButton,
-	IToolbarCollection, IUIElement,
+	IToolbarCollection,
+	IUIElement,
 	IViewBased,
 	Nullable
 } from '../../types';
-import { isJoditObject } from '../../core/helpers';
+import { isFunction, isJoditObject } from '../../core/helpers';
 import { ToolbarCollection } from './collection/collection';
 import { ToolbarEditorCollection } from './collection/editor-collection';
 import { ToolbarButton } from './button/button';
+import { ToolbarContent } from './button/content';
 
 /**
  * Collection factory
  * @param jodit
  */
-export function makeCollection(jodit: IViewBased, parentElement?: IUIElement): IToolbarCollection {
+export function makeCollection(
+	jodit: IViewBased,
+	parentElement?: IUIElement
+): IToolbarCollection {
 	const collection = isJoditObject(jodit)
 		? new ToolbarEditorCollection(jodit)
 		: new ToolbarCollection(jodit);
@@ -48,5 +54,13 @@ export function makeButton(
 	control: IControlTypeStrong,
 	target: Nullable<HTMLElement> = null
 ): IToolbarButton {
+	if (isFunction(control.getContent)) {
+		return new ToolbarContent(
+			jodit,
+			control as IControlTypeContent,
+			target
+		);
+	}
+
 	return new ToolbarButton(jodit, control, target);
 }

@@ -125,6 +125,12 @@ export class UIList<T extends IViewBased = IViewBased> extends UIGroup<T>
 		return this;
 	}
 
+	/**
+	 * Create button instance
+	 *
+	 * @param control
+	 * @param target
+	 */
 	protected makeButton(
 		control: IControlTypeStrong,
 		target: Nullable<HTMLElement>

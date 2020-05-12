@@ -707,22 +707,22 @@ export class ImageEditor extends ViewComponent {
 
 			this.image = this.j.c.element('img');
 
-			$$('img,.jodit_icon-loader', this.resize_box).forEach(
+			$$('img,.jodit-icon_loader', this.resize_box).forEach(
 				Dom.safeRemove
 			);
 
-			$$('img,.jodit_icon-loader', this.crop_box).forEach(Dom.safeRemove);
+			$$('img,.jodit-icon_loader', this.crop_box).forEach(Dom.safeRemove);
 
 			css(this.cropHandler, 'background', 'transparent');
 
 			this.onSave = save;
 
 			this.resize_box.appendChild(
-				this.j.c.element('i', { class: 'jodit_icon-loader' })
+				this.j.c.element('i', { class: 'jodit-icon_loader' })
 			);
 
 			this.crop_box.appendChild(
-				this.j.c.element('i', { class: 'jodit_icon-loader' })
+				this.j.c.element('i', { class: 'jodit-icon_loader' })
 			);
 
 			if (/\?/.test(url)) {
@@ -755,7 +755,7 @@ export class ImageEditor extends ViewComponent {
 
 				this.crop_box.appendChild(this.cropImage);
 
-				$$('.jodit_icon-loader', this.editor).forEach(Dom.safeRemove);
+				$$('.jodit-icon_loader', this.editor).forEach(Dom.safeRemove);
 
 				if (this.activeTab === 'crop') {
 					this.showCrop();
@@ -830,8 +830,8 @@ export class ImageEditor extends ViewComponent {
 
 		this.editor = this.j.c.fromHTML(
 			`<form class="${jie} jodit-properties">
-							<div class="jodit-grid">
-								<div class="jodit_col-lg-3-4">
+							<div class="jodit-grid jodit-grid_xs-column">
+								<div class="jodit_col-lg-3-4 jodit_col-xs-5-5">
 								${
 									o.resize
 										? `<div class="${jie}_area ${jie}_area_resize active">
@@ -857,7 +857,7 @@ export class ImageEditor extends ViewComponent {
 										: ''
 								}
 								</div>
-								<div class="jodit_col-lg-1-4">
+								<div class="jodit_col-lg-1-4 jodit_col-xs-5-5">
 								${
 									o.resize
 										? `<div data-area="resize" class="${jie}_slider active">

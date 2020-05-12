@@ -92,7 +92,7 @@ declare module '../../config' {
 		 * @property{function} filebrowser.getMessage method for receiving a message from the response
 		 * @example
 		 * ```javascript
-		 * new Jodit('#editor', {
+		 * Jodit.make('#editor', {
 		 *     filebrowser: {
 		 *          isSuccess: function (resp) {
 		 *              return resp.status == 1;
@@ -211,7 +211,7 @@ declare module '../../config' {
 		 * ```
 		 * @example
 		 * ```javascript
-		 * new Jodit('#editor2', {
+		 * Jodit.make('#editor2', {
 		 *         filebrowser: {
 		 *             isSuccess: function (resp) {
 		 *                 return resp.length !== 0;
@@ -361,6 +361,7 @@ Config.prototype.filebrowser = {
 
 	width: 859,
 	height: 400,
+
 	buttons: [
 		'filebrowser.upload',
 		'filebrowser.remove',
@@ -375,6 +376,7 @@ Config.prototype.filebrowser = {
 		'|',
 		'filebrowser.sort'
 	],
+
 	removeButtons: [],
 	fullsize: false,
 	showTooltip: true,
@@ -522,8 +524,6 @@ Config.prototype.filebrowser = {
 		data: { action: 'permissions' }
 	},
 
-	uploader: null, // use default Uploader's settings
-
 	defaultCallback(this: IJodit, data: IFileBrowserCallBackData) {
 		if (data.files && data.files.length) {
 			data.files.forEach((file, i) => {
@@ -552,9 +552,6 @@ Config.prototype.controls.filebrowser = {
 	upload: {
 		icon: 'plus',
 		isInput: true,
-		exec: () => {
-			// do nothing
-		},
 		isDisabled: (browser: IFileBrowser): boolean =>
 			!browser.dataProvider.canI('FileUpload'),
 
@@ -562,27 +559,25 @@ Config.prototype.controls.filebrowser = {
 			filebrowser: IFileBrowser,
 			control: IControlType
 		): HTMLElement => {
-			const btn: HTMLElement = filebrowser.c.fromHTML(
-					'<span class="jodit_upload_button">' +
-						Icon.get('plus') +
-						'<input type="file" accept="' +
-						(filebrowser.state.onlyImages ? 'image/*' : '*') +
-						'" tabindex="-1" dir="auto" multiple=""/>' +
-						'</span>'
-				),
-				input: HTMLInputElement = btn.querySelector(
-					'input'
-				) as HTMLInputElement;
+			const btn = filebrowser.c
+				.fromHTML(`<span class="jodit_upload_button">
+						${Icon.get('plus')}
+						<input
+							type="file"
+							accept="${filebrowser.state.onlyImages ? 'image/*' : '*'}"
+							tabindex="-1"
+							dir="auto"
+							multiple=""
+							${
+								control.isDisabled &&
+								control.isDisabled(filebrowser, control)
+									? 'disabled="disabled"'
+									: ''
+							}
+						/>
+						</span>`);
 
-			filebrowser.e
-				.on('updateToolbar', () => {
-					if (control && control.isDisabled) {
-						control.isDisabled(filebrowser, control)
-							? input.setAttribute('disabled', 'disabled')
-							: input.removeAttribute('disabled');
-					}
-				})
-				.fire('bindUploader.filebrowser', btn);
+			filebrowser.e.fire('bindUploader.filebrowser', btn);
 
 			return btn;
 		}

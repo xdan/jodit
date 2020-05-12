@@ -72,8 +72,8 @@ export const FileSelectorWidget = (
 		editor.o.uploader &&
 		(editor.o.uploader.url || editor.o.uploader.insertImageAsBase64URI)
 	) {
-		const dragbox = editor.c.fromHTML(
-			'<div class="jodit_draganddrop_file_box">' +
+		const dragBox = editor.c.fromHTML(
+			'<div class="jodit-drag-and-drop__file-box">' +
 				`<strong>${editor.i18n(
 					isImage ? 'Drop image' : 'Drop file'
 				)}</strong>` +
@@ -85,25 +85,29 @@ export const FileSelectorWidget = (
 		);
 
 		editor.uploader.bind(
-			dragbox,
+			dragBox,
 			(resp: IUploaderData) => {
 				let handler = isFunction(callbacks.upload)
 					? callbacks.upload
 					: editor.o.uploader.defaultHandlerSuccess;
 
 				if (isFunction(handler)) {
-					handler.call(editor, resp);
+					handler.call(editor.uploader, resp);
 				}
+
+				editor.e.fire('closeAllPopups');
 			},
 			(error: Error) => {
 				editor.e.fire('errorMessage', error.message);
+
+				editor.e.fire('closeAllPopups');
 			}
 		);
 
 		tabs.push({
 			icon: 'upload',
 			name: 'Upload',
-			content: dragbox
+			content: dragBox
 		});
 	}
 

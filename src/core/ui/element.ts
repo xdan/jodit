@@ -90,7 +90,9 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 			}
 		});
 
-		value !== null && value !== '' && cl.add(`${mod}_${value.toString().toLowerCase()}`);
+		value !== null &&
+			value !== '' &&
+			cl.add(`${mod}_${value.toString().toLowerCase()}`);
 
 		this.mods[name] = value;
 

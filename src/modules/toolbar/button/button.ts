@@ -30,8 +30,6 @@ import { STATUSES } from '../../../core/component';
 
 export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	implements IToolbarButton {
-	jodit!: T;
-
 	state = {
 		...UIButtonState(),
 		theme: 'toolbar',
@@ -39,12 +37,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		hasTrigger: false
 	};
 
-	trigger!: HTMLElement;
+	protected trigger!: HTMLElement;
 
 	/**
 	 * Get parent toolbar
 	 */
-	get toolbar(): Nullable<IToolbarCollection> {
+	protected get toolbar(): Nullable<IToolbarCollection> {
 		return this.closest(ToolbarCollection) as Nullable<ToolbarCollection>;
 	}
 
@@ -189,7 +187,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	}
 
 	constructor(
-		jodit: IViewBased,
+		jodit: T,
 		readonly control: IControlTypeStrong,
 		readonly target: Nullable<HTMLElement> = null
 	) {

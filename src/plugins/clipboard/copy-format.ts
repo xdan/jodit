@@ -12,9 +12,7 @@ import { IDictionary, IJodit, IControlType } from '../../types';
 const pluginKey: string = 'copyformat';
 
 /**
- * Plug-in copy and paste formatting from elements
- *
- * @module copyformat
+ * Plug-in copy and paste formatting from one element to another
  */
 
 const copyStyles: string[] = [

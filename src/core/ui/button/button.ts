@@ -37,8 +37,6 @@ export const UIButtonState = (): IUIButtonState => ({
 });
 
 export class UIButton extends UIElement implements IUIButton {
-	jodit!: IViewBased;
-
 	/**
 	 * Marker for buttons
 	 */
