@@ -86,8 +86,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	private resizer!: HTMLDivElement;
 	toolbar!: IToolbarCollection;
 
-	private offsetX: number = 0;
-	private offsetY: number = 0;
+	private offsetX?: number;
+	private offsetY?: number;
 
 	private destination: HTMLElement = document.body;
 	private destroyAfterClose: boolean = false;
@@ -598,14 +598,14 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			this.container.classList.add('jodit-modal');
 		}
 
+		this.destination.appendChild(this.container);
+
 		this.setPosition(this.offsetX, this.offsetY);
 		this.setMaxZIndex();
 
 		if (this.o.fullsize) {
 			this.maximization(true);
 		}
-
-		this.destination.appendChild(this.container);
 
 		/**
 		 * Called after the opening of the dialog box
