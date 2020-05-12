@@ -1,6 +1,43 @@
 # Changelog
 ## 3.4
-Big refactoring release.
+Big refactoring release
+* `FileBrowser`, `Dialog` etc. modules which extends `View` has only one argument in the constructor - options.
+Before:
+```js
+const editor = Jodit.make('#editor');
+const fb = Jodit.modules.FileBroser(editor, {
+    ajax: {
+        url: 'https://xdsoft.net'
+    }
+});
+fb.open();
+fb.close();
+
+editor.destruct();
+fb.open(); // error, fb is already destructed
+```
+
+Now:
+```js
+const editor = Jodit.make('#editor');
+const fb = Jodit.modules.FileBroser({
+    ajax: {
+        url: 'https://xdsoft.net'
+    }
+});
+fb.open();
+fb.close();
+
+editor.destruct();
+fb.open(); // Normal
+
+fb.destruct();
+//or
+editor.e.on('beforeDestruct', () => {
+    fb.destruct();
+});
+```
+
 * Split `table` plugin on `select-cells` and `resize-cells` plugins. `useTableProcessor` was removed.
 Instead, use
 ```js
