@@ -557,7 +557,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			})
 
 			.on(
-				'change.elements',
+				'set.elements',
 				this.async.debounce(() => {
 					Dom.detach(files);
 
@@ -577,7 +577,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			)
 
 			.on(
-				'change.folders',
+				'set.folders',
 				this.async.debounce(() => {
 					Dom.detach(this.tree);
 

@@ -20,6 +20,21 @@ export class ObserveObject {
 				set: value => {
 					const oldValue = data[key];
 
+					const sum: string[] = [];
+					this.fire(
+						[
+							'set',
+							...prefix.reduce((rs, p) => {
+								sum.push(p);
+								rs.push(`set.${sum.join('.')}`);
+								return rs;
+							}, [] as string[])
+						],
+						prefix.join('.'),
+						oldValue,
+						value.valueOf ? value.valueOf() : value
+					);
+
 					if (!isEqual(oldValue, value)) {
 						this.fire(
 							[
