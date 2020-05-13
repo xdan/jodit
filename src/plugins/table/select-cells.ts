@@ -40,11 +40,7 @@ export class selectCells extends Plugin {
 			.on('change.table afterCommand.table afterSetMode.table', () => {
 				this.onRemoveSelection();
 
-				$$('table', jodit.editor).forEach(table => {
-					if (!dataBind(table, key)) {
-						this.observe(table);
-					}
-				});
+				$$('table', jodit.editor).forEach(this.observe);
 			});
 	}
 
@@ -57,18 +53,23 @@ export class selectCells extends Plugin {
 	 * Add listeners for table
 	 * @param table
 	 */
-	private observe(table: HTMLTableElement) {
+	@autobind
+	private observe(table: HTMLTableElement): void {
+		if (dataBind(table, key)) {
+			return;
+		}
+
 		dataBind(table, key, true);
 
 		this.j.e
 			.on(
 				table,
-				'mousedown.table touchstart.table',
+				'mousedown.select-cells touchstart.select-cells',
 				this.onStartSelection.bind(this, table)
 			)
 			.on(
 				table,
-				'mouseup.table touchend.table',
+				'mouseup.select-cells touchend.select-cells',
 				this.onStopSelection.bind(this, table)
 			);
 	}
@@ -102,7 +103,7 @@ export class selectCells extends Plugin {
 
 		this.j.e.on(
 			table,
-			'mousemove.table touchmove.table',
+			'mousemove.select-cells touchmove.select-cells',
 			this.onMove.bind(this, table)
 		);
 
@@ -176,7 +177,11 @@ export class selectCells extends Plugin {
 	 */
 	@autobind
 	private onRemoveSelection(e?: MouseEvent): void {
-		if (!e?.buffer?.actionTrigger && !this.selectedCell && this.module.getAllSelectedCells().length) {
+		if (
+			!e?.buffer?.actionTrigger &&
+			!this.selectedCell &&
+			this.module.getAllSelectedCells().length
+		) {
 			this.j.unlock();
 			this.unselectCells();
 			this.j.e.fire('hidePopup');
@@ -238,7 +243,7 @@ export class selectCells extends Plugin {
 		);
 
 		$$('table', this.j.editor).forEach(table => {
-			this.j.e.off(table, 'mousemove.table touchmove.table');
+			this.j.e.off(table, 'mousemove.select-cells touchmove.select-cells');
 		});
 	}
 
@@ -369,14 +374,9 @@ export class selectCells extends Plugin {
 		jodit.e
 			.off(
 				[jodit.ow, jodit.editorWindow],
-				'mouseup.table touchend.table',
+				'mouseup.select-cells touchend.select-cells',
 				this.onStopSelection
 			)
-			.off('keydown.table')
-			.off('beforeCommand.table', this.onExecCommand)
-			.off('afterCommand.table', this.onAfterCommand)
-			.off('afterGetValueFromEditor.table')
-			.off('change.table afterCommand.table afterSetMode.table')
-			.off('.table');
+			.off('.select-cells');
 	}
 }

@@ -12,10 +12,13 @@ import { Plugin, Dom, Table } from '../../modules';
 import {
 	$$,
 	call,
+	dataBind,
 	getContentWidth,
-	offset,
+	offset
 } from '../../core/helpers';
 import { IBound, IJodit } from '../../types';
+
+const key = 'table_processor_observer-resize';
 
 /**
  * Process tables in editor
@@ -97,7 +100,7 @@ export class resizeCells extends Plugin {
 
 		this.startX = event.clientX;
 
-		this.j.lock(this.key);
+		this.j.lock(key);
 		this.resizeHandler.classList.add('jodit-table-resizer-moved');
 
 		let box: ClientRect,
@@ -368,8 +371,6 @@ export class resizeCells extends Plugin {
 		}
 	}
 
-		private key: string = 'table_processor_observer';
-
 	/**
 	 *
 	 * @param {Jodit} editor
@@ -380,19 +381,16 @@ export class resizeCells extends Plugin {
 		}
 
 		editor.e
-			.off(this.j.ow, '.table')
-			.off('.table')
-			.on('change.table afterCommand.table afterSetMode.table', () => {
-				($$('table', editor.editor) as HTMLTableElement[]).forEach(
-					(table: HTMLTableElement) => {
-						if (!(table as any)[this.key]) {
-							this.observe(table);
-						}
-					}
-				);
+			.off(this.j.ow, '.resize-cells')
+			.off('.resize-cells')
+			.on('change.resize-cells afterCommand.resize-cells afterSetMode.resize-cells', () => {
+				($$(
+					'table',
+					editor.editor
+				) as HTMLTableElement[]).forEach(this.observe);
 			})
-			.on(this.j.ow, 'mouseup.table touchend.table', this.onMouseUp)
-			.on(this.j.ow, 'scroll.table', () => {
+			.on(this.j.ow, 'mouseup.resize-cells touchend.resize-cells', this.onMouseUp)
+			.on(this.j.ow, 'scroll.resize-cells', () => {
 				if (this.drag) {
 					const parent = Dom.up(
 						this.workCell,
@@ -406,7 +404,7 @@ export class resizeCells extends Plugin {
 					}
 				}
 			})
-			.on('beforeSetMode.table', () => {
+			.on('beforeSetMode.resize-cells', () => {
 				this.module.getAllSelectedCells().forEach(td => {
 					this.module.removeSelection(td);
 					Table.normalizeTable(
@@ -420,11 +418,16 @@ export class resizeCells extends Plugin {
 			});
 	}
 
+	@autobind
 	private observe(table: HTMLTableElement) {
-		(table as any)[this.key] = true;
+		if (dataBind(table, key)) {
+			return;
+		}
+
+		dataBind(table, key, true);
 
 		this.j.e
-			.on(table, 'mouseleave.table', (e: MouseEvent) => {
+			.on(table, 'mouseleave.resize-cells', (e: MouseEvent) => {
 				if (
 					this.resizeHandler &&
 					this.resizeHandler !== e.relatedTarget
@@ -434,7 +437,7 @@ export class resizeCells extends Plugin {
 			})
 			.on(
 				table,
-				'mousemove.table touchmove.table',
+				'mousemove.resize-cells touchmove.resize-cells',
 				(event: MouseEvent) => {
 					const cell = Dom.up(
 						event.target as HTMLElement,
@@ -453,10 +456,11 @@ export class resizeCells extends Plugin {
 		this.createResizeHandle();
 	}
 
+	/** @ovveride */
 	beforeDestruct(jodit: IJodit): void {
 		if (jodit.events) {
-			jodit.e.off(this.j.ow, '.table');
-			jodit.e.off('.table');
+			jodit.e.off(this.j.ow, '.resize-cells');
+			jodit.e.off('.resize-cells');
 		}
 	}
 }
