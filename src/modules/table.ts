@@ -39,7 +39,9 @@ export class Table extends ViewComponent<IJodit> {
 			selector && selectors.push(selector);
 		});
 
-		style.innerHTML = selectors.length ? selectors.join(',') + `{${this.j.o.table.selectionCellStyle}}` : '';
+		style.innerHTML = selectors.length
+			? selectors.join(',') + `{${this.j.o.table.selectionCellStyle}}`
+			: '';
 	}
 
 	addSelection(td: HTMLTableCellElement): void {
@@ -247,11 +249,31 @@ export class Table extends ViewComponent<IJodit> {
 		after: boolean,
 		create: ICreate
 	) {
-		const columnsCount: number = Table.getColumnsCount(table),
-			row: HTMLTableRowElement = create.element('tr');
+		let row: HTMLTableRowElement;
 
-		for (let j: number = 0; j < columnsCount; j += 1) {
-			row.appendChild(create.element('td'));
+		if (!line) {
+			const columnsCount: number = Table.getColumnsCount(table);
+
+			row = create.element('tr');
+
+			for (let j: number = 0; j < columnsCount; j += 1) {
+				row.appendChild(create.element('td'));
+			}
+		} else {
+			row = line.cloneNode(true) as HTMLTableRowElement;
+
+			$$('td,th', line).forEach(cell => {
+				const rowspan = attr(cell, 'rowspan');
+
+				if (rowspan && parseInt(rowspan, 10) > 1) {
+					const newRowSpan = parseInt(rowspan, 10) - 1;
+					attr(cell, 'rowspan',  newRowSpan > 1 ? newRowSpan : null);
+				}
+			});
+
+			$$('td,th', row).forEach(cell => {
+					cell.innerHTML = '';
+			});
 		}
 
 		if (after && line && line.nextSibling) {
@@ -773,7 +795,9 @@ export class Table extends ViewComponent<IJodit> {
 				}
 
 				Table.__unmark(__marked);
-				jodit.getInstance<Table>('Table', jodit.o).removeSelection(cell);
+				jodit
+					.getInstance<Table>('Table', jodit.o)
+					.removeSelection(cell);
 			}
 		);
 		this.normalizeTable(table);
