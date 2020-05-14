@@ -23,7 +23,7 @@
 		border: 0;
 	}
 
-	&-moved {
+	&_moved {
 		background-color: @color-background-selection;
 		z-index: 2;
 
@@ -44,15 +44,13 @@
 
 		tr {
 			user-select: none;
+
 			th,
 			td {
 				border: 1px solid #ddd;
 				text-align: left;
 				vertical-align: middle;
 				user-select: text;
-				&[data-jodit-selected-cell] {
-					border: 1px double @color-border-selected;
-				}
 			}
 		}
 	}

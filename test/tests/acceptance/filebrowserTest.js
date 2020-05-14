@@ -25,7 +25,7 @@ describe('Jodit FileBrowser Tests', function() {
 		});
 
 		it('Should create dialog and load files', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				filebrowser: {
 					ajax: {
 						url: 'https://xdsoft.net/jodit/connector/index.php'
@@ -46,7 +46,7 @@ describe('Jodit FileBrowser Tests', function() {
 		});
 
 		it('Should add filebrowser icon in image buttons popup', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				filebrowser: {
 					ajax: {
 						url: 'https://xdsoft.net/jodit/connector/index.php'
@@ -63,7 +63,7 @@ describe('Jodit FileBrowser Tests', function() {
 		});
 
 		it('Should add uploader icon in image buttons popup', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				uploader: {
 					url:
 						'https://xdsoft.net/jodit/connector/index.php?action=upload'
@@ -414,12 +414,9 @@ describe('Jodit FileBrowser Tests', function() {
 					filebrowser
 						.open(function() {})
 						.then(function() {
-							const tiles = filebrowser.dialog.dialogbox_header.querySelector(
-								'.jodit_toolbar_btn-tiles'
-							);
-							const list = filebrowser.dialog.dialogbox_header.querySelector(
-								'.jodit_toolbar_btn-list'
-							);
+							const tiles = getButton('tiles', filebrowser.dialog);
+							const list = getButton('list', filebrowser.dialog);
+
 							const files = filebrowser.browser.querySelector(
 								'.jodit-filebrowser_files'
 							);
@@ -429,14 +426,15 @@ describe('Jodit FileBrowser Tests', function() {
 									'jodit-filebrowser_files_view-tiles'
 								)
 							).is.true;
+
 							expect(
-								tiles.classList.contains('jodit_active')
+								tiles.component.state.activated
 							).is.true;
 							expect(
-								list.classList.contains('jodit_active')
+								list.component.state.activated
 							).is.false;
 
-							simulateEvent('mousedown', 0, list);
+							simulateEvent('click', 0, list);
 
 							expect(
 								files.classList.contains(
@@ -449,10 +447,10 @@ describe('Jodit FileBrowser Tests', function() {
 								)
 							).is.true;
 							expect(
-								tiles.classList.contains('jodit_active')
+								tiles.component.state.activated
 							).is.false;
 							expect(
-								list.classList.contains('jodit_active')
+								list.component.state.activated
 							).is.true;
 
 							filebrowser.close();
@@ -479,7 +477,7 @@ describe('Jodit FileBrowser Tests', function() {
 					.open(function() {})
 					.then(function() {
 						const filter = filebrowser.dialog.dialogbox_header.querySelector(
-							'.jodit_toolbar_btn-filter'
+							'.jodit-toolbar-content_filter'
 						);
 						const input = filter.querySelector('input');
 						const files = filebrowser.browser.querySelector(
@@ -533,7 +531,7 @@ describe('Jodit FileBrowser Tests', function() {
 					.open(function() {})
 					.then(function() {
 						const sort = filebrowser.dialog.dialogbox_header.querySelector(
-							'.jodit_toolbar_btn-sort'
+							'.jodit-toolbar-content_sort'
 						);
 						const select = sort.querySelector('select');
 						const files = filebrowser.browser.querySelector(
@@ -616,7 +614,7 @@ describe('Jodit FileBrowser Tests', function() {
 
 		describe('Select button', function() {
 			it('Should fire first callback in open method', function(done) {
-				const filebrowser = new Jodit.modules.FileBrowser(null, {
+				const filebrowser = new Jodit.modules.FileBrowser({
 					filebrowser: {
 						saveStateInStorage: false
 					},
@@ -633,16 +631,9 @@ describe('Jodit FileBrowser Tests', function() {
 						expect(data.files[0]).equals(
 							'https://xdsoft.net/jodit/files/test.txt'
 						);
-
-						filebrowser.close();
-						filebrowser.destruct();
-
-						done();
 					})
 					.then(function() {
-						const select = filebrowser.dialog.dialogbox_header.querySelector(
-							'.jodit_toolbar_btn-select'
-						);
+						const select = getButton('select', filebrowser.dialog);
 						const files = filebrowser.browser.querySelector(
 							'.jodit-filebrowser_files'
 						);
@@ -651,7 +642,7 @@ describe('Jodit FileBrowser Tests', function() {
 						expect(select).is.not.null;
 
 						expect(
-							select.classList.contains('jodit_disabled')
+							select.hasAttribute('disabled')
 						).is.true;
 
 						simulateEvent(
@@ -663,10 +654,15 @@ describe('Jodit FileBrowser Tests', function() {
 						);
 
 						expect(
-							select.classList.contains('jodit_disabled')
+							select.hasAttribute('disabled')
 						).is.false;
 
-						simulateEvent('mousedown', 0, select);
+						simulateEvent('click', 0, select);
+
+						filebrowser.close();
+						filebrowser.destruct();
+
+						done();
 					})
 					.catch(function(e) {
 						throw e;
@@ -678,7 +674,7 @@ describe('Jodit FileBrowser Tests', function() {
 	describe('Test drag and drop', function() {
 		describe('Drag and drop image from filebrowser', function() {
 			it('Should create IMG element in editor', function(done) {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					filebrowser: {
 						ajax: {
 							url: 'https://xdsoft.net/jodit/connector/index.php'
@@ -686,7 +682,7 @@ describe('Jodit FileBrowser Tests', function() {
 					}
 				});
 
-				const filebrowser = editor.getInstance('FileBrowser');
+				const filebrowser = editor.filebrowser;
 
 				filebrowser
 					.open(function() {})
@@ -745,7 +741,7 @@ describe('Jodit FileBrowser Tests', function() {
 
 		describe('Drag and drop File from filebrowser', function() {
 			it('Should create A element in editor', function(done) {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					filebrowser: {
 						ajax: {
 							url: 'https://xdsoft.net/jodit/connector/index.php'
@@ -753,7 +749,7 @@ describe('Jodit FileBrowser Tests', function() {
 					}
 				});
 
-				const filebrowser = editor.getInstance('FileBrowser');
+				const filebrowser = editor.filebrowser;
 
 				filebrowser
 					.open(function() {})
@@ -821,6 +817,7 @@ describe('Jodit FileBrowser Tests', function() {
 
 				editor.value =
 					'<p>Some text</p><p>Another text</p><p>Another some text</p>';
+
 				const range = editor.selection.createRange();
 				range.setStart(
 					editor.editor.querySelectorAll('p')[1].firstChild,
@@ -830,7 +827,7 @@ describe('Jodit FileBrowser Tests', function() {
 				range.collapse(true);
 				editor.selection.selectRange(range);
 
-				const filebrowser = editor.getInstance('FileBrowser');
+				const filebrowser = editor.filebrowser;
 
 				filebrowser
 					.open()

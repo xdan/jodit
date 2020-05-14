@@ -127,7 +127,7 @@ console.log(Jodit.modules.Helpers.position(editor.editor.querySelector('p')));
 ### Feature
 * In `link` plugin added `formTemplate` and `formClassName` options [#333](https://github.com/xdan/jodit/issues/333)
 ```js
-const editor = new Jodit(appendTestArea(), {
+const editor = getJodit({
   link: {
     formTemplate: function() {
       return '<form class="form_url"><input ref="url_input" type="url"><button>save</button></form>';

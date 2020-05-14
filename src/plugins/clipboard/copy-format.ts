@@ -112,9 +112,7 @@ Config.prototype.controls.copyformat = {
 				const onMouseDown = () => {
 					editor.buffer.set(pluginKey, false);
 
-					const currentNode:
-						| Node
-						| false = editor.selection.current();
+					const currentNode= editor.selection.current();
 
 					if (currentNode) {
 						if (Dom.isTag(currentNode, 'img')) {

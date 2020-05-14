@@ -39,19 +39,15 @@ Config.prototype.controls.ol = {
 /**
  * Process commands insertOrderedList and insertUnOrderedList
  */
-/**
- * Process commands insertOrderedList and insertUnOrderedList
- */
 export function orderedList(editor: IJodit) {
 	const isOurCommand = (command: string) =>
 			/insert(un)?orderedlist/i.test(command),
-		getWrapper = (): HTMLElement | false => {
-			return Dom.up(
+		getWrapper = () =>
+			Dom.up(
 				editor.selection.current() as Node,
 				(tag: Node | null) => tag && /^UL|OL$/i.test(tag.nodeName),
 				editor.editor
-			);
-		},
+			),
 		listStyleTypeEqual = (el: HTMLElement, listStyleType: string) => {
 			const value = el.style.listStyleType;
 

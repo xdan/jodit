@@ -1,7 +1,7 @@
 describe('Stat plugin', function() {
 	describe('After init and change', function() {
 		it('Should show chars count and words count', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				language: 'en',
 				showCharsCounter: true,
 				showWordsCounter: true,
@@ -27,7 +27,7 @@ describe('Stat plugin', function() {
 		});
 		describe('Hide chars count', function() {
 			it('Should show only words count', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					language: 'en',
 					showCharsCounter: false,
 					showWordsCounter: true,
@@ -54,7 +54,7 @@ describe('Stat plugin', function() {
 
 		describe('Hide words count', function() {
 			it('Should show only chars count', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					language: 'en',
 					showCharsCounter: true,
 					showWordsCounter: false,
@@ -81,7 +81,7 @@ describe('Stat plugin', function() {
 
 		describe('Hide words and chars count', function() {
 			it('Should hide status bar', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					language: 'en',
 					showCharsCounter: false,
 					showWordsCounter: false,

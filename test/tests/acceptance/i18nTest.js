@@ -32,7 +32,7 @@ describe('Test i18n functionality', function() {
 						language +
 						' language',
 					function() {
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							language: language,
 							debugLanguage: true
 						});
@@ -52,7 +52,7 @@ describe('Test i18n functionality', function() {
 	});
 	describe('Test i18n function', function() {
 		it('Should show value in current language', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				language: 'ru',
 				i18n: {
 					ru: {

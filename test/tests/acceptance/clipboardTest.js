@@ -1,7 +1,7 @@
 describe('Clipboard text', function() {
 	describe('Paste HTML', function() {
 		it('Should show paste html dialog', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				defaultActionOnPaste: Jodit.INSERT_AS_HTML
 			});
 
@@ -30,7 +30,7 @@ describe('Clipboard text', function() {
 
 		describe('Prevent show dialog', function() {
 			it('Should not show paste html dialog if beforeOpenPasteDialog returned false', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					events: {
 						beforeOpenPasteDialog: function(
 							msg,
@@ -69,7 +69,7 @@ describe('Clipboard text', function() {
 
 			describe('Change dialog in afterOpenPasteDialog', function() {
 				it('Should change dialog', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						events: {
 							afterOpenPasteDialog: function(
 								dialog,
@@ -113,7 +113,7 @@ describe('Clipboard text', function() {
 
 	describe('Paste simple text', function() {
 		it('Should not show paste html dialog', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				defaultActionOnPaste: Jodit.INSERT_AS_HTML
 			});
 
@@ -146,7 +146,7 @@ describe('Clipboard text', function() {
 			describe('Insert only text', function() {
 				it('Should insert only text from pasted html', function() {
 					const
-						editor = new Jodit(appendTestArea(), {
+						editor = getJodit({
 							askBeforePasteHTML: false,
 							askBeforePasteFromWord: false,
 							defaultActionOnPaste: Jodit.INSERT_ONLY_TEXT
@@ -171,7 +171,7 @@ describe('Clipboard text', function() {
 
 			describe('Insert as text', function() {
 				it('Should insert only text from pasted html', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						askBeforePasteHTML: false,
 						askBeforePasteFromWord: false,
 						defaultActionOnPaste: Jodit.INSERT_AS_TEXT
@@ -194,7 +194,7 @@ describe('Clipboard text', function() {
 
 			describe('Insert as html', function() {
 				it('Should insert pasted html like html', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						askBeforePasteHTML: false,
 						askBeforePasteFromWord: false,
 						defaultActionOnPaste: Jodit.INSERT_AS_HTML
@@ -218,7 +218,7 @@ describe('Clipboard text', function() {
 
 			describe('Insert clear html', function() {
 				it('Should insert pasted and cleared html', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						askBeforePasteHTML: false,
 						askBeforePasteFromWord: false,
 						defaultActionOnPaste: Jodit.INSERT_CLEAR_HTML
@@ -244,7 +244,7 @@ describe('Clipboard text', function() {
 		describe('plain text', function () {
 			it('Should Insert text with <br> instead of \\n', function() {
 				const
-					editor = new Jodit(appendTestArea()),
+					editor = getJodit(),
 					pastedText = 'test\ntest\ntest\ntest\ntest\n',
 
 					emulatePasteEvent = function(data) {
@@ -268,7 +268,7 @@ describe('Clipboard text', function() {
 			['copy', 'cut'].forEach(function (command) {
 				describe('For ' + command + ' command. In Jodit.buffer', function() {
 					it('should be selected text', () => {
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							toolbarAdaptive: false,
 							observer: {
 								timeout: 0

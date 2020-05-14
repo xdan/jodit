@@ -2,7 +2,7 @@ describe('Test editor indent plugin', function() {
 	describe('Indent', function() {
 		describe('Exec Indent command several times', function() {
 			it('Should increase margin-left', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				editor.value = '<ul><li>test</li></ul>';
 
 				const range = editor.selection.createRange();
@@ -34,7 +34,7 @@ describe('Test editor indent plugin', function() {
 
 			describe('For RTL direction', function() {
 				it('Should increase margin-right', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						direction: 'rtl'
 					});
 					editor.value = '<ul><li>test</li></ul>';
@@ -70,7 +70,7 @@ describe('Test editor indent plugin', function() {
 	});
 
 	it(`should indent multi-line selection of various child elements only on 1st 2 lines`, function() {
-		const editor = new Jodit(appendTestArea());
+		const editor = getJodit();
 		editor.value = `
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. <i>Quonam, inquit, modo?</i> <span>prima quaeque bene</span>
@@ -107,7 +107,7 @@ describe('Test editor indent plugin', function() {
 	});
 
 	it(`should indent multi-line selection of "dd" and "dt" child elements only on 1st 2 dt/dd groups`, function() {
-		const editor = new Jodit(appendTestArea());
+		const editor = getJodit();
 		editor.value = `
     <dl>
       <dt><dfn>Falli igitur possumus.</dfn></dt>
@@ -153,7 +153,7 @@ describe('Test editor indent plugin', function() {
 
 	describe('If selection element outside the editor', function () {
 		it(`should do nothing`, function() {
-			const editor = new Jodit(appendTestArea()), div = appendTestDiv();
+			const editor = getJodit(), div = appendTestDiv();
 			editor.value = `test`;
 
 			div.innerHTML = 'text';

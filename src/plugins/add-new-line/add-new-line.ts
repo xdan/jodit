@@ -256,14 +256,14 @@ export class addNewLine extends Plugin {
 		}
 
 		if (this.isMatchedTag(currentElement)) {
-			const parentBox: Node | false = Dom.up(
+			const parentBox = Dom.up(
 				currentElement,
 				node => Dom.isBlock(node, editor.editorWindow),
 				editor.editor
 			);
 
 			if (parentBox && parentBox !== editor.editor) {
-				currentElement = parentBox as HTMLElement;
+				currentElement = parentBox;
 			}
 		}
 
@@ -308,6 +308,7 @@ export class addNewLine extends Plugin {
 		}
 	};
 
+	/** @override */
 	protected beforeDestruct(): void {
 		this.j.async.clearTimeout(this.timeout);
 		this.j.e.off(this.line);

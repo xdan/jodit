@@ -13,7 +13,7 @@ import {
 	IJodit,
 	CanUndef
 } from '../types/';
-import { camelCase, splitArray } from '../core/helpers/';
+import { splitArray } from '../core/helpers/';
 import { makeCollection } from '../modules/toolbar/factory';
 import { UIList } from '../core/ui';
 
@@ -93,13 +93,13 @@ Config.prototype.controls.dots = {
  */
 export function mobile(editor: IJodit) {
 	let timeout: number = 0,
-		now: number,
 		store: Array<string | IControlType> = splitArray(editor.o.buttons);
 
 	editor.e
 		.on('touchend', (e: TouchEvent) => {
 			if (e.changedTouches && e.changedTouches.length) {
-				now = new Date().getTime();
+				const now = new Date().getTime();
+
 				if (now - timeout > editor.o.mobileTapTimeout) {
 					timeout = now;
 					editor.selection.insertCursorAtPoint(
@@ -109,6 +109,7 @@ export function mobile(editor: IJodit) {
 				}
 			}
 		})
+
 		.on(
 			'getDiffButtons.mobile',
 			(toolbar: IToolbarCollection): void | Buttons => {
@@ -129,24 +130,28 @@ export function mobile(editor: IJodit) {
 						return;
 					}
 
-					const width: number = editor.container.offsetWidth;
+					const width = editor.container.offsetWidth;
 
-					let newStore: Array<string | IControlType> = [];
+					const newStore = (() => {
+						if (width >= editor.o.sizeLG) {
+							return splitArray(editor.o.buttons);
+						}
 
-					if (width >= editor.o.sizeLG) {
-						newStore = splitArray(editor.o.buttons);
-					} else if (width >= editor.o.sizeMD) {
-						newStore = splitArray(editor.o.buttonsMD);
-					} else if (width >= editor.o.sizeSM) {
-						newStore = splitArray(editor.o.buttonsSM);
-					} else {
-						newStore = splitArray(editor.o.buttonsXS);
-					}
+						if (width >= editor.o.sizeMD) {
+							return splitArray(editor.o.buttonsMD);
+						}
+
+						if (width >= editor.o.sizeSM) {
+							return splitArray(editor.o.buttonsSM);
+						}
+
+						return splitArray(editor.o.buttonsXS);
+					})();
 
 					if (newStore.toString() !== store.toString()) {
 						store = newStore;
 
-						editor.e.fire(camelCase('close-all-popups'));
+						editor.e.fire('closeAllPopups');
 
 						editor.toolbar
 							.setRemoveButtons(editor.o.removeButtons)

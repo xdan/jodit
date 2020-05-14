@@ -1,7 +1,7 @@
 describe('Commands Jodit Editor Tests', function() {
 	describe('Command "formatBlock"', function() {
 		it('Try exec the command "formatBlock" for several elements', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = '<p>test</p><p>test2</p>';
 
 			const sel = editor.selection.sel,
@@ -16,9 +16,10 @@ describe('Commands Jodit Editor Tests', function() {
 
 			expect(editor.value).equals('<h1>test</h1><h1>test2</h1>');
 		});
+
 		describe('Exec formatBlock for one inline element', function() {
 			it('Should wrap this element and all nearest inine element in block', function() {
-				const jodit = new Jodit(appendTestArea());
+				const jodit = getJodit();
 				jodit.value = 'stop <span>post</span> ice';
 				const range = jodit.editorDocument.createRange();
 				range.setStart(jodit.editor.firstChild, 0);
@@ -34,7 +35,7 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 
 		it('Try exec the command "formatBlock" in text node then selection is collapsed it should wrap it node in H1', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = 'test';
 
 			const sel = editor.selection.sel,
@@ -51,8 +52,9 @@ describe('Commands Jodit Editor Tests', function() {
 
 			expect(editor.value).equals('<h1>te a st</h1>');
 		});
+
 		it('Try exec the command "formatBlock" in the end of text node then selection is collapsed it should wrap it node in H1', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = 'test';
 
 			const sel = editor.selection.sel,
@@ -71,7 +73,7 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 
 		it('Try exec the command "formatBlock" for several text nodes', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = '';
 
 			editor.selection.insertNode(editor.createInside.text('test'));
@@ -98,7 +100,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 		describe('editor is empty', function() {
 			it('Should create empty element and set cursor into it', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				editor.value = '';
 				editor.selection.focus();
 
@@ -112,7 +114,7 @@ describe('Commands Jodit Editor Tests', function() {
 		describe('For UL>li elements', function() {
 			describe('Select only LI', function() {
 				it('Should replace all LI elements to P and unwrap it from UL', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					editor.value =
 						'<ul>' +
 						'<li>1</li>' +
@@ -150,9 +152,10 @@ describe('Commands Jodit Editor Tests', function() {
 					);
 				});
 			});
+
 			describe('Select UL', function() {
 				it('Should replace all LI elements to P and unwrap it from UL', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					editor.value =
 						'<ul>' +
 						'<li>1</li>' +
@@ -189,7 +192,7 @@ describe('Commands Jodit Editor Tests', function() {
 	describe('Sub/Supscript native', function() {
 		describe('sub', function() {
 			it('Should insert selection im SUB element', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				editor.value = '<p>test</p>';
 				const range = editor.selection.createRange();
 				range.setStart(editor.editor.firstChild.firstChild, 2);
@@ -199,9 +202,10 @@ describe('Commands Jodit Editor Tests', function() {
 				expect(editor.value).equals('<p>te<sub>st</sub></p>');
 			});
 		});
+
 		describe('sup', function() {
 			it('Should insert selection im SUP element', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				editor.value = '<p>test</p>';
 				const range = editor.selection.createRange();
 				range.setStart(editor.editor.firstChild.firstChild, 2);
@@ -212,10 +216,11 @@ describe('Commands Jodit Editor Tests', function() {
 			});
 		});
 	});
+
 	describe('Bold command', function() {
 		describe('For box with style="font-weight:bold"', function() {
 			it('should wrap selected text in STRONG element without questions', function() {
-				const editor = new Jodit(appendTestArea()),
+				const editor = getJodit(),
 					style = document.createElement('style');
 
 				editor.value = '<p>test</p>';
@@ -236,8 +241,9 @@ describe('Commands Jodit Editor Tests', function() {
 				expect(editor.value).equals('<p><strong>test</strong></p>');
 			});
 		});
+
 		it('Should insert a few chars and again exec bold. Bold mode should be switch off', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = 'test';
 
 			const sel = editor.selection.sel,
@@ -258,9 +264,10 @@ describe('Commands Jodit Editor Tests', function() {
 
 			expect(editor.value).equals('test<strong>abc</strong>def');
 		});
+
 		describe('for some text', function() {
 			it('should wrap this text in STRONG element', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				editor.value = 'test';
 
 				const sel = editor.selection.sel,
@@ -274,9 +281,10 @@ describe('Commands Jodit Editor Tests', function() {
 
 				expect(editor.value).equals('<strong>test</strong>');
 			});
+
 			describe('inside STRONG element ', function() {
 				it('from start of this element, should unwrap this text', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					editor.value = '<strong>test</strong>';
 
 					const sel = editor.selection.sel,
@@ -292,7 +300,7 @@ describe('Commands Jodit Editor Tests', function() {
 					expect(editor.value).equals('te<strong>st</strong>');
 				});
 				it('near end of this element, should unwrap this text', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					editor.value = '<strong>test</strong>';
 
 					const sel = editor.selection.sel,
@@ -308,7 +316,7 @@ describe('Commands Jodit Editor Tests', function() {
 					expect(editor.value).equals('<strong>te</strong>st');
 				});
 				it('in the middle of this element, should unwrap this text', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					editor.value = '<strong>test</strong>';
 
 					const sel = editor.selection.sel,
@@ -326,7 +334,7 @@ describe('Commands Jodit Editor Tests', function() {
 					);
 				});
 				it('should unwrap this part and after exec "bold" again it should create 3 STRONG elements', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					editor.value = '<strong>1 2 3</strong>';
 
 					const sel = editor.selection.sel,
@@ -346,7 +354,7 @@ describe('Commands Jodit Editor Tests', function() {
 				});
 			});
 			it('that contains a few STRONG elements, should unwrap all of these', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				editor.value =
 					'<strong>test</strong> test <strong>test</strong>';
 
@@ -365,7 +373,7 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 		describe('Try exec the command "bold"', function() {
 			it('Should wrap selected text in STRONG element', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				editor.value = '<p>test</p>';
 
 				const sel = editor.selection.sel,
@@ -381,7 +389,7 @@ describe('Commands Jodit Editor Tests', function() {
 			});
 			describe('Try exec the command "bold" twice', function() {
 				it('Should unwrap strong elements', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					editor.value = '<p>test</p>';
 
 					const sel = editor.selection.sel,
@@ -400,7 +408,7 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 		describe('Try exec the command "bold" for font-weight: 700 Element', function() {
 			it('should ubnwrap selected srtong element', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				editor.value = '<span style="font-weight: 700">test</span>';
 
 				const sel = editor.selection.sel,
@@ -418,7 +426,7 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 		describe('Exec bold for collapsed range and move cursor in another place', function() {
 			it('Should remove STRONG element', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					cleanHTML: {
 						timeout: 0
 					}
@@ -442,7 +450,7 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 		describe('Exec bold command for SPAN with font-size', function() {
 			it('Should leave both font-size and font-weight rules', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				editor.value = '<span style="font-size: 36px;">asdasd</span>';
 
 				const sel = editor.selection.sel,
@@ -467,7 +475,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 	describe('After exec some command', function() {
 		it('should restore selection to previous', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = '<p>test</p>';
 
 			const sel = editor.selection.sel,
@@ -487,7 +495,7 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 		describe('in collapsed selection', function() {
 			it('should place cursor inward', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				editor.value = '<p>test</p>';
 
 				const sel = editor.selection.sel,
@@ -509,7 +517,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 	describe('formatBlock', function() {
 		it('Should wrap or replace container to specialize tag', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = '<p>testy oprst <span>lets go</span></p>';
 
 			const sel = editor.selection.sel,
@@ -529,7 +537,7 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 
 		it('Should wrap text into H1 tag near Table, but table must be after this tag', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = 'test<table><tr><td>post</td></tr></table>';
 
 			const sel = editor.selection.sel,
@@ -550,7 +558,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 		describe('justifyLeft', function() {
 			it('Should set align for element which was created using formatBlock', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				editor.value = 'testy oprst <span>lets go</span>';
 
 				const sel = editor.selection.sel,
@@ -573,7 +581,7 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 
 		it('Insert H1 inside TD should crearte new H1 withow replacement', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = '<table><tr><td>1</td></tr></table>';
 
 			const sel = editor.selection.sel,
@@ -592,7 +600,7 @@ describe('Commands Jodit Editor Tests', function() {
 	});
 	describe('Colors', function() {
 		it('Set colour for all selection should create <span></span> tags inside all paragraps', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = '<p>1</p><p>2</p><p>3</p>';
 
 			const sel = editor.selection.sel,
@@ -611,7 +619,7 @@ describe('Commands Jodit Editor Tests', function() {
 			).equals(editor.value);
 		});
 		it('Set colour to collapsed position should create empty span and insert inward cursor', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = 'testy oprst <span>lets go</span>';
 
 			const sel = editor.selection.sel,
@@ -633,7 +641,7 @@ describe('Commands Jodit Editor Tests', function() {
 	describe('Fonts', function() {
 		describe('Set font size', function() {
 			it('should create attribute style="font-size:value"', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				editor.value = '<p> testy oprst <span>lets go</span></p>';
 
 				const sel = editor.selection.sel,
@@ -657,7 +665,7 @@ describe('Commands Jodit Editor Tests', function() {
 			});
 			describe('For box with style="font-size:12px"', function() {
 				it('should wrap selected text in SPAN with style="font-size:12px" element without questions', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					editor.value = 'test';
 
 					const sel = editor.selection.sel,
@@ -680,7 +688,7 @@ describe('Commands Jodit Editor Tests', function() {
 		describe('Set font family', function() {
 			describe('For box with style="font-name:Arial"', function() {
 				it('should wrap selected text in SPAN with style="font-family:Arial" element without questions', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					editor.value = '<p>test</p>';
 
 					const sel = editor.selection.sel,
@@ -702,7 +710,7 @@ describe('Commands Jodit Editor Tests', function() {
 				});
 			});
 			it('should create attribute style="font-family:value"', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				editor.value = '<p>test</p>';
 
 				const sel = editor.selection.sel,
@@ -725,7 +733,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 	describe('Align', function() {
 		it('Justify to right', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = '<p>test</p>';
 
 			const sel = editor.selection.sel,
@@ -745,7 +753,7 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 
 		it('Justify to center', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = 'test';
 
 			const sel = editor.selection.sel,
@@ -764,7 +772,7 @@ describe('Commands Jodit Editor Tests', function() {
 			);
 		});
 		it('Justify to left', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = 'test some text <span>test</span><br><p>data</p>';
 
 			const sel = editor.selection.sel,
@@ -784,7 +792,7 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 
 		it('Justify to left in element of unordered list', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = '<ul><li>test</li><li>data</li></ul>';
 
 			const sel = editor.selection.sel,
@@ -804,7 +812,7 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 
 		it('Justify to full', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = '<h1>test some text <span>test</span></h1>';
 
 			const sel = editor.selection.sel,
@@ -825,7 +833,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 		describe('Justify plain text with enter = br mode', function() {
 			it('Should wrap this text in enterBlock element', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					enter: 'br'
 				});
 				editor.value = 'test';
@@ -850,29 +858,39 @@ describe('Commands Jodit Editor Tests', function() {
 		describe('Table cells', function() {
 			describe('Selected table cells', function() {
 				it('Should apply align to all selected cells', function() {
-					const editor = Jodit.make(appendTestArea());
+					const editor = getJodit();
 					editor.value =
 						'<table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>';
 
+					const td = editor.editor.querySelector('td'),
+						pos = Jodit.modules.Helpers.position(td);
+
 					simulateEvent(
-						'mousedown',
+						['mousedown', 'mouseup', 'click'],
 						0,
-						editor.editor.querySelector('td')
+						td,
+						e => {
+							Object.assign(e, {
+								clientX: pos.left,
+								clientY: pos.top
+							});
+						}
 					);
 
 					editor.selection.select(
 						editor.editor.querySelector('td').firstChild
 					);
+
 					editor.execCommand('justifyright');
 
 					expect(sortAttributes(editor.value)).equals(
-						'<table><tbody><tr><td  style="text-align:right">1</td><td>2</td></tr></tbody></table>'
+						'<table><tbody><tr><td style="text-align:right">1</td><td>2</td></tr></tbody></table>'
 					);
 				});
 
 				describe('After change obe cell - select all', function() {
 					it('Should apply align to whole table and remove from cells', function() {
-						const editor = Jodit.make(appendTestArea());
+						const editor = getJodit();
 						editor.value =
 							'<table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>';
 
@@ -908,7 +926,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 	describe('Register sustom command', function() {
 		it('Should register command and hotkeys for it', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 
 			editor.value = 'test test test';
 			const range = editor.selection.createRange();

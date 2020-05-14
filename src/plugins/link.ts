@@ -14,7 +14,7 @@ import {
 	stripTags
 } from '../core/helpers/';
 import { Select } from '../core/selection';
-import { IDictionary, IJodit, IControlType } from '../types';
+import { IDictionary, IJodit, IControlType, Nullable } from '../types';
 
 /**
  * @property {object}  link `{@link link|link}` plugin's options
@@ -98,8 +98,8 @@ Config.prototype.controls.unlink = {
 
 Config.prototype.controls.link = {
 	isActive: (editor: IJodit): boolean => {
-		const current: Node | false = editor.selection.current();
-		return current && Dom.closest(current, 'a', editor.editor) !== false;
+		const current = editor.selection.current();
+		return Boolean(current && Dom.closest(current, 'a', editor.editor));
 	},
 
 	popup: (
@@ -327,7 +327,7 @@ export function link(jodit: IJodit) {
 		jodit.e.on('afterCommand.link', (command: string) => {
 			const sel: Select = jodit.selection;
 
-			let newtag: Node, node: Node | false;
+			let newtag: Node, node: Nullable<Node>;
 
 			if (command === 'removeFormat') {
 				node = sel.current();

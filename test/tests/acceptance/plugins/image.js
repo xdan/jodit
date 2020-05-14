@@ -2,7 +2,7 @@ describe('Process Images plugins', function() {
 	describe('Toolbar', function() {
 		describe('Click on Image button', function() {
 			it('Should open image dialog and insert image by url.', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 
 				editor.value = Jodit.INVISIBLE_SPACE; // IE in iframe mode can loose focus and we can not check where it paste image in start or in finish. It is only in IE
 
@@ -72,7 +72,7 @@ describe('Process Images plugins', function() {
 
 			describe('When the cursor in the middle of some text', function() {
 				it('Should insert image in this position after submit', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value = 'hello world!';
 

@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import autobind from 'autobind-decorator';
+
 import * as consts from './constants';
 import {
 	INVISIBLE_SPACE,
@@ -11,7 +13,13 @@ import {
 	INVISIBLE_SPACE_REG_EXP_START as INV_START
 } from './constants';
 
-import { HTMLTagNames, IDictionary, IJodit, markerInfo } from '../types';
+import {
+	HTMLTagNames,
+	IDictionary,
+	IJodit,
+	markerInfo,
+	Nullable
+} from '../types';
 import { Dom } from './dom';
 import {
 	attr,
@@ -24,7 +32,8 @@ import {
 	$$,
 	css,
 	normalizeNode,
-	normalizeCssValue, isArray
+	normalizeCssValue,
+	isArray, call
 } from './helpers';
 
 type WindowSelection = Selection | null;
@@ -47,7 +56,7 @@ export class Select {
 	 * Throw Error exception if parameter is not Node
 	 * @param node
 	 */
-	private errorNode(node: unknown) {
+	private errorNode(node: unknown): void {
 		if (!Dom.isNode(node, this.win)) {
 			throw error('Parameter node must be instance of Node');
 		}
@@ -100,9 +109,9 @@ export class Select {
 	/**
 	 * Remove all selected content
 	 */
-	remove() {
+	remove(): void {
 		const sel = this.sel,
-			current: false | Node = this.current();
+			current = this.current();
 
 		if (sel && current) {
 			for (let i = 0; i < sel.rangeCount; i += 1) {
@@ -186,7 +195,7 @@ export class Select {
 	/**
 	 * Remove all markers
 	 */
-	removeMarkers() {
+	removeMarkers(): void {
 		$$('span[data-' + consts.MARKER_CLASS + ']', this.area).forEach(
 			Dom.safeRemove
 		);
@@ -244,7 +253,7 @@ export class Select {
 	 *
 	 * @param {markerInfo[]|null} selectionInfo
 	 */
-	restore(selectionInfo: markerInfo[] | null = []) {
+	restore(selectionInfo: markerInfo[] | null = []): void {
 		if (isArray(selectionInfo)) {
 			let range: Range | false = false;
 
@@ -372,7 +381,8 @@ export class Select {
 	/**
 	 * Set focus in editor
 	 */
-	focus = (): boolean => {
+	@autobind
+	focus(): boolean {
 		if (!this.isFocused()) {
 			if (this.j.iframe) {
 				if (this.doc.readyState == 'complete') {
@@ -401,11 +411,10 @@ export class Select {
 		}
 
 		return false;
-	};
+	}
 
 	/**
 	 * Checks whether the current selection is something or just set the cursor is
-	 *
 	 * @return boolean true Selection does't have content
 	 */
 	isCollapsed(): boolean {
@@ -422,8 +431,6 @@ export class Select {
 
 	/**
 	 * Checks whether the editor currently in focus
-	 *
-	 * @return boolean
 	 */
 	isFocused(): boolean {
 		return (
@@ -435,10 +442,9 @@ export class Select {
 
 	/**
 	 * Returns the current element under the cursor inside editor
-	 *
 	 * @return false|Node The element under the cursor or false if undefined or not in editor
 	 */
-	current(checkChild: boolean = true): false | Node {
+	current(checkChild: boolean = true): null | Node {
 		if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
 			const sel = this.sel;
 
@@ -509,21 +515,21 @@ export class Select {
 			}
 		}
 
-		return false;
+		return null;
 	}
 
 	/**
 	 * Insert element in editor
 	 *
-	 * @param {Node} node
-	 * @param {Boolean} [insertCursorAfter=true] After insert, cursor will move after element
-	 * @param {Boolean} [fireChange=true] After insert, editor fire change event. You can prevent this behavior
+	 * @param node
+	 * @param [insertCursorAfter] After insert, cursor will move after element
+	 * @param [fireChange] After insert, editor fire change event. You can prevent this behavior
 	 */
 	insertNode(
 		node: Node,
 		insertCursorAfter = true,
 		fireChange: boolean = true
-	) {
+	): void {
 		this.errorNode(node);
 
 		if (!this.isFocused() && this.j.isEditorMode()) {
@@ -587,7 +593,7 @@ export class Select {
 	 * parent.selection.insertHTML('<img src="image.png"/>');
 	 * ```
 	 */
-	insertHTML(html: number | string | Node) {
+	insertHTML(html: number | string | Node): void {
 		if (html === '') {
 			return;
 		}
@@ -669,11 +675,10 @@ export class Select {
 		url: string | HTMLImageElement,
 		styles: IDictionary<string> | null,
 		defaultWidth: number | string | null
-	) {
-		const image: HTMLImageElement =
-			typeof url === 'string' ? this.j.createInside.element('img') : url;
+	): void {
+		const image = isString(url) ? this.j.createInside.element('img') : url;
 
-		if (typeof url === 'string') {
+		if (isString(url)) {
 			image.setAttribute('src', url);
 		}
 
@@ -703,6 +708,7 @@ export class Select {
 				image.style.width = '';
 				image.style.height = '';
 			}
+
 			image.removeEventListener('load', onload);
 		};
 
@@ -732,6 +738,10 @@ export class Select {
 		return result;
 	}
 
+	/**
+	 * Call callback for all selection node
+	 * @param callback
+	 */
 	eachSelection = (callback: (current: Node) => void) => {
 		const sel = this.sel;
 
@@ -788,7 +798,9 @@ export class Select {
 					if (current.firstChild) {
 						current = current.firstChild;
 					} else {
-						const currentB = this.j.createInside.text(INVISIBLE_SPACE);
+						const currentB = this.j.createInside.text(
+							INVISIBLE_SPACE
+						);
 
 						current.appendChild(currentB);
 						current = currentB;
@@ -814,13 +826,13 @@ export class Select {
 	 */
 	setCursorAfter(
 		node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement
-	): Text | false {
+	): Nullable<Text> {
 		this.errorNode(node);
 
 		if (
 			!Dom.up(
 				node,
-				(elm: Node | null) =>
+				elm =>
 					elm === this.area || (elm && elm.parentNode === this.area),
 				this.area
 			)
@@ -829,7 +841,7 @@ export class Select {
 		}
 
 		const range = this.createRange();
-		let fakeNode: Text | false = false;
+		let fakeNode: Nullable<Text> = null;
 
 		if (!Dom.isText(node)) {
 			fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
@@ -858,7 +870,8 @@ export class Select {
 	 *
 	 * @return {boolean | null} true - the cursor is at the end(start) block, null - cursor somewhere outside
 	 */
-	cursorInTheEdge(start: boolean, parentBlock: HTMLElement): boolean | null {
+	cursorInTheEdge(start: boolean, parentBlock: HTMLElement): Nullable<boolean> {
+		debugger
 		const end = !start,
 			range = this.sel?.getRangeAt(0),
 			current = this.current(false);
@@ -905,19 +918,14 @@ export class Select {
 			}
 		}
 
-		const next = start
-			? Dom.prev(current, check, parentBlock)
-			: Dom.next(current, check, parentBlock);
-
-		return !next;
-		//'<li><p><span>test</span>s<span>test</span></p></li>'
+		return !call(start ? Dom.prev : Dom.next, current, check, parentBlock)
 	}
 
 	/**
 	 * Wrapper for cursorInTheEdge
 	 * @param parentBlock
 	 */
-	cursorOnTheLeft(parentBlock: HTMLElement): boolean | null {
+	cursorOnTheLeft(parentBlock: HTMLElement): Nullable<boolean> {
 		return this.cursorInTheEdge(true, parentBlock);
 	}
 
@@ -925,7 +933,7 @@ export class Select {
 	 * Wrapper for cursorInTheEdge
 	 * @param parentBlock
 	 */
-	cursorOnTheRight(parentBlock: HTMLElement): boolean | null {
+	cursorOnTheRight(parentBlock: HTMLElement): Nullable<boolean> {
 		return this.cursorInTheEdge(false, parentBlock);
 	}
 
@@ -937,7 +945,7 @@ export class Select {
 	 */
 	setCursorBefore(
 		node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement
-	): Text | false {
+	): Nullable<Text> {
 		this.errorNode(node);
 
 		if (
@@ -952,7 +960,7 @@ export class Select {
 		}
 
 		const range = this.createRange();
-		let fakeNode: Text | false = false;
+		let fakeNode: Nullable<Text> = null;
 
 		if (!Dom.isText(node)) {
 			fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
@@ -976,10 +984,10 @@ export class Select {
 	/**
 	 * Set cursor in the node
 	 *
-	 * @param {Node} node
-	 * @param {boolean} [inStart=false] set cursor in start of element
+	 * @param node
+	 * @param [inStart] set cursor in start of element
 	 */
-	setCursorIn(node: Node, inStart: boolean = false) {
+	setCursorIn(node: Node, inStart: boolean = false): Node {
 		this.errorNode(node);
 
 		if (
@@ -1031,7 +1039,7 @@ export class Select {
 	 *
 	 * @fires changeSelection
 	 */
-	selectRange(range: Range) {
+	selectRange(range: Range): void {
 		const sel = this.sel;
 
 		if (sel) {
@@ -1056,7 +1064,7 @@ export class Select {
 	select(
 		node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement,
 		inward = false
-	) {
+	): void {
 		this.errorNode(node);
 
 		if (
@@ -1082,11 +1090,11 @@ export class Select {
 	 * @example
 	 * ```javascript
 	 * const editor = new jodit();
-	 * console.log(editor.selection.getHTML()); // html
-	 * console.log(Jodit.modules.Helpers.stripTags(editor.selection.getHTML())); // plain text
+	 * console.log(editor.selection.html); // html
+	 * console.log(Jodit.modules.Helpers.stripTags(editor.selection.html)); // plain text
 	 * ```
 	 */
-	getHTML(): string {
+	get html(): string {
 		const sel = this.sel;
 
 		if (sel && sel.rangeCount > 0) {
@@ -1167,7 +1175,7 @@ export class Select {
 			defaultTag?: HTMLTagNames;
 			rules?: IDictionary<string | string[]>;
 		} = {}
-	) {
+	): void {
 		const WRAP = 1,
 			UNWRAP = 0,
 			tlc = (v: unknown): HTMLTagNames =>
@@ -1288,7 +1296,9 @@ export class Select {
 			if (alternativeNodeName === defaultTag || !clearStyle) {
 				const node = this.j.createInside.element(alternativeNodeName);
 
-				node.appendChild(this.j.createInside.text(consts.INVISIBLE_SPACE));
+				node.appendChild(
+					this.j.createInside.text(consts.INVISIBLE_SPACE)
+				);
 
 				this.insertNode(node, false, false);
 
@@ -1423,7 +1433,11 @@ export class Select {
 
 				if (mode === WRAP) {
 					css(
-						Dom.replace(font, alternativeNodeName, this.j.createInside),
+						Dom.replace(
+							font,
+							alternativeNodeName,
+							this.j.createInside
+						),
 						cssRules && alternativeNodeName === defaultTag
 							? cssRules
 							: {}
@@ -1439,7 +1453,7 @@ export class Select {
 	 * Split selection on two parts
 	 * @param currentBox
 	 */
-	splitSelection(currentBox: HTMLElement): Element | null {
+	splitSelection(currentBox: HTMLElement): Nullable<Element> {
 		if (!this.isCollapsed()) {
 			return null;
 		}

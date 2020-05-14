@@ -3,7 +3,7 @@ describe('Dialog system tests', function() {
 		it('Should be opened when use clicks on the About button', function() {
 			getBox().style.width = '100%';
 
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				disablePlugins: 'mobile'
 			});
 
@@ -21,7 +21,7 @@ describe('Dialog system tests', function() {
 		describe('Close About dialog', function() {
 			it('Should show Close button in right top corner and close dialog after click', function() {
 				getBox().style.width = '100%';
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					disablePlugins: 'mobile'
 				});
 
@@ -83,7 +83,7 @@ describe('Dialog system tests', function() {
 	describe('Dialog image', function() {
 		describe('Opened dialog image', function() {
 			it('Should disable margin inputs for left, bottom, right if element has equals margins(margin:10px;)', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					observer: {
 						timeout: 0
 					},
@@ -100,7 +100,7 @@ describe('Dialog system tests', function() {
 				expect(dialog.querySelectorAll('input.margins[disabled]').length).equals(3);
 			});
 			it('Should enable margin inputs for left, bottom, right if element has not equals margins(margin:10px 5px;)', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					observer: {
 						timeout: 0
 					},

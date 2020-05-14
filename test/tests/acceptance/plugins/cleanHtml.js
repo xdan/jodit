@@ -2,7 +2,7 @@ describe('Clean html plugin', function() {
 	describe('Click remove format button', function() {
 		describe('For range selection', function() {
 			it('Should clear selected HTML fragment', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 
 				const button = editor.container.querySelector(
 					'.jodit_toolbar_btn.jodit_toolbar_btn-eraser'
@@ -88,7 +88,7 @@ describe('Clean html plugin', function() {
 
 		describe('For collapsed selection', function() {
 			it('Should move cursor outside from styled element', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 
 				[
 					[
@@ -135,7 +135,7 @@ describe('Clean html plugin', function() {
 
 	describe('Replace old tags', function() {
 		it('Should replace old tags to new', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				cleanHTML: {
 					timeout: 0
 				}
@@ -155,7 +155,7 @@ describe('Clean html plugin', function() {
 
 		describe('Replace custom tags', function() {
 			it('Should replace tags', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					cleanHTML: {
 						replaceOldTags: {
 							p: 'div'
@@ -181,7 +181,7 @@ describe('Clean html plugin', function() {
 
 		describe('Disable', function() {
 			it('Should not replace old tags to new', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					cleanHTML: {
 						replaceOldTags: false,
 						timeout: 0
@@ -205,7 +205,7 @@ describe('Clean html plugin', function() {
 	describe('Deny tags', function() {
 		describe('Parameter like string', function() {
 			it('Should remove all tags in denyTags options', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					cleanHTML: {
 						denyTags: 'p'
 					}
@@ -219,7 +219,7 @@ describe('Clean html plugin', function() {
 	describe('Allow tags', function() {
 		describe('Parameter like string', function() {
 			it('Should remove all tags not in allowTags options', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					cleanHTML: {
 						allowTags: 'p'
 					}
@@ -231,7 +231,7 @@ describe('Clean html plugin', function() {
 
 		describe('Parameter like hash', function() {
 			it('Should remove all tags not in allowTags options', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					cleanHTML: {
 						allowTags: {
 							p: true
@@ -245,7 +245,7 @@ describe('Clean html plugin', function() {
 
 		describe('Allow attributes', function() {
 			it('Should remove all attributes from element and remove not in allowTags options', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					cleanHTML: {
 						allowTags: {
 							p: {
@@ -262,7 +262,7 @@ describe('Clean html plugin', function() {
 
 		describe('Time checking', function() {
 			it('Should work fast', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					cleanHTML: {
 						allowTags: {
 							p: {
@@ -283,7 +283,7 @@ describe('Clean html plugin', function() {
 
 	describe('Fullfill empty paragraph', function() {
 		it('Should fill in empty paragraph', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				cleanHTML: {
 					fillEmptyParagraph: true
 				}
@@ -296,7 +296,7 @@ describe('Clean html plugin', function() {
 
 		describe('Switch off fillEmptyParagraph option', function() {
 			it('Should not fill in empty paragraph', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					cleanHTML: {
 						fillEmptyParagraph: false
 					}

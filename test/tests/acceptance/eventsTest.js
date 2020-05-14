@@ -1,7 +1,7 @@
 describe('Jodit Events system Tests', function() {
 	describe('Native Events', function() {
 		it('Create simple event handler on some DOM element', function() {
-			const editor = new Jodit(appendTestArea()),
+			const editor = getJodit(),
 				div = document.createElement('button');
 
 			let work = false;
@@ -19,7 +19,7 @@ describe('Jodit Events system Tests', function() {
 			div.parentNode.removeChild(div);
 		});
 		it('Create simple event handler on some DOM element on few events', function() {
-			const editor = new Jodit(appendTestArea()),
+			const editor = getJodit(),
 				div = document.createElement('button');
 
 			let work = 0;
@@ -38,7 +38,7 @@ describe('Jodit Events system Tests', function() {
 			div.parentNode.removeChild(div);
 		});
 		it('Create simple event handler on all DOM elements which will be inside some starting DOm element', function() {
-			const editor = new Jodit(appendTestArea()),
+			const editor = getJodit(),
 				div = document.createElement('button'),
 				a = document.createElement('a');
 
@@ -71,7 +71,7 @@ describe('Jodit Events system Tests', function() {
 		});
 
 		it('Add and remove event handler', function() {
-			const editor = new Jodit(appendTestArea()),
+			const editor = getJodit(),
 				div = document.createElement('button');
 
 			let work = 0;
@@ -95,7 +95,7 @@ describe('Jodit Events system Tests', function() {
 
 		describe('Add a few handlers for several evens and remove all handlers', function() {
 			it('Should stop listening events', function() {
-				const editor = new Jodit(appendTestArea()),
+				const editor = getJodit(),
 					div = document.createElement('button');
 
 				let work = 0;
@@ -132,7 +132,7 @@ describe('Jodit Events system Tests', function() {
 			});
 		});
 		it('Add event handler for several elements', function() {
-			const editor = new Jodit(appendTestArea()),
+			const editor = getJodit(),
 				div1 = editor.editorDocument.createElement('button'),
 				div2 = editor.editorDocument.createElement('button');
 
@@ -160,7 +160,7 @@ describe('Jodit Events system Tests', function() {
 		});
 
 		it('Fire trigger', function() {
-			const editor = new Jodit(appendTestArea()),
+			const editor = getJodit(),
 				div = document.createElement('button');
 
 			let work = 0;
@@ -180,7 +180,7 @@ describe('Jodit Events system Tests', function() {
 
 		describe('Remove handler', function() {
 			it('should remove full handler with selector options', function() {
-				const editor = new Jodit(appendTestArea()),
+				const editor = getJodit(),
 					a = document.createElement('a'),
 					div = document.createElement('button');
 
@@ -229,7 +229,7 @@ describe('Jodit Events system Tests', function() {
 			it('Should Remove all handlers', function() {
 				let work = 0;
 
-				const editor = new Jodit(appendTestArea()),
+				const editor = getJodit(),
 					div = document.createElement('button'),
 					inc = function() {
 						work++;
@@ -263,7 +263,7 @@ describe('Jodit Events system Tests', function() {
 		it('Proxy event from iframe.window to main.window', function() {
 			let work = 0;
 
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 					iframe: true
 				}),
 				mousedown = function() {
@@ -283,7 +283,7 @@ describe('Jodit Events system Tests', function() {
 	describe('Jodit Events', function() {
 		it('Event handler', function() {
 			let enable = false;
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 
 			editor.events.on('keydown', function(event) {
 				enable = true;
@@ -295,7 +295,7 @@ describe('Jodit Events system Tests', function() {
 
 		it('Delete event handler', function() {
 			let enable = false;
-			const editor = new Jodit(appendTestArea()),
+			const editor = getJodit(),
 				callback = function() {
 					enable = true;
 				};
@@ -309,7 +309,7 @@ describe('Jodit Events system Tests', function() {
 		});
 
 		it('Proxy events', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 
 			let work = false;
 
@@ -1000,7 +1000,7 @@ describe('Jodit Events system Tests', function() {
 			it('Add event handler for several elements', function() {
 				let work = '';
 
-				const editor = new Jodit(appendTestArea()),
+				const editor = getJodit(),
 					eventEmmiter = new Jodit.modules.EventsNative(),
 					div1 = editor.editorDocument.createElement('button'),
 					div2 = editor.editorDocument.createElement('button');
@@ -1181,7 +1181,7 @@ describe('Jodit Events system Tests', function() {
 		describe('Check destruct', function() {
 			describe('For window', function() {
 				it('Should remove all handlers', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					let checker = 0;
 
 					editor.events.on(window, 'updateSome1', function() {
@@ -1208,7 +1208,7 @@ describe('Jodit Events system Tests', function() {
 
 			describe('For document', function() {
 				it('Should remove all handlers', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					let checker = 0;
 
 					editor.events.on(document, 'updateSome1', function() {
@@ -1235,7 +1235,7 @@ describe('Jodit Events system Tests', function() {
 
 			describe('For body', function() {
 				it('Should remove all handlers', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					let checker = 0;
 
 					editor.events.on(document.body, 'updateSome1', function() {

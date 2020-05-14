@@ -2,7 +2,7 @@ describe('Test image', function() {
 	describe('Image properties dialog', function() {
 		describe('Double click on image', function() {
 			it('should open image properties dialog', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 
 				editor.value = '<img src="tests/artio.jpg"/>';
 				simulateEvent(
@@ -21,7 +21,7 @@ describe('Test image', function() {
 
 			describe('Disable by image.openOnDblClick', function() {
 				it('should not open image properties dialog', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						image: {
 							openOnDblClick: false
 						}
@@ -46,7 +46,7 @@ describe('Test image', function() {
 
 		describe('Change border radius', function() {
 			it('should change image border radius', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 
 				editor.value =
 					'<img style="width:100px; height: 100px; border-radius: 10px;" src="tests/artio.jpg"/>';
@@ -98,7 +98,7 @@ describe('Test image', function() {
 
 		describe('Change classes', function() {
 			it('should change image classlist', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 
 				editor.value =
 					'<img class="images123" style="width:100px; height: 100px;" src="tests/artio.jpg"/>';
@@ -146,7 +146,7 @@ describe('Test image', function() {
 
 		describe('Change styles', function() {
 			it('should change image styles', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 
 				editor.value =
 					'<img style="padding:10px;width:100px; height: 100px;" src="tests/artio.jpg"/>';
@@ -195,7 +195,7 @@ describe('Test image', function() {
 
 		describe('Change id', function() {
 			it('should change image id', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 
 				editor.value =
 					'<img id="stop123"  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>';
@@ -244,7 +244,7 @@ describe('Test image', function() {
 		describe('Change align', function() {
 			describe('left', function() {
 				it('should change image horizontal align', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value =
 						'<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>';
@@ -289,7 +289,7 @@ describe('Test image', function() {
 			});
 			describe('right', function() {
 				it('should change image horizontal align', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value =
 						'<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>';
@@ -334,7 +334,7 @@ describe('Test image', function() {
 			});
 			describe('center', function() {
 				it('should change image horizontal align', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value =
 						'<img style="float:left;width:100px; height: 100px;" src="tests/artio.jpg"/>';
@@ -379,7 +379,7 @@ describe('Test image', function() {
 			});
 			describe('Clear align', function() {
 				it('should clear some align', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value =
 						'<img src="tests/artio.jpg" style="width:100px; height: 100px;display:block;margin-left:auto;margin-right:auto">';
@@ -427,7 +427,7 @@ describe('Test image', function() {
 		describe('Change margins', function() {
 			describe('Change marginTop with lock', function() {
 				it('should change all margins', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value =
 						'<img style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/>';
@@ -482,7 +482,7 @@ describe('Test image', function() {
 			});
 			describe('Change marginTop with unlock', function() {
 				it('should change only marginTop', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value =
 						'<img style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/>';
@@ -552,7 +552,7 @@ describe('Test image', function() {
 
 		describe('Change title', function() {
 			it('should change image title', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 
 				editor.value =
 					'<img title="sting" style="width:100px; height: 100px;" src="tests/artio.jpg"/>';
@@ -590,7 +590,7 @@ describe('Test image', function() {
 
 		describe('Change alt', function() {
 			it('should change image alt', function(done) {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				const image = new Image();
 				const doTest = function() {
 					editor.value =
@@ -635,7 +635,7 @@ describe('Test image', function() {
 
 		describe('Change link', function() {
 			it('should change image wrapper', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 
 				editor.value =
 					'<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>';
@@ -672,7 +672,7 @@ describe('Test image', function() {
 			});
 			describe('open link in new tab', function() {
 				it('should change image wrapper with target="_blank"', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value =
 						'<img style="width:100px; height: 100px;" src="tests/artio.jpg"/>';
@@ -716,7 +716,7 @@ describe('Test image', function() {
 			});
 			describe('Open dialog dor image wrapped in link', function() {
 				it('should change image wrapper', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value =
 						'<a href="https://xdan.ru" target="_blank"><img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/></a>';
@@ -764,7 +764,7 @@ describe('Test image', function() {
 			});
 			describe('Unlink', function() {
 				it('should remove image wrapper', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value =
 						'<a href="https://xdan.ru" target="_blank"><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></a>';
@@ -878,7 +878,7 @@ describe('Test image', function() {
 
 			describe('unlock ratio', function() {
 				it('should create inputs with width and height', function(done) {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value = '<img src="tests/artio.jpg"/>';
 					const img = editor.editor.querySelector('img');
@@ -945,7 +945,7 @@ describe('Test image', function() {
 
 				describe('Toggle ratio again', function() {
 					it('should create connected inputs with width and height', function(done) {
-						const editor = new Jodit(appendTestArea());
+						const editor = getJodit();
 
 						editor.value = '<img src="tests/artio.jpg"/>';
 						const img = editor.editor.querySelector('img');
@@ -1010,7 +1010,7 @@ describe('Test image', function() {
 		describe('Show filebrowser buttons and edit image button', function() {
 			describe("If uploader or filebrowser settings don't setted", function() {
 				it('should not show buttons', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value = '<img src="tests/artio.jpg"/>';
 					simulateEvent(
@@ -1194,7 +1194,7 @@ describe('Test image', function() {
 	});
 
 	it('Double click on image then openOnDblClick=false should select image', function() {
-		const editor = new Jodit(appendTestArea(), {
+		const editor = getJodit({
 			image: { openOnDblClick: false }
 		});
 		editor.value = '<img src="tests/artio.jpg"/>';
@@ -1211,7 +1211,7 @@ describe('Test image', function() {
 
 	describe('One click on image', function() {
 		it('should show resizer', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = '<img src="tests/artio.jpg"/>';
 
 			const img = editor.editor.querySelector('img');
@@ -1227,7 +1227,7 @@ describe('Test image', function() {
 
 		describe('in full size mode', function() {
 			it('should show resizer and set mmaximum zIndex', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					fullsize: true
 				});
 				editor.value = '<img src="tests/artio.jpg"/>';
@@ -1249,7 +1249,7 @@ describe('Test image', function() {
 	});
 
 	it('One click inside table cell should show resizer', function() {
-		const editor = new Jodit(appendTestArea());
+		const editor = getJodit();
 		editor.value = '<table><tr><td>1</td></tr></table>';
 
 		const td = editor.editor.querySelector('td');
@@ -1412,7 +1412,7 @@ describe('Test image', function() {
 		describe('Resize image', function() {
 			describe('Size box', function() {
 				it('Should show size for image', function(done) {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						observer: {
 							timeout: 0
 						},
@@ -1472,7 +1472,7 @@ describe('Test image', function() {
 
 				describe('For small state', function() {
 					it('Should hide size', function() {
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							observer: {
 								timeout: 0
 							},
@@ -1534,7 +1534,7 @@ describe('Test image', function() {
 
 			it('Should not allow to resize image more then width of editor', function(done) {
 				box.style.width = '600px';
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				const image = new Image();
 				image.src = 'tests/artio.jpg';
 

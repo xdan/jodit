@@ -8,7 +8,7 @@ describe('Drag and drop element inside Editor', function() {
 				events[0] + ' and move image inside the editor',
 				function() {
 					it('Should ' + events[1] + ' dom element', function() {
-						const editor = new Jodit(appendTestArea());
+						const editor = getJodit();
 						editor.value =
 							'<p>1111</p>' +
 							'<p>2222</p>' +
@@ -56,7 +56,7 @@ describe('Drag and drop element inside Editor', function() {
 
 			describe(events[1] + ' image inside anchor', function() {
 				it('Should ' + events[1] + ' anchor with image', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value =
 						'<p>1111</p>' +
@@ -100,7 +100,7 @@ describe('Drag and drop element inside Editor', function() {
 
 			describe('Disable dragging', function() {
 				it('Should not move image', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						draggableTags: []
 					});
 

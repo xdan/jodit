@@ -140,7 +140,7 @@ export class xpath extends Plugin {
 			return;
 		}
 
-		const current: Node | false = this.j.selection.current();
+		const current = this.j.selection.current();
 
 		if (this.container) {
 			this.container.innerHTML = INVISIBLE_SPACE;

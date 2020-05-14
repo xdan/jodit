@@ -14,7 +14,7 @@ import {
 } from '../core/constants';
 import { Dom } from '../modules/';
 import { normalizeNode, trim } from '../core/helpers/';
-import { HTMLTagNames, IDictionary, IJodit } from '../types';
+import { HTMLTagNames, IDictionary, IJodit, Nullable } from '../types';
 import { Plugin } from '../core/plugin';
 
 /**
@@ -127,11 +127,7 @@ export class cleanHtml extends Plugin {
 			const tags = Object.keys(replaceOldTags) as HTMLTagNames[];
 
 			if (editor.selection.isCollapsed()) {
-				const oldParent = Dom.closest(
-					current,
-					tags,
-					editor.editor
-				);
+				const oldParent = Dom.closest(current, tags, editor.editor);
 
 				if (oldParent) {
 					const selInfo = editor.selection.save(),
@@ -177,8 +173,8 @@ export class cleanHtml extends Plugin {
 	}
 
 	private checkNode = (
-		nodeElm: Element | Node | null,
-		current: Node | false,
+		nodeElm: Nullable<Element | Node>,
+		current: Nullable<Node>,
 		remove: Node[]
 	): boolean => {
 		let work = false;
@@ -304,7 +300,7 @@ export class cleanHtml extends Plugin {
 		const currentNode = editor.selection.current();
 
 		if (currentNode) {
-			const currentParagraph: Node | false = Dom.up(
+			const currentParagraph = Dom.up(
 				currentNode,
 				node => Dom.isBlock(node, editor.editorWindow),
 				editor.editor
@@ -500,7 +496,7 @@ export class cleanHtml extends Plugin {
 		}
 	};
 
-	private isRemovableNode(node: Node, current: Node | false): boolean {
+	private isRemovableNode(node: Node, current: Nullable<Node>): boolean {
 		const allow = this.allowTagsHash;
 
 		if (
@@ -533,7 +529,7 @@ export class cleanHtml extends Plugin {
 
 		return (
 			this.j.o.cleanHTML.removeEmptyElements &&
-			current !== false &&
+			current !== null &&
 			Dom.isElement(node) &&
 			node.nodeName.match(IS_INLINE) !== null &&
 			!this.j.selection.isMarker(node) &&

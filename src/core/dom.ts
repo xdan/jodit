@@ -5,15 +5,24 @@
  */
 
 import * as consts from './constants';
-import { HTMLTagNames, ICreate, IJodit, NodeCondition } from '../types';
+import {
+	HTMLTagNames,
+	ICreate,
+	IJodit,
+	NodeCondition,
+	Nullable
+} from '../types';
 import { css, dataBind, isArray, isFunction, isString, trim } from './helpers';
 
+/**
+ * Module for working with DOM
+ */
 export class Dom {
 	/**
 	 * Remove all content from element
 	 * @param node
 	 */
-	static detach(node: Node) {
+	static detach(node: Node): void {
 		while (node.firstChild) {
 			node.removeChild(node.firstChild);
 		}
@@ -26,12 +35,12 @@ export class Dom {
 	 * @param tag
 	 * @param editor
 	 */
-	static wrapInline = (
+	static wrapInline(
 		current: Node,
 		tag: Node | HTMLTagNames,
 		editor: IJodit
-	): HTMLElement => {
-		let tmp: null | Node,
+	): HTMLElement {
+		let tmp: Nullable<Node>,
 			first: Node = current,
 			last: Node = current;
 
@@ -57,14 +66,13 @@ export class Dom {
 			}
 		} while (needFindNext);
 
-		const wrapper =
-			typeof tag === 'string' ? editor.createInside.element(tag) : tag;
+		const wrapper = isString(tag) ? editor.createInside.element(tag) : tag;
 
 		if (first.parentNode) {
 			first.parentNode.insertBefore(wrapper, first);
 		}
 
-		let next: Node | null = first;
+		let next: Nullable<Node> = first;
 
 		while (next) {
 			next = first.nextSibling;
@@ -80,7 +88,7 @@ export class Dom {
 		editor.selection.restore(selInfo);
 
 		return wrapper as HTMLElement;
-	};
+	}
 
 	/**
 	 * Wrap node inside another node
@@ -89,11 +97,11 @@ export class Dom {
 	 * @param tag
 	 * @param editor
 	 */
-	static wrap = (
+	static wrap(
 		current: Node,
-		tag: Node | string,
+		tag: HTMLElement | string,
 		editor: IJodit
-	): HTMLElement | null => {
+	): Nullable<HTMLElement> {
 		const selInfo = editor.selection.save();
 
 		const wrapper = isString(tag) ? editor.createInside.element(tag) : tag;
@@ -108,14 +116,14 @@ export class Dom {
 
 		editor.selection.restore(selInfo);
 
-		return wrapper as HTMLElement;
-	};
+		return wrapper;
+	}
 
 	/**
 	 * Remove parent of node and insert this node instead that parent
 	 * @param node
 	 */
-	static unwrap(node: Node) {
+	static unwrap(node: Node): void {
 		const parent = node.parentNode;
 
 		if (parent) {
@@ -130,8 +138,8 @@ export class Dom {
 	/**
 	 * It goes through all the internal elements of the node , causing a callback function
 	 *
-	 * @param  {HTMLElement} elm elements , the internal node is necessary to sort out
-	 * @param  {Function} callback It called for each item found
+	 * @param elm elements , the internal node is necessary to sort out
+	 * @param callback It called for each item found
 	 * @example
 	 * ```javascript
 	 * Jodit.modules.Dom.each(parent.selection.current(), function (node) {
@@ -287,9 +295,8 @@ export class Dom {
 	/**
 	 *  Check if element is table cell
 	 *
-	 * @param {Node} elm
-	 * @param {Window} win
-	 * @return {boolean}
+	 * @param elm
+	 * @param win
 	 */
 	static isCell(elm: unknown, win: Window): elm is HTMLTableCellElement {
 		return Dom.isNode(elm, win) && /^(td|th)$/i.test(elm.nodeName);
@@ -314,8 +321,6 @@ export class Dom {
 	 *
 	 * @param node
 	 * @param win
-	 *
-	 * @return {boolean}
 	 */
 	static isBlock(node: unknown, win: Window): boolean {
 		return (
@@ -368,7 +373,6 @@ export class Dom {
 
 	/**
 	 * It's block and it can be split
-	 *
 	 */
 	static canSplitBlock(node: any, win: Window): boolean {
 		return (
@@ -384,19 +388,17 @@ export class Dom {
 	/**
 	 * Find previous node
 	 *
-	 * @param {Node} node
-	 * @param {function} condition
-	 * @param {Node} root
-	 * @param {boolean} [withChild=true]
-	 *
-	 * @return {boolean|Node|HTMLElement|HTMLTableCellElement} false if not found
+	 * @param node
+	 * @param condition
+	 * @param root
+	 * @param [withChild]
 	 */
 	static prev(
 		node: Node,
 		condition: NodeCondition,
 		root: HTMLElement,
 		withChild: boolean = true
-	): false | Node | HTMLElement | HTMLTableCellElement {
+	): Nullable<Node> {
 		return Dom.find(
 			node,
 			condition,
@@ -410,18 +412,17 @@ export class Dom {
 	/**
 	 * Find next node what `condition(next) === true`
 	 *
-	 * @param {Node} node
-	 * @param {function} condition
-	 * @param {Node} root
-	 * @param {boolean} [withChild=true]
-	 * @return {boolean|Node|HTMLElement|HTMLTableCellElement}
+	 * @param node
+	 * @param condition
+	 * @param root
+	 * @param [withChild]
 	 */
 	static next(
 		node: Node,
 		condition: NodeCondition,
 		root: Node | HTMLElement,
 		withChild: boolean = true
-	): false | Node | HTMLElement | HTMLTableCellElement {
+	): Nullable<Node> {
 		return Dom.find(
 			node,
 			condition,
@@ -435,8 +436,8 @@ export class Dom {
 	static prevWithClass(
 		node: HTMLElement,
 		className: string
-	): HTMLElement | false {
-		return <HTMLElement | false>Dom.prev(
+	): Nullable<HTMLElement> {
+		return <HTMLElement | null>Dom.prev(
 			node,
 			node => {
 				return (
@@ -450,28 +451,23 @@ export class Dom {
 	static nextWithClass(
 		node: HTMLElement,
 		className: string
-	): HTMLElement | false {
-		return <HTMLElement | false>Dom.next(
+	): Nullable<HTMLElement> {
+		return Dom.next(
 			node,
-			node => {
-				return (
-					Dom.isElement(node) && node.classList.contains(className)
-				);
-			},
+			elm => Dom.isElement(elm) && elm.classList.contains(className),
 			<HTMLElement>node.parentNode
-		);
+		) as Nullable<HTMLElement>;
 	}
 
 	/**
 	 * Find next/prev node what `condition(next) === true`
 	 *
-	 * @param {Node} node
-	 * @param {function} condition
-	 * @param {Node} root
-	 * @param {boolean} [recurse=false] check first argument
-	 * @param {string} [sibling=nextSibling] nextSibling or previousSibling
-	 * @param {string|boolean} [child=firstChild] firstChild or lastChild
-	 * @return {Node|Boolean}
+	 * @param node
+	 * @param condition
+	 * @param root
+	 * @param [recurse] check first argument
+	 * @param [sibling] nextSibling or previousSibling
+	 * @param [child] firstChild or lastChild
 	 */
 	static find(
 		node: Node,
@@ -480,22 +476,23 @@ export class Dom {
 		recurse = false,
 		sibling = 'nextSibling',
 		child: string | false = 'firstChild'
-	): false | Node {
+	): Nullable<Node> {
 		if (recurse && condition(node)) {
 			return node;
 		}
 
-		let start: Node | null = node,
-			next: Node | null;
+		let start: Nullable<Node> = node,
+			next: Nullable<Node>;
 
 		do {
 			next = (start as any)[sibling];
+
 			if (condition(next)) {
-				return next ? next : false;
+				return next ? next : null;
 			}
 
 			if (child && next && (next as any)[child]) {
-				const nextOne: Node | false = Dom.find(
+				const nextOne = Dom.find(
 					(next as any)[child],
 					condition,
 					next,
@@ -503,6 +500,7 @@ export class Dom {
 					sibling,
 					child
 				);
+
 				if (nextOne) {
 					return nextOne;
 				}
@@ -515,7 +513,7 @@ export class Dom {
 			start = next;
 		} while (start && start !== root);
 
-		return false;
+		return null;
 	}
 
 	/**
@@ -526,12 +524,12 @@ export class Dom {
 	 * @param root
 	 */
 	static findInline = (
-		node: Node | null,
+		node: Nullable<Node>,
 		toLeft: boolean,
 		root: Node
-	): Node | null => {
-		let prevElement: Node | null = node,
-			nextElement: Node | null = null;
+	): Nullable<Node> => {
+		let prevElement: Nullable<Node> = node,
+			nextElement: Nullable<Node> = null;
 
 		do {
 			if (prevElement) {
@@ -569,12 +567,11 @@ export class Dom {
 	/**
 	 * Find next/prev node what `condition(next) === true`
 	 *
-	 * @param {Node} node
-	 * @param {function} condition
-	 * @param {Node} root
-	 * @param {string} [sibling=nextSibling] nextSibling or previousSibling
-	 * @param {string|boolean} [child=firstChild] firstChild or lastChild
-	 * @return {Node|Boolean}
+	 * @param node
+	 * @param condition
+	 * @param root
+	 * @param [sibling] nextSibling or previousSibling
+	 * @param [child] firstChild or lastChild
 	 */
 	static findWithCurrent(
 		node: Node,
@@ -582,22 +579,23 @@ export class Dom {
 		root: HTMLElement | Node,
 		sibling: 'nextSibling' | 'previousSibling' = 'nextSibling',
 		child: 'firstChild' | 'lastChild' = 'firstChild'
-	): false | Node {
-		let next: Node | null = node;
+	): Nullable<Node> {
+		let next: Nullable<Node> = node;
 
 		do {
 			if (condition(next)) {
-				return next ? next : false;
+				return next || null;
 			}
 
 			if (child && next && next[child]) {
-				const nextOne: Node | false = Dom.findWithCurrent(
+				const nextOne = Dom.findWithCurrent(
 					next[child] as Node,
 					condition,
 					next,
 					sibling,
 					child
 				);
+
 				if (nextOne) {
 					return nextOne;
 				}
@@ -612,7 +610,7 @@ export class Dom {
 			}
 		} while (next && next !== root);
 
-		return false;
+		return null;
 	}
 
 	/**
@@ -621,17 +619,16 @@ export class Dom {
 	 * @param node
 	 * @param condition
 	 * @param [root] Root element
-	 * @return {boolean|HTMLElement} Return false if condition not be true
 	 */
 	static up<T extends HTMLElement>(
 		node: Node,
 		condition: NodeCondition,
 		root?: Node
-	): false | T {
+	): Nullable<T> {
 		let start = node;
 
 		if (!node) {
-			return false;
+			return null;
 		}
 
 		do {
@@ -646,7 +643,7 @@ export class Dom {
 			start = start.parentNode;
 		} while (start && start !== root);
 
-		return false;
+		return null;
 	}
 
 	/**
@@ -656,34 +653,43 @@ export class Dom {
 	 * @param tags
 	 * @param root
 	 */
-	static closest<
-		T extends HTMLElement,
-		K extends HTMLTagNames
-	>(node: Node, tags: K, root: HTMLElement): false | HTMLElementTagNameMap[K];
+	static closest<T extends HTMLElement, K extends HTMLTagNames>(
+		node: Node,
+		tags: K,
+		root: HTMLElement
+	): Nullable<HTMLElementTagNameMap[K]>;
 
 	static closest<
 		T extends HTMLElement,
 		K extends keyof HTMLElementTagNameMap
-		>(node: Node, tags: K[], root: HTMLElement): false | HTMLElementTagNameMap[K];
+	>(
+		node: Node,
+		tags: K[],
+		root: HTMLElement
+	): Nullable<HTMLElementTagNameMap[K]>;
 
-	static closest<
-		T extends HTMLElement
-		>(node: Node, tags: NodeCondition, root: HTMLElement): false | T;
+	static closest<T extends HTMLElement>(
+		node: Node,
+		tags: NodeCondition,
+		root: HTMLElement
+	): Nullable<T>;
 
 	static closest<T extends HTMLElement>(
 		node: Node,
 		tags: HTMLTagNames | HTMLTagNames[] | NodeCondition,
 		root: HTMLElement
-	): false | T {
+	): Nullable<T> {
 		let condition: NodeCondition;
 
 		if (isFunction(tags)) {
 			condition = tags;
 		} else if (isArray(tags)) {
 			condition = (tag: Node | null) =>
-				tag && tags.includes(tag.nodeName.toLowerCase() as HTMLTagNames);
+				tag &&
+				tags.includes(tag.nodeName.toLowerCase() as HTMLTagNames);
 		} else {
-			condition = (tag: Node | null) => tag && tags === tag.nodeName.toLowerCase();
+			condition = (tag: Node | null) =>
+				tag && tags === tag.nodeName.toLowerCase();
 		}
 
 		return Dom.up(node, condition, root);
@@ -766,10 +772,8 @@ export class Dom {
 		node: Node,
 		condition: NodeCondition,
 		prev: boolean = false
-	): Node | void {
-		let nodes: Node[] = node.childNodes
-			? Array.prototype.slice.call(node.childNodes)
-			: [];
+	): Nullable<Node> {
+		let nodes: Node[] = node.childNodes ? Array.from(node.childNodes) : [];
 
 		if (condition(node)) {
 			return node;
@@ -782,25 +786,9 @@ export class Dom {
 		nodes.forEach(child => {
 			Dom.all(child, condition, prev);
 		});
+
+		return null;
 	}
-
-	/**
-	 * Check root contains child
-	 *
-	 * @param root
-	 * @param child
-	 * @return {boolean}
-	 */
-	static contains = (root: Node, child: Node): boolean => {
-		while (child.parentNode) {
-			if (child.parentNode === root) {
-				return true;
-			}
-			child = child.parentNode;
-		}
-
-		return false;
-	};
 
 	/**
 	 * Check root contains child or equal child
@@ -809,23 +797,23 @@ export class Dom {
 	 * @param child
 	 * @param [onlyContains]
 	 */
-	static isOrContains = (
+	static isOrContains(
 		root: Node,
 		child: Node,
 		onlyContains: boolean = false
-	): boolean => {
-		return (
-			child &&
-			root &&
-			((root === child && !onlyContains) || Dom.contains(root, child))
-		);
-	};
+	): boolean {
+		if (root === child && onlyContains) {
+			return false;
+		}
+
+		return child && root && root.contains(child);
+	}
 
 	/**
 	 * Safe remove element from DOM
 	 * @param node
 	 */
-	static safeRemove(node: Node | false | null | void) {
+	static safeRemove(node: Node | false | null | void): void {
 		node && node.parentNode && node.parentNode.removeChild(node);
 	}
 
@@ -846,7 +834,7 @@ export class Dom {
 	 * Show element
 	 * @param node
 	 */
-	static show(node: HTMLElement | null): void {
+	static show(node: Nullable<HTMLElement>): void {
 		if (!node) {
 			return;
 		}

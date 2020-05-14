@@ -4,7 +4,7 @@ describe('Test states', function() {
 		describe('Set readonly mode in options', function() {
 			describe('Readonly', function() {
 				it('Should deny edit content in simple source editor', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						readonly: true,
 						sourceEditor: 'area'
 					});
@@ -17,7 +17,7 @@ describe('Test states', function() {
 				it('Should deny edit content in iframe\'s body', function(done) {
 					unmockPromise();
 
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						readonly: true,
 						iframe: true,
 						events: {
@@ -33,14 +33,14 @@ describe('Test states', function() {
 			});
 
 			it('Should deny edit content in wysiwyg', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					readonly: true
 				});
 				expect(false).equals(editor.editor.hasAttribute('contenteditable'));
 			});
 
 			it('Should deny exec any commands', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					readonly: true
 				});
 
@@ -54,7 +54,7 @@ describe('Test states', function() {
 			});
 
 			it('Should disable all toolbar buttons besides source, print, about, fullsize', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					readonly: true,
 					toolbarAdaptive: false,
 					observer: {
@@ -76,7 +76,7 @@ describe('Test states', function() {
 				it('Should deny edit content in ace source editor', function(done) {
 					unmockPromise();
 
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						readonly: true,
 						sourceEditor: 'ace',
 						events: {
@@ -98,7 +98,7 @@ describe('Test states', function() {
 				describe('CTRL + H', function() {
 					describe('In readonly editor', function() {
 						it('Should be deny', function() {
-							const editor = new Jodit(appendTestArea(), {
+							const editor = getJodit({
 								readonly: true,
 								observer: {
 									timeout: 0
@@ -120,7 +120,7 @@ describe('Test states', function() {
 
 			describe('Method get read only', function() {
 				it('Should return enable/disable readonly', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						readonly: true
 					});
 
@@ -129,7 +129,7 @@ describe('Test states', function() {
 					expect(false).equals(editor.getReadOnly());
 					editor.destruct();
 
-					const editor2 = new Jodit(appendTestArea());
+					const editor2 = getJodit();
 					expect(false).equals(editor2.getReadOnly());
 				});
 			});
@@ -164,7 +164,7 @@ describe('Test states', function() {
 
 		describe('Disable readonly mode', function() {
 			it('Should allow edit content in wysiwyg', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					readonly: true
 				});
 				expect(false).equals(editor.editor.hasAttribute('contenteditable'));
@@ -173,7 +173,7 @@ describe('Test states', function() {
 			});
 
 			it('Should allow edit content in simple source editor', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					readonly: true,
 					sourceEditor: 'area'
 				});
@@ -189,7 +189,7 @@ describe('Test states', function() {
 			it('Should allow edit content in ace source editor', function(done) {
 				unmockPromise();
 
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					readonly: true,
 					sourceEditor: 'ace',
 					defaultMode: Jodit.MODE_SOURCE,

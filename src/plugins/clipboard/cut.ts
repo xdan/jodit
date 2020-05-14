@@ -36,7 +36,7 @@ export class clipboard implements IPlugin {
 			.on(`copy.${pluginKey} cut.${pluginKey}`, (event: ClipboardEvent):
 				| false
 				| void => {
-				const selectedText = editor.selection.getHTML();
+				const selectedText = editor.selection.html;
 
 				const clipboardData =
 					getDataTransfer(event) ||

@@ -7,22 +7,22 @@
 import * as consts from '../core/constants';
 import { Dom } from '../core/dom';
 import { $$, scrollIntoView } from '../core/helpers/';
-import { HTMLTagNames, IJodit } from '../types';
+import { HTMLTagNames, IJodit, Nullable } from '../types';
 import { Plugin } from '../core/plugin';
 import { INVISIBLE_SPACE } from '../core/constants';
 
 /**
  * Insert default paragraph
  *
- * @param {Jodit} editor
- * @param {Node} [fake]
- * @param {String} [wrapperTag]
- * @param {CSSStyleSheet} [style]
+ * @param editor
+ * @param [fake]
+ * @param [wrapperTag]
+ * @param [style]
  * @return {HTMLElement}
  */
 export const insertParagraph = (
 	editor: IJodit,
-	fake: Text | false,
+	fake: Nullable<Text>,
 	wrapperTag: HTMLTagNames,
 	style?: CSSStyleDeclaration
 ): HTMLElement => {
@@ -135,7 +135,7 @@ export class enter extends Plugin {
 		const isLi = Dom.isTag(currentBox, 'li');
 
 		// if use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
-		if (!isLi && this.checkBR(current, event.shiftKey) === false) {
+		if (!isLi && !this.checkBR(current, event.shiftKey)) {
 			return false;
 		}
 
@@ -145,11 +145,11 @@ export class enter extends Plugin {
 		}
 
 		if (!currentBox || currentBox === current) {
-			insertParagraph(editor, false, isLi ? 'li' : defaultTag);
+			insertParagraph(editor, null, isLi ? 'li' : defaultTag);
 			return false;
 		}
 
-		if (this.checkUnsplittableBox(currentBox) === false) {
+		if (!this.checkUnsplittableBox(currentBox)) {
 			return false;
 		}
 
@@ -168,7 +168,7 @@ export class enter extends Plugin {
 			(!canSplit || Dom.isEmpty(currentBox)) &&
 			(cursorOnTheRight || cursorOnTheLeft)
 		) {
-			let fake: Text | false = false;
+			let fake: Nullable<Text> = null;
 
 			if (cursorOnTheRight) {
 				fake = sel.setCursorAfter(currentBox);
@@ -191,7 +191,7 @@ export class enter extends Plugin {
 	private getBlockWrapper(
 		current: Node | null,
 		tagReg = consts.IS_BLOCK
-	): HTMLElement | false {
+	): Nullable<HTMLElement> {
 		let node = current;
 		const root = this.j.editor;
 
@@ -214,10 +214,10 @@ export class enter extends Plugin {
 			node = node.parentNode;
 		} while (node && node !== root);
 
-		return false;
+		return null;
 	}
 
-	private checkBR(current: Node, shiftKeyPressed: boolean): void | false {
+	private checkBR(current: Node, shiftKeyPressed: boolean): boolean {
 		// if use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
 		if (
 			this.brMode ||
@@ -231,6 +231,8 @@ export class enter extends Plugin {
 
 			return false;
 		}
+
+		return true;
 	}
 
 	private wrapText(current: Node) {
@@ -272,7 +274,7 @@ export class enter extends Plugin {
 		);
 	}
 
-	private checkUnsplittableBox(currentBox: HTMLElement): false | void {
+	private checkUnsplittableBox(currentBox: HTMLElement): boolean {
 		const editor = this.j,
 			sel = editor.selection;
 
@@ -284,16 +286,22 @@ export class enter extends Plugin {
 
 			return false;
 		}
+
+		return true;
 	}
 
-	private enterInsideEmptyLIelement(currentBox: HTMLElement) {
-		let fakeTextNode: Text | false = false;
+	private enterInsideEmptyLIelement(currentBox: HTMLElement): void {
+		let fakeTextNode: Nullable<Text> = null;
 
-		const ul: HTMLUListElement = Dom.closest(
+		const ul = Dom.closest(
 			currentBox,
 			['ol','ul'],
 			this.j.editor
-		) as HTMLUListElement;
+		);
+
+		if (!ul) {
+			return;
+		}
 
 		// If there is no LI element before
 		if (

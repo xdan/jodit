@@ -1,6 +1,6 @@
 describe('Test editor size plugin', function() {
 	it('should show resize handler in right-bottom corner and allow resize editor by vertical', function() {
-		const editor = new Jodit(appendTestArea(), {
+		const editor = getJodit({
 			height: 300,
 			iframe: true
 		});
@@ -15,7 +15,7 @@ describe('Test editor size plugin', function() {
 			it('Should set editor height by option', function() {
 				getBox().style.height = '400px';
 
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					height: 'calc(100% - 20px)'
 				});
 
@@ -37,7 +37,7 @@ describe('Test editor size plugin', function() {
 			});
 
 			it('Should set editor height by option for iframe', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					height: 300,
 					iframe: true
 				});
@@ -47,7 +47,7 @@ describe('Test editor size plugin', function() {
 			});
 
 			it('Should not change size by content after window was resized', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					height: 300
 				});
 
@@ -61,7 +61,7 @@ describe('Test editor size plugin', function() {
 
 			describe('Fullsize mode', function() {
 				it('Should set heights of workplace to 100% - toolbar\'s height', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						fullsize: true
 					});
 
@@ -70,7 +70,7 @@ describe('Test editor size plugin', function() {
 				});
 
 				it('Should restore size after fullsized mode', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						height: 300
 					});
 
@@ -86,7 +86,7 @@ describe('Test editor size plugin', function() {
 				});
 
 				it('Should hide resizer', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						height: 300,
 						iframe: true
 					});
@@ -98,7 +98,7 @@ describe('Test editor size plugin', function() {
 				});
 
 				it('Should change the icon in toolbar', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					const button = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-fullsize');
 					expect(button).is.not.null;
 
@@ -115,7 +115,7 @@ describe('Test editor size plugin', function() {
 
 				describe('For text icons', function() {
 					it('Should change the text in toolbar', function() {
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							'textIcons': true
 						});
 
@@ -176,7 +176,7 @@ describe('Test editor size plugin', function() {
 				box.style.width = 'auto';
 				box.style.height = 'auto';
 
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					height: 300,
 					width: 400,
 					allowResizeX: true,
@@ -206,7 +206,7 @@ describe('Test editor size plugin', function() {
 					box.style.width = 'auto';
 					box.style.height = 'auto';
 
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						height: 300,
 						width: 400,
 						allowResizeX: false,
@@ -241,7 +241,7 @@ describe('Test editor size plugin', function() {
 				describe('Change box width', function() {
 					it('should set fixed height but width must be auto', function() {
 						const box = getBox();
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							height: 300
 						});
 

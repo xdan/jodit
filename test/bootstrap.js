@@ -331,8 +331,11 @@ function appendTestArea(id, noput) {
 }
 
 function getJodit(options) {
-	const editor =  new Jodit(appendTestArea(), options);
-	window.scrollTo(0, Jodit.modules.Helpers.offset(editor.container, editor, editor.od).top);
+	const editor = new Jodit(appendTestArea(), options);
+	window.scrollTo(
+		0,
+		Jodit.modules.Helpers.offset(editor.container, editor, editor.od).top
+	);
 	return editor;
 }
 
@@ -527,7 +530,8 @@ function fillBoxBr(count) {
 }
 
 const codes = {
-	13: 'Enter'
+	13: 'Enter',
+	8: 'Backspace'
 };
 
 /**
@@ -554,9 +558,13 @@ function simulateEvent(type, keyCodeArg, element, options) {
 
 	evt.initEvent(type, true, true);
 
-	evt.keyCode = keyCodeArg;
-	evt.which = keyCodeArg;
-	evt.key = codes[keyCodeArg];
+	if (typeof keyCodeArg === 'number') {
+		evt.keyCode = keyCodeArg;
+		evt.which = keyCodeArg;
+		evt.key = codes[keyCodeArg];
+	} else {
+		evt.key = keyCodeArg;
+	}
 
 	if (options) {
 		options(evt);
@@ -591,9 +599,10 @@ function getOpenedPopup(editor) {
 }
 
 function getOpenedDialog(editor) {
-	return editor.ownerDocument.querySelector(
-		'.jodit-dialog__box:last-child'
-	) || null;
+	return (
+		editor.ownerDocument.querySelector('.jodit-dialog__box:last-child') ||
+		null
+	);
 }
 
 /**
@@ -630,17 +639,24 @@ function clickButton(buttonName, joditOrElement, role, last) {
 	simulateEvent(
 		'click',
 		0,
-		getButton(
-			buttonName,
-			joditOrElement,
-			role,
-			last
-		)
+		getButton(buttonName, joditOrElement, role, last)
 	);
 }
 
 function clickTrigger(buttonName, joditOrElement) {
 	clickButton(buttonName, joditOrElement, 'trigger');
+}
+
+/**
+ * Select table cells
+ * @param {Jodit} editor
+ * @param {number[]} indexes
+ */
+function selectCells(editor, indexes) {
+	const cells = editor.editor.querySelectorAll('td,th');
+	indexes.forEach(index => {
+		editor.getInstance('Table', editor.options).addSelection(cells[index]);
+	});
 }
 
 /**

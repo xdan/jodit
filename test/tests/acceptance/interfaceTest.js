@@ -1,7 +1,7 @@
 describe('Test interface', function() {
 	describe('About dialog', function() {
 		it('Should conteins License element', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 					license: '111',
 					toolbarAdaptive: false
 				});
@@ -52,7 +52,7 @@ describe('Test interface', function() {
 	describe('Direction', function() {
 		describe('Set RTL direction', function() {
 			it('Should have RTL direction', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					direction: 'rtl'
 				});
 
@@ -66,7 +66,7 @@ describe('Test interface', function() {
 
 		describe('For iframe mode', function() {
 			it('Should have same direction and language', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					iframe: true,
 					direction: 'rtl',
 					language: 'de'

@@ -207,27 +207,13 @@ export class backspace extends Plugin {
 		return Array.from(node.childNodes).every(this.isEmpty);
 	};
 
-	protected afterInit(jodit: IJodit): void {
-		jodit.e
-			.on('afterCommand', (command: string) => {
-				if (command === 'delete') {
-					this.afterCommand();
-				}
-			})
-			.on('keydown', (event: KeyboardEvent): false | void => {
-				if (
-					event.key === consts.KEY_BACKSPACE ||
-					event.key === consts.KEY_DELETE
-				) {
-					return this.onDelete(event.key === consts.KEY_BACKSPACE);
-				}
-			});
-	}
-
-	private afterCommand(): void {
+	/**
+	 * After Delete command remove extra BR
+	 */
+	private afterDeleteCommand(): void {
 		const jodit = this.j;
 
-		const current: Node | false = jodit.selection.current();
+		const current = jodit.selection.current();
 
 		if (current && Dom.isTag(current.firstChild, 'br')) {
 			jodit.selection.removeNode(current.firstChild);
@@ -245,7 +231,12 @@ export class backspace extends Plugin {
 			jodit.selection.removeNode(node);
 		}
 	}
-	private onDelete(toLeft: boolean): false | void {
+
+	/**
+	 * Handler keypress Delete or Backspace buttons
+	 * @param backspace
+	 */
+	private onDelete(backspace: boolean): false | void {
 		const jodit = this.j;
 
 		if (!jodit.selection.isFocused()) {
@@ -281,9 +272,9 @@ export class backspace extends Plugin {
 				jodit.editor
 			) as HTMLElement | null;
 
-			const workElement: Node | null = Dom.findInline(
+			const workElement = Dom.findInline(
 				fakeNode,
-				toLeft,
+				backspace,
 				jodit.editor
 			);
 
@@ -294,15 +285,15 @@ export class backspace extends Plugin {
 			let tryRemoveInline: boolean | void;
 
 			if (workElement) {
-				tryRemoveInline = this.removeInline(box, toLeft, range);
+				tryRemoveInline = this.removeInline(box, backspace, range);
 			} else if (fakeNode.parentNode) {
 				tryRemoveInline = this.removeInline(
 					{
-						node: toLeft
+						node: backspace
 							? fakeNode.parentNode.previousSibling
 							: fakeNode.parentNode.nextSibling
 					},
-					toLeft,
+					backspace,
 					range
 				);
 			}
@@ -311,12 +302,12 @@ export class backspace extends Plugin {
 				return tryRemoveInline ? undefined : false;
 			}
 
-			if (container && container.nodeName.match(/^(TD)$/)) {
+			if (container && Dom.isCell(container, this.j.editorWindow)) {
 				return false;
 			}
 
 			let prevBox = call(
-				toLeft ? Dom.prev : Dom.next,
+				backspace ? Dom.prev : Dom.next,
 				box.node || fakeNode,
 				node => Dom.isBlock(node, jodit.editorWindow),
 				jodit.editor
@@ -345,7 +336,10 @@ export class backspace extends Plugin {
 			}
 
 			if (prevBox) {
-				const tmpNode = jodit.selection.setCursorIn(prevBox, !toLeft);
+				const tmpNode = jodit.selection.setCursorIn(
+					prevBox,
+					!backspace
+				);
 
 				jodit.selection.insertNode(marker, false, false);
 
@@ -375,16 +369,13 @@ export class backspace extends Plugin {
 						container = parentContainer as HTMLElement;
 						prevBox = prevBox.parentNode as HTMLElement;
 					}
-					Dom.moveContent(container, prevBox, !toLeft);
+
+					Dom.moveContent(container, prevBox, !backspace);
 					normalizeNode(prevBox);
 				}
 
 				if (Dom.isTag(prevBox, 'li')) {
-					const UL: Node | false = Dom.closest(
-						prevBox,
-						['ul', 'ol'],
-						jodit.editor
-					);
+					const UL = Dom.closest(prevBox, ['ul', 'ol'], jodit.editor);
 
 					if (UL) {
 						const nextBox = UL.nextSibling;
@@ -394,7 +385,7 @@ export class backspace extends Plugin {
 							nextBox.nodeName === UL.nodeName &&
 							UL !== nextBox
 						) {
-							Dom.moveContent(nextBox, UL, !toLeft);
+							Dom.moveContent(nextBox, UL, !backspace);
 							jodit.selection.removeNode(nextBox);
 						}
 					}
@@ -440,5 +431,26 @@ export class backspace extends Plugin {
 		return false;
 	}
 
-	protected beforeDestruct(jodit: IJodit): void {}
+	/** @override */
+	protected afterInit(jodit: IJodit): void {
+		jodit.e
+			.on('afterCommand', (command: string) => {
+				if (command === 'delete') {
+					this.afterDeleteCommand();
+				}
+			})
+			.on('keydown', (event: KeyboardEvent): false | void => {
+				if (
+					event.key === consts.KEY_BACKSPACE ||
+					event.key === consts.KEY_DELETE
+				) {
+					return this.onDelete(event.key === consts.KEY_BACKSPACE);
+				}
+			});
+	}
+
+	/** @override */
+	protected beforeDestruct(jodit: IJodit): void {
+		jodit.e.off('afterCommand').off('keydown');
+	}
 }

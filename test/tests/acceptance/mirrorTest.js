@@ -37,7 +37,7 @@ describe('CodeMirror editor source code', function() {
 	describe('Change mode', function() {
 		describe('In WYSIWYG mode isEditorMode', function() {
 			it('Should return true', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				expect(editor.isEditorMode()).is.true;
 				editor.toggleMode();
 				expect(editor.isEditorMode()).is.false;
@@ -45,7 +45,7 @@ describe('CodeMirror editor source code', function() {
 		});
 
 		it('Should not fire Change event', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				useAceEditor: false // because onChange can be fired after aceInited
 			});
 
@@ -104,7 +104,7 @@ describe('CodeMirror editor source code', function() {
 
 			describe('Without ace', function() {
 				it('Should insert text on caret position', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						useAceEditor: false
 					});
 

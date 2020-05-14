@@ -23,14 +23,14 @@ const getKey = (direction: string) =>
 
 Config.prototype.controls.outdent = {
 	isDisabled: (editor: IJodit): boolean => {
-		const current: Node | false = editor.selection.current();
+		const current = editor.selection.current();
 
 		if (current) {
 			const currentBox = Dom.closest(
 				current,
 				node => Dom.isBlock(node, editor.editorWindow),
 				editor.editor
-			) as HTMLElement | false;
+			);
 
 			const key = getKey(editor.o.direction);
 

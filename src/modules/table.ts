@@ -267,12 +267,12 @@ export class Table extends ViewComponent<IJodit> {
 
 				if (rowspan && parseInt(rowspan, 10) > 1) {
 					const newRowSpan = parseInt(rowspan, 10) - 1;
-					attr(cell, 'rowspan',  newRowSpan > 1 ? newRowSpan : null);
+					attr(cell, 'rowspan', newRowSpan > 1 ? newRowSpan : null);
 				}
 			});
 
 			$$('td,th', row).forEach(cell => {
-					cell.innerHTML = '';
+				cell.innerHTML = '';
 			});
 		}
 
@@ -610,7 +610,7 @@ export class Table extends ViewComponent<IJodit> {
 	 * It combines all of the selected cells into one. The contents of the cells will also be combined
 	 * @param table
 	 */
-	static mergeSelected(table: HTMLTableElement) {
+	static mergeSelected(table: HTMLTableElement, jodit: IJodit) {
 		const html: string[] = [],
 			bound: number[][] = Table.getSelectedBound(
 				table,
@@ -666,10 +666,12 @@ export class Table extends ViewComponent<IJodit> {
 							}
 
 							if (!first) {
-								first = cell as HTMLTableCellElement;
+								first = cell;
 								first_j = j;
 							} else {
 								Table.__mark(td, 'remove', 1, __marked);
+
+								instance(jodit).removeSelection(td);
 							}
 						}
 					}
@@ -696,6 +698,7 @@ export class Table extends ViewComponent<IJodit> {
 						) + '%',
 						__marked
 					);
+
 					if (first_j) {
 						Table.setColumnWidthByDelta(
 							table,
@@ -708,6 +711,7 @@ export class Table extends ViewComponent<IJodit> {
 				}
 
 				(first as HTMLTableCellElement).innerHTML = html.join('<br/>');
+				instance(jodit).addSelection(first);
 
 				delete (first as any).__i_am_already_was;
 
@@ -795,9 +799,7 @@ export class Table extends ViewComponent<IJodit> {
 				}
 
 				Table.__unmark(__marked);
-				jodit
-					.getInstance<Table>('Table', jodit.o)
-					.removeSelection(cell);
+				instance(jodit).removeSelection(cell);
 			}
 		);
 		this.normalizeTable(table);
@@ -862,9 +864,7 @@ export class Table extends ViewComponent<IJodit> {
 
 				Table.__unmark(__marked);
 
-				jodit
-					.getInstance<Table>('Table', jodit.o)
-					.removeSelection(cell);
+				instance(jodit).removeSelection(cell);
 			}
 		);
 
@@ -969,3 +969,5 @@ export class Table extends ViewComponent<IJodit> {
 		});
 	}
 }
+
+const instance = (j: IJodit): Table => j.getInstance<Table>('Table', j.o);

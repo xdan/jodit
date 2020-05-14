@@ -385,7 +385,7 @@ export class inlinePopup extends Plugin {
 	private onClick(e: MouseEvent): void {
 		const node = e.target as Node,
 			elements = Object.keys(this.j.o.popup) as HTMLTagNames[],
-			target: HTMLElement | false = Dom.isTag(node, 'img')
+			target = Dom.isTag(node, 'img')
 				? node
 				: Dom.closest(node, elements, this.j.editor);
 

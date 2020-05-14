@@ -2,7 +2,7 @@ describe('Limit plugin', function() {
 	describe('Keydown', function() {
 		describe('On keydown when editor already full', function() {
 			it('should deny insert any chars', function(done) {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					limitChars: 5,
 					observer: {
 						timeout: 5
@@ -19,7 +19,7 @@ describe('Limit plugin', function() {
 
 			describe('Stat plugin', function() {
 				it('should show chars count', function(done) {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						limitChars: 5,
 						observer: {
 							timeout: 5
@@ -41,7 +41,7 @@ describe('Limit plugin', function() {
 
 				describe('Prevent keypress', function() {
 					it('should show chars count', function(done) {
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							limitChars: 5,
 							observer: {
 								timeout: 5
@@ -78,7 +78,7 @@ describe('Limit plugin', function() {
 	describe('Paste', function() {
 		describe('When editor aleady full', function() {
 			it('should deny insert any chars', function(done) {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					limitChars: 5,
 					observer: {
 						timeout: 5
@@ -108,7 +108,7 @@ describe('Limit plugin', function() {
 		describe('Paste', function() {
 			describe('When editor aleady full', function() {
 				it('should deny insert any chars', function(done) {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						limitWords: 3,
 						observer: {
 							timeout: 5

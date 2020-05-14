@@ -2,7 +2,7 @@ describe('Link plugin', function() {
 	describe('Insert link', function() {
 		describe('Insert simple link', function() {
 			it('Should insert as simple link', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 
 				simulatePaste(editor.editor, 'https://www.youtube.com');
 
@@ -14,7 +14,7 @@ describe('Link plugin', function() {
 			describe('Disable', function() {
 				describe('Disable any convert', function() {
 					it('Should not change source link', function() {
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							link: {
 								processPastedLink: false
 							}
@@ -29,7 +29,7 @@ describe('Link plugin', function() {
 
 		describe('Insert youtube link', function() {
 			it('Should insert iframe with video', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				simulatePaste(
 					editor.editor,
 					'https://www.youtube.com/watch?v=8Qn_spdM5Zg'
@@ -44,7 +44,7 @@ describe('Link plugin', function() {
 			describe('Disable', function() {
 				describe('Disable any convert', function() {
 					it('Should not change source link', function() {
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							link: {
 								processPastedLink: false,
 								processVideoLink: false
@@ -63,7 +63,7 @@ describe('Link plugin', function() {
 
 				describe('Disable video convert', function() {
 					it('Should insert video link as simple link', function() {
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							link: {
 								processVideoLink: false
 							}
@@ -87,7 +87,7 @@ describe('Link plugin', function() {
 			describe('Edit exists link', function() {
 				describe('Content input was not changed', function() {
 					it('Should save link content', function() {
-						const editor = new Jodit(appendTestArea());
+						const editor = getJodit();
 
 						editor.value =
 							'<p>test <a href="#somelink">link <strong>strong</strong></a> open</p>';
@@ -143,7 +143,7 @@ describe('Link plugin', function() {
 
 				describe('Content input was changed', function() {
 					it('Should replace link content', function() {
-						const editor = new Jodit(appendTestArea());
+						const editor = getJodit();
 
 						editor.value =
 							'<p>test <a href="#somelink">link <strong>strong</strong></a> open</p>';
@@ -189,7 +189,7 @@ describe('Link plugin', function() {
 
 					describe('Content stay clear', function() {
 						it('Should replace link content to url', function() {
-							const editor = new Jodit(appendTestArea());
+							const editor = getJodit();
 
 							editor.value =
 								'<p>test <a href="#somelink">link <strong>strong</strong></a> open</p>';
@@ -242,7 +242,7 @@ describe('Link plugin', function() {
 				describe('Select some text inside link', function() {
 					describe('Content input was not changed', function() {
 						it("Should open edit popup with full link's content", function() {
-							const editor = new Jodit(appendTestArea());
+							const editor = getJodit();
 
 							editor.value =
 								'<p>test <a href="#somelink">link <strong>strong</strong></a> open</p>';
@@ -302,7 +302,7 @@ describe('Link plugin', function() {
 
 					describe('Content input was changed', function() {
 						it("Should open edit popup with full link's content and after submit should replace full link's content", function() {
-							const editor = new Jodit(appendTestArea());
+							const editor = getJodit();
 
 							editor.value =
 								'<p>test <a href="#somelink">link <strong>strong</strong></a> open</p>';
@@ -362,7 +362,7 @@ describe('Link plugin', function() {
 				it('Should insert new link', function() {
 					let popup_opened = 0;
 
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						events: {
 							/**
 							 * @param {Node} target
@@ -458,7 +458,7 @@ describe('Link plugin', function() {
 						const tpl =
 							'<form class="form_url"><input ref="url_input" type="url"><button>save</button></form>';
 
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							link: {
 								formTemplate: function() {
 									return tpl;
@@ -501,7 +501,7 @@ describe('Link plugin', function() {
 							const tpl =
 								'<form class="form_url"><input data-ref="url_input" type="url"><button>save</button></form>';
 
-							const editor = new Jodit(appendTestArea(), {
+							const editor = getJodit({
 								link: {
 									formTemplate: function() {
 										return tpl;
@@ -542,7 +542,7 @@ describe('Link plugin', function() {
 
 					describe('Add class name in form', function() {
 						it('Should show form with this class', function() {
-							const editor = new Jodit(appendTestArea(), {
+							const editor = getJodit({
 								link: {
 									formClassName: 'bootstrap_form'
 								}
@@ -564,7 +564,7 @@ describe('Link plugin', function() {
 				describe('On selected content', function() {
 					describe('Selected text', function() {
 						it('Should wrap selected text in link', function() {
-							const editor = new Jodit(appendTestArea(), {
+							const editor = getJodit({
 								toolbarAdaptive: false
 							});
 
@@ -640,7 +640,7 @@ describe('Link plugin', function() {
 					describe('Selected image', function() {
 						describe('On open popup', function() {
 							it('Should hide text input', function() {
-								const editor = new Jodit(appendTestArea(), {
+								const editor = getJodit({
 									toolbarAdaptive: false,
 									observer: {
 										timeout: 0
@@ -678,7 +678,7 @@ describe('Link plugin', function() {
 						});
 
 						it('Should wrap selected image in link', function() {
-							const editor = new Jodit(appendTestArea(), {
+							const editor = getJodit({
 								toolbarAdaptive: false,
 								observer: {
 									timeout: 0
@@ -739,7 +739,7 @@ describe('Link plugin', function() {
 				});
 
 				it('Should restore source text after user clicked on Unlink button', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						observer: {
 							timeout: 0
 						}
@@ -807,7 +807,7 @@ describe('Link plugin', function() {
 
 			describe('Was selected part of text', function() {
 				it('Should show dialog form with this text', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value = '<p>one green bottle hanging under wall</p>';
 					const range = editor.selection.createRange();
@@ -832,7 +832,7 @@ describe('Link plugin', function() {
 
 			describe('Was selected part of html', function() {
 				it('Should show dialog form with selection text content from this HTML', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value =
 						'<p>one green <strong>bottle hanging</strong> under wall</p>' +
@@ -862,7 +862,7 @@ describe('Link plugin', function() {
 				describe('Was selected image', function() {
 					describe('Image had not anchor parent', function() {
 						it('Should show dialog without content input and after submit wrap this image', function() {
-							const editor = new Jodit(appendTestArea());
+							const editor = getJodit();
 
 							editor.value =
 								'<p>one green <img src="https://xdsoft.net/jodit/build/images/artio.jpg" alt="test"> under wall</p>';
@@ -909,7 +909,7 @@ describe('Link plugin', function() {
 
 				describe('After submit this part', function() {
 					it('should be wrapped inside anchor', function() {
-						const editor = new Jodit(appendTestArea());
+						const editor = getJodit();
 
 						editor.value =
 							'<p>one green <strong>bottle hanging</strong> under wall</p>' +

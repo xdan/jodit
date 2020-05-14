@@ -13,7 +13,7 @@ Config.prototype.controls.paragraph = {
 	update(button): boolean {
 		const editor = button.j as IJodit,
 			control = button.control,
-			current: Node | false = editor.selection.current();
+			current = editor.selection.current();
 
 		if (current && editor.o.textIcons) {
 			const currentBox: HTMLElement =
@@ -67,7 +67,7 @@ Config.prototype.controls.paragraph = {
 	},
 
 	isActiveChild: (editor: IJodit, control: IControlType): boolean => {
-		const current: Node | false = editor.selection.current();
+		const current = editor.selection.current();
 
 		if (current) {
 			const currentBox: HTMLElement = Dom.closest(
@@ -88,7 +88,7 @@ Config.prototype.controls.paragraph = {
 	},
 
 	isActive: (editor: IJodit, control: IControlType): boolean => {
-		const current: Node | false = editor.selection.current();
+		const current = editor.selection.current();
 
 		if (current) {
 			const currentBpx: HTMLElement = Dom.closest(

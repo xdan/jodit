@@ -1,7 +1,7 @@
 describe('Test Creator module', function() {
 	describe('Create inside element', function() {
 		it('Should be different in iframe mode', function() {
-			const editor1 = Jodit.make(appendTestArea());
+			const editor1 = getJodit();
 			const editor2 = Jodit.make(appendTestArea(), {iframe: true});
 
 			const div1 = editor1.createInside.div();
@@ -18,7 +18,7 @@ describe('Test Creator module', function() {
 
 	describe('createAttributes', function() {
 		it('Should add to every nodes some attributes', function() {
-			const editor = Jodit.make(appendTestArea());
+			const editor = getJodit();
 			const div = editor.createInside.div();
 			expect(div.className).equals('');
 

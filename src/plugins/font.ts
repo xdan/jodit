@@ -42,7 +42,7 @@ Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
 	tooltip: 'Font size',
 
 	isActiveChild: (editor, control: IControlType): boolean => {
-		const current: Node | false = editor.selection.current();
+		const current = editor.selection.current();
 
 		if (current) {
 			const currentBpx: HTMLElement =
@@ -71,7 +71,7 @@ Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
 	},
 
 	isActive: (editor): boolean => {
-		const current: Node | false = editor.selection.current();
+		const current = editor.selection.current();
 
 		if (current) {
 			const currentBpx: HTMLElement =
@@ -122,7 +122,7 @@ Config.prototype.controls.font = (<IControlType<IJodit>>{
 	},
 
 	isActiveChild: (editor, control: IControlType): boolean => {
-		const current: Node | false = editor.selection.current(),
+		const current = editor.selection.current(),
 			normFonts = (fontValue: string): string => {
 				return fontValue
 					.toLowerCase()
@@ -160,7 +160,7 @@ Config.prototype.controls.font = (<IControlType<IJodit>>{
 	},
 
 	isActive: (editor: IJodit): boolean => {
-		const current: Node | false = editor.selection.current();
+		const current = editor.selection.current();
 
 		if (current) {
 			const currentBpx: HTMLElement =

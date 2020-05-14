@@ -23,7 +23,7 @@ import { KEY_ESC } from '../../core/constants';
 import {
 	$$,
 	asArray,
-	attr, camelCase,
+	attr,
 	css,
 	extend,
 	hasContainer,
@@ -562,7 +562,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		destroyAfterClose?: boolean,
 		modal?: boolean
 	): this {
-		eventEmitter.fire(camelCase('close-all-popups'));
+		eventEmitter.fire('closeAllPopups');
 
 		/**
 		 * Called before the opening of the dialog box

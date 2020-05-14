@@ -16,15 +16,15 @@ Config.prototype.controls.align = {
 	update(button): void {
 		const editor = button.j as IJodit,
 			control = button.control,
-			current: Node | false = editor.selection.current();
+			current = editor.selection.current();
 
 		if (current) {
-			const currentBox: HTMLElement =
-				(Dom.closest(
+			const currentBox =
+				Dom.closest(
 					current,
 					node => Dom.isBlock(node, editor.editorWindow),
 					editor.editor
-				) as HTMLElement) || editor.editor;
+				) || editor.editor;
 
 			let currentValue: string = css(currentBox, 'text-align').toString();
 
@@ -53,7 +53,7 @@ Config.prototype.controls.align = {
 	},
 
 	isActive: (editor: IJodit, btn): boolean => {
-		const current: Node | false = editor.selection.current();
+		const current = editor.selection.current();
 
 		if (current && btn.defaultValue) {
 			const currentBox: HTMLElement =

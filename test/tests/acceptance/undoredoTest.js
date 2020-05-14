@@ -1,7 +1,7 @@
 describe('Undo/Redo behaviors', function() {
 	describe('Do some changes', function() {
 		it('Should change redo/undo stack', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				observer: {
 					timeout: 0
 				}
@@ -14,21 +14,12 @@ describe('Undo/Redo behaviors', function() {
 			range.collapse(false);
 			editor.selection.selectRange(range);
 
-			simulateEvent(
-				'mousedown',
-				0,
-				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-paragraph'
-				)
-			);
+			clickTrigger('paragraph', editor);
 
-			const list = editor.container.querySelector('.jodit_toolbar_list');
+			const list = getOpenedPopup(editor);
 
-			simulateEvent(
-				'mousedown',
-				0,
-				list.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-h1')
-			);
+			clickButton('h1', list);
+
 
 			expect(editor.value).equals('<h1>test</h1>');
 
@@ -43,7 +34,7 @@ describe('Undo/Redo behaviors', function() {
 
 		describe('Several operations', function() {
 			it('Should work perfect', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				editor.value =
 					'<p>test</p>' +
 					'<ul>' +
@@ -90,7 +81,7 @@ describe('Undo/Redo behaviors', function() {
 
 	describe('Commands', function() {
 		it('Undo. Enter text wait and again enter text. After execute "undo" command. First text should be returned', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				observer: {
 					timeout: 0 // disable delay
 				}
@@ -102,7 +93,7 @@ describe('Undo/Redo behaviors', function() {
 			expect(editor.value).equals('test');
 		});
 		it('Redo. Enter text wait and again enter text. After execute "undo" + "redo" command in editor should be second text', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				observer: {
 					timeout: 0
 				}
@@ -116,7 +107,7 @@ describe('Undo/Redo behaviors', function() {
 			expect(editor.value).equals('test2');
 		});
 		it('Check react UndoRedo to another changes', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				observer: {
 					timeout: 0
 				}
@@ -143,50 +134,46 @@ describe('Undo/Redo behaviors', function() {
 
 	describe('Clear stack', function() {
 		it('Should disable both buttons in toolbar and all calls redo and undo must do nothing', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				toolbarAdaptive: false,
 				observer: {
 					timeout: 0
 				}
 			});
 
-			const undo = editor.container.querySelector(
-				'.jodit_toolbar_btn.jodit_toolbar_btn-undo'
-			);
+			const undo = getButton('undo', editor);
 			expect(undo).is.not.null;
-			const redo = editor.container.querySelector(
-				'.jodit_toolbar_btn.jodit_toolbar_btn-redo'
-			);
+			const redo = getButton('redo', editor);
 			expect(redo).is.not.null;
 
-			expect(undo.classList.contains('jodit_disabled')).is.true;
-			expect(redo.classList.contains('jodit_disabled')).is.true;
+			expect(undo.hasAttribute('disabled')).is.true;
+			expect(redo.hasAttribute('disabled')).is.true;
 
 			editor.value = 'test';
 			editor.value = 'stop';
 
-			expect(undo.classList.contains('jodit_disabled')).is.false;
-			expect(redo.classList.contains('jodit_disabled')).is.true;
+			expect(undo.hasAttribute('disabled')).is.false;
+			expect(redo.hasAttribute('disabled')).is.true;
 
-			simulateEvent('mousedown', 0, undo);
+			simulateEvent('click', 0, undo);
 			expect(editor.value).equals('test');
-			expect(undo.classList.contains('jodit_disabled')).is.false;
-			expect(redo.classList.contains('jodit_disabled')).is.false;
+			expect(undo.hasAttribute('disabled')).is.false;
+			expect(redo.hasAttribute('disabled')).is.false;
 
-			simulateEvent('mousedown', 0, redo);
+			simulateEvent('click', 0, redo);
 			expect(editor.value).equals('stop');
-			expect(undo.classList.contains('jodit_disabled')).is.false;
-			expect(redo.classList.contains('jodit_disabled')).is.true;
+			expect(undo.hasAttribute('disabled')).is.false;
+			expect(redo.hasAttribute('disabled')).is.true;
 
 			editor.observer.clear();
 
-			expect(undo.classList.contains('jodit_disabled')).is.true;
-			expect(redo.classList.contains('jodit_disabled')).is.true;
+			expect(undo.hasAttribute('disabled')).is.true;
+			expect(redo.hasAttribute('disabled')).is.true;
 			expect(editor.value).equals('stop');
 
 			editor.execCommand('undo');
-			expect(undo.classList.contains('jodit_disabled')).is.true;
-			expect(redo.classList.contains('jodit_disabled')).is.true;
+			expect(undo.hasAttribute('disabled')).is.true;
+			expect(redo.hasAttribute('disabled')).is.true;
 			expect(editor.value).equals('stop');
 		});
 	});

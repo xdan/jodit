@@ -217,6 +217,11 @@ export class selectCells extends Plugin {
 			return;
 		}
 
+		const ownTable = Dom.closest(cell, 'table', table);
+		if (ownTable && ownTable !== table) {
+			return; // Nested tables
+		}
+
 		const bound = Table.getSelectedBound(table, [cell, this.selectedCell]),
 			box = Table.formalMatrix(table);
 
@@ -307,7 +312,7 @@ export class selectCells extends Plugin {
 						break;
 
 					case 'merge':
-						Table.mergeSelected(table);
+						Table.mergeSelected(table, this.j);
 						break;
 
 					case 'empty':

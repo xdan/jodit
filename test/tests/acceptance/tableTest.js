@@ -36,15 +36,16 @@ describe('Tables Jodit Editor Tests', function() {
 			editor.value =
 				'<table>' +
 				'<tr>' +
-				'<td data-jodit-selected-cell="1">1</td>' +
-				'<td data-jodit-selected-cell="1">2</td>' +
+				'<td>1</td>' +
+				'<td>2</td>' +
 				'<td rowspan="2">3</td>' +
 				'</tr>' +
 				'<tr><td>4</td></tr>' +
 				'</table>';
 
-			// const table = new Jodit.modules.Table(editor);
-			Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
+			selectCells(editor, [0, 1]);
+
+			Jodit.modules.Table.mergeSelected(editor.editor.firstChild, editor);
 
 			simulateEvent(
 				'mousemove',
@@ -161,9 +162,9 @@ describe('Tables Jodit Editor Tests', function() {
 
 						expect(editor.value).equals(
 							'<table><tbody>' +
-							'<tr><td>1</td><td>2</td><td>3</td></tr>' +
-							'<tr><td rowspan="2"></td><td></td><td></td></tr>' +
-							'<tr><td>3</td><td>4</td></tr>' +
+								'<tr><td>1</td><td>2</td><td>3</td></tr>' +
+								'<tr><td rowspan="2"></td><td></td><td></td></tr>' +
+								'<tr><td>3</td><td>4</td></tr>' +
 								'</tbody></table>'
 						);
 					});
@@ -332,19 +333,23 @@ describe('Tables Jodit Editor Tests', function() {
 
 				editor.value =
 					'<table>' +
-					'<tr><td data-jodit-selected-cell="1">1</td><td data-jodit-selected-cell="1">2</td></tr>' +
-					'<tr><td data-jodit-selected-cell="1">3</td><td data-jodit-selected-cell="1">4</td></tr>' +
+					'<tr><td>1</td><td>2</td></tr>' +
+					'<tr><td>3</td><td>4</td></tr>' +
 					'<tr><td>5</td><td>6</td></tr>' +
 					'</table>';
 
+				selectCells(editor, [0, 1, 2, 3]);
 				// const table = new Jodit.modules.Table(editor);
-				Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
+				Jodit.modules.Table.mergeSelected(
+					editor.editor.firstChild,
+					editor
+				);
 
 				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr>' +
-						'<td colspan="2" data-jodit-selected-cell="1">1<br>2<br>3<br>4</td>' +
+						'<td colspan="2">1<br>2<br>3<br>4</td>' +
 						'</tr>' +
 						'<tr>' +
 						'<td>5</td>' +
@@ -353,6 +358,10 @@ describe('Tables Jodit Editor Tests', function() {
 						'</tbody>' +
 						'</table>'
 				);
+
+				expect(
+					editor.getInstance('Table', editor.o).selected.size
+				).equals(1);
 			});
 
 			it('With colspan and rowspan into one ', function() {
@@ -360,21 +369,24 @@ describe('Tables Jodit Editor Tests', function() {
 
 				editor.value =
 					'<table>' +
-					'<tr><td colspan="2" data-jodit-selected-cell="1">1</td></tr>' +
-					'<tr><td data-jodit-selected-cell="1">3</td><td data-jodit-selected-cell="1">4</td></tr>' +
-					'<tr><td rowspan="2" data-jodit-selected-cell="1">5</td><td data-jodit-selected-cell="1">6</td></tr>' +
-					'<tr><td data-jodit-selected-cell="1">7</td></tr>' +
+					'<tr><td colspan="2">1</td></tr>' +
+					'<tr><td>3</td><td>4</td></tr>' +
+					'<tr><td rowspan="2">5</td><td>6</td></tr>' +
+					'<tr><td>7</td></tr>' +
 					'<tr><td>8</td><td>9</td></tr>' +
 					'</table>';
 
-				// const table = new Jodit.modules.Table(editor);
-				Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
+				selectCells(editor, [0, 1, 2, 3, 4, 5]);
+				Jodit.modules.Table.mergeSelected(
+					editor.editor.firstChild,
+					editor
+				);
 
-				expect(sortAttributes(editor.editor.innerHTML)).equals(
+				expect(sortAttributes(editor.value)).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr>' +
-						'<td colspan="2" data-jodit-selected-cell="1">' +
+						'<td colspan="2">' +
 						'1<br>3<br>4<br>5<br>6<br>7' +
 						'</td>' +
 						'</tr>' +
@@ -385,6 +397,10 @@ describe('Tables Jodit Editor Tests', function() {
 						'</tbody>' +
 						'</table>'
 				);
+
+				expect(
+					editor.getInstance('Table', editor.o).selected.size
+				).equals(1);
 			});
 
 			it('A few cells with colspan and rowspan', function() {
@@ -393,20 +409,24 @@ describe('Tables Jodit Editor Tests', function() {
 				editor.value =
 					'<table style="width: 100%;">' +
 					'<tbody>' +
-					'<tr><td data-jodit-selected-cell="1" colspan="3">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr>' +
-					'<tr><td data-jodit-selected-cell="1" rowspan="3">1,0<br>2,0<br>3,0<br></td><td data-jodit-selected-cell="1">1,1</td><td data-jodit-selected-cell="1">1,2</td><td>1,3</td></tr>' +
-					'<tr><td data-jodit-selected-cell="1">2,1</td><td data-jodit-selected-cell="1">2,2</td><td>2,3</td></tr>' +
-					'<tr><td data-jodit-selected-cell="1">3,1</td><td data-jodit-selected-cell="1">3,2</td><td>3,3</td></tr>' +
+					'<tr><td colspan="3">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr>' +
+					'<tr><td rowspan="3">1,0<br>2,0<br>3,0<br></td><td>1,1</td><td>1,2</td><td>1,3</td></tr>' +
+					'<tr><td>2,1</td><td>2,2</td><td>2,3</td></tr>' +
+					'<tr><td>3,1</td><td>3,2</td><td>3,3</td></tr>' +
 					'</tbody></table>';
 
-				// const table = new Jodit.modules.Table(editor);
-				Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
+				selectCells(editor, [0, 2, 3, 4, 6, 7, 9, 10]);
 
-				expect(sortAttributes(editor.editor.innerHTML)).equals(
+				Jodit.modules.Table.mergeSelected(
+					editor.editor.firstChild,
+					editor
+				);
+
+				expect(sortAttributes(editor.value)).equals(
 					'<table style="width:100%">' +
 						'<tbody>' +
 						'<tr>' +
-						'<td data-jodit-selected-cell="1" rowspan="4">' +
+						'<td rowspan="4">' +
 						'0,0<br>0,1<br>0,2<br><br>' +
 						'1,0<br>2,0<br>3,0<br><br>' +
 						'1,1<br>' +
@@ -438,26 +458,36 @@ describe('Tables Jodit Editor Tests', function() {
 				editor.value =
 					'<table style="width: 100%;">' +
 					'<tbody>' +
-					'<tr><td colspan="3" class="">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr>' +
 					'<tr>' +
-					'<td rowspan="3" class="">1,0<br>2,0<br>3,0<br></td>' +
-					'<td data-jodit-selected-cell="1">1,1</td><td data-jodit-selected-cell="1">1,2</td>' +
-					'<td data-jodit-selected-cell="1">1,3</td>' +
+					'<td colspan="3" class="">0,0<br>0,1<br>0,2<br></td>' +
+					'<td>0,3</td>' +
 					'</tr>' +
 					'<tr>' +
-					'<td data-jodit-selected-cell="1">2,1</td>' +
-					'<td data-jodit-selected-cell="1">2,2</td>' +
-					'<td data-jodit-selected-cell="1">2,3</td>' +
+					'<td rowspan="3" class="">1,0<br>2,0<br>3,0<br></td>' +
+					'<td>1,1</td>' +
+					'<td>1,2</td>' +
+					'<td>1,3</td>' +
+					'</tr>' +
+					'<tr>' +
+					'<td>2,1</td>' +
+					'<td>2,2</td>' +
+					'<td>2,3</td>' +
 					'</tr>' +
 					'<tr>' +
 					'<td class="">3,1</td>' +
 					'<td class="">3,2</td>' +
-					'<td>3,3</td></tr>' +
+					'<td>3,3</td>' +
+					'</tr>' +
 					'</tbody>' +
 					'</table>';
 
+				selectCells(editor, [3, 4, 5, 6, 7, 8]);
+
 				// const table = new Jodit.modules.Table(editor);
-				Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
+				Jodit.modules.Table.mergeSelected(
+					editor.editor.firstChild,
+					editor
+				);
 
 				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table style="width:100%">' +
@@ -467,7 +497,7 @@ describe('Tables Jodit Editor Tests', function() {
 						'</tr>' +
 						'<tr>' +
 						'<td rowspan="2">1,0<br>2,0<br>3,0<br></td>' +
-						'<td colspan="3" data-jodit-selected-cell="1">1,1<br>1,2<br>1,3<br>2,1<br>2,2<br>2,3</td>' +
+						'<td colspan="3">1,1<br>1,2<br>1,3<br>2,1<br>2,2<br>2,3</td>' +
 						'</tr>' +
 						'<tr>' +
 						'<td>3,1</td><td>3,2</td><td>3,3</td>' +
@@ -484,8 +514,8 @@ describe('Tables Jodit Editor Tests', function() {
 					'<table>' +
 					'<tbody>' +
 					'<tr>' +
-					'<td colspan="3" data-jodit-selected-cell="1" rowspan="4">1</td>' +
-					'<td data-jodit-selected-cell="1" rowspan="4">2</td>' +
+					'<td colspan="3" rowspan="4">1</td>' +
+					'<td rowspan="4">2</td>' +
 					'</tr>' +
 					'<tr></tr>' +
 					'<tr></tr>' +
@@ -493,14 +523,18 @@ describe('Tables Jodit Editor Tests', function() {
 					'</tbody>' +
 					'</table>';
 
-				// const table = new Jodit.modules.Table(editor);
-				Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
+				selectCells(editor, [0, 1]);
+
+				Jodit.modules.Table.mergeSelected(
+					editor.editor.firstChild,
+					editor
+				);
 
 				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr>' +
-						'<td data-jodit-selected-cell="1">1<br>2</td>' +
+						'<td>1<br>2</td>' +
 						'</tr>' +
 						'</tbody>' +
 						'</table>'
@@ -515,15 +549,16 @@ describe('Tables Jodit Editor Tests', function() {
 				editor.value =
 					'<table>' +
 					'<tbody>' +
-					'<tr><td data-jodit-selected-cell="1">0,0</td></tr>' +
+					'<tr><td>0,0</td></tr>' +
 					'<tr><td>1,0</td></tr>' +
 					'</tbody>' +
 					'</table>';
 
-				// const table = new Jodit.modules.Table(editor);
+				selectCells(editor, [0]);
+
 				Jodit.modules.Table.splitHorizontal(
 					editor.editor.firstChild,
-					editor.createInside
+					editor
 				);
 
 				expect(sortAttributes(editor.editor.innerHTML)).equals(
@@ -537,7 +572,7 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 			});
 
-			it('Split cell with rowspan by horizontal ', function() {
+			it('Split cell with rowspan by horizontal', function() {
 				const editor = getJodit();
 
 				editor.value =
@@ -545,7 +580,7 @@ describe('Tables Jodit Editor Tests', function() {
 					'<tbody>' +
 					'<tr><td>0,0</td><td>0,1</td><td>0,2</td></tr>' +
 					'<tr>' +
-					'<td rowspan="2" data-jodit-selected-cell="1">1,0</td>' +
+					'<td rowspan="2">1,0</td>' +
 					'<td>1,1</td>' +
 					'<td rowspan="2">1,2</td>' +
 					'</tr>' +
@@ -554,10 +589,12 @@ describe('Tables Jodit Editor Tests', function() {
 					'</tbody>' +
 					'</table>';
 
+				selectCells(editor, [3]);
+
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.splitHorizontal(
 					editor.editor.firstChild,
-					editor.createInside
+					editor
 				);
 
 				expect(sortAttributes(editor.editor.innerHTML)).equals(
@@ -585,7 +622,7 @@ describe('Tables Jodit Editor Tests', function() {
 					'<tr><td>0,0</td><td>0,1</td><td>0,2</td></tr>' +
 					'<tr>' +
 					'<td rowspan="2">1,0</td>' +
-					'<td rowspan="2" data-jodit-selected-cell="1">1,1</td>' +
+					'<td rowspan="2">1,1</td>' +
 					'<td>1,2</td>' +
 					'</tr>' +
 					'<tr><td><br></td></tr>' +
@@ -593,13 +630,14 @@ describe('Tables Jodit Editor Tests', function() {
 					'</tbody>' +
 					'</table>';
 
-				// const table = new Jodit.modules.Table(editor);
+				selectCells(editor, [4]);
+
 				Jodit.modules.Table.splitHorizontal(
 					editor.editor.firstChild,
-					editor.createInside
+					editor
 				);
 
-				expect(sortAttributes(editor.editor.innerHTML)).equals(
+				expect(sortAttributes(editor.value)).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr><td>0,0</td><td>0,1</td><td>0,2</td></tr>' +
@@ -621,18 +659,19 @@ describe('Tables Jodit Editor Tests', function() {
 				editor.value =
 					'<table style="width: 300px;">' +
 					'<tbody>' +
-					'<tr><td style="width:100px" data-jodit-selected-cell="1">0,0</td><td>0,1</td></tr>' +
+					'<tr><td style="width:100px">0,0</td><td>0,1</td></tr>' +
 					'<tr><td>1,0</td><td>1,1</td></tr>' +
 					'</tbody>' +
 					'</table>';
 
-				// const table = new Jodit.modules.Table(editor);
+				selectCells(editor, [0]);
+
 				Jodit.modules.Table.splitVertical(
 					editor.editor.firstChild,
-					editor.createInside
+					editor
 				);
 
-				expect(sortAttributes(editor.editor.innerHTML)).equals(
+				expect(sortAttributes(editor.value)).equals(
 					'<table style="width:300px">' +
 						'<tbody>' +
 						'<tr><td style="width:16.66%">0,0</td><td style="width:16.66%"><br></td><td>0,1</td></tr>' +
@@ -1164,86 +1203,86 @@ describe('Tables Jodit Editor Tests', function() {
 					'<tr><td>5</td><td>6</td></tr>' +
 					'</table>';
 
+				let td = editor.editor.querySelector('td'), pos = Jodit.modules.Helpers.position(td);
 				simulateEvent(
 					'mousedown',
-					1,
-					editor.editor.querySelector('td')
-				);
-				simulateEvent(
-					'mousemove',
-					1,
-					editor.editor.querySelectorAll('td')[3]
-				);
-				simulateEvent(
-					'mouseup',
-					1,
-					editor.editor.querySelectorAll('td')[3]
+					0,
+					td,
+					e => {
+						Object.assign(e, {
+							clientX: pos.left,
+							clientY: pos.top
+						});
+					}
 				);
 
-				expect(sortAttributes(editor.editor.innerHTML)).equals(
-					'<table>' +
-						'<tbody>' +
-						'<tr>' +
-						'<td data-jodit-selected-cell="1">1</td>' +
-						'<td data-jodit-selected-cell="1">2</td>' +
-						'</tr>' +
-						'<tr>' +
-						'<td data-jodit-selected-cell="1">3</td>' +
-						'<td data-jodit-selected-cell="1">4</td>' +
-						'</tr>' +
-						'<tr>' +
-						'<td>5</td>' +
-						'<td>6</td>' +
-						'</tr>' +
-						'</tbody>' +
-						'</table>'
+				td = editor.editor.querySelectorAll('td')[3];
+				pos = Jodit.modules.Helpers.position(td);
+				simulateEvent(
+					['mousemove', 'mouseup', 'click'],
+					0,
+					td,
+					e => {
+						Object.assign(e, {
+							clientX: pos.left + 10,
+							clientY: pos.top + 10
+						});
+					}
 				);
+
+				expect(editor.getInstance('Table', editor.o).selected.size).equals(4)
 			});
-			it('When we press mouse button over cell in subtable and move mouse to another cell, it should select all cells in bound in that table', function() {
-				const editor = getJodit();
 
-				editor.value =
-					'<table>' +
-					'<tr><td>1</td><td>2</td></tr>' +
-					'<tr>' +
-					'<td>3</td>' +
-					'<td class="test">' +
-					'<table>' +
-					'<tr><td>1</td><td>2</td></tr>' +
-					'<tr><td>3</td><td>4</td></tr>' +
-					'<tr><td>5</td><td>6</td></tr>' +
-					'</table>' +
-					'</td>' +
-					'</tr>' +
-					'<tr><td>5</td><td>6</td></tr>' +
-					'</table>';
+			describe('When we press mouse button over cell in subtable and move mouse to another cell', function() {
+				it('should select all cells in bound in that table', function() {
+					const editor = getJodit();
 
-				//const table = new Jodit.modules.Table(editor);
-				//editor.selection.setCursorIn(editor.editor.querySelector('td'));
+					editor.value =
+						'<table>' +
+						'<tr><td>1</td><td>2</td></tr>' +
+						'<tr>' +
+						'<td>3</td>' +
+						'<td class="test">' +
+						'<table>' +
+						'<tr><td>1</td><td>2</td></tr>' +
+						'<tr><td>3</td><td>4</td></tr>' +
+						'<tr><td>5</td><td>6</td></tr>' +
+						'</table>' +
+						'</td>' +
+						'</tr>' +
+						'<tr><td>5</td><td>6</td></tr>' +
+						'</table>';
 
-				simulateEvent(
-					'mousedown',
-					1,
-					editor.editor.querySelector('.test').querySelector('td')
-				);
-				simulateEvent(
-					'mousemove',
-					1,
-					editor.editor
-						.querySelector('.test')
-						.querySelectorAll('td')[3]
-				);
-				simulateEvent(
-					'mouseup',
-					1,
-					editor.editor
-						.querySelector('.test')
-						.querySelectorAll('td')[3]
-				);
+					let td = editor.editor.querySelector('.test').querySelector('td'), pos = Jodit.modules.Helpers.position(td);
+					simulateEvent(
+						'mousedown',
+						0,
+						td,
+						e => {
+							Object.assign(e, {
+								clientX: pos.left,
+								clientY: pos.top
+							});
+						}
+					);
 
-				expect(sortAttributes(editor.editor.innerHTML)).equals(
-					'<table><tbody><tr><td>1</td><td>2</td></tr><tr><td>3</td><td class="test"><table><tbody><tr><td data-jodit-selected-cell="1">1</td><td data-jodit-selected-cell="1">2</td></tr><tr><td data-jodit-selected-cell="1">3</td><td data-jodit-selected-cell="1">4</td></tr><tr><td>5</td><td>6</td></tr></tbody></table></td></tr><tr><td>5</td><td>6</td></tr></tbody></table>'
-				);
+					td = editor.editor.querySelector('.test').querySelectorAll('td')[3];
+					pos = Jodit.modules.Helpers.position(td);
+
+					simulateEvent(
+						['mousemove', 'mouseup', 'click'],
+						0,
+						td,
+						e => {
+							Object.assign(e, {
+								clientX: pos.left + 10,
+								clientY: pos.top + 10
+							});
+						}
+					);
+
+					expect(editor.getInstance('Table', editor.o).selected.size).equals(4)
+				});
 			});
 
 			it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound even if between be colspan and rowspan', function() {
@@ -1259,30 +1298,34 @@ describe('Tables Jodit Editor Tests', function() {
 					'</tbody>' +
 					'</table>';
 
-				//const table = new Jodit.modules.Table(editor);
-				//editor.selection.setCursorIn(editor.editor.querySelector('td'));
-
+				let td = editor.editor.querySelector('td'), pos = Jodit.modules.Helpers.position(td);
 				simulateEvent(
 					'mousedown',
-					1,
-					editor.editor.querySelectorAll('td')[0]
-				);
-				simulateEvent(
-					'mousemove',
-					1,
-					editor.editor.querySelectorAll('td')[7]
-				);
-				simulateEvent(
-					'mouseup',
-					1,
-					editor.editor.querySelectorAll('td')[7]
+					0,
+					td,
+					e => {
+						Object.assign(e, {
+							clientX: pos.left,
+							clientY: pos.top
+						});
+					}
 				);
 
-				expect(
-					sortAttributes(editor.editor.innerHTML) // ie change position between colspan and class
-				).equals(
-					'<table style="width:100%"><tbody><tr><td colspan="3" data-jodit-selected-cell="1">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr><tr><td data-jodit-selected-cell="1" rowspan="3">1,0<br>2,0<br>3,0<br></td><td data-jodit-selected-cell="1">1,1</td><td data-jodit-selected-cell="1">1,2</td><td>1,3</td></tr><tr><td data-jodit-selected-cell="1">2,1</td><td data-jodit-selected-cell="1">2,2</td><td>2,3</td></tr><tr><td data-jodit-selected-cell="1">3,1</td><td data-jodit-selected-cell="1">3,2</td><td>3,3</td></tr></tbody></table>'
+				td = editor.editor.querySelectorAll('td')[7];
+				pos = Jodit.modules.Helpers.position(td);
+				simulateEvent(
+					['mousemove', 'mouseup', 'click'],
+					0,
+					td,
+					e => {
+						Object.assign(e, {
+							clientX: pos.left + 10,
+							clientY: pos.top + 10
+						});
+					}
 				);
+
+				expect(editor.getInstance('Table', editor.o).selected.size).equals(8)
 			});
 		});
 
@@ -1561,7 +1604,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 				describe('For RTL direction', function() {
 					it('should decrease the width of the left column and the width of the right column should increase', function(done) {
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							direction: 'rtl'
 						});
 
@@ -1631,7 +1674,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 					describe('After resize', function() {
 						it('it should restore selection', function(done) {
-							const editor = new Jodit(appendTestArea(), {
+							const editor = getJodit({
 								direction: 'rtl'
 							});
 

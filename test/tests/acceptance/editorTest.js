@@ -202,7 +202,7 @@ describe('Jodit Editor Tests', function() {
 		describe('Set font for editor', function() {
 			it('Should set the font-family of the editor by option', function() {
 				const
-					editor = new Jodit(appendTestArea(), {
+					editor = getJodit({
 						style: {
 							fontFamily: 'Arial'
 						}
@@ -219,24 +219,24 @@ describe('Jodit Editor Tests', function() {
 
 		describe('Check preset', function() {
 			it('Should set option by preset', function() {
-				const editor2 = new Jodit(appendTestArea());
+				const editor2 = getJodit();
 				expect(editor2.options.inline).is.false;
 				expect(editor2.options.toolbar).is.true;
 				expect(editor2.options.readonly).is.false;
 
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					preset: 'inline'
 				});
 				expect(editor.options.inline).is.true;
 				expect(editor.options.toolbar).is.false;
 
 				Jodit.defaultOptions.presets.custom = { readonly: true };
-				const editor3 = new Jodit(appendTestArea(), {
+				const editor3 = getJodit({
 					preset: 'custom'
 				});
 				expect(editor3.options.readonly).is.true;
 
-				const editor4 = new Jodit(appendTestArea(), {
+				const editor4 = getJodit({
 					preset: 'inline',
 					inline: false
 				});
@@ -401,7 +401,7 @@ describe('Jodit Editor Tests', function() {
 		describe('Save selection stuf', function() {
 			describe('Set false in getEditorValue method', function() {
 				it('Should return HTML with selections markers', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					editor.value = 'test';
 					editor.selection.setCursorAfter(editor.editor.firstChild);
 					editor.selection.save(); // add selection markers
@@ -414,7 +414,7 @@ describe('Jodit Editor Tests', function() {
 		describe('Change returning value', function() {
 			describe('Event "beforeGetValueFromEditor"', function() {
 				it('Should restore &gt; to normal value in Liquid expressions', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					editor.value = 'test {% if a > b %} stop {% if a < b %}';
 					expect(editor.value).equals('test {% if a &gt; b %} stop {% if a &lt; b %}');
 
@@ -432,7 +432,7 @@ describe('Jodit Editor Tests', function() {
 
 			describe('Event "beforeSetValueToEditor"', function() {
 				it('Should be fired before set editor value', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 					editor.value = 'test';
 					expect(editor.value).equals('test');
 
@@ -494,7 +494,7 @@ describe('Jodit Editor Tests', function() {
 
 				describe('Uploader', function() {
 					it('should create instance of Uploader  only one time and in lazy mode', function() {
-						const editor = new Jodit(appendTestArea());
+						const editor = getJodit();
 						editor.components.forEach(function(cmp) {
 							expect(cmp instanceof Jodit.modules.Uploader).is.false;
 						});
@@ -533,7 +533,7 @@ describe('Jodit Editor Tests', function() {
 	describe('Selection module', function() {
 		it('Current selection element should be inside editor', function() {
 			const
-				editor = new Jodit(appendTestArea()),
+				editor = getJodit(),
 				div = document.createElement('div');
 
 			document.body.appendChild(div);
@@ -547,12 +547,12 @@ describe('Jodit Editor Tests', function() {
 			sel.removeAllRanges();
 			sel.addRange(range);
 
-			expect(editor.selection.current()).is.false;
+			expect(editor.selection.current()).is.null;
 			div.parentNode.removeChild(div);
 		});
 
 		it('Current selection element', function() {
-			const editor = new Jodit(appendTestArea()),
+			const editor = getJodit(),
 				div = editor.editorDocument.createElement('div'),
 				text = editor.createInside.text('jingl');
 
@@ -626,7 +626,7 @@ describe('Jodit Editor Tests', function() {
 				const
 					input = document.createElement('input'),
 					p = document.createElement('p'),
-					editor = new Jodit(appendTestArea());
+					editor = getJodit();
 
 				input.type = 'input';
 				document.body.appendChild(input);

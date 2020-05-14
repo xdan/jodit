@@ -3,7 +3,7 @@ describe('Test uploader module', function() {
 		describe('Drop Image like base64', function() {
 			it('Should insert image with SRC in base64', function(done) {
 				const file = new FileImage(),
-					editor = new Jodit(appendTestArea(), {
+					editor = getJodit({
 						uploader: {
 							insertImageAsBase64URI: true
 						},
@@ -29,7 +29,7 @@ describe('Test uploader module', function() {
 		describe('Drop Image and upload on server', function() {
 			it('Should upload file and insert image with SRC from server', function(done) {
 				const file = new FileImage(),
-					editor = new Jodit(appendTestArea(), {
+					editor = getJodit({
 						observer: {
 							timeout: 0
 						},
@@ -65,7 +65,7 @@ describe('Test uploader module', function() {
 					}, 4000)
 
 					const file = new FileImage(),
-						editor = new Jodit(appendTestArea(), {
+						editor = getJodit({
 							iframe: true,
 							observer: {
 								timeout: 0
@@ -107,7 +107,7 @@ describe('Test uploader module', function() {
 		describe('Drop File and upload on server', function() {
 			it('Should upload file and insert A element with HREF to file on server', function(done) {
 				const file = new FileXLS(),
-					editor = new Jodit(appendTestArea(), {
+					editor = getJodit({
 						observer: {
 							timeout: 0
 						},
@@ -140,7 +140,7 @@ describe('Test uploader module', function() {
 			describe('Drop with insertImageAsBase64URI=true', function() {
 				it('Should upload file and insert A element with HREF to file on server', function(done) {
 					const file = new FileXLS(),
-						editor = new Jodit(appendTestArea(), {
+						editor = getJodit({
 							observer: {
 								timeout: 0
 							},

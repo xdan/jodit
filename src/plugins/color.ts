@@ -14,7 +14,7 @@ Config.prototype.controls.brush = {
 	update(button): void {
 		const editor = button.j as IJodit;
 
-		const current: Node | false = editor.selection.current();
+		const current = editor.selection.current();
 
 		if (current && !button.state.disabled) {
 			const currentBpx: HTMLElement =

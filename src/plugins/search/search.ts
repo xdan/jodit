@@ -11,7 +11,7 @@ import * as consts from '../../core/constants';
 import { MODE_WYSIWYG } from '../../core/constants';
 import { Dom } from '../../core/dom';
 import { Plugin } from '../../core/plugin';
-import { ISelectionRange, markerInfo, IJodit } from '../../types';
+import { ISelectionRange, markerInfo, IJodit, Nullable } from '../../types';
 import { Icon } from '../../core/ui';
 
 declare module '../../config' {
@@ -142,8 +142,8 @@ export class search extends Plugin {
 
 	private isOpened: boolean = false;
 
-	private selInfo: markerInfo[] | null = null;
-	private current: Node | false = false;
+	private selInfo: Nullable<markerInfo[]> = null;
+	private current: Nullable<Node> = null;
 
 	private eachMap = (
 		node: Node,

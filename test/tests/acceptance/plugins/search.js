@@ -3,7 +3,7 @@ describe('Search plugin', function() {
 
 	describe('CTRL + F', function() {
 		it('Should show search form and query field must have focus', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				observer: {
 					timeout: 0
 				}
@@ -29,7 +29,7 @@ describe('Search plugin', function() {
 
 	describe('CTRL + H', function() {
 		it('Should show search and replace form and query field must have focus', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				observer: {
 					timeout: 0
 				}
@@ -58,7 +58,7 @@ describe('Search plugin', function() {
 
 		describe('Press Replace button', function() {
 			it('Should replace value form query field to value from replace field in editor', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					observer: {
 						timeout: 0
 					}
@@ -119,7 +119,7 @@ describe('Search plugin', function() {
 
 	describe('F3 after search', function() {
 		it('Should find a next match', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				observer: {
 					timeout: 0
 				}
@@ -176,7 +176,7 @@ describe('Search plugin', function() {
 		});
 
 		it('Should find the next match in a circle', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				observer: {
 					timeout: 0
 				}
@@ -244,7 +244,7 @@ describe('Search plugin', function() {
 
 		describe('with SHIFT key', function() {
 			it('Should find a previous match', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					observer: {
 						timeout: 0
 					}
@@ -319,7 +319,7 @@ describe('Search plugin', function() {
 
 	describe('Esc in query field', function() {
 		it('Should hide search form and restore selection', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value = '<p>text</p>';
 
 			const range = editor.selection.createRange();
@@ -617,7 +617,7 @@ describe('Search plugin', function() {
 
 	describe('Fire search event', function() {
 		it('Should select some elements which consists query string', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				observer: {
 					timeout: 0
 				}

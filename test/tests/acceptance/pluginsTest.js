@@ -4,7 +4,7 @@ describe('Test plugins', function() {
 	describe('Copy format plugin', function() {
 		it('Should copy fontWeight from element and paste it in new selection', function() {
 			getBox().style.width = 'auto';
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 
 			editor.value = 'text <strong>test</strong> post';
 			editor.selection.focus();
@@ -50,7 +50,7 @@ describe('Test plugins', function() {
 
 		it('Should copy fontSize from element and paste it in new selection', function() {
 			getBox().style.width = 'auto';
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 
 			editor.value =
 				'text <span style="font-size: 11px;">test</span> post';
@@ -97,7 +97,7 @@ describe('Test plugins', function() {
 		describe('Test', function() {
 			it('Should copy fontSize and color from element and paste it in new selection', function() {
 				getBox().style.width = 'auto';
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 
 				editor.value =
 					'text <span style="font-size: 11px;color: rgb(255, 0, 0);">test</span> post';
@@ -150,7 +150,7 @@ describe('Test plugins', function() {
 		it('Should toggle active state after double click', function() {
 			getBox().style.width = 'auto';
 
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 
 			editor.value =
 				'text <span style="font-size: 11px;color: rgb(255, 0, 0);">test</span> post';
@@ -210,7 +210,7 @@ describe('Test plugins', function() {
 			it('Should copy format from one image to another', function() {
 				getBox().style.width = 'auto';
 
-				const editor = new Jodit(appendTestArea()),
+				const editor = getJodit(),
 					html =
 						'<img src="tests/artio.jpg" ' +
 						'style="height: 100px;width: 100px; margin: 20px; border-image: none; border:1px solid #CCCCCC; border-radius: 50%;"> test ' +
@@ -262,7 +262,7 @@ describe('Test plugins', function() {
 		describe('Set cursor inside em[style=background] > strong elements', function() {
 			it('Should copy fontWeight from strong element, copy italic and background  style from em  and paste it in new selection', function() {
 				getBox().style.width = 'auto';
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 
 				editor.value =
 					'text <em style="background-color: #ff0000"><strong>test</strong></em> post';
@@ -321,7 +321,7 @@ describe('Test plugins', function() {
 
 	describe('Add new Line plugin', function() {
 		it('Should not add new line element in container before first use', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			expect(
 				editor.container.querySelectorAll('.jodit-add-new-line').length
 			).equals(0);
@@ -337,7 +337,7 @@ describe('Test plugins', function() {
 		};
 
 		it('Should show .jodit-add-new-line after user move mouse under Table,Ifrmae or IMG ', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value =
 				'<table>' +
 				'<tbody>' +
@@ -370,7 +370,7 @@ describe('Test plugins', function() {
 		});
 
 		it('Should add new paragraph after user clicked on newline ', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value =
 				'<table><tbody>' +
 				'<tr><td>2</td></tr>' +
@@ -411,7 +411,7 @@ describe('Test plugins', function() {
 		});
 
 		it('Should add new paragraph after user clicked on newline below table', function() {
-			const editor = new Jodit(appendTestArea());
+			const editor = getJodit();
 			editor.value =
 				'<table><tbody>' +
 				'<tr><td>3</td></tr>' +
@@ -456,7 +456,7 @@ describe('Test plugins', function() {
 		});
 
 		it('Should add new paragraph after user clicked on newline below table in IFRAME mode', function() {
-			const editor = new Jodit(appendTestArea(), {
+			const editor = getJodit({
 				ifarme: true
 			});
 			editor.value =
@@ -504,7 +504,7 @@ describe('Test plugins', function() {
 
 		describe('Insert line on top of IMG element that was inside P element', function() {
 			it('Should insert new P before parent P element', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				editor.value =
 					'<p><img src="tests/artio.jpg" style="width: 100px; height: 100px;" alt=""></p>';
 
@@ -1884,7 +1884,7 @@ describe('Test plugins', function() {
 
 				describe('In iframe mode', function() {
 					it('Should work some way', function() {
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							iframe: true
 						});
 
@@ -2015,7 +2015,7 @@ describe('Test plugins', function() {
 	describe('Size plugin', function() {
 		describe('In iframe mode after change mode', function() {
 			it('Should set min-height to iframe', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					iframe: true,
 					minHeight: 300
 				});
@@ -2030,7 +2030,7 @@ describe('Test plugins', function() {
 		});
 		describe('Set height', function() {
 			it('Should set container height', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					height: 222
 				});
 
@@ -2042,7 +2042,7 @@ describe('Test plugins', function() {
 	describe('Fullsize plugin', function() {
 		describe('Toggle fullsize', function() {
 			it('Should resize all boxes to first state', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					observer: {
 						timeout: 0
 					}
@@ -2077,7 +2077,7 @@ describe('Test plugins', function() {
 		describe('After init', function() {
 			describe('With showXPathInStatusbar=true', function() {
 				it('Should show status bar', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						language: 'en',
 						showXPathInStatusbar: true,
 						showCharsCounter: false,
@@ -2099,7 +2099,7 @@ describe('Test plugins', function() {
 				});
 
 				it('Should show path to selection element', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						language: 'en',
 						showXPathInStatusbar: true,
 						observer: {
@@ -2124,7 +2124,7 @@ describe('Test plugins', function() {
 
 				describe('After change selection', function() {
 					it('Should change path to selection element', function() {
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							language: 'en',
 							showXPathInStatusbar: true,
 							observer: {
@@ -2160,7 +2160,7 @@ describe('Test plugins', function() {
 				});
 				describe('After click on element of path', function() {
 					it('Should select this element', function() {
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							language: 'en',
 							showXPathInStatusbar: true,
 							observer: {
@@ -2212,7 +2212,7 @@ describe('Test plugins', function() {
 				});
 				describe('Context menu on element of path', function() {
 					it('Should open context menu', function() {
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							language: 'en',
 							showXPathInStatusbar: true,
 							observer: {
@@ -2272,7 +2272,7 @@ describe('Test plugins', function() {
 	describe('Paste storage', function() {
 		describe('Empty list', function() {
 			it('Sholud not show dialog', function() {
-				const editor = new Jodit(appendTestArea());
+				const editor = getJodit();
 				simulateEvent('keydown', Jodit.KEY_V, editor.editor, function(
 					data
 				) {
@@ -2289,7 +2289,7 @@ describe('Test plugins', function() {
 		});
 		describe('After copy elements', function() {
 			it('Sholud show dialog with pasted list', function() {
-				const editor = new Jodit(appendTestArea(), {
+				const editor = getJodit({
 					observer: {
 						timeout: 0
 					}
@@ -2341,7 +2341,7 @@ describe('Test plugins', function() {
 			});
 			describe('After click on some of elements', function() {
 				it('Sholud select this', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value = 'abcde';
 					const range = editor.ownerDocument.createRange();
@@ -2415,7 +2415,7 @@ describe('Test plugins', function() {
 			});
 			describe('Press key up/down/enter', function() {
 				it('Sholud select next/previos element of list and insert selected value after Enter', function() {
-					const editor = new Jodit(appendTestArea());
+					const editor = getJodit();
 
 					editor.value = 'abcde';
 					const range = editor.ownerDocument.createRange();

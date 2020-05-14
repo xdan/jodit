@@ -16,7 +16,6 @@ import {
 import { Dom } from '../../dom';
 import {
 	attr,
-	camelCase,
 	css,
 	isString,
 	kebabCase,
@@ -326,14 +325,13 @@ export class Popup extends UIElement implements IPopup {
 		const up = this.updatePosition,
 			ow = this.ow;
 
-		eventEmitter.on(camelCase('close-all-popups'), this.close);
+		eventEmitter.on('closeAllPopups', this.close);
 
 		this.j.e
-			.on(camelCase('close-all-popups'), this.close)
+			.on('closeAllPopups', this.close)
 			.on('escape', this.close)
 			.on('resize', up)
-			.on(this.container, 'scroll', up)
-			.on(this.container, 'mousewheel', up)
+			.on(this.container, 'scroll mousewheel', up)
 			.on('mousedown touchstart', this.closeOnOutsideClick)
 			.on(ow, 'mousedown touchstart', this.closeOnOutsideClick)
 			.on(ow, 'scroll', up)
@@ -344,14 +342,13 @@ export class Popup extends UIElement implements IPopup {
 		const up = this.updatePosition,
 			ow = this.ow;
 
-		eventEmitter.off(camelCase('close-all-popups'), this.close);
+		eventEmitter.off('closeAllPopups', this.close);
 
 		this.j.e
-			.off(camelCase('close-all-popups'), this.close)
+			.off('closeAllPopups', this.close)
 			.off('escape', this.close)
 			.off('resize', up)
-			.off(this.container, 'scroll', up)
-			.off(this.container, 'mousewheel', up)
+			.off(this.container, 'scroll mousewheel', up)
 			.off('mousedown touchstart', this.closeOnOutsideClick)
 			.off(ow, 'mousedown touchstart', this.closeOnOutsideClick)
 			.off(ow, 'scroll', up)

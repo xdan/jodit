@@ -150,7 +150,7 @@ describe('Test Inline mode', function() {
 				it('Should open inline-popup with float by right editor side', function() {
 					box.style.width = 'auto';
 
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						disablePlugins: 'mobile'
 					});
 
@@ -196,7 +196,7 @@ describe('Test Inline mode', function() {
 							brs.push(br);
 						}
 
-						const editor = new Jodit(appendTestArea(), {
+						const editor = getJodit({
 							disablePlugins: 'mobile'
 						});
 
@@ -238,7 +238,7 @@ describe('Test Inline mode', function() {
 			});
 			describe('Recalk position after Scroll', function() {
 				it('Should reacalc inline popup position', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						height: 500
 					});
 					editor.value =
@@ -286,7 +286,7 @@ describe('Test Inline mode', function() {
 
 			describe('Popup position ouside of editor', function() {
 				it('Should hide inline popup', function() {
-					const editor = new Jodit(appendTestArea(), {
+					const editor = getJodit({
 						height: 500
 					});
 					editor.value =

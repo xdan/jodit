@@ -40,9 +40,9 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 			return active;
 		}
 
-		const element: false | Node = this.j.selection
+		const element = this.j.selection
 			? this.j.selection.current()
-			: false;
+			: null;
 
 		if (!element) {
 			return false;
