@@ -599,10 +599,9 @@ function getOpenedPopup(editor) {
 }
 
 function getOpenedDialog(editor) {
-	return (
-		editor.ownerDocument.querySelector('.jodit-dialog__box:last-child') ||
-		null
-	);
+	const dlgs = editor.ownerDocument.querySelectorAll('.jodit-dialog__box');
+
+	return dlgs.length ? dlgs[dlgs.length - 1] : null;
 }
 
 /**
@@ -617,13 +616,23 @@ function getOpenedDialog(editor) {
 function getButton(buttonName, joditOrElement, role, last) {
 	const elm = joditOrElement.container || joditOrElement;
 
-	return elm.querySelector(
-		'.jodit-toolbar-button.jodit-toolbar-button_' +
-			buttonName +
-			(last ? ':last-child' : '') +
-			' [role="' +
-			(role || 'button') +
-			'"]'
+	return (
+		elm.querySelector(
+			'.jodit-toolbar-button.jodit-toolbar-button_' +
+				buttonName +
+				(last ? ':last-child' : '') +
+				' [role="' +
+				(role || 'button') +
+				'"]'
+		) ||
+		elm.querySelector(
+			'.jodit-ui-button.jodit-ui-button_' +
+				buttonName +
+				(last ? ':last-child' : '') +
+				'[role="' +
+				(role || 'button') +
+				'"]'
+		)
 	);
 }
 

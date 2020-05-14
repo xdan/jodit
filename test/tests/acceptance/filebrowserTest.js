@@ -33,13 +33,14 @@ describe('Jodit FileBrowser Tests', function() {
 				}
 			});
 
-			const filebrowser = new Jodit.modules.FileBrowser(editor.o.filebrowser);
+			const filebrowser = new Jodit.modules.FileBrowser(
+				editor.o.filebrowser
+			);
 			filebrowser.open(function() {});
 
 			expect(
-				editor.ownerDocument.querySelectorAll(
-					'.jodit-dialog__box'
-				).length
+				editor.ownerDocument.querySelectorAll('.jodit-dialog__box')
+					.length
 			).equals(1);
 
 			filebrowser.destruct();
@@ -57,7 +58,8 @@ describe('Jodit FileBrowser Tests', function() {
 			clickButton('image', editor);
 
 			expect(
-				getOpenedPopup(editor).querySelector('[aria-pressed="true"]')
+				getOpenedPopup(editor)
+					.querySelector('[aria-pressed="true"]')
 					.innerText.trim()
 			).equals('Browse');
 		});
@@ -78,7 +80,8 @@ describe('Jodit FileBrowser Tests', function() {
 			clickButton('image', editor);
 
 			expect(
-				getOpenedPopup(editor).querySelector('[aria-pressed="true"]')
+				getOpenedPopup(editor)
+					.querySelector('[aria-pressed="true"]')
 					.innerText.trim()
 			).equals('Upload');
 		});
@@ -178,11 +181,12 @@ describe('Jodit FileBrowser Tests', function() {
 					filebrowser
 						.open(function() {})
 						.then(function() {
-							const edit = getButton('edit', filebrowser.dialog.dialogbox_header);
+							const edit = getButton(
+								'edit',
+								filebrowser.dialog.dialogbox_header
+							);
 							expect(edit).is.not.null;
-							expect(
-								edit.hasAttribute('disabled')
-							).is.true;
+							expect(edit.hasAttribute('disabled')).is.true;
 
 							simulateEvent(
 								'click',
@@ -192,9 +196,7 @@ describe('Jodit FileBrowser Tests', function() {
 								)
 							);
 
-							expect(
-								edit.hasAttribute('disabled')
-							).is.false;
+							expect(edit.hasAttribute('disabled')).is.false;
 
 							filebrowser.close();
 							filebrowser.destruct();
@@ -216,11 +218,12 @@ describe('Jodit FileBrowser Tests', function() {
 					filebrowser
 						.open(function() {})
 						.then(function() {
-							const edit = getButton('edit', filebrowser.dialog.dialogbox_header);
+							const edit = getButton(
+								'edit',
+								filebrowser.dialog.dialogbox_header
+							);
 
-							expect(
-								edit.hasAttribute('disabled')
-							).is.true;
+							expect(edit.hasAttribute('disabled')).is.true;
 
 							simulateEvent(
 								'click',
@@ -230,9 +233,7 @@ describe('Jodit FileBrowser Tests', function() {
 								)[0]
 							);
 
-							expect(
-								edit.hasAttribute('disabled')
-							).is.false;
+							expect(edit.hasAttribute('disabled')).is.false;
 
 							simulateEvent(
 								'click',
@@ -245,13 +246,11 @@ describe('Jodit FileBrowser Tests', function() {
 										!navigator.userAgent.indexOf('Mac OS X')
 											? 'ctrlKey'
 											: 'metaKey'
-										] = true;
+									] = true;
 								}
 							);
 
-							expect(
-								edit.hasAttribute('disabled')
-							).is.true;
+							expect(edit.hasAttribute('disabled')).is.true;
 
 							filebrowser.close();
 							filebrowser.destruct();
@@ -268,19 +267,20 @@ describe('Jodit FileBrowser Tests', function() {
 						it('Should not use permission hash and canI method', function(done) {
 							defaultPermissions.permissions.allowFileRemove = false;
 
-							const filebrowser = new Jodit.modules.FileBrowser(
-								{
-									ajax: {
-										url:
-											'https://xdsoft.net/jodit/connector/index.php'
-									}
+							const filebrowser = new Jodit.modules.FileBrowser({
+								ajax: {
+									url:
+										'https://xdsoft.net/jodit/connector/index.php'
 								}
-							);
+							});
 
 							filebrowser
 								.open(function() {})
 								.then(function() {
-									const remove = getButton('remove', filebrowser.dialog);
+									const remove = getButton(
+										'remove',
+										filebrowser.dialog
+									);
 									expect(remove).is.not.null;
 									expect(
 										remove.hasAttribute('disabled')
@@ -313,20 +313,21 @@ describe('Jodit FileBrowser Tests', function() {
 						it('Should not use permission hash and canI method', function(done) {
 							defaultPermissions.permissions.allowFileRemove = false;
 
-							const filebrowser = new Jodit.modules.FileBrowser(
-								{
-									ajax: {
-										url:
-											'https://xdsoft.net/jodit/connector/index.php'
-									},
-									permissions: null
-								}
-							);
+							const filebrowser = new Jodit.modules.FileBrowser({
+								ajax: {
+									url:
+										'https://xdsoft.net/jodit/connector/index.php'
+								},
+								permissions: null
+							});
 
 							filebrowser
 								.open(function() {})
 								.then(function() {
-									const remove = getButton('remove', filebrowser.dialog);
+									const remove = getButton(
+										'remove',
+										filebrowser.dialog
+									);
 									expect(remove).is.not.null;
 
 									expect(
@@ -372,7 +373,7 @@ describe('Jodit FileBrowser Tests', function() {
 					.open(function() {})
 					.then(function() {
 						const tiles = getButton('tiles', filebrowser.dialog);
-						const list = getButton('list', filebrowser.dialog);;
+						const list = getButton('list', filebrowser.dialog);
 
 						const files = filebrowser.browser.querySelector(
 							'.jodit-filebrowser_files'
@@ -385,12 +386,8 @@ describe('Jodit FileBrowser Tests', function() {
 							)
 						).is.true;
 
-						expect(
-							tiles.component.state.activated
-						).is.true;
-						expect(
-							list.component.state.activated
-						).is.false;
+						expect(tiles.component.state.activated).is.true;
+						expect(list.component.state.activated).is.false;
 
 						filebrowser.close();
 						filebrowser.destruct();
@@ -414,7 +411,10 @@ describe('Jodit FileBrowser Tests', function() {
 					filebrowser
 						.open(function() {})
 						.then(function() {
-							const tiles = getButton('tiles', filebrowser.dialog);
+							const tiles = getButton(
+								'tiles',
+								filebrowser.dialog
+							);
 							const list = getButton('list', filebrowser.dialog);
 
 							const files = filebrowser.browser.querySelector(
@@ -427,12 +427,8 @@ describe('Jodit FileBrowser Tests', function() {
 								)
 							).is.true;
 
-							expect(
-								tiles.component.state.activated
-							).is.true;
-							expect(
-								list.component.state.activated
-							).is.false;
+							expect(tiles.component.state.activated).is.true;
+							expect(list.component.state.activated).is.false;
 
 							simulateEvent('click', 0, list);
 
@@ -446,12 +442,8 @@ describe('Jodit FileBrowser Tests', function() {
 									'jodit-filebrowser_files_view-list'
 								)
 							).is.true;
-							expect(
-								tiles.component.state.activated
-							).is.false;
-							expect(
-								list.component.state.activated
-							).is.true;
+							expect(tiles.component.state.activated).is.false;
+							expect(list.component.state.activated).is.true;
 
 							filebrowser.close();
 							filebrowser.destruct();
@@ -641,9 +633,7 @@ describe('Jodit FileBrowser Tests', function() {
 						expect(files).is.not.null;
 						expect(select).is.not.null;
 
-						expect(
-							select.hasAttribute('disabled')
-						).is.true;
+						expect(select.hasAttribute('disabled')).is.true;
 
 						simulateEvent(
 							'click',
@@ -653,9 +643,7 @@ describe('Jodit FileBrowser Tests', function() {
 							)
 						);
 
-						expect(
-							select.hasAttribute('disabled')
-						).is.false;
+						expect(select.hasAttribute('disabled')).is.false;
 
 						simulateEvent('click', 0, select);
 
@@ -879,7 +867,7 @@ describe('Jodit FileBrowser Tests', function() {
 				range.collapse(true);
 				editor.selection.selectRange(range);
 
-				const filebrowser = editor.getInstance('FileBrowser');
+				const filebrowser = editor.filebrowser;
 
 				filebrowser
 					.open()
@@ -997,7 +985,7 @@ describe('Jodit FileBrowser Tests', function() {
 					}
 				});
 
-				const filebrowser = editor.getInstance('FileBrowser');
+				const filebrowser = editor.filebrowser;
 
 				filebrowser
 					.open(function() {})
@@ -1041,7 +1029,7 @@ describe('Jodit FileBrowser Tests', function() {
 					}
 				});
 
-				const filebrowser = editor.getInstance('FileBrowser');
+				const filebrowser = editor.filebrowser;
 
 				filebrowser
 					.open(function() {})
@@ -1052,19 +1040,19 @@ describe('Jodit FileBrowser Tests', function() {
 
 						expect(files).is.not.null;
 
-						simulateEvent(
-							'contextmenu',
-							0,
-							files.querySelector(
+						const item = files.querySelector(
 								'.jodit-filebrowser_files_item[data-is-file="1"]'
-							)
-						);
+							),
+							pos = Jodit.modules.Helpers.position(item);
 
-						const context = document.body.querySelector(
-							'[data-editor_id="' +
-							editor.id +
-							'"].jodit-context-menu.jodit-context-menu_show'
-						);
+						simulateEvent('contextmenu', 0, item, function(o) {
+							Object.assign(o, {
+								clientX: pos.left + 10,
+								clientY: pos.top + 10
+							});
+						});
+
+						const context = getOpenedPopup(filebrowser);
 
 						expect(context).is.not.null;
 						filebrowser.destruct();
@@ -1089,7 +1077,7 @@ describe('Jodit FileBrowser Tests', function() {
 						}
 					});
 
-					const filebrowser = editor.getInstance('FileBrowser');
+					const filebrowser = editor.filebrowser;
 
 					filebrowser
 						.open(function() {})
@@ -1100,34 +1088,31 @@ describe('Jodit FileBrowser Tests', function() {
 
 							expect(files).is.not.null;
 
-							simulateEvent(
-								'contextmenu',
-								0,
-								files.querySelector(
-									'.jodit-filebrowser_files_item[data-is-file="0"]'
-								)
-							);
+							const item = files.querySelector(
+								'.jodit-filebrowser_files_item[data-is-file="0"]'
+								),
+								pos = Jodit.modules.Helpers.position(item);
 
-							const context = document.body.querySelector(
-								'[data-editor_id="' +
-								editor.id +
-								'"].jodit-context-menu.jodit-context-menu_show'
-							);
+							simulateEvent('contextmenu', 0, item, function(o) {
+								Object.assign(o, {
+									clientX: pos.left + 10,
+									clientY: pos.top + 10
+								});
+							});
+
+							const context = getOpenedPopup(filebrowser);
 
 							expect(context).is.not.null;
 
-							editor.events.on(
+							filebrowser.events.on(
 								'previewOpenedAndLoaded',
 								function() {
-									const dlgSel = '[data-editor_id="' + editor.id + '"].jodit.jodit-dialog__box.jodit-filebrowser_preview_dialog.active ';
-
-									const dialog = editor.ownerDocument.querySelector(dlgSel);
+									const dialog = getOpenedDialog(filebrowser);
 
 									expect(dialog).is.not.null;
-
 									const previewsButtons = dialog.querySelectorAll(
 										' .jodit-filebrowser_preview .jodit-filebrowser_preview_navigation.jodit-filebrowser_preview_navigation-prev, ' +
-										' .jodit-filebrowser_preview .jodit-filebrowser_preview_navigation.jodit-filebrowser_preview_navigation-next'
+											' .jodit-filebrowser_preview .jodit-filebrowser_preview_navigation.jodit-filebrowser_preview_navigation-next'
 									);
 
 									expect(previewsButtons.length).equals(2);
@@ -1137,11 +1122,7 @@ describe('Jodit FileBrowser Tests', function() {
 								}
 							);
 
-							simulateEvent(
-								'mousedown',
-								0,
-								context.querySelector('a[data-icon="eye"]')
-							);
+							clickButton('eye', context)
 						})
 						.catch(function(e) {
 							throw e;

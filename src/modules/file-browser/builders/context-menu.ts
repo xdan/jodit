@@ -204,6 +204,10 @@ export default (self: FileBrowser) => {
 										addLoadHandler(ga('href'));
 									});
 
+									self.e.on('beforeDestruct', () => {
+										preview.destruct();
+									});
+
 									preview.container.classList.add(
 										F_CLASS + '_preview_dialog'
 									);

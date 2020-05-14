@@ -26,7 +26,9 @@ import {
 	IDictionary,
 	ImageEditorActionBox,
 	IUploader,
-	IUploaderOptions, IDialog
+	IUploaderOptions,
+	IDialog,
+	CanUndef
 } from '../../types/';
 
 import { ImageEditor } from '..';
@@ -38,7 +40,9 @@ import {
 	extend,
 	isValidName,
 	attr,
-	error, isFunction, isString
+	error,
+	isFunction,
+	isString
 } from '../../core/helpers/';
 import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 
@@ -51,6 +55,7 @@ import { FileBrowserItem } from './builders/item';
 import { F_CLASS, ICON_LOADER, ITEM_CLASS } from './consts';
 import { makeDataProvider } from './factories';
 import { Icon } from '../../core/ui';
+import autobind from 'autobind-decorator';
 
 const DEFAULT_SOURCE_NAME = 'default',
 	ITEM_ACTIVE_CLASS = ITEM_CLASS + '-active-true';
@@ -362,10 +367,12 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	 * ```
 	 * @return Promise
 	 */
-	open = (
-		callback?: (data: IFileBrowserCallBackData) => void,
+	@autobind
+	open(
+		callback: CanUndef<(data: IFileBrowserCallBackData) => void> = this.o
+			.defaultCallback,
 		onlyImages: boolean = false
-	): Promise<void> => {
+	): Promise<void> {
 		this.state.onlyImages = onlyImages;
 
 		return this.async.promise((resolve, reject) => {
@@ -408,7 +415,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 			this.loadTree().then(resolve, reject);
 		});
-	};
+	}
 
 	/**
 	 * Open Image Editor
@@ -1173,7 +1180,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			self.state.view = self.o.view === 'list' ? 'list' : 'tiles';
 		}
 
-		this.state.fire('change.view')	;
+		this.state.fire('change.view');
 
 		const sortBy = self.storage.get<string>(F_CLASS + '_sortby');
 

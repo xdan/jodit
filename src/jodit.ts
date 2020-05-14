@@ -36,7 +36,8 @@ import {
 	IFileBrowser,
 	IJodit,
 	IUploader,
-	ICreate
+	ICreate,
+	IFileBrowserCallBackData
 } from './types';
 
 import { ViewWithToolbar } from './core/view/view-with-toolbar';
@@ -268,9 +269,34 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 */
 	@cache
 	get filebrowser(): IFileBrowser {
-		return this.getInstance('FileBrowser', {
-			defaultTimeout: this.defaultTimeout,
-			uploader: this.o.uploader,
+		const jodit = this;
+		return jodit.getInstance('FileBrowser', {
+			defaultTimeout: jodit.defaultTimeout,
+			uploader: jodit.o.uploader,
+			defaultCallback(data: IFileBrowserCallBackData): void {
+				if (data.files && data.files.length) {
+					data.files.forEach((file, i) => {
+						const url = data.baseurl + file;
+						const isImage = data.isImages
+							? data.isImages[i]
+							: false;
+
+						if (isImage) {
+							jodit.selection.insertImage(
+								url,
+								null,
+								jodit.o.imageDefaultWidth
+							);
+						} else {
+							jodit.selection.insertNode(
+								jodit.createInside.fromHTML(
+									`<a href="${url}" title="${url}">${url}</a>`
+								)
+							);
+						}
+					});
+				}
+			},
 			...this.o.filebrowser
 		});
 	}

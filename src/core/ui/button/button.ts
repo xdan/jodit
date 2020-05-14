@@ -106,6 +106,13 @@ export class UIButton extends UIElement implements IUIButton {
 		attr(this.container, 'aria-pressed', this.state.activated);
 	}
 
+	@watch('state.name')
+	protected onChangeName(): void {
+		this.container.classList.add(
+			`${this.componentName}_${this.clearName(this.state.name)}`
+		);
+	}
+
 	@watch('state.tooltip')
 	protected onChangeTooltip(): void {
 		if (this.get('j.o.useNativeTooltip')) {
@@ -278,6 +285,7 @@ export function Button(
 
 	if (isString(stateOrText)) {
 		button.state.icon.name = stateOrText;
+		button.state.name = stateOrText;
 
 		if (status) {
 			button.state.status = status;

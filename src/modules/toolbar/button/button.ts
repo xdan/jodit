@@ -198,10 +198,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		super(jodit);
 		this.setParentView(jodit);
 
-		this.container.classList.add(
-			`${this.componentName}_${this.clearName(control.name)}`
-		);
-
 		// Prevent lost focus
 		jodit.e.on([this.button, this.trigger], 'mousedown', (e: MouseEvent) =>
 			e.preventDefault()

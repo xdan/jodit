@@ -9,7 +9,6 @@ import { Config } from '../../config';
 import {
 	IFileBrowser,
 	IFileBrowserAnswer,
-	IFileBrowserCallBackData,
 	IFileBrowserItem,
 	IFileBrowserOptions,
 	ISource,
@@ -17,8 +16,7 @@ import {
 	IControlType,
 	IDictionary,
 	IUploader,
-	IViewBased,
-	IJodit
+	IViewBased
 } from '../../types/';
 
 import { humanSizeToBytes, isArray, isString } from '../../core/helpers';
@@ -281,29 +279,6 @@ Config.prototype.filebrowser = {
 
 	permissions: {
 		data: { action: 'permissions' }
-	},
-
-	defaultCallback(this: IJodit, data: IFileBrowserCallBackData) {
-		if (data.files && data.files.length) {
-			data.files.forEach((file, i) => {
-				const url = data.baseurl + file;
-				const isImage = data.isImages ? data.isImages[i] : false;
-
-				if (isImage) {
-					this.selection.insertImage(
-						url,
-						null,
-						this.o.imageDefaultWidth
-					);
-				} else {
-					this.selection.insertNode(
-						this.createInside.fromHTML(
-							`<a href="${url}" title="${url}">${url}</a>`
-						)
-					);
-				}
-			});
-		}
 	}
 } as IFileBrowserOptions;
 
