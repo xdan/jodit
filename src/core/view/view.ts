@@ -8,21 +8,26 @@ import { IAsync, IComponent, IProgressBar } from '../../types';
 import { IViewBased, IViewOptions } from '../../types';
 import { Panel } from './panel';
 import { Storage } from '../storage';
-import { error, i18n, isFunction, isVoid } from '../helpers';
+import { error, i18n, isDestructable, isFunction, isVoid } from '../helpers';
 import { BASE_PATH } from '../constants';
 import { ViewComponent, EventsNative, ProgressBar } from '../../modules';
 import { Async } from '../async';
 import { modules } from '../global';
+import { STATUSES } from '../component';
+import { hook } from '../decorators';
 
 export abstract class View extends Panel implements IViewBased {
-	isView: true = true;
+	readonly isView: true = true;
 
 	/**
 	 * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
 	 */
 	id: string;
 
-	components: Set<IComponent> = new Set();
+	/**
+	 * All created ViewComponent inside this view
+	 */
+	readonly components: Set<IComponent> = new Set();
 
 	/**
 	 * Get path for loading extra staff
@@ -65,7 +70,7 @@ export abstract class View extends Panel implements IViewBased {
 	/**
 	 * progress_bar Progress bar
 	 */
-	progressbar: IProgressBar = new ProgressBar(this);
+	readonly progressbar: IProgressBar = new ProgressBar(this);
 
 	options!: IViewOptions;
 
@@ -93,13 +98,10 @@ export abstract class View extends Panel implements IViewBased {
 
 	/**
 	 * Return current version
-	 *
-	 * @method getVersion
-	 * @return {string}
 	 */
-	getVersion = (): string => {
+	getVersion(): string {
 		return this.version;
-	};
+	}
 
 	/** @override */
 	protected initOptions(options?: IViewOptions): void {
@@ -117,6 +119,7 @@ export abstract class View extends Panel implements IViewBased {
 	}
 
 	private __modulesInstances: Map<string, IComponent> = new Map();
+
 	/**
 	 * Make one instance of one module
 	 *
@@ -145,6 +148,23 @@ export abstract class View extends Panel implements IViewBased {
 		return mi.get(moduleName) as any;
 	}
 
+	/**
+	 * Call before destruct
+	 */
+	@hook(STATUSES.beforeDestruct)
+	protected beforeDestruct(): void {
+		this.e.fire(STATUSES.beforeDestruct);
+
+		this.components.forEach(component => {
+			if (isDestructable(component) && !component.isInDestruct) {
+				component.destruct();
+			}
+		});
+
+		this.components.clear();
+	}
+
+	/** @override */
 	destruct() {
 		if (this.isDestructed) {
 			return;
@@ -176,5 +196,5 @@ View.defaultOptions = {
 	showTooltip: true,
 	useNativeTooltip: false,
 	buttons: [],
-	globalFullsize: true
+	globalFullSize: true
 };

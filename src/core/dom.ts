@@ -97,9 +97,14 @@ export class Dom {
 	 * @param tag
 	 * @param editor
 	 */
+	static wrap<K extends HTMLTagNames>(
+		current: Node,
+		tag: K,
+		editor: IJodit
+	): Nullable<HTMLElementTagNameMap[K]>;
 	static wrap(
 		current: Node,
-		tag: HTMLElement | string,
+		tag: HTMLElement | HTMLTagNames,
 		editor: IJodit
 	): Nullable<HTMLElement> {
 		const selInfo = editor.selection.save();

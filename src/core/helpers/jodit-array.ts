@@ -24,7 +24,8 @@ export class JoditArray {
 
 		this.length = data.length;
 
-		const proto: any = Array.prototype as any;
+		const proto = Array.prototype as any;
+
 		[
 			'map',
 			'forEach',
@@ -35,7 +36,7 @@ export class JoditArray {
 			'unshift',
 			'slice',
 			'splice'
-		].forEach((method: string) => {
+		].forEach((method) => {
 			(this as any)[method] = proto[method];
 		});
 	}

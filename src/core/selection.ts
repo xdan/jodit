@@ -871,7 +871,6 @@ export class Select {
 	 * @return {boolean | null} true - the cursor is at the end(start) block, null - cursor somewhere outside
 	 */
 	cursorInTheEdge(start: boolean, parentBlock: HTMLElement): Nullable<boolean> {
-		debugger
 		const end = !start,
 			range = this.sel?.getRangeAt(0),
 			current = this.current(false);

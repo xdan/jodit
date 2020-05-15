@@ -285,13 +285,14 @@ export class Popup extends UIElement implements IPopup {
 			return this;
 		}
 
+		this.isOpened = false;
+
 		this.childrenPopups.forEach(popup => popup.close());
 
 		this.j.e.fire(this, 'beforeClose');
 
 		this.removeGlobalListeners();
 
-		this.isOpened = false;
 		Dom.safeRemove(this.container);
 
 		return this;

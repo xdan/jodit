@@ -1080,8 +1080,9 @@ describe('Jodit FileBrowser Tests', function() {
 					const filebrowser = editor.filebrowser;
 
 					filebrowser
-						.open(function() {})
+						.open()
 						.then(function() {
+
 							const files = filebrowser.browser.querySelector(
 								'.jodit-filebrowser_files'
 							);
@@ -1116,8 +1117,6 @@ describe('Jodit FileBrowser Tests', function() {
 									);
 
 									expect(previewsButtons.length).equals(2);
-									filebrowser.destruct();
-
 									done();
 								}
 							);

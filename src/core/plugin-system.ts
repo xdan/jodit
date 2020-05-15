@@ -122,7 +122,7 @@ export class PluginSystem implements IPluginSystem {
 	 * @param jodit
 	 * @param plugin
 	 */
-	private static makePluginInstance(
+	static makePluginInstance(
 		jodit: IJodit,
 		plugin: PluginType
 	): PluginInstance {

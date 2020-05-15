@@ -59,7 +59,7 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 
 	zIndex?: number;
 	fullsize?: boolean;
-	globalFullsize?: boolean;
+	globalFullSize?: boolean;
 
 	controls?: Controls;
 

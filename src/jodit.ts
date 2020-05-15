@@ -11,7 +11,6 @@ import { Create, Dom, Observer, Select, StatusBar } from './modules/';
 import {
 	asArray,
 	css,
-	isDestructable,
 	isPromise,
 	normalizeKeyAliases,
 	error,
@@ -270,7 +269,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	@cache
 	get filebrowser(): IFileBrowser {
 		const jodit = this;
-		return jodit.getInstance('FileBrowser', {
+
+		const options = {
 			defaultTimeout: jodit.defaultTimeout,
 			uploader: jodit.o.uploader,
 			defaultCallback(data: IFileBrowserCallBackData): void {
@@ -298,7 +298,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				}
 			},
 			...this.o.filebrowser
-		});
+		};
+
+		return jodit.getInstance('FileBrowser', options);
 	}
 
 	private __mode: Modes = consts.MODE_WYSIWYG;
@@ -1421,22 +1423,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		this.elementToPlace.clear();
 
-		/**
-		 * Triggered before {@link events:beforeDestruct|beforeDestruct} executed. If returned false method stopped
-		 *
-		 * @event beforeDestruct
-		 * @example
-		 * ```javascript
-		 * var editor = new Jodit("#redactor");
-		 * editor.e.on('beforeDestruct', function (data) {
-		 *     return false;
-		 * });
-		 * ```
-		 */
-		if (this.e.fire('beforeDestruct') === false) {
-			return;
-		}
-
 		if (!this.editor) {
 			return;
 		}
@@ -1457,14 +1443,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.e.off(this.ow);
 		this.e.off(this.od);
 		this.e.off(this.od.body);
-
-		this.components.forEach(component => {
-			if (isDestructable(component) && !component.isInDestruct) {
-				component.destruct();
-			}
-		});
-
-		this.components.clear();
 
 		this.places.forEach(
 			({

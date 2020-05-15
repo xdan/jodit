@@ -29,7 +29,7 @@ export abstract class Plugin extends ViewComponent<IJodit> implements IPlugin {
 
 	@autobind
 	destruct() {
-		if (!this.isDestructed) {
+		if (!this.isInDestruct) {
 			this.setStatus(STATUSES.beforeDestruct);
 
 			this.j?.events?.off('beforeDestruct', this.destruct);

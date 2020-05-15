@@ -1130,13 +1130,15 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 		self.dialog = new Dialog({
 			fullsize: self.o.fullsize,
+			globalFullSize: self.o.globalFullSize,
 			language: this.o.language,
-			buttons: ['dialog.fullsize', 'dialog.close']
+			buttons: ['fullsize', 'dialog.close']
 		});
 
 		if (self.o.showFoldersPanel) {
 			self.browser.appendChild(self.tree);
 		}
+
 		self.browser.appendChild(self.files);
 		self.browser.appendChild(self.status_line);
 

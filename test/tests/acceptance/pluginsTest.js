@@ -11,28 +11,22 @@ describe('Test plugins', function() {
 			editor.selection.setCursorIn(editor.editor.querySelector('strong'));
 
 			expect(
-				editor.container.querySelectorAll(
-					'.jodit_toolbar_btn-copyformat'
-				).length
-			).equals(1);
+				getButton('copyformat', editor)
+			).is.not.null;
 
 			expect(
-				editor.container.querySelectorAll(
-					'.jodit_toolbar_btn-copyformat.jodit_active'
-				).length
-			).equals(0);
+				getButton('copyformat', editor).getAttribute('aria-pressed')
+			).equals('false');
 
 			simulateEvent(
-				'mousedown',
+				'click',
 				0,
-				editor.container.querySelector('.jodit_toolbar_btn-copyformat')
+				getButton('copyformat', editor)
 			);
 
 			expect(
-				editor.container.querySelectorAll(
-					'.jodit_toolbar_btn-copyformat.jodit_active'
-				).length
-			).equals(1);
+				getButton('copyformat', editor).getAttribute('aria-pressed')
+			).equals('true');
 
 			const sel = editor.selection.sel,
 				range = editor.selection.createRange();

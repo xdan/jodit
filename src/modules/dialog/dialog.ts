@@ -28,14 +28,13 @@ import {
 	extend,
 	hasContainer,
 	isArray,
-	isBoolean,
+	isBoolean, isFunction,
 	isString,
 	splitArray
 } from '../../core/helpers/';
 import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 import { Dom } from '../../core/dom';
 import { STATUSES } from '../../core/component';
-import { fullsize } from '../../plugins/fullsize/fullsize';
 import { eventEmitter } from '../../core/global';
 
 /**
@@ -67,10 +66,6 @@ Config.prototype.controls.dialog = {
 		exec: dialog => {
 			(dialog as Dialog).close();
 		}
-	},
-
-	fullsize: {
-		...Config.prototype.controls.fullsize
 	}
 } as IDictionary<IControlType>;
 
@@ -787,7 +782,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			self.e.on(self.resizer, 'mousedown', self.onResizerMouseDown);
 		}
 
-		fullsize(self);
+		const fullSize = Jodit.plugins.get('fullsize') as Function;
+		isFunction(fullSize) && fullSize(self);
 
 		self.setStatus(STATUSES.ready);
 	}
@@ -805,8 +801,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		if (this.isOpened) {
 			this.close();
 		}
-
-		this.setStatus(STATUSES.beforeDestruct);
 
 		if (this.events) {
 			this.removeGlobalListeners();

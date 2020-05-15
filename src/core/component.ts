@@ -28,14 +28,23 @@ export abstract class Component implements IComponent {
 	componentName!: string;
 	uid!: string;
 
+	/**
+	 * The document in which jodit was created
+	 */
 	get ownerDocument(): Document {
 		return this.ow.document;
 	}
 
+	/**
+	 * Shortcut for `this.ownerDocument`
+	 */
 	get od(): this['ownerDocument'] {
 		return this.ownerDocument;
 	}
 
+	/**
+	 * The window in which jodit was created
+	 */
 	ownerWindow: Window = window;
 	get ow(): this['ownerWindow'] {
 		return this.ownerWindow;
@@ -43,10 +52,16 @@ export abstract class Component implements IComponent {
 
 	private __componentStatus: ComponentStatus = STATUSES.beforeInit;
 
+	/**
+	 * Current component status
+	 */
 	get componentStatus(): ComponentStatus {
 		return this.__componentStatus;
 	}
 
+	/**
+	 * Setter for current component status
+	 */
 	set componentStatus(componentStatus: ComponentStatus) {
 		this.setStatus(componentStatus);
 	}
@@ -55,11 +70,15 @@ export abstract class Component implements IComponent {
 	 * Set component status
 	 * @param componentStatus
 	 */
-	setStatus(componentStatus: ComponentStatus) {
+	setStatus(componentStatus: ComponentStatus): void {
+		if (componentStatus === this.__componentStatus) {
+			return;
+		}
+
 		this.__componentStatus = componentStatus;
 
 		const cbList =
-			this.onStatusLst && this.onStatusLst[this.__componentStatus];
+			this.onStatusLst && this.onStatusLst[componentStatus];
 
 		if (cbList) {
 			cbList.forEach(cb => cb(this));
@@ -68,6 +87,24 @@ export abstract class Component implements IComponent {
 
 	/**
 	 * Safe get any field
+	 * @example
+	 * ```js
+	 * private a = {
+	 *	b: {
+	 *	 c: {
+	 *	   e: {
+	 *	     g: {
+	 *	       color: 'red'
+	 *	     }
+	 *	   }
+	 *	 }
+	 *	}
+	 * }
+	 *
+	 * this.get('a.b.c.e.g.color'); // Safe access to color
+	 * // instead using optionsl chaining
+	 * this?.a?.b?.c?.e?.g?.color
+	 * ```
 	 *
 	 * @param chain
 	 * @param obj
@@ -105,7 +142,10 @@ export abstract class Component implements IComponent {
 		this.uid = 'jodit-uid-' + uniqueUid();
 	}
 
-	destruct(): any {
+	/**
+	 * Destruct component method
+	 */
+	destruct(): void {
 		this.setStatus(STATUSES.destructed);
 	}
 
@@ -133,15 +173,25 @@ export abstract class Component implements IComponent {
 	private onStatusLst!: IDictionary<Function[]>;
 }
 
-export class ViewComponent<T extends IViewBased = IViewBased>
+export abstract class ViewComponent<T extends IViewBased = IViewBased>
 	extends Component
 	implements IViewComponent<T> {
+	/**
+	 * Parent View element
+	 */
 	jodit!: T;
 
+	/**
+	 * Shortcut for `this.jodit`
+	 */
 	get j(): this['jodit'] {
 		return this.jodit;
 	}
 
+	/**
+	 * Attach component to View
+	 * @param jodit
+	 */
 	setParentView(jodit: T): this {
 		this.jodit = jodit;
 
@@ -155,6 +205,7 @@ export class ViewComponent<T extends IViewBased = IViewBased>
 		this.setParentView(jodit);
 	}
 
+	/** @override */
 	destruct(): any {
 		this.j.components.delete(this);
 		return super.destruct();

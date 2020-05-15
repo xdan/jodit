@@ -48,6 +48,7 @@ import * as link from './link.svg';
 import * as lock from './lock.svg';
 import * as menu from './menu.svg';
 import * as merge from './merge.svg';
+import * as ok from './ok.svg';
 import * as ol from './ol.svg';
 import * as omega from './omega.svg';
 import * as outdent from './outdent.svg';
@@ -128,6 +129,7 @@ export {
 	lock,
 	menu,
 	merge,
+	ok,
 	ol,
 	omega,
 	outdent,

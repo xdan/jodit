@@ -41,7 +41,7 @@ export const Alert = (
 
 	const dialog = new Dialog(),
 		container = dialog.c.div(className),
-		okButton = Button(dialog, 'cancel', 'Ok');
+		okButton = Button(dialog, 'ok', 'Ok');
 
 	asArray(msg).forEach(oneMessage => {
 		container.appendChild(

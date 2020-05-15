@@ -933,9 +933,11 @@ export class ImageEditor extends ViewComponent {
 
 		this.dialog = new Dialog({
 			fullsize: this.j.o.fullsize,
+			globalFullSize: this.j.o.globalFullSize,
 			language: this.j.o.language,
-			buttons: ['dialog.fullsize', 'dialog.close']
+			buttons: ['fullsize', 'dialog.close']
 		});
+
 		this.dialog.setContent(this.editor);
 
 		this.dialog.setSize(this.o.width, this.o.height);

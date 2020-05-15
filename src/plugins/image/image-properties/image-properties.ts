@@ -27,7 +27,8 @@ import {
 	isArray,
 	markOwner,
 	isString,
-	refs
+	refs,
+	kebabCase
 } from '../../../core/helpers';
 
 import {
@@ -39,6 +40,7 @@ import {
 import { FileSelectorWidget, TabsWidget } from '../../../modules/widget';
 import { Button } from '../../../core/ui/button';
 import { form, mainTab, positionTab } from './templates/';
+import { watch } from '../../../core/decorators';
 
 /**
  * Plug-in for image editing window
@@ -131,16 +133,31 @@ export class imageProperties extends Plugin {
 		marginIsLocked: true
 	};
 
+	@watch('state.marginIsLocked')
+	onChangeMarginIsLocked(): void {
+		if (!this.form) {
+			return;
+		}
+
+		const { marginRight, marginBottom, marginLeft, lockMargin } = refs<
+			HTMLInputElement
+		>(this.form);
+
+		[marginRight, marginBottom, marginLeft].forEach(elm => {
+			attr(elm, 'disabled', this.state.marginIsLocked || null);
+		});
+
+		lockMargin.innerHTML = Icon.get(
+			this.state.marginIsLocked ? 'lock' : 'unlock'
+		);
+	}
+
 	private form!: HTMLElement;
 
 	/**
 	 * Dialog for form
 	 */
-	private dialog: IDialog = new Dialog({
-		fullsize: this.j.o.fullsize,
-		language: this.j.o.language,
-		buttons: ['dialog.fullsize', 'dialog.close']
-	});
+	private dialog!: IDialog;
 
 	/**
 	 * Open dialog editing image properties
@@ -157,6 +174,8 @@ export class imageProperties extends Plugin {
 	 * ```
 	 */
 	protected open(): void | false {
+		this.makeForm();
+
 		this.j.e.fire('hidePopup');
 
 		markOwner(this.j, this.dialog.container);
@@ -175,11 +194,22 @@ export class imageProperties extends Plugin {
 	 * Create form for edit image properties
 	 */
 	private makeForm(): void {
+		if (this.dialog) {
+			return;
+		}
+
+		this.dialog = new Dialog({
+			fullsize: this.j.o.fullsize,
+			globalFullSize: this.j.o.globalFullSize,
+			language: this.j.o.language,
+			buttons: ['fullsize', 'dialog.close']
+		});
+
 		const editor = this.j,
 			opt = editor.o,
 			i18n = editor.i18n.bind(editor),
 			buttons = {
-				check: Button(editor, 'check', 'Apply'),
+				check: Button(editor, 'ok', 'Apply'),
 				remove: Button(editor, 'bin', 'Delete')
 			};
 
@@ -217,157 +247,7 @@ export class imageProperties extends Plugin {
 			);
 		}
 
-		const {
-			style,
-			imageSrc,
-			borderRadius,
-			imageTitle,
-			imageAlt,
-			imageLink,
-			imageWidth,
-			imageHeight,
-			marginTop,
-			marginRight,
-			marginBottom,
-			marginLeft,
-			imageLinkOpenInNewTab,
-			align,
-			classes,
-			id
-		} = refs<HTMLInputElement>(this.form);
-
-		buttons.check.onAction(() => {
-			const { image } = this.state;
-
-			// styles
-			if (opt.image.editStyle) {
-				attr(image, 'style', style.value || null);
-			}
-
-			// Src
-			if (imageSrc.value) {
-				attr(image, 'src', imageSrc.value);
-			} else {
-				Dom.safeRemove(image);
-				dialog.close();
-				return;
-			}
-
-			// Border radius
-			if (
-				borderRadius.value !== '0' &&
-				/^[0-9]+$/.test(borderRadius.value)
-			) {
-				image.style.borderRadius = borderRadius.value + 'px';
-			} else {
-				image.style.borderRadius = '';
-			}
-
-			// Title
-			attr(image, 'title', imageTitle.value || null);
-
-			// Alt
-			attr(image, 'alt', imageAlt.value || null);
-
-			// Link
-			let link: HTMLAnchorElement | null = Dom.closest(
-				image,
-				'a',
-				editor.editor
-			) as HTMLAnchorElement;
-
-			if (imageLink.value) {
-				if (!link) {
-					link = Dom.wrap(image, 'a', editor) as HTMLAnchorElement;
-				}
-
-				attr(link, 'href', imageLink.value);
-
-				attr(
-					link,
-					'target',
-					imageLinkOpenInNewTab.checked ? '_blank' : 'null'
-				);
-			} else {
-				if (link && link.parentNode) {
-					link.parentNode.replaceChild(image, link);
-				}
-			}
-
-			const normalSize = (value: string): string => {
-				value = trim(value);
-				return /^[0-9]+$/.test(value) ? value + 'px' : value;
-			};
-
-			// Size
-			if (
-				imageWidth.value !== image.offsetWidth.toString() ||
-				imageHeight.value !== image.offsetHeight.toString()
-			) {
-				css(image, {
-					width: trim(imageWidth.value)
-						? normalSize(imageWidth.value)
-						: null,
-					height: trim(imageHeight.value)
-						? normalSize(imageHeight.value)
-						: null
-				});
-			}
-
-			const margins = [marginTop, marginRight, marginBottom, marginLeft];
-
-			if (opt.image.editMargins) {
-				if (!this.state.marginIsLocked) {
-					margins.forEach((margin: HTMLInputElement) => {
-						const side = attr(margin, 'data-ref') || '';
-						css(image, side, normalSize(margin.value));
-					});
-				} else {
-					css(image, 'margin', normalSize(marginTop.value));
-				}
-			}
-
-			if (opt.image.editClass) {
-				attr(image, 'class', classes.value || null);
-			}
-
-			if (opt.image.editId) {
-				attr(image, 'id', id.value || null);
-			}
-
-			if (opt.image.editAlign) {
-				if (align.value) {
-					if (['right', 'left'].includes(align.value.toLowerCase())) {
-						css(image, 'float', align.value);
-						clearCenterAlign(image);
-					} else {
-						css(image, {
-							float: '',
-							display: 'block',
-							marginLeft: 'auto',
-							marginRight: 'auto'
-						});
-					}
-				} else {
-					if (
-						css(image, 'float') &&
-						['right', 'left'].indexOf(
-							css(image, 'float')
-								.toString()
-								.toLowerCase()
-						) !== -1
-					) {
-						css(image, 'float', '');
-					}
-
-					clearCenterAlign(image);
-				}
-			}
-
-			editor.setEditorValue();
-
-			dialog.close();
-		});
+		buttons.check.onAction(this.onApply);
 
 		const { changeImage, editImage } = refs<HTMLInputElement>(this.form);
 
@@ -377,7 +257,9 @@ export class imageProperties extends Plugin {
 			editor.e.on(editImage, 'click', this.openImageEditor);
 		}
 
-		const { lockSize, lockMargin } = refs<HTMLInputElement>(mainForm);
+		const { lockSize, lockMargin, imageWidth, imageHeight } = refs<
+			HTMLInputElement
+		>(mainForm);
 
 		if (lockSize) {
 			editor.e.on(lockSize, 'click', () => {
@@ -391,19 +273,9 @@ export class imageProperties extends Plugin {
 			});
 		}
 
-		if (lockMargin) {
-			editor.e.on(lockMargin, 'click', () => {
-				this.state.marginIsLocked = !this.state.marginIsLocked;
-
-				lockMargin.innerHTML = Icon.get(
-					this.state.marginIsLocked ? 'lock' : 'unlock'
-				);
-
-				[marginRight, marginBottom, marginLeft].forEach(elm => {
-					attr(elm, 'disabled', this.state.marginIsLocked || null);
-				});
-			});
-		}
+		editor.e.on(lockMargin, 'click', () => {
+			this.state.marginIsLocked = !this.state.marginIsLocked;
+		});
 
 		const changeSizes = (event: any): void => {
 			const w = parseInt(imageWidth.value, 10),
@@ -510,17 +382,22 @@ export class imageProperties extends Plugin {
 					return;
 				}
 
-				let notequal = false;
+				let equal = true,
+					wasEmptyField = false;
 
 				[marginTop, marginRight, marginBottom, marginLeft].forEach(
 					elm => {
-						const id = attr(elm, 'data-refs') || '';
+						const id = attr(elm, 'data-ref') || '';
 
-						let value: number | string = (image.style as any)[
-							id
-						] as string;
+						let value:
+							| number
+							| string = image.style.getPropertyValue(
+							kebabCase(id)
+						);
 
 						if (!value) {
+							wasEmptyField = true;
+							elm.value = '';
 							return;
 						}
 
@@ -531,30 +408,17 @@ export class imageProperties extends Plugin {
 						elm.value = value.toString() || '';
 
 						if (
-							!notequal &&
-							id !== 'marginTop' &&
-							elm.value !== marginTop.value
+							(wasEmptyField && elm.value) ||
+							(equal &&
+								id !== 'marginTop' &&
+								elm.value !== marginTop.value)
 						) {
-							notequal = true;
+							equal = false;
 						}
 					}
 				);
 
-				this.state.marginIsLocked = !notequal;
-
-				if (lockMargin) {
-					lockMargin.innerHTML = Icon.get(
-						this.state.marginIsLocked ? 'lock' : 'unlock'
-					);
-				}
-
-				[
-					marginBottom,
-					marginLeft,
-					marginRight
-				].forEach((elm: HTMLElement) =>
-					attr(elm, 'disabled', this.state.marginIsLocked || null)
-				);
+				this.state.marginIsLocked = equal;
 			},
 			updateSizes = () => {
 				imageWidth.value = image.offsetWidth.toString();
@@ -596,6 +460,156 @@ export class imageProperties extends Plugin {
 		updateBorderRadius();
 		updateAlign();
 		updateStyle();
+	}
+
+	/**
+	 * Apply form's values to image
+	 */
+	@autobind
+	private onApply(): void {
+		const {
+			style,
+			imageSrc,
+			borderRadius,
+			imageTitle,
+			imageAlt,
+			imageLink,
+			imageWidth,
+			imageHeight,
+			marginTop,
+			marginRight,
+			marginBottom,
+			marginLeft,
+			imageLinkOpenInNewTab,
+			align,
+			classes,
+			id
+		} = refs<HTMLInputElement>(this.form);
+
+		const opt = this.j.o;
+		const { image } = this.state;
+
+		// styles
+		if (opt.image.editStyle) {
+			attr(image, 'style', style.value || null);
+		}
+
+		// Src
+		if (imageSrc.value) {
+			attr(image, 'src', imageSrc.value);
+		} else {
+			Dom.safeRemove(image);
+			this.dialog.close();
+			return;
+		}
+
+		// Border radius
+		if (borderRadius.value !== '0' && /^[0-9]+$/.test(borderRadius.value)) {
+			image.style.borderRadius = borderRadius.value + 'px';
+		} else {
+			image.style.borderRadius = '';
+		}
+
+		// Title
+		attr(image, 'title', imageTitle.value || null);
+
+		// Alt
+		attr(image, 'alt', imageAlt.value || null);
+
+		// Link
+		let link = Dom.closest(image, 'a', this.j.editor);
+
+		if (imageLink.value) {
+			if (!link) {
+				link = Dom.wrap(image, 'a', this.j);
+			}
+
+			attr(link, 'href', imageLink.value);
+
+			attr(
+				link,
+				'target',
+				imageLinkOpenInNewTab.checked ? '_blank' : null
+			);
+		} else {
+			if (link && link.parentNode) {
+				link.parentNode.replaceChild(image, link);
+			}
+		}
+
+		const normalSize = (value: string): string => {
+			value = trim(value);
+			return /^[0-9]+$/.test(value) ? value + 'px' : value;
+		};
+
+		// Size
+		if (
+			imageWidth.value !== image.offsetWidth.toString() ||
+			imageHeight.value !== image.offsetHeight.toString()
+		) {
+			css(image, {
+				width: trim(imageWidth.value)
+					? normalSize(imageWidth.value)
+					: null,
+				height: trim(imageHeight.value)
+					? normalSize(imageHeight.value)
+					: null
+			});
+		}
+
+		const margins = [marginTop, marginRight, marginBottom, marginLeft];
+
+		if (opt.image.editMargins) {
+			if (!this.state.marginIsLocked) {
+				margins.forEach((margin: HTMLInputElement) => {
+					const side = attr(margin, 'data-ref') || '';
+					css(image, side, normalSize(margin.value));
+				});
+			} else {
+				css(image, 'margin', normalSize(marginTop.value));
+			}
+		}
+
+		if (opt.image.editClass) {
+			attr(image, 'class', classes.value || null);
+		}
+
+		if (opt.image.editId) {
+			attr(image, 'id', id.value || null);
+		}
+
+		if (opt.image.editAlign) {
+			if (align.value) {
+				if (['right', 'left'].includes(align.value.toLowerCase())) {
+					css(image, 'float', align.value);
+					clearCenterAlign(image);
+				} else {
+					css(image, {
+						float: '',
+						display: 'block',
+						marginLeft: 'auto',
+						marginRight: 'auto'
+					});
+				}
+			} else {
+				if (
+					css(image, 'float') &&
+					['right', 'left'].indexOf(
+						css(image, 'float')
+							.toString()
+							.toLowerCase()
+					) !== -1
+				) {
+					css(image, 'float', '');
+				}
+
+				clearCenterAlign(image);
+			}
+		}
+
+		this.j.setEditorValue();
+
+		this.dialog.close();
 	}
 
 	/**
@@ -739,7 +753,6 @@ export class imageProperties extends Plugin {
 	/** @override **/
 	protected afterInit(editor: IJodit) {
 		const self = this;
-		editor.o.image.openOnDblClick && this.makeForm();
 
 		editor.e
 			.on('afterConstructor changePlace', () => {
@@ -775,7 +788,7 @@ export class imageProperties extends Plugin {
 
 	/** @override */
 	protected beforeDestruct(editor: IJodit) {
-		this.dialog.destruct();
+		this.dialog && this.dialog.destruct();
 		editor.e.off(editor.editor, '.imageproperties').off('.imageproperties');
 	}
 }

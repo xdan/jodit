@@ -18,7 +18,7 @@ import { IViewWithToolbar, IControlType, IViewBased } from '../../types';
 
 /**
  * @property{boolean} fullsize=false true Editor toWYSIWYG open toWYSIWYG full screen
- * @property{boolean} globalFullsize=true if true, after `fullsize` -  all editors element
+ * @property{boolean} globalFullSize=true if true, after `fullsize` -  all editors element
  * get jodit-fullsize_box class (z-index: 100000 !important;)
  * @example
  * ```javascript
@@ -38,12 +38,12 @@ import { IViewWithToolbar, IControlType, IViewBased } from '../../types';
 declare module '../../config' {
 	interface Config {
 		fullsize: boolean;
-		globalFullsize: boolean;
+		globalFullSize: boolean;
 	}
 }
 
 Config.prototype.fullsize = false;
-Config.prototype.globalFullsize = true;
+Config.prototype.globalFullSize = true;
 
 Config.prototype.controls.fullsize = {
 	exec: (editor: IViewBased) => {
@@ -122,7 +122,7 @@ export function fullsize(editor: IViewWithToolbar) {
 				css(editor.toolbar.container, 'width', 'auto');
 			}
 
-			if (editor.o.globalFullsize) {
+			if (editor.o.globalFullSize) {
 				let node = editor.container.parentNode as HTMLElement;
 
 				while (node && node.nodeType !== Node.DOCUMENT_NODE) {
@@ -136,7 +136,7 @@ export function fullsize(editor: IViewWithToolbar) {
 			editor.events?.fire('afterResize');
 		};
 
-	if (editor.o.globalFullsize) {
+	if (editor.o.globalFullSize) {
 		editor.e.on(editor.ow, 'resize', resize);
 	}
 

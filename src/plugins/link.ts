@@ -71,7 +71,7 @@ Config.prototype.link = {
 			</div>
 		<form/>`;
 	},
-	followOnDblClick: true,
+	followOnDblClick: false,
 	processVideoLink: true,
 	processPastedLink: true,
 	removeLinkAfterFormat: true,

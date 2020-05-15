@@ -1,5 +1,6 @@
 import { IJodit } from './jodit';
 import { IDestructible, IInitable } from './types';
+import { IViewBased } from './view';
 
 export class IPlugin implements IDestructible, IInitable {
 	jodit: IJodit;
@@ -14,7 +15,7 @@ export class IPlugin implements IDestructible, IInitable {
 }
 
 interface PluginFunction {
-	constructor(jodit: IJodit): void;
+	constructor(jodit: IViewBased): void;
 }
 
 export type PluginType = typeof IPlugin | IPlugin | PluginFunction;

@@ -61,7 +61,7 @@ export const Confirm = (
 		dialog.close();
 	};
 
-	const $ok = Button(dialog, 'check', 'Yes');
+	const $ok = Button(dialog, 'ok', 'Yes');
 
 	$ok.onAction(onok);
 

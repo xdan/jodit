@@ -34,6 +34,7 @@ describe('CodeMirror editor source code', function() {
 			});
 		}).timeout(6000);
 	});
+
 	describe('Change mode', function() {
 		describe('In WYSIWYG mode isEditorMode', function() {
 			it('Should return true', function() {
