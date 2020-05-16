@@ -430,7 +430,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		onSuccess?: () => void,
 		onFailed?: (error: Error) => void
 	): Promise<Dialog> => {
-		return (this.getInstance('ImageEditor') as ImageEditor).open(
+		return this.getInstance<ImageEditor>('ImageEditor', this.o).open(
 			href,
 			(
 				newname: string | void,

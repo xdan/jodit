@@ -29,7 +29,7 @@ Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
 		'96'
 	],
 
-	exec: (editor, event, control) => {
+	exec: (editor, event, {control}) => {
 		editor.execCommand(
 			control.command as string,
 			false,
@@ -99,7 +99,7 @@ Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
 Config.prototype.controls.font = (<IControlType<IJodit>>{
 	command: 'fontname',
 
-	exec: (editor, event, control) => {
+	exec: (editor, node, {control}) => {
 		editor.execCommand(
 			control.command as string,
 			false,

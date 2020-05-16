@@ -98,6 +98,21 @@
 		}
 	}
 
+	&_context_menu &__text {
+		justify-content: left;
+		padding-left: @padding-default;
+		position: relative;
+
+		&:before {
+			content: '';
+			position: absolute;
+			border-left: 1px solid @color-border;
+			height: 35px;
+			top: -10px;
+			left: 0;
+		}
+	}
+
 	&__icon:not(:empty) + &__text:not(:empty) {
 		margin-left: @padding-default;
 	}

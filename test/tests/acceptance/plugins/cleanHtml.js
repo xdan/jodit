@@ -4,9 +4,7 @@ describe('Clean html plugin', function() {
 			it('Should clear selected HTML fragment', function() {
 				const editor = getJodit();
 
-				const button = editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-eraser'
-				);
+				const button = getButton('eraser', editor);
 				expect(button).is.not.null;
 
 				[
@@ -79,7 +77,7 @@ describe('Clean html plugin', function() {
 					}
 
 					editor.selection.selectRange(range);
-					simulateEvent('mousedown', 0, button);
+					simulateEvent('click', 0, button);
 
 					expect(editor.value).equals(test[2]);
 				});
@@ -119,11 +117,9 @@ describe('Clean html plugin', function() {
 
 					editor.selection.selectRange(range);
 
-					const button = editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-eraser'
-					);
+					const button = getButton('eraser', editor);
 
-					simulateEvent('mousedown', 0, button);
+					simulateEvent('click', 0, button);
 
 					editor.selection.insertHTML(' pop ');
 

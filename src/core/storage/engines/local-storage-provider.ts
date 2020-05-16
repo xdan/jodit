@@ -51,6 +51,12 @@ export class LocalStorageProvider<T = StorageValueType> implements IStorage<T> {
 		} catch {}
 	}
 
+	delete(key: string) {
+		try {
+			localStorage.removeItem(this.rootKey);
+		} catch {}
+	}
+
 	get<R = T>(key: string): R | void {
 		try {
 			const buffer = localStorage.getItem(this.rootKey);

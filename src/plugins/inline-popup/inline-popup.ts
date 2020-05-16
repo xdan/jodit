@@ -25,7 +25,7 @@ import {
 	splitArray,
 	isString,
 	attr,
-	position
+	position, isJoditObject
 } from '../../core/helpers';
 import { Dom, Table, ToolbarCollection } from '../../modules';
 import { ColorPickerWidget, TabsWidget } from '../../modules/widget';
@@ -51,14 +51,14 @@ Config.prototype.popup = {
 		{
 			name: 'eye',
 			tooltip: 'Open link',
-			exec: (editor: IJodit, current: Node) => {
+			exec: (editor: IJodit, current) => {
 				const href = attr(current as HTMLElement, 'href');
 
 				if (current && href) {
 					editor.ow.open(href);
 				}
 			}
-		} as IControlType,
+		},
 		{
 			name: 'link',
 			tooltip: 'Edit link',
@@ -72,8 +72,8 @@ Config.prototype.popup = {
 		{
 			name: 'bin',
 			tooltip: 'Delete',
-			exec: (editor: IJodit, image: Node) => {
-				editor.selection.removeNode(image);
+			exec: (editor: IJodit, image) => {
+				image && editor.selection.removeNode(image);
 			}
 		}
 	],
@@ -81,8 +81,8 @@ Config.prototype.popup = {
 		{
 			name: 'bin',
 			tooltip: 'Delete',
-			exec: (editor: IJodit, image: Node) => {
-				editor.selection.removeNode(image);
+			exec: (editor: IJodit, image) => {
+				image && editor.selection.removeNode(image);
 			}
 		}
 	],
@@ -91,14 +91,15 @@ Config.prototype.popup = {
 			name: 'delete',
 			icon: 'bin',
 			tooltip: 'Delete',
-			exec: (editor: IJodit, image: Node) => {
-				editor.selection.removeNode(image);
+			exec: (editor: IJodit, image) => {
+				image && editor.selection.removeNode(image);
 			}
 		},
 		{
 			name: 'pencil',
-			exec(editor: IJodit, current: Node) {
-				const tagName: string = (current as HTMLElement).tagName.toLowerCase();
+			exec(editor: IJodit, current) {
+				const tagName = (current as HTMLElement).tagName.toLowerCase();
+
 				if (tagName === 'img') {
 					editor.e.fire('openImageProperties', current);
 				}
@@ -109,13 +110,8 @@ Config.prototype.popup = {
 			name: 'valign',
 			list: ['Top', 'Middle', 'Bottom'],
 			tooltip: 'Vertical align',
-			exec: (
-				editor: IJodit,
-				image: HTMLImageElement,
-				control: IControlType
-			) => {
-				const tagName = (image as HTMLElement).tagName.toLowerCase();
-				if (tagName !== 'img') {
+			exec: (editor: IJodit, image, { control }) => {
+				if (!Dom.isTag(image, 'img')) {
 					return;
 				}
 
@@ -133,12 +129,11 @@ Config.prototype.popup = {
 			name: 'left',
 			list: ['Left', 'Right', 'Center', 'Normal'],
 			exec: (
-				editor: IJodit,
-				image: HTMLImageElement,
-				control: IControlType
+				editor,
+				image,
+				{control}
 			) => {
-				const tagName: string = (image as HTMLElement).tagName.toLowerCase();
-				if (tagName !== 'img') {
+				if (!Dom.isTag(image, 'img')) {
 					return;
 				}
 
@@ -180,7 +175,11 @@ Config.prototype.popup = {
 	'table-cells': [
 		{
 			name: 'brush',
-			popup: (editor: IJodit) => {
+			popup: (editor) => {
+				if (!isJoditObject(editor)) {
+					return;
+				}
+
 				const selected: HTMLTableCellElement[] = editor
 					.getInstance<Table>('Table', editor.o)
 					.getAllSelectedCells();
@@ -207,6 +206,7 @@ Config.prototype.popup = {
 						selected.forEach((cell: HTMLTableCellElement) => {
 							css(cell, 'background-color', value);
 						});
+
 						editor.setEditorValue();
 						// close();
 					},
@@ -251,9 +251,9 @@ Config.prototype.popup = {
 			name: 'valign',
 			list: ['Top', 'Middle', 'Bottom'],
 			exec: (
-				editor: IJodit,
-				table: HTMLTableElement,
-				control: IControlType
+				editor,
+				table,
+				{control}
 			) => {
 				const command: string =
 					control.args && isString(control.args[0])
@@ -293,11 +293,11 @@ Config.prototype.popup = {
 				tableaddcolumnbefore: 'Insert column before',
 				tableaddcolumnafter: 'Insert column after'
 			},
-			exec: (
-				editor: IJodit,
-				table: HTMLTableElement,
-				control: IControlType
-			) => {
+			exec: (editor, table, { control }) => {
+				if (!isJoditObject(editor)) {
+					return;
+				}
+
 				const command: string =
 					control.args && typeof control.args[0] === 'string'
 						? control.args[0].toLowerCase()
@@ -314,10 +314,14 @@ Config.prototype.popup = {
 				tableaddrowafter: 'Insert row below'
 			},
 			exec: (
-				editor: IJodit,
-				table: HTMLTableElement,
-				control: IControlType
+				editor,
+				table,
+				{control}
 			) => {
+				if (!isJoditObject(editor)) {
+					return;
+				}
+
 				const command: string =
 					control.args && typeof control.args[0] === 'string'
 						? control.args[0].toLowerCase()
@@ -336,11 +340,11 @@ Config.prototype.popup = {
 				tablebincolumn: 'Delete column',
 				tableempty: 'Empty cell'
 			},
-			exec: (
-				editor: IJodit,
-				table: HTMLTableElement,
-				control: IControlType
-			) => {
+			exec: (editor, table, { control }) => {
+				if (!isJoditObject(editor)) {
+					return;
+				}
+
 				const command: string =
 					control.args && typeof control.args[0] === 'string'
 						? control.args[0].toLowerCase()
@@ -372,6 +376,9 @@ Config.prototype.popup = {
 	]
 } as IDictionary<Array<IControlType | string>>;
 
+/**
+ * Plugin for show inline popup dialog
+ */
 export class inlinePopup extends Plugin {
 	private type: Nullable<string> = null;
 

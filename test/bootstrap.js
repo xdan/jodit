@@ -529,10 +529,18 @@ function fillBoxBr(count) {
 	}
 }
 
-const codes = {
+const codeKey = {
 	13: 'Enter',
-	8: 'Backspace'
+	8: 'Backspace',
+	86: 'v',
+	38: 'ArrowUp',
+	40: 'ArrowDown',
 };
+
+const keyCode = Object.keys(codeKey).reduce((res, code) => {
+	res[codeKey[code]] = code;
+	return res;
+}, {})
 
 /**
  *
@@ -561,9 +569,10 @@ function simulateEvent(type, keyCodeArg, element, options) {
 	if (typeof keyCodeArg === 'number') {
 		evt.keyCode = keyCodeArg;
 		evt.which = keyCodeArg;
-		evt.key = codes[keyCodeArg];
+		evt.key = codeKey[keyCodeArg];
 	} else {
 		evt.key = keyCodeArg;
+		evt.which = keyCode[keyCodeArg];
 	}
 
 	if (options) {

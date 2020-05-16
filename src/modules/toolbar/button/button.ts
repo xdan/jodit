@@ -155,10 +155,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 			this.j.o.showTooltip &&
 			!this.j.o.useNativeTooltip
 		) {
-			const to =
-				this.get<number>('j.o.showTooltipDelay') ||
-				this.get<number>('j.defaultTimeout') ||
-				500;
+			const to = this.j.o.showTooltipDelay || this.j.defaultTimeout;
 
 			let timeout: number = 0;
 
@@ -361,13 +358,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 			return childControl;
 		};
 
-		toolbar
-			.build(
-				isArray(list)
-					? list.map(getButton)
-					: Object.keys(list).map(key => getButton(key, list[key])),
-				this.target
-			);
+		toolbar.build(
+			isArray(list)
+				? list.map(getButton)
+				: Object.keys(list).map(key => getButton(key, list[key])),
+			this.target
+		);
 
 		menu.setContent(toolbar.container).open(() => position(this.container));
 
@@ -392,10 +388,13 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		if (isFunction(control.exec)) {
 			control.exec(
 				this.j,
-				this.target || false,
-				control,
-				originalEvent,
-				this.container as HTMLLIElement
+				(this.toolbar ? this.toolbar.getTarget(this) : this.target) ||
+					null,
+				{
+					control,
+					originalEvent,
+					button: this
+				}
 			);
 
 			this.j?.e?.fire('synchro');

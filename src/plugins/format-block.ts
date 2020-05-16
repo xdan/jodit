@@ -45,7 +45,7 @@ Config.prototype.controls.paragraph = {
 		return false;
 	},
 
-	exec: (editor: IJodit, event, control: IControlType) => {
+	exec: (editor: IJodit, event, { control }) => {
 		editor.execCommand(
 			control.command as string,
 			false,

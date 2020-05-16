@@ -90,6 +90,13 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		return isDisabled;
 	}
 
+	/**
+	 * Returns current target for button
+	 */
+	getTarget(button: IToolbarButton): Node | null {
+		return button.target || null;
+	}
+
 	@autobind
 	immediateUpdate() {
 		if (this.isDestructed || this.j.isLocked()) {

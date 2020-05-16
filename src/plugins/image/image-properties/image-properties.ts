@@ -678,6 +678,7 @@ export class imageProperties extends Plugin {
 					source,
 					() => {
 						const timestamp: number = new Date().getTime();
+
 						attr(
 							this.state.image,
 							'src',

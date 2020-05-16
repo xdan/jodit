@@ -1024,7 +1024,7 @@ Config.prototype.controls = {
 			const bylink = editor.c.fromHTML(
 					`<form class="jodit-form">
 					<div class="jodit jodit-form__group">
-						<input class="jodit_input" required name="code" placeholder="http://" type="url"/>
+						<input class="jodit-input" required name="code" placeholder="http://" type="url"/>
 						<button class="jodit-button" type="submit">${editor.i18n('Insert')}</button>
 					</div>
 				</form>`

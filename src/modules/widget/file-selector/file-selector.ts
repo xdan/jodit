@@ -131,10 +131,10 @@ export const FileSelectorWidget = (
 		const form = editor.c.fromHTML(
 				`<form onsubmit="return false;" class="jodit-form">
 						<div class="jodit-form__group">
-							<input class="jodit_input" type="text" required name="url" placeholder="http://"/>
+							<input class="jodit-input" type="text" required name="url" placeholder="http://"/>
 						</div>
 						<div class="jodit-form__group">
-							<input class="jodit_input" type="text" name="text" placeholder="${editor.i18n(
+							<input class="jodit-input" type="text" name="text" placeholder="${editor.i18n(
 								'Alternative text'
 							)}"/>
 						</div>

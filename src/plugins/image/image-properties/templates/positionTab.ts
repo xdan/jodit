@@ -11,19 +11,19 @@ export function positionTab(editor: IJodit): HTMLElement {
 	}" class="jodit-form__group">
 			<label>${i18n('Margins')}</label>
 			<div class="jodit-grid jodit_vertical_middle">
-				<input class="jodit_col-lg-1-5 jodit_input" data-ref="marginTop" type="text" placeholder="${i18n(
+				<input class="jodit_col-lg-1-5 jodit-input" data-ref="marginTop" type="text" placeholder="${i18n(
 					'top'
 				)}"/>
 				<a style="text-align: center;" data-ref="lockMargin" class="jodit_lock_helper jodit_col-lg-1-5">${gi(
 					'lock'
 				)}</a>
-				<input disabled="true" class="jodit_col-lg-1-5 jodit_input" data-ref="marginRight" type="text" placeholder="${i18n(
+				<input disabled="true" class="jodit_col-lg-1-5 jodit-input" data-ref="marginRight" type="text" placeholder="${i18n(
 					'right'
 				)}"/>
-				<input disabled="true" class="jodit_col-lg-1-5 jodit_input" data-ref="marginBottom" type="text" placeholder="${i18n(
+				<input disabled="true" class="jodit_col-lg-1-5 jodit-input" data-ref="marginBottom" type="text" placeholder="${i18n(
 					'bottom'
 				)}"/>
-				<input disabled="true" class="jodit_col-lg-1-5 jodit_input" data-ref="marginLeft" type="text" placeholder="${i18n(
+				<input disabled="true" class="jodit_col-lg-1-5 jodit-input" data-ref="marginLeft" type="text" placeholder="${i18n(
 					'left'
 				)}"/>
 			</div>
@@ -32,19 +32,19 @@ export function positionTab(editor: IJodit): HTMLElement {
 			!opt.image.editStyle ? 'display:none' : ''
 		}" class="jodit-form__group">
 			<label>${i18n('Styles')}</label>
-			<input data-ref="style" type="text" class="jodit_input"/>
+			<input data-ref="style" type="text" class="jodit-input"/>
 		</div>
 		<div style="${
 			!opt.image.editClass ? 'display:none' : ''
 		}" class="jodit-form__group">
 			<label>${i18n('Classes')}</label>
-			<input data-ref="classes" type="text" class="jodit_input"/>
+			<input data-ref="classes" type="text" class="jodit-input"/>
 		</div>
 		<div style="${
 			!opt.image.editId ? 'display:none' : ''
 		}" class="jodit-form__group">
 			<label>Id</label>
-			<input data-ref="id" type="text" class="jodit_input"/>
+			<input data-ref="id" type="text" class="jodit-input"/>
 		</div>
 		<div
 			style="${!opt.image.editBorderRadius ? 'display:none' : ''}"
@@ -52,7 +52,7 @@ export function positionTab(editor: IJodit): HTMLElement {
 		>
 			<label>
 				<span>${i18n('Border radius')}</span>
-				<input data-ref="borderRadius" type="number" class="jodit_input"/>
+				<input data-ref="borderRadius" type="number" class="jodit-input"/>
 			</label>
 		</div>
 		<div

@@ -46,10 +46,10 @@ Config.prototype.link = {
 
 		return `<form class="jodit-form">
 			<div class="jodit-form__group">
-				<input ref="url_input" class="jodit_input" required type="text" name="url" placeholder="http://" type="text"/>
+				<input ref="url_input" class="jodit-input" required type="text" name="url" placeholder="http://" type="text"/>
 			</div>
 			<div ref="content_input_box" class="jodit-form__group">
-				<input ref="content_input" class="jodit_input" name="text" placeholder="${i18n(
+				<input ref="content_input" class="jodit-input" name="text" placeholder="${i18n(
 					'Text'
 				)}" type="text"/>
 			</div>

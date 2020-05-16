@@ -273,6 +273,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		const options = {
 			defaultTimeout: jodit.defaultTimeout,
 			uploader: jodit.o.uploader,
+			language: jodit.o.language,
 			defaultCallback(data: IFileBrowserCallBackData): void {
 				if (data.files && data.files.length) {
 					data.files.forEach((file, i) => {

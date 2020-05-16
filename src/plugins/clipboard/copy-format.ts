@@ -9,7 +9,7 @@ import { Dom } from '../../core/dom';
 import { css } from '../../core/helpers/';
 import { IDictionary, IJodit, IControlType } from '../../types';
 
-const pluginKey: string = 'copyformat';
+const pluginKey = 'copyformat';
 
 /**
  * Plug-in copy and paste formatting from one element to another
@@ -79,60 +79,66 @@ const getStyles = (
 };
 
 Config.prototype.controls.copyformat = {
-	exec: (editor: IJodit, current: Node | false) => {
-		if (current) {
-			if (editor.buffer.exists(pluginKey)) {
-				editor.buffer.set(pluginKey, false);
-				editor.e.off(editor.editor, 'mouseup.' + pluginKey);
-			} else {
-				const defaultStyles: IDictionary<string | number> = {},
-					box: HTMLElement =
-						(Dom.up(
-							current,
-							(elm: Node | null) => elm && !Dom.isText(elm),
-							editor.editor
-						) as HTMLElement) || editor.editor;
+	exec: (editor: IJodit, current: Node | null, { button }) => {
+		if (!current) {
+			return;
+		}
 
-				const ideal = editor.createInside.span();
+		if (editor.buffer.exists(pluginKey)) {
+			editor.buffer.delete(pluginKey);
+			editor.e.off(editor.editor, 'mouseup.' + pluginKey);
+		} else {
+			const defaultStyles: IDictionary<string | number> = {},
+				box =
+					Dom.up(
+						current,
+						(elm: Node | null) => elm && !Dom.isText(elm),
+						editor.editor
+					) || editor.editor;
 
-				editor.editor.appendChild(ideal);
+			const ideal = editor.createInside.span();
 
-				copyStyles.forEach((key: string) => {
-					defaultStyles[key] = css(ideal, key);
-				});
+			editor.editor.appendChild(ideal);
 
-				if (ideal !== editor.editor) {
-					Dom.safeRemove(ideal);
+			copyStyles.forEach((key: string) => {
+				defaultStyles[key] = css(ideal, key);
+			});
+
+			if (ideal !== editor.editor) {
+				Dom.safeRemove(ideal);
+			}
+
+			const format: IDictionary<string | number | undefined> = getStyles(
+				editor,
+				box,
+				defaultStyles
+			);
+
+			const onMouseUp = () => {
+				editor.buffer.delete(pluginKey);
+
+				const currentNode = editor.selection.current();
+
+				if (currentNode) {
+					if (Dom.isTag(currentNode, 'img')) {
+						css(currentNode as HTMLElement, format);
+					} else {
+						editor.selection.applyCSS(format);
+					}
 				}
 
-				const format: IDictionary<
-					string | number | undefined
-				> = getStyles(editor, box, defaultStyles);
+				editor.e.off(editor.editor, 'mouseup.' + pluginKey);
+			};
 
-				const onMouseDown = () => {
-					editor.buffer.set(pluginKey, false);
+			editor.e.on(editor.editor, 'mouseup.' + pluginKey, onMouseUp);
 
-					const currentNode= editor.selection.current();
-
-					if (currentNode) {
-						if (Dom.isTag(currentNode, 'img')) {
-							css(currentNode as HTMLElement, format);
-						} else {
-							editor.selection.applyCSS(format);
-						}
-					}
-
-					editor.e.off(editor.editor, 'mouseup.' + pluginKey);
-				};
-
-				editor.e.on(editor.editor, 'mouseup.' + pluginKey, onMouseDown);
-
-				editor.buffer.set(pluginKey, true);
-			}
+			editor.buffer.set(pluginKey, true);
 		}
+
+		button.update();
 	},
 
-	isActive: (editor: IJodit) => !!editor.buffer.get(pluginKey),
+	isActive: (editor: IJodit) => editor.buffer.exists(pluginKey),
 
 	tooltip: 'Paint format'
 } as IControlType;

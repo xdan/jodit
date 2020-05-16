@@ -12,10 +12,10 @@ export function mainTab(editor: IJodit): HTMLElement {
 		!opt.image.editSrc ? 'display:none' : ''
 	}" class="jodit-form__group">
 			<label>${i18n('Src')}</label>
-			<div class="jodit_input_group">
-				<input data-ref="imageSrc" class="jodit_input" type="text"/>
+			<div class="jodit-input_group">
+				<input data-ref="imageSrc" class="jodit-input" type="text"/>
 				<div
-					class="jodit_input_group-buttons"
+					class="jodit-input_group-buttons"
 					style="${hasFbUrl ? '' : 'display: none'}"
 				>
 						<a
@@ -36,19 +36,19 @@ export function mainTab(editor: IJodit): HTMLElement {
 			!opt.image.editTitle ? 'display:none' : ''
 		}" class="jodit-form__group">
 			<label>${i18n('Title')}</label>
-			<input data-ref="imageTitle" type="text" class="jodit_input"/>
+			<input data-ref="imageTitle" type="text" class="jodit-input"/>
 		</div>
 		<div style="${
 			!opt.image.editAlt ? 'display:none' : ''
 		}" class="jodit-form__group">
 			<label>${i18n('Alternative')}</label>
-			<input data-ref="imageAlt" type="text" class="jodit_input"/>
+			<input data-ref="imageAlt" type="text" class="jodit-input"/>
 		</div>
 		<div style="${
 			!opt.image.editLink ? 'display:none' : ''
 		}" class="jodit-form__group">
 			<label>${i18n('Link')}</label>
-			<input data-ref="imageLink" type="text" class="jodit_input"/>
+			<input data-ref="imageLink" type="text" class="jodit-input"/>
 		</div>
 		<div style="${
 			!opt.image.editLink ? 'display:none' : ''

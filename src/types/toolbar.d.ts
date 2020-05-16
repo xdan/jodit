@@ -15,12 +15,11 @@ import {
 import { IViewBased } from './view';
 import { IJodit } from './jodit';
 import { IFileBrowser } from './file-browser';
-import { IUIButton, IUIElement, IUIList } from './ui';
 
 interface IControlType<
 	T = IJodit | IViewBased | IFileBrowser,
-	Button = IToolbarButton
-> {
+	B = IToolbarButton
+	> {
 	name?: string;
 	text?: string;
 
@@ -28,7 +27,7 @@ interface IControlType<
 	hotkeys?: string | string[];
 	data?: IDictionary;
 
-	update?: (button: IToolbarButton) => void;
+	update?: (button: B) => void;
 	isInput?: boolean;
 
 	/**
@@ -59,20 +58,20 @@ interface IControlType<
 	 */
 	isActive?: (
 		editor: T,
-		control: IControlType<T, Button>,
-		button?: Button
+		control: IControlType<T, B>,
+		button?: B
 	) => boolean;
 
 	isActiveChild?: (
 		editor: T,
-		control: IControlType<T, Button>,
-		button?: Button
+		control: IControlType<T, B>,
+		button?: B
 	) => boolean; // for list
 
 	getContent?: (
 		editor: T,
-		control: IControlType<T, Button>,
-		button?: Button
+		control: IControlType<T, B>,
+		button?: B
 	) => string | HTMLElement;
 
 	/**
@@ -104,14 +103,14 @@ interface IControlType<
 	 */
 	isDisabled?: (
 		editor: T,
-		control: IControlType<T, Button>,
-		button?: Button
+		control: IControlType<T, B>,
+		button?: B
 	) => boolean;
 
 	isChildDisabled?: (
 		editor: T,
-		control: IControlType<T, Button>,
-		button?: Button
+		control: IControlType<T, B>,
+		button?: B
 	) => boolean;
 
 	/**
@@ -195,11 +194,13 @@ interface IControlType<
 	 * This function will be executed when the button is pressed.
 	 */
 	exec?: (
-		editor: T,
-		current: Node | false,
-		control: IControlType<T, Button>,
-		originalEvent: Event,
-		btn: HTMLLIElement
+		jodit: T,
+		current: Nullable<Node>,
+		options: {
+			control: IControlType<T, B>,
+			originalEvent: Event,
+			button: IToolbarButton
+		}
 	) => void;
 
 	args?: any[];
@@ -207,7 +208,7 @@ interface IControlType<
 	/**
 	 * The method which will be called for each element of button.list
 	 */
-	template?: (editor: T, key: string, value: string) => string;
+	template?: (jodit: T, key: string, value: string) => string;
 
 	/**
 	 * After click on the button it will show popup element which consist value that this function returned
@@ -236,15 +237,18 @@ interface IControlType<
 	 * ```
 	 */
 	popup?: (
-		editor: T,
+		jodit: T,
 		current: Node | false,
-		control: IControlType<T, Button>,
+		control: IControlType<T, B>,
 		close: () => void,
-		button: Button
+		button: B
 	) => string | HTMLElement | IUIElement | false;
 
 	defaultValue?: string | string[];
 }
+
+import { IUIButton, IUIElement, IUIList } from './ui';
+import { ToolbarButton } from '../modules';
 
 interface IControlTypeStrong extends IControlType {
 	name: NonNullable<IControlType['name']>;
@@ -278,6 +282,7 @@ interface IToolbarCollection extends IUIList {
 
 	shouldBeDisabled(button: IToolbarButton): boolean | void;
 	shouldBeActive(button: IToolbarButton): boolean | void;
+	getTarget(button: IToolbarButton): Node | null;
 }
 
 export interface IStatusBar extends IComponent {

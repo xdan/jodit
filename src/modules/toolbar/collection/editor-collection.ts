@@ -128,4 +128,9 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 
 		return total === matches;
 	};
+
+	/** @override */
+	getTarget(button: IToolbarButton): Node | null {
+		return button.target || this.j.selection.current() || null;
+	}
 }

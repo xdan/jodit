@@ -5,7 +5,7 @@
  */
 import { Dialog } from './dialog';
 import { Button } from '../../core/ui';
-import { attr } from '../../core/helpers';
+import { attr, isFunction } from '../../core/helpers';
 
 /**
  * Show `Prompt` dialog. Work without Jodit object
@@ -35,25 +35,23 @@ export const Prompt = (
 ): Dialog => {
 	const dialog = new Dialog(),
 		cancelButton = Button(dialog, 'cancel', 'Cancel'),
-		okButton = Button(dialog, 'check', 'Ok'),
-		form: HTMLFormElement = dialog.c.element('form', {
+		okButton = Button(dialog, 'ok', 'Ok'),
+		form = dialog.c.element('form', {
 			class: 'jodit-dialog_prompt'
 		}),
-		inputElement: HTMLInputElement = dialog.c.element('input', {
+		inputElement = dialog.c.element('input', {
 			autofocus: true,
-			class: 'jodit_input'
+			class: 'jodit-input'
 		}),
-		labelElement: HTMLLabelElement = dialog.c.element(
-			'label'
-		) as HTMLLabelElement;
+		labelElement = dialog.c.element('label');
 
-	if (typeof title === 'function') {
+	if (isFunction(title)) {
 		callback = title;
 		title = undefined;
 	}
 
 	if (placeholder) {
-		attr(inputElement,'placeholder', placeholder);
+		attr(inputElement, 'placeholder', placeholder);
 	}
 
 	labelElement.appendChild(dialog.c.text(msg));
@@ -66,7 +64,7 @@ export const Prompt = (
 	const onclick = () => {
 		if (
 			!callback ||
-			typeof callback !== 'function' ||
+			!isFunction(callback) ||
 			callback(inputElement.value) !== false
 		) {
 			dialog.close();

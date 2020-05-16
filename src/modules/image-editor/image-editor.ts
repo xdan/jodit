@@ -20,10 +20,10 @@ import {
 } from '../../types';
 import { ViewComponent } from '../../core/component';
 import { Alert, Dialog, Prompt } from '../dialog';
-import { $$, attr, css, trim } from '../../core/helpers';
+import { $$, attr, css, refs, trim } from '../../core/helpers';
 import { Dom } from '../../core/dom';
-import { Icon } from '../../core/ui';
 import { Button } from '../../core/ui/button';
+import { form } from './templates/form';
 
 declare module '../../config' {
 	interface Config {
@@ -87,9 +87,12 @@ Config.prototype.imageeditor = {
 	cropDefaultWidth: '70%',
 	cropDefaultHeight: '70%'
 };
+const jie = 'jodit-image-editor';
 
-const jie = 'jodit_image_editor';
-const gi = Icon.get.bind(Icon);
+const TABS = {
+	resize: 'resize' as ImageAction,
+	crop: 'crop' as ImageAction
+};
 
 /**
  * The module allows you toWYSIWYG edit the image: resize or cut any part of it
@@ -113,7 +116,7 @@ export class ImageEditor extends ViewComponent {
 	private width: number = 0;
 	private height: number = 0;
 
-	private activeTab: ImageAction = 'resize';
+	private activeTab: ImageAction = TABS.resize;
 
 	private naturalWidth: number = 0;
 	private naturalHeight: number = 0;
@@ -127,9 +130,6 @@ export class ImageEditor extends ViewComponent {
 	private buttons: IDictionary<IUIButton>;
 
 	private editor: HTMLElement;
-
-	private widthInput: HTMLInputElement;
-	private heightInput: HTMLInputElement;
 
 	private resize_box: HTMLElement;
 	private crop_box: HTMLElement;
@@ -254,6 +254,9 @@ export class ImageEditor extends ViewComponent {
 
 	private setHandlers = () => {
 		const self: ImageEditor = this;
+
+		const { widthInput, heightInput } = refs<HTMLInputElement>(this.editor);
+
 		self.j.e
 			.on(
 				[
@@ -272,7 +275,7 @@ export class ImageEditor extends ViewComponent {
 					self.start_x = e.clientX;
 					self.start_y = e.clientY;
 
-					if (self.activeTab === 'crop') {
+					if (self.activeTab === TABS.crop) {
 						self.top_x = css(self.cropHandler, 'left') as number;
 						self.top_y = css(self.cropHandler, 'top') as number;
 						self.width = self.cropHandler.offsetWidth;
@@ -287,13 +290,14 @@ export class ImageEditor extends ViewComponent {
 			.on(
 				this.j.ow,
 				`mousemove.${jie}` + self.j.id,
+
 				this.j.async.throttle((e: MouseEvent) => {
 					if (self.clicked) {
 						self.diff_x = e.clientX - self.start_x;
 						self.diff_y = e.clientY - self.start_y;
 
 						if (
-							(self.activeTab === 'resize' &&
+							(self.activeTab === TABS.resize &&
 								self.resizeUseRatio) ||
 							(self.activeTab === 'crop' && self.cropUseRatio)
 						) {
@@ -313,15 +317,15 @@ export class ImageEditor extends ViewComponent {
 							self.new_h = self.height + self.diff_y;
 						}
 
-						if (self.activeTab === 'resize') {
+						if (self.activeTab === TABS.resize) {
 							if (self.new_w > self.o.resizeMinWidth) {
 								css(self.image, 'width', self.new_w + 'px');
-								self.widthInput.value = self.new_w.toString();
+								widthInput.value = self.new_w.toString();
 							}
 
 							if (self.new_h > self.o.resizeMinHeight) {
 								css(self.image, 'height', self.new_h + 'px');
-								self.heightInput.value = self.new_h.toString();
+								heightInput.value = self.new_h.toString();
 							}
 
 							this.j.e.fire(self.resizeHandler, 'updatesize');
@@ -426,43 +430,45 @@ export class ImageEditor extends ViewComponent {
 				'click.' + jie,
 				function(this: HTMLElement) {
 					$$(
-						`.${jie}_slider,.${jie}_area`,
+						`.${jie}__slider,.${jie}__area`,
 						self.editor
-					).forEach(elm => elm.classList.remove('active'));
+					).forEach(elm => elm.classList.remove(`${jie}_active`));
 
 					const slide = this.parentNode as HTMLElement;
 
-					slide.classList.add('active');
+					slide.classList.add(`${jie}_active`);
 					self.activeTab =
-						<ImageAction>attr(slide, '-area') || 'resize';
+						<ImageAction>attr(slide, '-area') || TABS.resize;
 
-					const tab: HTMLDivElement | null = self.editor.querySelector(
-						`.${jie}_area.${jie}_area_` + self.activeTab
+					const tab = self.editor.querySelector(
+						`.${jie}__area.${jie}__area_` + self.activeTab
 					);
+
 					if (tab) {
-						tab.classList.add('active');
+						tab.classList.add(`${jie}_active`);
 					}
 
 					if (self.activeTab === 'crop') {
 						self.showCrop();
 					}
 				},
-				`.${jie}_slider-title`
+				`.${jie}__slider-title`
 			)
 			.on(
-				self.widthInput,
+				widthInput,
 				`change.${jie} mousedown.${jie} keydown.${jie}`,
 				self.j.async.debounce(() => {
-					const value: number = parseInt(self.widthInput.value, 10);
+					const value: number = parseInt(widthInput.value, 10);
 					let another: number;
 					if (value > self.o.min_width) {
 						css(self.image, 'width', value + 'px');
 
 						if (self.resizeUseRatio) {
 							another = Math.round(value / self.ratio);
+
 							if (another > self.o.min_height) {
 								css(self.image, 'height', another + 'px');
-								self.heightInput.value = another.toString();
+								heightInput.value = another.toString();
 							}
 						}
 					}
@@ -470,14 +476,14 @@ export class ImageEditor extends ViewComponent {
 				}, 200)
 			)
 			.on(
-				self.heightInput,
+				heightInput,
 				`change.${jie} mousedown.${jie} keydown.${jie}`,
 				self.j.async.debounce(() => {
 					if (this.isDestructed) {
 						return;
 					}
 
-					const value: number = parseInt(self.heightInput.value, 10);
+					const value: number = parseInt(heightInput.value, 10);
 					let another: number;
 					if (value > self.o.min_height) {
 						css(self.image, 'height', value + 'px');
@@ -487,7 +493,7 @@ export class ImageEditor extends ViewComponent {
 
 							if (another > self.o.min_width) {
 								css(self.image, 'width', another + 'px');
-								self.widthInput.value = another.toString();
+								widthInput.value = another.toString();
 							}
 						}
 					}
@@ -495,23 +501,19 @@ export class ImageEditor extends ViewComponent {
 				}, 200)
 			);
 
-		const rationResizeButton: HTMLInputElement | null = self.editor.querySelector(
-			`.${jie}_keep_spect_ratio`
-		);
-		if (rationResizeButton) {
-			rationResizeButton.addEventListener('change', () => {
-				this.resizeUseRatio = rationResizeButton.checked;
+		const { keepAspectRatioResize, keepAspectRatioCrop } = refs<
+			HTMLInputElement
+		>(this.editor);
+
+		if (keepAspectRatioResize) {
+			keepAspectRatioResize.addEventListener('change', () => {
+				this.resizeUseRatio = keepAspectRatioResize.checked;
 			});
 		}
 
-		// use ratio
-		const rationCropButton: HTMLInputElement | null = self.editor.querySelector(
-			`.${jie}_keep_spect_ratio_crop`
-		);
-
-		if (rationCropButton) {
-			rationCropButton.addEventListener('change', () => {
-				this.cropUseRatio = rationCropButton.checked;
+		if (keepAspectRatioCrop) {
+			keepAspectRatioCrop.addEventListener('change', () => {
+				this.cropUseRatio = keepAspectRatioCrop.checked;
 			});
 		}
 
@@ -613,19 +615,22 @@ export class ImageEditor extends ViewComponent {
 							}
 						);
 						break;
+
 					case self.buttons.save:
 						self.onSave(undefined, data, self.hide, (e: Error) => {
 							Alert(e.message);
 						});
 						break;
+
 					case self.buttons.reset:
 						if (self.activeTab === 'resize') {
 							css(self.image, {
 								width: null,
 								height: null
 							});
-							self.widthInput.value = self.naturalWidth.toString();
-							self.heightInput.value = self.naturalHeight.toString();
+
+							widthInput.value = self.naturalWidth.toString();
+							heightInput.value = self.naturalHeight.toString();
 							self.j.e.fire(self.resizeHandler, 'updatesize');
 						} else {
 							self.showCrop();
@@ -735,6 +740,10 @@ export class ImageEditor extends ViewComponent {
 
 			this.dialog.open();
 
+			const { widthInput, heightInput } = refs<HTMLInputElement>(
+				this.editor
+			);
+
 			const onload = () => {
 				if (this.isDestructed) {
 					return;
@@ -744,8 +753,8 @@ export class ImageEditor extends ViewComponent {
 				this.naturalWidth = this.image.naturalWidth;
 				this.naturalHeight = this.image.naturalHeight;
 
-				this.widthInput.value = this.naturalWidth.toString();
-				this.heightInput.value = this.naturalHeight.toString();
+				widthInput.value = this.naturalWidth.toString();
+				heightInput.value = this.naturalHeight.toString();
 
 				this.ratio = this.naturalWidth / this.naturalHeight;
 
@@ -765,6 +774,7 @@ export class ImageEditor extends ViewComponent {
 				this.j.e.fire(this.cropHandler, 'updatesize');
 
 				this.dialog.setPosition();
+
 				this.j.e.fire('afterImageEditor');
 
 				resolve(this.dialog);
@@ -782,18 +792,14 @@ export class ImageEditor extends ViewComponent {
 		super(editor);
 
 		this.options =
-			editor && (editor as IJodit).options
+			editor && (editor as IJodit).o && (editor as IJodit).o.imageeditor
 				? (editor as IJodit).o.imageeditor
 				: Config.defaultOptions.imageeditor;
 
 		const o = this.options;
-		const i = editor.i18n.bind(editor);
 
 		this.resizeUseRatio = o.resizeUseRatio;
 		this.cropUseRatio = o.cropUseRatio;
-
-		const r = this.resizeUseRatio;
-		const c = this.cropUseRatio;
 
 		this.buttons = {
 			reset: Button(this.j, 'update', 'Reset'),
@@ -803,132 +809,23 @@ export class ImageEditor extends ViewComponent {
 
 		this.activeTab = o.resize ? 'resize' : 'crop';
 
-		const act = (el: boolean, className = 'active') =>
-			el ? className : '';
+		this.editor = form(this.j, this.options);
 
-		const switcher = (
-			label: string,
-			className: string,
-			active: boolean = true
-		) => `<div class="jodit-form__group">
-			<label>${i(label)}</label>
-			<div class="jodit-button_group jodit-button_radio_group">
-				<input ${act(
-					active,
-					'checked'
-				)} type="checkbox" class="${jie}_${className} jodit_input"/>
+		const {resizeBox, cropBox} = refs<HTMLInputElement>(this.editor);
 
-				<button type="button" data-yes="1" class="jodit-button jodit_status_success">${i(
-					'Yes'
-				)}</button>
-
-				<button type="button" class="jodit-button jodit_status_danger">${i(
-					'No'
-				)}</button>
-			</div>
-		</div>`;
-
-		this.editor = this.j.c.fromHTML(
-			`<form class="${jie} jodit-properties">
-							<div class="jodit-grid jodit-grid_xs-column">
-								<div class="jodit_col-lg-3-4 jodit_col-xs-5-5">
-								${
-									o.resize
-										? `<div class="${jie}_area ${jie}_area_resize active">
-												<div class="${jie}_box"></div>
-												<div class="${jie}_resizer">
-													<i class="jodit_bottomright"></i>
-												</div>
-											</div>`
-										: ''
-								}
-								${
-									o.crop
-										? `<div class="${jie}_area ${jie}_area_crop ${act(
-												!o.resize
-										  )}">
-												<div class="${jie}_box">
-													<div class="${jie}_croper">
-														<i class="jodit_bottomright"></i>
-														<i class="jodit_sizes"></i>
-													</div>
-												</div>
-											</div>`
-										: ''
-								}
-								</div>
-								<div class="jodit_col-lg-1-4 jodit_col-xs-5-5">
-								${
-									o.resize
-										? `<div data-area="resize" class="${jie}_slider active">
-												<div class="${jie}_slider-title">
-													${gi('resize')}
-													${i('Resize')}
-												</div>
-												<div class="${jie}_slider-content">
-													<div class="jodit-form__group">
-														<label for="${jie}_width">
-															${i('Width')}
-														</label>
-														<input type="number" class="${jie}_width jodit_input"/>
-													</div>
-													<div class="jodit-form__group">
-														<label for="${jie}_height">
-															${i('Height')}
-														</label>
-														<input type="number" class="${jie}_height jodit_input"/>
-													</div>
-													${switcher('Keep Aspect Ratio', 'keep_spect_ratio', r)}
-												</div>
-											</div>`
-										: ''
-								}
-								${
-									o.crop
-										? `<div data-area="crop" class="${jie}_slider ${act(
-												!o.resize
-										  )}'">
-												<div class="${jie}_slider-title">
-													${gi('crop')}
-													${i('Crop')}
-												</div>
-												<div class="${jie}_slider-content">
-													${switcher('Keep Aspect Ratio', 'keep_spect_ratio_crop', c)}
-												</div>
-											</div>`
-										: ''
-								}
-								</div>
-							</div>
-						</form>`
-		);
-
-		this.widthInput = this.editor.querySelector(
-			`.${jie}_width`
-		) as HTMLInputElement;
-
-		this.heightInput = this.editor.querySelector(
-			`.${jie}_height`
-		) as HTMLInputElement;
-
-		this.resize_box = this.editor.querySelector(
-			`.${jie}_area.${jie}_area_resize .${jie}_box`
-		) as HTMLElement;
-
-		this.crop_box = this.editor.querySelector(
-			`.${jie}_area.${jie}_area_crop .${jie}_box`
-		) as HTMLElement;
+		this.resize_box = resizeBox;
+		this.crop_box = cropBox;
 
 		this.sizes = this.editor.querySelector(
-			`.${jie}_area.${jie}_area_crop .jodit_sizes`
+			`.${jie}__area.${jie}__area_crop .jodit-image-editor__sizes`
 		) as HTMLElement;
 
 		this.resizeHandler = this.editor.querySelector(
-			`.${jie}_resizer`
+			`.${jie}__resizer`
 		) as HTMLElement;
 
 		this.cropHandler = this.editor.querySelector(
-			`.${jie}_croper`
+			`.${jie}__croper`
 		) as HTMLElement;
 
 		this.dialog = new Dialog({
@@ -962,8 +859,6 @@ export class ImageEditor extends ViewComponent {
 
 		Dom.safeRemove(this.editor);
 
-		delete this.widthInput;
-		delete this.heightInput;
 		delete this.resize_box;
 		delete this.crop_box;
 		delete this.sizes;

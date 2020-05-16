@@ -33,7 +33,7 @@ describe('Limit plugin', function() {
 
 					setTimeout(() => {
 						expect('a1111').equals(editor.value);
-						const chars = editor.statusbar.container.querySelector('.jodit-statusbar__item');
+						const chars = editor.statusbar.container.querySelector('.jodit-status-bar__item');
 						expect(chars.textContent.trim()).equals('Chars: 5');
 						done();
 					}, 200);
@@ -65,7 +65,7 @@ describe('Limit plugin', function() {
 
 						setTimeout(() => {
 							expect('1111vv').equals(editor.value);
-							const chars = editor.statusbar.container.querySelector('.jodit-statusbar__item');
+							const chars = editor.statusbar.container.querySelector('.jodit-status-bar__item');
 							expect(chars.textContent.trim()).equals('Chars: 6');
 							done();
 						}, 200);

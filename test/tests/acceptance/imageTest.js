@@ -1091,12 +1091,12 @@ describe('Test image', function() {
 					'<div style="width:800px; margin:auto; border:1px solid red;">\n' +
 					'        wrong image selection\n' +
 					'        <div style="position:relative;text-align: left">\n' +
-					'            <textarea id="text_area0"> <img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/><br/><br/><br/><br/><br/><br/></textarea>\n' +
+					'            <textarea id="text__area0"> <img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/><br/><br/><br/><br/><br/><br/></textarea>\n' +
 					'        </div>\n' +
 					'    </div>';
 
 				document.body.appendChild(div);
-				const editor = new Jodit('#text_area0', {
+				const editor = new Jodit('#text__area0', {
 					observer: {
 						timeout: 0
 					}
@@ -1143,17 +1143,17 @@ describe('Test image', function() {
 					'<div style="width:800px; margin:auto; border:1px solid red;">\n' +
 					'        wrong image selection\n' +
 					'        <div style="position:relative;text-align: left">\n' +
-					'            <textarea id="text_area0"> <img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/></textarea>\n' +
+					'            <textarea id="text__area0"> <img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/></textarea>\n' +
 					'        </div>\n' +
 					'    </div>';
 
 				document.body.appendChild(div);
 
-				const editor = new Jodit('#text_area0');
+				const editor = new Jodit('#text__area0');
 				simulateEvent('click', 0, editor.editor.querySelector('img'));
 
 				const resizer = document.querySelector(
-					'.jodit-resizer[data-editor_id=text_area0]'
+					'.jodit-resizer[data-editor_id=text__area0]'
 				);
 				expect(resizer).is.not.null;
 
@@ -1177,13 +1177,13 @@ describe('Test image', function() {
 					'<div style="width:800px; margin:auto; border:1px solid red;">\n' +
 					'        wrong image selection\n' +
 					'        <div style="position:relative;text-align: left">\n' +
-					'            <textarea id="text_area1"> &lt;img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/&gt;</textarea>\n' +
+					'            <textarea id="text__area1"> &lt;img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/&gt;</textarea>\n' +
 					'        </div>\n' +
 					'    </div>';
 
 				document.body.appendChild(div);
 
-				const editor = new Jodit(document.getElementById('text_area1'));
+				const editor = new Jodit(document.getElementById('text__area1'));
 				simulateEvent(
 					['mousedown', 'mouseup', 'click'],
 					0,
@@ -1195,7 +1195,7 @@ describe('Test image', function() {
 				expect(popup).is.not.null;
 				//
 				const resizer = editor.ownerDocument.querySelector(
-					'.jodit-resizer[data-editor_id=text_area1]'
+					'.jodit-resizer[data-editor_id=text__area1]'
 				);
 				expect(resizer).is.not.null;
 				//

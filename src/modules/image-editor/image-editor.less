@@ -11,7 +11,7 @@
 @image_editor_resizer_target_border_color: #383838;
 @image_editor_resizer_target_bg_color: #8c7878;
 
-.jodit_image_editor {
+.jodit-image-editor {
 	width: 100%;
 	height: 100%;
 	@media (max-width: @screen-sm) {
@@ -34,7 +34,7 @@
 		box-sizing: border-box;
 	}
 
-	.jodit_image_editor_slider {
+	.jodit-image-editor__slider {
 		&-title {
 			text-shadow: rgb(243, 243, 243) 0 1px 0;
 			color: rgb(51, 51, 51);
@@ -61,7 +61,7 @@
 			display: none;
 		}
 
-		&.active .jodit_image_editor_slider-title {
+		&.jodit-image-editor_active .jodit-image-editor__slider-title {
 			background-color: rgb(93, 93, 93);
 			color: #fff;
 			text-shadow: #000000 0 1px 0;
@@ -70,12 +70,12 @@
 			}
 		}
 
-		&.active .jodit_image_editor_slider-content {
+		&.jodit-image-editor_active .jodit-image-editor__slider-content {
 			display: block;
 		}
 	}
 
-	&_area {
+	&__area {
 		width: 100%;
 		background-color: #eee;
 		background-image: linear-gradient(
@@ -105,11 +105,11 @@
 
 		display: none;
 
-		&.active {
+		&.jodit-image-editor_active {
 			display: block;
 		}
 
-		.jodit_image_editor_box {
+		.jodit-image-editor__box {
 			overflow: hidden;
 			position: relative;
 			z-index: 1;
@@ -123,8 +123,8 @@
 			}
 		}
 
-		.jodit_image_editor_croper,
-		.jodit_image_editor_resizer {
+		.jodit-image-editor__croper,
+		.jodit-image-editor__resizer {
 			z-index: 2;
 			width: 100px;
 			height: 100px;
@@ -158,14 +158,14 @@
 		}
 	}
 
-	&_area.jodit_image_editor_area_crop {
+	&__area.jodit-image-editor__area_crop {
 		height: 100%;
 		background: #eee;
 		text-align: center;
 		line-height: 100%;
 		position: relative;
 
-		.jodit_image_editor_box {
+		.jodit-image-editor__box {
 			height: 100%;
 			overflow: visible;
 			pointer-events: all;
@@ -192,11 +192,11 @@
 				z-index: 1;
 			}
 
-			.jodit_image_editor_croper {
+			.jodit-image-editor__croper {
 				pointer-events: all;
 				cursor: move;
 
-				i.jodit_sizes {
+				i.jodit-image-editor__sizes {
 					font-size: 12px;
 					white-space: pre;
 					position: absolute;
@@ -213,7 +213,7 @@
 			}
 		}
 
-		&.active {
+		&.jodit-image-editor_active {
 			display: flex;
 			justify-content: center;
 			align-items: center;

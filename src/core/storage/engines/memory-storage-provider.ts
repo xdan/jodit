@@ -14,6 +14,10 @@ export class MemoryStorageProvider<T = StorageValueType>
 		this.data.set(key, value);
 	}
 
+	delete(key: string) {
+		this.data.delete(key);
+	}
+
 	get<R = T>(key: string): R | void {
 		return <R | void>this.data.get(key);
 	}
