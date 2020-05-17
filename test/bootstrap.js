@@ -532,7 +532,10 @@ function fillBoxBr(count) {
 const codeKey = {
 	13: 'Enter',
 	8: 'Backspace',
+	114: 'F3',
 	86: 'v',
+	70: 'f',
+	72: 'h',
 	38: 'ArrowUp',
 	40: 'ArrowDown',
 };
@@ -577,6 +580,10 @@ function simulateEvent(type, keyCodeArg, element, options) {
 
 	if (options) {
 		options(evt);
+	} else if (element.getBoundingClientRect) {
+		const pos = Jodit.modules.Helpers.position(element);
+		evt.clientX = pos.left + 5;
+		evt.clientY = pos.top + 5;
 	}
 
 	if (type.match(/^mouse/)) {

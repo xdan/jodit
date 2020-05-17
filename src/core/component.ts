@@ -181,6 +181,10 @@ export abstract class ViewComponent<T extends IViewBased = IViewBased>
 	 */
 	jodit!: T;
 
+	get defaultTimeout(): number {
+		return this.j.defaultTimeout;
+	}
+
 	/**
 	 * Shortcut for `this.jodit`
 	 */

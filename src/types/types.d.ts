@@ -61,6 +61,7 @@ interface IViewComponent<T extends IViewBased = IViewBased> extends IComponent {
 	jodit: T;
 	j: this['jodit'];
 	setParentView(jodit: T): this;
+	defaultTimeout: number;
 }
 
 export type NodeCondition = (

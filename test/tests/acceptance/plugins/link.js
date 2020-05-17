@@ -101,24 +101,17 @@ describe('Link plugin', function() {
 						editor.selection.selectRange(range);
 
 						simulateEvent(
-							'mousedown',
+							'click',
 							0,
 							editor.editor.querySelector('a')
 						);
 
-						const inlinePopup = document.querySelector(
-							'.jodit_toolbar_popup-inline[data-editor_id=' +
-								editor.id +
-								']'
-						);
+						const inlinePopup = getOpenedPopup(editor);
 						expect(inlinePopup).is.not.null;
 
 						clickButton('link', inlinePopup);
 
-						const popup = inlinePopup.querySelector(
-							'.jodit_toolbar_popup'
-						);
-
+						const popup = getOpenedPopup(editor);
 						expect(popup).is.not.null;
 
 						const content = popup.querySelector(
@@ -157,22 +150,16 @@ describe('Link plugin', function() {
 						editor.selection.selectRange(range);
 
 						simulateEvent(
-							'mousedown',
+							'click',
 							0,
 							editor.editor.querySelector('a')
 						);
 
-						const inlinePopup = document.querySelector(
-							'.jodit_toolbar_popup-inline[data-editor_id=' +
-								editor.id +
-								']'
-						);
+						const inlinePopup = getOpenedPopup(editor);
 
 						clickButton('link', inlinePopup);
 
-						const popup = inlinePopup.querySelector(
-							'.jodit_toolbar_popup'
-						);
+						const popup = getOpenedPopup(editor);
 
 						const content = popup.querySelector(
 							'[ref=content_input]'
@@ -203,22 +190,16 @@ describe('Link plugin', function() {
 							editor.selection.selectRange(range);
 
 							simulateEvent(
-								'mousedown',
+								'click',
 								0,
 								editor.editor.querySelector('a')
 							);
 
-							const inlinePopup = document.querySelector(
-								'.jodit_toolbar_popup-inline[data-editor_id=' +
-									editor.id +
-									']'
-							);
+							const inlinePopup = getOpenedPopup(editor);
 
 							clickButton('link', inlinePopup);
 
-							const popup = inlinePopup.querySelector(
-								'.jodit_toolbar_popup'
-							);
+							const popup = getOpenedPopup(editor);
 
 							const content = popup.querySelector(
 								'[ref=content_input]'
@@ -259,22 +240,16 @@ describe('Link plugin', function() {
 							editor.selection.selectRange(range);
 
 							simulateEvent(
-								'mousedown',
+								'click',
 								0,
 								editor.editor.querySelector('a')
 							);
 
-							const inlinePopup = document.querySelector(
-								'.jodit_toolbar_popup-inline[data-editor_id=' +
-									editor.id +
-									']'
-							);
+							const inlinePopup = getOpenedPopup(editor);
 
 							clickButton('link', inlinePopup);
 
-							const popup = inlinePopup.querySelector(
-								'.jodit_toolbar_popup'
-							);
+							const popup = getOpenedPopup(editor);
 
 							const content = popup.querySelector(
 								'[ref=content_input]'
@@ -319,22 +294,16 @@ describe('Link plugin', function() {
 							editor.selection.selectRange(range);
 
 							simulateEvent(
-								'mousedown',
+								'click',
 								0,
 								editor.editor.querySelector('a')
 							);
 
-							const inlinePopup = document.querySelector(
-								'.jodit_toolbar_popup-inline[data-editor_id="' +
-									editor.id +
-									'"]'
-							);
+							const inlinePopup = getOpenedPopup(editor);
 
 							clickButton('link', inlinePopup);
 
-							const popup = inlinePopup.querySelector(
-								'.jodit_toolbar_popup'
-							);
+							const popup = getOpenedPopup(editor);
 
 							const content = popup.querySelector(
 								'[ref=content_input]'
@@ -392,57 +361,32 @@ describe('Link plugin', function() {
 
 					editor.value = '';
 
-					simulateEvent(
-						'mousedown',
-						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link'
-						)
-					);
+					clickButton('link', editor);
 
-					const list = editor.container.querySelector(
-						'.jodit_toolbar_popup'
-					);
+					const list = getOpenedPopup(editor);
 
 					expect(popup_opened).equals(2);
 					expect(
 						editor.ownerWindow.getComputedStyle(list).display
 					).equals('block');
+
 					expect(
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button'
-						).style.display
+						list.querySelector('[ref="unlink"]').style.display
 					).equals('none');
 
-					const url = editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]'
-					);
+					const url = list.querySelector('input[name=url]');
 					expect(url).is.not.null;
 
 					url.focus();
 					url.value = ''; // try wrong url
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=text]'
-					).value = '123';
-					simulateEvent(
-						'submit',
-						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit-form'
-						)
-					);
+					list.querySelector('input[name=text]').value = '123';
+					simulateEvent('submit', 0, list.querySelector('form'));
 
 					expect(url.classList.contains('jodit_error')).is.true;
 
 					url.focus();
 					url.value = 'tests/artio.jpg';
-					simulateEvent(
-						'submit',
-						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit-form'
-						)
-					);
+					simulateEvent('submit', 0, list.querySelector('form'));
 
 					expect(sortAttributes(editor.value)).equals(
 						'<a href="tests/artio.jpg">123</a>'
@@ -471,9 +415,7 @@ describe('Link plugin', function() {
 
 						clickButton('link', editor);
 
-						const popup = editor.container.querySelector(
-							'.jodit_toolbar_popup'
-						);
+						const popup = getOpenedPopup(editor);
 
 						expect(
 							sortAttributes(
@@ -481,9 +423,7 @@ describe('Link plugin', function() {
 							)
 						).equals(tpl);
 
-						const url = editor.container.querySelector(
-							'[ref=url_input]'
-						);
+						const url = popup.querySelector('[ref=url_input]');
 						expect(url).is.not.null;
 
 						url.focus();
@@ -514,9 +454,7 @@ describe('Link plugin', function() {
 
 							clickButton('link', editor);
 
-							const popup = editor.container.querySelector(
-								'.jodit_toolbar_popup'
-							);
+							const popup = getOpenedPopup(editor);
 
 							expect(
 								sortAttributes(
@@ -524,7 +462,7 @@ describe('Link plugin', function() {
 								)
 							).equals(tpl);
 
-							const url = editor.container.querySelector(
+							const url = popup.querySelector(
 								'[data-ref=url_input]'
 							);
 							expect(url).is.not.null;
@@ -532,7 +470,11 @@ describe('Link plugin', function() {
 							url.focus();
 							url.value = 'tests/artio.jpg';
 
-							simulateEvent('submit', 0, popup.querySelector('form'));
+							simulateEvent(
+								'submit',
+								0,
+								popup.querySelector('form')
+							);
 
 							expect(sortAttributes(editor.value)).equals(
 								'<a href="tests/artio.jpg">123</a>'
@@ -550,8 +492,8 @@ describe('Link plugin', function() {
 
 							clickButton('link', editor);
 
-							const form = editor.container.querySelector(
-								'.jodit_toolbar_popup form'
+							const form = getOpenedPopup(editor).querySelector(
+								'form'
 							);
 
 							expect(form).is.not.null;
@@ -568,7 +510,8 @@ describe('Link plugin', function() {
 								toolbarAdaptive: false
 							});
 
-							editor.value = 'test <span style="color: #ccc;">select </span> stop';
+							editor.value =
+								'test <span style="color: #ccc;">select </span> stop';
 
 							const range = editor.selection.createRange();
 
@@ -583,17 +526,9 @@ describe('Link plugin', function() {
 
 							editor.selection.selectRange(range);
 
-							simulateEvent(
-								'mousedown',
-								0,
-								editor.container.querySelector(
-									'.jodit_toolbar_btn.jodit_toolbar_btn-link'
-								)
-							);
+							clickButton('link', editor);
 
-							const popup = editor.container.querySelector(
-								'.jodit_toolbar_popup'
-							);
+							const popup = getOpenedPopup(editor);
 							expect(popup).is.not.null;
 
 							expect(
@@ -602,9 +537,8 @@ describe('Link plugin', function() {
 							).equals('block');
 
 							expect(
-								editor.container.querySelector(
-									'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button'
-								).style.display
+								popup.querySelector('[ref="unlink"]').style
+									.display
 							).equals('none');
 
 							const url = popup.querySelector('[ref=url_input]');
@@ -622,9 +556,7 @@ describe('Link plugin', function() {
 							simulateEvent(
 								'submit',
 								0,
-								editor.container.querySelector(
-									'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit-form'
-								)
+								popup.querySelector('form')
 							);
 
 							expect(sortAttributes(editor.value)).equals(
@@ -654,17 +586,9 @@ describe('Link plugin', function() {
 									editor.editor.querySelector('img')
 								);
 
-								simulateEvent(
-									'mousedown',
-									0,
-									editor.container.querySelector(
-										'.jodit_toolbar_btn.jodit_toolbar_btn-link'
-									)
-								);
+								clickButton('link', editor);
 
-								const popup = editor.container.querySelector(
-									'.jodit_toolbar_popup'
-								);
+								const popup = getOpenedPopup(editor);
 
 								const text = popup.querySelector(
 									'[ref=content_input_box]'
@@ -692,17 +616,9 @@ describe('Link plugin', function() {
 								editor.editor.querySelector('img')
 							);
 
-							simulateEvent(
-								'mousedown',
-								0,
-								editor.container.querySelector(
-									'.jodit_toolbar_btn.jodit_toolbar_btn-link'
-								)
-							);
+							clickButton('link', editor);
 
-							const popup = editor.container.querySelector(
-								'.jodit_toolbar_popup'
-							);
+							const popup = getOpenedPopup(editor);
 							expect(popup).is.not.null;
 							expect(
 								editor.ownerWindow.getComputedStyle(popup)
@@ -722,9 +638,7 @@ describe('Link plugin', function() {
 							simulateEvent(
 								'submit',
 								0,
-								editor.container.querySelector(
-									'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit-form'
-								)
+								popup.querySelector('form')
 							);
 
 							expect(sortAttributes(editor.value)).equals(
@@ -755,50 +669,32 @@ describe('Link plugin', function() {
 					sel.removeAllRanges();
 					sel.addRange(range);
 
-					simulateEvent(
-						'mousedown',
-						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link'
-						)
+					clickButton('link', editor);
+
+					const popup = getOpenedPopup(editor);
+
+					expect(popup.querySelector('input[name=url]').value).equals(
+						'#test'
 					);
 
-					expect(
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]'
-						).value
-					).equals('#test');
+					expect(popup.querySelector('input[name=target]').checked).is
+						.true;
+
+					expect(popup.querySelector('input[name=nofollow]').checked)
+						.is.true;
 
 					expect(
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=target]'
-						).checked
-					).is.true;
-
-					expect(
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=nofollow]'
-						).checked
-					).is.true;
-
-					expect(
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button'
-						).style.display
+						popup.querySelector('[ref="unlink"]').style.display
 					).does.not.equal('none');
 
 					expect(
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link [ref=insert]'
-						).innerHTML
+						popup.querySelector('[ref=insert]').innerHTML
 					).equals(editor.i18n('Update'));
 
 					simulateEvent(
 						'click',
 						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link [ref=unlink]'
-						)
+						popup.querySelector('[ref=unlink]')
 					);
 
 					expect(sortAttributes(editor.value)).equals('test');
@@ -817,9 +713,7 @@ describe('Link plugin', function() {
 
 					clickButton('link', editor);
 
-					const popup = editor.container.querySelector(
-						'.jodit_toolbar_popup'
-					);
+					const popup = getOpenedPopup(editor);
 
 					const textInput = popup.querySelector(
 						'input[ref=content_input]'
@@ -845,9 +739,7 @@ describe('Link plugin', function() {
 
 					clickButton('link', editor);
 
-					const popup = editor.container.querySelector(
-						'.jodit_toolbar_popup'
-					);
+					const popup = getOpenedPopup(editor);
 
 					const textInput = popup.querySelector(
 						'input[ref=content_input]'
@@ -873,9 +765,7 @@ describe('Link plugin', function() {
 
 							clickButton('link', editor);
 
-							const popup = editor.container.querySelector(
-								'.jodit_toolbar_popup'
-							);
+							const popup = getOpenedPopup(editor);
 
 							const textInput = popup.querySelector(
 								'input[ref=content_input]'
@@ -922,9 +812,7 @@ describe('Link plugin', function() {
 
 						clickButton('link', editor);
 
-						const popup = editor.container.querySelector(
-							'.jodit_toolbar_popup'
-						);
+						const popup = getOpenedPopup(editor);
 
 						const form = popup.querySelector('.jodit-form');
 						expect(form).is.not.null;

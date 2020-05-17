@@ -99,7 +99,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 
 	@autobind
 	immediateUpdate() {
-		if (this.isDestructed || this.j.isLocked()) {
+		if (this.isDestructed || this.j.isLocked) {
 			return;
 		}
 

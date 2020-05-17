@@ -95,7 +95,7 @@ export class resizeCells extends Plugin {
 	 */
 	@autobind
 	private onHandleMouseDown(event: MouseEvent) {
-		if (this.j.isLocked()) {
+		if (this.j.isLocked) {
 			return;
 		}
 
@@ -464,7 +464,7 @@ export class resizeCells extends Plugin {
 				table,
 				'mousemove.resize-cells touchmove.resize-cells',
 				(event: MouseEvent) => {
-					if (this.j.isLocked()) {
+					if (this.j.isLocked) {
 						return;
 					}
 

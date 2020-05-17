@@ -117,35 +117,31 @@ describe('Test Inline mode', function() {
 	describe('Inline popups', function() {
 		describe('Click on Image', function() {
 			it('Should show inline popup', function() {
-				const editor = new Jodit(appendTestDiv());
+				const editor = getJodit();
 
 				editor.value = '<p>test <img/> test</p>';
 				const img = editor.editor.querySelector('img');
-				simulateEvent('mousedown', 0, img);
+				simulateEvent('click', 0, img);
 
-				const popup = editor.ownerDocument.querySelector(
-					'.jodit_toolbar_popup-inline[data-editor_id=' +
-						editor.id +
-						']'
-				);
+				const popup = getOpenedPopup(editor);
 				expect(popup).is.not.null;
 			});
+
 			describe('Disable toolbarInline = false', function() {
 				it('Should show inline popup', function() {
-					const editor = new Jodit(appendTestDiv(), {
+					const editor = getJodit({
 						toolbarInline: false
 					});
+
 					editor.value = '<p>test <img/> test</p>';
 					const img = editor.editor.querySelector('img');
-					simulateEvent('mousedown', 0, img);
-					const popup = editor.ownerDocument.querySelector(
-						'.jodit_toolbar_popup-inline[data-editor_id=' +
-							editor.id +
-							']'
-					);
+					simulateEvent('click', 0, img);
+					const popup = getOpenedPopup(editor);
+
 					expect(popup).is.null;
 				});
 			});
+
 			describe('Click in the right side of editor', function() {
 				it('Should open inline-popup with float by right editor side', function() {
 					box.style.width = 'auto';
@@ -159,16 +155,12 @@ describe('Test Inline mode', function() {
 					editor.selection.focus();
 
 					simulateEvent(
-						'mousedown',
+						'click',
 						0,
 						editor.editor.querySelector('img')
 					);
 
-					const popup = editor.ownerDocument.querySelector(
-						'.jodit_toolbar_popup-inline[data-editor_id=' +
-							editor.id +
-							']'
-					);
+					const popup = getOpenedPopup(editor);
 
 					expect(popup).not.null;
 
@@ -181,7 +173,7 @@ describe('Test Inline mode', function() {
 								positionPopup.width -
 								(positionContainer.left +
 									positionContainer.width)
-						) < 2
+						) < 20
 					).is.true;
 				});
 
@@ -205,16 +197,12 @@ describe('Test Inline mode', function() {
 						editor.selection.focus();
 
 						simulateEvent(
-							'mousedown',
+							'click',
 							0,
 							editor.editor.querySelector('img')
 						);
 
-						const popup = editor.ownerDocument.querySelector(
-							'.jodit_toolbar_popup-inline[data-editor_id=' +
-								editor.id +
-								']'
-						);
+						const popup = getOpenedPopup(editor);
 
 						expect(popup).to.not.null;
 
@@ -227,7 +215,7 @@ describe('Test Inline mode', function() {
 									positionPopup.width -
 									(positionContainer.left +
 										positionContainer.width)
-							) < 2
+							) < 20
 						).to.true;
 
 						brs.forEach(function(br) {
@@ -236,6 +224,7 @@ describe('Test Inline mode', function() {
 					});
 				});
 			});
+
 			describe('Recalk position after Scroll', function() {
 				it('Should reacalc inline popup position', function() {
 					const editor = getJodit({
@@ -247,14 +236,12 @@ describe('Test Inline mode', function() {
 						' <img style="width:100px;height:100px;" src="tests/artio.jpg"/> ' +
 						'<br>'.repeat(20) +
 						'test</p>';
+
 					const img = editor.editor.querySelector('img');
 					img.scrollIntoView();
-					simulateEvent('mousedown', 0, img);
-					const popup = editor.ownerDocument.querySelector(
-						'.jodit_toolbar_popup-inline[data-editor_id=' +
-							editor.id +
-							']'
-					);
+
+					simulateEvent('click', 0, img);
+					const popup = getOpenedPopup(editor);
 					expect(popup).is.not.null;
 
 					let imgPosition = offset(img);
@@ -265,7 +252,7 @@ describe('Test Inline mode', function() {
 							popupPosition.top -
 								(imgPosition.top + imgPosition.height) -
 								10
-						) < 2
+						) < 20
 					).is.true;
 
 					editor.editor.scrollTop = editor.editor.scrollTop + 50;
@@ -279,7 +266,7 @@ describe('Test Inline mode', function() {
 							popupPosition.top -
 								(imgPosition.top + imgPosition.height) -
 								10
-						) < 2
+						) < 20
 					).is.true;
 				});
 			});
@@ -295,14 +282,11 @@ describe('Test Inline mode', function() {
 						' <img style="width:100px;height:100px;" src="tests/artio.jpg"/> ' +
 						'<br>'.repeat(120) +
 						'test</p>';
+
 					const img = editor.editor.querySelector('img');
 					img.scrollIntoView();
-					simulateEvent('mousedown', 0, img);
-					const popup = editor.ownerDocument.querySelector(
-						'.jodit_toolbar_popup-inline[data-editor_id=' +
-							editor.id +
-							']'
-					);
+					simulateEvent('click', 0, img);
+					const popup = getOpenedPopup(editor);
 					expect(popup).is.not.null;
 
 					const imgPosition = offset(img);
@@ -313,43 +297,18 @@ describe('Test Inline mode', function() {
 							popupPosition.top -
 								(imgPosition.top + imgPosition.height) -
 								10
-						) < 2
+						) < 20
 					).is.true;
 
 					editor.editor.scrollTop = editor.editor.scrollTop + 1000;
 					simulateEvent('scroll', 0, editor.editor);
 
-					expect(
-						popup.parentNode.classList.contains(
-							'jodit-popup-inline__target-hidden'
-						)
-					).is.true;
+					expect(popup.parentNode).is.not.null;
 
 					img.scrollIntoView();
 					simulateEvent('scroll', 0, editor.editor);
 
-					expect(
-						popup.parentNode.classList.contains(
-							'jodit-popup-inline__target-hidden'
-						)
-					).is.false;
-				});
-			});
-		});
-
-		describe('Click on Image', function() {
-			describe('On mobile', function() {
-				it('Should show inline popup', function() {
-					const editor = new Jodit(appendTestDiv());
-					editor.value = '<p>test <img/> test</p>';
-					const img = editor.editor.querySelector('img');
-					simulateEvent('touchstart', 0, img);
-					const popup = editor.ownerDocument.querySelector(
-						'.jodit_toolbar_popup-inline[data-editor_id=' +
-							editor.id +
-							']'
-					);
-					expect(popup).is.not.null;
+					expect(popup.parentNode).is.not.null;
 				});
 			});
 		});
@@ -359,14 +318,11 @@ describe('Test Inline mode', function() {
 				const editor = new Jodit(appendTestDiv());
 				editor.value = '<p>test <a href="#test">test</a> test</p>';
 				const a = editor.editor.querySelector('a');
-				simulateEvent('mousedown', 0, a);
-				const popup = editor.ownerDocument.querySelector(
-					'.jodit_toolbar_popup-inline[data-editor_id=' +
-						editor.id +
-						']'
-				);
+				simulateEvent('click', 0, a);
+				const popup = getOpenedPopup(editor);
 				expect(popup).is.not.null;
 			});
+
 			describe('Disable with toolbarInlineDisableFor', function() {
 				describe('Option like string', function() {
 					it('Should now show inline popup for link', function() {
@@ -374,74 +330,56 @@ describe('Test Inline mode', function() {
 							toolbarInline: true,
 							toolbarInlineDisableFor: 'a,IMG'
 						});
+
 						editor.value =
 							'<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="tests/artio.jpg">> test</p>';
 						const a = editor.editor.querySelector('a');
 						const img = editor.editor.querySelector('img');
 						const td = editor.editor.querySelector('td');
-						simulateEvent('mousedown', 0, a);
+						simulateEvent('click', 0, a);
 
-						let popup = editor.ownerDocument.querySelector(
-							'.jodit_toolbar_popup-inline[data-editor_id=' +
-								editor.id +
-								']'
-						);
+						let popup = getOpenedPopup(editor);
 						expect(popup).is.null;
 
-						simulateEvent('mousedown', 0, img);
-						popup = editor.ownerDocument.querySelector(
-							'.jodit_toolbar_popup-inline[data-editor_id=' +
-								editor.id +
-								']'
-						);
+						simulateEvent('click', 0, img);
+						popup = getOpenedPopup(editor);
 
 						expect(popup).is.null;
 
-						simulateEvent('mousedown', 0, td);
-						popup = editor.ownerDocument.querySelector(
-							'.jodit_toolbar_popup-inline[data-editor_id=' +
-								editor.id +
-								']'
-						);
+						simulateEvent('click', 0, td);
+						popup = getOpenedPopup(editor);
 
-						expect(popup).is.not.null;
+						expect(popup).is.null;
 					});
 				});
+
 				describe('Option like srray', function() {
 					it('Should now show inline popup for link', function() {
 						const editor = new Jodit(appendTestDiv(), {
 							toolbarInline: true,
-							toolbarInlineDisableFor: ['A', 'table']
+							toolbarInlineDisableFor: ['A', 'table-cells']
 						});
+
 						editor.value =
-							'<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="tests/artio.jpg">> test</p>';
+							'<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px;height:30px;" src="tests/artio.jpg">> test</p>';
+
 						const a = editor.editor.querySelector('a');
 						const img = editor.editor.querySelector('img');
 						const td = editor.editor.querySelector('td');
-						simulateEvent('mousedown', 0, a);
 
-						let popup = editor.ownerDocument.querySelector(
-							'.jodit_toolbar_popup-inline[data-editor_id=' +
-								editor.id +
-								']'
-						);
+						simulateEvent('click', 0, a);
+
+						let popup = getOpenedPopup(editor);
 						expect(popup).is.null;
 
-						simulateEvent('mousedown', 0, img);
-						popup = editor.ownerDocument.querySelector(
-							'.jodit_toolbar_popup-inline[data-editor_id=' +
-								editor.id +
-								']'
-						);
+						simulateEvent('click', 0, img);
+						popup = getOpenedPopup(editor);
 
 						expect(popup).is.not.null;
 
-						simulateEvent('mousedown', 0, td);
-						popup = editor.ownerDocument.querySelector(
-							'.jodit_toolbar_popup-inline[data-editor_id=' +
-								editor.id +
-								']'
-						);
+						simulateEvent(['mousedown', 'mouseup', 'click'], 0, td);
+
+						popup = getOpenedPopup(editor);
 
 						expect(popup).is.null;
 					});
@@ -451,16 +389,14 @@ describe('Test Inline mode', function() {
 
 		describe('Click on table cell', function() {
 			it('Should show inline popup', function() {
-				const editor = new Jodit(appendTestDiv());
+				const editor = getJodit();
 				editor.value =
 					'<table><tr><td>test test</a> test</td></tr></table>';
+
 				const td = editor.editor.querySelector('td');
-				simulateEvent('mousedown', 0, td);
-				const popup = editor.ownerDocument.querySelector(
-					'.jodit_toolbar_popup-inline[data-editor_id=' +
-						editor.id +
-						']'
-				);
+				simulateEvent(['mousedown', 'mouseup', 'click'], 0, td);
+
+				const popup = getOpenedPopup(editor);
 				expect(popup).is.not.null;
 			});
 		});
@@ -470,14 +406,13 @@ describe('Test Inline mode', function() {
 				const editor = new Jodit(appendTestDiv(), {
 					preset: 'inline'
 				});
+
 				editor.value = 'test<br>test';
 				editor.selection.select(editor.editor.firstChild);
-				simulateEvent('selectionchange', 0, editor.editor);
-				const popup = editor.ownerDocument.querySelector(
-					'.jodit_toolbar_popup-inline[data-editor_id=' +
-						editor.id +
-						']'
-				);
+
+				simulateEvent('selectionchange', 0, editor.editorDocument);
+
+				const popup = getOpenedPopup(editor);
 				expect(popup).is.not.null;
 			});
 
@@ -489,14 +424,11 @@ describe('Test Inline mode', function() {
 					});
 					editor.value = 'test<br>test';
 					editor.selection.select(editor.editor.firstChild);
-					simulateEvent('selectionchange', 0, editor.editor);
-					const popup = editor.ownerDocument.querySelector(
-						'.jodit_toolbar_popup-inline[data-editor_id=' +
-							editor.id +
-							']'
-					);
+					simulateEvent('selectionchange', 0, editor.editorDocument);
+					const popup = getOpenedPopup(editor);
 					expect(popup).is.null;
 				});
+
 				describe('After disable readonly mode', function() {
 					it('Should show inline popup', function() {
 						const editor = new Jodit(appendTestDiv(), {
@@ -505,28 +437,21 @@ describe('Test Inline mode', function() {
 						});
 						editor.value = 'test<br>test';
 						editor.selection.select(editor.editor.firstChild);
-						simulateEvent('selectionchange', 0, editor.editor);
+						simulateEvent('selectionchange', 0, editor.editorDocument);
 
-						let popup = editor.ownerDocument.querySelector(
-							'.jodit_toolbar_popup-inline[data-editor_id=' +
-								editor.id +
-								']'
-						);
+						let popup = getOpenedPopup(editor);
 						expect(popup).is.null;
 
 						editor.setReadOnly(false);
 
 						editor.selection.select(editor.editor.firstChild);
-						simulateEvent('selectionchange', 0, editor.editor);
-						popup = editor.ownerDocument.querySelector(
-							'.jodit_toolbar_popup-inline[data-editor_id=' +
-								editor.id +
-								']'
-						);
+						simulateEvent('selectionchange', 0, editor.editorDocument);
+						popup = getOpenedPopup(editor);
 						expect(popup).is.not.null;
+
 						expect(
 							editor.ownerWindow.getComputedStyle(popup).display
-						).equals('inline-block');
+						).equals('block');
 					});
 				});
 			});
@@ -538,12 +463,8 @@ describe('Test Inline mode', function() {
 					});
 					editor.value = 'test<br>test';
 					editor.selection.select(editor.editor.firstChild);
-					simulateEvent('selectionchange', 0, editor.editor);
-					const popup = editor.ownerDocument.querySelector(
-						'.jodit_toolbar_popup-inline[data-editor_id=' +
-							editor.id +
-							']'
-					);
+					simulateEvent('selectionchange', 0, editor.editorDocument);
+					const popup = getOpenedPopup(editor);
 					expect(popup).is.not.null;
 					const range = editor.selection.createRange();
 					range.setStart(editor.editor.firstChild, 0);
@@ -576,14 +497,8 @@ describe('Test Inline mode', function() {
 
 					editor.selection.select(editor.editor.firstChild);
 
-					simulateEvent('mousedown', 0, editor.editor);
-					simulateEvent('mouseup', 0, editor.editor);
-
-					const popup = editor.ownerDocument.querySelector(
-						'.jodit_toolbar_popup-inline[data-editor_id=' +
-							editor.id +
-							']'
-					);
+					simulateEvent('selectionchange', 0, editor.editorDocument);
+					const popup = getOpenedPopup(editor);
 					expect(popup).is.not.null;
 					expect(popup.parentNode).is.not.null;
 
@@ -604,6 +519,7 @@ describe('Test Inline mode', function() {
 			describe('Click on Image', function() {
 				it('Should show inline popup', function(done) {
 					unmockPromise();
+
 					const editor = new Jodit(appendTestDiv(), {
 						iframe: true,
 						events: {
@@ -611,18 +527,15 @@ describe('Test Inline mode', function() {
 								editor.value = '<p>test <img/> test</p>';
 								const img = editor.editor.querySelector('img');
 
-								simulateEvent('mousedown', 0, img);
-								const popup = editor.ownerDocument.querySelector(
-									'.jodit_toolbar_popup-inline[data-editor_id=' +
-										editor.id +
-										']'
-								);
+								simulateEvent('click', 0, img);
+								const popup = getOpenedPopup(editor);
 								expect(popup).is.not.null;
 								done();
 							}
 						}
 					});
 				});
+
 				describe('Disable toolbarInline = false', function() {
 					it('Should show inline popup', function(done) {
 						unmockPromise();
@@ -635,12 +548,8 @@ describe('Test Inline mode', function() {
 									const img = editor.editor.querySelector(
 										'img'
 									);
-									simulateEvent('mousedown', 0, img);
-									const popup = editor.ownerDocument.querySelector(
-										'.jodit_toolbar_popup-inline[data-editor_id=' +
-											editor.id +
-											']'
-									);
+									simulateEvent('click', 0, img);
+									const popup = getOpenedPopup(editor);
 									expect(popup).is.null;
 									done();
 								}
@@ -649,6 +558,7 @@ describe('Test Inline mode', function() {
 					});
 				});
 			});
+
 			describe('Click on Image', function() {
 				describe('On mobile', function() {
 					it('Should show inline popup', function(done) {
@@ -661,12 +571,8 @@ describe('Test Inline mode', function() {
 									const img = editor.editor.querySelector(
 										'img'
 									);
-									simulateEvent('touchstart', 0, img);
-									const popup = editor.ownerDocument.querySelector(
-										'.jodit_toolbar_popup-inline[data-editor_id=' +
-											editor.id +
-											']'
-									);
+									simulateEvent('click', 0, img);
+									const popup = getOpenedPopup(editor);
 									expect(popup).is.not.null;
 									done();
 								}
@@ -675,6 +581,7 @@ describe('Test Inline mode', function() {
 					});
 				});
 			});
+
 			describe('Click on link', function() {
 				it('Should show inline popup', function(done) {
 					unmockPromise();
@@ -685,18 +592,15 @@ describe('Test Inline mode', function() {
 								editor.value =
 									'<p>test <a href="#test">test</a> test</p>';
 								const a = editor.editor.querySelector('a');
-								simulateEvent('mousedown', 0, a);
-								const popup = editor.ownerDocument.querySelector(
-									'.jodit_toolbar_popup-inline[data-editor_id=' +
-										editor.id +
-										']'
-								);
+								simulateEvent('click', 0, a);
+								const popup = getOpenedPopup(editor);
 								expect(popup).is.not.null;
 								done();
 							}
 						}
 					});
 				});
+
 				describe('Disable with toolbarInlineDisableFor', function() {
 					describe('Option like string', function() {
 						it('Should now show inline popup for link', function(done) {
@@ -709,6 +613,7 @@ describe('Test Inline mode', function() {
 									afterConstructor: function(editor) {
 										editor.value =
 											'<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="tests/artio.jpg">> test</p>';
+
 										const a = editor.editor.querySelector(
 											'a'
 										);
@@ -718,45 +623,35 @@ describe('Test Inline mode', function() {
 										const td = editor.editor.querySelector(
 											'td'
 										);
-										simulateEvent('mousedown', 0, a);
 
-										let popup = editor.ownerDocument.querySelector(
-											'.jodit_toolbar_popup-inline[data-editor_id=' +
-												editor.id +
-												']'
-										);
+										simulateEvent('click', 0, a);
+
+										let popup = getOpenedPopup(editor);
 										expect(popup).is.null;
 
-										simulateEvent('mousedown', 0, img);
-										popup = editor.ownerDocument.querySelector(
-											'.jodit_toolbar_popup-inline[data-editor_id=' +
-												editor.id +
-												']'
-										);
+										simulateEvent('click', 0, img);
+										popup = getOpenedPopup(editor);
 
 										expect(popup).is.null;
 
-										simulateEvent('mousedown', 0, td);
-										popup = editor.ownerDocument.querySelector(
-											'.jodit_toolbar_popup-inline[data-editor_id=' +
-												editor.id +
-												']'
-										);
+										simulateEvent('click', 0, td);
+										popup = getOpenedPopup(editor);
 
-										expect(popup).is.not.null;
+										expect(popup).is.null;
 										done();
 									}
 								}
 							});
 						});
 					});
+
 					describe('Option like srray', function() {
 						it('Should now show inline popup for link', function(done) {
 							unmockPromise();
 							const editor = new Jodit(appendTestDiv(), {
 								iframe: true,
 								toolbarInline: true,
-								toolbarInlineDisableFor: ['A', 'table'],
+								toolbarInlineDisableFor: ['A', 'table-cells'],
 								events: {
 									afterConstructor: function(editor) {
 										editor.value =
@@ -770,30 +665,18 @@ describe('Test Inline mode', function() {
 										const td = editor.editor.querySelector(
 											'td'
 										);
-										simulateEvent('mousedown', 0, a);
+										simulateEvent('click', 0, a);
 
-										let popup = editor.ownerDocument.querySelector(
-											'.jodit_toolbar_popup-inline[data-editor_id=' +
-												editor.id +
-												']'
-										);
+										let popup = getOpenedPopup(editor);
 										expect(popup).is.null;
 
-										simulateEvent('mousedown', 0, img);
-										popup = editor.ownerDocument.querySelector(
-											'.jodit_toolbar_popup-inline[data-editor_id=' +
-												editor.id +
-												']'
-										);
+										simulateEvent('click', 0, img);
+										popup = getOpenedPopup(editor);
 
 										expect(popup).is.not.null;
 
-										simulateEvent('mousedown', 0, td);
-										popup = editor.ownerDocument.querySelector(
-											'.jodit_toolbar_popup-inline[data-editor_id=' +
-												editor.id +
-												']'
-										);
+										simulateEvent(['mousedown', 'mouseup', 'click'], 0, td);
+										popup = getOpenedPopup(editor);
 
 										expect(popup).is.null;
 										done();
@@ -804,6 +687,7 @@ describe('Test Inline mode', function() {
 					});
 				});
 			});
+
 			describe('Click on table cell', function() {
 				it('Should show inline popup', function(done) {
 					unmockPromise();
@@ -813,20 +697,23 @@ describe('Test Inline mode', function() {
 							afterConstructor: function(editor) {
 								editor.value =
 									'<table><tr><td>test test</a> test</td></tr></table>';
-								const td = editor.editor.querySelector('td');
-								simulateEvent('mousedown', 0, td);
-								const popup = editor.ownerDocument.querySelector(
-									'.jodit_toolbar_popup-inline[data-editor_id=' +
-										editor.id +
-										']'
-								);
+								const td = editor.editor.querySelector('td'), pos = Jodit.modules.Helpers.position(td, editor);
+
+								simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, function (o) {
+									o.clientX = pos.left + 5;
+									o.clientY = pos.top + 5;
+								});
+
+								const popup = getOpenedPopup(editor);
 								expect(popup).is.not.null;
+
 								done();
 							}
 						}
 					});
 				});
 			});
+
 			describe('Selection some text inside the editor', function() {
 				it('Should show inline popup', function(done) {
 					unmockPromise();
@@ -844,11 +731,7 @@ describe('Test Inline mode', function() {
 									0,
 									editor.editor
 								);
-								const popup = editor.ownerDocument.querySelector(
-									'.jodit_toolbar_popup-inline[data-editor_id=' +
-										editor.id +
-										']'
-								);
+								const popup = getOpenedPopup(editor);
 								expect(popup).is.not.null;
 								done();
 							}

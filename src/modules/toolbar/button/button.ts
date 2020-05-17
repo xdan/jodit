@@ -267,9 +267,14 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 					popup
 				) !== false
 			) {
+				const target =
+					(this.toolbar
+						? this.toolbar.getTarget(this)
+						: this.target) || null;
+
 				const popupElm = control.popup(
 					this.j,
-					this.target || false,
+					target,
 					control,
 					popup.close,
 					this
@@ -386,16 +391,15 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 		}
 
 		if (isFunction(control.exec)) {
-			control.exec(
-				this.j,
+			const target =
 				(this.toolbar ? this.toolbar.getTarget(this) : this.target) ||
-					null,
-				{
-					control,
-					originalEvent,
-					button: this
-				}
-			);
+				null;
+
+			control.exec(this.j, target, {
+				control,
+				originalEvent,
+				button: this
+			});
 
 			this.j?.e?.fire('synchro');
 

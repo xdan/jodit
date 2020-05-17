@@ -890,23 +890,18 @@ Config.prototype.controls = {
 	} as IControlType,
 
 	image: {
-		popup: (
-			editor: IJodit,
-			current: HTMLImageElement | false,
-			self: IControlType,
-			close
-		) => {
+		popup: (editor: IJodit, current, self, close) => {
 			let sourceImage: HTMLImageElement | null = null;
 
 			if (
 				current &&
 				!Dom.isText(current) &&
-				(current.tagName === 'IMG' || $$('img', current).length)
+				Dom.isHTMLElement(current, editor.editorWindow) &&
+				(Dom.isTag(current, 'img') || $$('img', current).length)
 			) {
-				sourceImage =
-					current.tagName === 'IMG'
-						? current
-						: ($$('img', current)[0] as HTMLImageElement);
+				sourceImage = Dom.isTag(current, 'img')
+					? current
+					: $$('img', current)[0];
 			}
 
 			const selInfo = editor.selection.save();

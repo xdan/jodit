@@ -45,30 +45,31 @@ describe('Test mobile mode', function() {
 			});
 
 			expect(27).to.be.below(
-				editor.container.querySelectorAll('.jodit_toolbar > li').length
+				editor.container.querySelectorAll('.jodit-toolbar-button').length
 			);
 
 			getBox().style.width = '790px';
 			simulateEvent('resize', 0, window);
 
 			expect(28).to.be.above(
-				editor.container.querySelectorAll('.jodit_toolbar > li').length
+				editor.container.querySelectorAll('.jodit-toolbar__box .jodit-toolbar-button').length
 			);
 
 			getBox().style.width = '690px';
 			simulateEvent('resize', 0, window);
 
 			expect(26).to.be.above(
-				editor.container.querySelectorAll('.jodit_toolbar > li').length
+				editor.container.querySelectorAll('.jodit-toolbar__box .jodit-toolbar-button').length
 			);
 
 			getBox().style.width = '390px';
 			simulateEvent('resize', 0, window);
 
 			expect(15).to.be.above(
-				editor.container.querySelectorAll('.jodit_toolbar > li').length
+				editor.container.querySelectorAll('.jodit-toolbar__box .jodit-toolbar-button').length
 			);
 		});
+
 		describe('If buttons were set like string', function() {
 			it('Should have different count buttons for different container sizes', function() {
 				getBox().style.width = '1000px';
@@ -80,7 +81,7 @@ describe('Test mobile mode', function() {
 				});
 
 				expect(4).equals(
-					editor.container.querySelectorAll('.jodit_toolbar > li')
+					editor.container.querySelectorAll('.jodit-toolbar__box .jodit-toolbar-button')
 						.length
 				);
 
@@ -88,7 +89,7 @@ describe('Test mobile mode', function() {
 				simulateEvent('resize', 0, window);
 
 				expect(3).equals(
-					editor.container.querySelectorAll('.jodit_toolbar > li')
+					editor.container.querySelectorAll('.jodit-toolbar__box .jodit-toolbar-button')
 						.length
 				);
 
@@ -96,7 +97,7 @@ describe('Test mobile mode', function() {
 				simulateEvent('resize', 0, window);
 
 				expect(2).equals(
-					editor.container.querySelectorAll('.jodit_toolbar > li')
+					editor.container.querySelectorAll('.jodit-toolbar__box .jodit-toolbar-button')
 						.length
 				);
 
@@ -104,7 +105,7 @@ describe('Test mobile mode', function() {
 				simulateEvent('resize', 0, window);
 
 				expect(1).equals(
-					editor.container.querySelectorAll('.jodit_toolbar > li')
+					editor.container.querySelectorAll('.jodit-toolbar__box .jodit-toolbar-button')
 						.length
 				);
 			});
@@ -125,7 +126,7 @@ describe('Test mobile mode', function() {
 				});
 
 				expect(4).equals(
-					editor.container.querySelectorAll('.jodit_toolbar > li')
+					editor.container.querySelectorAll('.jodit-toolbar__box .jodit-toolbar-button')
 						.length
 				);
 
@@ -133,7 +134,7 @@ describe('Test mobile mode', function() {
 				simulateEvent('resize', 0, window);
 
 				expect(3).equals(
-					editor.container.querySelectorAll('.jodit_toolbar > li')
+					editor.container.querySelectorAll('.jodit-toolbar__box .jodit-toolbar-button')
 						.length
 				);
 
@@ -141,7 +142,7 @@ describe('Test mobile mode', function() {
 				simulateEvent('resize', 0, window);
 
 				expect(2).equals(
-					editor.container.querySelectorAll('.jodit_toolbar > li')
+					editor.container.querySelectorAll('.jodit-toolbar__box .jodit-toolbar-button')
 						.length
 				);
 
@@ -149,11 +150,12 @@ describe('Test mobile mode', function() {
 				simulateEvent('resize', 0, window);
 
 				expect(1).equals(
-					editor.container.querySelectorAll('.jodit_toolbar > li')
+					editor.container.querySelectorAll('.jodit-toolbar__box .jodit-toolbar-button')
 						.length
 				);
 			});
 		});
+
 		describe('With toolbarAdaptive false', function() {
 			it('Should not change toolbar', function() {
 				getBox().style.width = '500px';
@@ -170,7 +172,7 @@ describe('Test mobile mode', function() {
 				});
 
 				expect(4).equals(
-					editor.container.querySelectorAll('.jodit_toolbar > li')
+					editor.container.querySelectorAll('.jodit-toolbar__box .jodit-toolbar-button')
 						.length
 				);
 
@@ -178,7 +180,7 @@ describe('Test mobile mode', function() {
 				simulateEvent('resize', 0, window);
 
 				expect(4).equals(
-					editor.container.querySelectorAll('.jodit_toolbar > li')
+					editor.container.querySelectorAll('.jodit-toolbar__box .jodit-toolbar-button')
 						.length
 				);
 
@@ -186,7 +188,7 @@ describe('Test mobile mode', function() {
 				simulateEvent('resize', 0, window);
 
 				expect(4).equals(
-					editor.container.querySelectorAll('.jodit_toolbar > li')
+					editor.container.querySelectorAll('.jodit-toolbar__box .jodit-toolbar-button')
 						.length
 				);
 
@@ -194,12 +196,10 @@ describe('Test mobile mode', function() {
 				simulateEvent('resize', 0, window);
 
 				expect(4).equals(
-					editor.container.querySelectorAll('.jodit_toolbar > li')
+					editor.container.querySelectorAll('.jodit-toolbar__box .jodit-toolbar-button')
 						.length
 				);
 			});
 		});
 	});
-
-	afterEach(removeStuff);
 });

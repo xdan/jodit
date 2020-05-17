@@ -1326,6 +1326,7 @@ describe('Test image', function() {
 							0,
 							resizer.getElementsByTagName('i')[1]
 						);
+
 						simulateEvent(
 							'mousemove',
 							0,
@@ -1335,6 +1336,7 @@ describe('Test image', function() {
 								data.clientY = positionResizer.top - 200;
 							}
 						);
+
 						simulateEvent(
 							'mouseup',
 							0,

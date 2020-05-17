@@ -8,6 +8,8 @@ import { IS_IE } from '../constants';
 import { HTMLTagNames, IDictionary, Nullable } from '../../types/';
 import { isString } from './checker';
 import { attr } from './utils';
+import { error } from './type';
+import { Dom } from '../dom';
 
 let temp = 1;
 
@@ -170,3 +172,40 @@ export const cssPath = (el: Element): Nullable<string> => {
 
 	return path.join(' > ');
 };
+
+
+/**
+ * Try to find element by selector
+ *
+ * @param element
+ * @param od
+ */
+export function resolveElement(element: string | HTMLElement, od: Document): HTMLElement {
+	let resolved = element;
+
+	if (isString(element)) {
+		try {
+			resolved = od.querySelector(element) as HTMLInputElement;
+		} catch {
+			throw error(
+				'String "' + element + '" should be valid HTML selector'
+			);
+		}
+	}
+
+	// Duck checking
+	if (
+		!resolved ||
+		typeof resolved !== 'object' ||
+		!Dom.isElement(resolved) ||
+		!resolved.cloneNode
+	) {
+		throw error(
+			'Element "' +
+			element +
+			'" should be string or HTMLElement instance'
+		);
+	}
+
+	return resolved;
+}

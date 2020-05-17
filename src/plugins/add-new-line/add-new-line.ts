@@ -78,7 +78,7 @@ export class addNewLine extends Plugin {
 	private isShown: boolean = false;
 
 	private show() {
-		if (this.isShown || this.j.o.readonly || this.j.isLocked()) {
+		if (this.isShown || this.j.o.readonly || this.j.isLocked) {
 			return;
 		}
 

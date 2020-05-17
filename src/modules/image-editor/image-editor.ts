@@ -392,7 +392,7 @@ export class ImageEditor extends ViewComponent {
 				}, 5)
 			)
 
-			.on(this.j.ow, `resize.${jie}` + self.j.id, () => {
+			.on(this.j.ow, `resize.${jie}`, () => {
 				this.j.e.fire(self.resizeHandler, 'updatesize');
 				self.showCrop();
 				this.j.e.fire(self.cropHandler, 'updatesize');
@@ -866,7 +866,8 @@ export class ImageEditor extends ViewComponent {
 		delete this.cropHandler;
 		delete this.editor;
 
-		if (this.j.events) {
+		if (this.j.e) {
+			this.j.e.off(this.ow,`.${jie}`)
 			this.j.e.off(`.${jie}`);
 		}
 

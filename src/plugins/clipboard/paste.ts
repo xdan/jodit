@@ -28,13 +28,15 @@ import {
 	type,
 	stripTags,
 	isString,
-	markOwner, isArray
+	markOwner,
+	isArray
 } from '../../core/helpers/';
 
 import { Dom } from '../../core/dom';
 import { IControlType, IJodit } from '../../types';
 import { nl2br } from '../../core/helpers';
 import { pluginKey as clipboardPluginKey } from './cut';
+import { Button } from '../../core/ui/button/button';
 
 declare module '../../config' {
 	interface Config {
@@ -169,48 +171,30 @@ export function paste(editor: IJodit) {
 				callback
 			);
 
+			editor.e.on('beforeDestruct', () => {
+				dialog.destruct();
+			});
+
 			markOwner(editor, dialog.container);
 
-			const keep = dialog.c.fromHTML(
-				`<a href="javascript:void(0)" class="jodit-button jodit-button_primary"><span>${editor.i18n(
-					'Keep'
-				)}</span></a>`
-			) as HTMLAnchorElement;
+			const keep = Button(editor, '', 'Keep');
+			const clear = Button(editor, '', clearButton);
+			const clear2 = Button(editor, '', clear2Button);
+			const cancel = Button(editor, '', 'Cancel');
 
-			const clear = dialog.c.fromHTML(
-				`<a href="javascript:void(0)" class="jodit-button"><span>${editor.i18n(
-					clearButton
-				)}</span></a>`
-			) as HTMLAnchorElement;
-
-			const clear2 = dialog.c.fromHTML(
-				`<a href="javascript:void(0)" class="jodit-button"><span>${editor.i18n(
-					clear2Button
-				)}</span></a>`
-			) as HTMLAnchorElement;
-
-			const cancel = dialog.c.fromHTML(
-				`<a href="javascript:void(0)" class="jodit-button"><span>${editor.i18n(
-					'Cancel'
-				)}</span></a>`
-			) as HTMLAnchorElement;
-
-			editor.e.on(keep, 'click', () => {
+			keep.onAction(() => {
 				dialog.close();
 				callback && callback(true);
 			});
-
-			editor.e.on(clear, 'click', () => {
+			clear.onAction(() => {
 				dialog.close();
 				callback && callback(false);
 			});
-
-			editor.e.on(clear2, 'click', () => {
+			clear2.onAction(() => {
 				dialog.close();
 				callback && callback(0);
 			});
-
-			editor.e.on(cancel, 'click', () => {
+			cancel.onAction(() => {
 				dialog.close();
 			});
 

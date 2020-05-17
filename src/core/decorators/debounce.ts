@@ -6,7 +6,7 @@ import { Component, STATUSES } from '../component';
  * Wrap function in debounce wrapper
  * @param timeout
  */
-export function debounce(timeout?: number) {
+export function debounce(timeout?: number | ((ctx: IViewComponent | IViewBased) => number)) {
 	return function<T extends Component & IDictionary>(
 		target: IDictionary,
 		propertyKey: string
@@ -20,7 +20,7 @@ export function debounce(timeout?: number) {
 
 			(component as any)[propertyKey] = async.debounce(
 				(component as any)[propertyKey].bind(component),
-				timeout || 0
+				(isFunction(timeout) ? timeout(component) : timeout) || 0
 			);
 		});
 	};

@@ -4,19 +4,31 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IAsync, IComponent, IProgressBar } from '../../types';
+import {
+	IAsync,
+	IComponent,
+	ICreate,
+	IProgressBar,
+	IStorage
+} from '../../types';
 import { IViewBased, IViewOptions } from '../../types';
-import { Panel } from './panel';
 import { Storage } from '../storage';
 import { error, i18n, isDestructable, isFunction, isVoid } from '../helpers';
 import { BASE_PATH } from '../constants';
-import { ViewComponent, EventsNative, ProgressBar } from '../../modules';
+import {
+	Component,
+	EventsNative,
+	ProgressBar,
+	Create,
+	Dom,
+	ViewComponent
+} from '../../modules';
 import { Async } from '../async';
 import { modules } from '../global';
 import { STATUSES } from '../component';
 import { hook } from '../decorators';
 
-export abstract class View extends Panel implements IViewBased {
+export abstract class View extends Component implements IViewBased {
 	readonly isView: true = true;
 
 	/**
@@ -52,11 +64,6 @@ export abstract class View extends Panel implements IViewBased {
 		return isVoid(this.o.defaultTimeout) ? 100 : this.o.defaultTimeout;
 	}
 
-	events: EventsNative = new EventsNative(this.od);
-	get e(): this['events'] {
-		return this.events;
-	}
-
 	async: IAsync = new Async();
 
 	/**
@@ -65,14 +72,33 @@ export abstract class View extends Panel implements IViewBased {
 	 * @type {{}}
 	 * @see copyformat plugin
 	 */
-	buffer = Storage.makeStorage();
+	buffer: IStorage = Storage.makeStorage();
+
+	create!: ICreate;
+	get c(): this['create'] {
+		return this.create;
+	}
+
+	container!: HTMLDivElement;
+
+	events!: EventsNative;
+	get e(): this['events'] {
+		return this.events;
+	}
 
 	/**
 	 * progress_bar Progress bar
 	 */
-	readonly progressbar: IProgressBar = new ProgressBar(this);
+	progressbar!: IProgressBar;
 
 	options!: IViewOptions;
+
+	/**
+	 * Short alias for options
+	 */
+	get o(): this['options'] {
+		return this.options;
+	}
 
 	/**
 	 * Internationalization method. Uses Jodit.lang object
@@ -84,16 +110,69 @@ export abstract class View extends Panel implements IViewBased {
 		return i18n(text, params, this.options);
 	}
 
+	private __isFullSize: boolean = false;
+
 	/**
 	 * @override
 	 * @param isFullSize
 	 */
 	toggleFullSize(isFullSize?: boolean) {
-		super.toggleFullSize(isFullSize);
+		if (isFullSize === undefined) {
+			isFullSize = !this.__isFullSize;
+		}
+
+		if (isFullSize === this.__isFullSize) {
+			return;
+		}
+
+		this.__isFullSize = isFullSize;
 
 		if (this.events) {
 			this.e.fire('toggleFullSize', isFullSize);
 		}
+	}
+
+	private __whoLocked: string | false = '';
+
+	/**
+	 * View is locked
+	 */
+	get isLocked(): boolean {
+		return this.__whoLocked !== '';
+	}
+
+	isLockedNotBy = (name: string): boolean =>
+		this.isLocked && this.__whoLocked !== name;
+
+	/**
+	 * Disable selecting
+	 */
+	lock(name = 'any') {
+		if (!this.isLocked) {
+			this.__whoLocked = name;
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Enable selecting
+	 */
+	unlock() {
+		if (this.isLocked) {
+			this.__whoLocked = '';
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * View is in fullSize
+	 */
+	get isFullSize(): boolean {
+		return this.__isFullSize;
 	}
 
 	/**
@@ -105,17 +184,32 @@ export abstract class View extends Panel implements IViewBased {
 
 	/** @override */
 	protected initOptions(options?: IViewOptions): void {
-		super.initOptions({
+		this.options = {
+			...(this.options || {}),
 			...View.defaultOptions,
 			...options
-		});
+		};
 	}
 
+	/**
+	 * Can change ownerWindow here
+	 */
+	protected initOwners(): void {}
+
 	constructor(options?: IViewOptions) {
-		super(options);
+		super();
 
 		this.id = new Date().getTime().toString();
 		this.buffer = Storage.makeStorage();
+
+		this.initOptions(options);
+		this.initOwners();
+
+		this.events = new EventsNative(this.od);
+		this.create = new Create(this.od);
+		this.container = this.c.div();
+
+		this.progressbar = new ProgressBar(this);
 	}
 
 	private __modulesInstances: Map<string, IComponent> = new Map();
@@ -179,6 +273,8 @@ export abstract class View extends Panel implements IViewBased {
 			this.e.destruct();
 			delete this.events;
 		}
+
+		Dom.safeRemove(this.container);
 
 		super.destruct();
 	}

@@ -4,17 +4,18 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../config';
-import { Dom } from '../core/dom';
+import { Config } from '../../config';
+import { Dom } from '../../core/dom';
 import {
 	attr,
 	convertMediaUrlToVideoEmbed,
 	isURL,
 	refs,
 	stripTags
-} from '../core/helpers/';
-import { Select } from '../core/selection';
-import { IDictionary, IJodit, IControlType, Nullable } from '../types';
+} from '../../core/helpers';
+import { Select } from '../../core/selection';
+import { IDictionary, IJodit, IControlType, Nullable } from '../../types';
+import { formTemplate } from './template';
 
 /**
  * @property {object}  link `{@link link|link}` plugin's options
@@ -25,7 +26,7 @@ import { IDictionary, IJodit, IControlType, Nullable } from '../types';
  * if it was done on the link is removed like command `unlink`
  */
 
-declare module '../config' {
+declare module '../../config' {
 	interface Config {
 		link: {
 			formTemplate: (editor: IJodit) => string;
@@ -41,36 +42,7 @@ declare module '../config' {
 }
 
 Config.prototype.link = {
-	formTemplate: (editor): string => {
-		const i18n = editor.i18n.bind(editor);
-
-		return `<form class="jodit-form">
-			<div class="jodit-form__group">
-				<input ref="url_input" class="jodit-input" required type="text" name="url" placeholder="http://" type="text"/>
-			</div>
-			<div ref="content_input_box" class="jodit-form__group">
-				<input ref="content_input" class="jodit-input" name="text" placeholder="${i18n(
-					'Text'
-				)}" type="text"/>
-			</div>
-			<label ref="target_checkbox_box">
-				<input ref="target_checkbox" class="jodit-checkbox" name="target" type="checkbox"/>
-				<span>${i18n('Open in new tab')}</span>
-			</label>
-			<label ref="nofollow_checkbox_box">
-				<input ref="nofollow_checkbox" class="jodit-checkbox" name="nofollow" type="checkbox"/>
-				<span>${i18n('No follow')}</span>
-			</label>
-			<div class="jodit-buttons">
-				<button ref="unlink" class="jodit-button jodit_unlink_button" type="button">${i18n(
-					'Unlink'
-				)}</button>
-				<button ref="insert" class="jodit-button jodit_link_insert_button" type="submit">${i18n(
-					'Insert'
-				)}</button>
-			</div>
-		<form/>`;
-	},
+	formTemplate,
 	followOnDblClick: false,
 	processVideoLink: true,
 	processPastedLink: true,
@@ -104,7 +76,7 @@ Config.prototype.controls.link = {
 
 	popup: (
 		editor: IJodit,
-		current: HTMLElement | false,
+		current,
 		self: IControlType,
 		close: () => void
 	) => {

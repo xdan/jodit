@@ -13,7 +13,6 @@ export { Dom } from '../core/dom';
 export { Plugin } from '../core/plugin';
 export { Create } from '../core/create';
 export * from '../core/ui/popup';
-export { Panel } from '../core/view/panel';
 export { View } from '../core/view/view';
 export { ViewWithToolbar } from '../core/view/view-with-toolbar';
 export { FileBrowser } from './file-browser/file-browser';

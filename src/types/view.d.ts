@@ -66,24 +66,7 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 	createAttributes?: IDictionary<Attributes | NodeFunction>;
 }
 
-interface IPanel<T = IViewOptions> extends IComponent, IContainer {
-	isLockedNotBy(name: string): boolean;
-	isLocked(): boolean;
-
-	lock(name?: string): boolean;
-	unlock(): boolean;
-
-	isFullSize: () => boolean;
-	toggleFullSize(isFullSize?: boolean): void;
-
-	create: ICreate;
-	c: this['create'];
-
-	options: T;
-	o: this['options'];
-}
-
-interface IViewBased<T = IViewOptions> extends IPanel<T> {
+interface IViewBased<T = IViewOptions> extends IContainer, IComponent {
 	isView: true;
 
 	/**
@@ -93,6 +76,14 @@ interface IViewBased<T = IViewOptions> extends IPanel<T> {
 
 	basePath: string;
 
+	isLocked: boolean;
+	isLockedNotBy(name: string): boolean;
+	lock(name?: string): boolean;
+	unlock(): boolean;
+
+	isFullSize: boolean;
+	toggleFullSize(isFullSize?: boolean): void;
+
 	buffer: IStorage;
 
 	progressbar: IProgressBar;
@@ -101,6 +92,9 @@ interface IViewBased<T = IViewOptions> extends IPanel<T> {
 	e: this['events'];
 
 	async: IAsync;
+
+	create: ICreate;
+	c: this['create'];
 
 	options: T;
 	// alias

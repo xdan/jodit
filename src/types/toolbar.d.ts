@@ -238,7 +238,7 @@ interface IControlType<
 	 */
 	popup?: (
 		jodit: T,
-		current: Node | false,
+		current: Nullable<Node>,
 		control: IControlType<T, B>,
 		close: () => void,
 		button: B

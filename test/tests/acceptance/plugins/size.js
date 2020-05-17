@@ -58,15 +58,13 @@ describe('Test editor size plugin', function() {
 				expect(editor.container.offsetHeight).equals(300);
 			});
 
-
 			describe('Fullsize mode', function() {
-				it('Should set heights of workplace to 100% - toolbar\'s height', function() {
+				it("Should set heights of workplace to 100% - toolbar's height", function() {
 					const editor = getJodit({
 						fullsize: true
 					});
 
 					expect(editor.workplace.offsetHeight).to.be.above(300);
-
 				});
 
 				it('Should restore size after fullsized mode', function() {
@@ -90,16 +88,20 @@ describe('Test editor size plugin', function() {
 						height: 300,
 						iframe: true
 					});
-					const handle = editor.container.querySelector('.jodit-editor__resize');
+					const handle = editor.container.querySelector(
+						'.jodit-editor__resize'
+					);
 
 					expect(handle).is.not.null;
 					editor.toggleFullSize(true);
-					expect(editor.ownerWindow.getComputedStyle(handle).display).equals('none');
+					expect(
+						editor.ownerWindow.getComputedStyle(handle).display
+					).equals('none');
 				});
 
 				it('Should change the icon in toolbar', function() {
 					const editor = getJodit();
-					const button = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-fullsize');
+					const button = getButton('fullsize', editor);
 					expect(button).is.not.null;
 
 					expect(button.querySelector('svg')).is.not.null;
@@ -107,19 +109,24 @@ describe('Test editor size plugin', function() {
 					const old_icon = button.querySelector('svg').innerHTML;
 
 					editor.toggleFullSize(true);
-					expect(button.querySelector('svg').innerHTML).does.not.equal(old_icon);
+					expect(
+						button.querySelector('svg').innerHTML
+					).does.not.equal(old_icon);
 
 					editor.toggleFullSize(false);
-					expect(button.querySelector('svg').innerHTML).equals(old_icon);
+					expect(button.querySelector('svg').innerHTML).equals(
+						old_icon
+					);
 				});
 
 				describe('For text icons', function() {
 					it('Should change the text in toolbar', function() {
 						const editor = getJodit({
-							'textIcons': true
+							textIcons: true
 						});
 
-						const button = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-fullsize');
+						const button = getButton('fullsize', editor);
+
 						expect(button).is.not.null;
 						expect(button.querySelector('svg')).is.null;
 
@@ -135,8 +142,7 @@ describe('Test editor size plugin', function() {
 			});
 
 			it('Should not change size by content after window was resized', function() {
-				const area = appendTestArea();
-				const editor = new Jodit(area, {
+				const editor = getJodit({
 					height: 300
 				});
 
@@ -148,19 +154,15 @@ describe('Test editor size plugin', function() {
 			});
 		});
 
-
-
 		describe('Autosize', function() {
 			it('Should set editor height by content', function() {
-				const area = appendTestArea();
-				const editor = new Jodit(area);
+				const editor = getJodit();
 				editor.value = '<p>test</p>'.repeat(100);
 				expect(editor.container.offsetHeight).to.be.above(1000);
 			});
 
 			it('Should set editor height by content in iframe mode', function() {
-				const area = appendTestArea();
-				const editor = new Jodit(area, {
+				const editor = getJodit({
 					iframe: true
 				});
 				editor.value = '<p>test</p>'.repeat(100);
@@ -201,6 +203,7 @@ describe('Test editor size plugin', function() {
 				expect(editor.container.offsetHeight).equals(400);
 				expect(editor.container.offsetWidth).equals(500);
 			});
+
 			describe('Disable X resizing', function() {
 				it('Should resize editor only by vertical', function() {
 					box.style.width = 'auto';
@@ -236,6 +239,7 @@ describe('Test editor size plugin', function() {
 				});
 			});
 		});
+
 		describe('Change box size', function() {
 			describe('Auto width mode', function() {
 				describe('Change box width', function() {

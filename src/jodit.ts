@@ -6,7 +6,7 @@
 
 import { Config, configFactory } from './config';
 import * as consts from './core/constants';
-import { Create, Dom, Observer, Select, StatusBar } from './modules/';
+import { Create, Dom, FileBrowser, Observer, Select, StatusBar } from './modules/';
 
 import {
 	asArray,
@@ -16,7 +16,7 @@ import {
 	error,
 	isString,
 	attr,
-	isFunction
+	isFunction, resolveElement
 } from './core/helpers/';
 
 import { JoditArray, JoditObject } from './core/helpers/';
@@ -301,7 +301,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			...this.o.filebrowser
 		};
 
-		return jodit.getInstance('FileBrowser', options);
+		return jodit.getInstance<FileBrowser>('FileBrowser', options);
 	}
 
 	private __mode: Modes = consts.MODE_WYSIWYG;
@@ -993,11 +993,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		super(options as IViewOptions);
 
 		try {
-			// if (!element) {
-			// 	element = this.c.div();
-			// }
-
-			this.resolveElement(element); // check element valid
+			resolveElement(element, this.od); // check element valid
 		} catch (e) {
 			this.destruct();
 			throw e;
@@ -1064,7 +1060,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		source: HTMLElement | string,
 		options?: object
 	): void | Promise<any> {
-		const element = this.resolveElement(source);
+		const element = resolveElement(source, this.od);
 
 		if (!this.isReady) {
 			this.id = attr(element, 'id') || new Date().getTime().toString();

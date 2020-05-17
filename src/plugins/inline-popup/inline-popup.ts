@@ -405,7 +405,7 @@ export class inlinePopup extends Plugin {
 		}
 	}
 
-	@debounce(500)
+	@debounce((ctx) => ctx.defaultTimeout * 5)
 	private onSelectionChange(): void {
 		if (!this.j.o.toolbarInlineForSelection) {
 			return;
@@ -439,7 +439,7 @@ export class inlinePopup extends Plugin {
 	 * @param type - selection, img, a etc.
 	 * @param target
 	 */
-	@wait((ctx: IViewComponent) => !ctx.j.isLocked())
+	@wait((ctx: IViewComponent) => !ctx.j.isLocked)
 	private showPopup(
 		rect: () => IBound,
 		type: string,
@@ -481,7 +481,7 @@ export class inlinePopup extends Plugin {
 	private canShowPopupForType(type: string): boolean {
 		const data = this.j.o.popup[type.toLowerCase()];
 
-		if (!this.j.o.toolbarInline || !data) {
+		if (this.j.o.readonly || !this.j.o.toolbarInline || !data) {
 			return false;
 		}
 

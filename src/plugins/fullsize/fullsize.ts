@@ -52,9 +52,9 @@ Config.prototype.controls.fullsize = {
 
 	update(button) {
 		const editor = button.j,
-			mode = editor.isFullSize() ? 'shrink' : 'fullsize';
+			mode = editor.isFullSize ? 'shrink' : 'fullsize';
 
-		button.state.activated = editor.isFullSize();
+		button.state.activated = editor.isFullSize;
 
 		if (editor.o.textIcons) {
 			button.state.text = mode;

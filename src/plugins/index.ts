@@ -26,7 +26,7 @@ export { indent } from './indent';
 export { inlinePopup } from './inline-popup/inline-popup';
 export { justify } from './justify';
 export { limit } from './limit';
-export { link } from './link';
+export { link } from './link/link';
 export { media } from './media';
 export { mobile } from './mobile';
 export { orderedList } from './ordered-list';

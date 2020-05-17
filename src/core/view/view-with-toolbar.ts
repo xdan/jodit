@@ -7,7 +7,7 @@ import './view-with-toolbar.less';
 
 import { IViewWithToolbar, IToolbarCollection, Buttons } from '../../types';
 import { View } from './view';
-import { isString, splitArray } from '../helpers';
+import { isString, resolveElement, splitArray } from '../helpers';
 import { STATUSES } from '../component';
 import { Dom } from '../dom';
 import { makeCollection } from '../../modules/toolbar/factory';
@@ -28,7 +28,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 			(isString(this.o.toolbar) ||
 				Dom.isHTMLElement(this.o.toolbar, this.ow))
 		) {
-			return this.resolveElement(this.o.toolbar);
+			return resolveElement(this.o.toolbar, this.od);
 		}
 
 		this.o.toolbar &&

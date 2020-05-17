@@ -56,19 +56,21 @@ export function size(editor: IJodit) {
 
 		let isResized: boolean = false,
 			onMouseMove = editor.async.throttle((e: MouseEvent) => {
-				if (isResized) {
-					if (editor.o.allowResizeY) {
-						setHeight(start.h + e.clientY - start.y);
-					}
-
-					if (editor.o.allowResizeX) {
-						setWidth(start.w + e.clientX - start.x);
-					}
-
-					resizeWorkspaceImd();
-
-					editor.e.fire('resize');
+				if (!isResized) {
+					return;
 				}
+
+				if (editor.o.allowResizeY) {
+					setHeight(start.h + e.clientY - start.y);
+				}
+
+				if (editor.o.allowResizeX) {
+					setWidth(start.w + e.clientX - start.x);
+				}
+
+				resizeWorkspaceImd();
+
+				editor.e.fire('resize');
 			}, editor.defaultTimeout / 10);
 
 		editor.e
@@ -137,7 +139,7 @@ export function size(editor: IJodit) {
 
 		if (
 			editor.container &&
-			(editor.o.height !== 'auto' || editor.isFullSize())
+			(editor.o.height !== 'auto' || editor.isFullSize)
 		) {
 			setHeightWorkPlace(
 				editor.container.offsetHeight - getNotWorkHeight()

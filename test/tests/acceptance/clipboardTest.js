@@ -20,11 +20,7 @@ describe('Clipboard text', function() {
 
 			expect(editor.value).equals('');
 
-			const dialog = editor.ownerDocument.querySelector(
-				'.jodit.jodit-dialog__box.active.jodit-modal[data-editor_id=' +
-				editor.id +
-				']'
-			);
+			const dialog = getOpenedDialog(editor);
 			expect(dialog).is.not.null;
 		});
 
@@ -58,12 +54,7 @@ describe('Clipboard text', function() {
 				simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
 
 				expect(editor.value).equals('');
-
-				const dialog = editor.ownerDocument.querySelector(
-					'.jodit.jodit-dialog__box.active.jodit-modal[data-editor_id=' +
-					editor.id +
-					']'
-				);
+				const dialog = getOpenedDialog(editor);
 				expect(dialog).is.null;
 			});
 
@@ -99,11 +90,7 @@ describe('Clipboard text', function() {
 
 					expect(editor.value).equals('');
 
-					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit-dialog__box.active.jodit-modal[data-editor_id=' +
-						editor.id +
-						']'
-					);
+					const dialog = getOpenedDialog(editor);
 					expect(dialog).is.not.null;
 					expect(parseInt(dialog.style.left, 10)).equals(10);
 				});
@@ -132,11 +119,7 @@ describe('Clipboard text', function() {
 
 			expect(editor.value).equals('test');
 
-			const dialog = editor.ownerDocument.querySelector(
-				'.jodit.jodit-dialog__box.active.jodit-modal[data-editor_id=' +
-				editor.id +
-				']'
-			);
+			const dialog = getOpenedDialog(editor);
 			expect(dialog).is.null;
 		});
 	});
@@ -302,6 +285,4 @@ describe('Clipboard text', function() {
 			});
 		});
 	});
-
-	afterEach(removeStuff);
 });

@@ -501,7 +501,7 @@ export class resizer extends Plugin {
 			this.j.workplace.appendChild(this.rect);
 		}
 
-		if (this.j.isFullSize()) {
+		if (this.j.isFullSize) {
 			this.rect.style.zIndex = css(this.j.container, 'zIndex').toString();
 		}
 

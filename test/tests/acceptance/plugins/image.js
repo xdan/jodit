@@ -14,52 +14,26 @@ describe('Process Images plugins', function() {
 				sel.removeAllRanges();
 				sel.addRange(range);
 
-				simulateEvent(
-					'mousedown',
-					0,
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-image'
-					)
-				);
+				clickButton('image', editor);
 
-				const list = editor.container.querySelector(
-					'.jodit_toolbar_popup'
-				);
+				const list = getOpenedPopup(editor);
 
 				expect(window.getComputedStyle(list).display).equals('block');
 
-				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]'
-				).value = ''; // try wrong url
+				list.querySelector('input[name=url]').value = ''; // try wrong url
 
-				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=text]'
-				).value = '123';
-				simulateEvent(
-					'submit',
-					0,
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit-form'
-					)
-				);
+				list.querySelector('input[name=text]').value = '123';
+
+				simulateEvent('submit', 0, list.querySelector('form'));
 
 				expect(
-					editor.container.querySelectorAll(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url].jodit_error'
-					).length
+					list.querySelectorAll('input[name=url].jodit_error').length
 				).equals(1);
 
-				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]'
-				).value = 'http://xdsoft.net/jodit/images/artio.jpg';
+				list.querySelector('input[name=url]').value =
+					'http://xdsoft.net/jodit/images/artio.jpg';
 
-				simulateEvent(
-					'submit',
-					0,
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit-form'
-					)
-				);
+				simulateEvent('submit', 0, list.querySelector('form'));
 
 				expect(sortAttributes(editor.value)).equals(
 					'<img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg" style="width:300px">'
@@ -82,30 +56,15 @@ describe('Process Images plugins', function() {
 					range.collapse(false);
 					editor.selection.selectRange(range);
 
-					simulateEvent(
-						'mousedown',
-						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-image'
-						)
-					);
+					clickButton('image', editor);
 
-					const list = editor.container.querySelector(
-						'.jodit_toolbar_popup'
-					), input = list.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]'
-					);
+					const list = getOpenedPopup(editor),
+						input = list.querySelector('input[name=url]');
 
 					input.focus();
 					input.value = 'http://xdsoft.net/jodit/images/artio.jpg';
 
-					simulateEvent(
-						'submit',
-						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit-form'
-						)
-					);
+					simulateEvent('submit', 0, list.querySelector('form'));
 
 					expect(sortAttributes(editor.value)).equals(
 						'hello<img alt="" src="http://xdsoft.net/jodit/images/artio.jpg" style="width:300px"> world!'
