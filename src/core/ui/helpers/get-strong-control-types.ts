@@ -4,7 +4,7 @@ import {
 	IControlTypeStrong,
 	IDictionary
 } from '../../../types';
-import { getControlType } from './getControlType';
+import { getControlType } from './get-control-type';
 import { Config } from '../../../config';
 import { isArray } from '../../helpers/checker';
 

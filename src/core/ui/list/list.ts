@@ -14,7 +14,7 @@ import {
 } from '../../../types';
 
 import { UIButton } from '../button';
-import { getStrongControlTypes } from '../helpers/getStrongControlTypes';
+import { getStrongControlTypes } from '../helpers/get-strong-control-types';
 import { STATUSES } from '../../component';
 import { watch } from '../../decorators';
 import { UIGroup } from './group';
