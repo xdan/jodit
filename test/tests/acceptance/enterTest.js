@@ -112,6 +112,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					expect(editor.value).equals('<p>test</p>');
 				});
+
 				describe('H1 with BR', function() {
 					it('Should simple remove this H1', function() {
 						const editor = getJodit();
@@ -137,6 +138,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					});
 				});
 			});
+
 			describe('Delete and next was empty H1', function() {
 				it('Should simple remove this H1', function() {
 					const editor = getJodit();
@@ -643,6 +645,44 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 				expect(editor.value).equals('<p>Some text</p><p> a <br></p>');
 			});
+
+			describe('Inside BODY for iframe and editHTMLDocumentMode', function() {
+				it('should work like in usual case', function() {
+					const editor = getJodit({
+						editHTMLDocumentMode: true,
+						iframe: true,
+						iframeStyle: '',
+						iframeCSSLinks: Jodit.Array([])
+					});
+
+					editor.value = 'Some text';
+
+					const sel = editor.selection.sel,
+						range = editor.selection.createRange();
+
+					range.setStart(
+						editor.editor.firstChild,
+						9
+					);
+					range.collapse(true);
+					sel.removeAllRanges();
+					sel.addRange(range);
+
+					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+
+					editor.selection.insertNode(
+						editor.createInside.text(' a ')
+					);
+
+					expect(sortAttributes(editor.value)).equals(
+						'<!DOCTYPE html>' +
+						'<html lang="en" style="overflow-y:hidden">' +
+						'<head><title>Jodit Editor</title></head>' +
+						'<body spellcheck="true" ><p>Some text</p><p> a <br></p></body>' +
+						'</html>'
+					);
+				});
+			});
 		});
 
 		describe('If Enter was pressed in the end of SPAN inside P', function() {
@@ -901,9 +941,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.selection.insertNode(
-						editor.createInside.text('a ')
-					);
+					editor.selection.insertNode(editor.createInside.text('a '));
 
 					expect(editor.value).equals(
 						'<p>Split </p><p>a paragraph</p>'
@@ -929,9 +967,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.selection.insertNode(
-						editor.createInside.text('a ')
-					);
+					editor.selection.insertNode(editor.createInside.text('a '));
 
 					expect(sortAttributes(editor.value)).equals(
 						'<p style="color:#FF0000;text-align:right">Split </p><p style="color:#FF0000;text-align:right">a paragraph</p>'
@@ -1053,9 +1089,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				range.collapse(true);
 				editor.selection.selectRange(range);
 
-				editor.selection.insertNode(
-					editor.createInside.text('split ')
-				);
+				editor.selection.insertNode(editor.createInside.text('split '));
 
 				expect(editor.value).equals(
 					'<table><tbody><tr><td>split text</td></tr></tbody></table>'
@@ -1067,9 +1101,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					'<table><tbody><tr><td>split <br>text</td></tr></tbody></table>'
 				);
 
-				editor.selection.insertNode(
-					editor.createInside.text(' test ')
-				);
+				editor.selection.insertNode(editor.createInside.text(' test '));
 
 				expect(editor.value).equals(
 					'<table><tbody><tr><td>split <br> test text</td></tr></tbody></table>'
@@ -1081,9 +1113,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					'<table><tbody><tr><td>split <br> test <br>text</td></tr></tbody></table>'
 				);
 
-				editor.selection.insertNode(
-					editor.createInside.text(' stop ')
-				);
+				editor.selection.insertNode(editor.createInside.text(' stop '));
 
 				expect(editor.value).equals(
 					'<table><tbody><tr><td>split <br> test <br> stop text</td></tr></tbody></table>'
@@ -1138,9 +1168,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					}
 				);
 
-				editor.selection.insertNode(
-					editor.createInside.text('split ')
-				);
+				editor.selection.insertNode(editor.createInside.text('split '));
 
 				expect(editor.value).equals('te<br>split st');
 

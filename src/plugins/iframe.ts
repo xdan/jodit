@@ -89,6 +89,7 @@ Config.prototype.iframeStyle =
 	'user-select:auto;' +
 	'margin:0px;' +
 	'overflow:auto;' +
+	'outline:none;' +
 	'}' +
 	'table{' +
 	'width:100%;' +
@@ -181,18 +182,20 @@ export function iframe(editor: IJodit) {
 
 				doc.open();
 				doc.write(
-					`${opt.iframeDoctype}` +
+					opt.iframeDoctype +
 						`<html dir="${
 							opt.direction
 						}" class="jodit" lang="${defaultLanguage(
 							opt.language
-						)}">
-						<head>
-							<title>${opt.iframeTitle}</title>
-							${opt.iframeBaseUrl ? `<base href="${opt.iframeBaseUrl}"/>` : ''}
-						</head>
-						<body class="jodit-wysiwyg" style="outline:none"></body>
-					</html>`
+						)}">` +
+						'<head>' +
+						`<title>${opt.iframeTitle}</title>` +
+						(opt.iframeBaseUrl
+							? `<base href="${opt.iframeBaseUrl}"/>`
+							: '') +
+						'</head>' +
+						'<body class="jodit-wysiwyg"></body>' +
+						'</html>'
 				);
 
 				doc.close();
@@ -278,7 +281,10 @@ export function iframe(editor: IJodit) {
 									/(<body[^>]+?)([\s]*["'])?contenteditable["'\s]*=[\s"']*true["']?/im,
 									'$1'
 								)
-							);
+							)
+							.replace(/(<[^<]+)\sclass=""/gim, '$1')
+							.replace(/(<[^<]+)\sstyle=""/gim, '$1')
+							.replace(/(<[^<]+)\sdir=""/gim, '$1');
 					}
 
 					return html;
@@ -293,12 +299,28 @@ export function iframe(editor: IJodit) {
 						);
 					}
 
-					editor.editor = doc.documentElement;
-
 					editor.e
-						.on('beforeGetNativeEditorValue', (): string =>
-							clearMarkers(doc.documentElement.outerHTML)
-						)
+						.on('beforeGetNativeEditorValue', (): string => {
+							const html = doc.documentElement,
+								body = doc.body;
+
+							body.classList.remove('jodit-wysiwyg');
+							html.classList.remove('jodit');
+							const minHeight = body.style.getPropertyValue(
+								'min-height'
+							);
+
+							body.style.removeProperty('min-height');
+
+							const result = clearMarkers(html.outerHTML);
+
+							body.classList.add('jodit-wysiwyg');
+							html.classList.add('jodit');
+
+							body.style.setProperty('min-height', minHeight);
+
+							return opt.iframeDoctype + result;
+						})
 						.on(
 							'beforeSetNativeEditorValue',
 							(value: string): boolean => {
@@ -309,7 +331,7 @@ export function iframe(editor: IJodit) {
 										doc.open('text/html', 'replace');
 										doc.write(clearMarkers(value));
 										doc.close();
-										editor.editor = doc.documentElement;
+										editor.editor = doc.body;
 
 										toggleEditable();
 									}
@@ -320,9 +342,9 @@ export function iframe(editor: IJodit) {
 								return true;
 							}
 						);
-				} else {
-					editor.editor = doc.body as HTMLBodyElement;
 				}
+
+				editor.editor = doc.body;
 
 				editor.e.on(
 					'afterSetMode afterInit afterAddPlace',
