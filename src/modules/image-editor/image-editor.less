@@ -14,6 +14,7 @@
 .jodit-image-editor {
 	width: 100%;
 	height: 100%;
+
 	@media (max-width: @screen-sm) {
 		height: auto;
 	}
@@ -21,6 +22,7 @@
 	> div,
 	> div > div {
 		height: 100%;
+
 		@media (max-width: @screen-sm) {
 			height: auto;
 			min-height: 200px;
@@ -39,7 +41,6 @@
 			text-shadow: rgb(243, 243, 243) 0 1px 0;
 			color: rgb(51, 51, 51);
 			border-bottom: 1px solid rgba(158, 158, 158, 0.31);
-
 			background-color: #f9f9f9;
 			padding: 0.8em 1em;
 			text-overflow: ellipsis;
@@ -64,7 +65,8 @@
 		&.jodit-image-editor_active .jodit-image-editor__slider-title {
 			background-color: rgb(93, 93, 93);
 			color: #fff;
-			text-shadow: #000000 0 1px 0;
+			text-shadow: #000 0 1px 0;
+
 			svg {
 				fill: white;
 			}
@@ -94,15 +96,12 @@
 				@color-border 75%,
 				@color-border
 			);
-
 		background-size: 30px 30px;
 		background-position: 0 0, 15px 15px;
 		height: 100%;
 		overflow: hidden;
-
 		user-select: none;
 		position: relative;
-
 		display: none;
 
 		&.jodit-image-editor_active {
@@ -180,7 +179,7 @@
 			text-align: left;
 			line-height: 100%;
 
-			&:after {
+			&::after {
 				content: '';
 				position: absolute;
 				top: 0;

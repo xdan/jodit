@@ -54,24 +54,25 @@ export function size(editor: IJodit) {
 				h: 0
 			};
 
-		let isResized: boolean = false,
-			onMouseMove = editor.async.throttle((e: MouseEvent) => {
-				if (!isResized) {
-					return;
-				}
+		let isResized: boolean = false;
 
-				if (editor.o.allowResizeY) {
-					setHeight(start.h + e.clientY - start.y);
-				}
+		const onMouseMove = editor.async.throttle((e: MouseEvent) => {
+			if (!isResized) {
+				return;
+			}
 
-				if (editor.o.allowResizeX) {
-					setWidth(start.w + e.clientX - start.x);
-				}
+			if (editor.o.allowResizeY) {
+				setHeight(start.h + e.clientY - start.y);
+			}
 
-				resizeWorkspaceImd();
+			if (editor.o.allowResizeX) {
+				setWidth(start.w + e.clientX - start.x);
+			}
 
-				editor.e.fire('resize');
-			}, editor.defaultTimeout / 10);
+			resizeWorkspaceImd();
+
+			editor.e.fire('resize');
+		}, editor.defaultTimeout / 10);
 
 		editor.e
 			.on(handle, 'mousedown touchstart', (e: MouseEvent) => {

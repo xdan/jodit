@@ -235,5 +235,6 @@ export default {
 	'Copy selection': 'Скопировать выделенное',
 	copy: 'копия',
 	'Border radius': 'Радиус границы',
-	'Show all': 'Показать все'
+	'Show all': 'Показать все',
+	Apply: 'Применить'
 } as IDictionary<string>;

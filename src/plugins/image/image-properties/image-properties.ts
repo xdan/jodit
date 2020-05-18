@@ -185,7 +185,10 @@ export class imageProperties extends Plugin {
 
 		this.updateValues();
 
-		this.dialog.open().setPosition();
+		this.dialog
+			.open()
+			.setModal(true)
+			.setPosition();
 
 		return false;
 	}
@@ -648,7 +651,7 @@ export class imageProperties extends Plugin {
 													this.updateValues();
 												}
 											}
-										);
+										).bindDestruct(this.j);
 									},
 									(error: Error) => {
 										Alert(
@@ -656,12 +659,12 @@ export class imageProperties extends Plugin {
 												'There was an error loading %s',
 												error.message
 											)
-										);
+										).bindDestruct(this.j);
 									}
 								);
 							}
 						}
-					);
+					).bindDestruct(this.j);
 					return;
 				}
 			};
@@ -691,12 +694,12 @@ export class imageProperties extends Plugin {
 						this.updateValues();
 					},
 					(error: Error) => {
-						Alert(error.message);
+						Alert(error.message).bindDestruct(this.j);
 					}
 				);
 			},
 			(error: Error) => {
-				Alert(error.message, loadExternal);
+				Alert(error.message, loadExternal).bindDestruct(this.j);
 			}
 		);
 	}

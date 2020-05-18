@@ -1,7 +1,11 @@
 import { IBound, IDestructible } from './types';
 import { IUIElement } from './ui';
 
-export type PopupStrategy = 'leftBottom' | 'rightBottom' | 'leftTop' | 'rightTop';
+export type PopupStrategy =
+	| 'leftBottom'
+	| 'rightBottom'
+	| 'leftTop'
+	| 'rightTop';
 export interface IPopup extends IUIElement, IDestructible {
 	container: HTMLElement;
 
@@ -9,10 +13,7 @@ export interface IPopup extends IUIElement, IDestructible {
 	strategy: PopupStrategy;
 	viewBound: () => IBound;
 
-	open(
-		getBound: () => IBound,
-		keepPosition?: boolean
-	): this;
+	open(getBound: () => IBound, keepPosition?: boolean): this;
 
 	setContent(content: HTMLElement | string): this;
 	updatePosition(): this;

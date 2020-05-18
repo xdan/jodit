@@ -9,7 +9,7 @@ import { Dom } from '../core/dom';
 import { css, normalizeSize } from '../core/helpers/';
 import { IControlType, IJodit } from '../types/';
 
-Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
+Config.prototype.controls.fontsize = ({
 	command: 'fontSize',
 	list: [
 		'8',
@@ -29,7 +29,7 @@ Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
 		'96'
 	],
 
-	exec: (editor, event, {control}) => {
+	exec: (editor, event, { control }) => {
 		editor.execCommand(
 			control.command as string,
 			false,
@@ -56,7 +56,6 @@ Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
 					},
 					editor.editor
 				) as HTMLElement) || editor.editor;
-
 
 			const fontSize: number = css(currentBpx, 'font-size') as number;
 
@@ -94,12 +93,12 @@ Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
 
 		return false;
 	}
-}) as IControlType;
+} as IControlType<IJodit>) as IControlType;
 
-Config.prototype.controls.font = (<IControlType<IJodit>>{
+Config.prototype.controls.font = ({
 	command: 'fontname',
 
-	exec: (editor, node, {control}) => {
+	exec: (editor, node, { control }) => {
 		editor.execCommand(
 			control.command as string,
 			false,
@@ -132,21 +131,16 @@ Config.prototype.controls.font = (<IControlType<IJodit>>{
 
 		if (current) {
 			const currentBpx: HTMLElement =
-				(Dom.closest(
+				Dom.closest(
 					current,
-					elm => {
-						return (
-							Dom.isBlock(elm, editor.editorWindow) ||
-							(elm && Dom.isElement(elm))
-						);
-					},
-					editor.editor
-				) as HTMLElement) || editor.editor;
+					elm =>
+						Dom.isBlock(elm, editor.editorWindow) ||
+						(elm && Dom.isElement(elm)),
 
-			const fontFamily: string = css(
-				currentBpx,
-				'font-family'
-			).toString();
+					editor.editor
+				) || editor.editor;
+
+			const fontFamily = css(currentBpx, 'font-family').toString();
 
 			return Boolean(
 				fontFamily &&
@@ -163,17 +157,15 @@ Config.prototype.controls.font = (<IControlType<IJodit>>{
 		const current = editor.selection.current();
 
 		if (current) {
-			const currentBpx: HTMLElement =
-				(Dom.closest(
+			const currentBpx =
+				Dom.closest(
 					current,
-					(elm: Node | null) => {
-						return (
-							Dom.isBlock(elm, editor.editorWindow) ||
-							Dom.isElement(elm)
-						);
-					},
+					(elm: Node | null) =>
+						Dom.isBlock(elm, editor.editorWindow) ||
+						Dom.isElement(elm),
+
 					editor.editor
-				) as HTMLElement) || editor.editor;
+				) || editor.editor;
 
 			return (
 				css(currentBpx, 'font-family').toString() !==
@@ -185,7 +177,7 @@ Config.prototype.controls.font = (<IControlType<IJodit>>{
 	},
 
 	tooltip: 'Font family'
-}) as IControlType;
+} as IControlType<IJodit>) as IControlType;
 
 /**
  * Process commands `fontsize` and `fontname`

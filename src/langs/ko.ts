@@ -230,5 +230,6 @@ export default {
 	'Copy selection': '선택 복사',
 	copy: '복사',
 	'Border radius': '둥근 테두리',
-	'Show all': '모두 보기'
+	'Show all': '모두 보기',
+	Apply: '적용'
 } as IDictionary<string>;

@@ -231,5 +231,6 @@ export default {
 	'Copy selection': 'คัดลอกส่วนที่เลือก',
 	copy: 'คัดลอก',
 	'Border radius': 'เส้นขอบรัศมี',
-	'Show all': 'แสดงทั้งหมด'
+	'Show all': 'แสดงทั้งหมด',
+	Apply: 'ปรับใช้'
 } as IDictionary<string>;

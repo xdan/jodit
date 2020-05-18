@@ -697,9 +697,11 @@ describe('Test Inline mode', function() {
 							afterConstructor: function(editor) {
 								editor.value =
 									'<table><tr><td>test test</a> test</td></tr></table>';
-								const td = editor.editor.querySelector('td'), pos = Jodit.modules.Helpers.position(td, editor);
 
-								simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, function (o) {
+								const td = editor.editor.querySelector('td'),
+									pos = Jodit.modules.Helpers.position(td);
+
+								simulateEvent(['mousedown', 'mouseup', 'click'], td, function (o) {
 									o.clientX = pos.left + 5;
 									o.clientY = pos.top + 5;
 								});

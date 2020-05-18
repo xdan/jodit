@@ -27,10 +27,11 @@ import {
 	error,
 	extend,
 	isPlainObject,
-	isJoditObject, isArray
+	isJoditObject,
+	isArray
 } from '../../core/helpers';
 import { Dom } from '../../core/dom';
-import { ViewComponent, STATUSES } from '../../core/component';
+import { ViewComponent, STATUSES } from '../../core/component/';
 import { getContainer } from '../../core/global';
 
 declare module '../../config' {
@@ -81,8 +82,7 @@ Config.prototype.uploader = {
 	},
 
 	getMessage(this: Uploader, resp: IUploaderAnswer) {
-		return resp.data.messages !== undefined &&
-			isArray(resp.data.messages)
+		return resp.data.messages !== undefined && isArray(resp.data.messages)
 			? resp.data.messages.join(' ')
 			: '';
 	},
@@ -533,10 +533,9 @@ export class Uploader extends ViewComponent implements IUploader {
 	) {
 		const self: Uploader = this,
 			onPaste = (e: ClipboardEvent): false | void => {
-				let i: number,
-					file: File | null,
-					extension: string,
-					cData = e.clipboardData;
+				let i: number, file: File | null, extension: string;
+
+				const cData = e.clipboardData;
 
 				const process = (formdata: FormData) => {
 					if (file) {
@@ -630,7 +629,7 @@ export class Uploader extends ViewComponent implements IUploader {
 				}
 			};
 
-		if (this.j && (<IJodit>this.j).editor !== form) {
+		if (this.j && (this.j as IJodit).editor !== form) {
 			self.j.e.on(form, 'paste', onPaste);
 		} else {
 			self.j.e.on('beforePaste', onPaste);

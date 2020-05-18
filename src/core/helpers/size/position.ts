@@ -1,12 +1,11 @@
-import { IBound, IJodit } from '../../../types';
+import { IBound, IViewBased } from '../../../types';
+import { isJoditObject } from '../checker';
 
 export function position(elm: HTMLElement): IBound;
-
-export function position(elm: HTMLElement, jodit: IJodit): IBound;
-
+export function position(elm: HTMLElement, jodit: IViewBased): IBound;
 export function position(
 	elm: HTMLElement,
-	jodit: IJodit,
+	jodit: IViewBased,
 	recurse: boolean
 ): IBound;
 
@@ -19,7 +18,7 @@ export function position(
  */
 export function position(
 	elm: HTMLElement,
-	jodit?: IJodit,
+	jodit?: IViewBased,
 	recurse: boolean = false
 ): IBound {
 	// let xPos = 0,
@@ -48,7 +47,7 @@ export function position(
 	let xPos = rect.left,
 		yPos = rect.top;
 
-	if (jodit && jodit.iframe && !recurse) {
+	if (isJoditObject(jodit) && jodit.iframe && !recurse) {
 		const { left, top } = position(jodit.iframe, jodit, true);
 
 		xPos += left;

@@ -6,7 +6,14 @@
 
 import { Config, configFactory } from './config';
 import * as consts from './core/constants';
-import { Create, Dom, FileBrowser, Observer, Select, StatusBar } from './modules/';
+import {
+	Create,
+	Dom,
+	FileBrowser,
+	Observer,
+	Select,
+	StatusBar
+} from './modules/';
 
 import {
 	asArray,
@@ -16,7 +23,8 @@ import {
 	error,
 	isString,
 	attr,
-	isFunction, resolveElement
+	isFunction,
+	resolveElement
 } from './core/helpers/';
 
 import { JoditArray, JoditObject } from './core/helpers/';
@@ -41,7 +49,7 @@ import {
 
 import { ViewWithToolbar } from './core/view/view-with-toolbar';
 
-import { STATUSES } from './core/component';
+import { STATUSES } from './core/component/component';
 import { instances, pluginSystem, modules, lang } from './core/global';
 import { cache } from './core/decorators';
 
@@ -811,7 +819,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		const oldmode: Modes = this.getMode();
 
 		const data = {
-				mode: <Modes>parseInt(mode.toString(), 10)
+				mode: parseInt(mode.toString(), 10) as Modes
 			},
 			modeClasses = [
 				'jodit-wysiwyg_mode',
@@ -1226,7 +1234,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		try {
 			Jodit.plugins.init(this);
 		} catch (e) {
-			console.error(e);
+			if (!isProd) {
+				throw e;
+			}
 		}
 	}
 

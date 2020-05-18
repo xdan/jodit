@@ -118,9 +118,9 @@ describe('Iframe mode', function() {
 									.replace(/<br>/g, '')
 							)
 						).equals(
-							'<html class="jodit" dir="" lang="en" spellcheck="true">' +
+							'<!DOCTYPE html><html lang="en">' +
 								'<head><title>Hi</title></head>' +
-								'<body class="jodit-wysiwyg" style="outline:none" ></body>' +
+								'<body spellcheck="true" ></body>' +
 								'</html>'
 						);
 					});
@@ -137,9 +137,9 @@ describe('Iframe mode', function() {
 										.replace(/<br>/g, '')
 								)
 							).equals(
-								'<html class="jodit" dir="" lang="en" spellcheck="true">' +
+								'<!DOCTYPE html><html lang="en">' +
 									'<head><title>Hi</title></head>' +
-									'<body class="jodit-wysiwyg" style="outline:none" >' +
+									'<body spellcheck="true" >' +
 									'<strong>Test</strong></body></html>'
 							);
 						});
@@ -149,14 +149,14 @@ describe('Iframe mode', function() {
 						it('Should replace entire document', function() {
 							const editor = Jodit.make(appendTestArea(), opt);
 							editor.value =
-								'<html lang="en"><head><title>Hi</title></head><body><strong>Test</strong></body></html>';
+								'<!DOCTYPE html><html lang="en"><head><title>Hi</title></head><body><strong>Test1</strong></body></html>';
 
 							expect(
 								sortAttributes(
 									editor.value.replace(/[\t\n]/g, '')
 								)
 							).equals(
-								'<html lang="en"><head><title>Hi</title></head><body ><strong>Test</strong></body></html>'
+								'<!DOCTYPE html><html lang="en"><head><title>Hi</title></head><body ><strong>Test1</strong></body></html>'
 							);
 						});
 					});

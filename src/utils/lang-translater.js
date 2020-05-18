@@ -79,4 +79,4 @@ const translateAll = text => {
 	});
 };
 
-translateAll('Show all');
+translateAll('Apply');

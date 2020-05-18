@@ -20,6 +20,8 @@ import {
 } from '../../core/helpers';
 import { IJodit } from '../../types';
 import { Plugin } from '../../core/plugin';
+import autobind from 'autobind-decorator';
+import { eventEmitter } from '../../core/global';
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table
@@ -110,6 +112,8 @@ export class resizer extends Plugin {
 				this.onClickHandle.bind(this, resizeHandle)
 			);
 		});
+
+		eventEmitter.on('hideHelpers', this.hide);
 
 		editor.e
 			.on('readonly', (isReadOnly: boolean) => {
@@ -511,12 +515,14 @@ export class resizer extends Plugin {
 	/**
 	 * Hide resizer
 	 */
-	private hide = () => {
+	@autobind
+	private hide(): void {
 		this.isResized = false;
 		this.isShown = false;
 		this.element = null;
+
 		Dom.safeRemove(this.rect);
-	};
+	}
 
 	private hideSizeViewer = () => {
 		this.sizeViewer.style.opacity = '0';
@@ -524,6 +530,8 @@ export class resizer extends Plugin {
 
 	protected beforeDestruct(jodit: IJodit): void {
 		this.hide();
+
+		eventEmitter.off('hideHelpers', this.hide);
 
 		this.j.e.off(this.j.ow, '.resizer').off('.resizer');
 	}

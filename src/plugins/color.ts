@@ -104,12 +104,14 @@ Config.prototype.controls.brush = {
 
 		tabs = [
 			{
-				name: 'Background', content: backgroundTag
+				name: 'Background',
+				content: backgroundTag
 			},
 			{
-				name: 'Text', content: colorTab
-			},
-		]
+				name: 'Text',
+				content: colorTab
+			}
+		];
 
 		if (editor.o.colorPickerDefaultTab !== 'background') {
 			tabs = tabs.reverse();

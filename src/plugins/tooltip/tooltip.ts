@@ -51,7 +51,7 @@ export class tooltip extends Plugin {
 	}
 
 	private open(target: HTMLElement, content: string): void {
-		if (!Dom.up(target, (elm) => elm && elm.nodeName === 'BODY')) {
+		if (!Dom.up(target, elm => elm && elm.nodeName === 'BODY')) {
 			return;
 		}
 

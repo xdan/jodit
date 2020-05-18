@@ -23,7 +23,7 @@ const $$temp = () => {
  *
  * @example
  * ```javascript
- * Jodit.modules.Helpres.$$('.someselector').forEach(function (elm) {
+ * Jodit.modules.Helpers.$$('.someselector').forEach(function (elm) {
  *      elm.addEventListener('click', function () {
  *          alert(''Clicked');
  *      });
@@ -37,7 +37,7 @@ const $$temp = () => {
 export function $$<K extends HTMLTagNames>(
 	selector: K,
 	root: HTMLElement | HTMLDocument
-): HTMLElementTagNameMap[K][];
+): Array<HTMLElementTagNameMap[K]>;
 
 export function $$<T extends HTMLElement>(
 	selector: string,
@@ -86,7 +86,7 @@ export const getXPathByElement = (
 	element: HTMLElement,
 	root: HTMLElement
 ): string => {
-	if (!element || element.nodeType !== 1) {
+	if (!element || element.nodeType !== Node.ELEMENT_NODE) {
 		return '';
 	}
 
@@ -117,7 +117,9 @@ export const getXPathByElement = (
  * Find all `ref` or `data-ref` elements inside HTMLElement
  * @param root
  */
-export const refs = <T extends HTMLElement>(root: HTMLElement): IDictionary<T> => {
+export const refs = <T extends HTMLElement>(
+	root: HTMLElement
+): IDictionary<T> => {
 	return $$('[ref],[data-ref]', root).reduce((def, child) => {
 		const key = attr(child, '-ref');
 
@@ -126,7 +128,7 @@ export const refs = <T extends HTMLElement>(root: HTMLElement): IDictionary<T> =
 		}
 
 		return def;
-	}, <IDictionary<T>>{});
+	}, {} as IDictionary<T>);
 };
 
 /**
@@ -134,7 +136,7 @@ export const refs = <T extends HTMLElement>(root: HTMLElement): IDictionary<T> =
  * @param el
  */
 export const cssPath = (el: Element): Nullable<string> => {
-	if (!(el instanceof Element)) {
+	if (!Dom.isElement(el)) {
 		return null;
 	}
 
@@ -149,7 +151,6 @@ export const cssPath = (el: Element): Nullable<string> => {
 			selector += '#' + start.id;
 			path.unshift(selector);
 			break;
-
 		} else {
 			let sib: Nullable<Element> = start,
 				nth = 1;
@@ -157,10 +158,10 @@ export const cssPath = (el: Element): Nullable<string> => {
 			do {
 				sib = sib.previousElementSibling;
 
-				if (sib && sib.nodeName.toLowerCase() == selector) {
+				if (sib && sib.nodeName.toLowerCase() === selector) {
 					nth++;
 				}
-			} while(sib);
+			} while (sib);
 
 			selector += ':nth-of-type(' + nth + ')';
 		}
@@ -173,14 +174,16 @@ export const cssPath = (el: Element): Nullable<string> => {
 	return path.join(' > ');
 };
 
-
 /**
  * Try to find element by selector
  *
  * @param element
  * @param od
  */
-export function resolveElement(element: string | HTMLElement, od: Document): HTMLElement {
+export function resolveElement(
+	element: string | HTMLElement,
+	od: Document
+): HTMLElement {
 	let resolved = element;
 
 	if (isString(element)) {
@@ -201,9 +204,7 @@ export function resolveElement(element: string | HTMLElement, od: Document): HTM
 		!resolved.cloneNode
 	) {
 		throw error(
-			'Element "' +
-			element +
-			'" should be string or HTMLElement instance'
+			'Element "' + element + '" should be string or HTMLElement instance'
 		);
 	}
 

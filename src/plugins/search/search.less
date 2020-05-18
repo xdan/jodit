@@ -14,6 +14,7 @@
 
 .jodit_search {
 	.font();
+
 	visibility: hidden;
 
 	&.jodit-search__active {
@@ -69,7 +70,7 @@
 			color: @color-border;
 			border-left: 1px solid @color-border;
 
-			&:before {
+			&::before {
 				content: '';
 				display: inline-block;
 				vertical-align: middle;
@@ -127,9 +128,11 @@
 		.jodit-search__counts,
 		.jodit-search__inputs {
 			height: @height-search * 2;
+
 			input {
 				height: 50%;
 				transition: background-color @timeout-button-active linear;
+
 				&:focus {
 					//background-color: fade(@color-background-selection, 9);
 					box-shadow: inset 0 0 3px 0 fade(@color-border, 58);
@@ -145,6 +148,7 @@
 
 	@media (max-width: @width-search) {
 		width: 100%;
+
 		.jodit-search__box {
 			width: 100%;
 		}

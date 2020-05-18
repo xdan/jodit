@@ -8,7 +8,7 @@ import './view-with-toolbar.less';
 import { IViewWithToolbar, IToolbarCollection, Buttons } from '../../types';
 import { View } from './view';
 import { isString, resolveElement, splitArray } from '../helpers';
-import { STATUSES } from '../component';
+import { STATUSES } from '../component/component';
 import { Dom } from '../dom';
 import { makeCollection } from '../../modules/toolbar/factory';
 

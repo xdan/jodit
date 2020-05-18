@@ -33,7 +33,8 @@ import {
 	css,
 	normalizeNode,
 	normalizeCssValue,
-	isArray, call
+	isArray,
+	call
 } from './helpers';
 
 type WindowSelection = Selection | null;
@@ -155,7 +156,7 @@ export class Select {
 		this.removeMarkers();
 
 		try {
-			let rng = this.createRange();
+			const rng = this.createRange();
 
 			(() => {
 				if (this.doc.caretPositionFromPoint) {
@@ -385,7 +386,7 @@ export class Select {
 	focus(): boolean {
 		if (!this.isFocused()) {
 			if (this.j.iframe) {
-				if (this.doc.readyState == 'complete') {
+				if (this.doc.readyState === 'complete') {
 					this.j.iframe.focus();
 				}
 			}
@@ -870,7 +871,10 @@ export class Select {
 	 *
 	 * @return {boolean | null} true - the cursor is at the end(start) block, null - cursor somewhere outside
 	 */
-	cursorInTheEdge(start: boolean, parentBlock: HTMLElement): Nullable<boolean> {
+	cursorInTheEdge(
+		start: boolean,
+		parentBlock: HTMLElement
+	): Nullable<boolean> {
 		const end = !start,
 			range = this.sel?.getRangeAt(0),
 			current = this.current(false);
@@ -917,7 +921,7 @@ export class Select {
 			}
 		}
 
-		return !call(start ? Dom.prev : Dom.next, current, check, parentBlock)
+		return !call(start ? Dom.prev : Dom.next, current, check, parentBlock);
 	}
 
 	/**
@@ -1520,7 +1524,9 @@ export class Select {
 					this.selectRange(range);
 				}
 			} catch (e) {
-				console.log(e);
+				if (!isProd) {
+					throw e;
+				}
 			}
 		}
 

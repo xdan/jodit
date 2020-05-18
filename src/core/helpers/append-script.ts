@@ -10,17 +10,17 @@ import { isFunction, isString } from './checker';
 
 export type Loader = (jodit: IViewBased, url: string) => Promise<any>;
 
-export type CallbackAndElement = {
+export interface CallbackAndElement {
 	callback: EventListener;
 	element: HTMLElement;
-};
+}
 
 const alreadyLoadedList = new Map<string, Promise<any>>();
 
 const cacheLoaders = (loader: Loader): Loader => {
 	return async (jodit: IViewBased, url: string): Promise<any> => {
 		if (alreadyLoadedList.has(url)) {
-			return <Promise<any>>alreadyLoadedList.get(url);
+			return alreadyLoadedList.get(url) as Promise<any>;
 		}
 
 		const promise = loader(jodit, url);

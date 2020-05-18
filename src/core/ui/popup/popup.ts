@@ -141,11 +141,11 @@ export class Popup extends UIElement implements IPopup {
 			? elmUnderCursor
 			: (elmUnderCursor.parentElement as HTMLElement);
 
-		const oldPos = position(element);
+		const oldPos = position(element, this.j);
 
 		return () => {
 			const bound = getBound();
-			const newPos = position(element);
+			const newPos = position(element, this.j);
 
 			return {
 				...bound,
@@ -167,7 +167,7 @@ export class Popup extends UIElement implements IPopup {
 		const [pos, strategy] = this.calculatePosition(
 			this.targetBound(),
 			this.viewBound(),
-			position(this.container)
+			position(this.container, this.j)
 		);
 
 		this.setMod('strategy', strategy);
@@ -250,7 +250,7 @@ export class Popup extends UIElement implements IPopup {
 		};
 
 		// Try find match position inside Jodit.container
-		let strategy = getMatchStrategy(position(this.j.container));
+		let strategy = getMatchStrategy(position(this.j.container, this.j));
 
 		// If not found or is not inside window view
 		if (!strategy || !Popup.boxInView(getPointByStrategy(strategy), view)) {

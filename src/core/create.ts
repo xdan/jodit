@@ -46,7 +46,7 @@ export class Create implements ICreate {
 	private applyAttributes = (elm: HTMLElement, attrs: Attributes) => {
 		each(attrs, (key: string, value) => {
 			if (isPlainObject(value) && key === 'style') {
-				css(elm, <IDictionary<string>>value);
+				css(elm, value as IDictionary<string>);
 			} else {
 				if (key === 'className') {
 					key = 'class';
@@ -89,9 +89,9 @@ export class Create implements ICreate {
 
 		if (childrenOrAttributes) {
 			if (isPlainObject(childrenOrAttributes)) {
-				this.applyAttributes(elm, <Attributes>childrenOrAttributes);
+				this.applyAttributes(elm, childrenOrAttributes as Attributes);
 			} else {
-				children = <Children>childrenOrAttributes;
+				children = childrenOrAttributes as Children;
 			}
 		}
 
@@ -117,7 +117,7 @@ export class Create implements ICreate {
 		childrenOrAttributes?: Attributes | Children,
 		children?: Children
 	): HTMLDivElement {
-		const div = this.element('div', <any>childrenOrAttributes, children);
+		const div = this.element('div', childrenOrAttributes as any, children);
 
 		if (className) {
 			div.className = className;
@@ -137,7 +137,11 @@ export class Create implements ICreate {
 		childrenOrAttributes?: Attributes | Children,
 		children?: Children
 	): HTMLSpanElement {
-		const span = this.element('span', <any>childrenOrAttributes, children);
+		const span = this.element(
+			'span',
+			childrenOrAttributes as any,
+			children
+		);
 
 		if (className) {
 			span.className = className;
@@ -157,7 +161,7 @@ export class Create implements ICreate {
 		childrenOrAttributes?: Attributes | Children,
 		children?: Children
 	): HTMLAnchorElement {
-		const a = this.element('a', <any>childrenOrAttributes, children);
+		const a = this.element('a', childrenOrAttributes as any, children);
 
 		if (className) {
 			a.className = className;

@@ -15,6 +15,7 @@ export class IPlugin implements IDestructible, IInitable {
 }
 
 interface PluginFunction {
+	// tslint:disable-next-line:no-misused-new
 	constructor(jodit: IViewBased): void;
 }
 

@@ -11,7 +11,7 @@ import {
 	IViewBased
 } from '../../../types';
 import watch from '../../../core/decorators/watch';
-import { STATUSES } from '../../component';
+import { STATUSES } from '../../component/component';
 import { Dom } from '../../dom';
 import { css, attr, isString } from '../../helpers';
 import { Icon } from '../icon';

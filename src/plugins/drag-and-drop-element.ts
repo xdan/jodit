@@ -152,6 +152,7 @@ export class DragAndDropElement extends Plugin {
 		this.j.e.fire('synchro');
 	};
 
+	/** @override */
 	protected afterInit() {
 		this.dragList = this.j.o.draggableTags
 			? splitArray(this.j.o.draggableTags)
@@ -177,6 +178,7 @@ export class DragAndDropElement extends Plugin {
 			);
 	}
 
+	/** @override */
 	protected beforeDestruct() {
 		this.onDragEnd();
 

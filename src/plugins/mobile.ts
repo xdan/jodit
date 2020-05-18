@@ -67,7 +67,7 @@ Config.prototype.controls.dots = {
 						if (buttons && store) {
 							store.toolbar.build(splitArray(buttons));
 
-							let w =
+							const w =
 								editor.toolbar.firstButton?.container
 									.offsetWidth || 36;
 

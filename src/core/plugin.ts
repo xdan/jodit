@@ -10,8 +10,6 @@ import { IJodit, IPlugin } from '../types';
 import { ViewComponent, STATUSES } from './component';
 
 export abstract class Plugin extends ViewComponent<IJodit> implements IPlugin {
-	jodit!: IJodit;
-
 	protected abstract afterInit(jodit: IJodit): void;
 	protected abstract beforeDestruct(jodit: IJodit): void;
 
@@ -25,7 +23,9 @@ export abstract class Plugin extends ViewComponent<IJodit> implements IPlugin {
 		this.setStatus(STATUSES.ready);
 	}
 
-	init(jodit: IJodit) {}
+	init(jodit: IJodit) {
+		// empty
+	}
 
 	@autobind
 	destruct() {

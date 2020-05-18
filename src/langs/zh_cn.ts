@@ -231,5 +231,6 @@ export default {
 	'Copy selection': '复制的选择',
 	copy: '复制',
 	'Border radius': '边界半径',
-	'Show all': '显示所有'
+	'Show all': '显示所有',
+	Apply: '适用'
 } as IDictionary<string>;

@@ -233,5 +233,6 @@ export default {
 	'Copy selection': 'Kopya seçimi',
 	copy: 'kopya',
 	'Border radius': 'Sınır yarıçapı',
-	'Show all': 'Tümünü Göster '
+	'Show all': 'Tümünü Göster ',
+	Apply: 'Uygula'
 } as IDictionary<string>;

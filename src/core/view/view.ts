@@ -25,7 +25,7 @@ import {
 } from '../../modules';
 import { Async } from '../async';
 import { modules } from '../global';
-import { STATUSES } from '../component';
+import { STATUSES } from '../component/component';
 import { hook } from '../decorators';
 
 export abstract class View extends Component implements IViewBased {

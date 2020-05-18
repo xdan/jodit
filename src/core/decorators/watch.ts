@@ -3,11 +3,16 @@ import { error, isFunction, isPlainObject, splitArray } from '../helpers';
 import { ObserveObject } from '../events';
 import { Component, STATUSES } from '../component';
 
-export function getPropertyDescriptor(obj: any, prop: string) : CanUndef<PropertyDescriptor> {
+export function getPropertyDescriptor(
+	obj: any,
+	prop: string
+): CanUndef<PropertyDescriptor> {
 	let desc;
+
 	do {
 		desc = Object.getOwnPropertyDescriptor(obj, prop);
-	} while (!desc && (obj = Object.getPrototypeOf(obj)));
+		obj = Object.getPrototypeOf(obj);
+	} while (!desc && obj);
 
 	return desc;
 }
@@ -17,10 +22,10 @@ export function getPropertyDescriptor(obj: any, prop: string) : CanUndef<Propert
  * @param observeFields
  */
 export function watch(observeFields: string[] | string) {
-	return function<T extends Component & IDictionary>(
+	return <T extends Component & IDictionary>(
 		target: T,
 		propertyKey: string
-	) {
+	) => {
 		if (!isFunction(target[propertyKey])) {
 			throw error('Handler must be a Function');
 		}

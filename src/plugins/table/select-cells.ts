@@ -23,11 +23,7 @@ export class selectCells extends Plugin {
 		}
 
 		jodit.e
-			.on(
-				[this.j.ow, this.j.editorWindow],
-				'click.table click.table',
-				this.onRemoveSelection
-			)
+			.on(this.j.ow, 'click.table click.table', this.onRemoveSelection)
 			.on('keydown.table', (event: KeyboardEvent) => {
 				if (event.key === KEY_TAB) {
 					this.unselectCells();
@@ -248,7 +244,10 @@ export class selectCells extends Plugin {
 		);
 
 		$$('table', this.j.editor).forEach(table => {
-			this.j.e.off(table, 'mousemove.select-cells touchmove.select-cells');
+			this.j.e.off(
+				table,
+				'mousemove.select-cells touchmove.select-cells'
+			);
 		});
 	}
 
@@ -378,7 +377,7 @@ export class selectCells extends Plugin {
 
 		jodit.e
 			.off(
-				[jodit.ow, jodit.editorWindow],
+				jodit.ow,
 				'mouseup.select-cells touchend.select-cells',
 				this.onStopSelection
 			)

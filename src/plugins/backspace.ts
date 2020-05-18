@@ -352,7 +352,7 @@ export class backspace extends Plugin {
 			}
 
 			if (container) {
-				let parentContainer = container.parentNode;
+				const parentContainer = container.parentNode;
 
 				this.removeEmptyBlocks(container);
 

@@ -82,7 +82,7 @@ export function indent(editor: IJodit) {
 			if (!currentBox && current) {
 				currentBox = Dom.wrapInline(
 					current,
-					enter !== BR ? <HTMLTagNames>enter : PARAGRAPH,
+					enter !== BR ? (enter as HTMLTagNames) : PARAGRAPH,
 					editor
 				);
 			}

@@ -133,7 +133,7 @@ Config.prototype.controls.paste = {
 					() => {
 						editor.selection.focus();
 					}
-				);
+				).bindDestruct(editor);
 			}
 		}
 	}
@@ -171,9 +171,7 @@ export function paste(editor: IJodit) {
 				callback
 			);
 
-			editor.e.on('beforeDestruct', () => {
-				dialog.destruct();
-			});
+			dialog.bindDestruct(editor);
 
 			markOwner(editor, dialog.container);
 

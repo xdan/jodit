@@ -303,7 +303,7 @@ describe('Jodit Events system Tests', function() {
 			editor.events.on('keydown', callback);
 			editor.events.off('keydown', callback);
 
-			simulateEvent('keydown', Jodit.KEY_Y, editor.editor);
+			simulateEvent('keydown', 'y', editor.editor);
 
 			expect(enable).is.false;
 		});

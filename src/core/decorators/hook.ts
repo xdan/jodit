@@ -1,4 +1,9 @@
-import { ComponentStatus, IDictionary, IViewBased, IViewComponent } from '../../types';
+import {
+	ComponentStatus,
+	IDictionary,
+	IViewBased,
+	IViewComponent
+} from '../../types';
 import { error, isFunction } from '../helpers';
 import { Component } from '../component';
 
@@ -7,10 +12,10 @@ import { Component } from '../component';
  * @param timeout
  */
 export function hook(status: ComponentStatus) {
-	return function<T extends Component & IDictionary>(
+	return <T extends Component & IDictionary>(
 		target: IDictionary,
 		propertyKey: string
-	) {
+	) => {
 		if (!isFunction(target[propertyKey])) {
 			throw error('Handler must be a Function');
 		}

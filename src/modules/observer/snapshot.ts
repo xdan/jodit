@@ -221,7 +221,8 @@ export class Snapshot extends ViewComponent<IJodit> {
 			this.j.editor.lastChild &&
 				this.j.selection.setCursorAfter(this.j.editor.lastChild);
 
-			if (process.env.NODE_ENV !== 'production') {
+			if (!isProd) {
+				// tslint:disable-next-line:no-console
 				console.warn('Broken snapshot', __ignore);
 			}
 		}

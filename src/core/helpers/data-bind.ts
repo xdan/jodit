@@ -21,7 +21,7 @@ export const dataBind = <T = any>(elm: object, key: string, value?: T): T => {
 		itemStore = {};
 		store.set(elm, itemStore);
 
-		let e = undefined;
+		let e;
 
 		if (elm instanceof ViewComponent) {
 			e = elm.j.e;
@@ -31,9 +31,10 @@ export const dataBind = <T = any>(elm: object, key: string, value?: T): T => {
 			e = elm.e;
 		}
 
-		e && e.on('beforeDestruct', () => {
-			store.delete(elm);
-		});
+		e &&
+			e.on('beforeDestruct', () => {
+				store.delete(elm);
+			});
 	}
 
 	if (value === undefined) {

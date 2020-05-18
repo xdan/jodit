@@ -18,7 +18,7 @@ export function form(editor: IJodit): HTMLElement {
 						!editSize ? 'display:none' : ''
 					}" class="jodit-form__group jodit-properties_image_sizes">
 						<input data-ref="imageWidth" type="number" class="jodit-input"/>
-						<a data-ref="lockSize" class="jodit_lock_helper">${gi('lock')}</a>
+						<a data-ref="lockSize" class="jodit-properties__lock">${gi('lock')}</a>
 						<input data-ref="imageHeight" type="number" class="imageHeight jodit-input"/>
 					</div>
 				</div>

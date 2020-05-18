@@ -15,7 +15,7 @@
 	padding-right: 5px;
 	margin-left: -5px;
 
-	&:after {
+	&::after {
 		content: '';
 		display: block;
 		height: 100%;
@@ -27,7 +27,7 @@
 		background-color: @color-background-selection;
 		z-index: 2;
 
-		&:after {
+		&::after {
 			border-right: 1px solid @color-border-moved;
 		}
 	}
@@ -73,6 +73,7 @@
 			& > div {
 				& > span {
 					.size(@width_element_default, @width_element_default);
+
 					display: inline-block;
 					vertical-align: top;
 					box-sizing: border-box;
@@ -98,6 +99,7 @@
 			label {
 				text-align: left;
 				padding-top: 0;
+
 				input {
 					margin-right: @padding-default;
 				}

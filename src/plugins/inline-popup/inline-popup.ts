@@ -25,7 +25,8 @@ import {
 	splitArray,
 	isString,
 	attr,
-	position, isJoditObject
+	position,
+	isJoditObject
 } from '../../core/helpers';
 import { Dom, Table, ToolbarCollection } from '../../modules';
 import { ColorPickerWidget, TabsWidget } from '../../modules/widget';
@@ -128,11 +129,7 @@ Config.prototype.popup = {
 		{
 			name: 'left',
 			list: ['Left', 'Right', 'Center', 'Normal'],
-			exec: (
-				editor,
-				image,
-				{control}
-			) => {
+			exec: (editor, image, { control }) => {
 				if (!Dom.isTag(image, 'img')) {
 					return;
 				}
@@ -175,7 +172,7 @@ Config.prototype.popup = {
 	'table-cells': [
 		{
 			name: 'brush',
-			popup: (editor) => {
+			popup: editor => {
 				if (!isJoditObject(editor)) {
 					return;
 				}
@@ -250,11 +247,7 @@ Config.prototype.popup = {
 		{
 			name: 'valign',
 			list: ['Top', 'Middle', 'Bottom'],
-			exec: (
-				editor,
-				table,
-				{control}
-			) => {
+			exec: (editor, table, { control }) => {
 				const command: string =
 					control.args && isString(control.args[0])
 						? control.args[0].toLowerCase()
@@ -313,11 +306,7 @@ Config.prototype.popup = {
 				tableaddrowbefore: 'Insert row above',
 				tableaddrowafter: 'Insert row below'
 			},
-			exec: (
-				editor,
-				table,
-				{control}
-			) => {
+			exec: (editor, table, { control }) => {
 				if (!isJoditObject(editor)) {
 					return;
 				}
@@ -398,14 +387,14 @@ export class inlinePopup extends Plugin {
 
 		if (target && this.canShowPopupForType(target.nodeName.toLowerCase())) {
 			this.showPopup(
-				() => position(target),
+				() => position(target, this.j),
 				target.nodeName.toLowerCase(),
 				target
 			);
 		}
 	}
 
-	@debounce((ctx) => ctx.defaultTimeout * 5)
+	@debounce(ctx => ctx.defaultTimeout * 5)
 	private onSelectionChange(): void {
 		if (!this.j.o.toolbarInlineForSelection) {
 			return;

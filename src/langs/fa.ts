@@ -9,8 +9,7 @@ export default {
 	'Jodit Editor': 'ویرایشگر جودیت',
 
 	"Jodit User's Guide": 'راهنمای کاربران',
-	'contains detailed help for using':
-		"راهنمایی برای استفاده",
+	'contains detailed help for using': 'راهنمایی برای استفاده',
 	'For information about the license, please go to our website:':
 		'برای کسب اطلاعات در رابطه با لایسنس لطفا به وب سایت مراجعه کنید:',
 	'Buy full version': 'خرید نسخه کامل',
@@ -20,15 +19,16 @@ export default {
 	// Toolbar
 	Anchor: 'لینک',
 	'Open in new tab': 'بازکردن در تب جدید',
-	'Open editor in fullsize': "تمام صفحه کردن ویرایشگر",
+	'Open editor in fullsize': 'تمام صفحه کردن ویرایشگر',
 	'Clear Formatting': 'پاک کردن قالب ها',
-	'Fill color or set the text color': 'رنگ را پر کنید یا رنگ متن را تنظیم کنید',
+	'Fill color or set the text color':
+		'رنگ را پر کنید یا رنگ متن را تنظیم کنید',
 	Redo: 'باز انجام',
 	Undo: 'بازگردانی',
 	Bold: 'بولد',
 	Italic: 'ایتالیک',
 	'Insert Unordered List': 'افزودن لیست بدون ترتیب',
-	'Insert Ordered List': "افزون لیست با ترتیب",
+	'Insert Ordered List': 'افزون لیست با ترتیب',
 	'Align Center': 'وسط چین',
 	'Align Justify': 'تراز کردن',
 	'Align Left': 'چپ چین',
@@ -82,13 +82,13 @@ export default {
 	Image: 'عکس',
 	file: 'فایل',
 	Advansed: 'پیشرفته',
-	'Image properties': "مقادیر عکس",
+	'Image properties': 'مقادیر عکس',
 	Cancel: 'بیخیال',
 	Ok: 'تایید',
 
 	// plugin paste
 	'Your code is similar to HTML. Keep as HTML?':
-		"به نظر کد شما از نوع HTML است , با همین قالب ادامه دهیم ؟",
+		'به نظر کد شما از نوع HTML است , با همین قالب ادامه دهیم ؟',
 	'Paste as HTML': 'جایگزاری HTML',
 	Keep: 'نگه دار',
 	Clean: 'تمیز کزدن',
@@ -101,7 +101,7 @@ export default {
 	'Insert only Text': 'افزودن به عنوان متن عادی',
 
 	'File Browser': 'انتخاب فایل',
-	'Error on load list': "خطا در بارگزاری لیست",
+	'Error on load list': 'خطا در بارگزاری لیست',
 	'Error on load folders': 'خطا در بازگزاری پوشه ها',
 	'Are you sure?': 'از انجام این اقدام اطمینان دارید ؟',
 	'Enter Directory name': 'نام مسیر را وارد کنید',
@@ -109,7 +109,7 @@ export default {
 	'type name': 'نام را وارد کنید',
 
 	// Form module
-	'Drop image': "عکس را رها کنید",
+	'Drop image': 'عکس را رها کنید',
 	'Drop file': 'فایل را رها کنید',
 	'or click': 'یا کلیک کنید',
 	'Alternative text': 'متن جایگزین',
@@ -220,7 +220,7 @@ export default {
 	'You can only edit your own images. Download this image on the host?':
 		'شما فقط میتوانید عکس های خود را ویرایش کنید , میخواهید عکس را از هاست دانلود کنیم ؟',
 	'The image has been successfully uploaded to the host!':
-		"عکس با موفقیت در هاست آپلود شد",
+		'عکس با موفقیت در هاست آپلود شد',
 	palette: 'جعبه رنگ نقاشی',
 	'There are no files': 'در این مسیر فایل وجود ندارد',
 	Rename: 'تغییر اسم',
@@ -228,9 +228,11 @@ export default {
 	preview: 'نمایش',
 	download: 'دانلود',
 	'Paste from clipboard': 'چسباندن از کلیپ بورد',
-	'Your browser doesn\'t support direct access to the clipboard.': 'مرورگر شما اجازه دسترسی به کلیپ بورد را نمیدهد.',
+	"Your browser doesn't support direct access to the clipboard.":
+		'مرورگر شما اجازه دسترسی به کلیپ بورد را نمیدهد.',
 	'Copy selection': 'کپی کردن انتخاب شده ها',
-	'copy': 'کپی',
+	copy: 'کپی',
 	'Border radius': 'Border radius',
 	'Show all': 'نمایش همه',
+	Apply: 'درخواست'
 } as IDictionary<string>;

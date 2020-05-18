@@ -5,7 +5,7 @@
 	"main": "build/jodit.min.js",
 	"types": "index.d.ts",
 	"scripts": {
-		"newversion": "npm test && npm version patch --no-git-tag-version && npm run build && npm run newversiongit && npm publish ./",
+		"newversion": "npm run lint && npm test && npm version patch --no-git-tag-version && npm run build && npm run newversiongit && npm publish ./",
 		"newversiongit": "git add --all  && git commit -m \"New version $npm_package_version. Read more https://github.com/xdan/jodit/releases/tag/$npm_package_version \" && git tag $npm_package_version && git push --tags origin HEAD:master",
 		"start": "node server.js",
 		"clean": "rm -rf build/*",
@@ -19,7 +19,8 @@
 		"jodit": "cd ../jodit-react/ && npm update && npm run newversion && cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion && cd ../jodit-docs && npm run newversion && cd ../jodit-master && npm run newversion",
 		"types": "rm -rf types/* && tsc --project . --declaration --outDir types --emitDeclarationOnly",
 		"pretty": "prettier --write ./src/*.{ts,less} ./src/**/*.{ts,less} ./src/**/**/*.{ts,less}",
-		"fix": "tslint -c tslint.json ./src/**/*.ts ./src/**/**/*.ts ./src/*.ts --fix && npm run pretty"
+		"fix": "tslint -c tslint.json ./src/**/*.ts ./src/**/**/*.ts ./src/*.ts --fix && npm run pretty",
+		"lint": "tslint -c tslint.json ./src/**/*.ts ./src/**/**/*.ts ./src/*.ts"
 	},
 	"repository": {
 		"type": "git",
@@ -75,6 +76,10 @@
 		"prettier": "1.19.1",
 		"raw-loader": "^0.5.1",
 		"style-loader": "^0.13.2",
+		"stylelint": "^13.4.0",
+		"stylelint-config-prettier": "^8.0.1",
+		"stylelint-config-standard": "^20.0.0",
+		"stylelint-prettier": "^1.1.2",
 		"synchronous-promise": "^2.0.12",
 		"terser-webpack-plugin": "^2.3.6",
 		"ts-loader": "^6.2.2",

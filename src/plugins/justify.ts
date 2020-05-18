@@ -26,7 +26,7 @@ Config.prototype.controls.align = {
 					editor.editor
 				) || editor.editor;
 
-			let currentValue: string = css(currentBox, 'text-align').toString();
+			let currentValue = css(currentBox, 'text-align').toString();
 
 			if (
 				control.defaultValue &&

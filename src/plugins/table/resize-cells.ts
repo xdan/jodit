@@ -166,7 +166,7 @@ export class resizeCells extends Plugin {
 			return;
 		}
 
-		this.j.e.fire('closeAllPopups')
+		this.j.e.fire('closeAllPopups');
 
 		let x = event.clientX;
 
@@ -203,8 +203,10 @@ export class resizeCells extends Plugin {
 
 	/**
 	 * Mouse up every where after move and click
+	 * @param event
 	 */
-	private onMouseUp = () => {
+	@autobind
+	private onMouseUp(e: MouseEvent): void {
 		if (this.selectMode || this.drag) {
 			this.selectMode = false;
 			this.j.unlock();
@@ -224,11 +226,13 @@ export class resizeCells extends Plugin {
 
 		this.resizeHandler.classList.remove('jodit-table-resizer_moved');
 
-		// resize column
-		if (this.wholeTable === null) {
-			this.resizeColumns();
-		} else {
-			this.resizeTable();
+		if (this.startX !== e.clientX) {
+			// resize column
+			if (this.wholeTable === null) {
+				this.resizeColumns();
+			} else {
+				this.resizeTable();
+			}
 		}
 
 		this.j.setEditorValue();

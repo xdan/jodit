@@ -332,7 +332,7 @@ export class Dom {
 			node &&
 			typeof node === 'object' &&
 			Dom.isNode(node, win) &&
-			consts.IS_BLOCK.test((<Node>node).nodeName)
+			consts.IS_BLOCK.test((node as Node).nodeName)
 		);
 	}
 
@@ -442,15 +442,15 @@ export class Dom {
 		node: HTMLElement,
 		className: string
 	): Nullable<HTMLElement> {
-		return <HTMLElement | null>Dom.prev(
+		return Dom.prev(
 			node,
 			node => {
 				return (
 					Dom.isElement(node) && node.classList.contains(className)
 				);
 			},
-			<HTMLElement>node.parentNode
-		);
+			node.parentNode as HTMLElement
+		) as HTMLElement | null;
 	}
 
 	static nextWithClass(
@@ -460,7 +460,7 @@ export class Dom {
 		return Dom.next(
 			node,
 			elm => Dom.isElement(elm) && elm.classList.contains(className),
-			<HTMLElement>node.parentNode
+			node.parentNode as HTMLElement
 		) as Nullable<HTMLElement>;
 	}
 

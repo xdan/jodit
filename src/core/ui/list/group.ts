@@ -1,10 +1,6 @@
 import './group.less';
 
-import {
-	IUIElement,
-	IUIGroup,
-	IViewBased
-} from '../../../types';
+import { IUIElement, IUIGroup, IViewBased } from '../../../types';
 import { UIElement } from '../element';
 import { watch } from '../../decorators';
 
@@ -23,7 +19,7 @@ export class UIGroup<T extends IViewBased = IViewBased> extends UIElement<T>
 	append(elm: IUIElement): void {
 		this.elements.push(elm);
 		this.container.appendChild(elm.container);
-		elm.parentElement = this
+		elm.parentElement = this;
 		elm.update();
 	}
 

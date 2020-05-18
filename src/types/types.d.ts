@@ -21,12 +21,12 @@ export interface IDestructible {
 	destruct(jodit?: IViewBased): any;
 }
 
-export type Statuses = {
+export interface Statuses {
 	beforeInit: 'beforeInit';
 	ready: 'ready';
 	beforeDestruct: 'beforeDestruct';
 	destructed: 'destructed';
-};
+}
 
 export type ComponentStatus = keyof Statuses;
 
@@ -55,6 +55,8 @@ interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 		status: keyof Statuses,
 		callback: (component: this) => void
 	): void;
+
+	bindDestruct(jodit: T): this;
 }
 
 interface IViewComponent<T extends IViewBased = IViewBased> extends IComponent {
@@ -218,7 +220,7 @@ export interface EventHandlerBlock {
 
 declare global {
 	interface HTMLElementTagNameMap {
-		'jodit': HTMLDivElement;
+		jodit: HTMLDivElement;
 	}
 }
 

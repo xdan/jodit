@@ -74,12 +74,7 @@ Config.prototype.controls.link = {
 		return Boolean(current && Dom.closest(current, 'a', editor.editor));
 	},
 
-	popup: (
-		editor: IJodit,
-		current,
-		self: IControlType,
-		close: () => void
-	) => {
+	popup: (editor: IJodit, current, self: IControlType, close: () => void) => {
 		const i18n = editor.i18n.bind(editor),
 			{
 				openInNewTabCheckbox,

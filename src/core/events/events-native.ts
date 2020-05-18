@@ -205,15 +205,7 @@ export class EventsNative implements IEventsNative {
 	): this;
 
 	on(
-		subjects: HTMLElement[],
-		events: string,
-		handle: CallbackFunction,
-		selector?: string,
-		onTop?: boolean
-	): this;
-
-	on(
-		subject: HTMLElement,
+		subjects: HTMLElement | HTMLElement[],
 		events: string,
 		handle: CallbackFunction,
 		selector?: string,
@@ -221,15 +213,7 @@ export class EventsNative implements IEventsNative {
 	): this;
 
 	on<T extends object>(
-		subjects: T[],
-		events: string,
-		handle: CallbackFunction,
-		selector?: string,
-		onTop?: boolean
-	): this;
-
-	on<T extends object>(
-		subject: T,
+		subjects: T[] | T,
 		events: string,
 		handle: CallbackFunction,
 		selector?: string,
@@ -560,8 +544,7 @@ export class EventsNative implements IEventsNative {
 		eventsList?: string | any | Event,
 		...args: any[]
 	): any {
-		let result: any = undefined,
-			result_value: any;
+		let result: any, result_value: any;
 
 		const subject: object = isString(subjectOrEvents)
 			? this
@@ -675,6 +658,6 @@ export class EventsNative implements IEventsNative {
 		this.off(this);
 
 		this.getStore(this).clear();
-		delete (<any>this)[this.__key];
+		delete (this as any)[this.__key];
 	}
 }

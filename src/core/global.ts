@@ -47,7 +47,7 @@ const boxes = new WeakMap<IComponent, IDictionary<HTMLElement>>();
 export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 	jodit: IViewBased | IViewComponent,
 	name: string,
-	tag: T = <T>'div',
+	tag: T = 'div' as T,
 	inside: boolean = false
 ): HTMLElementTagNameMap[T] {
 	const data = boxes.get(jodit) || {};

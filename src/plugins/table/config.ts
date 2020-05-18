@@ -10,10 +10,9 @@ declare module '../../config' {
 			allowCellSelection: boolean;
 			selectionCellStyle: string;
 
-
 			allowCellResize: boolean;
 			useExtraClassesOptions: boolean;
-		}
+		};
 	}
 }
 
@@ -22,7 +21,7 @@ Config.prototype.table = {
 	selectionCellStyle: 'border: 1px double #1e88e5 !important;',
 
 	allowCellResize: true,
-	useExtraClassesOptions: true
+	useExtraClassesOptions: false
 };
 
 Config.prototype.controls.table = {
@@ -36,9 +35,9 @@ Config.prototype.controls.table = {
 		}
 	},
 	popup: (editor: IJodit, current, control, close, button) => {
-		const default_rows_count: number =
+		const default_rows_count =
 				control.data && control.data.rows ? control.data.rows : 10,
-			default_cols_count: number =
+			default_cols_count =
 				control.data && control.data.cols ? control.data.cols : 10;
 
 		const generateExtraClasses = (): string => {
@@ -61,17 +60,17 @@ Config.prototype.controls.table = {
 		};
 
 		const form: HTMLFormElement = editor.c.fromHTML(
-			'<form class="jodit-form jodit-form__inserter">' +
-			'<label class="jodit-form__center">' +
-			'<span>1</span> &times; <span>1</span>' +
-			'</label>' +
-			'<div class="jodit-form__table-creator-box">' +
-			'<div class="jodit-form__container"></div>' +
-			'<div class="jodit-form__options">' +
-			generateExtraClasses() +
-			'</div>' +
-			'</div>' +
-			'</form>'
+				'<form class="jodit-form jodit-form__inserter">' +
+					'<label class="jodit-form__center">' +
+					'<span>1</span> &times; <span>1</span>' +
+					'</label>' +
+					'<div class="jodit-form__table-creator-box">' +
+					'<div class="jodit-form__container"></div>' +
+					'<div class="jodit-form__options">' +
+					generateExtraClasses() +
+					'</div>' +
+					'</div>' +
+					'</form>'
 			) as HTMLFormElement,
 			rows: HTMLSpanElement = form.querySelectorAll('span')[0],
 			cols: HTMLSpanElement = form.querySelectorAll('span')[1],
@@ -102,7 +101,7 @@ Config.prototype.controls.table = {
 				return;
 			}
 
-			let k =
+			const k =
 				index === undefined || isNaN(index)
 					? parseInt(attr(dv, '-index') || '0', 10)
 					: index || 0;
@@ -137,7 +136,7 @@ Config.prototype.controls.table = {
 					return;
 				}
 
-				let k = parseInt(attr(dv, '-index') || '0', 10);
+				const k = parseInt(attr(dv, '-index') || '0', 10);
 
 				const rows_count = Math.ceil((k + 1) / default_cols_count),
 					cols_count = (k % default_cols_count) + 1;
@@ -177,11 +176,11 @@ Config.prototype.controls.table = {
 				const crnt = editor.selection.current();
 
 				if (crnt && editor.selection.isCollapsed()) {
-					const block: HTMLElement | false = Dom.closest(
+					const block = Dom.closest(
 						crnt,
 						node => Dom.isBlock(node, editor.editorWindow),
 						editor.editor
-					) as HTMLElement | false;
+					);
 
 					if (
 						block &&

@@ -101,7 +101,9 @@ export class PluginSystem implements IPluginSystem {
 					await this.load(jodit, needLoadExtras);
 				}
 			} catch (e) {
-				console.log(e);
+				if (!isProd) {
+					throw e;
+				}
 			}
 		}
 

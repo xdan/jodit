@@ -58,7 +58,7 @@ import { Icon } from '../../core/ui';
 import autobind from 'autobind-decorator';
 
 const DEFAULT_SOURCE_NAME = 'default',
-	ITEM_ACTIVE_CLASS = ITEM_CLASS + '-active-true';
+	ITEM_ACTIVE_CLASS = ITEM_CLASS + '_active_true';
 
 export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	private loader = this.c.div(F_CLASS + '_loader', ICON_LOADER);
@@ -109,7 +109,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				}
 			})
 			.catch((error: Error) => {
-				Alert(error.message);
+				Alert(error.message).bindDestruct(this);
 				this.errorHandler(error);
 			});
 	}
@@ -745,7 +745,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 								return self.loadTree();
 							});
 						}
-					});
+					}).bindDestruct(self);
 				}
 			})
 			.on('edit.filebrowser', () => {
@@ -806,7 +806,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 							},
 							self.i18n('type name'),
 							name
-						);
+						).bindDestruct(this);
 					}
 				}
 			)
@@ -868,7 +868,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 									.catch(self.status);
 							}
 						}
-					);
+					).bindDestruct(self);
 
 					e.stopImmediatePropagation();
 					return false;
@@ -929,7 +929,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 						},
 						self.i18n('type name'),
 						name
-					);
+					).bindDestruct(self);
 
 					e.stopImmediatePropagation();
 
@@ -965,7 +965,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 									}, self.status);
 							},
 							self.i18n('type name')
-						);
+						).bindDestruct(self);
 					} else {
 						self.dataProvider.currentPath =
 							attr(this, '-path') || '';
@@ -1188,6 +1188,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 		if (sortBy) {
 			const parts = sortBy.split('-');
+
 			self.state.sortBy = ['changed', 'name', 'size'].includes(parts[0])
 				? sortBy
 				: 'changed-desc';

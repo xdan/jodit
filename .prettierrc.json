@@ -5,5 +5,5 @@
 	"semi": true,
 	"singleQuote": true,
 	"endOfLine": "lf",
-	"arrow-parens": "always"
+	"arrowParens": "avoid"
 }

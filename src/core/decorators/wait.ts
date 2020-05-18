@@ -15,7 +15,7 @@ export function wait<T extends IViewComponent>(
 export function wait<T extends IViewComponent | IViewBased>(
 	condition: (ctx: T) => boolean
 ): Function {
-	return function(target: T, propertyKey: string) {
+	return (target: T, propertyKey: string) => {
 		if (!isFunction((target as any)[propertyKey])) {
 			throw error('Handler must be a Function');
 		}

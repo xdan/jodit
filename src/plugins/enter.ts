@@ -62,6 +62,7 @@ export class enter extends Plugin {
 	private brMode = false;
 	private defaultTag: 'p' | 'br' | 'div' = consts.PARAGRAPH;
 
+	/** @override */
 	afterInit(editor: IJodit): void {
 		// use 'enter' option if no set
 		this.defaultTag = editor.o.enter.toLowerCase() as 'p' | 'div' | 'br';
@@ -108,9 +109,9 @@ export class enter extends Plugin {
 			return;
 		}
 
-		let current = this.j.selection.current(false) as Node;
+		const current = this.j.selection.current(false) as Node;
 
-		let currentBox = this.getBlockWrapper(current);
+		const currentBox = this.getBlockWrapper(current);
 
 		if (!currentBox) {
 			this.wrapText(current);
@@ -222,7 +223,7 @@ export class enter extends Plugin {
 		if (
 			this.brMode ||
 			shiftKeyPressed ||
-			Dom.closest(current, ['pre','blockquote'], this.j.editor)
+			Dom.closest(current, ['pre', 'blockquote'], this.j.editor)
 		) {
 			const br = this.j.createInside.element('br');
 
@@ -293,11 +294,7 @@ export class enter extends Plugin {
 	private enterInsideEmptyLIelement(currentBox: HTMLElement): void {
 		let fakeTextNode: Nullable<Text> = null;
 
-		const ul = Dom.closest(
-			currentBox,
-			['ol','ul'],
-			this.j.editor
-		);
+		const ul = Dom.closest(currentBox, ['ol', 'ul'], this.j.editor);
 
 		if (!ul) {
 			return;
@@ -343,6 +340,7 @@ export class enter extends Plugin {
 		}
 	}
 
+	/** @override */
 	beforeDestruct(editor: IJodit): void {
 		editor.e.off('keydown.enter');
 	}

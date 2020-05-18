@@ -13,18 +13,16 @@ export interface IDialogOptions extends IViewOptions {
 }
 
 export type ContentItem = string | HTMLElement | IContainer;
-export type Content = ContentItem | ContentItem[] | Array<ContentItem | ContentItem[]>;
+export type Content =
+	| ContentItem
+	| ContentItem[]
+	| Array<ContentItem | ContentItem[]>;
 
 export interface IDialog extends IComponent, IContainer {
 	isOpened: boolean;
 
-	open(
-		destroyAfter: boolean,
-	): this;
-	open(
-		destroyAfter: boolean,
-		modal: boolean
-	): this;
+	open(destroyAfter: boolean): this;
+	open(destroyAfter: boolean, modal: boolean): this;
 	open(
 		content?: Content,
 		title?: Content,
@@ -35,8 +33,9 @@ export interface IDialog extends IComponent, IContainer {
 	close(): this;
 
 	setSize(w?: number | string, h?: number | string): this;
-	setPosition(x?: number, y?: number): this
+	setPosition(x?: number, y?: number): this;
 	setHeader(content: Content): this;
 	setContent(content: Content): this;
-	setFooter(content: Content) : this;
+	setFooter(content: Content): this;
+	setModal(modal: undefined | boolean): this;
 }

@@ -31,12 +31,14 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	 * Find match parent
 	 * @param type
 	 */
+	// tslint:disable-next-line:ban-types
 	closest<T extends IUIElement>(type: Function | IUIElement): Nullable<T> {
-		let pe = this.__parentElement,
-			c =
-				typeof type === 'object'
-					? (pe: IUIElement) => pe === type
-					: (pe: IUIElement) => pe instanceof type;
+		const c =
+			typeof type === 'object'
+				? (pe: IUIElement) => pe === type
+				: (pe: IUIElement) => pe instanceof type;
+
+		let pe = this.__parentElement;
 
 		while (pe) {
 			if (c(pe)) {
@@ -53,6 +55,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	 * Find closest UIElement in DOM
 	 * @param node
 	 */
+	// tslint:disable-next-line:ban-types
 	static closestElement(node: Node, type: Function): Nullable<IUIElement> {
 		const elm = Dom.up(node, node => {
 			if (node) {
@@ -102,7 +105,9 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	/**
 	 * Update UI from state
 	 */
-	update(): void {}
+	update(): void {
+		// empty
+	}
 
 	/**
 	 * Append container to element

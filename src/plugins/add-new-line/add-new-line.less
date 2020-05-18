@@ -22,7 +22,7 @@
 	top: 0;
 	outline: none;
 
-	&:after {
+	&::after {
 		content: '';
 		background-color: @color-new-line;
 		height: 1px;
@@ -33,14 +33,11 @@
 	span {
 		position: absolute;
 		right: 0;
-
 		display: flex;
 		justify-content: center;
 		align-items: center;
-
 		width: @width-icon;
 		height: @height-icon;
-
 		background: fade(@color-background-button-hover, 30%);
 		border: 1px solid @color-new-line;
 		cursor: pointer;

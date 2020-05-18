@@ -20,7 +20,7 @@ import { isFunction, isJoditObject } from '../../../core/helpers/';
 
 import { UIList } from '../../../core/ui';
 import { makeButton } from '../factory';
-import { STATUSES } from '../../../core/component';
+import { STATUSES } from '../../../core/component/component';
 
 export class ToolbarCollection<T extends IViewBased = IViewBased>
 	extends UIList<T>

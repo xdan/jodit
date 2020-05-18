@@ -14,7 +14,7 @@ export function positionTab(editor: IJodit): HTMLElement {
 				<input class="jodit_col-lg-1-5 jodit-input" data-ref="marginTop" type="text" placeholder="${i18n(
 					'top'
 				)}"/>
-				<a style="text-align: center;" data-ref="lockMargin" class="jodit_lock_helper jodit_col-lg-1-5">${gi(
+				<a style="text-align: center;" data-ref="lockMargin" class="jodit-properties__lock jodit_col-lg-1-5">${gi(
 					'lock'
 				)}</a>
 				<input disabled="true" class="jodit_col-lg-1-5 jodit-input" data-ref="marginRight" type="text" placeholder="${i18n(

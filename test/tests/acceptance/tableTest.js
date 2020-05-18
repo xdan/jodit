@@ -1203,34 +1203,86 @@ describe('Tables Jodit Editor Tests', function() {
 					'<tr><td>5</td><td>6</td></tr>' +
 					'</table>';
 
-				let td = editor.editor.querySelector('td'), pos = Jodit.modules.Helpers.position(td);
-				simulateEvent(
-					'mousedown',
-					0,
-					td,
-					e => {
-						Object.assign(e, {
-							clientX: pos.left,
-							clientY: pos.top
-						});
-					}
-				);
+				let td = editor.editor.querySelector('td');
+
+				simulateEvent('mousedown', td);
 
 				td = editor.editor.querySelectorAll('td')[3];
 				pos = Jodit.modules.Helpers.position(td);
-				simulateEvent(
-					['mousemove', 'mouseup', 'click'],
-					0,
-					td,
-					e => {
-						Object.assign(e, {
-							clientX: pos.left + 10,
-							clientY: pos.top + 10
-						});
-					}
-				);
 
-				expect(editor.getInstance('Table', editor.o).selected.size).equals(4)
+				simulateEvent(['mousemove', 'mouseup', 'click'], 0, td);
+
+				expect(
+					editor.getInstance('Table', editor.o).selected.size
+				).equals(4);
+			});
+
+			describe('Set custom selected border color', function() {
+				it('Should add css rule in document for selected css', function() {
+					const editor = getJodit({
+						table: {
+							selectionCellStyle:
+								'border: 1px double red !important;'
+						}
+					});
+
+					editor.value =
+						'<table>' +
+						'<tr><td>1</td><td>2</td></tr>' +
+						'<tr><td>3</td><td>4</td></tr>' +
+						'<tr><td>5</td><td>6</td></tr>' +
+						'</table>';
+
+					let td = editor.editor.querySelector('td');
+
+					simulateEvent('mousedown', td);
+
+					td = editor.editor.querySelectorAll('td')[3];
+					pos = Jodit.modules.Helpers.position(td);
+
+					simulateEvent(['mousemove', 'mouseup', 'click'], td);
+
+					expect(
+						Jodit.modules.Helpers.normalizeColor(
+							editor.editorWindow.getComputedStyle(td).borderColor
+						)
+					).equals('#FF0000');
+				});
+
+				describe('For iframe mode', function() {
+					it('Should add css rule in editor document for selected css', function() {
+						const editor = getJodit({
+							iframe: true,
+							table: {
+								selectionCellStyle:
+									'border: 1px double red !important;'
+							}
+						});
+
+						editor.value =
+							'<table>' +
+							'<tr><td>1</td><td>2</td></tr>' +
+							'<tr><td>3</td><td>4</td></tr>' +
+							'<tr><td>5</td><td>6</td></tr>' +
+							'</table>';
+
+						let td = editor.editor.querySelector('td');
+
+						simulateEvent('mousedown', td);
+
+						td = editor.editor.querySelectorAll('td')[3];
+						pos = Jodit.modules.Helpers.position(td);
+
+						simulateEvent(['mousemove', 'mouseup', 'click'], td);
+
+						expect(
+							Jodit.modules.Helpers.normalizeColor(
+								editor.editorWindow.getComputedStyle(td)
+									.borderColor
+							)
+						).equals('#FF0000');
+					});
+				});
 			});
 
 			describe('When we press mouse button over cell in subtable and move mouse to another cell', function() {
@@ -1253,35 +1305,27 @@ describe('Tables Jodit Editor Tests', function() {
 						'<tr><td>5</td><td>6</td></tr>' +
 						'</table>';
 
-					let td = editor.editor.querySelector('.test').querySelector('td'), pos = Jodit.modules.Helpers.position(td);
-					simulateEvent(
-						'mousedown',
-						0,
-						td,
-						e => {
-							Object.assign(e, {
-								clientX: pos.left,
-								clientY: pos.top
-							});
-						}
-					);
+					let td = editor.editor
+							.querySelector('.test')
+							.querySelector('td'),
+						pos = Jodit.modules.Helpers.position(td);
+					simulateEvent('mousedown', 0, td, e => {
+						Object.assign(e, {
+							clientX: pos.left,
+							clientY: pos.top
+						});
+					});
 
-					td = editor.editor.querySelector('.test').querySelectorAll('td')[3];
+					td = editor.editor
+						.querySelector('.test')
+						.querySelectorAll('td')[3];
 					pos = Jodit.modules.Helpers.position(td);
 
-					simulateEvent(
-						['mousemove', 'mouseup', 'click'],
-						0,
-						td,
-						e => {
-							Object.assign(e, {
-								clientX: pos.left + 10,
-								clientY: pos.top + 10
-							});
-						}
-					);
+					simulateEvent(['mousemove', 'mouseup', 'click'], td);
 
-					expect(editor.getInstance('Table', editor.o).selected.size).equals(4)
+					expect(
+						editor.getInstance('Table', editor.o).selected.size
+					).equals(4);
 				});
 			});
 
@@ -1298,34 +1342,16 @@ describe('Tables Jodit Editor Tests', function() {
 					'</tbody>' +
 					'</table>';
 
-				let td = editor.editor.querySelector('td'), pos = Jodit.modules.Helpers.position(td);
-				simulateEvent(
-					'mousedown',
-					0,
-					td,
-					e => {
-						Object.assign(e, {
-							clientX: pos.left,
-							clientY: pos.top
-						});
-					}
-				);
+				let td = editor.editor.querySelector('td');
+
+				simulateEvent('mousedown', td);
 
 				td = editor.editor.querySelectorAll('td')[7];
-				pos = Jodit.modules.Helpers.position(td);
-				simulateEvent(
-					['mousemove', 'mouseup', 'click'],
-					0,
-					td,
-					e => {
-						Object.assign(e, {
-							clientX: pos.left + 10,
-							clientY: pos.top + 10
-						});
-					}
-				);
+				simulateEvent(['mousemove', 'mouseup', 'click'], td);
 
-				expect(editor.getInstance('Table', editor.o).selected.size).equals(8)
+				expect(
+					editor.getInstance('Table', editor.o).selected.size
+				).equals(8);
 			});
 		});
 
@@ -1436,6 +1462,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 				const td = editor.editor.querySelectorAll('td')[1],
 					box = td.getBoundingClientRect();
+
 				simulateEvent('mousemove', 1, td, function(options) {
 					options.clientX = box.left;
 					options.offsetX = 0;
@@ -1483,6 +1510,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 					const td = editor.editor.querySelectorAll('td')[1],
 						box = td.getBoundingClientRect();
+
 					simulateEvent('mousemove', 1, td, function(options) {
 						options.clientX = box.left;
 						options.offsetX = 0;
@@ -1859,6 +1887,45 @@ describe('Tables Jodit Editor Tests', function() {
 								'</tbody>' +
 								'</table>'
 						);
+					});
+				});
+
+				describe('press mouse button and do not move cursor after', function() {
+					it('should not change any cell\'s width', function() {
+						const editor = getJodit();
+
+						getBox().style.width = '202px';
+
+						const initital =
+							'<table style="width:100px"><tbody>' +
+							'<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
+							'</tbody></table>';
+
+						editor.value = initital;
+
+						const td = editor.editor.querySelectorAll('td')[0],
+							box = td.getBoundingClientRect();
+
+						simulateEvent('mousemove', td, function(options) {
+							options.clientX = box.left;
+							options.offsetX = 0;
+						});
+
+						simulateEvent(
+							'mousedown',
+							editor.container.querySelector(
+								'.jodit-table-resizer'
+							),
+							function(options) {
+								options.clientX = box.left;
+							}
+						);
+
+						simulateEvent('mouseup', window, function(options) {
+							options.clientX = box.left;
+						});
+
+						expect(sortAttributes(editor.value)).equals(initital);
 					});
 				});
 			});

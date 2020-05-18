@@ -10,12 +10,11 @@ import {
 	IDictionary,
 	Statuses,
 	IViewBased,
-	Nullable,
-	IViewComponent
-} from '../types';
+	Nullable
+} from '../../types';
 
-import { kebabCase, get } from './helpers/';
-import { uniqueUid } from './global';
+import { kebabCase, get } from '../helpers';
+import { uniqueUid } from '../global';
 
 export const STATUSES: Statuses = {
 	beforeInit: 'beforeInit',
@@ -77,8 +76,7 @@ export abstract class Component implements IComponent {
 
 		this.__componentStatus = componentStatus;
 
-		const cbList =
-			this.onStatusLst && this.onStatusLst[componentStatus];
+		const cbList = this.onStatusLst && this.onStatusLst[componentStatus];
 
 		if (cbList) {
 			cbList.forEach(cb => cb(this));
@@ -90,15 +88,15 @@ export abstract class Component implements IComponent {
 	 * @example
 	 * ```js
 	 * private a = {
-	 *	b: {
-	 *	 c: {
-	 *	   e: {
-	 *	     g: {
-	 *	       color: 'red'
-	 *	     }
-	 *	   }
-	 *	 }
-	 *	}
+	 * 	b: {
+	 * 		c: {
+	 * 			e: {
+	 * 				g: {
+	 * 					color: 'red'
+	 * 				}
+	 * 			}
+	 * 		}
+	 * 	}
 	 * }
 	 *
 	 * this.get('a.b.c.e.g.color'); // Safe access to color
@@ -137,6 +135,18 @@ export abstract class Component implements IComponent {
 		);
 	}
 
+	/**
+	 * Bind destructor to come View
+	 * @param jodit
+	 */
+	bindDestruct(jodit: IViewBased): this {
+		jodit.e.on(STATUSES.beforeDestruct, () => {
+			!this.isInDestruct && this.destruct();
+		});
+
+		return this;
+	}
+
 	constructor() {
 		this.componentName = 'jodit-' + kebabCase(this.constructor.name);
 		this.uid = 'jodit-uid-' + uniqueUid();
@@ -170,48 +180,5 @@ export abstract class Component implements IComponent {
 		this.onStatusLst[status].push(callback);
 	}
 
-	private onStatusLst!: IDictionary<Function[]>;
-}
-
-export abstract class ViewComponent<T extends IViewBased = IViewBased>
-	extends Component
-	implements IViewComponent<T> {
-	/**
-	 * Parent View element
-	 */
-	jodit!: T;
-
-	get defaultTimeout(): number {
-		return this.j.defaultTimeout;
-	}
-
-	/**
-	 * Shortcut for `this.jodit`
-	 */
-	get j(): this['jodit'] {
-		return this.jodit;
-	}
-
-	/**
-	 * Attach component to View
-	 * @param jodit
-	 */
-	setParentView(jodit: T): this {
-		this.jodit = jodit;
-
-		jodit.components.add(this);
-
-		return this;
-	}
-
-	constructor(jodit: T) {
-		super();
-		this.setParentView(jodit);
-	}
-
-	/** @override */
-	destruct(): any {
-		this.j.components.delete(this);
-		return super.destruct();
-	}
+	private onStatusLst!: IDictionary<CallableFunction[]>;
 }

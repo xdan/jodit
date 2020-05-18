@@ -18,7 +18,7 @@ import * as consts from '../core/constants';
 import { Dom } from '../core/dom';
 import { $$, attr, cssPath, each, trim } from '../core/helpers/';
 import { ICreate, IJodit } from '../types';
-import { ViewComponent } from '../core/component';
+import { ViewComponent } from '../core/component/viewComponent';
 import { getContainer } from '../core/global';
 import { debounce } from '../core/decorators';
 

@@ -1,6 +1,9 @@
 # Changelog
 ## 3.4
-Big refactoring release
+### Bug fixes
+* https://github.com/xdan/jodit/issues/393
+
+### Features
 * `FileBrowser`, `Dialog` etc. modules which extends `View` has only one argument in the constructor - options.
 Before:
 ```js

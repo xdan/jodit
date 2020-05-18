@@ -5,6 +5,7 @@
  */
 
 @import (reference) '../../styles/variables';
+
 @keyframes pulse {
 	30% {
 		opacity: 0.6;
@@ -35,8 +36,8 @@
 		transition: width 500ms ease-out, opacity 500ms linear;
 		will-change: width, opacity;
 
-		&:before,
-		&:after {
+		&::before,
+		&::after {
 			animation: pulse 2s ease-out 0s infinite;
 			content: '';
 			display: inline-block;
@@ -48,13 +49,13 @@
 			opacity: 0.6;
 		}
 
-		&:before {
+		&::before {
 			width: 180px;
 			right: -80px;
 			clip: rect(-6px, 90px, 14px, -6px);
 		}
 
-		&:after {
+		&::after {
 			width: 20px;
 			right: 0;
 			clip: rect(-6px, 22px, 14px, 10px);

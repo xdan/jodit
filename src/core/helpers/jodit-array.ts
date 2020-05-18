@@ -36,7 +36,7 @@ export class JoditArray {
 			'unshift',
 			'slice',
 			'splice'
-		].forEach((method) => {
+		].forEach(method => {
 			(this as any)[method] = proto[method];
 		});
 	}

@@ -29,7 +29,7 @@ Config.prototype.controls.about = {
 					</div>
 					<div>
 						<a href="https://xdsoft.net/jodit/doc/" target="_blank">${i18n(
-							'Jodit User\'s Guide'
+							"Jodit User's Guide"
 						)}</a>
 						${i18n('contains detailed help for using')}
 					</div>
@@ -40,10 +40,7 @@ Config.prototype.controls.about = {
 		);
 
 		dialog.open(true);
-
-		editor.e.on('beforeDestruct', () => {
-			dialog.destruct()
-		});
+		dialog.bindDestruct(editor);
 	},
 	tooltip: 'About Jodit',
 	mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG

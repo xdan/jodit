@@ -64,17 +64,14 @@
 .jodit_select,
 .jodit-input {
 	.font();
+
 	width: 100%;
 	height: 32px;
-
 	padding: @padding-default / 2 @padding-default;
-
 	line-height: 100%;
-
 	appearance: none;
 	outline: none;
 	box-sizing: border-box;
-
 	border: 1px solid @color-border;
 	border-radius: 0;
 	background-color: @color-white;
@@ -101,7 +98,7 @@
 	position: relative;
 	outline: none;
 
-	&:checked:after {
+	&:checked::after {
 		background: data-uri('icons/ok.svg') no-repeat center center
 			@color-border-active;
 		border-color: @color-border-active;
@@ -129,18 +126,15 @@
 
 .jodit-button {
 	position: relative;
-
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	user-select: none;
-
 	width: auto;
 	padding: 0 @padding-default;
 	height: @padding-default * 4;
 	line-height: 1;
 	margin: 0;
-
 	background-color: @color-background-gray;
 	color: @color-default;
 	cursor: pointer;

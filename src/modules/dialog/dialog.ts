@@ -28,7 +28,8 @@ import {
 	extend,
 	hasContainer,
 	isArray,
-	isBoolean, isFunction,
+	isBoolean,
+	isFunction,
 	isString,
 	splitArray
 } from '../../core/helpers/';
@@ -148,12 +149,15 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	@autobind
 	private onMouseUp(): void {
 		if (this.draggable || this.resizable) {
-			this.e.off(this.window, 'mousemove', this.onMouseMove);
+			this.e.off(this.ow, 'mousemove', this.onMouseMove);
 
 			this.draggable = false;
 			this.resizable = false;
 			this.unlockSelect();
+
 			if (this.e) {
+				this.removeGlobalListeners();
+
 				/**
 				 * Fired when dialog box is finished to resizing
 				 * @event endResize
@@ -254,7 +258,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	}
 
 	@autobind
-	private onKeyDown(e: KeyboardEvent): void {
+	private onEsc(e: KeyboardEvent): void {
 		if (this.isOpened && e.key === KEY_ESC) {
 			const me = this.getMaxZIndexDialog();
 
@@ -306,22 +310,18 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		const self = this;
 
 		self.e
-			.on(self.window, 'mousemove', self.onMouseMove)
+			.on(self.ow, 'mousemove', self.onMouseMove)
 			.on(self.container, 'close_dialog', self.close)
-			.on(self.window, 'mouseup', self.onMouseUp)
-			.on(self.window, 'keydown', self.onKeyDown)
-			.on(self.window, 'resize', self.onResize);
+			.on(self.ow, 'mouseup', self.onMouseUp);
 	}
 
 	private removeGlobalListeners(): void {
 		const self = this;
 
 		self.e
-			.off(self.window, 'mousemove', self.onMouseMove)
+			.off(self.ow, 'mousemove', self.onMouseMove)
 			.off(self.container, 'close_dialog', self.close)
-			.off(self.window, 'mouseup', self.onMouseUp)
-			.off(self.window, 'keydown', self.onKeyDown)
-			.off(self.window, 'resize', self.onResize);
+			.off(self.ow, 'mouseup', self.onMouseUp);
 	}
 
 	options!: IDialogOptions;
@@ -337,9 +337,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	private dialogbox_content!: HTMLDivElement;
 	private dialogbox_footer!: HTMLDivElement;
 	private dialogbox_toolbar!: HTMLDivElement;
-
-	document: Document = document;
-	window: Window = window;
 
 	/**
 	 * Specifies the size of the window
@@ -366,8 +363,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 * @param {Number} [y] - Position px Vertical
 	 */
 	setPosition(x?: number, y?: number): this {
-		const w: number = this.window.innerWidth,
-			h: number = this.window.innerHeight;
+		const w: number = this.ow.innerWidth,
+			h: number = this.ow.innerHeight;
 
 		let left: number = w / 2 - this.dialog.offsetWidth / 2,
 			top: number = h / 2 - this.dialog.offsetHeight / 2;
@@ -557,7 +554,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		destroyAfterClose?: boolean,
 		modal?: boolean
 	): this {
-		eventEmitter.fire('closeAllPopups');
+		eventEmitter.fire('closeAllPopups hideHelpers');
 
 		/**
 		 * Called before the opening of the dialog box
@@ -592,9 +589,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		this.container.classList.add('jodit-dialog_active');
 		this.isOpened = true;
 
-		if (modal) {
-			this.container.classList.add('jodit-modal');
-		}
+		this.setModal(modal);
 
 		this.destination.appendChild(this.container);
 
@@ -611,6 +606,15 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		 */
 		this.e.fire('afterOpen', this);
 
+		return this;
+	}
+
+	/**
+	 * Set modal mode
+	 * @param modal
+	 */
+	setModal(modal: undefined | boolean): this {
+		this.container.classList.toggle('jodit-modal', Boolean(modal));
 		return this;
 	}
 
@@ -766,12 +770,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 				.build(splitArray(self.o.buttons))
 				.appendTo(self.dialogbox_toolbar);
 
-		self.e
-			.on(self.container, 'close_dialog', self.close as any)
-			.on(this.window, 'mouseup', self.onMouseUp)
-			.on(this.window, 'keydown', self.onKeyDown)
-			.on(this.window, 'resize', self.onResize);
-
 		const headerBox: HTMLDivElement | null = self.container.querySelector(
 			'.jodit-dialog__header'
 		);
@@ -786,6 +784,10 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		isFunction(fullSize) && fullSize(self);
 
 		self.setStatus(STATUSES.ready);
+
+		this.e
+			.on(this.ow, 'keydown', this.onEsc)
+			.on(this.ow, 'resize', this.onResize);
 	}
 
 	/**
@@ -804,6 +806,10 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		if (this.events) {
 			this.removeGlobalListeners();
+
+			this.events
+				.on(this.ow, 'keydown', this.onEsc)
+				.on(this.ow, 'resize', this.onResize);
 		}
 
 		super.destruct();

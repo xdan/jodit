@@ -2,7 +2,8 @@ import { IFocusable } from './form';
 import {
 	IContainer,
 	IDestructible,
-	IDictionary, IViewComponent,
+	IDictionary,
+	IViewComponent,
 	Nullable
 } from './types';
 import { Buttons } from './toolbar';

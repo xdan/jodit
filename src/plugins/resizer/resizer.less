@@ -11,7 +11,7 @@
 	user-select: none;
 	position: relative;
 
-	&:after {
+	&::after {
 		position: absolute;
 		content: '';
 		z-index: 1;
@@ -46,23 +46,17 @@
 		position: absolute;
 		left: 50%;
 		top: 50%;
-
 		display: inline-block;
 		height: @viewer_height;
 		width: @viewer_width;
-		max-width: 100%;
-
 		margin-left: -@viewer_width / 2;
 		margin-top: -@viewer_height / 2;
-
 		line-height: @viewer_height;
 		font-size: 12px;
 		text-align: center;
-
 		color: @color-white;
 		background-color: @color-placeholder;
 		opacity: 0;
-
 		transition: opacity 0.2s linear;
 		overflow: visible;
 	}
@@ -70,10 +64,8 @@
 	> i {
 		position: absolute;
 		display: inline-block;
-
 		z-index: 4;
 		pointer-events: all;
-
 		border: 1px solid @color-border-resize;
 		background-color: @color-background-gray;
 
@@ -111,6 +103,7 @@
 		}
 
 		.handleSizes(10px);
+
 		@media (max-width: @screen-sm) {
 			.handleSizes(20px);
 		}

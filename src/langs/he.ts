@@ -233,5 +233,6 @@ export default {
 	'Copy selection': 'העתק בחירה',
 	copy: 'העתק',
 	'Border radius': 'רדיוס הגבול',
-	'Show all': 'הצג את כל'
+	'Show all': 'הצג את כל',
+	Apply: 'החל'
 } as IDictionary<string>;

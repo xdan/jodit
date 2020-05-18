@@ -443,25 +443,31 @@ describe('Test image', function() {
 						'.jodit-tab.jodit-tab_active'
 					);
 
-					const locker = tab.querySelector(
-						'[data-ref="lockMargin"]'
-					);
+					const locker = tab.querySelector('[data-ref="lockMargin"]');
 					expect(locker).is.not.null;
 					const lockerimg = locker.innerHTML;
 					simulateEvent('click', 0, locker);
 					expect(locker.innerHTML).does.not.equal(lockerimg);
 
 					expect(
-						tab.querySelector('[data-ref="marginTop"]').value.toString()
+						tab
+							.querySelector('[data-ref="marginTop"]')
+							.value.toString()
 					).equals('10');
 					expect(
-						tab.querySelector('[data-ref="marginBottom"]').value.toString()
+						tab
+							.querySelector('[data-ref="marginBottom"]')
+							.value.toString()
 					).equals('10');
 					expect(
-						tab.querySelector('[data-ref="marginLeft"]').value.toString()
+						tab
+							.querySelector('[data-ref="marginLeft"]')
+							.value.toString()
 					).equals('10');
 					expect(
-						tab.querySelector('[data-ref="marginRight"]').value.toString()
+						tab
+							.querySelector('[data-ref="marginRight"]')
+							.value.toString()
 					).equals('10');
 					expect(
 						tab
@@ -499,8 +505,11 @@ describe('Test image', function() {
 				const tab = dialog.querySelector('.jodit-tab.jodit-tab_active');
 
 				expect(tab).is.not.null;
-				expect(tab.querySelector('[data-ref="imageTitle"]')).is.not.null;
-				expect(tab.querySelector('[data-ref="imageTitle"]').value).equals('sting');
+				expect(tab.querySelector('[data-ref="imageTitle"]')).is.not
+					.null;
+				expect(
+					tab.querySelector('[data-ref="imageTitle"]').value
+				).equals('sting');
 
 				dialog.querySelector('[data-ref="imageTitle"]').value = 'Stop';
 				clickButton('ok', dialog);
@@ -531,10 +540,15 @@ describe('Test image', function() {
 					);
 
 					expect(tab).is.not.null;
-					expect(tab.querySelector('[data-ref="imageAlt"]')).does.not.equal(null);
-					expect(tab.querySelector('[data-ref="imageAlt"]').value).equals('test');
+					expect(
+						tab.querySelector('[data-ref="imageAlt"]')
+					).does.not.equal(null);
+					expect(
+						tab.querySelector('[data-ref="imageAlt"]').value
+					).equals('test');
 
-					dialog.querySelector('[data-ref="imageAlt"]').value = 'Stop';
+					dialog.querySelector('[data-ref="imageAlt"]').value =
+						'Stop';
 					clickButton('ok', dialog);
 
 					expect(sortAttributes(editor.value)).equals(
@@ -567,7 +581,9 @@ describe('Test image', function() {
 
 				expect(tab).is.not.null;
 				expect(tab.querySelector('[data-ref="imageLink"]')).is.not.null;
-				expect(tab.querySelector('[data-ref="imageLink"]').value).equals('');
+				expect(
+					tab.querySelector('[data-ref="imageLink"]').value
+				).equals('');
 
 				dialog.querySelector('[data-ref="imageLink"]').value =
 					'https://xdsoft.net/';
@@ -597,8 +613,11 @@ describe('Test image', function() {
 					);
 
 					expect(tab).is.not.null;
-					expect(tab.querySelector('[data-ref="imageLink"]')).is.not.null;
-					expect(tab.querySelector('[data-ref="imageLink"]').value).equals('');
+					expect(tab.querySelector('[data-ref="imageLink"]')).is.not
+						.null;
+					expect(
+						tab.querySelector('[data-ref="imageLink"]').value
+					).equals('');
 
 					dialog.querySelector('[data-ref="imageLink"]').value =
 						'https://xdsoft.net/';
@@ -632,14 +651,16 @@ describe('Test image', function() {
 						'.jodit-tab.jodit-tab_active'
 					);
 
-
 					expect(tab).is.not.null;
-					expect(tab.querySelector('[data-ref="imageLink"]')).is.not.null;
-					expect(tab.querySelector('[data-ref="imageLink"]').value).equals(
-						'https://xdan.ru'
-					);
-					expect(tab.querySelector('[data-ref="imageLinkOpenInNewTab"]').checked)
-						.is.true;
+					expect(tab.querySelector('[data-ref="imageLink"]')).is.not
+						.null;
+					expect(
+						tab.querySelector('[data-ref="imageLink"]').value
+					).equals('https://xdan.ru');
+					expect(
+						tab.querySelector('[data-ref="imageLinkOpenInNewTab"]')
+							.checked
+					).is.true;
 
 					dialog.querySelector('[data-ref="imageLink"]').value =
 						'https://xdsoft.net/';
@@ -673,12 +694,15 @@ describe('Test image', function() {
 					);
 
 					expect(tab).is.not.null;
-					expect(tab.querySelector('[data-ref="imageLink"]')).is.not.null;
-					expect(tab.querySelector('[data-ref="imageLink"]').value).equals(
-						'https://xdan.ru'
-					);
-					expect(tab.querySelector('[data-ref="imageLinkOpenInNewTab"]').checked)
-						.is.true;
+					expect(tab.querySelector('[data-ref="imageLink"]')).is.not
+						.null;
+					expect(
+						tab.querySelector('[data-ref="imageLink"]').value
+					).equals('https://xdan.ru');
+					expect(
+						tab.querySelector('[data-ref="imageLinkOpenInNewTab"]')
+							.checked
+					).is.true;
 
 					dialog.querySelector('[data-ref="imageLink"]').value = '';
 					dialog.querySelector(
@@ -711,7 +735,9 @@ describe('Test image', function() {
 						const dialog = getOpenedDialog(editor);
 						expect(dialog).is.not.null;
 
-						const imageWidth = dialog.querySelector('[data-ref="imageWidth"]');
+						const imageWidth = dialog.querySelector(
+							'[data-ref="imageWidth"]'
+						);
 						const imageHeight = dialog.querySelector(
 							'[data-ref="imageHeight"]'
 						);
@@ -763,7 +789,9 @@ describe('Test image', function() {
 
 						expect(dialog).is.not.null;
 
-						const imageWidth = dialog.querySelector('[data-ref="imageWidth"]');
+						const imageWidth = dialog.querySelector(
+							'[data-ref="imageWidth"]'
+						);
 						const imageHeight = dialog.querySelector(
 							'[data-ref="imageHeight"]'
 						);
@@ -876,9 +904,7 @@ describe('Test image', function() {
 
 					expect(dialog).is.not.null;
 
-					const fb = dialog.querySelector(
-						'[data-ref="changeImage"]'
-					);
+					const fb = dialog.querySelector('[data-ref="changeImage"]');
 					expect(fb).is.not.null;
 
 					const edit = dialog.querySelector(
@@ -917,14 +943,11 @@ describe('Test image', function() {
 
 					const dialog = getOpenedDialog(editor);
 
-					expect(dialog.querySelector('[data-ref="changeImage"]'))
-						.is.not.null;
+					expect(dialog.querySelector('[data-ref="changeImage"]')).is
+						.not.null;
 
-					expect(
-						dialog.querySelector(
-							'[data-ref="changeImage"]'
-						)
-					).is.not.null;
+					expect(dialog.querySelector('[data-ref="changeImage"]')).is
+						.not.null;
 				});
 
 				describe('Click on filebrowser button', function() {
@@ -948,9 +971,7 @@ describe('Test image', function() {
 						expect(rechange).is.not.null;
 						simulateEvent('click', 0, rechange);
 
-						expect(
-							getOpenedPopup(editor)
-						).is.not.null;
+						expect(getOpenedPopup(editor)).is.not.null;
 					});
 				});
 
@@ -1002,7 +1023,8 @@ describe('Test image', function() {
 							clickButton('ok', dialog4);
 
 							expect(
-								dialog.querySelector('[data-ref="imageSrc"]').value
+								dialog.querySelector('[data-ref="imageSrc"]')
+									.value
 							).equals(
 								'https://xdsoft.net/jodit/files/artio.jpg'
 							);
@@ -1102,25 +1124,19 @@ describe('Test image', function() {
 					}
 				});
 				window.scrollTo(0, offset(div).top);
-				simulateEvent(
-					'click',
-					0,
-					editor.editor.querySelector('img')
-				);
+				simulateEvent('click', 0, editor.editor.querySelector('img'));
 
 				const popup = getOpenedPopup(editor);
 
 				expect(popup.parentNode.parentNode !== null).is.true;
 
 				const positionPopup = Jodit.modules.Helpers.position(popup);
-				const positionImg = Jodit.modules.Helpers.position(editor.editor.querySelector('img'));
+				const positionImg = Jodit.modules.Helpers.position(
+					editor.editor.querySelector('img')
+				);
 
-				expect(
-					Math.abs(
-						positionPopup.left -
-							positionImg.left
-					) < 20
-				).is.true;
+				expect(Math.abs(positionPopup.left - positionImg.left) < 20).is
+					.true;
 
 				expect(
 					Math.abs(
@@ -1183,7 +1199,9 @@ describe('Test image', function() {
 
 				document.body.appendChild(div);
 
-				const editor = new Jodit(document.getElementById('text__area1'));
+				const editor = new Jodit(
+					document.getElementById('text__area1')
+				);
 				simulateEvent(
 					['mousedown', 'mouseup', 'click'],
 					0,
@@ -1243,7 +1261,6 @@ describe('Test image', function() {
 
 					simulateEvent(
 						['mousedown', 'mouseup', 'click'],
-						0,
 						editor.editor.querySelector('img')
 					);
 
@@ -1258,7 +1275,7 @@ describe('Test image', function() {
 						editor.ownerWindow.getComputedStyle(sizer).opacity
 					).equals('0');
 
-					const positionResizer = offset(resizer);
+					const positionResizer = offset(resizer.getElementsByTagName('i')[1]);
 
 					simulateEvent(
 						'mousedown',
@@ -1304,7 +1321,6 @@ describe('Test image', function() {
 
 						simulateEvent(
 							['mousedown', 'mouseup', 'click'],
-							0,
 							editor.editor.querySelector('img')
 						);
 
@@ -1319,17 +1335,15 @@ describe('Test image', function() {
 							editor.ownerWindow.getComputedStyle(sizer).opacity
 						).equals('0');
 
-						const positionResizer = offset(resizer);
+						const positionResizer = offset(resizer.getElementsByTagName('i')[2]);
 
 						simulateEvent(
 							'mousedown',
-							0,
-							resizer.getElementsByTagName('i')[1]
+							resizer.getElementsByTagName('i')[2]
 						);
 
 						simulateEvent(
 							'mousemove',
-							0,
 							editor.ownerWindow,
 							function(data) {
 								data.clientX = positionResizer.left - 480;
@@ -1339,7 +1353,6 @@ describe('Test image', function() {
 
 						simulateEvent(
 							'mouseup',
-							0,
 							editor.ownerWindow,
 							function(data) {
 								data.clientX = positionResizer.left - 480;

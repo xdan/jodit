@@ -44,7 +44,7 @@ export class ContextMenu extends Popup implements IContextMenu {
 			const action = Button(this.jodit, item.icon || 'empty', item.title);
 			this.jodit && action.setParentView(this.jodit);
 
-			action.setMod('context', 'menu')
+			action.setMod('context', 'menu');
 
 			action.onAction((e: MouseEvent) => {
 				item.exec?.call(self, e);

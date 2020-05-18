@@ -26,7 +26,7 @@ import {
 	isArray
 } from '../../../core/helpers/';
 import { Icon, ToolbarCollection } from '../..';
-import { STATUSES } from '../../../core/component';
+import { STATUSES } from '../../../core/component/component';
 
 export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	implements IToolbarButton {
@@ -370,7 +370,9 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 			this.target
 		);
 
-		menu.setContent(toolbar.container).open(() => position(this.container));
+		menu.setContent(toolbar.container).open(() =>
+			position(this.container)
+		);
 
 		this.state.activated = true;
 

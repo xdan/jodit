@@ -233,5 +233,6 @@ export default {
 	'Copy selection': 'Kopiuj zaznaczenie',
 	copy: 'kopiuj',
 	'Border radius': 'Zaokrąglenie krawędzi',
-	'Show all': 'Pokaż wszystkie'
+	'Show all': 'Pokaż wszystkie',
+	Apply: 'Zastosuj'
 } as IDictionary<string>;

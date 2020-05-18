@@ -139,11 +139,15 @@ export class hotkeys extends Plugin {
 
 		editor.e
 			.off('.hotkeys')
-			.on([editor.ow, editor.editorWindow], 'keydown.hotkeys', (e: KeyboardEvent): void => {
-				if (e.key === KEY_ESC) {
-					return this.j.e.fire('escape', e);
+			.on(
+				[editor.ow, editor.editorWindow],
+				'keydown.hotkeys',
+				(e: KeyboardEvent): void => {
+					if (e.key === KEY_ESC) {
+						return this.j.e.fire('escape', e);
+					}
 				}
-			})
+			)
 			.on(
 				'keydown.hotkeys',
 				(event: KeyboardEvent): void | false => {

@@ -97,7 +97,6 @@ export function fullsize(editor: IViewWithToolbar) {
 				}
 			}
 		},
-
 		/**
 		 * Change editor's state between FullSize and normal
 		 * @param enable
@@ -118,7 +117,10 @@ export function fullsize(editor: IViewWithToolbar) {
 			editor.container.classList.toggle('jodit_fullsize', enable);
 
 			if (editor.toolbar) {
-				isJoditObject(editor) && editor.toolbarContainer.appendChild(editor.toolbar.container);
+				isJoditObject(editor) &&
+					editor.toolbarContainer.appendChild(
+						editor.toolbar.container
+					);
 				css(editor.toolbar.container, 'width', 'auto');
 			}
 

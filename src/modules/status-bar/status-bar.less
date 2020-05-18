@@ -8,16 +8,15 @@
 
 .jodit-status-bar {
 	.font();
-	font-size: @font-size-small;
 
+	font-size: @font-size-small;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-
 	background-color: @color-toolbar;
 	padding: 0 @padding-default / 2;
 
-	&:before {
+	&::before {
 		content: '';
 		flex: auto;
 		order: 1;
@@ -27,6 +26,7 @@
 		&,
 		& > span {
 			.font();
+
 			font-size: @font-size-small;
 		}
 

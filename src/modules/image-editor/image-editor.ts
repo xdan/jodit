@@ -438,7 +438,7 @@ export class ImageEditor extends ViewComponent {
 
 					slide.classList.add(`${jie}_active`);
 					self.activeTab =
-						<ImageAction>attr(slide, '-area') || TABS.resize;
+						(attr(slide, '-area') as ImageAction) || TABS.resize;
 
 					const tab = self.editor.querySelector(
 						`.${jie}__area.${jie}__area_` + self.activeTab
@@ -601,24 +601,26 @@ export class ImageEditor extends ViewComponent {
 										self.j.i18n(
 											'The name should not be empty'
 										)
-									);
+									).bindDestruct(this.j);
+
 									return false;
 								}
+
 								self.onSave(
 									name,
 									data,
 									self.hide,
 									(e: Error) => {
-										Alert(e.message);
+										Alert(e.message).bindDestruct(self.j);
 									}
 								);
 							}
-						);
+						).bindDestruct(this.j);
 						break;
 
 					case self.buttons.save:
 						self.onSave(undefined, data, self.hide, (e: Error) => {
-							Alert(e.message);
+							Alert(e.message).bindDestruct(self.j);
 						});
 						break;
 
@@ -811,7 +813,7 @@ export class ImageEditor extends ViewComponent {
 
 		this.editor = form(this.j, this.options);
 
-		const {resizeBox, cropBox} = refs<HTMLInputElement>(this.editor);
+		const { resizeBox, cropBox } = refs<HTMLInputElement>(this.editor);
 
 		this.resize_box = resizeBox;
 		this.crop_box = cropBox;
@@ -867,7 +869,7 @@ export class ImageEditor extends ViewComponent {
 		delete this.editor;
 
 		if (this.j.e) {
-			this.j.e.off(this.ow,`.${jie}`)
+			this.j.e.off(this.ow, `.${jie}`);
 			this.j.e.off(`.${jie}`);
 		}
 

@@ -19,7 +19,7 @@ import { IFileBrowser } from './file-browser';
 interface IControlType<
 	T = IJodit | IViewBased | IFileBrowser,
 	B = IToolbarButton
-	> {
+> {
 	name?: string;
 	text?: string;
 
@@ -56,11 +56,7 @@ interface IControlType<
 	 * })
 	 * ```
 	 */
-	isActive?: (
-		editor: T,
-		control: IControlType<T, B>,
-		button?: B
-	) => boolean;
+	isActive?: (editor: T, control: IControlType<T, B>, button?: B) => boolean;
 
 	isActiveChild?: (
 		editor: T,
@@ -197,9 +193,9 @@ interface IControlType<
 		jodit: T,
 		current: Nullable<Node>,
 		options: {
-			control: IControlType<T, B>,
-			originalEvent: Event,
-			button: IToolbarButton
+			control: IControlType<T, B>;
+			originalEvent: Event;
+			button: IToolbarButton;
 		}
 	) => void;
 

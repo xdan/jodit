@@ -229,5 +229,6 @@ export default {
 	'Copy selection': 'Copier la sélection',
 	copy: 'copie',
 	'Border radius': 'Rayon des frontières',
-	'Show all': 'Afficher tous les'
+	'Show all': 'Afficher tous les',
+	Apply: 'Appliquer'
 } as IDictionary<string>;

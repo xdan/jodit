@@ -79,7 +79,7 @@ const getStyles = (
 };
 
 Config.prototype.controls.copyformat = {
-	exec: (editor: IJodit, current: Node | null, { button }) => {
+	exec: (editor: IJodit, current, { button }) => {
 		if (!current) {
 			return;
 		}

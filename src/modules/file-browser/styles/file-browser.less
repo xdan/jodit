@@ -19,7 +19,6 @@
 	}
 
 	@media (max-width: @screen-xs) {
-		flex-direction: column;
 		flex-flow: column-reverse;
 	}
 
@@ -147,7 +146,6 @@
 			align-items: center;
 			min-height: 38px;
 			padding: 5px 10px;
-
 			text-decoration: none;
 			color: @text-color;
 			transition: background-color 0.2s ease 0s;
@@ -223,7 +221,6 @@
 		.jodit-filebrowser_files_item {
 			width: @col_size;
 			height: @col_size;
-
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -284,7 +281,7 @@
 				}
 			}
 
-			&-active-true {
+			&_active_true {
 				.jodit-filebrowser_files_item-info {
 					background-color: @color-border-active;
 					color: white;
@@ -360,7 +357,7 @@
 					}
 				}
 
-				&:before {
+				&::before {
 					height: 100%;
 					content: '';
 					vertical-align: middle;
@@ -379,7 +376,6 @@
 	.jodit_upload_button {
 		position: relative;
 		width: 220px;
-
 		border: 0;
 		padding: 25px 0;
 		margin: 10px 0;

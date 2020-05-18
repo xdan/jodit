@@ -54,7 +54,8 @@ export class StatusBar extends ViewComponent implements IStatusBar {
 	 */
 	append(child: HTMLElement, inTheRight: boolean = false) {
 		const wrapper =
-			this.findEmpty(inTheRight) || this.j.c.div('jodit-status-bar__item');
+			this.findEmpty(inTheRight) ||
+			this.j.c.div('jodit-status-bar__item');
 
 		if (inTheRight) {
 			wrapper.classList.add('jodit-status-bar__item-right');

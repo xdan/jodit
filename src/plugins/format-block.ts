@@ -17,11 +17,11 @@ Config.prototype.controls.paragraph = {
 
 		if (current && editor.o.textIcons) {
 			const currentBox: HTMLElement =
-					(Dom.closest(
+					Dom.closest(
 						current,
 						node => Dom.isBlock(node, editor.editorWindow),
 						editor.editor
-					) as HTMLElement) || editor.editor,
+					) || editor.editor,
 				currentValue: string = currentBox.nodeName.toLowerCase(),
 				list = control.list as any;
 
@@ -70,17 +70,17 @@ Config.prototype.controls.paragraph = {
 		const current = editor.selection.current();
 
 		if (current) {
-			const currentBox: HTMLElement = Dom.closest(
+			const currentBox = Dom.closest(
 				current,
 				node => Dom.isBlock(node, editor.editorWindow),
 				editor.editor
-			) as HTMLElement;
+			);
 
-			return (
+			return Boolean(
 				currentBox &&
-				currentBox !== editor.editor &&
-				control.args !== undefined &&
-				currentBox.nodeName.toLowerCase() === control.args[0]
+					currentBox !== editor.editor &&
+					control.args !== undefined &&
+					currentBox.nodeName.toLowerCase() === control.args[0]
 			);
 		}
 
@@ -91,20 +91,20 @@ Config.prototype.controls.paragraph = {
 		const current = editor.selection.current();
 
 		if (current) {
-			const currentBpx: HTMLElement = Dom.closest(
+			const currentBpx = Dom.closest(
 				current,
 				node => Dom.isBlock(node, editor.editorWindow),
 				editor.editor
-			) as HTMLElement;
+			);
 
-			return (
+			return Boolean(
 				currentBpx &&
-				currentBpx !== editor.editor &&
-				control.list !== undefined &&
-				!Dom.isTag(currentBpx, 'p') &&
-				((control.list as any)[
-					currentBpx.nodeName.toLowerCase()
-				] as any) !== undefined
+					currentBpx !== editor.editor &&
+					control.list !== undefined &&
+					!Dom.isTag(currentBpx, 'p') &&
+					((control.list as any)[
+						currentBpx.nodeName.toLowerCase()
+					] as any) !== undefined
 			);
 		}
 
@@ -172,11 +172,11 @@ export function formatBlock(editor: IJodit) {
 						editor.selection.applyCSS(
 							{},
 							{
-								alternativeNodeName: <HTMLTagNames>third
+								alternativeNodeName: third as HTMLTagNames
 							}
 						);
 					} else {
-						Dom.wrapInline(current, <HTMLTagNames>third, editor);
+						Dom.wrapInline(current, third as HTMLTagNames, editor);
 					}
 				}
 

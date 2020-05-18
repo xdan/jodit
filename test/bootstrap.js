@@ -530,38 +530,49 @@ function fillBoxBr(count) {
 }
 
 const codeKey = {
-	13: 'Enter',
 	8: 'Backspace',
-	114: 'F3',
-	86: 'v',
-	70: 'f',
-	72: 'h',
+	13: 'Enter',
 	38: 'ArrowUp',
 	40: 'ArrowDown',
+	70: 'f',
+	72: 'h',
+	86: 'v',
+	89: 'y',
+	114: 'F3'
 };
 
 const keyCode = Object.keys(codeKey).reduce((res, code) => {
 	res[codeKey[code]] = code;
 	return res;
-}, {})
+}, {});
 
 /**
  *
- * @param type
- * @param keyCodeArg
- * @param element
- * @param options
+ * @param {string} type
+ * @param {string|number|HTMLElement} keyCodeOrElement
+ * @param {HTMLElement} [element]
+ * @param {Function} applyOpt
  */
-function simulateEvent(type, keyCodeArg, element, options) {
+function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
 	if (Array.isArray(type)) {
 		return type.forEach(function(event) {
-			simulateEvent(event, keyCodeArg, element, options);
+			simulateEvent(event, keyCodeOrElement, elementOrApplyOpt, applyOpt);
 		});
+	}
+
+	let element = elementOrApplyOpt;
+	if (typeof keyCodeOrElement === 'object') {
+		element = keyCodeOrElement;
+		keyCodeOrElement = null;
+
+		if (typeof elementOrApplyOpt === 'function') {
+			applyOpt = elementOrApplyOpt;
+		}
 	}
 
 	if (Array.isArray(element)) {
 		return element.forEach(function(elm) {
-			simulateEvent(type, keyCodeArg, elm, options);
+			simulateEvent(type, keyCodeOrElement, elm, applyOpt);
 		});
 	}
 
@@ -569,17 +580,19 @@ function simulateEvent(type, keyCodeArg, element, options) {
 
 	evt.initEvent(type, true, true);
 
-	if (typeof keyCodeArg === 'number') {
-		evt.keyCode = keyCodeArg;
-		evt.which = keyCodeArg;
-		evt.key = codeKey[keyCodeArg];
-	} else {
-		evt.key = keyCodeArg;
-		evt.which = keyCode[keyCodeArg];
+	if (keyCodeOrElement) {
+		if (typeof keyCodeOrElement === 'number') {
+			evt.keyCode = keyCodeOrElement;
+			evt.which = keyCodeOrElement;
+			evt.key = codeKey[keyCodeOrElement];
+		} else if (typeof keyCodeOrElement !== 'object') {
+			evt.key = keyCodeOrElement;
+			evt.which = keyCodeOrElement[keyCodeOrElement];
+		}
 	}
 
-	if (options) {
-		options(evt);
+	if (applyOpt) {
+		applyOpt(evt);
 	} else if (element.getBoundingClientRect) {
 		const pos = Jodit.modules.Helpers.position(element);
 		evt.clientX = pos.left + 5;
