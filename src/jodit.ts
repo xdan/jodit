@@ -24,7 +24,7 @@ import {
 	isString,
 	attr,
 	isFunction,
-	resolveElement
+	resolveElement, isVoid
 } from './core/helpers/';
 
 import { JoditArray, JoditObject } from './core/helpers/';
@@ -457,7 +457,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			return;
 		}
 
-		if (typeof newValue === 'string') {
+		if (isString(newValue)) {
 			value = newValue;
 		}
 
@@ -465,10 +465,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			if (value !== undefined) {
 				this.setElementValue(value);
 			}
+
 			return; // try change value before init or after destruct
 		}
 
-		if (typeof value !== 'string' && value !== undefined) {
+		if (!isString(value) && !isVoid(value)) {
 			throw error('value must be string');
 		}
 

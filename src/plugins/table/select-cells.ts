@@ -23,7 +23,7 @@ export class selectCells extends Plugin {
 		}
 
 		jodit.e
-			.on(this.j.ow, 'click.table click.table', this.onRemoveSelection)
+			.on(this.j.ow, 'click.table', this.onRemoveSelection)
 			.on('keydown.table', (event: KeyboardEvent) => {
 				if (event.key === KEY_TAB) {
 					this.unselectCells();
@@ -375,12 +375,6 @@ export class selectCells extends Plugin {
 	protected beforeDestruct(jodit: IJodit): void {
 		this.onRemoveSelection();
 
-		jodit.e
-			.off(
-				jodit.ow,
-				'mouseup.select-cells touchend.select-cells',
-				this.onStopSelection
-			)
-			.off('.select-cells');
+		jodit.e.off('.select-cells');
 	}
 }

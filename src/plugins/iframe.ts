@@ -106,10 +106,6 @@ Config.prototype.iframeStyle =
 	'-ms-user-select:text;' +
 	'user-select:text' +
 	'}' +
-	'td[data-jodit-selected-cell],' +
-	'th[data-jodit-selected-cell]{' +
-	'border: 1px double #1e88e5' +
-	'}' +
 	'p{' +
 	'margin-top:0;' +
 	'}' +
@@ -181,6 +177,7 @@ export function iframe(editor: IJodit) {
 						.contentWindow as Window).document;
 
 				doc.open();
+
 				doc.write(
 					opt.iframeDoctype +
 						`<html dir="${
@@ -282,6 +279,10 @@ export function iframe(editor: IJodit) {
 									'$1'
 								)
 							)
+							.replace(
+								/<(style|script|span)[^>]+jodit[^>]+>.*?<\/\1>/g,
+								''
+							)
 							.replace(/(<[^<]+)\sclass=""/gim, '$1')
 							.replace(/(<[^<]+)\sstyle=""/gim, '$1')
 							.replace(/(<[^<]+)\sdir=""/gim, '$1');
@@ -300,35 +301,24 @@ export function iframe(editor: IJodit) {
 					}
 
 					editor.e
-						.on('beforeGetNativeEditorValue', (): string => {
-							const html = doc.documentElement,
-								body = doc.body;
-
-							body.classList.remove('jodit-wysiwyg');
-							html.classList.remove('jodit');
-							const minHeight = body.style.getPropertyValue(
-								'min-height'
-							);
-
-							body.style.removeProperty('min-height');
-
-							const result = clearMarkers(html.outerHTML);
-
-							body.classList.add('jodit-wysiwyg');
-							html.classList.add('jodit');
-
-							body.style.setProperty('min-height', minHeight);
-
-							return opt.iframeDoctype + result;
-						})
+						.on('beforeGetNativeEditorValue', (): string =>
+							clearMarkers(doc.documentElement.outerHTML)
+						)
 						.on(
 							'beforeSetNativeEditorValue',
 							(value: string): boolean => {
+								if (!editor.isLocked) {
+									return false;
+								}
+
 								if (/<(html|body)/i.test(value)) {
 									const old = doc.documentElement.outerHTML;
 
-									if (old !== value) {
-										doc.open('text/html', 'replace');
+									if (
+										clearMarkers(old) !==
+										clearMarkers(value)
+									) {
+										doc.open();
 										doc.write(clearMarkers(value));
 										doc.close();
 										editor.editor = doc.body;

@@ -124,6 +124,10 @@ export function size(editor: IJodit) {
 			elm && css(elm as HTMLElement, 'minHeight', minHeightD);
 			editor.e.fire('setMinHeight', minHeightD);
 		});
+
+		if (editor.o.iframe) {
+			editor.setEditorValue();
+		}
 	};
 
 	const resizeWorkspaceImd = () => {
