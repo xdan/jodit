@@ -128,7 +128,7 @@ export class Popup extends UIElement implements IPopup {
 	 */
 	protected getKeepBound(getBound: getBoundFunc): getBoundFunc {
 		const oldBound = getBound();
-		let elmUnderCursor = this.od.elementFromPoint(
+		const elmUnderCursor = this.od.elementFromPoint(
 			oldBound.left,
 			oldBound.top
 		);

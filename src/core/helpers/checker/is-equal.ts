@@ -11,5 +11,5 @@ export function isEqual(a: unknown, b: unknown): boolean {
 }
 
 export function isFastEqual(a: unknown, b: unknown): boolean {
-	return a === b ;
+	return a === b;
 }

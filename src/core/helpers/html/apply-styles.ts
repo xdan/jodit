@@ -106,4 +106,4 @@ export function applyStyles(html: string): string {
 			.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
 			.replace(/<!--[^>]*>/g, '')
 	);
-};
+}

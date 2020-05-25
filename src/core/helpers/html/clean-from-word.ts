@@ -93,4 +93,4 @@ export function cleanFromWord(html: string): string {
 	return html
 		.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
 		.replace(/<!--[^>]*>/g, '');
-};
+}

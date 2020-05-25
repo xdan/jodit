@@ -92,10 +92,7 @@ export default (self: FileBrowser) => {
 								const preview = new Dialog({
 										fullsize: self.o.fullsize,
 										language: self.o.language,
-										buttons: [
-											'fullsize',
-											'dialog.close'
-										]
+										buttons: ['fullsize', 'dialog.close']
 									}),
 									temp_content = self.c.div(
 										F_CLASS + '_preview',
@@ -174,13 +171,15 @@ export default (self: FileBrowser) => {
 											CLASS_PREVIEW + 'navigation-next'
 										)
 									) {
-										item = <HTMLElement>(
-											Dom.nextWithClass(item, ITEM_CLASS)
-										);
+										item = Dom.nextWithClass(
+											item,
+											ITEM_CLASS
+										) as HTMLElement;
 									} else {
-										item = <HTMLElement>(
-											Dom.prevWithClass(item, ITEM_CLASS)
-										);
+										item = Dom.prevWithClass(
+											item,
+											ITEM_CLASS
+										) as HTMLElement;
 									}
 
 									if (!item) {

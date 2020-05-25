@@ -12,7 +12,7 @@ import { IDictionary } from '../../../types';
  * Check if element is simple plaint object
  * @param obj
  */
-export function isPlainObject <T>(
+export function isPlainObject<T>(
 	obj: any | IDictionary<T>
 ): obj is IDictionary<T> {
 	if (!obj || typeof obj !== 'object' || obj.nodeType || isWindow(obj)) {

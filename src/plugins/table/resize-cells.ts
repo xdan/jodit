@@ -237,7 +237,7 @@ export class resizeCells extends Plugin {
 
 		this.j.setEditorValue();
 		this.j.selection.focus();
-	};
+	}
 
 	/**
 	 * Resize only one column

@@ -12,7 +12,8 @@ import {
 	FileBrowser,
 	Observer,
 	Select,
-	StatusBar
+	StatusBar,
+	STATUSES
 } from './modules/';
 
 import {
@@ -24,10 +25,12 @@ import {
 	isString,
 	attr,
 	isFunction,
-	resolveElement, isVoid
+	resolveElement,
+	isVoid,
+	JoditArray,
+	JoditObject
 } from './core/helpers/';
 
-import { JoditArray, JoditObject } from './core/helpers/';
 import { Storage } from './core/storage/';
 
 import {
@@ -49,7 +52,6 @@ import {
 
 import { ViewWithToolbar } from './core/view/view-with-toolbar';
 
-import { STATUSES } from './core/component/component';
 import { instances, pluginSystem, modules, lang } from './core/global';
 import { cache } from './core/decorators';
 
@@ -614,7 +616,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 *
 	 * @param  {string} command command. It supports all the
 	 * {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#commands} and a number of its own
-	 * for example applyCSSProperty. Comand fontSize receives the second parameter px,
+	 * for example applyStyleProperty. Comand fontSize receives the second parameter px,
 	 * formatBlock and can take several options
 	 * @param  {boolean|string|int} showUI
 	 * @param  {boolean|string|int} value

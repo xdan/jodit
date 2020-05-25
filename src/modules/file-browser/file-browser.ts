@@ -117,7 +117,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	async loadTree(): Promise<any> {
 		const path: string = this.dataProvider.currentPath,
 			source: string = this.dataProvider.currentSource,
-			error = (e: string | Error) => {
+			errorUni = (e: string | Error) => {
 				throw e instanceof Error ? e : error(e);
 			};
 
@@ -151,10 +151,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				})
 				.catch(e => {
 					this.errorHandler(
-						error(this.i18n('Error on load folders'))
+						errorUni(this.i18n('Error on load folders'))
 					);
 
-					error(e);
+					errorUni(e);
 				});
 
 			const items = this.loadItems(path, source);

@@ -21,9 +21,7 @@ export function mainTab(editor: IJodit): HTMLElement {
 						<a
 							data-ref="changeImage"
 							class="jodit-button"
-						>${gi(
-							'image'
-						)}</a>
+						>${gi('image')}</a>
 						<a
 							data-ref="editImage"
 							class="jodit-button"

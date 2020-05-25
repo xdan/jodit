@@ -21,14 +21,11 @@ export interface IDestructible {
 	destruct(jodit?: IViewBased): any;
 }
 
-export enum STATUSES {
-	beforeInit = 'beforeInit',
-	ready = 'ready',
-	beforeDestruct = 'beforeDestruct',
-	destructed = 'destructed'
-}
-
-export type ComponentStatus = keyof typeof STATUSES;
+export type ComponentStatus =
+	| 'beforeInit'
+	| 'ready'
+	| 'beforeDestruct'
+	| 'destructed';
 
 export interface IContainer {
 	container: HTMLElement;

@@ -7,7 +7,8 @@ import {
 	isPlainObject,
 	hexToRgb,
 	attr,
-	isFunction, isArray
+	isFunction,
+	isArray
 } from '../../../core/helpers/';
 import { Icon } from '../../../core/ui';
 import { Dom } from '../../../core/dom';
@@ -107,7 +108,7 @@ export const ColorPickerWidget = (
 		editor.e.on(form, 'change', (e: MouseEvent) => {
 			e.stopPropagation();
 
-			let target: HTMLInputElement = e.target as HTMLInputElement;
+			const target: HTMLInputElement = e.target as HTMLInputElement;
 
 			if (!target || !target.tagName || !Dom.isTag(target, 'input')) {
 				return;

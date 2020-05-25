@@ -5,6 +5,7 @@
  */
 import { ViewComponent } from '../component';
 import { isViewObject } from './checker';
+import { IEventsNative, IViewComponent, Nullable } from '../../types';
 
 const store = new WeakMap();
 
@@ -14,17 +15,21 @@ const store = new WeakMap();
  * @param key
  * @param value
  */
-export const dataBind = <T = any>(elm: object, key: string, value?: T): T => {
+export const dataBind = <T = any>(
+	elm: IViewComponent | Node,
+	key: string,
+	value?: T
+): T => {
 	let itemStore = store.get(elm);
 
 	if (!itemStore) {
 		itemStore = {};
 		store.set(elm, itemStore);
 
-		let e;
+		let e: Nullable<IEventsNative> = null;
 
 		if (elm instanceof ViewComponent) {
-			e = elm.j.e;
+			e = (elm as IViewComponent).j.e;
 		}
 
 		if (isViewObject(elm)) {

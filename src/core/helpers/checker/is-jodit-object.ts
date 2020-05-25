@@ -27,6 +27,7 @@ export function isViewObject(jodit: unknown): jodit is IViewBased {
 		jodit &&
 			jodit instanceof Object &&
 			isFunction(jodit.constructor) &&
-			(jodit instanceof Jodit.modules.View || (jodit as IViewBased).isView)
+			(jodit instanceof Jodit.modules.View ||
+				(jodit as IViewBased).isView)
 	);
 }

@@ -83,7 +83,7 @@ export class pasteStorage extends Plugin {
 	private selectIndex = (index: number) => {
 		if (this.listBox) {
 			Array.from(
-				<NodeListOf<HTMLAnchorElement>>this.listBox.childNodes
+				this.listBox.childNodes as NodeListOf<HTMLAnchorElement>
 			).forEach((a, i) => {
 				a.classList.remove('jodit_active');
 				if (index === i && this.previewBox) {
@@ -116,11 +116,11 @@ export class pasteStorage extends Plugin {
 			const a: HTMLElement = this.j.c.element('a');
 			a.textContent = index + 1 + '. ' + html.replace(SPACE_REG_EXP, '');
 
-			this.j.e.on(a,'keydown', this.onKeyDown);
+			this.j.e.on(a, 'keydown', this.onKeyDown);
 
-			attr(a,'href', 'javascript:void(0)');
-			attr(a,'data-index', index.toString());
-			attr(a,'tab-index', '-1');
+			attr(a, 'href', 'javascript:void(0)');
+			attr(a, 'data-index', index.toString());
+			attr(a, 'tab-index', '-1');
 
 			this.listBox && this.listBox.appendChild(a);
 		});
@@ -145,7 +145,7 @@ export class pasteStorage extends Plugin {
 				'</a>'
 		) as HTMLAnchorElement;
 
-		this.j.e.on(pasteButton,'click', this.paste);
+		this.j.e.on(pasteButton, 'click', this.paste);
 
 		const cancelButton: HTMLAnchorElement = this.j.c.fromHTML(
 			'<a href="javascript:void(0)" style="float:right; margin-right: 10px;" class="jodit-button">' +

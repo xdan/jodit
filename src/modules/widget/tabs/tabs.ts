@@ -3,11 +3,11 @@ import { IDictionary, IJodit, IUIButton } from '../../../types';
 import { $$, isFunction } from '../../../core/helpers';
 import { Button } from '../../../core/ui';
 
-export type TabOption = {
+export interface TabOption {
 	icon?: string;
 	name: string;
 	content: HTMLElement | (() => void);
-};
+}
 
 /**
  * Build tabs system
@@ -59,7 +59,10 @@ export const TabsWidget = (
 		buttons.appendChild(button.container);
 		buttonList.push(button);
 
-		button.container.classList.add('jodit-tabs__button', 'jodit-tabs__button_columns_' + tabs.length);
+		button.container.classList.add(
+			'jodit-tabs__button',
+			'jodit-tabs__button_columns_' + tabs.length
+		);
 
 		if (!isFunction(content)) {
 			tab.appendChild(content);

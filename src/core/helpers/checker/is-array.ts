@@ -4,6 +4,6 @@
  */
 import { JoditArray } from '../jodit-array';
 
-export function isArray<T = any>(elm: unknown): elm is Array<T> {
+export function isArray<T = any>(elm: unknown): elm is T[] {
 	return Array.isArray(elm) || elm instanceof JoditArray;
 }

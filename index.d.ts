@@ -5,6 +5,4 @@ declare global {
 	const Jodit: typeof Super;
 }
 
-export {
-	Jodit
-};
+export { Jodit };

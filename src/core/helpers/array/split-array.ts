@@ -12,10 +12,10 @@ import { isString } from '../checker';
  */
 export function splitArray(a: string): string[];
 
-export function splitArray<T extends Array<any>>(a: T): T;
+export function splitArray<T extends any[]>(a: T): T;
 
-export function splitArray<T extends Array<any>>(a: T | string): T | string[];
+export function splitArray<T extends any[]>(a: T | string): T | string[];
 
-export function splitArray<T extends Array<any>>(a: T | string): T | string[] {
+export function splitArray<T extends any[]>(a: T | string): T | string[] {
 	return isString(a) ? a.split(/[,\s]+/) : a;
 }

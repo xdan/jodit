@@ -21,10 +21,10 @@ export function getControlType(
 		buttonControl = { name: 'empty', ...button };
 
 		if (controls[buttonControl.name] !== undefined) {
-			buttonControl = <IControlTypeStrong>{
+			buttonControl = {
 				...controls[buttonControl.name],
 				...buttonControl
-			};
+			} as IControlTypeStrong;
 		}
 	} else {
 		const list = button.split(/\./);

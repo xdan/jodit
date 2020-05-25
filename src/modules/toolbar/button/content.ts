@@ -14,8 +14,10 @@ export class ToolbarContent<T extends IViewBased = IViewBased> extends UIButton
 	/** @override */
 	update() {
 		const content = this.control.getContent(this.j, this.control, this);
-		Dom.detach(this.container)
-		this.container.appendChild(isString(content) ? this.j.create.fromHTML(content) : content);
+		Dom.detach(this.container);
+		this.container.appendChild(
+			isString(content) ? this.j.create.fromHTML(content) : content
+		);
 		super.update();
 	}
 

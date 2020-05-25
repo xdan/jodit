@@ -280,6 +280,10 @@ export function iframe(editor: IJodit) {
 								)
 							)
 							.replace(
+								/(class\s*=\s*)(['"])([^"']*)(jodit-wysiwyg|jodit)([^"']*\2)/g,
+								'$1$2$3$5'
+							)
+							.replace(
 								/<(style|script|span)[^>]+jodit[^>]+>.*?<\/\1>/g,
 								''
 							)

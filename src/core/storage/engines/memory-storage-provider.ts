@@ -19,7 +19,7 @@ export class MemoryStorageProvider<T = StorageValueType>
 	}
 
 	get<R = T>(key: string): R | void {
-		return <R | void>this.data.get(key);
+		return this.data.get(key) as R | void;
 	}
 
 	exists(key: string): boolean {

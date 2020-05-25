@@ -25,4 +25,4 @@ export function normalizeCssValue(
 	}
 
 	return value;
-};
+}

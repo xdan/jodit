@@ -598,6 +598,7 @@ describe('Commands Jodit Editor Tests', function() {
 			);
 		});
 	});
+
 	describe('Colors', function() {
 		it('Set colour for all selection should create <span></span> tags inside all paragraps', function() {
 			const editor = getJodit();
@@ -638,6 +639,7 @@ describe('Commands Jodit Editor Tests', function() {
 			);
 		});
 	});
+
 	describe('Fonts', function() {
 		describe('Set font size', function() {
 			it('should create attribute style="font-size:value"', function() {
@@ -663,6 +665,7 @@ describe('Commands Jodit Editor Tests', function() {
 					'<p> testy oprst <span style="font-size: 12%;">lets go</span></p>'
 				);
 			});
+
 			describe('For box with style="font-size:12px"', function() {
 				it('should wrap selected text in SPAN with style="font-size:12px" element without questions', function() {
 					const editor = getJodit();
@@ -685,6 +688,7 @@ describe('Commands Jodit Editor Tests', function() {
 				});
 			});
 		});
+
 		describe('Set font family', function() {
 			describe('For box with style="font-name:Arial"', function() {
 				it('should wrap selected text in SPAN with style="font-family:Arial" element without questions', function() {
@@ -726,6 +730,29 @@ describe('Commands Jodit Editor Tests', function() {
 
 				expect(editor.value).equals(
 					'<p>te<span style="font-family: Arial;">st</span></p>'
+				);
+			});
+		});
+
+		describe('Set font size and family', function() {
+			it('should create attribute style="font-family:value;font-size:value"', function() {
+				const editor = getJodit();
+				editor.value = '<p>test</p>';
+
+				const sel = editor.selection.sel,
+					range = editor.selection.createRange();
+
+				range.setStart(editor.editor.firstChild.firstChild, 2);
+				range.setEnd(editor.editor.firstChild.firstChild, 4);
+
+				sel.removeAllRanges();
+				sel.addRange(range);
+
+				editor.execCommand('fontName', false, 'Arial');
+				editor.execCommand('fontSize', false, 12);
+
+				expect(sortAttributes(editor.value)).equals(
+					'<p>te<span style="font-family:Arial;font-size:12px">st</span></p>'
 				);
 			});
 		});

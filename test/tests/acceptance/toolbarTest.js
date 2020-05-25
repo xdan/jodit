@@ -286,7 +286,7 @@ describe('Toolbar', function() {
 				).is.true;
 			});
 
-			describe('Change defaiult list', function() {
+			describe('Change default list', function() {
 				it('Should change default FONT list in toolbar', function() {
 					const editor = getJodit({
 						toolbarAdaptive: false,
@@ -465,85 +465,6 @@ describe('Toolbar', function() {
 			editor.selection.insertNode(editor.createInside.text(' a '));
 
 			expect(editor.value).equals('<h1>tex a ext</h1>');
-		});
-
-		describe('FontName', function() {
-			describe('Open fontname list and select some element', function() {
-				it('Should apply this font to current selection elements', function() {
-					const editor = getJodit({
-						toolbarAdaptive: false
-					});
-
-					editor.value = '<p>test</p>';
-					editor.selection.select(
-						editor.editor.firstChild.firstChild
-					);
-
-					const openFontNameList = function() {
-						clickTrigger('font', editor);
-
-						const list = getOpenedPopup(editor);
-
-						return list.querySelectorAll('button');
-					};
-
-					expect(openFontNameList()).is.not.null;
-
-					Array.from(openFontNameList()).map(function(font, index) {
-						simulateEvent('click', 0, font);
-
-						const fontFamily = font
-							.querySelector('span[style]')
-							.getAttribute('style')
-							.replace(/"/g, "'");
-
-						expect(sortAttributes(editor.value)).equals(
-							sortAttributes(
-								'<p><span style="' +
-									fontFamily +
-									'">test</span></p>'
-							)
-						);
-					});
-				});
-
-				describe('Extends standart font list', function() {
-					it('Should standart font list elements', function() {
-						const editor = getJodit({
-							toolbarAdaptive: false,
-							controls: {
-								font: {
-									list: {
-										"-apple-system,BlinkMacSystemFont,'Segoe WPC','Segoe UI',HelveticaNeue-Light,Ubuntu,'Droid Sans',sans-serif":
-											'OS System Font'
-									}
-								}
-							}
-						});
-
-						editor.value = '<p>test</p>';
-						editor.selection.select(
-							editor.editor.firstChild.firstChild
-						);
-
-						clickTrigger('font', editor);
-
-						const list = getOpenedPopup(editor);
-
-						expect(list).is.not.null;
-
-						const buttons = list.querySelectorAll('button'),
-							font = buttons[buttons.length - 1];
-						simulateEvent('click', 0, font);
-
-						expect(sortAttributes(editor.value)).equals(
-							sortAttributes(
-								"<p><span style=\"font-family:-apple-system,BlinkMacSystemFont,'Segoe WPC','Segoe UI',HelveticaNeue-Light,Ubuntu,'Droid Sans',sans-serif\">test</span></p>"
-							)
-						);
-					});
-				});
-			});
 		});
 
 		it('Open video dialog and insert video by url from youtube.', function() {

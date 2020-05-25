@@ -675,10 +675,9 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<!DOCTYPE html>' +
 						'<html lang="en" style="overflow-y:hidden">' +
 						'<head><title>Jodit Editor</title></head>' +
-						'<body spellcheck="true" ><p>Some text</p><p> a <br></p></body>' +
+						'<body spellcheck="true" style="min-height:90px" ><p>Some text</p><p> a <br></p></body>' +
 						'</html>'
 					);
 				});

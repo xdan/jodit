@@ -4,7 +4,8 @@ import { Icon } from '../../../core/ui';
 const jie = 'jodit-image-editor';
 const gi = Icon.get.bind(Icon);
 
-const act = (el: boolean, className = 'jodti-image-editor_active') => (el ? className : '');
+const act = (el: boolean, className = 'jodti-image-editor_active') =>
+	el ? className : '';
 
 export const form = (
 	editor: IViewBased,

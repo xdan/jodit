@@ -16,4 +16,4 @@ export function isHtmlFromWord(data: string): boolean {
 		data.search(/<meta.*?Microsoft Word\s[\d].*?>/) !== -1 ||
 		(data.search(/style="[^"]*mso-/) !== -1 && data.search(/<font/) !== -1)
 	);
-};
+}

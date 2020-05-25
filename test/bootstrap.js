@@ -834,7 +834,7 @@ function offset(el) {
 		} else if (nodeType === 8) {
 			output.push('<!--', node.nodeValue, '-->');
 		} else {
-			throw 'Error serializing XML. Unhandled node of type: ' + nodeType;
+			throw new Error('Error serializing XML. Unhandled node of type: ' + nodeType);
 		}
 	};
 

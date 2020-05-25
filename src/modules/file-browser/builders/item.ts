@@ -18,7 +18,7 @@ export class FileBrowserItem implements IFileBrowserItemWrapper {
 	static create(
 		data: IFileBrowserItemElement
 	): FileBrowserItem & IFileBrowserItemElement {
-		return <any>new FileBrowserItem(data);
+		return new FileBrowserItem(data) as any;
 	}
 
 	get path(): string {

@@ -40,9 +40,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 			return active;
 		}
 
-		const element = this.j.selection
-			? this.j.selection.current()
-			: null;
+		const element = this.j.selection ? this.j.selection.current() : null;
 
 		if (!element) {
 			return false;
@@ -51,7 +49,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 		let elm: Node | false;
 
 		if (button.control.tags) {
-			let tags: string[] = button.control.tags;
+			const tags: string[] = button.control.tags;
 
 			elm = element;
 

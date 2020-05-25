@@ -87,7 +87,7 @@ export const FileSelectorWidget = (
 		editor.uploader.bind(
 			dragBox,
 			(resp: IUploaderData) => {
-				let handler = isFunction(callbacks.upload)
+				const handler = isFunction(callbacks.upload)
 					? callbacks.upload
 					: editor.o.uploader.defaultHandlerSuccess;
 

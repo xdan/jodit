@@ -5,5 +5,5 @@
  */
 
 export function isPromise(val: any | Promise<any>): val is Promise<any> {
-	return val && typeof (<Promise<any>>val).then === 'function';
+	return val && typeof (val as Promise<any>).then === 'function';
 }
