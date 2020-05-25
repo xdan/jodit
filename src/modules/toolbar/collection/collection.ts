@@ -20,7 +20,7 @@ import { isFunction, isJoditObject } from '../../../core/helpers/';
 
 import { UIList } from '../../../core/ui';
 import { makeButton } from '../factory';
-import { STATUSES } from '../../../core/component/component';
+import { STATUSES } from '../../../core/component';
 
 export class ToolbarCollection<T extends IViewBased = IViewBased>
 	extends UIList<T>
@@ -77,7 +77,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 			return true;
 		}
 
-		let isDisabled: boolean | void = undefined;
+		let isDisabled: boolean | void;
 
 		if (isFunction(button.control.isDisabled)) {
 			isDisabled = button.control.isDisabled(
@@ -120,7 +120,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	}
 
 	constructor(jodit: IViewBased) {
-		super(<T>jodit);
+		super(jodit as T);
 		this.initEvents();
 		this.setStatus(STATUSES.ready);
 	}

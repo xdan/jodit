@@ -11,7 +11,7 @@ import {
 	IViewBased
 } from '../../../types';
 import watch from '../../../core/decorators/watch';
-import { STATUSES } from '../../component/component';
+import { STATUSES } from '../../component';
 import { Dom } from '../../dom';
 import { css, attr, isString } from '../../helpers';
 import { Icon } from '../icon';
@@ -73,7 +73,7 @@ export class UIButton extends UIElement implements IUIButton {
 	 */
 	@watch('parentElement')
 	protected updateSize(): void {
-		let pe = this.closest(UIList) as UIList;
+		const pe = this.closest(UIList) as UIList;
 
 		if (pe) {
 			this.state.size = pe.buttonSize;
@@ -137,7 +137,7 @@ export class UIButton extends UIElement implements IUIButton {
 
 		const { jodit, state } = this;
 
-		let iconElement: CanUndef<HTMLElement> = undefined;
+		let iconElement: CanUndef<HTMLElement>;
 
 		if (state.icon) {
 			if (state.icon.iconURL) {
@@ -251,9 +251,7 @@ export class UIButton extends UIElement implements IUIButton {
 			actionTrigger: this
 		};
 
-		this.actionHandlers.forEach(callback =>
-			callback.call(this, e)
-		);
+		this.actionHandlers.forEach(callback => callback.call(this, e));
 	}
 }
 

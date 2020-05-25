@@ -9,14 +9,16 @@ import {
 	IComponent,
 	IDictionary,
 	IViewBased,
-	Nullable,
-	STATUSES
+	Nullable
 } from '../../types';
 
 import { kebabCase, get } from '../helpers';
 import { uniqueUid } from '../global';
+import { STATUSES } from './statuses';
 
 export abstract class Component implements IComponent {
+	static STATUSES = STATUSES;
+
 	componentName!: string;
 	uid!: string;
 

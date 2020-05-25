@@ -17,6 +17,7 @@ import { error, i18n, isDestructable, isFunction, isVoid } from '../helpers';
 import { BASE_PATH } from '../constants';
 import {
 	Component,
+	STATUSES,
 	EventsNative,
 	ProgressBar,
 	Create,
@@ -25,7 +26,6 @@ import {
 } from '../../modules';
 import { Async } from '../async';
 import { modules } from '../global';
-import { STATUSES } from '../component/component';
 import { hook } from '../decorators';
 
 export abstract class View extends Component implements IViewBased {
