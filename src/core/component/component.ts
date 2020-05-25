@@ -8,20 +8,13 @@ import {
 	ComponentStatus,
 	IComponent,
 	IDictionary,
-	Statuses,
 	IViewBased,
-	Nullable
+	Nullable,
+	STATUSES
 } from '../../types';
 
 import { kebabCase, get } from '../helpers';
 import { uniqueUid } from '../global';
-
-export const STATUSES: Statuses = {
-	beforeInit: 'beforeInit',
-	ready: 'ready',
-	beforeDestruct: 'beforeDestruct',
-	destructed: 'destructed'
-};
 
 export abstract class Component implements IComponent {
 	componentName!: string;
@@ -166,7 +159,7 @@ export abstract class Component implements IComponent {
 	 * @param callback
 	 */
 	hookStatus(
-		status: keyof Statuses,
+		status: ComponentStatus,
 		callback: (component: this) => void
 	): void {
 		if (!this.onStatusLst) {
