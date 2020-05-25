@@ -169,7 +169,7 @@ export function formatBlock(editor: IJodit) {
 					}
 				} else {
 					if (!editor.selection.isCollapsed()) {
-						editor.selection.applyCSS(
+						editor.selection.applyStyle(
 							{},
 							{
 								alternativeNodeName: third as HTMLTagNames

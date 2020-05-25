@@ -4,6 +4,11 @@
 * https://github.com/xdan/jodit/issues/393
 
 ### Features
+* `Select.applyCSS` was renamed to `Select.applyStyle`
+```js
+const editor = Jodit.make('#editor');
+editor.selection.applyStyle({color: 'red'}) // will add to all selection text - red color
+```
 * `FileBrowser`, `Dialog` etc. modules which extends `View` has only one argument in the constructor - options.
 Before:
 ```js

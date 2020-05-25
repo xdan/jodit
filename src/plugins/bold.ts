@@ -75,7 +75,7 @@ export function bold(editor: IJodit) {
 				: cssOptions[key];
 		});
 
-		editor.selection.applyCSS(cssRules, {
+		editor.selection.applyStyle(cssRules, {
 			alternativeNodeName: control.tags ? control.tags[0] : undefined,
 			rules: control.css
 		});

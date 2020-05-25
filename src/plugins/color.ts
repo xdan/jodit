@@ -136,12 +136,12 @@ export function color(editor: IJodit) {
 
 		switch (command) {
 			case 'background':
-				editor.selection.applyCSS({
+				editor.selection.applyStyle({
 					backgroundColor: !colorHEX ? '' : (colorHEX as string)
 				});
 				break;
 			case 'forecolor':
-				editor.selection.applyCSS({
+				editor.selection.applyStyle({
 					color: !colorHEX ? '' : (colorHEX as string)
 				});
 				break;

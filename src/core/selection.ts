@@ -1170,8 +1170,15 @@ export class Select {
 	 * @param options.alternativeNodeName - tag - equal CSSRule (e.g. strong === font-weight: 700)
 	 * @param options.defaultTag - tag for wrapping
 	 * @param options.rules - cssRules
+	 * @example
+	 * ```js
+	 * const editor = Jodit.make('#editor');
+	 * editor.value = 'test';
+	 * editor.execCommand('selectall');
+	 * editor.selection.applyStyle({color: 'red'}) // will fill selection text in red
+	 * ```
 	 */
-	applyCSS(
+	applyStyle(
 		cssRules: IDictionary<string | number | undefined>,
 		options: {
 			alternativeNodeName?: HTMLTagNames;
@@ -1196,27 +1203,26 @@ export class Select {
 			!this.isMarker(elm as HTMLElement);
 
 		const checkCssRulesFor = (elm: HTMLElement): boolean => {
-			const rules = options.rules;
+			return Boolean(
+				options.rules &&
+					!Dom.isTag(elm, 'font') &&
+					Dom.isElement(elm) &&
+					isPlainObject(options.rules) &&
+					each(options.rules, (cssPropertyKey, cssPropertyValues) => {
+						const value = css(elm, cssPropertyKey, undefined, true);
 
-			return (
-				!Dom.isTag(elm, 'font') &&
-				Dom.isElement(elm) &&
-				isPlainObject(rules) &&
-				each(rules, (cssPropertyKey, cssPropertyValues) => {
-					const value = css(elm, cssPropertyKey, undefined, true);
-
-					return (
-						value !== null &&
-						value !== '' &&
-						cssPropertyValues.indexOf(
-							value.toString().toLowerCase()
-						) !== -1
-					);
-				})
+						return (
+							value !== null &&
+							value !== '' &&
+							cssPropertyValues.indexOf(
+								value.toString().toLowerCase()
+							) !== -1
+						);
+					})
 			);
 		};
 
-		const isSuitElement = (elm: Node | null): boolean | null => {
+		const isSuitElement = (elm: Nullable<Node>): Nullable<boolean> => {
 			if (!elm) {
 				return false;
 			}
@@ -1225,9 +1231,7 @@ export class Select {
 
 			return (
 				(reg.test(alternativeNodeName) ||
-					!!(
-						options.rules && checkCssRulesFor(elm as HTMLElement)
-					)) &&
+					checkCssRulesFor(elm as HTMLElement)) &&
 				findNextCondition(elm)
 			);
 		};
@@ -1315,7 +1319,7 @@ export class Select {
 			}
 		}
 
-		const selInfo: markerInfo[] = this.save();
+		const selInfo = this.save();
 
 		normalizeNode(this.area.firstChild); // FF fix for test "commandsTest - Exec command "bold"
 		// for some text that contains a few STRONG elements, should unwrap all of these"
@@ -1402,6 +1406,7 @@ export class Select {
 				toggleStyles(wrapper);
 				return;
 			}
+
 			// unwrap all suit elements inside
 			const needUnwrap: Node[] = [];
 			let firstElementSuit: boolean | undefined;
@@ -1453,7 +1458,7 @@ export class Select {
 	}
 
 	/**
-	 * Split selection on two parts
+	 * Split selection on two parts: left and right
 	 * @param currentBox
 	 */
 	splitSelection(currentBox: HTMLElement): Nullable<Element> {

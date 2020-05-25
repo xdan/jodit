@@ -191,12 +191,13 @@ export function font(editor: IJodit) {
 	): false | void => {
 		switch (command) {
 			case 'fontsize':
-				editor.selection.applyCSS({
+				editor.selection.applyStyle({
 					fontSize: normalizeSize(third)
 				});
 				break;
+
 			case 'fontname':
-				editor.selection.applyCSS({
+				editor.selection.applyStyle({
 					fontFamily: third
 				});
 				break;
