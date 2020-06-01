@@ -401,7 +401,7 @@ export class Dom {
 	static prev(
 		node: Node,
 		condition: NodeCondition,
-		root: HTMLElement,
+		root: Node | HTMLElement | ParentNode,
 		withChild: boolean = true
 	): Nullable<Node> {
 		return Dom.find(
@@ -425,7 +425,7 @@ export class Dom {
 	static next(
 		node: Node,
 		condition: NodeCondition,
-		root: Node | HTMLElement,
+		root: Node | HTMLElement | ParentNode,
 		withChild: boolean = true
 	): Nullable<Node> {
 		return Dom.find(
@@ -477,7 +477,7 @@ export class Dom {
 	static find(
 		node: Node,
 		condition: NodeCondition,
-		root: HTMLElement | Node,
+		root: ParentNode | HTMLElement | Node,
 		recurse = false,
 		sibling = 'nextSibling',
 		child: string | false = 'firstChild'
@@ -675,26 +675,28 @@ export class Dom {
 
 	static closest<T extends HTMLElement>(
 		node: Node,
-		tags: NodeCondition,
+		condition: NodeCondition,
 		root: HTMLElement
 	): Nullable<T>;
 
 	static closest<T extends HTMLElement>(
 		node: Node,
-		tags: HTMLTagNames | HTMLTagNames[] | NodeCondition,
+		tagsOrCondition: HTMLTagNames | HTMLTagNames[] | NodeCondition,
 		root: HTMLElement
 	): Nullable<T> {
 		let condition: NodeCondition;
 
-		if (isFunction(tags)) {
-			condition = tags;
-		} else if (isArray(tags)) {
+		if (isFunction(tagsOrCondition)) {
+			condition = tagsOrCondition;
+		} else if (isArray(tagsOrCondition)) {
 			condition = (tag: Node | null) =>
 				tag &&
-				tags.includes(tag.nodeName.toLowerCase() as HTMLTagNames);
+				tagsOrCondition.includes(
+					tag.nodeName.toLowerCase() as HTMLTagNames
+				);
 		} else {
 			condition = (tag: Node | null) =>
-				tag && tags === tag.nodeName.toLowerCase();
+				tag && tagsOrCondition === tag.nodeName.toLowerCase();
 		}
 
 		return Dom.up(node, condition, root);

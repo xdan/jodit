@@ -8,6 +8,6 @@
  * Check value is undefined or null
  * @param value
  */
-export function isVoid(value: unknown): value is void {
-	return typeof value === 'undefined' || value === null;
+export function isVoid(value: unknown): value is undefined | null {
+	return value === undefined || value === null;
 }

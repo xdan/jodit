@@ -63,8 +63,8 @@ interface IViewComponent<T extends IViewBased = IViewBased> extends IComponent {
 	defaultTimeout: number;
 }
 
-export type NodeCondition = (
-	node: Nullable<Node>
+export type NodeCondition<T extends Node = Node> = (
+	node: Nullable<T>
 ) => boolean | null | false | void | '';
 
 /**

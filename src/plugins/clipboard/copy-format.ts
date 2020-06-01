@@ -108,11 +108,7 @@ Config.prototype.controls.copyformat = {
 				Dom.safeRemove(ideal);
 			}
 
-			const format: IDictionary<string | number | undefined> = getStyles(
-				editor,
-				box,
-				defaultStyles
-			);
+			const format = getStyles(editor, box, defaultStyles);
 
 			const onMouseUp = () => {
 				editor.buffer.delete(pluginKey);

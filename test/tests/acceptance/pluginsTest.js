@@ -2316,6 +2316,4 @@ describe('Test plugins', function() {
 			});
 		});
 	});
-
-	afterEach(removeStuff);
 });

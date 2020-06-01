@@ -6,12 +6,12 @@
 
 import autobind from 'autobind-decorator';
 
-import * as consts from './constants';
+import * as consts from '../constants';
 import {
 	INVISIBLE_SPACE,
 	INVISIBLE_SPACE_REG_EXP_END as INV_END,
 	INVISIBLE_SPACE_REG_EXP_START as INV_START
-} from './constants';
+} from '../constants';
 
 import {
 	HTMLTagNames,
@@ -19,23 +19,20 @@ import {
 	IJodit,
 	markerInfo,
 	Nullable
-} from '../types';
-import { Dom } from './dom';
+} from '../../types';
+import { Dom } from '../dom';
+
 import {
 	attr,
 	error,
-	trim,
-	each,
 	isFunction,
-	isPlainObject,
 	isString,
 	$$,
 	css,
-	normalizeNode,
-	normalizeCssValue,
 	isArray,
 	call
-} from './helpers';
+} from '../helpers';
+import { Style } from './style/style';
 
 type WindowSelection = Selection | null;
 
@@ -350,9 +347,7 @@ export class Select {
 		sel.removeAllRanges();
 
 		for (i = length - 1; i >= 0; --i) {
-			const startElm: HTMLElement | null = this.doc.getElementById(
-				info[i].startId
-			);
+			const startElm = this.doc.getElementById(info[i].startId);
 
 			if (startElm) {
 				if (info[i].collapsed) {
@@ -361,7 +356,7 @@ export class Select {
 				} else {
 					ranges[i].setStartBefore(startElm);
 					if (info[i].endId) {
-						const endElm: HTMLElement | null = this.doc.getElementById(
+						const endElm = this.doc.getElementById(
 							info[i].endId as string
 						);
 						if (endElm) {
@@ -394,7 +389,7 @@ export class Select {
 			this.win.focus();
 			this.area.focus();
 
-			const sel: WindowSelection = this.sel,
+			const sel = this.sel,
 				range = sel?.rangeCount ? sel?.getRangeAt(0) : null;
 
 			if (!range || !Dom.isOrContains(this.area, range.startContainer)) {
@@ -659,6 +654,7 @@ export class Select {
 			) {
 				this.area.appendChild(this.j.createInside.element('br'));
 			}
+
 			this.setCursorAfter(lastChild);
 		}
 	}
@@ -1130,7 +1126,13 @@ export class Select {
 				);
 		});
 
-		this.doc.execCommand('fontsize', false, '7');
+		if (!this.isCollapsed()) {
+			this.doc.execCommand('fontsize', false, '7');
+		} else {
+			const font = this.j.createInside.element('font');
+			attr(font, 'size', 7);
+			this.insertNode(font, false, false);
+		}
 
 		$$('*[data-font-size]', this.area).forEach((elm: HTMLElement) => {
 			const fontSize = attr(elm, 'data-font-size');
@@ -1167,299 +1169,40 @@ export class Select {
 	 *
 	 * @param cssRules
 	 * @param options
-	 * @param options.alternativeNodeName - tag - equal CSSRule (e.g. strong === font-weight: 700)
-	 * @param options.defaultTag - tag for wrapping
-	 * @param options.rules - cssRules
+	 * @param options.element - tag - equal CSSRule (e.g. strong === font-weight: 700)
+	 * @param options.defaultTag - tag for wrapping and apply styles
+	 * @param options.rules - style marker for `alternativeTag` (e.g.font-weight: 700|bold for `strong`)
 	 * @example
 	 * ```js
 	 * const editor = Jodit.make('#editor');
 	 * editor.value = 'test';
 	 * editor.execCommand('selectall');
-	 * editor.selection.applyStyle({color: 'red'}) // will fill selection text in red
+	 *
+	 * editor.selection.applyStyle({color: 'red'}) // will wrap `text` in `span` and add style `color:red`
+	 * editor.selection.applyStyle({color: 'red'}) // will remove `color:red` from `span`
 	 * ```
 	 */
 	applyStyle(
-		cssRules: IDictionary<string | number | undefined>,
+		style: IDictionary<string | number | undefined>,
 		options: {
-			alternativeNodeName?: HTMLTagNames;
+			element?: HTMLTagNames;
 			defaultTag?: HTMLTagNames;
 			rules?: IDictionary<string | string[]>;
 		} = {}
 	): void {
-		const WRAP = 1,
-			UNWRAP = 0,
-			tlc = (v: unknown): HTMLTagNames =>
-				isString(v) ? (v.toLowerCase() as HTMLTagNames) : 'span',
-			alternativeNodeName: HTMLTagNames = tlc(
-				options.alternativeNodeName
-			),
-			defaultTag = tlc(options.defaultTag);
-
-		let mode: number;
-
-		const findNextCondition = (elm: Node | null): boolean =>
-			elm !== null &&
-			!Dom.isEmptyTextNode(elm) &&
-			!this.isMarker(elm as HTMLElement);
-
-		const checkCssRulesFor = (elm: HTMLElement): boolean => {
-			return Boolean(
-				options.rules &&
-					!Dom.isTag(elm, 'font') &&
-					Dom.isElement(elm) &&
-					isPlainObject(options.rules) &&
-					each(options.rules, (cssPropertyKey, cssPropertyValues) => {
-						const value = css(elm, cssPropertyKey, undefined, true);
-
-						return (
-							value !== null &&
-							value !== '' &&
-							cssPropertyValues.indexOf(
-								value.toString().toLowerCase()
-							) !== -1
-						);
-					})
-			);
-		};
-
-		const isSuitElement = (elm: Nullable<Node>): Nullable<boolean> => {
-			if (!elm) {
-				return false;
-			}
-
-			const reg = RegExp('^' + elm.nodeName + '$', 'i');
-
-			return (
-				(reg.test(alternativeNodeName) ||
-					checkCssRulesFor(elm as HTMLElement)) &&
-				findNextCondition(elm)
-			);
-		};
-
-		const toggleStyles = (elm: HTMLElement) => {
-			if (isSuitElement(elm)) {
-				// toggle CSS rules
-				if (tlc(elm.nodeName) === defaultTag && cssRules) {
-					Object.keys(cssRules).forEach((rule: string) => {
-						if (
-							mode === UNWRAP ||
-							css(elm, rule) ===
-								normalizeCssValue(
-									rule,
-									cssRules[rule] as string
-								)
-						) {
-							css(elm, rule, '');
-							if (mode === undefined) {
-								mode = UNWRAP;
-							}
-						} else {
-							css(elm, rule, cssRules[rule]);
-							if (mode === undefined) {
-								mode = WRAP;
-							}
-						}
-					});
-				}
-
-				if (
-					!Dom.isBlock(elm, this.win) &&
-					(!attr(elm, 'style') || tlc(elm.nodeName) !== defaultTag)
-				) {
-					// toggle `<strong>test</strong>` toWYSIWYG `test`, and
-					// `<span style="">test</span>` toWYSIWYG `test`
-					Dom.unwrap(elm);
-
-					if (mode === undefined) {
-						mode = UNWRAP;
-					}
-				}
-			}
-		};
-
-		if (this.isCollapsed()) {
-			let clearStyle: boolean = false;
-
-			if (
-				this.current() &&
-				Dom.closest(
-					this.current() as Node,
-					alternativeNodeName,
-					this.area
-				)
-			) {
-				clearStyle = true;
-				const closest = Dom.closest(
-					this.current() as Node,
-					alternativeNodeName,
-					this.area
-				);
-
-				if (closest) {
-					this.setCursorAfter(closest);
-				}
-			}
-
-			if (alternativeNodeName === defaultTag || !clearStyle) {
-				const node = this.j.createInside.element(alternativeNodeName);
-
-				node.appendChild(
-					this.j.createInside.text(consts.INVISIBLE_SPACE)
-				);
-
-				this.insertNode(node, false, false);
-
-				if (alternativeNodeName === defaultTag && cssRules) {
-					css(node as HTMLElement, cssRules);
-				}
-
-				this.setCursorIn(node);
-
-				return;
-			}
-		}
-
-		const selInfo = this.save();
-
-		normalizeNode(this.area.firstChild); // FF fix for test "commandsTest - Exec command "bold"
-		// for some text that contains a few STRONG elements, should unwrap all of these"
-		this.wrapInTag((font: HTMLElement) => {
-			if (
-				!Dom.next(
-					font,
-					findNextCondition,
-					font.parentNode as HTMLElement
-				) &&
-				!Dom.prev(
-					font,
-					findNextCondition,
-					font.parentNode as HTMLElement
-				) &&
-				isSuitElement(font.parentNode as HTMLElement) &&
-				font.parentNode !== this.area &&
-				(!Dom.isBlock(font.parentNode, this.win) ||
-					consts.IS_BLOCK.test(alternativeNodeName))
-			) {
-				toggleStyles(font.parentNode as HTMLElement);
-				return;
-			}
-
-			if (
-				font.firstChild &&
-				!Dom.next(
-					font.firstChild,
-					findNextCondition,
-					font as HTMLElement
-				) &&
-				!Dom.prev(
-					font.firstChild,
-					findNextCondition,
-					font as HTMLElement
-				) &&
-				isSuitElement(font.firstChild as HTMLElement)
-			) {
-				toggleStyles(font.firstChild as HTMLElement);
-				return;
-			}
-
-			if (Dom.closest(font, isSuitElement, this.area)) {
-				const leftRange = this.createRange(),
-					wrapper = Dom.closest(
-						font,
-						isSuitElement,
-						this.area
-					) as HTMLElement;
-
-				leftRange.setStartBefore(wrapper);
-				leftRange.setEndBefore(font);
-
-				const leftFragment = leftRange.extractContents();
-
-				if (
-					(!leftFragment.textContent ||
-						!trim(leftFragment.textContent).length) &&
-					leftFragment.firstChild
-				) {
-					Dom.unwrap(leftFragment.firstChild);
-				}
-
-				if (wrapper.parentNode) {
-					wrapper.parentNode.insertBefore(leftFragment, wrapper);
-				}
-
-				leftRange.setStartAfter(font);
-				leftRange.setEndAfter(wrapper);
-
-				const rightFragment = leftRange.extractContents();
-
-				// case then marker can be inside fragnment
-				if (
-					(!rightFragment.textContent ||
-						!trim(rightFragment.textContent).length) &&
-					rightFragment.firstChild
-				) {
-					Dom.unwrap(rightFragment.firstChild);
-				}
-
-				Dom.after(wrapper, rightFragment);
-
-				toggleStyles(wrapper);
-				return;
-			}
-
-			// unwrap all suit elements inside
-			const needUnwrap: Node[] = [];
-			let firstElementSuit: boolean | undefined;
-
-			if (font.firstChild) {
-				Dom.find(
-					font.firstChild,
-					(elm: Node | null) => {
-						if (elm && isSuitElement(elm as HTMLElement)) {
-							if (firstElementSuit === undefined) {
-								firstElementSuit = true;
-							}
-							needUnwrap.push(elm);
-						} else {
-							if (firstElementSuit === undefined) {
-								firstElementSuit = false;
-							}
-						}
-						return false;
-					},
-					font,
-					true
-				);
-			}
-
-			needUnwrap.forEach(Dom.unwrap);
-
-			if (!firstElementSuit) {
-				if (mode === undefined) {
-					mode = WRAP;
-				}
-
-				if (mode === WRAP) {
-					css(
-						Dom.replace(
-							font,
-							alternativeNodeName,
-							this.j.createInside
-						),
-						cssRules && alternativeNodeName === defaultTag
-							? cssRules
-							: {}
-					);
-				}
-			}
+		const styleElm = new Style({
+			style,
+			element: options.element,
+			defaultTag: options.defaultTag
 		});
 
-		this.restore(selInfo);
+		styleElm.apply(this.j);
 	}
 
 	/**
 	 * Split selection on two parts: left and right
 	 * @param currentBox
+	 * @return Left part
 	 */
 	splitSelection(currentBox: HTMLElement): Nullable<Element> {
 		if (!this.isCollapsed()) {

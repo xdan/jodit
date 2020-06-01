@@ -4,36 +4,36 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary } from '../../types';
-import { isPlainObject, isNumeric } from './checker/';
+import { isPlainObject, isNumeric, isVoid } from './checker/';
 import { normalizeCssValue } from './normalize/';
 import { camelCase, kebabCase } from './string/';
+import { IStyle, StyleValue } from '../selection';
 
 /**
  * Get the value of a computed style property for the first element in the set of matched elements or set one or
  * more CSS properties for every matched element
- * @param {HTMLElement} element
- * @param {string|object} key An object of property-value pairs to set. A CSS property name.
- * @param {string|int} value A value to set for the property.
- * @param {boolean} onlyStyleMode Get value from style attribute, without calculating
+ *
+ * @param element
+ * @param key An object of property-value pairs to set. A CSS property name.
+ * @param value A value to set for the property.
+ * @param [onlyStyleMode] Get value from style attribute, without calculating
  */
 export const css = (
 	element: HTMLElement,
-	key: string | IDictionary<number | string | null | undefined>,
-	value?: string | number,
+	key: string | IStyle,
+	value?: StyleValue,
 	onlyStyleMode: boolean = false
 ): string | number => {
-	const numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|font-size/i;
+	const numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size/i;
 
 	if (isPlainObject(key) || value !== undefined) {
 		const setValue = (
 			elm: HTMLElement,
 			_key: string,
-			_value: string | number | undefined
+			_value: StyleValue
 		) => {
 			if (
-				_value !== undefined &&
-				_value !== null &&
+				!isVoid(_value) &&
 				numberFieldsReg.test(_key) &&
 				isNumeric(_value.toString())
 			) {
@@ -41,7 +41,7 @@ export const css = (
 			}
 
 			if (
-				_value !== undefined &&
+				!isVoid(_value) &&
 				css(elm, _key, undefined, true) !==
 					normalizeCssValue(_key, _value)
 			) {

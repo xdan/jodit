@@ -117,7 +117,7 @@ Config.prototype.controls.font = ({
 	},
 
 	template: (editor, key: string, value: string) => {
-		return `<span style="font-family: ${key}">${value}</span>`;
+		return `<span style="font-family: ${key}!important;">${value}</span>`;
 	},
 
 	isActiveChild: (editor, control: IControlType): boolean => {

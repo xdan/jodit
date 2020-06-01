@@ -134,7 +134,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	static defaultOptions: Config;
 
 	static plugins: IPluginSystem = pluginSystem;
+
 	static modules: IDictionary<Function> = modules;
+	static ns: IDictionary<Function> = modules;
+
 	static decorators: IDictionary<Function> = {};
 	static instances: IDictionary<IJodit> = instances;
 	static lang: any = lang;

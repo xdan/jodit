@@ -21,7 +21,7 @@ export { Helpers };
 export { ImageEditor } from './image-editor/image-editor';
 export { Observer } from './observer/observer';
 export { ProgressBar } from './progress-bar/progress-bar';
-export { Select } from '../core/selection';
+export { Select, Style } from '../core/selection';
 export { Snapshot } from './observer/snapshot';
 export { StatusBar } from './status-bar/status-bar';
 export { Table } from './table';

@@ -6,7 +6,13 @@
 
 import { Config } from '../config';
 import { Dom } from '../modules/';
-import { HTMLTagNames, IJodit, markerInfo, IControlType } from '../types';
+import {
+	HTMLTagNames,
+	IJodit,
+	markerInfo,
+	IControlType,
+	IDictionary
+} from '../types';
 
 Config.prototype.controls.paragraph = {
 	command: 'formatBlock',
@@ -16,20 +22,20 @@ Config.prototype.controls.paragraph = {
 			current = editor.selection.current();
 
 		if (current && editor.o.textIcons) {
-			const currentBox: HTMLElement =
+			const currentBox =
 					Dom.closest(
 						current,
 						node => Dom.isBlock(node, editor.editorWindow),
 						editor.editor
 					) || editor.editor,
-				currentValue: string = currentBox.nodeName.toLowerCase(),
-				list = control.list as any;
+				currentValue = currentBox.nodeName.toLowerCase(),
+				list = control.list as IDictionary;
 
 			if (
 				button &&
 				control.data &&
 				control.data.currentValue !== currentValue &&
-				control.list &&
+				list &&
 				list[currentValue]
 			) {
 				if (editor.o.textIcons) {
@@ -172,7 +178,7 @@ export function formatBlock(editor: IJodit) {
 						editor.selection.applyStyle(
 							{},
 							{
-								alternativeNodeName: third as HTMLTagNames
+								element: third as HTMLTagNames
 							}
 						);
 					} else {

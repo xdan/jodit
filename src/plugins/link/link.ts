@@ -13,7 +13,7 @@ import {
 	refs,
 	stripTags
 } from '../../core/helpers';
-import { Select } from '../../core/selection';
+import { Select } from '../../core/selection/select';
 import { IDictionary, IJodit, IControlType, Nullable } from '../../types';
 import { formTemplate } from './template';
 
