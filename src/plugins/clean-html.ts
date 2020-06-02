@@ -13,7 +13,7 @@ import {
 	IS_INLINE
 } from '../core/constants';
 import { Dom } from '../modules/';
-import { normalizeNode, trim } from '../core/helpers/';
+import { isString, normalizeNode, trim } from '../core/helpers/';
 import { HTMLTagNames, IDictionary, IJodit, Nullable } from '../types';
 import { Plugin } from '../core/plugin';
 
@@ -239,7 +239,7 @@ export class cleanHtml extends Plugin {
 			attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
 		const tagsHash: IDictionary = {};
 
-		if (typeof tags === 'string') {
+		if (isString(tags)) {
 			tags.split(seperator).map((elm: string) => {
 				elm = trim(elm);
 				const attr: RegExpExecArray | null = attributesReg.exec(elm),
@@ -489,6 +489,7 @@ export class cleanHtml extends Plugin {
 						.replace(INVISIBLE_SPACE_REG_EXP, '')
 						.replace(SPACE_REG_EXP, ' ');
 				}
+
 				break;
 
 			default:

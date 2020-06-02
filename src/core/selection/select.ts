@@ -14,6 +14,7 @@ import {
 } from '../constants';
 
 import {
+	CanUndef,
 	HTMLTagNames,
 	IDictionary,
 	IJodit,
@@ -32,7 +33,7 @@ import {
 	isArray,
 	call
 } from '../helpers';
-import { Style } from './style/style';
+import { IStyle, Style } from './style/style';
 
 type WindowSelection = Selection | null;
 
@@ -1171,7 +1172,6 @@ export class Select {
 	 * @param options
 	 * @param options.element - tag - equal CSSRule (e.g. strong === font-weight: 700)
 	 * @param options.defaultTag - tag for wrapping and apply styles
-	 * @param options.rules - style marker for `alternativeTag` (e.g.font-weight: 700|bold for `strong`)
 	 * @example
 	 * ```js
 	 * const editor = Jodit.make('#editor');
@@ -1183,11 +1183,10 @@ export class Select {
 	 * ```
 	 */
 	applyStyle(
-		style: IDictionary<string | number | undefined>,
+		style: CanUndef<IStyle>,
 		options: {
 			element?: HTMLTagNames;
 			defaultTag?: HTMLTagNames;
-			rules?: IDictionary<string | string[]>;
 		} = {}
 	): void {
 		const styleElm = new Style({

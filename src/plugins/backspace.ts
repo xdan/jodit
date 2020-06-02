@@ -270,7 +270,7 @@ export class backspace extends Plugin {
 				fakeNode,
 				node => Dom.isBlock(node, jodit.editorWindow),
 				jodit.editor
-			) as HTMLElement | null;
+			);
 
 			const workElement = Dom.findInline(
 				fakeNode,

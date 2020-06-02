@@ -76,8 +76,7 @@ export function bold(editor: IJodit) {
 		});
 
 		editor.selection.applyStyle(cssRules, {
-			element: control.tags ? control.tags[0] : undefined,
-			rules: control.css
+			element: control.tags ? control.tags[0] : undefined
 		});
 
 		editor.e.fire('synchro');

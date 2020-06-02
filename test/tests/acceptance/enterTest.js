@@ -309,8 +309,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 						0
 					);
 					range.collapse(true);
-					sel.removeAllRanges();
-					sel.addRange(range);
+					editor.selection.selectRange(range);
 
 					simulateEvent(
 						'keydown',
@@ -318,19 +317,21 @@ describe('Enter behavior Jodit Editor Tests', function() {
 						editor.editor
 					);
 
-					expect('<ul><li>Test</li><li>Some text</li></ul>').equals(
-						editor.value
+					expect(sortAttributes(editor.value)).equals(
+						'<ul><li>Test</li><li>Some text</li></ul>'
 					);
 
 					editor.selection.focus();
 					editor.selection.insertNode(
 						editor.createInside.text(' a ')
 					);
-					expect(
+
+					expect(sortAttributes(editor.value)).equals(
 						'<ul><li>Test a </li><li>Some text</li></ul>'
-					).equals(editor.value);
+					);
 				});
 			});
+
 			describe('In the P element', function() {
 				it('Should connect both UL in one element', function() {
 					const editor = getJodit();
@@ -660,10 +661,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					const sel = editor.selection.sel,
 						range = editor.selection.createRange();
 
-					range.setStart(
-						editor.editor.firstChild,
-						9
-					);
+					range.setStart(editor.editor.firstChild, 9);
 					range.collapse(true);
 					sel.removeAllRanges();
 					sel.addRange(range);
@@ -676,9 +674,9 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					expect(sortAttributes(editor.value)).equals(
 						'<html lang="en" style="overflow-y:hidden">' +
-						'<head><title>Jodit Editor</title></head>' +
-						'<body spellcheck="true" style="min-height:90px" ><p>Some text</p><p> a <br></p></body>' +
-						'</html>'
+							'<head><title>Jodit Editor</title></head>' +
+							'<body spellcheck="true" style="min-height:90px" ><p>Some text</p><p> a <br></p></body>' +
+							'</html>'
 					);
 				});
 			});

@@ -36,11 +36,11 @@ export class ApplyStyle {
 
 		if (isCollapsed) {
 			const font = this.jodit.createInside.element('font');
-			sel.insertNode(font);
+			sel.insertNode(font, false, false);
 			sel.setCursorIn(font);
 			selInfo = sel.save();
 			this.applyToElement(font);
-			Dom.safeRemove(font);
+			Dom.unwrap(font);
 		} else {
 			selInfo = sel.save();
 			normalizeNode(sel.area.firstChild); // FF fix for test "commandsTest - Exec command "bold"
@@ -85,9 +85,21 @@ export class ApplyStyle {
 		let wrapper = font;
 
 		if (this.style.elementIsBlock) {
+			const ulReg = /^(UL|OL|LI)$/i;
 			const box = Dom.up(
 				font,
-				node => node && Dom.isBlock(node, this.jodit.selection.win),
+				node => {
+					if (node && Dom.isBlock(node, this.jodit.selection.win)) {
+						if (
+							ulReg.test(this.style.element) ||
+							!ulReg.test(node.nodeName)
+						) {
+							return true;
+						}
+					}
+
+					return false;
+				},
 				area
 			);
 
@@ -104,21 +116,11 @@ export class ApplyStyle {
 			this.jodit.createInside
 		);
 
-		css(
-			newWrapper,
-			this.style.element === this.style.defaultTag
-				? this.style.options.style || {}
-				: {}
-		);
+		if (this.style.options.style && this.style.elementIsDefault) {
+			css(newWrapper, this.style.options.style);
+		}
 	}
 
-	/**
-	 * Check suitable parent node
-	 *
-	 * @param font
-	 * @example
-	 * `<strong><font>selected</font></strong>`
-	 */
 	private checkSuitableParent(font: HTMLElement): boolean {
 		const { parentNode } = font;
 
@@ -235,14 +237,15 @@ export class ApplyStyle {
 				!Dom.isTag(elm, 'font') &&
 				Dom.isHTMLElement(elm, this.jodit.editorWindow) &&
 				each(rules, (property, checkValue) => {
-					const value = css(elm, property, undefined);
+					const value = css(elm, property, undefined, true);
 
 					return (
 						!isVoid(value) &&
 						value !== '' &&
 						!isVoid(checkValue) &&
-						checkValue.toString().toLowerCase() ===
-							value.toString().toLowerCase()
+						normalizeCssValue(property, checkValue)
+							.toString()
+							.toLowerCase() === value.toString().toLowerCase()
 					);
 				})
 		);
@@ -263,14 +266,13 @@ export class ApplyStyle {
 			return false;
 		}
 
-		const { element, defaultTag, options } = this.style;
+		const { element, elementIsDefault, options } = this.style;
 
-		const isDefault = this.style.element === defaultTag;
 		const elmHasSameStyle = this.elementHasSameStyle(elm, options.style);
 		const elmIsSame = elm.nodeName.toLowerCase() === element;
 
 		return (
-			((!isDefault || !strict) && elmIsSame) ||
+			((!elementIsDefault || !strict) && elmIsSame) ||
 			(elmHasSameStyle && this.isNormalNode(elm))
 		);
 	}
@@ -418,9 +420,24 @@ export class ApplyStyle {
 		range.setEndAfter(end);
 		const fragment = range.extractContents();
 
-		const wrapper = this.jodit.createInside.element(this.style.element);
+		let wrapper = this.jodit.createInside.element(this.style.element);
 		wrapper.appendChild(fragment);
 		range.insertNode(wrapper);
+
+		if (this.style.elementIsBlock) {
+			if (/^(OL|UL)$/i.test(this.style.element)) {
+				const li = Dom.replace(wrapper, 'li', this.jodit.createInside);
+				const ul = Dom.wrap(li, this.style.element, this.jodit);
+
+				if (ul) {
+					wrapper = ul;
+				}
+			}
+
+			if (Dom.isEmpty(wrapper)) {
+				wrapper.appendChild(this.jodit.createInside.element('br'));
+			}
+		}
 
 		return wrapper;
 	}

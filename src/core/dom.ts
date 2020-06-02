@@ -51,6 +51,7 @@ export class Dom {
 		do {
 			needFindNext = false;
 			tmp = first.previousSibling;
+
 			if (tmp && !Dom.isBlock(tmp, editor.editorWindow)) {
 				needFindNext = true;
 				first = tmp;
@@ -60,6 +61,7 @@ export class Dom {
 		do {
 			needFindNext = false;
 			tmp = last.nextSibling;
+
 			if (tmp && !Dom.isBlock(tmp, editor.editorWindow)) {
 				needFindNext = true;
 				last = tmp;
@@ -102,6 +104,7 @@ export class Dom {
 		tag: K,
 		editor: IJodit
 	): Nullable<HTMLElementTagNameMap[K]>;
+
 	static wrap(
 		current: Node,
 		tag: HTMLElement | HTMLTagNames,
