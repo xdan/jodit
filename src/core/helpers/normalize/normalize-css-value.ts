@@ -5,18 +5,24 @@
  */
 
 import { isNumeric } from '../checker/';
+import { kebabCase } from '../string';
 
 export function normalizeCssValue(
 	key: string,
 	value: string | number
 ): string | number {
-	switch (key.toLowerCase()) {
+	switch (kebabCase(key)) {
 		case 'font-weight':
 			switch (value.toString().toLowerCase()) {
+				case '700':
 				case 'bold':
 					return 700;
+
+				case '400':
 				case 'normal':
 					return 400;
+
+				case '900':
 				case 'heavy':
 					return 900;
 			}

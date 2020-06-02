@@ -1,3 +1,5 @@
+import autobind from 'autobind-decorator';
+
 import { CanUndef, IJodit, markerInfo, Nullable } from '../../../types';
 import { isPlainObject, isVoid } from '../../helpers/checker';
 import { Dom } from '../../dom';
@@ -9,8 +11,6 @@ import {
 	normalizeNode,
 	trim
 } from '../../helpers';
-import * as consts from '../../constants';
-import autobind from 'autobind-decorator';
 import { IStyle, Style } from './style';
 
 enum mode {
@@ -56,114 +56,6 @@ export class ApplyStyle {
 	 * Mode WRAP or UNWRAP
 	 */
 	private mode: CanUndef<keyof typeof mode>;
-
-	/**
-	 * Apply style to collapsed selection.
-	 * In usual case - should append `alternativeTag` or apply rules to `defaultTag`
-	 */
-	applyToCollapsed(): void {
-		const sel = this.jodit.selection;
-		const current = sel.current();
-
-		if (!current) {
-			return;
-		}
-
-		const closest = Dom.closest(
-			current,
-			n => {
-				if (this.isSuitElement(n)) {
-					return true;
-				}
-
-				if (
-					Dom.isBlock(n, this.jodit.editorWindow) &&
-					this.style.elementIsBlock
-				) {
-					return true;
-				}
-
-				return false;
-			},
-			sel.area
-		);
-
-		if (closest) {
-			return this.applyToCollapsedInSuitableBox(closest);
-		}
-
-		let node: Nullable<Node> = null;
-
-		if (this.style.elementIsBlock) {
-			this.wrapUnwrappedText(current);
-			return;
-		}
-
-		// for SPAN - we can use another styled SPAN
-		if (this.style.element === this.style.defaultTag) {
-			const wrapper = Dom.closest(current, this.style.element, sel.area);
-
-			if (wrapper && Dom.isEmpty(wrapper)) {
-				node = wrapper;
-			}
-		}
-
-		if (!node) {
-			node = this.jodit.createInside.element(this.style.element);
-
-			node.appendChild(
-				this.jodit.createInside.text(consts.INVISIBLE_SPACE)
-			);
-
-			sel.insertNode(node, false, false);
-			sel.setCursorIn(node);
-		}
-
-		if (
-			this.style.element === this.style.defaultTag &&
-			this.style.options.style
-		) {
-			css(node as HTMLElement, this.style.options.style);
-		}
-	}
-
-	/**
-	 * Apply for collapsed selection was inside suitable box
-	 * @param closest
-	 */
-	applyToCollapsedInSuitableBox(closest: HTMLElement): void {
-		const sel = this.jodit.selection;
-
-		if (!this.style.elementIsBlock) {
-			if (sel.cursorOnTheLeft(closest)) {
-				sel.setCursorBefore(closest);
-			} else if (sel.cursorOnTheRight(closest)) {
-				sel.setCursorAfter(closest);
-			} else {
-				const left = sel.splitSelection(closest);
-				left && sel.setCursorAfter(left);
-			}
-		}
-
-		// For blocks should only unwrap or wrap selection
-		if (this.style.elementIsBlock) {
-			const save = sel.save();
-
-			if (closest.nodeName.toLowerCase() === this.style.element) {
-				Dom.unwrap(closest);
-			} else {
-				Dom.replace(
-					closest,
-					this.style.element,
-					this.jodit.createInside
-				);
-			}
-
-			sel.restore(save);
-		}
-
-		return;
-	}
 
 	/**
 	 * Apply options to all selected fragment
@@ -234,7 +126,7 @@ export class ApplyStyle {
 			parentNode &&
 			!Dom.next(font, this.isNormalNode, parentNode) &&
 			!Dom.prev(font, this.isNormalNode, parentNode) &&
-			this.isSuitElement(parentNode, false) &&
+			this.isSuitableElement(parentNode, false) &&
 			parentNode !== this.jodit.selection.area &&
 			(!Dom.isBlock(parentNode, this.jodit.editorWindow) ||
 				this.style.elementIsBlock)
@@ -260,7 +152,7 @@ export class ApplyStyle {
 			firstChild &&
 			!Dom.next(firstChild, this.isNormalNode, font) &&
 			!Dom.prev(firstChild, this.isNormalNode, font) &&
-			this.isSuitElement(firstChild, false)
+			this.isSuitableElement(firstChild, false)
 		) {
 			this.toggleStyles(firstChild);
 			return true;
@@ -279,7 +171,7 @@ export class ApplyStyle {
 	private checkClosestWrapper(font: HTMLElement): boolean {
 		const wrapper = Dom.closest(
 			font,
-			this.isSuitElement,
+			this.isSuitableElement,
 			this.jodit.editor
 		);
 
@@ -337,14 +229,11 @@ export class ApplyStyle {
 	 * @param elm
 	 * @param rules
 	 */
-	private elementHasRules(
-		elm: HTMLElement,
-		rules: CanUndef<IStyle>
-	): boolean {
+	private elementHasSameStyle(elm: Node, rules: CanUndef<IStyle>): boolean {
 		return Boolean(
 			isPlainObject(rules) &&
 				!Dom.isTag(elm, 'font') &&
-				Dom.isElement(elm) &&
+				Dom.isHTMLElement(elm, this.jodit.editorWindow) &&
 				each(rules, (property, checkValue) => {
 					const value = css(elm, property, undefined);
 
@@ -366,7 +255,7 @@ export class ApplyStyle {
 	 * @param strict
 	 */
 	@autobind
-	private isSuitElement(
+	isSuitableElement(
 		elm: Nullable<Node>,
 		strict: boolean = true
 	): elm is HTMLElement {
@@ -374,14 +263,15 @@ export class ApplyStyle {
 			return false;
 		}
 
+		const { element, defaultTag, options } = this.style;
+
+		const isDefault = this.style.element === defaultTag;
+		const elmHasSameStyle = this.elementHasSameStyle(elm, options.style);
+		const elmIsSame = elm.nodeName.toLowerCase() === element;
+
 		return (
-			(((this.style.element !== this.style.defaultTag || !strict) &&
-				elm.nodeName.toLowerCase() === this.style.element) ||
-				this.elementHasRules(
-					elm as HTMLElement,
-					this.style.options.style
-				)) &&
-			this.isNormalNode(elm)
+			((!isDefault || !strict) && elmIsSame) ||
+			(elmHasSameStyle && this.isNormalNode(elm))
 		);
 	}
 
@@ -463,7 +353,7 @@ export class ApplyStyle {
 			Dom.find(
 				font.firstChild,
 				(elm: Node | null) => {
-					if (elm && this.isSuitElement(elm as HTMLElement)) {
+					if (elm && this.isSuitableElement(elm as HTMLElement)) {
 						if (firstElementSuit === undefined) {
 							firstElementSuit = true;
 						}
