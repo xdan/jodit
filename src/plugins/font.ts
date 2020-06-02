@@ -107,6 +107,7 @@ Config.prototype.controls.font = ({
 	},
 
 	list: {
+		'': 'Default',
 		'Helvetica,sans-serif': 'Helvetica',
 		'Arial,Helvetica,sans-serif': 'Arial',
 		'Georgia,serif': 'Georgia',
