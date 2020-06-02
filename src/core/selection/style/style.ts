@@ -20,7 +20,7 @@ export class Style {
 	/**
 	 * New element is block
 	 */
-	protected get elementIsBlock(): boolean {
+	get elementIsBlock(): boolean {
 		return Boolean(
 			this.options.element && IS_BLOCK.test(this.options.element)
 		);

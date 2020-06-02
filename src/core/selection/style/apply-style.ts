@@ -1,11 +1,10 @@
-import { CanUndef, IJodit, Nullable } from '../../../types';
+import { CanUndef, IJodit, markerInfo, Nullable } from '../../../types';
 import { isPlainObject, isVoid } from '../../helpers/checker';
 import { Dom } from '../../dom';
 import {
 	attr,
 	css,
 	each,
-	error,
 	normalizeCssValue,
 	normalizeNode,
 	trim
@@ -13,7 +12,6 @@ import {
 import * as consts from '../../constants';
 import autobind from 'autobind-decorator';
 import { IStyle, Style } from './style';
-import { IS_BLOCK } from '../../constants';
 
 enum mode {
 	UNWRAP = 'UNWRAP',
@@ -32,15 +30,24 @@ export class ApplyStyle {
 	apply(): void {
 		const sel = this.jodit.selection;
 
-		if (sel.isCollapsed()) {
-			return this.applyToCollapsed();
+		let selInfo: markerInfo[] = [];
+
+		const isCollapsed = sel.isCollapsed();
+
+		if (isCollapsed) {
+			const font = this.jodit.createInside.element('font');
+			sel.insertNode(font);
+			sel.setCursorIn(font);
+			selInfo = sel.save();
+			this.applyToElement(font);
+			Dom.safeRemove(font);
+		} else {
+			selInfo = sel.save();
+			normalizeNode(sel.area.firstChild); // FF fix for test "commandsTest - Exec command "bold"
+
+			// for some text that contains a few STRONG elements, should unwrap all of these"
+			sel.wrapInTag(this.applyToElement);
 		}
-
-		const selInfo = sel.save();
-
-		normalizeNode(sel.area.firstChild); // FF fix for test "commandsTest - Exec command "bold"
-		// for some text that contains a few STRONG elements, should unwrap all of these"
-		sel.wrapInTag(this.applyToElement);
 
 		sel.restore(selInfo);
 	}
@@ -54,30 +61,48 @@ export class ApplyStyle {
 	 * Apply style to collapsed selection.
 	 * In usual case - should append `alternativeTag` or apply rules to `defaultTag`
 	 */
-	private applyToCollapsed(): void {
+	applyToCollapsed(): void {
 		const sel = this.jodit.selection;
 		const current = sel.current();
 
-		const closest =
-			current && Dom.closest(current, this.isSuitElement, sel.area);
+		if (!current) {
+			return;
+		}
+
+		const closest = Dom.closest(
+			current,
+			n => {
+				if (this.isSuitElement(n)) {
+					return true;
+				}
+
+				if (
+					Dom.isBlock(n, this.jodit.editorWindow) &&
+					this.style.elementIsBlock
+				) {
+					return true;
+				}
+
+				return false;
+			},
+			sel.area
+		);
 
 		if (closest) {
-			if (sel.cursorOnTheLeft(closest)) {
-				sel.setCursorBefore(closest);
-			} else if (sel.cursorOnTheRight(closest)) {
-				sel.setCursorAfter(closest);
-			} else {
-				const left = sel.splitSelection(closest);
-				left && sel.setCursorAfter(left);
-			}
-
-			return;
+			return this.applyToCollapsedInSuitableBox(closest);
 		}
 
 		let node: Nullable<Node> = null;
 
-		if (current && this.style.element === this.style.defaultTag) {
+		if (this.style.elementIsBlock) {
+			this.wrapUnwrappedText(current);
+			return;
+		}
+
+		// for SPAN - we can use another styled SPAN
+		if (this.style.element === this.style.defaultTag) {
 			const wrapper = Dom.closest(current, this.style.element, sel.area);
+
 			if (wrapper && Dom.isEmpty(wrapper)) {
 				node = wrapper;
 			}
@@ -85,9 +110,11 @@ export class ApplyStyle {
 
 		if (!node) {
 			node = this.jodit.createInside.element(this.style.element);
+
 			node.appendChild(
 				this.jodit.createInside.text(consts.INVISIBLE_SPACE)
 			);
+
 			sel.insertNode(node, false, false);
 			sel.setCursorIn(node);
 		}
@@ -98,6 +125,44 @@ export class ApplyStyle {
 		) {
 			css(node as HTMLElement, this.style.options.style);
 		}
+	}
+
+	/**
+	 * Apply for collapsed selection was inside suitable box
+	 * @param closest
+	 */
+	applyToCollapsedInSuitableBox(closest: HTMLElement): void {
+		const sel = this.jodit.selection;
+
+		if (!this.style.elementIsBlock) {
+			if (sel.cursorOnTheLeft(closest)) {
+				sel.setCursorBefore(closest);
+			} else if (sel.cursorOnTheRight(closest)) {
+				sel.setCursorAfter(closest);
+			} else {
+				const left = sel.splitSelection(closest);
+				left && sel.setCursorAfter(left);
+			}
+		}
+
+		// For blocks should only unwrap or wrap selection
+		if (this.style.elementIsBlock) {
+			const save = sel.save();
+
+			if (closest.nodeName.toLowerCase() === this.style.element) {
+				Dom.unwrap(closest);
+			} else {
+				Dom.replace(
+					closest,
+					this.style.element,
+					this.jodit.createInside
+				);
+			}
+
+			sel.restore(save);
+		}
+
+		return;
 	}
 
 	/**
@@ -122,12 +187,12 @@ export class ApplyStyle {
 		}
 
 		if (this.mode !== mode.WRAP) {
-			throw error('Need UNWRAP implementation');
+			return;
 		}
 
 		let wrapper = font;
 
-		if (IS_BLOCK.test(this.style.element)) {
+		if (this.style.elementIsBlock) {
 			const box = Dom.up(
 				font,
 				node => node && Dom.isBlock(node, this.jodit.selection.win),
@@ -141,8 +206,14 @@ export class ApplyStyle {
 			}
 		}
 
+		const newWrapper = Dom.replace(
+			wrapper,
+			this.style.element,
+			this.jodit.createInside
+		);
+
 		css(
-			Dom.replace(wrapper, this.style.element, this.jodit.createInside),
+			newWrapper,
 			this.style.element === this.style.defaultTag
 				? this.style.options.style || {}
 				: {}
@@ -166,7 +237,7 @@ export class ApplyStyle {
 			this.isSuitElement(parentNode, false) &&
 			parentNode !== this.jodit.selection.area &&
 			(!Dom.isBlock(parentNode, this.jodit.editorWindow) ||
-				consts.IS_BLOCK.test(this.style.element))
+				this.style.elementIsBlock)
 		) {
 			this.toggleStyles(parentNode);
 			return true;
@@ -213,6 +284,11 @@ export class ApplyStyle {
 		);
 
 		if (wrapper) {
+			if (this.style.elementIsBlock) {
+				this.toggleStyles(wrapper);
+				return true;
+			}
+
 			const leftRange = this.jodit.selection.createRange();
 
 			leftRange.setStartBefore(wrapper);
@@ -352,11 +428,19 @@ export class ApplyStyle {
 			});
 		}
 
-		if (
-			!Dom.isBlock(elm, this.jodit.editorWindow) &&
+		const isBlock = Dom.isBlock(elm, this.jodit.editorWindow);
+
+		const isSuitableInline =
+			!isBlock &&
 			(!attr(elm, 'style') ||
-				elm.nodeName.toLowerCase() !== this.style.defaultTag)
-		) {
+				elm.nodeName.toLowerCase() !== this.style.defaultTag);
+
+		const isSuitableBlock =
+			!isSuitableInline &&
+			isBlock &&
+			elm.nodeName.toLowerCase() === this.style.element;
+
+		if (isSuitableInline || isSuitableBlock) {
 			// toggle `<strong>test</strong>` toWYSIWYG `test`, and
 			// `<span style="">test</span>` toWYSIWYG `test`
 			Dom.unwrap(elm);
@@ -390,6 +474,7 @@ export class ApplyStyle {
 							firstElementSuit = false;
 						}
 					}
+
 					return false;
 				},
 				font,
@@ -399,20 +484,20 @@ export class ApplyStyle {
 
 		needUnwrap.forEach(Dom.unwrap);
 
-		return !!firstElementSuit;
+		return Boolean(firstElementSuit);
 	}
 
 	/**
 	 * Wrap text or inline elements inside Block element
-	 * @param font
+	 * @param elm
 	 */
-	private wrapUnwrappedText(font: HTMLElement): HTMLElement {
+	private wrapUnwrappedText(elm: Node): HTMLElement {
 		const { area } = this.jodit.selection;
 
-		let start: Node = font,
-			end: Node = font;
+		let start: Node = elm,
+			end: Node = elm;
 
-		const findNext = (clb: (node: Node) => void) => {
+		const edge = (clb: (node: Node) => void) => {
 			return (node: Nullable<Node>) => {
 				if (Dom.isBlock(node, this.jodit.selection.win)) {
 					return true;
@@ -427,14 +512,14 @@ export class ApplyStyle {
 		};
 
 		Dom.prev(
-			font,
-			findNext(node => (start = node)),
+			elm,
+			edge(n => (start = n)),
 			area
 		);
 
 		Dom.next(
-			font,
-			findNext(node => (end = node)),
+			elm,
+			edge(n => (end = n)),
 			area
 		);
 
@@ -443,7 +528,7 @@ export class ApplyStyle {
 		range.setEndAfter(end);
 		const fragment = range.extractContents();
 
-		const wrapper = this.jodit.createInside.div();
+		const wrapper = this.jodit.createInside.element(this.style.element);
 		wrapper.appendChild(fragment);
 		range.insertNode(wrapper);
 

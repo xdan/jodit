@@ -1114,7 +1114,7 @@ export class Select {
 	 * @param tagOrCallback
 	 */
 	wrapInTag(
-		tagOrCallback: HTMLTagNames | ((font: HTMLElement) => void)
+		tagOrCallback: HTMLTagNames | ((font: HTMLElement) => any)
 	): HTMLElement[] {
 		// fix issue https://github.com/xdan/jodit/issues/65
 		$$('*[style*=font-size]', this.area).forEach((elm: HTMLElement) => {

@@ -1,6 +1,8 @@
 describe('Test Style module', function() {
 	let editor;
 
+	const Style = Jodit.ns.Style;
+
 	beforeEach(function() {
 		editor = getJodit();
 		editor.value = 'test';
@@ -9,7 +11,7 @@ describe('Test Style module', function() {
 
 	describe('Apply style', function() {
 		it('Should apply style to element', function() {
-			const style = new Jodit.ns.Style({
+			const style = new Style({
 				style: {
 					color: 'red',
 					background: 'yellow'
@@ -27,7 +29,7 @@ describe('Test Style module', function() {
 			it('Should create SPAN element with this style', function() {
 				editor.selection.setCursorAfter(editor.editor.firstChild);
 
-				const style = new Jodit.ns.Style({
+				const style = new Style({
 					style: {
 						fontSize: 12
 					}
@@ -46,7 +48,7 @@ describe('Test Style module', function() {
 				it('Should create new SPAN inside first', function() {
 					editor.selection.setCursorAfter(editor.editor.firstChild);
 
-					const style = new Jodit.ns.Style({
+					const style = new Style({
 						style: {
 							fontSize: 12
 						}
@@ -56,7 +58,7 @@ describe('Test Style module', function() {
 
 					editor.selection.insertHTML('stop');
 
-					const style2 = new Jodit.ns.Style({
+					const style2 = new Style({
 						style: {
 							color: '#ff00ff'
 						}
@@ -77,7 +79,7 @@ describe('Test Style module', function() {
 							editor.editor.firstChild
 						);
 
-						const style = new Jodit.ns.Style({
+						const style = new Style({
 							style: {
 								fontSize: 12
 							}
@@ -95,13 +97,38 @@ describe('Test Style module', function() {
 							'test<span style="font-size:12px">stop</span>elem'
 						);
 					});
+
+					describe('Without editing', function() {
+						it('Should unwap empty SPAN', function() {
+							editor.selection.setCursorAfter(
+								editor.editor.firstChild
+							);
+
+							const style = new Style({
+								style: {
+									fontSize: 12
+								}
+							});
+
+							style.apply(editor);
+							style.apply(editor);
+
+							editor.selection.insertHTML('elem');
+
+							expect(sortAttributes(editor.value)).equals(
+								'testelem'
+							);
+						});
+					});
 				});
 
 				describe('Apply different styles', function() {
 					it('Should combine all of it', function() {
-						editor.selection.setCursorAfter(editor.editor.firstChild);
+						editor.selection.setCursorAfter(
+							editor.editor.firstChild
+						);
 
-						const style = new Jodit.ns.Style({
+						const style = new Style({
 							style: {
 								background: 'yellow'
 							}
@@ -109,7 +136,7 @@ describe('Test Style module', function() {
 
 						style.apply(editor);
 
-						const style2 = new Jodit.ns.Style({
+						const style2 = new Style({
 							style: {
 								fontSize: '12px'
 							}
@@ -129,7 +156,7 @@ describe('Test Style module', function() {
 
 		describe('Apply different styles', function() {
 			it('Should combine all of it', function() {
-				const style = new Jodit.ns.Style({
+				const style = new Style({
 					style: {
 						background: 'yellow'
 					}
@@ -137,7 +164,7 @@ describe('Test Style module', function() {
 
 				style.apply(editor);
 
-				const style2 = new Jodit.ns.Style({
+				const style2 = new Style({
 					style: {
 						fontSize: '12px'
 					}
@@ -157,7 +184,7 @@ describe('Test Style module', function() {
 					editor.value = '<span>test</span>';
 					editor.selection.select(editor.editor.firstChild);
 
-					const style = new Jodit.ns.Style({
+					const style = new Style({
 						style: {
 							fontSize: 11
 						}
@@ -178,7 +205,7 @@ describe('Test Style module', function() {
 						editor.editor.firstChild.firstChild
 					);
 
-					const style = new Jodit.ns.Style({
+					const style = new Style({
 						style: {
 							fontSize: 11
 						}
@@ -196,7 +223,7 @@ describe('Test Style module', function() {
 
 	describe('Apply element', function() {
 		it('Should wrap selection in element', function() {
-			const style = new Jodit.ns.Style({
+			const style = new Style({
 				element: 'h1'
 			});
 
@@ -209,34 +236,44 @@ describe('Test Style module', function() {
 			describe('Block element', function() {
 				it('Should wrap whole text for selection part', function() {
 					const range = editor.selection.createRange();
-					range.setStart(editor.editor.firstChild, 2)
+					range.setStart(editor.editor.firstChild, 2);
 					range.setEndAfter(editor.editor.firstChild);
 					editor.selection.selectRange(range);
 
-					const style = new Jodit.ns.Style({
+					const style = new Style({
 						element: 'h1'
 					});
 
 					style.apply(editor);
 
-					expect(sortAttributes(editor.value)).equals('<h1>test</h1>');
+					expect(sortAttributes(editor.value)).equals(
+						'<h1>test</h1>'
+					);
 				});
 
 				describe('Selected part inside inline element', function() {
 					it('Should wrap whole text with this part', function() {
 						editor.value = 'test<strong>stop</strong>left';
 						const range = editor.selection.createRange();
-						range.setStart(editor.editor.querySelector('strong').firstChild, 2);
-						range.setEnd(editor.editor.querySelector('strong').firstChild, 3);
+						range.setStart(
+							editor.editor.querySelector('strong').firstChild,
+							2
+						);
+						range.setEnd(
+							editor.editor.querySelector('strong').firstChild,
+							3
+						);
 						editor.selection.selectRange(range);
 
-						const style = new Jodit.ns.Style({
+						const style = new Style({
 							element: 'h1'
 						});
 
 						style.apply(editor);
 
-						expect(sortAttributes(editor.value)).equals('<h1>test<strong>stop</strong>left</h1>');
+						expect(sortAttributes(editor.value)).equals(
+							'<h1>test<strong>stop</strong>left</h1>'
+						);
 					});
 				});
 			});
@@ -244,17 +281,19 @@ describe('Test Style module', function() {
 			describe('inline element', function() {
 				it('Should wrap only selection part', function() {
 					const range = editor.selection.createRange();
-					range.setStart(editor.editor.firstChild, 2)
+					range.setStart(editor.editor.firstChild, 2);
 					range.setEndAfter(editor.editor.firstChild);
 					editor.selection.selectRange(range);
 
-					const style = new Jodit.ns.Style({
+					const style = new Style({
 						element: 'strong'
 					});
 
 					style.apply(editor);
 
-					expect(sortAttributes(editor.value)).equals('te<strong>st</strong>');
+					expect(sortAttributes(editor.value)).equals(
+						'te<strong>st</strong>'
+					);
 				});
 			});
 		});
@@ -264,27 +303,52 @@ describe('Test Style module', function() {
 				it('Should wrap whole text in element', function() {
 					editor.selection.setCursorAfter(editor.editor.firstChild);
 
-					const style = new Jodit.ns.Style({
+					const style = new Style({
 						element: 'h1'
 					});
 
 					style.apply(editor);
 
-					expect(sortAttributes(editor.value)).equals('<h1>test</h1>');
+					expect(sortAttributes(editor.value)).equals(
+						'<h1>test</h1>'
+					);
 				});
 
-				describe('Selected Block element', function() {
-					it('Should replace this element to new style', function() {
-						editor.value = '<p>test</p>';
-						editor.selection.setCursorAfter(editor.editor.firstChild.firstChild);
+				describe('Double time', function() {
+					it('Should unwrap element', function() {
+						editor.value = '<h1>test</h1>';
 
-						const style = new Jodit.ns.Style({
+						editor.selection.setCursorAfter(
+							editor.editor.firstChild.firstChild
+						);
+
+						const style = new Style({
 							element: 'h1'
 						});
 
 						style.apply(editor);
 
-						expect(sortAttributes(editor.value)).equals('<h1>test</h1>');
+						expect(sortAttributes(editor.value)).equals('test');
+					});
+				});
+
+				describe('Selected Block element', function() {
+					it('Should replace this element to new style', function() {
+						editor.value = '<p>test</p>';
+
+						editor.selection.setCursorAfter(
+							editor.editor.firstChild.firstChild
+						);
+
+						const style = new Style({
+							element: 'h1'
+						});
+
+						style.apply(editor);
+
+						expect(sortAttributes(editor.value)).equals(
+							'<h1>test</h1>'
+						);
 					});
 				});
 			});
@@ -295,7 +359,7 @@ describe('Test Style module', function() {
 				editor.value = '<h2>test</h2>';
 				editor.execCommand('selectall');
 
-				const style = new Jodit.ns.Style({
+				const style = new Style({
 					element: 'h1'
 				});
 
@@ -309,7 +373,7 @@ describe('Test Style module', function() {
 					editor.value = '<strong>test</strong>';
 					editor.execCommand('selectall');
 
-					const style = new Jodit.ns.Style({
+					const style = new Style({
 						element: 'em',
 						style: {
 							fontStyle: 'italic'
@@ -329,7 +393,7 @@ describe('Test Style module', function() {
 							editor.editor.firstChild
 						);
 
-						const strong = new Jodit.ns.Style({
+						const strong = new Style({
 							element: 'strong',
 							style: {
 								fontWeight: 700
@@ -344,7 +408,7 @@ describe('Test Style module', function() {
 							'test<strong>stop</strong>'
 						);
 
-						const em = new Jodit.ns.Style({
+						const em = new Style({
 							element: 'em',
 							style: {
 								fontStyle: 'italic'
@@ -366,7 +430,7 @@ describe('Test Style module', function() {
 								editor.editor.firstChild
 							);
 
-							const style = new Jodit.ns.Style({
+							const style = new Style({
 								style: {
 									fontSize: 12
 								}
@@ -376,7 +440,7 @@ describe('Test Style module', function() {
 
 							editor.selection.insertHTML('stop');
 
-							const style2 = new Jodit.ns.Style({
+							const style2 = new Style({
 								style: {
 									color: '#ff00ff'
 								}
@@ -387,7 +451,7 @@ describe('Test Style module', function() {
 							editor.selection.insertHTML('elem');
 
 							expect(sortAttributes(editor.value)).equals(
-								'test<span style="font-size:12px;">stop<span style="color:#ff00ff">elem</span></span>'
+								'test<span style="font-size:12px">stop<span style="color:#FF00FF">elem</span></span>'
 							);
 						});
 
@@ -397,7 +461,7 @@ describe('Test Style module', function() {
 									editor.editor.firstChild
 								);
 
-								const style = new Jodit.ns.Style({
+								const style = new Style({
 									style: {
 										fontSize: 12
 									}
@@ -426,7 +490,7 @@ describe('Test Style module', function() {
 				editor.value = '<h1>test</h1>';
 				editor.execCommand('selectall');
 
-				const style = new Jodit.ns.Style({
+				const style = new Style({
 					element: 'h1'
 				});
 
@@ -445,7 +509,7 @@ describe('Test Style module', function() {
 				range.setEnd(editor.editor.lastChild, 3);
 				editor.selection.selectRange(range);
 
-				const style = new Jodit.ns.Style({
+				const style = new Style({
 					element: 'strong',
 					style: {
 						fontWeight: 700
@@ -462,28 +526,44 @@ describe('Test Style module', function() {
 	});
 
 	describe('Combine style or element', function() {
-		it('Should combine all of it', function() {
-			editor.value = '<span style="font-weight:700">test</span>';
-			editor.execCommand('selectall');
+		describe('For Styled element with style equaled STRONG', function() {
+			describe('Apply STRONG', function() {
+				it('Should unwrap this element', function() {
+					editor.value = '<span style="font-weight:700">test</span>';
+					editor.execCommand('selectall');
 
-			const style = new Jodit.ns.Style({
-				element: 'strong',
-				style: {
-					fontWeight: 700
-				}
+					const style = new Style({
+						element: 'strong',
+						style: {
+							fontWeight: 700
+						}
+					});
+
+					style.apply(editor);
+
+					expect(sortAttributes(editor.value)).equals('test');
+				});
 			});
+		});
 
-			style.apply(editor);
+		describe('For Styled element with style contains STRONG', function() {
+			describe('Apply STRONG', function() {
+				it('Should remove STRONG from element', function() {
+					editor.value = '<span style="font-weight:700;font-size:24px;">test</span>';
+					editor.execCommand('selectall');
 
-			expect(sortAttributes(editor.value)).equals('test');
+					const style = new Style({
+						element: 'strong',
+						style: {
+							fontWeight: 700
+						}
+					});
 
-			editor.value = 'test';
-			editor.execCommand('selectall');
-			style.apply(editor);
+					style.apply(editor);
 
-			expect(sortAttributes(editor.value)).equals(
-				'<strong>test</strong>'
-			);
+					expect(sortAttributes(editor.value)).equals('<span style="font-size:24px">test</span>');
+				});
+			});
 		});
 	});
 });

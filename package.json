@@ -40,7 +40,7 @@
 	"homepage": "https://xdsoft.net/jodit/",
 	"devDependencies": {
 		"@types/es6-promise": "^3.3.0",
-		"@types/node": "^12.12.42",
+		"@types/node": "^12.12.43",
 		"autoprefixer": "^6.7.7",
 		"chai": "^4.2.0",
 		"classlist-polyfill": "^1.2.0",
