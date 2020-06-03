@@ -306,12 +306,15 @@ export function iframe(editor: IJodit) {
 
 					editor.e
 						.on('beforeGetNativeEditorValue', (): string =>
-							clearMarkers(doc.documentElement.outerHTML)
+							clearMarkers(
+								editor.o.iframeDoctype +
+									doc.documentElement.outerHTML
+							)
 						)
 						.on(
 							'beforeSetNativeEditorValue',
 							(value: string): boolean => {
-								if (!editor.isLocked) {
+								if (editor.isLocked) {
 									return false;
 								}
 
@@ -323,7 +326,10 @@ export function iframe(editor: IJodit) {
 										clearMarkers(value)
 									) {
 										doc.open();
-										doc.write(clearMarkers(value));
+										doc.write(
+											editor.o.iframeDoctype +
+												clearMarkers(value)
+										);
 										doc.close();
 										editor.editor = doc.body;
 

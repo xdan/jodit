@@ -52,20 +52,13 @@ describe('Iframe mode', function() {
 		});
 
 		describe('Set value right after construct', function() {
-			it('Should set/get value without some trouble', function(done) {
-				unmockPromise();
+			it('Should set/get value without some trouble', function() {
 				const area = appendTestArea();
 
 				area.value = 'stop';
 
 				const editor = new Jodit(area, {
-					iframe: true,
-					events: {
-						afterConstructor: function(editor) {
-							expect(editor.value).equals('stop'); // Because it run in sync
-							done();
-						}
-					}
+					iframe: true
 				});
 
 				expect(editor.value).equals('stop');
