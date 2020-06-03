@@ -85,7 +85,8 @@ export class ApplyStyle {
 		let wrapper = font;
 
 		if (this.style.elementIsBlock) {
-			const ulReg = /^(UL|OL|LI)$/i;
+			const ulReg = /^(ul|ol|li|td|th|tr|tbody|table)$/i;
+
 			const box = Dom.up(
 				font,
 				node => {
@@ -384,36 +385,36 @@ export class ApplyStyle {
 	 * @param elm
 	 */
 	private wrapUnwrappedText(elm: Node): HTMLElement {
-		const { area } = this.jodit.selection;
+		const { area, win } = this.jodit.selection;
 
-		let start: Node = elm,
-			end: Node = elm;
+		const edge = (elm: Node, key: keyof Node = 'previousSibling') => {
+			let edgeNode: Node = elm,
+				node: Nullable<Node> = elm;
 
-		const edge = (clb: (node: Node) => void) => {
-			return (node: Nullable<Node>) => {
-				if (Dom.isBlock(node, this.jodit.selection.win)) {
-					return true;
+			while (node) {
+				edgeNode = node;
+
+				if (node[key]) {
+					node = node[key] as Nullable<Node>;
+				} else {
+					node =
+						node.parentNode &&
+						!Dom.isBlock(node.parentNode, win) &&
+						node.parentNode !== area
+							? node.parentNode
+							: null;
 				}
 
-				if (node) {
-					clb(node);
+				if (Dom.isBlock(node, win)) {
+					break;
 				}
+			}
 
-				return false;
-			};
+			return edgeNode;
 		};
 
-		Dom.prev(
-			elm,
-			edge(n => (start = n)),
-			area
-		);
-
-		Dom.next(
-			elm,
-			edge(n => (end = n)),
-			area
-		);
+		const start: Node = edge(elm),
+			end: Node = edge(elm, 'nextSibling');
 
 		const range = this.jodit.selection.createRange();
 		range.setStartBefore(start);
@@ -425,6 +426,7 @@ export class ApplyStyle {
 		range.insertNode(wrapper);
 
 		if (this.style.elementIsBlock) {
+			// Add extra LI inside UL/OL
 			if (/^(OL|UL)$/i.test(this.style.element)) {
 				const li = Dom.replace(wrapper, 'li', this.jodit.createInside);
 				const ul = Dom.wrap(li, this.style.element, this.jodit);

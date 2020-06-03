@@ -142,7 +142,8 @@ describe('Commands Jodit Editor Tests', function() {
 							'</ul>'
 					);
 
-					editor.execCommand('formatBlock', false, 'p');
+					editor.execCommand('formatBlock', false, 'h1');
+
 					expect(editor.value).equals(
 						'<ul>' +
 							'<li>1</li>' +
@@ -176,7 +177,7 @@ describe('Commands Jodit Editor Tests', function() {
 							'</ul>'
 					);
 
-					editor.execCommand('formatBlock', false, 'p');
+					editor.execCommand('formatBlock', false, 'h1');
 					expect(editor.value).equals(
 						'<ul>' +
 							'<li>1</li>' +
@@ -332,8 +333,7 @@ describe('Commands Jodit Editor Tests', function() {
 				range = editor.selection.createRange();
 
 			range.selectNodeContents(editor.editor.querySelector('td'));
-			sel.removeAllRanges();
-			sel.addRange(range);
+			editor.selection.selectRange(range);
 
 			editor.execCommand('formatBlock', false, 'h1');
 
@@ -559,11 +559,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 						editor.execCommand('justifyright');
 
-						simulateEvent(
-							'mousedown',
-							0,
-							editor.editor.firstChild
-						);
+						simulateEvent('mousedown', 0, editor.editor.firstChild);
 
 						editor.execCommand('selectall');
 						editor.execCommand('justifyfull');

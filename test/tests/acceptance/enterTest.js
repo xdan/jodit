@@ -349,7 +349,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					expect(editor.value).equals(
+					expect(sortAttributes(editor.value)).equals(
 						'<ul><li>Test</li></ul><p><br></p><ul><li>Some text</li></ul>'
 					);
 
@@ -360,7 +360,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 						editor.editor
 					);
 
-					expect(editor.value).equals(
+					expect(sortAttributes(editor.value)).equals(
 						'<ul><li>Test<br></li><li>Some text</li></ul>'
 					);
 
@@ -673,9 +673,9 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<html lang="en" style="overflow-y:hidden">' +
+						'<!DOCTYPE html><html lang="en" style="overflow-y:hidden">' +
 							'<head><title>Jodit Editor</title></head>' +
-							'<body spellcheck="true" style="min-height:90px" ><p>Some text</p><p> a <br></p></body>' +
+							'<body spellcheck="true"  style="min-height:90px"><p>Some text</p><p> a <br></p></body>' +
 							'</html>'
 					);
 				});

@@ -16,7 +16,7 @@ describe('Font test', function() {
 
 					const list = getOpenedPopup(editor);
 
-					return list.querySelectorAll('button');
+					return Array.from(list.querySelectorAll('button')).slice(1);
 				};
 
 				expect(openFontNameList()).is.not.null;
@@ -32,7 +32,7 @@ describe('Font test', function() {
 					expect(sortAttributes(editor.value)).equals(
 						sortAttributes(
 							'<p><span style="' +
-							fontFamily +
+							fontFamily.replace('!important','') +
 							'">test</span></p>'
 						)
 					);
@@ -96,8 +96,8 @@ describe('Font test', function() {
 			clickButton('Impact_Charcoal_sans_serif', list2);
 			editor.selection.insertHTML('stop');
 
-			expect(editor.value).equals('<span style="font-size: 10px;">test' +
-				'<span style="font-family: Impact, Charcoal, sans-serif;">test</span></span>');
+			expect(sortAttributes(editor.value)).equals('<span style="font-size:10px">test' +
+				'<span style="font-family:Impact,Charcoal,sans-serif">stop</span></span>');
 		});
 	});
 });

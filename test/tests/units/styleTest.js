@@ -604,7 +604,7 @@ describe('Test Style module', function() {
 					'<li>1</li>' +
 					'<li>2</li>' +
 					'<li>3</li>' +
-					'</ul>';
+					'</ul> test';
 
 				const range = editor.selection.createRange();
 				range.setStart(
@@ -628,9 +628,67 @@ describe('Test Style module', function() {
 					'<li><h1>1</h1></li>' +
 					'<li><h1>2</h1></li>' +
 					'<li><h1>3</h1></li>' +
-					'</ul>'
+					'</ul> test'
 				);
 			})
+
+			describe('Apply H1 for whole UL', function () {
+				it('Should create H1 inside every LI inside UL', function () {
+					editor.value =
+						'<ul>' +
+						'<li>1</li>' +
+						'<li>2</li>' +
+						'<li>3</li>' +
+						'</ul>';
+
+					const range = editor.selection.createRange();
+					range.selectNodeContents(editor.editor);
+					editor.selection.selectRange(range);
+
+					const style = new Style({
+						element: 'h1'
+					});
+
+					style.apply(editor);
+
+					expect(editor.value).equals(
+						'<ul>' +
+						'<li><h1>1</h1></li>' +
+						'<li><h1>2</h1></li>' +
+						'<li><h1>3</h1></li>' +
+						'</ul>'
+					);
+				})
+
+				describe('Apply H1 for whole UL with text', function () {
+					it('Should create H1 inside every LI inside UL and wrap text', function () {
+						editor.value =
+							'<ul>' +
+							'<li>1</li>' +
+							'<li>2</li>' +
+							'<li>3</li>' +
+							'</ul> test';
+
+						const range = editor.selection.createRange();
+						range.selectNodeContents(editor.editor);
+						editor.selection.selectRange(range);
+
+						const style = new Style({
+							element: 'h1'
+						});
+
+						style.apply(editor);
+
+						expect(editor.value).equals(
+							'<ul>' +
+							'<li><h1>1</h1></li>' +
+							'<li><h1>2</h1></li>' +
+							'<li><h1>3</h1></li>' +
+							'</ul><h1> test</h1>'
+						);
+					})
+				});
+			});
 		});
 	});
 

@@ -330,7 +330,7 @@ export class Dom {
 	 * @param node
 	 * @param win
 	 */
-	static isBlock(node: unknown, win: Window): boolean {
+	static isBlock(node: unknown, win: Window): node is HTMLElement {
 		return (
 			node &&
 			typeof node === 'object' &&

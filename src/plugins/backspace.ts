@@ -309,7 +309,9 @@ export class backspace extends Plugin {
 			let prevBox = call(
 				backspace ? Dom.prev : Dom.next,
 				box.node || fakeNode,
-				node => Dom.isBlock(node, jodit.editorWindow),
+				node =>
+					Dom.isBlock(node, jodit.editorWindow) &&
+					!/^(ul|ol)$/i.test(node.nodeName),
 				jodit.editor
 			);
 
