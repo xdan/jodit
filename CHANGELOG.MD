@@ -2,6 +2,8 @@
 ## 3.4
 ### Bug fixes
 * https://github.com/xdan/jodit/issues/393
+* https://github.com/xdan/jodit/issues/392
+* https://github.com/xdan/jodit/issues/391
 
 ### Features
 * `Select.applyCSS` was renamed to `Select.applyStyle`

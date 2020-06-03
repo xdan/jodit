@@ -7,22 +7,28 @@
 import { extend } from './extend';
 
 export class JoditArray {
-	length: number = 0;
-
-	toString() {
-		const out: any[] = [];
-
-		for (let i = 0; i < this.length; i += 1) {
-			out[i] = (this as any)[i];
-		}
-
-		return out.toString();
-	}
-
 	constructor(data: any[]) {
 		extend(true, this, data);
 
-		this.length = data.length;
+		Object.defineProperty(this, 'length', {
+			value: data.length,
+			enumerable: false,
+			configurable: false
+		});
+
+		Object.defineProperty(this, 'toString', {
+			value: (): string => {
+				const out: any[] = [];
+
+				for (let i = 0; i < (this as any).length; i += 1) {
+					out[i] = (this as any)[i];
+				}
+
+				return out.toString();
+			},
+			enumerable: false,
+			configurable: false
+		});
 
 		const proto = Array.prototype as any;
 
@@ -37,7 +43,11 @@ export class JoditArray {
 			'slice',
 			'splice'
 		].forEach(method => {
-			(this as any)[method] = proto[method];
+			Object.defineProperty(this, method, {
+				value: proto[method],
+				enumerable: false,
+				configurable: false
+			});
 		});
 	}
 }
