@@ -390,10 +390,6 @@ export function iframe(editor: IJodit) {
 						);
 				}
 
-				(e => {
-					e.matches || (e.matches = Element.prototype.matches); // fix inside iframe polifill
-				})((editor.editorWindow as any).Element.prototype);
-
 				// throw events in our world
 				if (doc.documentElement) {
 					editor.e
