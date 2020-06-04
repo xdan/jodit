@@ -14,7 +14,12 @@ import {
 } from '../types';
 import { PluginSystem } from './plugin-system';
 import { Dom } from './dom';
-import { isJoditObject, isViewObject, kebabCase } from './helpers/';
+import {
+	getClassName,
+	isJoditObject,
+	isViewObject,
+	kebabCase
+} from './helpers/';
 import { EventsNative } from './events';
 
 export const instances: IDictionary<IJodit> = {};
@@ -46,10 +51,12 @@ const boxes = new WeakMap<IComponent, IDictionary<HTMLElement>>();
  */
 export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 	jodit: IViewBased | IViewComponent,
-	name: string,
+	classFunc: Function,
 	tag: T = 'div' as T,
 	inside: boolean = false
 ): HTMLElementTagNameMap[T] {
+	const name = getClassName(classFunc.prototype);
+
 	const data = boxes.get(jodit) || {};
 
 	if (!data[name]) {

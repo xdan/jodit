@@ -20,3 +20,9 @@ if (!Array.prototype.includes) {
 		return this.indexOf(value) > -1;
 	};
 }
+
+if (!Array.prototype.find) {
+	Array.prototype.find = function(value: any) {
+		return this.indexOf(value) > -1 ? value : undefined;
+	};
+}

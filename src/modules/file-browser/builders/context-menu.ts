@@ -8,10 +8,11 @@ import { Dialog } from '../../dialog';
 import { Dom } from '../../../core/dom';
 import { F_CLASS, ICON_LOADER, ITEM_CLASS } from '../consts';
 
-import { FileBrowser } from '../file-browser';
 import { attr, error } from '../../../core/helpers';
 import { makeContextMenu } from '../factories';
 import { Icon } from '../../../core/ui';
+import { IFileBrowser } from '../../../types';
+import { getItem } from '../listeners/native-listeners';
 
 const CLASS_PREVIEW = F_CLASS + '_preview_',
 	preview_tpl_next = (next = 'next', right = 'right') =>
@@ -20,16 +21,23 @@ const CLASS_PREVIEW = F_CLASS + '_preview_',
 		Icon.get('angle-' + right) +
 		'</a>';
 
-export default (self: FileBrowser) => {
+export default (self: IFileBrowser) => {
 	if (!self.o.contextMenu) {
 		return () => {};
 	}
 
 	const contextmenu = makeContextMenu(self);
 
-	return function(this: HTMLElement, e: DragEvent): boolean | void {
-		let item: HTMLElement = this,
-			opt = self.options,
+	return (e: DragEvent): boolean | void => {
+		const a = getItem(e.target, self.dialog.container);
+
+		if (!a) {
+			return;
+		}
+
+		let item: HTMLElement = a;
+
+		const opt = self.options,
 			ga = (key: string) => attr(item, key) || '';
 
 		self.async.setTimeout(() => {

@@ -212,7 +212,7 @@ export function paste(editor: IJodit) {
 		};
 
 	const insertByType = (html: string | Node, subtype: string) => {
-		if (typeof html === 'string') {
+		if (isString(html)) {
 			switch (subtype) {
 				case INSERT_CLEAR_HTML:
 					html = cleanFromWord(html);
@@ -229,9 +229,11 @@ export function paste(editor: IJodit) {
 			}
 		}
 
-		if (typeof html === 'string') {
+		if (isString(html)) {
 			editor.buffer.set(clipboardPluginKey, html);
 		}
+
+		debugger
 
 		editor.selection.insertHTML(html);
 	};
@@ -379,12 +381,13 @@ export function paste(editor: IJodit) {
 				}
 			};
 
-			if (dt.types && Array.from(dt.types).indexOf('text/html') !== -1) {
-				const html = dt.getData(TEXT_HTML);
-				return processHTMLData(html);
+			if (dt.types && Array.from(dt.types).includes(TEXT_HTML)) {
+				return processHTMLData(dt.getData(TEXT_HTML));
 			}
 
 			if (event.type !== 'drop') {
+				debugger
+
 				const div = editor.c.div('', {
 					tabindex: -1,
 					contenteditable: true,
@@ -418,7 +421,7 @@ export function paste(editor: IJodit) {
 
 					// If data has been processes by browser, process it
 					if (div.childNodes && div.childNodes.length > 0) {
-						const pastedData: string = div.innerHTML;
+						const pastedData = div.innerHTML;
 
 						removeFakeFocus();
 
@@ -437,6 +440,8 @@ export function paste(editor: IJodit) {
 				};
 
 				waitData();
+
+				return false;
 			}
 		}
 
@@ -546,7 +551,7 @@ export function paste(editor: IJodit) {
 					}
 
 					if (
-						typeof clipboard_html === 'string' ||
+						isString(clipboard_html) ||
 						Dom.isNode(clipboard_html, editor.editorWindow)
 					) {
 						if (event.type === 'drop') {

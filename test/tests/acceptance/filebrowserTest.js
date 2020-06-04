@@ -192,7 +192,7 @@ describe('Jodit FileBrowser Tests', function() {
 								'click',
 								0,
 								filebrowser.browser.querySelector(
-									'.jodit-filebrowser_files_item[data-is-file="0"]'
+									'.jodit-filebrowser__files-item[data-is-file="0"]'
 								)
 							);
 
@@ -229,7 +229,7 @@ describe('Jodit FileBrowser Tests', function() {
 								'click',
 								0,
 								filebrowser.browser.querySelectorAll(
-									'.jodit-filebrowser_files_item[data-is-file="0"]'
+									'.jodit-filebrowser__files-item[data-is-file="0"]'
 								)[0]
 							);
 
@@ -239,7 +239,7 @@ describe('Jodit FileBrowser Tests', function() {
 								'click',
 								0,
 								filebrowser.browser.querySelectorAll(
-									'.jodit-filebrowser_files_item[data-is-file="0"]'
+									'.jodit-filebrowser__files-item[data-is-file="0"]'
 								)[1],
 								function(data) {
 									data[
@@ -290,7 +290,7 @@ describe('Jodit FileBrowser Tests', function() {
 										'click',
 										0,
 										filebrowser.browser.querySelector(
-											'.jodit-filebrowser_files_item[data-is-file="0"]'
+											'.jodit-filebrowser__files-item[data-is-file="0"]'
 										)
 									);
 
@@ -338,7 +338,7 @@ describe('Jodit FileBrowser Tests', function() {
 										'click',
 										0,
 										filebrowser.browser.querySelector(
-											'.jodit-filebrowser_files_item[data-is-file="0"]'
+											'.jodit-filebrowser__files-item[data-is-file="0"]'
 										)
 									);
 
@@ -481,14 +481,14 @@ describe('Jodit FileBrowser Tests', function() {
 						expect(input).is.not.null;
 
 						const count = files.querySelectorAll(
-							'.jodit-filebrowser_files_item'
+							'.jodit-filebrowser__files-item'
 						).length;
 						input.value = 'i';
 						simulateEvent('keydown', 0, input);
 
 						expect(
 							files.querySelectorAll(
-								'.jodit-filebrowser_files_item'
+								'.jodit-filebrowser__files-item'
 							).length
 						).does.not.equal(count);
 
@@ -496,7 +496,7 @@ describe('Jodit FileBrowser Tests', function() {
 						simulateEvent('keydown', 0, input);
 						expect(
 							files.querySelectorAll(
-								'.jodit-filebrowser_files_item'
+								'.jodit-filebrowser__files-item'
 							).length
 						).equals(count);
 
@@ -579,14 +579,14 @@ describe('Jodit FileBrowser Tests', function() {
 							simulateEvent('change', 0, select);
 
 							const items = files.querySelectorAll(
-								'.jodit-filebrowser_files_item'
+								'.jodit-filebrowser__files-item'
 							);
 
 							expect(
 								Array.from(items)
 									.map(function(item) {
 										return item.querySelector(
-											'.jodit-filebrowser_files_item-info-filename'
+											'.jodit-filebrowser__files-item-info-filename'
 										).textContent;
 									})
 									.join(',')
@@ -639,7 +639,7 @@ describe('Jodit FileBrowser Tests', function() {
 							'click',
 							0,
 							filebrowser.browser.querySelector(
-								'.jodit-filebrowser_files_item'
+								'.jodit-filebrowser__files-item'
 							)
 						);
 
@@ -685,7 +685,7 @@ describe('Jodit FileBrowser Tests', function() {
 							'dragstart',
 							0,
 							files.querySelector(
-								'.jodit-filebrowser_files_item img[data-src="https://xdsoft.net/jodit/files/images.jpg"]'
+								'.jodit-filebrowser__files-item img[data-src="https://xdsoft.net/jodit/files/images.jpg"]'
 							)
 						);
 
@@ -752,7 +752,7 @@ describe('Jodit FileBrowser Tests', function() {
 							'dragstart',
 							0,
 							files.querySelector(
-								'.jodit-filebrowser_files_item[data-is-file="1"] img'
+								'.jodit-filebrowser__files-item[data-is-file="1"] img'
 							)
 						);
 
@@ -830,7 +830,7 @@ describe('Jodit FileBrowser Tests', function() {
 							['click', 'dblclick'],
 							0,
 							files.querySelector(
-								'a[data-is-file="0"].jodit-filebrowser_files_item'
+								'a[data-is-file="0"].jodit-filebrowser__files-item'
 							)
 						);
 
@@ -882,7 +882,7 @@ describe('Jodit FileBrowser Tests', function() {
 							['click', 'dblclick'],
 							0,
 							files.querySelector(
-								'a[data-is-file="1"].jodit-filebrowser_files_item'
+								'a[data-is-file="1"].jodit-filebrowser__files-item'
 							)
 						);
 
@@ -997,13 +997,13 @@ describe('Jodit FileBrowser Tests', function() {
 						expect(tree).is.not.null;
 
 						const item = tree.querySelector(
-							'.jodit-filebrowser_tree_item'
+							'.jodit-filebrowser__tree-item'
 						);
 
 						expect(item).is.not.null;
 
 						const trigger = tree.querySelector(
-							'.jodit_icon_folder_rename'
+							'.jodit-icon_folder_rename'
 						);
 
 						expect(trigger).is.not.null;
@@ -1041,7 +1041,7 @@ describe('Jodit FileBrowser Tests', function() {
 						expect(files).is.not.null;
 
 						const item = files.querySelector(
-								'.jodit-filebrowser_files_item[data-is-file="1"]'
+								'.jodit-filebrowser__files-item[data-is-file="1"]'
 							),
 							pos = Jodit.modules.Helpers.position(item);
 
@@ -1090,7 +1090,7 @@ describe('Jodit FileBrowser Tests', function() {
 							expect(files).is.not.null;
 
 							const item = files.querySelector(
-								'.jodit-filebrowser_files_item[data-is-file="0"]'
+								'.jodit-filebrowser__files-item[data-is-file="0"]'
 								),
 								pos = Jodit.modules.Helpers.position(item);
 

@@ -16,7 +16,8 @@ import {
 	ImageAction,
 	IViewBased,
 	IUIButton,
-	IDictionary
+	IDictionary,
+	Nullable
 } from '../../types';
 import { ViewComponent } from '../../core/component';
 import { Alert, Dialog, Prompt } from '../dialog';
@@ -410,50 +411,51 @@ export class ImageEditor extends ViewComponent {
 			);
 
 		// btn group
-
 		$$('.jodit-button_group', self.editor).forEach(group => {
 			const input = group.querySelector('input') as HTMLInputElement;
-			self.j.e.on(
-				group,
-				'click change',
-				function(this: HTMLButtonElement) {
-					input.checked = !input.checked;
-					self.j.e.fire(input, 'change');
-				},
-				'button'
-			);
+
+			self.j.e.on(group, 'click change', (e: MouseEvent): void => {
+				input.checked = !input.checked;
+				self.j.e.fire(input, 'change');
+			});
 		});
 
 		self.j.e
-			.on(
-				this.editor,
-				'click.' + jie,
-				function(this: HTMLElement) {
-					$$(
-						`.${jie}__slider,.${jie}__area`,
-						self.editor
-					).forEach(elm => elm.classList.remove(`${jie}_active`));
+			.on(this.editor, 'click.' + jie, (e: MouseEvent): void => {
+				const title = Dom.closest(
+					e.target as Node,
+					(node: Nullable<Node>) =>
+						Dom.isElement(node) &&
+						node.classList.contains(`${jie}__slider-title`),
+					self.editor
+				);
 
-					const slide = this.parentNode as HTMLElement;
+				const slide = title?.parentElement;
 
-					slide.classList.add(`${jie}_active`);
-					self.activeTab =
-						(attr(slide, '-area') as ImageAction) || TABS.resize;
+				if (!slide) {
+					return;
+				}
 
-					const tab = self.editor.querySelector(
-						`.${jie}__area.${jie}__area_` + self.activeTab
-					);
+				$$(`.${jie}__slider,.${jie}__area`, self.editor).forEach(elm =>
+					elm.classList.remove(`${jie}_active`)
+				);
 
-					if (tab) {
-						tab.classList.add(`${jie}_active`);
-					}
+				slide.classList.add(`${jie}_active`);
+				self.activeTab =
+					(attr(slide, '-area') as ImageAction) || TABS.resize;
 
-					if (self.activeTab === 'crop') {
-						self.showCrop();
-					}
-				},
-				`.${jie}__slider-title`
-			)
+				const tab = self.editor.querySelector(
+					`.${jie}__area.${jie}__area_` + self.activeTab
+				);
+
+				if (tab) {
+					tab.classList.add(`${jie}_active`);
+				}
+
+				if (self.activeTab === 'crop') {
+					self.showCrop();
+				}
+			})
 			.on(
 				widthInput,
 				`change.${jie} mousedown.${jie} keydown.${jie}`,

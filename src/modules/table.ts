@@ -31,7 +31,7 @@ export class Table extends ViewComponent<IJodit> {
 
 	@debounce()
 	private recalculateStyles(): void {
-		const style = getContainer(this.j, Table.name, 'style', true);
+		const style = getContainer(this.j, Table, 'style', true);
 		const selectors: string[] = [];
 
 		this.selected.forEach(td => {
@@ -458,7 +458,7 @@ export class Table extends ViewComponent<IJodit> {
 		let i: number, j: number, k: number;
 
 		for (i = 0; i < box.length; i += 1) {
-			for (j = 0; j < box[i].length; j += 1) {
+			for (j = 0; box[i] && j < box[i].length; j += 1) {
 				if (selectedCells.includes(box[i][j])) {
 					bound[0][0] = Math.min(i, bound[0][0]);
 					bound[0][1] = Math.min(j, bound[0][1]);
@@ -470,14 +470,14 @@ export class Table extends ViewComponent<IJodit> {
 
 		for (i = bound[0][0]; i <= bound[1][0]; i += 1) {
 			for (k = 1, j = bound[0][1]; j <= bound[1][1]; j += 1) {
-				while (box[i][j - k] && box[i][j] === box[i][j - k]) {
+				while (box[i] && box[i][j - k] && box[i][j] === box[i][j - k]) {
 					bound[0][1] = Math.min(j - k, bound[0][1]);
 					bound[1][1] = Math.max(j - k, bound[1][1]);
 					k += 1;
 				}
 
 				k = 1;
-				while (box[i][j + k] && box[i][j] === box[i][j + k]) {
+				while (box[i] && box[i][j + k] && box[i][j] === box[i][j + k]) {
 					bound[0][1] = Math.min(j + k, bound[0][1]);
 					bound[1][1] = Math.max(j + k, bound[1][1]);
 					k += 1;

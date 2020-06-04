@@ -109,7 +109,7 @@ export class Popup extends UIElement implements IPopup {
 			? getBound
 			: this.getKeepBound(getBound);
 
-		const parentContainer = getContainer(this.jodit, Popup.name);
+		const parentContainer = getContainer(this.jodit, Popup);
 
 		if (parentContainer !== this.container.parentElement) {
 			parentContainer.appendChild(this.container);

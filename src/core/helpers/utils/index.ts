@@ -7,3 +7,4 @@
 export * from './mark-deprecated';
 export * from './utils';
 export * from './get';
+export * from './get-class-name';

@@ -98,7 +98,7 @@ export class ObserveObject {
 
 	private __lockEvent: IDictionary<boolean> = {};
 
-	fire(event: string | string[], ...attr: any[]) {
+	fire(event: string | string[], ...attr: any[]): void {
 		if (isArray(event)) {
 			event.map(e => this.fire(e, ...attr));
 			return;

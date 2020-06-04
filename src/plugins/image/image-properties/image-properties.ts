@@ -760,26 +760,33 @@ export class imageProperties extends Plugin {
 
 		editor.e
 			.on('afterConstructor changePlace', () => {
-				editor.e.off(editor.editor, '.imageproperties').on(
-					editor.editor,
-					'dblclick.imageproperties',
-					function(this: HTMLImageElement, e: MouseEvent) {
-						if (editor.o.image.openOnDblClick) {
-							self.state.image = this;
+				editor.e
+					.off(editor.editor, '.imageproperties')
+					.on(
+						editor.editor,
+						'dblclick.imageproperties',
+						(e: MouseEvent) => {
+							const image = e.target;
 
-							if (!editor.o.readonly) {
-								e.stopImmediatePropagation();
-								e.preventDefault();
-
-								self.open();
+							if (!Dom.isTag(image, 'img')) {
+								return;
 							}
-						} else {
-							e.stopImmediatePropagation();
-							editor.selection.select(this);
+
+							if (editor.o.image.openOnDblClick) {
+								self.state.image = image;
+
+								if (!editor.o.readonly) {
+									e.stopImmediatePropagation();
+									e.preventDefault();
+
+									self.open();
+								}
+							} else {
+								e.stopImmediatePropagation();
+								editor.selection.select(image);
+							}
 						}
-					},
-					'img'
-				);
+					);
 			})
 			.on(
 				'openImageProperties.imageproperties',

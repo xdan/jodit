@@ -13,7 +13,7 @@ import {
 import watch from '../../../core/decorators/watch';
 import { STATUSES } from '../../component';
 import { Dom } from '../../dom';
-import { css, attr, isString } from '../../helpers';
+import { css, attr, isString, getClassName } from '../../helpers';
 import { Icon } from '../icon';
 import { UIList } from '..';
 
@@ -220,7 +220,7 @@ export class UIButton extends UIElement implements IUIButton {
 		this.onChangeSize();
 		this.onChangeStatus();
 
-		if (this.constructor.name === UIButton.name) {
+		if (getClassName(this) === getClassName(UIButton.prototype)) {
 			this.setStatus(STATUSES.ready);
 		}
 	}

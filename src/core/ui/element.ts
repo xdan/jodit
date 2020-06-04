@@ -1,6 +1,7 @@
 import { ViewComponent, STATUSES } from '../component';
 import { IDictionary, IUIElement, IViewBased, Nullable } from '../../types';
 import { Dom } from '../dom';
+import { getClassName } from '../helpers/utils';
 
 export abstract class UIElement<T extends IViewBased = IViewBased>
 	extends ViewComponent<T>
@@ -87,7 +88,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		const mod = `${this.componentName}_${name}`,
 			cl = this.container.classList;
 
-		cl.forEach(className => {
+		Array.from(cl).forEach(className => {
 			if (className.indexOf(mod) === 0) {
 				cl.remove(className);
 			}
@@ -141,7 +142,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 			value: this
 		});
 
-		if (this.constructor.name === UIElement.name) {
+		if (getClassName(this) === getClassName(UIElement.prototype)) {
 			this.setStatus(STATUSES.ready);
 		}
 	}

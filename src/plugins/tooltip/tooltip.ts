@@ -20,7 +20,7 @@ export class tooltip extends Plugin {
 
 	afterInit(jodit: IJodit) {
 		this.container = jodit.c.div('jodit-tooltip');
-		getContainer(this.j, tooltip.name).appendChild(this.container);
+		getContainer(this.j, tooltip).appendChild(this.container);
 
 		let timeout = 0;
 		jodit.e

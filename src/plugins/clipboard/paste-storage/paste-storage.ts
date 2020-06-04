@@ -169,23 +169,18 @@ export class pasteStorage extends Plugin {
 		this.dialog.setContent(this.container);
 		this.dialog.setFooter([pasteButton, cancelButton]);
 
-		this.j.e.on(
-			this.listBox,
-			'click dblclick',
-			(e: MouseEvent) => {
-				const a: HTMLAnchorElement | null = e.target as HTMLAnchorElement;
-				if (Dom.isTag(a, 'a') && a.hasAttribute('data-index')) {
-					this.selectIndex(parseInt(attr(a, '-index') || '0', 10));
-				}
+		this.j.e.on(this.listBox, 'click dblclick', (e: MouseEvent) => {
+			const a = e.target as HTMLAnchorElement;
+			if (Dom.isTag(a, 'a') && a.hasAttribute('data-index')) {
+				this.selectIndex(parseInt(attr(a, '-index') || '0', 10));
+			}
 
-				if (e.type === 'dblclick') {
-					this.paste();
-				}
+			if (e.type === 'dblclick') {
+				this.paste();
+			}
 
-				return false;
-			},
-			'a'
-		);
+			return false;
+		});
 	}
 
 	afterInit() {

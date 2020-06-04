@@ -12,7 +12,7 @@ import {
 	Nullable
 } from '../../types';
 
-import { kebabCase, get } from '../helpers';
+import { kebabCase, get, getClassName } from '../helpers';
 import { uniqueUid } from '../global';
 import { STATUSES } from './statuses';
 
@@ -143,7 +143,7 @@ export abstract class Component implements IComponent {
 	}
 
 	constructor() {
-		this.componentName = 'jodit-' + kebabCase(this.constructor.name);
+		this.componentName = 'jodit-' + kebabCase(getClassName(this));
 		this.uid = 'jodit-uid-' + uniqueUid();
 	}
 

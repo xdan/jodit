@@ -67,7 +67,7 @@ interface IControlType<
 	getContent?: (
 		editor: T,
 		control: IControlType<T, B>,
-		button?: B
+		button: B
 	) => string | HTMLElement;
 
 	/**

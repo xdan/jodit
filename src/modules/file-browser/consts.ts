@@ -6,5 +6,5 @@
 
 export const F_CLASS = 'jodit-filebrowser';
 
-export const ITEM_CLASS = F_CLASS + '_files_item';
+export const ITEM_CLASS = F_CLASS + '__files-item';
 export const ICON_LOADER = '<i class="jodit-icon_loader"></i>';

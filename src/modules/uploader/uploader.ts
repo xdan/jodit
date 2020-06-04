@@ -23,7 +23,6 @@ import {
 import { Ajax } from '../../core/ajax';
 import {
 	attr,
-	browser,
 	error,
 	extend,
 	isPlainObject,
@@ -551,7 +550,7 @@ export class Uploader extends ViewComponent implements IUploader {
 					return false;
 				}
 
-				if (browser('ff') || IS_IE) {
+				if (IS_IE) {
 					if (
 						cData &&
 						(!cData.types.length || cData.types[0] !== TEXT_PLAIN)
@@ -564,7 +563,7 @@ export class Uploader extends ViewComponent implements IUploader {
 							contenteditable: true
 						});
 
-						getContainer(this.j, Uploader.name).appendChild(div);
+						getContainer(this.j, Uploader).appendChild(div);
 
 						const selection = isJoditObject(this.j)
 								? this.j.selection.save()

@@ -15,3 +15,4 @@ export * from './uploader';
 export * from './view';
 export * from './context';
 export * from './ui';
+export * from './observe';

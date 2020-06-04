@@ -200,7 +200,6 @@ export class EventsNative implements IEventsNative {
 		events: string,
 		callback: CallbackFunction,
 		ignore?: void,
-		selector?: string,
 		onTop?: boolean
 	): this;
 
@@ -208,7 +207,6 @@ export class EventsNative implements IEventsNative {
 		subjects: HTMLElement | HTMLElement[],
 		events: string,
 		handle: CallbackFunction,
-		selector?: string,
 		onTop?: boolean
 	): this;
 
@@ -216,20 +214,16 @@ export class EventsNative implements IEventsNative {
 		subjects: T[] | T,
 		events: string,
 		handle: CallbackFunction,
-		selector?: string,
 		onTop?: boolean
 	): this;
 
 	on(
-		subjectOrEvents: object | string,
+		subjectOrEvents: HTMLElement | HTMLElement[] | object | string,
 		eventsOrCallback: string | CallbackFunction,
 		handlerOrSelector?: CallbackFunction | void,
-		selector?: string,
 		onTop: boolean = false
 	): this {
-		const subject: object = isString(subjectOrEvents)
-			? this
-			: subjectOrEvents;
+		const subject = isString(subjectOrEvents) ? this : subjectOrEvents;
 
 		const events: string = isString(eventsOrCallback)
 			? eventsOrCallback
@@ -253,15 +247,13 @@ export class EventsNative implements IEventsNative {
 
 		if (isArray(subject)) {
 			subject.forEach((subj: object) => {
-				this.on(subj, events, callback, selector);
+				this.on(subj, events, callback, onTop);
 			});
 
 			return this;
 		}
 
-		const isDOMElement: boolean = isFunction(
-				(subject as any).addEventListener
-			),
+		const isDOMElement = isFunction((subject as any).addEventListener),
 			self: EventsNative = this;
 
 		let syntheticCallback = function(
@@ -286,36 +278,6 @@ export class EventsNative implements IEventsNative {
 
 				return;
 			};
-
-			if (selector) {
-				syntheticCallback = function(
-					this: any,
-					event: TouchEvent | MouseEvent
-				): false | void {
-					self.prepareEvent(event);
-					let node: Element | null = event.target as any;
-					while (node && node !== this) {
-						if (node.matches(selector as string)) {
-							Object.defineProperty(event, 'target', {
-								value: node,
-								configurable: true,
-								enumerable: true
-							});
-
-							if (
-								callback &&
-								callback.call(node, event) === false
-							) {
-								event.preventDefault();
-								return false;
-							}
-
-							return;
-						}
-						node = node.parentNode as Element | null;
-					}
-				};
-			}
 		}
 
 		this.eachEvent(events, (event: string, namespace: string): void => {

@@ -36,9 +36,7 @@ export class DragAndDrop extends Plugin {
 	private onDrag = (event: DragEvent) => {
 		if (this.draggable) {
 			if (!this.draggable.parentNode) {
-				getContainer(this.j, DragAndDrop.name).appendChild(
-					this.draggable
-				);
+				getContainer(this.j, DragAndDrop).appendChild(this.draggable);
 			}
 
 			this.j.e.fire('hidePopup');
@@ -159,7 +157,7 @@ export class DragAndDrop extends Plugin {
 
 		if (
 			Dom.isElement(target) &&
-			target.matches('.jodit-filebrowser_files_item')
+			target.matches('.jodit-filebrowser__files-item')
 		) {
 			target = target.querySelector('img') as HTMLElement;
 		}

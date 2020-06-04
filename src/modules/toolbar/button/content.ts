@@ -1,3 +1,5 @@
+import './content.less';
+
 import {
 	IControlTypeContent,
 	IToolbarButton,
@@ -14,10 +16,15 @@ export class ToolbarContent<T extends IViewBased = IViewBased> extends UIButton
 	/** @override */
 	update() {
 		const content = this.control.getContent(this.j, this.control, this);
-		Dom.detach(this.container);
-		this.container.appendChild(
-			isString(content) ? this.j.create.fromHTML(content) : content
-		);
+
+		if (isString(content) || content.parentNode !== this.container) {
+			Dom.detach(this.container);
+
+			this.container.appendChild(
+				isString(content) ? this.j.create.fromHTML(content) : content
+			);
+		}
+
 		super.update();
 	}
 
@@ -35,6 +42,7 @@ export class ToolbarContent<T extends IViewBased = IViewBased> extends UIButton
 		this.container.classList.add(
 			`${this.componentName}_${this.clearName(control.name)}`
 		);
+
 		attr(this.container, 'role', 'content');
 	}
 }

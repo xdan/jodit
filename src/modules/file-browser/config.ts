@@ -186,6 +186,7 @@ Config.prototype.filebrowser = {
 		}</div>`;
 
 		return `<a
+			data-jodit-filebrowser-item="true"
 			data-is-file="${item.isImage ? 0 : 1}"
 			draggable="true"
 			class="${IC}"
@@ -294,7 +295,7 @@ Config.prototype.controls.filebrowser = {
 			control: IControlType
 		): HTMLElement => {
 			const btn = filebrowser.c
-				.fromHTML(`<span class="jodit_upload_button">
+				.fromHTML(`<span class="jodit-ui-button jodit__upload-button">
 						${Icon.get('plus')}
 						<input
 							type="file"
@@ -384,11 +385,19 @@ Config.prototype.controls.filebrowser = {
 
 	filter: {
 		isInput: true,
-		getContent: (filebrowser: IFileBrowser): HTMLElement => {
-			const input: HTMLInputElement = filebrowser.c.element('input', {
+		getContent: (filebrowser: IFileBrowser, _, b): HTMLElement => {
+			const oldInput = b.container.querySelector('.jodit-input');
+
+			if (oldInput) {
+				return oldInput as HTMLElement;
+			}
+
+			const input = filebrowser.c.element('input', {
 				class: 'jodit-input',
 				placeholder: filebrowser.i18n('Filter')
 			});
+
+			input.value = filebrowser.state.filterWord;
 
 			filebrowser.e.on(
 				input,
@@ -427,6 +436,8 @@ Config.prototype.controls.filebrowser = {
 					)} (⬇)</option>` +
 					'</select>'
 			) as HTMLSelectElement;
+
+			select.value = fb.state.sortBy;
 
 			fb.e
 				.on('sort.filebrowser', (value: string) => {

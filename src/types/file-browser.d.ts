@@ -5,10 +5,16 @@
  */
 
 import { Buttons } from './toolbar';
-import { IDestructible, IDictionary, ImageBox, IPermissions } from './types';
+import {
+	IDestructible,
+	IDictionary,
+	ImageBox,
+	IPermissions,
+	Nullable
+} from './types';
 import { IUploader, IUploaderOptions } from './uploader';
 import { IViewOptions, IViewWithToolbar } from './view';
-import { IDialog, IStorage } from '../types';
+import { IDialog, IStorage, ObservableObject } from '../types';
 
 /**
  * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new
@@ -230,7 +236,14 @@ export interface IFileBrowser extends IViewWithToolbar<IFileBrowserOptions> {
 	uploader: IUploader;
 	dataProvider: IFileBrowserDataProvider;
 
-	state: IFileBrowserState;
+	state: ObservableObject<IFileBrowserState>;
+
+	tree: HTMLElement;
+	files: HTMLElement;
+	elementsMap: IDictionary<{
+		elm: HTMLElement;
+		item: IFileBrowserItem;
+	}>;
 
 	storage: IStorage;
 	dialog: IDialog;
@@ -252,6 +265,12 @@ export interface IFileBrowser extends IViewWithToolbar<IFileBrowserOptions> {
 		callback?: (data: IFileBrowserCallBackData) => void,
 		onlyImages?: boolean
 	): Promise<void>;
+
+	status(message: string | Error, success?: boolean): void;
+
+	loadTree(): Promise<any>;
+	loadItems(path?: string, source?: string): Promise<any>;
+	deleteFile(name: string, source: string): Promise<any>;
 }
 
 export interface IFileBrowserState {

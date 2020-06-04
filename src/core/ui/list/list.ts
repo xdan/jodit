@@ -19,6 +19,7 @@ import { STATUSES } from '../../component';
 import { watch } from '../../decorators';
 import { UIGroup } from './group';
 import { UISeparator } from '../separator';
+import { getClassName } from '../../helpers';
 
 export class UIList<T extends IViewBased = IViewBased> extends UIGroup<T>
 	implements IUIList {
@@ -36,7 +37,7 @@ export class UIList<T extends IViewBased = IViewBased> extends UIGroup<T>
 		super(jodit);
 		this.onChangeMode();
 
-		if (this.constructor.name === UIList.name) {
+		if (getClassName(this) === getClassName(UIList.prototype)) {
 			this.setStatus(STATUSES.ready);
 		}
 	}

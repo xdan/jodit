@@ -52,7 +52,6 @@ interface IEventsNative extends IDestructible {
 		events: string,
 		handler: CallbackFunction,
 		handlerOrSelector?: void,
-		selector?: string,
 		onTop?: boolean
 	): IEventsNative;
 
@@ -60,7 +59,6 @@ interface IEventsNative extends IDestructible {
 		subject: HTMLElement,
 		events: string,
 		handler: CallbackFunction,
-		selector?: string,
 		onTop?: boolean
 	): IEventsNative;
 
@@ -68,7 +66,6 @@ interface IEventsNative extends IDestructible {
 		subject: object,
 		events: string,
 		handler: CallbackFunction,
-		selector?: string,
 		onTop?: boolean
 	): IEventsNative;
 
@@ -76,7 +73,6 @@ interface IEventsNative extends IDestructible {
 		subjectOrEvents: object | string,
 		eventsOrCallback: string | CallbackFunction,
 		handlerOrSelector?: CallbackFunction | void,
-		selector?: string,
 		onTop?: boolean
 	): IEventsNative;
 

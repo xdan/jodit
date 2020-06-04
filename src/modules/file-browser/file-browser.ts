@@ -7,7 +7,7 @@ import './styles/index.less';
 
 import { Config, OptionsDefault } from '../../config';
 import * as consts from '../../core/constants';
-import { Dialog, Confirm, Prompt, Alert } from '../dialog/';
+import { Dialog, Alert } from '../dialog/';
 
 import {
 	IFileBrowser,
@@ -33,39 +33,28 @@ import {
 
 import { ImageEditor } from '..';
 import { Storage } from '../../core/storage/';
-import {
-	each,
-	normalizePath,
-	ctrlKey,
-	extend,
-	isValidName,
-	attr,
-	error,
-	isFunction,
-	isString
-} from '../../core/helpers/';
+import { each, extend, error, isFunction, isString } from '../../core/helpers/';
 import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 
 import './config';
 
 import { Dom } from '../../core/dom';
-import contextMenu from './builders/context-menu';
 import { ObserveObject } from '../../core/events/';
 import { FileBrowserItem } from './builders/item';
-import { F_CLASS, ICON_LOADER, ITEM_CLASS } from './consts';
+import { F_CLASS, ICON_LOADER } from './consts';
 import { makeDataProvider } from './factories';
-import { Icon } from '../../core/ui';
 import autobind from 'autobind-decorator';
-
-const DEFAULT_SOURCE_NAME = 'default',
-	ITEM_ACTIVE_CLASS = ITEM_CLASS + '_active_true';
+import { stateListeners } from './listeners/state-listeners';
+import { nativeListeners } from './listeners/native-listeners';
+import { selfListeners } from './listeners/self-listeners';
 
 export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
-	private loader = this.c.div(F_CLASS + '_loader', ICON_LOADER);
+	private loader = this.c.div(F_CLASS + '__loader', ICON_LOADER);
 	private browser = this.c.div(F_CLASS + ' non-selected');
-	private status_line = this.c.div(F_CLASS + '_status');
-	private tree = this.c.div(F_CLASS + '_tree');
-	private files = this.c.div(F_CLASS + '_files');
+	private status_line = this.c.div(F_CLASS + '__status');
+
+	tree = this.c.div(F_CLASS + '__tree');
+	files = this.c.div(F_CLASS + '__files');
 
 	state = ObserveObject.create<IFileBrowserState>({
 		activeElements: [],
@@ -313,7 +302,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	 * parent.filebrowser.status('There was an error uploading file', false);
 	 * ```
 	 */
-	status = (message: string | Error, success?: boolean) => {
+	@autobind
+	status(message: string | Error, success?: boolean): void {
 		if (!isString(message)) {
 			message = message.message;
 		}
@@ -340,7 +330,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				label: 'fileBrowser.status'
 			}
 		);
-	};
+	}
 
 	/**
 	 * Close dialog
@@ -384,24 +374,16 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 			this.e
 				.off(this.files, 'dblclick')
-				.on(this.files, 'dblclick', this.onSelect(callback), 'a')
-				.on(
-					this.files,
-					'touchstart',
-					() => {
-						const now = new Date().getTime();
+				.on(this.files, 'dblclick', this.onSelect(callback))
+				.on(this.files, 'touchstart', () => {
+					const now = new Date().getTime();
 
-						if (
-							now - localTimeout <
-							consts.EMULATE_DBLCLICK_TIMEOUT
-						) {
-							this.onSelect(callback)();
-						}
+					if (now - localTimeout < consts.EMULATE_DBLCLICK_TIMEOUT) {
+						this.onSelect(callback)();
+					}
 
-						localTimeout = now;
-					},
-					'a'
-				)
+					localTimeout = now;
+				})
 				.off('select.filebrowser')
 				.on('select.filebrowser', this.onSelect(callback));
 
@@ -487,597 +469,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		);
 	};
 
-	private elementsMap: IDictionary<{
+	elementsMap: IDictionary<{
 		elm: HTMLElement;
 		item: IFileBrowserItem;
 	}> = {};
-
-	private elementToItem(elm: HTMLElement): IFileBrowserItem | void {
-		const { key } = elm.dataset,
-			{ item } = this.elementsMap[key || ''];
-
-		return item;
-	}
-
-	/**
-	 * Convert state to view
-	 */
-	private stateToView() {
-		const { state, files, create, options } = this,
-			getDomElement = (item: IFileBrowserItem): HTMLElement => {
-				const key = item.uniqueHashKey;
-
-				if (this.elementsMap[key]) {
-					return this.elementsMap[key].elm;
-				}
-
-				const elm = create.fromHTML(
-					options.getThumbTemplate.call(
-						this,
-						item,
-						item.source,
-						item.sourceName.toString()
-					)
-				);
-
-				elm.dataset.key = key;
-
-				this.elementsMap[key] = {
-					item,
-					elm
-				};
-
-				return this.elementsMap[key].elm;
-			};
-
-		state
-			.on('beforeChange.activeElements', () => {
-				state.activeElements.forEach(item => {
-					const key = item.uniqueHashKey,
-						{ elm } = this.elementsMap[key];
-
-					elm && elm.classList.remove(ITEM_ACTIVE_CLASS);
-				});
-			})
-
-			.on('change.activeElements', () => {
-				this.e.fire('changeSelection');
-
-				state.activeElements.forEach(item => {
-					const key = item.uniqueHashKey,
-						{ elm } = this.elementsMap[key];
-
-					elm && elm.classList.add(ITEM_ACTIVE_CLASS);
-				});
-			})
-
-			.on('change.view', () => {
-				files.classList.remove(F_CLASS + '_files_view-tiles');
-				files.classList.remove(F_CLASS + '_files_view-list');
-				files.classList.add(F_CLASS + '_files_view-' + state.view);
-
-				this.storage.set(F_CLASS + '_view', state.view);
-			})
-
-			.on('change.sortBy', () => {
-				this.storage.set(F_CLASS + '_sortby', state.sortBy);
-			})
-
-			.on(
-				'change.elements',
-				this.async.debounce(() => {
-					Dom.detach(files);
-
-					if (state.elements.length) {
-						state.elements.forEach(item => {
-							this.files.appendChild(getDomElement(item));
-						});
-					} else {
-						files.appendChild(
-							create.div(
-								F_CLASS + '_no_files',
-								this.i18n('There are no files')
-							)
-						);
-					}
-				}, this.defaultTimeout)
-			)
-
-			.on(
-				'change.folders',
-				this.async.debounce(() => {
-					Dom.detach(this.tree);
-
-					let lastSource = DEFAULT_SOURCE_NAME,
-						lastSource2: ISource | null = null;
-
-					const appendCreateButton = (
-						source: ISource | null,
-						sourceName: string,
-						force: boolean = false
-					) => {
-						if (
-							source &&
-							lastSource2 &&
-							(source !== lastSource2 || force) &&
-							options.createNewFolder &&
-							this.dataProvider.canI('FolderCreate')
-						) {
-							this.tree.appendChild(
-								create.a(
-									'jodit-button addfolder',
-									{
-										href: 'javascript:void(0)',
-										'data-path': normalizePath(
-											source.path + '/'
-										),
-										'data-source': sourceName
-									},
-									Icon.get('plus') +
-										' ' +
-										this.i18n('Add folder')
-								)
-							);
-
-							lastSource2 = source;
-						}
-					};
-
-					state.folders.forEach(folder => {
-						const { name, source, sourceName } = folder;
-
-						if (sourceName && sourceName !== lastSource) {
-							this.tree.appendChild(
-								create.div(
-									F_CLASS + '_source_title',
-									sourceName
-								)
-							);
-							lastSource = sourceName;
-						}
-
-						const folderElm = create.a(
-							F_CLASS + '_tree_item',
-							{
-								draggable: 'draggable',
-								href: 'javascript:void(0)',
-								'data-path': normalizePath(
-									source.path,
-									name + '/'
-								),
-								'data-name': name,
-								'data-source': sourceName,
-								'data-source-path': source.path
-							},
-							create.span(F_CLASS + '_tree_item_title', name)
-						);
-
-						appendCreateButton(source, sourceName);
-
-						lastSource2 = source;
-
-						this.tree.appendChild(folderElm);
-
-						if (name === '..' || name === '.') {
-							return;
-						}
-
-						if (
-							options.deleteFolder &&
-							this.dataProvider.canI('FolderRename')
-						) {
-							folderElm.appendChild(
-								create.element(
-									'i',
-									{
-										class:
-											'jodit_icon_folder jodit_icon_folder_rename',
-										title: this.i18n('Rename')
-									},
-									Icon.get('pencil')
-								)
-							);
-						}
-
-						if (
-							options.deleteFolder &&
-							this.dataProvider.canI('FolderRemove')
-						) {
-							folderElm.appendChild(
-								create.element(
-									'i',
-									{
-										class:
-											'jodit_icon_folder jodit_icon_folder_remove',
-										title: this.i18n('Delete')
-									},
-									Icon.get('cancel')
-								)
-							);
-						}
-					});
-
-					appendCreateButton(lastSource2, lastSource, true);
-				}, this.defaultTimeout)
-			);
-	}
-
-	private initEventsListeners() {
-		const state = this.state,
-			self = this;
-
-		self.e
-			.on('view.filebrowser', (view: 'tiles' | 'list') => {
-				if (view !== state.view) {
-					state.view = view;
-				}
-			})
-			.on('sort.filebrowser', (value: string) => {
-				if (value !== state.sortBy) {
-					state.sortBy = value;
-					self.loadItems();
-				}
-			})
-			.on('filter.filebrowser', (value: string) => {
-				if (value !== state.filterWord) {
-					state.filterWord = value;
-					self.loadItems();
-				}
-			})
-			.on('fileRemove.filebrowser', () => {
-				if (self.state.activeElements.length) {
-					Confirm(self.i18n('Are you sure?'), '', (yes: boolean) => {
-						if (yes) {
-							const promises: Array<Promise<any>> = [];
-
-							self.state.activeElements.forEach(item => {
-								promises.push(
-									self.deleteFile(
-										item.file || item.name || '',
-										item.sourceName
-									)
-								);
-							});
-
-							self.state.activeElements = [];
-
-							Promise.all(promises).then(() => {
-								return self.loadTree();
-							});
-						}
-					}).bindDestruct(self);
-				}
-			})
-			.on('edit.filebrowser', () => {
-				if (self.state.activeElements.length === 1) {
-					const [file] = this.state.activeElements;
-
-					self.openImageEditor(
-						file.fileURL,
-						file.file || '',
-						file.path,
-						file.sourceName
-					);
-				}
-			})
-			.on(
-				'fileRename.filebrowser',
-				(name: string, path: string, source: string) => {
-					if (self.state.activeElements.length === 1) {
-						Prompt(
-							self.i18n('Enter new name'),
-							self.i18n('Rename'),
-							(newName: string): false | void => {
-								if (!isValidName(newName)) {
-									self.status(self.i18n('Enter new name'));
-									return false;
-								}
-
-								self.dataProvider
-									.fileRename(path, name, newName, source)
-									.then(resp => {
-										if (
-											self.o.fileRename &&
-											self.o.fileRename.process
-										) {
-											resp = self.o.fileRename.process.call(
-												self,
-												resp
-											);
-										}
-
-										if (!self.o.isSuccess(resp)) {
-											throw error(
-												self.o.getMessage(resp)
-											);
-										} else {
-											self.state.activeElements = [];
-											self.status(
-												self.o.getMessage(resp),
-												true
-											);
-										}
-
-										self.loadItems();
-									})
-									.catch(self.status);
-
-								return;
-							},
-							self.i18n('type name'),
-							name
-						).bindDestruct(this);
-					}
-				}
-			)
-			.on('update.filebrowser', () => {
-				self.loadTree();
-			});
-	}
-
-	private initNativeEventsListeners() {
-		let dragElement: false | HTMLElement = false;
-
-		const self = this;
-
-		self.e
-			.on(
-				self.tree,
-				'click',
-				function(this: HTMLElement, e: MouseEvent) {
-					const a: HTMLAnchorElement = this
-							.parentNode as HTMLAnchorElement,
-						path = attr(a, '-path') || '';
-
-					Confirm(
-						self.i18n('Are you sure?'),
-						self.i18n('Delete'),
-						(yes: boolean) => {
-							if (yes) {
-								self.dataProvider
-									.folderRemove(
-										path,
-										attr(a, '-name') || '',
-										attr(a, '-source') || ''
-									)
-									.then(resp => {
-										if (
-											self.o.folderRemove &&
-											self.o.folderRemove.process
-										) {
-											resp = self.o.folderRemove.process.call(
-												self,
-												resp
-											);
-										}
-
-										if (!self.o.isSuccess(resp)) {
-											throw error(
-												self.o.getMessage(resp)
-											);
-										} else {
-											self.state.activeElements = [];
-											self.status(
-												self.o.getMessage(resp),
-												true
-											);
-										}
-
-										self.loadTree();
-									})
-									.catch(self.status);
-							}
-						}
-					).bindDestruct(self);
-
-					e.stopImmediatePropagation();
-					return false;
-				},
-				'a>.jodit_icon_folder_remove'
-			)
-			.on(
-				self.tree,
-				'click',
-				function(this: HTMLElement, e: MouseEvent) {
-					const a: HTMLAnchorElement = this
-							.parentNode as HTMLAnchorElement,
-						name = attr(a, '-name') || '',
-						path = attr(a, '-source-path') || '';
-
-					Prompt(
-						self.i18n('Enter new name'),
-						self.i18n('Rename'),
-						(newName: string): false | void => {
-							if (!isValidName(newName)) {
-								self.status(self.i18n('Enter new name'));
-								return false;
-							}
-
-							self.dataProvider
-								.folderRename(
-									path,
-									attr(a, '-name') || '',
-									newName,
-									attr(a, '-source') || ''
-								)
-								.then(resp => {
-									if (
-										self.o.folderRename &&
-										self.o.folderRename.process
-									) {
-										resp = self.o.folderRename.process.call(
-											self,
-											resp
-										);
-									}
-
-									if (!self.o.isSuccess(resp)) {
-										throw error(self.o.getMessage(resp));
-									} else {
-										self.state.activeElements = [];
-										self.status(
-											self.o.getMessage(resp),
-											true
-										);
-									}
-
-									self.loadTree();
-								})
-								.catch(self.status);
-
-							return;
-						},
-						self.i18n('type name'),
-						name
-					).bindDestruct(self);
-
-					e.stopImmediatePropagation();
-
-					return false;
-				},
-				'a>.jodit_icon_folder_rename'
-			)
-			.on(
-				self.tree,
-				'click',
-				function(this: HTMLAnchorElement) {
-					if (this.classList.contains('addfolder')) {
-						Prompt(
-							self.i18n('Enter Directory name'),
-							self.i18n('Create directory'),
-							(name: string) => {
-								self.dataProvider
-									.createFolder(
-										name,
-										attr(this, '-path') || '',
-										attr(this, '-source') || ''
-									)
-									.then(resp => {
-										if (self.o.isSuccess(resp)) {
-											self.loadTree();
-										} else {
-											self.status(
-												self.o.getMessage(resp)
-											);
-										}
-
-										return resp;
-									}, self.status);
-							},
-							self.i18n('type name')
-						).bindDestruct(self);
-					} else {
-						self.dataProvider.currentPath =
-							attr(this, '-path') || '';
-						self.dataProvider.currentSource =
-							attr(this, '-source') || '';
-
-						self.loadTree();
-					}
-				},
-				'a'
-			)
-			.on(
-				self.tree,
-				'dragstart',
-				function(this: HTMLAnchorElement) {
-					if (self.o.moveFolder) {
-						dragElement = this;
-					}
-				},
-				'a'
-			)
-			.on(
-				self.tree,
-				'drop',
-				function(this: HTMLAnchorElement): boolean | void {
-					if ((self.o.moveFile || self.o.moveFolder) && dragElement) {
-						let path = attr(dragElement, '-path') || '';
-
-						// move folder
-						if (
-							!self.o.moveFolder &&
-							dragElement.classList.contains(
-								F_CLASS + '_tree_item'
-							)
-						) {
-							return false;
-						}
-
-						// move file
-						if (dragElement.classList.contains(ITEM_CLASS)) {
-							path += attr(dragElement, '-name');
-
-							if (!self.o.moveFile) {
-								return false;
-							}
-						}
-
-						self.dataProvider
-							.move(
-								path,
-								attr(this, '-path') || '',
-								attr(this, '-source') || '',
-								dragElement.classList.contains(ITEM_CLASS)
-							)
-							.then(resp => {
-								if (self.o.isSuccess(resp)) {
-									self.loadTree();
-								} else {
-									self.status(self.o.getMessage(resp));
-								}
-							}, self.status);
-
-						dragElement = false;
-					}
-				},
-				'a'
-			)
-			.on(self.files, 'contextmenu', contextMenu(self), 'a')
-			.on(self.files, 'click', (e: MouseEvent) => {
-				if (!ctrlKey(e)) {
-					this.state.activeElements = [];
-				}
-			})
-			.on(
-				self.files,
-				'click',
-				function(this: HTMLElement, e: MouseEvent): false | void {
-					const item = self.elementToItem(this);
-
-					if (!item) {
-						return;
-					}
-
-					if (!ctrlKey(e)) {
-						self.state.activeElements = [item];
-					} else {
-						self.state.activeElements = [
-							...self.state.activeElements,
-							item
-						];
-					}
-
-					e.stopPropagation();
-
-					return false;
-				},
-				'a'
-			)
-			.on(
-				self.files,
-				'dragstart',
-				function() {
-					if (self.o.moveFile) {
-						dragElement = this;
-					}
-				},
-				'a'
-			)
-			.on(self.dialog.container, 'drop', (e: DragEvent) =>
-				e.preventDefault()
-			);
-	}
 
 	private initUploader(editor?: IFileBrowser | IJodit) {
 		const self = this,
@@ -1142,8 +537,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		self.browser.appendChild(self.files);
 		self.browser.appendChild(self.status_line);
 
-		this.initEventsListeners();
-		this.initNativeEventsListeners();
+		selfListeners.call(self);
+		nativeListeners.call(self);
+		stateListeners.call(self);
 
 		self.dialog.setSize(self.o.width, self.o.height);
 
@@ -1171,8 +567,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				);
 			}
 		});
-
-		self.stateToView();
 
 		const view = this.storage.get(F_CLASS + '_view');
 

@@ -167,7 +167,6 @@ export class hotkeys extends Plugin {
 					}
 				},
 				undefined,
-				undefined,
 				true
 			)
 			.on(
@@ -179,7 +178,6 @@ export class hotkeys extends Plugin {
 						return false;
 					}
 				},
-				undefined,
 				undefined,
 				true
 			);

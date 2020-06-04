@@ -351,7 +351,9 @@ export class Dom {
 	 * Check if element is element node
 	 * @param node
 	 */
-	static isElement(node: Node | null | false | EventTarget): node is Element {
+	static isElement(
+		node: Node | null | false | EventTarget | object
+	): node is Element {
 		return Boolean(node && (node as Node).nodeType === Node.ELEMENT_NODE);
 	}
 

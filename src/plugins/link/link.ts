@@ -248,19 +248,20 @@ Config.prototype.controls.link = {
 export function link(jodit: IJodit) {
 	if (jodit.o.link.followOnDblClick) {
 		jodit.e.on('afterInit changePlace', () => {
-			jodit.e.off('dblclick.link').on(
-				jodit.editor,
-				'dblclick.link',
-				function(this: HTMLAnchorElement, e: MouseEvent) {
-					const href = attr(this, 'href');
+			jodit.e
+				.off('dblclick.link')
+				.on(jodit.editor, 'dblclick.link', (e: MouseEvent) => {
+					if (!Dom.isTag(e.target, 'a')) {
+						return;
+					}
+
+					const href = attr(e.target, 'href');
 
 					if (href) {
 						location.href = href;
 						e.preventDefault();
 					}
-				},
-				'a'
-			);
+				});
 		});
 	}
 

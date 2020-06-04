@@ -193,7 +193,6 @@ export function size(editor: IJodit) {
 				resizeWorkspaceImd();
 			},
 			undefined,
-			undefined,
 			true
 		)
 		.on(window, 'load', resizeWorkspace)
