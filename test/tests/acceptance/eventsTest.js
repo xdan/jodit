@@ -37,38 +37,6 @@ describe('Jodit Events system Tests', function() {
 			expect(work).equals(3);
 			div.parentNode.removeChild(div);
 		});
-		it('Create simple event handler on all DOM elements which will be inside some starting DOm element', function() {
-			const editor = getJodit(),
-				div = document.createElement('button'),
-				a = document.createElement('a');
-
-			let work = 0;
-
-			document.body.appendChild(div);
-
-			editor.events.on(
-				div,
-				'click',
-				function() {
-					work++;
-				},
-				'a.active'
-			);
-
-			simulateEvent('click', 0, div);
-			expect(work).equals(0);
-
-			div.appendChild(a);
-
-			simulateEvent('click', 0, a);
-			expect(work).equals(0);
-
-			a.classList.add('active');
-			simulateEvent('click', 0, a);
-			expect(work).equals(1);
-
-			div.parentNode.removeChild(div);
-		});
 
 		it('Add and remove event handler', function() {
 			const editor = getJodit(),
@@ -176,53 +144,6 @@ describe('Jodit Events system Tests', function() {
 			expect(work).equals(1);
 
 			div.parentNode.removeChild(div);
-		});
-
-		describe('Remove handler', function() {
-			it('should remove full handler with selector options', function() {
-				const editor = getJodit(),
-					a = document.createElement('a'),
-					div = document.createElement('button');
-
-				let work = 0;
-
-				a.textContent = 'test';
-				div.appendChild(a);
-				document.body.appendChild(div);
-
-				editor.events
-					.on(
-						div,
-						'click',
-						function() {
-							work++;
-						},
-						'a'
-					)
-					.fire(div, 'click');
-
-				expect(work).equals(0);
-
-				editor.events.fire(a, 'click');
-				expect(work).equals(1);
-
-				editor.events.off(div, 'click');
-				editor.events.fire(a, 'click');
-				expect(work).equals(1);
-
-				editor.events.on(
-					div,
-					'click',
-					function() {
-						work++;
-					},
-					'a'
-				);
-				editor.events.fire(a, 'click');
-				expect(work).equals(2);
-
-				div.parentNode.removeChild(div);
-			});
 		});
 
 		describe('Remove all handlers using event namespace', function() {
@@ -364,7 +285,6 @@ describe('Jodit Events system Tests', function() {
 					function() {
 						clicked.push(4);
 					},
-					undefined,
 					true
 				);
 
@@ -409,7 +329,6 @@ describe('Jodit Events system Tests', function() {
 						function() {
 							clicked.push(4);
 						},
-						undefined,
 						true
 					);
 
@@ -454,7 +373,6 @@ describe('Jodit Events system Tests', function() {
 							function() {
 								clicked.push(4);
 							},
-							undefined,
 							undefined,
 							true
 						);
@@ -907,38 +825,6 @@ describe('Jodit Events system Tests', function() {
 				div.parentNode.removeChild(div);
 			});
 
-			it('Create simple event handler on all DOM elements which will be inside some starting DOm element', function() {
-				let work = 0;
-				const eventEmmiter = new Jodit.modules.EventsNative(),
-					div = document.createElement('button'),
-					a = document.createElement('a');
-
-				document.body.appendChild(div);
-
-				eventEmmiter.on(
-					div,
-					'click',
-					function() {
-						work++;
-					},
-					'a.active'
-				);
-
-				simulateEvent('click', 0, div);
-				expect(work).equals(0);
-
-				div.appendChild(a);
-
-				simulateEvent('click', 0, a);
-				expect(work).equals(0);
-
-				a.classList.add('active');
-				simulateEvent('click', 0, a);
-				expect(work).equals(1);
-
-				div.parentNode.removeChild(div);
-			});
-
 			it('Add and remove event handler', function() {
 				let work = 0;
 				const eventEmmiter = new Jodit.modules.EventsNative(),
@@ -1039,90 +925,6 @@ describe('Jodit Events system Tests', function() {
 				expect(work).equals(1);
 
 				div.parentNode.removeChild(div);
-			});
-
-			describe('Add handler like live jQuery method', function() {
-				it('Should work for all feature elements', function() {
-					let work = 0;
-
-					const eventEmmiter = new Jodit.modules.EventsNative(),
-						div = document.createElement('div');
-
-					eventEmmiter.on(
-						div,
-						'click',
-						function() {
-							work++;
-						},
-						'img'
-					);
-
-					document.body.appendChild(div);
-
-					eventEmmiter.fire(div, 'click');
-					expect(work).equals(0);
-
-					div.appendChild(document.createElement('a'));
-					eventEmmiter.fire(div.querySelector('a'), 'click');
-					expect(work).equals(0);
-
-					div.querySelector('a').appendChild(
-						document.createElement('img')
-					);
-					eventEmmiter.fire(div.querySelector('img'), 'click');
-					expect(work).equals(1);
-
-					simulateEvent('click', 0, div.querySelector('img'));
-					expect(work).equals(2);
-
-					div.parentNode.removeChild(div);
-				});
-			});
-
-			describe('Remove handler', function() {
-				it('should remove full handler with selector options', function() {
-					let work = 0;
-					const eventEmmiter = new Jodit.modules.EventsNative(),
-						a = document.createElement('a'),
-						div = document.createElement('button');
-
-					a.textContent = 'test';
-					div.appendChild(a);
-
-					document.body.appendChild(div);
-
-					eventEmmiter.on(
-						div,
-						'click',
-						function() {
-							work++;
-						},
-						'a'
-					);
-
-					eventEmmiter.fire(div, 'click');
-					expect(work).equals(0);
-
-					eventEmmiter.fire(a, 'click');
-					expect(work).equals(1);
-
-					eventEmmiter.off(div, 'click');
-					eventEmmiter.fire(a, 'click');
-					expect(work).equals(1);
-
-					eventEmmiter.on(
-						div,
-						'click',
-						function() {
-							work++;
-						},
-						'a'
-					);
-					eventEmmiter.fire(a, 'click');
-					expect(work).equals(2);
-
-					div.parentNode.removeChild(div);
-				});
 			});
 
 			describe('Remove all handlers using event namespace', function() {

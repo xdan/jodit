@@ -376,13 +376,13 @@ describe('Jodit FileBrowser Tests', function() {
 						const list = getButton('list', filebrowser.dialog);
 
 						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser_files'
+							'.jodit-filebrowser__files'
 						);
 
 						expect(files).is.not.null;
 						expect(
 							files.classList.contains(
-								'jodit-filebrowser_files_view-tiles'
+								'jodit-filebrowser__files_view_tiles'
 							)
 						).is.true;
 
@@ -418,12 +418,12 @@ describe('Jodit FileBrowser Tests', function() {
 							const list = getButton('list', filebrowser.dialog);
 
 							const files = filebrowser.browser.querySelector(
-								'.jodit-filebrowser_files'
+								'.jodit-filebrowser__files'
 							);
 							expect(files).is.not.null;
 							expect(
 								files.classList.contains(
-									'jodit-filebrowser_files_view-tiles'
+									'jodit-filebrowser__files_view_tiles'
 								)
 							).is.true;
 
@@ -434,12 +434,12 @@ describe('Jodit FileBrowser Tests', function() {
 
 							expect(
 								files.classList.contains(
-									'jodit-filebrowser_files_view-tiles'
+									'jodit-filebrowser__files_view_tiles'
 								)
 							).is.false;
 							expect(
 								files.classList.contains(
-									'jodit-filebrowser_files_view-list'
+									'jodit-filebrowser__files_view_list'
 								)
 							).is.true;
 							expect(tiles.component.state.activated).is.false;
@@ -458,7 +458,7 @@ describe('Jodit FileBrowser Tests', function() {
 		});
 
 		describe('Filter', function() {
-			it('Should show only filterd items', function(done) {
+			it('Should show only filtered items', function(done) {
 				const filebrowser = new Jodit.modules.FileBrowser({
 					ajax: {
 						url: 'https://xdsoft.net/jodit/connector/index.php'
@@ -473,7 +473,7 @@ describe('Jodit FileBrowser Tests', function() {
 						);
 						const input = filter.querySelector('input');
 						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser_files'
+							'.jodit-filebrowser__files'
 						);
 
 						expect(files).is.not.null;
@@ -527,7 +527,7 @@ describe('Jodit FileBrowser Tests', function() {
 						);
 						const select = sort.querySelector('select');
 						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser_files'
+							'.jodit-filebrowser__files'
 						);
 
 						expect(files).is.not.null;
@@ -627,7 +627,7 @@ describe('Jodit FileBrowser Tests', function() {
 					.then(function() {
 						const select = getButton('select', filebrowser.dialog);
 						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser_files'
+							'.jodit-filebrowser__files'
 						);
 
 						expect(files).is.not.null;
@@ -676,7 +676,7 @@ describe('Jodit FileBrowser Tests', function() {
 					.open(function() {})
 					.then(function() {
 						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser_files'
+							'.jodit-filebrowser__files'
 						);
 
 						expect(files).is.not.null;
@@ -743,7 +743,7 @@ describe('Jodit FileBrowser Tests', function() {
 					.open(function() {})
 					.then(function() {
 						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser_files'
+							'.jodit-filebrowser__files'
 						);
 
 						expect(files).is.not.null;
@@ -821,7 +821,7 @@ describe('Jodit FileBrowser Tests', function() {
 					.open()
 					.then(function() {
 						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser_files'
+							'.jodit-filebrowser__files'
 						);
 
 						expect(files).is.not.null;
@@ -873,7 +873,7 @@ describe('Jodit FileBrowser Tests', function() {
 					.open()
 					.then(function() {
 						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser_files'
+							'.jodit-filebrowser__files'
 						);
 
 						expect(files).is.not.null;
@@ -991,7 +991,7 @@ describe('Jodit FileBrowser Tests', function() {
 					.open(function() {})
 					.then(function() {
 						const tree = filebrowser.browser.querySelector(
-							'.jodit-filebrowser_tree'
+							'.jodit-filebrowser__tree'
 						);
 
 						expect(tree).is.not.null;
@@ -1035,7 +1035,7 @@ describe('Jodit FileBrowser Tests', function() {
 					.open(function() {})
 					.then(function() {
 						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser_files'
+							'.jodit-filebrowser__files'
 						);
 
 						expect(files).is.not.null;
@@ -1084,7 +1084,7 @@ describe('Jodit FileBrowser Tests', function() {
 						.then(function() {
 
 							const files = filebrowser.browser.querySelector(
-								'.jodit-filebrowser_files'
+								'.jodit-filebrowser__files'
 							);
 
 							expect(files).is.not.null;
