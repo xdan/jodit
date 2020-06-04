@@ -1,10 +1,11 @@
 # Changelog
 ## 3.4
 ### Bug fixes
+* https://github.com/xdan/jodit/issues/398
+* https://github.com/xdan/jodit/issues/396
 * https://github.com/xdan/jodit/issues/393
 * https://github.com/xdan/jodit/issues/392
 * https://github.com/xdan/jodit/issues/391
-* https://github.com/xdan/jodit/issues/398
 
 ### Features
 * From `NativeEvent.on` method was removed `selector` argument. It was `jQuery.live` style.
