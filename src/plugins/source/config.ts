@@ -7,6 +7,7 @@
 import { Config } from '../../config';
 import * as consts from '../../core/constants';
 import { IControlType, IJodit } from '../../types';
+import { IS_IE } from '../../core/constants';
 
 declare module '../../config' {
 	interface Config {
@@ -43,7 +44,7 @@ declare module '../../config' {
 	}
 }
 
-Config.prototype.beautifyHTML = true;
+Config.prototype.beautifyHTML = !IS_IE;
 Config.prototype.useAceEditor = true;
 Config.prototype.sourceEditor = 'ace';
 

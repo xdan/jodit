@@ -629,11 +629,13 @@ export class Dom {
 	 * @param node
 	 * @param condition
 	 * @param [root] Root element
+	 * @param [checkRoot]
 	 */
 	static up<T extends HTMLElement>(
 		node: Node,
 		condition: NodeCondition,
-		root?: Node
+		root?: Node,
+		checkRoot: boolean = false
 	): Nullable<T> {
 		let start = node;
 
@@ -652,6 +654,10 @@ export class Dom {
 
 			start = start.parentNode;
 		} while (start && start !== root);
+
+		if (start === root && checkRoot && condition(start)) {
+			return start as T;
+		}
 
 		return null;
 	}
@@ -814,11 +820,13 @@ export class Dom {
 		child: Node,
 		onlyContains: boolean = false
 	): boolean {
-		if (root === child && onlyContains) {
-			return false;
+		if (root === child) {
+			return !onlyContains;
 		}
 
-		return child && root && root.contains(child);
+		return Boolean(
+			child && root && this.up(child, nd => nd === root, root, true)
+		);
 	}
 
 	/**
@@ -869,7 +877,7 @@ export class Dom {
 		tagName: K | 'svg' | 'path'
 	): node is HTMLElementTagNameMap[K] {
 		return (
-			Dom.isElement(node) &&
+			this.isElement(node) &&
 			node.tagName.toLowerCase() === tagName.toLowerCase()
 		);
 	}

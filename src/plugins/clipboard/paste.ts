@@ -233,8 +233,6 @@ export function paste(editor: IJodit) {
 			editor.buffer.set(clipboardPluginKey, html);
 		}
 
-		debugger
-
 		editor.selection.insertHTML(html);
 	};
 
@@ -386,8 +384,6 @@ export function paste(editor: IJodit) {
 			}
 
 			if (event.type !== 'drop') {
-				debugger
-
 				const div = editor.c.div('', {
 					tabindex: -1,
 					contenteditable: true,
