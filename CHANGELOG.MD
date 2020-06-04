@@ -7,6 +7,28 @@
 * https://github.com/xdan/jodit/issues/398
 
 ### Features
+* From `NativeEvent.on` method was removed `selector` argument. It was `jQuery.live` style.
+Example:
+```html
+<div class="test">
+    <button>1</button>
+    <button>2</button>
+</div>
+```
+Earlier, you can use something like this
+```js
+editor.events.on(document.querySelector('div'), 'click', function () {
+    alert(this.innerText);
+}, 'button')
+```
+
+Now, you should use event.target
+```js
+editor.events.on(document.querySelector('div'), 'click', function (e) {
+    alert(e.target.innerText);
+})
+```
+
 * `Select.applyCSS` was renamed to `Select.applyStyle`
 ```js
 const editor = Jodit.make('#editor');
