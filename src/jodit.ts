@@ -748,6 +748,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	lock(name: string = 'any') {
 		if (super.lock(name)) {
 			this.__selectionLocked = this.selection.save();
+			this.selection.clear();
 			this.editor.classList.add('jodit_disabled');
 			this.e.fire('lock', true);
 			return true;

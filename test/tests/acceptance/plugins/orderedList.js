@@ -103,7 +103,7 @@ describe('Test orderedList plugin', function() {
 					editor.value = 'Hello world';
 					editor.selection.select(editor.editor.firstChild);
 
-					editor.execCommand('insertUnorderedList', 'circle');
+					editor.execCommand('insertUnorderedList', false, 'circle');
 
 					expect(sortAttributes(editor.value)).equals(
 						'<ul style="list-style-type:circle"><li>Hello world</li></ul>'
@@ -137,7 +137,7 @@ describe('Test orderedList plugin', function() {
 
 					editor.execCommand('insertUnorderedList');
 
-					expect(editor.value).equals('Hello world<br>');
+					expect(editor.value.replace(/<br>$/, '')).equals('Hello world');
 				});
 			});
 
@@ -162,7 +162,7 @@ describe('Test orderedList plugin', function() {
 						'<ul style="list-style-type: circle"><li>Hello world</li></ul>';
 					editor.selection.select(editor.editor.firstChild);
 
-					editor.execCommand('insertUnorderedList', 'square');
+					editor.execCommand('insertUnorderedList', false, 'square');
 
 					expect(sortAttributes(editor.value)).equals(
 						'<ul style="list-style-type:square"><li>Hello world</li></ul>'
@@ -220,6 +220,7 @@ describe('Test orderedList plugin', function() {
 					);
 				});
 			});
+
 			describe('Click on same element inside popup two times', function() {
 				it('should return ul to first state', function() {
 					const editor = getJodit();
@@ -240,6 +241,10 @@ describe('Test orderedList plugin', function() {
 						)
 					);
 
+					expect(sortAttributes(editor.value)).equals(
+						'<ul style="list-style-type:circle"><li>Text to text</li></ul>'
+					);
+
 					clickTrigger('ul', editor);
 					clickButton(
 						'circle',
@@ -250,8 +255,8 @@ describe('Test orderedList plugin', function() {
 
 					editor.selection.insertHTML('test ');
 
-					expect(sortAttributes(editor.value)).equals(
-						'test Text to text<br>'
+					expect(sortAttributes(editor.value).replace(/<br>$/, '')).equals(
+						'test Text to text'
 					);
 				});
 			});

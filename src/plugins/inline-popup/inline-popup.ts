@@ -248,7 +248,7 @@ Config.prototype.popup = {
 			name: 'valign',
 			list: ['Top', 'Middle', 'Bottom'],
 			exec: (editor, table, { control }) => {
-				const command: string =
+				const command =
 					control.args && isString(control.args[0])
 						? control.args[0].toLowerCase()
 						: '';
@@ -291,8 +291,8 @@ Config.prototype.popup = {
 					return;
 				}
 
-				const command: string =
-					control.args && typeof control.args[0] === 'string'
+				const command =
+					control.args && isString(control.args[0])
 						? control.args[0].toLowerCase()
 						: '';
 
@@ -311,8 +311,8 @@ Config.prototype.popup = {
 					return;
 				}
 
-				const command: string =
-					control.args && typeof control.args[0] === 'string'
+				const command =
+					control.args && isString(control.args[0])
 						? control.args[0].toLowerCase()
 						: '';
 
@@ -334,8 +334,8 @@ Config.prototype.popup = {
 					return;
 				}
 
-				const command: string =
-					control.args && typeof control.args[0] === 'string'
+				const command =
+					control.args && isString(control.args[0])
 						? control.args[0].toLowerCase()
 						: '';
 

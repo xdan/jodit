@@ -57,7 +57,7 @@ export function orderedList(editor: IJodit) {
 			);
 		},
 		setListStyleType = (el: HTMLElement, value: string) => {
-			if (value === 'default') {
+			if (value === 'default' || !value) {
 				el.style.removeProperty('list-style-type');
 			} else {
 				el.style.setProperty('list-style-type', value);
@@ -65,7 +65,7 @@ export function orderedList(editor: IJodit) {
 		};
 
 	editor.e
-		.on('beforeCommand', (command: string, listStyleType: string):
+		.on('beforeCommand', (command: string, _, listStyleType: string):
 			| false
 			| void => {
 			if (isOurCommand(command) && listStyleType) {
@@ -82,7 +82,7 @@ export function orderedList(editor: IJodit) {
 				}
 			}
 		})
-		.on('afterCommand', (command: string, listStyleType: string):
+		.on('afterCommand', (command: string, _, listStyleType: string):
 			| false
 			| void => {
 			if (isOurCommand(command)) {
@@ -105,6 +105,7 @@ export function orderedList(editor: IJodit) {
 
 					editor.selection.restore(selection);
 				}
+
 				editor.setEditorValue();
 			}
 		});

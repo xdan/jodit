@@ -436,8 +436,6 @@ export function paste(editor: IJodit) {
 				};
 
 				waitData();
-
-				return false;
 			}
 		}
 

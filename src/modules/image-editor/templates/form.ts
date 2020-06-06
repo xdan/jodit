@@ -25,11 +25,11 @@ export const form = (
 				'checked'
 			)} data-ref="${ref}" type="checkbox" class="jodit-input"/>
 
-			<button type="button" data-yes="1" class="jodit-button jodit_status_success">${i(
+			<button type="button" data-yes="1" class="jodit-ui-button jodit-ui-button_status_success">${i(
 				'Yes'
 			)}</button>
 
-			<button type="button" class="jodit-button jodit_status_danger">${i(
+			<button type="button" class="jodit-ui-button jodit-ui-button_status_danger">${i(
 				'No'
 			)}</button>
 		</div>
@@ -37,7 +37,7 @@ export const form = (
 
 	return editor.create.fromHTML(`<form class="${jie} jodit-properties">
 		<div class="jodit-grid jodit-grid_xs-column">
-			<div class="jodit_col-lg-3-4 jodit_col-xs-5-5">
+			<div class="jodit_col-lg-3-4 jodit_col-sm-5-5">
 			${
 				o.resize
 					? `<div class="${jie}__area ${jie}__area_resize ${jie}_active">
@@ -63,7 +63,7 @@ export const form = (
 					: ''
 			}
 			</div>
-			<div class="jodit_col-lg-1-4 jodit_col-xs-5-5">
+			<div class="jodit_col-lg-1-4 jodit_col-sm-5-5">
 			${
 				o.resize
 					? `<div data-area="resize" class="${jie}__slider ${jie}_active">

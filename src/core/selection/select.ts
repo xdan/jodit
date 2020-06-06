@@ -124,7 +124,9 @@ export class Select {
 	 * Clear all selection
 	 */
 	clear(): void {
-		this.sel?.removeAllRanges();
+		if (this.sel?.rangeCount) {
+			this.sel?.removeAllRanges();
+		}
 	}
 
 	/**
@@ -1148,6 +1150,14 @@ export class Select {
 
 		$$('font[size="7"]', this.area).forEach((font: HTMLElement) => {
 			try {
+				if (
+					font.firstChild &&
+					font.firstChild === font.lastChild &&
+					this.isMarker(font.firstChild)
+				) {
+					return;
+				}
+
 				if (isFunction(tagOrCallback)) {
 					tagOrCallback(font);
 				} else {

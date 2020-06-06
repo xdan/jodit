@@ -421,8 +421,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 					? this.j.execCommand.bind(this.j)
 					: this.j.od.execCommand.bind(this.j.od),
 				control.command || control.name,
-				(control.args && control.args[0]) || false,
-				(control.args && control.args[1]) || null
+				false,
+				control.args && control.args[0]
 			);
 
 			this.j.e.fire('closeAllPopups');

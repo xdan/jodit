@@ -149,7 +149,14 @@ export class ApplyStyle {
 	 * `<font><strong>selected</strong></font>`
 	 */
 	private checkSuitableChild(font: HTMLElement): boolean {
-		const { firstChild } = font;
+		let { firstChild } = font;
+
+		if (
+			firstChild &&
+			this.jodit.selection.isMarker(firstChild as HTMLElement)
+		) {
+			firstChild = firstChild.nextSibling;
+		}
 
 		if (
 			firstChild &&

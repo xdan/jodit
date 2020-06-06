@@ -1244,7 +1244,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 					expect(
 						Jodit.modules.Helpers.normalizeColor(
-							editor.editorWindow.getComputedStyle(td).borderColor
+							editor.editorWindow.getComputedStyle(td).borderBottomColor
 						)
 					).equals('#FF0000');
 				});
@@ -1278,7 +1278,7 @@ describe('Tables Jodit Editor Tests', function() {
 						expect(
 							Jodit.modules.Helpers.normalizeColor(
 								editor.editorWindow.getComputedStyle(td)
-									.borderColor
+									.borderBottomColor
 							)
 						).equals('#FF0000');
 					});

@@ -1615,7 +1615,7 @@ describe('Test plugins', function() {
 					expect('test<em> tes</em>t test').equals(editor.value);
 
 					// standart ctrl+shift+7
-					simulateEvent('keydown', 103, editor.editor, function(
+					simulateEvent('keydown', 55, editor.editor, function(
 						data
 					) {
 						data.shiftKey = true;

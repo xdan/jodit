@@ -23,21 +23,25 @@ export class selectCells extends Plugin {
 		}
 
 		jodit.e
-			.on(this.j.ow, 'click.table', this.onRemoveSelection)
-			.on('keydown.table', (event: KeyboardEvent) => {
+			.on(this.j.ow, 'click.select-cells', this.onRemoveSelection)
+			.on('keydown.select-cells', (event: KeyboardEvent) => {
 				if (event.key === KEY_TAB) {
 					this.unselectCells();
 				}
 			})
 
-			.on('beforeCommand.table', this.onExecCommand)
-			.on('afterCommand.table', this.onAfterCommand)
+			.on('beforeCommand.select-cells', this.onExecCommand)
+			.on('afterCommand.select-cells', this.onAfterCommand)
 
-			.on('change.table afterCommand.table afterSetMode.table', () => {
-				this.onRemoveSelection();
-
-				$$('table', jodit.editor).forEach(this.observe);
-			});
+			.on(
+				'change afterCommand afterSetMode click'
+					.split(' ')
+					.map(e => e + '.select-cells')
+					.join(' '),
+				() => {
+					$$('table', jodit.editor).forEach(this.observe);
+				}
+			);
 	}
 
 	/**
@@ -54,6 +58,8 @@ export class selectCells extends Plugin {
 		if (dataBind(table, key)) {
 			return;
 		}
+
+		this.onRemoveSelection();
 
 		dataBind(table, key, true);
 
@@ -144,8 +150,6 @@ export class selectCells extends Plugin {
 		if (cell !== this.selectedCell) {
 			this.j.lock(key);
 
-			this.j.selection.clear();
-
 			if (e.preventDefault) {
 				e.preventDefault();
 			}
@@ -158,14 +162,25 @@ export class selectCells extends Plugin {
 
 		for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
 			for (let j = bound[0][1]; j <= bound[1][1]; j += 1) {
-				this.j
-					.getInstance<Table>('Table', this.j.o)
-					.addSelection(box[i][j]);
+				this.module.addSelection(box[i][j]);
 			}
 		}
 
 		this.j.e.fire('hidePopup');
 		e.stopPropagation();
+
+		// Hack for FireFox for force redraw selection
+		(() => {
+			const n = this.j.createInside.fromHTML(
+				'<div style="color:rgba(0,0,0,0.01);width:0;height:0">&nbsp;</div>'
+			);
+
+			cell.appendChild(n);
+
+			this.j.async.setTimeout(() => {
+				n.parentNode?.removeChild(n);
+			}, this.j.defaultTimeout / 5);
+		})();
 	}
 
 	/**

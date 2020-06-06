@@ -1801,24 +1801,11 @@ describe('Toolbar', function() {
 				'</table>';
 
 			const td = editor.editor.querySelector('td'),
-				next = editor.editor.querySelectorAll('td')[1],
-				pos = Jodit.modules.Helpers.position(td);
+				next = editor.editor.querySelectorAll('td')[1];
 
-			simulateEvent('mousedown', 0, td, e => {
-				Object.assign(e, {
-					clientX: pos.left,
-					clientY: pos.top
-				});
-			});
+			simulateEvent('mousedown', td);
 
-			simulateEvent(['mousemove', 'mouseup'], 0, next, e => {
-				const pos = Jodit.modules.Helpers.position(next);
-
-				Object.assign(e, {
-					clientX: pos.left,
-					clientY: pos.top
-				});
-			});
+			simulateEvent(['mousemove', 'mouseup'], next);
 
 			const popup = getOpenedPopup(editor);
 

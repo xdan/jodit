@@ -274,22 +274,28 @@ export function iframe(editor: IJodit) {
 							)
 							.replace(
 								bodyMarker,
-								body[0].replace(
-									/(<body[^>]+?)([\s]*["'])?contenteditable["'\s]*=[\s"']*true["']?/im,
-									'$1'
-								)
+
+								body[0]
+									.replace(
+										/(<body[^>]+?)min-height["'\s]*:[\s"']*[0-9]+(px|%)/im,
+										'$1'
+									)
+									.replace(
+										/(<body[^>]+?)([\s]*["'])?contenteditable["'\s]*=[\s"']*true["']?/im,
+										'$1'
+									)
+									.replace(
+										/<(style|script|span)[^>]+jodit[^>]+>.*?<\/\1>/g,
+										''
+									)
 							)
 							.replace(
 								/(class\s*=\s*)(['"])([^"']*)(jodit-wysiwyg|jodit)([^"']*\2)/g,
 								'$1$2$3$5'
 							)
-							.replace(
-								/<(style|script|span)[^>]+jodit[^>]+>.*?<\/\1>/g,
-								''
-							)
-							.replace(/(<[^<]+)\sclass=""/gim, '$1')
-							.replace(/(<[^<]+)\sstyle=""/gim, '$1')
-							.replace(/(<[^<]+)\sdir=""/gim, '$1');
+							.replace(/(<[^<]+?)\sclass="[\s]*"/gim, '$1')
+							.replace(/(<[^<]+?)\sstyle="[\s;]*"/gim, '$1')
+							.replace(/(<[^<]+?)\sdir="[\s]*"/gim, '$1');
 					}
 
 					return html;

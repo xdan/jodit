@@ -14,14 +14,14 @@ describe('Test Style module', function() {
 			const style = new Style({
 				style: {
 					color: 'red',
-					background: 'yellow'
+					backgroundColor: 'yellow'
 				}
 			});
 
 			style.apply(editor);
 
 			expect(sortAttributes(editor.value)).equals(
-				'<span style="background:yellow;color:red">test</span>'
+				'<span style="background-color:yellow;color:red">test</span>'
 			);
 		});
 
@@ -130,7 +130,7 @@ describe('Test Style module', function() {
 
 						const style = new Style({
 							style: {
-								background: 'yellow'
+								backgroundColor: 'yellow'
 							}
 						});
 
@@ -147,7 +147,7 @@ describe('Test Style module', function() {
 						editor.selection.insertHTML('stop');
 
 						expect(sortAttributes(editor.value)).equals(
-							'test<span style="background:yellow;font-size:12px">stop</span>'
+							'test<span style="background-color:yellow;font-size:12px">stop</span>'
 						);
 					});
 				});
@@ -158,7 +158,7 @@ describe('Test Style module', function() {
 			it('Should combine all of it', function() {
 				const style = new Style({
 					style: {
-						background: 'yellow'
+						backgroundColor: 'yellow'
 					}
 				});
 
@@ -173,7 +173,7 @@ describe('Test Style module', function() {
 				style2.apply(editor);
 
 				expect(sortAttributes(editor.value)).equals(
-					'<span style="background:yellow;font-size:12px">test</span>'
+					'<span style="background-color:yellow;font-size:12px">test</span>'
 				);
 			});
 		});
@@ -393,7 +393,10 @@ describe('Test Style module', function() {
 			describe('With style', function() {
 				it('Should wrap contents again', function() {
 					editor.value = '<strong>test</strong>';
-					editor.execCommand('selectall');
+					const range = editor.selection.createRange();
+					range.setStart(editor.editor.firstChild.firstChild, 0);
+					range.setEnd(editor.editor.firstChild.firstChild, 4);
+					editor.selection.selectRange(range);
 
 					const style = new Style({
 						element: 'em',
