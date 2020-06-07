@@ -53,6 +53,7 @@ Config.prototype.sourceEditorNativeOptions = {
 	 * Show gutter
 	 */
 	showGutter: true,
+
 	/**
 	 * Default theme
 	 */

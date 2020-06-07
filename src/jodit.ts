@@ -1008,7 +1008,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		super(options as IViewOptions);
 
 		try {
-			resolveElement(element, this.od); // check element valid
+			resolveElement(element, this.o.shadowRoot || this.od); // check element valid
 		} catch (e) {
 			this.destruct();
 			throw e;
@@ -1075,7 +1075,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		source: HTMLElement | string,
 		options?: object
 	): void | Promise<any> {
-		const element = resolveElement(source, this.od);
+		const element = resolveElement(source, this.o.shadowRoot || this.od);
 
 		if (!this.isReady) {
 			this.id = attr(element, 'id') || new Date().getTime().toString();

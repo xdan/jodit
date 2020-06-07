@@ -18,13 +18,15 @@ export function createSourceEditor(
 
 	switch (type) {
 		case 'ace':
-			sourceEditor = new AceEditor(
-				editor,
-				container,
-				toWYSIWYG,
-				fromWYSIWYG
-			);
-			break;
+			if (!editor.o.shadowRoot) {
+				sourceEditor = new AceEditor(
+					editor,
+					container,
+					toWYSIWYG,
+					fromWYSIWYG
+				);
+				break;
+			}
 
 		default:
 			sourceEditor = new TextAreaEditor(

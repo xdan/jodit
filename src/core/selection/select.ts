@@ -86,6 +86,10 @@ export class Select {
 	 * Return current selection object
 	 */
 	get sel(): WindowSelection {
+		if (this.j.o.shadowRoot) {
+			return this.j.o.shadowRoot.getSelection();
+		}
+
 		return this.win.getSelection();
 	}
 

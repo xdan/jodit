@@ -11,7 +11,7 @@ import {
 	IProgressBar,
 	IToolbarCollection
 } from './toolbar';
-import { IComponent, IContainer, IDictionary } from './types';
+import { IComponent, IContainer, IDictionary, Nullable } from './types';
 import { Attributes, ICreate } from './create';
 import { IStorage } from './storage';
 import { IAsync } from './async';
@@ -64,6 +64,8 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 	controls?: Controls;
 
 	createAttributes?: IDictionary<Attributes | NodeFunction>;
+
+	shadowRoot?: Nullable<ShadowRoot>;
 }
 
 interface IViewBased<T = IViewOptions> extends IContainer, IComponent {

@@ -182,7 +182,7 @@ export const cssPath = (el: Element): Nullable<string> => {
  */
 export function resolveElement(
 	element: string | HTMLElement,
-	od: Document
+	od: ShadowRoot | Document
 ): HTMLElement {
 	let resolved = element;
 

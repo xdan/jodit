@@ -1,6 +1,8 @@
 # Changelog
 ## 3.4
 ### Bug fixes
+* https://github.com/xdan/jodit/issues/405
+* https://github.com/xdan/jodit/issues/404 See more in Features
 * https://github.com/xdan/jodit/issues/400
 * https://github.com/xdan/jodit/issues/398
 * https://github.com/xdan/jodit/issues/396
@@ -9,6 +11,29 @@
 * https://github.com/xdan/jodit/issues/391
 
 ### Features
+* Added `shadowRoot` option for ShadowDom support.
+> ACE source editor does not support Shadow Dom
+```html
+<div id="editor"></div>
+```
+```js
+const app = document.getElementById("editor");
+app.attachShadow({ mode: "open" });
+const root = app.shadowRoot;
+
+root.innerHTML = `
+<link rel="stylesheet" href="./build/jodit.css"/>
+<h1>Jodit example in Shadow DOM</h1>
+<div id="edit"></div>
+`;
+
+var editor = new Jodit(root.getElementById("edit"), {
+    globalFullSize: false,
+    shadowRoot: root
+});
+editor.value = "<p>start</p>";
+```
+
 * From `NativeEvent.on` method was removed `selector` argument. It was `jQuery.live` style.
 Example:
 ```html

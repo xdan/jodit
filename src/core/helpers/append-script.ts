@@ -97,7 +97,11 @@ export const appendStyleAsync = cacheLoaders(
 
 			link.href = completeUrl(url);
 
-			jodit.od.body.appendChild(link);
+			if (jodit.o.shadowRoot) {
+				jodit.o.shadowRoot.appendChild(link);
+			} else {
+				jodit.od.body.appendChild(link);
+			}
 		});
 	}
 );

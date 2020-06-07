@@ -28,7 +28,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 			(isString(this.o.toolbar) ||
 				Dom.isHTMLElement(this.o.toolbar, this.ow))
 		) {
-			return resolveElement(this.o.toolbar, this.od);
+			return resolveElement(this.o.toolbar, this.o.shadowRoot || this.od);
 		}
 
 		this.o.toolbar &&

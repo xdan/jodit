@@ -27,7 +27,7 @@ import {
 	IFileBrowserCallBackData,
 	Controls,
 	IControlType,
-	IUIButtonState
+	IUIButtonState, Nullable
 } from './types';
 import { FileSelectorWidget, TabOption, TabsWidget } from './modules/widget';
 
@@ -75,6 +75,11 @@ export class Config implements IViewOptions {
 	ownerWindow: Window = (typeof window !== 'undefined'
 		? window
 		: null) as Window;
+
+	/**
+	 * Shadow root if Jodit was created in it
+	 */
+	shadowRoot: Nullable<ShadowRoot> = null;
 
 	/**
 	 * z-index For editor
