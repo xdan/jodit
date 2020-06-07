@@ -184,6 +184,7 @@ module.exports = (env, argv) => {
 					new webpack.optimize.OccurrenceOrderPlugin(),
 					new webpack.DefinePlugin({
 						appVersion: JSON.stringify(pkg.version),
+						isProd: isProd,
 						'process.env': {
 							TARGET_ES: JSON.stringify(ES),
 							NODE_ENV: JSON.stringify(mode)

@@ -51,34 +51,36 @@ export function watch(observeFields: string[] | string) {
 				} else {
 					const descriptor = getPropertyDescriptor(target, key);
 
-					Object.defineProperty(component, key, {
-						set(v: any): void {
-							const oldValue = value;
+					!Object.getOwnPropertyDescriptor(component, key) &&
+						Object.defineProperty(component, key, {
+							configurable: true,
+							set(v: any): void {
+								const oldValue = value;
 
-							if (oldValue === v) {
-								return;
+								if (oldValue === v) {
+									return;
+								}
+
+								value = v;
+								if (descriptor && descriptor.set) {
+									descriptor.set.call(component, v);
+								}
+
+								if (isPlainObject(value)) {
+									value = ObserveObject.create(value, [key]);
+									value.on('change.' + field, callback);
+								}
+
+								callback(key, oldValue, value);
+							},
+							get(): any {
+								if (descriptor && descriptor.get) {
+									return descriptor.get.call(component);
+								}
+
+								return value;
 							}
-
-							value = v;
-							if (descriptor && descriptor.set) {
-								descriptor.set.call(component, v);
-							}
-
-							if (isPlainObject(value)) {
-								value = ObserveObject.create(value, [key]);
-								value.on('change.' + field, callback);
-							}
-
-							callback(key, oldValue, value);
-						},
-						get(): any {
-							if (descriptor && descriptor.get) {
-								return descriptor.get.call(component);
-							}
-
-							return value;
-						}
-					});
+						});
 				}
 			});
 		});
