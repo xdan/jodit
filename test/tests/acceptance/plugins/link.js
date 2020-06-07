@@ -333,17 +333,7 @@ describe('Link plugin', function() {
 
 					const editor = getJodit({
 						events: {
-							/**
-							 * @param {Node} target
-							 * @param {ControlType} control
-							 * @param {ToolbarPopup} popup
-							 * @return false | undefined - if return false - popup will not be shown
-							 */
-							beforeLinkOpenPopup: function(
-								target,
-								control,
-								popup
-							) {
+							beforeLinkOpenPopup: function() {
 								popup_opened += 1;
 							},
 							/**
@@ -395,6 +385,33 @@ describe('Link plugin', function() {
 					simulateEvent('mousedown', 0, editor.editor);
 
 					expect(list.parentNode).is.null;
+				});
+
+				it('Should fire change event', function() {
+					let change = 0;
+
+					const editor = getJodit({
+						events: {
+							change: function() {
+								change += 1;
+							}
+						}
+					});
+
+					editor.value = '';
+
+					clickButton('link', editor);
+
+					const list = getOpenedPopup(editor);
+					const url = list.querySelector('input[ref=url_input]');
+					url.value = 'tests/artio.jpg';
+					simulateEvent('submit', 0, list.querySelector('form'));
+
+					expect(sortAttributes(editor.value)).equals(
+						'<a href="tests/artio.jpg">123</a>'
+					);
+
+					expect(change).equals(1);
 				});
 
 				describe('Set custom popup template', function() {
