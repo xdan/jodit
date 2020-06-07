@@ -1242,6 +1242,8 @@ describe('Tables Jodit Editor Tests', function() {
 
 					simulateEvent(['mousemove', 'mouseup', 'click'], td);
 
+
+					debugger
 					expect(
 						Jodit.modules.Helpers.normalizeColor(
 							editor.editorWindow.getComputedStyle(td).borderBottomColor

@@ -23,6 +23,7 @@ import * as Plugins from './plugins/';
 import * as Icons from './styles/icons/';
 
 import { Config, OptionsDefault } from './config';
+import { keepModuleNames } from './keep-names';
 
 // copy constants in Jodit
 Object.keys(consts).forEach((key: string) => {
@@ -44,6 +45,8 @@ Object.keys(Modules)
 	.forEach((key: string) => {
 		DefaultJodit.modules[key] = (Modules as any)[key];
 	});
+
+keepModuleNames(DefaultJodit.modules);
 
 // Decorators
 Object.keys(decorators)

@@ -402,4 +402,17 @@ describe('Test helpers', function() {
 			});
 		});
 	});
+
+	describe('Utils', function () {
+		describe('getClassName', function () {
+			const getClassName = Jodit.modules.Helpers.getClassName;
+
+			it('Should return normal(not uglifyed) name for instance of class', function () {
+				expect(getClassName(Jodit.modules.Popup.prototype)).equals('Popup');
+				expect(getClassName(Jodit.modules.UIButton.prototype)).equals('UIButton');
+				expect(getClassName(Jodit.modules.ToolbarButton.prototype)).equals('ToolbarButton');
+				expect(getClassName(Jodit.modules.Component.prototype)).equals('Component');
+			});
+		});
+	});
 });

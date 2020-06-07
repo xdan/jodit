@@ -567,9 +567,7 @@ export class EventsNative implements IEventsNative {
 								}
 							);
 						} catch (e) {
-							if (!isProd) {
-								throw e;
-							}
+							throw e;
 						} finally {
 							this.removeStop(blocks);
 						}

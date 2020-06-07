@@ -1,0 +1,23 @@
+import { IDictionary } from './types';
+import { keepNames } from './core/helpers/utils';
+
+/**
+ * Save origina class name for some modules for uglify keepName: false
+ * @param modules
+ */
+export function keepModuleNames(modules: IDictionary<Function>): void {
+	keepNames.set(modules.UIButton, 'UIButton');
+	keepNames.set(modules.UIElement, 'UIElement');
+	keepNames.set(modules.UISeparator, 'UISeparator');
+	keepNames.set(modules.UIList, 'UIList');
+	keepNames.set(modules.UIGroup, 'UIGroup');
+	keepNames.set(modules.Popup, 'Popup');
+	keepNames.set(modules.ToolbarButton, 'ToolbarButton');
+	keepNames.set(modules.ToolbarContent, 'ToolbarContent');
+	keepNames.set(modules.ToolbarCollection, 'ToolbarCollection');
+	keepNames.set(modules.ToolbarEditorCollection, 'ToolbarEditorCollection');
+	keepNames.set(modules.Component, 'Component');
+	keepNames.set(modules.Table, 'Table');
+	keepNames.set(modules.Uploader, 'Uploader');
+	keepNames.set(modules.FileBrowser, 'FileBrowser');
+}
