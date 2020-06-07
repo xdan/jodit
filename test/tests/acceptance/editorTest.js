@@ -1,7 +1,12 @@
 describe('Jodit Editor Tests', function() {
 	describe('Constructor', function() {
 		it('Constructor Jodit must be in global scope', function() {
-			expect(window.Jodit).to.be.a('function');
+			expect(window.Jodit).is.a('function');
+		});
+
+		it('Constructor default should not be in global scope', function() {
+			expect(window.default).is.not.a('function');
+			expect(window.default).does.equal(window.Jodit);
 		});
 
 		describe('First argument', function() {

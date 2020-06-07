@@ -9,6 +9,8 @@
 * https://github.com/xdan/jodit/issues/393
 * https://github.com/xdan/jodit/issues/392
 * https://github.com/xdan/jodit/issues/391
+* https://github.com/xdan/jodit/issues/385
+* https://github.com/xdan/jodit/issues/378
 
 ### Features
 * Added `shadowRoot` option for ShadowDom support.
