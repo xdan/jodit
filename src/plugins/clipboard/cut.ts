@@ -12,13 +12,13 @@ import { getDataTransfer } from './paste';
 
 Config.prototype.controls.cut = {
 	command: 'cut',
-	isDisabled: (editor: IJodit) => editor.selection.isCollapsed(),
+	isDisabled: (editor: IJodit) => editor.s.isCollapsed(),
 	tooltip: 'Cut selection'
 } as IControlType;
 
 Config.prototype.controls.copy = {
 	command: 'copy',
-	isDisabled: (editor: IJodit) => editor.selection.isCollapsed(),
+	isDisabled: (editor: IJodit) => editor.s.isCollapsed(),
 	tooltip: 'Copy selection'
 } as IControlType;
 
@@ -36,7 +36,7 @@ export class clipboard implements IPlugin {
 			.on(`copy.${pluginKey} cut.${pluginKey}`, (event: ClipboardEvent):
 				| false
 				| void => {
-				const selectedText = editor.selection.html;
+				const selectedText = editor.s.html;
 
 				const clipboardData =
 					getDataTransfer(event) ||
@@ -51,8 +51,8 @@ export class clipboard implements IPlugin {
 				editor.buffer.set(pluginKey, selectedText);
 
 				if (event.type === 'cut') {
-					editor.selection.remove();
-					editor.selection.focus();
+					editor.s.remove();
+					editor.s.focus();
 				}
 
 				event.preventDefault();

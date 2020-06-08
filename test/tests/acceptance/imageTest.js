@@ -1048,7 +1048,7 @@ describe('Test image', function() {
 
 		expect(dialog).is.null;
 
-		expect(editor.selection.current().tagName).equals('IMG');
+		expect(editor.s.current().tagName).equals('IMG');
 	});
 
 	describe('One click on image', function() {

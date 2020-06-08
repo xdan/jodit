@@ -593,7 +593,7 @@ export class Select {
 	 * @param  {string} html HTML The text toWYSIWYG be inserted into the document
 	 * @example
 	 * ```javascript
-	 * parent.selection.insertHTML('<img src="image.png"/>');
+	 * parent.s.insertHTML('<img src="image.png"/>');
 	 * ```
 	 */
 	insertHTML(html: number | string | Node): void {
@@ -1096,8 +1096,8 @@ export class Select {
 	 * @example
 	 * ```javascript
 	 * const editor = new jodit();
-	 * console.log(editor.selection.html); // html
-	 * console.log(Jodit.modules.Helpers.stripTags(editor.selection.html)); // plain text
+	 * console.log(editor.s.html); // html
+	 * console.log(Jodit.modules.Helpers.stripTags(editor.s.html)); // plain text
 	 * ```
 	 */
 	get html(): string {
@@ -1192,8 +1192,8 @@ export class Select {
 	 * editor.value = 'test';
 	 * editor.execCommand('selectall');
 	 *
-	 * editor.selection.applyStyle({color: 'red'}) // will wrap `text` in `span` and add style `color:red`
-	 * editor.selection.applyStyle({color: 'red'}) // will remove `color:red` from `span`
+	 * editor.s.applyStyle({color: 'red'}) // will wrap `text` in `span` and add style `color:red`
+	 * editor.s.applyStyle({color: 'red'}) // will remove `color:red` from `span`
 	 * ```
 	 */
 	applyStyle(

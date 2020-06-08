@@ -42,7 +42,7 @@ Config.prototype.controls.fontsize = ({
 	tooltip: 'Font size',
 
 	isActiveChild: (editor, control: IControlType): boolean => {
-		const current = editor.selection.current();
+		const current = editor.s.current();
 
 		if (current) {
 			const currentBpx: HTMLElement =
@@ -70,7 +70,7 @@ Config.prototype.controls.fontsize = ({
 	},
 
 	isActive: (editor): boolean => {
-		const current = editor.selection.current();
+		const current = editor.s.current();
 
 		if (current) {
 			const currentBpx: HTMLElement =
@@ -122,7 +122,7 @@ Config.prototype.controls.font = ({
 	},
 
 	isActiveChild: (editor, control: IControlType): boolean => {
-		const current = editor.selection.current(),
+		const current = editor.s.current(),
 			normFonts = (fontValue: string): string => {
 				return fontValue
 					.toLowerCase()
@@ -155,7 +155,7 @@ Config.prototype.controls.font = ({
 	},
 
 	isActive: (editor: IJodit): boolean => {
-		const current = editor.selection.current();
+		const current = editor.s.current();
 
 		if (current) {
 			const currentBpx =
@@ -192,13 +192,13 @@ export function font(editor: IJodit) {
 	): false | void => {
 		switch (command) {
 			case 'fontsize':
-				editor.selection.applyStyle({
+				editor.s.applyStyle({
 					fontSize: normalizeSize(third)
 				});
 				break;
 
 			case 'fontname':
-				editor.selection.applyStyle({
+				editor.s.applyStyle({
 					fontFamily: third
 				});
 				break;

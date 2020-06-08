@@ -12,7 +12,15 @@ import {
 	NodeCondition,
 	Nullable
 } from '../types';
-import { css, dataBind, isArray, isFunction, isString, trim } from './helpers';
+import {
+	asArray,
+	css,
+	dataBind,
+	isArray,
+	isFunction,
+	isString,
+	trim
+} from './helpers';
 
 /**
  * Module for working with DOM
@@ -44,7 +52,7 @@ export class Dom {
 			first: Node = current,
 			last: Node = current;
 
-		const selInfo = editor.selection.save();
+		const selInfo = editor.s.save();
 
 		let needFindNext: boolean = false;
 
@@ -87,7 +95,7 @@ export class Dom {
 			first = next;
 		}
 
-		editor.selection.restore(selInfo);
+		editor.s.restore(selInfo);
 
 		return wrapper as HTMLElement;
 	}
@@ -110,7 +118,7 @@ export class Dom {
 		tag: HTMLElement | HTMLTagNames,
 		editor: IJodit
 	): Nullable<HTMLElement> {
-		const selInfo = editor.selection.save();
+		const selInfo = editor.s.save();
 
 		const wrapper = isString(tag) ? editor.createInside.element(tag) : tag;
 
@@ -122,7 +130,7 @@ export class Dom {
 
 		wrapper.appendChild(current);
 
-		editor.selection.restore(selInfo);
+		editor.s.restore(selInfo);
 
 		return wrapper;
 	}
@@ -150,7 +158,7 @@ export class Dom {
 	 * @param callback It called for each item found
 	 * @example
 	 * ```javascript
-	 * Jodit.modules.Dom.each(parent.selection.current(), function (node) {
+	 * Jodit.modules.Dom.each(parent.s.current(), function (node) {
 	 *  if (node.nodeType === Node.TEXT_NODE) {
 	 *      node.nodeValue = node.nodeValue.replace(Jodit.INVISIBLE_SPACE_REG_EX, '') // remove all of
 	 *      the text element codes invisible character
@@ -739,10 +747,7 @@ export class Dom {
 	 * @param elm
 	 * @param newElement
 	 */
-	static after(
-		elm: HTMLElement,
-		newElement: HTMLElement | DocumentFragment
-	): void {
+	static after(elm: Node, newElement: Node | DocumentFragment): void {
 		const parentNode: Node | null = elm.parentNode;
 
 		if (!parentNode) {
@@ -870,15 +875,33 @@ export class Dom {
 	 * Check if element is some tag
 	 *
 	 * @param node
-	 * @param tagName
+	 * @param tagNames
 	 */
 	static isTag<K extends keyof HTMLElementTagNameMap>(
 		node: Node | null | false | EventTarget,
-		tagName: K | 'svg' | 'path'
+		tagName: K
+	): node is HTMLElementTagNameMap[K];
+
+	static isTag<K extends keyof HTMLElementTagNameMap>(
+		node: Node | null | false | EventTarget,
+		tagNames: K[]
+	): node is HTMLElementTagNameMap[K];
+
+	static isTag<K extends keyof HTMLElementTagNameMap>(
+		node: Node | null | false | EventTarget,
+		tagNames: K[] | K
 	): node is HTMLElementTagNameMap[K] {
-		return (
-			this.isElement(node) &&
-			node.tagName.toLowerCase() === tagName.toLowerCase()
-		);
+		const tags = asArray(tagNames).map(String);
+
+		for (let i = 0; i < tags.length; i += 1) {
+			if (
+				this.isElement(node) &&
+				node.tagName.toLowerCase() === tags[i].toLowerCase()
+			) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

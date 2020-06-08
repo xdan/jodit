@@ -40,7 +40,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 			return active;
 		}
 
-		const element = this.j.selection ? this.j.selection.current() : null;
+		const element = this.j.selection ? this.j.s.current() : null;
 
 		if (!element) {
 			return false;
@@ -129,6 +129,6 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 
 	/** @override */
 	getTarget(button: IToolbarButton): Node | null {
-		return button.target || this.j.selection.current() || null;
+		return button.target || this.j.s.current() || null;
 	}
 }

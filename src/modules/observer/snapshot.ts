@@ -138,7 +138,7 @@ export class Snapshot extends ViewComponent<IJodit> {
 
 		snapshot.html = this.j.getNativeEditorValue();
 
-		const sel = this.j.selection.sel;
+		const sel = this.j.s.sel;
 
 		if (sel && sel.rangeCount) {
 			const range = sel.getRangeAt(0),
@@ -215,11 +215,11 @@ export class Snapshot extends ViewComponent<IJodit> {
 					snapshot.range.endOffset
 				);
 
-				this.j.selection.selectRange(range);
+				this.j.s.selectRange(range);
 			}
 		} catch (__ignore) {
 			this.j.editor.lastChild &&
-				this.j.selection.setCursorAfter(this.j.editor.lastChild);
+				this.j.s.setCursorAfter(this.j.editor.lastChild);
 
 			if (!isProd) {
 				// tslint:disable-next-line:no-console

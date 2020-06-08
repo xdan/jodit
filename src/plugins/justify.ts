@@ -16,7 +16,7 @@ Config.prototype.controls.align = {
 	update(button): void {
 		const editor = button.j as IJodit,
 			control = button.control,
-			current = editor.selection.current();
+			current = editor.s.current();
 
 		if (current) {
 			const currentBox =
@@ -53,7 +53,7 @@ Config.prototype.controls.align = {
 	},
 
 	isActive: (editor: IJodit, btn): boolean => {
-		const current = editor.selection.current();
+		const current = editor.s.current();
 
 		if (current && btn.defaultValue) {
 			const currentBox: HTMLElement =
@@ -171,9 +171,9 @@ export const alignElement = (
  */
 export function justify(editor: IJodit) {
 	const callback = (command: string): false | void => {
-		editor.selection.focus();
+		editor.s.focus();
 
-		editor.selection.eachSelection((current: Node): false | void => {
+		editor.s.eachSelection((current: Node): false | void => {
 			if (!current) {
 				return;
 			}

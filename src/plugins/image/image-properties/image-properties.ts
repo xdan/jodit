@@ -168,7 +168,7 @@ export class imageProperties extends Plugin {
 	 *     img = editor.createInside.element('img');
 	 *
 	 * img.setAttribute('src', 'images/some-image.png');
-	 * editor.selection.insertImage(img);
+	 * editor.s.insertImage(img);
 	 * // open the properties of the editing window
 	 * editor.events.fire('openImageProperties', img);
 	 * ```
@@ -221,12 +221,12 @@ export class imageProperties extends Plugin {
 				this.state.image.parentNode &&
 				opt.image.selectImageAfterClose
 			) {
-				editor.selection.select(this.state.image);
+				editor.s.select(this.state.image);
 			}
 		});
 
 		buttons.remove.onAction(() => {
-			editor.selection.removeNode(this.state.image);
+			editor.s.removeNode(this.state.image);
 			this.dialog.close();
 		});
 
@@ -783,7 +783,7 @@ export class imageProperties extends Plugin {
 								}
 							} else {
 								e.stopImmediatePropagation();
-								editor.selection.select(image);
+								editor.s.select(image);
 							}
 						}
 					);

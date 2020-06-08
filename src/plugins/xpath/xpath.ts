@@ -54,7 +54,7 @@ export class xpath extends Plugin {
 				icon: 'select-all',
 				title: 'Select',
 				exec: () => {
-					this.j.selection.select(bindElement);
+					this.j.s.select(bindElement);
 				}
 			}
 		]);
@@ -63,7 +63,7 @@ export class xpath extends Plugin {
 	};
 
 	private onSelectPath = (bindElement: Node, event: MouseEvent) => {
-		this.j.selection.focus();
+		this.j.s.focus();
 
 		const path = attr(event.target as HTMLElement, '-path') || '/';
 
@@ -78,12 +78,12 @@ export class xpath extends Plugin {
 				.iterateNext();
 
 			if (elm) {
-				this.j.selection.select(elm);
+				this.j.s.select(elm);
 				return false;
 			}
 		} catch {}
 
-		this.j.selection.select(bindElement);
+		this.j.s.select(bindElement);
 
 		return false;
 	};
@@ -140,7 +140,7 @@ export class xpath extends Plugin {
 			return;
 		}
 
-		const current = this.j.selection.current();
+		const current = this.j.s.current();
 
 		if (this.container) {
 			this.container.innerHTML = INVISIBLE_SPACE;

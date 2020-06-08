@@ -102,7 +102,7 @@ export function mobile(editor: IJodit) {
 
 				if (now - timeout > editor.o.mobileTapTimeout) {
 					timeout = now;
-					editor.selection.insertCursorAtPoint(
+					editor.s.insertCursorAtPoint(
 						e.changedTouches[0].clientX,
 						e.changedTouches[0].clientY
 					);

@@ -131,14 +131,14 @@ export class source extends Plugin {
 
 	private saveSelection = () => {
 		if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
-			this.selInfo = this.j.selection.save() || [];
+			this.selInfo = this.j.s.save() || [];
 			this.j.setEditorValue();
 			this.fromWYSIWYG(true);
 		} else {
 			this.selInfo.length = 0;
 			const value: string = this.getMirrorValue();
 			if (this.getSelectionStart() === this.getSelectionEnd()) {
-				const marker = this.j.selection.marker(true);
+				const marker = this.j.s.marker(true);
 
 				this.selInfo[0] = {
 					startId: marker.id,
@@ -157,10 +157,10 @@ export class source extends Plugin {
 						value.substr(selectionStart)
 				);
 			} else {
-				const markerStart: HTMLSpanElement = this.j.selection.marker(
+				const markerStart: HTMLSpanElement = this.j.s.marker(
 					true
 				);
-				const markerEnd: HTMLSpanElement = this.j.selection.marker(
+				const markerEnd: HTMLSpanElement = this.j.s.marker(
 					false
 				);
 
@@ -204,7 +204,7 @@ export class source extends Plugin {
 
 		if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
 			this.__lock = true;
-			this.j.selection.restore(this.selInfo);
+			this.j.s.restore(this.selInfo);
 			this.__lock = false;
 			return;
 		}

@@ -32,8 +32,8 @@ export class pasteStorage extends Plugin {
 	private dialog: Dialog | null = null;
 
 	private paste = () => {
-		this.j.selection.focus();
-		this.j.selection.insertHTML(this.list[this.currentIndex]);
+		this.j.s.focus();
+		this.j.s.insertHTML(this.list[this.currentIndex]);
 
 		if (this.currentIndex !== 0) {
 			const buffer = this.list[0];

@@ -13,7 +13,7 @@ Jodit.defaultOptions.controls.example2 = {
 	iconURL: '{basePath}plugins/example/icon.svg',
 	tooltip: 'Example2',
 	exec: (editor: IJodit) => {
-		editor.selection.insertHTML('Hello world');
+		editor.s.insertHTML('Hello world');
 	}
 } as IControlType;
 

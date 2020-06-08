@@ -9,10 +9,10 @@ describe('Undo/Redo behaviors', function() {
 
 			editor.value = 'test';
 
-			const range = editor.selection.createRange();
+			const range = editor.s.createRange();
 			range.setEnd(editor.editor.firstChild, 4);
 			range.collapse(false);
-			editor.selection.selectRange(range);
+			editor.s.selectRange(range);
 
 			clickTrigger('paragraph', editor);
 
@@ -43,10 +43,10 @@ describe('Undo/Redo behaviors', function() {
 					'<li><a>test4</a></li>' +
 					'</ul>';
 
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 				range.setStart(editor.editor.firstChild.firstChild, 1);
 				range.setEnd(editor.editor.lastChild.firstChild, 1);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
@@ -62,7 +62,7 @@ describe('Undo/Redo behaviors', function() {
 
 				range.setStart(editor.editor.firstChild.firstChild, 0);
 				range.setEnd(editor.editor.firstChild.firstChild, 3);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
@@ -115,13 +115,13 @@ describe('Undo/Redo behaviors', function() {
 
 			editor.value = 'test';
 
-			const range = editor.selection.createRange();
+			const range = editor.s.createRange();
 			range.setEnd(editor.editor.firstChild, 4);
 			range.collapse(false);
-			editor.selection.sel.removeAllRanges();
-			editor.selection.sel.addRange(range);
+			editor.s.sel.removeAllRanges();
+			editor.s.sel.addRange(range);
 
-			editor.selection.insertNode(
+			editor.s.insertNode(
 				editor.createInside.text('test2')
 			);
 			editor.execCommand('undo');

@@ -27,7 +27,8 @@ import {
 	IFileBrowserCallBackData,
 	Controls,
 	IControlType,
-	IUIButtonState, Nullable
+	IUIButtonState,
+	Nullable
 } from './types';
 import { FileSelectorWidget, TabOption, TabsWidget } from './modules/widget';
 
@@ -644,7 +645,7 @@ export class Config implements IViewOptions {
 	 *                 this.val('');
 	 *                 return;
 	 *             }
-	 *             this.selection.insertNode(this.c.element(key, ''));
+	 *             this.s.insertNode(this.c.element(key, ''));
 	 *             this.e.fire('errorMessage', 'Was inserted ' + value);
 	 *        },
 	 *        template: function (key, value) {
@@ -909,17 +910,17 @@ Config.prototype.controls = {
 					: $$('img', current)[0];
 			}
 
-			const selInfo = editor.selection.save();
+			const selInfo = editor.s.save();
 
 			return FileSelectorWidget(
 				editor,
 				{
 					filebrowser: (data: IFileBrowserCallBackData) => {
-						editor.selection.restore(selInfo);
+						editor.s.restore(selInfo);
 
 						data.files &&
 							data.files.forEach(file =>
-								editor.selection.insertImage(
+								editor.s.insertImage(
 									data.baseurl + file,
 									null,
 									editor.o.imageDefaultWidth
@@ -930,7 +931,7 @@ Config.prototype.controls = {
 					},
 					upload: true,
 					url: async (url: string, text: string) => {
-						editor.selection.restore(selInfo);
+						editor.s.restore(selInfo);
 
 						const image: HTMLImageElement =
 							sourceImage || editor.createInside.element('img');
@@ -939,7 +940,7 @@ Config.prototype.controls = {
 						image.setAttribute('alt', text);
 
 						if (!sourceImage) {
-							await editor.selection.insertImage(
+							await editor.s.insertImage(
 								image,
 								null,
 								editor.o.imageDefaultWidth
@@ -965,7 +966,7 @@ Config.prototype.controls = {
 			close
 		) => {
 			const insert = (url: string, title: string = '') => {
-				editor.selection.insertNode(
+				editor.s.insertNode(
 					editor.createInside.fromHTML(
 						`<a href="${url}" title="${title}">${title || url}</a>`
 					)
@@ -1040,10 +1041,10 @@ Config.prototype.controls = {
 								</form>`
 				) as HTMLFormElement,
 				tabs: TabOption[] = [],
-				selinfo = editor.selection.save(),
+				selinfo = editor.s.save(),
 				insertCode = (code: string) => {
-					editor.selection.restore(selinfo);
-					editor.selection.insertHTML(code);
+					editor.s.restore(selinfo);
+					editor.s.insertHTML(code);
 					close();
 				};
 

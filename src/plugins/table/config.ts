@@ -173,9 +173,9 @@ Config.prototype.controls.table = {
 					tbody.appendChild(tr);
 				}
 
-				const crnt = editor.selection.current();
+				const crnt = editor.s.current();
 
-				if (crnt && editor.selection.isCollapsed()) {
+				if (crnt && editor.s.isCollapsed()) {
 					const block = Dom.closest(
 						crnt,
 						node => Dom.isBlock(node, editor.editorWindow),
@@ -189,7 +189,7 @@ Config.prototype.controls.table = {
 							/^TD|TH|TBODY|TABLE|THEADER|TFOOTER$/
 						)
 					) {
-						editor.selection.setCursorAfter(block);
+						editor.s.setCursorAfter(block);
 					}
 				}
 
@@ -203,11 +203,11 @@ Config.prototype.controls.table = {
 					}
 				);
 
-				editor.selection.insertNode(crt.text('\n'));
-				editor.selection.insertNode(table, false);
+				editor.s.insertNode(crt.text('\n'));
+				editor.s.insertNode(table, false);
 
 				if (first_td) {
-					editor.selection.setCursorIn(first_td);
+					editor.s.setCursorIn(first_td);
 					scrollIntoView(
 						first_td,
 						editor.editor,

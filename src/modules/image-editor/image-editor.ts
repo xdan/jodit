@@ -696,7 +696,7 @@ export class ImageEditor extends ViewComponent {
 	 *		 }
 	 *		 img.style.width = data.w;
 	 *		 img.style.height = data.h;
-	 *		 jodit.selection.insertNode(img);
+	 *		 jodit.s.insertNode(img);
 	 *		 success();
 	 * });
 	 * ```

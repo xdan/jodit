@@ -113,13 +113,13 @@ Config.prototype.controls.copyformat = {
 			const onMouseUp = () => {
 				editor.buffer.delete(pluginKey);
 
-				const currentNode = editor.selection.current();
+				const currentNode = editor.s.current();
 
 				if (currentNode) {
 					if (Dom.isTag(currentNode, 'img')) {
 						css(currentNode as HTMLElement, format);
 					} else {
-						editor.selection.applyStyle(format);
+						editor.s.applyStyle(format);
 					}
 				}
 

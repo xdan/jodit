@@ -106,7 +106,7 @@ export type BuildDataResult =
  *            var i, field = 'files';
  *            if (data[field] && data[field].length) {
  *                for (i = 0; i < data[field].length; i += 1) {
- *                    this.selection.insertImage(data.baseurl + data[field][i]);
+ *                    this.s.insertImage(data.baseurl + data[field][i]);
  *                }
  *            }
  *         },

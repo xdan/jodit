@@ -77,8 +77,8 @@ export class symbols extends Plugin {
 					e?: MouseEvent
 				) {
 					if (Dom.isTag(this, 'a')) {
-						jodit.selection.focus();
-						jodit.selection.insertHTML(this.innerHTML);
+						jodit.s.focus();
+						jodit.s.insertHTML(this.innerHTML);
 						jodit.e.fire(this, 'close_dialog');
 						e && e.preventDefault();
 						e && e.stopImmediatePropagation();

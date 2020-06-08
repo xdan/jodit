@@ -46,13 +46,13 @@ describe('Test Creator module', function() {
 			expect(ul.className).equals('ui-test');
 
 			editor2.value = 'test';
-			editor2.selection.setCursorAfter(editor2.editor.firstChild);
+			editor2.s.setCursorAfter(editor2.editor.firstChild);
 			simulateEvent('keydown', 13, editor2.editor);
 
 			expect(editor2.value).equals('<p data-attr="stop">test</p><p data-attr="stop"><br></p>');
 
 			editor2.value = 'test';
-			editor2.selection.select(editor2.editor.firstChild);
+			editor2.s.select(editor2.editor.firstChild);
 			editor2.execCommand('bold');
 
 			expect(editor2.value).equals('<strong test="true">test</strong>');

@@ -63,7 +63,7 @@ describe('CodeMirror editor source code', function() {
 				});
 
 
-			editor.selection.setCursorAfter(editor.editor.firstChild);
+			editor.s.setCursorAfter(editor.editor.firstChild);
 			editor.setMode(Jodit.MODE_SOURCE);
 			editor.setMode(Jodit.MODE_WYSIWYG);
 			editor.value = defaultValue;
@@ -81,18 +81,18 @@ describe('CodeMirror editor source code', function() {
 					beautifyHTML: false,
 					events: {
 						sourceEditorReady: function(jodit) {
-							jodit.selection.focus();
+							jodit.s.focus();
 							jodit.value = '<p>test <span>test</span> test</p>';
 							const range = jodit.editorDocument.createRange();
 
 							range.selectNodeContents(jodit.editor.querySelector('span'));
 							range.collapse(false);
 
-							jodit.selection.selectRange(range);
+							jodit.s.selectRange(range);
 
 							jodit.setMode(Jodit.MODE_SOURCE);
 
-							jodit.selection.insertHTML('loop');
+							jodit.s.insertHTML('loop');
 
 							expect(jodit.value).equals('<p>test <span>testloop</span> test</p>');
 							mockPromise();
@@ -110,17 +110,17 @@ describe('CodeMirror editor source code', function() {
 					});
 
 					editor.value = '<p>one <span>two</span> three</p>';
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 					range.selectNodeContents(editor.editor.querySelector('span'));
 					range.collapse(false);
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
-					editor.selection.insertHTML('stop');
+					editor.s.insertHTML('stop');
 					expect(editor.value).equals('<p>one <span>twostop</span> three</p>');
 
 					editor.setMode(Jodit.MODE_SOURCE);
 
-					editor.selection.insertHTML('loop');
+					editor.s.insertHTML('loop');
 					expect(editor.value).equals('<p>one <span>twostoploop</span> three</p>');
 				});
 			});

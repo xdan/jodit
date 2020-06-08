@@ -112,7 +112,7 @@ export class DragAndDropElement extends Plugin {
 			top: event.clientY
 		});
 
-		this.j.selection.insertCursorAtPoint(event.clientX, event.clientY);
+		this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
 	}, this.j.defaultTimeout);
 
 	private onDragEnd = () => {
@@ -143,7 +143,7 @@ export class DragAndDropElement extends Plugin {
 			fragment = fragment.cloneNode(true) as HTMLElement;
 		}
 
-		this.j.selection.insertNode(fragment, true, false);
+		this.j.s.insertNode(fragment, true, false);
 
 		if (Dom.isTag(fragment, 'img') && this.j.e) {
 			this.j.e.fire('afterInsertImage', fragment);

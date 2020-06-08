@@ -65,7 +65,7 @@ describe('Clean html plugin', function() {
 				].forEach(function(test) {
 					editor.value = test[0];
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 
 					if (typeof test[1] === 'string') {
 						range.setStartBefore(
@@ -76,7 +76,7 @@ describe('Clean html plugin', function() {
 						test[1](range);
 					}
 
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 					simulateEvent('click', 0, button);
 
 					expect(editor.value).equals(test[2]);
@@ -109,19 +109,19 @@ describe('Clean html plugin', function() {
 				].forEach(function(test) {
 					editor.value = test[0];
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 					range.selectNodeContents(
 						editor.editor.querySelector(test[1])
 					);
 					range.collapse(false);
 
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
 					const button = getButton('eraser', editor);
 
 					simulateEvent('click', 0, button);
 
-					editor.selection.insertHTML(' pop ');
+					editor.s.insertHTML(' pop ');
 
 					expect(editor.value).equals(test[2]);
 				});
@@ -137,14 +137,14 @@ describe('Clean html plugin', function() {
 				}
 			});
 			editor.value = 'test <b>old</b> test';
-			const range = editor.selection.createRange();
+			const range = editor.s.createRange();
 			range.setStart(editor.editor.querySelector('b').firstChild, 2);
 			range.collapse(true);
-			editor.selection.selectRange(range);
+			editor.s.selectRange(range);
 
 			simulateEvent('mousedown', 0, editor.editor);
 
-			editor.selection.insertHTML(' some ');
+			editor.s.insertHTML(' some ');
 
 			expect(editor.value).equals('test <strong>ol some d</strong> test');
 		});
@@ -160,14 +160,14 @@ describe('Clean html plugin', function() {
 					}
 				});
 				editor.value = '<p>test <b>old</b> test</p>';
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 				range.setStart(editor.editor.querySelector('b').firstChild, 2);
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				simulateEvent('mousedown', 0, editor.editor);
 
-				editor.selection.insertHTML(' some ');
+				editor.s.insertHTML(' some ');
 
 				expect(editor.value).equals(
 					'<div>test <strong>ol some d</strong> test</div>'
@@ -184,14 +184,14 @@ describe('Clean html plugin', function() {
 					}
 				});
 				editor.value = 'test <b>old</b> test';
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 				range.setStart(editor.editor.querySelector('b').firstChild, 2);
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				simulateEvent('mousedown', 0, editor.editor);
 
-				editor.selection.insertHTML(' some ');
+				editor.s.insertHTML(' some ');
 
 				expect(editor.value).equals('test <b>ol some d</b> test');
 			});

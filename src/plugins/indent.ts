@@ -23,7 +23,7 @@ const getKey = (direction: string) =>
 
 Config.prototype.controls.outdent = {
 	isDisabled: (editor: IJodit): boolean => {
-		const current = editor.selection.current();
+		const current = editor.s.current();
 
 		if (current) {
 			const currentBox = Dom.closest(
@@ -66,8 +66,8 @@ export function indent(editor: IJodit) {
 	const callback = (command: string): void | false => {
 		const indentedBoxes: HTMLElement[] = [];
 
-		editor.selection.eachSelection((current: Node): false | void => {
-			const selectionInfo = editor.selection.save();
+		editor.s.eachSelection((current: Node): false | void => {
+			const selectionInfo = editor.s.save();
 
 			let currentBox = current
 				? (Dom.up(
@@ -88,7 +88,7 @@ export function indent(editor: IJodit) {
 			}
 
 			if (!currentBox) {
-				editor.selection.restore(selectionInfo);
+				editor.s.restore(selectionInfo);
 				return false;
 			}
 
@@ -111,7 +111,7 @@ export function indent(editor: IJodit) {
 				}
 			}
 
-			editor.selection.restore(selectionInfo);
+			editor.s.restore(selectionInfo);
 		});
 
 		editor.setEditorValue();

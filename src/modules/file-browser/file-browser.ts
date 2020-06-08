@@ -351,7 +351,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	 * fb.open(function (data) {
 	 *     var i;
 	 *     for (i = 0;i < data.files.length; i += 1) {
-	 *         parent.selection.insertImage(data.baseurl + data.files[i]);
+	 *         parent.s.insertImage(data.baseurl + data.files[i]);
 	 *     }
 	 * });
 	 * ```

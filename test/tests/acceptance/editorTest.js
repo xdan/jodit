@@ -6,7 +6,7 @@ describe('Jodit Editor Tests', function() {
 
 		it('Constructor default should not be in global scope', function() {
 			expect(window.default).is.not.a('function');
-			expect(window.default).does.equal(window.Jodit);
+			expect(window.default).does.not.equal(window.Jodit);
 		});
 
 		describe('First argument', function() {
@@ -489,8 +489,8 @@ describe('Jodit Editor Tests', function() {
 				it('Should return HTML with selections markers', function() {
 					const editor = getJodit();
 					editor.value = 'test';
-					editor.selection.setCursorAfter(editor.editor.firstChild);
-					editor.selection.save(); // add selection markers
+					editor.s.setCursorAfter(editor.editor.firstChild);
+					editor.s.save(); // add selection markers
 					expect(
 						/<span[^>]+id="jodit_selection_marker_[^>]+><\/span>/.test(
 							editor.getEditorValue(false)
@@ -656,7 +656,7 @@ describe('Jodit Editor Tests', function() {
 			sel.removeAllRanges();
 			sel.addRange(range);
 
-			expect(editor.selection.current()).is.null;
+			expect(editor.s.current()).is.null;
 			div.parentNode.removeChild(div);
 		});
 
@@ -667,16 +667,16 @@ describe('Jodit Editor Tests', function() {
 
 			editor.value = '';
 			div.appendChild(text);
-			editor.selection.insertNode(div);
-			editor.selection.setCursorIn(text);
+			editor.s.insertNode(div);
+			editor.s.setCursorIn(text);
 
-			expect(editor.selection.current()).equals(text);
+			expect(editor.s.current()).equals(text);
 		});
 
 		it('Insert simple text node in editor', function() {
 			const area = appendTestArea();
 			const editor = new Jodit(area);
-			editor.selection.insertNode(editor.createInside.text('Test'));
+			editor.s.insertNode(editor.createInside.text('Test'));
 			expect(editor.value).equals('Test');
 			editor.destruct();
 		});
@@ -689,7 +689,7 @@ describe('Jodit Editor Tests', function() {
 				const div = editor.editorDocument.createElement('div');
 
 				div.innerHTML = digit;
-				editor.selection.insertNode(div);
+				editor.s.insertNode(div);
 			}
 
 			insert(1);
@@ -705,15 +705,15 @@ describe('Jodit Editor Tests', function() {
 			const editor = new Jodit(area);
 
 			expect(function() {
-				editor.selection.insertNode();
+				editor.s.insertNode();
 			}).to.throw(/node must be/);
 
 			expect(function() {
-				editor.selection.insertNode('Text');
+				editor.s.insertNode('Text');
 			}).to.throw(/node must be/);
 
 			expect(function() {
-				editor.selection.insertNode(null);
+				editor.s.insertNode(null);
 			}).to.throw(/node must be/);
 
 			editor.destruct();
@@ -742,8 +742,8 @@ describe('Jodit Editor Tests', function() {
 				document.body.appendChild(p);
 
 				editor.value = '<p>Hello world</p>';
-				editor.selection.focus();
-				editor.selection.setCursorAfter(editor.editor.firstChild);
+				editor.s.focus();
+				editor.s.setCursorAfter(editor.editor.firstChild);
 
 				expect(editor.editorIsActive).is.true;
 
@@ -752,8 +752,8 @@ describe('Jodit Editor Tests', function() {
 				expect(editor.editorIsActive).is.false;
 				document.body.removeChild(input);
 
-				editor.selection.focus();
-				editor.selection.setCursorAfter(editor.editor.firstChild);
+				editor.s.focus();
+				editor.s.setCursorAfter(editor.editor.firstChild);
 				expect(editor.editorIsActive).is.true;
 
 				const sel = window.getSelection(),
@@ -783,12 +783,12 @@ describe('Jodit Editor Tests', function() {
 					editor.editorDocument.createElement('span')
 				];
 
-				editor.selection.insertNode(spans[0]);
-				editor.selection.insertNode(spans[1]);
-				editor.selection.insertNode(spans[2]);
+				editor.s.insertNode(spans[0]);
+				editor.s.insertNode(spans[1]);
+				editor.s.insertNode(spans[2]);
 
-				editor.selection.setCursorAfter(spans[1]);
-				editor.selection.insertNode(
+				editor.s.setCursorAfter(spans[1]);
+				editor.s.insertNode(
 					editor.editorDocument.createElement('i')
 				);
 
@@ -803,7 +803,7 @@ describe('Jodit Editor Tests', function() {
 
 				expect(function() {
 					const div = editor.editorDocument.createElement('div');
-					editor.selection.setCursorIn(div);
+					editor.s.setCursorIn(div);
 				}).to.Throw(/in editor/);
 			});
 		});

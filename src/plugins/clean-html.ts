@@ -119,18 +119,18 @@ export class cleanHtml extends Plugin {
 
 		const editor = this.j;
 
-		const current = editor.selection.current();
+		const current = editor.s.current();
 
 		const replaceOldTags = editor.o.cleanHTML.replaceOldTags;
 
 		if (replaceOldTags && current) {
 			const tags = Object.keys(replaceOldTags) as HTMLTagNames[];
 
-			if (editor.selection.isCollapsed()) {
+			if (editor.s.isCollapsed()) {
 				const oldParent = Dom.closest(current, tags, editor.editor);
 
 				if (oldParent) {
-					const selInfo = editor.selection.save(),
+					const selInfo = editor.s.save(),
 						tagName: string =
 							replaceOldTags[oldParent.nodeName.toLowerCase()] ||
 							replaceOldTags[oldParent.nodeName];
@@ -143,7 +143,7 @@ export class cleanHtml extends Plugin {
 						false
 					);
 
-					editor.selection.restore(selInfo);
+					editor.s.restore(selInfo);
 				}
 			}
 		}
@@ -297,7 +297,7 @@ export class cleanHtml extends Plugin {
 			return;
 		}
 
-		const currentNode = editor.selection.current();
+		const currentNode = editor.s.current();
 
 		if (currentNode) {
 			const currentParagraph = Dom.up(
@@ -321,9 +321,9 @@ export class cleanHtml extends Plugin {
 
 							if (
 								node === currentNode &&
-								editor.selection.isCollapsed()
+								editor.s.isCollapsed()
 							) {
-								editor.selection.setCursorAfter(node);
+								editor.s.setCursorAfter(node);
 							}
 						}
 					}
@@ -367,7 +367,7 @@ export class cleanHtml extends Plugin {
 				}
 			}
 
-			this.j.selection.setCursorIn(node);
+			this.j.s.setCursorIn(node);
 		}
 	}
 
@@ -415,10 +415,10 @@ export class cleanHtml extends Plugin {
 				parentNode.parentNode &&
 				parentNode.parentNode !== fragment
 			) {
-				const second = this.j.selection.splitSelection(
+				const second = this.j.s.splitSelection(
 					parentNode as HTMLElement
 				);
-				this.j.selection.setCursorAfter(second || parentNode);
+				this.j.s.setCursorAfter(second || parentNode);
 
 				if (Dom.isEmpty(parentNode)) {
 					Dom.safeRemove(parentNode);
@@ -533,7 +533,7 @@ export class cleanHtml extends Plugin {
 			current !== null &&
 			Dom.isElement(node) &&
 			node.nodeName.match(IS_INLINE) !== null &&
-			!this.j.selection.isMarker(node) &&
+			!this.j.s.isMarker(node) &&
 			trim((node as Element).innerHTML).length === 0 &&
 			!Dom.isOrContains(node, current)
 		);

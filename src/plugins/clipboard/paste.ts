@@ -88,7 +88,7 @@ Config.prototype.controls.paste = {
 	tooltip: 'Paste from clipboard',
 
 	async exec(editor: IJodit) {
-		editor.selection.focus();
+		editor.s.focus();
 
 		let text = '',
 			error = true;
@@ -123,7 +123,7 @@ Config.prototype.controls.paste = {
 		}
 
 		if (text) {
-			editor.selection.insertHTML(text);
+			editor.s.insertHTML(text);
 		} else {
 			if (error) {
 				Alert(
@@ -131,7 +131,7 @@ Config.prototype.controls.paste = {
 						"Your browser doesn't support direct access to the clipboard."
 					),
 					() => {
-						editor.selection.focus();
+						editor.s.focus();
 					}
 				).bindDestruct(editor);
 			}
@@ -233,7 +233,7 @@ export function paste(editor: IJodit) {
 			editor.buffer.set(clipboardPluginKey, html);
 		}
 
-		editor.selection.insertHTML(html);
+		editor.s.insertHTML(html);
 	};
 
 	const insertHTML = (
@@ -247,7 +247,7 @@ export function paste(editor: IJodit) {
 
 			const pasteHTMLByType = (insertType: string) => {
 				if (event.type === 'drop') {
-					editor.selection.insertCursorAtPoint(
+					editor.s.insertCursorAtPoint(
 						(event as DragEvent).clientX,
 						(event as DragEvent).clientY
 					);
@@ -342,7 +342,7 @@ export function paste(editor: IJodit) {
 								html = stripTags(cleanFromWord(html));
 							}
 
-							editor.selection.insertHTML(html);
+							editor.s.insertHTML(html);
 							editor.setEditorValue();
 						};
 
@@ -402,14 +402,14 @@ export function paste(editor: IJodit) {
 
 				editor.container.appendChild(div);
 
-				const selData = editor.selection.save();
+				const selData = editor.s.save();
 
 				div.focus();
 				let tick: number = 0;
 
 				const removeFakeFocus = () => {
 					Dom.safeRemove(div);
-					editor.selection && editor.selection.restore(selData);
+					editor.selection && editor.s.restore(selData);
 				};
 
 				const waitData = () => {
@@ -422,7 +422,7 @@ export function paste(editor: IJodit) {
 						removeFakeFocus();
 
 						if (processHTMLData(pastedData) !== false) {
-							editor.selection.insertHTML(pastedData);
+							editor.s.insertHTML(pastedData);
 						}
 
 						return;
@@ -549,7 +549,7 @@ export function paste(editor: IJodit) {
 						Dom.isNode(clipboard_html, editor.editorWindow)
 					) {
 						if (event.type === 'drop') {
-							editor.selection.insertCursorAtPoint(
+							editor.s.insertCursorAtPoint(
 								(event as DragEvent).clientX,
 								(event as DragEvent).clientY
 							);

@@ -15,7 +15,7 @@ describe('Selection Module Tests', function() {
 				sel.removeAllRanges();
 				sel.addRange(range);
 
-				expect(editor.selection.current()).is.null;
+				expect(editor.s.current()).is.null;
 				document.body.removeChild(div);
 			});
 		});
@@ -24,13 +24,13 @@ describe('Selection Module Tests', function() {
 			it('Should return text before this span', function() {
 				const editor = getJodit();
 				editor.value = '<h1>one<span>two</span>tree</h1>';
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 				range.setStart(editor.editor.firstChild, 1);
 				range.collapse(true);
 
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
-				expect(editor.selection.current()).equals(
+				expect(editor.s.current()).equals(
 					editor.editor.firstChild.firstChild
 				); //one
 			});
@@ -39,12 +39,12 @@ describe('Selection Module Tests', function() {
 			it('Should return text', function() {
 				const editor = getJodit();
 				editor.value = '<h1>test</h1>';
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 				range.setStart(editor.editor.firstChild.firstChild, 1);
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
-				expect(editor.selection.current()).equals(
+				expect(editor.s.current()).equals(
 					editor.editor.firstChild.firstChild
 				); // test
 			});
@@ -53,12 +53,12 @@ describe('Selection Module Tests', function() {
 			it('Should return text inside h1', function() {
 				const editor = getJodit();
 				editor.value = '<h1>test</h1>';
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 				range.setStart(editor.editor, 1);
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
-				expect(editor.selection.current()).equals(
+				expect(editor.s.current()).equals(
 					editor.editor.firstChild.firstChild
 				); // test
 			});
@@ -67,15 +67,15 @@ describe('Selection Module Tests', function() {
 				it('Should return h1', function() {
 					const editor = getJodit();
 					editor.value = '<h1>test</h1>';
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 					range.setStart(editor.editor, 1);
 					range.collapse(true);
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
 					expect([
 						editor.editor.firstChild,
 						editor.editor.firstChild.firstChild
-					]).to.include(editor.selection.current(false)); // h1
+					]).to.include(editor.s.current(false)); // h1
 				});
 			});
 		});
@@ -83,11 +83,11 @@ describe('Selection Module Tests', function() {
 			it('Should return this image', function() {
 				const editor = getJodit();
 				editor.value = '<h1>test <img src="#" alt=""> sdfsdfs</h1>';
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 				range.selectNode(editor.editor.querySelector('img'));
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
-				expect(editor.selection.current()).equals(
+				expect(editor.s.current()).equals(
 					editor.editor.querySelector('img')
 				);
 			});
@@ -103,23 +103,23 @@ describe('Selection Module Tests', function() {
 							const editor = getJodit();
 							editor.value = '<ul><li><p>test</p></li></ul>';
 
-							const range = editor.selection.createRange();
+							const range = editor.s.createRange();
 
 							range.setStartAfter(
 								editor.editor.querySelector('p').firstChild
 							);
 							range.collapse(true);
-							editor.selection.selectRange(range);
+							editor.s.selectRange(range);
 
 							['li', 'p'].forEach(function(tag) {
 								expect(
-									editor.selection.cursorOnTheLeft(
+									editor.s.cursorOnTheLeft(
 										editor.editor.querySelector(tag)
 									)
 								).is.false;
 
 								expect(
-									editor.selection.cursorOnTheRight(
+									editor.s.cursorOnTheRight(
 										editor.editor.querySelector(tag)
 									)
 								).is.true;
@@ -132,23 +132,23 @@ describe('Selection Module Tests', function() {
 							const editor = getJodit();
 							editor.value = '<ul><li><p>test</p></li></ul>';
 
-							const range = editor.selection.createRange();
+							const range = editor.s.createRange();
 
 							range.setStartBefore(
 								editor.editor.querySelector('p').firstChild
 							);
 							range.collapse(true);
-							editor.selection.selectRange(range);
+							editor.s.selectRange(range);
 
 							['li', 'p'].forEach(function(tag) {
 								expect(
-									editor.selection.cursorOnTheLeft(
+									editor.s.cursorOnTheLeft(
 										editor.editor.querySelector(tag)
 									)
 								).is.true;
 
 								expect(
-									editor.selection.cursorOnTheRight(
+									editor.s.cursorOnTheRight(
 										editor.editor.querySelector(tag)
 									)
 								).is.false;
@@ -163,14 +163,14 @@ describe('Selection Module Tests', function() {
 					const editor = getJodit();
 					editor.value = '<p>test<br></p>';
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 
 					range.setStart(editor.editor.firstChild.firstChild, 4);
 					range.collapse(true);
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
 					expect(
-						editor.selection.cursorOnTheRight(
+						editor.s.cursorOnTheRight(
 							editor.editor.firstChild
 						)
 					).is.true;
@@ -182,14 +182,14 @@ describe('Selection Module Tests', function() {
 					const editor = getJodit();
 					editor.value = '<p>test<img/></p>';
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 
 					range.setStart(editor.editor.firstChild.firstChild, 4);
 					range.collapse(true);
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
 					expect(
-						editor.selection.cursorOnTheRight(
+						editor.s.cursorOnTheRight(
 							editor.editor.firstChild
 						)
 					).is.false;
@@ -201,14 +201,14 @@ describe('Selection Module Tests', function() {
 					const editor = getJodit();
 					editor.value = '<p>test</p>';
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 
 					range.setStart(editor.editor.firstChild.firstChild, 2);
 					range.collapse(true);
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
 					expect(
-						editor.selection.cursorOnTheRight(
+						editor.s.cursorOnTheRight(
 							editor.editor.firstChild
 						)
 					).is.false;
@@ -224,14 +224,14 @@ describe('Selection Module Tests', function() {
 							Jodit.INVISIBLE_SPACE +
 							'</p>';
 
-						const range = editor.selection.createRange();
+						const range = editor.s.createRange();
 
 						range.setStart(editor.editor.firstChild.firstChild, 4);
 						range.collapse(true);
-						editor.selection.selectRange(range);
+						editor.s.selectRange(range);
 
 						expect(
-							editor.selection.cursorOnTheRight(
+							editor.s.cursorOnTheRight(
 								editor.editor.firstChild
 							)
 						).is.true;
@@ -247,14 +247,14 @@ describe('Selection Module Tests', function() {
 							Jodit.INVISIBLE_SPACE +
 							'test</p>';
 
-						const range = editor.selection.createRange();
+						const range = editor.s.createRange();
 
 						range.setStart(editor.editor.firstChild.firstChild, 3);
 						range.collapse(true);
-						editor.selection.selectRange(range);
+						editor.s.selectRange(range);
 
 						expect(
-							editor.selection.cursorOnTheLeft(
+							editor.s.cursorOnTheLeft(
 								editor.editor.firstChild
 							)
 						).is.true;
@@ -266,21 +266,21 @@ describe('Selection Module Tests', function() {
 						const editor = getJodit();
 						editor.value = '<p>test</p>';
 
-						const range = editor.selection.createRange();
+						const range = editor.s.createRange();
 
 						range.setStart(editor.editor.firstChild.firstChild, 4);
 						range.collapse(true);
-						editor.selection.selectRange(range);
-						editor.selection.insertNode(
+						editor.s.selectRange(range);
+						editor.s.insertNode(
 							editor.createInside.text('a')
 						);
 
 						range.setStart(editor.editor.firstChild.firstChild, 4);
 						range.collapse(true);
-						editor.selection.selectRange(range);
+						editor.s.selectRange(range);
 
 						expect(
-							editor.selection.cursorOnTheRight(
+							editor.s.cursorOnTheRight(
 								editor.editor.firstChild
 							)
 						).is.false;
@@ -291,22 +291,22 @@ describe('Selection Module Tests', function() {
 							const editor = getJodit();
 							editor.value = '<p>test</p>';
 
-							const range = editor.selection.createRange();
+							const range = editor.s.createRange();
 
 							range.setStart(
 								editor.editor.firstChild.firstChild,
 								4
 							);
 							range.collapse(true);
-							editor.selection.selectRange(range);
+							editor.s.selectRange(range);
 
-							editor.selection.insertNode(
+							editor.s.insertNode(
 								editor.createInside.text(Jodit.INVISIBLE_SPACE)
 							);
-							editor.selection.insertNode(
+							editor.s.insertNode(
 								editor.createInside.text(Jodit.INVISIBLE_SPACE)
 							);
-							editor.selection.insertNode(
+							editor.s.insertNode(
 								editor.createInside.text(Jodit.INVISIBLE_SPACE)
 							);
 
@@ -315,10 +315,10 @@ describe('Selection Module Tests', function() {
 								4
 							);
 							range.collapse(true);
-							editor.selection.selectRange(range);
+							editor.s.selectRange(range);
 
 							expect(
-								editor.selection.cursorOnTheRight(
+								editor.s.cursorOnTheRight(
 									editor.editor.firstChild
 								)
 							).is.true;
@@ -331,15 +331,15 @@ describe('Selection Module Tests', function() {
 								const editor = getJodit();
 								editor.value = '<p>test</p>';
 
-								const range = editor.selection.createRange();
+								const range = editor.s.createRange();
 
 								range.setStart(
 									editor.editor.firstChild.firstChild,
 									0
 								);
 								range.collapse(true);
-								editor.selection.selectRange(range);
-								editor.selection.insertNode(
+								editor.s.selectRange(range);
+								editor.s.insertNode(
 									editor.createInside.text('a')
 								);
 
@@ -348,10 +348,10 @@ describe('Selection Module Tests', function() {
 									0
 								);
 								range.collapse(true);
-								editor.selection.selectRange(range);
+								editor.s.selectRange(range);
 
 								expect(
-									editor.selection.cursorOnTheLeft(
+									editor.s.cursorOnTheLeft(
 										editor.editor.firstChild
 									)
 								).is.false;
@@ -361,26 +361,26 @@ describe('Selection Module Tests', function() {
 									const editor = getJodit();
 									editor.value = '<p>test</p>';
 
-									const range = editor.selection.createRange();
+									const range = editor.s.createRange();
 
 									range.setStart(
 										editor.editor.firstChild.firstChild,
 										0
 									);
 									range.collapse(true);
-									editor.selection.selectRange(range);
+									editor.s.selectRange(range);
 
-									editor.selection.insertNode(
+									editor.s.insertNode(
 										editor.createInside.text(
 											Jodit.INVISIBLE_SPACE
 										)
 									);
-									editor.selection.insertNode(
+									editor.s.insertNode(
 										editor.createInside.text(
 											Jodit.INVISIBLE_SPACE
 										)
 									);
-									editor.selection.insertNode(
+									editor.s.insertNode(
 										editor.createInside.text(
 											Jodit.INVISIBLE_SPACE
 										)
@@ -391,10 +391,10 @@ describe('Selection Module Tests', function() {
 										0
 									);
 									range.collapse(true);
-									editor.selection.selectRange(range);
+									editor.s.selectRange(range);
 
 									expect(
-										editor.selection.cursorOnTheLeft(
+										editor.s.cursorOnTheLeft(
 											editor.editor.firstChild
 										)
 									).is.true;
@@ -411,14 +411,14 @@ describe('Selection Module Tests', function() {
 				const editor = getJodit();
 				editor.value = '<p>test</p>';
 
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 
 				range.setStartAfter(editor.editor.firstChild);
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				expect(
-					editor.selection.cursorOnTheRight(editor.editor.firstChild)
+					editor.s.cursorOnTheRight(editor.editor.firstChild)
 				).is.null;
 			});
 		});
@@ -428,14 +428,14 @@ describe('Selection Module Tests', function() {
 				const editor = getJodit();
 				editor.value = '<p>test</p>';
 
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 
 				range.setStartBefore(editor.editor.firstChild);
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				expect(
-					editor.selection.cursorOnTheLeft(editor.editor.firstChild)
+					editor.s.cursorOnTheLeft(editor.editor.firstChild)
 				).is.null;
 			});
 		});
@@ -445,14 +445,14 @@ describe('Selection Module Tests', function() {
 				const editor = getJodit();
 				editor.value = '<p><span>test</span></p>';
 
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 
 				range.setStartBefore(editor.editor.firstChild.firstChild);
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				expect(
-					editor.selection.cursorOnTheLeft(editor.editor.firstChild)
+					editor.s.cursorOnTheLeft(editor.editor.firstChild)
 				).is.true;
 			});
 		});
@@ -462,14 +462,14 @@ describe('Selection Module Tests', function() {
 				const editor = getJodit();
 				editor.value = '<p><span>test</span></p>';
 
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 
 				range.setStartAfter(editor.editor.firstChild.firstChild);
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				expect(
-					editor.selection.cursorOnTheRight(editor.editor.firstChild)
+					editor.s.cursorOnTheRight(editor.editor.firstChild)
 				).is.true;
 			});
 		});
@@ -479,14 +479,14 @@ describe('Selection Module Tests', function() {
 				const editor = getJodit();
 				editor.value = '<p><span>test</span><span>stop</span></p>';
 
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 
 				range.setStartAfter(editor.editor.firstChild.firstChild);
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				expect(
-					editor.selection.cursorOnTheRight(editor.editor.firstChild)
+					editor.s.cursorOnTheRight(editor.editor.firstChild)
 				).is.false;
 			});
 		});
@@ -496,14 +496,14 @@ describe('Selection Module Tests', function() {
 				const editor = getJodit();
 				editor.value = '<p><span>test</span><span>stop</span></p>';
 
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 
 				range.setStartAfter(editor.editor.firstChild.firstChild);
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				expect(
-					editor.selection.cursorOnTheLeft(editor.editor.firstChild)
+					editor.s.cursorOnTheLeft(editor.editor.firstChild)
 				).is.false;
 			});
 		});
@@ -513,8 +513,8 @@ describe('Selection Module Tests', function() {
 				const editor = getJodit();
 				editor.value = '<p>test</p>';
 
-				const sel = editor.selection.sel,
-					range = editor.selection.createRange();
+				const sel = editor.s.sel,
+					range = editor.s.createRange();
 
 				range.setStart(editor.editor.firstChild.firstChild, 4);
 				range.collapse(true);
@@ -522,7 +522,7 @@ describe('Selection Module Tests', function() {
 				sel.addRange(range);
 
 				expect(
-					editor.selection.cursorOnTheRight(editor.editor.firstChild)
+					editor.s.cursorOnTheRight(editor.editor.firstChild)
 				).is.true;
 
 				range.setStart(editor.editor.firstChild.firstChild, 2);
@@ -531,7 +531,7 @@ describe('Selection Module Tests', function() {
 				sel.addRange(range);
 
 				expect(
-					editor.selection.cursorOnTheRight(editor.editor.firstChild)
+					editor.s.cursorOnTheRight(editor.editor.firstChild)
 				).is.false;
 			});
 		});
@@ -541,8 +541,8 @@ describe('Selection Module Tests', function() {
 				const editor = getJodit();
 				editor.value = '<p>test<span>1</span></p>';
 
-				const sel = editor.selection.sel,
-					range = editor.selection.createRange();
+				const sel = editor.s.sel,
+					range = editor.s.createRange();
 
 				range.selectNodeContents(editor.editor.firstChild.lastChild);
 				range.collapse(false);
@@ -550,7 +550,7 @@ describe('Selection Module Tests', function() {
 				sel.addRange(range);
 
 				expect(
-					editor.selection.cursorInTheEdge(
+					editor.s.cursorInTheEdge(
 						false,
 						editor.editor.firstChild
 					)
@@ -563,8 +563,8 @@ describe('Selection Module Tests', function() {
 				const editor = getJodit();
 				editor.value = '<p>Some <span>text</span></p>';
 
-				const sel = editor.selection.sel,
-					range = editor.selection.createRange();
+				const sel = editor.s.sel,
+					range = editor.s.createRange();
 
 				range.selectNodeContents(editor.editor.firstChild.lastChild);
 				range.collapse(false);
@@ -572,7 +572,7 @@ describe('Selection Module Tests', function() {
 				sel.addRange(range);
 
 				expect(
-					editor.selection.cursorInTheEdge(
+					editor.s.cursorInTheEdge(
 						true,
 						editor.editor.firstChild
 					)
@@ -587,8 +587,8 @@ describe('Selection Module Tests', function() {
 
 			editor.value = '<p>test</p>';
 
-			const sel = editor.selection.sel,
-				range = editor.selection.createRange();
+			const sel = editor.s.sel,
+				range = editor.s.createRange();
 
 			range.setStart(editor.editor.firstChild.firstChild, 2);
 			range.collapse(true);
@@ -645,7 +645,7 @@ describe('Selection Module Tests', function() {
 						sel.removeAllRanges();
 						sel.addRange(range);
 
-						jodit.selection.insertHTML('hello');
+						jodit.s.insertHTML('hello');
 
 						jodit.setMode(Jodit.MODE_SOURCE);
 
@@ -688,7 +688,7 @@ describe('Selection Module Tests', function() {
 			mirror.setSelectionRange(5, 5);
 
 			editor.setMode(Jodit.MODE_WYSIWYG);
-			editor.selection.insertNode(editor.createInside.text(' a '));
+			editor.s.insertNode(editor.createInside.text(' a '));
 
 			expect(editor.value).equals('<p>te a st</p>');
 		});
@@ -699,8 +699,8 @@ describe('Selection Module Tests', function() {
 			});
 			editor.value = '<p>test</p>';
 
-			const sel = editor.selection.sel,
-				range = editor.selection.createRange();
+			const sel = editor.s.sel,
+				range = editor.s.createRange();
 
 			range.setStart(editor.editor.firstChild.firstChild, 1);
 			range.setEnd(editor.editor.firstChild.firstChild, 3);
@@ -724,7 +724,7 @@ describe('Selection Module Tests', function() {
 					useAceEditor: false,
 					defaultMode: Jodit.MODE_SOURCE
 				});
-				editor.selection.focus();
+				editor.s.focus();
 				editor.value = '<p>test</p>';
 
 				const mirror = editor.container.querySelector(
@@ -734,9 +734,9 @@ describe('Selection Module Tests', function() {
 
 				editor.setMode(Jodit.MODE_WYSIWYG);
 
-				expect(editor.selection.isCollapsed()).is.false;
+				expect(editor.s.isCollapsed()).is.false;
 
-				editor.selection.insertNode(editor.createInside.text(' a '));
+				editor.s.insertNode(editor.createInside.text(' a '));
 				expect(editor.value).equals(' a ');
 			});
 		});
@@ -754,8 +754,8 @@ describe('Selection Module Tests', function() {
 			mirror.setSelectionRange(4, 4);
 
 			editor.setMode(Jodit.MODE_WYSIWYG);
-			expect(editor.selection.isCollapsed()).is.true;
-			editor.selection.insertNode(editor.createInside.text(' a '));
+			expect(editor.s.isCollapsed()).is.true;
+			editor.s.insertNode(editor.createInside.text(' a '));
 			expect(editor.value).equals('<a>1 a 1</a>');
 		});
 	});
@@ -769,7 +769,7 @@ describe('Selection Module Tests', function() {
 				0,
 				editor.editor.getElementsByTagName('p')[1]
 			);
-			editor.selection.insertHTML('test');
+			editor.s.insertHTML('test');
 			expect('<p></p><p>test</p><p></p>').equals(editor.value);
 		});
 	});
@@ -780,7 +780,7 @@ describe('Selection Module Tests', function() {
 				const editor = getJodit();
 				editor.value = '<p>1</p><p>2</p>';
 				expect(function() {
-					editor.selection.setCursorIn(
+					editor.s.setCursorIn(
 						editor.editor.querySelector('strong')
 					);
 				}).to.throw();
@@ -790,11 +790,11 @@ describe('Selection Module Tests', function() {
 				it('Should not throw exception', function() {
 					const editor = getJodit();
 					editor.value = '<p>1<span>3</span>2</p>';
-					editor.selection.select(
+					editor.s.select(
 						editor.editor.querySelector('span')
 					);
-					const fragment = editor.selection.range.extractContents();
-					editor.selection.insertNode(fragment);
+					const fragment = editor.s.range.extractContents();
+					editor.s.insertNode(fragment);
 				});
 			});
 		});
@@ -803,7 +803,7 @@ describe('Selection Module Tests', function() {
 			it('Should throw exception', function() {
 				const editor = getJodit();
 				expect(function() {
-					editor.selection.setCursorIn(document.body);
+					editor.s.setCursorIn(document.body);
 				}).to.throw();
 			});
 		});
@@ -812,8 +812,8 @@ describe('Selection Module Tests', function() {
 			const editor = getJodit();
 			editor.value = '<p>1</p><p>2</p>';
 
-			editor.selection.setCursorIn(editor.editor.lastChild);
-			editor.selection.insertHTML('test');
+			editor.s.setCursorIn(editor.editor.lastChild);
+			editor.s.insertHTML('test');
 
 			expect(editor.value).equals('<p>1</p><p>2test</p>');
 		});
@@ -823,8 +823,8 @@ describe('Selection Module Tests', function() {
 				const editor = getJodit();
 				editor.value = '<p>1</p><p>2</p>';
 
-				editor.selection.setCursorIn(editor.editor.lastChild, true);
-				editor.selection.insertHTML('test');
+				editor.s.setCursorIn(editor.editor.lastChild, true);
+				editor.s.insertHTML('test');
 
 				expect(editor.value).equals('<p>1</p><p>test2</p>');
 			});
@@ -836,13 +836,13 @@ describe('Selection Module Tests', function() {
 			const editor = getJodit();
 			editor.value =
 				'<p>1</p><p>2</p><strong><span>22</span></strong><p>4</p>stop';
-			const range = editor.selection.createRange();
+			const range = editor.s.createRange();
 			range.setStartBefore(editor.editor.firstChild);
 			range.setEndAfter(editor.editor.lastChild);
-			editor.selection.selectRange(range);
+			editor.s.selectRange(range);
 
 			const nodesNames = [];
-			editor.selection.eachSelection(function(node) {
+			editor.s.eachSelection(function(node) {
 				nodesNames.push(node.nodeName);
 			});
 
@@ -854,13 +854,13 @@ describe('Selection Module Tests', function() {
 			const editor = getJodit();
 			editor.value =
 				'<p>1</p><p>2</p><strong><span>22</span></strong><p>4</p>stop';
-			const range = editor.selection.createRange();
+			const range = editor.s.createRange();
 			range.setStartBefore(editor.editor.firstChild.nextSibling);
 			range.setEndAfter(editor.editor.lastChild.previousSibling);
-			editor.selection.selectRange(range);
+			editor.s.selectRange(range);
 
 			const nodesNames = [];
-			editor.selection.eachSelection(function(node) {
+			editor.s.eachSelection(function(node) {
 				nodesNames.push(node.nodeName);
 			});
 
@@ -872,10 +872,10 @@ describe('Selection Module Tests', function() {
 			const editor = getJodit();
 			editor.value = '';
 
-			editor.selection.setCursorIn(editor.editor);
+			editor.s.setCursorIn(editor.editor);
 
 			const nodesNames = [];
-			editor.selection.eachSelection(function(node) {
+			editor.s.eachSelection(function(node) {
 				nodesNames.push(node.nodeName);
 			});
 
@@ -887,10 +887,10 @@ describe('Selection Module Tests', function() {
 			const editor = getJodit();
 			editor.value = '<p>1</p><p>2</p>';
 
-			editor.selection.setCursorIn(editor.editor.firstChild);
+			editor.s.setCursorIn(editor.editor.firstChild);
 
 			const nodesNames = [];
-			editor.selection.eachSelection(function(node) {
+			editor.s.eachSelection(function(node) {
 				nodesNames.push(node.nodeName);
 			});
 

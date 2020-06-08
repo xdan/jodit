@@ -33,11 +33,11 @@ describe('Iframe mode', function() {
 								editor.editorDocument.body.innerHTML
 							);
 
-							const range = editor.selection.createRange();
+							const range = editor.s.createRange();
 							range.selectNodeContents(
 								editor.editorDocument.body
 							);
-							editor.selection.selectRange(range);
+							editor.s.selectRange(range);
 
 							editor.execCommand('bold');
 

@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import * as consts from '../core/constants';
-import { Dom } from '../core/dom';
-import { $$, scrollIntoView } from '../core/helpers/';
-import { HTMLTagNames, IJodit, Nullable } from '../types';
-import { Plugin } from '../core/plugin';
-import { INVISIBLE_SPACE } from '../core/constants';
+import * as consts from '../../core/constants';
+import { Dom } from '../../core/dom';
+import { $$, scrollIntoView } from '../../core/helpers';
+import { HTMLTagNames, IJodit, Nullable } from '../../types';
+import { Plugin } from '../../core/plugin';
+import { INVISIBLE_SPACE } from '../../core/constants';
 
 /**
  * Insert default paragraph
@@ -35,15 +35,15 @@ export const insertParagraph = (
 		p.setAttribute('style', style.cssText);
 	}
 
-	editor.selection.insertNode(p, false, false);
-	editor.selection.setCursorBefore(helper_node);
+	editor.s.insertNode(p, false, false);
+	editor.s.setCursorBefore(helper_node);
 
-	const range = editor.selection.createRange();
+	const range = editor.s.createRange();
 
 	range.setStartBefore(wrapperTag.toLowerCase() !== 'br' ? helper_node : p);
 	range.collapse(true);
 
-	editor.selection.selectRange(range);
+	editor.s.selectRange(range);
 
 	Dom.safeRemove(fake);
 
@@ -91,11 +91,11 @@ export class enter extends Plugin {
 						return beforeEnter;
 					}
 
-					if (!editor.selection.isCollapsed()) {
+					if (!editor.s.isCollapsed()) {
 						editor.execCommand('Delete');
 					}
 
-					editor.selection.focus();
+					editor.s.focus();
 
 					this.onEnter(event);
 
@@ -109,7 +109,7 @@ export class enter extends Plugin {
 			return;
 		}
 
-		const current = this.j.selection.current(false) as Node;
+		const current = this.j.s.current(false) as Node;
 
 		const currentBox = this.getBlockWrapper(current);
 
@@ -227,7 +227,7 @@ export class enter extends Plugin {
 		) {
 			const br = this.j.createInside.element('br');
 
-			this.j.selection.insertNode(br, true);
+			this.j.s.insertNode(br, true);
 			scrollIntoView(br, this.j.editor, this.j.editorDocument);
 
 			return false;
@@ -255,7 +255,7 @@ export class enter extends Plugin {
 			const helper_node = this.j.createInside.element('br');
 
 			currentBox.appendChild(helper_node);
-			this.j.selection.setCursorBefore(helper_node);
+			this.j.s.setCursorBefore(helper_node);
 		}
 
 		return currentBox;
@@ -308,7 +308,7 @@ export class enter extends Plugin {
 				ul
 			)
 		) {
-			fakeTextNode = this.j.selection.setCursorBefore(ul);
+			fakeTextNode = this.j.s.setCursorBefore(ul);
 			// If there is no LI element after
 		} else if (
 			!Dom.next(
@@ -317,9 +317,9 @@ export class enter extends Plugin {
 				ul
 			)
 		) {
-			fakeTextNode = this.j.selection.setCursorAfter(ul);
+			fakeTextNode = this.j.s.setCursorAfter(ul);
 		} else {
-			const leftRange = this.j.selection.createRange();
+			const leftRange = this.j.s.createRange();
 			leftRange.setStartBefore(ul);
 			leftRange.setEndAfter(currentBox);
 			const fragment = leftRange.extractContents();
@@ -328,7 +328,7 @@ export class enter extends Plugin {
 				ul.parentNode.insertBefore(fragment, ul);
 			}
 
-			fakeTextNode = this.j.selection.setCursorBefore(ul);
+			fakeTextNode = this.j.s.setCursorBefore(ul);
 		}
 
 		Dom.safeRemove(currentBox);

@@ -218,6 +218,9 @@ export interface EventHandlerBlock {
 declare global {
 	interface HTMLElementTagNameMap {
 		jodit: HTMLDivElement;
+		svg: HTMLElement;
+		path: HTMLElement;
+		'jodit-media': HTMLElement;
 	}
 }
 

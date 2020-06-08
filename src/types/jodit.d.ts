@@ -58,6 +58,11 @@ interface IJodit extends IViewWithToolbar {
 	selection: Select;
 
 	/**
+	 * Alias for this.selection
+	 */
+	s: this['selection'];
+
+	/**
 	 * Return current real work mode. When editor in MODE_SOURCE or MODE_WYSIWYG it will
 	 * return them, but then editor in MODE_SPLIT it will return MODE_SOURCE if
 	 * Textarea(CodeMirror) focused or MODE_WYSIWYG otherwise

@@ -146,7 +146,7 @@ var editor = new Jodit('#editor', {
 ```javascript
 Jodit.plugins.yourplugin = function (editor) {
     editor.events.on('afterInit', function () {
-        editor.selection.insertHTMl('Text');
+        editor.s.insertHTMl('Text');
     });
 }
 ```
@@ -159,7 +159,7 @@ var editor = new Jodit('.someselector', {
             name: 'insertDate',
             iconURL: 'http://xdsoft.net/jodit/logo.png',
             exec: function (editor) {
-                editor.selection.insertHTML((new Date).toDateString());
+                editor.s.insertHTML((new Date).toDateString());
             }
         }
     ]
@@ -175,7 +175,7 @@ var editor = new Jodit('.someselector', {
             name: 'insertDate',
             iconURL: 'http://xdsoft.net/jodit/logo.png',
             exec: function (editor) {
-                editor.selection.insertHTML((new Date).toDateString());
+                editor.s.insertHTML((new Date).toDateString());
             }
         }
     }
@@ -187,7 +187,7 @@ button with plugin
 ```javascript
 Jodit.plugins.add('insertText', function (editor) {
     editor.events.on('someEvent', function (text) {
-        editor.selection.insertHTMl('Hello ' + text);
+        editor.s.insertHTMl('Hello ' + text);
     });
 });
 

@@ -46,7 +46,7 @@ describe('Test states', function() {
 
 				editor.value = 'test';
 
-				editor.selection.select(editor.editor.firstChild);
+				editor.s.select(editor.editor.firstChild);
 
 				editor.execCommand('bold');
 

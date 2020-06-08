@@ -6,8 +6,8 @@ describe('Process Images plugins', function() {
 
 				editor.value = Jodit.INVISIBLE_SPACE; // IE in iframe mode can loose focus and we can not check where it paste image in start or in finish. It is only in IE
 
-				const sel = editor.selection.sel,
-					range = editor.selection.createRange();
+				const sel = editor.s.sel,
+					range = editor.s.createRange();
 
 				range.selectNodeContents(editor.editor);
 				range.collapse(false);
@@ -50,11 +50,11 @@ describe('Process Images plugins', function() {
 
 					editor.value = 'hello world!';
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 
 					range.setEnd(editor.editor.firstChild, 5);
 					range.collapse(false);
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
 					clickButton('image', editor);
 

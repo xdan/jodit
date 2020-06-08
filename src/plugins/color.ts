@@ -14,7 +14,7 @@ Config.prototype.controls.brush = {
 	update(button): void {
 		const editor = button.j as IJodit;
 
-		const current = editor.selection.current();
+		const current = editor.s.current();
 
 		if (current && !button.state.disabled) {
 			const currentBpx: HTMLElement =
@@ -136,12 +136,12 @@ export function color(editor: IJodit) {
 
 		switch (command) {
 			case 'background':
-				editor.selection.applyStyle({
+				editor.s.applyStyle({
 					backgroundColor: !colorHEX ? '' : (colorHEX as string)
 				});
 				break;
 			case 'forecolor':
-				editor.selection.applyStyle({
+				editor.s.applyStyle({
 					color: !colorHEX ? '' : (colorHEX as string)
 				});
 				break;

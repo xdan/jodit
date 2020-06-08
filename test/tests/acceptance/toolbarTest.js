@@ -46,7 +46,7 @@ describe('Toolbar', function() {
 							iconURL:
 								'https://xdsoft.net/jodit/build/images/icons/045-copy.png',
 							exec: function() {
-								editor.selection.insertHTML(
+								editor.s.insertHTML(
 									'<p><span>indigo</span></p>'
 								);
 							}
@@ -362,12 +362,12 @@ describe('Toolbar', function() {
 
 			editor.value = 'text2text';
 
-			const range = editor.selection.createRange();
+			const range = editor.s.createRange();
 
 			range.setStart(editor.editor.firstChild, 3);
 			range.setEnd(editor.editor.firstChild, 6);
 
-			editor.selection.selectRange(range);
+			editor.s.selectRange(range);
 
 			clickButton('brush', editor);
 
@@ -390,7 +390,7 @@ describe('Toolbar', function() {
 
 			range.selectNodeContents(editor.editor.querySelector('span'));
 			// range.collapse(true);
-			editor.selection.selectRange(range);
+			editor.s.selectRange(range);
 
 			clickButton('brush', editor);
 
@@ -442,11 +442,11 @@ describe('Toolbar', function() {
 
 			editor.value = 'text2text';
 
-			const range = editor.selection.createRange();
+			const range = editor.s.createRange();
 
 			range.setStart(editor.editor.firstChild, 3);
 			range.setEnd(editor.editor.firstChild, 6);
-			editor.selection.selectRange(range);
+			editor.s.selectRange(range);
 
 			clickTrigger('paragraph', editor);
 
@@ -462,7 +462,7 @@ describe('Toolbar', function() {
 
 			expect(list.parentNode).is.null;
 
-			editor.selection.insertNode(editor.createInside.text(' a '));
+			editor.s.insertNode(editor.createInside.text(' a '));
 
 			expect(editor.value).equals('<h1>tex a ext</h1>');
 		});
@@ -756,7 +756,7 @@ describe('Toolbar', function() {
 						name: 'insertDate',
 						iconURL: 'http://xdsoft.net/jodit/images/logo.png',
 						exec: function(editor) {
-							editor.selection.insertHTML(
+							editor.s.insertHTML(
 								new Date('2016/03/16').toDateString()
 							);
 						}
@@ -785,10 +785,10 @@ describe('Toolbar', function() {
 
 			editor.value =
 				'<strong>test</strong><em>test2</em><i>test3</i><b>test3</b>';
-			editor.selection.focus();
+			editor.s.focus();
 
-			const sel = editor.selection.sel,
-				range = editor.selection.createRange();
+			const sel = editor.s.sel,
+				range = editor.s.createRange();
 
 			range.setStart(editor.editor.firstChild.firstChild, 2);
 			range.collapse(true);
@@ -889,7 +889,7 @@ describe('Toolbar', function() {
 											return;
 										}
 
-										editor.selection.insertHTML(
+										editor.s.insertHTML(
 											'&nbsp;{{test' + key + '}}&nbsp;'
 										);
 									},
@@ -940,7 +940,7 @@ describe('Toolbar', function() {
 											return;
 										}
 
-										editor.selection.insertHTML(
+										editor.s.insertHTML(
 											'&nbsp;{{test' + key + '}}&nbsp;'
 										);
 									},
@@ -974,10 +974,10 @@ describe('Toolbar', function() {
 				bold = getButton('bold', editor);
 
 			editor.value = '<span style="font-weight: bold">test</span>';
-			editor.selection.focus();
+			editor.s.focus();
 
-			const sel = editor.selection.sel,
-				range = editor.selection.createRange();
+			const sel = editor.s.sel,
+				range = editor.s.createRange();
 			range.setStart(editor.editor.firstChild.firstChild, 2);
 			range.collapse(true);
 			sel.removeAllRanges();
@@ -997,7 +997,7 @@ describe('Toolbar', function() {
 						timeout: 0 // disable delay
 					}
 				});
-				editor.selection.focus();
+				editor.s.focus();
 
 				editor.value = 'Test';
 
@@ -1045,7 +1045,7 @@ describe('Toolbar', function() {
 								name: 'adddate',
 								exec: function(editor) {
 									const a = editor.createInside.text('111');
-									editor.selection.insertNode(a);
+									editor.s.insertNode(a);
 								}
 							}
 						]
@@ -1078,7 +1078,7 @@ describe('Toolbar', function() {
 										const a = editor.createInside.text(
 											'111'
 										);
-										editor.selection.insertNode(a);
+										editor.s.insertNode(a);
 									}
 								}
 							]
@@ -1115,14 +1115,14 @@ describe('Toolbar', function() {
 					});
 
 					editor.value = '<p>test</p>';
-					editor.selection.setCursorAfter(
+					editor.s.setCursorAfter(
 						editor.editor.firstChild.firstChild
 					);
 
 					clickButton('bold', editor);
-					editor.selection.insertHTML('text');
+					editor.s.insertHTML('text');
 					clickButton('bold', editor);
-					editor.selection.insertHTML('text');
+					editor.s.insertHTML('text');
 
 					expect(editor.value).equals(
 						'<p>test<strong>text</strong>text</p>'
@@ -1138,11 +1138,11 @@ describe('Toolbar', function() {
 
 					editor.value = 'test test test';
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 					range.setStart(editor.editor.firstChild, 0);
 					range.setEnd(editor.editor.firstChild, 4);
 
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
 					clickButton('bold', editor);
 
@@ -1162,10 +1162,10 @@ describe('Toolbar', function() {
 				});
 
 				editor.value = '<p>test<strong>bold</strong></p>';
-				editor.selection.focus();
+				editor.s.focus();
 
 				const p = editor.editor.firstChild;
-				editor.selection.setCursorAfter(p.firstChild);
+				editor.s.setCursorAfter(p.firstChild);
 
 				simulateEvent('mousedown', 0, p);
 
@@ -1175,11 +1175,11 @@ describe('Toolbar', function() {
 				expect(bold.getAttribute('aria-pressed')).equals('false');
 				expect(align.getAttribute('aria-pressed')).equals('false');
 
-				editor.selection.setCursorIn(
+				editor.s.setCursorIn(
 					p.querySelector('strong').firstChild
 				);
 				simulateEvent('mousedown', 0, p);
-				// editor.selection.insertHTML('ddd');
+				// editor.s.insertHTML('ddd');
 				expect(bold.getAttribute('aria-pressed')).equals('true');
 				expect(align.getAttribute('aria-pressed')).equals('false');
 
@@ -1199,18 +1199,18 @@ describe('Toolbar', function() {
 
 					editor.value =
 						'<p>test<span style="font-size: 12px">bold</span></p>';
-					editor.selection.focus();
+					editor.s.focus();
 
 					const p = editor.editor.firstChild;
 					const fontsize = getButton('fontsize', editor);
 
-					editor.selection.setCursorAfter(p.firstChild);
+					editor.s.setCursorAfter(p.firstChild);
 					simulateEvent('mousedown', 0, p);
 					expect(fontsize.getAttribute('aria-pressed')).equals(
 						'false'
 					);
 
-					editor.selection.setCursorIn(p.lastChild);
+					editor.s.setCursorIn(p.lastChild);
 					simulateEvent('mousedown', 0, p);
 					expect(fontsize.getAttribute('aria-pressed')).equals(
 						'true'
@@ -1228,7 +1228,7 @@ describe('Toolbar', function() {
 
 					editor.value =
 						'<p>test<span style="color: #ccc">bold</span></p>';
-					editor.selection.focus();
+					editor.s.focus();
 
 					const p = editor.editor.firstChild;
 					const brush = getButton('brush', editor);
@@ -1236,12 +1236,12 @@ describe('Toolbar', function() {
 
 					expect(brushIcon).is.not.null;
 
-					editor.selection.setCursorAfter(p.firstChild);
+					editor.s.setCursorAfter(p.firstChild);
 					simulateEvent('mousedown', 0, p);
 					expect(brush.getAttribute('aria-pressed')).equals('false');
 					expect('').equals(brushIcon.style.fill);
 
-					editor.selection.setCursorIn(p.lastChild);
+					editor.s.setCursorIn(p.lastChild);
 					simulateEvent('mousedown', 0, p);
 
 					expect(brush.getAttribute('aria-pressed')).equals('true');
@@ -1261,21 +1261,21 @@ describe('Toolbar', function() {
 
 						editor.value =
 							'<p>test<span style="font-size: 12px">bold</span></p>';
-						editor.selection.focus();
+						editor.s.focus();
 
 						const p = editor.editor.firstChild;
 						const font = getButton('fontsize', editor);
 
 						expect(font).is.not.null;
 
-						editor.selection.setCursorAfter(p.firstChild);
+						editor.s.setCursorAfter(p.firstChild);
 						simulateEvent('mousedown', 0, p);
 
 						expect(font.getAttribute('aria-pressed')).equals(
 							'false'
 						);
 
-						editor.selection.setCursorIn(p.lastChild);
+						editor.s.setCursorIn(p.lastChild);
 
 						simulateEvent('mousedown', 0, p);
 						expect(font.getAttribute('aria-pressed')).equals(
@@ -1305,20 +1305,20 @@ describe('Toolbar', function() {
 
 						editor.value =
 							'<p>test<span style="font-family: Georgia, serif;">bold</span></p>';
-						editor.selection.focus();
+						editor.s.focus();
 
 						const p = editor.editor.firstChild;
 						const font = getButton('font', editor);
 
 						expect(font).is.not.null;
 
-						editor.selection.setCursorAfter(p.firstChild);
+						editor.s.setCursorAfter(p.firstChild);
 						simulateEvent('mousedown', 0, p);
 						expect(font.getAttribute('aria-pressed')).equals(
 							'false'
 						);
 
-						editor.selection.setCursorIn(p.lastChild);
+						editor.s.setCursorIn(p.lastChild);
 
 						simulateEvent('mousedown', 0, p);
 						expect(font.getAttribute('aria-pressed')).equals(
@@ -1349,20 +1349,20 @@ describe('Toolbar', function() {
 
 						editor.value =
 							'<p>test</p><h1>test</h1><code>test</code>';
-						editor.selection.focus();
+						editor.s.focus();
 
 						const p = editor.editor.firstChild;
 						const paragraph = getButton('paragraph', editor);
 
 						expect(paragraph).is.not.null;
 
-						editor.selection.setCursorAfter(p.firstChild);
+						editor.s.setCursorAfter(p.firstChild);
 						simulateEvent('mousedown', 0, p);
 						expect(paragraph.getAttribute('aria-pressed')).equals(
 							'false'
 						);
 
-						editor.selection.setCursorIn(
+						editor.s.setCursorIn(
 							editor.editor.childNodes[1]
 						);
 
@@ -1392,12 +1392,12 @@ describe('Toolbar', function() {
 					});
 
 					editor.value = '<em><strong><u>bold</u></strong></em>';
-					editor.selection.focus();
+					editor.s.focus();
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 					range.setStartBefore(editor.editor.firstChild);
 					range.setEndAfter(editor.editor.firstChild);
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
 					const bold = getButton('bold', editor);
 
@@ -1430,13 +1430,13 @@ describe('Toolbar', function() {
 						const cut = getButton('cut', editor);
 
 						editor.value = '<p>test<strong>bold</strong></p>';
-						editor.selection.focus();
+						editor.s.focus();
 
 						expect(cut.hasAttribute('disabled')).is.true;
 
 						const p = editor.editor.firstChild;
 
-						editor.selection.select(p.firstChild);
+						editor.s.select(p.firstChild);
 
 						expect(cut.hasAttribute('disabled')).is.false;
 					});
@@ -1454,13 +1454,13 @@ describe('Toolbar', function() {
 						const copy = getButton('copy', editor);
 
 						editor.value = '<p>test<strong>bold</strong></p>';
-						editor.selection.focus();
+						editor.s.focus();
 
 						expect(copy.hasAttribute('disabled')).is.true;
 
 						const p = editor.editor.firstChild;
 
-						editor.selection.select(p.firstChild);
+						editor.s.select(p.firstChild);
 
 						expect(copy.hasAttribute('disabled')).is.false;
 					});
@@ -1482,20 +1482,20 @@ describe('Toolbar', function() {
 
 					editor.value =
 						'<p>test<span style="color: #ccc">bold</span></p>';
-					editor.selection.focus();
+					editor.s.focus();
 
 					const p = editor.editor.firstChild,
 						brush = getButton('brush', editor),
 						brushIcon = brush.querySelector('svg');
 
-					editor.selection.setCursorAfter(p.firstChild);
+					editor.s.setCursorAfter(p.firstChild);
 					simulateEvent('mousedown', 0, p);
 
 					expect(brush.getAttribute('aria-pressed')).equals('false');
 
 					expect('').equals(brushIcon.style.fill);
 
-					editor.selection.setCursorIn(p.lastChild);
+					editor.s.setCursorIn(p.lastChild);
 					simulateEvent('mousedown', 0, p);
 
 					expect(brush.getAttribute('aria-pressed')).equals('true');
@@ -1520,10 +1520,10 @@ describe('Toolbar', function() {
 			const editor = getJodit();
 
 			editor.value = 'Text to text';
-			editor.selection.focus();
+			editor.s.focus();
 
-			const sel = editor.selection.sel,
-				range = editor.selection.createRange();
+			const sel = editor.s.sel,
+				range = editor.s.createRange();
 			range.setStart(editor.editor.firstChild, 3);
 			range.setEnd(editor.editor.firstChild, 10);
 			sel.removeAllRanges();
@@ -1538,10 +1538,10 @@ describe('Toolbar', function() {
 			const editor = getJodit();
 
 			editor.value = 'Text to text';
-			editor.selection.focus();
+			editor.s.focus();
 
-			const sel = editor.selection.sel,
-				range = editor.selection.createRange();
+			const sel = editor.s.sel,
+				range = editor.s.createRange();
 			range.setStart(editor.editor.firstChild, 0);
 			range.collapse(true);
 			sel.removeAllRanges();
@@ -1549,7 +1549,7 @@ describe('Toolbar', function() {
 
 			clickButton('italic', editor);
 
-			editor.selection.insertHTML('test');
+			editor.s.insertHTML('test');
 
 			expect(editor.value).equals('<em>test</em>Text to text');
 		});
@@ -1561,7 +1561,7 @@ describe('Toolbar', function() {
 				const editor = getJodit();
 
 				editor.value = '<img alt="" src="../artio.jpg"/>';
-				editor.selection.focus();
+				editor.s.focus();
 
 				simulateEvent('click', 0, editor.editor.querySelector('img'));
 
@@ -1577,7 +1577,7 @@ describe('Toolbar', function() {
 					const editor = getJodit();
 
 					editor.value = '<img alt="" src="../artio.jpg"/>';
-					editor.selection.focus();
+					editor.s.focus();
 
 					simulateEvent(
 						'click',

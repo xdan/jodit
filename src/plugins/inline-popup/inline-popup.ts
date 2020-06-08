@@ -74,7 +74,7 @@ Config.prototype.popup = {
 			name: 'bin',
 			tooltip: 'Delete',
 			exec: (editor: IJodit, image) => {
-				image && editor.selection.removeNode(image);
+				image && editor.s.removeNode(image);
 			}
 		}
 	],
@@ -83,7 +83,7 @@ Config.prototype.popup = {
 			name: 'bin',
 			tooltip: 'Delete',
 			exec: (editor: IJodit, image) => {
-				image && editor.selection.removeNode(image);
+				image && editor.s.removeNode(image);
 			}
 		}
 	],
@@ -93,7 +93,7 @@ Config.prototype.popup = {
 			icon: 'bin',
 			tooltip: 'Delete',
 			exec: (editor: IJodit, image) => {
-				image && editor.selection.removeNode(image);
+				image && editor.s.removeNode(image);
 			}
 		},
 		{
@@ -401,8 +401,8 @@ export class inlinePopup extends Plugin {
 		}
 
 		const type = 'selection',
-			sel = this.j.selection.sel,
-			range = this.j.selection.range;
+			sel = this.j.s.sel,
+			range = this.j.s.range;
 
 		if (sel?.isCollapsed) {
 			if (this.type === type && this.popup.isOpened) {
@@ -412,7 +412,7 @@ export class inlinePopup extends Plugin {
 			return;
 		}
 
-		const node = this.j.selection.current();
+		const node = this.j.s.current();
 
 		if (!node) {
 			return;

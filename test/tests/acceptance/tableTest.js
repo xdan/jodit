@@ -9,7 +9,7 @@ describe('Tables Jodit Editor Tests', function() {
 			const table1 = editor.createInside.fromHTML(
 				'<table><tr><td>1</td></tr></table>'
 			);
-			editor.selection.insertNode(table1);
+			editor.s.insertNode(table1);
 			simulateEvent('mousemove', 0, table1.querySelector('td'), function(
 				opt
 			) {
@@ -19,7 +19,7 @@ describe('Tables Jodit Editor Tests', function() {
 			const table2 = editor.createInside.fromHTML(
 				'<table><tr><td>2</td></tr></table>'
 			);
-			editor.selection.insertNode(table2);
+			editor.s.insertNode(table2);
 			simulateEvent('mousemove', 0, table2.querySelector('td'), function(
 				opt
 			) {
@@ -698,10 +698,10 @@ describe('Tables Jodit Editor Tests', function() {
 			tr.appendChild(td2);
 			table.appendChild(tr);
 
-			editor.selection.focus();
-			editor.selection.insertNode(table, false);
-			editor.selection.setCursorIn(table, false); // set cursor in last cell
-			editor.selection.insertNode(editor.createInside.text('ok'));
+			editor.s.focus();
+			editor.s.insertNode(table, false);
+			editor.s.setCursorIn(table, false); // set cursor in last cell
+			editor.s.insertNode(editor.createInside.text('ok'));
 
 			expect(editor.value).equals(
 				'<table><tr><td></td><td>ok</td></tr></table>'
@@ -735,11 +735,11 @@ describe('Tables Jodit Editor Tests', function() {
 				'</tr>' +
 				'</table>';
 
-			editor.selection.setCursorIn(editor.editor.querySelector('td'));
+			editor.s.setCursorIn(editor.editor.querySelector('td'));
 
 			simulateEvent('keydown', Jodit.KEY_TAB, editor.editor);
 
-			editor.selection.insertNode(
+			editor.s.insertNode(
 				editor.createInside.text('test'),
 				false
 			);
@@ -760,7 +760,7 @@ describe('Tables Jodit Editor Tests', function() {
 				'</tr>' +
 				'</table>';
 
-			editor.selection.setCursorIn(
+			editor.s.setCursorIn(
 				editor.editor.querySelector('td').nextSibling
 			);
 
@@ -770,7 +770,7 @@ describe('Tables Jodit Editor Tests', function() {
 				evnt.shiftKey = true;
 			});
 
-			editor.selection.insertNode(
+			editor.s.insertNode(
 				editor.createInside.text('test'),
 				false
 			);
@@ -791,14 +791,14 @@ describe('Tables Jodit Editor Tests', function() {
 				'</tr>' +
 				'</table>';
 
-			editor.selection.setCursorIn(
+			editor.s.setCursorIn(
 				editor.editor.querySelector('td'),
 				true
 			); // set cursor before 1
 
 			simulateEvent('keydown', Jodit.KEY_RIGHT, editor.editor); // not work but in real cursor move after 1
 
-			editor.selection.insertNode(
+			editor.s.insertNode(
 				editor.createInside.text('test'),
 				false
 			);
@@ -819,14 +819,14 @@ describe('Tables Jodit Editor Tests', function() {
 				'</tr>' +
 				'</table>';
 
-			editor.selection.setCursorIn(
+			editor.s.setCursorIn(
 				editor.editor.querySelector('td').nextSibling,
 				true
 			); // set cursor before 1
 
 			simulateEvent('keydown', Jodit.KEY_LEFT, editor.editor); // not work but in real cursor move after 1
 
-			editor.selection.insertNode(
+			editor.s.insertNode(
 				editor.createInside.text('test'),
 				false
 			);
@@ -856,13 +856,13 @@ describe('Tables Jodit Editor Tests', function() {
 				'</tr>' +
 				'</table>';
 
-			editor.selection.setCursorAfter(
+			editor.s.setCursorAfter(
 				editor.editor.querySelectorAll('td')[3].firstChild
 			); // set cursor after 4
 
 			simulateEvent('keydown', Jodit.KEY_UP, editor.editor);
 
-			editor.selection.insertNode(
+			editor.s.insertNode(
 				editor.createInside.text('test'),
 				false
 			);
@@ -899,13 +899,13 @@ describe('Tables Jodit Editor Tests', function() {
 				'</tr>' +
 				'</table>';
 
-			editor.selection.setCursorAfter(
+			editor.s.setCursorAfter(
 				editor.editor.querySelectorAll('td')[1].lastChild
 			); // set cursor after 3
 
 			simulateEvent('keydown', Jodit.KEY_DOWN, editor.editor);
 
-			editor.selection.insertNode(
+			editor.s.insertNode(
 				editor.createInside.text('test'),
 				false
 			);
@@ -935,13 +935,13 @@ describe('Tables Jodit Editor Tests', function() {
 				'</tr>' +
 				'</table>';
 
-			editor.selection.setCursorAfter(
+			editor.s.setCursorAfter(
 				editor.editor.querySelectorAll('td')[1].lastChild
 			); // set cursor after 2
 
 			simulateEvent('keydown', Jodit.KEY_TAB, editor.editor);
 
-			editor.selection.insertNode(
+			editor.s.insertNode(
 				editor.createInside.text('test'),
 				false
 			);
@@ -1569,7 +1569,7 @@ describe('Tables Jodit Editor Tests', function() {
 						const td = editor.editor.querySelectorAll('td')[1],
 							box = td.getBoundingClientRect();
 
-						editor.selection.setCursorIn(editor.editor.firstChild);
+						editor.s.setCursorIn(editor.editor.firstChild);
 
 						simulateEvent('mousemove', 1, td, function(options) {
 							options.clientX = box.left;
@@ -1612,7 +1612,7 @@ describe('Tables Jodit Editor Tests', function() {
 							}
 						);
 
-						editor.selection.insertHTML('stop');
+						editor.s.insertHTML('stop');
 
 						expect(sortAttributes(editor.value)).equals(
 							'<p>teststop</p>' +
@@ -1716,7 +1716,7 @@ describe('Tables Jodit Editor Tests', function() {
 							const td = editor.editor.querySelectorAll('td')[1],
 								box = td.getBoundingClientRect();
 
-							editor.selection.setCursorIn(
+							editor.s.setCursorIn(
 								editor.editor.firstChild
 							);
 
@@ -1764,7 +1764,7 @@ describe('Tables Jodit Editor Tests', function() {
 								}
 							);
 
-							editor.selection.insertHTML('stop');
+							editor.s.insertHTML('stop');
 
 							expect(sortAttributes(editor.value)).equals(
 								'<p>teststop</p>' +

@@ -92,13 +92,13 @@ describe('Link plugin', function() {
 						editor.value =
 							'<p>test <a href="#somelink">link <strong>strong</strong></a> open</p>';
 
-						const range = editor.selection.createRange();
+						const range = editor.s.createRange();
 						range.setStart(
 							editor.editor.querySelector('a').firstChild,
 							4
 						);
 						range.collapse(true);
-						editor.selection.selectRange(range);
+						editor.s.selectRange(range);
 
 						simulateEvent(
 							'click',
@@ -141,13 +141,13 @@ describe('Link plugin', function() {
 						editor.value =
 							'<p>test <a href="#somelink">link <strong>strong</strong></a> open</p>';
 
-						const range = editor.selection.createRange();
+						const range = editor.s.createRange();
 						range.setStart(
 							editor.editor.querySelector('a').firstChild,
 							4
 						);
 						range.collapse(true);
-						editor.selection.selectRange(range);
+						editor.s.selectRange(range);
 
 						simulateEvent(
 							'click',
@@ -181,13 +181,13 @@ describe('Link plugin', function() {
 							editor.value =
 								'<p>test <a href="#somelink">link <strong>strong</strong></a> open</p>';
 
-							const range = editor.selection.createRange();
+							const range = editor.s.createRange();
 							range.setStart(
 								editor.editor.querySelector('a').firstChild,
 								4
 							);
 							range.collapse(true);
-							editor.selection.selectRange(range);
+							editor.s.selectRange(range);
 
 							simulateEvent(
 								'click',
@@ -228,7 +228,7 @@ describe('Link plugin', function() {
 							editor.value =
 								'<p>test <a href="#somelink">link <strong>strong</strong></a> open</p>';
 
-							const range = editor.selection.createRange();
+							const range = editor.s.createRange();
 							range.setStart(
 								editor.editor.querySelector('a').firstChild,
 								2
@@ -237,7 +237,7 @@ describe('Link plugin', function() {
 								editor.editor.querySelector('a').firstChild,
 								4
 							);
-							editor.selection.selectRange(range);
+							editor.s.selectRange(range);
 
 							simulateEvent(
 								'click',
@@ -282,7 +282,7 @@ describe('Link plugin', function() {
 							editor.value =
 								'<p>test <a href="#somelink">link <strong>strong</strong></a> open</p>';
 
-							const range = editor.selection.createRange();
+							const range = editor.s.createRange();
 							range.setStart(
 								editor.editor.querySelector('a').firstChild,
 								2
@@ -291,7 +291,7 @@ describe('Link plugin', function() {
 								editor.editor.querySelector('a').firstChild,
 								4
 							);
-							editor.selection.selectRange(range);
+							editor.s.selectRange(range);
 
 							simulateEvent(
 								'click',
@@ -428,7 +428,7 @@ describe('Link plugin', function() {
 						});
 
 						editor.value = '123';
-						editor.selection.select(editor.editor.firstChild);
+						editor.s.select(editor.editor.firstChild);
 
 						clickButton('link', editor);
 
@@ -467,7 +467,7 @@ describe('Link plugin', function() {
 							});
 
 							editor.value = '123';
-							editor.selection.select(editor.editor.firstChild);
+							editor.s.select(editor.editor.firstChild);
 
 							clickButton('link', editor);
 
@@ -530,7 +530,7 @@ describe('Link plugin', function() {
 							editor.value =
 								'test <span style="color: #ccc;">select </span> stop';
 
-							const range = editor.selection.createRange();
+							const range = editor.s.createRange();
 
 							range.setStart(
 								editor.editor.querySelector('span').firstChild,
@@ -541,7 +541,7 @@ describe('Link plugin', function() {
 								6
 							);
 
-							editor.selection.selectRange(range);
+							editor.s.selectRange(range);
 
 							clickButton('link', editor);
 
@@ -599,7 +599,7 @@ describe('Link plugin', function() {
 								editor.value =
 									'test <img style="width: 100px;height: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""> stop';
 
-								editor.selection.select(
+								editor.s.select(
 									editor.editor.querySelector('img')
 								);
 
@@ -629,7 +629,7 @@ describe('Link plugin', function() {
 							editor.value =
 								'test <img style="width: 100px;height: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""> stop';
 
-							editor.selection.select(
+							editor.s.select(
 								editor.editor.querySelector('img')
 							);
 
@@ -679,8 +679,8 @@ describe('Link plugin', function() {
 					editor.value =
 						'<a target="_blank" rel="nofollow" href="#test">test</a>';
 
-					const sel = editor.selection.sel,
-						range = editor.selection.createRange();
+					const sel = editor.s.sel,
+						range = editor.s.createRange();
 
 					range.selectNode(editor.editor.firstChild);
 					sel.removeAllRanges();
@@ -723,10 +723,10 @@ describe('Link plugin', function() {
 					const editor = getJodit();
 
 					editor.value = '<p>one green bottle hanging under wall</p>';
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 					range.setStart(editor.editor.firstChild.firstChild, 10);
 					range.setEnd(editor.editor.firstChild.firstChild, 16);
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
 					clickButton('link', editor);
 
@@ -749,10 +749,10 @@ describe('Link plugin', function() {
 						'<p>one green <strong>bottle hanging</strong> under wall</p>' +
 						'<p>two green <em>bottles hanging</em> under wall</p>';
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 					range.setStart(editor.editor.firstChild.firstChild, 4);
 					range.setEnd(editor.editor.lastChild.lastChild, 6);
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
 					clickButton('link', editor);
 
@@ -776,7 +776,7 @@ describe('Link plugin', function() {
 							editor.value =
 								'<p>one green <img src="https://xdsoft.net/jodit/build/images/artio.jpg" alt="test"> under wall</p>';
 
-							editor.selection.select(
+							editor.s.select(
 								editor.editor.querySelector('img')
 							);
 
@@ -822,10 +822,10 @@ describe('Link plugin', function() {
 							'<p>one green <strong>bottle hanging</strong> under wall</p>' +
 							'<p>two green <em>bottles hanging</em> under wall</p>';
 
-						const range = editor.selection.createRange();
+						const range = editor.s.createRange();
 						range.setStart(editor.editor.firstChild.firstChild, 4);
 						range.setEnd(editor.editor.lastChild.lastChild, 6);
-						editor.selection.selectRange(range);
+						editor.s.selectRange(range);
 
 						clickButton('link', editor);
 

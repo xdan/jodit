@@ -262,16 +262,16 @@ describe('Clipboard text', function() {
 
 						editor.value = html;
 
-						editor.selection.focus();
+						editor.s.focus();
 						editor.execCommand('selectall');
 						simulateEvent(command, 0, editor.editor, function (p){});
 
 						expect(editor.buffer.get('clipboard')).equals(html);
 
 						editor.value = html;
-						editor.selection.focus();
+						editor.s.focus();
 
-						editor.selection.select(editor.editor.querySelector('strong'));
+						editor.s.select(editor.editor.querySelector('strong'));
 						simulateEvent(command, 0, editor.editor, function (p){});
 
 						expect(editor.buffer.get('clipboard')).equals('<strong>bold</strong>');

@@ -46,7 +46,7 @@ export class DragAndDrop extends Plugin {
 				top: event.clientY + 20
 			});
 
-			this.j.selection.insertCursorAtPoint(event.clientX, event.clientY);
+			this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
 
 			event.preventDefault();
 			event.stopPropagation();
@@ -66,7 +66,7 @@ export class DragAndDrop extends Plugin {
 				return false;
 			}
 
-			const sel = this.j.selection.sel;
+			const sel = this.j.s.sel;
 			const range: Range | null =
 				this.bufferRange ||
 				(sel && sel.rangeCount ? sel.getRangeAt(0) : null);
@@ -106,15 +106,15 @@ export class DragAndDrop extends Plugin {
 
 			sel && sel.removeAllRanges();
 
-			this.j.selection.insertCursorAtPoint(event.clientX, event.clientY);
+			this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
 
 			if (fragment) {
-				this.j.selection.insertNode(fragment, false, false);
+				this.j.s.insertNode(fragment, false, false);
 
 				if (range && fragment.firstChild && fragment.lastChild) {
 					range.setStartBefore(fragment.firstChild);
 					range.setEndAfter(fragment.lastChild);
-					this.j.selection.selectRange(range);
+					this.j.s.selectRange(range);
 					this.j.e.fire('synchro');
 				}
 
@@ -142,7 +142,7 @@ export class DragAndDrop extends Plugin {
 		this.isCopyMode = this.isFragmentFromEditor ? ctrlKey(event) : true; // we can move only element from editor
 
 		if (this.isFragmentFromEditor) {
-			const sel = this.j.selection.sel;
+			const sel = this.j.s.sel;
 			const range: Range | null =
 				sel && sel.rangeCount ? sel.getRangeAt(0) : null;
 			if (range) {

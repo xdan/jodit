@@ -44,7 +44,7 @@ export function orderedList(editor: IJodit) {
 			/insert(un)?orderedlist/i.test(command),
 		getWrapper = () =>
 			Dom.up(
-				editor.selection.current() as Node,
+				editor.s.current() as Node,
 				(tag: Node | null) => tag && /^UL|OL$/i.test(tag.nodeName),
 				editor.editor
 			),
@@ -93,7 +93,7 @@ export function orderedList(editor: IJodit) {
 				}
 
 				if (ul && Dom.isTag(ul.parentNode, 'p')) {
-					const selection: markerInfo[] = editor.selection.save();
+					const selection: markerInfo[] = editor.s.save();
 
 					Dom.unwrap(ul.parentNode);
 
@@ -103,7 +103,7 @@ export function orderedList(editor: IJodit) {
 						}
 					});
 
-					editor.selection.restore(selection);
+					editor.s.restore(selection);
 				}
 
 				editor.setEditorValue();

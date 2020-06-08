@@ -192,7 +192,7 @@ export class resizeCells extends Plugin {
 		this.resizeHandler.style.left =
 			x - (this.j.o.iframe ? 0 : workplacePosition.left) + 'px';
 
-		const sel = this.j.selection.sel;
+		const sel = this.j.s.sel;
 
 		sel && sel.removeAllRanges();
 
@@ -236,7 +236,7 @@ export class resizeCells extends Plugin {
 		}
 
 		this.j.setEditorValue();
-		this.j.selection.focus();
+		this.j.s.focus();
 	}
 
 	/**

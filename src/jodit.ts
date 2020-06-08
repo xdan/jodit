@@ -269,6 +269,13 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	selection: Select;
 
 	/**
+	 * Alias for this.selection
+	 */
+	get s(): this['selection'] {
+		return this.selection;
+	}
+
+	/**
 	 * @property {Uploader} uploader
 	 */
 	@cache
@@ -296,13 +303,13 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 							: false;
 
 						if (isImage) {
-							jodit.selection.insertImage(
+							jodit.s.insertImage(
 								url,
 								null,
 								jodit.o.imageDefaultWidth
 							);
 						} else {
-							jodit.selection.insertNode(
+							jodit.s.insertNode(
 								jodit.createInside.fromHTML(
 									`<a href="${url}" title="${url}">${url}</a>`
 								)
@@ -655,8 +662,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * parent.e.on('beforeCommand', function (command) {
 		 *  if (command === 'justifyCenter') {
 		 *      var p = parent.c.element('p')
-		 *      parent.selection.insertNode(p)
-		 *      parent.selection.setCursorIn(p);
+		 *      parent.s.insertNode(p)
+		 *      parent.s.setCursorIn(p);
 		 *      p.style.textAlign = 'justyfy';
 		 *      return false; // break execute native command
 		 *  }
@@ -670,10 +677,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		if (result !== false) {
-			this.selection.focus();
+			this.s.focus();
 
 			if (command === 'selectall') {
-				this.selection.select(this.editor, true);
+				this.s.select(this.editor, true);
 			} else {
 				try {
 					result = this.editorDocument.execCommand(
@@ -747,8 +754,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 */
 	lock(name: string = 'any') {
 		if (super.lock(name)) {
-			this.__selectionLocked = this.selection.save();
-			this.selection.clear();
+			this.__selectionLocked = this.s.save();
+			this.s.clear();
 			this.editor.classList.add('jodit_disabled');
 			this.e.fire('lock', true);
 			return true;
@@ -765,7 +772,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.editor.classList.remove('jodit_disabled');
 
 			if (this.__selectionLocked) {
-				this.selection.restore(this.__selectionLocked);
+				this.s.restore(this.__selectionLocked);
 			}
 
 			this.e.fire('lock', false);

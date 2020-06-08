@@ -19,7 +19,7 @@ Config.prototype.controls.paragraph = {
 	update(button): boolean {
 		const editor = button.j as IJodit,
 			control = button.control,
-			current = editor.selection.current();
+			current = editor.s.current();
 
 		if (current && editor.o.textIcons) {
 			const currentBox =
@@ -73,7 +73,7 @@ Config.prototype.controls.paragraph = {
 	},
 
 	isActiveChild: (editor: IJodit, control: IControlType): boolean => {
-		const current = editor.selection.current();
+		const current = editor.s.current();
 
 		if (current) {
 			const currentBox = Dom.closest(
@@ -94,7 +94,7 @@ Config.prototype.controls.paragraph = {
 	},
 
 	isActive: (editor: IJodit, control: IControlType): boolean => {
-		const current = editor.selection.current();
+		const current = editor.s.current();
 
 		if (current) {
 			const currentBpx = Dom.closest(
@@ -132,11 +132,11 @@ export function formatBlock(editor: IJodit) {
 	editor.registerCommand(
 		'formatblock',
 		(command: string, second: string, third: string): false | void => {
-			// editor.selection.focus();
+			// editor.s.focus();
 			// let work: boolean = false;
 			//
-			// editor.selection.eachSelection((current: Node) => {
-			// 	const selectionInfo: markerInfo[] = editor.selection.save();
+			// editor.s.eachSelection((current: Node) => {
+			// 	const selectionInfo: markerInfo[] = editor.s.save();
 			// 	let currentBox: HTMLElement | false = current
 			// 		? (Dom.up(
 			// 				current,
@@ -154,7 +154,7 @@ export function formatBlock(editor: IJodit) {
 			// 	}
 			//
 			// 	if (!currentBox) {
-			// 		editor.selection.restore(selectionInfo);
+			// 		editor.s.restore(selectionInfo);
 			// 		return;
 			// 	}
 			//
@@ -174,8 +174,8 @@ export function formatBlock(editor: IJodit) {
 			// 			);
 			// 		}
 			// 	} else {
-			// 		if (!editor.selection.isCollapsed()) {
-			// 			editor.selection.applyStyle(
+			// 		if (!editor.s.isCollapsed()) {
+			// 			editor.s.applyStyle(
 			// 				{},
 			// 				{
 			// 					element: third as HTMLTagNames
@@ -187,18 +187,18 @@ export function formatBlock(editor: IJodit) {
 			// 	}
 			//
 			// 	work = true;
-			// 	editor.selection.restore(selectionInfo);
+			// 	editor.s.restore(selectionInfo);
 			// });
 			//
 			// if (!work) {
 			// 	const br = editor.createInside.element('br');
 			// 	const currentBox = editor.createInside.element(third, br);
-			// 	editor.selection.insertNode(currentBox, false);
-			// 	editor.selection.setCursorIn(currentBox);
+			// 	editor.s.insertNode(currentBox, false);
+			// 	editor.s.setCursorIn(currentBox);
 			// }
 			//
 
-			editor.selection.applyStyle(undefined, {
+			editor.s.applyStyle(undefined, {
 				element: third as HTMLTagNames
 			});
 

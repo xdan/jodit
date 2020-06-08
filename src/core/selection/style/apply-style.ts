@@ -90,7 +90,7 @@ export class ApplyStyle {
 			const box = Dom.up(
 				font,
 				node => {
-					if (node && Dom.isBlock(node, this.jodit.selection.win)) {
+					if (node && Dom.isBlock(node, this.jodit.s.win)) {
 						if (
 							ulReg.test(this.style.element) ||
 							!ulReg.test(node.nodeName)
@@ -130,7 +130,7 @@ export class ApplyStyle {
 			!Dom.next(font, this.isNormalNode, parentNode) &&
 			!Dom.prev(font, this.isNormalNode, parentNode) &&
 			this.isSuitableElement(parentNode, false) &&
-			parentNode !== this.jodit.selection.area &&
+			parentNode !== this.jodit.s.area &&
 			(!Dom.isBlock(parentNode, this.jodit.editorWindow) ||
 				this.style.elementIsBlock)
 		) {
@@ -153,7 +153,7 @@ export class ApplyStyle {
 
 		if (
 			firstChild &&
-			this.jodit.selection.isMarker(firstChild as HTMLElement)
+			this.jodit.s.isMarker(firstChild as HTMLElement)
 		) {
 			firstChild = firstChild.nextSibling;
 		}
@@ -191,7 +191,7 @@ export class ApplyStyle {
 				return true;
 			}
 
-			const leftRange = this.jodit.selection.createRange();
+			const leftRange = this.jodit.s.createRange();
 
 			leftRange.setStartBefore(wrapper);
 			leftRange.setEndBefore(font);
@@ -294,7 +294,7 @@ export class ApplyStyle {
 		return Boolean(
 			elm !== null &&
 				!Dom.isEmptyTextNode(elm) &&
-				!this.jodit.selection.isMarker(elm as HTMLElement)
+				!this.jodit.s.isMarker(elm as HTMLElement)
 		);
 	}
 
@@ -423,7 +423,7 @@ export class ApplyStyle {
 		const start: Node = edge(elm),
 			end: Node = edge(elm, 'nextSibling');
 
-		const range = this.jodit.selection.createRange();
+		const range = this.jodit.s.createRange();
 		range.setStartBefore(start);
 		range.setEndAfter(end);
 		const fragment = range.extractContents();

@@ -177,7 +177,7 @@ export class addNewLine extends Plugin {
 			editor.editor.appendChild(p);
 		}
 
-		editor.selection.setCursorIn(p);
+		editor.s.setCursorIn(p);
 		scrollIntoView(p, editor.editor, editor.editorDocument);
 
 		editor.e.fire('synchro');
@@ -193,7 +193,7 @@ export class addNewLine extends Plugin {
 			!editor.o.readonly &&
 			editor.o.addNewLineOnDBLClick &&
 			e.target === editor.editor &&
-			editor.selection.isCollapsed()
+			editor.s.isCollapsed()
 		) {
 			const editorBound: IBound = offset(
 				editor.editor,
@@ -215,7 +215,7 @@ export class addNewLine extends Plugin {
 				editor.editor.appendChild(p);
 			}
 
-			editor.selection.setCursorIn(p);
+			editor.s.setCursorIn(p);
 			editor.setEditorValue();
 
 			this.hideForce();

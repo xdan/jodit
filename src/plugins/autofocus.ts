@@ -28,9 +28,9 @@ export function autofocus(editor: IJodit) {
 	editor.e.on('afterInit', () => {
 		if (editor.o.autofocus) {
 			if (editor.defaultTimeout) {
-				editor.async.setTimeout(editor.selection.focus, 300);
+				editor.async.setTimeout(editor.s.focus, 300);
 			} else {
-				editor.selection.focus();
+				editor.s.focus();
 			}
 		}
 	});
@@ -46,9 +46,9 @@ export function autofocus(editor: IJodit) {
 					!(e.target as HTMLElement).childNodes.length
 				) {
 					if (editor.editor === e.target) {
-						editor.selection.focus();
+						editor.s.focus();
 					} else {
-						editor.selection.setCursorIn(e.target as HTMLElement);
+						editor.s.setCursorIn(e.target as HTMLElement);
 					}
 				}
 			});

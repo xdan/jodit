@@ -28,7 +28,7 @@ export function tableKeyboardNavigation(editor: IJodit) {
 				event.key === consts.KEY_UP ||
 				event.key === consts.KEY_DOWN
 			) {
-				current = editor.selection.current() as Element;
+				current = editor.s.current() as Element;
 
 				block = Dom.up(
 					current,
@@ -41,7 +41,7 @@ export function tableKeyboardNavigation(editor: IJodit) {
 					return;
 				}
 
-				const range = editor.selection.range;
+				const range = editor.s.range;
 
 				if (event.key !== consts.KEY_TAB && current !== block) {
 					if (
@@ -156,12 +156,12 @@ export function tableKeyboardNavigation(editor: IJodit) {
 				if (!next.firstChild) {
 					const first = editor.createInside.element('br');
 					next.appendChild(first);
-					editor.selection.setCursorBefore(first);
+					editor.s.setCursorBefore(first);
 				} else {
 					if (event.key === consts.KEY_TAB) {
-						editor.selection.select(next, true);
+						editor.s.select(next, true);
 					} else {
-						editor.selection.setCursorIn(
+						editor.s.setCursorIn(
 							next,
 							event.key === consts.KEY_RIGHT ||
 								event.key === consts.KEY_DOWN

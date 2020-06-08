@@ -294,7 +294,7 @@ export class resizer extends Plugin {
 		}
 
 		if (this.element.tagName !== 'JODIT') {
-			this.j.selection.select(this.element);
+			this.j.s.select(this.element);
 		} else {
 			Dom.safeRemove(this.element);
 			this.hide();
@@ -382,7 +382,7 @@ export class resizer extends Plugin {
 			this.j.e
 				.off(element, 'mousedown.select touchstart.select')
 				.on(element, 'mousedown.select touchstart.select', () => {
-					this.j.selection.select(element);
+					this.j.s.select(element);
 				})
 				.off(element, 'changesize')
 				.on(element, 'changesize', () => {

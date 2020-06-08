@@ -18,8 +18,8 @@ describe('Test orderedList plugin', function() {
 					const editor = getJodit();
 					editor.value = '<ul><li>test</li></ul>';
 
-					const sel = editor.selection.sel,
-						range = editor.selection.createRange();
+					const sel = editor.s.sel,
+						range = editor.s.createRange();
 
 					range.setStart(
 						editor.editor.firstChild.firstChild.firstChild,
@@ -32,7 +32,7 @@ describe('Test orderedList plugin', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.selection.insertNode(
+					editor.s.insertNode(
 						editor.createInside.text(' a ')
 					);
 
@@ -45,8 +45,8 @@ describe('Test orderedList plugin', function() {
 					const editor = getJodit();
 					editor.value = '<ul><li>test</li></ul>';
 
-					const sel = editor.selection.sel,
-						range = editor.selection.createRange();
+					const sel = editor.s.sel,
+						range = editor.s.createRange();
 
 					range.setStart(
 						editor.editor.firstChild.firstChild.firstChild,
@@ -59,7 +59,7 @@ describe('Test orderedList plugin', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.selection.insertNode(
+					editor.s.insertNode(
 						editor.createInside.text(' a ')
 					);
 
@@ -73,7 +73,7 @@ describe('Test orderedList plugin', function() {
 				it('Should wrap this text in ul/li', function() {
 					const editor = getJodit();
 					editor.value = 'Hello world';
-					editor.selection.select(editor.editor.firstChild);
+					editor.s.select(editor.editor.firstChild);
 
 					editor.execCommand('insertUnorderedList');
 
@@ -87,7 +87,7 @@ describe('Test orderedList plugin', function() {
 				it('Should wrap whole text in ul/li', function() {
 					const editor = getJodit();
 					editor.value = 'Hello world';
-					editor.selection.setCursorAfter(editor.editor.firstChild);
+					editor.s.setCursorAfter(editor.editor.firstChild);
 
 					editor.execCommand('insertUnorderedList');
 
@@ -101,7 +101,7 @@ describe('Test orderedList plugin', function() {
 				it('Should wrap this text in styled ul/li', function() {
 					const editor = getJodit();
 					editor.value = 'Hello world';
-					editor.selection.select(editor.editor.firstChild);
+					editor.s.select(editor.editor.firstChild);
 
 					editor.execCommand('insertUnorderedList', false, 'circle');
 
@@ -117,7 +117,7 @@ describe('Test orderedList plugin', function() {
 				it('Should wrap this text inside ol/li', function() {
 					const editor = getJodit();
 					editor.value = 'Hello world';
-					editor.selection.select(editor.editor.firstChild);
+					editor.s.select(editor.editor.firstChild);
 
 					editor.execCommand('insertOrderedList');
 
@@ -133,7 +133,7 @@ describe('Test orderedList plugin', function() {
 				it('Should unwrap selected ul/li', function() {
 					const editor = getJodit();
 					editor.value = '<ul><li>Hello world</li></ul>';
-					editor.selection.select(editor.editor.firstChild);
+					editor.s.select(editor.editor.firstChild);
 
 					editor.execCommand('insertUnorderedList');
 
@@ -145,7 +145,7 @@ describe('Test orderedList plugin', function() {
 				it('Should replace selected ul/li to ol/li', function() {
 					const editor = getJodit();
 					editor.value = '<ul><li>Hello world</li></ul>';
-					editor.selection.select(editor.editor.firstChild);
+					editor.s.select(editor.editor.firstChild);
 
 					editor.execCommand('insertOrderedList');
 
@@ -160,7 +160,7 @@ describe('Test orderedList plugin', function() {
 					const editor = getJodit();
 					editor.value =
 						'<ul style="list-style-type: circle"><li>Hello world</li></ul>';
-					editor.selection.select(editor.editor.firstChild);
+					editor.s.select(editor.editor.firstChild);
 
 					editor.execCommand('insertUnorderedList', false, 'square');
 
@@ -180,15 +180,15 @@ describe('Test orderedList plugin', function() {
 
 					editor.value = '<p>Text to text</p>';
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 
 					range.setStart(editor.editor.firstChild.firstChild, 0);
 					range.collapse(true);
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
 					clickButton('ul', editor);
 
-					editor.selection.insertHTML('test ');
+					editor.s.insertHTML('test ');
 
 					expect(editor.value).equals(
 						'<ul><li>test Text to text</li></ul>'
@@ -204,16 +204,16 @@ describe('Test orderedList plugin', function() {
 
 					editor.value = '<p>Text to text</p>';
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 
 					range.setStart(editor.editor.firstChild.firstChild, 0);
 					range.collapse(true);
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
 					clickTrigger('ul', editor);
 					clickButton('circle', getOpenedPopup(editor));
 
-					editor.selection.insertHTML('test ');
+					editor.s.insertHTML('test ');
 
 					expect(sortAttributes(editor.value)).equals(
 						'<ul style="list-style-type:circle"><li>test Text to text</li></ul>'
@@ -227,11 +227,11 @@ describe('Test orderedList plugin', function() {
 
 					editor.value = '<p>Text to text</p>';
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 
 					range.setStart(editor.editor.firstChild.firstChild, 0);
 					range.collapse(true);
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
 					clickTrigger('ul', editor);
 					clickButton(
@@ -253,7 +253,7 @@ describe('Test orderedList plugin', function() {
 						)
 					);
 
-					editor.selection.insertHTML('test ');
+					editor.s.insertHTML('test ');
 
 					expect(sortAttributes(editor.value).replace(/<br>$/, '')).equals(
 						'test Text to text'

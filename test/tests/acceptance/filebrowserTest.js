@@ -806,14 +806,14 @@ describe('Jodit FileBrowser Tests', function() {
 				editor.value =
 					'<p>Some text</p><p>Another text</p><p>Another some text</p>';
 
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 				range.setStart(
 					editor.editor.querySelectorAll('p')[1].firstChild,
 					7
 				);
 
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				const filebrowser = editor.filebrowser;
 
@@ -859,13 +859,13 @@ describe('Jodit FileBrowser Tests', function() {
 
 				editor.value =
 					'<p>Some text</p><p>Another text</p><p>Another some text</p>';
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 				range.setStart(
 					editor.editor.querySelectorAll('p')[1].firstChild,
 					7
 				);
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				const filebrowser = editor.filebrowser;
 

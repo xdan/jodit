@@ -6,10 +6,10 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					enter: 'BR'
 				});
 				editor.value = 'test';
-				editor.selection.setCursorAfter(editor.editor.firstChild);
+				editor.s.setCursorAfter(editor.editor.firstChild);
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 				expect(editor.value).equals('test<br>');
-				editor.selection.insertHTML('stop');
+				editor.s.insertHTML('stop');
 				expect(editor.value).equals('test<br>stop');
 			});
 		});
@@ -19,8 +19,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				const editor = getJodit();
 				editor.value = 'Some text';
 
-				const sel = editor.selection.sel,
-					range = editor.selection.createRange();
+				const sel = editor.s.sel,
+					range = editor.s.createRange();
 
 				range.setStart(editor.editor.firstChild, 9);
 				range.collapse(true);
@@ -29,7 +29,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-				editor.selection.insertNode(editor.createInside.text(' a '));
+				editor.s.insertNode(editor.createInside.text(' a '));
 
 				expect(editor.value).equals('<p>Some text</p><p> a <br></p>');
 			});
@@ -45,8 +45,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					editor.value = 'Some text';
 
-					const sel = editor.selection.sel,
-						range = editor.selection.createRange();
+					const sel = editor.s.sel,
+						range = editor.s.createRange();
 
 					range.setStart(editor.editor.firstChild, 9);
 					range.collapse(true);
@@ -55,7 +55,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.selection.insertNode(
+					editor.s.insertNode(
 						editor.createInside.text(' a ')
 					);
 
@@ -75,8 +75,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				editor.value =
 					'<p>Some <span style="color: red">text</span></p>';
 
-				const sel = editor.selection.sel,
-					range = editor.selection.createRange();
+				const sel = editor.s.sel,
+					range = editor.s.createRange();
 
 				range.selectNodeContents(editor.editor.firstChild.lastChild);
 				range.collapse(false);
@@ -85,7 +85,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-				editor.selection.insertNode(editor.createInside.text(' a '));
+				editor.s.insertNode(editor.createInside.text(' a '));
 
 				expect(editor.value).equals(
 					'<p>Some <span style="color: red">text</span></p><p><span style="color: red"> a <br></span></p>'
@@ -98,8 +98,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				const editor = getJodit();
 				editor.value = '<p>Some <strong>text</strong></p>';
 
-				const sel = editor.selection.sel,
-					range = editor.selection.createRange();
+				const sel = editor.s.sel,
+					range = editor.s.createRange();
 
 				range.selectNodeContents(editor.editor.firstChild.lastChild);
 				range.collapse(false);
@@ -108,7 +108,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-				editor.selection.insertNode(editor.createInside.text(' a '));
+				editor.s.insertNode(editor.createInside.text(' a '));
 
 				expect(editor.value).equals(
 					'<p>Some <strong>text</strong></p><p><strong> a <br></strong></p>'
@@ -122,7 +122,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				editor.value =
 					'as<span style="color: rgb(147, 101, 184);">da</span>s';
 
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 
 				// set focus in the span
 				range.setStart(
@@ -130,11 +130,11 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					1
 				);
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-				editor.selection.insertNode(editor.createInside.text(' a '));
+				editor.s.insertNode(editor.createInside.text(' a '));
 
 				expect(editor.value).equals(
 					'<p>as<span style="color: rgb(147, 101, 184);">d</span></p><p><span style="color: rgb(147, 101, 184);"> a a</span>s</p>'
@@ -147,8 +147,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				const editor = getJodit();
 				editor.value = '<h1>Some text</h1>';
 
-				const sel = editor.selection.sel,
-					range = editor.selection.createRange();
+				const sel = editor.s.sel,
+					range = editor.s.createRange();
 
 				range.setStart(editor.editor.firstChild.firstChild, 5);
 				range.collapse(true);
@@ -157,7 +157,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-				editor.selection.insertNode(editor.createInside.text(' a '));
+				editor.s.insertNode(editor.createInside.text(' a '));
 
 				expect(editor.value).equals('<h1>Some </h1><h1> a text</h1>');
 			});
@@ -168,8 +168,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				const editor = getJodit();
 				editor.value = '<h1>Some text</h1>';
 
-				const sel = editor.selection.sel,
-					range = editor.selection.createRange();
+				const sel = editor.s.sel,
+					range = editor.s.createRange();
 
 				range.setStart(editor.editor.firstChild.firstChild, 9);
 				range.collapse(true);
@@ -178,7 +178,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-				editor.selection.insertNode(editor.createInside.text(' a '));
+				editor.s.insertNode(editor.createInside.text(' a '));
 
 				expect(editor.value).equals('<h1>Some text</h1><p> a <br></p>');
 			});
@@ -196,10 +196,10 @@ describe('Enter behavior Jodit Editor Tests', function() {
 						}
 					});
 					editor.value = 'test';
-					editor.selection.setCursorAfter(editor.editor.firstChild);
+					editor.s.setCursorAfter(editor.editor.firstChild);
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 					expect(editor.value).equals('test');
-					editor.selection.insertHTML('stop');
+					editor.s.insertHTML('stop');
 					expect(editor.value).equals('teststop');
 				});
 			});
@@ -209,8 +209,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					const editor = getJodit();
 					editor.value = 'Some text';
 
-					const sel = editor.selection.sel,
-						range = editor.selection.createRange();
+					const sel = editor.s.sel,
+						range = editor.s.createRange();
 
 					range.setStart(editor.editor.firstChild, 0);
 					range.collapse(true);
@@ -219,7 +219,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.selection.insertNode(
+					editor.s.insertNode(
 						editor.createInside.text(' a ')
 					);
 
@@ -235,11 +235,11 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				const editor = getJodit();
 
 				editor.value = ''; // empty
-				editor.selection.focus();
+				editor.s.focus();
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-				editor.selection.insertNode(editor.createInside.text(' a '));
+				editor.s.insertNode(editor.createInside.text(' a '));
 
 				expect(editor.value).equals('<p><br></p><p> a <br></p>');
 			});
@@ -250,8 +250,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				const editor = getJodit();
 				editor.value = 'Some text';
 
-				const sel = editor.selection.sel,
-					range = editor.selection.createRange();
+				const sel = editor.s.sel,
+					range = editor.s.createRange();
 
 				range.setStart(editor.editor.firstChild, 5);
 				range.collapse(true);
@@ -260,7 +260,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-				editor.selection.insertNode(editor.createInside.text(' a '));
+				editor.s.insertNode(editor.createInside.text(' a '));
 
 				expect(editor.value).equals('<p>Some </p><p> a text</p>');
 			});
@@ -281,20 +281,20 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				it('Should contain the specified tag settings and after this cursor must be inside that tag', function() {
 					const editor = getJodit();
 					editor.value = '';
-					editor.selection.focus();
+					editor.s.focus();
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-					editor.selection.insertNode(
+					editor.s.insertNode(
 						editor.createInside.text('test')
 					);
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-					editor.selection.insertNode(
+					editor.s.insertNode(
 						editor.createInside.text('test2')
 					);
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-					editor.selection.insertNode(
+					editor.s.insertNode(
 						editor.createInside.text('test3')
 					);
 
@@ -315,17 +315,17 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					p.appendChild(node);
 
-					editor.selection.insertNode(p);
+					editor.s.insertNode(p);
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 
 					range.setStart(node, 6);
-					editor.selection.sel.removeAllRanges();
-					editor.selection.sel.addRange(range);
+					editor.s.sel.removeAllRanges();
+					editor.s.sel.addRange(range);
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.selection.insertNode(editor.createInside.text('a '));
+					editor.s.insertNode(editor.createInside.text('a '));
 
 					expect(editor.value).equals(
 						'<p>Split </p><p>a paragraph</p>'
@@ -341,17 +341,17 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					p.style.textAlign = 'right';
 					p.style.color = '#ff0000';
 
-					editor.selection.insertNode(p);
+					editor.s.insertNode(p);
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 
 					range.setStart(node, 6);
-					editor.selection.sel.removeAllRanges();
-					editor.selection.sel.addRange(range);
+					editor.s.sel.removeAllRanges();
+					editor.s.sel.addRange(range);
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.selection.insertNode(editor.createInside.text('a '));
+					editor.s.insertNode(editor.createInside.text('a '));
 
 					expect(sortAttributes(editor.value)).equals(
 						'<p style="color:#FF0000;text-align:right">Split </p><p style="color:#FF0000;text-align:right">a paragraph</p>'
@@ -368,11 +368,11 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 						p.innerHTML = 'Split paragraph';
 						p2.innerHTML = 'Test';
-						editor.selection.insertNode(p);
-						editor.selection.insertNode(p2);
+						editor.s.insertNode(p);
+						editor.s.insertNode(p2);
 
 						// set cursor in end of element
-						editor.selection.setCursorIn(p, false);
+						editor.s.setCursorIn(p, false);
 
 						simulateEvent(
 							'keydown',
@@ -380,7 +380,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							editor.editor
 						);
 
-						editor.selection.insertNode(
+						editor.s.insertNode(
 							editor.createInside.text('a ')
 						);
 
@@ -398,16 +398,16 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 						p.innerHTML = 'Split paragraph';
 						p2.innerHTML = 'Test';
-						editor.selection.insertNode(p);
-						editor.selection.insertNode(p2);
+						editor.s.insertNode(p);
+						editor.s.insertNode(p2);
 
-						const range = editor.selection.createRange();
+						const range = editor.s.createRange();
 
 						// set cursor in start of element
 						range.setStart(p.firstChild, 0);
 						range.collapse(true);
-						editor.selection.sel.removeAllRanges();
-						editor.selection.sel.addRange(range);
+						editor.s.sel.removeAllRanges();
+						editor.s.sel.addRange(range);
 
 						simulateEvent(
 							'keydown',
@@ -415,7 +415,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							editor.editor
 						);
 
-						editor.selection.insertNode(
+						editor.s.insertNode(
 							editor.createInside.text('a ')
 						);
 
@@ -436,11 +436,11 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 						p.innerHTML = 'Split paragraph';
 						p2.innerHTML = 'Test';
-						editor.selection.insertNode(p);
-						editor.selection.insertNode(p2);
+						editor.s.insertNode(p);
+						editor.s.insertNode(p2);
 
 						// set cursor in end of element
-						editor.selection.setCursorIn(p, false);
+						editor.s.setCursorIn(p, false);
 
 						simulateEvent(
 							'keydown',
@@ -448,7 +448,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							editor.editor
 						);
 
-						editor.selection.insertNode(
+						editor.s.insertNode(
 							editor.createInside.text('a ')
 						);
 
@@ -466,14 +466,14 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 				editor.value = '<table><tr><td>text</td></tr></table>';
 
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 
 				// set cursor in start of element
 				range.selectNodeContents(editor.editor.querySelector('td'));
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
-				editor.selection.insertNode(editor.createInside.text('split '));
+				editor.s.insertNode(editor.createInside.text('split '));
 
 				expect(editor.value).equals(
 					'<table><tbody><tr><td>split text</td></tr></tbody></table>'
@@ -485,7 +485,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					'<table><tbody><tr><td>split <br>text</td></tr></tbody></table>'
 				);
 
-				editor.selection.insertNode(editor.createInside.text(' test '));
+				editor.s.insertNode(editor.createInside.text(' test '));
 
 				expect(editor.value).equals(
 					'<table><tbody><tr><td>split <br> test text</td></tr></tbody></table>'
@@ -497,7 +497,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					'<table><tbody><tr><td>split <br> test <br>text</td></tr></tbody></table>'
 				);
 
-				editor.selection.insertNode(editor.createInside.text(' stop '));
+				editor.s.insertNode(editor.createInside.text(' stop '));
 
 				expect(editor.value).equals(
 					'<table><tbody><tr><td>split <br> test <br> stop text</td></tr></tbody></table>'
@@ -509,16 +509,16 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 				editor.value = '<table><tr><td>test</td></tr></table>';
 
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 
 				// set cursor in start of element
 				range.setEndAfter(editor.editor.querySelector('table'));
 				range.collapse(false);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-				editor.selection.insertNode(
+				editor.s.insertNode(
 					editor.createInside.text('text'),
 					false
 				);
@@ -535,13 +535,13 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 				editor.value = 'test';
 
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 
 				// set cursor in start of element
 				range.setStart(editor.editor.firstChild, 2);
 				range.collapse(true);
-				editor.selection.sel.removeAllRanges();
-				editor.selection.sel.addRange(range);
+				editor.s.sel.removeAllRanges();
+				editor.s.sel.addRange(range);
 
 				simulateEvent(
 					'keydown',
@@ -552,7 +552,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					}
 				);
 
-				editor.selection.insertNode(editor.createInside.text('split '));
+				editor.s.insertNode(editor.createInside.text('split '));
 
 				expect(editor.value).equals('te<br>split st');
 
@@ -575,12 +575,12 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 				editor.value = '<pre>test</pre>';
 
-				editor.selection.setCursorIn(
+				editor.s.setCursorIn(
 					editor.editor.querySelector('pre'),
 					false
 				);
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-				editor.selection.insertNode(editor.createInside.text('split'));
+				editor.s.insertNode(editor.createInside.text('split'));
 
 				expect('<pre>test<br>split</pre>').equals(
 					sortAttributes(editor.value)
@@ -598,7 +598,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 						editor.value = '<ul><li>test</li></ul>';
 
-						editor.selection.setCursorAfter(
+						editor.s.setCursorAfter(
 							editor.editor.querySelector('ul>li').firstChild
 						);
 						simulateEvent(
@@ -606,7 +606,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							Jodit.KEY_ENTER,
 							editor.editor
 						);
-						editor.selection.insertNode(
+						editor.s.insertNode(
 							editor.createInside.text('split')
 						);
 
@@ -626,7 +626,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 						editor.value = '<ul><li>test</li><li> </li></ul>';
 
-						editor.selection.setCursorAfter(
+						editor.s.setCursorAfter(
 							editor.editor.querySelectorAll('ul>li')[1]
 								.firstChild
 						);
@@ -635,7 +635,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							Jodit.KEY_ENTER,
 							editor.editor
 						);
-						editor.selection.insertNode(
+						editor.s.insertNode(
 							editor.createInside.text('split')
 						);
 
@@ -661,12 +661,12 @@ describe('Enter behavior Jodit Editor Tests', function() {
 						'</tbody>' +
 						'</table>';
 
-					editor.selection.setCursorIn(
+					editor.s.setCursorIn(
 						editor.editor.querySelector('ul>li'),
 						false
 					);
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-					editor.selection.insertNode(
+					editor.s.insertNode(
 						editor.createInside.text('split')
 					);
 
@@ -699,7 +699,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							'<li><img style="width:30px" src="tests/artio.jpg"></li>' +
 							'</ul>';
 
-						editor.selection.setCursorBefore(
+						editor.s.setCursorBefore(
 							editor.editor.firstChild.lastChild.firstChild
 						);
 						simulateEvent(
@@ -707,7 +707,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							Jodit.KEY_ENTER,
 							editor.editor
 						);
-						editor.selection.insertNode(
+						editor.s.insertNode(
 							editor.createInside.text('split ')
 						);
 
@@ -728,8 +728,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					const editor = getJodit();
 					editor.value = '<ul><li> </li></ul>';
 
-					const sel = editor.selection.sel,
-						range = editor.selection.createRange();
+					const sel = editor.s.sel,
+						range = editor.s.createRange();
 
 					range.setStart(editor.editor.firstChild.firstChild, 0);
 					range.collapse(true);
@@ -738,7 +738,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.selection.insertNode(
+					editor.s.insertNode(
 						editor.createInside.text(' a ')
 					);
 
@@ -751,8 +751,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					const editor = getJodit();
 					editor.value = '<ul><li>Some text</li><li> </li></ul>';
 
-					const sel = editor.selection.sel,
-						range = editor.selection.createRange();
+					const sel = editor.s.sel,
+						range = editor.s.createRange();
 
 					range.setStart(
 						editor.editor.firstChild.lastChild.firstChild,
@@ -764,7 +764,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.selection.insertNode(
+					editor.s.insertNode(
 						editor.createInside.text(' a ')
 					);
 
@@ -780,8 +780,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					editor.value =
 						'<ul><li>Test</li><li> </li><li>Some text</li></ul>';
 
-					const sel = editor.selection.sel,
-						range = editor.selection.createRange();
+					const sel = editor.s.sel,
+						range = editor.s.createRange();
 
 					range.setStart(editor.editor.firstChild.childNodes[1], 0);
 					range.collapse(true);
@@ -790,7 +790,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.selection.insertNode(
+					editor.s.insertNode(
 						editor.createInside.text(' a ')
 					);
 
@@ -805,8 +805,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					const editor = getJodit();
 					editor.value = '<ul><li>Some text</li></ul>';
 
-					const sel = editor.selection.sel,
-						range = editor.selection.createRange();
+					const sel = editor.s.sel,
+						range = editor.s.createRange();
 
 					range.setStart(
 						editor.editor.firstChild.firstChild.firstChild,
@@ -818,7 +818,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.selection.insertNode(
+					editor.s.insertNode(
 						editor.createInside.text(' a ')
 					);
 
@@ -833,8 +833,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					const editor = getJodit();
 					editor.value = '<ul><li> </li><li>Some text</li></ul>';
 
-					const sel = editor.selection.sel,
-						range = editor.selection.createRange();
+					const sel = editor.s.sel,
+						range = editor.s.createRange();
 
 					range.setStart(editor.editor.firstChild.firstChild, 0);
 					range.collapse(true);
@@ -843,7 +843,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.selection.insertNode(
+					editor.s.insertNode(
 						editor.createInside.text(' a ')
 					);
 
@@ -862,17 +862,17 @@ describe('Enter behavior Jodit Editor Tests', function() {
 						'<li><p>Line_2</p></li>' +
 						'</ul>';
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 
 					range.setEndAfter(
 						editor.editor.querySelector('p').firstChild
 					);
 					range.collapse(false);
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.selection.insertNode(
+					editor.s.insertNode(
 						editor.createInside.text(' a ')
 					);
 
@@ -895,8 +895,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					});
 					editor.value = 'Some text';
 
-					const sel = editor.selection.sel,
-						range = editor.selection.createRange();
+					const sel = editor.s.sel,
+						range = editor.s.createRange();
 
 					range.setStart(editor.editor.firstChild, 9);
 					range.collapse(true);
@@ -907,7 +907,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.selection.insertNode(
+					editor.s.insertNode(
 						editor.createInside.text(' a ')
 					);
 
@@ -922,13 +922,13 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 				editor.value = '<span style="color:red">test</span>';
 
-				editor.selection.setCursorIn(
+				editor.s.setCursorIn(
 					editor.editor.querySelector('span'),
 					false
 				);
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-				editor.selection.insertNode(editor.createInside.text('test'));
+				editor.s.insertNode(editor.createInside.text('test'));
 
 				expect(sortAttributes(editor.value)).equals(
 					'<p><span style="color:red">test</span></p><p><span style="color:red">test<br></span></p>'

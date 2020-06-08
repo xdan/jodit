@@ -131,7 +131,7 @@ interface IControlType<
 	 *                 this.setEditorValue('');
 	 *                 return;
 	 *             }
-	 *             this.selection.insertNode(this.c.element(key, ''));
+	 *             this.s.insertNode(this.c.element(key, ''));
 	 *             this.e.fire('errorMessage', 'Was inserted ' + value);
 	 *        },
 	 *        template: function (key, value) {
@@ -222,7 +222,7 @@ interface IControlType<
 	 *              div.appendChild(button);
 	 *
 	 *              button.addEventListener('click', function (e) {
-	 *                  editor.selection.insertHTML(prompt("Enter your code"));
+	 *                  editor.s.insertHTML(prompt("Enter your code"));
 	 *                  return false;
 	 *              });
 	 *              return div;

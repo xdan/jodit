@@ -116,10 +116,10 @@ describe('Search plugin', function() {
 
 			editor.value = 'test test test';
 
-			let range = editor.selection.createRange();
+			let range = editor.s.createRange();
 			range.setStart(editor.editor.firstChild, 0);
 			range.setEnd(editor.editor.firstChild, 4);
-			editor.selection.selectRange(range);
+			editor.s.selectRange(range);
 
 			const search = editor.container.querySelector('.jodit_search');
 			expect(false).equals(
@@ -139,7 +139,7 @@ describe('Search plugin', function() {
 					search.querySelector('.jodit-search__query')
 			);
 
-			editor.selection.removeMarkers();
+			editor.s.removeMarkers();
 			Jodit.modules.Helpers.normalizeNode(editor.editor.firstChild); // because Select module splits text node
 
 			editor.events.fire('searchNext');
@@ -148,7 +148,7 @@ describe('Search plugin', function() {
 				options.shiftKey = false;
 			}); //
 
-			const sel = editor.selection.sel;
+			const sel = editor.s.sel;
 
 			expect(1).equals(sel.rangeCount);
 			range = sel.getRangeAt(0);
@@ -169,10 +169,10 @@ describe('Search plugin', function() {
 
 			editor.value = 'test test test';
 
-			let range = editor.selection.createRange();
+			let range = editor.s.createRange();
 			range.setStart(editor.editor.firstChild, 0);
 			range.setEnd(editor.editor.firstChild, 1);
-			editor.selection.selectRange(range);
+			editor.s.selectRange(range);
 
 			const search = editor.container.querySelector('.jodit_search');
 
@@ -193,10 +193,10 @@ describe('Search plugin', function() {
 					search.querySelector('.jodit-search__query')
 			);
 
-			editor.selection.removeMarkers();
+			editor.s.removeMarkers();
 			Jodit.modules.Helpers.normalizeNode(editor.editor.firstChild); // because Select module splits text node
 
-			const sel = editor.selection.sel;
+			const sel = editor.s.sel;
 
 			editor.events.fire('searchNext');
 			[
@@ -232,10 +232,10 @@ describe('Search plugin', function() {
 
 				editor.value = 'test test test';
 
-				let range = editor.selection.createRange();
+				let range = editor.s.createRange();
 				range.setStart(editor.editor.firstChild, 0);
 				range.setEnd(editor.editor.firstChild, 4);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				const search = editor.container.querySelector('.jodit_search');
 
@@ -256,7 +256,7 @@ describe('Search plugin', function() {
 						search.querySelector('.jodit-search__query')
 				);
 
-				editor.selection.removeMarkers();
+				editor.s.removeMarkers();
 				Jodit.modules.Helpers.normalizeNode(editor.editor.firstChild); // because Select module splits text node
 
 				editor.events.fire('searchNext');
@@ -267,7 +267,7 @@ describe('Search plugin', function() {
 					options.shiftKey = true;
 				}); //
 
-				const sel = editor.selection.sel;
+				const sel = editor.s.sel;
 
 				expect(1).equals(sel.rangeCount);
 				range = sel.getRangeAt(0);
@@ -286,10 +286,10 @@ describe('Search plugin', function() {
 			const editor = getJodit();
 			editor.value = '<p>text</p>';
 
-			const range = editor.selection.createRange();
+			const range = editor.s.createRange();
 			range.setStart(editor.editor.firstChild.firstChild, 1);
 			range.setEnd(editor.editor.firstChild.firstChild, 3);
-			const sel = editor.selection.sel;
+			const sel = editor.s.sel;
 			sel.removeAllRanges();
 			sel.addRange(range);
 
@@ -521,7 +521,7 @@ describe('Search plugin', function() {
 			});
 			editor.value =
 				'<p><span>Mr</span> <span>John</span> <span>Smith</span> <span>washed</span> <span>window</span></p>';
-			const sel = editor.selection.sel;
+			const sel = editor.s.sel;
 			sel.removeAllRanges();
 
 			editor.events.fire('search', 'th was');

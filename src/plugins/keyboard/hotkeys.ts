@@ -4,13 +4,13 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../config';
-import { Plugin } from '../core/plugin';
-import { normalizeKeyAliases } from '../core/helpers/';
-import { IDictionary, IJodit } from '../types';
-import { KEY_ESC } from '../core/constants';
+import { Config } from '../../config';
+import { Plugin } from '../../core/plugin';
+import { normalizeKeyAliases } from '../../core/helpers';
+import { IDictionary, IJodit } from '../../types';
+import { KEY_ESC } from '../../core/constants';
 
-declare module '../config' {
+declare module '../../config' {
 	interface Config {
 		commandToHotkeys: IDictionary<string | string[]>;
 	}

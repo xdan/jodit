@@ -7,7 +7,7 @@ describe('Font test', function() {
 				});
 
 				editor.value = '<p>test</p>';
-				editor.selection.select(
+				editor.s.select(
 					editor.editor.firstChild.firstChild
 				);
 
@@ -54,7 +54,7 @@ describe('Font test', function() {
 					});
 
 					editor.value = '<p>test</p>';
-					editor.selection.select(
+					editor.s.select(
 						editor.editor.firstChild.firstChild
 					);
 
@@ -86,7 +86,7 @@ describe('Font test', function() {
 			const list = getOpenedPopup(editor);
 
 			clickButton('10', list);
-			editor.selection.insertHTML('test');
+			editor.s.insertHTML('test');
 
 			expect(editor.value).equals('<span style="font-size: 10px;">test</span>');
 
@@ -94,7 +94,7 @@ describe('Font test', function() {
 			const list2 = getOpenedPopup(editor);
 
 			clickButton('Impact_Charcoal_sans_serif', list2);
-			editor.selection.insertHTML('stop');
+			editor.s.insertHTML('stop');
 
 			expect(sortAttributes(editor.value)).equals('<span style="font-size:10px">test' +
 				'<span style="font-family:Impact,Charcoal,sans-serif">stop</span></span>');

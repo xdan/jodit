@@ -165,7 +165,7 @@ export function iframe(editor: IJodit) {
 	editor.e
 		.on('afterSetMode', () => {
 			if (editor.isEditorMode()) {
-				editor.selection.focus();
+				editor.s.focus();
 			}
 		})
 		.on(
@@ -400,11 +400,11 @@ export function iframe(editor: IJodit) {
 				if (doc.documentElement) {
 					editor.e
 						.on(doc.documentElement, 'mousedown touchend', () => {
-							if (!editor.selection.isFocused()) {
-								editor.selection.focus();
+							if (!editor.s.isFocused()) {
+								editor.s.focus();
 
 								if (editor.editor === doc.body) {
-									editor.selection.setCursorIn(doc.body);
+									editor.s.setCursorIn(doc.body);
 								}
 							}
 						})

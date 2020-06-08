@@ -118,13 +118,13 @@ Config.prototype.uploader = {
 
 				if (isJoditObject(this.j)) {
 					if (tagName === 'img') {
-						this.j.selection.insertImage(
+						this.j.s.insertImage(
 							elm as HTMLImageElement,
 							null,
 							this.j.o.imageDefaultWidth
 						);
 					} else {
-						this.j.selection.insertNode(elm);
+						this.j.s.insertNode(elm);
 					}
 				}
 			});
@@ -519,7 +519,7 @@ export class Uploader extends ViewComponent implements IUploader {
 	 * Jodit.editors.someidfoeditor.uploader.bind($form[0], function (files) {
 	 *     var i;
 	 *     for (i = 0; i < data.files.length; i += 1) {
-	 *         parent.selection.insertImage(data.files[i])
+	 *         parent.s.insertImage(data.files[i])
 	 *     }
 	 * });
 	 * ```
@@ -566,12 +566,12 @@ export class Uploader extends ViewComponent implements IUploader {
 						getContainer(this.j, Uploader).appendChild(div);
 
 						const selection = isJoditObject(this.j)
-								? this.j.selection.save()
+								? this.j.s.save()
 								: null,
 							restore = () =>
 								selection &&
 								isJoditObject(this.j) &&
-								this.j.selection.restore(selection);
+								this.j.s.restore(selection);
 
 						div.focus();
 

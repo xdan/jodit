@@ -69,7 +69,7 @@ export function media(editor: IJodit) {
 		editor.e
 			.off(element, 'mousedown.select touchstart.select')
 			.on(element, 'mousedown.select touchstart.select', () => {
-				editor.selection.setCursorAfter(element);
+				editor.s.setCursorAfter(element);
 			});
 	};
 

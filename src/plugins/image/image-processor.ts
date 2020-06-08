@@ -38,7 +38,7 @@ export function imageProcessor(editor: IJodit) {
 						}
 
 						editor.e.on(elm, 'mousedown touchstart', () => {
-							editor.selection.select(elm);
+							editor.s.select(elm);
 						});
 					}
 				});

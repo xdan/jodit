@@ -152,7 +152,7 @@ describe('Test Inline mode', function() {
 
 					editor.value =
 						'<p>test <img style="width: 30px; float: right"/> test</p>';
-					editor.selection.focus();
+					editor.s.focus();
 
 					simulateEvent(
 						'click',
@@ -194,7 +194,7 @@ describe('Test Inline mode', function() {
 
 						editor.value =
 							'<p>test <img style="width: 30px; float: right"/> test</p>';
-						editor.selection.focus();
+						editor.s.focus();
 
 						simulateEvent(
 							'click',
@@ -408,7 +408,7 @@ describe('Test Inline mode', function() {
 				});
 
 				editor.value = 'test<br>test';
-				editor.selection.select(editor.editor.firstChild);
+				editor.s.select(editor.editor.firstChild);
 
 				simulateEvent('selectionchange', 0, editor.editorDocument);
 
@@ -423,7 +423,7 @@ describe('Test Inline mode', function() {
 						readonly: true
 					});
 					editor.value = 'test<br>test';
-					editor.selection.select(editor.editor.firstChild);
+					editor.s.select(editor.editor.firstChild);
 					simulateEvent('selectionchange', 0, editor.editorDocument);
 					const popup = getOpenedPopup(editor);
 					expect(popup).is.null;
@@ -436,7 +436,7 @@ describe('Test Inline mode', function() {
 							readonly: true
 						});
 						editor.value = 'test<br>test';
-						editor.selection.select(editor.editor.firstChild);
+						editor.s.select(editor.editor.firstChild);
 						simulateEvent('selectionchange', 0, editor.editorDocument);
 
 						let popup = getOpenedPopup(editor);
@@ -444,7 +444,7 @@ describe('Test Inline mode', function() {
 
 						editor.setReadOnly(false);
 
-						editor.selection.select(editor.editor.firstChild);
+						editor.s.select(editor.editor.firstChild);
 						simulateEvent('selectionchange', 0, editor.editorDocument);
 						popup = getOpenedPopup(editor);
 						expect(popup).is.not.null;
@@ -462,14 +462,14 @@ describe('Test Inline mode', function() {
 						preset: 'inline'
 					});
 					editor.value = 'test<br>test';
-					editor.selection.select(editor.editor.firstChild);
+					editor.s.select(editor.editor.firstChild);
 					simulateEvent('selectionchange', 0, editor.editorDocument);
 					const popup = getOpenedPopup(editor);
 					expect(popup).is.not.null;
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 					range.setStart(editor.editor.firstChild, 0);
 					range.collapse(true);
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 					simulateEvent('mousedown', 0, editor.editor);
 					expect(popup.parentNode).is.null;
 				});
@@ -495,7 +495,7 @@ describe('Test Inline mode', function() {
 					editor.value = 'test<br>test';
 					editor2.value = 'test<br>test';
 
-					editor.selection.select(editor.editor.firstChild);
+					editor.s.select(editor.editor.firstChild);
 
 					simulateEvent('selectionchange', 0, editor.editorDocument);
 					const popup = getOpenedPopup(editor);
@@ -505,7 +505,7 @@ describe('Test Inline mode', function() {
 					const range = editor2.editorDocument.createRange();
 					range.setStart(editor2.editor.firstChild, 0);
 					range.collapse(true);
-					editor2.selection.selectRange(range);
+					editor2.s.selectRange(range);
 					simulateEvent('mousedown', 0, editor2.ownerWindow);
 
 					expect(popup.parentNode).is.null;
@@ -725,7 +725,7 @@ describe('Test Inline mode', function() {
 						events: {
 							afterConstructor: function(editor) {
 								editor.value = 'test<br>test';
-								editor.selection.select(
+								editor.s.select(
 									editor.editor.firstChild
 								);
 								simulateEvent(

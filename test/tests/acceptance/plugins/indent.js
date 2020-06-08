@@ -5,13 +5,13 @@ describe('Test editor indent plugin', function() {
 				const editor = getJodit();
 				editor.value = '<ul><li>test</li></ul>';
 
-				const range = editor.selection.createRange();
+				const range = editor.s.createRange();
 				range.setStart(
 					editor.editor.firstChild.firstChild.firstChild,
 					0
 				);
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				editor.s.selectRange(range);
 
 				editor.execCommand('indent');
 				expect(editor.value).equals(
@@ -39,13 +39,13 @@ describe('Test editor indent plugin', function() {
 					});
 					editor.value = '<ul><li>test</li></ul>';
 
-					const range = editor.selection.createRange();
+					const range = editor.s.createRange();
 					range.setStart(
 						editor.editor.firstChild.firstChild.firstChild,
 						0
 					);
 					range.collapse(true);
-					editor.selection.selectRange(range);
+					editor.s.selectRange(range);
 
 					editor.execCommand('indent');
 					expect(editor.value).equals(
@@ -90,8 +90,8 @@ describe('Test editor indent plugin', function() {
 		const el2 = children[1];
 		const el3 = children[2];
 
-		const sel = editor.selection.sel,
-			range = editor.selection.createRange();
+		const sel = editor.s.sel,
+			range = editor.s.createRange();
 
 		range.setStart(el1Child, 0);
 		range.setEnd(el2, 1);
@@ -132,8 +132,8 @@ describe('Test editor indent plugin', function() {
 		const el5 = children[4];
 		const el6 = children[5];
 
-		const sel = editor.selection.sel,
-			range = editor.selection.createRange();
+		const sel = editor.s.sel,
+			range = editor.s.createRange();
 
 		range.setStart(el1, 0);
 		range.setEnd(el4, 1);
@@ -158,12 +158,12 @@ describe('Test editor indent plugin', function() {
 
 			div.innerHTML = 'text';
 
-			const range = editor.selection.createRange();
+			const range = editor.s.createRange();
 
 			range.setStart(div.firstChild, 0);
 			range.setEnd(div.firstChild, 1);
 
-			editor.selection.selectRange(range);
+			editor.s.selectRange(range);
 
 			editor.execCommand('indent');
 

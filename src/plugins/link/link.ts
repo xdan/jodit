@@ -70,7 +70,7 @@ Config.prototype.controls.unlink = {
 
 Config.prototype.controls.link = {
 	isActive: (editor: IJodit): boolean => {
-		const current = editor.selection.current();
+		const current = editor.s.current();
 		return Boolean(current && Dom.closest(current, 'a', editor.editor));
 	},
 
@@ -120,7 +120,7 @@ Config.prototype.controls.link = {
 			link
 				? link.innerText
 				: stripTags(
-						editor.selection.range.cloneContents(),
+						editor.s.range.cloneContents(),
 						editor.editorDocument
 				  );
 
@@ -187,13 +187,13 @@ Config.prototype.controls.link = {
 				getSelectionText() !== content_input.value.trim();
 
 			if (!link) {
-				if (!editor.selection.isCollapsed()) {
-					links = editor.selection.wrapInTag(
+				if (!editor.s.isCollapsed()) {
+					links = editor.s.wrapInTag(
 						'a'
 					) as HTMLAnchorElement[];
 				} else {
 					const a = editor.createInside.element('a');
-					editor.selection.insertNode(a);
+					editor.s.insertNode(a);
 					links = [a];
 				}
 			} else {
@@ -314,7 +314,7 @@ export function link(jodit: IJodit) {
 
 					if (node.parentNode) {
 						node.parentNode.replaceChild(newtag, node);
-						jodit.selection.setCursorIn(newtag, true);
+						jodit.s.setCursorIn(newtag, true);
 					}
 				}
 			}

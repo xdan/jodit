@@ -10,7 +10,7 @@ describe('Limit plugin', function() {
 				});
 
 				editor.value = '11111';
-				editor.selection.insertHTML('a');
+				editor.s.insertHTML('a');
 				setTimeout(() => {
 					expect('11111').equals(editor.value);
 					done();
@@ -28,8 +28,8 @@ describe('Limit plugin', function() {
 
 					editor.value = '1111';
 
-					editor.selection.insertHTML('a');
-					editor.selection.insertHTML('a');
+					editor.s.insertHTML('a');
+					editor.s.insertHTML('a');
 
 					setTimeout(() => {
 						expect('a1111').equals(editor.value);
@@ -50,13 +50,13 @@ describe('Limit plugin', function() {
 
 						editor.value = '1111';
 
-						const sel = editor.selection.sel,
-							range = editor.selection.createRange();
+						const sel = editor.s.sel,
+							range = editor.s.createRange();
 
 						range.setEndAfter(editor.editor.firstChild);
 						range.collapse(false);
 
-						editor.selection.selectRange(range);
+						editor.s.selectRange(range);
 						range.insertNode(editor.createInside.text('v'));
 						simulateEvent('keydown', Jodit.KEY_V, editor.editor);
 
@@ -117,7 +117,7 @@ describe('Limit plugin', function() {
 
 					editor.value = '11111';
 
-					editor.selection.setCursorAfter(
+					editor.s.setCursorAfter(
 						editor.editor.firstChild
 					);
 

@@ -170,7 +170,7 @@ export class search extends Plugin {
 			? 'inline-block'
 			: 'none';
 
-		const range = this.j.selection.range,
+		const range = this.j.s.range,
 			counts: [number, number] = this.calcCounts(
 				this.queryInput.value,
 				range
@@ -259,7 +259,7 @@ export class search extends Plugin {
 	};
 
 	findAndReplace = (start: Node | null, query: string): boolean => {
-		const range = this.j.selection.range,
+		const range = this.j.s.range,
 			bound: ISelectionRange | false = this.find(
 				start,
 				query,
@@ -286,7 +286,7 @@ export class search extends Plugin {
 					);
 
 					rng.insertNode(textNode);
-					this.j.selection.select(textNode);
+					this.j.s.select(textNode);
 					this.tryScrollToElement(textNode);
 				}
 			} catch {}
@@ -308,7 +308,7 @@ export class search extends Plugin {
 		query: string,
 		next: boolean
 	): boolean => {
-		const range = this.j.selection.range,
+		const range = this.j.s.range,
 			bound: ISelectionRange | false = this.find(
 				start,
 				query,
@@ -323,7 +323,7 @@ export class search extends Plugin {
 			try {
 				rng.setStart(bound.startContainer, bound.startOffset as number);
 				rng.setEnd(bound.endContainer, bound.endOffset as number);
-				this.j.selection.selectRange(rng);
+				this.j.s.selectRange(rng);
 			} catch (e) {}
 
 			this.tryScrollToElement(bound.startContainer);
@@ -483,10 +483,10 @@ export class search extends Plugin {
 			searchAndReplace
 		);
 
-		this.current = this.j.selection.current();
-		this.selInfo = this.j.selection.save();
+		this.current = this.j.s.current();
+		this.selInfo = this.j.s.save();
 
-		const selStr: string = (this.j.selection.sel || '').toString();
+		const selStr: string = (this.j.s.sel || '').toString();
 
 		if (selStr) {
 			this.queryInput.value = selStr;
@@ -507,7 +507,7 @@ export class search extends Plugin {
 		}
 
 		if (this.selInfo) {
-			this.j.selection.restore(this.selInfo);
+			this.j.s.restore(this.selInfo);
 			this.selInfo = null;
 		}
 
@@ -590,14 +590,14 @@ export class search extends Plugin {
 				.on('changePlace', onInit)
 				.on(self.closeButton, 'click', this.close)
 				.on(self.queryInput, 'mousedown', () => {
-					if (editor.selection.isFocused()) {
-						editor.selection.removeMarkers();
-						self.selInfo = editor.selection.save();
+					if (editor.s.isFocused()) {
+						editor.s.removeMarkers();
+						self.selInfo = editor.s.save();
 					}
 				})
 				.on(self.replaceButton, 'click', (e: MouseEvent) => {
 					self.findAndReplace(
-						editor.selection.current() || editor.editor.firstChild,
+						editor.s.current() || editor.editor.firstChild,
 						self.queryInput.value
 					);
 
@@ -643,17 +643,17 @@ export class search extends Plugin {
 				})
 				.on('keydown.search mousedown.search', () => {
 					if (this.selInfo) {
-						editor.selection.removeMarkers();
+						editor.s.removeMarkers();
 						this.selInfo = null;
 					}
 					if (this.isOpened) {
-						this.current = this.j.selection.current();
+						this.current = this.j.s.current();
 						this.updateCounters();
 					}
 				})
 				.on('searchNext.search searchPrevious.search', () => {
 					return self.findAndSelect(
-						editor.selection.current() || editor.editor.firstChild,
+						editor.s.current() || editor.editor.firstChild,
 						self.queryInput.value,
 						editor.e.current[editor.e.current.length - 1] ===
 							'searchNext'
@@ -670,7 +670,7 @@ export class search extends Plugin {
 					next: boolean = true
 				) => {
 					self.findAndSelect(
-						editor.selection.current() || editor.editor.firstChild,
+						editor.s.current() || editor.editor.firstChild,
 						value || '',
 						next
 					);
