@@ -4,12 +4,18 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import * as consts from '../core/constants';
-import { MAY_BE_REMOVED_WITH_KEY } from '../core/constants';
-import { Dom } from '../modules/';
-import { call, isString, normalizeNode, trim } from '../core/helpers/';
-import { IJodit } from '../types';
-import { Plugin } from '../core/plugin';
+import * as consts from '../../core/constants';
+import { MAY_BE_REMOVED_WITH_KEY } from '../../core/constants';
+import { Dom } from '../../modules';
+import {
+	call,
+	isString,
+	normalizeNode,
+	trim,
+	trimInv
+} from '../../core/helpers';
+import { IJodit, Nullable } from '../../types';
+import { Plugin } from '../../core/plugin';
 
 /**
  * Plug-in process entering Backspace key
@@ -18,8 +24,8 @@ import { Plugin } from '../core/plugin';
  */
 export class backspace extends Plugin {
 	private removeEmptyBlocks(container: HTMLElement): void {
-		let box: HTMLElement | null = container,
-			parent: Node | null;
+		let box: Nullable<HTMLElement> = container,
+			parent: Nullable<Node>;
 
 		normalizeNode(container);
 
@@ -36,21 +42,28 @@ export class backspace extends Plugin {
 				container !== this.j.editor
 			) {
 				parent = box.parentNode;
-				this.j.selection.removeNode(box);
+				this.j.s.removeNode(box);
 			} else {
 				break;
 			}
 
-			box = parent as HTMLElement | null;
+			box = parent as Nullable<HTMLElement>;
 		} while (box && box !== this.j.editor);
 	}
 
+	/**
+	 * Remove invisible chars
+	 *
+	 * @param box
+	 * @param toLeft
+	 * @param range
+	 */
 	private removeChar(
-		box: { node: Node | null },
+		box: { node: Nullable<Node> },
 		toLeft: boolean,
 		range: Range
 	): void | true {
-		let nextElement: Node | null = null;
+		let nextElement: Nullable<Node> = null;
 
 		do {
 			if (Dom.isText(box.node) && isString(box.node.nodeValue)) {
@@ -87,12 +100,13 @@ export class backspace extends Plugin {
 
 				range.setStart(box.node, startOffset);
 				range.collapse(true);
-				this.j.selection.selectRange(range);
+				this.j.s.selectRange(range);
 
 				nextElement = Dom.findInline(box.node, toLeft, this.j.editor);
 
-				if (value.length) {
+				if (trimInv(value).length > 1) {
 					let setRange: boolean = false;
+
 					if (toLeft) {
 						if (startOffset) {
 							setRange = true;
@@ -107,11 +121,22 @@ export class backspace extends Plugin {
 						return true;
 					}
 				} else {
-					range.setStartBefore(box.node);
-					range.collapse(true);
-					this.j.selection.selectRange(range);
+					let startNode: Nullable<Node> = box.node;
 
-					this.j.selection.removeNode(box.node);
+					// do {
+					range.setStartBefore(startNode);
+					range.collapse(true);
+					this.j.s.selectRange(range);
+
+					const parentNode: Nullable<Node> = startNode.parentNode;
+					this.j.s.removeNode(startNode);
+					startNode = parentNode;
+					// } while (
+					// 	startNode &&
+					// 	startNode !== this.jodit.editor &&
+					// 	Dom.isInlineBlock(startNode) &&
+					// 	Dom.isEmpty(startNode)
+					// );
 
 					box.node = nextElement;
 				}
@@ -131,28 +156,24 @@ export class backspace extends Plugin {
 		} while (Dom.isText(nextElement));
 	}
 
-	private potentialRemovable: RegExp = MAY_BE_REMOVED_WITH_KEY;
-
-	private removePotential(node: Node | null): false | void {
+	private removePotential(node: Nullable<Node>): false | void {
 		if (node && this.potentialRemovable.test(node.nodeName)) {
-			this.j.selection.removeNode(node);
+			this.j.s.removeNode(node);
 			return false;
 		}
 	}
 
+	private potentialRemovable: RegExp = MAY_BE_REMOVED_WITH_KEY;
+
 	private removeInline(
-		box: { node: Node | null },
+		box: { node: Nullable<Node> },
 		toLeft: boolean,
 		range: Range
 	): boolean | void {
 		if (box.node) {
 			const workElement = box.node;
 
-			const removeCharFlag: void | true = this.removeChar(
-				box,
-				toLeft,
-				range
-			);
+			const removeCharFlag = this.removeChar(box, toLeft, range);
 
 			if (removeCharFlag) {
 				return true;
@@ -213,10 +234,10 @@ export class backspace extends Plugin {
 	private afterDeleteCommand(): void {
 		const jodit = this.j;
 
-		const current = jodit.selection.current();
+		const current = jodit.s.current();
 
 		if (current && Dom.isTag(current.firstChild, 'br')) {
-			jodit.selection.removeNode(current.firstChild);
+			jodit.s.removeNode(current.firstChild);
 		}
 
 		if (
@@ -226,9 +247,9 @@ export class backspace extends Plugin {
 		) {
 			jodit.editor.innerHTML = '';
 
-			const node = jodit.selection.setCursorIn(jodit.editor);
+			const node = jodit.s.setCursorIn(jodit.editor);
 
-			jodit.selection.removeNode(node);
+			jodit.s.removeNode(node);
 		}
 	}
 
@@ -239,16 +260,16 @@ export class backspace extends Plugin {
 	private onDelete(backspace: boolean): false | void {
 		const jodit = this.j;
 
-		if (!jodit.selection.isFocused()) {
-			jodit.selection.focus();
+		if (!jodit.s.isFocused()) {
+			jodit.s.focus();
 		}
 
-		if (!jodit.selection.isCollapsed()) {
+		if (!jodit.s.isCollapsed()) {
 			jodit.execCommand('Delete');
 			return false;
 		}
 
-		const sel = jodit.selection.sel,
+		const sel = jodit.s.sel,
 			range = sel && sel.rangeCount ? sel.getRangeAt(0) : false;
 
 		if (!range) {
@@ -277,6 +298,16 @@ export class backspace extends Plugin {
 				backspace,
 				jodit.editor
 			);
+
+			// if (!container && Dom.isElement(workElement)) {
+			// 	if (Dom.isEmpty(workElement)) {
+			// 		Dom.safeRemove(workElement);
+			// 	} else {
+			// 		this.j.s.setCursorIn(workElement, !backspace);
+			// 	}
+			//
+			// 	return false;
+			// }
 
 			const box = {
 				node: workElement
@@ -332,18 +363,18 @@ export class backspace extends Plugin {
 					boxNode.parentNode.insertBefore(prevBox, boxNode);
 			} else {
 				if (prevBox && this.isEmpty(prevBox)) {
-					jodit.selection.removeNode(prevBox);
+					jodit.s.removeNode(prevBox);
 					return false;
 				}
 			}
 
 			if (prevBox) {
-				const tmpNode = jodit.selection.setCursorIn(
+				const tmpNode = jodit.s.setCursorIn(
 					prevBox,
 					!backspace
 				);
 
-				jodit.selection.insertNode(marker, false, false);
+				jodit.s.insertNode(marker, false, false);
 
 				if (
 					Dom.isText(tmpNode) &&
@@ -388,7 +419,7 @@ export class backspace extends Plugin {
 							UL !== nextBox
 						) {
 							Dom.moveContent(nextBox, UL, !backspace);
-							jodit.selection.removeNode(nextBox);
+							jodit.s.removeNode(nextBox);
 						}
 					}
 				}
@@ -408,12 +439,12 @@ export class backspace extends Plugin {
 					parent.parentNode &&
 					parent !== jodit.editor
 				) {
-					jodit.selection.removeNode(parent);
+					jodit.s.removeNode(parent);
 				}
 			}
 
 			if (marker && Dom.isOrContains(jodit.editor, marker, true)) {
-				const tmpNode = jodit.selection.setCursorBefore(marker);
+				const tmpNode = jodit.s.setCursorBefore(marker);
 
 				Dom.safeRemove(marker);
 

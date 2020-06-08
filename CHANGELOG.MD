@@ -62,7 +62,7 @@ editor.events.on(document.querySelector('div'), 'click', function (e) {
 * `Select.applyCSS` was renamed to `Select.applyStyle`
 ```js
 const editor = Jodit.make('#editor');
-editor.selection.applyStyle({color: 'red'}) // will add to all selection text - red color
+editor.s.applyStyle({color: 'red'}) // will add to all selection text - red color
 ```
 * `FileBrowser`, `Dialog` etc. modules which extends `View` has only one argument in the constructor - options.
 Before:
@@ -138,6 +138,7 @@ Methods which need binding binds with `@autobind` decorator.
 * Added short aliases for. Can be used as chain - `this.j.e.on`
   *  `this.jodit` => `this.j`
   *  `this.options` => `this.o`
+  *  `this.selection` => `this.s`
   *  `this.create` => `this.c`
   *  `this.events` => `this.e`
   *  `this.ownerDocument` => `this.od`
@@ -295,11 +296,11 @@ In PRO version you can choose mirrror&
 ```javascript
 const editor = new Jodit('#editor');
 setTimeout(() => {
-	editor.selection.insertHTML('Hello!')
+	editor.s.insertHTML('Hello!')
 }, 1000);
 
 editor.async.setTimeout(() => {
-	editor.selection.insertHTML('World!')
+	editor.s.insertHTML('World!')
 }, 1000);
 
 editor.destruct();
@@ -340,7 +341,7 @@ editor.events.on('afterRemoveNode', (node) => {
 ```javascript
 Jodit.plugins.insertText = function (editor) {
     editor.events.on('someEvent', function (text) {
-        editor.selection.insertHTMl('Hello ' + text);
+        editor.s.insertHTMl('Hello ' + text);
     });
 };
 ```
@@ -348,7 +349,7 @@ Jodit.plugins.insertText = function (editor) {
 ```javascript
 Jodit.plugins.add('insertText', function (editor) {
     editor.events.on('someEvent', function (text) {
-        editor.selection.insertHTMl('Hello ' + text);
+        editor.s.insertHTMl('Hello ' + text);
     });
 });
 console.log(Jodit.plugins.get('insertText'));
@@ -625,9 +626,9 @@ Fix a few bugs in [JJE](http://xdsoft.net/jodit/#extesions)
                     if (parent.helper.isHTML(html)) {
                         Jodit.Confirm('Your code is similar to HTML. Paste as HTML?', 'Paste as HTML', function (agree) {
                             if (agree) {
-                                parent.selection.insertHTML(html);
+                                parent.s.insertHTML(html);
                             } else {
-                                parent.selection.insertHTML(parent.helper.htmlspecialchars(html));
+                                parent.s.insertHTML(parent.helper.htmlspecialchars(html));
                             }
                             parent.syncCode(true);
                         });
@@ -814,7 +815,7 @@ var editor  = new  Jodit("#editor", {
 ```javascript
 var editor = new Jodit('.jodit'),
     node = editor.node.create('text', 'Hellow world');
-editor.selection.insertNode(node);
+editor.s.insertNode(node);
 ```
 * Added [link](http://xdsoft.net/jodit/doc/module-link.html) plugin. And its options
   * [processPastedLink](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#link) Wrap inserted link in `<a href="link">link</a>`
