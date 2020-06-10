@@ -1,6 +1,31 @@
 describe('Search plugin', function() {
 	const search = Jodit.plugins.get('search');
 
+	describe('Disable option', function() {
+		it('Should not init plugin', function() {
+			const editor = getJodit({
+				useSearch: false,
+				observer: {
+					timeout: 0
+				}
+			});
+
+			const search = editor.container.querySelector('.jodit_search');
+			expect(false).equals(
+				search.classList.contains('jodit-search_active')
+			);
+
+			simulateEvent('keydown', 'f', editor.editor, function(options) {
+				options.ctrlKey = true;
+			});
+
+			expect(false).equals(
+				search.classList.contains('jodit-search_active')
+			);
+		});
+	});
+
+
 	describe('CTRL + F', function() {
 		it('Should show search form and query field must have focus', function() {
 			const editor = getJodit({
@@ -10,13 +35,13 @@ describe('Search plugin', function() {
 			});
 			const search = editor.container.querySelector('.jodit_search');
 			expect(false).equals(
-				search.classList.contains('jodit-search__active')
+				search.classList.contains('jodit-search_active')
 			);
 			simulateEvent('keydown', 'f', editor.editor, function(options) {
 				options.ctrlKey = true;
 			});
 			expect(true).equals(
-				search.classList.contains('jodit-search__active')
+				search.classList.contains('jodit-search_active')
 			);
 			expect(true).equals(
 				editor.ownerDocument.activeElement ===
@@ -35,7 +60,7 @@ describe('Search plugin', function() {
 
 			const search = editor.container.querySelector('.jodit_search');
 			expect(false).equals(
-				search.classList.contains('jodit-search__active')
+				search.classList.contains('jodit-search_active')
 			);
 
 			simulateEvent('keydown', 'h', editor.editor, function(options) {
@@ -43,7 +68,7 @@ describe('Search plugin', function() {
 			});
 
 			expect(true).equals(
-				search.classList.contains('jodit-search__active')
+				search.classList.contains('jodit-search_active')
 			);
 
 			expect(true).equals(
@@ -68,14 +93,14 @@ describe('Search plugin', function() {
 
 				const search = editor.container.querySelector('.jodit_search');
 				expect(false).equals(
-					search.classList.contains('jodit-search__active')
+					search.classList.contains('jodit-search_active')
 				);
 				simulateEvent('keydown', 'h', editor.editor, function(options) {
 					options.ctrlKey = true;
 				});
 
 				expect(true).equals(
-					search.classList.contains('jodit-search__active')
+					search.classList.contains('jodit-search_active')
 				);
 
 				expect(true).equals(
@@ -123,7 +148,7 @@ describe('Search plugin', function() {
 
 			const search = editor.container.querySelector('.jodit_search');
 			expect(false).equals(
-				search.classList.contains('jodit-search__active')
+				search.classList.contains('jodit-search_active')
 			);
 
 			// press ctrl(cmd) + f
@@ -132,7 +157,7 @@ describe('Search plugin', function() {
 			});
 
 			expect(true).equals(
-				search.classList.contains('jodit-search__active')
+				search.classList.contains('jodit-search_active')
 			);
 			expect(true).equals(
 				editor.ownerDocument.activeElement ===
@@ -177,7 +202,7 @@ describe('Search plugin', function() {
 			const search = editor.container.querySelector('.jodit_search');
 
 			expect(false).equals(
-				search.classList.contains('jodit-search__active')
+				search.classList.contains('jodit-search_active')
 			);
 
 			// press ctrl(cmd) + f
@@ -186,7 +211,7 @@ describe('Search plugin', function() {
 			});
 
 			expect(true).equals(
-				search.classList.contains('jodit-search__active')
+				search.classList.contains('jodit-search_active')
 			);
 			expect(true).equals(
 				editor.ownerDocument.activeElement ===
@@ -240,7 +265,7 @@ describe('Search plugin', function() {
 				const search = editor.container.querySelector('.jodit_search');
 
 				expect(false).equals(
-					search.classList.contains('jodit-search__active')
+					search.classList.contains('jodit-search_active')
 				);
 
 				// press ctrl(cmd) + f
@@ -249,7 +274,7 @@ describe('Search plugin', function() {
 				});
 
 				expect(true).equals(
-					search.classList.contains('jodit-search__active')
+					search.classList.contains('jodit-search_active')
 				);
 				expect(true).equals(
 					editor.ownerDocument.activeElement ===
@@ -295,14 +320,14 @@ describe('Search plugin', function() {
 
 			const search = editor.container.querySelector('.jodit_search');
 			expect(false).equals(
-				search.classList.contains('jodit-search__active')
+				search.classList.contains('jodit-search_active')
 			);
 			simulateEvent('keydown', 'f', editor.editor, function(options) {
 				options.ctrlKey = true;
 			});
 
 			expect(true).equals(
-				search.classList.contains('jodit-search__active')
+				search.classList.contains('jodit-search_active')
 			);
 			expect(true).equals(
 				editor.ownerDocument.activeElement ===
@@ -315,7 +340,7 @@ describe('Search plugin', function() {
 			);
 
 			expect(false).equals(
-				search.classList.contains('jodit-search__active')
+				search.classList.contains('jodit-search_active')
 			);
 			expect('ex').equals(sel.toString());
 		});
