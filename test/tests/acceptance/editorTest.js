@@ -389,9 +389,9 @@ describe('Jodit Editor Tests', function() {
 				const area = appendTestArea();
 				const editor = new Jodit(area);
 				editor.value = 'Test';
-				expect(area.value).equals('Test');
-				expect(editor.value).equals('Test');
-				expect(editor.value).equals('Test');
+
+				expect(area.value).equals('<p>Test</p>');
+				expect(editor.value).equals('<p>Test</p>');
 			});
 		});
 
@@ -511,7 +511,7 @@ describe('Jodit Editor Tests', function() {
 					const editor = getJodit();
 					editor.value = 'test {% if a > b %} stop {% if a < b %}';
 					expect(editor.value).equals(
-						'test {% if a &gt; b %} stop {% if a &lt; b %}'
+						'<p>test {% if a &gt; b %} stop {% if a &lt; b %}</p>'
 					);
 
 					editor.events.on('beforeGetValueFromEditor', function() {
@@ -525,7 +525,7 @@ describe('Jodit Editor Tests', function() {
 					});
 
 					expect(editor.value).equals(
-						'test {% if a > b %} stop {% if a < b %}'
+						'<p>test {% if a > b %} stop {% if a < b %}</p>'
 					);
 				});
 			});
@@ -534,7 +534,7 @@ describe('Jodit Editor Tests', function() {
 				it('Should be fired before set editor value', function() {
 					const editor = getJodit();
 					editor.value = 'test';
-					expect(editor.value).equals('test');
+					expect(editor.value).equals('<p>test</p>');
 
 					editor.events.on('beforeSetValueToEditor', function(
 						old_value
@@ -544,7 +544,7 @@ describe('Jodit Editor Tests', function() {
 
 					editor.value = 'test';
 
-					expect(editor.value).equals('test stop');
+					expect(editor.value).equals('<p>test stop</p>');
 
 					editor.events.on('beforeSetValueToEditor', function(
 						old_value
@@ -554,7 +554,7 @@ describe('Jodit Editor Tests', function() {
 
 					editor.value = 'uuups';
 
-					expect(editor.value).equals('test stop');
+					expect(editor.value).equals('<p>test stop</p>');
 				});
 			});
 		});
@@ -677,7 +677,7 @@ describe('Jodit Editor Tests', function() {
 			const area = appendTestArea();
 			const editor = new Jodit(area);
 			editor.s.insertNode(editor.createInside.text('Test'));
-			expect(editor.value).equals('Test');
+			expect(editor.value).equals('<p>Test</p>');
 			editor.destruct();
 		});
 
@@ -771,12 +771,15 @@ describe('Jodit Editor Tests', function() {
 
 		describe('Cursor position', function() {
 			it('Should set cursor after node', function() {
-				const area = appendTestArea();
-				const editor = new Jodit(area, {
+				const editor = getJodit({
 					cleanHTML: {
 						removeEmptyElements: false
 					}
 				});
+
+				editor.value = '<p></p>';
+				editor.s.setCursorIn(editor.editor.firstChild);
+
 				const spans = [
 					editor.editorDocument.createElement('span'),
 					editor.editorDocument.createElement('span'),
@@ -793,7 +796,7 @@ describe('Jodit Editor Tests', function() {
 				);
 
 				expect(editor.value).equals(
-					'<span></span><span></span><i></i><span></span>'
+					'<p><span></span><span></span><i></i><span></span></p>'
 				);
 			});
 

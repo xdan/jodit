@@ -228,7 +228,7 @@ export class enter extends Plugin {
 			const br = this.j.createInside.element('br');
 
 			this.j.s.insertNode(br, true);
-			scrollIntoView(br, this.j.editor, this.j.editorDocument);
+			scrollIntoView(br, this.j.editor, this.j.ed);
 
 			return false;
 		}

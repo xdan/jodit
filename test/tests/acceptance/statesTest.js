@@ -106,11 +106,11 @@ describe('Test states', function() {
 							});
 
 							const search = editor.container.querySelector('.jodit_search');
-							expect(false).equals(search.classList.contains('jodit-search__active'));
+							expect(false).equals(search.classList.contains('jodit-search_active'));
 							simulateEvent('keydown', Jodit.KEY_H, editor.editor, function(options) {
 								options.ctrlKey = true;
 							});
-							expect(false).equals(search.classList.contains('jodit-search__active'));
+							expect(false).equals(search.classList.contains('jodit-search_active'));
 							expect(false).equals(search.classList.contains('jodit-search__and-replace'));
 							expect(false).equals(editor.ownerDocument.activeElement === search.querySelector('.jodit-search__query'));
 						});

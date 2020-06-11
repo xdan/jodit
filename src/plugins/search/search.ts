@@ -59,7 +59,9 @@ export class search extends Plugin {
 		start: boolean = true,
 		getIndex: boolean = false
 	): boolean | string | number {
-		needle = trim(needle.toLowerCase().replace(consts.SPACE_REG_EXP, ' '));
+		needle = trim(
+			needle.toLowerCase().replace(consts.SPACE_REG_EXP(), ' ')
+		);
 		haystack = haystack.toLowerCase();
 
 		let i: number = start ? 0 : haystack.length - 1,
@@ -75,7 +77,7 @@ export class search extends Plugin {
 			if (
 				some ||
 				(startAtIndex !== null &&
-					consts.SPACE_REG_EXP.test(haystack[i]))
+					consts.SPACE_REG_EXP().test(haystack[i]))
 			) {
 				if (startAtIndex === null || !start) {
 					startAtIndex = i;
@@ -238,7 +240,7 @@ export class search extends Plugin {
 				query,
 				true,
 				0,
-				(bound as Range) || this.j.editorDocument.createRange()
+				(bound as Range) || this.j.ed.createRange()
 			);
 			if (bound) {
 				if (this.boundAlreadyWas(bound, bounds)) {
@@ -269,7 +271,7 @@ export class search extends Plugin {
 			);
 
 		if (bound && bound.startContainer && bound.endContainer) {
-			const rng = this.j.editorDocument.createRange();
+			const rng = this.j.ed.createRange();
 
 			try {
 				if (bound && bound.startContainer && bound.endContainer) {
@@ -318,7 +320,7 @@ export class search extends Plugin {
 			);
 
 		if (bound && bound.startContainer && bound.endContainer) {
-			const rng: Range = this.j.editorDocument.createRange();
+			const rng: Range = this.j.ed.createRange();
 
 			try {
 				rng.setStart(bound.startContainer, bound.startOffset as number);
@@ -444,10 +446,7 @@ export class search extends Plugin {
 								endOffset: null
 							};
 						}
-					} else if (
-						Dom.isBlock(elm, this.j.editorWindow) &&
-						sentence !== ''
-					) {
+					} else if (Dom.isBlock(elm, this.j.ew) && sentence !== '') {
 						sentence = next ? sentence + ' ' : ' ' + sentence;
 					}
 
@@ -473,7 +472,7 @@ export class search extends Plugin {
 
 	open = (searchAndReplace: boolean = false) => {
 		if (!this.isOpened) {
-			this.searchBox.classList.add('jodit-search__active');
+			this.searchBox.classList.add('jodit-search_active');
 			this.isOpened = true;
 		}
 
@@ -511,7 +510,7 @@ export class search extends Plugin {
 			this.selInfo = null;
 		}
 
-		this.searchBox.classList.remove('jodit-search__active');
+		this.searchBox.classList.remove('jodit-search_active');
 		this.isOpened = false;
 	};
 

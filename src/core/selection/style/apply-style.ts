@@ -117,6 +117,10 @@ export class ApplyStyle {
 			this.jodit.createInside
 		);
 
+		if (this.style.elementIsBlock) {
+			this.postProcessListElement(newWrapper);
+		}
+
 		if (this.style.options.style && this.style.elementIsDefault) {
 			css(newWrapper, this.style.options.style);
 		}
@@ -151,10 +155,7 @@ export class ApplyStyle {
 	private checkSuitableChild(font: HTMLElement): boolean {
 		let { firstChild } = font;
 
-		if (
-			firstChild &&
-			this.jodit.s.isMarker(firstChild as HTMLElement)
-		) {
+		if (firstChild && this.jodit.s.isMarker(firstChild as HTMLElement)) {
 			firstChild = firstChild.nextSibling;
 		}
 
@@ -394,9 +395,9 @@ export class ApplyStyle {
 	private wrapUnwrappedText(elm: Node): HTMLElement {
 		const { area, win } = this.jodit.selection;
 
-		const edge = (elm: Node, key: keyof Node = 'previousSibling') => {
-			let edgeNode: Node = elm,
-				node: Nullable<Node> = elm;
+		const edge = (n: Node, key: keyof Node = 'previousSibling') => {
+			let edgeNode: Node = n,
+				node: Nullable<Node> = n;
 
 			while (node) {
 				edgeNode = node;
@@ -428,26 +429,40 @@ export class ApplyStyle {
 		range.setEndAfter(end);
 		const fragment = range.extractContents();
 
-		let wrapper = this.jodit.createInside.element(this.style.element);
+		const wrapper = this.jodit.createInside.element(this.style.element);
 		wrapper.appendChild(fragment);
 		range.insertNode(wrapper);
 
 		if (this.style.elementIsBlock) {
-			// Add extra LI inside UL/OL
-			if (/^(OL|UL)$/i.test(this.style.element)) {
-				const li = Dom.replace(wrapper, 'li', this.jodit.createInside);
-				const ul = Dom.wrap(li, this.style.element, this.jodit);
+			this.postProcessListElement(wrapper);
 
-				if (ul) {
-					wrapper = ul;
-				}
-			}
-
-			if (Dom.isEmpty(wrapper)) {
+			if (
+				Dom.isEmpty(wrapper) &&
+				!Dom.isTag(wrapper.firstElementChild, 'br')
+			) {
 				wrapper.appendChild(this.jodit.createInside.element('br'));
 			}
 		}
 
 		return wrapper;
+	}
+
+	/**
+	 * Post process UL or OL element
+	 * @param wrapper
+	 */
+	private postProcessListElement(wrapper: HTMLElement): void {
+		// Add extra LI inside UL/OL
+		if (
+			/^(OL|UL)$/i.test(this.style.element) &&
+			!Dom.isTag(wrapper.firstElementChild, 'li')
+		) {
+			const li = Dom.replace(wrapper, 'li', this.jodit.createInside);
+			const ul = Dom.wrap(li, this.style.element, this.jodit);
+
+			if (ul) {
+				wrapper = ul;
+			}
+		}
 	}
 }

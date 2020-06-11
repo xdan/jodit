@@ -53,7 +53,7 @@ export class stat extends Plugin {
 		if (this.j.o.showCharsCounter) {
 			this.charCounter.textContent = this.j.i18n(
 				'Chars: %d',
-				text.replace(SPACE_REG_EXP, '').length
+				text.replace(SPACE_REG_EXP(), '').length
 			);
 		}
 
@@ -61,8 +61,8 @@ export class stat extends Plugin {
 			this.wordCounter.textContent = this.j.i18n(
 				'Words: %d',
 				text
-					.replace(INVISIBLE_SPACE_REG_EXP, '')
-					.split(SPACE_REG_EXP)
+					.replace(INVISIBLE_SPACE_REG_EXP(), '')
+					.split(SPACE_REG_EXP())
 					.filter((e: string) => e.length).length
 			);
 		}

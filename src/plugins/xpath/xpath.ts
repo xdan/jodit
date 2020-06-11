@@ -73,7 +73,7 @@ export class xpath extends Plugin {
 		}
 
 		try {
-			const elm: Node | null = this.j.editorDocument
+			const elm: Node | null = this.j.ed
 				.evaluate(path, this.j.editor, null, XPathResult.ANY_TYPE, null)
 				.iterateNext();
 

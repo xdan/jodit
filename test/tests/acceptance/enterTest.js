@@ -3,8 +3,9 @@ describe('Enter behavior Jodit Editor Tests', function() {
 		describe('Enter BR', function() {
 			it('Should simple insert BR element', function() {
 				const editor = getJodit({
-					enter: 'BR'
+					enter: 'br'
 				});
+
 				editor.value = 'test';
 				editor.s.setCursorAfter(editor.editor.firstChild);
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
@@ -22,7 +23,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				const sel = editor.s.sel,
 					range = editor.s.createRange();
 
-				range.setStart(editor.editor.firstChild, 9);
+				range.setStart(editor.editor.firstChild.firstChild, 9);
 				range.collapse(true);
 				sel.removeAllRanges();
 				sel.addRange(range);
@@ -48,7 +49,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					const sel = editor.s.sel,
 						range = editor.s.createRange();
 
-					range.setStart(editor.editor.firstChild, 9);
+					range.setStart(editor.editor.firstChild.firstChild, 9);
 					range.collapse(true);
 					sel.removeAllRanges();
 					sel.addRange(range);
@@ -126,7 +127,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 				// set focus in the span
 				range.setStart(
-					editor.editor.firstChild.nextSibling.firstChild,
+					editor.editor.firstChild.firstChild.nextSibling.firstChild,
 					1
 				);
 				range.collapse(true);
@@ -253,7 +254,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				const sel = editor.s.sel,
 					range = editor.s.createRange();
 
-				range.setStart(editor.editor.firstChild, 5);
+				range.setStart(editor.editor.firstChild.firstChild, 5);
 				range.collapse(true);
 				sel.removeAllRanges();
 				sel.addRange(range);
@@ -538,7 +539,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				const range = editor.s.createRange();
 
 				// set cursor in start of element
-				range.setStart(editor.editor.firstChild, 2);
+				range.setStart(editor.editor.firstChild.firstChild, 2);
 				range.collapse(true);
 				editor.s.sel.removeAllRanges();
 				editor.s.sel.addRange(range);
@@ -554,7 +555,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 				editor.s.insertNode(editor.createInside.text('split '));
 
-				expect(editor.value).equals('te<br>split st');
+				expect(editor.value).equals('<p>te<br>split st</p>');
 
 				simulateEvent(
 					'keydown',
@@ -565,7 +566,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					}
 				);
 
-				expect(editor.value).equals('te<br>split <br>st');
+				expect(editor.value).equals('<p>te<br>split <br>st</p>');
 			});
 		});
 
@@ -618,6 +619,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 						).equals(sortAttributes(editor.value));
 					});
 				});
+
 				describe('Inside empty LI tag', function() {
 					it('Should work like usual and add insert new br after UL', function() {
 						const editor = getJodit({

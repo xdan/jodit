@@ -14,6 +14,13 @@
 * https://github.com/xdan/jodit/issues/369
 
 ### Features
+* Added `WrapTextNodes` plugin - it wrap all alone text node inside options.enter element.
+You can disable this:
+```js
+const editor = Jodit.make('#editor', {
+    disablePlugins: ['WrapTextNodes']
+})
+```
 * Added `shadowRoot` option for ShadowDom support.
 > ACE source editor does not support Shadow Dom
 ```html

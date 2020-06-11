@@ -246,10 +246,24 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	/**
+	 * Alias for this.editorWindow
+	 */
+	get ew(): this['editorWindow'] {
+		return this.editorWindow;
+	}
+
+	/**
 	 * In iframe mode editor's window can be different by owner
 	 */
 	get editorDocument(): Document {
 		return this.currentPlace.editorWindow.document;
+	}
+
+	/**
+	 * Alias for this.editorWindow
+	 */
+	get ed(): this['editorDocument'] {
+		return this.editorDocument;
 	}
 
 	/**
@@ -398,7 +412,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		value = this.getNativeEditorValue().replace(
-			consts.INVISIBLE_SPACE_REG_EXP,
+			consts.INVISIBLE_SPACE_REG_EXP(),
 			''
 		);
 
@@ -460,10 +474,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * });
 		 * ```
 		 */
-		const newValue: string | undefined | false = this.e.fire(
-			'beforeSetValueToEditor',
-			value
-		);
+		const newValue: string | undefined | false = !isVoid(value)
+			? this.e.fire('beforeSetValueToEditor', value)
+			: undefined;
 
 		if (newValue === false) {
 			return;

@@ -387,7 +387,8 @@ export class Config implements IViewOptions {
 	 * Use when you need insert new block element
 	 * use enter option if not set
 	 */
-	enterBlock: 'p' | 'div' = consts.PARAGRAPH;
+	enterBlock: 'p' | 'div' =
+		this.enter !== 'br' ? this.enter : consts.PARAGRAPH;
 
 	/**
 	 * Jodit.MODE_WYSIWYG The HTML editor allows you to write like MSWord,

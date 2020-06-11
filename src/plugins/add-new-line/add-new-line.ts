@@ -115,7 +115,7 @@ export class addNewLine extends Plugin {
 	private canGetFocus = (elm: Node | null): boolean => {
 		return (
 			elm !== null &&
-			Dom.isBlock(elm, this.j.editorWindow) &&
+			Dom.isBlock(elm, this.j.ew) &&
 			!/^(img|table|iframe|hr)$/i.test(elm.nodeName)
 		);
 	};
@@ -317,7 +317,7 @@ export class addNewLine extends Plugin {
 		Dom.safeRemove(this.line);
 
 		this.j.e
-			.off([this.j.ow, this.j.editorWindow, this.j.editor], '.' + ns)
+			.off([this.j.ow, this.j.ew, this.j.editor], '.' + ns)
 			.off(this.j.container, '.' + ns);
 	}
 }

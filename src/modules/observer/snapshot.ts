@@ -203,7 +203,7 @@ export class Snapshot extends ViewComponent<IJodit> {
 	restoreOnlySelection(snapshot: SnapshotType): void {
 		try {
 			if (snapshot.range) {
-				const range = this.j.editorDocument.createRange();
+				const range = this.j.ed.createRange();
 
 				range.setStart(
 					this.getElementByLadder(snapshot.range.startContainer),

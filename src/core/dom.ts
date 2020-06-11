@@ -152,7 +152,7 @@ export class Dom {
 	}
 
 	/**
-	 * It goes through all the internal elements of the node , causing a callback function
+	 * It goes through all the internal elements of the node, causing a callback function
 	 *
 	 * @param elm elements , the internal node is necessary to sort out
 	 * @param callback It called for each item found
@@ -248,7 +248,7 @@ export class Dom {
 		return (
 			Dom.isText(node) &&
 			(!node.nodeValue ||
-				node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '')
+				node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP(), '')
 					.length === 0)
 		);
 	}
@@ -447,7 +447,7 @@ export class Dom {
 			root,
 			undefined,
 			undefined,
-			withChild ? 'firstChild' : ''
+			withChild ? 'firstChild' : false
 		);
 	}
 
@@ -492,8 +492,8 @@ export class Dom {
 		condition: NodeCondition,
 		root: ParentNode | HTMLElement | Node,
 		recurse = false,
-		sibling = 'nextSibling',
-		child: string | false = 'firstChild'
+		sibling: keyof Node = 'nextSibling',
+		child: keyof Node | false = 'firstChild'
 	): Nullable<Node> {
 		if (recurse && condition(node)) {
 			return node;
@@ -748,7 +748,7 @@ export class Dom {
 	 * @param newElement
 	 */
 	static after(elm: Node, newElement: Node | DocumentFragment): void {
-		const parentNode: Node | null = elm.parentNode;
+		const { parentNode } = elm;
 
 		if (!parentNode) {
 			return;
@@ -759,6 +759,42 @@ export class Dom {
 		} else {
 			parentNode.insertBefore(newElement, elm.nextSibling);
 		}
+	}
+
+	/**
+	 * Insert newElement before element
+	 *
+	 * @param elm
+	 * @param newElement
+	 */
+	static before(elm: Node, newElement: Node | DocumentFragment): void {
+		const { parentNode } = elm;
+
+		if (!parentNode) {
+			return;
+		}
+
+		parentNode.insertBefore(newElement, elm);
+	}
+
+	/**
+	 * Insert newElement as first child inside element
+	 *
+	 * @param elm
+	 * @param newElement
+	 */
+	static prepend(root: Node, newElement: Node | DocumentFragment): void {
+		root.insertBefore(newElement, root.firstChild);
+	}
+
+	/**
+	 * Insert newElement as last child inside element
+	 *
+	 * @param elm
+	 * @param newElement
+	 */
+	static append(root: Node, newElement: Node | DocumentFragment): void {
+		root.appendChild(newElement);
 	}
 
 	/**

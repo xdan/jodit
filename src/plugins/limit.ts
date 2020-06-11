@@ -49,8 +49,8 @@ export function limit(jodit: IJodit) {
 				inputText || (jodit.o.limitHTML ? jodit.value : jodit.text);
 
 			const words: string[] = text
-				.replace(INVISIBLE_SPACE_REG_EXP, '')
-				.split(SPACE_REG_EXP)
+				.replace(INVISIBLE_SPACE_REG_EXP(), '')
+				.split(SPACE_REG_EXP())
 				.filter((e: string) => e.length);
 
 			if (event && COMMAND_KEYS.includes(event.key)) {

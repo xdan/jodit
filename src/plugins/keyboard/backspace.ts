@@ -31,13 +31,13 @@ export class backspace extends Plugin {
 
 		do {
 			const html = box.innerHTML.replace(
-				consts.INVISIBLE_SPACE_REG_EXP,
+				consts.INVISIBLE_SPACE_REG_EXP(),
 				''
 			);
 
 			if (
 				(!html.length || html === '<br>') &&
-				!Dom.isCell(box, this.j.editorWindow) &&
+				!Dom.isCell(box, this.j.ew) &&
 				box.parentNode &&
 				container !== this.j.editor
 			) {
@@ -333,7 +333,7 @@ export class backspace extends Plugin {
 				return tryRemoveInline ? undefined : false;
 			}
 
-			if (container && Dom.isCell(container, this.j.editorWindow)) {
+			if (container && Dom.isCell(container, this.j.ew)) {
 				return false;
 			}
 
@@ -369,10 +369,7 @@ export class backspace extends Plugin {
 			}
 
 			if (prevBox) {
-				const tmpNode = jodit.s.setCursorIn(
-					prevBox,
-					!backspace
-				);
+				const tmpNode = jodit.s.setCursorIn(prevBox, !backspace);
 
 				jodit.s.insertNode(marker, false, false);
 

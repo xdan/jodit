@@ -114,7 +114,8 @@ export class pasteStorage extends Plugin {
 
 		this.list.forEach((html: string, index: number) => {
 			const a: HTMLElement = this.j.c.element('a');
-			a.textContent = index + 1 + '. ' + html.replace(SPACE_REG_EXP, '');
+			a.textContent =
+				index + 1 + '. ' + html.replace(SPACE_REG_EXP(), '');
 
 			this.j.e.on(a, 'keydown', this.onKeyDown);
 

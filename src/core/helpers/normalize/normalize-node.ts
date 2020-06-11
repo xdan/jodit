@@ -19,7 +19,7 @@ export const normalizeNode = (node: Node | null) => {
 			}
 
 			node.nodeValue = node.nodeValue.replace(
-				INVISIBLE_SPACE_REG_EXP,
+				INVISIBLE_SPACE_REG_EXP(),
 				''
 			);
 

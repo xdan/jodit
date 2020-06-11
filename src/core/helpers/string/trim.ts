@@ -18,8 +18,8 @@ import {
  */
 export function trim(value: string): string {
 	return value
-		.replace(SPACE_REG_EXP_END, '')
-		.replace(SPACE_REG_EXP_START, '');
+		.replace(SPACE_REG_EXP_END(), '')
+		.replace(SPACE_REG_EXP_START(), '');
 }
 
 /**
@@ -28,6 +28,6 @@ export function trim(value: string): string {
  */
 export function trimInv(value: string): string {
 	return value
-		.replace(INVISIBLE_SPACE_REG_EXP_END, '')
-		.replace(INVISIBLE_SPACE_REG_EXP_START, '');
+		.replace(INVISIBLE_SPACE_REG_EXP_END(), '')
+		.replace(INVISIBLE_SPACE_REG_EXP_START(), '');
 }

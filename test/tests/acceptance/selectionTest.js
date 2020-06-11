@@ -169,11 +169,8 @@ describe('Selection Module Tests', function() {
 					range.collapse(true);
 					editor.s.selectRange(range);
 
-					expect(
-						editor.s.cursorOnTheRight(
-							editor.editor.firstChild
-						)
-					).is.true;
+					expect(editor.s.cursorOnTheRight(editor.editor.firstChild))
+						.is.true;
 				});
 			});
 
@@ -188,11 +185,8 @@ describe('Selection Module Tests', function() {
 					range.collapse(true);
 					editor.s.selectRange(range);
 
-					expect(
-						editor.s.cursorOnTheRight(
-							editor.editor.firstChild
-						)
-					).is.false;
+					expect(editor.s.cursorOnTheRight(editor.editor.firstChild))
+						.is.false;
 				});
 			});
 
@@ -207,11 +201,8 @@ describe('Selection Module Tests', function() {
 					range.collapse(true);
 					editor.s.selectRange(range);
 
-					expect(
-						editor.s.cursorOnTheRight(
-							editor.editor.firstChild
-						)
-					).is.false;
+					expect(editor.s.cursorOnTheRight(editor.editor.firstChild))
+						.is.false;
 				});
 
 				describe('Cursor in the middle of text node but after cursor only invisible spaces', function() {
@@ -231,9 +222,7 @@ describe('Selection Module Tests', function() {
 						editor.s.selectRange(range);
 
 						expect(
-							editor.s.cursorOnTheRight(
-								editor.editor.firstChild
-							)
+							editor.s.cursorOnTheRight(editor.editor.firstChild)
 						).is.true;
 					});
 				});
@@ -254,9 +243,7 @@ describe('Selection Module Tests', function() {
 						editor.s.selectRange(range);
 
 						expect(
-							editor.s.cursorOnTheLeft(
-								editor.editor.firstChild
-							)
+							editor.s.cursorOnTheLeft(editor.editor.firstChild)
 						).is.true;
 					});
 				});
@@ -271,18 +258,14 @@ describe('Selection Module Tests', function() {
 						range.setStart(editor.editor.firstChild.firstChild, 4);
 						range.collapse(true);
 						editor.s.selectRange(range);
-						editor.s.insertNode(
-							editor.createInside.text('a')
-						);
+						editor.s.insertNode(editor.createInside.text('a'));
 
 						range.setStart(editor.editor.firstChild.firstChild, 4);
 						range.collapse(true);
 						editor.s.selectRange(range);
 
 						expect(
-							editor.s.cursorOnTheRight(
-								editor.editor.firstChild
-							)
+							editor.s.cursorOnTheRight(editor.editor.firstChild)
 						).is.false;
 					});
 
@@ -417,9 +400,8 @@ describe('Selection Module Tests', function() {
 				range.collapse(true);
 				editor.s.selectRange(range);
 
-				expect(
-					editor.s.cursorOnTheRight(editor.editor.firstChild)
-				).is.null;
+				expect(editor.s.cursorOnTheRight(editor.editor.firstChild)).is
+					.null;
 			});
 		});
 
@@ -434,9 +416,8 @@ describe('Selection Module Tests', function() {
 				range.collapse(true);
 				editor.s.selectRange(range);
 
-				expect(
-					editor.s.cursorOnTheLeft(editor.editor.firstChild)
-				).is.null;
+				expect(editor.s.cursorOnTheLeft(editor.editor.firstChild)).is
+					.null;
 			});
 		});
 
@@ -451,9 +432,8 @@ describe('Selection Module Tests', function() {
 				range.collapse(true);
 				editor.s.selectRange(range);
 
-				expect(
-					editor.s.cursorOnTheLeft(editor.editor.firstChild)
-				).is.true;
+				expect(editor.s.cursorOnTheLeft(editor.editor.firstChild)).is
+					.true;
 			});
 		});
 
@@ -468,9 +448,8 @@ describe('Selection Module Tests', function() {
 				range.collapse(true);
 				editor.s.selectRange(range);
 
-				expect(
-					editor.s.cursorOnTheRight(editor.editor.firstChild)
-				).is.true;
+				expect(editor.s.cursorOnTheRight(editor.editor.firstChild)).is
+					.true;
 			});
 		});
 
@@ -485,9 +464,8 @@ describe('Selection Module Tests', function() {
 				range.collapse(true);
 				editor.s.selectRange(range);
 
-				expect(
-					editor.s.cursorOnTheRight(editor.editor.firstChild)
-				).is.false;
+				expect(editor.s.cursorOnTheRight(editor.editor.firstChild)).is
+					.false;
 			});
 		});
 
@@ -502,9 +480,8 @@ describe('Selection Module Tests', function() {
 				range.collapse(true);
 				editor.s.selectRange(range);
 
-				expect(
-					editor.s.cursorOnTheLeft(editor.editor.firstChild)
-				).is.false;
+				expect(editor.s.cursorOnTheLeft(editor.editor.firstChild)).is
+					.false;
 			});
 		});
 
@@ -521,18 +498,16 @@ describe('Selection Module Tests', function() {
 				sel.removeAllRanges();
 				sel.addRange(range);
 
-				expect(
-					editor.s.cursorOnTheRight(editor.editor.firstChild)
-				).is.true;
+				expect(editor.s.cursorOnTheRight(editor.editor.firstChild)).is
+					.true;
 
 				range.setStart(editor.editor.firstChild.firstChild, 2);
 				range.collapse(true);
 				sel.removeAllRanges();
 				sel.addRange(range);
 
-				expect(
-					editor.s.cursorOnTheRight(editor.editor.firstChild)
-				).is.false;
+				expect(editor.s.cursorOnTheRight(editor.editor.firstChild)).is
+					.false;
 			});
 		});
 
@@ -550,10 +525,7 @@ describe('Selection Module Tests', function() {
 				sel.addRange(range);
 
 				expect(
-					editor.s.cursorInTheEdge(
-						false,
-						editor.editor.firstChild
-					)
+					editor.s.cursorInTheEdge(false, editor.editor.firstChild)
 				).is.true;
 			});
 		});
@@ -571,12 +543,8 @@ describe('Selection Module Tests', function() {
 				sel.removeAllRanges();
 				sel.addRange(range);
 
-				expect(
-					editor.s.cursorInTheEdge(
-						true,
-						editor.editor.firstChild
-					)
-				).is.false;
+				expect(editor.s.cursorInTheEdge(true, editor.editor.firstChild))
+					.is.false;
 			});
 		});
 	});
@@ -737,7 +705,7 @@ describe('Selection Module Tests', function() {
 				expect(editor.s.isCollapsed()).is.false;
 
 				editor.s.insertNode(editor.createInside.text(' a '));
-				expect(editor.value).equals(' a ');
+				expect(editor.value).equals('<p> a </p>');
 			});
 		});
 
@@ -746,17 +714,17 @@ describe('Selection Module Tests', function() {
 				useAceEditor: false,
 				defaultMode: Jodit.MODE_SOURCE
 			});
-			editor.value = '<a>11</a>';
+			editor.value = '<p><a>11</a></p>';
 
 			const mirror = editor.container.querySelector(
 				'textarea.jodit-source__mirror'
 			);
-			mirror.setSelectionRange(4, 4);
+			mirror.setSelectionRange(7, 7);
 
 			editor.setMode(Jodit.MODE_WYSIWYG);
 			expect(editor.s.isCollapsed()).is.true;
 			editor.s.insertNode(editor.createInside.text(' a '));
-			expect(editor.value).equals('<a>1 a 1</a>');
+			expect(editor.value).equals('<p><a>1 a 1</a></p>');
 		});
 	});
 
@@ -780,9 +748,7 @@ describe('Selection Module Tests', function() {
 				const editor = getJodit();
 				editor.value = '<p>1</p><p>2</p>';
 				expect(function() {
-					editor.s.setCursorIn(
-						editor.editor.querySelector('strong')
-					);
+					editor.s.setCursorIn(editor.editor.querySelector('strong'));
 				}).to.throw();
 			});
 
@@ -790,9 +756,7 @@ describe('Selection Module Tests', function() {
 				it('Should not throw exception', function() {
 					const editor = getJodit();
 					editor.value = '<p>1<span>3</span>2</p>';
-					editor.s.select(
-						editor.editor.querySelector('span')
-					);
+					editor.s.select(editor.editor.querySelector('span'));
 					const fragment = editor.s.range.extractContents();
 					editor.s.insertNode(fragment);
 				});
@@ -833,7 +797,9 @@ describe('Selection Module Tests', function() {
 
 	describe('Method eachSelection', function() {
 		it('Should call callback for each node in selection', function() {
-			const editor = getJodit();
+			const editor = getJodit({
+				disablePlugins: ['WrapTextNodes']
+			});
 			editor.value =
 				'<p>1</p><p>2</p><strong><span>22</span></strong><p>4</p>stop';
 			const range = editor.s.createRange();
@@ -850,8 +816,9 @@ describe('Selection Module Tests', function() {
 				['P', 'P', 'STRONG', 'P', '#text'].toString().toLowerCase()
 			).equals(nodesNames.toString().toLowerCase());
 		});
+
 		it('Should call callback for each node in selection range', function() {
-			const editor = getJodit();
+			const editor = getJodit({ disablePlugins: ['WrapTextNodes'] });
 			editor.value =
 				'<p>1</p><p>2</p><strong><span>22</span></strong><p>4</p>stop';
 			const range = editor.s.createRange();
@@ -868,6 +835,7 @@ describe('Selection Module Tests', function() {
 				nodesNames.toString().toLowerCase()
 			);
 		});
+
 		it('Should not call callback for editor', function() {
 			const editor = getJodit();
 			editor.value = '';
@@ -883,6 +851,7 @@ describe('Selection Module Tests', function() {
 				nodesNames.toString().toLowerCase()
 			);
 		});
+
 		it('Should call callback for current node if selection is collapsed', function() {
 			const editor = getJodit();
 			editor.value = '<p>1</p><p>2</p>';
@@ -898,7 +867,7 @@ describe('Selection Module Tests', function() {
 				nodesNames.toString().toLowerCase()
 			);
 		});
+
 		describe('If selected element is UL or LI or content in LI', function() {});
 	});
-	afterEach(removeStuff);
 });

@@ -72,14 +72,14 @@ export class Select {
 	 * Editor Window - it can be different for iframe mode
 	 */
 	get win(): Window {
-		return this.j.editorWindow;
+		return this.j.ew;
 	}
 
 	/**
 	 * Current jodit editor doc
 	 */
 	get doc(): Document {
-		return this.j.editorDocument;
+		return this.j.ed;
 	}
 
 	/**
@@ -403,7 +403,7 @@ export class Select {
 				const range = this.createRange();
 				range.setStart(this.area, 0);
 				range.collapse(true);
-				this.selectRange(range);
+				this.selectRange(range, false);
 			}
 
 			if (!this.j.editorIsActive) {
@@ -828,6 +828,7 @@ export class Select {
 	 * @param {Node} node
 	 * @return {Node} fake invisible textnode. After insert it can be removed
 	 */
+	@autobind
 	setCursorAfter(
 		node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement
 	): Nullable<Text> {
@@ -892,18 +893,20 @@ export class Select {
 
 		const container = start ? range.startContainer : range.endContainer;
 		const offset = start ? range.startOffset : range.endOffset;
+
 		const check = (elm: Node | null) =>
 			elm && !Dom.isTag(elm, 'br') && !Dom.isEmptyTextNode(elm);
 
 		// check right offset
 		if (Dom.isText(container)) {
-			const text = container.nodeValue || '';
+			const text = container.nodeValue?.length ? container.nodeValue : '';
 
-			if (end && text.replace(INV_END, '').length > offset) {
+			if (end && text.replace(INV_END(), '').length > offset) {
 				return false;
 			}
 
-			const inv = INV_START.exec(text);
+			const inv = INV_START().exec(text);
+
 			if (
 				start &&
 				((inv && inv[0].length < offset) || (!inv && offset > 0))
@@ -946,12 +949,11 @@ export class Select {
 	/**
 	 * Set cursor before the node
 	 *
-	 * @param {Node} node
-	 * @return {Text} fake invisible textnode. After insert it can be removed
+	 * @param node
+	 * @return fake invisible textnode. After insert it can be removed
 	 */
-	setCursorBefore(
-		node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement
-	): Nullable<Text> {
+	@autobind
+	setCursorBefore(node: Node): Nullable<Text> {
 		this.errorNode(node);
 
 		if (
@@ -993,6 +995,7 @@ export class Select {
 	 * @param node
 	 * @param [inStart] set cursor in start of element
 	 */
+	@autobind
 	setCursorIn(node: Node, inStart: boolean = false): Node {
 		this.errorNode(node);
 
@@ -1042,11 +1045,16 @@ export class Select {
 	 * Set range selection
 	 *
 	 * @param range
+	 * @param [focus]
 	 *
 	 * @fires changeSelection
 	 */
-	selectRange(range: Range): void {
+	selectRange(range: Range, focus: boolean = true): void {
 		const sel = this.sel;
+
+		if (focus && !this.isFocused()) {
+			this.focus();
+		}
 
 		if (sel) {
 			sel.removeAllRanges();

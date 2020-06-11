@@ -5,7 +5,7 @@ describe('Test Style module', function() {
 
 	beforeEach(function() {
 		editor = getJodit();
-		editor.value = 'test';
+		editor.value = '<p>test</p>';
 		editor.execCommand('selectall');
 	});
 
@@ -21,13 +21,13 @@ describe('Test Style module', function() {
 			style.apply(editor);
 
 			expect(sortAttributes(editor.value)).equals(
-				'<span style="background-color:yellow;color:red">test</span>'
+				'<p><span style="background-color:yellow;color:red">test</span></p>'
 			);
 		});
 
 		describe('For collapsed selection', function() {
 			it('Should create SPAN element with this style', function() {
-				editor.s.setCursorAfter(editor.editor.firstChild);
+				editor.s.setCursorAfter(editor.editor.firstChild.firstChild);
 
 				const style = new Style({
 					style: {
@@ -40,13 +40,15 @@ describe('Test Style module', function() {
 				editor.s.insertHTML('stop');
 
 				expect(sortAttributes(editor.value)).equals(
-					'test<span style="font-size:12px">stop</span>'
+					'<p>test<span style="font-size:12px">stop</span></p>'
 				);
 			});
 
 			describe('Double times', function() {
 				it('Should create new SPAN inside first', function() {
-					editor.s.setCursorAfter(editor.editor.firstChild);
+					editor.s.setCursorAfter(
+						editor.editor.firstChild.firstChild
+					);
 
 					const style = new Style({
 						style: {
@@ -69,14 +71,14 @@ describe('Test Style module', function() {
 					editor.s.insertHTML('elem');
 
 					expect(sortAttributes(editor.value)).equals(
-						'test<span style="font-size:12px">stop<span style="color:#FF00FF">elem</span></span>'
+						'<p>test<span style="font-size:12px">stop<span style="color:#FF00FF">elem</span></span></p>'
 					);
 				});
 
 				describe('With same style', function() {
 					it('Should break first SPAN', function() {
 						editor.s.setCursorAfter(
-							editor.editor.firstChild
+							editor.editor.firstChild.firstChild
 						);
 
 						const style = new Style({
@@ -94,14 +96,14 @@ describe('Test Style module', function() {
 						editor.s.insertHTML('elem');
 
 						expect(sortAttributes(editor.value)).equals(
-							'test<span style="font-size:12px">stop</span>elem'
+							'<p>test<span style="font-size:12px">stop</span>elem</p>'
 						);
 					});
 
 					describe('Without editing', function() {
 						it('Should unwap empty SPAN', function() {
 							editor.s.setCursorAfter(
-								editor.editor.firstChild
+								editor.editor.firstChild.firstChild
 							);
 
 							const style = new Style({
@@ -116,7 +118,7 @@ describe('Test Style module', function() {
 							editor.s.insertHTML('elem');
 
 							expect(sortAttributes(editor.value)).equals(
-								'testelem'
+								'<p>testelem</p>'
 							);
 						});
 					});
@@ -125,7 +127,7 @@ describe('Test Style module', function() {
 				describe('Apply different styles', function() {
 					it('Should combine all of it', function() {
 						editor.s.setCursorAfter(
-							editor.editor.firstChild
+							editor.editor.firstChild.firstChild
 						);
 
 						const style = new Style({
@@ -147,7 +149,7 @@ describe('Test Style module', function() {
 						editor.s.insertHTML('stop');
 
 						expect(sortAttributes(editor.value)).equals(
-							'test<span style="background-color:yellow;font-size:12px">stop</span>'
+							'<p>test<span style="background-color:yellow;font-size:12px">stop</span></p>'
 						);
 					});
 				});
@@ -173,7 +175,7 @@ describe('Test Style module', function() {
 				style2.apply(editor);
 
 				expect(sortAttributes(editor.value)).equals(
-					'<span style="background-color:yellow;font-size:12px">test</span>'
+					'<p><span style="background-color:yellow;font-size:12px">test</span></p>'
 				);
 			});
 		});
@@ -182,7 +184,7 @@ describe('Test Style module', function() {
 			describe('Select SPAN', function() {
 				it('Should apply style to this SPAN', function() {
 					editor.value = '<span>test</span>';
-					editor.s.select(editor.editor.firstChild);
+					editor.s.select(editor.editor.firstChild.firstChild);
 
 					const style = new Style({
 						style: {
@@ -193,7 +195,7 @@ describe('Test Style module', function() {
 					style.apply(editor);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<span style="font-size:11px">test</span>'
+						'<p><span style="font-size:11px">test</span></p>'
 					);
 				});
 			});
@@ -201,9 +203,7 @@ describe('Test Style module', function() {
 			describe('Select SPAN content', function() {
 				it('Should apply style to this SPAN', function() {
 					editor.value = '<span>test</span>';
-					editor.s.select(
-						editor.editor.firstChild.firstChild
-					);
+					editor.s.select(editor.editor.firstChild.firstChild);
 
 					const style = new Style({
 						style: {
@@ -214,7 +214,7 @@ describe('Test Style module', function() {
 					style.apply(editor);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<span style="font-size:11px">test</span>'
+						'<p><span style="font-size:11px">test</span></p>'
 					);
 				});
 			});
@@ -236,8 +236,8 @@ describe('Test Style module', function() {
 			describe('Block element', function() {
 				it('Should wrap whole text for selection part', function() {
 					const range = editor.s.createRange();
-					range.setStart(editor.editor.firstChild, 2);
-					range.setEndAfter(editor.editor.firstChild);
+					range.setStart(editor.editor.firstChild.firstChild, 2);
+					range.setEndAfter(editor.editor.firstChild.firstChild);
 					editor.s.selectRange(range);
 
 					const style = new Style({
@@ -303,8 +303,8 @@ describe('Test Style module', function() {
 			describe('inline element', function() {
 				it('Should wrap only selection part', function() {
 					const range = editor.s.createRange();
-					range.setStart(editor.editor.firstChild, 2);
-					range.setEndAfter(editor.editor.firstChild);
+					range.setStart(editor.editor.firstChild.firstChild, 2);
+					range.setEndAfter(editor.editor.firstChild.firstChild);
 					editor.s.selectRange(range);
 
 					const style = new Style({
@@ -314,7 +314,7 @@ describe('Test Style module', function() {
 					style.apply(editor);
 
 					expect(sortAttributes(editor.value)).equals(
-						'te<strong>st</strong>'
+						'<p>te<strong>st</strong></p>'
 					);
 				});
 			});
@@ -323,7 +323,9 @@ describe('Test Style module', function() {
 		describe('For collapsed selection', function() {
 			describe('Block element', function() {
 				it('Should wrap whole text in element', function() {
-					editor.s.setCursorAfter(editor.editor.firstChild);
+					editor.s.setCursorAfter(
+						editor.editor.firstChild.firstChild
+					);
 
 					const style = new Style({
 						element: 'h1'
@@ -394,8 +396,15 @@ describe('Test Style module', function() {
 				it('Should wrap contents again', function() {
 					editor.value = '<strong>test</strong>';
 					const range = editor.s.createRange();
-					range.setStart(editor.editor.firstChild.firstChild, 0);
-					range.setEnd(editor.editor.firstChild.firstChild, 4);
+					debugger;
+					range.setStart(
+						editor.editor.firstChild.firstChild.firstChild,
+						0
+					);
+					range.setEnd(
+						editor.editor.firstChild.firstChild.firstChild,
+						4
+					);
 					editor.s.selectRange(range);
 
 					const style = new Style({
@@ -408,14 +417,14 @@ describe('Test Style module', function() {
 					style.apply(editor);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<strong><em>test</em></strong>'
+						'<p><strong><em>test</em></strong></p>'
 					);
 				});
 
 				describe('For collapsed selection', function() {
 					it('Should add several tags', function() {
 						editor.s.setCursorAfter(
-							editor.editor.firstChild
+							editor.editor.firstChild.firstChild
 						);
 
 						const strong = new Style({
@@ -430,7 +439,7 @@ describe('Test Style module', function() {
 						editor.s.insertHTML('stop');
 
 						expect(sortAttributes(editor.value)).equals(
-							'test<strong>stop</strong>'
+							'<p>test<strong>stop</strong></p>'
 						);
 
 						const em = new Style({
@@ -445,14 +454,14 @@ describe('Test Style module', function() {
 						editor.s.insertHTML('last');
 
 						expect(sortAttributes(editor.value)).equals(
-							'test<strong>stop<em>last</em></strong>'
+							'<p>test<strong>stop<em>last</em></strong></p>'
 						);
 					});
 
 					describe('Double times', function() {
 						it('Should create new SPAN inside first', function() {
 							editor.s.setCursorAfter(
-								editor.editor.firstChild
+								editor.editor.firstChild.firstChild
 							);
 
 							const style = new Style({
@@ -476,14 +485,14 @@ describe('Test Style module', function() {
 							editor.s.insertHTML('elem');
 
 							expect(sortAttributes(editor.value)).equals(
-								'test<span style="font-size:12px">stop<span style="color:#FF00FF">elem</span></span>'
+								'<p>test<span style="font-size:12px">stop<span style="color:#FF00FF">elem</span></span></p>'
 							);
 						});
 
 						describe('With same style', function() {
 							it('Should break first SPAN', function() {
 								editor.s.setCursorAfter(
-									editor.editor.firstChild
+									editor.editor.firstChild.firstChild
 								);
 
 								const style = new Style({
@@ -501,7 +510,7 @@ describe('Test Style module', function() {
 								editor.s.insertHTML('elem');
 
 								expect(sortAttributes(editor.value)).equals(
-									'test<span style="font-size:12px">stop</span>elem'
+									'<p>test<span style="font-size:12px">stop</span>elem</p>'
 								);
 							});
 						});
@@ -551,8 +560,11 @@ describe('Test Style module', function() {
 				editor.value = '<strong>test</strong> some';
 
 				const range = editor.s.createRange();
-				range.setStart(editor.editor.firstChild.firstChild, 2);
-				range.setEnd(editor.editor.lastChild, 3);
+				range.setStart(
+					editor.editor.firstChild.firstChild.firstChild,
+					2
+				);
+				range.setEnd(editor.editor.firstChild.lastChild, 3);
 				editor.s.selectRange(range);
 
 				const style = new Style({
@@ -565,14 +577,14 @@ describe('Test Style module', function() {
 				style.apply(editor);
 
 				expect(sortAttributes(editor.value)).equals(
-					'<strong>te</strong>st some'
+					'<p><strong>te</strong>st some</p>'
 				);
 			});
 		});
 
-		describe('Apply UL/OL', function () {
-			describe('UL', function () {
-				it('Should create LI inside new element', function () {
+		describe('Apply UL/OL', function() {
+			describe('UL', function() {
+				it('Should create LI inside new element', function() {
 					const style = new Style({
 						element: 'ul'
 					});
@@ -582,11 +594,11 @@ describe('Test Style module', function() {
 					expect(sortAttributes(editor.value)).equals(
 						'<ul><li>test</li></ul>'
 					);
-				})
-			})
+				});
+			});
 
-			describe('OL', function () {
-				it('Should create LI inside new element', function () {
+			describe('OL', function() {
+				it('Should create LI inside new element', function() {
 					const style = new Style({
 						element: 'ol'
 					});
@@ -596,12 +608,12 @@ describe('Test Style module', function() {
 					expect(sortAttributes(editor.value)).equals(
 						'<ol><li>test</li></ol>'
 					);
-				})
-			})
-		})
+				});
+			});
+		});
 
-		describe('Apply H1 inside LI', function () {
-			it('Should create H1 inside LI', function () {
+		describe('Apply H1 inside LI', function() {
+			it('Should create H1 inside LI', function() {
 				editor.value =
 					'<ul>' +
 					'<li>1</li>' +
@@ -614,10 +626,7 @@ describe('Test Style module', function() {
 					editor.editor.firstChild.firstChild.firstChild,
 					0
 				);
-				range.setEnd(
-					editor.editor.firstChild.lastChild.firstChild,
-					1
-				);
+				range.setEnd(editor.editor.firstChild.lastChild.firstChild, 1);
 				editor.s.selectRange(range);
 
 				const style = new Style({
@@ -628,15 +637,15 @@ describe('Test Style module', function() {
 
 				expect(editor.value).equals(
 					'<ul>' +
-					'<li><h1>1</h1></li>' +
-					'<li><h1>2</h1></li>' +
-					'<li><h1>3</h1></li>' +
-					'</ul> test'
+						'<li><h1>1</h1></li>' +
+						'<li><h1>2</h1></li>' +
+						'<li><h1>3</h1></li>' +
+						'</ul><p> test</p>'
 				);
-			})
+			});
 
-			describe('Apply H1 for whole UL', function () {
-				it('Should create H1 inside every LI inside UL', function () {
+			describe('Apply H1 for whole UL', function() {
+				it('Should create H1 inside every LI inside UL', function() {
 					editor.value =
 						'<ul>' +
 						'<li>1</li>' +
@@ -656,15 +665,15 @@ describe('Test Style module', function() {
 
 					expect(editor.value).equals(
 						'<ul>' +
-						'<li><h1>1</h1></li>' +
-						'<li><h1>2</h1></li>' +
-						'<li><h1>3</h1></li>' +
-						'</ul>'
+							'<li><h1>1</h1></li>' +
+							'<li><h1>2</h1></li>' +
+							'<li><h1>3</h1></li>' +
+							'</ul>'
 					);
-				})
+				});
 
-				describe('Apply H1 for whole UL with text', function () {
-					it('Should create H1 inside every LI inside UL and wrap text', function () {
+				describe('Apply H1 for whole UL with text', function() {
+					it('Should create H1 inside every LI inside UL and wrap text', function() {
 						editor.value =
 							'<ul>' +
 							'<li>1</li>' +
@@ -684,12 +693,12 @@ describe('Test Style module', function() {
 
 						expect(editor.value).equals(
 							'<ul>' +
-							'<li><h1>1</h1></li>' +
-							'<li><h1>2</h1></li>' +
-							'<li><h1>3</h1></li>' +
-							'</ul><h1> test</h1>'
+								'<li><h1>1</h1></li>' +
+								'<li><h1>2</h1></li>' +
+								'<li><h1>3</h1></li>' +
+								'</ul><h1> test</h1>'
 						);
-					})
+					});
 				});
 			});
 		});
@@ -711,7 +720,7 @@ describe('Test Style module', function() {
 
 					style.apply(editor);
 
-					expect(sortAttributes(editor.value)).equals('test');
+					expect(sortAttributes(editor.value)).equals('<p>test</p>');
 				});
 			});
 		});
@@ -719,7 +728,8 @@ describe('Test Style module', function() {
 		describe('For Styled element with style contains STRONG', function() {
 			describe('Apply STRONG', function() {
 				it('Should remove STRONG from element', function() {
-					editor.value = '<span style="font-weight:700;font-size:24px;">test</span>';
+					editor.value =
+						'<span style="font-weight:700;font-size:24px;">test</span>';
 					editor.execCommand('selectall');
 
 					const style = new Style({
@@ -731,14 +741,16 @@ describe('Test Style module', function() {
 
 					style.apply(editor);
 
-					expect(sortAttributes(editor.value)).equals('<span style="font-size:24px">test</span>');
+					expect(sortAttributes(editor.value)).equals(
+						'<p><span style="font-size:24px">test</span></p>'
+					);
 				});
 			});
 		});
 	});
 });
 
-describe('Test Selection.applyStyle method', function () {
+describe('Test Selection.applyStyle method', function() {
 	describe('Bold command', function() {
 		describe('For box with style="font-weight:bold"', function() {
 			it('should wrap selected text in STRONG element without questions', function() {
@@ -784,7 +796,7 @@ describe('Test Selection.applyStyle method', function () {
 
 			editor.s.insertNode(editor.createInside.text('def'));
 
-			expect(editor.value).equals('test<strong>abc</strong>def');
+			expect(editor.value).equals('<p>test<strong>abc</strong>def</p>');
 		});
 
 		describe('for some text', function() {
@@ -801,7 +813,7 @@ describe('Test Selection.applyStyle method', function () {
 
 				editor.execCommand('bold');
 
-				expect(editor.value).equals('<strong>test</strong>');
+				expect(editor.value).equals('<p><strong>test</strong></p>');
 			});
 
 			describe('inside STRONG element ', function() {
@@ -809,52 +821,66 @@ describe('Test Selection.applyStyle method', function () {
 					const editor = getJodit();
 					editor.value = '<strong>test</strong>';
 
-					const sel = editor.s.sel,
-						range = editor.s.createRange();
+					const range = editor.s.createRange();
 
-					range.setStart(editor.editor.firstChild.firstChild, 0);
-					range.setEnd(editor.editor.firstChild.firstChild, 2);
-					sel.removeAllRanges();
-					sel.addRange(range);
+					range.setStart(
+						editor.editor.firstChild.firstChild.firstChild,
+						0
+					);
+					range.setEnd(
+						editor.editor.firstChild.firstChild.firstChild,
+						2
+					);
+
+					editor.s.selectRange(range);
 
 					editor.execCommand('bold');
 
-					expect(editor.value).equals('te<strong>st</strong>');
+					expect(editor.value).equals('<p>te<strong>st</strong></p>');
 				});
 
 				it('near end of this element, should unwrap this text', function() {
 					const editor = getJodit();
 					editor.value = '<strong>test</strong>';
 
-					const sel = editor.s.sel,
-						range = editor.s.createRange();
+					const range = editor.s.createRange();
 
-					range.setStart(editor.editor.firstChild.firstChild, 2);
-					range.setEnd(editor.editor.firstChild.firstChild, 4);
-					sel.removeAllRanges();
-					sel.addRange(range);
+					range.setStart(
+						editor.editor.firstChild.firstChild.firstChild,
+						2
+					);
+					range.setEnd(
+						editor.editor.firstChild.firstChild.firstChild,
+						4
+					);
+
+					editor.s.selectRange(range);
 
 					editor.execCommand('bold');
 
-					expect(editor.value).equals('<strong>te</strong>st');
+					expect(editor.value).equals('<p><strong>te</strong>st</p>');
 				});
 
 				it('in the middle of this element, should unwrap this text', function() {
 					const editor = getJodit();
 					editor.value = '<strong>test</strong>';
 
-					const sel = editor.s.sel,
-						range = editor.s.createRange();
+					const range = editor.s.createRange();
 
-					range.setStart(editor.editor.firstChild.firstChild, 1);
-					range.setEnd(editor.editor.firstChild.firstChild, 3);
-					sel.removeAllRanges();
-					sel.addRange(range);
+					range.setStart(
+						editor.editor.firstChild.firstChild.firstChild,
+						1
+					);
+					range.setEnd(
+						editor.editor.firstChild.firstChild.firstChild,
+						3
+					);
+					editor.s.selectRange(range);
 
 					editor.execCommand('bold');
 
 					expect(editor.value).equals(
-						'<strong>t</strong>es<strong>t</strong>'
+						'<p><strong>t</strong>es<strong>t</strong></p>'
 					);
 				});
 
@@ -862,38 +888,45 @@ describe('Test Selection.applyStyle method', function () {
 					const editor = getJodit();
 					editor.value = '<strong>1 2 3</strong>';
 
-					const sel = editor.s.sel,
-						range = editor.s.createRange();
+					const range = editor.s.createRange();
 
-					range.setStart(editor.editor.firstChild.firstChild, 1);
-					range.setEnd(editor.editor.firstChild.firstChild, 4);
-					sel.removeAllRanges();
-					sel.addRange(range);
+					range.setStart(
+						editor.editor.firstChild.firstChild.firstChild,
+						1
+					);
+					range.setEnd(
+						editor.editor.firstChild.firstChild.firstChild,
+						4
+					);
+					editor.s.selectRange(range);
 
 					editor.execCommand('bold');
 					editor.execCommand('bold');
 
 					expect(editor.value).equals(
-						'<strong>1</strong><strong> 2 </strong><strong>3</strong>'
+						'<p><strong>1</strong><strong> 2 </strong><strong>3</strong></p>'
 					);
 				});
 
-				describe('For collapsed selection', function () {
+				describe('For collapsed selection', function() {
 					it('should split this element and set cursor between two parts', function() {
 						const editor = getJodit();
 						editor.value = '<strong>test</strong>';
 
 						const range = editor.s.createRange();
 
-						range.setStart(editor.editor.firstChild.firstChild, 2);
+						range.setStart(
+							editor.editor.firstChild.firstChild.firstChild,
+							2
+						);
 						range.collapse(true);
 						editor.s.selectRange(range);
 
 						editor.execCommand('bold');
-						editor.s.insertHTML('stop')
+						editor.s.insertHTML('stop');
 
 						expect(editor.value).equals(
-							'<strong>te</strong>stop<strong>st</strong>'
+							'<p><strong>te</strong>stop<strong>st</strong></p>'
 						);
 					});
 				});
@@ -904,17 +937,18 @@ describe('Test Selection.applyStyle method', function () {
 				editor.value =
 					'<strong>test</strong> test <strong>test</strong>';
 
-				const sel = editor.s.sel,
-					range = editor.s.createRange();
+				const range = editor.s.createRange();
 
-				range.setStart(editor.editor.firstChild.firstChild, 0);
-				range.setEnd(editor.editor.lastChild.firstChild, 4);
-				sel.removeAllRanges();
-				sel.addRange(range);
+				range.setStart(
+					editor.editor.firstChild.firstChild.firstChild,
+					0
+				);
+				range.setEnd(editor.editor.firstChild.lastChild.firstChild, 4);
+				editor.s.selectRange(range);
 
 				editor.execCommand('bold');
 
-				expect(editor.value).equals('test test test');
+				expect(editor.value).equals('<p>test test test</p>');
 			});
 		});
 
@@ -959,17 +993,14 @@ describe('Test Selection.applyStyle method', function () {
 				const editor = getJodit();
 				editor.value = '<span style="font-weight: 700">test</span>';
 
-				const sel = editor.s.sel,
-					range = editor.s.createRange();
+				const range = editor.s.createRange();
 
 				range.selectNodeContents(editor.editor.firstChild);
-				sel.removeAllRanges();
-				sel.addRange(range);
+				editor.s.selectRange(range);
 
 				editor.execCommand('bold');
-				// editor.execCommand('bold');
 
-				expect(editor.value).equals('test');
+				expect(editor.value).equals('<p>test</p>');
 			});
 		});
 
@@ -982,19 +1013,21 @@ describe('Test Selection.applyStyle method', function () {
 				});
 
 				editor.value = 'testtest';
+
 				const range = editor.s.createRange();
-				range.setStart(editor.editor.firstChild, 4);
+				range.setStart(editor.editor.firstChild.firstChild, 4);
 				range.collapse(true);
 				editor.s.selectRange(range);
 
 				editor.execCommand('bold');
-				expect(editor.value).equals('test<strong></strong>test');
+				expect(editor.value).equals('<p>test<strong></strong>test</p>');
 
-				range.setStart(editor.editor.lastChild, 2);
+				range.setStart(editor.editor.firstChild.lastChild, 2);
 				range.collapse(true);
 				editor.s.selectRange(range);
 				simulateEvent('mousedown', 0, editor.editor);
-				expect(editor.value).equals('testtest');
+
+				expect(editor.value).equals('<p>testtest</p>');
 			});
 		});
 
@@ -1003,20 +1036,18 @@ describe('Test Selection.applyStyle method', function () {
 				const editor = getJodit();
 				editor.value = '<span style="font-size: 36px;">asdasd</span>';
 
-				const sel = editor.s.sel,
-					range = editor.s.createRange();
+				const range = editor.s.createRange();
 
-				range.setStart(editor.editor.firstChild.firstChild, 0);
-				range.setEnd(editor.editor.firstChild.firstChild, 6);
+				range.setStart(editor.editor.firstChild.firstChild.firstChild, 0);
+				range.setEnd(editor.editor.firstChild.firstChild.firstChild, 6);
 
-				sel.removeAllRanges();
-				sel.addRange(range);
+				editor.s.selectRange(range);
 
 				editor.execCommand('bold');
 
 				expect(sortAttributes(editor.value)).equals(
 					sortAttributes(
-						'<span style="font-size: 36px;"><strong>asdasd</strong></span>'
+						'<p><span style="font-size: 36px;"><strong>asdasd</strong></span></p>'
 					)
 				);
 			});
@@ -1057,7 +1088,7 @@ describe('Test Selection.applyStyle method', function () {
 					const sel = editor.s.sel,
 						range = editor.s.createRange();
 
-					range.selectNodeContents(editor.editor.firstChild);
+					range.selectNodeContents(editor.editor.firstChild.firstChild);
 					sel.removeAllRanges();
 					sel.addRange(range);
 
@@ -1066,7 +1097,7 @@ describe('Test Selection.applyStyle method', function () {
 					editor.execCommand('fontSize', false, 12);
 
 					expect(editor.value).equals(
-						'<span style="font-size: 12px;">test</span>'
+						'<p><span style="font-size: 12px;">test</span></p>'
 					);
 				});
 			});

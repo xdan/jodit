@@ -364,8 +364,8 @@ describe('Toolbar', function() {
 
 			const range = editor.s.createRange();
 
-			range.setStart(editor.editor.firstChild, 3);
-			range.setEnd(editor.editor.firstChild, 6);
+			range.setStart(editor.editor.firstChild.firstChild, 3);
+			range.setEnd(editor.editor.firstChild.firstChild, 6);
 
 			editor.s.selectRange(range);
 
@@ -382,7 +382,7 @@ describe('Toolbar', function() {
 			);
 
 			expect(editor.value).equals(
-				'tex<span style="background-color: rgb(249, 203, 156);">t2t</span>ext'
+				'<p>tex<span style="background-color: rgb(249, 203, 156);">t2t</span>ext</p>'
 			);
 
 			// simulateEvent('mousedown', 0, editor.editor)
@@ -444,8 +444,8 @@ describe('Toolbar', function() {
 
 			const range = editor.s.createRange();
 
-			range.setStart(editor.editor.firstChild, 3);
-			range.setEnd(editor.editor.firstChild, 6);
+			range.setStart(editor.editor.firstChild.firstChild, 3);
+			range.setEnd(editor.editor.firstChild.firstChild, 6);
 			editor.s.selectRange(range);
 
 			clickTrigger('paragraph', editor);
@@ -771,7 +771,7 @@ describe('Toolbar', function() {
 			editor.value = '';
 
 			simulateEvent('click', 0, button);
-			expect(editor.value).equals('Wed Mar 16 2016');
+			expect(editor.value).equals('<p>Wed Mar 16 2016</p>');
 		});
 
 		it('When cursor inside STRONG tag, Bold button should be selected', function() {
@@ -790,7 +790,7 @@ describe('Toolbar', function() {
 			const sel = editor.s.sel,
 				range = editor.s.createRange();
 
-			range.setStart(editor.editor.firstChild.firstChild, 2);
+			range.setStart(editor.editor.firstChild.firstChild.firstChild, 2);
 			range.collapse(true);
 			sel.removeAllRanges();
 			sel.addRange(range);
@@ -799,7 +799,7 @@ describe('Toolbar', function() {
 
 			expect(bold.getAttribute('aria-pressed')).equals('true');
 
-			range.setStart(editor.editor.firstChild.nextSibling.firstChild, 2);
+			range.setStart(editor.editor.firstChild.firstChild.nextSibling.firstChild, 2);
 			range.collapse(true);
 			sel.removeAllRanges();
 			sel.addRange(range);
@@ -811,7 +811,7 @@ describe('Toolbar', function() {
 			expect(italic.getAttribute('aria-pressed')).equals('true');
 
 			range.setStart(
-				editor.editor.firstChild.nextSibling.nextSibling.firstChild,
+				editor.editor.firstChild.firstChild.nextSibling.nextSibling.firstChild,
 				2
 			);
 			range.collapse(true);
@@ -824,7 +824,7 @@ describe('Toolbar', function() {
 			expect(italic.getAttribute('aria-pressed')).equals('true');
 
 			range.setStart(
-				editor.editor.firstChild.nextSibling.nextSibling.nextSibling
+				editor.editor.firstChild.firstChild.nextSibling.nextSibling.nextSibling
 					.firstChild,
 				2
 			);
@@ -978,7 +978,7 @@ describe('Toolbar', function() {
 
 			const sel = editor.s.sel,
 				range = editor.s.createRange();
-			range.setStart(editor.editor.firstChild.firstChild, 2);
+			range.setStart(editor.editor.firstChild.firstChild.firstChild, 2);
 			range.collapse(true);
 			sel.removeAllRanges();
 			sel.addRange(range);

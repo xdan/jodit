@@ -523,7 +523,7 @@ export class inlinePopup extends Plugin {
 			)
 			.on('click', this.onClick)
 			.on(
-				this.j.editorDocument,
+				this.j.ed,
 				'selectionchange',
 				this.onSelectionChange
 			);
@@ -534,7 +534,7 @@ export class inlinePopup extends Plugin {
 			.off('showPopup')
 			.off('click', this.onClick)
 			.off(
-				this.j.editorDocument,
+				this.j.ed,
 				'selectionchange',
 				this.onSelectionChange
 			);

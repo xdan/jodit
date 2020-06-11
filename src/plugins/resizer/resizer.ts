@@ -430,7 +430,7 @@ export class resizer extends Plugin {
 				pos: IBound = offset(
 					this.element,
 					this.j,
-					this.j.editorDocument
+					this.j.ed
 				),
 				left: number = parseInt(this.rect.style.left || '0', 10),
 				top: number = parseInt(this.rect.style.top || '0', 10),

@@ -4,13 +4,13 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { TEXT_HTML, TEXT_PLAIN } from '../core/constants';
-import { Dom } from '../core/dom';
-import { attr, css, ctrlKey, dataBind } from '../core/helpers';
-import { Plugin } from '../core/plugin';
-import { IPoint } from '../types/';
-import { getDataTransfer } from './clipboard';
-import { getContainer } from '../core/global';
+import { TEXT_HTML, TEXT_PLAIN } from '../../core/constants';
+import { Dom } from '../../core/dom';
+import { attr, css, ctrlKey, dataBind } from '../../core/helpers';
+import { Plugin } from '../../core/plugin';
+import { IPoint } from '../../types';
+import { getDataTransfer } from './index';
+import { getContainer } from '../../core/global';
 
 /**
  * Process drag and drop image from FileBrowser and movev image inside the editor
@@ -190,13 +190,13 @@ export class DragAndDrop extends Plugin {
 			.off(window, '.DragAndDrop')
 			.off('.DragAndDrop')
 			.off(
-				[window, this.j.editorDocument, this.j.editor],
+				[window, this.j.ed, this.j.editor],
 				'dragstart.DragAndDrop',
 				this.onDragStart
 			)
 			.on(window, 'dragover.DragAndDrop', this.onDrag)
 			.on(
-				[window, this.j.editorDocument, this.j.editor],
+				[window, this.j.ed, this.j.editor],
 				'dragstart.DragAndDrop',
 				this.onDragStart
 			)
@@ -215,7 +215,7 @@ export class DragAndDrop extends Plugin {
 			.off(window, '.DragAndDrop')
 			.off('.DragAndDrop')
 			.off(
-				[window, this.j.editorDocument, this.j.editor],
+				[window, this.j.ed, this.j.editor],
 				'dragstart.DragAndDrop',
 				this.onDragStart
 			);

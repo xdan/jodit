@@ -92,7 +92,7 @@ export class source extends Plugin {
 	};
 
 	private __clear = (str: string): string =>
-		str.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
+		str.replace(consts.INVISIBLE_SPACE_REG_EXP(), '');
 
 	private selectAll = () => {
 		this.sourceEditor.selectAll();
@@ -157,12 +157,8 @@ export class source extends Plugin {
 						value.substr(selectionStart)
 				);
 			} else {
-				const markerStart: HTMLSpanElement = this.j.s.marker(
-					true
-				);
-				const markerEnd: HTMLSpanElement = this.j.s.marker(
-					false
-				);
+				const markerStart = this.j.s.marker(true);
+				const markerEnd = this.j.s.marker(false);
 
 				this.selInfo[0] = {
 					startId: markerStart.id,

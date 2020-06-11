@@ -102,7 +102,7 @@ export class resizeCells extends Plugin {
 		this.drag = true;
 
 		this.j.e.on(
-			this.j.editorWindow,
+			this.j.ew,
 			'mousemove.table touchmove.table',
 			this.onMouseMove
 		);
@@ -219,7 +219,7 @@ export class resizeCells extends Plugin {
 		this.drag = false;
 
 		this.j.e.off(
-			this.j.editorWindow,
+			this.j.ew,
 			'mousemove.table touchmove.table',
 			this.onMouseMove
 		);
@@ -258,7 +258,7 @@ export class resizeCells extends Plugin {
 		const nextTD = call(
 			this.isRTL ? Dom.prev : Dom.next,
 			this.workCell,
-			elm => Dom.isCell(elm, this.j.editorWindow),
+			elm => Dom.isCell(elm, this.j.ew),
 			this.workCell.parentNode as HTMLElement
 		) as HTMLTableCellElement;
 
@@ -280,7 +280,7 @@ export class resizeCells extends Plugin {
 		const width = this.workTable.offsetWidth,
 			parentWidth = getContentWidth(
 				this.workTable.parentNode as HTMLElement,
-				this.j.editorWindow
+				this.j.ew
 			);
 
 		// for RTL use mirror logic
@@ -295,7 +295,7 @@ export class resizeCells extends Plugin {
 			const side = this.isRTL ? 'marginRight' : 'marginLeft';
 
 			const margin = parseInt(
-				this.j.editorWindow.getComputedStyle(this.workTable)[side] ||
+				this.j.ew.getComputedStyle(this.workTable)[side] ||
 					'0',
 				10
 			);
@@ -344,7 +344,7 @@ export class resizeCells extends Plugin {
 		offsetX: number = 0,
 		delta: number = 0
 	) {
-		const box = offset(cell, this.j, this.j.editorDocument);
+		const box = offset(cell, this.j, this.j.ed);
 
 		if (offsetX > consts.NEARBY && offsetX < box.width - consts.NEARBY) {
 			this.hideResizeHandle();
@@ -357,7 +357,7 @@ export class resizeCells extends Plugin {
 				this.j.od,
 				true
 			),
-			parentBox: IBound = offset(table, this.j, this.j.editorDocument);
+			parentBox: IBound = offset(table, this.j, this.j.ed);
 
 		this.resizeHandler.style.left =
 			(offsetX <= consts.NEARBY ? box.left : box.left + box.width) -
@@ -376,7 +376,7 @@ export class resizeCells extends Plugin {
 			const prevTD = call(
 				this.isRTL ? Dom.next : Dom.prev,
 				cell,
-				elm => Dom.isCell(elm, this.j.editorWindow),
+				elm => Dom.isCell(elm, this.j.ew),
 				cell.parentNode as HTMLElement
 			) as HTMLTableCellElement;
 
@@ -385,7 +385,7 @@ export class resizeCells extends Plugin {
 			const nextTD = call(
 				!this.isRTL ? Dom.next : Dom.prev,
 				cell,
-				elm => Dom.isCell(elm, this.j.editorWindow),
+				elm => Dom.isCell(elm, this.j.ew),
 				cell.parentNode as HTMLElement
 			);
 
@@ -474,7 +474,7 @@ export class resizeCells extends Plugin {
 
 					const cell = Dom.up(
 						event.target as HTMLElement,
-						elm => Dom.isCell(elm, this.j.editorWindow),
+						elm => Dom.isCell(elm, this.j.ew),
 						table
 					) as HTMLTableCellElement;
 

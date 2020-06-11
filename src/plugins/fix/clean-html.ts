@@ -4,18 +4,18 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../config';
+import { Config } from '../../config';
 import {
 	INVISIBLE_SPACE,
 	INVISIBLE_SPACE_REG_EXP,
 	INVISIBLE_SPACE_REG_EXP as INV_REG,
 	SPACE_REG_EXP,
 	IS_INLINE
-} from '../core/constants';
-import { Dom } from '../modules/';
-import { isString, normalizeNode, trim } from '../core/helpers/';
-import { HTMLTagNames, IDictionary, IJodit, Nullable } from '../types';
-import { Plugin } from '../core/plugin';
+} from '../../core/constants';
+import { Dom } from '../../modules';
+import { isString, normalizeNode, trim } from '../../core/helpers';
+import { HTMLTagNames, IDictionary, IJodit, Nullable } from '../../types';
+import { Plugin } from '../../core/plugin';
 
 /**
  * @property {object} cleanHTML {@link cleanHtml|cleanHtml}'s options
@@ -64,7 +64,7 @@ import { Plugin } from '../core/plugin';
  * });
  * ```
  */
-declare module '../config' {
+declare module '../../config' {
 	interface Config {
 		cleanHTML: {
 			timeout: number;
@@ -190,7 +190,7 @@ export class cleanHtml extends Plugin {
 
 		if (
 			this.j.o.cleanHTML.fillEmptyParagraph &&
-			Dom.isBlock(nodeElm, this.j.editorWindow) &&
+			Dom.isBlock(nodeElm, this.j.ew) &&
 			Dom.isEmpty(nodeElm, /^(img|svg|canvas|input|textarea|form|br)$/)
 		) {
 			const br = this.j.createInside.element('br');
@@ -311,11 +311,11 @@ export class cleanHtml extends Plugin {
 					if (node && Dom.isText(node)) {
 						if (
 							node.nodeValue !== null &&
-							INV_REG.test(node.nodeValue) &&
-							node.nodeValue.replace(INV_REG, '').length !== 0
+							INV_REG().test(node.nodeValue) &&
+							node.nodeValue.replace(INV_REG(), '').length !== 0
 						) {
 							node.nodeValue = node.nodeValue.replace(
-								INV_REG,
+								INV_REG(),
 								''
 							);
 
@@ -354,7 +354,7 @@ export class cleanHtml extends Plugin {
 		if (hr) {
 			let node = Dom.next(
 				hr,
-				node => Dom.isBlock(node, this.j.editorWindow),
+				node => Dom.isBlock(node, this.j.ew),
 				this.j.editor,
 				false
 			) as Node | null;
@@ -483,11 +483,11 @@ export class cleanHtml extends Plugin {
 					this.j.o.cleanHTML.replaceNBSP &&
 					Dom.isText(elm) &&
 					elm.nodeValue !== null &&
-					elm.nodeValue.match(SPACE_REG_EXP)
+					elm.nodeValue.match(SPACE_REG_EXP())
 				) {
 					elm.nodeValue = elm.nodeValue
-						.replace(INVISIBLE_SPACE_REG_EXP, '')
-						.replace(SPACE_REG_EXP, ' ');
+						.replace(INVISIBLE_SPACE_REG_EXP(), '')
+						.replace(SPACE_REG_EXP(), ' ');
 				}
 
 				break;
@@ -516,12 +516,12 @@ export class cleanHtml extends Plugin {
 			!cleanHtml.hasNotEmptyTextSibling(node, true) &&
 			Dom.up(
 				node,
-				node => Dom.isBlock(node, this.j.editorWindow),
+				node => Dom.isBlock(node, this.j.ew),
 				this.j.editor
 			) !==
 				Dom.up(
 					current,
-					node => Dom.isBlock(node, this.j.editorWindow),
+					node => Dom.isBlock(node, this.j.ew),
 					this.j.editor
 				)
 		) {

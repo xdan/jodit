@@ -132,7 +132,7 @@ export class selectCells extends Plugin {
 			return;
 		}
 
-		const node = this.j.editorDocument.elementFromPoint(
+		const node = this.j.ed.elementFromPoint(
 			e.clientX,
 			e.clientY
 		);
@@ -213,7 +213,7 @@ export class selectCells extends Plugin {
 
 		this.j.unlock();
 
-		const node = this.j.editorDocument.elementFromPoint(
+		const node = this.j.ed.elementFromPoint(
 			e.clientX,
 			e.clientY
 		);

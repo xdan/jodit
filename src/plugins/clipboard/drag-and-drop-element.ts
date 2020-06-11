@@ -4,13 +4,13 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../config';
-import { css, ctrlKey, dataBind, splitArray } from '../core/helpers/';
-import { Plugin } from '../core/plugin';
-import { Dom } from '../core/dom';
-import { getContainer } from '../core/global';
+import { Config } from '../../config';
+import { css, ctrlKey, dataBind, splitArray } from '../../core/helpers';
+import { Plugin } from '../../core/plugin';
+import { Dom } from '../../core/dom';
+import { getContainer } from '../../core/global';
 
-declare module '../config' {
+declare module '../../config' {
 	interface Config {
 		draggableTags: string | string[];
 	}
@@ -172,7 +172,7 @@ export class DragAndDropElement extends Plugin {
 			)
 			.on('mouseup touchend', this.onDrop)
 			.on(
-				[this.j.editorWindow, this.ow],
+				[this.j.ew, this.ow],
 				'mouseup touchend',
 				this.onDragEnd
 			);

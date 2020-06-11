@@ -48,7 +48,18 @@ interface IJodit extends IViewWithToolbar {
 	text: string;
 
 	editorDocument: HTMLDocument;
+
+	/**
+	 * Alias for this.editorDocument
+	 */
+	ed: this['editorDocument'];
+
 	editorWindow: Window;
+
+	/**
+	 * Alias for this.editorDocument
+	 */
+	ew: this['editorWindow'];
 
 	createInside: ICreate;
 

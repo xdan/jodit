@@ -55,7 +55,7 @@ describe('Test Creator module', function() {
 			editor2.s.select(editor2.editor.firstChild);
 			editor2.execCommand('bold');
 
-			expect(editor2.value).equals('<strong test="true">test</strong>');
+			expect(editor2.value).equals('<p data-attr="stop"><strong test="true">test</strong></p>');
 		});
 	});
 });
