@@ -87,7 +87,7 @@ describe('Test orderedList plugin', function() {
 				it('Should wrap whole text in ul/li', function() {
 					const editor = getJodit();
 					editor.value = 'Hello world';
-					editor.s.setCursorAfter(editor.editor.firstChild);
+					editor.s.setCursorAfter(editor.editor.firstChild.firstChild);
 
 					editor.execCommand('insertUnorderedList');
 
@@ -137,7 +137,7 @@ describe('Test orderedList plugin', function() {
 
 					editor.execCommand('insertUnorderedList');
 
-					expect(editor.value.replace(/<br>$/, '')).equals('Hello world');
+					expect(editor.value.replace(/<br>/, '')).equals('<p>Hello world</p>');
 				});
 			});
 
@@ -255,8 +255,8 @@ describe('Test orderedList plugin', function() {
 
 					editor.s.insertHTML('test ');
 
-					expect(sortAttributes(editor.value).replace(/<br>$/, '')).equals(
-						'test Text to text'
+					expect(sortAttributes(editor.value).replace(/<br>/, '')).equals(
+						'<p>test Text to text</p>'
 					);
 				});
 			});

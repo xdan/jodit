@@ -72,7 +72,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		if (
 			this.j.o.readonly &&
 			(!this.j.o.activeButtonsInReadOnly ||
-				this.j.o.activeButtonsInReadOnly.includes(button.control.name))
+				!this.j.o.activeButtonsInReadOnly.includes(button.control.name))
 		) {
 			return true;
 		}

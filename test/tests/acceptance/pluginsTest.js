@@ -6,7 +6,7 @@ describe('Test plugins', function() {
 			getBox().style.width = 'auto';
 			const editor = getJodit();
 
-			editor.value = 'text <strong>test</strong> post';
+			editor.value = '<div>text <strong>test</strong> post</div>';
 			editor.s.focus();
 			editor.s.setCursorIn(editor.editor.querySelector('strong'));
 
@@ -22,17 +22,15 @@ describe('Test plugins', function() {
 				getButton('copyformat', editor).getAttribute('aria-pressed')
 			).equals('true');
 
-			const sel = editor.s.sel,
-				range = editor.s.createRange();
+			const range = editor.s.createRange();
 
-			range.selectNode(editor.editor.lastChild);
-			sel.removeAllRanges();
-			sel.addRange(range);
+			range.selectNode(editor.editor.firstChild.lastChild);
+			editor.s.selectRange(range);
 
 			simulateEvent('mouseup', 0, editor.editor);
 
 			expect(editor.value.replace('700', 'bold')).equals(
-				'text <strong>test</strong><span style="font-weight: bold;"> post</span>'
+				'<div>text <strong>test</strong><span style="font-weight: bold;"> post</span></div>'
 			);
 		});
 
@@ -41,7 +39,7 @@ describe('Test plugins', function() {
 			const editor = getJodit();
 
 			editor.value =
-				'text <span style="font-size: 11px;">test</span> post';
+				'<div>text <span style="font-size: 11px;">test</span> post</div>';
 			editor.s.focus();
 			editor.s.setCursorIn(editor.editor.querySelector('span'));
 
@@ -56,17 +54,13 @@ describe('Test plugins', function() {
 				getButton('copyformat', editor).getAttribute('aria-pressed')
 			).equals('true');
 
-			const sel = editor.s.sel,
-				range = editor.s.createRange();
-
-			range.selectNode(editor.editor.lastChild);
-			sel.removeAllRanges();
-			sel.addRange(range);
+			const range = editor.s.createRange(true);
+			range.selectNode(editor.editor.firstChild.lastChild);
 
 			simulateEvent('mouseup', 0, editor.editor);
 
 			expect(editor.value).equals(
-				'text <span style="font-size: 11px;">test</span><span style="font-size: 11px;"> post</span>'
+				'<div>text <span style="font-size: 11px;">test</span><span style="font-size: 11px;"> post</span></div>'
 			);
 		});
 
@@ -76,12 +70,10 @@ describe('Test plugins', function() {
 				const editor = getJodit();
 
 				editor.value =
-					'text <span style="font-size: 11px;color: rgb(255, 0, 0);">test</span> post';
+					'<div>text <span style="font-size: 11px;color: rgb(255, 0, 0);">test</span> post</div>';
 				editor.s.focus();
 
-				editor.s.setCursorIn(
-					editor.editor.querySelector('span')
-				);
+				editor.s.setCursorIn(editor.editor.querySelector('span'));
 
 				expect(
 					getButton('copyformat', editor).getAttribute('aria-pressed')
@@ -93,17 +85,14 @@ describe('Test plugins', function() {
 					getButton('copyformat', editor).getAttribute('aria-pressed')
 				).equals('true');
 
-				const sel = editor.s.sel,
-					range = editor.s.createRange();
+				const range = editor.s.createRange(true);
 
-				range.selectNode(editor.editor.lastChild);
-				sel.removeAllRanges();
-				sel.addRange(range);
+				range.selectNode(editor.editor.firstChild.lastChild);
 
 				simulateEvent('mouseup', 0, editor.editor);
 
 				expect(sortAttributes(editor.value)).equals(
-					'text <span style="color:#FF0000;font-size:11px">test</span><span style="color:#FF0000;font-size:11px"> post</span>'
+					'<div>text <span style="color:#FF0000;font-size:11px">test</span><span style="color:#FF0000;font-size:11px"> post</span></div>'
 				);
 			});
 		});
@@ -138,14 +127,14 @@ describe('Test plugins', function() {
 			const sel = editor.s.sel,
 				range = editor.s.createRange();
 
-			range.selectNode(editor.editor.lastChild);
+			range.selectNode(editor.editor.firstChild.lastChild);
 			sel.removeAllRanges();
 			sel.addRange(range);
 
 			simulateEvent('mouseup', 0, editor.editor);
 
 			expect(sortAttributes(editor.value)).equals(
-				'text <span style="color:#FF0000;font-size:11px">test</span> post'
+				'<p>text <span style="color:#FF0000;font-size:11px">test</span> post</p>'
 			);
 		});
 
@@ -155,9 +144,9 @@ describe('Test plugins', function() {
 
 				const editor = getJodit(),
 					html =
-						'<img src="tests/artio.jpg" ' +
+						'<p><img src="tests/artio.jpg" ' +
 						'style="height: 100px;width: 100px; margin: 20px; border-image: none; border:1px solid #CCCCCC; border-radius: 50%;"> test ' +
-						'<img style="height: 100px;width: 100px;" src="tests/artio.jpg">';
+						'<img style="height: 100px;width: 100px;" src="tests/artio.jpg"></p>';
 
 				editor.value = html;
 				editor.s.focus();
@@ -187,10 +176,10 @@ describe('Test plugins', function() {
 
 				expect(sortAttributes(editor.value)).equals(
 					sortAttributes(
-						'<img src="tests/artio.jpg" ' +
+						'<p><img src="tests/artio.jpg" ' +
 							'style="border-image:none;border-radius:50%;border:1px solid #CCCCCC;height:100px;margin:20px;width:100px"> test ' +
 							'<img src="tests/artio.jpg" ' +
-							'style="border-image:none;border-color:#CCCCCC;border-radius:50%;border-style:solid;border-width:1px;height:100px;margin:20px;width:100px">'
+							'style="border-image:none;border-color:#CCCCCC;border-radius:50%;border-style:solid;border-width:1px;height:100px;margin:20px;width:100px"></p>'
 					)
 				);
 			});
@@ -202,12 +191,10 @@ describe('Test plugins', function() {
 				const editor = getJodit();
 
 				editor.value =
-					'text <em style="background-color: #ff0000"><strong>test</strong></em> post';
+					'<div>text <em style="background-color: #ff0000"><strong>test</strong></em> post</div>';
 				editor.s.focus();
 
-				editor.s.setCursorIn(
-					editor.editor.querySelector('strong')
-				);
+				editor.s.setCursorIn(editor.editor.querySelector('strong'));
 				expect(
 					getButton('copyformat', editor).getAttribute('aria-pressed')
 				).equals('false');
@@ -218,12 +205,9 @@ describe('Test plugins', function() {
 					getButton('copyformat', editor).getAttribute('aria-pressed')
 				).equals('true');
 
-				const sel = editor.s.sel,
-					range = editor.s.createRange();
+				const range = editor.s.createRange(true);
 
-				range.selectNode(editor.editor.lastChild);
-				sel.removeAllRanges();
-				sel.addRange(range);
+				range.selectNode(editor.editor.firstChild.lastChild);
 
 				simulateEvent('mouseup', 0, editor.editor);
 
@@ -235,7 +219,7 @@ describe('Test plugins', function() {
 							.replace(/rgb\(255, 0, 0\)/g, '#ff0000')
 					)
 				).equals(
-					'text <em style="background-color:#ff0000"><strong>test</strong></em><span style="background-color:#ff0000;font-style:italic;font-weight:bold"> post</span>'
+					'<div>text <em style="background-color:#ff0000"><strong>test</strong></em><span style="background-color:#ff0000;font-style:italic;font-weight:bold"> post</span></div>'
 				);
 			});
 		});
@@ -1207,12 +1191,12 @@ describe('Test plugins', function() {
 			it('should wrap elements in block and change margin for it', function() {
 				const area = appendTestArea();
 				const editor = new Jodit(area);
-				editor.value = 'a<br>b<br>c<br>';
-				editor.s.setCursorAfter(editor.editor.lastChild);
+				editor.value = '<p>a<br>b<br>c<br></p>';
+				editor.s.setCursorAfter(editor.editor.firstChild.lastChild);
 				editor.execCommand('indent');
-				expect(
-					'<p style="margin-left: 10px;">a<br>b<br>c<br></p>'
-				).equals(editor.value);
+				expect(sortAttributes(editor.value)).equals(
+					'<p style="margin-left:10px">a<br>b<br>c<br></p>'
+				);
 			});
 		});
 	});
@@ -1433,18 +1417,18 @@ describe('Test plugins', function() {
 					simulateEvent('click', 0, btn);
 					let dialog = getOpenedDialog(editor);
 
-					expect(null).does.not.equal(dialog);
+					expect(dialog).is.not.null;
 
 					const currentActive = dialog.getElementsByTagName('a')[5];
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, currentActive);
 
-					expect('&amp;').equals(editor.value);
+					expect(editor.value).equals('<p>&amp;</p>');
 
 					simulateEvent('click', 0, btn);
 					dialog = getOpenedDialog(editor);
 
-					expect(null).does.not.equal(dialog);
+					expect(dialog).is.not.null;
 
 					const currentActive2 = dialog.getElementsByTagName(
 						'a'
@@ -1452,7 +1436,7 @@ describe('Test plugins', function() {
 
 					simulateEvent('mousedown', 0, currentActive2);
 
-					expect('&amp;½').equals(editor.value);
+					expect(editor.value).equals('<p>&amp;½</p>');
 				});
 			});
 		});
@@ -1467,10 +1451,10 @@ describe('Test plugins', function() {
 				});
 
 				editor.value = 'test';
-				const range = editor.s.createRange();
+
+				const range = editor.s.createRange(true);
 				range.setStart(editor.editor.firstChild, 0);
 				range.collapse(true);
-				editor.s.selectRange(range);
 
 				const btn = getButton('symbol', editor);
 
@@ -1486,8 +1470,8 @@ describe('Test plugins', function() {
 
 				simulateEvent('mousedown', 0, currentActive);
 
-				expect('½test').equals(editor.value);
-				expect(null).equals(popup.parentNode);
+				expect(editor.value).equals('<p>½test</p>');
+				expect(popup.parentNode).is.null;
 			});
 		});
 	});
@@ -1504,10 +1488,10 @@ describe('Test plugins', function() {
 					});
 
 				editor.value = 'test test test';
-				const range = editor.s.createRange();
-				range.setStart(editor.editor.firstChild, 4);
-				range.setEnd(editor.editor.firstChild, 8);
-				editor.s.selectRange(range);
+
+				const range = editor.s.createRange(true);
+				range.setStart(editor.editor.firstChild.firstChild, 4);
+				range.setEnd(editor.editor.firstChild.firstChild, 8);
 
 				// standart ctrl+u
 				simulateEvent('keydown', 85, editor.editor, function(data) {
@@ -1515,7 +1499,7 @@ describe('Test plugins', function() {
 					data.ctrlKey = true;
 				});
 
-				expect('test<u> tes</u>t test').equals(editor.value);
+				expect(editor.value).equals('<p>test<u> tes</u>t test</p>');
 			});
 			describe('Replace ctrl+b to ctrl+shift+b for bold command', function() {
 				it('Should not execute bold on ctrl+b', function() {
@@ -1526,11 +1510,12 @@ describe('Test plugins', function() {
 								italic: ['ctrl+i', 'ctrl+shift+i']
 							}
 						});
+
 					editor.value = 'test test test';
-					const range = editor.s.createRange();
-					range.setStart(editor.editor.firstChild, 4);
-					range.setEnd(editor.editor.firstChild, 8);
-					editor.s.selectRange(range);
+
+					const range = editor.s.createRange(true);
+					range.setStart(editor.editor.firstChild.firstChild, 4);
+					range.setEnd(editor.editor.firstChild.firstChild, 8);
 
 					// standart ctrl+b
 					simulateEvent('keydown', 66, editor.editor, function(data) {
@@ -1538,17 +1523,18 @@ describe('Test plugins', function() {
 						data.ctrlKey = true;
 					});
 
-					expect('test test test').equals(editor.value); // should not sork
+					expect(editor.value).equals('<p>test test test</p>'); // should not sork
 
 					simulateEvent('keydown', 66, editor.editor, function(data) {
 						data.shiftKey = true;
 						data.ctrlKey = true;
 					});
 
-					expect('test<strong> tes</strong>t test').equals(
-						editor.value
+					expect(editor.value).equals(
+						'<p>test<strong> tes</strong>t test</p>'
 					);
 				});
+
 				it('Should execute bold on ctrl+shift+b', function() {
 					const area = appendTestArea(),
 						editor = new Jodit(area, {
@@ -1557,19 +1543,20 @@ describe('Test plugins', function() {
 								italic: ['ctrl+i', 'ctrl+shift+i']
 							}
 						});
+
 					editor.value = 'test test test';
-					const range = editor.s.createRange();
-					range.setStart(editor.editor.firstChild, 4);
-					range.setEnd(editor.editor.firstChild, 8);
-					editor.s.selectRange(range);
+
+					const range = editor.s.createRange(true);
+					range.setStart(editor.editor.firstChild.firstChild, 4);
+					range.setEnd(editor.editor.firstChild.firstChild, 8);
 
 					simulateEvent('keydown', 66, editor.editor, function(data) {
 						data.shiftKey = true;
 						data.ctrlKey = true;
 					});
 
-					expect('test<strong> tes</strong>t test').equals(
-						editor.value
+					expect(editor.value).equals(
+						'<p>test<strong> tes</strong>t test</p>'
 					);
 				});
 			});
@@ -1586,44 +1573,41 @@ describe('Test plugins', function() {
 
 					editor.value = 'test test test';
 
-					const range = editor.s.createRange();
-					range.setStart(editor.editor.firstChild, 4);
-					range.setEnd(editor.editor.firstChild, 8);
+					const range = editor.s.createRange(true);
+					range.setStart(editor.editor.firstChild.firstChild, 4);
+					range.setEnd(editor.editor.firstChild.firstChild, 8);
 					editor.s.selectRange(range);
 
 					// standart ctrl+i
-					simulateEvent('keydown', 73, editor.editor, function(data) {
+					simulateEvent('keydown', 'i', editor.editor, function(data) {
 						// data.shiftKey = true;
 						data.ctrlKey = true;
 					});
 
-					expect('test<em> tes</em>t test').equals(editor.value);
+					expect(editor.value).equals('<p>test<em> tes</em>t test</p>');
 
 					editor.value = 'test test test';
 
-					const range2 = editor.s.createRange();
-					range2.setStart(editor.editor.firstChild, 4);
-					range2.setEnd(editor.editor.firstChild, 8);
-					editor.s.selectRange(range2);
+					const range2 = editor.s.createRange(true);
+					range2.setStart(editor.editor.firstChild.firstChild, 4);
+					range2.setEnd(editor.editor.firstChild.firstChild, 8);
 
 					// standart ctrl+shift+i
-					simulateEvent('keydown', 73, editor.editor, function(data) {
+					simulateEvent('keydown', 'i', editor.editor, function(data) {
 						data.shiftKey = true;
 						data.ctrlKey = true;
 					});
 
-					expect('test<em> tes</em>t test').equals(editor.value);
+					expect(editor.value).equals('<p>test<em> tes</em>t test</p>');
 
 					// standart ctrl+shift+7
-					simulateEvent('keydown', 55, editor.editor, function(
-						data
-					) {
+					simulateEvent('keydown', '7', editor.editor, function(data) {
 						data.shiftKey = true;
 						data.ctrlKey = true;
 					});
 
-					expect('<ol><li>test<em> tes</em>t test</li></ol>').equals(
-						editor.value.replace('<br>', '')
+					expect(editor.value.replace('<br>', '')).equals(
+						'<ol><li>test<em> tes</em>t test</li></ol>'
 					);
 				});
 			});
@@ -1924,9 +1908,7 @@ describe('Test plugins', function() {
 					});
 
 					editor.value = '<p>Simple text <a href="#">sss</a></p>';
-					editor.s.setCursorIn(
-						editor.editor.querySelector('a')
-					);
+					editor.s.setCursorIn(editor.editor.querySelector('a'));
 
 					const statusbar = editor.container.querySelector(
 						'.jodit-status-bar .jodit-xpath'
@@ -1950,9 +1932,7 @@ describe('Test plugins', function() {
 
 						editor.value =
 							'<p>Simple text <a href="#">sss</a><span>s</span></p>';
-						editor.s.setCursorIn(
-							editor.editor.querySelector('a')
-						);
+						editor.s.setCursorIn(editor.editor.querySelector('a'));
 
 						const statusbar = editor.container.querySelector(
 							'.jodit-status-bar .jodit-xpath'
@@ -1987,9 +1967,7 @@ describe('Test plugins', function() {
 
 						editor.value =
 							'<p>Simple text <a href="#">sss</a><span>s</span></p>';
-						editor.s.setCursorIn(
-							editor.editor.querySelector('a')
-						);
+						editor.s.setCursorIn(editor.editor.querySelector('a'));
 
 						const statusbar = editor.container.querySelector(
 							'.jodit-status-bar .jodit-xpath'
@@ -2007,9 +1985,7 @@ describe('Test plugins', function() {
 						); // click on A
 
 						expect(
-							Jodit.modules.Helpers.trim(
-								editor.s.sel.toString()
-							)
+							Jodit.modules.Helpers.trim(editor.s.sel.toString())
 						).equals('sss');
 						expect(statusbar.childNodes[2].textContent).equals('a');
 
@@ -2020,9 +1996,7 @@ describe('Test plugins', function() {
 						); // click on P
 
 						expect(
-							Jodit.modules.Helpers.trim(
-								editor.s.sel.toString()
-							)
+							Jodit.modules.Helpers.trim(editor.s.sel.toString())
 						).equals('Simple text ssss');
 						expect(statusbar.childNodes.length).equals(3);
 					});
@@ -2041,9 +2015,7 @@ describe('Test plugins', function() {
 						editor.value =
 							'<p>Simple text <a href="#">sss</a><span>s</span></p>';
 
-						editor.s.setCursorIn(
-							editor.editor.querySelector('a')
-						);
+						editor.s.setCursorIn(editor.editor.querySelector('a'));
 
 						const statusbar = editor.container.querySelector(
 							'.jodit-status-bar .jodit-xpath'
@@ -2127,8 +2099,8 @@ describe('Test plugins', function() {
 					});
 				});
 
-				range.setStart(editor.editor.firstChild, 1);
-				range.setEnd(editor.editor.firstChild, 2);
+				range.setStart(editor.editor.firstChild.firstChild, 1);
+				range.setEnd(editor.editor.firstChild.firstChild, 2);
 				editor.s.selectRange(range);
 
 				simulateEvent('copy', 0, editor.editor, function(data) {
@@ -2156,8 +2128,8 @@ describe('Test plugins', function() {
 					editor.value = 'abcde';
 					const range = editor.ownerDocument.createRange();
 
-					range.setStart(editor.editor.firstChild, 0);
-					range.setEnd(editor.editor.firstChild, 1);
+					range.setStart(editor.editor.firstChild.firstChild, 0);
+					range.setEnd(editor.editor.firstChild.firstChild, 1);
 					editor.s.selectRange(range);
 
 					simulateEvent('copy', 0, editor.editor, function(data) {
@@ -2169,8 +2141,8 @@ describe('Test plugins', function() {
 						});
 					});
 
-					range.setStart(editor.editor.firstChild, 1);
-					range.setEnd(editor.editor.firstChild, 2);
+					range.setStart(editor.editor.firstChild.firstChild, 1);
+					range.setEnd(editor.editor.firstChild.firstChild, 2);
 					editor.s.selectRange(range);
 
 					simulateEvent('copy', 0, editor.editor, function(data) {
@@ -2212,7 +2184,7 @@ describe('Test plugins', function() {
 
 					expect(dialog.parentNode).is.null;
 
-					expect(editor.value).equals('aacde');
+					expect(editor.value).equals('<p>aacde</p>');
 				});
 			});
 
@@ -2223,8 +2195,8 @@ describe('Test plugins', function() {
 					editor.value = 'abcde';
 					const range = editor.ownerDocument.createRange();
 
-					range.setStart(editor.editor.firstChild, 0);
-					range.setEnd(editor.editor.firstChild, 1);
+					range.setStart(editor.editor.firstChild.firstChild, 0);
+					range.setEnd(editor.editor.firstChild.firstChild, 1);
 					editor.s.selectRange(range);
 
 					simulateEvent('copy', 0, editor.editor, function(data) {
@@ -2236,8 +2208,8 @@ describe('Test plugins', function() {
 						});
 					});
 
-					range.setStart(editor.editor.firstChild, 1);
-					range.setEnd(editor.editor.firstChild, 2);
+					range.setStart(editor.editor.firstChild.firstChild, 1);
+					range.setEnd(editor.editor.firstChild.firstChild, 2);
 					editor.s.selectRange(range);
 
 					simulateEvent('copy', 0, editor.editor, function(data) {
@@ -2311,7 +2283,7 @@ describe('Test plugins', function() {
 
 					expect(dialog.parentNode).is.null;
 
-					expect(editor.value).equals('aacde');
+					expect(editor.value).equals('<p>aacde</p>');
 				});
 			});
 		});

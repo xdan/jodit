@@ -61,7 +61,7 @@ describe('Toolbar', function() {
 
 				clickButton('alert_some', editor);
 
-				expect(editor.value).equals('<p><span>indigo</span></p><br>');
+				expect(editor.value).equals('<p><span>indigo</span></p><p><br></p>');
 			});
 		});
 	});
@@ -799,7 +799,10 @@ describe('Toolbar', function() {
 
 			expect(bold.getAttribute('aria-pressed')).equals('true');
 
-			range.setStart(editor.editor.firstChild.firstChild.nextSibling.firstChild, 2);
+			range.setStart(
+				editor.editor.firstChild.firstChild.nextSibling.firstChild,
+				2
+			);
 			range.collapse(true);
 			sel.removeAllRanges();
 			sel.addRange(range);
@@ -811,7 +814,8 @@ describe('Toolbar', function() {
 			expect(italic.getAttribute('aria-pressed')).equals('true');
 
 			range.setStart(
-				editor.editor.firstChild.firstChild.nextSibling.nextSibling.firstChild,
+				editor.editor.firstChild.firstChild.nextSibling.nextSibling
+					.firstChild,
 				2
 			);
 			range.collapse(true);
@@ -824,8 +828,8 @@ describe('Toolbar', function() {
 			expect(italic.getAttribute('aria-pressed')).equals('true');
 
 			range.setStart(
-				editor.editor.firstChild.firstChild.nextSibling.nextSibling.nextSibling
-					.firstChild,
+				editor.editor.firstChild.firstChild.nextSibling.nextSibling
+					.nextSibling.firstChild,
 				2
 			);
 			range.collapse(true);
@@ -997,7 +1001,6 @@ describe('Toolbar', function() {
 						timeout: 0 // disable delay
 					}
 				});
-				editor.s.focus();
 
 				editor.value = 'Test';
 
@@ -1057,7 +1060,7 @@ describe('Toolbar', function() {
 
 					clickButton('adddate', editor);
 
-					expect(editor.value).equals('111');
+					expect(editor.value).equals('<p>111</p>');
 				});
 
 				describe('extraButtons always append in the end', function() {
@@ -1139,15 +1142,15 @@ describe('Toolbar', function() {
 					editor.value = 'test test test';
 
 					const range = editor.s.createRange();
-					range.setStart(editor.editor.firstChild, 0);
-					range.setEnd(editor.editor.firstChild, 4);
+					range.setStart(editor.editor.firstChild.firstChild, 0);
+					range.setEnd(editor.editor.firstChild.firstChild, 4);
 
 					editor.s.selectRange(range);
 
 					clickButton('bold', editor);
 
 					expect(editor.value).equals(
-						'<strong>test</strong> test test'
+						'<p><strong>test</strong> test test</p>'
 					);
 				});
 			});
@@ -1175,9 +1178,7 @@ describe('Toolbar', function() {
 				expect(bold.getAttribute('aria-pressed')).equals('false');
 				expect(align.getAttribute('aria-pressed')).equals('false');
 
-				editor.s.setCursorIn(
-					p.querySelector('strong').firstChild
-				);
+				editor.s.setCursorIn(p.querySelector('strong').firstChild);
 				simulateEvent('mousedown', 0, p);
 				// editor.s.insertHTML('ddd');
 				expect(bold.getAttribute('aria-pressed')).equals('true');
@@ -1362,9 +1363,7 @@ describe('Toolbar', function() {
 							'false'
 						);
 
-						editor.s.setCursorIn(
-							editor.editor.childNodes[1]
-						);
+						editor.s.setCursorIn(editor.editor.childNodes[1]);
 
 						simulateEvent('mousedown', 0, p);
 						expect(paragraph.getAttribute('aria-pressed')).equals(
@@ -1522,16 +1521,14 @@ describe('Toolbar', function() {
 			editor.value = 'Text to text';
 			editor.s.focus();
 
-			const sel = editor.s.sel,
-				range = editor.s.createRange();
-			range.setStart(editor.editor.firstChild, 3);
-			range.setEnd(editor.editor.firstChild, 10);
-			sel.removeAllRanges();
-			sel.addRange(range);
+			const range = editor.s.createRange();
+			range.setStart(editor.editor.firstChild.firstChild, 3);
+			range.setEnd(editor.editor.firstChild.firstChild, 10);
+			editor.s.selectRange(range);
 
 			clickButton('bold', editor);
 
-			expect(editor.value).equals('Tex<strong>t to te</strong>xt');
+			expect(editor.value).equals('<p>Tex<strong>t to te</strong>xt</p>');
 		});
 
 		it('Click on Italic button when selection is collapsed should create new <em> element and set cursor into it', function() {
@@ -1540,18 +1537,16 @@ describe('Toolbar', function() {
 			editor.value = 'Text to text';
 			editor.s.focus();
 
-			const sel = editor.s.sel,
-				range = editor.s.createRange();
-			range.setStart(editor.editor.firstChild, 0);
+			const range = editor.s.createRange();
+			range.setStart(editor.editor.firstChild.firstChild, 0);
 			range.collapse(true);
-			sel.removeAllRanges();
-			sel.addRange(range);
+			editor.s.selectRange(range);
 
 			clickButton('italic', editor);
 
 			editor.s.insertHTML('test');
 
-			expect(editor.value).equals('<em>test</em>Text to text');
+			expect(editor.value).equals('<p><em>test</em>Text to text</p>');
 		});
 	});
 
@@ -1827,7 +1822,7 @@ describe('Toolbar', function() {
 			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
 				Object.assign(e, {
 					clientX: pos.left,
-					clientY: pos.top,
+					clientY: pos.top
 				});
 			});
 
@@ -1841,7 +1836,6 @@ describe('Toolbar', function() {
 			expect(
 				popupColor && window.getComputedStyle(popupColor).display
 			).equals('block');
-
 
 			simulateEvent('click', 0, popupColor.querySelector('button'));
 
@@ -1861,7 +1855,7 @@ describe('Toolbar', function() {
 			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
 				Object.assign(e, {
 					clientX: pos.left,
-					clientY: pos.top,
+					clientY: pos.top
 				});
 			});
 
@@ -1899,7 +1893,7 @@ describe('Toolbar', function() {
 			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
 				Object.assign(e, {
 					clientX: pos.left,
-					clientY: pos.top,
+					clientY: pos.top
 				});
 			});
 
@@ -1938,7 +1932,7 @@ describe('Toolbar', function() {
 			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
 				Object.assign(e, {
 					clientX: pos.left,
-					clientY: pos.top,
+					clientY: pos.top
 				});
 			});
 
@@ -1977,17 +1971,13 @@ describe('Toolbar', function() {
 					}
 				});
 
-				clickButton('image', editor)
+				clickButton('image', editor);
 
 				const popup = getOpenedPopup(editor);
 
 				expect(popup).is.not.null;
 
-				simulateEvent(
-					'click',
-					0,
-					popup.querySelector('button')
-				);
+				simulateEvent('click', 0, popup.querySelector('button'));
 
 				const dialog = getOpenedDialog(editor);
 
@@ -1996,7 +1986,7 @@ describe('Toolbar', function() {
 				expect(3).equals(
 					dialog.querySelectorAll(
 						'.jodit-dialog__header .jodit-dialog__header-title button,' +
-						'.jodit-dialog__header .jodit-dialog__header-title select'
+							'.jodit-dialog__header .jodit-dialog__header-title select'
 					).length
 				);
 			});
@@ -2027,9 +2017,9 @@ describe('Toolbar', function() {
 
 			editor.destruct();
 
-			expect(firstEditPlace.innerHTML).equals('first');
-			expect(secondEditPlace.innerHTML).equals('second');
-			expect(thirdEditPlace.innerHTML).equals('third');
+			expect(firstEditPlace.innerHTML).equals('<p>first</p>');
+			expect(secondEditPlace.innerHTML).equals('<p>second</p>');
+			expect(thirdEditPlace.innerHTML).equals('<p>third</p>');
 		});
 
 		describe('For all instances you can set self options', function() {
@@ -2038,7 +2028,9 @@ describe('Toolbar', function() {
 					firstEditPlace = appendTestDiv('firstEditPlace'),
 					secondEditPlace = appendTestDiv('secondEditPlace'),
 					thirdEditPlace = appendTestDiv('thirdEditPlace'),
-					editor = Jodit.make(firstEditPlace);
+					editor = Jodit.make(firstEditPlace, {
+						disablePlugins: ['WrapTextNodes']
+					});
 
 				editor.setPanel(toolbarBox);
 

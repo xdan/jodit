@@ -50,7 +50,7 @@ describe('CodeMirror editor source code', function() {
 				useAceEditor: false // because onChange can be fired after aceInited
 			});
 
-			const defaultValue = 'test';
+			const defaultValue = '<p>test</p>';
 			let count = 0;
 
 			editor.value = defaultValue;
@@ -63,11 +63,11 @@ describe('CodeMirror editor source code', function() {
 				});
 
 
-			editor.s.setCursorAfter(editor.editor.firstChild);
+			editor.s.setCursorAfter(editor.editor.firstChild.firstChild);
 			editor.setMode(Jodit.MODE_SOURCE);
 			editor.setMode(Jodit.MODE_WYSIWYG);
 			editor.value = defaultValue;
-			editor.value = 'another';
+			editor.value = '<p>another</p>';
 
 			expect(1).equals(count);
 		});

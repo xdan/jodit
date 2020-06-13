@@ -268,11 +268,13 @@ export class Popup extends UIElement implements IPopup {
 	 * @param view
 	 */
 	private static boxInView(box: IBound, view: IBound): boolean {
+		const accuracy = 2;
+
 		return (
-			box.top >= view.top &&
-			box.left >= view.left &&
-			box.top + box.height <= view.top + view.height &&
-			box.left + box.width <= view.left + view.width
+			box.top - view.top >= -accuracy &&
+			box.left - view.left >= -accuracy &&
+			view.top + view.height - (box.top + box.height) >= -accuracy &&
+			view.left + view.width - (box.left + box.width) >= -accuracy
 		);
 	}
 

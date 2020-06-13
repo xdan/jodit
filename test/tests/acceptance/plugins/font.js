@@ -88,7 +88,7 @@ describe('Font test', function() {
 			clickButton('10', list);
 			editor.s.insertHTML('test');
 
-			expect(editor.value).equals('<span style="font-size: 10px;">test</span>');
+			expect(editor.value).equals('<p><span style="font-size: 10px;">test</span></p>');
 
 			clickTrigger('font', editor);
 			const list2 = getOpenedPopup(editor);
@@ -96,8 +96,8 @@ describe('Font test', function() {
 			clickButton('Impact_Charcoal_sans_serif', list2);
 			editor.s.insertHTML('stop');
 
-			expect(sortAttributes(editor.value)).equals('<span style="font-size:10px">test' +
-				'<span style="font-family:Impact,Charcoal,sans-serif">stop</span></span>');
+			expect(sortAttributes(editor.value)).equals('<p><span style="font-size:10px">test' +
+				'<span style="font-family:Impact,Charcoal,sans-serif">stop</span></span></p>');
 		});
 	});
 });

@@ -10,7 +10,7 @@ describe('Test uploader module', function() {
 						events: {
 							afterInsertImage: function(img) {
 								expect(img.src).equals(file.dataURI);
-								expect(sortAttributes(editor.value)).equals('<img src="' + file.dataURI + '" style="width:300px">');
+								expect(sortAttributes(editor.value)).equals('<p><img src="' + file.dataURI + '" style="width:300px"></p>');
 								done();
 							}
 						}
@@ -42,7 +42,7 @@ describe('Test uploader module', function() {
 								expect(img.src).equals('https://xdsoft.net/jodit/files/logo.gif');
 
 								expect(sortAttributes(editor.value))
-									.equals('<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px">');
+									.equals('<p><img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px"></p>');
 
 								done();
 							}
@@ -84,7 +84,7 @@ describe('Test uploader module', function() {
 									expect(
 										sortAttributes(editor.value)
 									).equals(
-										'<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px">'
+										'<p><img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px"></p>'
 									);
 									done();
 								}
@@ -121,7 +121,7 @@ describe('Test uploader module', function() {
 									'https://xdsoft.net/jodit/files/file.xls'
 								);
 								expect(editor.value).equals(
-									'<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a>'
+									'<p><a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a></p>'
 								);
 								done();
 							}
@@ -155,7 +155,7 @@ describe('Test uploader module', function() {
 										'https://xdsoft.net/jodit/files/file.xls'
 									);
 									expect(editor.value).equals(
-										'<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a>'
+										'<p><a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a></p>'
 									);
 									done();
 								}
@@ -173,6 +173,4 @@ describe('Test uploader module', function() {
 			});
 		});
 	});
-
-	afterEach(removeStuff);
 });

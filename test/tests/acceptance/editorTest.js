@@ -381,8 +381,8 @@ describe('Jodit Editor Tests', function() {
 			it('Set element value', function() {
 				const area = appendTestArea();
 				const editor = new Jodit(area);
-				editor.setElementValue('Test');
-				expect(area.value).equals('Test');
+				editor.setElementValue('<p>Test</p>');
+				expect(area.value).equals('<p>Test</p>');
 			});
 
 			it('Set value by magic property', function() {

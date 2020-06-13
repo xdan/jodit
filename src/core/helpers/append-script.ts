@@ -48,7 +48,7 @@ export const appendScript = (
 
 	script.type = 'text/javascript';
 
-	if (isFunction(callback)) {
+	if (isFunction(callback) && !jodit.isInDestruct) {
 		jodit.e.on(script, 'load', callback);
 	}
 
@@ -71,7 +71,7 @@ export const appendScriptAsync = cacheLoaders(
 	(jodit: IViewBased, url: string) => {
 		return new Promise((resolve, reject) => {
 			const { element } = appendScript(jodit, url, resolve);
-			jodit.e.on(element, 'error', reject);
+			!jodit.isInDestruct && jodit.e.on(element, 'error', reject);
 		});
 	}
 );
@@ -93,7 +93,8 @@ export const appendStyleAsync = cacheLoaders(
 
 			const callback = () => resolve(link);
 
-			jodit.e.on(link, 'load', callback).on(link, 'error', reject);
+			!jodit.isInDestruct &&
+				jodit.e.on(link, 'load', callback).on(link, 'error', reject);
 
 			link.href = completeUrl(url);
 

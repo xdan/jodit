@@ -75,7 +75,7 @@ describe('Test image', function() {
 				clickButton('ok', dialog);
 
 				expect(sortAttributes(editor.value)).equals(
-					'<img src="tests/artio.jpg" style="border-radius:100px;height:100px;width:100px">'
+					'<p><img src="tests/artio.jpg" style="border-radius:100px;height:100px;width:100px"></p>'
 				);
 			});
 		});
@@ -115,7 +115,7 @@ describe('Test image', function() {
 				clickButton('ok', dialog);
 
 				expect(sortAttributes(editor.value)).equals(
-					'<img class="tavble " src="tests/artio.jpg" style="height:100px;width:100px">'
+					'<p><img class="tavble " src="tests/artio.jpg" style="height:100px;width:100px"></p>'
 				);
 			});
 		});
@@ -156,7 +156,7 @@ describe('Test image', function() {
 				clickButton('ok', dialog);
 
 				expect(sortAttributes(editor.value)).equals(
-					'<img src="tests/artio.jpg" style="background-color:#FF0000;height:100px;padding:20px;width:100px">'
+					'<p><img src="tests/artio.jpg" style="background-color:#FF0000;height:100px;padding:20px;width:100px"></p>'
 				);
 			});
 		});
@@ -196,7 +196,7 @@ describe('Test image', function() {
 				clickButton('ok', dialog);
 
 				expect(sortAttributes(editor.value)).equals(
-					'<img id="fast12" src="tests/artio.jpg" style="height:100px;width:100px">'
+					'<p><img id="fast12" src="tests/artio.jpg" style="height:100px;width:100px"></p>'
 				);
 			});
 		});
@@ -239,10 +239,11 @@ describe('Test image', function() {
 					clickButton('ok', dialog);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<img src="tests/artio.jpg" style="float:left;height:100px;width:100px">'
+						'<p><img src="tests/artio.jpg" style="float:left;height:100px;width:100px"></p>'
 					);
 				});
 			});
+
 			describe('right', function() {
 				it('should change image horizontal align', function() {
 					const editor = getJodit();
@@ -279,16 +280,18 @@ describe('Test image', function() {
 					clickButton('ok', dialog);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<img src="tests/artio.jpg" style="float:right;height:100px;width:100px">'
+						'<p><img src="tests/artio.jpg" style="float:right;height:100px;width:100px"></p>'
 					);
 				});
 			});
+
 			describe('center', function() {
 				it('should change image horizontal align', function() {
 					const editor = getJodit();
 
 					editor.value =
 						'<img style="float:left;width:100px; height: 100px;" src="tests/artio.jpg"/>';
+
 					simulateEvent(
 						'dblclick',
 						0,
@@ -318,7 +321,7 @@ describe('Test image', function() {
 					clickButton('ok', dialog);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<img src="tests/artio.jpg" style="display:block;height:100px;margin-left:auto;margin-right:auto;width:100px">'
+						'<p><img src="tests/artio.jpg" style="display:block;height:100px;margin-left:auto;margin-right:auto;width:100px"></p>'
 					);
 				});
 			});
@@ -329,6 +332,7 @@ describe('Test image', function() {
 
 					editor.value =
 						'<img src="tests/artio.jpg" style="width:100px; height: 100px;display:block;margin-left:auto;margin-right:auto">';
+
 					simulateEvent(
 						'dblclick',
 						0,
@@ -359,7 +363,7 @@ describe('Test image', function() {
 					clickButton('ok', dialog);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<img src="tests/artio.jpg" style="height:100px;width:100px">'
+						'<p><img src="tests/artio.jpg" style="height:100px;width:100px"></p>'
 					);
 				});
 			});
@@ -412,7 +416,7 @@ describe('Test image', function() {
 					clickButton('ok', dialog);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<img src="tests/artio.jpg" style="height:100px;margin:100px;width:100px">'
+						'<p><img src="tests/artio.jpg" style="height:100px;margin:100px;width:100px"></p>'
 					);
 				});
 			});
@@ -482,7 +486,7 @@ describe('Test image', function() {
 					clickButton('ok', dialog);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<img src="tests/artio.jpg" style="height:100px;margin:100px 20px 10px 220px;width:100px">'
+						'<p><img src="tests/artio.jpg" style="height:100px;margin:100px 20px 10px 220px;width:100px"></p>'
 					);
 				});
 			});
@@ -515,7 +519,7 @@ describe('Test image', function() {
 				clickButton('ok', dialog);
 
 				expect(sortAttributes(editor.value)).equals(
-					'<img src="tests/artio.jpg" style="height:100px;width:100px" title="Stop">'
+					'<p><img src="tests/artio.jpg" style="height:100px;width:100px" title="Stop"></p>'
 				);
 			});
 		});
@@ -527,6 +531,7 @@ describe('Test image', function() {
 				const doTest = function() {
 					editor.value =
 						'<img alt="test" style="width:100px; height: 100px;" src="tests/artio.jpg"/>';
+
 					simulateEvent(
 						'dblclick',
 						0,
@@ -552,7 +557,7 @@ describe('Test image', function() {
 					clickButton('ok', dialog);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<img alt="Stop" src="tests/artio.jpg" style="height:100px;width:100px">'
+						'<p><img alt="Stop" src="tests/artio.jpg" style="height:100px;width:100px"></p>'
 					);
 					done();
 				};
@@ -569,6 +574,7 @@ describe('Test image', function() {
 
 				editor.value =
 					'<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>';
+
 				simulateEvent(
 					'dblclick',
 					0,
@@ -591,7 +597,7 @@ describe('Test image', function() {
 				clickButton('ok', dialog);
 
 				expect(sortAttributes(editor.value)).equals(
-					'<a href="https://xdsoft.net/"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>'
+					'<p><a href="https://xdsoft.net/"><img src="tests/artio.jpg" style="height:100px;width:100px"></a></p>'
 				);
 			});
 
@@ -601,6 +607,7 @@ describe('Test image', function() {
 
 					editor.value =
 						'<img style="width:100px; height: 100px;" src="tests/artio.jpg"/>';
+
 					simulateEvent(
 						'dblclick',
 						0,
@@ -628,7 +635,7 @@ describe('Test image', function() {
 					clickButton('ok', dialog);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<a href="https://xdsoft.net/" target="_blank"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>'
+						'<p><a href="https://xdsoft.net/" target="_blank"><img src="tests/artio.jpg" style="height:100px;width:100px"></a></p>'
 					);
 				});
 			});
@@ -671,7 +678,7 @@ describe('Test image', function() {
 					clickButton('ok', dialog);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<a href="https://xdsoft.net/"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>'
+						'<p><a href="https://xdsoft.net/"><img src="tests/artio.jpg" style="height:100px;width:100px"></a></p>'
 					);
 				});
 			});
@@ -682,6 +689,7 @@ describe('Test image', function() {
 
 					editor.value =
 						'<a href="https://xdan.ru" target="_blank"><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></a>';
+
 					simulateEvent(
 						'dblclick',
 						0,
@@ -712,7 +720,7 @@ describe('Test image', function() {
 					clickButton('ok', dialog);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<img src="tests/artio.jpg" style="height:100px;width:100px">'
+						'<p><img src="tests/artio.jpg" style="height:100px;width:100px"></p>'
 					);
 				});
 			});
@@ -765,7 +773,7 @@ describe('Test image', function() {
 						clickButton('ok', dialog);
 
 						expect(sortAttributes(editor.value)).equals(
-							'<img src="tests/artio.jpg" style="height:200px;width:356px">'
+							'<p><img src="tests/artio.jpg" style="height:200px;width:356px"></p>'
 						);
 
 						done();
@@ -825,7 +833,7 @@ describe('Test image', function() {
 						clickButton('ok', dialog);
 
 						expect(sortAttributes(editor.value)).equals(
-							'<img src="tests/artio.jpg" style="height:200px;width:100px">'
+							'<p><img src="tests/artio.jpg" style="height:200px;width:100px"></p>'
 						);
 
 						done();
@@ -876,7 +884,7 @@ describe('Test image', function() {
 							clickButton('ok', dialog);
 
 							expect(sortAttributes(editor.value)).equals(
-								'<img src="tests/artio.jpg" style="height:200px;width:356px">'
+								'<p><img src="tests/artio.jpg" style="height:200px;width:356px"></p>'
 							);
 
 							done();
@@ -1275,7 +1283,9 @@ describe('Test image', function() {
 						editor.ownerWindow.getComputedStyle(sizer).opacity
 					).equals('0');
 
-					const positionResizer = offset(resizer.getElementsByTagName('i')[1]);
+					const positionResizer = offset(
+						resizer.getElementsByTagName('i')[1]
+					);
 
 					simulateEvent(
 						'mousedown',
@@ -1335,30 +1345,28 @@ describe('Test image', function() {
 							editor.ownerWindow.getComputedStyle(sizer).opacity
 						).equals('0');
 
-						const positionResizer = offset(resizer.getElementsByTagName('i')[2]);
+						const positionResizer = offset(
+							resizer.getElementsByTagName('i')[2]
+						);
 
 						simulateEvent(
 							'mousedown',
 							resizer.getElementsByTagName('i')[2]
 						);
 
-						simulateEvent(
-							'mousemove',
-							editor.ownerWindow,
-							function(data) {
-								data.clientX = positionResizer.left - 480;
-								data.clientY = positionResizer.top - 200;
-							}
-						);
+						simulateEvent('mousemove', editor.ownerWindow, function(
+							data
+						) {
+							data.clientX = positionResizer.left - 480;
+							data.clientY = positionResizer.top - 200;
+						});
 
-						simulateEvent(
-							'mouseup',
-							editor.ownerWindow,
-							function(data) {
-								data.clientX = positionResizer.left - 480;
-								data.clientY = positionResizer.top - 200;
-							}
-						);
+						simulateEvent('mouseup', editor.ownerWindow, function(
+							data
+						) {
+							data.clientX = positionResizer.left - 480;
+							data.clientY = positionResizer.top - 200;
+						});
 
 						expect(sizer.style.opacity).equals('0');
 					});

@@ -42,6 +42,7 @@ describe('Test Inline mode', function() {
 				expect(value).equals(editor.value);
 			});
 		});
+
 		describe('For H1', function() {
 			it('Should use this element like container', function() {
 				const div = document.createElement('h1'),
@@ -52,6 +53,7 @@ describe('Test Inline mode', function() {
 				box.appendChild(div);
 
 				const editor = new Jodit(div, {
+					disablePlugins: ['WrapTextNodes'],
 					inline: true,
 					observer: {
 						timeout: 0

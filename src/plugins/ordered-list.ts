@@ -42,7 +42,7 @@ Config.prototype.controls.ol = {
 export function orderedList(editor: IJodit) {
 	const isOurCommand = (command: string) =>
 			/insert(un)?orderedlist/i.test(command),
-		getWrapper = () =>
+		getListWrapper = () =>
 			Dom.up(
 				editor.s.current() as Node,
 				(tag: Node | null) => tag && /^UL|OL$/i.test(tag.nodeName),
@@ -69,7 +69,7 @@ export function orderedList(editor: IJodit) {
 			| false
 			| void => {
 			if (isOurCommand(command) && listStyleType) {
-				const ul = getWrapper();
+				const ul = getListWrapper();
 
 				if (ul && !listStyleTypeEqual(ul, listStyleType)) {
 					if (
@@ -86,7 +86,7 @@ export function orderedList(editor: IJodit) {
 			| false
 			| void => {
 			if (isOurCommand(command)) {
-				const ul = getWrapper();
+				const ul = getListWrapper();
 
 				if (ul) {
 					setListStyleType(ul, listStyleType);

@@ -7,7 +7,7 @@ describe('Link plugin', function() {
 				simulatePaste(editor.editor, 'https://www.youtube.com');
 
 				expect(editor.value).equal(
-					'<a href="https://www.youtube.com">https://www.youtube.com</a><br>'
+					'<p><a href="https://www.youtube.com">https://www.youtube.com</a></p>'
 				);
 			});
 
@@ -21,7 +21,7 @@ describe('Link plugin', function() {
 						});
 
 						simulatePaste(editor.editor, 'https://www.youtube.com');
-						expect(editor.value).equal('https://www.youtube.com');
+						expect(editor.value).equal('<p>https://www.youtube.com</p>');
 					});
 				});
 			});
@@ -56,7 +56,7 @@ describe('Link plugin', function() {
 							'https://www.youtube.com/watch?v=8Qn_spdM5Zg'
 						);
 						expect(editor.value).equal(
-							'https://www.youtube.com/watch?v=8Qn_spdM5Zg'
+							'<p>https://www.youtube.com/watch?v=8Qn_spdM5Zg</p>'
 						);
 					});
 				});
@@ -74,7 +74,7 @@ describe('Link plugin', function() {
 							'https://www.youtube.com/watch?v=8Qn_spdM5Zg'
 						);
 						expect(editor.value).equal(
-							'<a href="https://www.youtube.com/watch?v=8Qn_spdM5Zg">https://www.youtube.com/watch?v=8Qn_spdM5Zg</a><br>'
+							'<p><a href="https://www.youtube.com/watch?v=8Qn_spdM5Zg">https://www.youtube.com/watch?v=8Qn_spdM5Zg</a></p>'
 						);
 					});
 				});
@@ -379,7 +379,7 @@ describe('Link plugin', function() {
 					simulateEvent('submit', 0, list.querySelector('form'));
 
 					expect(sortAttributes(editor.value)).equals(
-						'<a href="tests/artio.jpg">123</a>'
+						'<p><a href="tests/artio.jpg">123</a></p>'
 					);
 
 					simulateEvent('mousedown', 0, editor.editor);
@@ -408,7 +408,7 @@ describe('Link plugin', function() {
 					simulateEvent('submit', 0, list.querySelector('form'));
 
 					expect(sortAttributes(editor.value)).equals(
-						'<a href="tests/artio.jpg">123</a>'
+						'<p><a href="tests/artio.jpg">tests/artio.jpg</a></p>'
 					);
 
 					expect(change).equals(1);
@@ -449,7 +449,7 @@ describe('Link plugin', function() {
 						simulateEvent('submit', 0, popup.querySelector('form'));
 
 						expect(sortAttributes(editor.value)).equals(
-							'<a href="tests/artio.jpg">123</a>'
+							'<p><a href="tests/artio.jpg">123</a></p>'
 						);
 					});
 
@@ -494,7 +494,7 @@ describe('Link plugin', function() {
 							);
 
 							expect(sortAttributes(editor.value)).equals(
-								'<a href="tests/artio.jpg">123</a>'
+								'<p><a href="tests/artio.jpg">123</a></p>'
 							);
 						});
 					});
@@ -577,7 +577,7 @@ describe('Link plugin', function() {
 							);
 
 							expect(sortAttributes(editor.value)).equals(
-								'test <span style="color:#ccc"><a href="tests/artio.jpg">select</a> </span> stop'
+								'<p>test <span style="color:#ccc"><a href="tests/artio.jpg">select</a> </span> stop</p>'
 							);
 
 							simulateEvent('mousedown', 0, editor.editor);
@@ -659,7 +659,7 @@ describe('Link plugin', function() {
 							);
 
 							expect(sortAttributes(editor.value)).equals(
-								'test <a href="tests/artio.jpg"><img alt="" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="height:100px;width:100px"></a> stop'
+								'<p>test <a href="tests/artio.jpg"><img alt="" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="height:100px;width:100px"></a> stop</p>'
 							);
 
 							simulateEvent('mousedown', 0, editor.editor);
@@ -714,7 +714,7 @@ describe('Link plugin', function() {
 						popup.querySelector('[ref=unlink]')
 					);
 
-					expect(sortAttributes(editor.value)).equals('test');
+					expect(sortAttributes(editor.value)).equals('<p>test</p>');
 				});
 			});
 

@@ -2,7 +2,9 @@ describe('Clean html plugin', function() {
 	describe('Click remove format button', function() {
 		describe('For range selection', function() {
 			it('Should clear selected HTML fragment', function() {
-				const editor = getJodit();
+				const editor = getJodit({
+					disablePlugins: ['WrapTextNodes']
+				});
 
 				const button = getButton('eraser', editor);
 				expect(button).is.not.null;
@@ -10,14 +12,12 @@ describe('Clean html plugin', function() {
 				[
 					[
 						'<p>as<strong>da</strong>sd</p>' +
-						'<p>asd<strong>as</strong>d</p>' +
-						'<p>a<strong>sdsad</strong>a</p>',
+							'<p>asd<strong>as</strong>d</p>' +
+							'<p>a<strong>sdsad</strong>a</p>',
 						function(range) {
 							range.selectNodeContents(editor.editor);
 						},
-						'<p>asdasd</p>' +
-						'<p>asdasd</p>' +
-						'<p>asdsada</p>'
+						'<p>asdasd</p>' + '<p>asdasd</p>' + '<p>asdsada</p>'
 					],
 					[
 						'<p>four <strong style="background-color: red; color: blue;"><span style="align-content: baseline;">rust blog go</span>st</strong> elm</p>',
@@ -27,8 +27,8 @@ describe('Clean html plugin', function() {
 							range.setEnd(elm.firstChild, 9);
 						},
 						'<p>four <strong style="background-color: red; color: blue;"><span style="align-content: baseline;">rust </span></strong>' +
-						'blog' +
-						'<strong style="background-color: red; color: blue;"><span style="align-content: baseline;"> go</span>st</strong> elm</p>'
+							'blog' +
+							'<strong style="background-color: red; color: blue;"><span style="align-content: baseline;"> go</span>st</strong> elm</p>'
 					],
 					[
 						'<p>five <strong style="background-color: red; color: blue;">one two three</strong> elm</p>',
@@ -61,7 +61,7 @@ describe('Clean html plugin', function() {
 						'two <strong style="background-color: red; color: blue;">test test test</strong> elm',
 						'strong',
 						'two test test test elm'
-					],
+					]
 				].forEach(function(test) {
 					editor.value = test[0];
 
@@ -86,7 +86,9 @@ describe('Clean html plugin', function() {
 
 		describe('For collapsed selection', function() {
 			it('Should move cursor outside from styled element', function() {
-				const editor = getJodit();
+				const editor = getJodit({
+					disablePlugins: ['WrapTextNodes']
+				});
 
 				[
 					[
@@ -136,17 +138,18 @@ describe('Clean html plugin', function() {
 					timeout: 0
 				}
 			});
+
 			editor.value = 'test <b>old</b> test';
-			const range = editor.s.createRange();
+
+			const range = editor.s.createRange(true);
 			range.setStart(editor.editor.querySelector('b').firstChild, 2);
 			range.collapse(true);
-			editor.s.selectRange(range);
 
 			simulateEvent('mousedown', 0, editor.editor);
 
 			editor.s.insertHTML(' some ');
 
-			expect(editor.value).equals('test <strong>ol some d</strong> test');
+			expect(editor.value).equals('<p>test <strong>ol some d</strong> test</p>');
 		});
 
 		describe('Replace custom tags', function() {
@@ -160,10 +163,10 @@ describe('Clean html plugin', function() {
 					}
 				});
 				editor.value = '<p>test <b>old</b> test</p>';
-				const range = editor.s.createRange();
+
+				const range = editor.s.createRange(true);
 				range.setStart(editor.editor.querySelector('b').firstChild, 2);
 				range.collapse(true);
-				editor.s.selectRange(range);
 
 				simulateEvent('mousedown', 0, editor.editor);
 
@@ -183,17 +186,18 @@ describe('Clean html plugin', function() {
 						timeout: 0
 					}
 				});
+
 				editor.value = 'test <b>old</b> test';
-				const range = editor.s.createRange();
+
+				const range = editor.s.createRange(true);
 				range.setStart(editor.editor.querySelector('b').firstChild, 2);
 				range.collapse(true);
-				editor.s.selectRange(range);
 
 				simulateEvent('mousedown', 0, editor.editor);
 
 				editor.s.insertHTML(' some ');
 
-				expect(editor.value).equals('test <b>ol some d</b> test');
+				expect(editor.value).equals('<p>test <b>ol some d</b> test</p>');
 			});
 		});
 	});

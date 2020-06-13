@@ -6,13 +6,11 @@ describe('Process Images plugins', function() {
 
 				editor.value = Jodit.INVISIBLE_SPACE; // IE in iframe mode can loose focus and we can not check where it paste image in start or in finish. It is only in IE
 
-				const sel = editor.s.sel,
-					range = editor.s.createRange();
+				const
+					range = editor.s.createRange(true);
 
 				range.selectNodeContents(editor.editor);
 				range.collapse(false);
-				sel.removeAllRanges();
-				sel.addRange(range);
 
 				clickButton('image', editor);
 
@@ -36,7 +34,7 @@ describe('Process Images plugins', function() {
 				simulateEvent('submit', 0, list.querySelector('form'));
 
 				expect(sortAttributes(editor.value)).equals(
-					'<img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg" style="width:300px">'
+					'<p><img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg" style="width:300px"></p>'
 				);
 
 				simulateEvent('mousedown', 0, editor.editor);
@@ -52,7 +50,7 @@ describe('Process Images plugins', function() {
 
 					const range = editor.s.createRange();
 
-					range.setEnd(editor.editor.firstChild, 5);
+					range.setEnd(editor.editor.firstChild.firstChild, 5);
 					range.collapse(false);
 					editor.s.selectRange(range);
 
@@ -67,7 +65,7 @@ describe('Process Images plugins', function() {
 					simulateEvent('submit', 0, list.querySelector('form'));
 
 					expect(sortAttributes(editor.value)).equals(
-						'hello<img alt="" src="http://xdsoft.net/jodit/images/artio.jpg" style="width:300px"> world!'
+						'<p>hello<img alt="" src="http://xdsoft.net/jodit/images/artio.jpg" style="width:300px"> world!</p>'
 					);
 				});
 			});

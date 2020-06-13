@@ -288,14 +288,14 @@ describe('Backspace/Delete key', function() {
 
 				editor.s.insertNode(editor.createInside.text(' 2 '));
 
-				expect(editor.value).equals(' 2 ');
+				expect(editor.value).equals('<p> 2 </p>');
 			});
 
 			describe('Near has element', function() {
 				it('Should remove empty tag and set cursor in previous element', function() {
 					editor.value =
 						'<table><tbody>' +
-						'<tr><td></td></tr>' +
+						'<tr><td>1</td></tr>' +
 						'</tbody></table><p><br></p>';
 
 					const range = editor.s.createRange();
@@ -313,7 +313,7 @@ describe('Backspace/Delete key', function() {
 
 					expect(editor.value).equals(
 						'<table><tbody>' +
-							'<tr><td> 2 </td></tr>' +
+							'<tr><td>1 2 </td></tr>' +
 							'</tbody></table>'
 					);
 				});
@@ -331,7 +331,7 @@ describe('Backspace/Delete key', function() {
 
 				editor.s.insertNode(editor.createInside.text(' 2 '));
 
-				expect(editor.value).equals(' 2 ');
+				expect(editor.value).equals('<p> 2 </p>');
 			});
 
 			describe('Near has element', function() {
@@ -536,13 +536,13 @@ describe('Backspace/Delete key', function() {
 	describe('after last char inside tag', function() {
 		describe('inside A', function() {
 			it('Should remove empty tag and set cursor in previous element', function() {
-				editor.value = '<a href="#test">t</a>';
+				editor.value = '<p><a href="#test">t</a></p>';
 
-				editor.s.setCursorIn(editor.editor.firstChild, false);
+				editor.s.setCursorIn(editor.editor.firstChild.firstChild, false);
 
 				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
-				expect(editor.value).equals('');
+				expect(editor.value).equals('<p><br></p>');
 			});
 		});
 
@@ -605,7 +605,7 @@ describe('Backspace/Delete key', function() {
 
 					editor.s.insertNode(editor.createInside.text(' a '));
 					expect(editor.value).equals(
-						' a <table><tbody><tr><td>1</td></tr></tbody></table>'
+						'<p> a </p><table><tbody><tr><td>1</td></tr></tbody></table>'
 					);
 				});
 			});

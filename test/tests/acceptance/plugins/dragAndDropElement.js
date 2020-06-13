@@ -107,7 +107,7 @@ describe('Drag and drop element inside Editor', function() {
 					const defaultValue =
 						'<p>1111</p>' +
 						'<p>2222</p>' +
-						'<a href="#test"><img style="width: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""></a>' +
+						'<p><a href="#test"><img style="width: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""></a></p>' +
 						'<p>3333</p>' +
 						'<p>4444</p>';
 

@@ -278,6 +278,7 @@ if (String.prototype.repeat === undefined) {
 const expect = typeof chai !== 'undefined' ? chai.expect : function() {},
 	stuff = [];
 
+const stringify = Jodit.ns.Helpers.stringify;
 const box = document.createElement('div');
 
 document.body.appendChild(box);

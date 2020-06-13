@@ -10,7 +10,7 @@ describe('Undo/Redo behaviors', function() {
 			editor.value = 'test';
 
 			const range = editor.s.createRange();
-			range.setEnd(editor.editor.firstChild, 4);
+			range.setEnd(editor.editor.firstChild.firstChild, 4);
 			range.collapse(false);
 			editor.s.selectRange(range);
 
@@ -25,7 +25,7 @@ describe('Undo/Redo behaviors', function() {
 
 			editor.execCommand('undo');
 
-			expect(editor.value).equals('test');
+			expect(editor.value).equals('<p>test</p>');
 
 			editor.execCommand('redo');
 
@@ -90,8 +90,9 @@ describe('Undo/Redo behaviors', function() {
 			editor.value = 'test';
 			editor.value = 'test2';
 			editor.execCommand('undo');
-			expect(editor.value).equals('test');
+			expect(editor.value).equals('<p>test</p>');
 		});
+
 		it('Redo. Enter text wait and again enter text. After execute "undo" + "redo" command in editor should be second text', function() {
 			const editor = getJodit({
 				observer: {
@@ -102,10 +103,11 @@ describe('Undo/Redo behaviors', function() {
 			editor.value = 'test';
 			editor.value = 'test2';
 			editor.execCommand('undo');
-			expect(editor.value).equals('test');
+			expect(editor.value).equals('<p>test</p>');
 			editor.execCommand('redo');
-			expect(editor.value).equals('test2');
+			expect(editor.value).equals('<p>test2</p>');
 		});
+
 		it('Check react UndoRedo to another changes', function() {
 			const editor = getJodit({
 				observer: {
@@ -116,7 +118,7 @@ describe('Undo/Redo behaviors', function() {
 			editor.value = 'test';
 
 			const range = editor.s.createRange();
-			range.setEnd(editor.editor.firstChild, 4);
+			range.setEnd(editor.editor.firstChild.firstChild, 4);
 			range.collapse(false);
 			editor.s.sel.removeAllRanges();
 			editor.s.sel.addRange(range);
@@ -125,10 +127,10 @@ describe('Undo/Redo behaviors', function() {
 				editor.createInside.text('test2')
 			);
 			editor.execCommand('undo');
-			expect(editor.value).equals('test');
+			expect(editor.value).equals('<p>test</p>');
 
 			editor.execCommand('redo');
-			expect(editor.value).equals('testtest2');
+			expect(editor.value).equals('<p>testtest2</p>');
 		});
 	});
 
@@ -156,12 +158,12 @@ describe('Undo/Redo behaviors', function() {
 			expect(redo.hasAttribute('disabled')).is.true;
 
 			simulateEvent('click', 0, undo);
-			expect(editor.value).equals('test');
+			expect(editor.value).equals('<p>test</p>');
 			expect(undo.hasAttribute('disabled')).is.false;
 			expect(redo.hasAttribute('disabled')).is.false;
 
 			simulateEvent('click', 0, redo);
-			expect(editor.value).equals('stop');
+			expect(editor.value).equals('<p>stop</p>');
 			expect(undo.hasAttribute('disabled')).is.false;
 			expect(redo.hasAttribute('disabled')).is.true;
 
@@ -169,14 +171,12 @@ describe('Undo/Redo behaviors', function() {
 
 			expect(undo.hasAttribute('disabled')).is.true;
 			expect(redo.hasAttribute('disabled')).is.true;
-			expect(editor.value).equals('stop');
+			expect(editor.value).equals('<p>stop</p>');
 
 			editor.execCommand('undo');
 			expect(undo.hasAttribute('disabled')).is.true;
 			expect(redo.hasAttribute('disabled')).is.true;
-			expect(editor.value).equals('stop');
+			expect(editor.value).equals('<p>stop</p>');
 		});
 	});
-
-	afterEach(removeStuff);
 });

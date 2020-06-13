@@ -104,9 +104,16 @@ export class Select {
 
 	/**
 	 * Return current selection object
+	 * @param select Immediately add in selection
 	 */
-	createRange(): Range {
-		return this.doc.createRange();
+	createRange(select: boolean = false): Range {
+		const range = this.doc.createRange();
+
+		if (select) {
+			this.selectRange(range);
+		}
+
+		return range;
 	}
 
 	/**

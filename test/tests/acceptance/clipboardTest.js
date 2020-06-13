@@ -117,7 +117,7 @@ describe('Clipboard text', function() {
 
 			simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
 
-			expect(editor.value).equals('test');
+			expect(editor.value).equals('<p>test</p>');
 
 			const dialog = getOpenedDialog(editor);
 			expect(dialog).is.null;
@@ -148,7 +148,7 @@ describe('Clipboard text', function() {
 
 					simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
 
-					expect(editor.value).equals('test');
+					expect(editor.value).equals('<p>test</p>');
 				});
 			});
 
@@ -171,7 +171,7 @@ describe('Clipboard text', function() {
 					};
 
 					simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
-					expect(editor.value).equals('&lt;p&gt;test&lt;/p&gt;');
+					expect(editor.value).equals('<p>&lt;p&gt;test&lt;/p&gt;</p>');
 				});
 			});
 
@@ -195,7 +195,7 @@ describe('Clipboard text', function() {
 					};
 
 					simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
-					expect(editor.value).equals('<p>test</p><br>');
+					expect(editor.value).equals('<p>test</p><p><br></p>');
 				});
 			});
 
@@ -219,7 +219,7 @@ describe('Clipboard text', function() {
 					};
 
 					simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
-					expect(editor.value).equals('<p>test</p><br>');
+					expect(editor.value).equals('<p>test</p><p><br></p>');
 				});
 			});
 		});
@@ -241,7 +241,7 @@ describe('Clipboard text', function() {
 
 				simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
 
-				expect(editor.value).equals('test<br>\ntest<br>\ntest<br>\ntest<br>\ntest<br>\n');
+				expect(editor.value).equals('<p>test<br>\ntest<br>\ntest<br>\ntest<br>\ntest<br>\n</p>');
 			});
 		});
 	});

@@ -29,8 +29,9 @@ describe('Iframe mode', function() {
 						afterConstructor: function(editor) {
 							mockPromise();
 							editor.value = 'test test stop';
-							expect('test test stop').equals(
-								editor.ed.body.innerHTML
+
+							expect(editor.ed.body.innerHTML).equals(
+								'<p>test test stop</p>'
 							);
 
 							const range = editor.s.createRange();
@@ -41,9 +42,10 @@ describe('Iframe mode', function() {
 
 							editor.execCommand('bold');
 
-							expect('<strong>test test stop</strong>').equals(
-								editor.ed.body.innerHTML
+							expect(editor.ed.body.innerHTML).equals(
+								'<p><strong>test test stop</strong></p>'
 							);
+
 							done();
 						}
 					}
@@ -61,9 +63,9 @@ describe('Iframe mode', function() {
 					iframe: true
 				});
 
-				expect(editor.value).equals('stop');
+				expect(editor.value).equals('<p>stop</p>');
 				editor.value = 'test1';
-				expect(editor.value).equals('test1');
+				expect(editor.value).equals('<p>test1</p>');
 			});
 		});
 
@@ -133,7 +135,7 @@ describe('Iframe mode', function() {
 								'<!DOCTYPE html><html lang="en">' +
 									'<head><title>Hi</title></head>' +
 									'<body spellcheck="true" >' +
-									'<strong>Test</strong></body></html>'
+									'<p><strong>Test</strong></p></body></html>'
 							);
 						});
 					});
@@ -149,7 +151,7 @@ describe('Iframe mode', function() {
 									editor.value.replace(/[\t\n]/g, '')
 								)
 							).equals(
-								'<!DOCTYPE html><html lang="en"><head><title>Hi</title></head><body ><strong>Test1</strong></body></html>'
+								'<!DOCTYPE html><html lang="en"><head><title>Hi</title></head><body ><p><strong>Test1</strong></p></body></html>'
 							);
 						});
 					});
@@ -163,17 +165,17 @@ describe('Iframe mode', function() {
 			unmockPromise();
 			const area = appendTestArea();
 
-			area.value = 'start value';
+			area.value = '<p>start value</p>';
 
 			Jodit.make(area, {
 				iframe: true,
 				events: {
 					afterConstructor: function(jodit) {
 						expect(
-							jodit.editor.getAttribute('secret-attriute')
+							jodit.editor.getAttribute('secret-attribute')
 						).equals('435'); // loaded from index.html
-						expect(Jodit.modules.Helpers.trim(jodit.value)).equals(
-							'test 435'
+						expect(Jodit.ns.Helpers.trim(jodit.value)).equals(
+							'<p>test 435</p>'
 						); // loaded from index.html
 						done();
 					},

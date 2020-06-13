@@ -112,7 +112,7 @@ export class search extends Plugin {
 		return false;
 	}
 
-	private template = `<div class="jodit_search">
+	private template = `<div class="jodit-search">
 			<div class="jodit-search__box">
 				<div class="jodit-search__inputs">
 					<input tabindex="0" class="jodit-search__query" placeholder="${this.j.i18n(
@@ -478,7 +478,7 @@ export class search extends Plugin {
 
 		this.j.e.fire('hidePopup');
 		this.searchBox.classList.toggle(
-			'jodit-search__and-replace',
+			'jodit-search_replace',
 			searchAndReplace
 		);
 

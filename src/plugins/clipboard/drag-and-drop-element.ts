@@ -135,7 +135,7 @@ export class DragAndDropElement extends Plugin {
 			return;
 		}
 
-		let fragment: HTMLElement = dataBind(this.draggable, 'target');
+		let fragment = dataBind<HTMLElement>(this.draggable, 'target');
 
 		this.onDragEnd();
 
@@ -143,7 +143,13 @@ export class DragAndDropElement extends Plugin {
 			fragment = fragment.cloneNode(true) as HTMLElement;
 		}
 
+		const { parentElement } = fragment;
+
 		this.j.s.insertNode(fragment, true, false);
+
+		if (parentElement && Dom.isEmpty(parentElement)) {
+			Dom.safeRemove(parentElement);
+		}
 
 		if (Dom.isTag(fragment, 'img') && this.j.e) {
 			this.j.e.fire('afterInsertImage', fragment);
@@ -171,11 +177,7 @@ export class DragAndDropElement extends Plugin {
 				this.onDragStart
 			)
 			.on('mouseup touchend', this.onDrop)
-			.on(
-				[this.j.ew, this.ow],
-				'mouseup touchend',
-				this.onDragEnd
-			);
+			.on([this.j.ew, this.ow], 'mouseup touchend', this.onDragEnd);
 	}
 
 	/** @override */

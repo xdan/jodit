@@ -10,21 +10,15 @@ describe('Search plugin', function() {
 				}
 			});
 
-			const search = editor.container.querySelector('.jodit_search');
-			expect(false).equals(
-				search.classList.contains('jodit-search_active')
-			);
+			expect(editor.container.querySelector('.jodit-search')).is.null;
 
 			simulateEvent('keydown', 'f', editor.editor, function(options) {
 				options.ctrlKey = true;
 			});
 
-			expect(false).equals(
-				search.classList.contains('jodit-search_active')
-			);
+			expect(editor.container.querySelector('.jodit-search')).is.null;
 		});
 	});
-
 
 	describe('CTRL + F', function() {
 		it('Should show search form and query field must have focus', function() {
@@ -33,7 +27,7 @@ describe('Search plugin', function() {
 					timeout: 0
 				}
 			});
-			const search = editor.container.querySelector('.jodit_search');
+			const search = editor.container.querySelector('.jodit-search');
 			expect(false).equals(
 				search.classList.contains('jodit-search_active')
 			);
@@ -58,7 +52,7 @@ describe('Search plugin', function() {
 				}
 			});
 
-			const search = editor.container.querySelector('.jodit_search');
+			const search = editor.container.querySelector('.jodit-search');
 			expect(false).equals(
 				search.classList.contains('jodit-search_active')
 			);
@@ -72,7 +66,7 @@ describe('Search plugin', function() {
 			);
 
 			expect(true).equals(
-				search.classList.contains('jodit-search__and-replace')
+				search.classList.contains('jodit-search_replace')
 			);
 
 			expect(true).equals(
@@ -91,7 +85,7 @@ describe('Search plugin', function() {
 
 				editor.value = 'test test test';
 
-				const search = editor.container.querySelector('.jodit_search');
+				const search = editor.container.querySelector('.jodit-search');
 				expect(false).equals(
 					search.classList.contains('jodit-search_active')
 				);
@@ -104,7 +98,7 @@ describe('Search plugin', function() {
 				);
 
 				expect(true).equals(
-					search.classList.contains('jodit-search__and-replace')
+					search.classList.contains('jodit-search_replace')
 				);
 
 				expect(true).equals(
@@ -126,7 +120,7 @@ describe('Search plugin', function() {
 				simulateEvent('click', 0, replaceButton);
 				simulateEvent('click', 0, replaceButton);
 
-				expect('wesw wesw test').equals(editor.value);
+				expect(editor.value).equals('<p>wesw wesw test</p>');
 			});
 		});
 	});
@@ -141,28 +135,24 @@ describe('Search plugin', function() {
 
 			editor.value = 'test test test';
 
-			let range = editor.s.createRange();
-			range.setStart(editor.editor.firstChild, 0);
-			range.setEnd(editor.editor.firstChild, 4);
-			editor.s.selectRange(range);
+			let range = editor.s.createRange(true);
+			range.setStart(editor.editor.firstChild.firstChild, 0);
+			range.setEnd(editor.editor.firstChild.firstChild, 4);
 
-			const search = editor.container.querySelector('.jodit_search');
-			expect(false).equals(
-				search.classList.contains('jodit-search_active')
-			);
+			const search = editor.container.querySelector('.jodit-search');
+			expect(search.classList.contains('jodit-search_active')).is.false;
 
 			// press ctrl(cmd) + f
 			simulateEvent('keydown', 'f', editor.editor, function(options) {
 				options.ctrlKey = true;
 			});
 
-			expect(true).equals(
-				search.classList.contains('jodit-search_active')
-			);
-			expect(true).equals(
+			expect(search.classList.contains('jodit-search_active')).is.true;
+
+			expect(
 				editor.ownerDocument.activeElement ===
 					search.querySelector('.jodit-search__query')
-			);
+			).is.true;
 
 			editor.s.removeMarkers();
 			Jodit.modules.Helpers.normalizeNode(editor.editor.firstChild); // because Select module splits text node
@@ -178,15 +168,21 @@ describe('Search plugin', function() {
 			expect(1).equals(sel.rangeCount);
 			range = sel.getRangeAt(0);
 
-			expect(editor.editor.firstChild).equals(range.startContainer);
+			expect(editor.editor.firstChild.firstChild).equals(
+				range.startContainer
+			);
 			expect(5).equals(range.startOffset);
 
-			expect(editor.editor.firstChild).equals(range.endContainer);
+			expect(editor.editor.firstChild.firstChild).equals(
+				range.endContainer
+			);
 			expect(9).equals(range.endOffset);
 		});
 
 		it('Should find the next match in a circle', function() {
 			const editor = getJodit({
+				disablePlugins: ['WrapTextNodes'],
+
 				observer: {
 					timeout: 0
 				}
@@ -194,29 +190,26 @@ describe('Search plugin', function() {
 
 			editor.value = 'test test test';
 
-			let range = editor.s.createRange();
+			let range = editor.s.createRange(true);
 			range.setStart(editor.editor.firstChild, 0);
 			range.setEnd(editor.editor.firstChild, 1);
-			editor.s.selectRange(range);
 
-			const search = editor.container.querySelector('.jodit_search');
+			const search = editor.container.querySelector('.jodit-search');
 
-			expect(false).equals(
-				search.classList.contains('jodit-search_active')
-			);
+			expect(search.classList.contains('jodit-search_active')).is.false;
 
 			// press ctrl(cmd) + f
 			simulateEvent('keydown', 'f', editor.editor, function(options) {
 				options.ctrlKey = true;
 			});
 
-			expect(true).equals(
+			expect(
 				search.classList.contains('jodit-search_active')
-			);
-			expect(true).equals(
+			).is.true;
+			expect(
 				editor.ownerDocument.activeElement ===
 					search.querySelector('.jodit-search__query')
-			);
+			).is.true;
 
 			editor.s.removeMarkers();
 			Jodit.modules.Helpers.normalizeNode(editor.editor.firstChild); // because Select module splits text node
@@ -257,12 +250,11 @@ describe('Search plugin', function() {
 
 				editor.value = 'test test test';
 
-				let range = editor.s.createRange();
-				range.setStart(editor.editor.firstChild, 0);
-				range.setEnd(editor.editor.firstChild, 4);
-				editor.s.selectRange(range);
+				let range = editor.s.createRange(true);
+				range.setStart(editor.editor.firstChild.firstChild, 0);
+				range.setEnd(editor.editor.firstChild.firstChild, 4);
 
-				const search = editor.container.querySelector('.jodit_search');
+				const search = editor.container.querySelector('.jodit-search');
 
 				expect(false).equals(
 					search.classList.contains('jodit-search_active')
@@ -297,10 +289,10 @@ describe('Search plugin', function() {
 				expect(1).equals(sel.rangeCount);
 				range = sel.getRangeAt(0);
 
-				expect(editor.editor.firstChild).equals(range.startContainer);
+				expect(editor.editor.firstChild.firstChild).equals(range.startContainer);
 				expect(10).equals(range.startOffset);
 
-				expect(editor.editor.firstChild).equals(range.endContainer);
+				expect(editor.editor.firstChild.firstChild).equals(range.endContainer);
 				expect(14).equals(range.endOffset);
 			});
 		});
@@ -318,7 +310,7 @@ describe('Search plugin', function() {
 			sel.removeAllRanges();
 			sel.addRange(range);
 
-			const search = editor.container.querySelector('.jodit_search');
+			const search = editor.container.querySelector('.jodit-search');
 			expect(false).equals(
 				search.classList.contains('jodit-search_active')
 			);

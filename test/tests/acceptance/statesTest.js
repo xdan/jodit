@@ -50,7 +50,7 @@ describe('Test states', function() {
 
 				editor.execCommand('bold');
 
-				expect('test').equals(editor.value);
+				expect(editor.value).equals('<p>test</p>');
 			});
 
 			it('Should disable all toolbar buttons besides source, print, about, fullsize', function() {
@@ -63,11 +63,14 @@ describe('Test states', function() {
 				});
 
 				editor.value = 'test';
-				const buttons = [].slice.call(editor.container.querySelectorAll('.jodit_toolbar_btn'));
+				const buttons = [].slice.call(editor.container.querySelectorAll('.jodit-toolbar-button'));
+
+				expect(buttons.length).is.above(0);
+
 				buttons.forEach(function(btn) {
 					if (!/(source|print|about|fullsize|separator|selectall|break)/.test(btn.className)) {
-						expect(true).equals(btn.classList.contains('jodit_disabled'));
-						expect(true).equals(btn.hasAttribute('disabled'));
+						debugger
+						expect(btn.hasAttribute('disabled')).is.true;
 					}
 				});
 			});
@@ -105,13 +108,13 @@ describe('Test states', function() {
 								}
 							});
 
-							const search = editor.container.querySelector('.jodit_search');
+							const search = editor.container.querySelector('.jodit-search');
 							expect(false).equals(search.classList.contains('jodit-search_active'));
 							simulateEvent('keydown', Jodit.KEY_H, editor.editor, function(options) {
 								options.ctrlKey = true;
 							});
 							expect(false).equals(search.classList.contains('jodit-search_active'));
-							expect(false).equals(search.classList.contains('jodit-search__and-replace'));
+							expect(false).equals(search.classList.contains('jodit-search_replace'));
 							expect(false).equals(editor.ownerDocument.activeElement === search.querySelector('.jodit-search__query'));
 						});
 					});

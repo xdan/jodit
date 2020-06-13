@@ -35,7 +35,9 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 
 		it('Try exec the command "formatBlock" in text node then selection is collapsed it should wrap it node in H1', function() {
-			const editor = getJodit();
+			const editor = getJodit({
+				disablePlugins: ['WrapTextNodes']
+			});
 			editor.value = 'test';
 
 			const sel = editor.s.sel,
@@ -54,7 +56,9 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 
 		it('Try exec the command "formatBlock" in the end of text node then selection is collapsed it should wrap it node in H1', function() {
-			const editor = getJodit();
+			const editor = getJodit({
+				disablePlugins: ['WrapTextNodes']
+			});
 			editor.value = 'test';
 
 			const sel = editor.s.sel,
@@ -282,7 +286,9 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 
 		it('Should wrap text into H1 tag near Table, but table must be after this tag', function() {
-			const editor = getJodit();
+			const editor = getJodit({
+				disablePlugins: ['WrapTextNodes']
+			});
 			editor.value = 'test<table><tr><td>post</td></tr></table>';
 
 			const sel = editor.s.sel,
@@ -303,7 +309,9 @@ describe('Commands Jodit Editor Tests', function() {
 
 		describe('justifyLeft', function() {
 			it('Should set align for element which was created using formatBlock', function() {
-				const editor = getJodit();
+				const editor = getJodit({
+					disablePlugins: ['WrapTextNodes']
+				});
 				editor.value = 'testy oprst <span>lets go</span>';
 
 				const sel = editor.s.sel,
@@ -363,8 +371,11 @@ describe('Commands Jodit Editor Tests', function() {
 				'<p><span style="color: rgb(255, 0, 0);">1</span></p><p><span style="color: rgb(255, 0, 0);">2</span></p><p><span style="color: rgb(255, 0, 0);">3</span></p>'
 			).equals(editor.value);
 		});
+
 		it('Set colour to collapsed position should create empty span and insert inward cursor', function() {
-			const editor = getJodit();
+			const editor = getJodit({
+				disablePlugins: ['WrapTextNodes']
+			});
 			editor.value = 'testy oprst <span>lets go</span>';
 
 			const sel = editor.s.sel,
@@ -406,7 +417,9 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 
 		it('Justify to center', function() {
-			const editor = getJodit();
+			const editor = getJodit({
+				disablePlugins: ['WrapTextNodes']
+			});
 			editor.value = 'test';
 
 			const sel = editor.s.sel,
@@ -424,8 +437,11 @@ describe('Commands Jodit Editor Tests', function() {
 				'<p style="text-align: center;">test</p>'
 			);
 		});
+
 		it('Justify to left', function() {
-			const editor = getJodit();
+			const editor = getJodit({
+				disablePlugins: ['WrapTextNodes']
+			});
 			editor.value = 'test some text <span>test</span><br><p>data</p>';
 
 			const sel = editor.s.sel,
@@ -575,7 +591,9 @@ describe('Commands Jodit Editor Tests', function() {
 
 	describe('Register sustom command', function() {
 		it('Should register command and hotkeys for it', function() {
-			const editor = getJodit();
+			const editor = getJodit({
+				disablePlugins: ['WrapTextNodes']
+			});
 
 			editor.value = 'test test test';
 			const range = editor.s.createRange();

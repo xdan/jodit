@@ -150,6 +150,8 @@ Methods which need binding binds with `@autobind` decorator.
   *  `this.events` => `this.e`
   *  `this.ownerDocument` => `this.od`
   *  `this.ownerWindow` => `this.ow`
+  *  `this.editorDocument` => `this.ed`
+  *  `this.editorWindow` => `this.ew`
 * Change name `Dialog`.`setTitle` to `Dialog`.`setHeader`
 * Remove `Create.inside` field and instead added `Jodit.createInside`
 * In popups added position strategies: `'leftBottom' | 'rightBottom' | 'leftTop' | 'rightTop'` etc.

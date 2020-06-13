@@ -710,7 +710,7 @@ describe('Jodit FileBrowser Tests', function() {
 						});
 
 						expect(editor.value).equals(
-							'<img src="https://xdsoft.net/jodit/files/images.jpg">'
+							'<p><img src="https://xdsoft.net/jodit/files/images.jpg"></p>'
 						);
 
 						expect(image.parentNode).is.not.null;
@@ -776,7 +776,7 @@ describe('Jodit FileBrowser Tests', function() {
 						});
 
 						expect(editor.value).equals(
-							'<a href="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a>'
+							'<p><a href="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a></p>'
 						);
 						expect(image.parentNode).is.not.null;
 						simulateEvent('drop', 0, window);
@@ -921,7 +921,7 @@ describe('Jodit FileBrowser Tests', function() {
 
 					editor.events.on('filesWereUploaded', function() {
 						expect(sortAttributes(editor.value)).equals(
-							'<img src="https://xdsoft.net/jodit/files/test.png" style="width:300px">'
+							'<p><img src="https://xdsoft.net/jodit/files/test.png" style="width:300px"></p>'
 						);
 						done();
 					});
@@ -955,7 +955,7 @@ describe('Jodit FileBrowser Tests', function() {
 
 					editor.events.on('filesWereUploaded', function() {
 						expect(editor.value).equals(
-							'<a href="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a>'
+							'<p><a href="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a></p>'
 						);
 						done();
 					});

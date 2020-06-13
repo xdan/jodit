@@ -11,8 +11,9 @@ describe('Limit plugin', function() {
 
 				editor.value = '11111';
 				editor.s.insertHTML('a');
+
 				setTimeout(() => {
-					expect('11111').equals(editor.value);
+					expect(editor.value).equals('<p>11111</p>');
 					done();
 				}, 200);
 			});
@@ -32,8 +33,10 @@ describe('Limit plugin', function() {
 					editor.s.insertHTML('a');
 
 					setTimeout(() => {
-						expect('a1111').equals(editor.value);
-						const chars = editor.statusbar.container.querySelector('.jodit-status-bar__item');
+						expect(editor.value).equals('<p>a1111</p>');
+						const chars = editor.statusbar.container.querySelector(
+							'.jodit-status-bar__item'
+						);
 						expect(chars.textContent.trim()).equals('Chars: 5');
 						done();
 					}, 200);
@@ -53,7 +56,7 @@ describe('Limit plugin', function() {
 						const sel = editor.s.sel,
 							range = editor.s.createRange();
 
-						range.setEndAfter(editor.editor.firstChild);
+						range.setEndAfter(editor.editor.firstChild.firstChild);
 						range.collapse(false);
 
 						editor.s.selectRange(range);
@@ -64,8 +67,10 @@ describe('Limit plugin', function() {
 						simulateEvent('keydown', Jodit.KEY_V, editor.editor);
 
 						setTimeout(() => {
-							expect('1111vv').equals(editor.value);
-							const chars = editor.statusbar.container.querySelector('.jodit-status-bar__item');
+							expect(editor.value).equals('<p>1111vv</p>');
+							const chars = editor.statusbar.container.querySelector(
+								'.jodit-status-bar__item'
+							);
 							expect(chars.textContent.trim()).equals('Chars: 6');
 							done();
 						}, 200);
@@ -97,7 +102,7 @@ describe('Limit plugin', function() {
 				});
 
 				setTimeout(() => {
-					expect('11111').equals(editor.value);
+					expect(editor.value).equals('<p>11111</p>');
 					done();
 				}, 200);
 			});
@@ -118,7 +123,7 @@ describe('Limit plugin', function() {
 					editor.value = '11111';
 
 					editor.s.setCursorAfter(
-						editor.editor.firstChild
+						editor.editor.firstChild.firstChild
 					);
 
 					const paste = () => {
@@ -136,18 +141,16 @@ describe('Limit plugin', function() {
 
 					const timeout = () => {
 						setTimeout(() => {
-							expect('11111 aaa aaa').equals(
-								editor.value
-							);
+							expect(editor.value).equals('<p>11111 aaa aaa</p>');
 							done();
 						}, 200);
 					};
 
 					paste();
-					expect('11111 aaa').equals(editor.value);
+					expect(editor.value).equals('<p>11111 aaa</p>');
 
 					paste();
-					expect('11111 aaa aaa').equals(editor.value);
+					expect(editor.value).equals('<p>11111 aaa aaa</p>');
 
 					paste();
 					timeout();
