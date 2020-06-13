@@ -178,7 +178,7 @@ Config.prototype.controls.table = {
 				if (crnt && editor.s.isCollapsed()) {
 					const block = Dom.closest(
 						crnt,
-						node => Dom.isBlock(node, editor.editorWindow),
+						node => Dom.isBlock(node, editor.ew),
 						editor.editor
 					);
 
@@ -211,7 +211,7 @@ Config.prototype.controls.table = {
 					scrollIntoView(
 						first_td,
 						editor.editor,
-						editor.editorDocument
+						editor.ed
 					);
 				}
 

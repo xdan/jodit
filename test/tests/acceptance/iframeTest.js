@@ -7,10 +7,10 @@ describe('Iframe mode', function() {
 				events: {
 					afterConstructor: function(editor) {
 						expect(editor.ownerDocument).does.not.equal(
-							editor.editorDocument
+							editor.ed
 						);
 						expect('true').equals(
-							editor.editorDocument.body.getAttribute(
+							editor.ed.body.getAttribute(
 								'contenteditable'
 							)
 						);
@@ -30,19 +30,19 @@ describe('Iframe mode', function() {
 							mockPromise();
 							editor.value = 'test test stop';
 							expect('test test stop').equals(
-								editor.editorDocument.body.innerHTML
+								editor.ed.body.innerHTML
 							);
 
 							const range = editor.s.createRange();
 							range.selectNodeContents(
-								editor.editorDocument.body
+								editor.ed.body
 							);
 							editor.s.selectRange(range);
 
 							editor.execCommand('bold');
 
 							expect('<strong>test test stop</strong>').equals(
-								editor.editorDocument.body.innerHTML
+								editor.ed.body.innerHTML
 							);
 							done();
 						}

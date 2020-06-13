@@ -152,7 +152,7 @@ describe('Test position/offset helpers', function() {
 					height: 10000
 				});
 
-				const span = makeBox(jodit.editorDocument);
+				const span = makeBox(jodit.ed);
 
 				jodit.ownerWindow.scrollTo(0, jodit.container.offsetTop - 100);
 
@@ -183,7 +183,7 @@ describe('Test position/offset helpers', function() {
 			const pos = Jodit.modules.Helpers.offset(
 				span,
 				jodit,
-				jodit.editorDocument
+				jodit.ed
 			);
 
 			createPoint(pos.left, pos.top, '#cdf');
@@ -203,7 +203,7 @@ describe('Test position/offset helpers', function() {
 					height: 10000
 				});
 
-				span = makeBox(jodit.editorDocument);
+				span = makeBox(jodit.ed);
 				box.firstChild.scrollTo(0, 100000);
 
 				iframe.contentWindow.scrollTo(0, jodit.container.offsetTop);
@@ -212,14 +212,14 @@ describe('Test position/offset helpers', function() {
 				const pos = Jodit.modules.Helpers.offset(
 					span,
 					jodit,
-					jodit.editorDocument
+					jodit.ed
 				);
 
 				expect(
 					pos.top -
 						box.offsetTop -
 						jodit.ownerWindow.scrollY -
-						jodit.editorWindow.scrollY -
+						jodit.ew.scrollY -
 						jodit.toolbar.container.offsetHeight
 				).equals(256);
 				expect(pos.left).equals(251);

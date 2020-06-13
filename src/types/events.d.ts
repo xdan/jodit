@@ -22,7 +22,8 @@ interface IEventsNative extends IDestructible {
 	 * });
 	 * ```
 	 */
-	current: string[];
+	current: string;
+	currents: string[];
 
 	/**
 	 * Sets the handler for the specified event ( Event List ) for a given element .

@@ -150,7 +150,7 @@ export class addNewLine extends Plugin {
 			.off(editor.editor, '.' + ns)
 			.off(editor.container, '.' + ns)
 			.on(
-				[editor.ow, editor.editorWindow, editor.editor],
+				[editor.ow, editor.ew, editor.editor],
 				`scroll` + '.' + ns,
 				this.hideForce
 			)
@@ -178,7 +178,7 @@ export class addNewLine extends Plugin {
 		}
 
 		editor.s.setCursorIn(p);
-		scrollIntoView(p, editor.editor, editor.editorDocument);
+		scrollIntoView(p, editor.editor, editor.ed);
 
 		editor.e.fire('synchro');
 		this.hideForce();
@@ -198,10 +198,10 @@ export class addNewLine extends Plugin {
 			const editorBound: IBound = offset(
 				editor.editor,
 				editor,
-				editor.editorDocument
+				editor.ed
 			);
 
-			const top = e.pageY - editor.editorWindow.pageYOffset;
+			const top = e.pageY - editor.ew.pageYOffset;
 
 			const p = editor.createInside.element(editor.o.enter);
 
@@ -226,13 +226,13 @@ export class addNewLine extends Plugin {
 	private onMouseMove = (e: MouseEvent) => {
 		const editor = this.j;
 
-		let currentElement: HTMLElement | null = editor.editorDocument.elementFromPoint(
+		let currentElement: HTMLElement | null = editor.ed.elementFromPoint(
 			e.clientX,
 			e.clientY
 		) as HTMLElement;
 
 		if (
-			!Dom.isHTMLElement(currentElement, editor.editorWindow) ||
+			!Dom.isHTMLElement(currentElement, editor.ew) ||
 			Dom.isOrContains(this.line, currentElement)
 		) {
 			return;
@@ -258,7 +258,7 @@ export class addNewLine extends Plugin {
 		if (this.isMatchedTag(currentElement)) {
 			const parentBox = Dom.up(
 				currentElement,
-				node => Dom.isBlock(node, editor.editorWindow),
+				node => Dom.isBlock(node, editor.ew),
 				editor.editor
 			);
 

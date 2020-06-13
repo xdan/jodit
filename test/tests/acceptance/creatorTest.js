@@ -9,7 +9,7 @@ describe('Test Creator module', function() {
 
 			const div2 = editor2.createInside.div();
 			expect(div2.ownerDocument).does.not.equal(document);
-			expect(div2.ownerDocument).equals(editor2.editorDocument);
+			expect(div2.ownerDocument).equals(editor2.ed);
 
 			const div3 = editor2.create.div();
 			expect(div3.ownerDocument).equals(document);

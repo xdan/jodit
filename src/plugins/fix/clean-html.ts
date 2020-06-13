@@ -302,7 +302,7 @@ export class cleanHtml extends Plugin {
 		if (currentNode) {
 			const currentParagraph = Dom.up(
 				currentNode,
-				node => Dom.isBlock(node, editor.editorWindow),
+				node => Dom.isBlock(node, editor.ew),
 				editor.editor
 			);
 

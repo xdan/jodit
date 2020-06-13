@@ -95,7 +95,7 @@ Config.prototype.controls.link = {
 				url_input
 			} = elements as IDictionary<HTMLInputElement>,
 			currentElement = current,
-			isImageContent = Dom.isImage(currentElement, editor.editorWindow);
+			isImageContent = Dom.isImage(currentElement, editor.ew);
 
 		let { content_input } = elements as IDictionary<HTMLInputElement>;
 
@@ -121,7 +121,7 @@ Config.prototype.controls.link = {
 				? link.innerText
 				: stripTags(
 						editor.s.range.cloneContents(),
-						editor.editorDocument
+						editor.ed
 				  );
 
 		if (current && Dom.closest(current, 'a', editor.editor)) {

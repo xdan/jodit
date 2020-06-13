@@ -136,12 +136,12 @@ export class placeholder extends Plugin {
 		let marginTop: number = 0,
 			marginLeft: number = 0;
 
-		const style = editor.editorWindow.getComputedStyle(editor.editor);
+		const style = editor.ew.getComputedStyle(editor.editor);
 
 		editor.workplace.appendChild(this.placeholderElm);
 
 		if (Dom.isElement(editor.editor.firstChild)) {
-			const style2 = editor.editorWindow.getComputedStyle(
+			const style2 = editor.ew.getComputedStyle(
 				editor.editor.firstChild as Element
 			);
 

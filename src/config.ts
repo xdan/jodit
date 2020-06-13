@@ -903,7 +903,7 @@ Config.prototype.controls = {
 			if (
 				current &&
 				!Dom.isText(current) &&
-				Dom.isHTMLElement(current, editor.editorWindow) &&
+				Dom.isHTMLElement(current, editor.ew) &&
 				(Dom.isTag(current, 'img') || $$('img', current).length)
 			) {
 				sourceImage = Dom.isTag(current, 'img')

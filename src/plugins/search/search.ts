@@ -654,8 +654,7 @@ export class search extends Plugin {
 					return self.findAndSelect(
 						editor.s.current() || editor.editor.firstChild,
 						self.queryInput.value,
-						editor.e.current[editor.e.current.length - 1] ===
-							'searchNext'
+						editor.e.current === 'searchNext'
 					);
 				})
 				.on('search.search', (value: string, next: boolean = true) => {

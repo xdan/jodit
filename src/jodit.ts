@@ -158,7 +158,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	readonly storage = Storage.makeStorage(true, this.id);
 
 	readonly createInside: ICreate = new Create(
-		() => this.editorDocument,
+		() => this.ed,
 		this.o.createAttributes
 	);
 
@@ -246,7 +246,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	/**
-	 * Alias for this.editorWindow
+	 * Alias for this.ew
 	 */
 	get ew(): this['editorWindow'] {
 		return this.editorWindow;
@@ -260,7 +260,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	/**
-	 * Alias for this.editorWindow
+	 * Alias for this.ew
 	 */
 	get ed(): this['editorDocument'] {
 		return this.editorDocument;
@@ -454,7 +454,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * Set editor html value and if set sync fill source element value
 	 * When method was called without arguments - it is simple way to synchronize editor to element
 	 * @event beforeSetValueToEditor
-	 * @param {string} [value]
+	 * @param [value]
+	 * @param [notChangeStack]
 	 */
 	setEditorValue(value?: string) {
 		/**
@@ -474,9 +475,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * });
 		 * ```
 		 */
-		const newValue: string | undefined | false = !isVoid(value)
-			? this.e.fire('beforeSetValueToEditor', value)
-			: undefined;
+		const newValue: string | undefined | false = this.e.fire(
+			'beforeSetValueToEditor',
+			value
+		);
 
 		if (newValue === false) {
 			return;
@@ -502,6 +504,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.setNativeEditorValue(value);
 		}
 
+		this.e.fire('postProcessSetEditorValue');
+
 		const old_value = this.getElementValue(),
 			new_value = this.getEditorValue();
 
@@ -513,6 +517,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.__callChangeCount += 1;
 
 			try {
+				this.observer.upTick();
 				this.e.fire('change', new_value, old_value);
 				this.e.fire(this.observer, 'change', new_value, old_value);
 			} finally {
@@ -696,11 +701,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				this.s.select(this.editor, true);
 			} else {
 				try {
-					result = this.editorDocument.execCommand(
-						command,
-						showUI,
-						value
-					);
+					result = this.ed.execCommand(command, showUI, value);
 				} catch (e) {
 					if (!isProd) {
 						throw e;
@@ -1305,7 +1306,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 			// if enter plugin not installed
 			try {
-				this.editorDocument.execCommand(
+				this.ed.execCommand(
 					'defaultParagraphSeparator',
 					false,
 					this.o.enter.toLowerCase()
@@ -1314,19 +1315,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 			// fix for native resizing
 			try {
-				this.editorDocument.execCommand(
-					'enableObjectResizing',
-					false,
-					'false'
-				);
+				this.ed.execCommand('enableObjectResizing', false, 'false');
 			} catch {}
 
 			try {
-				this.editorDocument.execCommand(
-					'enableInlineTableEditing',
-					false,
-					'false'
-				);
+				this.ed.execCommand('enableInlineTableEditing', false, 'false');
 			} catch {}
 		};
 

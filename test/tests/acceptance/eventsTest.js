@@ -101,13 +101,13 @@ describe('Jodit Events system Tests', function() {
 		});
 		it('Add event handler for several elements', function() {
 			const editor = getJodit(),
-				div1 = editor.editorDocument.createElement('button'),
-				div2 = editor.editorDocument.createElement('button');
+				div1 = editor.ed.createElement('button'),
+				div2 = editor.ed.createElement('button');
 
 			let work = '';
 
-			editor.editorDocument.body.appendChild(div1);
-			editor.editorDocument.body.appendChild(div2);
+			editor.ed.body.appendChild(div1);
+			editor.ed.body.appendChild(div2);
 
 			div1.textContent = 'test1';
 			div2.textContent = 'test2';
@@ -193,7 +193,7 @@ describe('Jodit Events system Tests', function() {
 
 			window.addEventListener('mousedown', mousedown);
 
-			editor.events.fire(editor.editorWindow, 'mousedown');
+			editor.events.fire(editor.ew, 'mousedown');
 
 			expect(work).equals(1);
 
@@ -888,11 +888,11 @@ describe('Jodit Events system Tests', function() {
 
 				const editor = getJodit(),
 					eventEmmiter = new Jodit.modules.EventsNative(),
-					div1 = editor.editorDocument.createElement('button'),
-					div2 = editor.editorDocument.createElement('button');
+					div1 = editor.ed.createElement('button'),
+					div2 = editor.ed.createElement('button');
 
-				editor.editorDocument.body.appendChild(div1);
-				editor.editorDocument.body.appendChild(div2);
+				editor.ed.body.appendChild(div1);
+				editor.ed.body.appendChild(div2);
 
 				div1.textContent = 'test1';
 				div2.textContent = 'test2';

@@ -40,7 +40,7 @@ export class clipboard implements IPlugin {
 
 				const clipboardData =
 					getDataTransfer(event) ||
-					getDataTransfer(editor.editorWindow as any) ||
+					getDataTransfer(editor.ew as any) ||
 					getDataTransfer((event as any).originalEvent);
 
 				if (clipboardData) {

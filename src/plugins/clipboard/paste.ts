@@ -118,7 +118,7 @@ Config.prototype.controls.paste = {
 
 		if (error) {
 			const value = editor.value;
-			editor.editorDocument.execCommand('paste');
+			editor.ed.execCommand('paste');
 			error = value !== editor.value;
 		}
 
@@ -509,7 +509,7 @@ export function paste(editor: IJodit) {
 				let clipboard_html = getText();
 
 				if (
-					Dom.isNode(clipboard_html, editor.editorWindow) ||
+					Dom.isNode(clipboard_html, editor.ew) ||
 					(clipboard_html && trim(clipboard_html) !== '')
 				) {
 					/**
@@ -546,7 +546,7 @@ export function paste(editor: IJodit) {
 
 					if (
 						isString(clipboard_html) ||
-						Dom.isNode(clipboard_html, editor.editorWindow)
+						Dom.isNode(clipboard_html, editor.ew)
 					) {
 						if (event.type === 'drop') {
 							editor.s.insertCursorAtPoint(

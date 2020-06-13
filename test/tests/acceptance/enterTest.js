@@ -311,7 +311,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				it('Should split paragraph', function() {
 					const editor = getJodit();
 
-					const p = editor.editorDocument.createElement('p'),
+					const p = editor.ed.createElement('p'),
 						node = editor.createInside.text('Split paragraph');
 
 					p.appendChild(node);
@@ -335,7 +335,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				it('Should create new paragraph with same styles like as original', function() {
 					const editor = getJodit();
 
-					const p = editor.editorDocument.createElement('p'),
+					const p = editor.ed.createElement('p'),
 						node = editor.createInside.text('Split paragraph');
 
 					p.appendChild(node);
@@ -364,8 +364,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					it('should move  cursor in another new paragraph', function() {
 						const editor = getJodit();
 
-						const p = editor.editorDocument.createElement('p'),
-							p2 = editor.editorDocument.createElement('p');
+						const p = editor.ed.createElement('p'),
+							p2 = editor.ed.createElement('p');
 
 						p.innerHTML = 'Split paragraph';
 						p2.innerHTML = 'Test';
@@ -394,8 +394,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					it('should move cursor in another new paragraph before old place', function() {
 						const editor = getJodit();
 
-						const p = editor.editorDocument.createElement('p'),
-							p2 = editor.editorDocument.createElement('p');
+						const p = editor.ed.createElement('p'),
+							p2 = editor.ed.createElement('p');
 
 						p.innerHTML = 'Split paragraph';
 						p2.innerHTML = 'Test';
@@ -429,8 +429,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					it('should move  cursor in new paragraph an copy all styles from old', function() {
 						const editor = getJodit();
 
-						const p = editor.editorDocument.createElement('p'),
-							p2 = editor.editorDocument.createElement('p');
+						const p = editor.ed.createElement('p'),
+							p2 = editor.ed.createElement('p');
 
 						p.style.color = '#ff0000';
 						p.style.textAlign = 'right';

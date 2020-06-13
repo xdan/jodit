@@ -170,7 +170,10 @@ export class EventsNative implements IEventsNative {
 	 * });
 	 * ```
 	 */
-	current: string[] = [];
+	get current(): string {
+		return this.currents[this.currents.length - 1];
+	}
+	currents: string[] = [];
 
 	/**
 	 * Sets the handler for the specified event ( Event List ) for a given element .
@@ -550,14 +553,14 @@ export class EventsNative implements IEventsNative {
 										return false;
 									}
 
-									this.current.push(event);
+									this.currents.push(event);
 
 									result_value = block.syntheticCallback.apply(
 										subject,
 										argumentsList
 									);
 
-									this.current.pop();
+									this.currents.pop();
 
 									if (result_value !== undefined) {
 										result = result_value;

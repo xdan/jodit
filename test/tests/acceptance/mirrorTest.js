@@ -83,7 +83,7 @@ describe('CodeMirror editor source code', function() {
 						sourceEditorReady: function(jodit) {
 							jodit.s.focus();
 							jodit.value = '<p>test <span>test</span> test</p>';
-							const range = jodit.editorDocument.createRange();
+							const range = jodit.ed.createRange();
 
 							range.selectNodeContents(jodit.editor.querySelector('span'));
 							range.collapse(false);

@@ -602,8 +602,8 @@ describe('Selection Module Tests', function() {
 							('<p>' + 'test '.repeat(50) + '</p>').repeat(1)
 						);
 
-						const sel = jodit.editorWindow.getSelection(),
-							range = jodit.editorDocument.createRange();
+						const sel = jodit.ew.getSelection(),
+							range = jodit.ed.createRange();
 
 						range.selectNodeContents(
 							jodit.editor.querySelector('p')

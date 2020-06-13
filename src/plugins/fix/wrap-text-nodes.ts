@@ -9,7 +9,7 @@ export class WrapTextNodes extends Plugin {
 			return;
 		}
 
-		jodit.e.on('change.wraptextnodes', () => {
+		jodit.e.on('afterInit.wtn postProcessSetEditorValue.wtn', () => {
 			if (!jodit.isEditorMode()) {
 				return;
 			}
@@ -17,19 +17,25 @@ export class WrapTextNodes extends Plugin {
 			let child: Nullable<Node> = jodit.editor.firstChild,
 				isChanged: boolean = false;
 
-			const isNormalFirst = (n: Nullable<Node>) =>
-				(Dom.isText(n) &&
-					isString(n.nodeValue) &&
-					/[^\s]/.test(n.nodeValue)) ||
-				Dom.isInlineBlock(n);
+			const isNotClosed = (n: Nullable<Node>) =>
+					Dom.isElement(n) &&
+					!(
+						Dom.isBlock(n, jodit.ew) ||
+						/^(BR|HR)$/i.test(n.nodeName)
+					),
+				isSuitableStart = (n: Nullable<Node>) =>
+					(Dom.isText(n) &&
+						isString(n.nodeValue) &&
+						/[^\s]/.test(n.nodeValue)) ||
+					isNotClosed(n);
 
-			const isNormal = (n: Nullable<Node>) =>
-				Dom.isText(n) || Dom.isInlineBlock(n);
+			const isSuitable = (n: Nullable<Node>) =>
+				Dom.isText(n) || isNotClosed(n);
 
 			let selInfo: Nullable<markerInfo[]> = null;
 
 			while (child) {
-				if (isNormalFirst(child)) {
+				if (isSuitableStart(child)) {
 					if (!isChanged) {
 						selInfo = jodit.s.save();
 					}
@@ -39,7 +45,7 @@ export class WrapTextNodes extends Plugin {
 
 					Dom.before(child, box);
 
-					while (child && isNormal(child)) {
+					while (child && isSuitable(child)) {
 						const next: Nullable<Node> = child.nextSibling;
 						box.appendChild(child);
 						child = next;
@@ -52,13 +58,16 @@ export class WrapTextNodes extends Plugin {
 			}
 
 			if (isChanged) {
-				jodit.setEditorValue();
 				jodit.s.restore(selInfo);
+
+				if (jodit.e.current === 'afterInit') {
+					jodit.e.fire('internalChange');
+				}
 			}
 		});
 	}
 
 	protected beforeDestruct(jodit: IJodit) {
-		jodit.e.off('change.wraptextnodes');
+		jodit.e.off('.wtn');
 	}
 }

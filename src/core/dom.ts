@@ -60,7 +60,7 @@ export class Dom {
 			needFindNext = false;
 			tmp = first.previousSibling;
 
-			if (tmp && !Dom.isBlock(tmp, editor.editorWindow)) {
+			if (tmp && !Dom.isBlock(tmp, editor.ew)) {
 				needFindNext = true;
 				first = tmp;
 			}
@@ -70,7 +70,7 @@ export class Dom {
 			needFindNext = false;
 			tmp = last.nextSibling;
 
-			if (tmp && !Dom.isBlock(tmp, editor.editorWindow)) {
+			if (tmp && !Dom.isBlock(tmp, editor.ew)) {
 				needFindNext = true;
 				last = tmp;
 			}

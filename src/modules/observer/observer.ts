@@ -10,6 +10,7 @@ import { ViewComponent } from '../../core/component';
 import { Snapshot } from './snapshot';
 import { Stack } from './stack';
 import { Command } from './command';
+import { debounce } from '../../core/decorators';
 
 /**
  * @property {object} observer module settings {@link Observer|Observer}
@@ -36,21 +37,65 @@ Config.prototype.observer = {
  * @params {Jodit} parent Jodit main object
  */
 export class Observer extends ViewComponent<IJodit> {
-	private startValue!: SnapshotType;
+	private __startValue!: SnapshotType;
 
-	private onChangeStack = () => {
+	get startValue(): SnapshotType {
+		return this.__startValue;
+	}
+
+	set startValue(value) {
+		this.__startValue = value;
+	}
+
+	stack: Stack = new Stack();
+	snapshot: Snapshot = new Snapshot(this.j);
+
+	private updateTick: number = 0;
+
+	upTick(): void {
+		this.updateTick += 1;
+	}
+
+	/**
+	 * Push new command in stack on some changes
+	 */
+	@debounce()
+	private onChange(): void {
+		if (this.snapshot.isBlocked) {
+			return;
+		}
+
+		this.updateStack();
+	}
+
+	/**
+	 * Update history stack
+	 */
+	private updateStack(replace: boolean = false): void {
 		const newValue = this.snapshot.make();
 
 		if (!Snapshot.equal(newValue, this.startValue)) {
-			this.stack.push(new Command(this.startValue, newValue, this));
+			const newCommand = new Command(
+				this.startValue,
+				newValue,
+				this,
+				this.updateTick
+			);
+
+			if (replace) {
+				const command = this.stack.current();
+
+				if (command && this.updateTick === command.tick) {
+					this.stack.replace(newCommand);
+				}
+			} else {
+				this.stack.push(newCommand);
+			}
 
 			this.startValue = newValue;
-			this.changeStack();
+			this.fireChangeStack();
 		}
-	};
-
-	stack: Stack = new Stack();
-	snapshot: Snapshot;
+	}
 
 	/**
 	 * Return state of the WYSIWYG editor to step back
@@ -58,7 +103,7 @@ export class Observer extends ViewComponent<IJodit> {
 	redo() {
 		if (this.stack.redo()) {
 			this.startValue = this.snapshot.make();
-			this.changeStack();
+			this.fireChangeStack();
 		}
 	}
 
@@ -68,28 +113,26 @@ export class Observer extends ViewComponent<IJodit> {
 	undo() {
 		if (this.stack.undo()) {
 			this.startValue = this.snapshot.make();
-			this.changeStack();
+			this.fireChangeStack();
 		}
 	}
 
 	clear() {
 		this.startValue = this.snapshot.make();
 		this.stack.clear();
-		this.changeStack();
+		this.fireChangeStack();
 	}
 
-	private changeStack() {
+	replaceSnapshot() {
+		this.updateStack(true);
+	}
+
+	private fireChangeStack() {
 		this.j && !this.j.isInDestruct && this.j.events?.fire('changeStack');
 	}
 
 	constructor(editor: IJodit) {
 		super(editor);
-		this.snapshot = new Snapshot(editor);
-
-		const onChangeStack = editor.async.debounce(
-			this.onChangeStack,
-			editor.defaultTimeout
-		);
 
 		editor.e.on('afterAddPlace.observer', () => {
 			if (this.isInDestruct) {
@@ -97,19 +140,25 @@ export class Observer extends ViewComponent<IJodit> {
 			}
 
 			this.startValue = this.snapshot.make();
+
 			editor.events
 				// save selection
+				.on('internalChange', () => {
+					this.startValue = this.snapshot.make();
+				})
 				.on(
 					editor.editor,
 					[
-						'changeSelection.observer',
-						'selectionstart.observer',
-						'selectionchange.observer',
-						'mousedown.observer',
-						'mouseup.observer',
-						'keydown.observer',
-						'keyup.observer'
-					].join(' '),
+						'changeSelection',
+						'selectionstart',
+						'selectionchange',
+						'mousedown',
+						'mouseup',
+						'keydown',
+						'keyup'
+					]
+						.map(f => f + '.observer')
+						.join(' '),
 					() => {
 						if (
 							this.startValue.html ===
@@ -119,11 +168,7 @@ export class Observer extends ViewComponent<IJodit> {
 						}
 					}
 				)
-				.on(this, 'change.observer', () => {
-					if (!this.snapshot.isBlocked) {
-						onChangeStack();
-					}
-				});
+				.on(this, 'change.observer', this.onChange);
 		});
 	}
 

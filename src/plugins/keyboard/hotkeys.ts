@@ -140,7 +140,7 @@ export class hotkeys extends Plugin {
 		editor.e
 			.off('.hotkeys')
 			.on(
-				[editor.ow, editor.editorWindow],
+				[editor.ow, editor.ew],
 				'keydown.hotkeys',
 				(e: KeyboardEvent): void => {
 					if (e.key === KEY_ESC) {

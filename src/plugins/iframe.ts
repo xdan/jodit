@@ -383,7 +383,7 @@ export function iframe(editor: IJodit) {
 						.on(
 							[
 								editor.iframe,
-								editor.editorWindow,
+								editor.ew,
 								doc.documentElement
 							],
 							'load',
@@ -409,7 +409,7 @@ export function iframe(editor: IJodit) {
 							}
 						})
 						.on(
-							editor.editorWindow,
+							editor.ew,
 							'mousedown touchstart keydown keyup touchend click mouseup mousemove scroll',
 							(e: Event) => {
 								editor.events?.fire(editor.ow, e);

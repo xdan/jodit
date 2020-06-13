@@ -50,7 +50,7 @@ Config.prototype.controls.fontsize = ({
 					current,
 					elm => {
 						return (
-							Dom.isBlock(elm, editor.editorWindow) ||
+							Dom.isBlock(elm, editor.ew) ||
 							(elm && Dom.isElement(elm))
 						);
 					},
@@ -78,7 +78,7 @@ Config.prototype.controls.fontsize = ({
 					current,
 					elm => {
 						return (
-							Dom.isBlock(elm, editor.editorWindow) ||
+							Dom.isBlock(elm, editor.ew) ||
 							(elm && Dom.isElement(elm))
 						);
 					},
@@ -135,7 +135,7 @@ Config.prototype.controls.font = ({
 				Dom.closest(
 					current,
 					elm =>
-						Dom.isBlock(elm, editor.editorWindow) ||
+						Dom.isBlock(elm, editor.ew) ||
 						(elm && Dom.isElement(elm)),
 
 					editor.editor
@@ -162,7 +162,7 @@ Config.prototype.controls.font = ({
 				Dom.closest(
 					current,
 					(elm: Node | null) =>
-						Dom.isBlock(elm, editor.editorWindow) ||
+						Dom.isBlock(elm, editor.ew) ||
 						Dom.isElement(elm),
 
 					editor.editor

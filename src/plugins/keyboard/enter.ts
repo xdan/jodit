@@ -47,7 +47,7 @@ export const insertParagraph = (
 
 	Dom.safeRemove(fake);
 
-	scrollIntoView(p, editor.editor, editor.editorDocument);
+	scrollIntoView(p, editor.editor, editor.ed);
 
 	editor.events?.fire('synchro'); // fire change
 
@@ -268,8 +268,8 @@ export class enter extends Plugin {
 			Dom.prev(
 				current,
 				(elm: Node | null) =>
-					Dom.isBlock(elm, editor.editorWindow) ||
-					Dom.isImage(elm, editor.editorWindow),
+					Dom.isBlock(elm, editor.ew) ||
+					Dom.isImage(elm, editor.ew),
 				editor.editor
 			)
 		);
@@ -279,7 +279,7 @@ export class enter extends Plugin {
 		const editor = this.j,
 			sel = editor.selection;
 
-		if (!Dom.canSplitBlock(currentBox, editor.editorWindow)) {
+		if (!Dom.canSplitBlock(currentBox, editor.ew)) {
 			const br = editor.createInside.element('br');
 
 			sel.insertNode(br, false);

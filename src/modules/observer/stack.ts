@@ -5,6 +5,7 @@
  */
 
 import { Command } from './command';
+import { CanUndef } from '../../types';
 
 export class Stack {
 	private commands: Command[] = [];
@@ -23,6 +24,14 @@ export class Stack {
 		this.clearRedo();
 		this.commands.push(command);
 		this.stackPosition += 1;
+	}
+
+	replace(command: Command) {
+		this.commands[this.stackPosition] = command;
+	}
+
+	current(): CanUndef<Command> {
+		return this.commands[this.stackPosition];
 	}
 
 	undo(): boolean {

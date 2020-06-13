@@ -8,11 +8,6 @@ import { SnapshotType } from '../../types';
 import { Observer } from './observer';
 
 export class Command {
-	private observer: Observer;
-
-	readonly oldValue: SnapshotType;
-	readonly newValue: SnapshotType;
-
 	public undo() {
 		this.observer.snapshot.restore(this.oldValue);
 	}
@@ -21,12 +16,9 @@ export class Command {
 	}
 
 	constructor(
-		oldValue: SnapshotType,
-		newValue: SnapshotType,
-		observer: Observer
-	) {
-		this.observer = observer;
-		this.oldValue = oldValue;
-		this.newValue = newValue;
-	}
+		readonly oldValue: SnapshotType,
+		readonly newValue: SnapshotType,
+		readonly observer: Observer,
+		readonly tick: number
+	) {}
 }

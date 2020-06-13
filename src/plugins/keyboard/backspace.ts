@@ -289,7 +289,7 @@ export class backspace extends Plugin {
 
 			let container = Dom.up(
 				fakeNode,
-				node => Dom.isBlock(node, jodit.editorWindow),
+				node => Dom.isBlock(node, jodit.ew),
 				jodit.editor
 			);
 
@@ -341,7 +341,7 @@ export class backspace extends Plugin {
 				backspace ? Dom.prev : Dom.next,
 				box.node || fakeNode,
 				node =>
-					Dom.isBlock(node, jodit.editorWindow) &&
+					Dom.isBlock(node, jodit.ew) &&
 					!/^(ul|ol)$/i.test(node.nodeName),
 				jodit.editor
 			);

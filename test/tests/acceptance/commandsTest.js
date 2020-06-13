@@ -21,7 +21,7 @@ describe('Commands Jodit Editor Tests', function() {
 			it('Should wrap this element and all nearest inine element in block', function() {
 				const jodit = getJodit();
 				jodit.value = 'stop <span>post</span> ice';
-				const range = jodit.editorDocument.createRange();
+				const range = jodit.ed.createRange();
 				range.setStart(jodit.editor.firstChild, 0);
 				range.setEnd(jodit.editor.firstChild, 2);
 				jodit.s.selectRange(range);

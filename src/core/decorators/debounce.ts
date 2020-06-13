@@ -20,13 +20,12 @@ export function debounce(
 		target.hookStatus(
 			STATUSES.ready,
 			(component: IViewComponent | IViewBased) => {
-				const async = isViewObject(component)
-					? component.async
-					: component.j.async;
+				const view = isViewObject(component) ? component : component.j;
 
-				(component as any)[propertyKey] = async.debounce(
+				(component as any)[propertyKey] = view.async.debounce(
 					(component as any)[propertyKey].bind(component),
-					(isFunction(timeout) ? timeout(component) : timeout) || 0
+					(isFunction(timeout) ? timeout(component) : timeout) ||
+						view.defaultTimeout
 				);
 			}
 		);

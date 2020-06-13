@@ -25,7 +25,7 @@ Config.prototype.controls.paragraph = {
 			const currentBox =
 					Dom.closest(
 						current,
-						node => Dom.isBlock(node, editor.editorWindow),
+						node => Dom.isBlock(node, editor.ew),
 						editor.editor
 					) || editor.editor,
 				currentValue = currentBox.nodeName.toLowerCase(),
@@ -78,7 +78,7 @@ Config.prototype.controls.paragraph = {
 		if (current) {
 			const currentBox = Dom.closest(
 				current,
-				node => Dom.isBlock(node, editor.editorWindow),
+				node => Dom.isBlock(node, editor.ew),
 				editor.editor
 			);
 
@@ -99,7 +99,7 @@ Config.prototype.controls.paragraph = {
 		if (current) {
 			const currentBpx = Dom.closest(
 				current,
-				node => Dom.isBlock(node, editor.editorWindow),
+				node => Dom.isBlock(node, editor.ew),
 				editor.editor
 			);
 
@@ -140,7 +140,7 @@ export function formatBlock(editor: IJodit) {
 			// 	let currentBox: HTMLElement | false = current
 			// 		? (Dom.up(
 			// 				current,
-			// 				node => Dom.isBlock(node, editor.editorWindow),
+			// 				node => Dom.isBlock(node, editor.ew),
 			// 				editor.editor
 			// 		  ) as HTMLElement)
 			// 		: false;

@@ -34,7 +34,7 @@ interface IJodit extends IViewWithToolbar {
 
 	getNativeEditorValue(): string;
 	getEditorValue(removeSelectionMarkers?: boolean): string;
-	setEditorValue(value?: string): void;
+	setEditorValue(value?: string, notChangeStack?: boolean): void;
 
 	getReadOnly(): boolean;
 	setReadOnly(enable: boolean): void;
@@ -50,14 +50,14 @@ interface IJodit extends IViewWithToolbar {
 	editorDocument: HTMLDocument;
 
 	/**
-	 * Alias for this.editorDocument
+	 * Alias for this.ed
 	 */
 	ed: this['editorDocument'];
 
 	editorWindow: Window;
 
 	/**
-	 * Alias for this.editorDocument
+	 * Alias for this.ed
 	 */
 	ew: this['editorWindow'];
 

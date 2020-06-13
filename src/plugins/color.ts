@@ -22,7 +22,7 @@ Config.prototype.controls.brush = {
 					current,
 					elm => {
 						return (
-							Dom.isBlock(elm, editor.editorWindow) ||
+							Dom.isBlock(elm, editor.ew) ||
 							(elm && Dom.isElement(elm))
 						);
 					},
@@ -63,7 +63,7 @@ Config.prototype.controls.brush = {
 		if (
 			current &&
 			current !== editor.editor &&
-			Dom.isNode(current, editor.editorWindow) &&
+			Dom.isNode(current, editor.ew) &&
 			Dom.isElement(current)
 		) {
 			colorHEX = css(current as HTMLElement, 'color').toString();

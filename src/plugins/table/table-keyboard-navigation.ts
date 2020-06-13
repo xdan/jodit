@@ -119,7 +119,7 @@ export function tableKeyboardNavigation(editor: IJodit) {
 						next = (Dom as any)[sibling](
 							block,
 							(elm: Node | null) =>
-								elm && Dom.isCell(elm, editor.editorWindow),
+								elm && Dom.isCell(elm, editor.ew),
 							table
 						) as HTMLTableCellElement;
 					}

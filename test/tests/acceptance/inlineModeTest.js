@@ -410,7 +410,7 @@ describe('Test Inline mode', function() {
 				editor.value = 'test<br>test';
 				editor.s.select(editor.editor.firstChild);
 
-				simulateEvent('selectionchange', 0, editor.editorDocument);
+				simulateEvent('selectionchange', 0, editor.ed);
 
 				const popup = getOpenedPopup(editor);
 				expect(popup).is.not.null;
@@ -424,7 +424,7 @@ describe('Test Inline mode', function() {
 					});
 					editor.value = 'test<br>test';
 					editor.s.select(editor.editor.firstChild);
-					simulateEvent('selectionchange', 0, editor.editorDocument);
+					simulateEvent('selectionchange', 0, editor.ed);
 					const popup = getOpenedPopup(editor);
 					expect(popup).is.null;
 				});
@@ -437,7 +437,7 @@ describe('Test Inline mode', function() {
 						});
 						editor.value = 'test<br>test';
 						editor.s.select(editor.editor.firstChild);
-						simulateEvent('selectionchange', 0, editor.editorDocument);
+						simulateEvent('selectionchange', 0, editor.ed);
 
 						let popup = getOpenedPopup(editor);
 						expect(popup).is.null;
@@ -445,7 +445,7 @@ describe('Test Inline mode', function() {
 						editor.setReadOnly(false);
 
 						editor.s.select(editor.editor.firstChild);
-						simulateEvent('selectionchange', 0, editor.editorDocument);
+						simulateEvent('selectionchange', 0, editor.ed);
 						popup = getOpenedPopup(editor);
 						expect(popup).is.not.null;
 
@@ -463,7 +463,7 @@ describe('Test Inline mode', function() {
 					});
 					editor.value = 'test<br>test';
 					editor.s.select(editor.editor.firstChild);
-					simulateEvent('selectionchange', 0, editor.editorDocument);
+					simulateEvent('selectionchange', 0, editor.ed);
 					const popup = getOpenedPopup(editor);
 					expect(popup).is.not.null;
 					const range = editor.s.createRange();
@@ -497,12 +497,12 @@ describe('Test Inline mode', function() {
 
 					editor.s.select(editor.editor.firstChild);
 
-					simulateEvent('selectionchange', 0, editor.editorDocument);
+					simulateEvent('selectionchange', 0, editor.ed);
 					const popup = getOpenedPopup(editor);
 					expect(popup).is.not.null;
 					expect(popup.parentNode).is.not.null;
 
-					const range = editor2.editorDocument.createRange();
+					const range = editor2.ed.createRange();
 					range.setStart(editor2.editor.firstChild, 0);
 					range.collapse(true);
 					editor2.s.selectRange(range);

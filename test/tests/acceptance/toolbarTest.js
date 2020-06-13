@@ -1013,7 +1013,7 @@ describe('Toolbar', function() {
 				expect(getButton('redo', editor).hasAttribute('disabled')).is
 					.false;
 
-				expect(editor.value).equals('top');
+				expect(editor.value).equals('<p>top</p>');
 			});
 		});
 

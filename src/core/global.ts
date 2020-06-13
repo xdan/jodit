@@ -66,13 +66,13 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 		if (
 			inside &&
 			isJoditObject(jodit) &&
-			jodit.od !== jodit.editorDocument
+			jodit.od !== jodit.ed
 		) {
 			c = jodit.createInside;
 			body =
 				tag === 'style'
-					? jodit.editorDocument.head
-					: jodit.editorDocument.body;
+					? jodit.ed.head
+					: jodit.ed.body;
 		}
 
 		const box = c.element(tag, {

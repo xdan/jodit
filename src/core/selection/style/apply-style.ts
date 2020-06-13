@@ -135,7 +135,7 @@ export class ApplyStyle {
 			!Dom.prev(font, this.isNormalNode, parentNode) &&
 			this.isSuitableElement(parentNode, false) &&
 			parentNode !== this.jodit.s.area &&
-			(!Dom.isBlock(parentNode, this.jodit.editorWindow) ||
+			(!Dom.isBlock(parentNode, this.jodit.ew) ||
 				this.style.elementIsBlock)
 		) {
 			this.toggleStyles(parentNode);
@@ -244,7 +244,7 @@ export class ApplyStyle {
 		return Boolean(
 			isPlainObject(rules) &&
 				!Dom.isTag(elm, 'font') &&
-				Dom.isHTMLElement(elm, this.jodit.editorWindow) &&
+				Dom.isHTMLElement(elm, this.jodit.ew) &&
 				each(rules, (property, checkValue) => {
 					const value = css(elm, property, undefined, true);
 
@@ -329,7 +329,7 @@ export class ApplyStyle {
 			});
 		}
 
-		const isBlock = Dom.isBlock(elm, this.jodit.editorWindow);
+		const isBlock = Dom.isBlock(elm, this.jodit.ew);
 
 		const isSuitableInline =
 			!isBlock &&

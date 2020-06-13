@@ -42,7 +42,7 @@ export function autofocus(editor: IJodit) {
 				if (
 					editor.isEditorMode() &&
 					e.target &&
-					Dom.isBlock(e.target as Node, editor.editorWindow) &&
+					Dom.isBlock(e.target as Node, editor.ew) &&
 					!(e.target as HTMLElement).childNodes.length
 				) {
 					if (editor.editor === e.target) {

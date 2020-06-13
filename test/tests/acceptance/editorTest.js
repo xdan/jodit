@@ -116,7 +116,7 @@ describe('Jodit Editor Tests', function() {
 					document.querySelector('.jodit-wysiwyg')
 				);
 			} else {
-				expect(editor.editor).equals(editor.editorDocument.body);
+				expect(editor.editor).equals(editor.ed.body);
 			}
 		});
 
@@ -662,7 +662,7 @@ describe('Jodit Editor Tests', function() {
 
 		it('Current selection element', function() {
 			const editor = getJodit(),
-				div = editor.editorDocument.createElement('div'),
+				div = editor.ed.createElement('div'),
 				text = editor.createInside.text('jingl');
 
 			editor.value = '';
@@ -686,7 +686,7 @@ describe('Jodit Editor Tests', function() {
 			const editor = new Jodit(area);
 
 			function insert(digit) {
-				const div = editor.editorDocument.createElement('div');
+				const div = editor.ed.createElement('div');
 
 				div.innerHTML = digit;
 				editor.s.insertNode(div);
@@ -781,9 +781,9 @@ describe('Jodit Editor Tests', function() {
 				editor.s.setCursorIn(editor.editor.firstChild);
 
 				const spans = [
-					editor.editorDocument.createElement('span'),
-					editor.editorDocument.createElement('span'),
-					editor.editorDocument.createElement('span')
+					editor.ed.createElement('span'),
+					editor.ed.createElement('span'),
+					editor.ed.createElement('span')
 				];
 
 				editor.s.insertNode(spans[0]);
@@ -792,7 +792,7 @@ describe('Jodit Editor Tests', function() {
 
 				editor.s.setCursorAfter(spans[1]);
 				editor.s.insertNode(
-					editor.editorDocument.createElement('i')
+					editor.ed.createElement('i')
 				);
 
 				expect(editor.value).equals(
@@ -805,7 +805,7 @@ describe('Jodit Editor Tests', function() {
 				const editor = new Jodit(area);
 
 				expect(function() {
-					const div = editor.editorDocument.createElement('div');
+					const div = editor.ed.createElement('div');
 					editor.s.setCursorIn(div);
 				}).to.Throw(/in editor/);
 			});

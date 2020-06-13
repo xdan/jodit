@@ -73,10 +73,10 @@ describe('Test interface', function() {
 				});
 
 				expect('rtl').equals(
-					editor.editorDocument.documentElement.getAttribute('dir')
+					editor.ed.documentElement.getAttribute('dir')
 				);
 				expect('de').equals(
-					editor.editorDocument.documentElement.getAttribute('lang')
+					editor.ed.documentElement.getAttribute('lang')
 				);
 			});
 		});

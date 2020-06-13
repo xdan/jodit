@@ -1246,7 +1246,7 @@ describe('Tables Jodit Editor Tests', function() {
 					debugger
 					expect(
 						Jodit.modules.Helpers.normalizeColor(
-							editor.editorWindow.getComputedStyle(td).borderBottomColor
+							editor.ew.getComputedStyle(td).borderBottomColor
 						)
 					).equals('#FF0000');
 				});
@@ -1279,7 +1279,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 						expect(
 							Jodit.modules.Helpers.normalizeColor(
-								editor.editorWindow.getComputedStyle(td)
+								editor.ew.getComputedStyle(td)
 									.borderBottomColor
 							)
 						).equals('#FF0000');
@@ -1388,13 +1388,13 @@ describe('Tables Jodit Editor Tests', function() {
 						const box = Jodit.modules.Helpers.offset(
 							editor.editor.querySelectorAll('td')[1],
 							editor,
-							editor.editorDocument
+							editor.ed
 						);
 
 						const tablebox = Jodit.modules.Helpers.offset(
 							editor.editor.querySelector('table'),
 							editor,
-							editor.editorDocument
+							editor.ed
 						);
 
 						simulateEvent(
@@ -1483,7 +1483,7 @@ describe('Tables Jodit Editor Tests', function() {
 					}
 				);
 
-				simulateEvent('mousemove', 1, editor.editorWindow, function(
+				simulateEvent('mousemove', 1, editor.ew, function(
 					options
 				) {
 					options.clientX = box.left + 500; // can move only on 5 pixels
@@ -1531,7 +1531,7 @@ describe('Tables Jodit Editor Tests', function() {
 						}
 					);
 
-					simulateEvent('mousemove', 1, editor.editorWindow, function(
+					simulateEvent('mousemove', 1, editor.ew, function(
 						options
 					) {
 						options.clientX = box.left + 5; // move on 5 pixels
@@ -1594,7 +1594,7 @@ describe('Tables Jodit Editor Tests', function() {
 						simulateEvent(
 							'mousemove',
 							1,
-							editor.editorWindow,
+							editor.ew,
 							function(options) {
 								options.clientX = box.left + 5; // move on 5 pixels
 								options.pageX = 0;
@@ -1669,7 +1669,7 @@ describe('Tables Jodit Editor Tests', function() {
 						simulateEvent(
 							'mousemove',
 							1,
-							editor.editorWindow,
+							editor.ew,
 							function(options) {
 								options.clientX = box.left + 5; // move on 5 pixels
 								options.pageX = 0;
@@ -1745,7 +1745,7 @@ describe('Tables Jodit Editor Tests', function() {
 							simulateEvent(
 								'mousemove',
 								1,
-								editor.editorWindow,
+								editor.ew,
 								function(options) {
 									options.clientX = box.left + 5; // move on 5 pixels
 									options.pageX = 0;
