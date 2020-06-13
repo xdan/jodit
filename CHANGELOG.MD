@@ -14,8 +14,8 @@
 * https://github.com/xdan/jodit/issues/369
 
 ### Features
-* Added `WrapTextNodes` plugin - it wrap all alone text node inside options.enter element.
-You can disable this:
+* Added `WrapTextNodes` plugin - it wrap all alone text node(or inline elements) inside `options.enter` element.
+You can disable this behaviour:
 ```js
 const editor = Jodit.make('#editor', {
     disablePlugins: ['WrapTextNodes']
