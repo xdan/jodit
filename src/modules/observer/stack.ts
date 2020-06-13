@@ -11,6 +11,10 @@ export class Stack {
 	private commands: Command[] = [];
 	private stackPosition: number = -1;
 
+	get length(): number {
+		return this.commands.length;
+	}
+
 	private clearRedo() {
 		this.commands.length = this.stackPosition + 1;
 	}
