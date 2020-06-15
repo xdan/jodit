@@ -25,7 +25,7 @@ export const form = (
 		active: boolean = true
 	) => `<div class="jodit-form__group">
 		<label>${i(label)}</label>
-		<div class="jodit-button_group jodit-button_radio_group">
+		<div class="jodit-button-group jodit-button_radio_group">
 			<input ${act(
 				active,
 				'checked'

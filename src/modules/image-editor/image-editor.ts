@@ -411,7 +411,7 @@ export class ImageEditor extends ViewComponent {
 			);
 
 		// btn group
-		$$('.jodit-button_group', self.editor).forEach(group => {
+		$$('.jodit-button-group', self.editor).forEach(group => {
 			const input = group.querySelector('input') as HTMLInputElement;
 
 			self.j.e.on(group, 'click', (e: MouseEvent): void => {
