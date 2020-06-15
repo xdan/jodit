@@ -25,7 +25,11 @@ export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 	appendTo(element: HTMLElement): this;
 
 	mods: IDictionary<string | boolean | null>;
-	setMod(name: string, value: string | boolean | null): this;
+	setMod(
+		name: string,
+		value: string | boolean | null,
+		container?: HTMLElement
+	): this;
 }
 
 export interface IUIButtonState {

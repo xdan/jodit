@@ -84,7 +84,11 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	 * @param name
 	 * @param value if null, mod will be removed
 	 */
-	setMod(name: string, value: string | boolean | null): this {
+	setMod(
+		name: string,
+		value: string | boolean | null,
+		container: HTMLElement = this.container
+	): this {
 		name = name.toLowerCase();
 
 		if (this.mods[name] === value) {
@@ -92,7 +96,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		}
 
 		const mod = `${this.componentName}_${name}`,
-			cl = this.container.classList;
+			cl = container.classList;
 
 		Array.from(cl).forEach(className => {
 			if (className.indexOf(mod) === 0) {

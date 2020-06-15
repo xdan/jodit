@@ -6,13 +6,20 @@
 
 import './group.less';
 
-import { IUIElement, IUIGroup, IViewBased } from '../../../types';
+import {
+	IUIButtonState,
+	IUIElement,
+	IUIGroup,
+	IViewBased
+} from '../../../types';
 import { UIElement } from '../element';
 import { watch } from '../../decorators';
 
 export class UIGroup<T extends IViewBased = IViewBased> extends UIElement<T>
 	implements IUIGroup {
 	elements: IUIElement[] = [];
+
+	buttonSize: IUIButtonState['size'] = 'middle';
 
 	/**
 	 * Update all children

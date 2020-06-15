@@ -4,7 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-// Border
 @color-gray: #efefef;
 @color-border: @color-gray;
 @color-border-selected: #1e88e5;
@@ -57,7 +56,9 @@
 @color-icon: rgb(34, 34, 34);
 
 @padding-text-icons: 0 12px;
-@padding-default: 10px;
+@padding-default: 8px;
+
+@border-radius-default: 3px;
 
 //z-index
 @z-index-full-size: 100000;
@@ -69,11 +70,11 @@
 @z-index-dropdownlist: 10000;
 @z-index-fly-toolbar: 30000;
 
-@icon_tiny_size: 8px;
-@icon-xsmall-size: 10px;
-@icon_small_size: 12px;
+@icon-tiny-size: 8px;
+@icon-xsmall-size: @padding-default;
+@icon-small-size: 12px;
 @icon-middle-size: 14px;
-@icon_large_size: 16px;
+@icon-large-size: 16px;
 
 @icon_loader_size: 48px;
 
@@ -101,7 +102,7 @@
 @context_menu_item_bg_hover_color: #e3e3e3;
 @context_menu_item_hover_color: #000;
 @context_menu_icon_size: 18px;
-@context_menu_item_padding: 10px;
+@context_menu_item_padding: @padding-default;
 @context_menu_item_height: 38px;
 
 @width-default: 180px;

@@ -39,6 +39,10 @@ export function makeCollection(
 		collection.parentElement = parentElement;
 	}
 
+	if (jodit.o.toolbarButtonSize) {
+		collection.buttonSize = jodit.o.toolbarButtonSize;
+	}
+
 	return collection;
 }
 

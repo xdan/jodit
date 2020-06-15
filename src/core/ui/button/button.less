@@ -7,7 +7,7 @@
 @import (reference) '../../../styles/variables';
 @import (reference) '../../../styles/mixins';
 
-@color-button-background-hover: #dde4ef;
+@color-button-background-hover: #dcdcdc;
 
 .button-size(@size) {
 	@plus: (@size - 4px) * 2;
@@ -26,7 +26,7 @@
 	}
 }
 
-.button-state() {
+.jodit-ui-button-interaction() {
 	&:hover:not([disabled]) {
 		background-color: @color-button-background-hover;
 		outline: 0;
@@ -48,40 +48,7 @@
 	}
 }
 
-.jodit-ui-button_clear {
-	padding: 0;
-	position: relative;
-	text-align: center;
-	background: 0 0;
-	text-transform: none;
-	font-style: normal;
-	box-shadow: none;
-	border: 0;
-	box-sizing: border-box;
-	user-select: none;
-	background-clip: padding-box;
-	text-decoration: none;
-	outline: 0;
-}
-
-.jodit-ui-button {
-	&,
-	&__button {
-		display: flex;
-		justify-content: stretch;
-		align-items: center;
-	}
-
-	&__button {
-		justify-content: center;
-	}
-
-	.jodit-ui-button_clear();
-
-	.button-state();
-
-	.button-size(@icon-middle-size);
-
+.jodit-ui-button-icon-text {
 	&__icon {
 		display: none;
 
@@ -112,7 +79,7 @@
 			position: absolute;
 			border-left: 1px solid @color-border;
 			height: 35px;
-			top: -10px;
+			top: -@padding-default;
 			left: 0;
 		}
 	}
@@ -124,10 +91,30 @@
 	&__icon:empty + &__text:not(:empty) {
 		padding: 0 @padding-default;
 	}
+}
+
+.jodit-ui-button_clear {
+	padding: 0;
+	position: relative;
+	text-align: center;
+	background: 0 0;
+	text-transform: none;
+	font-style: normal;
+	box-shadow: none;
+	border: 0;
+	box-sizing: border-box;
+	user-select: none;
+	background-clip: padding-box;
+	text-decoration: none;
+	outline: 0;
+}
+
+.jodit-ui-button-sizes {
+	.button-size(@icon-middle-size);
 
 	&_size {
 		&_tiny {
-			.button-size(@icon_tiny_size);
+			.button-size(@icon-tiny-size);
 		}
 
 		&_xsmall {
@@ -135,19 +122,16 @@
 		}
 
 		&_small {
-			.button-size(@icon_small_size);
+			.button-size(@icon-small-size);
 		}
 
 		&_large {
-			.button-size(@icon_large_size);
+			.button-size(@icon-large-size);
 		}
 	}
+}
 
-	& {
-		padding: 0 @padding-default;
-		border-radius: 0.25rem;
-	}
-
+.jodit-ui-button-statuses {
 	&_status_default {
 		.jodit_status(#d8d8d8, #212529, #c9cdd1, #212529, #dae0e5, #212529);
 	}
@@ -163,4 +147,27 @@
 	&_status_danger {
 		.jodit_status(#dc3545, #fff, #c82333, #fff, #bd2130, #fff);
 	}
+}
+
+.jodit-ui-button-style {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	padding: 0 @padding-default;
+	border-radius: @border-radius-default;
+}
+
+.jodit-ui-button {
+	.jodit-ui-button_clear();
+
+	.jodit-ui-button-style();
+
+	.jodit-ui-button-interaction();
+
+	.jodit-ui-button-sizes();
+
+	.jodit-ui-button-icon-text();
+
+	.jodit-ui-button-statuses();
 }

@@ -11,7 +11,6 @@ import {
 	IControlTypeStrong,
 	IDictionary,
 	IUIButton,
-	IUIButtonState,
 	IUIElement,
 	IUIGroup,
 	IUIList,
@@ -32,7 +31,6 @@ export class UIList<T extends IViewBased = IViewBased> extends UIGroup<T>
 	jodit!: T;
 
 	mode: IUIList['mode'] = 'horizontal';
-	buttonSize: IUIButtonState['size'] = 'middle';
 
 	@watch('mode')
 	onChangeMode() {

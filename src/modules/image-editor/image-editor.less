@@ -7,7 +7,7 @@
 @import (reference) '../../styles/variables';
 
 @image_editor_resizer_border_color: #05ff00;
-@image_editor_resizer_target_size: 10px;
+@image_editor_resizer_target_size: @padding-default;
 @image_editor_resizer_target_border_color: #383838;
 @image_editor_resizer_target_bg_color: #8c7878;
 
@@ -29,7 +29,7 @@
 		}
 	}
 
-	padding: 10px;
+	padding: @padding-default;
 	overflow: hidden;
 
 	* {
@@ -51,7 +51,7 @@
 			line-height: 1em;
 
 			svg {
-				margin-right: 10px;
+				margin-right: @padding-default;
 				width: 16px;
 				display: inline-block;
 				vertical-align: middle;
@@ -131,7 +131,7 @@
 			box-shadow: 0 0 11px #000;
 			border: 1px solid #fff;
 			background-repeat: no-repeat;
-			top: 10px;
+			top: @padding-default;
 			left: 20px;
 			pointer-events: none;
 
@@ -142,11 +142,11 @@
 				z-index: 4;
 				background-color: @image_editor_resizer_target_bg_color;
 				cursor: se-resize;
-				border-radius: 10px;
+				border-radius: @padding-default;
 				height: 20px;
 				width: 20px;
-				right: -10px;
-				bottom: -10px;
+				right: -@padding-default;
+				bottom: -@padding-default;
 				box-shadow: 0 0 11px #000;
 				pointer-events: all;
 

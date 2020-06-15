@@ -66,7 +66,7 @@
 		left: 0;
 		top: 0;
 		background-color: #fff;
-		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
+		box-shadow: 0 @padding-default @padding-default * 2 rgba(0, 0, 0, 0.19),
 			0 6px 6px rgba(0, 0, 0, 0.23);
 		min-width: 200px;
 		min-height: 100px;
@@ -83,11 +83,11 @@
 		&_prompt {
 			max-width: 300px;
 			min-width: 200px;
-			padding: 10px;
+			padding: @padding-default;
 			word-break: break-all;
 
 			label {
-				margin-bottom: 5px;
+				margin-bottom: @padding-default / 2;
 				display: block;
 			}
 		}
@@ -95,7 +95,7 @@
 		&_alert {
 			max-width: 300px;
 			min-width: 200px;
-			padding: 10px;
+			padding: @padding-default;
 			word-break: break-all;
 		}
 
@@ -167,17 +167,17 @@
 			overflow: auto;
 
 			.jodit-form__group {
-				margin-bottom: 10px;
-				padding: 0 10px;
+				margin-bottom: @padding-default;
+				padding: 0 @padding-default;
 
 				&:first-child {
-					margin-top: 10px;
+					margin-top: @padding-default;
 				}
 
 				label {
 					display: inline-block;
 					max-width: 100%;
-					margin-bottom: 5px;
+					margin-bottom: @padding-default / 2;
 					font-weight: 700;
 				}
 

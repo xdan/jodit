@@ -16,7 +16,7 @@
 	display: flex;
 
 	&_no_files {
-		padding: 10px;
+		padding: @padding-default;
 	}
 
 	@media (max-width: @screen-xs) {
@@ -83,7 +83,7 @@
 		}
 
 		&::-webkit-scrollbar {
-			width: 5px;
+			width: @padding-default / 2;
 		}
 
 		&::-webkit-scrollbar-track {
@@ -113,7 +113,7 @@
 		overflow-y: auto;
 
 		&::-webkit-scrollbar {
-			width: 5px;
+			width: @padding-default / 2;
 		}
 
 		&::-webkit-scrollbar-track {
@@ -128,7 +128,7 @@
 		.jodit-filebrowser__source-title {
 			user-select: none;
 			display: block;
-			padding: 10px;
+			padding: @padding-default;
 			color: #969696;
 			border-bottom: 1px solid #484848;
 			line-height: 17px;
@@ -146,7 +146,7 @@
 			justify-content: space-between;
 			align-items: center;
 			min-height: 38px;
-			padding: 5px 10px;
+			padding: @padding-default / 2 @padding-default;
 			text-decoration: none;
 			color: @text-color;
 			transition: background-color 0.2s ease 0s;
@@ -161,7 +161,7 @@
 			@icon-size: 12px;
 
 			.jodit-icon_folder {
-				margin-left: 5px;
+				margin-left: @padding-default / 2;
 				width: @icon-size + 4px;
 				height: @icon-size + 4px;
 				display: flex;
@@ -197,15 +197,15 @@
 	&__files.jodit-filebrowser_active {
 		width: 100%;
 		overflow-y: auto;
-		padding: 5px;
+		padding: @padding-default / 2;
 		flex-wrap: wrap;
 		align-content: flex-start;
 
 		.jodit-filebrowser__source-title {
 			user-select: none;
-			margin: -10px -10px 0 -10px;
+			margin: -@padding-default -@padding-default 0 -@padding-default;
 			display: block;
-			padding: 10px;
+			padding: @padding-default;
 			line-height: 17px;
 			min-height: 38px;
 			position: relative;
@@ -216,7 +216,7 @@
 		}
 
 		a + .jodit-filebrowser__source-title {
-			margin-top: 10px;
+			margin-top: @padding-default;
 		}
 
 		.jodit-filebrowser__files-item {
@@ -227,12 +227,12 @@
 			align-items: center;
 
 			@media (max-width: @screen-xs) {
-				width: calc(50% - 10px);
+				width: calc(50% - @padding-default);
 			}
 
 			text-align: center;
 			border: 1px solid @color-border;
-			margin: 5px;
+			margin: @padding-default / 2;
 			font-size: 0;
 			overflow: hidden;
 			transition: border 0.1s linear, bottom 0.1s linear;
@@ -383,7 +383,7 @@
 			right: 0;
 			top: 0;
 			bottom: 0;
-			margin: 0 -10px 0 0;
+			margin: 0 -@padding-default 0 0;
 			padding: 0;
 			opacity: 0;
 			font-size: 400px;
