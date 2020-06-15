@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 import './resizer.less';
 
 import { Config } from '../../config';
@@ -427,11 +428,7 @@ export class resizer extends Plugin {
 					this.j.od,
 					true
 				),
-				pos: IBound = offset(
-					this.element,
-					this.j,
-					this.j.ed
-				),
+				pos: IBound = offset(this.element, this.j, this.j.ed),
 				left: number = parseInt(this.rect.style.left || '0', 10),
 				top: number = parseInt(this.rect.style.top || '0', 10),
 				w: number = this.rect.offsetWidth,

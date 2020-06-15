@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
 import { IDictionary, ILanguageOptions } from '../../../types';
 import { Config } from '../../../config';
 import { defaultLanguage as defineLanguage } from '../default-language';

@@ -72,7 +72,7 @@ Config.prototype.controls.paragraph = {
 		blockquote: 'Quote'
 	},
 
-	isActiveChild: (editor: IJodit, control: IControlType): boolean => {
+	isChildActive: (editor: IJodit, control: IControlType): boolean => {
 		const current = editor.s.current();
 
 		if (current) {
@@ -117,7 +117,7 @@ Config.prototype.controls.paragraph = {
 		return false;
 	},
 
-	template: (e: IJodit, key: string, value: string) =>
+	childTemplate: (e: IJodit, key: string, value: string) =>
 		`<${key}><span>${e.i18n(value)}</span></${key}>`,
 
 	tooltip: 'Insert format block'

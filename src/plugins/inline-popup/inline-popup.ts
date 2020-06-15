@@ -1,369 +1,29 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
 import './inline-popup.less';
+import './config/config';
 
 import autobind from 'autobind-decorator';
-
 import { Plugin } from '../../core/plugin';
 import {
 	Buttons,
 	HTMLTagNames,
 	IBound,
-	IControlType,
-	IDictionary,
 	IJodit,
 	IPopup,
 	IToolbarCollection,
-	IUIButtonState,
 	IViewComponent,
 	Nullable
 } from '../../types';
 import { makeCollection } from '../../modules/toolbar/factory';
 import { Popup } from '../../core/ui/popup';
-import { Config } from '../../config';
-import {
-	clearCenterAlign,
-	css,
-	splitArray,
-	isString,
-	attr,
-	position,
-	isJoditObject
-} from '../../core/helpers';
-import { Dom, Table, ToolbarCollection } from '../../modules';
-import { ColorPickerWidget, TabsWidget } from '../../modules/widget';
+import { splitArray, isString, position } from '../../core/helpers';
+import { Dom, ToolbarCollection } from '../../modules';
 import { debounce, wait } from '../../core/decorators';
-
-declare module '../../config' {
-	interface Config {
-		popup: IDictionary<Array<IControlType | string>>;
-		toolbarInline: boolean;
-		toolbarInlineForSelection: boolean;
-		toolbarInlineButtonSize: IUIButtonState['size'];
-		toolbarInlineDisableFor: string | string[];
-	}
-}
-
-Config.prototype.toolbarInlineButtonSize = 'small';
-Config.prototype.toolbarInline = true;
-Config.prototype.toolbarInlineForSelection = false;
-Config.prototype.toolbarInlineDisableFor = [];
-
-Config.prototype.popup = {
-	a: [
-		{
-			name: 'eye',
-			tooltip: 'Open link',
-			exec: (editor: IJodit, current) => {
-				const href = attr(current as HTMLElement, 'href');
-
-				if (current && href) {
-					editor.ow.open(href);
-				}
-			}
-		},
-		{
-			name: 'link',
-			tooltip: 'Edit link',
-			icon: 'pencil'
-		},
-		'unlink',
-		'brush',
-		'file'
-	],
-	jodit: [
-		{
-			name: 'bin',
-			tooltip: 'Delete',
-			exec: (editor: IJodit, image) => {
-				image && editor.s.removeNode(image);
-			}
-		}
-	],
-	'jodit-media': [
-		{
-			name: 'bin',
-			tooltip: 'Delete',
-			exec: (editor: IJodit, image) => {
-				image && editor.s.removeNode(image);
-			}
-		}
-	],
-	img: [
-		{
-			name: 'delete',
-			icon: 'bin',
-			tooltip: 'Delete',
-			exec: (editor: IJodit, image) => {
-				image && editor.s.removeNode(image);
-			}
-		},
-		{
-			name: 'pencil',
-			exec(editor: IJodit, current) {
-				const tagName = (current as HTMLElement).tagName.toLowerCase();
-
-				if (tagName === 'img') {
-					editor.e.fire('openImageProperties', current);
-				}
-			},
-			tooltip: 'Edit'
-		},
-		{
-			name: 'valign',
-			list: ['Top', 'Middle', 'Bottom'],
-			tooltip: 'Vertical align',
-			exec: (editor: IJodit, image, { control }) => {
-				if (!Dom.isTag(image, 'img')) {
-					return;
-				}
-
-				const command =
-					control.args && isString(control.args[1])
-						? control.args[1].toLowerCase()
-						: '';
-
-				css(image, 'vertical-align', command);
-
-				editor.e.fire('recalcPositionPopup');
-			}
-		},
-		{
-			name: 'left',
-			list: ['Left', 'Right', 'Center', 'Normal'],
-			exec: (editor, image, { control }) => {
-				if (!Dom.isTag(image, 'img')) {
-					return;
-				}
-
-				const command: string =
-					control.args && typeof control.args[1] === 'string'
-						? control.args[1].toLowerCase()
-						: '';
-
-				if (command !== 'normal') {
-					if (['right', 'left'].indexOf(command) !== -1) {
-						css(image, 'float', command);
-						clearCenterAlign(image);
-					} else {
-						css(image, 'float', '');
-						css(image, {
-							display: 'block',
-							'margin-left': 'auto',
-							'margin-right': 'auto'
-						});
-					}
-				} else {
-					if (
-						css(image, 'float') &&
-						['right', 'left'].indexOf(
-							(css(image, 'float') as string).toLowerCase()
-						) !== -1
-					) {
-						css(image, 'float', '');
-					}
-
-					clearCenterAlign(image);
-				}
-
-				editor.e.fire('recalcPositionPopup');
-			},
-			tooltip: 'Horizontal align'
-		}
-	],
-	'table-cells': [
-		{
-			name: 'brush',
-			popup: editor => {
-				if (!isJoditObject(editor)) {
-					return;
-				}
-
-				const selected: HTMLTableCellElement[] = editor
-					.getInstance<Table>('Table', editor.o)
-					.getAllSelectedCells();
-
-				let $bg: HTMLElement,
-					$cl: HTMLElement,
-					$br: HTMLElement,
-					$tab: HTMLElement,
-					color: string,
-					br_color: string,
-					bg_color: string;
-
-				if (!selected.length) {
-					return false;
-				}
-
-				color = css(selected[0], 'color') as string;
-				bg_color = css(selected[0], 'background-color') as string;
-				br_color = css(selected[0], 'border-color') as string;
-
-				$bg = ColorPickerWidget(
-					editor,
-					(value: string) => {
-						selected.forEach((cell: HTMLTableCellElement) => {
-							css(cell, 'background-color', value);
-						});
-
-						editor.setEditorValue();
-						// close();
-					},
-					bg_color
-				);
-
-				$cl = ColorPickerWidget(
-					editor,
-					(value: string) => {
-						selected.forEach((cell: HTMLTableCellElement) => {
-							css(cell, 'color', value);
-						});
-						editor.setEditorValue();
-						// close();
-					},
-					color
-				);
-
-				$br = ColorPickerWidget(
-					editor,
-					(value: string) => {
-						selected.forEach((cell: HTMLTableCellElement) => {
-							css(cell, 'border-color', value);
-						});
-						editor.setEditorValue();
-						// close();
-					},
-					br_color
-				);
-
-				$tab = TabsWidget(editor, [
-					{ name: 'Background', content: $bg },
-					{ name: 'Text', content: $cl },
-					{ name: 'Border', content: $br }
-				]);
-
-				return $tab;
-			},
-			tooltip: 'Background'
-		},
-		{
-			name: 'valign',
-			list: ['Top', 'Middle', 'Bottom'],
-			exec: (editor, table, { control }) => {
-				const command =
-					control.args && isString(control.args[0])
-						? control.args[0].toLowerCase()
-						: '';
-
-				editor
-					.getInstance<Table>('Table', editor.o)
-					.getAllSelectedCells()
-					.forEach((cell: HTMLTableCellElement) => {
-						css(cell, 'vertical-align', command);
-					});
-			},
-			tooltip: 'Vertical align'
-		},
-		{
-			name: 'splitv',
-			list: {
-				tablesplitv: 'Split vertical',
-				tablesplitg: 'Split horizontal'
-			},
-			tooltip: 'Split'
-		},
-		{
-			name: 'align',
-			icon: 'left'
-		},
-		'\n',
-		{
-			name: 'merge',
-			command: 'tablemerge',
-			tooltip: 'Merge'
-		},
-		{
-			name: 'addcolumn',
-			list: {
-				tableaddcolumnbefore: 'Insert column before',
-				tableaddcolumnafter: 'Insert column after'
-			},
-			exec: (editor, table, { control }) => {
-				if (!isJoditObject(editor)) {
-					return;
-				}
-
-				const command =
-					control.args && isString(control.args[0])
-						? control.args[0].toLowerCase()
-						: '';
-
-				editor.execCommand(command, false, table);
-			},
-			tooltip: 'Add column'
-		},
-		{
-			name: 'addrow',
-			list: {
-				tableaddrowbefore: 'Insert row above',
-				tableaddrowafter: 'Insert row below'
-			},
-			exec: (editor, table, { control }) => {
-				if (!isJoditObject(editor)) {
-					return;
-				}
-
-				const command =
-					control.args && isString(control.args[0])
-						? control.args[0].toLowerCase()
-						: '';
-
-				editor.execCommand(command, false, table);
-			},
-			tooltip: 'Add row'
-		},
-		{
-			name: 'delete',
-			icon: 'bin',
-			list: {
-				tablebin: 'Delete table',
-				tablebinrow: 'Delete row',
-				tablebincolumn: 'Delete column',
-				tableempty: 'Empty cell'
-			},
-			exec: (editor, table, { control }) => {
-				if (!isJoditObject(editor)) {
-					return;
-				}
-
-				const command =
-					control.args && isString(control.args[0])
-						? control.args[0].toLowerCase()
-						: '';
-
-				editor.execCommand(command, false, table);
-				editor.e.fire('hidePopup');
-			},
-			tooltip: 'Delete'
-		}
-	],
-	selection: [
-		'bold',
-		'underline',
-		'italic',
-		'ul',
-		'ol',
-		'\n',
-		'outdent',
-		'indent',
-		'fontsize',
-		'brush',
-		'cut',
-		'\n',
-		'paragraph',
-		'link',
-		'align',
-		'dots'
-	]
-} as IDictionary<Array<IControlType | string>>;
 
 /**
  * Plugin for show inline popup dialog
@@ -522,21 +182,13 @@ export class inlinePopup extends Plugin {
 				}
 			)
 			.on('click', this.onClick)
-			.on(
-				this.j.ed,
-				'selectionchange',
-				this.onSelectionChange
-			);
+			.on(this.j.ed, 'selectionchange', this.onSelectionChange);
 	}
 
 	protected beforeDestruct(jodit: IJodit): void {
 		this.j.e
 			.off('showPopup')
 			.off('click', this.onClick)
-			.off(
-				this.j.ed,
-				'selectionchange',
-				this.onSelectionChange
-			);
+			.off(this.j.ed, 'selectionchange', this.onSelectionChange);
 	}
 }

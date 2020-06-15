@@ -58,7 +58,7 @@ interface IControlType<
 	 */
 	isActive?: (editor: T, control: IControlType<T, B>, button?: B) => boolean;
 
-	isActiveChild?: (
+	isChildActive?: (
 		editor: T,
 		control: IControlType<T, B>,
 		button?: B
@@ -205,6 +205,7 @@ interface IControlType<
 	 * The method which will be called for each element of button.list
 	 */
 	template?: (jodit: T, key: string, value: string) => string;
+	childTemplate?: (jodit: T, key: string, value: string) => string;
 
 	/**
 	 * After click on the button it will show popup element which consist value that this function returned

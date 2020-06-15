@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 import './placeholder.less';
 
 import { Config } from '../../config';
@@ -78,7 +79,7 @@ export class placeholder extends Plugin {
 		);
 
 		this.placeholderElm = editor.c.fromHTML(
-			`<span style="display: none;" class="jodit-placeholder">${editor.i18n(
+			`<span data-ref="placeholder" style="display: none;" class="jodit-placeholder">${editor.i18n(
 				editor.o.placeholder
 			)}</span>`
 		);
@@ -136,7 +137,17 @@ export class placeholder extends Plugin {
 		let marginTop: number = 0,
 			marginLeft: number = 0;
 
-		const style = editor.ew.getComputedStyle(editor.editor);
+		const current = editor.s.current(),
+			wrapper =
+				(current &&
+					Dom.closest(
+						current,
+						n => Dom.isBlock(n, editor.ew),
+						editor.editor
+					)) ||
+				editor.editor;
+
+		const style = editor.ew.getComputedStyle(wrapper);
 
 		editor.workplace.appendChild(this.placeholderElm);
 
@@ -166,6 +177,7 @@ export class placeholder extends Plugin {
 
 		css(this.placeholderElm, {
 			display: 'block',
+			textAlign: style.getPropertyValue('text-align'),
 			marginTop: Math.max(
 				parseInt(style.getPropertyValue('margin-top'), 10),
 				marginTop

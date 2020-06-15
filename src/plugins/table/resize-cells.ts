@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 import './table.less';
 
 import autobind from 'autobind-decorator';
@@ -295,8 +296,7 @@ export class resizeCells extends Plugin {
 			const side = this.isRTL ? 'marginRight' : 'marginLeft';
 
 			const margin = parseInt(
-				this.j.ew.getComputedStyle(this.workTable)[side] ||
-					'0',
+				this.j.ew.getComputedStyle(this.workTable)[side] || '0',
 				10
 			);
 

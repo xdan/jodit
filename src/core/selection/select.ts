@@ -452,76 +452,76 @@ export class Select {
 
 	/**
 	 * Returns the current element under the cursor inside editor
-	 * @return false|Node The element under the cursor or false if undefined or not in editor
 	 */
 	current(checkChild: boolean = true): null | Node {
 		if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
 			const sel = this.sel;
 
-			if (sel && sel.rangeCount > 0) {
-				const range = sel.getRangeAt(0);
+			if (!sel || sel.rangeCount === 0) {
+				return null;
+			}
 
-				let node: Node | null = range.startContainer,
-					rightMode: boolean = false;
+			const range = sel.getRangeAt(0);
 
-				const child = (nd: Node): Node | null =>
-					rightMode ? nd.lastChild : nd.firstChild;
+			let node = range.startContainer,
+				rightMode: boolean = false;
 
-				if (!Dom.isText(node)) {
-					node = range.startContainer.childNodes[range.startOffset];
+			const child = (nd: Node): Node | null =>
+				rightMode ? nd.lastChild : nd.firstChild;
 
-					if (!node) {
-						node =
-							range.startContainer.childNodes[
-								range.startOffset - 1
-							];
-						rightMode = true;
-					}
+			if (Dom.isTag(node, 'br') && sel.isCollapsed) {
+				return node;
+			}
 
-					if (node && sel.isCollapsed && !Dom.isText(node)) {
-						// test Current method - Cursor in the left of some SPAN
-						if (!rightMode && Dom.isText(node.previousSibling)) {
-							node = node.previousSibling;
-						} else if (checkChild) {
-							let current: Node | null = child(node);
+			if (!Dom.isText(node)) {
+				node = range.startContainer.childNodes[range.startOffset];
 
-							while (current) {
-								if (current && Dom.isText(current)) {
-									node = current;
-									break;
-								}
-								current = child(current);
+				if (!node) {
+					node =
+						range.startContainer.childNodes[range.startOffset - 1];
+
+					rightMode = true;
+				}
+
+				if (node && sel.isCollapsed && !Dom.isText(node)) {
+					// test Current method - Cursor in the left of some SPAN
+					if (!rightMode && Dom.isText(node.previousSibling)) {
+						node = node.previousSibling;
+					} else if (checkChild) {
+						let current: Node | null = child(node);
+
+						while (current) {
+							if (current && Dom.isText(current)) {
+								node = current;
+								break;
 							}
-						}
-					}
-
-					if (node && !sel.isCollapsed && !Dom.isText(node)) {
-						let leftChild: Node | null = node,
-							rightChild: Node | null = node;
-
-						do {
-							leftChild = leftChild.firstChild;
-							rightChild = rightChild.lastChild;
-						} while (
-							leftChild &&
-							rightChild &&
-							!Dom.isText(leftChild)
-						);
-
-						if (
-							leftChild === rightChild &&
-							leftChild &&
-							Dom.isText(leftChild)
-						) {
-							node = leftChild;
+							current = child(current);
 						}
 					}
 				}
 
-				// check - cursor inside editor
-				if (node && Dom.isOrContains(this.area, node)) {
-					return node;
+				if (node && !sel.isCollapsed && !Dom.isText(node)) {
+					let leftChild: Node | null = node,
+						rightChild: Node | null = node;
+
+					do {
+						leftChild = leftChild.firstChild;
+						rightChild = rightChild.lastChild;
+					} while (leftChild && rightChild && !Dom.isText(leftChild));
+
+					if (
+						leftChild === rightChild &&
+						leftChild &&
+						Dom.isText(leftChild)
+					) {
+						node = leftChild;
+					}
 				}
+			}
+
+			// check - cursor inside editor
+			if (node && Dom.isOrContains(this.area, node)) {
+				return node;
 			}
 		}
 

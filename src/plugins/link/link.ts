@@ -63,6 +63,7 @@ Config.prototype.controls.unlink = {
 			Dom.unwrap(anchor);
 		}
 
+		editor.setEditorValue();
 		editor.e.fire('hidePopup');
 	},
 	tooltip: 'Unlink'
@@ -119,10 +120,7 @@ Config.prototype.controls.link = {
 		const getSelectionText = () =>
 			link
 				? link.innerText
-				: stripTags(
-						editor.s.range.cloneContents(),
-						editor.ed
-				  );
+				: stripTags(editor.s.range.cloneContents(), editor.ed);
 
 		if (current && Dom.closest(current, 'a', editor.editor)) {
 			link = Dom.closest(
@@ -164,6 +162,8 @@ Config.prototype.controls.link = {
 					Dom.unwrap(link);
 				}
 
+				editor.setEditorValue();
+
 				close();
 				e.preventDefault();
 			});
@@ -188,9 +188,7 @@ Config.prototype.controls.link = {
 
 			if (!link) {
 				if (!editor.s.isCollapsed()) {
-					links = editor.s.wrapInTag(
-						'a'
-					) as HTMLAnchorElement[];
+					links = editor.s.wrapInTag('a') as HTMLAnchorElement[];
 				} else {
 					const a = editor.createInside.element('a');
 					editor.s.insertNode(a);
@@ -230,6 +228,7 @@ Config.prototype.controls.link = {
 				}
 			});
 
+			editor.setEditorValue();
 			close();
 			return false;
 		});

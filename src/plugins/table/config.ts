@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
 import { Config } from '../../config';
 import { IControlType, IDictionary, IJodit } from '../../types';
 import { Dom } from '../../core/dom';
@@ -61,15 +67,15 @@ Config.prototype.controls.table = {
 
 		const form: HTMLFormElement = editor.c.fromHTML(
 				'<form class="jodit-form jodit-form__inserter">' +
-					'<label class="jodit-form__center">' +
-					'<span>1</span> &times; <span>1</span>' +
-					'</label>' +
 					'<div class="jodit-form__table-creator-box">' +
 					'<div class="jodit-form__container"></div>' +
 					'<div class="jodit-form__options">' +
 					generateExtraClasses() +
 					'</div>' +
 					'</div>' +
+					'<label class="jodit-form__center">' +
+					'<span>1</span> &times; <span>1</span>' +
+					'</label>' +
 					'</form>'
 			) as HTMLFormElement,
 			rows: HTMLSpanElement = form.querySelectorAll('span')[0],
@@ -208,11 +214,7 @@ Config.prototype.controls.table = {
 
 				if (first_td) {
 					editor.s.setCursorIn(first_td);
-					scrollIntoView(
-						first_td,
-						editor.editor,
-						editor.ed
-					);
+					scrollIntoView(first_td, editor.editor, editor.ed);
 				}
 
 				close();

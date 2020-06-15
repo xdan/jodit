@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
 import autobind from 'autobind-decorator';
 
 import { Plugin } from '../../core/plugin';
@@ -113,7 +119,7 @@ export class selectCells extends Plugin {
 			'showPopup',
 			table,
 			(): IBound => position(cell, this.j),
-			'table-cells'
+			'cells'
 		);
 	}
 
@@ -132,10 +138,7 @@ export class selectCells extends Plugin {
 			return;
 		}
 
-		const node = this.j.ed.elementFromPoint(
-			e.clientX,
-			e.clientY
-		);
+		const node = this.j.ed.elementFromPoint(e.clientX, e.clientY);
 
 		if (!node) {
 			return;
@@ -213,10 +216,7 @@ export class selectCells extends Plugin {
 
 		this.j.unlock();
 
-		const node = this.j.ed.elementFromPoint(
-			e.clientX,
-			e.clientY
-		);
+		const node = this.j.ed.elementFromPoint(e.clientX, e.clientY);
 
 		if (!node) {
 			return;
@@ -255,7 +255,7 @@ export class selectCells extends Plugin {
 					height: maxOffset.top - minOffset.top + maxOffset.height
 				};
 			},
-			'table-cells'
+			'cells'
 		);
 
 		$$('table', this.j.editor).forEach(table => {

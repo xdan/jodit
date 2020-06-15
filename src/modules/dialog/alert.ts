@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 import { Dialog } from './dialog';
 import { asArray, isFunction } from '../../core/helpers/';
 import { Dom } from '../../core/dom';

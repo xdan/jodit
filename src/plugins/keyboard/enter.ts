@@ -219,11 +219,17 @@ export class enter extends Plugin {
 	}
 
 	private checkBR(current: Node, shiftKeyPressed: boolean): boolean {
+		const isMultyLineBlock = Dom.closest(
+			current,
+			['pre', 'blockquote'],
+			this.j.editor
+		);
+
 		// if use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
 		if (
 			this.brMode ||
-			shiftKeyPressed ||
-			Dom.closest(current, ['pre', 'blockquote'], this.j.editor)
+			(shiftKeyPressed && !isMultyLineBlock) ||
+			(!shiftKeyPressed && isMultyLineBlock)
 		) {
 			const br = this.j.createInside.element('br');
 
@@ -268,8 +274,7 @@ export class enter extends Plugin {
 			Dom.prev(
 				current,
 				(elm: Node | null) =>
-					Dom.isBlock(elm, editor.ew) ||
-					Dom.isImage(elm, editor.ew),
+					Dom.isBlock(elm, editor.ew) || Dom.isImage(elm, editor.ew),
 				editor.editor
 			)
 		);

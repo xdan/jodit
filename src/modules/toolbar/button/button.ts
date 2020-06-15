@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
 import './button.less';
 
 import {
@@ -79,7 +85,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 
 	/** @override */
 	protected onChangeText(): void {
-		if (!this.control.list && isFunction(this.control.template)) {
+		if (isFunction(this.control.template)) {
 			this.text.innerHTML = this.control.template(
 				this.j,
 				this.control.name,
@@ -217,7 +223,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 
 		state.name = control.name;
 
-		if (this.j.o.textIcons) {
+		if (this.j.o.textIcons || control.template) {
 			state.icon = UIButtonState().icon;
 			state.text = control.text || control.name;
 		} else {
@@ -346,10 +352,10 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 
 			const childControl: IControlTypeStrong = {
 				name: key.toString(),
-				template: control.template,
+				template: control.childTemplate,
 				exec: control.exec,
 				command: control.command,
-				isActive: control.isActiveChild,
+				isActive: control.isChildActive,
 				isDisabled: control.isChildDisabled,
 				mode: control.mode,
 				args: [...(control.args ? control.args : []), key, value]

@@ -37,11 +37,11 @@ Config.prototype.controls.fontsize = ({
 		);
 	},
 
-	template: (editor, key: string, value: string) => value,
+	childTemplate: (editor, key: string, value: string) => value,
 
 	tooltip: 'Font size',
 
-	isActiveChild: (editor, control: IControlType): boolean => {
+	isChildActive: (editor, control: IControlType): boolean => {
 		const current = editor.s.current();
 
 		if (current) {
@@ -117,11 +117,11 @@ Config.prototype.controls.font = ({
 		'Verdana,Geneva,sans-serif': 'Verdana'
 	},
 
-	template: (editor, key: string, value: string) => {
+	childTemplate: (editor, key: string, value: string) => {
 		return `<span style="font-family: ${key}!important;">${value}</span>`;
 	},
 
-	isActiveChild: (editor, control: IControlType): boolean => {
+	isChildActive: (editor, control: IControlType): boolean => {
 		const current = editor.s.current(),
 			normFonts = (fontValue: string): string => {
 				return fontValue
@@ -162,8 +162,7 @@ Config.prototype.controls.font = ({
 				Dom.closest(
 					current,
 					(elm: Node | null) =>
-						Dom.isBlock(elm, editor.ew) ||
-						Dom.isElement(elm),
+						Dom.isBlock(elm, editor.ew) || Dom.isElement(elm),
 
 					editor.editor
 				) || editor.editor;

@@ -1,3 +1,9 @@
+/*!
+ *  Jodit Editor (https://xdsoft.net/jodit/)
+ *  Released under MIT see LICENSE.txt in the project root for license information.
+ *  Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
 import { CanUndef, IDictionary } from '../../types';
 import { error, isFunction, isPlainObject, splitArray } from '../helpers';
 import { ObserveObject } from '../events';
@@ -30,7 +36,7 @@ export function watch(observeFields: string[] | string) {
 			throw error('Handler must be a Function');
 		}
 
-		target.hookStatus(STATUSES.ready, (component: IDictionary) => {
+		const process = (component: IDictionary) => {
 			const callback = (key: string, ...args: any[]) => {
 				if (!component.isInDestruct) {
 					component[propertyKey](key, ...args);
@@ -51,39 +57,44 @@ export function watch(observeFields: string[] | string) {
 				} else {
 					const descriptor = getPropertyDescriptor(target, key);
 
-					!Object.getOwnPropertyDescriptor(component, key) &&
-						Object.defineProperty(component, key, {
-							configurable: true,
-							set(v: any): void {
-								const oldValue = value;
+					Object.defineProperty(component, key, {
+						configurable: true,
+						set(v: any): void {
+							const oldValue = value;
 
-								if (oldValue === v) {
-									return;
-								}
-
-								value = v;
-								if (descriptor && descriptor.set) {
-									descriptor.set.call(component, v);
-								}
-
-								if (isPlainObject(value)) {
-									value = ObserveObject.create(value, [key]);
-									value.on('change.' + field, callback);
-								}
-
-								callback(key, oldValue, value);
-							},
-							get(): any {
-								if (descriptor && descriptor.get) {
-									return descriptor.get.call(component);
-								}
-
-								return value;
+							if (oldValue === v) {
+								return;
 							}
-						});
+
+							value = v;
+							if (descriptor && descriptor.set) {
+								descriptor.set.call(component, v);
+							}
+
+							if (isPlainObject(value)) {
+								value = ObserveObject.create(value, [key]);
+								value.on('change.' + field, callback);
+							}
+
+							callback(key, oldValue, value);
+						},
+						get(): any {
+							if (descriptor && descriptor.get) {
+								return descriptor.get.call(component);
+							}
+
+							return value;
+						}
+					});
 				}
 			});
-		});
+		};
+
+		if (isFunction(target.hookStatus)) {
+			target.hookStatus(STATUSES.ready, process);
+		} else {
+			process(target);
+		}
 	};
 }
 

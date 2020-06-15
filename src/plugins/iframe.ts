@@ -381,11 +381,7 @@ export function iframe(editor: IJodit) {
 							resizeIframe
 						)
 						.on(
-							[
-								editor.iframe,
-								editor.ew,
-								doc.documentElement
-							],
+							[editor.iframe, editor.ew, doc.documentElement],
 							'load',
 							resizeIframe
 						)
