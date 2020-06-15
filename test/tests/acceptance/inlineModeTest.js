@@ -359,7 +359,7 @@ describe('Test Inline mode', function() {
 					it('Should now show inline popup for link', function() {
 						const editor = new Jodit(appendTestDiv(), {
 							toolbarInline: true,
-							toolbarInlineDisableFor: ['A', 'table-cells']
+							toolbarInlineDisableFor: ['A', 'cells']
 						});
 
 						editor.value =
@@ -653,7 +653,7 @@ describe('Test Inline mode', function() {
 							const editor = new Jodit(appendTestDiv(), {
 								iframe: true,
 								toolbarInline: true,
-								toolbarInlineDisableFor: ['A', 'table-cells'],
+								toolbarInlineDisableFor: ['A', 'cells'],
 								events: {
 									afterConstructor: function(editor) {
 										editor.value =

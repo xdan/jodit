@@ -323,6 +323,7 @@ describe('Test object observer', function() {
 
 				expect(counter).to.deep.equal(['some.element.one']);
 			});
+
 			it('Should fire event with old and new Value', function() {
 				const counter = [];
 
@@ -341,6 +342,30 @@ describe('Test object observer', function() {
 				expect(counter).to.deep.equal([
 					'some.element.one', 1, 2,
 					'some.element.one', 2, 3
+				]);
+			});
+		});
+
+		describe('Change watched property', function() {
+			it('Should fire handler', function() {
+				const counter = [], obj = {
+					mode: 'top',
+					methodA: function () {
+						counter.push(obj.mode);
+					}
+				};
+
+				Jodit.decorators.watch('mode')(obj, 'methodA');
+
+				expect(obj.mode).equals('top');
+
+				obj.mode = 'left';
+
+				expect(obj.mode).equals('left');
+				expect(obj.mode).equals('left');
+
+				expect(counter).to.deep.equal([
+					'left'
 				]);
 			});
 		});

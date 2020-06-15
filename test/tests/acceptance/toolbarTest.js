@@ -897,7 +897,7 @@ describe('Toolbar', function() {
 											'&nbsp;{{test' + key + '}}&nbsp;'
 										);
 									},
-									template: function(key, value) {
+									childTemplate: function(key, value) {
 										return '<div>' + value + '</div>';
 									}
 								}
@@ -948,7 +948,7 @@ describe('Toolbar', function() {
 											'&nbsp;{{test' + key + '}}&nbsp;'
 										);
 									},
-									template: function(key, value) {
+									childTemplate: function(key, value) {
 										return '<div>' + value + '</div>';
 									}
 								}

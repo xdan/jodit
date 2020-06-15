@@ -32,9 +32,8 @@ describe('Placeholder plugin', function() {
 				area.value = '<p><br></p>';
 				const editor = new Jodit(area);
 
-				expect(
-					editor.container.querySelector('.jodit-placeholder')
-				).is.not.null;
+				expect(editor.container.querySelector('.jodit-placeholder')).is
+					.not.null;
 			});
 		});
 
@@ -44,9 +43,8 @@ describe('Placeholder plugin', function() {
 				area.value = '<ul><li><br></li></ul>';
 				const editor = new Jodit(area);
 
-				expect(
-					editor.container.querySelector('.jodit-placeholder')
-				).is.not.null;
+				expect(editor.container.querySelector('.jodit-placeholder')).is
+					.not.null;
 			});
 		});
 	});
@@ -86,6 +84,31 @@ describe('Placeholder plugin', function() {
 					editor.container.querySelector('.jodit-placeholder').style
 						.fontSize === '12px'
 			).is.true;
+		});
+	});
+
+	describe('For different align', function() {
+		it("Should set Placeholder's text-align", function() {
+			const editor = getJodit();
+
+			editor.value = '<p><br></p>'
+			editor.s.setCursorIn(editor.editor.firstChild);
+
+			clickTrigger('left', editor);
+			const list = getOpenedPopup(editor);
+			clickButton('right', list);
+
+			const placeholder = editor.container.querySelector(
+				'[data-ref="placeholder"]'
+			);
+
+			expect(placeholder.style.textAlign === 'right').is.true;
+
+			clickTrigger('left', editor);
+			const list2 = getOpenedPopup(editor);
+			clickButton('center', list2);
+
+			expect(placeholder.style.textAlign === 'center').is.true;
 		});
 	});
 

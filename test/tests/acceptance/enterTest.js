@@ -56,9 +56,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.s.insertNode(
-						editor.createInside.text(' a ')
-					);
+					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(sortAttributes(editor.value)).equals(
 						'<!DOCTYPE html><html lang="en" style="overflow-y:hidden">' +
@@ -220,9 +218,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.s.insertNode(
-						editor.createInside.text(' a ')
-					);
+					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(editor.value).equals(
 						'<p><br></p><p> a Some text</p>'
@@ -285,19 +281,13 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					editor.s.focus();
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-					editor.s.insertNode(
-						editor.createInside.text('test')
-					);
+					editor.s.insertNode(editor.createInside.text('test'));
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-					editor.s.insertNode(
-						editor.createInside.text('test2')
-					);
+					editor.s.insertNode(editor.createInside.text('test2'));
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-					editor.s.insertNode(
-						editor.createInside.text('test3')
-					);
+					editor.s.insertNode(editor.createInside.text('test3'));
 
 					expect(editor.value).equals(
 						'<p><br></p><p>test</p><p>test2</p><p>test3<br></p>'
@@ -381,9 +371,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							editor.editor
 						);
 
-						editor.s.insertNode(
-							editor.createInside.text('a ')
-						);
+						editor.s.insertNode(editor.createInside.text('a '));
 
 						expect(editor.value).equals(
 							'<p>Split paragraph</p><p>a <br></p><p>Test</p>'
@@ -416,9 +404,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							editor.editor
 						);
 
-						editor.s.insertNode(
-							editor.createInside.text('a ')
-						);
+						editor.s.insertNode(editor.createInside.text('a '));
 
 						expect(editor.value).equals(
 							'<p><br></p><p>a Split paragraph</p><p>Test</p>'
@@ -449,9 +435,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							editor.editor
 						);
 
-						editor.s.insertNode(
-							editor.createInside.text('a ')
-						);
+						editor.s.insertNode(editor.createInside.text('a '));
 
 						expect(sortAttributes(editor.value)).to.be.equal(
 							'<p style="color:#FF0000;text-align:right">Split paragraph</p><p style="color:#FF0000;text-align:right">a <br></p><p>Test</p>'
@@ -519,10 +503,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-				editor.s.insertNode(
-					editor.createInside.text('text'),
-					false
-				);
+				editor.s.insertNode(editor.createInside.text('text'), false);
 
 				expect(editor.value).equals(
 					'<table><tbody><tr><td>test</td></tr></tbody></table><p>text<br></p>'
@@ -570,22 +551,102 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('In PRE tag', function() {
+		describe('In PRE or BLOCKQUOTE tag', function() {
 			it('Should add <br> element', function() {
 				const editor = getJodit();
 
 				editor.value = '<pre>test</pre>';
 
-				editor.s.setCursorIn(
-					editor.editor.querySelector('pre'),
-					false
-				);
+				editor.s.setCursorIn(editor.editor.querySelector('pre'), false);
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 				editor.s.insertNode(editor.createInside.text('split'));
 
-				expect('<pre>test<br>split</pre>').equals(
-					sortAttributes(editor.value)
+				expect(sortAttributes(editor.value)).equals(
+					'<pre>test<br>split</pre>'
 				);
+			});
+
+			describe('with SHIFT button', function() {
+				describe('In the end', function() {
+					it('should add new P element after PRE', function() {
+						const editor = getJodit();
+
+						editor.value = '<pre>test</pre>';
+
+						editor.s
+							.createRange(true)
+							.setStart(editor.editor.firstChild.firstChild, 4);
+
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_ENTER,
+							editor.editor,
+							function(options) {
+								options.shiftKey = true;
+							}
+						);
+
+						editor.s.insertNode(editor.createInside.text('split '));
+
+						expect(editor.value).equals(
+							'<pre>test</pre><p>split <br></p>'
+						);
+					});
+				});
+
+				describe('In the start', function() {
+					it('should add new P element before blockquote', function() {
+						const editor = getJodit();
+
+						editor.value = '<blockquote>test</blockquote>';
+
+						editor.s
+							.createRange(true)
+							.setStart(editor.editor.firstChild.firstChild, 0);
+
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_ENTER,
+							editor.editor,
+							function(options) {
+								options.shiftKey = true;
+							}
+						);
+
+						editor.s.insertNode(editor.createInside.text('split '));
+
+						expect(editor.value).equals(
+							'<p><br></p><blockquote>split test</blockquote>'
+						);
+					});
+				});
+
+				describe('In the middle', function() {
+					it('should split PRE element', function() {
+						const editor = getJodit();
+
+						editor.value = '<pre>test</pre>';
+
+						editor.s
+							.createRange(true)
+							.setStart(editor.editor.firstChild.firstChild, 2);
+
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_ENTER,
+							editor.editor,
+							function(options) {
+								options.shiftKey = true;
+							}
+						);
+
+						editor.s.insertNode(editor.createInside.text('split '));
+
+						expect(editor.value).equals(
+							'<pre>te</pre><pre>split st</pre>'
+						);
+					});
+				});
 			});
 		});
 
@@ -607,9 +668,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							Jodit.KEY_ENTER,
 							editor.editor
 						);
-						editor.s.insertNode(
-							editor.createInside.text('split')
-						);
+						editor.s.insertNode(editor.createInside.text('split'));
 
 						expect(
 							'<ul>' +
@@ -637,9 +696,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							Jodit.KEY_ENTER,
 							editor.editor
 						);
-						editor.s.insertNode(
-							editor.createInside.text('split')
-						);
+						editor.s.insertNode(editor.createInside.text('split'));
 
 						expect(
 							'<ul>' + '<li>test</li>' + '</ul>split<br>'
@@ -668,9 +725,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 						false
 					);
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-					editor.s.insertNode(
-						editor.createInside.text('split')
-					);
+					editor.s.insertNode(editor.createInside.text('split'));
 
 					expect(
 						'<table>' +
@@ -709,9 +764,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							Jodit.KEY_ENTER,
 							editor.editor
 						);
-						editor.s.insertNode(
-							editor.createInside.text('split ')
-						);
+						editor.s.insertNode(editor.createInside.text('split '));
 
 						expect(
 							'<ul>' +
@@ -740,9 +793,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.s.insertNode(
-						editor.createInside.text(' a ')
-					);
+					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(editor.value).equals('<p> a <br></p>');
 				});
@@ -766,9 +817,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.s.insertNode(
-						editor.createInside.text(' a ')
-					);
+					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(editor.value).equals(
 						'<ul><li>Some text</li></ul><p> a <br></p>'
@@ -792,9 +841,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.s.insertNode(
-						editor.createInside.text(' a ')
-					);
+					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(editor.value).equals(
 						'<ul><li>Test</li></ul><p> a <br></p><ul><li>Some text</li></ul>'
@@ -820,9 +867,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.s.insertNode(
-						editor.createInside.text(' a ')
-					);
+					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(editor.value).equals(
 						'<ul><li><br></li><li> a Some text</li></ul>'
@@ -845,9 +890,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.s.insertNode(
-						editor.createInside.text(' a ')
-					);
+					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(editor.value).equals(
 						'<p> a <br></p><ul><li>Some text</li></ul>'
@@ -874,9 +917,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.s.insertNode(
-						editor.createInside.text(' a ')
-					);
+					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(editor.value).equals(
 						'<ul>' +
@@ -909,9 +950,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.s.insertNode(
-						editor.createInside.text(' a ')
-					);
+					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(editor.value).equals('Some text<br><br><br> a ');
 				});

@@ -71,7 +71,7 @@ editor.events.on(document.querySelector('div'), 'click', function (e) {
 const editor = Jodit.make('#editor');
 editor.s.applyStyle({color: 'red'}) // will add to all selection text - red color
 ```
-* `FileBrowser`, `Dialog` etc. modules which extends `View` has only one argument in the constructor - options.
+* `FileBrowser`, `Dialog` etc. modules which extend `View` has only one argument in the constructor - options.
 Before:
 ```js
 const editor = Jodit.make('#editor');
@@ -119,8 +119,8 @@ Jodit.make('#editor', {table: {
 	useExtraClassesOptions: true
 }});
 ```
-* All `less` files were moved near with TS. Classnaming was changed closer to BEM.
-* Removed `PopupList` and `Popup`. Instead use only `PopupMenu`.
+* All `less` files were moved near with TS. Class naming was changed closer to BEM.
+* Removed `PopupList` and `Popup`. Instead, use only `PopupMenu`.
 * Added `ui.button` and `ui.list` for working with buttons. `toolbar.button` extends `ui.button`.
 UIButton - is reactive:
 ```js
@@ -139,7 +139,7 @@ button
     .appendTo(document.body); // will append it inside the body
 ```
 * In `tsconfig` added decorators supports.
-Methods which need binding binds with `@autobind` decorator.
+Methods that need binding binds with `@autobind` decorator.
 * Added `watch` decorator.
 * All filenames were renamed to kebab-case.
 * Added short aliases for. Can be used as chain - `this.j.e.on`
@@ -282,7 +282,7 @@ Jodit.make('#editor', {
 	ownerDocument: doc
 });
 ```
-Fixed bug with ProgressBar - it simple does not work(
+Fixed bug with ProgressBar - it simply does not work(
 
 ### Feature
 Source plugin was separated on several classes. Now you can choose SourceEditor
@@ -314,7 +314,7 @@ editor.async.setTimeout(() => {
 
 editor.destruct();
 ```
-After destruct first timeout will throw the error, but second will be cleared.
+After destruct the first timeout will throw the error, but second will be cleared.
 
 Added two methods setPanel and addPlace
 ```html
@@ -397,13 +397,13 @@ https://sitename.com/somepath/plugins/emoji/emoji.js
 https://sitename.com/somepath/plugins/emoji/emoji.css
 ```
 
-In `plugins/example` folder you can find example.
+In `plugins/example` folder you can find an example.
 
-extraPlugins option allows append in editor extra plugins from npm, bower etc.
+extraPlugins option allows appending in editor extra plugins from npm, bower etc.
 
 ### Build System
 
-In Build system was added gulp subsystem for build extra plugins.
+In Build system was added gulp subsystem to build extra plugins.
 You can make extra plugins like `plugins/example` and after build,
 this plugin will not be inside `jodit.min.js` file. It will be in separate
 folder (eg `build/plugins/emoji/`).
@@ -502,7 +502,7 @@ Jodit.Confirm("Are you shure?", function (yes) {
 ```
 
 ### 2.5.49
-First step for Mobile friendly [sizeLG,sizeMD,sizeSM](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#sizeLG) and sets of buttons for different sizes editors.
+First step for Mobile-friendly [sizeLG,sizeMD,sizeSM](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#sizeLG) and sets of buttons for different sizes editors.
 > `Note`. this is not the width of the device, the width of the editor
 
 * buttons The list of buttons that appear in the editor's toolbar on large places (≥ options.sizeLG).

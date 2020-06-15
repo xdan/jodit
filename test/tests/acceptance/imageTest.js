@@ -1157,6 +1157,160 @@ describe('Test image', function() {
 				document.body.removeChild(div);
 			});
 		});
+
+		describe('Click on button', function() {
+			describe('H Align', function() {
+				describe('Right', function() {
+					it('Should change img H align to right', function() {
+						const editor = getJodit();
+						editor.value =
+							'<p><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
+
+						simulateEvent('click', editor.editor.querySelector('img'));
+
+						const popup = getOpenedPopup(editor);
+						clickTrigger('left', popup);
+						const list = getOpenedPopup(editor);
+
+						clickButton('Right', list);
+
+						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="float:right;height:100px;width:100px"></p>');
+					});
+				});
+
+				describe('Left', function() {
+					it('Should change img H align to left', function() {
+						const editor = getJodit();
+						editor.value =
+							'<p><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
+
+						simulateEvent('click', editor.editor.querySelector('img'));
+
+						const popup = getOpenedPopup(editor);
+						clickTrigger('left', popup);
+						const list = getOpenedPopup(editor);
+
+						clickButton('Left', list);
+
+						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="float:left;height:100px;width:100px"></p>');
+					});
+				});
+
+				describe('Center', function() {
+					it('Should change img H align to center', function() {
+						const editor = getJodit();
+						editor.value =
+							'<p><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
+
+						simulateEvent('click', editor.editor.querySelector('img'));
+
+						const popup = getOpenedPopup(editor);
+						clickTrigger('left', popup);
+						const list = getOpenedPopup(editor);
+
+						clickButton('Center', list);
+
+						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="display:block;height:100px;margin-left:auto;margin-right:auto;width:100px"></p>');
+					});
+				});
+
+				describe('Normal', function() {
+					it('Should change img H align to center', function() {
+						const editor = getJodit();
+						editor.value =
+							'<p><img style="width:100px; height: 100px; float: right" src="tests/artio.jpg"/></p>';
+
+						simulateEvent('click', editor.editor.querySelector('img'));
+
+						const popup = getOpenedPopup(editor);
+						clickTrigger('left', popup);
+						const list = getOpenedPopup(editor);
+
+						clickButton('Normal', list);
+
+						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="height:100px;width:100px"></p>');
+					});
+				});
+			});
+
+			describe('V Align', function() {
+				describe('Top', function() {
+					it('Should change img V align to top', function() {
+						const editor = getJodit();
+						editor.value =
+							'<p><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
+
+						simulateEvent('click', editor.editor.querySelector('img'));
+
+						const popup = getOpenedPopup(editor);
+
+						clickTrigger('valign', popup);
+						const list = getOpenedPopup(editor);
+
+						clickButton('Top', list);
+
+						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="height:100px;vertical-align:top;width:100px"></p>');
+					});
+				});
+
+				describe('Bottom', function() {
+					it('Should change img V align to bottom', function() {
+						const editor = getJodit();
+						editor.value =
+							'<p><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
+
+						simulateEvent('click', editor.editor.querySelector('img'));
+
+						const popup = getOpenedPopup(editor);
+
+						clickTrigger('valign', popup);
+						const list = getOpenedPopup(editor);
+
+						clickButton('Bottom', list);
+
+						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="height:100px;vertical-align:bottom;width:100px"></p>');
+					});
+				});
+
+				describe('Middle', function() {
+					it('Should change img V align to Middle', function() {
+						const editor = getJodit();
+						editor.value =
+							'<p><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
+
+						simulateEvent('click', editor.editor.querySelector('img'));
+
+						const popup = getOpenedPopup(editor);
+
+						clickTrigger('valign', popup);
+						const list = getOpenedPopup(editor);
+
+						clickButton('Middle', list);
+
+						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="height:100px;vertical-align:middle;width:100px"></p>');
+					});
+				});
+
+				describe('Normal', function() {
+					it('Should change img V align to Normal', function() {
+						const editor = getJodit();
+						editor.value =
+							'<p><img style="width:100px; vertical-align:middle; height: 100px;" src="tests/artio.jpg"/></p>';
+
+						simulateEvent('click', editor.editor.querySelector('img'));
+
+						const popup = getOpenedPopup(editor);
+
+						clickTrigger('valign', popup);
+						const list = getOpenedPopup(editor);
+
+						clickButton('Normal', list);
+
+						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="height:100px;width:100px"></p>');
+					});
+				});
+			});
+		});
 	});
 
 	describe('Resize box', function() {

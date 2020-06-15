@@ -65,6 +65,15 @@
 			"check-type",
 			"check-type-operator",
 			"check-preblock"
+		],
+		"file-header": [
+			true,
+			{
+				"match": "Jodit Editor",
+				"allow-single-line-comments": false,
+				"default": "Jodit Editor (https://xdsoft.net/jodit/)\nReleased under MIT see LICENSE.txt in the project root for license information.\nCopyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net",
+				"enforce-trailing-newline": false
+			}
 		]
 	},
 	"rulesDirectory": []

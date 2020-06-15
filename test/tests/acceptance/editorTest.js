@@ -517,7 +517,7 @@ describe('Jodit Editor Tests', function() {
 					editor.events.on('beforeGetValueFromEditor', function() {
 						return editor
 							.getNativeEditorValue()
-							.replace(/\{%[^\}]+%\}/g, function(match) {
+							.replace(/{%[^}]+%}/g, function(match) {
 								return match
 									.replace(/&gt;/g, '>')
 									.replace(/&lt;/g, '<');
