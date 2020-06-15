@@ -56,12 +56,12 @@ export function errorMessages(editor: IJodit) {
 			};
 
 		/**
-		 * Вывести всплывающее сообщение внизу редактора
+		 * Show popup error in the bottom of editor
 		 *
 		 * @event errorMessage
-		 * @param {string} message  Сообщение
-		 * @param {string} className Дополнительный класс собобщения. Допускаются info, error, success
-		 * @param {string} timeout Сколько миллисекунд показывать. По умолчанию используется
+		 * @param message
+		 * @param className Additional class for status. Allow: info, error, success
+		 * @param timeout How many seconds show error
 		 * options.showMessageErrorTime = 2000
 		 * @example
 		 * ```javascript

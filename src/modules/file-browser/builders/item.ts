@@ -40,7 +40,8 @@ export class FileBrowserItem implements IFileBrowserItemWrapper {
 	}
 
 	get fileURL(): string {
-		let { name, file, fileIsAbsolute, source } = this.data;
+		let { name } = this.data;
+		const { file, fileIsAbsolute, source } = this.data;
 
 		if (file !== undefined) {
 			name = file;

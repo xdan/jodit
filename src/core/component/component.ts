@@ -142,7 +142,7 @@ export abstract class Component implements IComponent {
 		return this;
 	}
 
-	constructor() {
+	protected constructor() {
 		this.componentName = 'jodit-' + kebabCase(getClassName(this));
 		this.uid = 'jodit-uid-' + uniqueUid();
 	}

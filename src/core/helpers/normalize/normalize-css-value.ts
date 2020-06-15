@@ -7,7 +7,7 @@
 import { isNumeric } from '../checker/';
 import { kebabCase } from '../string';
 
-export function 	normalizeCssValue(
+export function normalizeCssValue(
 	key: string,
 	value: string | number
 ): string | number {

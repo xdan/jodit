@@ -13,7 +13,7 @@ export function isValidName(name: string): boolean {
 		return false;
 	}
 
-	if (/[^0-9A-Za-zа-яА-ЯЁё\w\-_\.]/.test(name)) {
+	if (/[^0-9A-Za-zа-яА-ЯЁё\w\-_.]/.test(name)) {
 		return false;
 	}
 

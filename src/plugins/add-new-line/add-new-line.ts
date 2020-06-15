@@ -33,7 +33,7 @@ Config.prototype.addNewLine = true;
 Config.prototype.addNewLineOnDBLClick = true;
 
 /**
- * Whar kind of tags it will be impact
+ * What kind of tags it will be impact
  * @type {string[]}
  */
 Config.prototype.addNewLineTagsTriggers = [

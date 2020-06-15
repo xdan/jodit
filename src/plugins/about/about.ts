@@ -9,7 +9,7 @@ import './about.less';
 import { Config } from '../../config';
 import { IControlType, IJodit } from '../../types';
 import { isLicense, normalizeLicense } from '../../core/helpers/';
-import * as consts from '../../core/constants';
+import * as constants from '../../core/constants';
 import { Dialog } from '../../modules/dialog';
 
 Config.prototype.controls.about = {
@@ -49,7 +49,7 @@ Config.prototype.controls.about = {
 		dialog.bindDestruct(editor);
 	},
 	tooltip: 'About Jodit',
-	mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
+	mode: constants.MODE_SOURCE + constants.MODE_WYSIWYG
 } as IControlType;
 
 export function about() {

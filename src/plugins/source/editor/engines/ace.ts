@@ -5,7 +5,7 @@
  */
 
 import { IJodit, ISourceEditor } from '../../../../types';
-import * as consts from '../../../../core/constants';
+import * as constants from '../../../../core/constants';
 import { isString, loadNext } from '../../../../core/helpers';
 import { SourceEditor } from '../sourceEditor';
 
@@ -37,7 +37,7 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 	}
 
 	private updateButtons() {
-		if (this.undoManager && this.j.getRealMode() === consts.MODE_SOURCE) {
+		if (this.undoManager && this.j.getRealMode() === constants.MODE_SOURCE) {
 			this.j.e.fire('canRedo', this.undoManager.hasRedo());
 			this.j.e.fire('canUndo', this.undoManager.hasUndo());
 		}
@@ -147,7 +147,7 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 			this.instance.on('focus', this.proxyOnFocus);
 			this.instance.on('mousedown', this.proxyOnMouseDown);
 
-			if (editor.getRealMode() !== consts.MODE_WYSIWYG) {
+			if (editor.getRealMode() !== constants.MODE_WYSIWYG) {
 				this.setValue(this.getValue());
 			}
 
@@ -179,8 +179,8 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 		editor.e
 			.on('afterSetMode', () => {
 				if (
-					editor.getRealMode() !== consts.MODE_SOURCE &&
-					editor.getMode() !== consts.MODE_SPLIT
+					editor.getRealMode() !== constants.MODE_SOURCE &&
+					editor.getMode() !== constants.MODE_SPLIT
 				) {
 					return;
 				}
@@ -190,7 +190,7 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 			})
 			.on('beforeCommand', (command: string): false | void => {
 				if (
-					editor.getRealMode() !== consts.MODE_WYSIWYG &&
+					editor.getRealMode() !== constants.MODE_WYSIWYG &&
 					(command === 'redo' || command === 'undo') &&
 					this.undoManager
 				) {
