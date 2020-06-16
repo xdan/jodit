@@ -4,10 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../../../styles/variables';
+@import '../../../styles/variables';
 @import (reference) '../../../styles/mixins';
-
-@color-button-background-hover: #dcdcdc;
 
 .button-size(@size) {
 	@plus: (@size - 4px) * 2;
@@ -28,19 +26,19 @@
 
 .jodit-ui-button-interaction() {
 	&:hover:not([disabled]) {
-		background-color: @color-button-background-hover;
+		background-color: var(--color-button-background-hover);
 		outline: 0;
 		opacity: 1;
 	}
 
 	&:active:not([disabled]),
 	&[aria-pressed='true']:not([disabled]) {
-		background-color: fade(@color-button-background-hover, 40);
+		background-color: var(--color-button-background-hover_opacity40);
 		outline: 0;
 	}
 
 	&[aria-pressed='true']:hover:not([disabled]) {
-		background-color: fade(@color-button-background-hover, 60);
+		background-color: var(--color-button-background-hover_opacity60);
 	}
 
 	&[disabled] {
@@ -71,13 +69,13 @@
 
 	&_context_menu &__text {
 		justify-content: left;
-		padding-left: @padding-default;
+		padding-left: var(--padding-default);
 		position: relative;
 
 		&::before {
 			content: '';
 			position: absolute;
-			border-left: 1px solid @color-border;
+			border-left: 1px solid var(--color-border);
 			height: 35px;
 			top: -@padding-default;
 			left: 0;
@@ -85,11 +83,11 @@
 	}
 
 	&__icon:not(:empty) + &__text:not(:empty) {
-		margin-left: @padding-default;
+		margin-left: var(--padding-default);
 	}
 
 	&__icon:empty + &__text:not(:empty) {
-		padding: 0 @padding-default;
+		padding: 0 var(--padding-default);
 	}
 }
 
@@ -154,8 +152,8 @@
 	justify-content: center;
 	align-items: center;
 
-	padding: 0 @padding-default;
-	border-radius: @border-radius-default;
+	padding: 0 var(--padding-default);
+	border-radius: var(--border-radius-default);
 }
 
 .jodit-ui-button {

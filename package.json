@@ -72,6 +72,7 @@
 		"mini-css-extract-plugin": "^0.4.5",
 		"mocha": "^7.2.0",
 		"optimize-css-assets-webpack-plugin": "^5.0.3",
+		"postcss-css-variables": "^0.17.0",
 		"postcss-loader": "^2.1.6",
 		"precss": "^2.0.0",
 		"prettier": "1.19.1",

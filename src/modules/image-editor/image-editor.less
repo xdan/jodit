@@ -4,12 +4,14 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../../styles/variables';
+@import '../../styles/variables';
 
-@image_editor_resizer_border_color: #05ff00;
-@image_editor_resizer_target_size: @padding-default;
-@image_editor_resizer_target_border_color: #383838;
-@image_editor_resizer_target_bg_color: #8c7878;
+:root {
+	--image_editor_resizer_border_color: #05ff00;
+	--image_editor_resizer_target_size: padding-default;
+	--image_editor_resizer_target_border_color: #383838;
+	--image_editor_resizer_target_bg_color: #8c7878;
+}
 
 .jodit-image-editor {
 	width: 100%;
@@ -29,7 +31,7 @@
 		}
 	}
 
-	padding: @padding-default;
+	padding: var(--padding-default);
 	overflow: hidden;
 
 	* {
@@ -51,7 +53,7 @@
 			line-height: 1em;
 
 			svg {
-				margin-right: @padding-default;
+				margin-right: var(--padding-default);
 				width: 16px;
 				display: inline-block;
 				vertical-align: middle;
@@ -82,19 +84,19 @@
 		background-color: #eee;
 		background-image: linear-gradient(
 				45deg,
-				@color-border 25%,
+				var(--color-border) 25%,
 				transparent 25%,
 				transparent 75%,
-				@color-border 75%,
-				@color-border
+				var(--color-border) 75%,
+				var(--color-border)
 			),
 			linear-gradient(
 				45deg,
-				@color-border 25%,
+				var(--color-border) 25%,
 				transparent 25%,
 				transparent 75%,
-				@color-border 75%,
-				@color-border
+				var(--color-border) 75%,
+				var(--color-border)
 			);
 		background-size: 30px 30px;
 		background-position: 0 0, 15px 15px;
@@ -131,22 +133,23 @@
 			box-shadow: 0 0 11px #000;
 			border: 1px solid #fff;
 			background-repeat: no-repeat;
-			top: @padding-default;
+			top: var(--padding-default);
 			left: 20px;
 			pointer-events: none;
 
 			i.jodit_bottomright {
 				position: absolute;
 				display: inline-block;
-				border: 1px solid @image_editor_resizer_target_border_color;
+				border: 1px solid
+					var(--image_editor_resizer_target_border_color);
 				z-index: 4;
-				background-color: @image_editor_resizer_target_bg_color;
+				background-color: var(--image_editor_resizer_target_bg_color);
 				cursor: se-resize;
-				border-radius: @padding-default;
+				border-radius: 50%;
 				height: 20px;
 				width: 20px;
-				right: -@padding-default;
-				bottom: -@padding-default;
+				right: calc(var(--padding-default) * -1);
+				bottom: calc(var(--padding-default) * -1);
 				box-shadow: 0 0 11px #000;
 				pointer-events: all;
 

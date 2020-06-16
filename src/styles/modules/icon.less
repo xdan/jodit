@@ -16,8 +16,8 @@
 .jodit-icon_loader {
 	background: data-uri('../icons/loader.png') no-repeat center;
 	background-size: 100% 100%;
-	width: @icon_loader_size;
-	height: @icon_loader_size;
+	width: var(--icon_loader_size);
+	height: var(--icon_loader_size);
 	display: inline-block;
 	vertical-align: middle;
 	will-change: transform;
@@ -27,7 +27,7 @@
 .jodit-icon {
 	.size(@icon-middle-size, @icon-middle-size);
 
-	fill: @color-icon;
+	fill: var(--color-icon);
 	transform-origin: 0 0 !important;
 	overflow: visible;
 	background: center no-repeat;
@@ -35,7 +35,7 @@
 }
 
 .jodit-icon_close {
-	stroke: @color-icon;
+	stroke: var(--color-icon);
 }
 
 svg.jodit-icon {

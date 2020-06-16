@@ -9,7 +9,7 @@
 .jodit_text_icons {
 	.jodit_icon {
 		width: auto;
-		font-size: @font-size-default;
+		font-size: var(--font-size-default);
 
 		&::first-letter {
 			text-transform: uppercase;
@@ -18,7 +18,7 @@
 
 	.jodit-tabs .jodit-tabs__buttons > a {
 		width: auto;
-		font-family: @font-default;
+		font-family: var(--font-default);
 
 		i {
 			width: auto;
@@ -29,11 +29,11 @@
 		width: auto;
 
 		> a {
-			padding: @padding-text-icons;
-			font-family: @font-default;
+			padding: var(--padding-text-icons);
+			font-family: var(--font-default);
 			width: auto;
 			text-decoration: none;
-			color: @color-text-icons;
+			color: var(--color-text-icons);
 			line-height: 1;
 		}
 	}
@@ -42,9 +42,9 @@
 		.jodit-dialog__header a,
 		.jodit-button {
 			width: auto;
-			padding: @padding-text-icons;
-			font-family: @font-default;
-			color: @color-text-icons;
+			padding: var(--padding-text-icons);
+			font-family: var(--font-default);
+			color: var(--color-text-icons);
 
 			.jodit_icon {
 				width: auto;

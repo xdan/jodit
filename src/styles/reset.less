@@ -4,21 +4,21 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) './variables';
+@import './variables';
 
 .jodit-wysiwyg {
 	outline: 0;
 
 	&::selection,
 	*::selection {
-		background: @color-background-selection;
-		color: @color-selection;
+		background: var(--color-background-selection);
+		color: var(--color-selection);
 	}
 }
 
 .jodit-container:not(.jodit_inline) .jodit-wysiwyg {
 	margin: 0;
-	padding: @padding-default;
+	padding: var(--padding-default);
 	outline: 0;
 	overflow-x: auto;
 	position: relative;
@@ -42,10 +42,10 @@
 	}
 
 	blockquote {
-		border-left: solid 2px @color-text;
+		border-left: solid 2px currentColor;
 		margin-left: 0;
-		padding-left: @padding-default / 2;
-		color: @color-text;
+		padding-left: calc(var(--padding-default) / 2);
+		color: var(--color-text);
 	}
 
 	// It is custom tag

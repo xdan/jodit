@@ -208,6 +208,7 @@ export abstract class View extends Component implements IViewBased {
 		this.events = new EventsNative(this.od);
 		this.create = new Create(this.od);
 		this.container = this.c.div();
+		this.container.classList.add('jodit');
 
 		this.progressbar = new ProgressBar(this);
 	}

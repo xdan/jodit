@@ -69,7 +69,7 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 		}
 
 		const box = c.element(tag, {
-			className: `jodit-${kebabCase(name)}-container jodit-box`
+			className: `jodit jodit-${kebabCase(name)}-container jodit-box`
 		});
 
 		body.appendChild(box);

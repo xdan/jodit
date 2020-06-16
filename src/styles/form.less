@@ -4,16 +4,16 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) './variables';
+@import './variables';
 @import (reference) './mixins';
 
 .jodit-form {
 	.font();
 
-	color: @color-default;
+	color: var(--color-default);
 
 	&.jodit_error {
-		border-color: @color-error;
+		border-color: var(--color-error);
 		box-shadow: inset 0 0 3px 0 rgba(189, 189, 189, 0.3);
 	}
 
@@ -24,8 +24,8 @@
 	button {
 		height: 36px;
 		line-height: 1;
-		color: @color-button;
-		padding: @padding-default;
+		color: var(--color-button);
+		padding: var(--padding-default);
 		cursor: pointer;
 		text-decoration: none;
 		border: none;
@@ -33,22 +33,22 @@
 		font-size: 16px;
 		outline: none;
 		transition: background 0.2s ease 0s;
-		margin-top: @padding-default;
-		margin-bottom: @padding-default;
+		margin-top: var(--padding-default);
+		margin-bottom: var(--padding-default);
 
 		&:hover {
-			background-color: @color-background-button-hover;
-			color: @color-button;
+			background-color: var(--color-background-button-hover);
+			color: var(--color-button);
 		}
 
 		&:active {
-			background: @color-background-button-hover;
-			color: @color-button;
+			background: var(--color-background-button-hover);
+			color: var(--color-button);
 		}
 	}
 
 	label {
-		margin-top: @padding-default;
+		margin-top: var(--padding-default);
 		text-align: left;
 		white-space: nowrap;
 		display: flex;
@@ -72,13 +72,13 @@
 	appearance: none;
 	outline: none;
 	box-sizing: border-box;
-	border: 1px solid @color-border;
+	border: 1px solid var(--color-border);
 	border-radius: 0;
-	background-color: @color-white;
+	background-color: var(--color-white);
 
 	&[disabled] {
 		background-color: #f0f0f0;
-		color: @color-border;
+		color: var(--color-border);
 	}
 }
 
@@ -100,8 +100,8 @@
 
 	&:checked::after {
 		background: data-uri('icons/ok.svg') no-repeat center center
-			@color-border-active;
-		border-color: @color-border-active;
+			var(--color-border)-active;
+		border-color: var(--color-border-active);
 	}
 }
 
@@ -114,14 +114,14 @@
 
 .jodit-textarea {
 	height: auto;
-	min-width: @width-input-min;
+	min-width: var(--width-input-min);
 }
 
 .jodit-form__group {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: @padding-default;
-	min-width: @width-input-min;
+	margin-bottom: var(--padding-default);
+	min-width: var(--width-input-min);
 }
 
 .jodit-button {
@@ -135,8 +135,8 @@
 	height: @padding-default * 4;
 	line-height: 1;
 	margin: 0;
-	background-color: @color-background-gray;
-	color: @color-default;
+	background-color: var(--color-background-gray);
+	color: var(--color-default);
 	cursor: pointer;
 	border: 0;
 	border-radius: 0.25rem;
@@ -166,7 +166,7 @@
 }
 
 .jodit-buttons {
-	margin-bottom: @padding-default;
+	margin-bottom: var(--padding-default);
 	display: flex;
 	flex-wrap: nowrap;
 	justify-content: space-between;

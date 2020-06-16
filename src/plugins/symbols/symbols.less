@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../../styles/variables';
+@import '../../styles/variables';
 
 .jodit-symbols {
 	width: 460px;
-	padding: @padding-default;
+	padding: var(--padding-default);
 
 	.jodit-symbols__container_table,
 	.jodit-symbols__container_preview {
@@ -27,7 +27,7 @@
 			font-size: 34px;
 			text-align: center;
 			padding: 20px 0;
-			border: 1px solid @color-border;
+			border: 1px solid var(--color-border);
 		}
 	}
 
@@ -42,19 +42,19 @@
 			a {
 				font-size: 16px;
 				text-decoration: none;
-				color: @color-default;
+				color: var(--color-default);
 				display: inline-block;
 				box-sizing: border-box;
-				width: @width_element_default * 1.2;
-				height: @height_element_default * 1.2;
+				width: calc(var(--width_element_default) * 1.2);
+				height: calc(var(--height_element_default) * 1.2);
 				border: 1px solid transparent;
 				text-align: center;
-				line-height: @height_element_default * 1.2;
+				line-height: calc(var(--height_element_default) * 1.2);
 				vertical-align: top;
 
 				&:hover,
 				&:focus {
-					border: 1px solid @color-border-selected;
+					border: 1px solid var(--color-border)-selected;
 				}
 			}
 		}

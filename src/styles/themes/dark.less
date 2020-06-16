@@ -4,76 +4,76 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../variables';
+@import '../variables';
 
 .jodit_dark_theme {
 	&.jodit-container {
-		background-color: @dark_background_color;
+		background-color: var(--dark_background_color);
 	}
 
 	.jodit_toolbar_list > .jodit_toolbar {
-		background-color: @dark_background_color;
+		background-color: var(--dark_background_color);
 	}
 
 	&.jodit-container.jodit_disabled {
-		background-color: @dark_background_color;
+		background-color: var(--dark_background_color);
 	}
 
 	&.jodit-container:not(.jodit_inline) .jodit-workplace {
-		border-color: @dark_background_color;
+		border-color: var(--dark_background_color);
 	}
 
 	.jodit-status-bar {
-		background-color: fade(@dark_toolbar_color, 80);
-		border-color: fade(@dark_background_color, 80%);
+		background-color: rgba(95, 92, 92, 0.8);
+		border-color: rgba(95, 92, 92, 0.8);
 
 		&,
 		.jodit-status-bar__item span {
-			color: @dark_text_color;
+			color: var(--dark_text_color);
 		}
 	}
 
 	.jodit_popup_triangle,
 	.jodit_toolbar_popup-inline,
 	.jodit_toolbar_popup {
-		background: @dark_background_color;
+		background: var(--dark_background_color);
 
 		&::before {
-			background: @dark_background_color;
+			background: var(--dark_background_color);
 		}
 	}
 
 	.jodit_toolbar {
-		background: @dark_toolbar_color;
-		border-color: fade(@dark_background_color, 80%);
+		background: var(--dark_toolbar_color);
+		border-color: var(--dark_background_color_opacity80);
 
 		li.jodit-toolbar-button {
 			> a {
-				color: @dark_text_color;
+				color: var(--dark_text_color);
 
 				&:hover {
-					background-color: @dark_background_color;
+					background-color: var(--dark_background_color);
 				}
 			}
 
 			&.jodit-toolbar-button-break {
-				border-top-color: @dark_toolbar_seperator_color2;
+				border-top-color: var(--dark_toolbar_seperator_color2);
 			}
 
 			&.jodit-toolbar-button-separator {
-				border-right-color: @dark_toolbar_seperator_color2;
+				border-right-color: var(--dark_toolbar_seperator_color2);
 			}
 
 			&.active,
 			&:active,
 			&:hover,
 			&.jodit_active {
-				background-color: @dark_background_color;
+				background-color: var(--dark_background_color);
 			}
 
 			&.jodit_with_dropdownlist {
 				.jodit_with_dropdownlist-trigger {
-					fill: @dark_icon_color;
+					fill: var(--dark_icon_color);
 				}
 			}
 		}
@@ -81,104 +81,104 @@
 
 	.jodit__upload-button svg,
 	.jodit_icon {
-		fill: @dark_icon_color;
+		fill: var(--dark_icon_color);
 	}
 
 	.jodit_icon_close {
-		stroke: @dark_icon_color;
+		stroke: var(--dark_icon_color);
 	}
 
 	.jodit-wysiwyg_iframe,
 	.jodit-wysiwyg {
-		background-color: @dark_background_color;
-		color: @dark_text_color;
+		background-color: var(--dark_background_color);
+		color: var(--dark_text_color);
 	}
 
 	.jodit_dropdownlist {
-		background: @dark_toolbar_color;
+		background: var(--dark_toolbar_color);
 	}
 
 	.jodit-tabs .jodit-tabs__buttons > a {
-		background-color: @dark_toolbar_seperator_color2;
-		color: @dark_text_color;
+		background-color: var(--dark_toolbar_seperator_color2);
+		color: var(--dark_text_color);
 
 		&:hover {
-			background-color: fade(@dark_toolbar_seperator_color2, 80%);
-			color: @dark_text_color;
-			border-color: fade(@dark_toolbar_seperator_color2, 90%);
+			background-color: var(--dark_toolbar_seperator_color_opacity80);
+			color: var(--dark_text_color);
+			border-color: var(--dark_toolbar_seperator_color_opacity80);
 		}
 
 		&.active {
-			background: @dark_toolbar_seperator_color1;
-			border-color: @dark_toolbar_seperator_color2;
+			background: var(--dark_toolbar_seperator_color1);
+			border-color: var(--dark_toolbar_seperator_color2);
 		}
 
 		svg {
-			fill: @dark_icon_color;
+			fill: var(--dark_icon_color);
 		}
 	}
 
 	.jodit-form textarea,
 	.jodit-form input[type='url'],
 	.jodit-form input[type='text'] {
-		background-color: @dark_toolbar_seperator_color1;
-		border-color: @dark_toolbar_seperator_color2;
-		color: @dark_text_color;
+		background-color: var(--dark_toolbar_seperator_color1);
+		border-color: var(--dark_toolbar_seperator_color2);
+		color: var(--dark_text_color);
 	}
 
 	.jodit-form button {
-		background-color: @dark_toolbar_seperator_color3;
-		color: @dark_text_color;
+		background-color: var(--dark_toolbar_seperator_color3);
+		color: var(--dark_text_color);
 	}
 
 	.jodit-placeholder {
-		color: fade(@dark_text_color, 80%);
+		color: var(--dark_text_color_opacity80);
 	}
 
 	.jodit-drag-and-drop__file-box,
 	.jodit_uploadfile_button {
-		color: @dark_text_color;
+		color: var(--dark_text_color);
 
 		&:hover {
-			background-color: @dark_toolbar_seperator_color3;
+			background-color: var(--dark_toolbar_seperator_color3);
 		}
 	}
 
 	.jodit-add-new-line {
 		&::before {
-			border-top-color: @dark_toolbar_seperator_color2;
+			border-top-color: var(--dark_toolbar_seperator_color2);
 		}
 
 		span {
-			background: @dark_toolbar_seperator_color3;
-			border-color: @dark_toolbar_seperator_color2;
+			background: var(--dark_toolbar_seperator_color3);
+			border-color: var(--dark_toolbar_seperator_color2);
 
 			svg {
-				fill: @dark_text_color;
+				fill: var(--dark_text_color);
 			}
 		}
 	}
 
 	.jodit-resizer > i {
-		background: @dark_toolbar_seperator_color3;
-		border-color: @dark_icon_color;
+		background: var(--dark_toolbar_seperator_color3);
+		border-color: var(--dark_icon_color);
 	}
 
 	.jodit-input {
-		border-color: fade(@dark_text_color, 50);
-		background-color: @dark_text_color;
+		border-color: var(--dark_text_color_opacity50);
+		background-color: var(--dark_text_color);
 	}
 
 	&.jodit-dialog__box .jodit-dialog {
-		background-color: @dark_background_color;
+		background-color: var(--dark_background_color);
 
 		.jodit-filebrowser__files.active .jodit-filebrowser__files-item,
 		.jodit-dialog__header {
-			border-color: @dark_border_color;
+			border-color: var(--dark_border_color);
 		}
 
 		.jodit-filebrowser__files.active .jodit-filebrowser__files-item-info {
-			background-color: @dark_text_color;
+			background-color: var(--dark_text_color);
 		}
 	}
 }

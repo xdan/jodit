@@ -4,27 +4,28 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../../../styles/variables';
+@import '../../../styles/variables';
 @import (reference) '../../../styles/mixins';
 
-@color-cell-size: 24px;
-@color-cell-icon-size: 12px;
-
 .jodit-color-picker {
+	--color-cell-size: 24px;
+	--color-cell-icon-size: 12px;
+
 	text-align: left;
 	margin: 0;
 	user-select: none;
 
 	.jodit-color-picker__group {
-		margin-bottom: @padding-default / 2;
+		margin-bottom: calc(var(--padding-default) / 2);
 		white-space: normal;
-		max-width: @color-cell-size * 10;
+		max-width: calc(var(--color-cell-size) * 10);
 		display: flex;
 		flex-wrap: wrap;
 	}
 
 	a {
-		.size(@color-cell-size, @color-cell-size);
+		width: var(--color-cell-size);
+		height: var(--color-cell-size);
 
 		display: block;
 		text-decoration: none;
@@ -38,7 +39,7 @@
 
 		&:active {
 			background: #d6d6d6;
-			color: @color-border-active;
+			color: var(--color-border-active);
 		}
 	}
 

@@ -4,20 +4,20 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../../styles/variables';
+@import '../../styles/variables';
 
 .jodit-drag-and-drop__file-box,
 .jodit_uploadfile_button {
 	position: relative;
 	width: 100%;
-	border: dashed 1px @color-border-drag;
+	border: dashed 1px var(--color-border-drag);
 	padding: 25px 0;
 	margin: @padding-default 0;
 	text-align: center;
 	overflow: hidden;
 
 	&:hover {
-		background-color: @color-background-button-hover;
+		background-color: var(--color-background-button-hover);
 	}
 
 	input {
@@ -38,6 +38,6 @@
 	.jodit-drag-and-drop__file-box {
 		width: auto;
 		max-width: 100%;
-		min-width: @width-input-min;
+		min-width: var(--width-input-min);
 	}
 }

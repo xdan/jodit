@@ -4,9 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../../styles/variables';
-
-@color-source-area: #323232;
+@import '../../styles/variables';
 
 .fontSource() {
 	font: 12px / normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas',
@@ -16,7 +14,7 @@
 .jodit-source {
 	display: none;
 	position: relative;
-	background-color: @color-source-area;
+	background-color: var(--color-source-area);
 	min-height: 100%;
 	flex: auto;
 	overflow: auto;
@@ -59,7 +57,7 @@
 	border: 0;
 	width: 100%;
 	height: 100%;
-	background: @color-source-area;
+	background: var(--color-source-area);
 	margin: 0;
 	resize: none;
 	box-sizing: border-box;
@@ -72,12 +70,12 @@
 	box-shadow: none;
 	overflow: auto;
 	z-index: 2;
-	padding: @padding-default;
+	padding: var(--padding-default);
 	white-space: pre-wrap;
 	tab-size: 2em;
 	min-height: 100%;
 
 	&::selection {
-		background: @color-selection-area;
+		background: var(--color-selection-area);
 	}
 }

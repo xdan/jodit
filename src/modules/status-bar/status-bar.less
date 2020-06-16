@@ -4,17 +4,16 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+@import '../../styles/variables';
 @import (reference) '../../styles/mixins';
 
 .jodit-status-bar {
-	.font();
-
-	font-size: @font-size-small;
+	font-size: var(--font-size-small);
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	background-color: @color-toolbar;
-	padding: 0 @padding-default / 2;
+	background-color: var(--color-toolbar);
+	padding: 0 calc(var(--padding-default) / 2);
 
 	&::before {
 		content: '';
@@ -27,16 +26,16 @@
 		& > span {
 			.font();
 
-			font-size: @font-size-small;
+			font-size: var(--font-size-small);
 		}
 
 		line-height: 1.57142857em;
-		margin: 0 @padding-default 0 0;
+		margin: 0 var(--padding-default) 0 0;
 		padding: 0;
 		order: 0;
 
 		&.jodit-status-bar__item-right {
-			margin: 0 0 0 @padding-default;
+			margin: 0 0 0 var(--padding-default);
 			order: 2;
 		}
 
@@ -46,16 +45,16 @@
 			border-radius: 3px;
 
 			&:hover {
-				background-color: @color-background-gray;
+				background-color: var(--color-background-gray);
 				text-decoration: none;
-				color: @color-text;
+				color: var(--color-text);
 			}
 		}
 	}
 }
 
 .jodit-workplace + .jodit-status-bar:not(:empty) {
-	border-top: 1px solid @color-border;
+	border-top: 1px solid var(--color-border);
 }
 
 .jodit_disabled .jodit-status-bar {

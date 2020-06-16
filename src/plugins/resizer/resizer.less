@@ -4,7 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../../styles/variables';
+@import '../../styles/variables';
+
+:root {
+	--viewer_width: 70px;
+	--viewer_height: 24px;
+}
 
 [data-jodit_iframe_wrapper] {
 	display: block;
@@ -29,7 +34,7 @@
 	width: 100px;
 	height: 100px;
 	position: absolute;
-	border: 1px solid @color-border-resize;
+	border: 1px solid var(--color-border-resize);
 	top: 0;
 	left: 0;
 	pointer-events: none;
@@ -39,23 +44,20 @@
 		box-sizing: border-box;
 	}
 
-	@viewer_width: 70px;
-	@viewer_height: 24px;
-
 	> span {
 		position: absolute;
 		left: 50%;
 		top: 50%;
 		display: inline-block;
-		height: @viewer_height;
-		width: @viewer_width;
-		margin-left: -@viewer_width / 2;
-		margin-top: -@viewer_height / 2;
-		line-height: @viewer_height;
+		width: var(--viewer_width);
+		height: var(--viewer_height);
+		margin-left: calc(var(--viewer_width) / -2);
+		margin-top: calc(var(--viewer_height) / -2);
+		line-height: var(--viewer_height);
 		font-size: 12px;
 		text-align: center;
-		color: @color-white;
-		background-color: @color-placeholder;
+		color: var(--color-white);
+		background-color: var(--color-placeholder);
 		opacity: 0;
 		transition: opacity 0.2s linear;
 		overflow: visible;
@@ -66,11 +68,11 @@
 		display: inline-block;
 		z-index: 4;
 		pointer-events: all;
-		border: 1px solid @color-border-resize;
-		background-color: @color-background-gray;
+		border: 1px solid var(--color-border-resize);
+		background-color: var(--color-background-gray);
 
 		&:hover {
-			background-color: @color-background-gray-hover;
+			background-color: var(--color-background-gray-hover);
 		}
 
 		.handleSizes(@size-resizer-handle) {

@@ -4,23 +4,24 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../../../styles/variables';
+@import '../../../styles/variables';
 @import (reference) '../../../styles/mixins';
 
 .jodit-popup {
+	--box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
+		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
+
 	.jodit-box();
 
 	position: fixed;
 	display: inline-block;
-	z-index: @z-index-popup;
+	z-index: var(--z-index-popup);
 	transform: translate3d(0, 0, 0);
-	box-shadow: 0 4px 1px -2px fade(@color-shadow, 20%),
-		0 3px 3px 0 fade(@color-shadow, 15%),
-		0 1px 4px 0 fade(@color-shadow, 13%);
+	box-shadow: var(--box-shadow);
 
 	&__content {
-		padding: @padding-default;
-		background: @color-background-default;
+		padding: var(--padding-default);
+		background: var(--color-background-default);
 		overflow-scrolling: touch;
 		overflow: auto;
 		max-height: 300px;

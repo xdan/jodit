@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../../../styles/variables';
+@import '../../../styles/variables';
 @import (reference) '../../../styles/mixins';
 @import (reference) '../../../core/ui/button/button';
 
@@ -12,19 +12,21 @@
 	width: @size;
 
 	svg {
-		width: @size - 3px;
+		width: @size - 4px;
 	}
 }
 
 .jodit-toolbar-button {
 	border: 1px solid transparent;
-	border-radius: @border-radius-default;
+	border-radius: var(--border-radius-default);
+	overflow: hidden;
 
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
 	.jodit-ui-button-icon-text();
+
 	&__icon:empty + &__text:not(:empty) {
 		padding: 0;
 	}
@@ -35,13 +37,15 @@
 		.jodit-ui-button-interaction();
 		.jodit-ui-button_clear();
 		.jodit-ui-button-style();
+		padding: 0;
 	}
 
 	&__trigger {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		border-radius: 0 @border-radius-default @border-radius-default 0;
+		border-radius: 0 var(--border-radius-default)
+			var(--border-radius-default) 0;
 		opacity: 0.4;
 		height: 100%;
 
@@ -67,11 +71,12 @@
 
 	&_with-trigger_true {
 		.jodit-toolbar-button__button {
-			border-radius: @border-radius-default 0 0 @border-radius-default;
+			border-radius: var(--border-radius-default) 0 0
+				var(--border-radius-default);
 		}
 
 		&:hover {
-			border-color: @color-border;
+			border-color: var(--color-border);
 		}
 	}
 }

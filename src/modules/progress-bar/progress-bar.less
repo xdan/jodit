@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../../styles/variables';
+@import '../../styles/variables';
 
 @keyframes pulse {
 	30% {
@@ -31,7 +31,7 @@
 
 	div {
 		position: relative;
-		background: @color-background-progress;
+		background: var(--color-background-progress);
 		height: 2px;
 		transition: width 500ms ease-out, opacity 500ms linear;
 		will-change: width, opacity;
@@ -44,7 +44,7 @@
 			position: absolute;
 			top: 0;
 			height: 2px;
-			box-shadow: @color-background-progress 1px 0 6px 1px;
+			box-shadow: var(--color-background-progress) 1px 0 6px 1px;
 			border-radius: 100%;
 			opacity: 0.6;
 		}
@@ -58,7 +58,7 @@
 		&::after {
 			width: 20px;
 			right: 0;
-			clip: rect(-6px, 22px, 14px, @padding-default);
+			clip: rect(-6px, 22px, 14px, var(--padding-default));
 		}
 	}
 }

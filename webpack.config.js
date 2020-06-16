@@ -24,18 +24,20 @@ module.exports = (env, argv) => {
 
 	const mode = debug ? 'development' : argv.mode;
 	const isProd = mode === 'production';
-	const uglify = !debug && (argv && Boolean(argv.uglify));
+	const uglify = !debug && argv && Boolean(argv.uglify);
 
-
-	const ES = (argv && ['es5', 'es2018'].includes(argv.es)) ? argv.es: 'es2018';
+	const ES = argv && ['es5', 'es2018'].includes(argv.es) ? argv.es : 'es2018';
 	const ESNext = ES === 'es2018';
 
 	console.warn('ES mode: ' + ES);
 
-	const filename = (name) => name + ((ES === 'es5' || isTest) ? '' : '.' + ES) + (uglify ? '.min' : '');
+	const filename = name =>
+		name +
+		(ES === 'es5' || isTest ? '' : '.' + ES) +
+		(uglify ? '.min' : '');
 
 	const css_loaders = [
-		(debug || isTest) ? 'style-loader' : MiniCssExtractPlugin.loader,
+		debug || isTest ? 'style-loader' : MiniCssExtractPlugin.loader,
 		{
 			loader: 'css-loader',
 			options: {
@@ -48,7 +50,10 @@ module.exports = (env, argv) => {
 			loader: 'postcss-loader',
 			options: {
 				sourceMap: debug,
-				plugins: () => [require('precss'), require('autoprefixer')]
+				plugins: () =>
+					[require('autoprefixer')].concat(
+						(isProd && !ESNext) ? require('postcss-css-variables') : []
+					)
 			}
 		},
 		{
@@ -68,10 +73,12 @@ module.exports = (env, argv) => {
 		devtool: debug ? 'inline-sourcemap' : false,
 
 		entry: {
-			jodit: debug ? ['webpack-hot-middleware/client', './src/index'] : ['./src/index']
+			jodit: debug
+				? ['webpack-hot-middleware/client', './src/index']
+				: ['./src/index']
 		},
 
-		output:  {
+		output: {
 			path: path.join(__dirname, 'build'),
 			filename: filename('[name]') + '.js',
 			publicPath: '/build/',
@@ -91,7 +98,7 @@ module.exports = (env, argv) => {
 					sourceMap: false,
 					extractComments: false,
 
-					exclude: "./src/langs",
+					exclude: './src/langs',
 					terserOptions: {
 						ecma: ESNext ? 8 : 5,
 
@@ -154,7 +161,7 @@ module.exports = (env, argv) => {
 					exclude: [
 						/(node_modules)/,
 						/langs\/[a-z]{2}\.ts/,
-						/langs\/[a-z]{2}_[a-z]{2}\.ts/,
+						/langs\/[a-z]{2}_[a-z]{2}\.ts/
 					]
 				},
 

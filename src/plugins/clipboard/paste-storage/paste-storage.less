@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../../../styles/variables';
+@import '../../../styles/variables';
 
 .jodit-paste-storage {
-	padding: @padding-default;
+	padding: var(--padding-default);
 	max-width: 600px;
 
 	@media (max-width: @screen-sm) {
@@ -17,7 +17,7 @@
 	> div {
 		max-width: 100%;
 		max-height: 300px;
-		border: 1px solid @color-border;
+		border: 1px solid var(--color-border);
 
 		&:first-child {
 			a {
@@ -32,11 +32,11 @@
 				margin: 0;
 				border: 1px solid transparent;
 				text-decoration: none;
-				color: @color-default;
+				color: var(--color-default);
 
 				&.jodit_active {
-					color: @color-white;
-					background-color: @dark_background_color;
+					color: var(--color-white);
+					background-color: var(--dark_background_color);
 				}
 
 				&:focus {
@@ -44,11 +44,11 @@
 				}
 			}
 
-			margin-bottom: @padding-default;
+			margin-bottom: var(--padding-default);
 		}
 
 		&:last-child {
-			padding: @padding-default;
+			padding: var(--padding-default);
 
 			ul,
 			li {

@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../../styles/mixins';
+@import '../../styles/variables';
 
 .jodit-placeholder {
 	width: 100%;
@@ -13,8 +13,8 @@
 	left: 0;
 	display: block;
 	position: absolute;
-	padding: @padding-default;
-	color: @color-placeholder;
+	padding: var(--padding-default);
+	color: var(--color-placeholder);
 	z-index: 1;
 	pointer-events: none;
 }

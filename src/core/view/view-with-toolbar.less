@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../../styles/variables';
+@import '../../styles/variables';
 
 .jodit-toolbar {
 	&__box {
 		&:not(:empty) {
-			background-color: @color-toolbar;
+			background-color: var(--color-toolbar);
 
 			& + .jodit-workplace {
 				border-top-width: 1px;

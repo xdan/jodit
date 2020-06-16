@@ -4,11 +4,13 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../../styles/variables';
+@import '../../styles/variables';
 
-@color-new-line: @color-border;
-@width-icon: 30px;
-@height-icon: @padding-default * 2;
+:root {
+	--color-new-line: var(--color-border);
+	--width-icon: 30px;
+	--height-icon: calc(var(--padding-default) * 2);
+}
 
 .jodit-add-new-line {
 	box-sizing: border-box;
@@ -25,10 +27,10 @@
 
 	&::after {
 		content: '';
-		background-color: @color-new-line;
+		background-color: var(--color-new-line);
 		height: 1px;
 		display: block;
-		width: ~'calc(100% - @{width-icon})';
+		width: calc(100% - var(--width-icon));
 	}
 
 	span {
@@ -37,14 +39,14 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		width: @width-icon;
-		height: @height-icon;
-		background: fade(@color-background-button-hover, 30%);
-		border: 1px solid @color-new-line;
+		width: var(--width-icon);
+		height: var(--height-icon);
+		background: var(--color-background-button-hover-opacity30);
+		border: 1px solid var(--color-new-line);
 		cursor: pointer;
 
 		&:hover {
-			background: fade(@color-background-button-hover, 100%);
+			background: var(--color-background-button-hover);
 		}
 	}
 
@@ -54,7 +56,7 @@
 
 	svg {
 		width: 16px;
-		fill: @color-new-line;
+		fill: var(--color-new-line);
 	}
 
 	display: block;

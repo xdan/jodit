@@ -6,6 +6,10 @@
 
 @import (reference) './mixins';
 
+.jodit:not(.jodit_inline) {
+	.font();
+}
+
 .jodit,
 .jodit-container {
 	&,
@@ -26,19 +30,17 @@
 }
 
 .jodit-container:not(.jodit_inline) {
-	border: 1px solid @color-border;
-	border-radius: @border-radius-default;
-
-	.font();
-
-	background: @color-background-default;
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius-default);
+	overflow: hidden;
+	background: var(--color-background-default);
 
 	.jodit-workplace {
-		border: 0 solid @color-border;
+		border: 0 solid var(--color-border);
 	}
 
 	&.jodit_disabled {
-		background: @color-background-gray;
+		background: var(--color-background-gray);
 
 		.jodit-workplace {
 			opacity: 0.4;
