@@ -25,6 +25,10 @@
 	align-items: center;
 
 	.jodit-ui-button-icon-text();
+	&__icon:empty + &__text:not(:empty) {
+		padding: 0;
+	}
+
 	.jodit-ui-button-sizes();
 
 	&__button {
