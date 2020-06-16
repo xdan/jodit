@@ -5,6 +5,7 @@
  */
 
 import { IDictionary } from '../types';
+import { isArray } from '../core/helpers/checker';
 
 import ar from './ar';
 import cs_cz from './cs_cz';
@@ -25,7 +26,6 @@ import ru from './ru';
 import tr from './tr';
 import zh_cn from './zh_cn';
 import zh_tw from './zh_tw';
-import { isArray } from '../core/helpers/checker';
 
 const exp: IDictionary<IDictionary<string>> = {
 	ar,

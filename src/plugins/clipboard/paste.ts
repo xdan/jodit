@@ -229,6 +229,10 @@ export function paste(editor: IJodit) {
 			}
 		}
 
+		if (editor.isInDestruct) {
+			return;
+		}
+
 		if (isString(html)) {
 			editor.buffer.set(clipboardPluginKey, html);
 		}

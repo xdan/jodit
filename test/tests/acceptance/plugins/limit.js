@@ -81,7 +81,7 @@ describe('Limit plugin', function() {
 	});
 
 	describe('Paste', function() {
-		describe('When editor aleady full', function() {
+		describe('When editor already full', function() {
 			it('should deny insert any chars', function(done) {
 				const editor = getJodit({
 					limitChars: 5,
@@ -92,7 +92,7 @@ describe('Limit plugin', function() {
 
 				editor.value = '11111';
 
-				simulateEvent('paste', 0, editor.editor, function(data) {
+				simulateEvent('paste', editor.editor, function(data) {
 					data.clipboardData = {
 						types: ['text/html'],
 						getData: function(type) {
@@ -111,7 +111,7 @@ describe('Limit plugin', function() {
 
 	describe('Limit words', function() {
 		describe('Paste', function() {
-			describe('When editor aleady full', function() {
+			describe('When editor already full', function() {
 				it('should deny insert any chars', function(done) {
 					const editor = getJodit({
 						limitWords: 3,
@@ -126,8 +126,8 @@ describe('Limit plugin', function() {
 						editor.editor.firstChild.firstChild
 					);
 
-					const paste = () => {
-						simulateEvent('paste', 0, editor.editor, function(
+					const paste = function () {
+						simulateEvent('paste', editor.editor, function(
 							data
 						) {
 							data.clipboardData = {

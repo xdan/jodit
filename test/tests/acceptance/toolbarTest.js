@@ -61,7 +61,9 @@ describe('Toolbar', function() {
 
 				clickButton('alert_some', editor);
 
-				expect(editor.value).equals('<p><span>indigo</span></p><p><br></p>');
+				expect(editor.value).equals(
+					'<p><span>indigo</span></p><p><br></p>'
+				);
 			});
 		});
 	});
@@ -224,8 +226,15 @@ describe('Toolbar', function() {
 			describe('in the right side', function() {
 				it('Should open popup in toolbar with float by left editor side', function() {
 					const editor = getJodit({
-						width: 310,
-						buttons: ['video', 'video', 'video', 'video', 'video'],
+						width: 315,
+						buttons: [
+							'video',
+							'video',
+							'video',
+							'video',
+							'video',
+							'video'
+						],
 						disablePlugins: 'mobile'
 					});
 
@@ -866,6 +875,123 @@ describe('Toolbar', function() {
 					.false;
 				expect(getButton('source', editor).hasAttribute('disabled')).is
 					.false;
+			});
+
+			describe('For list', function() {
+				describe('enable', function() {
+					it('Should enable buttons which can be used in this mode', function() {
+						const editor = getJodit({
+							observer: {
+								timeout: 0 // disable delay
+							},
+							defaultMode: Jodit.MODE_SOURCE,
+							buttons: [
+								{
+									name: 'list_test',
+									mode: Jodit.MODE_SPLIT,
+									list: {
+										h1: 'insert Header 1',
+										h2: 'insert Header 2',
+										clear: 'Empty editor'
+									},
+									exec: function(editor) {
+										const key = this.args[0];
+
+										if (key === 'clear') {
+											this.val('');
+											return;
+										}
+
+										editor.s.insertHTML(
+											'&nbsp;{{test' + key + '}}&nbsp;'
+										);
+									},
+									childTemplate: function(key, value) {
+										return '<div>' + value + '</div>';
+									}
+								}
+							]
+						});
+
+						const btn = getButton('list_test', editor);
+						expect(btn).is.not.null;
+
+						expect(btn.hasAttribute('disabled')).to.be.false;
+
+						clickTrigger('list_test', editor);
+
+						const list = getOpenedPopup(editor);
+						expect(list).is.not.null;
+
+						expect(
+							list.querySelectorAll('.jodit_disabled').length
+						).equals(0);
+					});
+				});
+
+				describe('disable', function() {
+					it('Should disable buttons which can not be used in that mode', function() {
+						const editor = getJodit({
+							observer: {
+								timeout: 0 // disable delay
+							},
+							defaultMode: Jodit.MODE_SOURCE,
+							buttons: [
+								{
+									name: 'list_test',
+									mode: Jodit.MODE_WYSIWYG,
+									list: {
+										h1: 'insert Header 1',
+										h2: 'insert Header 2',
+										clear: 'Empty editor'
+									},
+									exec: function(editor) {
+										const key = this.args[0];
+
+										if (key === 'clear') {
+											this.val('');
+											return;
+										}
+
+										editor.s.insertHTML(
+											'&nbsp;{{test' + key + '}}&nbsp;'
+										);
+									},
+									childTemplate: function(key, value) {
+										return '<div>' + value + '</div>';
+									}
+								}
+							]
+						});
+
+						const btn = getButton('list_test', editor);
+						expect(btn).is.not.null;
+
+						expect(btn.hasAttribute('disabled')).to.be.true;
+
+						simulateEvent('mousedown', 0, btn);
+
+						const list = btn.querySelector('.jodit_toolbar_list');
+						expect(list).is.null;
+					});
+				});
+			});
+		});
+
+		describe('Set size', function() {
+			it('Should add modification to button', function() {
+				const editor = getJodit({
+					toolbarButtonSize: 'small'
+				});
+
+				expect(
+					getButton(
+						'source',
+						editor
+					).parentElement.classList.contains(
+						'jodit-toolbar-button_size_small'
+					)
+				).is.true;
 			});
 
 			describe('For list', function() {

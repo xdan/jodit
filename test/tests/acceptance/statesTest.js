@@ -69,7 +69,6 @@ describe('Test states', function() {
 
 				buttons.forEach(function(btn) {
 					if (!/(source|print|about|fullsize|separator|selectall|break)/.test(btn.className)) {
-						debugger
 						expect(btn.hasAttribute('disabled')).is.true;
 					}
 				});

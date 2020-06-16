@@ -396,7 +396,7 @@ describe('Test Style module', function() {
 				it('Should wrap contents again', function() {
 					editor.value = '<strong>test</strong>';
 					const range = editor.s.createRange();
-					debugger;
+
 					range.setStart(
 						editor.editor.firstChild.firstChild.firstChild,
 						0

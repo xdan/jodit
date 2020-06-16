@@ -191,7 +191,7 @@ describe('Test position/offset helpers', function() {
 			expect(
 				pos.top - box.offsetTop - iframe.contentWindow.scrollY - jodit.toolbar.container.offsetHeight
 			).equals(816);
-			expect(pos.left).equals(251);
+			expect(pos.left).equals(249);
 		});
 
 		describe('In iframe', function() {

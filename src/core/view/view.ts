@@ -274,6 +274,11 @@ export abstract class View extends Component implements IViewBased {
 			delete this.events;
 		}
 
+		if (this.buffer) {
+			this.buffer.clear();
+			delete this.buffer;
+		}
+
 		Dom.safeRemove(this.container);
 
 		super.destruct();

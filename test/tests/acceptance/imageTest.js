@@ -1569,7 +1569,7 @@ describe('Test image', function() {
 					const newratio = img.offsetWidth / img.offsetHeight;
 
 					expect(img.offsetWidth).equals(
-						editor.editor.offsetWidth - 20
+						editor.editor.offsetWidth - 16
 					);
 
 					expect(Math.abs(newratio - ratio) < 0.003).is.true;

@@ -337,11 +337,12 @@ export class Table extends ViewComponent<IJodit> {
 					(cell.parentNode === row || cell !== box[rowIndex][j - 1])
 				) {
 					const rowSpan: number = cell.rowSpan;
-					if (rowSpan - 1 > 1) {
-						cell.setAttribute('rowspan', (rowSpan - 1).toString());
-					} else {
-						cell.removeAttribute('rowspan');
-					}
+
+					attr(
+						cell,
+						'rowspan',
+						rowSpan - 1 > 1 ? (rowSpan - 1).toString() : null
+					);
 				}
 			}
 		);
@@ -430,11 +431,12 @@ export class Table extends ViewComponent<IJodit> {
 			}
 			if (dec && (i - 1 < 0 || td !== box[i - 1][j])) {
 				const colSpan: number = td.colSpan;
-				if (colSpan - 1 > 1) {
-					td.setAttribute('colspan', (colSpan - 1).toString());
-				} else {
-					td.removeAttribute('colspan');
-				}
+
+				attr(
+					td,
+					'colspan',
+					colSpan - 1 > 1 ? (colSpan - 1).toString() : null
+				);
 			}
 		});
 	}

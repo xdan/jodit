@@ -1242,8 +1242,6 @@ describe('Tables Jodit Editor Tests', function() {
 
 					simulateEvent(['mousemove', 'mouseup', 'click'], td);
 
-
-					debugger
 					expect(
 						Jodit.modules.Helpers.normalizeColor(
 							editor.ew.getComputedStyle(td).borderBottomColor
@@ -1822,7 +1820,7 @@ describe('Tables Jodit Editor Tests', function() {
 				expect(
 					sortAttributes(editor.editor.innerHTML.toLowerCase())
 				).equals(
-					'<table cellspacing="0" style="border-collapse:separate;width:83.33%"><tbody>' +
+					'<table cellspacing="0" style="border-collapse:separate;width:81.52%"><tbody>' +
 						'<tr>' +
 						'<td>1</td>' +
 						'<td>2</td>' +
@@ -1878,7 +1876,7 @@ describe('Tables Jodit Editor Tests', function() {
 								editor.editor.innerHTML.toLowerCase()
 							)
 						).equals(
-							'<table style="margin-left:27.77%;width:27.77%">' +
+							'<table style="margin-left:27.17%;width:27.17%">' +
 								'<tbody>' +
 								'<tr>' +
 								'<td>1</td>' +
