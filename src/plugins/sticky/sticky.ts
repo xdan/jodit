@@ -76,7 +76,7 @@ export class sticky extends Plugin {
 		// on resize it should work always
 		css(toolbar, {
 			top: this.j.o.toolbarStickyOffset,
-			width: this.j.container.offsetWidth
+			width: this.j.container.offsetWidth - 2
 		});
 
 		if (IS_IE && this.dummyBox) {

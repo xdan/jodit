@@ -1579,12 +1579,16 @@ describe('Test plugins', function() {
 					editor.s.selectRange(range);
 
 					// standart ctrl+i
-					simulateEvent('keydown', 'i', editor.editor, function(data) {
+					simulateEvent('keydown', 'i', editor.editor, function(
+						data
+					) {
 						// data.shiftKey = true;
 						data.ctrlKey = true;
 					});
 
-					expect(editor.value).equals('<p>test<em> tes</em>t test</p>');
+					expect(editor.value).equals(
+						'<p>test<em> tes</em>t test</p>'
+					);
 
 					editor.value = 'test test test';
 
@@ -1593,15 +1597,21 @@ describe('Test plugins', function() {
 					range2.setEnd(editor.editor.firstChild.firstChild, 8);
 
 					// standart ctrl+shift+i
-					simulateEvent('keydown', 'i', editor.editor, function(data) {
+					simulateEvent('keydown', 'i', editor.editor, function(
+						data
+					) {
 						data.shiftKey = true;
 						data.ctrlKey = true;
 					});
 
-					expect(editor.value).equals('<p>test<em> tes</em>t test</p>');
+					expect(editor.value).equals(
+						'<p>test<em> tes</em>t test</p>'
+					);
 
 					// standart ctrl+shift+7
-					simulateEvent('keydown', '7', editor.editor, function(data) {
+					simulateEvent('keydown', '7', editor.editor, function(
+						data
+					) {
 						data.shiftKey = true;
 						data.ctrlKey = true;
 					});
@@ -1630,8 +1640,7 @@ describe('Test plugins', function() {
 		describe('Create editor in page with long text', function() {
 			describe('and scroll page to bottom', function() {
 				it('Should add to editor class `jodit_sticky` and toolbar must be always on the top', function() {
-					const area = appendTestArea(),
-						editor = new Jodit(area);
+					const editor = getJodit();
 
 					editor.value = '<p>stop</p>'.repeat(100);
 

@@ -10,6 +10,9 @@
 	&__box {
 		&:not(:empty) {
 			background-color: var(--color-toolbar);
+			overflow: hidden;
+			border-radius: var(--border-radius-default)
+				var(--border-radius-default) 0 0;
 
 			& + .jodit-workplace {
 				border-top-width: 1px;
