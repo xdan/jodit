@@ -4,11 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import '../../styles/variables';
+@import (reference) '../../styles/variables';
 
 :root {
 	--viewer_width: 70px;
 	--viewer_height: 24px;
+	--resizer-handle-size: var(--padding-default);
 }
 
 [data-jodit_iframe_wrapper] {
@@ -34,7 +35,7 @@
 	width: 100px;
 	height: 100px;
 	position: absolute;
-	border: 1px solid var(--color-border-resize);
+	border: 1px solid var(--color-border-dark);
 	top: 0;
 	left: 0;
 	pointer-events: none;
@@ -68,46 +69,44 @@
 		display: inline-block;
 		z-index: 4;
 		pointer-events: all;
-		border: 1px solid var(--color-border-resize);
+		border: 1px solid var(--color-border-dark);
 		background-color: var(--color-background-gray);
 
 		&:hover {
 			background-color: var(--color-background-gray-hover);
 		}
 
-		.handleSizes(@size-resizer-handle) {
-			width: @size-resizer-handle;
-			height: @size-resizer-handle;
+		width: var(--resizer-handle-size);
+		height: var(--resizer-handle-size);
 
-			&:nth-child(1) {
-				left: -@size-resizer-handle / 2;
-				top: -@size-resizer-handle / 2;
-				cursor: nw-resize;
-			}
-
-			&:nth-child(2) {
-				right: -@size-resizer-handle / 2;
-				top: -@size-resizer-handle / 2;
-				cursor: ne-resize;
-			}
-
-			&:nth-child(3) {
-				right: -@size-resizer-handle / 2;
-				bottom: -@size-resizer-handle / 2;
-				cursor: se-resize;
-			}
-
-			&:nth-child(4) {
-				left: -@size-resizer-handle / 2;
-				bottom: -@size-resizer-handle / 2;
-				cursor: sw-resize;
-			}
+		&:nth-child(1) {
+			left: calc(var(--resizer-handle-size) / -2);
+			top: calc(var(--resizer-handle-size) / -2);
+			cursor: nw-resize;
 		}
 
-		.handleSizes(@padding-default);
+		&:nth-child(2) {
+			right: calc(var(--resizer-handle-size) / -2);
+			top: calc(var(--resizer-handle-size) / -2);
+			cursor: ne-resize;
+		}
+
+		&:nth-child(3) {
+			right: calc(var(--resizer-handle-size) / -2);
+			bottom: calc(var(--resizer-handle-size) / -2);
+			cursor: se-resize;
+		}
+
+		&:nth-child(4) {
+			left: calc(var(--resizer-handle-size) / -2);
+			bottom: calc(var(--resizer-handle-size) / -2);
+			cursor: sw-resize;
+		}
 
 		@media (max-width: @screen-sm) {
-			.handleSizes(20px);
+			:root {
+				--resizer-handle-size: calc(var(--padding-default) * 2);
+			}
 		}
 	}
 }

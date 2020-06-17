@@ -46,6 +46,7 @@ type NodeFunction = (elm: HTMLElement) => void;
 
 interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 	basePath?: string;
+	theme?: string;
 
 	defaultTimeout?: number;
 

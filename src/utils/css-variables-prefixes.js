@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../../styles/variables';
+module.exports = function(source) {
+	this.cacheable && this.cacheable(true);
+	return source.replace(/--([a-z0-9_\-]+)/g, '--jd-$1');
+};
 
-.jodit-popup-inline__container {
-	z-index: 1300;
-	min-width: 700px;
-}
+module.exports.seperable = true;

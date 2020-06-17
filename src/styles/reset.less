@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import './variables';
+@import (reference) './variables';
 
 .jodit-wysiwyg {
 	outline: 0;
@@ -30,7 +30,7 @@
 
 	p,
 	pre {
-		margin: 0 0 @padding-default;
+		margin: 0 0 var(--padding-default);
 	}
 
 	h1,

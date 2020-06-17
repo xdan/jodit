@@ -14,6 +14,7 @@
 * https://github.com/xdan/jodit/issues/369
 
 ### Features
+* All `less` variables were replaced to css custom properties for modern browsers.
 * Added `WrapTextNodes` plugin - it wrap all alone text node(or inline elements) inside `options.enter` element.
 You can disable this behaviour:
 ```js

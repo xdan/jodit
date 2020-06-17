@@ -56,17 +56,15 @@ export function positionTab(editor: IJodit): HTMLElement {
 			style="${!opt.image.editBorderRadius ? 'display:none' : ''}"
 			class="jodit-form__group"
 		>
-			<label>
-				<span>${i18n('Border radius')}</span>
+			<label>${i18n('Border radius')}</label>
 				<input data-ref="borderRadius" type="number" class="jodit-input"/>
-			</label>
 		</div>
 		<div
 			style="${!opt.image.editAlign ? 'display:none' : ''}"
 			class="jodit-form__group"
 		>
 			<label>${i18n('Align')}</label>
-			<select data-ref="align" class="jodit_select">
+			<select data-ref="align" class="jodit-select">
 				<option value="">${i18n('--Not Set--')}</option>
 				<option value="left">${i18n('Left')}</option>
 				<option value="center">${i18n('Center')}</option>

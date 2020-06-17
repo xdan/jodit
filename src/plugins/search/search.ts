@@ -13,6 +13,7 @@ import { Dom } from '../../core/dom';
 import { Plugin } from '../../core/plugin';
 import { ISelectionRange, markerInfo, IJodit, Nullable } from '../../types';
 import { Icon } from '../../core/ui';
+import { refs, trim } from '../../core/helpers';
 
 declare module '../../config' {
 	interface Config {
@@ -115,27 +116,27 @@ export class search extends Plugin {
 	private template = `<div class="jodit-search">
 			<div class="jodit-search__box">
 				<div class="jodit-search__inputs">
-					<input tabindex="0" class="jodit-search__query" placeholder="${this.j.i18n(
+					<input data-ref="query" tabindex="0" placeholder="${this.j.i18n(
 						'Search for'
 					)}" type="text"/>
-					<input tabindex="0" class="jodit-search__replace" placeholder="${this.j.i18n(
+					<input data-ref="replace" tabindex="0" placeholder="${this.j.i18n(
 						'Replace with'
 					)}" type="text"/>
 				</div>
 				<div class="jodit-search__counts">
-					<span>0/0</span>
+					<span data-ref="counter-box">0/0</span>
 				</div>
 				<div class="jodit-search__buttons">
-					<button tabindex="0" type="button" class="jodit-search__buttons-next">${Icon.get(
+					<button data-ref="next" tabindex="0" type="button">${Icon.get(
 						'angle-down'
 					)}</button>
-					<button tabindex="0" type="button" class="jodit-search__buttons-prev">${Icon.get(
+					<button data-ref="prev" tabindex="0" type="button">${Icon.get(
 						'angle-up'
 					)}</button>
-					<button tabindex="0" type="button" class="jodit-search__buttons-cancel">${Icon.get(
+					<button data-ref="cancel" tabindex="0" type="button">${Icon.get(
 						'cancel'
 					)}</button>
-					<button tabindex="0" type="button" class="jodit-search__buttons-replace">${this.j.i18n(
+					<button data-ref="replace-btn" tabindex="0" type="button" class="jodit-ui-button">${this.j.i18n(
 						'Replace'
 					)}</button>
 				</div>
@@ -520,35 +521,29 @@ export class search extends Plugin {
 
 			self.searchBox = editor.c.fromHTML(self.template) as HTMLDivElement;
 
-			const qs = self.searchBox.querySelector.bind(self.searchBox);
+			const {
+				query,
+				replace,
+				cancel,
+				next,
+				prev,
+				replaceBtn,
+				counterBox
+			} = refs(self.searchBox);
 
-			self.queryInput = qs(
-				'input.jodit-search__query'
-			) as HTMLInputElement;
+			self.queryInput = query as HTMLInputElement;
 
-			self.replaceInput = qs(
-				'input.jodit-search__replace'
-			) as HTMLInputElement;
+			self.replaceInput = replace as HTMLInputElement;
 
-			self.closeButton = qs(
-				'.jodit-search__buttons-cancel'
-			) as HTMLButtonElement;
+			self.closeButton = cancel as HTMLButtonElement;
 
-			self.nextButton = qs(
-				'.jodit-search__buttons-next'
-			) as HTMLButtonElement;
+			self.nextButton = next as HTMLButtonElement;
 
-			self.prevButton = qs(
-				'.jodit-search__buttons-prev'
-			) as HTMLButtonElement;
+			self.prevButton = prev as HTMLButtonElement;
 
-			self.replaceButton = qs(
-				'.jodit-search__buttons-replace'
-			) as HTMLButtonElement;
+			self.replaceButton = replaceBtn as HTMLButtonElement;
 
-			self.counterBox = qs(
-				'.jodit-search__counts span'
-			) as HTMLButtonElement;
+			self.counterBox = counterBox as HTMLButtonElement;
 
 			const onInit = () => {
 				editor.workplace.appendChild(this.searchBox);

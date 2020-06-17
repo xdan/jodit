@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import './styles/index.less';
+import './styles';
 
 import { Config, OptionsDefault } from '../../config';
 import * as consts from '../../core/constants';
@@ -526,6 +526,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 		self.dialog = new Dialog({
 			fullsize: self.o.fullsize,
+			theme: self.o.theme,
 			globalFullSize: self.o.globalFullSize,
 			language: this.o.language,
 			buttons: ['fullsize', 'dialog.close']

@@ -492,12 +492,12 @@ describe('Jodit Editor Tests', function() {
 					editor.s.setCursorAfter(editor.editor.firstChild);
 					editor.s.save(); // add selection markers
 					expect(
-						/<span[^>]+id="jodit_selection_marker_[^>]+><\/span>/.test(
+						/<span[^>]+id="jodit-selection_marker_[^>]+><\/span>/.test(
 							editor.getEditorValue(false)
 						)
 					).is.true;
 					expect(
-						/<span[^>]+id="jodit_selection_marker_[^>]+><\/span>/.test(
+						/<span[^>]+id="jodit-selection_marker_[^>]+><\/span>/.test(
 							editor.getEditorValue(true)
 						)
 					).is.false;

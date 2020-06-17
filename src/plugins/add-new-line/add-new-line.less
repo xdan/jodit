@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import '../../styles/variables';
+@import (reference) '../../styles/variables';
 
 :root {
 	--color-new-line: var(--color-border);
@@ -36,11 +36,14 @@
 	span {
 		position: absolute;
 		right: 0;
+
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
 		width: var(--width-icon);
 		height: var(--height-icon);
+
 		background: var(--color-background-button-hover-opacity30);
 		border: 1px solid var(--color-new-line);
 		cursor: pointer;

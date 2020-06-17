@@ -10,6 +10,7 @@ import { isString } from './checker';
 import { attr } from './utils';
 import { error } from './type';
 import { Dom } from '../dom';
+import { camelCase } from './string';
 
 let temp = 1;
 
@@ -124,7 +125,7 @@ export const refs = <T extends HTMLElement>(
 		const key = attr(child, '-ref');
 
 		if (key && isString(key)) {
-			def[key] = child as T;
+			def[camelCase(key)] = child as T;
 		}
 
 		return def;

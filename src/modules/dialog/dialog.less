@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import '../../styles/variables';
+@import (reference) '../../styles/variables';
 @import (reference) '../../styles/mixins';
 
 .jodit-dialog__box {
@@ -66,7 +66,8 @@
 		left: 0;
 		top: 0;
 		background-color: #fff;
-		box-shadow: 0 @padding-default @padding-default * 2 rgba(0, 0, 0, 0.19),
+		box-shadow: 0 var(--padding-default) calc(var(--padding-default) * 2)
+				rgba(0, 0, 0, 0.19),
 			0 6px 6px rgba(0, 0, 0, 0.23);
 		min-width: 200px;
 		min-height: 100px;
@@ -87,7 +88,7 @@
 			word-break: break-all;
 
 			label {
-				margin-bottom: @padding-default / 2;
+				margin-bottom: calc(var(--padding-default) / 2);
 				display: block;
 			}
 		}
@@ -123,7 +124,7 @@
 				font-weight: 400;
 				line-height: 48px;
 				vertical-align: top;
-				padding: 0 @padding-default;
+				padding: 0 var(--padding-default);
 			}
 
 			&-toolbar {
@@ -167,18 +168,18 @@
 			overflow: auto;
 
 			.jodit-form__group {
-				margin-bottom: var(--padding-default);
-				padding: 0 @padding-default;
+				margin-bottom: calc(var(--padding-default) * 1.5);
+				padding: 0 var(--padding-default);
 
 				&:first-child {
 					margin-top: var(--padding-default);
 				}
 
-				label {
-					display: inline-block;
-					max-width: 100%;
-					margin-bottom: @padding-default / 2;
-					font-weight: 700;
+				label + .jodit-select,
+				label + .jodit-grid,
+				label + .jodit-input_group,
+				label + input {
+					margin-top: calc(var(--padding-default) / 2);
 				}
 
 				.jodit-input_group {
@@ -225,7 +226,7 @@
 			display: none;
 
 			button {
-				margin-right: @padding-default / 2;
+				margin-right: calc(var(--padding-default) / 2);
 
 				&:last-child {
 					margin-right: 0;

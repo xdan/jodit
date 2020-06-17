@@ -4,13 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import '../../styles/variables';
-
-@width-search: 320px;
+@import (reference) '../../styles/variables';
 
 :root {
 	--height-search: 30px;
-	--width-search: @width-search;
+	--width-search: 320px;
 	--width-search-input-box: 60%;
 	--width-search-count-box: 15%;
 	--transform-button-active: 0.95;
@@ -32,9 +30,13 @@
 
 	.jodit-search__box {
 		width: var(--width-search);
+		max-width: 100vw;
+
+		display: flex;
+
 		position: absolute;
 		right: 0;
-		background-color: var(--color-toolbar);
+		background-color: var(--color-panel);
 		border: solid var(--color-border);
 		border-width: 0 0 1px 1px;
 		padding: calc(var(--padding-default) / 2);
@@ -48,17 +50,19 @@
 			outline: none;
 			padding: 0 var(--padding-default);
 
-			&.jodit-search__replace {
+			&[data-ref='replace'] {
 				display: none;
 			}
+		}
+
+		input:not(:focus) + input:not(:focus) {
+			border-top: 1px solid var(--color-border);
 		}
 
 		.jodit-search__buttons,
 		.jodit-search__counts,
 		.jodit-search__inputs {
 			height: var(--height-search);
-			display: inline-block;
-			vertical-align: top;
 		}
 
 		.jodit-search__inputs {
@@ -68,39 +72,25 @@
 
 		.jodit-search__counts {
 			width: var(--width-search-count-box);
-			line-height: 100%;
-			text-align: center;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			color: var(--color-border);
 			border-left: 1px solid var(--color-border);
-
-			&::before {
-				content: '';
-				display: inline-block;
-				vertical-align: middle;
-				height: 100%;
-			}
-
-			span {
-				display: inline-block;
-				vertical-align: middle;
-			}
 		}
 
 		.jodit-search__buttons {
+			flex: 1;
 			padding-left: 0;
-			width: calc(
-				100% - var(--width-search-input-box) -
-					var(--width-search-count-box)
-			);
+			display: flex;
+			justify-content: center;
+			align-items: center;
 
 			button {
-				outline: 0;
 				width: 32%;
-				padding: 1px calc(var(--padding-default) / 2);
 				margin-right: 1%;
-				transition: transform var(--timeout-button-active) linear;
 
-				&.jodit-search__buttons-replace {
+				&[data-ref='replace-btn'] {
 					width: 100%;
 					border: 1px solid var(--color-border);
 					margin-top: 2px;
@@ -141,22 +131,18 @@
 				transition: background-color var(--timeout-button-active) linear;
 
 				&:focus {
-					box-shadow: inset 0 0 3px 0 var(--color-border_opacity60);
+					box-shadow: inset 0 0 3px 0 var(--color-border);
 				}
 			}
 		}
 
-		.jodit-search__buttons button.jodit-search__buttons-replace,
-		.jodit-search__inputs input.jodit-search__replace {
-			display: block;
+		.jodit-search__buttons {
+			flex-wrap: wrap;
 		}
-	}
 
-	@media (max-width: @width-search) {
-		width: 100%;
-
-		.jodit-search__box {
-			width: 100%;
+		.jodit-search__inputs input[data-ref='replace'],
+		.jodit-search__buttons button[data-ref='replace-btn'] {
+			display: block;
 		}
 	}
 }

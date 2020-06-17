@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import '../../../styles/variables';
+@import (reference) '../../../styles/variables';
 @import (reference) '../../../styles/mixins';
 
 .jodit-tabs {
@@ -12,13 +12,13 @@
 
 	.jodit-tabs__buttons {
 		line-height: 18px;
-		margin-bottom: @padding-default / 2;
+		margin-bottom: calc(var(--padding-default) / 2);
 		margin-top: 4px;
 		display: flex;
 		justify-content: center;
 
 		> * {
-			margin-left: @padding-default / 2;
+			margin-left: calc(var(--padding-default) / 2);
 
 			&:only-of-type {
 				width: 100%;

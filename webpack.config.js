@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 
 const webpack = require('webpack');
 
@@ -6,6 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MinimizeJSPlugin = require('terser-webpack-plugin');
+const PostBuild = require('./src/utils/post-build');
 
 const pkg = require('./package.json');
 
@@ -47,19 +49,13 @@ module.exports = (env, argv) => {
 			}
 		},
 		{
-			loader: 'postcss-loader',
-			options: {
-				sourceMap: debug,
-				plugins: () =>
-					[require('autoprefixer')].concat(
-						(isProd && !ESNext) ? require('postcss-css-variables') : []
-					)
-			}
+			loader: path.resolve('./src/utils/css-variables-prefixes')
 		},
 		{
 			loader: 'less-loader',
 			options: {
 				sourceMap: debug,
+				lessOptions: {},
 				noIeCompat: true
 			}
 		}
@@ -234,6 +230,31 @@ module.exports = (env, argv) => {
 				entryOnly: true
 			})
 		);
+
+		if (isProd && !ESNext) {
+			config.plugins.push(
+				new PostBuild(() => {
+					const postcss = require('postcss');
+					const plugins = postcss([
+						require('autoprefixer'),
+						require('postcss-css-variables')
+					]);
+
+					const file = path.resolve(
+						__dirname,
+						'./build/' + filename('jodit') + '.css'
+					);
+
+					fs.readFile(file, (err, css) => {
+						plugins
+							.process(css, { from: file, to: file })
+							.then(result => {
+								fs.writeFile(file, result.css, () => true);
+							});
+					});
+				})
+			);
+		}
 	}
 
 	return config;

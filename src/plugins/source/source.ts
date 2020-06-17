@@ -212,14 +212,14 @@ export class source extends Plugin {
 		try {
 			if (this.selInfo[0].startMarker) {
 				value = value.replace(
-					/<span[^>]+data-jodit_selection_marker="start"[^>]*>[<>]*?<\/span>/gim,
+					/<span[^>]+data-jodit-selection_marker="start"[^>]*>[<>]*?<\/span>/gim,
 					this.tempMarkerStart
 				);
 			}
 
 			if (this.selInfo[0].endMarker) {
 				value = value.replace(
-					/<span[^>]+data-jodit_selection_marker="end"[^>]*>[<>]*?<\/span>/gim,
+					/<span[^>]+data-jodit-selection_marker="end"[^>]*>[<>]*?<\/span>/gim,
 					this.tempMarkerEnd
 				);
 			}

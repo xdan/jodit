@@ -308,6 +308,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			defaultTimeout: jodit.defaultTimeout,
 			uploader: jodit.o.uploader,
 			language: jodit.o.language,
+			theme: jodit.o.theme,
 			defaultCallback(data: IFileBrowserCallBackData): void {
 				if (data.files && data.files.length) {
 					data.files.forEach((file, i) => {
@@ -418,7 +419,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		if (removeSelectionMarkers) {
 			value = value.replace(
-				/<span[^>]+id="jodit_selection_marker_[^>]+><\/span>/g,
+				/<span[^>]+id="jodit-selection_marker_[^>]+><\/span>/g,
 				''
 			);
 		}
@@ -1130,9 +1131,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		container.classList.add('jodit');
 		container.classList.add('jodit-container');
-		container.classList.add(
-			'jodit_' + (this.o.theme || 'default') + '_theme'
-		);
+		container.classList.add(`jodit_theme_${this.o.theme || 'default'}`);
 
 		container.setAttribute('contenteditable', 'false');
 

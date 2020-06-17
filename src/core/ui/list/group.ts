@@ -27,6 +27,7 @@ export class UIGroup<T extends IViewBased = IViewBased> extends UIElement<T>
 	@watch('buttonSize')
 	update(): void {
 		this.elements.forEach(elm => elm.update());
+		this.setMod('size', this.buttonSize);
 	}
 
 	append(elm: IUIElement): void {

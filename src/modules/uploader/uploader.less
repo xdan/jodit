@@ -4,15 +4,15 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import '../../styles/variables';
+@import (reference) '../../styles/variables';
 
 .jodit-drag-and-drop__file-box,
 .jodit_uploadfile_button {
 	position: relative;
 	width: 100%;
-	border: dashed 1px var(--color-border-drag);
+	border: dashed 1px var(--color-gray);
 	padding: 25px 0;
-	margin: @padding-default 0;
+	margin: var(--padding-default) 0;
 	text-align: center;
 	overflow: hidden;
 

@@ -4,16 +4,52 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import '../../../styles/variables';
+@import (reference) '../../../styles/variables';
 @import (reference) '../../../core/ui/list/list';
+
+:root {
+	--button-size: @icon-middle-size;
+	--margin-v: 2px;
+}
 
 .jodit-toolbar-collection,
 .jodit-toolbar-editor-collection {
+	&_mode_horizontal {
+		background-image: repeating-linear-gradient(
+			var(--color-border) 0,
+			transparent 1px,
+			transparent
+				calc(
+					var(--button-size) + (var(--button-size) - 4px) * 2 +
+						var(--margin-v) * 2
+				)
+		);
+		margin-top: -1px;
+	}
+
+	&_size {
+		&_tiny {
+			--button-size: @icon-tiny-size;
+		}
+
+		&_xsmall {
+			--button-size: @icon-xsmall-size;
+		}
+
+		&_small {
+			--button-size: @icon-small-size;
+		}
+
+		&_large {
+			--button-size: @icon-large-size;
+		}
+	}
+
 	.jodit-ui-list();
 
 	.jodit-toolbar-content,
 	.jodit-toolbar-button {
-		margin: 2px 1px;
+		margin: var(--margin-v) 1px;
 		padding: 0;
 	}
 }

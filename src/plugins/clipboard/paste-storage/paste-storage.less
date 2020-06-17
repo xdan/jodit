@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import '../../../styles/variables';
+@import (reference) '../../../styles/variables';
 
 .jodit-paste-storage {
 	padding: var(--padding-default);
@@ -28,7 +28,7 @@
 				white-space: pre;
 				overflow: hidden;
 				text-overflow: ellipsis;
-				padding: @padding-default / 2;
+				padding: calc(var(--padding-default) / 2);
 				margin: 0;
 				border: 1px solid transparent;
 				text-decoration: none;

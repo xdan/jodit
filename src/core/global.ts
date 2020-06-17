@@ -60,7 +60,8 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 	const data = boxes.get(jodit) || {};
 
 	if (!data[name]) {
-		let c = isViewObject(jodit) ? jodit.c : jodit.j.c,
+		const view = isViewObject(jodit) ? jodit : jodit.j;
+		let c = view.c,
 			body = jodit.od.body;
 
 		if (inside && isJoditObject(jodit) && jodit.od !== jodit.ed) {
@@ -71,6 +72,8 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 		const box = c.element(tag, {
 			className: `jodit jodit-${kebabCase(name)}-container jodit-box`
 		});
+
+		box.classList.add(`jodit_theme_${view.o.theme || 'default'}`);
 
 		body.appendChild(box);
 

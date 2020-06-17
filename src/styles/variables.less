@@ -10,8 +10,6 @@
 @screen-md: 992px;
 @screen-lg: 1200px;
 
-@padding-default: 8px;
-
 @icon-tiny-size: 8px;
 @icon-xsmall-size: 10px;
 @icon-small-size: 12px;
@@ -19,47 +17,33 @@
 @icon-large-size: 16px;
 
 :root {
-	--color-gray: #bdbcbc;
+	--color-white: #ffffff;
+	--color-gray: #dadada;
+	--color-gray-dark: #a5a5a5;
+	--color-dark: #4c4c4c;
+
+	--color-default: var(--color-dark);
+	--color-text: #222222;
+
 	--color-border: var(--color-gray);
-	--color-border_opacity60: rgba(189, 188, 188, 0.6);
+	--color-border-dark: var(--color-dark);
 
 	--color-border-selected: #1e88e5;
-	--color-border-moved: #1e88e5;
-	--color-border-tab: rgba(0, 0, 0, 0.1);
-	--color-border-tab_hover: #c6c6c6;
-	--color-border-tab_active: #ccc;
-	--color-border-resize: rgba(3, 14, 82, 0.92);
 	--color-border-active: #b5b5b5;
-	--color-border-drag: var(--color-gray);
 
-	--color-dark: #4c4c4c;
-	--color-default: var(--color-dark);
-	--color-shadow: var(--color-dark);
 	--color-selection: var(--color-dark);
+	--color-selection-area: #bdbdbd;
 
 	--color-separator: var(--color-border);
 	--color-error: #f7d1d1;
-	--color-placeholder: rgba(0, 0, 0, 0.35);
-	--color-toolbar: #f9f9f9;
+	--color-placeholder: var(--color-gray-dark);
+	--color-panel: #f9f9f9;
 	--color-resizer: #c8c8c8;
 
-	--color-tab: #737373;
-	--color-tab_hover: #111;
-	--color-tab_active: #333;
-	--color-text: #222222;
-	--color-link: #b8312f;
-	--color-button: var(--color-dark);
-	--color-link_hover: #d65f5e;
-	--color-selection-area: #bdbdbd;
-
-	--color-white: #ffffff;
 	--color-background-default: var(--color-white);
-	--color-background-gray: rgba(225, 225, 225, 0.99);
+	--color-background-gray: rvar(--color-gray);
 	--color-background-gray-hover: #f8f8f8;
-	--color-background-tab: #f5f5f5;
-	--color-background-tab_active: #fff;
 	--color-background-hover: #7a450f;
-	--color-background-nav-button-hover: #dde4ef;
 	--color-background-button-hover: #ecebe9;
 	--color-background-button-hover-opacity30: rgba(236, 235, 233, 0.3);
 	--color-background-progress: #b91f1f;
@@ -79,29 +63,28 @@
 	--font-size-small: 11px;
 
 	--color-text-icons: rgba(0, 0, 0, 0.75);
-	--color-icon: rgb(34, 34, 34);
+	--color-icon: var(--color-dark);
 
-	--padding-text-icons: 0 12px;
-	--padding-default: @padding-default;
+	--padding-default: 8px;
 
 	--border-radius-default: 3px;
 
 	//z-index
 	--z-index-full-size: 100000;
-	--z-index-dialog: 2222223;
 	--z-index-popup: 10000001;
 	--z-index-tooltip: 10000002;
-	--z-index-context-menu: 2222224;
-	--z-index-dialog-overlay: 2222222;
+	--z-index-dialog-overlay: 20000003;
+	--z-index-dialog: 20000004;
+	--z-index-context-menu: 20000005;
 
-	--icon_loader_size: 48px;
+	--icon-loader-size: 48px;
 
 	--width_element_default: 18px;
 	--height_element_default: 18px;
 
 	// dark theme
 	--dark_background_color: #575757;
-	--dark_background_color_opacity80: rgba(87, 87, 87, 0.8);
+	--dark_background_ligher: #787878;
 	--dark_border_color: #444;
 	--dark_text_color: #d1cccc;
 	--dark_text_color_opacity80: rgba(209, 204, 204, 0.8);
@@ -114,24 +97,6 @@
 	--dark_toolbar_seperator_color3: rgba(104, 103, 103, 0.75);
 	--dark_color-border-selected: #152f5f;
 
-	//context menu
-	--context_menu_bg: #fff;
-	--context_menu_shadow: rgba(0, 0, 0, 0.24);
-	--context_menu_border_color: rgba(204, 204, 204, 0.24);
-	--context_menu_icon_color: #727272;
-	--context_menu_icon_hover_color: #000;
-	--context_menu_item_color: #727272;
-	--context_menu_item_bg_hover_color: #e3e3e3;
-	--context_menu_item_hover_color: #000;
-	--context_menu_icon_size: 18px;
-	--context_menu_item_padding: var(--padding-default);
-	--context_menu_item_height: 38px;
-
 	--width-default: 180px;
 	--width-input-min: var(--width-default);
-	--height-input: var(--width-default);
-
-	// triangle
-	--popup-bg-color: #ffffff;
-	--popup-triangle-size: 8px;
 }

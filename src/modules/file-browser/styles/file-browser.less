@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import '../../../styles/variables';
+@import (reference) '../../../styles/variables';
 
 :root {
 	--first_column: 31%;
@@ -38,8 +38,8 @@
 			position: absolute;
 			top: 50%;
 			left: 50%;
-			margin-top: calc(var(--icon_loader_size) / -2);
-			margin-left: calc(var(--icon_loader_size) / -2);
+			margin-top: calc(var(--icon-loader-size) / -2);
+			margin-left: calc(var(--icon-loader-size) / -2);
 			font-style: normal;
 			opacity: 0.7;
 		}
@@ -87,7 +87,7 @@
 		}
 
 		&::-webkit-scrollbar {
-			width: @padding-default / 2;
+			width: calc(var(--padding-default) / 2);
 		}
 
 		&::-webkit-scrollbar-track {
@@ -117,7 +117,7 @@
 		overflow-y: auto;
 
 		&::-webkit-scrollbar {
-			width: @padding-default / 2;
+			width: calc(var(--padding-default) / 2);
 		}
 
 		&::-webkit-scrollbar-track {
@@ -197,13 +197,14 @@
 	&__files.jodit-filebrowser_active {
 		width: 100%;
 		overflow-y: auto;
-		padding: @padding-default / 2;
+		padding: calc(var(--padding-default) / 2);
 		flex-wrap: wrap;
 		align-content: flex-start;
 
 		.jodit-filebrowser__source-title {
 			user-select: none;
-			margin: -@padding-default -@padding-default 0 -@padding-default;
+			margin: calc(var(--padding-default) * -1);
+			margin-bottom: 0;
 			display: block;
 			padding: var(--padding-default);
 			line-height: 17px;
@@ -383,7 +384,7 @@
 			right: 0;
 			top: 0;
 			bottom: 0;
-			margin: 0 -@padding-default 0 0;
+			margin: 0 calc(var(--padding-default) * -1) 0 0;
 			padding: 0;
 			opacity: 0;
 			font-size: 400px;

@@ -739,7 +739,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		});
 
 		self.container.classList.add(
-			'jodit_' + (this.o.theme || 'default') + '_theme'
+			`jodit_theme_${this.o.theme || 'default'}`
 		);
 
 		self.dialog = self.container.querySelector(
