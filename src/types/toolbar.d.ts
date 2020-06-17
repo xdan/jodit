@@ -197,7 +197,7 @@ interface IControlType<
 			originalEvent: Event;
 			button: IToolbarButton;
 		}
-	) => void;
+	) => any;
 
 	args?: any[];
 

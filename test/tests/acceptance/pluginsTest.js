@@ -1658,7 +1658,7 @@ describe('Test plugins', function() {
 						editor.container.classList.contains('jodit_sticky')
 					);
 
-					expect(0).equals(
+					expect(-1).equals(
 						editor.toolbar.container.getBoundingClientRect().top
 					);
 				});
@@ -1709,7 +1709,7 @@ describe('Test plugins', function() {
 						expect(true).equals(
 							editor.container.classList.contains('jodit_sticky')
 						);
-						expect(0).equals(
+						expect(-1).equals(
 							editor.toolbar.container.getBoundingClientRect().top
 						);
 					});
@@ -1735,7 +1735,7 @@ describe('Test plugins', function() {
 						expect(true).equals(
 							editor.container.classList.contains('jodit_sticky')
 						);
-						expect(100).equals(
+						expect(99).equals(
 							editor.toolbar.container.getBoundingClientRect().top
 						);
 					});

@@ -126,6 +126,7 @@ export const refs = <T extends HTMLElement>(
 
 		if (key && isString(key)) {
 			def[camelCase(key)] = child as T;
+			def[key] = child as T;
 		}
 
 		return def;

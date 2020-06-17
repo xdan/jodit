@@ -226,8 +226,10 @@ describe('Toolbar', function() {
 			describe('in the right side', function() {
 				it('Should open popup in toolbar with float by left editor side', function() {
 					const editor = getJodit({
-						width: 315,
+						width: 306,
 						buttons: [
+							'video',
+							'video',
 							'video',
 							'video',
 							'video',
@@ -366,86 +368,6 @@ describe('Toolbar', function() {
 			expect(list && list.parentNode === null).is.true;
 		});
 
-		it('Open colorpicker set background and color. After this click in another any place. White when popap will be closed. Open again and remove all styles.', function() {
-			const editor = getJodit();
-
-			editor.value = 'text2text';
-
-			const range = editor.s.createRange();
-
-			range.setStart(editor.editor.firstChild.firstChild, 3);
-			range.setEnd(editor.editor.firstChild.firstChild, 6);
-
-			editor.s.selectRange(range);
-
-			clickButton('brush', editor);
-
-			const popup = getOpenedPopup(editor);
-
-			expect(window.getComputedStyle(popup).display).equals('block');
-
-			simulateEvent(
-				'mousedown',
-				0,
-				popup.querySelector('[data-color="#F9CB9C"]')
-			);
-
-			expect(editor.value).equals(
-				'<p>tex<span style="background-color: rgb(249, 203, 156);">t2t</span>ext</p>'
-			);
-
-			// simulateEvent('mousedown', 0, editor.editor)
-			expect(popup.parentNode).is.null;
-
-			range.selectNodeContents(editor.editor.querySelector('span'));
-			// range.collapse(true);
-			editor.s.selectRange(range);
-
-			clickButton('brush', editor);
-
-			const popup2 = getOpenedPopup(editor);
-			expect(window.getComputedStyle(popup2).display).equals('block');
-		});
-
-		describe('Show native color picker', function() {
-			describe('Enable', function() {
-				it('should open color picker with button - native color picker', function() {
-					const editor = getJodit({
-						showBrowserColorPicker: true
-					});
-
-					editor.value = 'text2text';
-
-					clickTrigger('brush', editor);
-
-					const list = getOpenedPopup(editor);
-
-					// In two tabs text-color and background-color
-					expect(
-						list.querySelectorAll('input[type="color"]').length
-					).equals(2);
-				});
-			});
-
-			describe('Disable', function() {
-				it('should open color picker without button - native color picker', function() {
-					const editor = getJodit({
-						showBrowserColorPicker: false
-					});
-
-					editor.value = 'text2text';
-
-					clickTrigger('brush', editor);
-
-					const list = getOpenedPopup(editor);
-
-					expect(
-						list.querySelectorAll('input[type="color"]').length
-					).equals(0);
-				});
-			});
-		});
-
 		it('Open format list set H1 for current cursor position. Restore selection after that', function() {
 			const editor = getJodit();
 
@@ -539,7 +461,7 @@ describe('Toolbar', function() {
 
 				editor.value = 'test test <a href="#">test</a>';
 
-				simulateEvent('click', 0, editor.editor.querySelector('a'));
+				simulateEvent('click', editor.editor.querySelector('a'));
 
 				const popup = getOpenedPopup(editor);
 
@@ -558,16 +480,14 @@ describe('Toolbar', function() {
 
 					simulateEvent('click', 0, editor.editor.querySelector('a'));
 
-					const popup = editor.ownerDocument.querySelector(
-						'.jodit-popup[data-editor_id=' + editor.id + ']'
-					);
+					const popup = getOpenedPopup(editor);
 
 					expect(popup).is.not.null;
 
 					const pencil = getButton('link', popup);
 					expect(pencil).is.not.null;
 
-					simulateEvent('click', 0, pencil);
+					simulateEvent('click',  pencil);
 					const subpopup = getOpenedPopup(editor);
 
 					expect(subpopup).is.not.null;
@@ -583,7 +503,7 @@ describe('Toolbar', function() {
 			describe('Mouse move', function() {
 				it('Should highlight cells in table-creator', function() {
 					const editor = getJodit();
-					clickTrigger('table', editor);
+					clickButton('table', editor);
 
 					const list = getOpenedPopup(editor);
 
@@ -610,7 +530,7 @@ describe('Toolbar', function() {
 							iframe: true
 						});
 
-						clickTrigger('table', editor);
+						clickButton('table', editor);
 
 						const list = getOpenedPopup(editor);
 
@@ -701,23 +621,7 @@ describe('Toolbar', function() {
 						textIcons: true
 					});
 
-					clickTrigger('image', editor);
-
-					const popup = getOpenedPopup(editor);
-
-					expect(popup).is.not.null;
-
-					expect(popup.querySelectorAll('svg, img').length).equals(0);
-				});
-			});
-
-			describe('In brush popup', function() {
-				it('Should be also only text', function() {
-					const editor = getJodit({
-						textIcons: true
-					});
-
-					clickTrigger('brush', editor);
+					clickButton('image', editor);
 
 					const popup = getOpenedPopup(editor);
 
@@ -734,7 +638,7 @@ describe('Toolbar', function() {
 						toolbarAdaptive: false
 					});
 
-					clickTrigger('video', editor);
+					clickButton('video', editor);
 
 					const popup = getOpenedPopup(editor);
 
@@ -1345,38 +1249,6 @@ describe('Toolbar', function() {
 				});
 			});
 
-			describe('Color button', function() {
-				it('Should be activated then element has some color', function() {
-					const editor = getJodit({
-						observer: {
-							timeout: 0
-						}
-					});
-
-					editor.value =
-						'<p>test<span style="color: #ccc">bold</span></p>';
-					editor.s.focus();
-
-					const p = editor.editor.firstChild;
-					const brush = getButton('brush', editor);
-					let brushIcon = brush.querySelector('svg');
-
-					expect(brushIcon).is.not.null;
-
-					editor.s.setCursorAfter(p.firstChild);
-					simulateEvent('mousedown', 0, p);
-					expect(brush.getAttribute('aria-pressed')).equals('false');
-					expect('').equals(brushIcon.style.fill);
-
-					editor.s.setCursorIn(p.lastChild);
-					simulateEvent('mousedown', 0, p);
-
-					expect(brush.getAttribute('aria-pressed')).equals('true');
-					brushIcon = brush.querySelector('svg');
-					expect('rgb(204, 204, 204)').equals(brushIcon.style.fill);
-				});
-			});
-
 			describe('In list', function() {
 				describe('Fontsize button', function() {
 					it('Should be activated then element has some style value', function() {
@@ -1589,44 +1461,6 @@ describe('Toolbar', function() {
 
 						expect(copy.hasAttribute('disabled')).is.false;
 					});
-				});
-			});
-
-			describe('Color button', function() {
-				it('Should be disabled and icon should have default color', function() {
-					const color = Jodit.defaultOptions.controls.brush,
-						defaultIsDisabled = color.isDisable;
-
-					color.isDisable = () => true; // Always disabled
-
-					const editor = getJodit({
-						observer: {
-							timeout: 0
-						}
-					});
-
-					editor.value =
-						'<p>test<span style="color: #ccc">bold</span></p>';
-					editor.s.focus();
-
-					const p = editor.editor.firstChild,
-						brush = getButton('brush', editor),
-						brushIcon = brush.querySelector('svg');
-
-					editor.s.setCursorAfter(p.firstChild);
-					simulateEvent('mousedown', 0, p);
-
-					expect(brush.getAttribute('aria-pressed')).equals('false');
-
-					expect('').equals(brushIcon.style.fill);
-
-					editor.s.setCursorIn(p.lastChild);
-					simulateEvent('mousedown', 0, p);
-
-					expect(brush.getAttribute('aria-pressed')).equals('true');
-					expect('').equals(brushIcon.style.fill);
-
-					color.isDisable = defaultIsDisabled;
 				});
 			});
 		});

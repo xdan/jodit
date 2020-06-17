@@ -32,9 +32,7 @@ describe('Test orderedList plugin', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.s.insertNode(
-						editor.createInside.text(' a ')
-					);
+					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(editor.value).equals(
 						'<ul><li>test</li><li> a <br></li></ul>'
@@ -59,9 +57,7 @@ describe('Test orderedList plugin', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					editor.s.insertNode(
-						editor.createInside.text(' a ')
-					);
+					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(editor.value).equals(
 						'<ul><li>te</li><li> a st</li></ul>'
@@ -87,7 +83,9 @@ describe('Test orderedList plugin', function() {
 				it('Should wrap whole text in ul/li', function() {
 					const editor = getJodit();
 					editor.value = 'Hello world';
-					editor.s.setCursorAfter(editor.editor.firstChild.firstChild);
+					editor.s.setCursorAfter(
+						editor.editor.firstChild.firstChild
+					);
 
 					editor.execCommand('insertUnorderedList');
 
@@ -129,6 +127,26 @@ describe('Test orderedList plugin', function() {
 		});
 
 		describe('Run second time', function() {
+			describe('On same place', function() {
+				it('Should not do anything', function() {
+					const editor = getJodit();
+					editor.value = '<p>test</p>';
+					editor.s.setCursorIn(editor.editor.firstChild);
+
+					clickButton('ul', editor);
+
+					expect(editor.value.replace(/<br>/, '')).equals(
+						'<ul><li>test</li></ul>'
+					);
+
+					clickButton('ul', editor);
+
+					expect(editor.value.replace(/<br>/, '')).equals(
+						'<p>test</p>'
+					);
+				});
+			});
+
 			describe('Unordered after Unordered', function() {
 				it('Should unwrap selected ul/li', function() {
 					const editor = getJodit();
@@ -137,7 +155,9 @@ describe('Test orderedList plugin', function() {
 
 					editor.execCommand('insertUnorderedList');
 
-					expect(editor.value.replace(/<br>/, '')).equals('<p>Hello world</p>');
+					expect(editor.value.replace(/<br>/, '')).equals(
+						'<p>Hello world</p>'
+					);
 				});
 			});
 
@@ -255,9 +275,9 @@ describe('Test orderedList plugin', function() {
 
 					editor.s.insertHTML('test ');
 
-					expect(sortAttributes(editor.value).replace(/<br>/, '')).equals(
-						'<p>test Text to text</p>'
-					);
+					expect(
+						sortAttributes(editor.value).replace(/<br>/, '')
+					).equals('<p>test Text to text</p>');
 				});
 			});
 		});

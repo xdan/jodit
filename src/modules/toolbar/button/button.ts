@@ -243,7 +243,9 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 			state.tooltip = this.j.i18n(control.tooltip);
 		}
 
-		state.hasTrigger = Boolean(control.list || control.popup);
+		state.hasTrigger = Boolean(
+			control.list || (control.popup && control.exec)
+		);
 	}
 
 	/**
@@ -391,34 +393,36 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	protected onClick(originalEvent: MouseEvent): void {
 		const { control } = this;
 
-		if (isFunction(control.popup)) {
-			return this.onTriggerClick(originalEvent);
-		}
-
 		if (isFunction(control.exec)) {
 			const target =
 				(this.toolbar ? this.toolbar.getTarget(this) : this.target) ||
 				null;
 
-			control.exec(this.j, target, {
+			const result = control.exec(this.j, target, {
 				control,
 				originalEvent,
 				button: this
 			});
 
-			this.j?.e?.fire('synchro');
+			if (result !== false) {
+				this.j?.e?.fire('synchro');
 
-			if (this.parentElement) {
-				this.parentElement.update();
+				if (this.parentElement) {
+					this.parentElement.update();
+				}
+
+				/**
+				 * Fired after calling `button.exec` function
+				 * @event afterExec
+				 */
+				this.j?.e?.fire('closeAllPopups afterExec');
+
+				return;
 			}
+		}
 
-			/**
-			 * Fired after calling `button.exec` function
-			 * @event afterExec
-			 */
-			this.j?.e?.fire('closeAllPopups afterExec');
-
-			return;
+		if (isFunction(control.popup)) {
+			return this.onTriggerClick(originalEvent);
 		}
 
 		if (control.command || control.name) {

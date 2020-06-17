@@ -6,13 +6,27 @@
 
 import { Config } from '../config';
 import { Dom } from '../modules/';
-import { css, normalizeColor } from '../core/helpers/';
+import { css, dataBind, normalizeColor } from '../core/helpers/';
 import { IJodit, IControlType } from '../types';
 import { ColorPickerWidget, TabOption, TabsWidget } from '../modules/widget';
 
 Config.prototype.controls.brush = {
 	update(button): void {
+		const color = dataBind(button, 'color');
 		const editor = button.j as IJodit;
+
+		const update = (key: string, value: string) => {
+			if (value && value !== css(editor.editor, key).toString()) {
+				button.state.icon.fill = value;
+				return;
+			}
+		};
+
+		if (color) {
+			const mode = dataBind(button, 'color');
+			update(mode === 'color' ? mode : 'background-color', color);
+			return;
+		}
 
 		const current = editor.s.current();
 
@@ -29,20 +43,11 @@ Config.prototype.controls.brush = {
 					editor.editor
 				) as HTMLElement) || editor.editor;
 
-			const colorHEX = css(currentBpx, 'color').toString(),
-				bgHEX = css(currentBpx, 'background-color').toString();
-
-			if (colorHEX !== css(editor.editor, 'color').toString()) {
-				button.state.icon.fill = colorHEX;
-				button.state.activated = true;
-				return;
-			}
-
-			if (bgHEX !== css(editor.editor, 'background-color').toString()) {
-				button.state.icon.fill = bgHEX;
-				button.state.activated = true;
-				return;
-			}
+			update('color', css(currentBpx, 'color').toString());
+			update(
+				'background-color',
+				css(currentBpx, 'background-color').toString()
+			);
 		}
 
 		button.state.icon.fill = '';
@@ -53,7 +58,8 @@ Config.prototype.controls.brush = {
 		editor: IJodit,
 		current: Node | false,
 		self: IControlType,
-		close: () => void
+		close: () => void,
+		button
 	) => {
 		let colorHEX: string = '',
 			bg_color: string = '',
@@ -83,6 +89,9 @@ Config.prototype.controls.brush = {
 					currentElement.style.backgroundColor = value;
 				}
 
+				dataBind(button, 'color', value);
+				dataBind(button, 'color-mode', 'background');
+
 				close();
 			},
 			bg_color
@@ -96,6 +105,9 @@ Config.prototype.controls.brush = {
 				} else {
 					currentElement.style.color = value;
 				}
+
+				dataBind(button, 'color', value);
+				dataBind(button, 'color-mode', 'color');
 
 				close();
 			},
@@ -118,6 +130,35 @@ Config.prototype.controls.brush = {
 		}
 
 		return TabsWidget(editor, tabs, currentElement as any);
+	},
+	exec(jodit: IJodit, current, { button }): void | false {
+		const mode = dataBind(button, 'color-mode'),
+			color = dataBind(button, 'color');
+
+		if (!mode) {
+			return false;
+		}
+
+		if (
+			current &&
+			current !== jodit.editor &&
+			Dom.isNode(current, jodit.ew) &&
+			Dom.isElement(current)
+		) {
+			switch (mode) {
+				case 'color':
+					(current as HTMLElement).style.color = color;
+					break;
+					(current as HTMLElement).style.backgroundColor = color;
+					break;
+			}
+		} else {
+			jodit.execCommand(
+				mode === 'background' ? mode : 'forecolor',
+				false,
+				color
+			);
+		}
 	},
 	tooltip: 'Fill color or set the text color'
 } as IControlType;
