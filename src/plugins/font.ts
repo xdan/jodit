@@ -6,11 +6,17 @@
 
 import { Config } from '../config';
 import { Dom } from '../core/dom';
-import { css, normalizeSize } from '../core/helpers/';
+import { css, dataBind, isVoid, normalizeSize } from '../core/helpers/';
 import { IControlType, IJodit } from '../types/';
 
 Config.prototype.controls.fontsize = ({
 	command: 'fontSize',
+
+	data: {
+		cssRule: 'font-size',
+		normalize: <T>(v: T): T => v
+	},
+
 	list: [
 		'8',
 		'9',
@@ -29,11 +35,22 @@ Config.prototype.controls.fontsize = ({
 		'96'
 	],
 
-	exec: (editor, event, { control }) => {
+	exec: (editor, event, { control, button }): void | false => {
+		const key = `button${control.command}`;
+
+		const value =
+			(control.args && control.args[0]) || dataBind(editor, key);
+
+		if (isVoid(value)) {
+			return false;
+		}
+
+		dataBind(editor, key, value);
+
 		editor.execCommand(
 			control.command as string,
 			false,
-			control.args ? control.args[0] : undefined
+			value || undefined
 		);
 	},
 
@@ -42,7 +59,9 @@ Config.prototype.controls.fontsize = ({
 	tooltip: 'Font size',
 
 	isChildActive: (editor, control: IControlType): boolean => {
-		const current = editor.s.current();
+		const current = editor.s.current(),
+			cssKey = control.data?.cssRule || 'font-size',
+			normalize = control.data?.normalize || ((v: string): string => v);
 
 		if (current) {
 			const currentBpx: HTMLElement =
@@ -57,37 +76,13 @@ Config.prototype.controls.fontsize = ({
 					editor.editor
 				) as HTMLElement) || editor.editor;
 
-			const fontSize: number = css(currentBpx, 'font-size') as number;
+			const value = css(currentBpx, cssKey) as number;
 
 			return Boolean(
-				fontSize &&
+				value &&
 					control.args &&
-					control.args[0].toString() === fontSize.toString()
-			);
-		}
-
-		return false;
-	},
-
-	isActive: (editor): boolean => {
-		const current = editor.s.current();
-
-		if (current) {
-			const currentBpx: HTMLElement =
-				(Dom.closest(
-					current,
-					elm => {
-						return (
-							Dom.isBlock(elm, editor.ew) ||
-							(elm && Dom.isElement(elm))
-						);
-					},
-					editor.editor
-				) as HTMLElement) || editor.editor;
-
-			return (
-				css(currentBpx, 'font-size').toString() !==
-				css(editor.editor, 'font-size').toString()
+					normalize(control.args[0].toString()) ===
+						normalize(value.toString())
 			);
 		}
 
@@ -96,15 +91,8 @@ Config.prototype.controls.fontsize = ({
 } as IControlType<IJodit>) as IControlType;
 
 Config.prototype.controls.font = ({
+	...Config.prototype.controls.fontsize,
 	command: 'fontname',
-
-	exec: (editor, node, { control }) => {
-		editor.execCommand(
-			control.command as string,
-			false,
-			control.args ? control.args[0] : undefined
-		);
-	},
 
 	list: {
 		'': 'Default',
@@ -121,59 +109,14 @@ Config.prototype.controls.font = ({
 		return `<span style="font-family: ${key}!important;">${value}</span>`;
 	},
 
-	isChildActive: (editor, control: IControlType): boolean => {
-		const current = editor.s.current(),
-			normFonts = (fontValue: string): string => {
-				return fontValue
-					.toLowerCase()
-					.replace(/['"]+/g, '')
-					.replace(/[^a-z0-9]+/g, ',');
-			};
-
-		if (current) {
-			const currentBpx: HTMLElement =
-				Dom.closest(
-					current,
-					elm =>
-						Dom.isBlock(elm, editor.ew) ||
-						(elm && Dom.isElement(elm)),
-
-					editor.editor
-				) || editor.editor;
-
-			const fontFamily = css(currentBpx, 'font-family').toString();
-
-			return Boolean(
-				fontFamily &&
-					control.args &&
-					normFonts(control.args[0].toString()) ===
-						normFonts(fontFamily)
-			);
+	data: {
+		cssRule: 'font-family',
+		normalize: (v: string): string => {
+			return v
+				.toLowerCase()
+				.replace(/['"]+/g, '')
+				.replace(/[^a-z0-9]+/g, ',');
 		}
-
-		return false;
-	},
-
-	isActive: (editor: IJodit): boolean => {
-		const current = editor.s.current();
-
-		if (current) {
-			const currentBpx =
-				Dom.closest(
-					current,
-					(elm: Node | null) =>
-						Dom.isBlock(elm, editor.ew) || Dom.isElement(elm),
-
-					editor.editor
-				) || editor.editor;
-
-			return (
-				css(currentBpx, 'font-family').toString() !==
-				css(editor.editor, 'font-family').toString()
-			);
-		}
-
-		return false;
 	},
 
 	tooltip: 'Font family'

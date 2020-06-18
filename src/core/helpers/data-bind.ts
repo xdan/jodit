@@ -17,7 +17,7 @@ const store = new WeakMap();
  * @param value
  */
 export const dataBind = <T = any>(
-	elm: IViewComponent | Node,
+	elm: IViewComponent | Node | object,
 	key: string,
 	value?: T
 ): T => {

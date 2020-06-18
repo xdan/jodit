@@ -110,7 +110,7 @@ describe('Color plugin', function() {
 			});
 
 			describe('Second click on the button', function() {
-				it('Should apply previous choise', function() {
+				it('Should apply previous choice', function() {
 					const editor = getJodit();
 
 					editor.value = 'text2text';

@@ -350,7 +350,7 @@ describe('Test helpers', function() {
 
 					for (let i = 0; i < values.length; i += 1) {
 						expect(values[i][1]).equals(
-							Jodit.modules.Helpers.stripTags(values[i][0])
+							Jodit.modules.Helpers.stripTags(values[i][0]).replace(/\n/g, '')
 						);
 					}
 				});

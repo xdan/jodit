@@ -7,6 +7,17 @@
 import { Config } from '../config';
 import { Dom } from '../core/dom';
 import { IControlType, IJodit, markerInfo } from '../types';
+import { dataBind } from '../core/helpers';
+
+const exec: IControlType<IJodit>['exec'] = (jodit, _, { control }): void => {
+	const key = `button${control.command}`;
+
+	const value = (control.args && control.args[0]) || dataBind(jodit, key);
+
+	dataBind(jodit, key, value);
+
+	jodit.execCommand(control.command as string, false, value);
+};
 
 Config.prototype.controls.ul = {
 	command: 'insertUnorderedList',
@@ -18,7 +29,8 @@ Config.prototype.controls.ul = {
 		circle: 'Circle',
 		disc: 'Disc',
 		square: 'Square'
-	}
+	},
+	exec
 } as IControlType;
 
 Config.prototype.controls.ol = {
@@ -33,7 +45,8 @@ Config.prototype.controls.ol = {
 		'lower-roman': 'Lower Roman',
 		'upper-alpha': 'Upper Alpha',
 		'upper-roman': 'Upper Roman'
-	}
+	},
+	exec
 } as IControlType;
 
 /**

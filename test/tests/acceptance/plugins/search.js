@@ -27,19 +27,24 @@ describe('Search plugin', function() {
 					timeout: 0
 				}
 			});
+
 			const search = editor.container.querySelector('.jodit-search');
+
 			expect(false).equals(
 				search.classList.contains('jodit-search_active')
 			);
+
 			simulateEvent('keydown', 'f', editor.editor, function(options) {
 				options.ctrlKey = true;
 			});
+
 			expect(true).equals(
 				search.classList.contains('jodit-search_active')
 			);
+
 			expect(true).equals(
 				editor.ownerDocument.activeElement ===
-					search.querySelector('.jodit-search__query')
+					search.querySelector('[data-ref="query"]')
 			);
 		});
 	});
@@ -71,7 +76,7 @@ describe('Search plugin', function() {
 
 			expect(true).equals(
 				editor.ownerDocument.activeElement ===
-					search.querySelector('.jodit-search__query')
+					search.querySelector('[data-ref="query"]')
 			);
 		});
 
@@ -103,13 +108,13 @@ describe('Search plugin', function() {
 
 				expect(true).equals(
 					editor.ownerDocument.activeElement ===
-						search.querySelector('.jodit-search__query')
+						search.querySelector('[data-ref="query"]')
 				);
 
-				const query = search.querySelector('.jodit-search__query');
-				const replace = search.querySelector('.jodit-search__replace');
+				const query = search.querySelector('[data-ref="query"]');
+				const replace = search.querySelector('[data-ref="replace"]');
 				const replaceButton = search.querySelector(
-					'.jodit-search__buttons-replace'
+					'[data-ref="replace-btn"]'
 				);
 
 				query.value = 't';
@@ -151,7 +156,7 @@ describe('Search plugin', function() {
 
 			expect(
 				editor.ownerDocument.activeElement ===
-					search.querySelector('.jodit-search__query')
+					search.querySelector('[data-ref="query"]')
 			).is.true;
 
 			editor.s.removeMarkers();
@@ -208,7 +213,7 @@ describe('Search plugin', function() {
 			).is.true;
 			expect(
 				editor.ownerDocument.activeElement ===
-					search.querySelector('.jodit-search__query')
+					search.querySelector('[data-ref="query"]')
 			).is.true;
 
 			editor.s.removeMarkers();
@@ -270,7 +275,7 @@ describe('Search plugin', function() {
 				);
 				expect(true).equals(
 					editor.ownerDocument.activeElement ===
-						search.querySelector('.jodit-search__query')
+						search.querySelector('[data-ref="query"]')
 				);
 
 				editor.s.removeMarkers();
@@ -323,12 +328,12 @@ describe('Search plugin', function() {
 			);
 			expect(true).equals(
 				editor.ownerDocument.activeElement ===
-					search.querySelector('.jodit-search__query')
+					search.querySelector('[data-ref="query"]')
 			);
 			simulateEvent(
 				'keydown',
 				Jodit.KEY_ESC,
-				search.querySelector('.jodit-search__query')
+				search.querySelector('[data-ref="query"]')
 			);
 
 			expect(false).equals(

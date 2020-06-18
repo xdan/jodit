@@ -13,6 +13,7 @@ import {
 	IControlType,
 	IDictionary
 } from '../types';
+import { dataBind, isVoid } from '../core/helpers';
 
 Config.prototype.controls.paragraph = {
 	command: 'formatBlock',
@@ -51,11 +52,22 @@ Config.prototype.controls.paragraph = {
 		return false;
 	},
 
-	exec: (editor: IJodit, event, { control }) => {
+	exec: (editor: IJodit, event, { control }): void | false => {
+		const key = `button${control.command}`;
+
+		const value =
+			(control.args && control.args[0]) || dataBind(editor, key);
+
+		if (isVoid(value)) {
+			return false;
+		}
+
+		dataBind(editor, key, value);
+
 		editor.execCommand(
 			control.command as string,
 			false,
-			control.args ? control.args[0] : undefined
+			value || undefined
 		);
 	},
 
@@ -118,7 +130,9 @@ Config.prototype.controls.paragraph = {
 	},
 
 	childTemplate: (e: IJodit, key: string, value: string) =>
-		`<${key}><span>${e.i18n(value)}</span></${key}>`,
+		`<${key} style="margin:0;padding:0"><span>${e.i18n(
+			value
+		)}</span></${key}>`,
 
 	tooltip: 'Insert format block'
 } as IControlType;

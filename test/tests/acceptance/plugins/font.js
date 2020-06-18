@@ -39,7 +39,7 @@ describe('Font test', function() {
 				});
 			});
 
-			describe('Extends standart font list', function() {
+			describe('Extends standard font list', function() {
 				it('Should standart font list elements', function() {
 					const editor = getJodit({
 						toolbarAdaptive: false,
@@ -98,6 +98,203 @@ describe('Font test', function() {
 
 			expect(sortAttributes(editor.value)).equals('<p><span style="font-size:10px">test' +
 				'<span style="font-family:Impact,Charcoal,sans-serif">stop</span></span></p>');
+		});
+	});
+
+	describe('Font size', function () {
+		describe('State', function() {
+			describe('First click on the button', function() {
+				it('Should open list', function() {
+					const editor = getJodit();
+
+					clickButton('fontsize', editor);
+
+					const popup = getOpenedPopup(editor);
+
+					expect(popup).is.not.null;
+				});
+
+				describe('Second click on the button', function() {
+					it('Should apply previous choice', function() {
+						const editor = getJodit();
+
+						editor.value = 'text2text';
+
+						const range = editor.s.createRange(true);
+
+						range.setStart(editor.editor.firstChild.firstChild, 3);
+						range.setEnd(editor.editor.firstChild.firstChild, 6);
+
+						clickButton('fontsize', editor);
+
+						const popup = getOpenedPopup(editor);
+
+						expect(popup).is.not.null;
+
+						clickButton('8', popup);
+
+						expect(sortAttributes(editor.value)).equals(
+							'<p>tex<span style="font-size:8px">t2t</span>ext</p>'
+						);
+
+						const range2 = editor.s.createRange(true);
+
+						range2.setStartAfter(editor.editor.firstChild);
+
+						clickButton('fontsize', editor);
+
+						const popup2 = getOpenedPopup(editor);
+
+						expect(popup2).is.null;
+
+						expect(editor.value).equals(
+							'<p>tex<span style="font-size: 8px;">t2t</span>ext</p><p><span style="font-size: 8px;"></span></p>'
+						);
+					});
+				});
+			});
+		});
+	});
+
+	describe('Font family', function () {
+		describe('State', function() {
+			describe('First click on the button', function() {
+				it('Should open list', function() {
+					const editor = getJodit();
+
+					clickButton('font', editor);
+
+					const popup = getOpenedPopup(editor);
+
+					expect(popup).is.not.null;
+				});
+
+				describe('Second click on the button', function() {
+					it('Should apply previous choice', function() {
+						const editor = getJodit();
+
+						editor.value = 'text2text';
+
+						const range = editor.s.createRange(true);
+
+						range.setStart(editor.editor.firstChild.firstChild, 3);
+						range.setEnd(editor.editor.firstChild.firstChild, 6);
+
+						clickButton('font', editor);
+
+						const popup = getOpenedPopup(editor);
+
+						expect(popup).is.not.null;
+
+						clickButton('Impact_Charcoal_sans_serif', popup);
+
+						expect(editor.value).equals(
+							'<p>tex<span style="font-family: Impact, Charcoal, sans-serif;">t2t</span>ext</p>'
+						);
+
+						const range2 = editor.s.createRange(true);
+
+						range2.setStartAfter(editor.editor.firstChild);
+
+						clickButton('font', editor);
+
+						const popup2 = getOpenedPopup(editor);
+
+						expect(popup2).is.null;
+
+						expect(editor.value).equals(
+							'<p>tex<span style="font-family: Impact, Charcoal, sans-serif;">t2t</span>ext</p><p><span style="font-family: Impact, Charcoal, sans-serif;"></span></p>'
+						);
+					});
+				});
+			});
+		});
+	});
+
+	describe('Active', function() {
+		describe('In list', function() {
+			describe('Fontsize button', function() {
+				it('Should be activated then element has some style value', function() {
+					const editor = getJodit({
+						observer: {
+							timeout: 0
+						}
+					});
+
+					editor.value =
+						'<p>test<span style="font-size: 12px">bold</span></p>';
+					editor.s.focus();
+
+					const p = editor.editor.firstChild;
+					const font = getButton('fontsize', editor);
+
+					expect(font).is.not.null;
+
+					editor.s.setCursorAfter(p.firstChild);
+					simulateEvent('mousedown', 0, p);
+
+					expect(font.getAttribute('aria-pressed')).equals(
+						'false'
+					);
+
+					editor.s.setCursorIn(p.lastChild);
+
+					simulateEvent('mousedown', 0, p);
+
+					clickTrigger('fontsize', editor);
+
+					const font12 = getOpenedPopup(editor).querySelector(
+						'[role="listitem"][class*="12"]'
+					);
+
+					expect(font12.getAttribute('aria-pressed')).equals(
+						'true'
+					);
+				});
+			});
+
+			describe('Font family button', function() {
+				it('Should be activated then element has some style value', function() {
+					const editor = getJodit({
+						toolbarAdaptive: false,
+						observer: {
+							timeout: 0
+						}
+					});
+
+					editor.value =
+						'<p>test<span style="font-family: Georgia, serif;">bold</span></p>';
+					editor.s.focus();
+
+					const p = editor.editor.firstChild;
+					const font = getButton('font', editor);
+
+					expect(font).is.not.null;
+
+					editor.s.setCursorAfter(p.firstChild);
+					simulateEvent('mousedown', 0, p);
+					expect(font.getAttribute('aria-pressed')).equals(
+						'false'
+					);
+
+					editor.s.setCursorIn(p.lastChild);
+
+					simulateEvent('mousedown', 0, p);
+
+
+					clickTrigger('font', editor);
+
+					const popup = getOpenedPopup(editor);
+
+					const fontGeorgia = popup.querySelector(
+						'[class*=Georgia_serif]'
+					);
+
+					expect(fontGeorgia).does.not.equal(font);
+					expect(fontGeorgia.hasAttribute('aria-pressed')).is
+						.true;
+				});
+			});
 		});
 	});
 });
