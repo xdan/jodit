@@ -356,6 +356,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 				name: key.toString(),
 				template: control.childTemplate,
 				exec: control.exec,
+				data: control.data,
 				command: control.command,
 				isActive: control.isChildActive,
 				isDisabled: control.isChildDisabled,
@@ -419,6 +420,10 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 
 				return;
 			}
+		}
+
+		if (control.list) {
+			return this.openControlList(control as IControlTypeStrongList);
 		}
 
 		if (isFunction(control.popup)) {

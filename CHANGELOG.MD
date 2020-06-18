@@ -1,6 +1,7 @@
 # Changelog
 ## 3.4
 ### Bug fixes
+* https://github.com/xdan/jodit/issues/408
 * https://github.com/xdan/jodit/issues/405
 * https://github.com/xdan/jodit/issues/404 See more in Features
 * https://github.com/xdan/jodit/issues/400
@@ -12,6 +13,7 @@
 * https://github.com/xdan/jodit/issues/385
 * https://github.com/xdan/jodit/issues/378
 * https://github.com/xdan/jodit/issues/369
+* Fixed unde-redo subsystem for source mode
 
 ### Features
 * All `less` variables were replaced to css custom properties for modern browsers.
