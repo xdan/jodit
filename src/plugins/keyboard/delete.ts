@@ -16,7 +16,6 @@ import {
 import { isVoid, call, trim } from '../../core/helpers';
 import {
 	getNeighbor,
-	getNormalSibling,
 	getNotSpaceSibling,
 	getSibling,
 	normalizeCursorPosition
@@ -274,7 +273,7 @@ export class Delete extends Plugin {
 		fakeNode: Node,
 		backspace: boolean
 	): void | true {
-		const neighbor = getNormalSibling(fakeNode, backspace);
+		const neighbor = Dom.getNormalSibling(fakeNode, backspace);
 
 		if (
 			Dom.isElement(neighbor) &&
@@ -395,8 +394,8 @@ export class Delete extends Plugin {
 	 * ```
 	 */
 	private checkJoinTwoLists(fakeNode: Node, backspace: boolean): true | void {
-		const next = getNormalSibling(fakeNode, backspace),
-			prev = getNormalSibling(fakeNode, !backspace);
+		const next = Dom.getNormalSibling(fakeNode, backspace),
+			prev = Dom.getNormalSibling(fakeNode, !backspace);
 
 		if (
 			!Dom.closest(fakeNode, Dom.isElement, this.root) &&

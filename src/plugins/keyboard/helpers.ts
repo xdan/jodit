@@ -27,25 +27,11 @@ export function getSibling(node: Node, backspace: boolean): Nullable<Node> {
 	return backspace ? node.previousSibling : node.nextSibling;
 }
 
-export function getNormalSibling(
-	node: Node,
-	backspace: boolean,
-	normal: (n: Node) => boolean = (n: Node) => !Dom.isEmptyTextNode(n)
-): Nullable<Node> {
-	let start = getSibling(node, backspace);
-
-	while (start && !normal(start)) {
-		start = getSibling(start, backspace);
-	}
-
-	return start && normal(start) ? start : null;
-}
-
 export function getNotSpaceSibling(
 	node: Node,
 	backspace: boolean
 ): Nullable<Node> {
-	return getNormalSibling(node, backspace, n => {
+	return Dom.getNormalSibling(node, backspace, n => {
 		return (
 			!Dom.isEmptyTextNode(n) &&
 			Boolean(
@@ -56,8 +42,8 @@ export function getNotSpaceSibling(
 }
 
 export function normalizeCursorPosition(node: Node, backspace: boolean): void {
-	let sibling = getNormalSibling(node, backspace),
-		anotherSibling = getNormalSibling(node, !backspace);
+	let sibling = Dom.getNormalSibling(node, backspace),
+		anotherSibling = Dom.getNormalSibling(node, !backspace);
 
 	while (
 		Dom.isElement(sibling) &&

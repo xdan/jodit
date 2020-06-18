@@ -69,15 +69,37 @@ Config.prototype.controls.brush = {
 		if (
 			current &&
 			current !== editor.editor &&
-			Dom.isNode(current, editor.ew) &&
-			Dom.isElement(current)
+			Dom.isNode(current, editor.ew)
 		) {
-			colorHEX = css(current as HTMLElement, 'color').toString();
-			bg_color = css(
-				current as HTMLElement,
-				'background-color'
-			).toString();
-			currentElement = current as HTMLElement;
+			if (Dom.isElement(current)) {
+				currentElement = current as HTMLElement;
+			}
+
+			Dom.up(
+				current,
+				(node): true | void => {
+					if (Dom.isHTMLElement(node, editor.ew)) {
+						const color = css(node, 'color', undefined, true),
+							background = css(
+								node,
+								'background-color',
+								undefined,
+								true
+							);
+
+						if (color) {
+							colorHEX = color.toString();
+							return true;
+						}
+
+						if (background) {
+							bg_color = background.toString();
+							return true;
+						}
+					}
+				},
+				editor.editor
+			);
 		}
 
 		const backgroundTag: HTMLElement = ColorPickerWidget(

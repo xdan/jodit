@@ -6,12 +6,11 @@
 
 import './color-picker.less';
 
-import { IDictionary, IJodit, IRGB } from '../../../types';
+import { IDictionary, IJodit } from '../../../types';
 import {
 	normalizeColor,
 	hasBrowserColorPicker,
 	isPlainObject,
-	hexToRgb,
 	attr,
 	isFunction,
 	isArray
@@ -44,25 +43,11 @@ export const ColorPickerWidget = (
 ): HTMLDivElement => {
 	const valueHex = normalizeColor(coldColor),
 		form: HTMLDivElement = editor.c.div('jodit-color-picker'),
-		iconEye: string = editor.o.textIcons ? '' : Icon.get('eye'),
 		iconPalette: string = editor.o.textIcons
 			? `<span>${editor.i18n('palette')}</span>`
 			: Icon.get('palette'),
 		setColor = (target: HTMLElement, color: string) => {
-			target.innerHTML = Icon.get('eye');
-			target.classList.add('active');
-
-			const colorRGB: IRGB | null = hexToRgb(color);
-			if (colorRGB) {
-				(target.firstChild as HTMLElement).style.fill =
-					'rgb(' +
-					(255 - colorRGB.r) +
-					',' +
-					(255 - colorRGB.g) +
-					',' +
-					(255 - colorRGB.b) +
-					')';
-			}
+			target.classList.add('jodit_active');
 		},
 		eachColor = (colors: string[] | IDictionary<string[]>) => {
 			const stack: string[] = [];
@@ -81,16 +66,16 @@ export const ColorPickerWidget = (
 				colors.forEach(color => {
 					stack.push(
 						'<a ' +
-							(valueHex === color ? ' class="active" ' : '') +
+							(valueHex === color
+								? ' class="jodit_active" '
+								: '') +
 							' title="' +
 							color +
 							'" style="background-color:' +
 							color +
 							'" data-color="' +
 							color +
-							'" href="javascript:void(0)">' +
-							(valueHex === color ? iconEye : '') +
-							'</a>'
+							'" href="javascript:void(0)"></a>'
 					);
 				});
 			}

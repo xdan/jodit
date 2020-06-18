@@ -21,6 +21,7 @@ import {
 	isString,
 	trim
 } from './helpers';
+import { getSibling } from '../plugins/keyboard/helpers';
 
 /**
  * Module for working with DOM
@@ -629,6 +630,27 @@ export class Dom {
 		} while (next && next !== root);
 
 		return null;
+	}
+
+	/**
+	 * Get not empty  sibling
+	 *
+	 * @param node
+	 * @param [left]
+	 * @param [normal]
+	 */
+	static getNormalSibling(
+		node: Node,
+		left: boolean = true,
+		normal: (n: Node) => boolean = (n: Node) => !Dom.isEmptyTextNode(n)
+	): Nullable<Node> {
+		let start = getSibling(node, left);
+
+		while (start && !normal(start)) {
+			start = getSibling(start, left);
+		}
+
+		return start && normal(start) ? start : null;
 	}
 
 	/**

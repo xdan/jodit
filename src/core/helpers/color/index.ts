@@ -4,5 +4,4 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from './hex-to-rgb';
 export * from './color-to-hex';
