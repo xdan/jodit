@@ -84,7 +84,7 @@ export class TextAreaEditor extends SourceEditor<HTMLTextAreaElement>
 		return this.instance.selectionEnd;
 	}
 
-	setSelectionRange(start: number, end: number): void {
+	setSelectionRange(start: number, end: number = start): void {
 		this.instance.setSelectionRange(start, end);
 	}
 
@@ -106,5 +106,25 @@ export class TextAreaEditor extends SourceEditor<HTMLTextAreaElement>
 
 	selectAll(): void {
 		this.instance.select();
+	}
+
+	replaceUndoManager() {
+		const { observer } = this.jodit;
+
+		this.j.e.on(this.instance, 'keydown', (e: KeyboardEvent):
+			| false
+			| void => {
+			if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
+				if (e.shiftKey) {
+					observer.redo();
+				} else {
+					observer.undo();
+				}
+
+				this.setSelectionRange(this.getValue().length);
+
+				return false;
+			}
+		});
 	}
 }

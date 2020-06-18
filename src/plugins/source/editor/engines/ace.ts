@@ -30,19 +30,6 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 		this.j.e.fire('mousedown', e);
 	};
 
-	private get undoManager(): null | AceAjax.UndoManager {
-		return this.instance
-			? this.instance.getSession().getUndoManager()
-			: null;
-	}
-
-	private updateButtons() {
-		if (this.undoManager && this.j.getRealMode() === constants.MODE_SOURCE) {
-			this.j.e.fire('canRedo', this.undoManager.hasRedo());
-			this.j.e.fire('canUndo', this.undoManager.hasUndo());
-		}
-	}
-
 	private getLastColumnIndex(row: number): number {
 		return this.instance.session.getLine(row).length;
 	}
@@ -114,12 +101,11 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 
 			this.container.appendChild(fakeMirror);
 
-			this.instance = ((editor.ow as any).ace as AceAjax.Ace).edit(
-				fakeMirror
-			);
+			const ace = (editor.ow as any).ace as AceAjax.Ace;
+
+			this.instance = ace.edit(fakeMirror);
 
 			this.instance.setTheme(editor.o.sourceEditorNativeOptions.theme);
-
 			this.instance.renderer.setShowGutter(
 				editor.o.sourceEditorNativeOptions.showGutter
 			);
@@ -176,37 +162,17 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 			this.onReady();
 		};
 
-		editor.e
-			.on('afterSetMode', () => {
-				if (
-					editor.getRealMode() !== constants.MODE_SOURCE &&
-					editor.getMode() !== constants.MODE_SPLIT
-				) {
-					return;
-				}
+		editor.e.on('afterSetMode', () => {
+			if (
+				editor.getRealMode() !== constants.MODE_SOURCE &&
+				editor.getMode() !== constants.MODE_SPLIT
+			) {
+				return;
+			}
 
-				this.fromWYSIWYG();
-				tryInitAceEditor();
-			})
-			.on('beforeCommand', (command: string): false | void => {
-				if (
-					editor.getRealMode() !== constants.MODE_WYSIWYG &&
-					(command === 'redo' || command === 'undo') &&
-					this.undoManager
-				) {
-					if (
-						(this.undoManager as any)[
-							'has' +
-								command.substr(0, 1).toUpperCase() +
-								command.substr(1)
-						]
-					) {
-						this.instance[command]();
-					}
-					this.updateButtons();
-					return false;
-				}
-			});
+			this.fromWYSIWYG();
+			tryInitAceEditor();
+		});
 
 		tryInitAceEditor();
 
@@ -241,7 +207,6 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 		this.instance.setValue(value);
 
 		this.instance.clearSelection();
-		this.updateButtons();
 	}
 
 	getValue() {
@@ -291,5 +256,25 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 
 	setPlaceHolder(title: string): void {
 		// ACE does not support placeholder
+	}
+
+	replaceUndoManager() {
+		const { observer } = this.jodit;
+
+		this.instance.commands.addCommand({
+			name: 'Undo',
+			bindKey: { win: 'Ctrl-Z', mac: 'Command-Z' },
+			exec: () => {
+				observer.undo();
+			}
+		});
+
+		this.instance.commands.addCommand({
+			name: 'Redo',
+			bindKey: { win: 'Ctrl-Shift-Z', mac: 'Command-Shift-Z' },
+			exec: () => {
+				observer.redo();
+			}
+		});
 	}
 }

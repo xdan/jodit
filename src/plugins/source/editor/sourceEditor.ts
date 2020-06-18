@@ -25,9 +25,11 @@ export abstract class SourceEditor<T> {
 	}
 
 	abstract init(editor: IJodit): void;
+	abstract replaceUndoManager(): void;
 
 	isReady: boolean = false;
 	protected onReady() {
+		this.replaceUndoManager();
 		this.isReady = true;
 		this.j.e.fire(this, 'ready');
 	}

@@ -30,9 +30,7 @@ export class redoUndo extends Plugin {
 	}
 	afterInit(editor: IJodit) {
 		const callback = (command: string): void | false => {
-			if (editor.getRealMode() === consts.MODE_WYSIWYG) {
-				editor.observer[command as 'redo' | 'undo']();
-			}
+			editor.observer[command as 'redo' | 'undo']();
 
 			return false;
 		};

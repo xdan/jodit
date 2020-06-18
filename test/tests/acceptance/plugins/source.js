@@ -1,6 +1,6 @@
-describe('CodeMirror editor source code', function() {
+describe('Source code test', function() {
 	describe('Init', function() {
-		it('After init container must has codeeditor container', function(done) {
+		it('After init container must has source editor container', function(done) {
 			unmockPromise();
 
 			let timeout;
@@ -126,6 +126,4 @@ describe('CodeMirror editor source code', function() {
 			});
 		});
 	});
-
-	afterEach(removeStuff);
 });

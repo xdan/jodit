@@ -40,4 +40,6 @@ export class CustomEditor extends SourceEditor<HTMLTextAreaElement>
 	setReadOnly(isReadOnly: boolean): void {}
 
 	selectAll(): void {}
+
+	replaceUndoManager(): void {}
 }
