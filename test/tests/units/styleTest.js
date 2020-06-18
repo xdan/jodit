@@ -25,6 +25,30 @@ describe('Test Style module', function() {
 			);
 		});
 
+		describe('Two times', function() {
+			it('Should do nothing', function() {
+				const style = function () {
+					return new Style({
+						style: {
+							color: '#FF0000'
+						}
+					});
+				}
+
+				style().apply(editor);
+
+				expect(sortAttributes(editor.value)).equals(
+					'<p><span style="color:#FF0000">test</span></p>'
+				);
+
+				style().apply(editor);
+
+				expect(sortAttributes(editor.value)).equals(
+					'<p>test</p>'
+				);
+			});
+		});
+
 		describe('For collapsed selection', function() {
 			it('Should create SPAN element with this style', function() {
 				editor.s.setCursorAfter(editor.editor.firstChild.firstChild);

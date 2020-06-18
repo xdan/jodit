@@ -6,6 +6,7 @@
 
 import { isNumeric } from '../checker/';
 import { kebabCase } from '../string';
+import { colorToHex } from '../color';
 
 export function normalizeCssValue(
 	key: string,
@@ -28,6 +29,10 @@ export function normalizeCssValue(
 			}
 
 			return isNumeric(value) ? +value : value;
+	}
+
+	if (/color/i.test(key)) {
+		return colorToHex(value.toString()) || value;
 	}
 
 	return value;

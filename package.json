@@ -77,7 +77,7 @@
 		"prettier": "1.19.1",
 		"raw-loader": "^0.5.1",
 		"style-loader": "^0.13.2",
-		"stylelint": "^13.6.0",
+		"stylelint": "^13.6.1",
 		"stylelint-config-prettier": "^8.0.1",
 		"stylelint-config-standard": "^20.0.0",
 		"stylelint-prettier": "^1.1.2",
@@ -93,7 +93,7 @@
 		"uglifyjs-webpack-plugin": "^2.2.0",
 		"url-loader": "^1.1.2",
 		"webpack": "^4.43.0",
-		"webpack-cli": "^3.3.11",
+		"webpack-cli": "^3.3.12",
 		"webpack-dev-middleware": "^3.7.2",
 		"webpack-dev-server": "^3.11.0",
 		"webpack-hot-middleware": "^2.25.0"
