@@ -13,7 +13,8 @@ import {
 	isPlainObject,
 	attr,
 	isFunction,
-	isArray
+	isArray,
+	refs
 } from '../../../core/helpers/';
 import { Icon } from '../../../core/ui';
 import { Dom } from '../../../core/dom';
@@ -42,13 +43,10 @@ export const ColorPickerWidget = (
 	coldColor: string
 ): HTMLDivElement => {
 	const valueHex = normalizeColor(coldColor),
-		form: HTMLDivElement = editor.c.div('jodit-color-picker'),
+		form = editor.c.div('jodit-color-picker'),
 		iconPalette: string = editor.o.textIcons
 			? `<span>${editor.i18n('palette')}</span>`
 			: Icon.get('palette'),
-		setColor = (target: HTMLElement, color: string) => {
-			target.classList.add('jodit_active');
-		},
 		eachColor = (colors: string[] | IDictionary<string[]>) => {
 			const stack: string[] = [];
 
@@ -83,16 +81,28 @@ export const ColorPickerWidget = (
 		};
 
 	form.appendChild(
-		editor.c.fromHTML('<div>' + eachColor(editor.o.colors) + '</div>')
+		editor.c.fromHTML(
+			'<div class="jodit-color-picker__groups">' +
+				eachColor(editor.o.colors) +
+				'</div>'
+		)
 	);
 
+	form.appendChild(
+		editor.c.fromHTML(
+			'<div data-ref="extra" class="jodit-color-picker__extra"></div>'
+		)
+	);
+
+	const { extra } = refs(form);
+
 	if (editor.o.showBrowserColorPicker && hasBrowserColorPicker()) {
-		form.appendChild(
+		extra.appendChild(
 			editor.c.fromHTML(
-				'<span class="jodit-color-picker__native">' +
+				'<div class="jodit-color-picker__native">' +
 					iconPalette +
 					'<input type="color" value=""/>' +
-					'</span>'
+					'</div>'
 			)
 		);
 
@@ -107,10 +117,6 @@ export const ColorPickerWidget = (
 
 			const color: string = target.value || '';
 
-			if (color) {
-				setColor(target, color);
-			}
-
 			if (isFunction(callback)) {
 				callback(color);
 			}
@@ -122,7 +128,7 @@ export const ColorPickerWidget = (
 	editor.e.on(form, 'mousedown touchend', (e: MouseEvent) => {
 		e.stopPropagation();
 
-		let target: HTMLElement = e.target as HTMLElement;
+		let target = e.target as HTMLElement;
 
 		if (
 			(!target ||
@@ -142,17 +148,7 @@ export const ColorPickerWidget = (
 			return;
 		}
 
-		const active: HTMLElement | null = form.querySelector('a.active');
-		if (active) {
-			active.classList.remove('active');
-			active.innerHTML = '';
-		}
-
 		const color: string = attr(target, '-color') || '';
-
-		if (color) {
-			setColor(target, color);
-		}
 
 		if (callback && typeof callback === 'function') {
 			callback(color);
@@ -160,6 +156,8 @@ export const ColorPickerWidget = (
 
 		e.preventDefault();
 	});
+
+	editor.e.fire('afterGenerateColorPicker', form, extra);
 
 	return form;
 };

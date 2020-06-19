@@ -4,12 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import {
-	IControlType,
-	IDictionary,
-	IJodit,
-	IUIButtonState
-} from '../../../types';
+import { IControlType, IDictionary, IJodit } from '../../../types';
 import { Config } from '../../../config';
 
 declare module '../../../config' {
@@ -17,12 +12,10 @@ declare module '../../../config' {
 		popup: IDictionary<Array<IControlType | string>>;
 		toolbarInline: boolean;
 		toolbarInlineForSelection: boolean;
-		toolbarInlineButtonSize: IUIButtonState['size'];
 		toolbarInlineDisableFor: string | string[];
 	}
 }
 
-Config.prototype.toolbarInlineButtonSize = 'small';
 Config.prototype.toolbarInline = true;
 Config.prototype.toolbarInlineForSelection = false;
 Config.prototype.toolbarInlineDisableFor = [];

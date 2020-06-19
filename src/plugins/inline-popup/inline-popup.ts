@@ -103,7 +103,7 @@ export class inlinePopup extends Plugin {
 		if (this.type !== type) {
 			const data = this.j.o.popup[type];
 
-			this.toolbar.buttonSize = this.j.o.toolbarInlineButtonSize;
+			this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
 			this.toolbar.build(data, target);
 			this.popup.setContent(this.toolbar.container);
 

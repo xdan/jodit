@@ -33,7 +33,7 @@ export default [
 		name: 'valign',
 		list: ['Top', 'Middle', 'Bottom', 'Normal'],
 		tooltip: 'Vertical align',
-		exec: (editor: IJodit, image, { control }) => {
+		exec: (editor: IJodit, image, { control }): void | false => {
 			if (!Dom.isTag(image, 'img')) {
 				return;
 			}
@@ -42,6 +42,10 @@ export default [
 				control.args && isString(control.args[0])
 					? control.args[0].toLowerCase()
 					: '';
+
+			if (!command) {
+				return false;
+			}
 
 			css(image, 'vertical-align', command === 'normal' ? '' : command);
 
@@ -52,7 +56,7 @@ export default [
 		name: 'left',
 		childTemplate: (_, __, value: string) => value,
 		list: ['Left', 'Right', 'Center', 'Normal'],
-		exec: (editor: IJodit, image, { control }) => {
+		exec: (editor: IJodit, image, { control }): void | false => {
 			if (!Dom.isTag(image, 'img')) {
 				return;
 			}
@@ -61,6 +65,10 @@ export default [
 				control.args && isString(control.args[0])
 					? control.args[0].toLowerCase()
 					: '';
+
+			if (!command) {
+				return false;
+			}
 
 			if (command !== 'normal') {
 				if (['right', 'left'].indexOf(command) !== -1) {

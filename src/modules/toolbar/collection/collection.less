@@ -7,32 +7,57 @@
 @import (reference) '../../../styles/variables';
 @import (reference) '../../../core/ui/list/list';
 
+.gradient(@icon-size) {
+	--button-icon-size: @icon-size;
+	@button-size: @icon-size + (@icon-size - 4px) * 2 + 4px;
+
+	&.jodit-toolbar-collection_mode_horizontal,
+	&.jodit-toolbar-editor-collection_mode_horizontal {
+		background-image: repeating-linear-gradient(
+			transparent 0,
+			transparent @button-size - 1px,
+			var(--color-border) @button-size
+		);
+	}
+}
+
 .jodit-toolbar-collection,
 .jodit-toolbar-editor-collection {
 	&_mode_horizontal {
+		position: relative;
 		background-image: repeating-linear-gradient(
-			var(--color-border) 0,
-			transparent 1px,
-			transparent var(--button-size)
+			transparent 0,
+			transparent calc(var(--button-size) - 1px),
+			var(--color-border) var(--button-size)
 		);
-		margin-top: -1px;
+
+		&:after {
+			content: '';
+			display: block;
+			width: 100%;
+			height: 1px;
+			background-color: var(--color-background-default);
+			position: absolute;
+			left: 0;
+			bottom: 0;
+		}
 	}
 
 	&_size {
 		&_tiny {
-			--button-icon-size: @icon-tiny-size;
+			.gradient(@icon-tiny-size);
 		}
 
 		&_xsmall {
-			--button-icon-size: @icon-xsmall-size;
+			.gradient(@icon-xsmall-size);
 		}
 
 		&_small {
-			--button-icon-size: @icon-small-size;
+			.gradient(@icon-small-size);
 		}
 
 		&_large {
-			--button-icon-size: @icon-large-size;
+			.gradient(@icon-large-size);
 		}
 	}
 
@@ -42,5 +67,14 @@
 	.jodit-toolbar-button {
 		margin: var(--margin-v) 1px;
 		padding: 0;
+	}
+}
+
+.jodit-dialog__box {
+	.jodit-toolbar-collection,
+	.jodit-toolbar-editor-collection {
+		&_mode_horizontal {
+			background-image: none;
+		}
 	}
 }
