@@ -109,6 +109,7 @@ export class Delete extends Plugin {
 				this.checkTableCell(fakeNode, backspace) ||
 				this.checkRemoveEmptyParent(fakeNode, backspace) ||
 				this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
+				this.checkJoinTwoLists(fakeNode, backspace) ||
 				this.checkJoinNeighbors(fakeNode, backspace) ||
 				this.checkRewrapListItem(fakeNode, backspace)
 			) {
@@ -159,13 +160,23 @@ export class Delete extends Plugin {
 	private checkRemoveChar(fakeNode: Node, backspace: boolean): void | true {
 		const step = backspace ? -1 : 1;
 
-		let sibling = getSibling(fakeNode, backspace),
+		let sibling: Nullable<Node> = getSibling(fakeNode, backspace),
 			removeNeighbor: Nullable<Node> = null;
 
 		let charRemoved: boolean = false,
 			removed: CanUndef<string>;
 
-		while (sibling && Dom.isText(sibling)) {
+		while (sibling && (Dom.isText(sibling) || Dom.isInlineBlock(sibling))) {
+			while (Dom.isInlineBlock(sibling)) {
+				sibling = (backspace
+					? sibling?.lastChild
+					: sibling?.firstChild) as Nullable<Node>;
+			}
+
+			if (!sibling) {
+				break;
+			}
+
 			if (sibling.nodeValue?.length) {
 				const value = sibling.nodeValue;
 				const length = value.length;
@@ -401,12 +412,12 @@ export class Delete extends Plugin {
 			!Dom.closest(fakeNode, Dom.isElement, this.root) &&
 			Dom.isTag(next, ['ul', 'ol']) &&
 			Dom.isTag(prev, ['ul', 'ol']) &&
-			Dom.isTag(next.firstElementChild, 'li') &&
+			Dom.isTag(next.lastElementChild, 'li') &&
 			Dom.isTag(prev.firstElementChild, 'li')
 		) {
 			const { setCursorBefore, setCursorAfter } = this.j.s;
 
-			const target = next.firstElementChild,
+			const target = next.lastElementChild,
 				second = prev.firstElementChild;
 
 			call(!backspace ? Dom.append : Dom.prepend, second, fakeNode);
@@ -480,21 +491,36 @@ export class Delete extends Plugin {
 			return;
 		}
 
-		const neighbor = getNotSpaceSibling(parent, backspace);
+		let neighbor = getNotSpaceSibling(parent, backspace);
+		const startNeighbor = neighbor;
 
 		this.j.s.setCursorBefore(fakeNode);
+
+		if (!this.j.s.cursorInTheEdge(backspace, parent)) {
+			return;
+		}
+
+		if (
+			Dom.isTag(neighbor, ['ul', 'ol']) &&
+			!Dom.isTag(parent, ['ul', 'ol'])
+		) {
+			neighbor = backspace
+				? neighbor.lastElementChild
+				: neighbor.firstElementChild;
+		}
 
 		if (
 			parent &&
 			neighbor &&
-			parent.nodeName === neighbor.nodeName &&
+			startNeighbor &&
+			Dom.isElement(neighbor) &&
 			this.j.s.cursorInTheEdge(backspace, parent)
 		) {
 			Dom.moveContent(parent, neighbor, !backspace);
 
 			let next;
 			do {
-				next = getSibling(neighbor, !backspace);
+				next = getSibling(startNeighbor, !backspace);
 				Dom.safeRemove(next);
 			} while (next !== parent);
 
@@ -502,6 +528,7 @@ export class Delete extends Plugin {
 			return true;
 		}
 
+		// Try move cursor in the UL if it was in the edge of LI
 		if (
 			Dom.isTag(parent, 'li') &&
 			this.j.s.cursorInTheEdge(backspace, parent)

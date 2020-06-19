@@ -3,7 +3,7 @@ describe('Backspace/Delete key', function() {
 	beforeEach(function() {
 		editor = getJodit();
 		editor.value = '<p>test</p>';
-		range = editor.s.createRange();
+		range = editor.s.createRange(true);
 	});
 
 	describe('For non collapsed range', function() {
@@ -68,6 +68,18 @@ describe('Backspace/Delete key', function() {
 				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
 				expect(editor.value).equals('<p>tst</p>');
+			});
+
+			describe('Text after SPAN and cursor in the left edge of text', function () {
+				it('Should remove char inside span', function() {
+					editor.value = '<p><span>AAA</span>test</p>';
+
+					range.setStart(editor.editor.firstChild.lastChild, 0);
+
+					simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+					expect(sortAttributes(editor.value)).equals('<p><span>AA</span>test</p>');
+				});
 			});
 
 			describe('Cursor in the outside some element', function() {
@@ -648,6 +660,48 @@ describe('Backspace/Delete key', function() {
 
 				editor.s.insertHTML(' a ');
 				expect(editor.value).equals('<p>Test a Test</p>');
+			});
+
+			describe('P after UL and cursor in the left edge of P', function () {
+				it('Should remove P and move all this content inside last LI', function() {
+					editor.value = '<p>AAA</p>\n' +
+						'<ul>\n' +
+						'    <li>BBB</li>\n' +
+						'    <li>BBB</li>\n' +
+						'    <li>BBB</li>\n' +
+						'</ul><p>CCC</p>';
+
+					range.setStart(editor.editor.lastChild.firstChild, 0);
+
+					simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+					expect(sortAttributes(editor.value)).equals('<p>AAA</p>\n' +
+						'<ul>\n' +
+						'    <li>BBB</li>\n' +
+						'    <li>BBB</li>\n' +
+						'    <li>BBBCCC</li>\n' +
+						'</ul>');
+
+					editor.s.insertHTML(' a ');
+					expect(editor.value).equals('<p>AAA</p>\n' +
+						'<ul>\n' +
+						'    <li>BBB</li>\n' +
+						'    <li>BBB</li>\n' +
+						'    <li>BBB a CCC</li>\n' +
+						'</ul>');
+				});
+			});
+
+			describe('H1 after P and cursor in the left edge of H1', function () {
+				it('Should remove H1 and move all this content inside last P', function() {
+					editor.value = '<p>AAA</p><h1>CCC</h1>';
+
+					range.setStart(editor.editor.lastChild.firstChild, 0);
+
+					simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+					expect(sortAttributes(editor.value)).equals('<p>AAACCC</p>');
+				});
 			});
 
 			describe('Space between two elements', function() {

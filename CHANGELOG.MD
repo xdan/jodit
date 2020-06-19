@@ -13,6 +13,7 @@
 * https://github.com/xdan/jodit/issues/385
 * https://github.com/xdan/jodit/issues/378
 * https://github.com/xdan/jodit/issues/369
+* https://github.com/xdan/jodit/issues/360
 * Fixed unde-redo subsystem for source mode
 
 ### Features
