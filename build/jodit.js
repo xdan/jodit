@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.4.1
+ Version: v3.4.2
  Url: https://xdsoft.net/jodit/
  License(s): MIT
 */
@@ -4404,7 +4404,7 @@ var View = (function (_super) {
         var _this = _super.call(this) || this;
         _this.isView = true;
         _this.components = new Set();
-        _this.version = "3.4.1";
+        _this.version = "3.4.2";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.__isFullSize = false;
@@ -18080,6 +18080,7 @@ var Delete = (function (_super) {
                 this.checkTableCell(fakeNode, backspace) ||
                 this.checkRemoveEmptyParent(fakeNode, backspace) ||
                 this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
+                this.checkJoinTwoLists(fakeNode, backspace) ||
                 this.checkJoinNeighbors(fakeNode, backspace) ||
                 this.checkRewrapListItem(fakeNode, backspace)) {
                 return false;
@@ -18102,7 +18103,14 @@ var Delete = (function (_super) {
         var step = backspace ? -1 : 1;
         var sibling = helpers_2.getSibling(fakeNode, backspace), removeNeighbor = null;
         var charRemoved = false, removed;
-        while (sibling && dom_1.Dom.isText(sibling)) {
+        while (sibling && (dom_1.Dom.isText(sibling) || dom_1.Dom.isInlineBlock(sibling))) {
+            while (dom_1.Dom.isInlineBlock(sibling)) {
+                sibling = (backspace
+                    ? sibling === null || sibling === void 0 ? void 0 : sibling.lastChild : sibling === null || sibling === void 0 ? void 0 : sibling.firstChild);
+            }
+            if (!sibling) {
+                break;
+            }
             if ((_a = sibling.nodeValue) === null || _a === void 0 ? void 0 : _a.length) {
                 var value = sibling.nodeValue;
                 var length_1 = value.length;
@@ -18214,10 +18222,10 @@ var Delete = (function (_super) {
         if (!dom_1.Dom.closest(fakeNode, dom_1.Dom.isElement, this.root) &&
             dom_1.Dom.isTag(next, ['ul', 'ol']) &&
             dom_1.Dom.isTag(prev, ['ul', 'ol']) &&
-            dom_1.Dom.isTag(next.firstElementChild, 'li') &&
+            dom_1.Dom.isTag(next.lastElementChild, 'li') &&
             dom_1.Dom.isTag(prev.firstElementChild, 'li')) {
             var _a = this.j.s, setCursorBefore = _a.setCursorBefore, setCursorAfter = _a.setCursorAfter;
-            var target = next.firstElementChild, second = prev.firstElementChild;
+            var target = next.lastElementChild, second = prev.firstElementChild;
             helpers_1.call(!backspace ? dom_1.Dom.append : dom_1.Dom.prepend, second, fakeNode);
             this.checkJoinNeighbors(fakeNode, backspace);
             helpers_1.call(backspace ? dom_1.Dom.append : dom_1.Dom.prepend, target, fakeNode);
@@ -18243,15 +18251,26 @@ var Delete = (function (_super) {
             return;
         }
         var neighbor = helpers_2.getNotSpaceSibling(parent, backspace);
+        var startNeighbor = neighbor;
         this.j.s.setCursorBefore(fakeNode);
+        if (!this.j.s.cursorInTheEdge(backspace, parent)) {
+            return;
+        }
+        if (dom_1.Dom.isTag(neighbor, ['ul', 'ol']) &&
+            !dom_1.Dom.isTag(parent, ['ul', 'ol'])) {
+            neighbor = backspace
+                ? neighbor.lastElementChild
+                : neighbor.firstElementChild;
+        }
         if (parent &&
             neighbor &&
-            parent.nodeName === neighbor.nodeName &&
+            startNeighbor &&
+            dom_1.Dom.isElement(neighbor) &&
             this.j.s.cursorInTheEdge(backspace, parent)) {
             dom_1.Dom.moveContent(parent, neighbor, !backspace);
             var next = void 0;
             do {
-                next = helpers_2.getSibling(neighbor, !backspace);
+                next = helpers_2.getSibling(startNeighbor, !backspace);
                 dom_1.Dom.safeRemove(next);
             } while (next !== parent);
             this.j.s.setCursorBefore(fakeNode);
