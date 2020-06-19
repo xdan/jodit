@@ -9,6 +9,15 @@
 .jodit_theme_dark {
 	--color-border: #6b6b6b;
 
+	.jodit-toolbar-collection,
+	.jodit-toolbar-editor-collection {
+		&_mode_horizontal {
+			&:after {
+				background-color: var(--color-border);
+			}
+		}
+	}
+
 	&.jodit-container {
 		background-color: var(--dark_background_color);
 	}

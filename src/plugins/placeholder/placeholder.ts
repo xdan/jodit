@@ -16,7 +16,6 @@ import { MAY_BE_REMOVED_WITH_KEY } from '../../core/constants';
 
 /**
  * Show placeholder
- *
  */
 
 /**
@@ -38,7 +37,7 @@ declare module '../../config' {
 Config.prototype.showPlaceholder = true;
 
 /**
- * @property {boolean} useInputsPlaceholder=true use a placeholder from original input field, if it was set
+ * @property useInputsPlaceholder=true use a placeholder from original input field, if it was set
  * @example
  * ```javascript
  * //<textarea id="editor" placeholder="start typing text ..." cols="30" rows="10"></textarea>
@@ -50,7 +49,7 @@ Config.prototype.showPlaceholder = true;
 Config.prototype.useInputsPlaceholder = true;
 
 /**
- * @property {string} placeholder='Type something' Default placeholder
+ * @property placeholder='Type something' Default placeholder
  * @example
  * ```javascript
  * var editor = new Jodit('#editor', {
@@ -238,7 +237,12 @@ export class placeholder extends Plugin {
 
 		if (
 			!next &&
-			Dom.each(first, elm => Dom.isEmpty(elm) || Dom.isTag(elm, 'br'))
+			Dom.each(
+				first,
+				elm =>
+					!Dom.isTag(elm, ['ul', 'li', 'ol']) &&
+					(Dom.isEmpty(elm) || Dom.isTag(elm, 'br'))
+			)
 		) {
 			return true;
 		}
