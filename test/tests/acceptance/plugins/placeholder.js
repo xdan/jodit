@@ -38,13 +38,13 @@ describe('Placeholder plugin', function() {
 		});
 
 		describe('Empty UL/LI', function() {
-			it('Should show placeholder', function() {
+			it('Should not show placeholder', function() {
 				const area = appendTestArea();
 				area.value = '<ul><li><br></li></ul>';
 				const editor = new Jodit(area);
 
 				expect(editor.container.querySelector('.jodit-placeholder')).is
-					.not.null;
+					.null;
 			});
 		});
 	});
