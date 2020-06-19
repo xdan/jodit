@@ -1,5 +1,6 @@
 var examples = document.getElementById('examples');
 var main_container = document.getElementById('main_container');
+
 var links = {
     'index.html': 'All options',
     'arabic.lang.html': 'Arabic Language',
@@ -8,6 +9,7 @@ var links = {
     'inline-mode.html': 'Inline mode',
     'custom-icons.html': 'Custom Icons / Font Awesome',
     'oneinstance.html': 'One Instance',
+    'color-picker.html': 'Color Picker',
 };
 
 if (examples) {
