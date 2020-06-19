@@ -38,7 +38,9 @@
         </code></pre>
 		<h3>JavaScript</h3>
 		<pre><code class="language-javascript">
-const editor = new Jodit('#area_editor');
+const editor = new Jodit('#area_editor', {
+  buttons: 'brush'
+});
 
 // After open will add custom buttn in default color-picker
 editor.e.on('afterGenerateColorPicker', (form, extra) => {
@@ -65,7 +67,7 @@ editor.e.on('afterGenerateColorPicker', (form, extra) => {
       //
       style.apply(editor);
     });
-
+    // Init custom color picker for dialog's content element
     AColorPicker
       .from(dialog.dialogbox_content.firstChild)
       .on('change', (picker, color) => {
@@ -100,7 +102,9 @@ editor.e.on('afterGenerateColorPicker', (form, extra) => {
 <script src="assets/prism.js"></script>
 <script src="assets/app.js"></script>
 <script>
-	const editor = new Jodit('#area_editor');
+	const editor = new Jodit('#area_editor', {
+		buttons: 'brush'
+	});
 	editor.e.on('afterGenerateColorPicker', (form, extra) => {
 		const elm = editor.create.fromHTML('<button class="jodit-ui-button">Custom</button>');
 
