@@ -1537,6 +1537,12 @@ svg.jodit-icon{
 .jodit-toolbar-collection_size_small.jodit-toolbar-collection_mode_horizontal,.jodit-toolbar-collection_size_small.jodit-toolbar-editor-collection_mode_horizontal,.jodit-toolbar-editor-collection_size_small.jodit-toolbar-collection_mode_horizontal,.jodit-toolbar-editor-collection_size_small.jodit-toolbar-editor-collection_mode_horizontal{
   background-image:repeating-linear-gradient(transparent, transparent 31px, var(--jd-color-border) 32px);
 }
+.jodit-toolbar-collection_size_middle,.jodit-toolbar-editor-collection_size_middle{
+  --jd-button-icon-size:14px;
+}
+.jodit-toolbar-collection_size_middle.jodit-toolbar-collection_mode_horizontal,.jodit-toolbar-collection_size_middle.jodit-toolbar-editor-collection_mode_horizontal,.jodit-toolbar-editor-collection_size_middle.jodit-toolbar-collection_mode_horizontal,.jodit-toolbar-editor-collection_size_middle.jodit-toolbar-editor-collection_mode_horizontal{
+  background-image:repeating-linear-gradient(transparent, transparent 37px, var(--jd-color-border) 38px);
+}
 .jodit-toolbar-collection_size_large,.jodit-toolbar-editor-collection_size_large{
   --jd-button-icon-size:16px;
 }

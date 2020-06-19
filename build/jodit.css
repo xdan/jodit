@@ -1742,6 +1742,18 @@ svg.jodit-icon{
 .jodit-toolbar-editor-collection_size_small.jodit-toolbar-editor-collection_mode_horizontal{
   background-image:repeating-linear-gradient(transparent, transparent 31px, #dadada 32px);
 }
+.jodit-toolbar-collection_size_middle.jodit-toolbar-collection_mode_horizontal{
+  background-image:repeating-linear-gradient(transparent, transparent 37px, #dadada 38px);
+}
+.jodit-toolbar-collection_size_middle.jodit-toolbar-editor-collection_mode_horizontal{
+  background-image:repeating-linear-gradient(transparent, transparent 37px, #dadada 38px);
+}
+.jodit-toolbar-editor-collection_size_middle.jodit-toolbar-collection_mode_horizontal{
+  background-image:repeating-linear-gradient(transparent, transparent 37px, #dadada 38px);
+}
+.jodit-toolbar-editor-collection_size_middle.jodit-toolbar-editor-collection_mode_horizontal{
+  background-image:repeating-linear-gradient(transparent, transparent 37px, #dadada 38px);
+}
 .jodit-toolbar-collection_size_large.jodit-toolbar-collection_mode_horizontal{
   background-image:repeating-linear-gradient(transparent, transparent 43px, #dadada 44px);
 }
