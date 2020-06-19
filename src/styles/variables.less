@@ -16,11 +16,14 @@
 @icon-middle-size: 14px;
 @icon-large-size: 16px;
 
+@color-background-selection: #b5d6fd;
+@color-dark: #4c4c4c;
+
 :root {
 	--color-white: #ffffff;
 	--color-gray: #dadada;
 	--color-gray-dark: #a5a5a5;
-	--color-dark: #4c4c4c;
+	--color-dark: @color-dark;
 
 	--color-default: var(--color-dark);
 	--color-text: #222222;
@@ -48,7 +51,7 @@
 	--color-background-button-hover-opacity30: rgba(236, 235, 233, 0.3);
 	--color-background-progress: #b91f1f;
 	--color-background-filebrowser-folders: #3f3f3f;
-	--color-background-selection: #b5d6fd;
+	--color-background-selection: @color-background-selection;
 	--color-background-selection_opacity50: rgba(181, 214, 253, 0.5);
 
 	--color-source-area: #323232;
