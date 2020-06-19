@@ -1,26 +1,18 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.4.0
+ Version: v3.4.1
  Url: https://xdsoft.net/jodit/
  License(s): MIT
 */
 .jodit-wysiwyg{
   outline:0;
 }
-.jodit-wysiwyg::-moz-selection{
+.jodit-wysiwyg::-moz-selection,.jodit-wysiwyg ::-moz-selection{
   background:#b5d6fd;
   color:#4c4c4c;
 }
-.jodit-wysiwyg ::-moz-selection{
-  background:#b5d6fd;
-  color:#4c4c4c;
-}
-.jodit-wysiwyg::selection{
-  background:#b5d6fd;
-  color:#4c4c4c;
-}
-.jodit-wysiwyg ::selection{
+.jodit-wysiwyg::selection,.jodit-wysiwyg ::selection{
   background:#b5d6fd;
   color:#4c4c4c;
 }
@@ -34,18 +26,6 @@
 .jodit-container:not(.jodit_inline) .jodit-wysiwyg img{
   position:relative;
   max-width:100%;
-}
-.jodit-container:not(.jodit_inline) .jodit-wysiwyg p,.jodit-container:not(.jodit_inline) .jodit-wysiwyg pre{
-  margin:0 0 8px;
-}
-.jodit-container:not(.jodit_inline) .jodit-wysiwyg h1,.jodit-container:not(.jodit_inline) .jodit-wysiwyg h2,.jodit-container:not(.jodit_inline) .jodit-wysiwyg h3,.jodit-container:not(.jodit_inline) .jodit-wysiwyg h4,.jodit-container:not(.jodit_inline) .jodit-wysiwyg h5{
-  margin-top:0;
-}
-.jodit-container:not(.jodit_inline) .jodit-wysiwyg blockquote{
-  border-left:2px solid;
-  margin-left:0;
-  padding-left:calc(8px/2);
-  color:#222;
 }
 .jodit-container:not(.jodit_inline) .jodit-wysiwyg jodit-media{
   position:relative;
@@ -553,6 +533,12 @@ svg.jodit-icon{
   padding:0;
   position:static;
   width:auto;
+}
+.jodit_theme_dark .jodit-toolbar-collection_mode_horizontal:after{
+  background-color:#6b6b6b;
+}
+.jodit_theme_dark .jodit-toolbar-editor-collection_mode_horizontal:after{
+  background-color:#6b6b6b;
 }
 .jodit_theme_dark.jodit-container{
   background-color:#575757;

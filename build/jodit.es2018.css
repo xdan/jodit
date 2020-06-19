@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.4.0
+ Version: v3.4.1
  Url: https://xdsoft.net/jodit/
  License(s): MIT
 */
@@ -78,12 +78,12 @@
   outline:0;
 }
 .jodit-wysiwyg::selection,.jodit-wysiwyg ::selection{
-  background:var(--jd-color-background-selection);
-  color:var(--jd-color-selection);
+  background:#b5d6fd;
+  color:#4c4c4c;
 }
 .jodit-container:not(.jodit_inline) .jodit-wysiwyg{
   margin:0;
-  padding:var(--jd-padding-default);
+  padding:8px;
   outline:0;
   overflow-x:auto;
   position:relative;
@@ -91,18 +91,6 @@
 .jodit-container:not(.jodit_inline) .jodit-wysiwyg img{
   position:relative;
   max-width:100%;
-}
-.jodit-container:not(.jodit_inline) .jodit-wysiwyg p,.jodit-container:not(.jodit_inline) .jodit-wysiwyg pre{
-  margin:0 0 8px;
-}
-.jodit-container:not(.jodit_inline) .jodit-wysiwyg h1,.jodit-container:not(.jodit_inline) .jodit-wysiwyg h2,.jodit-container:not(.jodit_inline) .jodit-wysiwyg h3,.jodit-container:not(.jodit_inline) .jodit-wysiwyg h4,.jodit-container:not(.jodit_inline) .jodit-wysiwyg h5{
-  margin-top:0;
-}
-.jodit-container:not(.jodit_inline) .jodit-wysiwyg blockquote{
-  border-left:2px solid;
-  margin-left:0;
-  padding-left:calc(var(--jd-padding-default)/2);
-  color:var(--jd-color-text);
 }
 .jodit-container:not(.jodit_inline) .jodit-wysiwyg jodit-media{
   position:relative;
@@ -495,7 +483,7 @@ svg.jodit-icon{
 .jodit-container:not(.jodit_inline){
   border:1px solid var(--jd-color-border);
   border-radius:var(--jd-border-radius-default);
-  background-color:var(--jd-color-background-default);
+  background-color:#fff;
 }
 .jodit-container:not(.jodit_inline) .jodit-workplace{
   border:0 solid var(--jd-color-border);
@@ -530,6 +518,9 @@ svg.jodit-icon{
 }
 .jodit_theme_dark{
   --jd-color-border:#6b6b6b;
+}
+.jodit_theme_dark .jodit-toolbar-collection_mode_horizontal:after,.jodit_theme_dark .jodit-toolbar-editor-collection_mode_horizontal:after{
+  background-color:var(--jd-color-border);
 }
 .jodit_theme_dark.jodit-container,.jodit_theme_dark.jodit-container.jodit_disabled{
   background-color:var(--jd-dark_background_color);
