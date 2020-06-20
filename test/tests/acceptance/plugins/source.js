@@ -33,6 +33,44 @@ describe('Source code test', function() {
 				}
 			});
 		}).timeout(6000);
+
+		describe('Set value in source mode', function() {
+			it('Should set value in editor and in source', function(done) {
+				unmockPromise();
+
+				let timeout;
+				const
+					area = appendTestArea(false, true),
+					__done = function() {
+						clearTimeout(timeout);
+						this.events.off('beforeDestruct');
+						this.destruct();
+						area.parentNode.removeChild(area);
+						done();
+					};
+
+				timeout = setTimeout(function() {
+					expect(false).is.true;
+					__done.call(editor);
+				}, 5000);
+
+				editor = new Jodit(area, {
+					defaultMode: Jodit.MODE_SOURCE,
+					sourceEditor: 'ace',
+					events: {
+						beforeDestruct: function() {
+							return false;
+						},
+						sourceEditorReady: function(editor) {
+							expect(editor.__plugins.source.sourceEditor.getValue()).equals('<p>pop</p>');
+							__done.call(editor);
+						}
+					}
+				});
+
+				editor.value = '<p>pop</p>';
+			}).timeout(6000);
+		});
 	});
 
 	describe('Change mode', function() {
