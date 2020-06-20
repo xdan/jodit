@@ -392,7 +392,7 @@ export class Config implements IViewOptions {
 
 	/**
 	 * Jodit.MODE_WYSIWYG The HTML editor allows you to write like MSWord,
-	 * Jodit.MODE_AREA syntax highlighting source editor
+	 * Jodit.MODE_SOURCE syntax highlighting source editor
 	 * @example
 	 * ```javascript
 	 * var editor = new Jodit('#editor', {
