@@ -62,8 +62,12 @@ describe('Source code test', function() {
 							return false;
 						},
 						sourceEditorReady: function(editor) {
-							expect(editor.__plugins.source.sourceEditor.getValue()).equals('<p>pop</p>');
-							__done.call(editor);
+							setTimeout(() => {
+								expect(editor.__plugins.source.sourceEditor.getValue()).equals('<p>pop</p>');
+								editor.value = '<p>test</p>';
+								expect(editor.__plugins.source.sourceEditor.getValue()).equals('<p>test</p>');
+								__done.call(editor);
+							}, 300);
 						}
 					}
 				});

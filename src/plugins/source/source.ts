@@ -288,6 +288,7 @@ export class source extends Plugin {
 			});
 		} else {
 			this.sourceEditor.onReadyAlways(() => {
+				this.fromWYSIWYG(true);
 				editor.events?.fire('sourceEditorReady', editor);
 			});
 		}
