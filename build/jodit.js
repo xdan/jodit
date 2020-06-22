@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.4.5
+ Version: v3.4.6
  Url: https://xdsoft.net/jodit/
  License(s): MIT
 */
@@ -373,7 +373,7 @@ tslib_1.__exportStar(__webpack_require__(30), exports);
 tslib_1.__exportStar(__webpack_require__(113), exports);
 tslib_1.__exportStar(__webpack_require__(32), exports);
 tslib_1.__exportStar(__webpack_require__(128), exports);
-tslib_1.__exportStar(__webpack_require__(11), exports);
+tslib_1.__exportStar(__webpack_require__(12), exports);
 tslib_1.__exportStar(__webpack_require__(133), exports);
 tslib_1.__exportStar(__webpack_require__(134), exports);
 tslib_1.__exportStar(__webpack_require__(135), exports);
@@ -1747,27 +1747,6 @@ function autobind() {
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(84), exports);
-tslib_1.__exportStar(__webpack_require__(85), exports);
-tslib_1.__exportStar(__webpack_require__(86), exports);
-tslib_1.__exportStar(__webpack_require__(87), exports);
-tslib_1.__exportStar(__webpack_require__(88), exports);
-tslib_1.__exportStar(__webpack_require__(89), exports);
-
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.eventEmitter = exports.getContainer = exports.lang = exports.modules = exports.pluginSystem = exports.uniqueUid = exports.instances = void 0;
 var plugin_system_1 = __webpack_require__(39);
 var dom_1 = __webpack_require__(2);
@@ -1815,6 +1794,27 @@ function getContainer(jodit, classFunc, tag, inside) {
 }
 exports.getContainer = getContainer;
 exports.eventEmitter = new events_1.EventsNative();
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(0);
+tslib_1.__exportStar(__webpack_require__(84), exports);
+tslib_1.__exportStar(__webpack_require__(85), exports);
+tslib_1.__exportStar(__webpack_require__(86), exports);
+tslib_1.__exportStar(__webpack_require__(87), exports);
+tslib_1.__exportStar(__webpack_require__(88), exports);
+tslib_1.__exportStar(__webpack_require__(89), exports);
 
 
 /***/ }),
@@ -2164,7 +2164,7 @@ var helpers_1 = __webpack_require__(1);
 var view_with_toolbar_1 = __webpack_require__(25);
 var dom_1 = __webpack_require__(2);
 var component_1 = __webpack_require__(7);
-var global_1 = __webpack_require__(12);
+var global_1 = __webpack_require__(11);
 config_1.Config.prototype.dialog = {
     extraButtons: [],
     resizable: true,
@@ -2251,7 +2251,7 @@ var Dialog = (function (_super) {
         if (self.o.resizable) {
             self.e.on(self.resizer, 'mousedown', self.onResizerMouseDown);
         }
-        var fullSize = Jodit.plugins.get('fullsize');
+        var fullSize = global_1.pluginSystem.get('fullsize');
         helpers_1.isFunction(fullSize) && fullSize(self);
         self.setStatus(component_1.STATUSES.ready);
         _this.e
@@ -2854,7 +2854,7 @@ var checker_1 = __webpack_require__(5);
 var utils_1 = __webpack_require__(15);
 var type_1 = __webpack_require__(29);
 var dom_1 = __webpack_require__(2);
-var string_1 = __webpack_require__(11);
+var string_1 = __webpack_require__(12);
 var temp = 1;
 var $$temp = function () {
     temp++;
@@ -3737,7 +3737,7 @@ var STATUSES;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Component = void 0;
 var helpers_1 = __webpack_require__(1);
-var global_1 = __webpack_require__(12);
+var global_1 = __webpack_require__(11);
 var statuses_1 = __webpack_require__(45);
 var Component = (function () {
     function Component() {
@@ -3904,7 +3904,7 @@ exports.normalizeCursorPosition = exports.getNotSpaceSibling = exports.getSiblin
 var utils_1 = __webpack_require__(15);
 var dom_1 = __webpack_require__(2);
 var constants_1 = __webpack_require__(3);
-var string_1 = __webpack_require__(11);
+var string_1 = __webpack_require__(12);
 function getNeighbor(node, backspace, root) {
     return utils_1.call(backspace ? dom_1.Dom.prev : dom_1.Dom.next, node, function (n) { var _a; return Boolean(n && (!dom_1.Dom.isText(n) || ((_a = n.nodeValue) === null || _a === void 0 ? void 0 : _a.length))); }, root);
 }
@@ -4396,7 +4396,7 @@ var helpers_1 = __webpack_require__(1);
 var constants_1 = __webpack_require__(3);
 var modules_1 = __webpack_require__(9);
 var async_1 = __webpack_require__(165);
-var global_1 = __webpack_require__(12);
+var global_1 = __webpack_require__(11);
 var decorators_1 = __webpack_require__(13);
 var View = (function (_super) {
     tslib_1.__extends(View, _super);
@@ -4404,7 +4404,7 @@ var View = (function (_super) {
         var _this = _super.call(this) || this;
         _this.isView = true;
         _this.components = new Set();
-        _this.version = "3.4.5";
+        _this.version = "3.4.6";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.__isFullSize = false;
@@ -7966,7 +7966,7 @@ var modules_1 = __webpack_require__(9);
 var helpers_1 = __webpack_require__(1);
 var storage_1 = __webpack_require__(35);
 var view_with_toolbar_1 = __webpack_require__(25);
-var global_1 = __webpack_require__(12);
+var global_1 = __webpack_require__(11);
 var decorators_1 = __webpack_require__(13);
 var Jodit = (function (_super) {
     tslib_1.__extends(Jodit, _super);
@@ -8011,7 +8011,7 @@ var Jodit = (function (_super) {
         });
         _this.places.length = 0;
         var addPlaceResult = _this.addPlace(element, options);
-        Jodit.instances[_this.id] = _this;
+        global_1.instances[_this.id] = _this;
         var init = function () {
             if (_this.e) {
                 _this.e.fire('afterInit', _this);
@@ -8054,7 +8054,7 @@ var Jodit = (function (_super) {
         get: function () {
             return this.options && this.o.observer
                 ? this.o.observer.timeout
-                : Jodit.defaultOptions.observer.timeout;
+                : config_1.Config.defaultOptions.observer.timeout;
         },
         enumerable: false,
         configurable: true
@@ -8535,7 +8535,7 @@ var Jodit = (function (_super) {
         var element = helpers_1.resolveElement(source, this.o.shadowRoot || this.od);
         if (!this.isReady) {
             this.id = helpers_1.attr(element, 'id') || new Date().getTime().toString();
-            Jodit.instances[this.id] = this;
+            global_1.instances[this.id] = this;
         }
         if (element.attributes) {
             Array.from(element.attributes).forEach(function (attr) {
@@ -8638,7 +8638,7 @@ var Jodit = (function (_super) {
         this.beforeInitHook();
         this.e.fire('beforeInit', this);
         try {
-            Jodit.plugins.init(this);
+            global_1.pluginSystem.init(this);
         }
         catch (e) {
             if (false) {}
@@ -8825,7 +8825,7 @@ var Jodit = (function (_super) {
         });
         this.places.length = 0;
         this.currentPlace = {};
-        delete Jodit.instances[this.id];
+        delete global_1.instances[this.id];
         _super.prototype.destruct.call(this);
     };
     Jodit.plugins = global_1.pluginSystem;
@@ -8993,7 +8993,7 @@ exports.isArray = isArray;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isFastEqual = exports.isEqual = void 0;
-var string_1 = __webpack_require__(11);
+var string_1 = __webpack_require__(12);
 function isEqual(a, b) {
     return a === b || string_1.stringify(a) === string_1.stringify(b);
 }
@@ -9148,7 +9148,7 @@ exports.i18n = exports.sprintf = void 0;
 var config_1 = __webpack_require__(4);
 var default_language_1 = __webpack_require__(38);
 var index_1 = __webpack_require__(1);
-var global_1 = __webpack_require__(12);
+var global_1 = __webpack_require__(11);
 exports.sprintf = function (str, args) {
     if (!args || !args.length) {
         return str;
@@ -9820,6 +9820,7 @@ exports.isInt = isInt;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isViewObject = exports.isJoditObject = void 0;
 var is_function_1 = __webpack_require__(28);
+var global_1 = __webpack_require__(11);
 function isJoditObject(jodit) {
     return Boolean(jodit &&
         jodit instanceof Object &&
@@ -9832,9 +9833,7 @@ function isViewObject(jodit) {
     return Boolean(jodit &&
         jodit instanceof Object &&
         is_function_1.isFunction(jodit.constructor) &&
-        ((typeof Jodit !== 'undefined' &&
-            jodit instanceof Jodit.modules.View) ||
-            jodit.isView));
+        (jodit instanceof global_1.modules.View || jodit.isView));
 }
 exports.isViewObject = isViewObject;
 
@@ -10233,7 +10232,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.applyStyles = void 0;
 var dom_1 = __webpack_require__(2);
 var selector_1 = __webpack_require__(31);
-var string_1 = __webpack_require__(11);
+var string_1 = __webpack_require__(12);
 function normalizeCSS(s) {
     return s
         .replace(/mso-[a-z\-]+:[\s]*[^;]+;/gi, '')
@@ -10327,7 +10326,7 @@ exports.applyStyles = applyStyles;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cleanFromWord = void 0;
 var dom_1 = __webpack_require__(2);
-var string_1 = __webpack_require__(11);
+var string_1 = __webpack_require__(12);
 function cleanFromWord(html) {
     if (html.indexOf('<html ') !== -1) {
         html = html.substring(html.indexOf('<html '), html.length);
@@ -10431,7 +10430,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.stripTags = void 0;
 var checker_1 = __webpack_require__(5);
 var selector_1 = __webpack_require__(31);
-var string_1 = __webpack_require__(11);
+var string_1 = __webpack_require__(12);
 var dom_1 = __webpack_require__(2);
 function stripTags(html, doc) {
     if (doc === void 0) { doc = document; }
@@ -10492,7 +10491,7 @@ exports.nl2br = nl2br;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.normalizeKeyAliases = void 0;
-var string_1 = __webpack_require__(11);
+var string_1 = __webpack_require__(12);
 var constants_1 = __webpack_require__(3);
 function normalizeKeyAliases(keys) {
     var memory = {};
@@ -10582,7 +10581,7 @@ exports.normalizeNode = function (node) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.normalizePath = void 0;
-var string_1 = __webpack_require__(11);
+var string_1 = __webpack_require__(12);
 exports.normalizePath = function () {
     var path = [];
     for (var _i = 0; _i < arguments.length; _i++) {
@@ -10702,7 +10701,7 @@ exports.normalizeUrl = function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.normalizeCssValue = void 0;
 var checker_1 = __webpack_require__(5);
-var string_1 = __webpack_require__(11);
+var string_1 = __webpack_require__(12);
 var color_1 = __webpack_require__(30);
 function normalizeCssValue(key, value) {
     switch (string_1.kebabCase(key)) {
@@ -10742,7 +10741,7 @@ exports.normalizeCssValue = normalizeCssValue;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.normalizeColor = void 0;
 var color_1 = __webpack_require__(30);
-var string_1 = __webpack_require__(11);
+var string_1 = __webpack_require__(12);
 exports.normalizeColor = function (colorInput) {
     var newcolor = ['#'];
     var color = color_1.colorToHex(colorInput);
@@ -11112,7 +11111,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.clearCenterAlign = exports.css = void 0;
 var checker_1 = __webpack_require__(5);
 var normalize_1 = __webpack_require__(32);
-var string_1 = __webpack_require__(11);
+var string_1 = __webpack_require__(12);
 exports.css = function (element, key, value, onlyStyleMode) {
     if (onlyStyleMode === void 0) { onlyStyleMode = false; }
     var numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size/i;
@@ -11516,7 +11515,7 @@ __webpack_require__(148);
 var autobind_decorator_1 = __webpack_require__(10);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
-var global_1 = __webpack_require__(12);
+var global_1 = __webpack_require__(11);
 var __1 = __webpack_require__(8);
 var Popup = (function (_super) {
     tslib_1.__extends(Popup, _super);
@@ -16350,7 +16349,7 @@ var consts = __webpack_require__(3);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
 var viewComponent_1 = __webpack_require__(47);
-var global_1 = __webpack_require__(12);
+var global_1 = __webpack_require__(11);
 var decorators_1 = __webpack_require__(13);
 var Table = (function (_super) {
     tslib_1.__extends(Table, _super);
@@ -16953,7 +16952,7 @@ var ajax_1 = __webpack_require__(34);
 var helpers_1 = __webpack_require__(1);
 var dom_1 = __webpack_require__(2);
 var component_1 = __webpack_require__(7);
-var global_1 = __webpack_require__(12);
+var global_1 = __webpack_require__(11);
 config_1.Config.prototype.enableDragAndDropFileToEditor = true;
 config_1.Config.prototype.uploader = {
     url: '',
@@ -19285,7 +19284,7 @@ var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
 var plugin_1 = __webpack_require__(6);
 var index_1 = __webpack_require__(64);
-var global_1 = __webpack_require__(12);
+var global_1 = __webpack_require__(11);
 var DragAndDrop = (function (_super) {
     tslib_1.__extends(DragAndDrop, _super);
     function DragAndDrop() {
@@ -19457,7 +19456,7 @@ var config_1 = __webpack_require__(4);
 var helpers_1 = __webpack_require__(1);
 var plugin_1 = __webpack_require__(6);
 var dom_1 = __webpack_require__(2);
-var global_1 = __webpack_require__(12);
+var global_1 = __webpack_require__(11);
 config_1.Config.prototype.draggableTags = ['img', 'a', 'jodit-media', 'jodit'];
 var DragAndDropElement = (function (_super) {
     tslib_1.__extends(DragAndDropElement, _super);
@@ -22556,7 +22555,7 @@ var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
 var plugin_1 = __webpack_require__(6);
 var autobind_decorator_1 = __webpack_require__(10);
-var global_1 = __webpack_require__(12);
+var global_1 = __webpack_require__(11);
 config_1.Config.prototype.useIframeResizer = true;
 config_1.Config.prototype.useTableResizer = true;
 config_1.Config.prototype.useImageResizer = true;
@@ -25608,7 +25607,7 @@ __webpack_require__(294);
 var helpers_1 = __webpack_require__(1);
 var plugin_1 = __webpack_require__(6);
 var dom_1 = __webpack_require__(2);
-var global_1 = __webpack_require__(12);
+var global_1 = __webpack_require__(11);
 var autobind_decorator_1 = __webpack_require__(10);
 var tooltip = (function (_super) {
     tslib_1.__extends(tooltip, _super);

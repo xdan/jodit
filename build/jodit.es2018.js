@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.4.5
+ Version: v3.4.6
  Url: https://xdsoft.net/jodit/
  License(s): MIT
 */
@@ -988,7 +988,7 @@ const ctrlKey = (e) => {
 };
 
 // EXTERNAL MODULE: ./src/core/component/index.ts
-var component = __webpack_require__(8);
+var component = __webpack_require__(9);
 
 // CONCATENATED MODULE: ./src/core/helpers/data-bind.ts
 /*!
@@ -2679,12 +2679,16 @@ function isInt(value) {
     return typeof value === 'number' && Number.isFinite(value) && !(value % 1);
 }
 
+// EXTERNAL MODULE: ./src/core/global.ts
+var global = __webpack_require__(8);
+
 // CONCATENATED MODULE: ./src/core/helpers/checker/is-jodit-object.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 
 function isJoditObject(jodit) {
     return Boolean(jodit &&
@@ -2697,9 +2701,7 @@ function isViewObject(jodit) {
     return Boolean(jodit &&
         jodit instanceof Object &&
         isFunction(jodit.constructor) &&
-        ((typeof Jodit !== 'undefined' &&
-            jodit instanceof Jodit.modules.View) ||
-            jodit.isView));
+        (jodit instanceof global["e" /* modules */].View || jodit.isView));
 }
 
 // CONCATENATED MODULE: ./src/core/helpers/checker/is-license.ts
@@ -3085,7 +3087,7 @@ function getStrongControlTypes(items, controls) {
 }
 
 // EXTERNAL MODULE: ./src/core/component/index.ts
-var component = __webpack_require__(8);
+var component = __webpack_require__(9);
 
 // CONCATENATED MODULE: ./src/core/ui/list/list.ts
 /*!
@@ -3199,30 +3201,6 @@ var icon = __webpack_require__(24);
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _statuses__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(16);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "b", function() { return _statuses__WEBPACK_IMPORTED_MODULE_0__["a"]; });
-
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _component__WEBPACK_IMPORTED_MODULE_1__["a"]; });
-
-/* harmony import */ var _viewComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(32);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "c", function() { return _viewComponent__WEBPACK_IMPORTED_MODULE_2__["a"]; });
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return instances; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return uniqueUid; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return pluginSystem; });
@@ -3281,6 +3259,30 @@ function getContainer(jodit, classFunc, tag = 'div', inside = false) {
     return data[name];
 }
 const eventEmitter = new _events__WEBPACK_IMPORTED_MODULE_3__[/* EventsNative */ "b"]();
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _statuses__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(16);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "b", function() { return _statuses__WEBPACK_IMPORTED_MODULE_0__["a"]; });
+
+/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _component__WEBPACK_IMPORTED_MODULE_1__["a"]; });
+
+/* harmony import */ var _viewComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(32);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "c", function() { return _viewComponent__WEBPACK_IMPORTED_MODULE_2__["a"]; });
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
 
 
 /***/ }),
@@ -3526,7 +3528,7 @@ var default_language = __webpack_require__(28);
 var helpers = __webpack_require__(0);
 
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(9);
+var global = __webpack_require__(8);
 
 // CONCATENATED MODULE: ./src/core/helpers/string/i18n.ts
 /*!
@@ -3644,7 +3646,7 @@ var watch = __webpack_require__(15);
 var helpers = __webpack_require__(0);
 
 // EXTERNAL MODULE: ./src/core/component/index.ts
-var core_component = __webpack_require__(8);
+var core_component = __webpack_require__(9);
 
 // CONCATENATED MODULE: ./src/core/decorators/debounce.ts
 /*!
@@ -4071,7 +4073,7 @@ const FileSelectorWidget = (editor, callbacks, elm, close, isImage = true) => {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return watch; });
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18);
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
+/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9);
 /*!
  *  Jodit Editor (https://xdsoft.net/jodit/)
  *  Released under MIT see LICENSE.txt in the project root for license information.
@@ -4756,7 +4758,7 @@ var dom = __webpack_require__(1);
 var helpers = __webpack_require__(0);
 
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(9);
+var global = __webpack_require__(8);
 
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 5 modules
 var ui = __webpack_require__(7);
@@ -4999,7 +5001,7 @@ Object(tslib_es6["a" /* __decorate */])([
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UIElement; });
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
 /* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 /* harmony import */ var _helpers_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(10);
 /*!
@@ -5415,7 +5417,7 @@ function error(message) {
 /* harmony import */ var autobind_decorator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
 /* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(20);
 /* harmony import */ var _core_decorators_watch__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(15);
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8);
+/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9);
 /* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(0);
 /* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(24);
@@ -6031,7 +6033,7 @@ class PluginSystem {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Component; });
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _global__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9);
+/* harmony import */ var _global__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8);
 /* harmony import */ var _statuses__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(16);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -7598,7 +7600,7 @@ class ajax_Ajax {
 ajax_Ajax.log = [];
 
 // EXTERNAL MODULE: ./src/core/component/index.ts
-var core_component = __webpack_require__(8);
+var core_component = __webpack_require__(9);
 
 // EXTERNAL MODULE: ./src/modules/context-menu/context-menu.less
 var context_menu = __webpack_require__(139);
@@ -7927,7 +7929,7 @@ class async_Async {
 }
 
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(9);
+var global = __webpack_require__(8);
 
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 4 modules
 var decorators = __webpack_require__(12);
@@ -7951,7 +7953,7 @@ class view_View extends core_component["a" /* Component */] {
         super();
         this.isView = true;
         this.components = new Set();
-        this.version = "3.4.5";
+        this.version = "3.4.6";
         this.async = new async_Async();
         this.buffer = storage_Storage.makeStorage();
         this.__isFullSize = false;
@@ -8754,7 +8756,7 @@ class dialog_Dialog extends view_with_toolbar_ViewWithToolbar {
         if (self.o.resizable) {
             self.e.on(self.resizer, 'mousedown', self.onResizerMouseDown);
         }
-        const fullSize = Jodit.plugins.get('fullsize');
+        const fullSize = global["f" /* pluginSystem */].get('fullsize');
         Object(helpers["isFunction"])(fullSize) && fullSize(self);
         self.setStatus(core_component["b" /* STATUSES */].ready);
         this.e
@@ -14089,7 +14091,7 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
         });
         this.places.length = 0;
         const addPlaceResult = this.addPlace(element, options);
-        jodit_Jodit.instances[this.id] = this;
+        global["c" /* instances */][this.id] = this;
         const init = () => {
             if (this.e) {
                 this.e.fire('afterInit', this);
@@ -14122,7 +14124,7 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
     get defaultTimeout() {
         return this.options && this.o.observer
             ? this.o.observer.timeout
-            : jodit_Jodit.defaultOptions.observer.timeout;
+            : config["a" /* Config */].defaultOptions.observer.timeout;
     }
     static Array(array) {
         return new helpers["JoditArray"](array);
@@ -14533,7 +14535,7 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
         const element = Object(helpers["resolveElement"])(source, this.o.shadowRoot || this.od);
         if (!this.isReady) {
             this.id = Object(helpers["attr"])(element, 'id') || new Date().getTime().toString();
-            jodit_Jodit.instances[this.id] = this;
+            global["c" /* instances */][this.id] = this;
         }
         if (element.attributes) {
             Array.from(element.attributes).forEach((attr) => {
@@ -14636,7 +14638,7 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
         this.beforeInitHook();
         this.e.fire('beforeInit', this);
         try {
-            jodit_Jodit.plugins.init(this);
+            global["f" /* pluginSystem */].init(this);
         }
         catch (e) {
             if (false) {}
@@ -14819,7 +14821,7 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
         });
         this.places.length = 0;
         this.currentPlace = {};
-        delete jodit_Jodit.instances[this.id];
+        delete global["c" /* instances */][this.id];
         super.destruct();
     }
 }

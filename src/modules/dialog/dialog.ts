@@ -37,7 +37,7 @@ import {
 import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 import { Dom } from '../../core/dom';
 import { STATUSES } from '../../core/component';
-import { eventEmitter } from '../../core/global';
+import { eventEmitter, pluginSystem } from '../../core/global';
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}
@@ -781,7 +781,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			self.e.on(self.resizer, 'mousedown', self.onResizerMouseDown);
 		}
 
-		const fullSize = Jodit.plugins.get('fullsize') as Function;
+		const fullSize = pluginSystem.get('fullsize') as Function;
 		isFunction(fullSize) && fullSize(self);
 
 		self.setStatus(STATUSES.ready);

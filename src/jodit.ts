@@ -98,7 +98,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	get defaultTimeout(): number {
 		return this.options && this.o.observer
 			? this.o.observer.timeout
-			: Jodit.defaultOptions.observer.timeout;
+			: Config.defaultOptions.observer.timeout;
 	}
 
 	/**
@@ -1062,7 +1062,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.places.length = 0;
 		const addPlaceResult = this.addPlace(element, options);
 
-		Jodit.instances[this.id] = this;
+		instances[this.id] = this;
 
 		const init = () => {
 			if (this.e) {
@@ -1101,8 +1101,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		if (!this.isReady) {
 			this.id = attr(element, 'id') || new Date().getTime().toString();
-
-			Jodit.instances[this.id] = this;
+			instances[this.id] = this;
 		}
 
 		if (element.attributes) {
@@ -1260,7 +1259,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.e.fire('beforeInit', this);
 
 		try {
-			Jodit.plugins.init(this);
+			pluginSystem.init(this);
 		} catch (e) {
 			if (!isProd) {
 				throw e;
@@ -1536,7 +1535,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.places.length = 0;
 		this.currentPlace = {} as any;
 
-		delete Jodit.instances[this.id];
+		delete instances[this.id];
 
 		super.destruct();
 	}

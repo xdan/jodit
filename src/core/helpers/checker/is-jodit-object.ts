@@ -6,6 +6,7 @@
 
 import { IJodit, IViewBased } from '../../../types';
 import { isFunction } from './is-function';
+import { modules } from '../../global';
 
 /**
  * Check if element is instance of Jodit
@@ -28,8 +29,6 @@ export function isViewObject(jodit: unknown): jodit is IViewBased {
 		jodit &&
 			jodit instanceof Object &&
 			isFunction(jodit.constructor) &&
-			((typeof Jodit !== 'undefined' &&
-				jodit instanceof Jodit.modules.View) ||
-				(jodit as IViewBased).isView)
+			(jodit instanceof modules.View || (jodit as IViewBased).isView)
 	);
 }
