@@ -20,7 +20,7 @@ const banner = `/*!
 */
 `;
 
-module.exports = (env, argv) => {
+module.exports = (env, argv, dir = __dirname) => {
 	const debug = !argv || !argv.mode || !argv.mode.match(/production/);
 	const isTest = argv && Boolean(argv.isTest);
 
@@ -49,7 +49,10 @@ module.exports = (env, argv) => {
 			}
 		},
 		{
-			loader: path.resolve('./src/utils/css-variables-prefixes')
+			loader: path.resolve(
+				__dirname,
+				'./src/utils/css-variables-prefixes'
+			)
 		},
 		{
 			loader: 'less-loader',
@@ -64,7 +67,7 @@ module.exports = (env, argv) => {
 	const config = {
 		cache: !isProd,
 		mode,
-		context: __dirname,
+		context: dir,
 
 		devtool: debug ? 'inline-sourcemap' : false,
 
@@ -75,7 +78,7 @@ module.exports = (env, argv) => {
 		},
 
 		output: {
-			path: path.join(__dirname, 'build'),
+			path: path.join(dir, 'build'),
 			filename: filename('[name]') + '.js',
 			publicPath: '/build/',
 			libraryTarget: 'umd'
@@ -137,11 +140,14 @@ module.exports = (env, argv) => {
 					test: /\.(ts)$/,
 					use: [
 						{
-							loader: path.resolve('./src/utils/lang-loader.js')
+							loader: path.resolve(
+								__dirname,
+								'./src/utils/lang-loader.js'
+							)
 						}
 					],
-					include: path.resolve('./src/langs'),
-					exclude: path.resolve('./src/langs/index.ts')
+					include: path.resolve(__dirname, './src/langs'),
+					exclude: path.resolve(__dirname, './src/langs/index.ts')
 				},
 
 				{
@@ -164,7 +170,10 @@ module.exports = (env, argv) => {
 				{
 					test: /\.svg$/i,
 					use: {
-						loader: path.resolve('src/utils/svg-loader.js')
+						loader: path.resolve(
+							__dirname,
+							'src/utils/svg-loader.js'
+						)
 					}
 				}
 			]
@@ -241,7 +250,7 @@ module.exports = (env, argv) => {
 					]);
 
 					const file = path.resolve(
-						__dirname,
+						dir,
 						'./build/' + filename('jodit') + '.css'
 					);
 
