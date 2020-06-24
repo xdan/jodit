@@ -75,6 +75,18 @@ describe('Source code test', function() {
 				editor.value = '<p>pop</p>';
 			}).timeout(6000);
 		});
+
+		describe('Split mode', function() {
+			it('Should shoe source and wysiwyg in same time', function() {
+				const editor = getJodit({
+					defaultMode: Jodit.MODE_SPLIT,
+					sourceEditor: 'area'
+				});
+
+				expect(editor.ew.getComputedStyle(editor.editor).display).equals('block');
+				expect(editor.ew.getComputedStyle(editor.container.querySelector('.jodit-source')).display).equals('block');
+			}).timeout(6000);
+		});
 	});
 
 	describe('Change mode', function() {
