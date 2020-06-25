@@ -1,7 +1,13 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
 module.exports = {
 	root: true,
 	parser: '@typescript-eslint/parser',
-	plugins: ['@typescript-eslint'],
+	plugins: ['@typescript-eslint', 'header'],
 	extends: [
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
@@ -12,6 +18,7 @@ module.exports = {
 		node: true
 	},
 	rules: {
+		"header/header": [2, "src/header.js"],
 		'no-mixed-spaces-and-tabs': 'off',
 		'no-empty': 'off',
 		'@typescript-eslint/ban-types': 'off',
