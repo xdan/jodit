@@ -1,3 +1,8 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 describe('Test uploader module', function() {
 	describe('Drop file', function() {
 		describe('Drop Image like base64', function() {

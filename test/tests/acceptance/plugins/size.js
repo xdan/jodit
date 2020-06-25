@@ -1,3 +1,8 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 describe('Test editor size plugin', function() {
 	it('should show resize handler in right-bottom corner and allow resize editor by vertical', function() {
 		const editor = getJodit({
