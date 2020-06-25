@@ -76,7 +76,6 @@ export class enter extends Plugin {
 
 		editor.e
 			.off('.enter')
-			.on('change.enter', this.checkWrapper)
 			.on('keydown.enter', (event: KeyboardEvent): false | void => {
 				if (event.key === consts.KEY_ENTER) {
 					/**
@@ -103,20 +102,6 @@ export class enter extends Plugin {
 				}
 			});
 	}
-
-	private checkWrapper = (): false | void => {
-		if (!this.j.isEditorMode()) {
-			return;
-		}
-
-		const current = this.j.s.current(false) as Node;
-
-		const currentBox = this.getBlockWrapper(current);
-
-		if (!currentBox) {
-			this.wrapText(current);
-		}
-	};
 
 	private onEnter(event: KeyboardEvent): false | void {
 		const editor = this.j,
