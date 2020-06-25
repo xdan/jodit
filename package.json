@@ -20,8 +20,8 @@
 		"jodit": "cd ../jodit-react/ && npm update && npm run newversion && cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion && cd ../jodit-docs && npm run newversion && cd ../jodit-master && npm run newversion",
 		"types": "rm -rf types/* && tsc --project . --declaration --outDir types --emitDeclarationOnly",
 		"pretty": "prettier --write ./src/*.{ts,less} ./src/**/*.{ts,less} ./src/**/**/*.{ts,less}",
-		"fix": "tslint -c tslint.old.json ./src/**/*.ts ./src/**/**/*.ts ./src/*.ts --fix && npm run pretty",
-		"lint": "tslint -c tslint.old.json ./src/**/*.ts ./src/**/**/*.ts ./src/*.ts"
+		"fix": "eslint ./src/* ./test/ --fix && npm run pretty",
+		"lint": "eslint ./src/* ./test/"
 	},
 	"repository": {
 		"type": "git",
@@ -92,9 +92,6 @@
 		"ts-loader": "^7.0.5",
 		"ts-private-uglifier": "^1.0.2",
 		"tslib": "^2.0.0",
-		"tslint": "^6.1.2",
-		"tslint-config-prettier": "^1.18.0",
-		"tslint-plugin-prettier": "^2.3.0",
 		"typescript": "^3.9.5",
 		"uglifyjs-webpack-plugin": "^2.2.0",
 		"url-loader": "^4.1.0",
@@ -119,7 +116,7 @@
 			"git add"
 		],
 		"*.{ts}": [
-			"tslint -c tslint.json",
+			"eslint ./src",
 			"prettier --write",
 			"git add"
 		]

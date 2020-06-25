@@ -45,6 +45,7 @@ module.exports = {
 		"onLoadImage": true,
 		"sortStyles": true,
 		"simulateEvent": true,
+		"simulatePaste": true,
 		"beforeEach": true,
 		"describe": true,
 		"it": true,
