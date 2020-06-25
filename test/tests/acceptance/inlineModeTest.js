@@ -50,7 +50,7 @@ describe('Test Inline mode', function() {
 
 				div.innerHTML = value;
 
-				box.appendChild(div);
+				getBox().appendChild(div);
 
 				const editor = new Jodit(div, {
 					disablePlugins: ['WrapTextNodes'],
@@ -146,7 +146,7 @@ describe('Test Inline mode', function() {
 
 			describe('Click in the right side of editor', function() {
 				it('Should open inline-popup with float by right editor side', function() {
-					box.style.width = 'auto';
+					getBox().style.width = 'auto';
 
 					const editor = getJodit({
 						disablePlugins: 'mobile'
@@ -181,7 +181,7 @@ describe('Test Inline mode', function() {
 
 				describe('Click in the right side of editor in window with scroll', function() {
 					it('Should open inline-popup with float by right editor side', function() {
-						box.style.width = 'auto';
+						getBox().style.width = 'auto';
 						const brs = [];
 
 						for (let i = 0; i < 100; i += 1) {
@@ -232,6 +232,7 @@ describe('Test Inline mode', function() {
 					const editor = getJodit({
 						height: 500
 					});
+
 					editor.value =
 						'<p>test' +
 						'<br>'.repeat(20) +
@@ -302,7 +303,7 @@ describe('Test Inline mode', function() {
 						) < 20
 					).is.true;
 
-					editor.editor.scrollTop = editor.editor.scrollTop + 1000;
+					editor.editor.scrollTop += 1000;
 					simulateEvent('scroll', 0, editor.editor);
 
 					expect(popup.parentNode).is.not.null;
@@ -745,5 +746,4 @@ describe('Test Inline mode', function() {
 			});
 		});
 	});
-	afterEach(removeStuff);
 });

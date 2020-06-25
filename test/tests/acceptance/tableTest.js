@@ -970,7 +970,6 @@ describe('Tables Jodit Editor Tests', function() {
 					'<tr><td>3</td><td>4</td></tr>' +
 					'</table>';
 
-				const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.removeRow(editor.editor.firstChild, 0);
 
 				expect(editor.value.toLowerCase()).equals(
@@ -1208,7 +1207,6 @@ describe('Tables Jodit Editor Tests', function() {
 				simulateEvent('mousedown', td);
 
 				td = editor.editor.querySelectorAll('td')[3];
-				pos = Jodit.modules.Helpers.position(td);
 
 				simulateEvent(['mousemove', 'mouseup', 'click'], 0, td);
 
@@ -1238,7 +1236,6 @@ describe('Tables Jodit Editor Tests', function() {
 					simulateEvent('mousedown', td);
 
 					td = editor.editor.querySelectorAll('td')[3];
-					pos = Jodit.modules.Helpers.position(td);
 
 					simulateEvent(['mousemove', 'mouseup', 'click'], td);
 
@@ -1271,7 +1268,6 @@ describe('Tables Jodit Editor Tests', function() {
 						simulateEvent('mousedown', td);
 
 						td = editor.editor.querySelectorAll('td')[3];
-						pos = Jodit.modules.Helpers.position(td);
 
 						simulateEvent(['mousemove', 'mouseup', 'click'], td);
 
@@ -1359,7 +1355,7 @@ describe('Tables Jodit Editor Tests', function() {
 			describe('Move mouse over edge of cell', function() {
 				before(function() {
 					const brs = [];
-					for (i = 0; i < 100; i += 1) {
+					for (let i = 0; i < 100; i += 1) {
 						brs.push(document.createElement('br'));
 						brs[brs.length - 1].classList.add('test');
 						document.body.appendChild(brs[brs.length - 1]);

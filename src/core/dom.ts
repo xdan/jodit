@@ -393,7 +393,7 @@ export class Dom {
 	/**
 	 * It's block and it can be split
 	 */
-	static canSplitBlock(node: any, win: Window): boolean {
+	static canSplitBlock(node: unknown, win: Window): boolean {
 		return (
 			node &&
 			node instanceof (win as any).HTMLElement &&

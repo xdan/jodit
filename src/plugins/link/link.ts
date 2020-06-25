@@ -244,7 +244,7 @@ Config.prototype.controls.link = {
  *
  * @module plugins/link
  */
-export function link(jodit: IJodit) {
+export function link(jodit: IJodit): void {
 	if (jodit.o.link.followOnDblClick) {
 		jodit.e.on('afterInit changePlace', () => {
 			jodit.e

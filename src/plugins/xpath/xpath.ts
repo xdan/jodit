@@ -188,7 +188,7 @@ export class xpath extends Plugin {
 	container!: HTMLElement;
 	menu: ContextMenu | null = null;
 
-	afterInit() {
+	afterInit(): void {
 		if (this.j.o.showXPathInStatusbar) {
 			this.container = this.j.c.div('jodit-xpath');
 

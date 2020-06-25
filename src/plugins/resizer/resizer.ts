@@ -530,6 +530,6 @@ export class resizer extends Plugin {
 
 		eventEmitter.off('hideHelpers', this.hide);
 
-		this.j.e.off(this.j.ow, '.resizer').off('.resizer');
+		jodit.e.off(this.j.ow, '.resizer').off('.resizer');
 	}
 }

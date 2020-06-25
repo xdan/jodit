@@ -81,6 +81,4 @@ describe('Test interface', function() {
 			});
 		});
 	});
-
-	afterEach(removeStuff);
 });

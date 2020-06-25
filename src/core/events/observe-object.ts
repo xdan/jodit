@@ -109,8 +109,6 @@ export class ObserveObject {
 				this.__lockEvent[event] = true;
 				this.onEvents[event].forEach(clb => clb.call(this, ...attr));
 			}
-		} catch (e) {
-			throw e;
 		} finally {
 			this.__lockEvent[event] = false;
 		}

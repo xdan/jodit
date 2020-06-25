@@ -456,11 +456,11 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 *
 	 * @return {Dialog}
 	 */
-	getMaxZIndexDialog() {
+	getMaxZIndexDialog(): IDialog {
 		let maxZi: number = 0,
-			dlg: Dialog,
+			dlg: IDialog,
 			zIndex: number,
-			res: Dialog = this;
+			res: IDialog = this;
 
 		$$('.jodit-dialog__box', this.destination).forEach(
 			(dialog: HTMLElement) => {
@@ -480,7 +480,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	/**
 	 * Sets the maximum z-index dialog box, displaying it on top of all the dialog boxes
 	 */
-	setMaxZIndex() {
+	setMaxZIndex(): void {
 		let maxzi: number = 0,
 			zIndex: number = 0;
 
@@ -794,7 +794,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	/**
 	 * It destroys all objects created for the windows and also includes all the handlers for the window object
 	 */
-	destruct() {
+	destruct(): void {
 		if (this.isInDestruct) {
 			return;
 		}

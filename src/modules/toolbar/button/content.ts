@@ -20,7 +20,7 @@ import { attr } from '../../../core/helpers/utils';
 export class ToolbarContent<T extends IViewBased = IViewBased> extends UIButton
 	implements IToolbarButton {
 	/** @override */
-	update() {
+	update(): void {
 		const content = this.control.getContent(this.j, this.control, this);
 
 		if (isString(content) || content.parentNode !== this.container) {

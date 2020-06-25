@@ -50,14 +50,14 @@ export default (self: IFileBrowser) => {
 							icon: 'pencil',
 							title: 'Edit',
 							exec: () => {
-								self.openImageEditor(
+								return self.openImageEditor(
 									ga('href'),
 									ga('data-name'),
 									ga('data-path'),
 									ga('data-source')
 								);
 							}
-					  }
+						}
 					: false,
 
 				self.dataProvider.canI('FileRename')
@@ -72,7 +72,7 @@ export default (self: IFileBrowser) => {
 									ga('data-source')
 								);
 							}
-					  }
+						}
 					: false,
 
 				self.dataProvider.canI('FileRemove')
@@ -89,7 +89,7 @@ export default (self: IFileBrowser) => {
 
 								await self.loadTree();
 							}
-					  }
+						}
 					: false,
 
 				opt.preview
@@ -171,7 +171,7 @@ export default (self: IFileBrowser) => {
 										}
 									};
 
-								self.e.on([next, prev], 'click', function(
+								self.e.on([next, prev], 'click', function (
 									this: HTMLElement
 								) {
 									if (

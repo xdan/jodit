@@ -71,5 +71,4 @@ describe('Test i18n functionality', function() {
 			);
 		});
 	});
-	afterEach(removeStuff);
 });

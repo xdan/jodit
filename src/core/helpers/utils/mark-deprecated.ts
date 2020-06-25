@@ -22,7 +22,7 @@ export function markDeprecated(
 	names: string[] = [''],
 	ctx: any = null
 ) {
-	return (...args: any[]) => {
+	return (...args: any[]): void => {
 		cns.warn(
 			`Method "${names[0]}" deprecated.` +
 				(names[1] ? ` Use "${names[1]}" instead` : '')

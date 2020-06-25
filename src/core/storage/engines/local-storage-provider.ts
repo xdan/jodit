@@ -39,7 +39,7 @@ export const canUsePersistentStorage: BooleanFunction = (() => {
  * Persistent storage in localStorage
  */
 export class LocalStorageProvider<T = StorageValueType> implements IStorage<T> {
-	set(key: string, value: T) {
+	set(key: string, value: T): void {
 		try {
 			const buffer = localStorage.getItem(this.rootKey);
 
@@ -51,7 +51,7 @@ export class LocalStorageProvider<T = StorageValueType> implements IStorage<T> {
 		} catch {}
 	}
 
-	delete(key: string) {
+	delete(key: string): void {
 		try {
 			localStorage.removeItem(this.rootKey);
 		} catch {}

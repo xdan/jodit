@@ -24,7 +24,7 @@ Config.prototype.autofocus = false;
  *
  * @param {Jodit} editor
  */
-export function autofocus(editor: IJodit) {
+export function autofocus(editor: IJodit): void {
 	editor.e.on('afterInit', () => {
 		if (editor.o.autofocus) {
 			if (editor.defaultTimeout) {

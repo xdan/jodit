@@ -24,7 +24,7 @@ Config.prototype.allowResizeY = true;
  * Resize editor
  * @param {Jodit} editor
  */
-export function size(editor: IJodit) {
+export function size(editor: IJodit): void {
 	const setHeight = (height: number | string) => {
 		css(editor.container, 'height', height);
 

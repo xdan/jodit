@@ -171,6 +171,7 @@ Config.prototype.controls.brush = {
 				case 'color':
 					(current as HTMLElement).style.color = color;
 					break;
+				case 'background':
 					(current as HTMLElement).style.backgroundColor = color;
 					break;
 			}
@@ -189,7 +190,7 @@ Config.prototype.controls.brush = {
  * Process commands `background` and `forecolor`
  * @param {Jodit} editor
  */
-export function color(editor: IJodit) {
+export function color(editor: IJodit): void {
 	const callback = (
 		command: string,
 		second: string,

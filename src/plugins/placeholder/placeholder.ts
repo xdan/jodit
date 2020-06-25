@@ -253,6 +253,6 @@ export class placeholder extends Plugin {
 	protected beforeDestruct(jodit: IJodit): void {
 		this.hide();
 
-		this.j.e.off('.placeholder').off(window, 'load', this.toggle);
+		jodit.e.off('.placeholder').off(window, 'load', this.toggle);
 	}
 }

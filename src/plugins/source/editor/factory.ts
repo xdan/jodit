@@ -13,7 +13,7 @@ export function createSourceEditor(
 	container: HTMLElement,
 	toWYSIWYG: CallbackFunction,
 	fromWYSIWYG: CallbackFunction
-) {
+): ISourceEditor {
 	let sourceEditor: ISourceEditor;
 
 	switch (type) {

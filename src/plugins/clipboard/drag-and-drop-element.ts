@@ -159,7 +159,7 @@ export class DragAndDropElement extends Plugin {
 	};
 
 	/** @override */
-	protected afterInit() {
+	protected afterInit(): void {
 		this.dragList = this.j.o.draggableTags
 			? splitArray(this.j.o.draggableTags)
 					.filter(item => item)
@@ -181,7 +181,7 @@ export class DragAndDropElement extends Plugin {
 	}
 
 	/** @override */
-	protected beforeDestruct() {
+	protected beforeDestruct(): void {
 		this.onDragEnd();
 
 		this.j.e

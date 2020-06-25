@@ -11,11 +11,11 @@ import { trim } from '../string';
  * @param path
  * @see Test helpers
  */
-export const normalizePath = (...path: string[]) => {
+export const normalizePath = (...path: string[]): string => {
 	return path
 		.filter(part => trim(part).length)
 		.map((part, index) => {
-			part = part.replace(/([^:])[\\\/]+/g, '$1/');
+			part = part.replace(/([^:])[\\/]+/g, '$1/');
 
 			if (index) {
 				part = part.replace(/^\//, '');

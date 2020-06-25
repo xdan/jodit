@@ -80,7 +80,7 @@ export const css = (
 
 	if (
 		numberFieldsReg.test(key as string) &&
-		/^[\-+]?[0-9.]+px$/.test(result.toString())
+		/^[-+]?[0-9.]+px$/.test(result.toString())
 	) {
 		result = parseInt(result.toString(), 10);
 	}
@@ -92,7 +92,7 @@ export const css = (
  * Clear center align
  * @param image
  */
-export const clearCenterAlign = (image: HTMLElement) => {
+export const clearCenterAlign = (image: HTMLElement): void => {
 	if (css(image, 'display') === 'block') {
 		css(image, 'display', '');
 	}

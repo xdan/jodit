@@ -159,12 +159,12 @@ export class ImageEditor extends ViewComponent {
 		const valueNbr: number = parseFloat(value.toString());
 		let match: string[] | null;
 
-		match = /^[\-+]?[0-9]+(px)?$/.exec(percentStr);
+		match = /^[-+]?[0-9]+(px)?$/.exec(percentStr);
 		if (match) {
 			return parseInt(percentStr, 10);
 		}
 
-		match = /^([\-+]?[0-9.]+)%$/.exec(percentStr);
+		match = /^([-+]?[0-9.]+)%$/.exec(percentStr);
 
 		if (match) {
 			return Math.round(valueNbr * (parseFloat(match[1]) / 100));
@@ -414,7 +414,7 @@ export class ImageEditor extends ViewComponent {
 		$$('.jodit-button-group', self.editor).forEach(group => {
 			const input = group.querySelector('input') as HTMLInputElement;
 
-			self.j.e.on(group, 'click', (e: MouseEvent): void => {
+			self.j.e.on(group, 'click', (): void => {
 				input.checked = !input.checked;
 				self.j.e.fire(input, 'change');
 			});
@@ -663,7 +663,7 @@ export class ImageEditor extends ViewComponent {
 	 * @method hide
 	 */
 	@autobind
-	hide() {
+	hide(): void {
 		this.dialog.close();
 	}
 

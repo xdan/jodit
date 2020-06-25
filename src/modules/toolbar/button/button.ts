@@ -127,12 +127,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	}
 
 	/** @override */
-	focus() {
+	focus(): void {
 		this.container.querySelector('button')?.focus();
 	}
 
 	@watch('state.hasTrigger')
-	protected onChangeHasTrigger() {
+	protected onChangeHasTrigger(): void {
 		if (this.state.hasTrigger) {
 			this.container.appendChild(this.trigger);
 		} else {
@@ -154,7 +154,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	/**
 	 * Add tooltip to button
 	 */
-	protected initTooltip() {
+	protected initTooltip(): void {
 		if (
 			!this.j.o.textIcons &&
 			this.j.o.showTooltip &&

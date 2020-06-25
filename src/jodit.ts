@@ -107,7 +107,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param array
 	 * @constructor
 	 */
-	static Array(array: any[]): JoditArray {
+	static Array(array: never[]): JoditArray {
 		return new JoditArray(array);
 	}
 
@@ -117,7 +117,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param object
 	 * @constructor
 	 */
-	static Object(object: any): JoditObject {
+	static Object(object: never): JoditObject {
 		return new JoditObject(object);
 	}
 
@@ -149,7 +149,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	private __selectionLocked: markerInfo[] | null = null;
 
-	private __wasReadOnly: boolean = false;
+	private __wasReadOnly = false;
 
 	/**
 	 * Container for set/get value
@@ -165,7 +165,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Editor has focus in this time
 	 */
-	editorIsActive: boolean = false;
+	editorIsActive = false;
 
 	private setPlaceField(field: keyof IWorkPlace, value: any): void {
 		if (!this.currentPlace) {
@@ -358,9 +358,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @return {string}
 	 */
 	getNativeEditorValue(): string {
-		let value: string;
-
-		value = this.e.fire('beforeGetNativeEditorValue');
+		const value: string = this.e.fire('beforeGetNativeEditorValue');
 
 		if (isString(value)) {
 			return value;
@@ -377,7 +375,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * Set value to native editor
 	 * @param value
 	 */
-	setNativeEditorValue(value: string) {
+	setNativeEditorValue(value: string): void {
 		if (this.e.fire('beforeSetNativeEditorValue', value)) {
 			return;
 		}
@@ -458,7 +456,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param [value]
 	 * @param [notChangeStack]
 	 */
-	setEditorValue(value?: string) {
+	setEditorValue(value?: string): void {
 		/**
 		 * Triggered before  {@link Jodit~getEditorValue|setEditorValue} set value to wysiwyg.
 		 *
@@ -530,7 +528,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Return source element value
 	 */
-	getElementValue() {
+	getElementValue(): string {
 		return (this.element as HTMLInputElement).value !== undefined
 			? (this.element as HTMLInputElement).value
 			: this.element.innerHTML;
@@ -542,7 +540,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 *
 	 * @param {string} [value]
 	 */
-	setElementValue(value?: string) {
+	setElementValue(value?: string): void {
 		if (!isString(value) && value !== undefined) {
 			throw error('value must be string');
 		}
@@ -629,7 +627,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param hotkeys
 	 * @param commandName
 	 */
-	registerHotkeyToCommand(hotkeys: string | string[], commandName: string) {
+	registerHotkeyToCommand(hotkeys: string | string[], commandName: string): void {
 		const shortcuts: string = asArray(hotkeys)
 			.map(normalizeKeyAliases)
 			.map(hotkey => hotkey + '.hotkey')
@@ -660,9 +658,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 */
 	execCommand(
 		command: string,
-		showUI: any = false,
+		showUI: boolean = false,
 		value: null | any = null
-	) {
+	): void {
 		if (this.o.readonly && command !== 'selectall') {
 			return;
 		}
@@ -767,7 +765,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Disable selecting
 	 */
-	lock(name: string = 'any') {
+	lock(name = 'any'): boolean {
 		if (super.lock(name)) {
 			this.__selectionLocked = this.s.save();
 			this.s.clear();
@@ -782,7 +780,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Enable selecting
 	 */
-	unlock() {
+	unlock(): boolean {
 		if (super.unlock()) {
 			this.editor.classList.remove('jodit_disabled');
 
@@ -844,7 +842,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @fired beforeSetMode
 	 * @fired afterSetMode
 	 */
-	setMode(mode: number | string) {
+	setMode(mode: number | string): void {
 		const oldmode: Modes = this.getMode();
 
 		const data = {
@@ -915,7 +913,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * editor.toggleMode();
 	 * ```
 	 */
-	toggleMode() {
+	toggleMode(): void {
 		let mode: number = this.getMode();
 		if (
 			[
@@ -939,7 +937,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 *
 	 * @param {boolean} isDisabled
 	 */
-	setDisabled(isDisabled: boolean) {
+	setDisabled(isDisabled: boolean): void {
 		this.o.disabled = isDisabled;
 
 		const readOnly: boolean = this.__wasReadOnly;
@@ -969,7 +967,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 *
 	 * @param {boolean} isReadOnly
 	 */
-	setReadOnly(isReadOnly: boolean) {
+	setReadOnly(isReadOnly: boolean): void {
 		if (this.__wasReadOnly === isReadOnly) {
 			return;
 		}
@@ -996,14 +994,14 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Hook before init
 	 */
-	beforeInitHook(): any {
+	beforeInitHook(): void {
 		// do nothing
 	}
 
 	/**
 	 * Hook after init
 	 */
-	afterInitHook(): any {
+	afterInitHook(): void {
 		// do nothing
 	}
 
@@ -1259,7 +1257,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.e.fire('beforeInit', this);
 
 		try {
-			pluginSystem.init(this);
+			pluginSystem.init(this).catch((e) => {
+				throw e;
+			});
 		} catch (e) {
 			if (!isProd) {
 				throw e;
@@ -1440,7 +1440,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Jodit's Destructor. Remove editor, and return source input
 	 */
-	destruct() {
+	destruct(): void {
 		if (this.isInDestruct) {
 			return;
 		}

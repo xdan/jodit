@@ -43,7 +43,7 @@ export class Observer extends ViewComponent<IJodit> {
 		return this.__startValue;
 	}
 
-	set startValue(value) {
+	set startValue(value: SnapshotType) {
 		this.__startValue = value;
 	}
 
@@ -100,7 +100,7 @@ export class Observer extends ViewComponent<IJodit> {
 	/**
 	 * Return state of the WYSIWYG editor to step back
 	 */
-	redo() {
+	redo(): void {
 		if (this.stack.redo()) {
 			this.startValue = this.snapshot.make();
 			this.fireChangeStack();
@@ -110,24 +110,24 @@ export class Observer extends ViewComponent<IJodit> {
 	/**
 	 * Return the state of the WYSIWYG editor to step forward
 	 */
-	undo() {
+	undo(): void {
 		if (this.stack.undo()) {
 			this.startValue = this.snapshot.make();
 			this.fireChangeStack();
 		}
 	}
 
-	clear() {
+	clear(): void {
 		this.startValue = this.snapshot.make();
 		this.stack.clear();
 		this.fireChangeStack();
 	}
 
-	replaceSnapshot() {
+	replaceSnapshot(): void {
 		this.updateStack(true);
 	}
 
-	private fireChangeStack() {
+	private fireChangeStack(): void {
 		this.j && !this.j.isInDestruct && this.j.events?.fire('changeStack');
 	}
 
@@ -172,7 +172,7 @@ export class Observer extends ViewComponent<IJodit> {
 		});
 	}
 
-	destruct(): any {
+	destruct(): void {
 		if (this.j.events) {
 			this.j.e.off('.observer');
 		}

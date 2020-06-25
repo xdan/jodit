@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export const normalizeRelativePath = (path: string) => {
+export const normalizeRelativePath = (path: string): string => {
 	const sections = path.split('/'),
 		builder = sections.reduce((builder, section) => {
 			switch (section) {

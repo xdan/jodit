@@ -53,13 +53,12 @@ describe('Limit plugin', function() {
 
 						editor.value = '1111';
 
-						const sel = editor.s.sel,
-							range = editor.s.createRange();
+						const
+							range = editor.s.createRange(true);
 
 						range.setEndAfter(editor.editor.firstChild.firstChild);
 						range.collapse(false);
 
-						editor.s.selectRange(range);
 						range.insertNode(editor.createInside.text('v'));
 						simulateEvent('keydown', Jodit.KEY_V, editor.editor);
 
@@ -95,7 +94,7 @@ describe('Limit plugin', function() {
 				simulateEvent('paste', editor.editor, function(data) {
 					data.clipboardData = {
 						types: ['text/html'],
-						getData: function(type) {
+						getData: function() {
 							return 'a';
 						}
 					};
@@ -132,7 +131,7 @@ describe('Limit plugin', function() {
 						) {
 							data.clipboardData = {
 								types: ['text/html'],
-								getData: function(type) {
+								getData: function() {
 									return ' aaa';
 								}
 							};

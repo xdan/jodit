@@ -203,7 +203,7 @@ describe('Test position/offset helpers', function() {
 					height: 10000
 				});
 
-				span = makeBox(jodit.ed);
+				const span = makeBox(jodit.ed);
 				box.firstChild.scrollTo(0, 100000);
 
 				iframe.contentWindow.scrollTo(0, jodit.container.offsetTop);

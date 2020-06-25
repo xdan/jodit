@@ -51,7 +51,7 @@ export class EventHandlersStore {
 		namespace: string,
 		data: EventHandlerBlock,
 		onTop: boolean = false
-	) {
+	): void {
 		if (this.__store[namespace] === undefined) {
 			this.__store[namespace] = {};
 		}
@@ -67,7 +67,7 @@ export class EventHandlersStore {
 		}
 	}
 
-	clear() {
+	clear(): void {
 		delete this.__store;
 		this.__store = {};
 	}

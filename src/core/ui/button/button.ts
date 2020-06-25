@@ -129,7 +129,7 @@ export class UIButton extends UIElement implements IUIButton {
 	}
 
 	@watch('state.tabIndex')
-	onChangeTabIndex() {
+	onChangeTabIndex(): void {
 		attr(this.container, 'tabIndex', this.state.tabIndex);
 	}
 
@@ -182,7 +182,7 @@ export class UIButton extends UIElement implements IUIButton {
 	/**
 	 * Set focus on element
 	 */
-	focus() {
+	focus(): void {
 		this.container.focus();
 	}
 

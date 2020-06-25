@@ -1,5 +1,5 @@
 import { IJodit, IPlugin, IControlType } from '../../src/types';
-declare var Jodit: any;
+declare let Jodit: any;
 
 Jodit.defaultOptions.controls.example = {
 	iconURL: '{basePath}plugins/example/icon.svg',
@@ -29,7 +29,7 @@ class example implements IPlugin {
 	hasStyle = true;
 	jodit!: IJodit;
 
-	init(jodit: IJodit) {
+	init(jodit: IJodit): void {
 		alert('Example plugin');
 	}
 

@@ -12,7 +12,7 @@ const gulptasks = require(path.resolve(cwd, './gulpfile'));
 const config = require(path.resolve(cwd, './webpack.config'))([], {
 	es: 'es5',
 	isTest: true
-});
+}, cwd);
 
 gulptasks.watch();
 

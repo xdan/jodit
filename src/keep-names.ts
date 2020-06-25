@@ -11,6 +11,7 @@ import { keepNames } from './core/helpers/utils';
  * Save origina class name for some modules for uglify keepName: false
  * @param modules
  */
+// eslint-disable-next-line @typescript-eslint/ban-types
 export function keepModuleNames(modules: IDictionary<Function>): void {
 	keepNames.set(modules.UIButton, 'UIButton');
 	keepNames.set(modules.UIElement, 'UIElement');

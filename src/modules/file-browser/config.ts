@@ -166,14 +166,13 @@ Config.prototype.filebrowser = {
 			showSize = opt.showFileSize && item.size,
 			showTime = opt.showFileChangeTime && item.time;
 
-		let name: string = '',
-			info: string;
+		let name: string = '';
 
 		if (item.file !== undefined) {
 			name = item.file;
 		}
 
-		info = `<div class="${IC}-info">${
+		const info = `<div class="${IC}-info">${
 			showName ? `<span class="${IC}-info-filename">${name}</span>` : ''
 		}${
 			showSize

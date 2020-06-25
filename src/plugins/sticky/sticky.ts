@@ -65,7 +65,7 @@ export class sticky extends Plugin {
 		);
 	}
 
-	addSticky = (toolbar: HTMLElement) => {
+	addSticky = (toolbar: HTMLElement): void => {
 		if (!this.isToolbarSticked) {
 			this.createDummy(toolbar);
 			this.j.container.classList.add('jodit_sticky');
@@ -86,7 +86,7 @@ export class sticky extends Plugin {
 		}
 	};
 
-	removeSticky = (toolbar: HTMLElement) => {
+	removeSticky = (toolbar: HTMLElement): void => {
 		if (this.isToolbarSticked) {
 			css(toolbar, {
 				width: '',
@@ -98,7 +98,7 @@ export class sticky extends Plugin {
 		}
 	};
 
-	afterInit(jodit: IJodit) {
+	afterInit(jodit: IJodit): void {
 		jodit.e.on(jodit.ow, 'scroll wheel mousewheel resize', () => {
 			const scrollWindowTop: number =
 					jodit.ow.pageYOffset ||

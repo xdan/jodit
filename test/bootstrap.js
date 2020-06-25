@@ -59,7 +59,7 @@ function mockAjax() {
 
 			return new Promise(function(resolve) {
 				switch (action) {
-					case 'fileUpload':
+					case 'fileUpload': {
 						const file = ajax.options.data.get('files[0]');
 						resolve({
 							success: true,
@@ -73,6 +73,7 @@ function mockAjax() {
 							}
 						});
 						break;
+					}
 					case 'files':
 						resolve({
 							success: true,
@@ -454,7 +455,7 @@ function sortStyles(matches) {
 
 function sortAttributes(html) {
 	const tag = /<([^>]+)>/g;
-	const reg = /([a-z_\-]+)[\s]*=[\s]*"([^"]*)"/i,
+	const reg = /([a-z_-]+)[\s]*=[\s]*"([^"]*)"/i,
 		tags = [];
 
 	let matches, tagMatch;
@@ -867,7 +868,7 @@ function offset(el) {
 
 				dXML.async = false;
 				// Wrap the markup into a SVG node to ensure parsing works.
-				sXML =
+				const sXML =
 					"<svg xmlns='http://www.w3.org/2000/svg'>" +
 					markupText +
 					'</svg>';

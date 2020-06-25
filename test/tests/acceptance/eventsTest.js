@@ -1127,6 +1127,4 @@ describe('Jodit Events system Tests', function() {
 			expect('23').equals(clicked);
 		});
 	});
-
-	afterEach(removeStuff);
 });

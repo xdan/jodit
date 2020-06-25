@@ -18,7 +18,7 @@ export class tooltip extends Plugin {
 
 	container!: HTMLElement;
 
-	afterInit(jodit: IJodit) {
+	afterInit(jodit: IJodit): void {
 		this.container = jodit.c.div('jodit-tooltip');
 		getContainer(this.j, tooltip).appendChild(this.container);
 

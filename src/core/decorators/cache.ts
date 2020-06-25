@@ -14,7 +14,7 @@ export function cache<T, R>(
 	target: any,
 	name: PropertyKey,
 	descriptor: CachePropertyDescriptor<T, R>
-) {
+): void {
 	const getter = descriptor.get;
 
 	if (!getter) {

@@ -362,7 +362,6 @@ describe('Search plugin', function() {
 			});
 
 			it('Should find needle in haystack steb by step', function() {
-				const str = 'Mr John Smith washed window';
 				expect(false).equals(
 					search.getSomePartOfStringIndex('th was', 'Mr')
 				);

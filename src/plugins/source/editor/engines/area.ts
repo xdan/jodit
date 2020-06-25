@@ -108,7 +108,7 @@ export class TextAreaEditor extends SourceEditor<HTMLTextAreaElement>
 		this.instance.select();
 	}
 
-	replaceUndoManager() {
+	replaceUndoManager(): void {
 		const { observer } = this.jodit;
 
 		this.j.e.on(this.instance, 'keydown', (e: KeyboardEvent):

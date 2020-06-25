@@ -234,7 +234,7 @@ export class cleanHtml extends Plugin {
 	private static getHash(
 		tags: false | string | IDictionary<string>
 	): IDictionary | false {
-		const attributesReg = /([^\[]*)\[([^\]]+)]/;
+		const attributesReg = /([^[]*)\[([^\]]+)]/;
 		const seperator = /[\s]*,[\s]*/,
 			attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
 		const tagsHash: IDictionary = {};
@@ -553,7 +553,7 @@ export class cleanHtml extends Plugin {
 		return false;
 	}
 
-	protected beforeDestruct(jodit: IJodit): void {
+	protected beforeDestruct(): void {
 		this.j.e.off('.cleanHtml');
 	}
 }

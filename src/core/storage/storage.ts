@@ -17,11 +17,11 @@ export const StorageKey: string = 'Jodit_';
 export class Storage<T = StorageValueType> implements IStorage<T> {
 	readonly prefix = StorageKey;
 
-	set(key: string, value: T) {
+	set(key: string, value: T): void {
 		this.provider.set(camelCase(this.prefix + key), value);
 	}
 
-	delete(key: string) {
+	delete(key: string): void {
 		this.provider.delete(camelCase(this.prefix + key));
 	}
 

@@ -1528,7 +1528,7 @@ describe('Test image', function() {
 			});
 
 			it('Should not allow to resize image more then width of editor', function(done) {
-				box.style.width = '600px';
+				getBox().style.width = '600px';
 				const editor = getJodit();
 				const image = new Image();
 				image.src = 'tests/artio.jpg';

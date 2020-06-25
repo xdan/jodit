@@ -182,7 +182,7 @@ export class Snapshot extends ViewComponent<IJodit> {
 	 * @param {object} snapshot - snapshot of editor resulting from the `{@link Snapshot~make|make}`
 	 * @see make
 	 */
-	restore(snapshot: SnapshotType) {
+	restore(snapshot: SnapshotType): void {
 		this.isBlocked = true;
 
 		const value = this.j.getNativeEditorValue();
@@ -228,7 +228,7 @@ export class Snapshot extends ViewComponent<IJodit> {
 		}
 	}
 
-	destruct(): any {
+	destruct(): void {
 		this.isBlocked = false;
 		super.destruct();
 	}

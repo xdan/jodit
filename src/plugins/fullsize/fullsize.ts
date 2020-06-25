@@ -74,7 +74,7 @@ Config.prototype.controls.fullsize = {
  *
  * @param {Jodit} editor
  */
-export function fullsize(editor: IViewWithToolbar) {
+export function fullsize(editor: IViewWithToolbar): void {
 	let shown: boolean = false,
 		oldHeight: number = 0,
 		oldWidth: number = 0,

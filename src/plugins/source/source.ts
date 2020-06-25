@@ -79,7 +79,7 @@ export class source extends Plugin {
 			if (
 				str[start] === '<' &&
 				str[start + 1] !== undefined &&
-				str[start + 1].match(/[\w\/]+/i)
+				str[start + 1].match(/[\w/]+/i)
 			) {
 				return start;
 			}
@@ -130,7 +130,7 @@ export class source extends Plugin {
 		this.sourceEditor.focus();
 	}
 
-	private saveSelection = () => {
+	private saveSelection = (): void => {
 		if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
 			this.selInfo = this.j.s.save() || [];
 			this.j.setEditorValue();
@@ -270,7 +270,7 @@ export class source extends Plugin {
 		this.sourceEditor.setReadOnly(this.j.o.readonly);
 	};
 
-	private initSourceEditor(editor: IJodit) {
+	private initSourceEditor(editor: IJodit): void {
 		if (editor.o.sourceEditor !== 'area') {
 			const sourceEditor = createSourceEditor(
 				editor.o.sourceEditor,

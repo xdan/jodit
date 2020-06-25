@@ -263,7 +263,7 @@ describe('Jodit FileBrowser Tests', function() {
 				});
 
 				describe('Allow all buttons if permission handle is not set', function() {
-					describe('If deny remove action', function(done) {
+					describe('If deny remove action', function() {
 						it('Should not use permission hash and canI method', function(done) {
 							defaultPermissions.permissions.allowFileRemove = false;
 
@@ -309,7 +309,7 @@ describe('Jodit FileBrowser Tests', function() {
 						});
 					});
 
-					describe('If not set permission api option', function(done) {
+					describe('If not set permission api option', function() {
 						it('Should not use permission hash and canI method', function(done) {
 							defaultPermissions.permissions.allowFileRemove = false;
 
@@ -902,7 +902,7 @@ describe('Jodit FileBrowser Tests', function() {
 
 	describe('Uploader', function() {
 		describe('Drag and drop', function() {
-			describe('Image', function(done) {
+			describe('Image', function() {
 				it('Should create IMG element', function(done) {
 					const editor = getJodit({
 						uploader: {
@@ -936,7 +936,7 @@ describe('Jodit FileBrowser Tests', function() {
 				});
 			});
 
-			describe('File', function(done) {
+			describe('File', function() {
 				it('Should create A element', function(done) {
 					const editor = getJodit({
 						uploader: {

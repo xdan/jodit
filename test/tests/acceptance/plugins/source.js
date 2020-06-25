@@ -14,6 +14,8 @@ describe('Source code test', function() {
 					done();
 				};
 
+			let editor;
+
 			timeout = setTimeout(function() {
 				expect(false).is.true;
 				__done.call(editor);
@@ -48,6 +50,8 @@ describe('Source code test', function() {
 						area.parentNode.removeChild(area);
 						done();
 					};
+
+				let editor;
 
 				timeout = setTimeout(function() {
 					expect(false).is.true;

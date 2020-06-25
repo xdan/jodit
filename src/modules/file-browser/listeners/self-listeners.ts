@@ -9,7 +9,7 @@ import { isValidName } from '../../../core/helpers/checker';
 import { error } from '../../../core/helpers';
 import { IFileBrowser } from '../../../types';
 
-export function selfListeners(this: IFileBrowser) {
+export function selfListeners(this: IFileBrowser): void {
 	const state = this.state,
 		self = this;
 

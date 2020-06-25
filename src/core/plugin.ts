@@ -23,12 +23,12 @@ export abstract class Plugin extends ViewComponent<IJodit> implements IPlugin {
 		this.setStatus(STATUSES.ready);
 	}
 
-	init(jodit: IJodit) {
+	init(jodit: IJodit): void {
 		// empty
 	}
 
 	@autobind
-	destruct() {
+	destruct(): void {
 		if (!this.isInDestruct) {
 			this.setStatus(STATUSES.beforeDestruct);
 

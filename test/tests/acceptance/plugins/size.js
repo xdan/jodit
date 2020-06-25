@@ -206,8 +206,8 @@ describe('Test editor size plugin', function() {
 
 			describe('Disable X resizing', function() {
 				it('Should resize editor only by vertical', function() {
-					box.style.width = 'auto';
-					box.style.height = 'auto';
+					getBox().style.width = 'auto';
+					getBox().style.height = 'auto';
 
 					const editor = getJodit({
 						height: 300,

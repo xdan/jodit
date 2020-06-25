@@ -19,10 +19,10 @@
 export const browser = (browser: string): boolean | string => {
 	const ua: string = navigator.userAgent.toLowerCase(),
 		match: any =
-			/(firefox)[\s\/]([\w.]+)/.exec(ua) ||
-			/(chrome)[\s\/]([\w.]+)/.exec(ua) ||
-			/(webkit)[\s\/]([\w.]+)/.exec(ua) ||
-			/(opera)(?:.*version)[\s\/]([\w.]+)/.exec(ua) ||
+			/(firefox)[\s/]([\w.]+)/.exec(ua) ||
+			/(chrome)[\s/]([\w.]+)/.exec(ua) ||
+			/(webkit)[\s/]([\w.]+)/.exec(ua) ||
+			/(opera)(?:.*version)[\s/]([\w.]+)/.exec(ua) ||
 			/(msie)[\s]([\w.]+)/.exec(ua) ||
 			/(trident)\/([\w.]+)/.exec(ua) ||
 			ua.indexOf('compatible') < 0 ||

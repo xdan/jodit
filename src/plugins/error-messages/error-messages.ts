@@ -36,7 +36,7 @@ Config.prototype.showMessageErrorOffsetPx = 3;
 /**
  * Plugin toWYSIWYG display pop-up messages in the lower right corner of the editor
  */
-export function errorMessages(editor: IJodit) {
+export function errorMessages(editor: IJodit): void {
 	if (editor.o.showMessageErrors) {
 		let height: number;
 

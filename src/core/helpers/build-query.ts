@@ -16,7 +16,7 @@ export const buildQuery = (data: IDictionary, prefix?: string): string => {
 	const enc = encodeURIComponent;
 
 	for (const dataKey in data) {
-		if (data.hasOwnProperty(dataKey)) {
+		if (Object.prototype.hasOwnProperty.call(data, dataKey)) {
 			const k = prefix ? prefix + '[' + dataKey + ']' : dataKey;
 			const v = data[dataKey];
 

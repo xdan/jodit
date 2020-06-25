@@ -756,7 +756,7 @@ export class imageProperties extends Plugin {
 	}
 
 	/** @override **/
-	protected afterInit(editor: IJodit) {
+	protected afterInit(editor: IJodit): void {
 		const self = this;
 
 		editor.e
@@ -799,7 +799,7 @@ export class imageProperties extends Plugin {
 	}
 
 	/** @override */
-	protected beforeDestruct(editor: IJodit) {
+	protected beforeDestruct(editor: IJodit): void {
 		this.dialog && this.dialog.destruct();
 		editor.e.off(editor.editor, '.imageproperties').off('.imageproperties');
 	}

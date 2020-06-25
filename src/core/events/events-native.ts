@@ -261,9 +261,10 @@ export class EventsNative implements IEventsNative {
 
 		let syntheticCallback = function(
 			this: any,
-			event: MouseEvent | TouchEvent
+			event: MouseEvent | TouchEvent,
+			...args: any[]
 		) {
-			return callback && callback.apply(this, arguments as any);
+			return callback && callback.call(this, event, ...args);
 		};
 
 		if (isDOMElement) {
@@ -569,8 +570,6 @@ export class EventsNative implements IEventsNative {
 									return true;
 								}
 							);
-						} catch (e) {
-							throw e;
 						} finally {
 							this.removeStop(blocks);
 						}
@@ -611,7 +610,7 @@ export class EventsNative implements IEventsNative {
 		this.__key += new Date().getTime();
 	}
 
-	destruct() {
+	destruct(): void {
 		if (!this.isDestructed) {
 			return;
 		}

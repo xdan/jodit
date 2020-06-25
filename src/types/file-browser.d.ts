@@ -9,8 +9,7 @@ import {
 	IDestructible,
 	IDictionary,
 	ImageBox,
-	IPermissions,
-	Nullable
+	IPermissions
 } from './types';
 import { IUploader, IUploaderOptions } from './uploader';
 import { IViewOptions, IViewWithToolbar } from './view';

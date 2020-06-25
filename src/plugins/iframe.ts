@@ -159,7 +159,7 @@ Config.prototype.editHTMLDocumentMode = false;
  * Iframe plugin - use `iframe` instead of DIV in editor. It can be need when you want attach custom styles in editor
  * in backend of you system
  */
-export function iframe(editor: IJodit) {
+export function iframe(editor: IJodit): void {
 	const opt = editor.options;
 
 	editor.e

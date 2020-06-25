@@ -8,10 +8,11 @@ import { SnapshotType } from '../../types';
 import { Observer } from './observer';
 
 export class Command {
-	public undo() {
+	undo(): void {
 		this.observer.snapshot.restore(this.oldValue);
 	}
-	public redo() {
+
+	redo(): void {
 		this.observer.snapshot.restore(this.newValue);
 	}
 

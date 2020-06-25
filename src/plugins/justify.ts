@@ -119,7 +119,7 @@ Config.prototype.controls.right = {
  * @param node
  * @param editor
  */
-export const clearAlign = (node: Node, editor: IJodit) => {
+export const clearAlign = (node: Node, editor: IJodit): void => {
 	Dom.each(node, elm => {
 		if (Dom.isHTMLElement(elm, editor.ew)) {
 			if (elm.style.textAlign) {
@@ -144,7 +144,7 @@ export const alignElement = (
 	command: string,
 	box: HTMLElement,
 	editor: IJodit
-) => {
+): void => {
 	if (Dom.isNode(box, editor.ew) && Dom.isElement(box)) {
 		clearAlign(box, editor);
 
@@ -169,7 +169,7 @@ export const alignElement = (
  * Process commands: `justifyfull`, `justifyleft`, `justifyright`, `justifycenter`
  * @param {Jodit} editor
  */
-export function justify(editor: IJodit) {
+export function justify(editor: IJodit): void {
 	const callback = (command: string): false | void => {
 		editor.s.focus();
 

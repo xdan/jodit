@@ -31,6 +31,6 @@ export function setTimeout<T = any>(
  * Clear timeout
  * @param timer
  */
-export function clearTimeout(timer: number) {
+export function clearTimeout(timer: number): void {
 	window.clearTimeout(timer);
 }

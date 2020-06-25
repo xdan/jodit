@@ -28,7 +28,8 @@ import {
 	extend,
 	isPlainObject,
 	isJoditObject,
-	isArray
+	isArray,
+	isFunction
 } from '../../core/helpers';
 import { Dom } from '../../core/dom';
 import { ViewComponent, STATUSES } from '../../core/component/';
@@ -395,9 +396,7 @@ export class Uploader extends ViewComponent implements IUploader {
 
 					let newName =
 						fileList[i].name ||
-						Math.random()
-							.toString()
-							.replace('.', '');
+						Math.random().toString().replace('.', '');
 
 					if (extension) {
 						let extForReg = extension;
@@ -455,9 +454,9 @@ export class Uploader extends ViewComponent implements IUploader {
 							}
 						} else {
 							if (
-								typeof (
+								isFunction(
 									handlerError ||
-									uploader.o.defaultHandlerError
+										uploader.o.defaultHandlerError
 								)
 							) {
 								((handlerError ||
@@ -489,7 +488,7 @@ export class Uploader extends ViewComponent implements IUploader {
 	 * @method setPath
 	 * @param {string} path
 	 */
-	setPath(path: string) {
+	setPath(path: string): void {
 		this.path = path;
 	}
 
@@ -499,7 +498,7 @@ export class Uploader extends ViewComponent implements IUploader {
 	 * @method setSource
 	 * @param {string} source
 	 */
-	setSource(source: string) {
+	setSource(source: string): void {
 		this.source = source;
 	}
 
@@ -530,7 +529,7 @@ export class Uploader extends ViewComponent implements IUploader {
 		form: HTMLElement,
 		handlerSuccess?: HandlerSuccess,
 		handlerError?: HandlerError
-	) {
+	): void {
 		const self: Uploader = this,
 			onPaste = (e: ClipboardEvent): false | void => {
 				let i: number, file: File | null, extension: string;
@@ -687,7 +686,7 @@ export class Uploader extends ViewComponent implements IUploader {
 		);
 
 		if (inputFile) {
-			self.j.e.on(inputFile, 'change', function(this: HTMLInputElement) {
+			self.j.e.on(inputFile, 'change', function (this: HTMLInputElement) {
 				self.sendFiles(this.files, handlerSuccess, handlerError).then(
 					() => {
 						inputFile.value = '';
@@ -713,7 +712,7 @@ export class Uploader extends ViewComponent implements IUploader {
 		url: string,
 		handlerSuccess?: HandlerSuccess,
 		handlerError?: HandlerError
-	) {
+	): void {
 		const uploader = this;
 		uploader.send(
 			{

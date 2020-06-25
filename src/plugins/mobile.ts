@@ -91,7 +91,7 @@ Config.prototype.controls.dots = {
 /**
  * Rebuild toolbar in depends of editor's width
  */
-export function mobile(editor: IJodit) {
+export function mobile(editor: IJodit): void {
 	let timeout: number = 0,
 		store: Array<string | IControlType> = splitArray(editor.o.buttons);
 

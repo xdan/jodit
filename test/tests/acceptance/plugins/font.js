@@ -1,17 +1,15 @@
-describe('Font test', function() {
-	describe('FontName', function() {
-		describe('Open fontname list and select some element', function() {
-			it('Should apply this font to current selection elements', function() {
+describe('Font test', function () {
+	describe('FontName', function () {
+		describe('Open fontname list and select some element', function () {
+			it('Should apply this font to current selection elements', function () {
 				const editor = getJodit({
 					toolbarAdaptive: false
 				});
 
 				editor.value = '<p>test</p>';
-				editor.s.select(
-					editor.editor.firstChild.firstChild
-				);
+				editor.s.select(editor.editor.firstChild.firstChild);
 
-				const openFontNameList = function() {
+				const openFontNameList = function () {
 					clickTrigger('font', editor);
 
 					const list = getOpenedPopup(editor);
@@ -21,7 +19,7 @@ describe('Font test', function() {
 
 				expect(openFontNameList()).is.not.null;
 
-				Array.from(openFontNameList()).map(function(font, index) {
+				Array.from(openFontNameList()).map(function (font) {
 					simulateEvent('click', 0, font);
 
 					const fontFamily = font
@@ -32,15 +30,15 @@ describe('Font test', function() {
 					expect(sortAttributes(editor.value)).equals(
 						sortAttributes(
 							'<p><span style="' +
-							fontFamily.replace('!important','') +
-							'">test</span></p>'
+								fontFamily.replace('!important', '') +
+								'">test</span></p>'
 						)
 					);
 				});
 			});
 
-			describe('Extends standard font list', function() {
-				it('Should standart font list elements', function() {
+			describe('Extends standard font list', function () {
+				it('Should standart font list elements', function () {
 					const editor = getJodit({
 						toolbarAdaptive: false,
 						controls: {
@@ -54,9 +52,7 @@ describe('Font test', function() {
 					});
 
 					editor.value = '<p>test</p>';
-					editor.s.select(
-						editor.editor.firstChild.firstChild
-					);
+					editor.s.select(editor.editor.firstChild.firstChild);
 
 					clickTrigger('font', editor);
 
@@ -88,7 +84,9 @@ describe('Font test', function() {
 			clickButton('10', list);
 			editor.s.insertHTML('test');
 
-			expect(editor.value).equals('<p><span style="font-size: 10px;">test</span></p>');
+			expect(editor.value).equals(
+				'<p><span style="font-size: 10px;">test</span></p>'
+			);
 
 			clickTrigger('font', editor);
 			const list2 = getOpenedPopup(editor);
@@ -96,15 +94,17 @@ describe('Font test', function() {
 			clickButton('Impact_Charcoal_sans_serif', list2);
 			editor.s.insertHTML('stop');
 
-			expect(sortAttributes(editor.value)).equals('<p><span style="font-size:10px">test' +
-				'<span style="font-family:Impact,Charcoal,sans-serif">stop</span></span></p>');
+			expect(sortAttributes(editor.value)).equals(
+				'<p><span style="font-size:10px">test' +
+					'<span style="font-family:Impact,Charcoal,sans-serif">stop</span></span></p>'
+			);
 		});
 	});
 
 	describe('Font size', function () {
-		describe('State', function() {
-			describe('First click on the button', function() {
-				it('Should open list', function() {
+		describe('State', function () {
+			describe('First click on the button', function () {
+				it('Should open list', function () {
 					const editor = getJodit();
 
 					clickButton('fontsize', editor);
@@ -114,8 +114,8 @@ describe('Font test', function() {
 					expect(popup).is.not.null;
 				});
 
-				describe('Second click on the button', function() {
-					it('Should apply previous choice', function() {
+				describe('Second click on the button', function () {
+					it('Should apply previous choice', function () {
 						const editor = getJodit();
 
 						editor.value = 'text2text';
@@ -157,9 +157,9 @@ describe('Font test', function() {
 	});
 
 	describe('Font family', function () {
-		describe('State', function() {
-			describe('First click on the button', function() {
-				it('Should open list', function() {
+		describe('State', function () {
+			describe('First click on the button', function () {
+				it('Should open list', function () {
 					const editor = getJodit();
 
 					clickButton('font', editor);
@@ -169,8 +169,8 @@ describe('Font test', function() {
 					expect(popup).is.not.null;
 				});
 
-				describe('Second click on the button', function() {
-					it('Should apply previous choice', function() {
+				describe('Second click on the button', function () {
+					it('Should apply previous choice', function () {
 						const editor = getJodit();
 
 						editor.value = 'text2text';
@@ -211,10 +211,10 @@ describe('Font test', function() {
 		});
 	});
 
-	describe('Active', function() {
-		describe('In list', function() {
-			describe('Fontsize button', function() {
-				it('Should be activated then element has some style value', function() {
+	describe('Active', function () {
+		describe('In list', function () {
+			describe('Fontsize button', function () {
+				it('Should be activated then element has some style value', function () {
 					const editor = getJodit({
 						observer: {
 							timeout: 0
@@ -233,9 +233,7 @@ describe('Font test', function() {
 					editor.s.setCursorAfter(p.firstChild);
 					simulateEvent('mousedown', 0, p);
 
-					expect(font.getAttribute('aria-pressed')).equals(
-						'false'
-					);
+					expect(font.getAttribute('aria-pressed')).equals('false');
 
 					editor.s.setCursorIn(p.lastChild);
 
@@ -247,14 +245,12 @@ describe('Font test', function() {
 						'[role="listitem"][class*="12"]'
 					);
 
-					expect(font12.getAttribute('aria-pressed')).equals(
-						'true'
-					);
+					expect(font12.getAttribute('aria-pressed')).equals('true');
 				});
 			});
 
-			describe('Font family button', function() {
-				it('Should be activated then element has some style value', function() {
+			describe('Font family button', function () {
+				it('Should be activated then element has some style value', function () {
 					const editor = getJodit({
 						toolbarAdaptive: false,
 						observer: {
@@ -273,14 +269,11 @@ describe('Font test', function() {
 
 					editor.s.setCursorAfter(p.firstChild);
 					simulateEvent('mousedown', 0, p);
-					expect(font.getAttribute('aria-pressed')).equals(
-						'false'
-					);
+					expect(font.getAttribute('aria-pressed')).equals('false');
 
 					editor.s.setCursorIn(p.lastChild);
 
 					simulateEvent('mousedown', 0, p);
-
 
 					clickTrigger('font', editor);
 
@@ -291,8 +284,7 @@ describe('Font test', function() {
 					);
 
 					expect(fontGeorgia).does.not.equal(font);
-					expect(fontGeorgia.hasAttribute('aria-pressed')).is
-						.true;
+					expect(fontGeorgia.hasAttribute('aria-pressed')).is.true;
 				});
 			});
 		});

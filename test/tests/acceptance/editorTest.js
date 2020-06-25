@@ -811,6 +811,4 @@ describe('Jodit Editor Tests', function() {
 			});
 		});
 	});
-
-	afterEach(removeStuff);
 });

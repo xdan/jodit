@@ -753,7 +753,7 @@ export class Select {
 	 * Call callback for all selection node
 	 * @param callback
 	 */
-	eachSelection = (callback: (current: Node) => void) => {
+	eachSelection = (callback: (current: Node) => void): void => {
 		const sel = this.sel;
 
 		if (sel && sel.rangeCount) {

@@ -4,6 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export function isWindow(obj: any): boolean {
-	return obj !== null && obj === obj.window;
+export function isWindow(obj: object): boolean {
+	return obj !== null && obj === (obj as Window).window;
 }

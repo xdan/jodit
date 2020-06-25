@@ -56,10 +56,11 @@ export const convertMediaUrlToVideoEmbed = (
 		case 'youtube.com':
 		case 'www.youtube.com':
 		case 'youtu.be':
-		case 'www.youtu.be':
+		case 'www.youtu.be': {
 			const query: any = parser.search
 				? parseQuery(parser.search)
 				: { v: parser.pathname.substr(1) };
+
 			return query.v
 				? '<iframe width="' +
 						width +
@@ -71,6 +72,7 @@ export const convertMediaUrlToVideoEmbed = (
 						query.v +
 						'" frameborder="0" allowfullscreen></iframe>'
 				: url;
+		}
 	}
 
 	return url;

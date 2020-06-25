@@ -32,7 +32,7 @@ Config.prototype.mediaInFakeBlock = true;
  */
 Config.prototype.mediaBlocks = ['video', 'audio'];
 
-export function media(editor: IJodit) {
+export function media(editor: IJodit): void {
 	const keyFake: string = 'jodit_fake_wrapper';
 
 	const { mediaFakeTag, mediaBlocks, mediaInFakeBlock } = editor.options;
@@ -44,9 +44,7 @@ export function media(editor: IJodit) {
 		) {
 			element = element.parentNode as HTMLElement;
 		} else {
-			let wrapper: HTMLElement;
-
-			wrapper = editor.createInside.fromHTML(
+			const wrapper = editor.createInside.fromHTML(
 				`<${mediaFakeTag} data-jodit-temp="1" contenteditable="false" draggable="true" data-${keyFake}="1"></${mediaFakeTag}>`
 			);
 

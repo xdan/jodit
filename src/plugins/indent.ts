@@ -60,7 +60,7 @@ Config.prototype.indentMargin = 10;
  * Indents the line containing the selection or insertion point.
  * @param {Jodit} editor
  */
-export function indent(editor: IJodit) {
+export function indent(editor: IJodit): void {
 	const key = getKey(editor.o.direction);
 
 	const callback = (command: string): void | false => {

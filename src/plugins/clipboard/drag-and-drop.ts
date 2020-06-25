@@ -185,7 +185,7 @@ export class DragAndDrop extends Plugin {
 		return dt ? dt.getData(TEXT_HTML) || dt.getData(TEXT_PLAIN) : null;
 	};
 
-	afterInit() {
+	afterInit(): void {
 		this.j.e
 			.off(window, '.DragAndDrop')
 			.off('.DragAndDrop')
@@ -208,7 +208,7 @@ export class DragAndDrop extends Plugin {
 			);
 	}
 
-	beforeDestruct() {
+	beforeDestruct(): void {
 		this.onDragEnd();
 
 		this.j.e

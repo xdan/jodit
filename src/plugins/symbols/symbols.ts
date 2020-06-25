@@ -25,7 +25,7 @@ export class symbols extends Plugin {
 	private countInRow: number = 17;
 
 	/** @overdide */
-	afterInit(jodit: IJodit) {
+	afterInit(jodit: IJodit): void {
 		jodit.e.on('generateSpecialCharactersTable.symbols', () => {
 			const container = jodit.c.fromHTML(
 					'<div class="jodit-symbols__container">' +
@@ -70,10 +70,10 @@ export class symbols extends Plugin {
 			const self: symbols = this;
 
 			jodit.e
-				.on(chars, 'focus', function(this: HTMLAnchorElement) {
+				.on(chars, 'focus', function (this: HTMLAnchorElement) {
 					preview.innerHTML = this.innerHTML;
 				})
-				.on(chars, 'mousedown', function(
+				.on(chars, 'mousedown', function (
 					this: HTMLAnchorElement,
 					e?: MouseEvent
 				) {
@@ -85,7 +85,7 @@ export class symbols extends Plugin {
 						e && e.stopImmediatePropagation();
 					}
 				})
-				.on(chars, 'mouseenter', function(this: HTMLAnchorElement) {
+				.on(chars, 'mouseenter', function (this: HTMLAnchorElement) {
 					if (Dom.isTag(this, 'a')) {
 						this.focus();
 					}

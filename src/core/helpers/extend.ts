@@ -63,7 +63,7 @@ export function extend<T, U, V, W>(
 export function extend(target: object, ...sources: any[]): any;
 export function extend(deep: true, target: object, ...sources: any[]): any;
 
-export function extend(this: any, ...args: any[]): any {
+export function extend<T>(this: T, ...args: any[]): any {
 	const length = args.length;
 	let options,
 		name,

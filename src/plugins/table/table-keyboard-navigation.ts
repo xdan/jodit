@@ -13,7 +13,7 @@ import { IJodit } from '../../types';
  * Process navigate keypressing in table cell
  * @param {Jodit} editor
  */
-export function tableKeyboardNavigation(editor: IJodit) {
+export function tableKeyboardNavigation(editor: IJodit): void {
 	editor.e
 		.off('.tableKeyboardNavigation')
 		.on('keydown.tableKeyboardNavigation', (event: KeyboardEvent):
@@ -91,7 +91,7 @@ export function tableKeyboardNavigation(editor: IJodit) {
 			switch (event.key) {
 				case consts.KEY_TAB:
 				// case consts.KEY_RIGHT:
-				case consts.KEY_LEFT:
+				case consts.KEY_LEFT: {
 					const sibling: string =
 						event.key === consts.KEY_LEFT || event.shiftKey
 							? 'prev'
@@ -124,6 +124,7 @@ export function tableKeyboardNavigation(editor: IJodit) {
 						) as HTMLTableCellElement;
 					}
 					break;
+				}
 				case consts.KEY_UP:
 				case consts.KEY_DOWN:
 					{

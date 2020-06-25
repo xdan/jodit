@@ -105,7 +105,7 @@ export class enter extends Plugin {
 	}
 
 	private checkWrapper = (): false | void => {
-		if (!this.j.isEditorMode() || true) {
+		if (!this.j.isEditorMode()) {
 			return;
 		}
 

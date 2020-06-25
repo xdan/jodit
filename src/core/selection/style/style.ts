@@ -10,7 +10,7 @@ import { ApplyStyle } from './apply-style';
 
 export type StyleValue = number | string | null | undefined;
 
-export interface IStyle extends IDictionary<StyleValue> {}
+export type IStyle = IDictionary<StyleValue>
 
 export interface IStyleOptions {
 	style: CanUndef<IStyle>;
@@ -46,7 +46,7 @@ export class Style {
 
 	constructor(readonly options: IStyleOptions) {}
 
-	apply(jodit: IJodit) {
+	apply(jodit: IJodit): void {
 		const applyStyle = new ApplyStyle(jodit, this);
 		applyStyle.apply();
 	}

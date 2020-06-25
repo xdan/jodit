@@ -16,7 +16,7 @@ const DEFAULT_SOURCE_NAME = 'default',
 /**
  * Convert state to view
  */
-export function stateListeners(this: IFileBrowser) {
+export function stateListeners(this: IFileBrowser): void {
 	const { state, files, create, options } = this,
 		getDomElement = (item: IFileBrowserItem): HTMLElement => {
 			const key = item.uniqueHashKey;

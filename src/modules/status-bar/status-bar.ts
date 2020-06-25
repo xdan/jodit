@@ -16,14 +16,14 @@ export class StatusBar extends ViewComponent implements IStatusBar {
 	/**
 	 * Hide statusbar
 	 */
-	hide() {
+	hide(): void {
 		this.container && this.container.classList.add('jodit_hidden');
 	}
 
 	/**
 	 * Show statusbar
 	 */
-	show() {
+	show(): void {
 		this.container && this.container.classList.remove('jodit_hidden');
 	}
 
@@ -53,7 +53,7 @@ export class StatusBar extends ViewComponent implements IStatusBar {
 	 * @param child
 	 * @param inTheRight
 	 */
-	append(child: HTMLElement, inTheRight: boolean = false) {
+	append(child: HTMLElement, inTheRight: boolean = false): void {
 		const wrapper =
 			this.findEmpty(inTheRight) ||
 			this.j.c.div('jodit-status-bar__item');
@@ -78,7 +78,7 @@ export class StatusBar extends ViewComponent implements IStatusBar {
 		this.hide();
 	}
 
-	destruct() {
+	destruct(): void {
 		this.setStatus(STATUSES.beforeDestruct);
 
 		Dom.safeRemove(this.container);

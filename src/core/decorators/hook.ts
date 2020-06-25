@@ -21,7 +21,7 @@ export function hook(status: ComponentStatus) {
 	return <T extends Component & IDictionary>(
 		target: IDictionary,
 		propertyKey: string
-	) => {
+	): void => {
 		if (!isFunction(target[propertyKey])) {
 			throw error('Handler must be a Function');
 		}

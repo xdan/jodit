@@ -7,7 +7,7 @@
 import { INVISIBLE_SPACE_REG_EXP } from '../../constants';
 import { Dom } from '../../dom';
 
-export const normalizeNode = (node: Node | null) => {
+export const normalizeNode = (node: Node | null): void => {
 	if (!node) {
 		return;
 	}

@@ -142,76 +142,10 @@ Config.prototype.controls.paragraph = {
  *
  * @param {Jodit} editor
  */
-export function formatBlock(editor: IJodit) {
+export function formatBlock(editor: IJodit): void {
 	editor.registerCommand(
 		'formatblock',
 		(command: string, second: string, third: string): false | void => {
-			// editor.s.focus();
-			// let work: boolean = false;
-			//
-			// editor.s.eachSelection((current: Node) => {
-			// 	const selectionInfo: markerInfo[] = editor.s.save();
-			// 	let currentBox: HTMLElement | false = current
-			// 		? (Dom.up(
-			// 				current,
-			// 				node => Dom.isBlock(node, editor.ew),
-			// 				editor.editor
-			// 		  ) as HTMLElement)
-			// 		: false;
-			//
-			// 	if ((!currentBox || Dom.isTag(currentBox, 'li')) && current) {
-			// 		currentBox = Dom.wrapInline(
-			// 			current,
-			// 			editor.o.enter,
-			// 			editor
-			// 		);
-			// 	}
-			//
-			// 	if (!currentBox) {
-			// 		editor.s.restore(selectionInfo);
-			// 		return;
-			// 	}
-			//
-			// 	if (!currentBox.tagName.match(/TD|TH|TBODY|TABLE|THEAD/i)) {
-			// 		if (
-			// 			third === editor.o.enterBlock.toLowerCase() &&
-			// 			Dom.isTag(currentBox.parentNode, 'li')
-			// 		) {
-			// 			Dom.unwrap(currentBox);
-			// 		} else {
-			// 			Dom.replace(
-			// 				currentBox,
-			// 				third as HTMLTagNames,
-			// 				editor.createInside,
-			// 				true,
-			// 				false
-			// 			);
-			// 		}
-			// 	} else {
-			// 		if (!editor.s.isCollapsed()) {
-			// 			editor.s.applyStyle(
-			// 				{},
-			// 				{
-			// 					element: third as HTMLTagNames
-			// 				}
-			// 			);
-			// 		} else {
-			// 			Dom.wrapInline(current, third as HTMLTagNames, editor);
-			// 		}
-			// 	}
-			//
-			// 	work = true;
-			// 	editor.s.restore(selectionInfo);
-			// });
-			//
-			// if (!work) {
-			// 	const br = editor.createInside.element('br');
-			// 	const currentBox = editor.createInside.element(third, br);
-			// 	editor.s.insertNode(currentBox, false);
-			// 	editor.s.setCursorIn(currentBox);
-			// }
-			//
-
 			editor.s.applyStyle(undefined, {
 				element: third as HTMLTagNames
 			});

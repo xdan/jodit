@@ -10,9 +10,9 @@ import { trim } from '../string';
 
 function normalizeCSS(s: string) {
 	return s
-		.replace(/mso-[a-z\-]+:[\s]*[^;]+;/gi, '')
-		.replace(/mso-[a-z\-]+:[\s]*[^";]+$/gi, '')
-		.replace(/border[a-z\-]*:[\s]*[^;]+;/gi, '')
+		.replace(/mso-[a-z-]+:[\s]*[^;]+;/gi, '')
+		.replace(/mso-[a-z-]+:[\s]*[^";]+$/gi, '')
+		.replace(/border[a-z-]*:[\s]*[^;]+;/gi, '')
 		.replace(/([0-9.]+)(pt|cm)/gi, (match, units, metrics) => {
 			switch (metrics.toLowerCase()) {
 				case 'pt':

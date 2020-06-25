@@ -186,7 +186,7 @@ export class inlinePopup extends Plugin {
 	}
 
 	protected beforeDestruct(jodit: IJodit): void {
-		this.j.e
+		jodit.e
 			.off('showPopup')
 			.off('click', this.onClick)
 			.off(this.j.ed, 'selectionchange', this.onSelectionChange);

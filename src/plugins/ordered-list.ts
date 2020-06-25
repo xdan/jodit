@@ -52,7 +52,7 @@ Config.prototype.controls.ol = {
 /**
  * Process commands insertOrderedList and insertUnOrderedList
  */
-export function orderedList(editor: IJodit) {
+export function orderedList(editor: IJodit): void {
 	const isOurCommand = (command: string) =>
 			/insert(un)?orderedlist/i.test(command),
 		getListWrapper = () =>

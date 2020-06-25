@@ -4,8 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IComponent, IDictionary, IViewComponent } from './types';
-import { IViewBased } from './view';
+import { IDictionary, IViewComponent } from './types';
 
 interface IUploaderData {
 	messages?: string[];

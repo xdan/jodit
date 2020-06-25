@@ -202,8 +202,6 @@ describe('Iframe mode', function() {
 			});
 		}).timeout(5000);
 	});
-
-	afterEach(removeStuff);
 });
 
 describe('Editor inside iframe', function() {
@@ -211,7 +209,7 @@ describe('Editor inside iframe', function() {
 		it('Should be iframe.contentDocument', function() {
 			const iframe = document.createElement('iframe');
 			iframe.style.width = '900px';
-			box.appendChild(iframe);
+			getBox().appendChild(iframe);
 
 			const win = iframe.contentWindow;
 			const doc = win.document;

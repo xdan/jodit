@@ -337,7 +337,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	 * Close dialog
 	 * @method close
 	 */
-	close = () => {
+	close = (): void => {
 		this.dialog.close();
 	};
 
@@ -490,7 +490,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			) as IUploaderOptions<IUploader>;
 
 		const uploadHandler = () => {
-			this.loadItems();
+			return this.loadItems();
 		};
 
 		self.uploader = self.getInstance('Uploader', uploaderOptions);
@@ -600,7 +600,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		self.initUploader(self);
 	}
 
-	destruct() {
+	destruct(): void {
 		if (this.isInDestruct) {
 			return;
 		}

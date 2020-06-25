@@ -35,7 +35,7 @@ Config.prototype.controls.fontsize = ({
 		'96'
 	],
 
-	exec: (editor, event, { control, button }): void | false => {
+	exec: (editor, event, { control }): void | false => {
 		const key = `button${control.command}`;
 
 		const value =
@@ -126,7 +126,7 @@ Config.prototype.controls.font = ({
  * Process commands `fontsize` and `fontname`
  * @param {Jodit} editor
  */
-export function font(editor: IJodit) {
+export function font(editor: IJodit): void {
 	const callback = (
 		command: string,
 		second: string,

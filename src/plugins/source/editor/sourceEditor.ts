@@ -28,13 +28,13 @@ export abstract class SourceEditor<T> {
 	abstract replaceUndoManager(): void;
 
 	isReady: boolean = false;
-	protected onReady() {
+	protected onReady(): void {
 		this.replaceUndoManager();
 		this.isReady = true;
 		this.j.e.fire(this, 'ready');
 	}
 
-	onReadyAlways(onReady: CallbackFunction) {
+	onReadyAlways(onReady: CallbackFunction): void {
 		if (!this.isReady) {
 			this.j.events?.on(this, 'ready', onReady);
 		} else {

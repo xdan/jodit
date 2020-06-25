@@ -18,7 +18,7 @@ export function stringify(
 		excludeKeys?: string[];
 		prettify?: string;
 	} = {}
-) {
+): string {
 	if (typeof value !== 'object') {
 		return value.toString ? value.toString() : value;
 	}

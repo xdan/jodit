@@ -40,7 +40,7 @@ Config.prototype.limitHTML = false;
  * Plugin control for chars or words count
  * @param jodit
  */
-export function limit(jodit: IJodit) {
+export function limit(jodit: IJodit): void {
 	if (jodit && (jodit.o.limitWords || jodit.o.limitChars)) {
 		const callback = (
 			event: KeyboardEvent | null,

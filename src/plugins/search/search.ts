@@ -501,7 +501,7 @@ export class search extends Plugin {
 		}
 	};
 
-	close = () => {
+	close = (): void => {
 		if (!this.isOpened) {
 			return;
 		}
@@ -515,7 +515,7 @@ export class search extends Plugin {
 		this.isOpened = false;
 	};
 
-	afterInit(editor: IJodit) {
+	afterInit(editor: IJodit): void {
 		if (editor.o.useSearch) {
 			const self: search = this;
 

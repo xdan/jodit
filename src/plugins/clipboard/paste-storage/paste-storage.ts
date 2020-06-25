@@ -184,7 +184,7 @@ export class pasteStorage extends Plugin {
 		});
 	}
 
-	afterInit() {
+	afterInit(): void {
 		this.j.e
 			.off('afterCopy.paste-storage')
 			.on('afterCopy.paste-storage', (html: string) => {

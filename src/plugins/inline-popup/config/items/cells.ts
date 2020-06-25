@@ -17,7 +17,7 @@ const cmd = (control: IControlType): string =>
 export default [
 	{
 		name: 'brush',
-		popup: editor => {
+		popup: (editor): void | false | HTMLElement => {
 			if (!isJoditObject(editor)) {
 				return;
 			}
@@ -26,48 +26,37 @@ export default [
 				.getInstance<Table>('Table', editor.o)
 				.getAllSelectedCells();
 
-			let $bg: HTMLElement,
-				$cl: HTMLElement,
-				$br: HTMLElement,
-				$tab: HTMLElement,
-				color: string,
-				br_color: string,
-				bg_color: string;
-
 			if (!selected.length) {
 				return false;
 			}
 
-			color = css(selected[0], 'color') as string;
-			bg_color = css(selected[0], 'background-color') as string;
-			br_color = css(selected[0], 'border-color') as string;
+			const color = css(selected[0], 'color') as string,
+				bg_color = css(selected[0], 'background-color') as string,
+				br_color = css(selected[0], 'border-color') as string,
+				$bg = ColorPickerWidget(
+					editor,
+					(value: string) => {
+						selected.forEach((cell: HTMLTableCellElement) => {
+							css(cell, 'background-color', value);
+						});
 
-			$bg = ColorPickerWidget(
-				editor,
-				(value: string) => {
-					selected.forEach((cell: HTMLTableCellElement) => {
-						css(cell, 'background-color', value);
-					});
+						editor.setEditorValue();
+					},
+					bg_color
+				),
+				$cl = ColorPickerWidget(
+					editor,
+					(value: string) => {
+						selected.forEach((cell: HTMLTableCellElement) => {
+							css(cell, 'color', value);
+						});
+						editor.setEditorValue();
+						// close();
+					},
+					color
+				);
 
-					editor.setEditorValue();
-					// close();
-				},
-				bg_color
-			);
-
-			$cl = ColorPickerWidget(
-				editor,
-				(value: string) => {
-					selected.forEach((cell: HTMLTableCellElement) => {
-						css(cell, 'color', value);
-					});
-					editor.setEditorValue();
-					// close();
-				},
-				color
-			);
-
-			$br = ColorPickerWidget(
+			const $br = ColorPickerWidget(
 				editor,
 				(value: string) => {
 					selected.forEach((cell: HTMLTableCellElement) => {
@@ -79,13 +68,11 @@ export default [
 				br_color
 			);
 
-			$tab = TabsWidget(editor, [
+			return TabsWidget(editor, [
 				{ name: 'Background', content: $bg },
 				{ name: 'Text', content: $cl },
 				{ name: 'Border', content: $br }
 			]);
-
-			return $tab;
 		},
 		tooltip: 'Background'
 	},

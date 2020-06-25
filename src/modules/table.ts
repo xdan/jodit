@@ -18,7 +18,7 @@ import * as consts from '../core/constants';
 import { Dom } from '../core/dom';
 import { $$, attr, cssPath, each, trim } from '../core/helpers/';
 import { ICreate, IJodit } from '../types';
-import { ViewComponent } from '../core/component/viewComponent';
+import { ViewComponent } from '../core/component';
 import { getContainer } from '../core/global';
 import { debounce } from '../core/decorators';
 
@@ -98,19 +98,17 @@ export class Table extends ViewComponent<IJodit> {
 
 	/**
 	 * Returns rows count in the table
-	 * @param {HTMLTableElement} table
-	 * @return {number}
+	 * @param table
 	 */
-	static getRowsCount(table: HTMLTableElement) {
+	static getRowsCount(table: HTMLTableElement): number {
 		return table.rows.length;
 	}
 
 	/**
 	 * Returns columns count in the table
-	 * @param {HTMLTableElement} table
-	 * @return {number}
+	 * @param table
 	 */
-	static getColumnsCount(table: HTMLTableElement) {
+	static getColumnsCount(table: HTMLTableElement): number {
 		const matrix = Table.formalMatrix(table);
 		return matrix.reduce((max_count, cells) => {
 			return Math.max(max_count, cells.length);
@@ -248,7 +246,7 @@ export class Table extends ViewComponent<IJodit> {
 		line: false | HTMLTableRowElement,
 		after: boolean,
 		create: ICreate
-	) {
+	): void {
 		let row: HTMLTableRowElement;
 
 		if (!line) {
@@ -292,7 +290,7 @@ export class Table extends ViewComponent<IJodit> {
 	 * @param {HTMLTableElement} table
 	 * @param {int} rowIndex
 	 */
-	static removeRow(table: HTMLTableElement, rowIndex: number) {
+	static removeRow(table: HTMLTableElement, rowIndex: number): void {
 		const box = Table.formalMatrix(table);
 		let dec: boolean;
 		const row = table.rows[rowIndex];
@@ -363,7 +361,7 @@ export class Table extends ViewComponent<IJodit> {
 		j: number,
 		after: boolean,
 		create: ICreate
-	) {
+	): void {
 		const box: HTMLTableCellElement[][] = Table.formalMatrix(table);
 		let i: number;
 
@@ -415,7 +413,7 @@ export class Table extends ViewComponent<IJodit> {
 	 * @param {HTMLTableElement} table
 	 * @param {int} [j]
 	 */
-	static removeColumn(table: HTMLTableElement, j: number) {
+	static removeColumn(table: HTMLTableElement, j: number): void {
 		const box: HTMLTableCellElement[][] = Table.formalMatrix(table);
 
 		let dec: boolean;
@@ -508,7 +506,7 @@ export class Table extends ViewComponent<IJodit> {
 	 * Try recalculate all coluns and rows after change
 	 * @param {HTMLTableElement} table
 	 */
-	static normalizeTable(table: HTMLTableElement) {
+	static normalizeTable(table: HTMLTableElement): void {
 		let i: number, j: number, min: number, not: boolean;
 
 		const __marked: HTMLTableCellElement[] = [],
@@ -612,7 +610,7 @@ export class Table extends ViewComponent<IJodit> {
 	 * It combines all of the selected cells into one. The contents of the cells will also be combined
 	 * @param table
 	 */
-	static mergeSelected(table: HTMLTableElement, jodit: IJodit) {
+	static mergeSelected(table: HTMLTableElement, jodit: IJodit): void {
 		const html: string[] = [],
 			bound: number[][] = Table.getSelectedBound(
 				table,
@@ -733,7 +731,7 @@ export class Table extends ViewComponent<IJodit> {
 	/**
 	 * Divides all selected by `jodit_focused_cell` class table cell in 2 parts vertical. Those division into 2 columns
 	 */
-	static splitHorizontal(table: HTMLTableElement, jodit: IJodit) {
+	static splitHorizontal(table: HTMLTableElement, jodit: IJodit): void {
 		let coord: number[],
 			td: HTMLTableCellElement,
 			tr: HTMLTableRowElement,
@@ -810,7 +808,7 @@ export class Table extends ViewComponent<IJodit> {
 	/**
 	 * It splits all the selected cells into 2 parts horizontally. Those. are added new row
 	 */
-	static splitVertical(table: HTMLTableElement, jodit: IJodit) {
+	static splitVertical(table: HTMLTableElement, jodit: IJodit): void {
 		let coord: number[], td: HTMLTableCellElement, percentage: number;
 
 		const __marked: HTMLTableCellElement[] = [];
@@ -888,7 +886,7 @@ export class Table extends ViewComponent<IJodit> {
 		delta: number,
 		noUnmark: boolean,
 		marked: HTMLTableCellElement[]
-	) {
+	): void {
 		const box = Table.formalMatrix(table);
 		let i: number, w: number, percent: number;
 

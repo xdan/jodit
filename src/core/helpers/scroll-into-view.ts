@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export const inView = (elm: HTMLElement, root: HTMLElement, doc: Document) => {
+export const inView = (elm: HTMLElement, root: HTMLElement, doc: Document): boolean => {
 	let rect: ClientRect = elm.getBoundingClientRect(),
 		el: HTMLElement | null = elm as HTMLElement | null;
 	const top: number = rect.top,

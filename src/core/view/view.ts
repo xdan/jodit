@@ -116,7 +116,7 @@ export abstract class View extends Component implements IViewBased {
 	 * @override
 	 * @param isFullSize
 	 */
-	toggleFullSize(isFullSize?: boolean) {
+	toggleFullSize(isFullSize?: boolean): void {
 		if (isFullSize === undefined) {
 			isFullSize = !this.__isFullSize;
 		}
@@ -147,7 +147,7 @@ export abstract class View extends Component implements IViewBased {
 	/**
 	 * Disable selecting
 	 */
-	lock(name = 'any') {
+	lock(name = 'any'): boolean {
 		if (!this.isLocked) {
 			this.__whoLocked = name;
 			return true;
@@ -159,7 +159,7 @@ export abstract class View extends Component implements IViewBased {
 	/**
 	 * Enable selecting
 	 */
-	unlock() {
+	unlock(): boolean {
 		if (this.isLocked) {
 			this.__whoLocked = '';
 			return true;

@@ -13,7 +13,7 @@ import { isString } from './is-string';
  */
 export function isNumeric(value: number | string): boolean {
 	if (isString(value)) {
-		if (!value.match(/^([+\-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
+		if (!value.match(/^([+-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
 			return false;
 		}
 

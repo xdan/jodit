@@ -27,7 +27,7 @@ export const getItem = (
 		root
 	);
 
-export function nativeListeners(this: IFileBrowser) {
+export function nativeListeners(this: IFileBrowser): void {
 	let dragElement: false | HTMLElement = false;
 
 	const self = this;

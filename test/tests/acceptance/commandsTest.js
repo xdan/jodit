@@ -1,6 +1,6 @@
-describe('Commands Jodit Editor Tests', function() {
-	describe('Command "formatBlock"', function() {
-		it('Try exec the command "formatBlock" for several elements', function() {
+describe('Commands Jodit Editor Tests', function () {
+	describe('Command "formatBlock"', function () {
+		it('Try exec the command "formatBlock" for several elements', function () {
 			const editor = getJodit();
 			editor.value = '<p>test</p><p>test2</p>';
 
@@ -17,8 +17,8 @@ describe('Commands Jodit Editor Tests', function() {
 			expect(editor.value).equals('<h1>test</h1><h1>test2</h1>');
 		});
 
-		describe('Exec formatBlock for one inline element', function() {
-			it('Should wrap this element and all nearest inine element in block', function() {
+		describe('Exec formatBlock for one inline element', function () {
+			it('Should wrap this element and all nearest inine element in block', function () {
 				const jodit = getJodit();
 				jodit.value = 'stop <span>post</span> ice';
 				const range = jodit.ed.createRange();
@@ -34,7 +34,7 @@ describe('Commands Jodit Editor Tests', function() {
 			});
 		});
 
-		it('Try exec the command "formatBlock" in text node then selection is collapsed it should wrap it node in H1', function() {
+		it('Try exec the command "formatBlock" in text node then selection is collapsed it should wrap it node in H1', function () {
 			const editor = getJodit({
 				disablePlugins: ['WrapTextNodes']
 			});
@@ -55,7 +55,7 @@ describe('Commands Jodit Editor Tests', function() {
 			expect(editor.value).equals('<h1>te a st</h1>');
 		});
 
-		it('Try exec the command "formatBlock" in the end of text node then selection is collapsed it should wrap it node in H1', function() {
+		it('Try exec the command "formatBlock" in the end of text node then selection is collapsed it should wrap it node in H1', function () {
 			const editor = getJodit({
 				disablePlugins: ['WrapTextNodes']
 			});
@@ -76,16 +76,14 @@ describe('Commands Jodit Editor Tests', function() {
 			expect(editor.value).equals('<h1>test a </h1>');
 		});
 
-		it('Try exec the command "formatBlock" for several text nodes', function() {
+		it('Try exec the command "formatBlock" for several text nodes', function () {
 			const editor = getJodit();
 			editor.value = '';
 
 			editor.s.insertNode(editor.createInside.text('test'));
 			editor.s.insertNode(editor.createInside.text(' test2'));
 			editor.s.insertNode(editor.createInside.text(' test3'));
-			editor.s.insertNode(
-				editor.createInside.element('span', ' test4')
-			);
+			editor.s.insertNode(editor.createInside.element('span', ' test4'));
 
 			const sel = editor.s.sel,
 				range = editor.s.createRange();
@@ -102,8 +100,8 @@ describe('Commands Jodit Editor Tests', function() {
 			);
 		});
 
-		describe('editor is empty', function() {
-			it('Should create empty element and set cursor into it', function() {
+		describe('editor is empty', function () {
+			it('Should create empty element and set cursor into it', function () {
 				const editor = getJodit();
 				editor.value = '';
 				editor.s.focus();
@@ -115,9 +113,9 @@ describe('Commands Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('For UL>li elements', function() {
-			describe('Select only LI', function() {
-				it('Should replace all LI elements to P and unwrap it from UL', function() {
+		describe('For UL>li elements', function () {
+			describe('Select only LI', function () {
+				it('Should replace all LI elements to P and unwrap it from UL', function () {
 					const editor = getJodit();
 					editor.value =
 						'<ul>' +
@@ -158,8 +156,8 @@ describe('Commands Jodit Editor Tests', function() {
 				});
 			});
 
-			describe('Select UL', function() {
-				it('Should replace all LI elements to P and unwrap it from UL', function() {
+			describe('Select UL', function () {
+				it('Should replace all LI elements to P and unwrap it from UL', function () {
 					const editor = getJodit();
 					editor.value =
 						'<ul>' +
@@ -194,9 +192,9 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 	});
 
-	describe('Sub/Supscript native', function() {
-		describe('sub', function() {
-			it('Should insert selection im SUB element', function() {
+	describe('Sub/Supscript native', function () {
+		describe('sub', function () {
+			it('Should insert selection im SUB element', function () {
 				const editor = getJodit();
 				editor.value = '<p>test</p>';
 				const range = editor.s.createRange();
@@ -208,8 +206,8 @@ describe('Commands Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('sup', function() {
-			it('Should insert selection im SUP element', function() {
+		describe('sup', function () {
+			it('Should insert selection im SUP element', function () {
 				const editor = getJodit();
 				editor.value = '<p>test</p>';
 				const range = editor.s.createRange();
@@ -222,8 +220,8 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 	});
 
-	describe('After exec some command', function() {
-		it('should restore selection to previous', function() {
+	describe('After exec some command', function () {
+		it('should restore selection to previous', function () {
 			const editor = getJodit();
 			editor.value = '<p>test</p>';
 
@@ -242,8 +240,8 @@ describe('Commands Jodit Editor Tests', function() {
 
 			expect(editor.value).equals('<p>tetopt</p>');
 		});
-		describe('in collapsed selection', function() {
-			it('should place cursor inward', function() {
+		describe('in collapsed selection', function () {
+			it('should place cursor inward', function () {
 				const editor = getJodit();
 				editor.value = '<p>test</p>';
 
@@ -264,8 +262,8 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 	});
 
-	describe('formatBlock', function() {
-		it('Should wrap or replace container to specialize tag', function() {
+	describe('formatBlock', function () {
+		it('Should wrap or replace container to specialize tag', function () {
 			const editor = getJodit();
 			editor.value = '<p>testy oprst <span>lets go</span></p>';
 
@@ -285,7 +283,7 @@ describe('Commands Jodit Editor Tests', function() {
 			);
 		});
 
-		it('Should wrap text into H1 tag near Table, but table must be after this tag', function() {
+		it('Should wrap text into H1 tag near Table, but table must be after this tag', function () {
 			const editor = getJodit({
 				disablePlugins: ['WrapTextNodes']
 			});
@@ -307,8 +305,8 @@ describe('Commands Jodit Editor Tests', function() {
 			);
 		});
 
-		describe('justifyLeft', function() {
-			it('Should set align for element which was created using formatBlock', function() {
+		describe('justifyLeft', function () {
+			it('Should set align for element which was created using formatBlock', function () {
 				const editor = getJodit({
 					disablePlugins: ['WrapTextNodes']
 				});
@@ -333,15 +331,13 @@ describe('Commands Jodit Editor Tests', function() {
 			});
 		});
 
-		it('Insert H1 inside TD should crearte new H1 withow replacement', function() {
+		it('Insert H1 inside TD should crearte new H1 withow replacement', function () {
 			const editor = getJodit();
 			editor.value = '<table><tr><td>1</td></tr></table>';
 
-			const sel = editor.s.sel,
-				range = editor.s.createRange();
+			const range = editor.s.createRange(true);
 
 			range.selectNodeContents(editor.editor.querySelector('td'));
-			editor.s.selectRange(range);
 
 			editor.execCommand('formatBlock', false, 'h1');
 
@@ -351,8 +347,8 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 	});
 
-	describe('Colors', function() {
-		it('Set colour for all selection should create <span></span> tags inside all paragraps', function() {
+	describe('Colors', function () {
+		it('Set colour for all selection should create <span></span> tags inside all paragraps', function () {
 			const editor = getJodit();
 			editor.value = '<p>1</p><p>2</p><p>3</p>';
 
@@ -372,7 +368,7 @@ describe('Commands Jodit Editor Tests', function() {
 			).equals(editor.value);
 		});
 
-		it('Set colour to collapsed position should create empty span and insert inward cursor', function() {
+		it('Set colour to collapsed position should create empty span and insert inward cursor', function () {
 			const editor = getJodit({
 				disablePlugins: ['WrapTextNodes']
 			});
@@ -395,8 +391,8 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 	});
 
-	describe('Align', function() {
-		it('Justify to right', function() {
+	describe('Align', function () {
+		it('Justify to right', function () {
 			const editor = getJodit();
 			editor.value = '<p>test</p>';
 
@@ -416,7 +412,7 @@ describe('Commands Jodit Editor Tests', function() {
 			);
 		});
 
-		it('Justify to center', function() {
+		it('Justify to center', function () {
 			const editor = getJodit({
 				disablePlugins: ['WrapTextNodes']
 			});
@@ -438,7 +434,7 @@ describe('Commands Jodit Editor Tests', function() {
 			);
 		});
 
-		it('Justify to left', function() {
+		it('Justify to left', function () {
 			const editor = getJodit({
 				disablePlugins: ['WrapTextNodes']
 			});
@@ -460,7 +456,7 @@ describe('Commands Jodit Editor Tests', function() {
 			);
 		});
 
-		it('Justify to left in element of unordered list', function() {
+		it('Justify to left in element of unordered list', function () {
 			const editor = getJodit();
 			editor.value = '<ul><li>test</li><li>data</li></ul>';
 
@@ -480,7 +476,7 @@ describe('Commands Jodit Editor Tests', function() {
 			);
 		});
 
-		it('Justify to full', function() {
+		it('Justify to full', function () {
 			const editor = getJodit();
 			editor.value = '<h1>test some text <span>test</span></h1>';
 
@@ -500,8 +496,8 @@ describe('Commands Jodit Editor Tests', function() {
 			);
 		});
 
-		describe('Justify plain text with enter = br mode', function() {
-			it('Should wrap this text in enterBlock element', function() {
+		describe('Justify plain text with enter = br mode', function () {
+			it('Should wrap this text in enterBlock element', function () {
 				const editor = getJodit({
 					enter: 'br'
 				});
@@ -524,9 +520,9 @@ describe('Commands Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Table cells', function() {
-			describe('Selected table cells', function() {
-				it('Should apply align to all selected cells', function() {
+		describe('Table cells', function () {
+			describe('Selected table cells', function () {
+				it('Should apply align to all selected cells', function () {
 					const editor = getJodit();
 					editor.value =
 						'<table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>';
@@ -557,8 +553,8 @@ describe('Commands Jodit Editor Tests', function() {
 					);
 				});
 
-				describe('After change obe cell - select all', function() {
-					it('Should apply align to whole table and remove from cells', function() {
+				describe('After change obe cell - select all', function () {
+					it('Should apply align to whole table and remove from cells', function () {
 						const editor = getJodit();
 						editor.value =
 							'<table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>';
@@ -589,8 +585,8 @@ describe('Commands Jodit Editor Tests', function() {
 		});
 	});
 
-	describe('Register sustom command', function() {
-		it('Should register command and hotkeys for it', function() {
+	describe('Register sustom command', function () {
+		it('Should register command and hotkeys for it', function () {
 			const editor = getJodit({
 				disablePlugins: ['WrapTextNodes']
 			});
@@ -601,7 +597,7 @@ describe('Commands Jodit Editor Tests', function() {
 			range.setEnd(editor.editor.firstChild, 8);
 			editor.s.selectRange(range);
 
-			editor.registerCommand('someCommand', function() {
+			editor.registerCommand('someCommand', function () {
 				this.setEditorValue('stop');
 			});
 
@@ -612,14 +608,14 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.registerCommand('someCommands', {
 				hotkeys: 'ctrl+d',
-				exec: function() {
+				exec: function () {
 					this.setEditorValue('even');
 				}
 			});
 
 			expect('even').does.not.equal(editor.value);
 			// ctrl+d
-			simulateEvent('keydown', 68, editor.editor, function(data) {
+			simulateEvent('keydown', 68, editor.editor, function (data) {
 				// data.shiftKey = true;
 				data.ctrlKey = true;
 			});

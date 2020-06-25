@@ -142,7 +142,7 @@ Config.prototype.controls.paste = {
 /**
  * Ask before paste HTML source
  */
-export function paste(editor: IJodit) {
+export function paste(editor: IJodit): void {
 	const opt = editor.options,
 		clearOrKeep = (
 			msg: string,

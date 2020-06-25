@@ -40,7 +40,7 @@ export class stat extends Plugin {
 		this.calc();
 	};
 
-	afterInit() {
+	afterInit(): void {
 		this.charCounter = this.j.c.span();
 		this.wordCounter = this.j.c.span();
 		this.j.e.on('afterInit changePlace afterAddPlace', this.reInit);

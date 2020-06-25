@@ -14,7 +14,7 @@ const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
  *
  * @param {Jodit} editor
  */
-export function imageProcessor(editor: IJodit) {
+export function imageProcessor(editor: IJodit): void {
 	editor.e.on(
 		'change afterInit changePlace',
 		editor.async.debounce(() => {

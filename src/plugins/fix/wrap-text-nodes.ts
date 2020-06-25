@@ -10,7 +10,7 @@ import { Dom } from '../../core/dom';
 import { isString } from '../../core/helpers/checker';
 
 export class WrapTextNodes extends Plugin {
-	protected afterInit(jodit: IJodit) {
+	protected afterInit(jodit: IJodit): void {
 		if (jodit.o.enter.toLowerCase() === 'br') {
 			return;
 		}
@@ -70,7 +70,7 @@ export class WrapTextNodes extends Plugin {
 		});
 	}
 
-	protected beforeDestruct(jodit: IJodit) {
+	protected beforeDestruct(jodit: IJodit): void {
 		jodit.e.off('.wtn');
 	}
 }

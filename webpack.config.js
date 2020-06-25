@@ -44,8 +44,7 @@ module.exports = (env, argv, dir = __dirname) => {
 			loader: 'css-loader',
 			options: {
 				sourceMap: debug,
-				importLoaders: 1,
-				minimize: !debug
+				importLoaders: 1
 			}
 		},
 		{
@@ -58,8 +57,7 @@ module.exports = (env, argv, dir = __dirname) => {
 			loader: 'less-loader',
 			options: {
 				sourceMap: debug,
-				lessOptions: {},
-				noIeCompat: true
+				lessOptions: {}
 			}
 		}
 	];
@@ -72,9 +70,7 @@ module.exports = (env, argv, dir = __dirname) => {
 		devtool: debug ? 'inline-sourcemap' : false,
 
 		entry: {
-			jodit: debug
-				? ['webpack-hot-middleware/client', './src/index']
-				: ['./src/index']
+			jodit: ['./src/index']
 		},
 
 		output: {
@@ -133,7 +129,7 @@ module.exports = (env, argv, dir = __dirname) => {
 				{
 					test: /\.less$/,
 					use: css_loaders,
-					include: path.resolve('./src')
+					include: path.resolve(__dirname, './src')
 				},
 
 				{
@@ -155,13 +151,13 @@ module.exports = (env, argv, dir = __dirname) => {
 					loader: 'ts-loader',
 					options: {
 						transpileOnly: uglify,
+						allowTsInNodeModules: true,
 						compilerOptions: {
 							target: ES
 						}
 					},
-					include: path.resolve('src/'),
+					include: path.resolve(__dirname, './src/'),
 					exclude: [
-						/(node_modules)/,
 						/langs\/[a-z]{2}\.ts/,
 						/langs\/[a-z]{2}_[a-z]{2}\.ts/
 					]
@@ -191,7 +187,7 @@ module.exports = (env, argv, dir = __dirname) => {
 					}),
 					new webpack.NamedModulesPlugin(),
 					new webpack.HotModuleReplacementPlugin()
-			  ]
+				]
 			: [
 					new webpack.optimize.OccurrenceOrderPlugin(),
 					new webpack.DefinePlugin({
@@ -202,7 +198,7 @@ module.exports = (env, argv, dir = __dirname) => {
 							NODE_ENV: JSON.stringify(mode)
 						}
 					})
-			  ]
+				]
 	};
 
 	if (!debug && !isTest) {

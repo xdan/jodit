@@ -245,7 +245,6 @@ interface IControlType<
 }
 
 import { IUIButton, IUIElement, IUIList } from './ui';
-import { ToolbarButton } from '../modules';
 
 interface IControlTypeStrong extends IControlType {
 	name: NonNullable<IControlType['name']>;

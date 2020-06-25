@@ -6,23 +6,8 @@
 
 const ts = require('typescript');
 
-module.exports = function(source) {
+module.exports = function() {
 	this.cacheable && this.cacheable(true);
-
-	// let result = [];
-	//
-	// try {
-	// 	const transpile = ts.transpileModule(source, {compilerOptions: {
-	// 			module: ts.ModuleKind.ES2015
-	// 	}});
-	//
-	// 	const es5export = 'result = ';
-	// 	const content = transpile.outputText;
-	//
-	// } catch (e) {
-	// 	throw new Error('Error in lang-loader: ' + e.message);
-	// }
-
 	return 'module.exports.default = {};';
 };
 

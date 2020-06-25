@@ -34,18 +34,16 @@ export const colorToHex = (color: string): string | false => {
 		/([\s\n\t\r]*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color) ||
 		/([\s\n\t\r]*?)rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/.exec(color);
 
-	let hex, red, green, blue, rgb;
-
 	if (!digits) {
 		return '#000000';
 	}
 
-	red = parseInt(digits[2], 10);
-	green = parseInt(digits[3], 10);
-	blue = parseInt(digits[4], 10);
-	rgb = blue | (green << 8) | (red << 16);
+	const red = parseInt(digits[2], 10),
+		green = parseInt(digits[3], 10),
+		blue = parseInt(digits[4], 10),
+		rgb = blue | (green << 8) | (red << 16);
 
-	hex = rgb.toString(16).toUpperCase();
+	let hex = rgb.toString(16).toUpperCase();
 
 	while (hex.length < 6) {
 		hex = '0' + hex;

@@ -19,18 +19,18 @@ export class Stack {
 		this.commands.length = this.stackPosition + 1;
 	}
 
-	clear() {
+	clear(): void {
 		this.commands.length = 0;
 		this.stackPosition = -1;
 	}
 
-	push(command: Command) {
+	push(command: Command): void {
 		this.clearRedo();
 		this.commands.push(command);
 		this.stackPosition += 1;
 	}
 
-	replace(command: Command) {
+	replace(command: Command): void {
 		this.commands[this.stackPosition] = command;
 	}
 

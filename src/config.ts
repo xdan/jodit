@@ -814,7 +814,7 @@ export class Config implements IViewOptions {
 	}
 }
 
-export const OptionsDefault: any = function(
+export const OptionsDefault: any = function (
 	this: any,
 	options: any,
 	def: any = Config.defaultOptions
@@ -987,7 +987,7 @@ Config.prototype.controls = {
 							current,
 							'a',
 							editor.editor
-					  ) as HTMLAnchorElement);
+					) as HTMLAnchorElement);
 			}
 
 			return FileSelectorWidget(

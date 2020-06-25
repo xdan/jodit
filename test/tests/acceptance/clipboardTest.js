@@ -10,7 +10,7 @@ describe('Clipboard text', function() {
 			const emulatePasteEvent = function(data) {
 				data.clipboardData = {
 					types: ['text/html'],
-					getData: function(type) {
+					getData: function() {
 						return pastedText;
 					}
 				};
@@ -264,7 +264,7 @@ describe('Clipboard text', function() {
 
 						editor.s.focus();
 						editor.execCommand('selectall');
-						simulateEvent(command, 0, editor.editor, function (p){});
+						simulateEvent(command, editor.editor);
 
 						expect(editor.buffer.get('clipboard')).equals(html);
 
@@ -272,7 +272,7 @@ describe('Clipboard text', function() {
 						editor.s.focus();
 
 						editor.s.select(editor.editor.querySelector('strong'));
-						simulateEvent(command, 0, editor.editor, function (p){});
+						simulateEvent(command, editor.editor);
 
 						expect(editor.buffer.get('clipboard')).equals('<strong>bold</strong>');
 

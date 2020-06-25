@@ -25,10 +25,10 @@ Config.prototype.controls.undo = {
  * Custom process Redo and Undo functionality
  */
 export class redoUndo extends Plugin {
-	beforeDestruct() {
+	beforeDestruct(): void {
 		// do nothing
 	}
-	afterInit(editor: IJodit) {
+	afterInit(editor: IJodit): void {
 		const callback = (command: string): void | false => {
 			editor.observer[command as 'redo' | 'undo']();
 

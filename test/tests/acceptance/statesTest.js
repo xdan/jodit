@@ -17,7 +17,7 @@ describe('Test states', function() {
 				it('Should deny edit content in iframe\'s body', function(done) {
 					unmockPromise();
 
-					const editor = getJodit({
+					getJodit({
 						readonly: true,
 						iframe: true,
 						events: {
@@ -251,5 +251,4 @@ describe('Test states', function() {
 			});
 		});
 	});
-	afterEach(removeStuff);
 });

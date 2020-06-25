@@ -33,7 +33,7 @@ export class UIList<T extends IViewBased = IViewBased> extends UIGroup<T>
 	mode: IUIList['mode'] = 'horizontal';
 
 	@watch('mode')
-	onChangeMode() {
+	onChangeMode(): void {
 		this.setMod('mode', this.mode);
 	}
 

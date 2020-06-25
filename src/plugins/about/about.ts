@@ -52,6 +52,6 @@ Config.prototype.controls.about = {
 	mode: constants.MODE_SOURCE + constants.MODE_WYSIWYG
 } as IControlType;
 
-export function about() {
+export function about(): void {
 	// Config.buttons.add('about', null, true);
 }
