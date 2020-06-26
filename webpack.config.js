@@ -1,3 +1,8 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 const path = require('path');
 const fs = require('fs');
 
@@ -246,8 +251,8 @@ module.exports = (env, argv, dir = __dirname) => {
 					]);
 
 					const file = path.resolve(
-						dir,
-						'./build/' + filename('jodit') + '.css'
+						config.output.path,
+ 						filename('jodit') + '.css'
 					);
 
 					fs.readFile(file, (err, css) => {
@@ -261,6 +266,11 @@ module.exports = (env, argv, dir = __dirname) => {
 			);
 		}
 	}
+
+	Object.defineProperty(config, 'css_loaders', {
+		enumerable: false,
+		value: css_loaders
+	})
 
 	return config;
 };
