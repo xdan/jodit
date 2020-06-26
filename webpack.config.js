@@ -14,18 +14,19 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MinimizeJSPlugin = require('terser-webpack-plugin');
 const PostBuild = require('./src/utils/post-build');
 
-const pkg = require('./package.json');
-
-const banner = `/*!
- ${pkg.name} - ${pkg.description}
- Author: ${pkg.author}
- Version: v${pkg.version}
- Url: ${pkg.homepage}
- License(s): ${pkg.license}
-*/
-`;
-
 module.exports = (env, argv, dir = __dirname) => {
+	const pkg = require(path.resolve(dir, './package.json'));
+
+	const banner = `/*!
+ * ${pkg.name} - ${pkg.description}
+ * Author: ${pkg.author}
+ * Version: v${pkg.version}
+ * Url: ${pkg.homepage}
+ * License(s): ${pkg.license}
+ */
+	`;
+
+
 	const debug = !argv || !argv.mode || !argv.mode.match(/production/);
 	const isTest = argv && Boolean(argv.isTest);
 
