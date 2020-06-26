@@ -13,6 +13,14 @@ const path = require('path');
 
 const cwd = process.cwd();
 
+const reg = /--([a-z]+)\s*=\s*(.*)/;
+const args = {};
+
+process.argv.filter(a => reg.test(a)).forEach((c) => {
+	const res = reg.exec(c);
+	args[res[1]] = res[2];
+});
+
 const gulptasks = require(path.resolve(cwd, './gulpfile'));
 
 const config = require(path.resolve(cwd, './webpack.config'))([], {
@@ -27,7 +35,7 @@ const app = new (require('express'))();
 
 app.use(compression());
 
-const port = 2000;
+const port = args.port || 2000;
 
 const compiler = webpack(config);
 

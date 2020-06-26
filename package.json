@@ -7,7 +7,7 @@
 	"scripts": {
 		"newversion": "npm run lint && npm test && npm version patch --no-git-tag-version && npm run build && npm run newversiongit && npm publish ./",
 		"newversiongit": "git add --all  && git commit -m \"New version $npm_package_version. Read more https://github.com/xdan/jodit/releases/tag/$npm_package_version \" && git tag $npm_package_version && git push --tags origin HEAD:master",
-		"start": "node server.js",
+		"start": "node server.js --port=2000",
 		"clean": "rm -rf build/*",
 		"build": "npm run clean && gulp build && npm run build-es5 && npm run build-es18 && npm run build-no-uglify-es5 && npm run build-no-uglify-es18",
 		"build-es5": "webpack --progress --mode production --es es5 --uglify true",
