@@ -100,7 +100,9 @@ export class inlinePopup extends Plugin {
 			return false;
 		}
 
-		if (this.type !== type) {
+		if (this.type !== type || target !== this.previousTarget) {
+			this.previousTarget = target;
+
 			const data = this.j.o.popup[type];
 
 			this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
@@ -114,6 +116,8 @@ export class inlinePopup extends Plugin {
 
 		return true;
 	}
+
+	private previousTarget?: HTMLElement;
 
 	/**
 	 * Hide opened popup

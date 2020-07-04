@@ -8,10 +8,8 @@ const jodit = new Jodit('#editor', {
     allowTabNavigation: true // enable tab navigation between toolbar's buttons
 });
 ```
+* https://github.com/xdan/jodit/issues/421
 * https://github.com/xdan/jodit/issues/420
-
-
-
 
 ## 3.4.2
 ### Bug fixes
