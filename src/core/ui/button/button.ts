@@ -39,7 +39,7 @@ export const UIButtonState = (): IUIButtonState => ({
 
 	tooltip: '',
 	text: '',
-	tabIndex: -1
+	tabIndex: undefined
 });
 
 export class UIButton extends UIElement implements IUIButton {
@@ -286,6 +286,8 @@ export function Button(
 	status?: string
 ): IUIButton {
 	const button = new UIButton(jodit);
+
+	button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
 
 	if (isString(stateOrText)) {
 		button.state.icon.name = stateOrText;

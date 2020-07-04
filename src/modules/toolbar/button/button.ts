@@ -99,6 +99,11 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 	}
 
 	/** @override */
+	onChangeTabIndex(): void {
+		attr(this.button, 'tabIndex', this.state.tabIndex);
+	}
+
+	/** @override */
 	protected createContainer(): HTMLElement {
 		const cn = this.componentName;
 		const container = this.j.c.span(cn),

@@ -20,6 +20,7 @@ describe('Test Inline mode', function() {
 				expect(area.value).equals(editor.value);
 			});
 		});
+
 		describe('For DIV', function() {
 			it('Should use this element like container', function() {
 				const div = appendTestDiv(),

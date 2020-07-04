@@ -66,5 +66,9 @@ export function makeButton(
 		);
 	}
 
-	return new ToolbarButton(jodit, control, target);
+	const button = new ToolbarButton(jodit, control, target);
+
+	button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
+
+	return button;
 }

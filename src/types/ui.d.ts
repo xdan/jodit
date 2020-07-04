@@ -6,6 +6,7 @@
 
 import { IFocusable } from './form';
 import {
+	CanUndef,
 	IContainer,
 	IDestructible,
 	IDictionary,
@@ -48,7 +49,7 @@ export interface IUIButtonState {
 	text: string;
 	tooltip: string;
 
-	tabIndex: number;
+	tabIndex: CanUndef<number>;
 }
 
 export interface IUIButtonStatePartial {

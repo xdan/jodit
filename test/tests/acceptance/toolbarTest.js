@@ -1004,6 +1004,38 @@ describe('Toolbar', function() {
 			});
 		});
 
+		describe('Allow tab navigation', function() {
+			describe('Enable', function() {
+				it('Should set tabindex=0 for all buttons', function() {
+					const editor = getJodit({
+						allowTabNavigation: true
+					});
+
+					expect(
+						getButton(
+							'source',
+							editor
+						).getAttribute('tabindex')
+					).equals('0');
+				});
+			});
+
+			describe('Disable', function() {
+				it('Should set tabindex=-1 for all buttons', function() {
+					const editor = getJodit({
+						allowTabNavigation: false // default
+					});
+
+					expect(
+						getButton(
+							'source',
+							editor
+						).getAttribute('tabindex')
+					).equals('-1');
+				});
+			});
+		});
+
 		it('When cursor inside SPAN tag with style="font-weight: bold" or style="font-weight: 700", Bold button should be selected', function() {
 			const editor = getJodit({
 					observer: {
