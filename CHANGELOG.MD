@@ -10,6 +10,7 @@ const jodit = new Jodit('#editor', {
 ```
 * https://github.com/xdan/jodit/issues/421
 * https://github.com/xdan/jodit/issues/420
+* https://github.com/xdan/jodit/issues/419
 
 ## 3.4.2
 ### Bug fixes
