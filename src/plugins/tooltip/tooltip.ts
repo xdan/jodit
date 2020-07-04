@@ -6,8 +6,8 @@
 
 import './tooltip.less';
 
-import { IJodit } from '../../types';
-import { css, offset } from '../../core/helpers';
+import { IJodit, IPoint } from '../../types';
+import { css } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { Dom } from '../../core/dom';
 import { getContainer } from '../../core/global';
@@ -23,13 +23,14 @@ export class tooltip extends Plugin {
 		getContainer(this.j, tooltip).appendChild(this.container);
 
 		let timeout = 0;
+
 		jodit.e
 			.off('.tooltip')
 			.on(
 				'showTooltip.tooltip',
-				(target: HTMLElement, content: string) => {
+				(getPoint: () => IPoint, content: string) => {
 					jodit.async.clearTimeout(timeout);
-					this.open(target, content);
+					this.open(getPoint, content);
 				}
 			)
 			.on('escape.tooltip', this.close)
@@ -37,7 +38,7 @@ export class tooltip extends Plugin {
 				'hideTooltip.tooltip change.tooltip updateToolbar.tooltip scroll.tooltip changePlace.tooltip hidePopup.tooltip closeAllPopups.tooltip',
 				() => {
 					timeout = jodit.async.setTimeout(
-						() => this.close(),
+						this.close,
 						this.j.defaultTimeout
 					);
 				}
@@ -50,25 +51,20 @@ export class tooltip extends Plugin {
 		Dom.safeRemove(this.container);
 	}
 
-	private open(target: HTMLElement, content: string): void {
-		if (!Dom.up(target, elm => elm && elm.nodeName === 'BODY')) {
-			return;
-		}
-
+	private open(getPoint: () => IPoint, content: string): void {
 		this.container.classList.add('jodit-tooltip_visible');
 		this.container.innerHTML = content;
 
 		this.isOpened = true;
-		this.calcPosition(target);
+		this.setPosition(getPoint);
 	}
 
-	private calcPosition(target: HTMLElement) {
-		const bound = offset(target, this.j, this.j.od, true);
+	private setPosition(getPoint: () => IPoint) {
+		const point = getPoint();
 
 		css(this.container, {
-			left: bound.left - this.container.offsetWidth / 2 + bound.width / 2,
-			top: bound.top + bound.height,
-			position: null
+			left: point.x,
+			top: point.y
 		});
 	}
 
@@ -79,8 +75,7 @@ export class tooltip extends Plugin {
 			this.container.classList.remove('jodit-tooltip_visible');
 
 			css(this.container, {
-				left: -5000,
-				position: 'fixed'
+				left: -5000
 			});
 		}
 	}

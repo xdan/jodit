@@ -166,7 +166,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 
 			this.j.e
 				.off(this.container, 'mouseenter mouseleave')
-				.on(this.container, 'mouseenter', () => {
+				.on(this.container, 'mousemove', (e: MouseEvent) => {
 					if (!this.state.tooltip) {
 						return;
 					}
@@ -176,7 +176,10 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 							!this.state.disabled &&
 							this.j.e.fire(
 								'showTooltip',
-								this.container,
+								() => ({
+									x: e.clientX + 10,
+									y: e.clientY + 10
+								}),
 								this.state.tooltip
 							),
 						{

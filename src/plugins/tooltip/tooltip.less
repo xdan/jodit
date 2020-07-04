@@ -8,16 +8,16 @@
 @import (reference) '../../styles/mixins';
 
 .jodit-tooltip {
-	position: absolute;
+	position: fixed;
 	background: #727171;
 	color: #fff;
 
 	.font();
 
 	font-size: 11px;
-	line-height: 15px;
+	line-height: 1.4;
 	white-space: normal;
-	padding: 6px;
+	padding: calc(var(--padding-default) / 4) calc(var(--padding-default) / 2);
 	z-index: var(--z-index-tooltip);
 	max-width: 120px;
 	border-radius: 2px;
