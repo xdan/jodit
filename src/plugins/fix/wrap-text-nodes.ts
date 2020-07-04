@@ -25,6 +25,7 @@ export class WrapTextNodes extends Plugin {
 
 			const isNotClosed = (n: Nullable<Node>) =>
 					Dom.isElement(n) &&
+					!jodit.selection.isMarker(n) &&
 					!(Dom.isBlock(n, jodit.ew) || Dom.isTag(n, ['hr'])),
 				isSuitableStart = (n: Nullable<Node>) =>
 					(Dom.isText(n) &&
