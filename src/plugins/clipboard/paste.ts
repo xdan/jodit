@@ -184,14 +184,17 @@ export function paste(editor: IJodit): void {
 				dialog.close();
 				callback && callback(true);
 			});
+
 			clear.onAction(() => {
 				dialog.close();
 				callback && callback(false);
 			});
+
 			clear2.onAction(() => {
 				dialog.close();
 				callback && callback(0);
 			});
+
 			cancel.onAction(() => {
 				dialog.close();
 			});

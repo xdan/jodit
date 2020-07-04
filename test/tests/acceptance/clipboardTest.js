@@ -29,6 +29,35 @@ describe('Clipboard text', function() {
 			expect(dialog).is.not.null;
 		});
 
+		describe('Paste HTML from Twitter', function() {
+			it('Should paste as is', function() {
+				const editor = getJodit({
+					disablePlugins: ['WrapTextNodes']
+				});
+
+				const pastedText = '<blockquote class="twitter-tweet"><p lang="ru" dir="ltr">Нет слов, конечно <a href="https://t.co/VEAi634acb">https://t.co/VEAi634acb</a></p>— Vasily Oblomov (@VS_Oblomov) <a href="https://twitter.com/VS_Oblomov/status/1279467342213324801?ref_src=twsrc%5Etfw">July 4, 2020</a></blockquote> <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>';
+
+				const emulatePasteEvent = function(data) {
+					data.clipboardData = {
+						types: ["text/plain", "text/html"],
+						getData: function() {
+							return pastedText;
+						}
+					};
+				};
+
+				simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
+
+				expect(editor.value).equals('');
+
+				const dialog = getOpenedDialog(editor);
+
+				simulateEvent('click', dialog.querySelector('button.jodit-ui-button'));
+
+				expect(editor.value.replace(/<br>$/, '')).equals(pastedText);
+			});
+		});
+
 		describe('Prevent show dialog', function() {
 			it('Should not show paste html dialog if beforeOpenPasteDialog returned false', function() {
 				const editor = getJodit({

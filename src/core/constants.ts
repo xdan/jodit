@@ -91,6 +91,7 @@ export const IS_IE =
 	typeof navigator !== 'undefined' &&
 	(navigator.userAgent.indexOf('MSIE') !== -1 ||
 		/rv:11.0/i.test(navigator.userAgent));
+
 /**
  * @property {string} TEXT_PLAIN='text/plain'  For IE11 it will be 'text'. Need for dataTransfer.setData
  */

@@ -630,6 +630,10 @@ function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
 	element.dispatchEvent(evt);
 }
 
+/**
+ * @param {Jodit} editor
+ * @return {HTMLElement|null}
+ */
 function getOpenedPopup(editor) {
 	const popups = editor.ownerDocument.querySelectorAll(
 		'[role="popup"][data-editor_id="' + editor.id + '"]:last-child'
@@ -637,6 +641,10 @@ function getOpenedPopup(editor) {
 	return popups.length ? popups[popups.length - 1] : null;
 }
 
+/**
+ * @param {Jodit} editor
+ * @return {HTMLElement|null}
+ */
 function getOpenedDialog(editor) {
 	const dlgs = editor.ownerDocument.querySelectorAll('.jodit-dialog__box');
 
