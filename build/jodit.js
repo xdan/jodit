@@ -1,11 +1,11 @@
 /*!
- jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
- Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.4.11
- Url: https://xdsoft.net/jodit/
- License(s): MIT
-*/
-
+ * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
+ * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
+ * Version: v3.4.12
+ * Url: https://xdsoft.net/jodit/
+ * License(s): MIT
+ */
+	
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -1947,7 +1947,9 @@ function makeButton(jodit, control, target) {
     if (helpers_1.isFunction(control.getContent)) {
         return new content_1.ToolbarContent(jodit, control, target);
     }
-    return new button_1.ToolbarButton(jodit, control, target);
+    var button = new button_1.ToolbarButton(jodit, control, target);
+    button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
+    return button;
 }
 exports.makeButton = makeButton;
 
@@ -3881,7 +3883,7 @@ exports.UIButtonState = function () { return ({
     },
     tooltip: '',
     text: '',
-    tabIndex: -1
+    tabIndex: undefined
 }); };
 var UIButton = (function (_super) {
     tslib_1.__extends(UIButton, _super);
@@ -4045,6 +4047,7 @@ var UIButton = (function (_super) {
 exports.UIButton = UIButton;
 function Button(jodit, stateOrText, text, status) {
     var button = new UIButton(jodit);
+    button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
     if (helpers_1.isString(stateOrText)) {
         button.state.icon.name = stateOrText;
         button.state.name = stateOrText;
@@ -4368,7 +4371,7 @@ var View = (function (_super) {
         var _this = _super.call(this) || this;
         _this.isView = true;
         _this.components = new Set();
-        _this.version = "3.4.11";
+        _this.version = "3.4.12";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.__isFullSize = false;
@@ -4829,6 +4832,9 @@ var ToolbarButton = (function (_super) {
         }
         this.setMod('text-icons', Boolean(this.text.innerText.trim().length));
     };
+    ToolbarButton.prototype.onChangeTabIndex = function () {
+        helpers_1.attr(this.button, 'tabIndex', this.state.tabIndex);
+    };
     ToolbarButton.prototype.createContainer = function () {
         var cn = this.componentName;
         var container = this.j.c.span(cn), button = _super.prototype.createContainer.call(this);
@@ -4871,13 +4877,16 @@ var ToolbarButton = (function (_super) {
             var timeout_1 = 0;
             this.j.e
                 .off(this.container, 'mouseenter mouseleave')
-                .on(this.container, 'mouseenter', function () {
+                .on(this.container, 'mousemove', function (e) {
                 if (!_this.state.tooltip) {
                     return;
                 }
                 timeout_1 = _this.j.async.setTimeout(function () {
                     return !_this.state.disabled &&
-                        _this.j.e.fire('showTooltip', _this.container, _this.state.tooltip);
+                        _this.j.e.fire('showTooltip', function () { return ({
+                            x: e.clientX + 10,
+                            y: e.clientY + 10
+                        }); }, _this.state.tooltip);
                 }, {
                     timeout: to_1,
                     label: 'tooltip'
@@ -18791,7 +18800,7 @@ var WrapTextNodes = (function (_super) {
                 return (dom_1.Dom.isText(n) &&
                     checker_1.isString(n.nodeValue) &&
                     /[^\s]/.test(n.nodeValue)) ||
-                    isNotClosed(n);
+                    (isNotClosed(n) && !jodit.selection.isMarker(n));
             };
             var isSuitable = function (n) {
                 return dom_1.Dom.isText(n) || isNotClosed(n);
@@ -21323,7 +21332,8 @@ var inlinePopup = (function (_super) {
         if (!this.canShowPopupForType(type)) {
             return false;
         }
-        if (this.type !== type) {
+        if (this.type !== type || target !== this.previousTarget) {
+            this.previousTarget = target;
             var data = this.j.o.popup[type];
             this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
             this.toolbar.build(data, target);
@@ -25615,13 +25625,13 @@ var tooltip = (function (_super) {
         var timeout = 0;
         jodit.e
             .off('.tooltip')
-            .on('showTooltip.tooltip', function (target, content) {
+            .on('showTooltip.tooltip', function (getPoint, content) {
             jodit.async.clearTimeout(timeout);
-            _this.open(target, content);
+            _this.open(getPoint, content);
         })
             .on('escape.tooltip', this.close)
             .on('hideTooltip.tooltip change.tooltip updateToolbar.tooltip scroll.tooltip changePlace.tooltip hidePopup.tooltip closeAllPopups.tooltip', function () {
-            timeout = jodit.async.setTimeout(function () { return _this.close(); }, _this.j.defaultTimeout);
+            timeout = jodit.async.setTimeout(_this.close, _this.j.defaultTimeout);
         });
     };
     tooltip.prototype.beforeDestruct = function (jodit) {
@@ -25629,21 +25639,17 @@ var tooltip = (function (_super) {
         this.close();
         dom_1.Dom.safeRemove(this.container);
     };
-    tooltip.prototype.open = function (target, content) {
-        if (!dom_1.Dom.up(target, function (elm) { return elm && elm.nodeName === 'BODY'; })) {
-            return;
-        }
+    tooltip.prototype.open = function (getPoint, content) {
         this.container.classList.add('jodit-tooltip_visible');
         this.container.innerHTML = content;
         this.isOpened = true;
-        this.calcPosition(target);
+        this.setPosition(getPoint);
     };
-    tooltip.prototype.calcPosition = function (target) {
-        var bound = helpers_1.offset(target, this.j, this.j.od, true);
+    tooltip.prototype.setPosition = function (getPoint) {
+        var point = getPoint();
         helpers_1.css(this.container, {
-            left: bound.left - this.container.offsetWidth / 2 + bound.width / 2,
-            top: bound.top + bound.height,
-            position: null
+            left: point.x,
+            top: point.y
         });
     };
     tooltip.prototype.close = function () {
@@ -25651,8 +25657,7 @@ var tooltip = (function (_super) {
             this.isOpened = false;
             this.container.classList.remove('jodit-tooltip_visible');
             helpers_1.css(this.container, {
-                left: -5000,
-                position: 'fixed'
+                left: -5000
             });
         }
     };
@@ -26511,6 +26516,7 @@ function keepModuleNames(modules) {
     utils_1.keepNames.set(modules.UIList, 'UIList');
     utils_1.keepNames.set(modules.UIGroup, 'UIGroup');
     utils_1.keepNames.set(modules.Popup, 'Popup');
+    utils_1.keepNames.set(modules.ContextMenu, 'ContextMenu');
     utils_1.keepNames.set(modules.ToolbarButton, 'ToolbarButton');
     utils_1.keepNames.set(modules.ToolbarContent, 'ToolbarContent');
     utils_1.keepNames.set(modules.ToolbarCollection, 'ToolbarCollection');

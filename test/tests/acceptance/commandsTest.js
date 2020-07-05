@@ -92,7 +92,7 @@ describe('Commands Jodit Editor Tests', function () {
 				editor.s.insertNode(
 					editor.createInside.element('span', ' test4')
 				);
-debugger
+
 				const range = editor.s.createRange(true);
 
 				range.setStart(editor.editor.firstChild, 0);

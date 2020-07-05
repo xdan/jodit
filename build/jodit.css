@@ -1,10 +1,10 @@
 /*!
- jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
- Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.4.11
- Url: https://xdsoft.net/jodit/
- License(s): MIT
-*/
+ * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
+ * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
+ * Version: v3.4.12
+ * Url: https://xdsoft.net/jodit/
+ * License(s): MIT
+ */
 .jodit-wysiwyg{
   outline:0;
 }
@@ -3609,16 +3609,16 @@ html.jodit-fullsize_box{
   margin:0;
 }
 .jodit-tooltip{
-  position:absolute;
+  position:fixed;
   background:#727171;
   color:#fff;
   font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 		Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size:14px;
   font-size:11px;
-  line-height:15px;
+  line-height:1.4;
   white-space:normal;
-  padding:6px;
+  padding:calc(8px/4) calc(8px/2);
   z-index:10000002;
   max-width:120px;
   border-radius:2px;

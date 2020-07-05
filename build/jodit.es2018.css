@@ -1,11 +1,11 @@
 /*!
- jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
- Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.4.11
- Url: https://xdsoft.net/jodit/
- License(s): MIT
-*/
-
+ * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
+ * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
+ * Version: v3.4.12
+ * Url: https://xdsoft.net/jodit/
+ * License(s): MIT
+ */
+	
 :root{
   --jd-color-white:#fff;
   --jd-color-gray:#dadada;
@@ -3327,15 +3327,15 @@ html.jodit-fullsize_box{
   margin:0;
 }
 .jodit-tooltip{
-  position:absolute;
+  position:fixed;
   background:#727171;
   color:#fff;
   font-family:var(--jd-font-default);
   font-size:var(--jd-font-size-default);
   font-size:11px;
-  line-height:15px;
+  line-height:1.4;
   white-space:normal;
-  padding:6px;
+  padding:calc(var(--jd-padding-default)/4) calc(var(--jd-padding-default)/2);
   z-index:var(--jd-z-index-tooltip);
   max-width:120px;
   border-radius:2px;

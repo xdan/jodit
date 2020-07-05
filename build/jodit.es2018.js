@@ -1,11 +1,11 @@
 /*!
- jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
- Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.4.11
- Url: https://xdsoft.net/jodit/
- License(s): MIT
-*/
-
+ * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
+ * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
+ * Version: v3.4.12
+ * Url: https://xdsoft.net/jodit/
+ * License(s): MIT
+ */
+	
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -5556,7 +5556,7 @@ const UIButtonState = () => ({
     },
     tooltip: '',
     text: '',
-    tabIndex: -1
+    tabIndex: undefined
 });
 class UIButton extends _element__WEBPACK_IMPORTED_MODULE_3__[/* UIElement */ "a"] {
     constructor(jodit) {
@@ -5715,6 +5715,7 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __decorate */ "a"])([
 ], UIButton.prototype, "onActionFire", null);
 function Button(jodit, stateOrText, text, status) {
     const button = new UIButton(jodit);
+    button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
     if (Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["isString"])(stateOrText)) {
         button.state.icon.name = stateOrText;
         button.state.name = stateOrText;
@@ -7926,7 +7927,7 @@ class view_View extends core_component["a" /* Component */] {
         super();
         this.isView = true;
         this.components = new Set();
-        this.version = "3.4.11";
+        this.version = "3.4.12";
         this.async = new async_Async();
         this.buffer = storage_Storage.makeStorage();
         this.__isFullSize = false;
@@ -8310,6 +8311,9 @@ class button_ToolbarButton extends ui_button["b" /* UIButton */] {
         }
         this.setMod('text-icons', Boolean(this.text.innerText.trim().length));
     }
+    onChangeTabIndex() {
+        Object(helpers["attr"])(this.button, 'tabIndex', this.state.tabIndex);
+    }
     createContainer() {
         const cn = this.componentName;
         const container = this.j.c.span(cn), button = super.createContainer();
@@ -8351,12 +8355,15 @@ class button_ToolbarButton extends ui_button["b" /* UIButton */] {
             let timeout = 0;
             this.j.e
                 .off(this.container, 'mouseenter mouseleave')
-                .on(this.container, 'mouseenter', () => {
+                .on(this.container, 'mousemove', (e) => {
                 if (!this.state.tooltip) {
                     return;
                 }
                 timeout = this.j.async.setTimeout(() => !this.state.disabled &&
-                    this.j.e.fire('showTooltip', this.container, this.state.tooltip), {
+                    this.j.e.fire('showTooltip', () => ({
+                        x: e.clientX + 10,
+                        y: e.clientY + 10
+                    }), this.state.tooltip), {
                     timeout: to,
                     label: 'tooltip'
                 });
@@ -8570,7 +8577,9 @@ function makeButton(jodit, control, target = null) {
     if (Object(helpers["isFunction"])(control.getContent)) {
         return new content_ToolbarContent(jodit, control, target);
     }
-    return new button_ToolbarButton(jodit, control, target);
+    const button = new button_ToolbarButton(jodit, control, target);
+    button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
+    return button;
 }
 
 // CONCATENATED MODULE: ./src/core/view/view-with-toolbar.ts
@@ -15948,7 +15957,7 @@ class wrap_text_nodes_WrapTextNodes extends plugin_Plugin {
                 !(dom["a" /* Dom */].isBlock(n, jodit.ew) || dom["a" /* Dom */].isTag(n, ['hr'])), isSuitableStart = (n) => (dom["a" /* Dom */].isText(n) &&
                 Object(checker["s" /* isString */])(n.nodeValue) &&
                 /[^\s]/.test(n.nodeValue)) ||
-                isNotClosed(n);
+                (isNotClosed(n) && !jodit.selection.isMarker(n));
             const isSuitable = (n) => dom["a" /* Dom */].isText(n) || isNotClosed(n);
             let selInfo = null;
             while (child) {
@@ -18799,7 +18808,8 @@ class inline_popup_inlinePopup extends plugin_Plugin {
         if (!this.canShowPopupForType(type)) {
             return false;
         }
-        if (this.type !== type) {
+        if (this.type !== type || target !== this.previousTarget) {
+            this.previousTarget = target;
             const data = this.j.o.popup[type];
             this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
             this.toolbar.build(data, target);
@@ -22564,13 +22574,13 @@ class tooltip_tooltip_tooltip extends plugin_Plugin {
         let timeout = 0;
         jodit.e
             .off('.tooltip')
-            .on('showTooltip.tooltip', (target, content) => {
+            .on('showTooltip.tooltip', (getPoint, content) => {
             jodit.async.clearTimeout(timeout);
-            this.open(target, content);
+            this.open(getPoint, content);
         })
             .on('escape.tooltip', this.close)
             .on('hideTooltip.tooltip change.tooltip updateToolbar.tooltip scroll.tooltip changePlace.tooltip hidePopup.tooltip closeAllPopups.tooltip', () => {
-            timeout = jodit.async.setTimeout(() => this.close(), this.j.defaultTimeout);
+            timeout = jodit.async.setTimeout(this.close, this.j.defaultTimeout);
         });
     }
     beforeDestruct(jodit) {
@@ -22578,21 +22588,17 @@ class tooltip_tooltip_tooltip extends plugin_Plugin {
         this.close();
         dom["a" /* Dom */].safeRemove(this.container);
     }
-    open(target, content) {
-        if (!dom["a" /* Dom */].up(target, elm => elm && elm.nodeName === 'BODY')) {
-            return;
-        }
+    open(getPoint, content) {
         this.container.classList.add('jodit-tooltip_visible');
         this.container.innerHTML = content;
         this.isOpened = true;
-        this.calcPosition(target);
+        this.setPosition(getPoint);
     }
-    calcPosition(target) {
-        const bound = Object(helpers["offset"])(target, this.j, this.j.od, true);
+    setPosition(getPoint) {
+        const point = getPoint();
         Object(helpers["css"])(this.container, {
-            left: bound.left - this.container.offsetWidth / 2 + bound.width / 2,
-            top: bound.top + bound.height,
-            position: null
+            left: point.x,
+            top: point.y
         });
     }
     close() {
@@ -22600,8 +22606,7 @@ class tooltip_tooltip_tooltip extends plugin_Plugin {
             this.isOpened = false;
             this.container.classList.remove('jodit-tooltip_visible');
             Object(helpers["css"])(this.container, {
-                left: -5000,
-                position: 'fixed'
+                left: -5000
             });
         }
     }
@@ -23153,6 +23158,7 @@ function keepModuleNames(modules) {
     utils["f" /* keepNames */].set(modules.UIList, 'UIList');
     utils["f" /* keepNames */].set(modules.UIGroup, 'UIGroup');
     utils["f" /* keepNames */].set(modules.Popup, 'Popup');
+    utils["f" /* keepNames */].set(modules.ContextMenu, 'ContextMenu');
     utils["f" /* keepNames */].set(modules.ToolbarButton, 'ToolbarButton');
     utils["f" /* keepNames */].set(modules.ToolbarContent, 'ToolbarContent');
     utils["f" /* keepNames */].set(modules.ToolbarCollection, 'ToolbarCollection');
