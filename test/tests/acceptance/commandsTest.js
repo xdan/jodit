@@ -81,28 +81,29 @@ describe('Commands Jodit Editor Tests', function () {
 			expect(editor.value).equals('<h1>test a </h1>');
 		});
 
-		it('Try exec the command "formatBlock" for several text nodes', function () {
-			const editor = getJodit();
-			editor.value = '';
+		describe('Try exec the command "formatBlock" for several text nodes', function () {
+			it('should wrap all these nodes inside tag', function () {
+				const editor = getJodit();
+				editor.value = '';
 
-			editor.s.insertNode(editor.createInside.text('test'));
-			editor.s.insertNode(editor.createInside.text(' test2'));
-			editor.s.insertNode(editor.createInside.text(' test3'));
-			editor.s.insertNode(editor.createInside.element('span', ' test4'));
+				editor.s.insertNode(editor.createInside.text('test'));
+				editor.s.insertNode(editor.createInside.text(' test2'));
+				editor.s.insertNode(editor.createInside.text(' test3'));
+				editor.s.insertNode(
+					editor.createInside.element('span', ' test4')
+				);
+debugger
+				const range = editor.s.createRange(true);
 
-			const sel = editor.s.sel,
-				range = editor.s.createRange();
+				range.setStart(editor.editor.firstChild, 0);
+				range.setEnd(editor.editor.lastChild, 0);
 
-			range.setStart(editor.editor.firstChild, 0);
-			range.setEnd(editor.editor.lastChild, 0);
-			sel.removeAllRanges();
-			sel.addRange(range);
+				editor.execCommand('formatBlock', false, 'h1');
 
-			editor.execCommand('formatBlock', false, 'h1');
-
-			expect(editor.value).equals(
-				'<h1>test test2 test3<span> test4</span></h1>'
-			);
+				expect(editor.value).equals(
+					'<h1>test test2 test3<span> test4</span></h1>'
+				);
+			});
 		});
 
 		describe('editor is empty', function () {

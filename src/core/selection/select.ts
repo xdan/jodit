@@ -202,7 +202,7 @@ export class Select {
 		Dom.isNode(elm, this.win) &&
 		Dom.isElement(elm) &&
 		Dom.isTag(elm, 'span') &&
-		(elm as Element).hasAttribute('data-' + consts.MARKER_CLASS);
+		elm.hasAttribute('data-' + consts.MARKER_CLASS);
 
 	/**
 	 * Remove all markers
@@ -676,9 +676,9 @@ export class Select {
 	/**
 	 * Insert image in editor
 	 *
-	 * @param  {string|HTMLImageElement} url URL for image, or HTMLImageElement
-	 * @param  {string} [styles] If specified, it will be applied <code>$(image).css(styles)</code>
-	 * @param { number | string | null } defaultWidth
+	 * @param  url URL for image, or HTMLImageElement
+	 * @param  [styles] If specified, it will be applied <code>$(image).css(styles)</code>
+	 * @param defaultWidth
 	 *
 	 * @fired afterInsertImage
 	 */

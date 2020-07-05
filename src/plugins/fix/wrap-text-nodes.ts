@@ -23,15 +23,14 @@ export class WrapTextNodes extends Plugin {
 			let child: Nullable<Node> = jodit.editor.firstChild,
 				isChanged: boolean = false;
 
-			const isNotClosed = (n: Nullable<Node>) =>
+			const isNotClosed = (n: Nullable<Node>): n is Element =>
 					Dom.isElement(n) &&
-					!jodit.selection.isMarker(n) &&
 					!(Dom.isBlock(n, jodit.ew) || Dom.isTag(n, ['hr'])),
 				isSuitableStart = (n: Nullable<Node>) =>
 					(Dom.isText(n) &&
 						isString(n.nodeValue) &&
 						/[^\s]/.test(n.nodeValue)) ||
-					isNotClosed(n);
+					(isNotClosed(n) && !jodit.selection.isMarker(n));
 
 			const isSuitable = (n: Nullable<Node>) =>
 				Dom.isText(n) || isNotClosed(n);
