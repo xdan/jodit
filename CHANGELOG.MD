@@ -1,4 +1,8 @@
 # Changelog
+## 3.4.13
+### Bug fixes
+* https://github.com/xdan/jodit/issues/379
+
 ## 3.4.12
 ### Bug fixes
 * https://github.com/xdan/jodit/issues/424

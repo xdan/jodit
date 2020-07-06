@@ -47,7 +47,8 @@ import {
 	IJodit,
 	IUploader,
 	ICreate,
-	IFileBrowserCallBackData
+	IFileBrowserCallBackData,
+	IStorage
 } from './types';
 
 import { ViewWithToolbar } from './core/view/view-with-toolbar';
@@ -155,7 +156,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * Container for set/get value
 	 * @type {Storage}
 	 */
-	readonly storage = Storage.makeStorage(true, this.id);
+	readonly storage!: IStorage;
 
 	readonly createInside: ICreate = new Create(
 		() => this.ed,
@@ -627,7 +628,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param hotkeys
 	 * @param commandName
 	 */
-	registerHotkeyToCommand(hotkeys: string | string[], commandName: string): void {
+	registerHotkeyToCommand(
+		hotkeys: string | string[],
+		commandName: string
+	): void {
 		const shortcuts: string = asArray(hotkeys)
 			.map(normalizeKeyAliases)
 			.map(hotkey => hotkey + '.hotkey')
@@ -1036,11 +1040,13 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		this.setStatus(STATUSES.beforeInit);
 
-		if (this.options?.events) {
-			Object.keys(this.o.events).forEach((key: string) =>
-				this.e.on(key, this.o.events[key])
-			);
-		}
+		this.id =
+			attr(resolveElement(element, this.o.shadowRoot || this.od), 'id') ||
+			new Date().getTime().toString();
+
+		this.storage = Storage.makeStorage(true, this.id);
+
+		this.attachEvents(this.o);
 
 		this.e.on(this.ow, 'resize', () => {
 			if (this.e) {
@@ -1097,10 +1103,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	): void | Promise<any> {
 		const element = resolveElement(source, this.o.shadowRoot || this.od);
 
-		if (!this.isReady) {
-			this.id = attr(element, 'id') || new Date().getTime().toString();
-			instances[this.id] = this;
-		}
+		this.attachEvents(options as IViewOptions);
 
 		if (element.attributes) {
 			Array.from(element.attributes).forEach((attr: Attr) => {
@@ -1167,6 +1170,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		const workplace = this.c.div('jodit-workplace', {
 			contenteditable: false
 		});
+
 		container.appendChild(workplace);
 
 		const statusbar = new StatusBar(this, container);
@@ -1257,7 +1261,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.e.fire('beforeInit', this);
 
 		try {
-			pluginSystem.init(this).catch((e) => {
+			pluginSystem.init(this).catch(e => {
 				throw e;
 			});
 		} catch (e) {
@@ -1435,6 +1439,18 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		init();
+	}
+
+	/**
+	 * Add option's event handlers in emitter
+	 * @param options
+	 */
+	private attachEvents(options: IViewOptions) {
+		if (options && options.events) {
+			Object.keys(options.events).forEach((key: string) =>
+				this.e.on(key, options.events[key])
+			);
+		}
 	}
 
 	/**

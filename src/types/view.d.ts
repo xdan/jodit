@@ -66,6 +66,8 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 
 	createAttributes?: IDictionary<Attributes | NodeFunction>;
 
+	events: IDictionary<(...args: any[]) => any>;
+
 	shadowRoot?: Nullable<ShadowRoot>;
 }
 

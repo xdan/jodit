@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+// TODO: Need refactoring
+
 import { Config } from '../../config';
 import {
 	INSERT_AS_HTML,
