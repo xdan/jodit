@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.12
+ * Version: v3.4.14
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -7927,7 +7927,7 @@ class view_View extends core_component["a" /* Component */] {
         super();
         this.isView = true;
         this.components = new Set();
-        this.version = "3.4.12";
+        this.version = "3.4.14";
         this.async = new async_Async();
         this.buffer = storage_Storage.makeStorage();
         this.__isFullSize = false;
@@ -14026,7 +14026,6 @@ var plugin_system = __webpack_require__(28);
 
 class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
     constructor(element, options) {
-        var _a;
         super(options);
         this.isJodit = true;
         this.__defaultStyleDisplayKey = 'data-jodit-default-style-display';
@@ -14034,7 +14033,6 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
         this.commands = {};
         this.__selectionLocked = null;
         this.__wasReadOnly = false;
-        this.storage = storage_Storage.makeStorage(true, this.id);
         this.createInside = new create_Create(() => this.ed, this.o.createAttributes);
         this.editorIsActive = false;
         this.__mode = constants["MODE_WYSIWYG"];
@@ -14048,9 +14046,12 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
             throw e;
         }
         this.setStatus(core_component["b" /* STATUSES */].beforeInit);
-        if ((_a = this.options) === null || _a === void 0 ? void 0 : _a.events) {
-            Object.keys(this.o.events).forEach((key) => this.e.on(key, this.o.events[key]));
-        }
+        this.id =
+            Object(helpers["attr"])(Object(helpers["resolveElement"])(element, this.o.shadowRoot || this.od), 'id') ||
+                new Date().getTime().toString();
+        global["c" /* instances */][this.id] = this;
+        this.storage = storage_Storage.makeStorage(true, this.id);
+        this.attachEvents(this.o);
         this.e.on(this.ow, 'resize', () => {
             if (this.e) {
                 this.e.fire('resize');
@@ -14505,10 +14506,7 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
     }
     addPlace(source, options) {
         const element = Object(helpers["resolveElement"])(source, this.o.shadowRoot || this.od);
-        if (!this.isReady) {
-            this.id = Object(helpers["attr"])(element, 'id') || new Date().getTime().toString();
-            global["c" /* instances */][this.id] = this;
-        }
+        this.attachEvents(options);
         if (element.attributes) {
             Array.from(element.attributes).forEach((attr) => {
                 const name = attr.name;
@@ -14610,7 +14608,7 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
         this.beforeInitHook();
         this.e.fire('beforeInit', this);
         try {
-            global["f" /* pluginSystem */].init(this).catch((e) => {
+            global["f" /* pluginSystem */].init(this).catch(e => {
                 throw e;
             });
         }
@@ -14734,6 +14732,10 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
             return stayDefault.then(init);
         }
         init();
+    }
+    attachEvents(options) {
+        const e = options === null || options === void 0 ? void 0 : options.events;
+        e && Object.keys(e).forEach((key) => this.e.on(key, e[key]));
     }
     destruct() {
         if (this.isInDestruct) {

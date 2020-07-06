@@ -1043,6 +1043,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.id =
 			attr(resolveElement(element, this.o.shadowRoot || this.od), 'id') ||
 			new Date().getTime().toString();
+		instances[this.id] = this;
 
 		this.storage = Storage.makeStorage(true, this.id);
 
@@ -1446,11 +1447,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param options
 	 */
 	private attachEvents(options: IViewOptions) {
-		if (options && options.events) {
-			Object.keys(options.events).forEach((key: string) =>
-				this.e.on(key, options.events[key])
-			);
-		}
+		const e = options?.events;
+		e && Object.keys(e).forEach((key: string) => this.e.on(key, e[key]));
 	}
 
 	/**

@@ -3,20 +3,20 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Jodit Editor Tests', function() {
-	describe('Constructor', function() {
-		it('Constructor Jodit must be in global scope', function() {
+describe('Jodit Editor Tests', function () {
+	describe('Constructor', function () {
+		it('Constructor Jodit must be in global scope', function () {
 			expect(window.Jodit).is.a('function');
 		});
 
-		it('Constructor default should not be in global scope', function() {
+		it('Constructor default should not be in global scope', function () {
 			expect(window.default).is.not.a('function');
 			expect(window.default).does.not.equal(window.Jodit);
 		});
 
-		describe('First argument', function() {
-			describe('String #id', function() {
-				it('Should be valid selector', function() {
+		describe('First argument', function () {
+			describe('String #id', function () {
+				it('Should be valid selector', function () {
 					const area = appendTestArea('editor');
 
 					const editor = new Jodit('#editor');
@@ -25,62 +25,62 @@ describe('Jodit Editor Tests', function() {
 				});
 			});
 
-			describe('Undefined,null,false,bad seelctor,function,number, text node', function() {
-				it('Should be not valid selector', function() {
-					expect(function() {
+			describe('Undefined,null,false,bad seelctor,function,number, text node', function () {
+				it('Should be not valid selector', function () {
+					expect(function () {
 						new Jodit(0);
 					}).to.throw(Error);
 
-					expect(function() {
+					expect(function () {
 						new Jodit();
 					}).to.throw(Error);
 
-					expect(function() {
+					expect(function () {
 						new Jodit(null);
 					}).to.throw(Error);
 
-					expect(function() {
+					expect(function () {
 						new Jodit(false);
 					}).to.throw(Error);
 
-					expect(function() {
+					expect(function () {
 						new Jodit('.salomon');
 					}).to.throw(Error);
 
-					expect(function() {
+					expect(function () {
 						new Jodit('>asdsad.salomon');
 					}).to.throw(Error);
 
-					expect(function() {
-						new Jodit(function() {});
+					expect(function () {
+						new Jodit(function () {});
 					}).to.throw(Error);
 
-					expect(function() {
+					expect(function () {
 						new Jodit(233);
 					}).to.throw(Error);
 
 					const elm = document.createTextNode('stop');
-					expect(function() {
+					expect(function () {
 						new Jodit(elm);
 					}).to.throw(Error);
 				});
 			});
-			describe('HTMLTextAreaElement', function() {
-				it('Should be instance of HTMLElement', function() {
+			describe('HTMLTextAreaElement', function () {
+				it('Should be instance of HTMLElement', function () {
 					const area = appendTestArea('editor2');
 
-					const editor2 = new Jodit(area);
+					const editor2 = getJodit(undefined, area);
 					expect(editor2.element).equals(area);
 					editor2.destruct();
 				});
 			});
 
-			describe('HTMLDivElement', function() {
-				it('Should be instance of HTMLElement', function() {
+			describe('HTMLDivElement', function () {
+				it('Should be instance of HTMLElement', function () {
 					const div = document.createElement('div');
 					div.innerHTML = '<h1>Test</h1>';
 					document.body.appendChild(div);
-					const editor3 = new Jodit(div);
+					const editor3 = getJodit(undefined, div);
 
 					expect(editor3.element).equals(div);
 					expect('<h1>Test</h1>').equals(editor3.getEditorValue());
@@ -90,8 +90,8 @@ describe('Jodit Editor Tests', function() {
 				});
 			});
 
-			describe('Found element', function() {
-				it('Should be instance of HTMLElement', function() {
+			describe('Found element', function () {
+				it('Should be instance of HTMLElement', function () {
 					const div = document.createElement('div');
 					div.innerHTML = '<h1>Test</h1>';
 					div.setAttribute('id', 'test2222');
@@ -99,7 +99,7 @@ describe('Jodit Editor Tests', function() {
 
 					const found = document.getElementById('test2222');
 
-					const editor3 = new Jodit(found);
+					const editor3 = getJodit(undefined, found);
 
 					expect(editor3.element).equals(found);
 					expect('<h1>Test</h1>').equals(editor3.getEditorValue());
@@ -110,10 +110,10 @@ describe('Jodit Editor Tests', function() {
 			});
 		});
 
-		it('Editor should replace and hide source textarea', function() {
+		it('Editor should replace and hide source textarea', function () {
 			const area = appendTestArea();
 
-			const editor = new Jodit(area);
+			const editor = getJodit(undefined, area);
 			expect(area.style.display).equals('none');
 
 			if (!editor.options.iframe) {
@@ -125,23 +125,22 @@ describe('Jodit Editor Tests', function() {
 			}
 		});
 
-		describe('Options', function() {
-			it('Options should be inherited from the default values', function() {
-				const area = appendTestArea();
-				const editor = new Jodit(area, {
+		describe('Options', function () {
+			it('Options should be inherited from the default values', function () {
+				const editor = getJodit({
 					zIndex: 1986
 				});
+
 				expect(editor.options.zIndex).equals(1986);
 				expect(editor.options.spellcheck).is.true;
 			});
 
-			describe('Set nested array', function() {
-				it('Should create editor with merged default array and set array', function() {
-					const area = appendTestArea();
+			describe('Set nested array', function () {
+				it('Should create editor with merged default array and set array', function () {
 					Jodit.defaultOptions.someArray = {
 						data: [1, 2, 3, 4]
 					};
-					const editor = new Jodit(area, {
+					const editor = getJodit({
 						someArray: {
 							data: [5, 6, 7]
 						}
@@ -152,13 +151,13 @@ describe('Jodit Editor Tests', function() {
 					);
 				});
 
-				describe('Set nested array like Jodit.Array', function() {
-					it('Should create editor with set array', function() {
-						const area = appendTestArea();
+				describe('Set nested array like Jodit.Array', function () {
+					it('Should create editor with set array', function () {
 						Jodit.defaultOptions.someArray = {
 							data: [1, 2, 3, 4]
 						};
-						const editor = new Jodit(area, {
+
+						const editor = getJodit({
 							someArray: {
 								data: Jodit.Array([5, 6, 7])
 							}
@@ -169,8 +168,8 @@ describe('Jodit Editor Tests', function() {
 						);
 					});
 
-					describe('Then Jodit.Array has another namespace', function() {
-						it('Should create editor with set array', function() {
+					describe('Then Jodit.Array has another namespace', function () {
+						it('Should create editor with set array', function () {
 							const area = appendTestArea();
 
 							function JoditArray(data) {
@@ -186,7 +185,11 @@ describe('Jodit Editor Tests', function() {
 									value: function () {
 										const out = [];
 
-										for (let i = 0; i < self.length; i += 1) {
+										for (
+											let i = 0;
+											i < self.length;
+											i += 1
+										) {
 											out[i] = self[i];
 										}
 
@@ -210,7 +213,7 @@ describe('Jodit Editor Tests', function() {
 									'unshift',
 									'slice',
 									'splice'
-								].forEach(function(method) {
+								].forEach(function (method) {
 									Object.defineProperty(self, method, {
 										value: proto[method],
 										enumerable: false,
@@ -245,16 +248,16 @@ describe('Jodit Editor Tests', function() {
 				});
 			});
 
-			describe('Set nested object', function() {
-				it('Should create editor with merged default object and set object', function() {
-					const area = appendTestArea();
+			describe('Set nested object', function () {
+				it('Should create editor with merged default object and set object', function () {
 					Jodit.defaultOptions.someObject = {
 						data: {
 							left: 10,
 							right: 20
 						}
 					};
-					const editor = new Jodit(area, {
+
+					const editor = getJodit({
 						someObject: {
 							data: {
 								top: 10,
@@ -268,16 +271,16 @@ describe('Jodit Editor Tests', function() {
 					).equals('{"left":10,"right":10,"top":10}');
 				});
 
-				describe('Set nested object like Jodit.Object', function() {
-					it('Should create editor with set object', function() {
-						const area = appendTestArea();
+				describe('Set nested object like Jodit.Object', function () {
+					it('Should create editor with set object', function () {
 						Jodit.defaultOptions.someObject = {
 							data: {
 								left: 10,
 								right: 20
 							}
 						};
-						const editor = new Jodit(area, {
+
+						const editor = getJodit({
 							someObject: {
 								data: Jodit.Object({
 									top: 10,
@@ -294,8 +297,8 @@ describe('Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Set font for editor', function() {
-			it('Should set the font-family of the editor by option', function() {
+		describe('Set font for editor', function () {
+			it('Should set the font-family of the editor by option', function () {
 				const editor = getJodit({
 					style: {
 						fontFamily: 'Arial'
@@ -310,9 +313,10 @@ describe('Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Check preset', function() {
-			it('Should set option by preset', function() {
+		describe('Check preset', function () {
+			it('Should set option by preset', function () {
 				const editor2 = getJodit();
+
 				expect(editor2.options.inline).is.false;
 				expect(editor2.options.toolbar).is.true;
 				expect(editor2.options.readonly).is.false;
@@ -339,25 +343,31 @@ describe('Jodit Editor Tests', function() {
 		});
 	});
 
-	describe('Editors stack', function() {
-		it('Jodit.instances should contain all instances of Jodit', function() {
-			const editor = new Jodit(appendTestArea('textarea_editor'));
+	describe('Editors stack', function () {
+		it('Jodit.instances should contain all instances of Jodit', function () {
+			const editor = getJodit(
+				undefined,
+				appendTestArea('textarea_editor')
+			);
 			expect(Jodit.instances.textarea_editor).equals(editor);
 		});
 
-		it('Jodit.instances should not contain editor after destruct', function() {
-			const editor = new Jodit(appendTestArea('textarea_editor'));
+		it('Jodit.instances should not contain editor after destruct', function () {
+			const editor = getJodit(
+				undefined,
+				appendTestArea('textarea_editor')
+			);
 			editor.destruct();
 			expect(Jodit.instances.textarea_editor).to.be.an('undefined');
 		});
 	});
 
-	describe('Destructor', function() {
-		it('After call "destruct" method, should return source textarea and remove Editor\'s stuf', function() {
+	describe('Destructor', function () {
+		it('After call "destruct" method, should return source textarea and remove Editor\'s stuf', function () {
 			const area = appendTestArea();
 			area.style.display = 'block';
 
-			const editor = new Jodit(area);
+			const editor = getJodit(undefined, area);
 			expect(area.style.display).equals('none');
 			expect(editor.container.parentNode).equals(area.parentNode);
 			editor.destruct();
@@ -366,14 +376,14 @@ describe('Jodit Editor Tests', function() {
 			expect(editor.editor).equals(undefined);
 		});
 
-		it('After call "destruct" method, should return source textarea and remove all Editor\'s stuf', function() {
+		it('After call "destruct" method, should return source textarea and remove all Editor\'s stuf', function () {
 			const box = document.createElement('div'),
 				area = document.createElement('textarea');
 
 			box.appendChild(area);
 			document.body.appendChild(box);
 
-			const editor = new Jodit(area);
+			const editor = getJodit(undefined, area);
 			editor.destruct();
 
 			expect(box.innerHTML).equals('<textarea></textarea>');
@@ -381,18 +391,18 @@ describe('Jodit Editor Tests', function() {
 		});
 	});
 
-	describe('Set/Get', function() {
-		describe('Set value', function() {
-			it('Set element value', function() {
+	describe('Set/Get', function () {
+		describe('Set value', function () {
+			it('Set element value', function () {
 				const area = appendTestArea();
-				const editor = new Jodit(area);
+				const editor = getJodit(undefined, area);
 				editor.setElementValue('<p>Test</p>');
 				expect(area.value).equals('<p>Test</p>');
 			});
 
-			it('Set value by magic property', function() {
+			it('Set value by magic property', function () {
 				const area = appendTestArea();
-				const editor = new Jodit(area);
+				const editor = getJodit(undefined, area);
 				editor.value = 'Test';
 
 				expect(area.value).equals('<p>Test</p>');
@@ -400,35 +410,32 @@ describe('Jodit Editor Tests', function() {
 			});
 		});
 
-		it('Set wrong element value', function() {
+		it('Set wrong element value', function () {
 			const area = appendTestArea(),
-				editor = new Jodit(area);
+				editor = getJodit(undefined, area);
 
-			expect(function() {
+			expect(function () {
 				editor.setElementValue(document.createTextNode('Test'));
 			}).to.throw(/value must be/);
 		});
 
-		it('Set editor value', function() {
-			const area = appendTestArea(),
-				editor = new Jodit(area);
+		it('Set editor value', function () {
+			const editor = getJodit();
 
 			editor.value = '<div>Test</div>';
 			expect(editor.editor.innerHTML).equals('<div>Test</div>');
 		});
 
-		it('Set no string editor value', function() {
-			const area = appendTestArea(),
-				editor = new Jodit(area);
+		it('Set no string editor value', function () {
+			const editor = getJodit();
 
-			expect(function() {
+			expect(function () {
 				editor.value = document.createElement('div');
 			}).to.throw(/value must be/);
 		});
 
-		it('Set wrong editor value', function() {
-			const area = appendTestArea(),
-				editor = new Jodit(area);
+		it('Set wrong editor value', function () {
+			const editor = getJodit();
 
 			editor.value = '<div>Test<div>';
 			expect(editor.editor.innerHTML).equals(
@@ -436,62 +443,53 @@ describe('Jodit Editor Tests', function() {
 			);
 		});
 
-		describe('Synchronization', function() {
-			it('Check synchronization between element and editor', function() {
-				const area = appendTestArea();
-				const editor = new Jodit(area);
+		describe('Synchronization', function () {
+			it('Check synchronization between element and editor', function () {
+				const editor = getJodit();
 				editor.value = '<div>Test<div>';
 
-				const sel = window.getSelection(),
-					range = document.createRange();
+				const range = editor.s.createRange(true);
 
 				range.selectNodeContents(editor.editor.firstChild);
 				range.collapse(false);
-				sel.removeAllRanges();
-				sel.addRange(range);
 
 				expect(editor.getElementValue()).equals(
 					'<div>Test<div></div></div>'
 				);
 			});
 
-			it('Check synchronization between editor and element', function() {
+			it('Check synchronization between editor and element', function () {
 				const area = appendTestArea();
-				const editor = new Jodit(area);
+				const editor = getJodit(undefined, area);
 				area.value = '<div>Test</div>';
 				editor.setElementValue();
 				expect(editor.value).equals('<div>Test</div>');
 			});
 
-			it('Check synchronization between editor and element with wrong html', function() {
-				const area = appendTestArea();
-				const editor = new Jodit(area);
+			it('Check synchronization between editor and element with wrong html', function () {
+				const editor = getJodit();
 				editor.setElementValue('<div>Test</div>');
 				expect(editor.value).equals(editor.getElementValue());
 			});
 
-			it('Check synchronization between editor and element when was pressed button', function() {
-				const area = appendTestArea();
-				const editor = new Jodit(area);
+			it('Check synchronization between editor and element when was pressed button', function () {
+				const editor = getJodit();
 				editor.setElementValue('<div>Test</div>');
 				expect(editor.value).equals(editor.getElementValue());
 
-				const sel = window.getSelection(),
-					range = document.createRange();
+				const range = editor.s.createRange(true);
 
 				range.selectNodeContents(editor.editor.firstChild);
 				range.collapse(false);
-				sel.removeAllRanges();
-				sel.addRange(range);
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 				expect(editor.value).equals(editor.getElementValue());
 			});
 		});
 
-		describe('Save selection stuf', function() {
-			describe('Set false in getEditorValue method', function() {
-				it('Should return HTML with selections markers', function() {
+		describe('Save selection stuf', function () {
+			describe('Set false in getEditorValue method', function () {
+				it('Should return HTML with selections markers', function () {
 					const editor = getJodit();
 					editor.value = 'test';
 					editor.s.setCursorAfter(editor.editor.firstChild);
@@ -510,19 +508,19 @@ describe('Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Change returning value', function() {
-			describe('Event "beforeGetValueFromEditor"', function() {
-				it('Should restore &gt; to normal value in Liquid expressions', function() {
+		describe('Change returning value', function () {
+			describe('Event "beforeGetValueFromEditor"', function () {
+				it('Should restore &gt; to normal value in Liquid expressions', function () {
 					const editor = getJodit();
 					editor.value = 'test {% if a > b %} stop {% if a < b %}';
 					expect(editor.value).equals(
 						'<p>test {% if a &gt; b %} stop {% if a &lt; b %}</p>'
 					);
 
-					editor.events.on('beforeGetValueFromEditor', function() {
+					editor.events.on('beforeGetValueFromEditor', function () {
 						return editor
 							.getNativeEditorValue()
-							.replace(/{%[^}]+%}/g, function(match) {
+							.replace(/{%[^}]+%}/g, function (match) {
 								return match
 									.replace(/&gt;/g, '>')
 									.replace(/&lt;/g, '<');
@@ -535,13 +533,13 @@ describe('Jodit Editor Tests', function() {
 				});
 			});
 
-			describe('Event "beforeSetValueToEditor"', function() {
-				it('Should be fired before set editor value', function() {
+			describe('Event "beforeSetValueToEditor"', function () {
+				it('Should be fired before set editor value', function () {
 					const editor = getJodit();
 					editor.value = 'test';
 					expect(editor.value).equals('<p>test</p>');
 
-					editor.events.on('beforeSetValueToEditor', function(
+					editor.events.on('beforeSetValueToEditor', function (
 						old_value
 					) {
 						return old_value + ' stop';
@@ -551,7 +549,7 @@ describe('Jodit Editor Tests', function() {
 
 					expect(editor.value).equals('<p>test stop</p>');
 
-					editor.events.on('beforeSetValueToEditor', function(
+					editor.events.on('beforeSetValueToEditor', function (
 						old_value
 					) {
 						return false;
@@ -564,13 +562,13 @@ describe('Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Check Cache decorator', function() {
-			describe('Get filebrowser and uploader property from editor', function() {
-				describe('FileBrowser', function() {
-					it('should create instance of Filebrowser  only one time and in lazy mode', function() {
+		describe('Check Cache decorator', function () {
+			describe('Get filebrowser and uploader property from editor', function () {
+				describe('FileBrowser', function () {
+					it('should create instance of Filebrowser  only one time and in lazy mode', function () {
 						const editor = getJodit();
 
-						editor.components.forEach(function(cmp) {
+						editor.components.forEach(function (cmp) {
 							expect(
 								cmp instanceof Jodit.modules.FileBrowser
 							).is.false;
@@ -582,7 +580,7 @@ describe('Jodit Editor Tests', function() {
 
 						let instanceCount = 0;
 
-						editor.components.forEach(function(cmp) {
+						editor.components.forEach(function (cmp) {
 							if (cmp instanceof Jodit.modules.FileBrowser) {
 								instanceCount += 1;
 								expect(filebrowser === cmp).is.true;
@@ -592,7 +590,7 @@ describe('Jodit Editor Tests', function() {
 						expect(instanceCount).equals(1);
 
 						const filebrowser2 = editor.filebrowser;
-						editor.components.forEach(function(cmp) {
+						editor.components.forEach(function (cmp) {
 							if (cmp instanceof Jodit.modules.FileBrowser) {
 								instanceCount += 1;
 								expect(filebrowser === cmp).is.true;
@@ -604,10 +602,10 @@ describe('Jodit Editor Tests', function() {
 					});
 				});
 
-				describe('Uploader', function() {
-					it('should create instance of Uploader  only one time and in lazy mode', function() {
+				describe('Uploader', function () {
+					it('should create instance of Uploader  only one time and in lazy mode', function () {
 						const editor = getJodit();
-						editor.components.forEach(function(cmp) {
+						editor.components.forEach(function (cmp) {
 							expect(
 								cmp instanceof Jodit.modules.Uploader
 							).is.false;
@@ -619,7 +617,7 @@ describe('Jodit Editor Tests', function() {
 
 						let instanceCount = 0;
 
-						editor.components.forEach(function(cmp) {
+						editor.components.forEach(function (cmp) {
 							if (cmp instanceof Jodit.modules.Uploader) {
 								instanceCount += 1;
 								expect(uploader === cmp).is.true;
@@ -630,7 +628,7 @@ describe('Jodit Editor Tests', function() {
 
 						const uploader2 = editor.uploader;
 
-						editor.components.forEach(function(cmp) {
+						editor.components.forEach(function (cmp) {
 							if (cmp instanceof Jodit.modules.Uploader) {
 								instanceCount += 1;
 								expect(uploader === cmp).is.true;
@@ -645,8 +643,8 @@ describe('Jodit Editor Tests', function() {
 		});
 	});
 
-	describe('Selection module', function() {
-		it('Current selection element should be inside editor', function() {
+	describe('Selection module', function () {
+		it('Current selection element should be inside editor', function () {
 			const editor = getJodit(),
 				div = document.createElement('div');
 
@@ -665,7 +663,7 @@ describe('Jodit Editor Tests', function() {
 			div.parentNode.removeChild(div);
 		});
 
-		it('Current selection element', function() {
+		it('Current selection element', function () {
 			const editor = getJodit(),
 				div = editor.ed.createElement('div'),
 				text = editor.createInside.text('jingl');
@@ -678,7 +676,7 @@ describe('Jodit Editor Tests', function() {
 			expect(editor.s.current()).equals(text);
 		});
 
-		it('Insert simple text node in editor', function() {
+		it('Insert simple text node in editor', function () {
 			const area = appendTestArea();
 			const editor = new Jodit(area);
 			editor.s.insertNode(editor.createInside.text('Test'));
@@ -686,9 +684,8 @@ describe('Jodit Editor Tests', function() {
 			editor.destruct();
 		});
 
-		it('Insert 3 divs', function() {
-			const area = appendTestArea();
-			const editor = new Jodit(area);
+		it('Insert 3 divs', function () {
+			const editor = getJodit();
 
 			function insert(digit) {
 				const div = editor.ed.createElement('div');
@@ -705,28 +702,26 @@ describe('Jodit Editor Tests', function() {
 			editor.destruct();
 		});
 
-		it('Insert wrong data', function() {
-			const area = appendTestArea();
-			const editor = new Jodit(area);
+		it('Insert wrong data', function () {
+			const editor = getJodit();
 
-			expect(function() {
+			expect(function () {
 				editor.s.insertNode();
 			}).to.throw(/node must be/);
 
-			expect(function() {
+			expect(function () {
 				editor.s.insertNode('Text');
 			}).to.throw(/node must be/);
 
-			expect(function() {
+			expect(function () {
 				editor.s.insertNode(null);
 			}).to.throw(/node must be/);
 
 			editor.destruct();
 		});
 
-		it('Select all and delete. Check plugin "backspace"', function() {
-			const area = appendTestArea();
-			const editor = new Jodit(area);
+		it('Select all and delete. Check plugin "backspace"', function () {
+			const editor = getJodit();
 			editor.value = '<p>asdasd</p><p>asdasd</p><p>asd</p>';
 			editor.execCommand('selectall');
 			editor.execCommand('delete');
@@ -734,8 +729,8 @@ describe('Jodit Editor Tests', function() {
 			editor.destruct();
 		});
 
-		describe('Editor after focus and after blur', function() {
-			it('Should change editorIsActive field', function() {
+		describe('Editor after focus and after blur', function () {
+			it('Should change editorIsActive field', function () {
 				const input = document.createElement('input'),
 					p = document.createElement('p'),
 					editor = getJodit();
@@ -761,12 +756,9 @@ describe('Jodit Editor Tests', function() {
 				editor.s.setCursorAfter(editor.editor.firstChild);
 				expect(editor.editorIsActive).is.true;
 
-				const sel = window.getSelection(),
-					range = document.createRange();
+				const range = editor.s.createRange(true);
 
 				range.selectNodeContents(p);
-				sel.removeAllRanges();
-				sel.addRange(range);
 
 				simulateEvent('blur', 0, editor.editor);
 				expect(editor.editorIsActive).is.false;
@@ -774,8 +766,8 @@ describe('Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Cursor position', function() {
-			it('Should set cursor after node', function() {
+		describe('Cursor position', function () {
+			it('Should set cursor after node', function () {
 				const editor = getJodit({
 					cleanHTML: {
 						removeEmptyElements: false
@@ -796,20 +788,17 @@ describe('Jodit Editor Tests', function() {
 				editor.s.insertNode(spans[2]);
 
 				editor.s.setCursorAfter(spans[1]);
-				editor.s.insertNode(
-					editor.ed.createElement('i')
-				);
+				editor.s.insertNode(editor.ed.createElement('i'));
 
 				expect(editor.value).equals(
 					'<p><span></span><span></span><i></i><span></span></p>'
 				);
 			});
 
-			it('Set cursor in non placed element', function() {
-				const area = appendTestArea();
-				const editor = new Jodit(area);
+			it('Set cursor in non placed element', function () {
+				const editor = getJodit();
 
-				expect(function() {
+				expect(function () {
 					const div = editor.ed.createElement('div');
 					editor.s.setCursorIn(div);
 				}).to.Throw(/in editor/);

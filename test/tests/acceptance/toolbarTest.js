@@ -88,9 +88,12 @@ describe('Toolbar', function() {
 	describe('Set toolbar options to css selector', function() {
 		it('Should render toolbar in different container', function() {
 			const div = appendTestDiv(),
-				editor = Jodit.make(appendTestArea(), {
-					toolbar: div
-				});
+				editor = getJodit(
+					{
+						toolbar: div
+					},
+					appendTestArea()
+				);
 
 			const toolbar = document.querySelector(
 				'.jodit-toolbar-editor-collection'

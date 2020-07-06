@@ -3,13 +3,13 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Test interface', function() {
-	describe('About dialog', function() {
-		it('Should conteins License element', function() {
+describe('Test interface', function () {
+	describe('About dialog', function () {
+		it('Should conteins License element', function () {
 			const editor = getJodit({
-					license: '111',
-					toolbarAdaptive: false
-				});
+				license: '111',
+				toolbarAdaptive: false
+			});
 
 			const aboutButton = getButton('about', editor);
 
@@ -20,30 +20,25 @@ describe('Test interface', function() {
 
 			expect(dialog).is.not.null;
 
-			expect(
-				dialog.textContent.match(/License:.*(MIT)/)
-			).is.not.null;
+			expect(dialog.textContent.match(/License:.*(MIT)/)).is.not.null;
 		});
 
-		describe('Set license', function() {
-			it('Should show License in about dialog', function() {
-				const area = appendTestArea(),
-					editor = new Jodit(area, {
-						license: '12345678901234567890123456789022', // don't use this key - it is wrong
-						toolbarAdaptive: false
-					});
+		describe('Set license', function () {
+			it('Should show License in about dialog', function () {
+				const editor = getJodit({
+					license: '12345678901234567890123456789022', // don't use this key - it is wrong
+					toolbarAdaptive: false
+				});
 
 				const aboutButton = getButton('about', editor);
 
 				expect(aboutButton).is.not.null;
 				simulateEvent('click', 0, aboutButton);
 
-				const dialog = getOpenedDialog(editor)
+				const dialog = getOpenedDialog(editor);
 				expect(dialog).is.not.null;
 
-				expect(
-					dialog.textContent.match(/License:.*(GPL|GNU)/)
-				).is.null;
+				expect(dialog.textContent.match(/License:.*(GPL|GNU)/)).is.null;
 
 				expect(
 					dialog.textContent.match(
@@ -54,9 +49,9 @@ describe('Test interface', function() {
 		});
 	});
 
-	describe('Direction', function() {
-		describe('Set RTL direction', function() {
-			it('Should have RTL direction', function() {
+	describe('Direction', function () {
+		describe('Set RTL direction', function () {
+			it('Should have RTL direction', function () {
 				const editor = getJodit({
 					direction: 'rtl'
 				});
@@ -69,8 +64,8 @@ describe('Test interface', function() {
 			});
 		});
 
-		describe('For iframe mode', function() {
-			it('Should have same direction and language', function() {
+		describe('For iframe mode', function () {
+			it('Should have same direction and language', function () {
 				const editor = getJodit({
 					iframe: true,
 					direction: 'rtl',

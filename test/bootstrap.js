@@ -4,10 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 typeof window.chai !== 'undefined' &&
-	(function() {
+	(function () {
 		chai.config.includeStack = true;
 		chai.config.showDiff = true;
 	})();
+
 typeof window.mocha !== 'undefined' && mocha.timeout(15000);
 
 const oldI18n = Jodit.prototype.i18n,
@@ -42,7 +43,7 @@ const defaultPermissions = {
 
 function mockAjax() {
 	if (typeof window.chai !== 'undefined') {
-		Jodit.modules.Ajax.prototype.send = function() {
+		Jodit.modules.Ajax.prototype.send = function () {
 			const ajax = this;
 
 			const request = this.prepareRequest();
@@ -62,7 +63,7 @@ function mockAjax() {
 				action = actioExec[1];
 			}
 
-			return new Promise(function(resolve) {
+			return new Promise(function (resolve) {
 				switch (action) {
 					case 'fileUpload': {
 						const file = ajax.options.data.get('files[0]');
@@ -223,12 +224,12 @@ function unmockAjax() {
 if (typeof window.chai !== 'undefined') {
 	mockPromise();
 	mockAjax();
-	window.FormData = function() {
+	window.FormData = function () {
 		this.data = {};
-		this.append = function(key, value) {
+		this.append = function (key, value) {
 			this.data[key] = value;
 		};
-		this.get = function(key) {
+		this.get = function (key) {
 			return this.data[key];
 		};
 	};
@@ -237,7 +238,7 @@ if (typeof window.chai !== 'undefined') {
 const i18nkeys = [];
 const excludeI18nKeys = ['adddate'];
 
-Jodit.prototype.i18n = function(key) {
+Jodit.prototype.i18n = function (key) {
 	!excludeI18nKeys.includes(key) &&
 		i18nkeys.includes(key) &&
 		!key.includes('<svg') &&
@@ -246,6 +247,9 @@ Jodit.prototype.i18n = function(key) {
 	return oldI18n.apply(this, arguments);
 };
 
+Jodit.defaultOptions.events.afterInit = function (editor) {
+	editor && editor.container.setAttribute('data-test-case', window.mochaTestName);
+}
 Jodit.defaultOptions.filebrowser.saveStateInStorage = false;
 Jodit.defaultOptions.observer.timeout = 0;
 Jodit.modules.View.defaultOptions.defaultTimeout = 0;
@@ -270,7 +274,7 @@ td,th {\
 }';
 
 if (String.prototype.repeat === undefined) {
-	String.prototype.repeat = function(count) {
+	String.prototype.repeat = function (count) {
 		const result = [];
 
 		for (let i = 0; i < count; i++) {
@@ -281,7 +285,7 @@ if (String.prototype.repeat === undefined) {
 	};
 }
 
-const expect = typeof chai !== 'undefined' ? chai.expect : function() {},
+const expect = typeof chai !== 'undefined' ? chai.expect : function () {},
 	stuff = [];
 
 const stringify = Jodit.ns.Helpers.stringify;
@@ -294,11 +298,11 @@ function getBox() {
 }
 
 function removeStuff() {
-	Object.keys(Jodit.instances).forEach(function(key) {
+	Object.keys(Jodit.instances).forEach(function (key) {
 		Jodit.instances[key].destruct();
 	});
 
-	stuff.forEach(function(elm) {
+	stuff.forEach(function (elm) {
 		elm && elm.parentNode && elm.parentNode.removeChild(elm);
 	});
 
@@ -306,7 +310,7 @@ function removeStuff() {
 
 	Array.from(
 		document.querySelectorAll('.jodit.jodit-dialog__box.active')
-	).forEach(function(dialog) {
+	).forEach(function (dialog) {
 		simulateEvent('close_dialog', 0, dialog);
 	});
 
@@ -319,6 +323,12 @@ function removeStuff() {
 
 if (typeof afterEach === 'function') {
 	afterEach(removeStuff);
+}
+
+if (typeof beforeEach === 'function') {
+	beforeEach(function () {
+		window.mochaTestName = this.test.ctx.currentTest.fullTitle();
+	});
 }
 
 /**
@@ -337,12 +347,24 @@ function appendTestArea(id, noput) {
 	return textarea;
 }
 
-function getJodit(options) {
-	const editor = new Jodit(appendTestArea(), options);
+/**
+ * Jodit Factory
+ *
+ * @param {object} options
+ * @param {HTMLElement|undefined} element
+ * @return {Jodit}
+ */
+function getJodit(options, element) {
+	const editor = new Jodit(element || appendTestArea(), options);
+
 	window.scrollTo(
 		0,
 		Jodit.modules.Helpers.offset(editor.container, editor, editor.od).top
 	);
+
+	editor.container &&
+		editor.container.setAttribute('data-test-case', window.mochaTestName);
+
 	return editor;
 }
 
@@ -381,14 +403,14 @@ function sortStyles(matches) {
 		.replace(/"/g, "'")
 		.split(';');
 
-	styles = styles.map(trim).filter(function(elm) {
+	styles = styles.map(trim).filter(function (elm) {
 		return elm.length;
 	});
 
 	let border = null;
 
 	styles = styles
-		.map(function(elm) {
+		.map(function (elm) {
 			const keyValue = elm.split(':').map(trim);
 
 			if (keyValue[0] === 'border-image') {
@@ -396,7 +418,7 @@ function sortStyles(matches) {
 			}
 
 			if (/rgb\(/.test(keyValue[1])) {
-				keyValue[1] = keyValue[1].replace(/rgb\([^)]+\)/, function(
+				keyValue[1] = keyValue[1].replace(/rgb\([^)]+\)/, function (
 					match
 				) {
 					return Jodit.modules.Helpers.normalizeColor(match);
@@ -435,19 +457,19 @@ function sortStyles(matches) {
 
 			return keyValue;
 		})
-		.filter(function(a) {
+		.filter(function (a) {
 			return a !== null;
 		})
-		.map(function(a) {
+		.map(function (a) {
 			return a
-				.map(function(item) {
+				.map(function (item) {
 					return typeof item === 'string'
 						? item
 						: item.sort().join(' ');
 				})
 				.join(':');
 		})
-		.sort(function(a, b) {
+		.sort(function (a, b) {
 			if (a < b) {
 				return -1;
 			}
@@ -496,7 +518,7 @@ function sortAttributes(html) {
 			}
 		} while (matches);
 
-		attrs.sort(function(a, b) {
+		attrs.sort(function (a, b) {
 			if (a.name < b.name) {
 				return -1;
 			}
@@ -504,7 +526,7 @@ function sortAttributes(html) {
 			return a.name > b.name ? 1 : 0;
 		});
 
-		attrs.forEach(function(elm, i) {
+		attrs.forEach(function (elm, i) {
 			newTag = newTag.replace(
 				'attribute:' + (i + 1),
 				elm.name + '="' + elm.value + '"'
@@ -517,7 +539,7 @@ function sortAttributes(html) {
 		});
 	}
 
-	tags.forEach(function(elm) {
+	tags.forEach(function (elm) {
 		html = html.replace(elm.name, elm.value);
 	});
 
@@ -565,7 +587,7 @@ const keyCode = Object.keys(codeKey).reduce((res, code) => {
  */
 function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
 	if (Array.isArray(type)) {
-		return type.forEach(function(event) {
+		return type.forEach(function (event) {
 			simulateEvent(event, keyCodeOrElement, elementOrApplyOpt, applyOpt);
 		});
 	}
@@ -581,7 +603,7 @@ function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
 	}
 
 	if (Array.isArray(element)) {
-		return element.forEach(function(elm) {
+		return element.forEach(function (elm) {
 			simulateEvent(type, keyCodeOrElement, elm, applyOpt);
 		});
 	}
@@ -610,7 +632,7 @@ function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
 	}
 
 	if (type.match(/^mouse/)) {
-		['pageX', 'pageY', 'clientX', 'clientY'].forEach(function(key) {
+		['pageX', 'pageY', 'clientX', 'clientY'].forEach(function (key) {
 			if (evt[key] === undefined) {
 				evt[key] = 0;
 			}
@@ -620,7 +642,7 @@ function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
 	if (type.match(/^touch/) && !evt.changedTouches) {
 		const changedTouches = {};
 
-		['pageX', 'pageY', 'clientX', 'clientY'].forEach(function(key) {
+		['pageX', 'pageY', 'clientX', 'clientY'].forEach(function (key) {
 			changedTouches[key] = evt[key];
 		});
 
@@ -723,7 +745,7 @@ function selectCells(editor, indexes) {
  * @param {Function} callback
  */
 function one(event, element, callback) {
-	const on = function() {
+	const on = function () {
 		element.removeEventListener(event, on);
 		callback.apply(element, arguments);
 	};
@@ -751,10 +773,10 @@ function onLoadImage(image, callback) {
  * @param pastedText
  */
 function simulatePaste(element, pastedText) {
-	simulateEvent('paste', 0, element, function(data) {
+	simulateEvent('paste', 0, element, function (data) {
 		data.clipboardData = {
 			types: ['text/html'],
-			getData: function() {
+			getData: function () {
 				return pastedText;
 			}
 		};
@@ -814,8 +836,8 @@ function offset(el) {
  * I haven't decided on the best name for this property - thus the duplication.
  */
 
-(function() {
-	const serializeXML = function(node, output) {
+(function () {
+	const serializeXML = function (node, output) {
 		const nodeType = node.nodeType;
 
 		if (nodeType === 3) {
@@ -852,13 +874,15 @@ function offset(el) {
 		} else if (nodeType === 8) {
 			output.push('<!--', node.nodeValue, '-->');
 		} else {
-			throw new Error('Error serializing XML. Unhandled node of type: ' + nodeType);
+			throw new Error(
+				'Error serializing XML. Unhandled node of type: ' + nodeType
+			);
 		}
 	};
 
 	// The innerHTML DOM property for SVGElement.
 	Object.defineProperty(SVGElement.prototype, 'innerHTML', {
-		get: function() {
+		get: function () {
 			const output = [];
 			let childNode = this.firstChild;
 
@@ -869,7 +893,7 @@ function offset(el) {
 
 			return output.join('');
 		},
-		set: function(markupText) {
+		set: function (markupText) {
 			// Wipe out the current contents of the element.
 			while (this.firstChild) {
 				this.removeChild(this.firstChild);
@@ -906,10 +930,10 @@ function offset(el) {
 
 	// The innerSVG DOM property for SVGElement.
 	Object.defineProperty(SVGElement.prototype, 'innerSVG', {
-		get: function() {
+		get: function () {
 			return this.innerHTML;
 		},
-		set: function(markupText) {
+		set: function (markupText) {
 			this.innerHTML = markupText;
 		}
 	});
@@ -934,14 +958,14 @@ function FileXLS() {
 }
 
 if (typeof window.chai !== 'undefined') {
-	window.FileReader = function() {
+	window.FileReader = function () {
 		const self = this;
 		self.result = null;
 		/**
 		 *
 		 * @param {FileImage} file
 		 */
-		self.readAsDataURL = function(file) {
+		self.readAsDataURL = function (file) {
 			self.result = file.dataURI;
 			self.onloadend && self.onloadend();
 		};

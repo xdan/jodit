@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.12
+ * Version: v3.4.14
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -4371,7 +4371,7 @@ var View = (function (_super) {
         var _this = _super.call(this) || this;
         _this.isView = true;
         _this.components = new Set();
-        _this.version = "3.4.12";
+        _this.version = "3.4.14";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.__isFullSize = false;
@@ -7944,7 +7944,6 @@ var decorators_1 = __webpack_require__(13);
 var Jodit = (function (_super) {
     tslib_1.__extends(Jodit, _super);
     function Jodit(element, options) {
-        var _a;
         var _this = _super.call(this, options) || this;
         _this.isJodit = true;
         _this.__defaultStyleDisplayKey = 'data-jodit-default-style-display';
@@ -7952,7 +7951,6 @@ var Jodit = (function (_super) {
         _this.commands = {};
         _this.__selectionLocked = null;
         _this.__wasReadOnly = false;
-        _this.storage = storage_1.Storage.makeStorage(true, _this.id);
         _this.createInside = new modules_1.Create(function () { return _this.ed; }, _this.o.createAttributes);
         _this.editorIsActive = false;
         _this.__mode = consts.MODE_WYSIWYG;
@@ -7966,11 +7964,12 @@ var Jodit = (function (_super) {
             throw e;
         }
         _this.setStatus(modules_1.STATUSES.beforeInit);
-        if ((_a = _this.options) === null || _a === void 0 ? void 0 : _a.events) {
-            Object.keys(_this.o.events).forEach(function (key) {
-                return _this.e.on(key, _this.o.events[key]);
-            });
-        }
+        _this.id =
+            helpers_1.attr(helpers_1.resolveElement(element, _this.o.shadowRoot || _this.od), 'id') ||
+                new Date().getTime().toString();
+        global_1.instances[_this.id] = _this;
+        _this.storage = storage_1.Storage.makeStorage(true, _this.id);
+        _this.attachEvents(_this.o);
         _this.e.on(_this.ow, 'resize', function () {
             if (_this.e) {
                 _this.e.fire('resize');
@@ -8505,10 +8504,7 @@ var Jodit = (function (_super) {
     Jodit.prototype.addPlace = function (source, options) {
         var _this = this;
         var element = helpers_1.resolveElement(source, this.o.shadowRoot || this.od);
-        if (!this.isReady) {
-            this.id = helpers_1.attr(element, 'id') || new Date().getTime().toString();
-            global_1.instances[this.id] = this;
-        }
+        this.attachEvents(options);
         if (element.attributes) {
             Array.from(element.attributes).forEach(function (attr) {
                 var name = attr.name;
@@ -8736,6 +8732,11 @@ var Jodit = (function (_super) {
             return stayDefault.then(init);
         }
         init();
+    };
+    Jodit.prototype.attachEvents = function (options) {
+        var _this = this;
+        var e = options === null || options === void 0 ? void 0 : options.events;
+        e && Object.keys(e).forEach(function (key) { return _this.e.on(key, e[key]); });
     };
     Jodit.prototype.destruct = function () {
         var _this = this;
