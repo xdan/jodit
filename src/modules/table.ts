@@ -40,7 +40,6 @@ export class Table extends ViewComponent<IJodit> {
 		});
 
 		style.innerHTML = selectors.length
-			// @ts-ignore
 			? selectors.join(',') + `{${this.j.o.table.selectionCellStyle}}`
 			: '';
 	}
