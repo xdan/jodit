@@ -21,13 +21,12 @@ import { ICreate, IJodit } from '../types';
 import { ViewComponent } from '../core/component';
 import { getContainer } from '../core/global';
 import { debounce } from '../core/decorators';
+import { Config } from '../config';
 
 export class Table extends ViewComponent<IJodit> {
 	private selected: Set<HTMLTableCellElement> = new Set();
-	private static selectedByTable: WeakMap<
-		HTMLTableElement,
-		Set<HTMLTableCellElement>
-	> = new WeakMap();
+	private static selectedByTable: WeakMap<HTMLTableElement,
+		Set<HTMLTableCellElement>> = new WeakMap();
 
 	@debounce()
 	private recalculateStyles(): void {
@@ -41,11 +40,9 @@ export class Table extends ViewComponent<IJodit> {
 		});
 
 		// eslint-disable-next-line no-prototype-builtins
-		if(this.jodit.options.hasOwnProperty('table')) {
-			style.innerHTML = selectors.length
-				? selectors.join(',') + `{${this.jodit.options.table.selectionCellStyle}}`
-				: '';
-		}
+		style.innerHTML = selectors.length
+			? selectors.join(',') + `{${(this.jodit.options as Config).table.selectionCellStyle}}`
+			: '';
 	}
 
 	addSelection(td: HTMLTableCellElement): void {
@@ -280,7 +277,7 @@ export class Table extends ViewComponent<IJodit> {
 
 		if (after && line && line.nextSibling) {
 			line.parentNode &&
-				line.parentNode.insertBefore(row, line.nextSibling);
+			line.parentNode.insertBefore(row, line.nextSibling);
 		} else if (!after && line) {
 			line.parentNode && line.parentNode.insertBefore(row, line);
 		} else {
@@ -384,7 +381,7 @@ export class Table extends ViewComponent<IJodit> {
 				) {
 					if (td.nextSibling) {
 						td.parentNode &&
-							td.parentNode.insertBefore(cell, td.nextSibling);
+						td.parentNode.insertBefore(cell, td.nextSibling);
 					} else {
 						td.parentNode && td.parentNode.appendChild(cell);
 					}
@@ -396,7 +393,7 @@ export class Table extends ViewComponent<IJodit> {
 					(box[i][j] !== box[i][j - 1] && box[i][j].parentNode)
 				) {
 					td.parentNode &&
-						td.parentNode.insertBefore(cell, box[i][j]);
+					td.parentNode.insertBefore(cell, box[i][j]);
 					added = true;
 				}
 			}
