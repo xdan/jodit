@@ -12975,11 +12975,9 @@ class table_Table extends core_component["c" /* ViewComponent */] {
             const selector = Object(helpers["cssPath"])(td);
             selector && selectors.push(selector);
         });
-        if (this.jodit.options.hasOwnProperty('table')) {
-            style.innerHTML = selectors.length
-                ? selectors.join(',') + `{${this.jodit.options.table.selectionCellStyle}}`
-                : '';
-        }
+        style.innerHTML = selectors.length
+            ? selectors.join(',') + `{${this.jodit.options.table.selectionCellStyle}}`
+            : '';
     }
     addSelection(td) {
         this.selected.add(td);

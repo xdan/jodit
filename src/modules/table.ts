@@ -21,7 +21,6 @@ import { ICreate, IJodit } from '../types';
 import { ViewComponent } from '../core/component';
 import { getContainer } from '../core/global';
 import { debounce } from '../core/decorators';
-import { Config } from '../config';
 
 export class Table extends ViewComponent<IJodit> {
 	private selected: Set<HTMLTableCellElement> = new Set();
