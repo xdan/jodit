@@ -37,6 +37,8 @@ import { IStyle, Style } from './style/style';
 
 type WindowSelection = Selection | null;
 
+declare const isProd: boolean;
+
 export class Select {
 	constructor(readonly jodit: IJodit) {
 		jodit.e.on('removeMarkers', () => {

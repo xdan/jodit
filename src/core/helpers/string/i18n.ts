@@ -16,6 +16,7 @@ import { lang } from '../../global';
  * @param str
  * @param args
  */
+declare const isProd: boolean;
 export const sprintf = (str: string, args?: Array<string | number>): string => {
 	if (!args || !args.length) {
 		return str;

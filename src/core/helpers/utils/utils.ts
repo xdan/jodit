@@ -18,6 +18,11 @@ import { IViewBased } from '../../../types';
  * Jodit.modules.Helpers.call(f > 0.5 ? Math.ceil : Math.floor, f);
  * ```
  */
+
+// interface HTMLElement {
+// 	component: any;
+// }
+
 export function call<T extends any[], R>(
 	func: (...args: T) => R,
 	...args: T
@@ -72,6 +77,7 @@ export function attr(
 export function markOwner(jodit: IViewBased, elm: HTMLElement): void {
 	attr(elm, 'data-editor_id', jodit.id);
 
+	// @ts-ignore
 	!elm.component &&
 		Object.defineProperty(elm, 'jodit', {
 			value: jodit

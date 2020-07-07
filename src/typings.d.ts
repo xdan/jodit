@@ -9,9 +9,9 @@ declare module '*.svg' {
 	export default content;
 }
 
-interface HTMLElement {
-	component: any;
-}
+// interface HTMLElement {
+// 	component: any;
+// }
 
 declare const appVersion: string;
 
