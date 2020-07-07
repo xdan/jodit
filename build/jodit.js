@@ -16385,9 +16385,11 @@ var Table = (function (_super) {
             var selector = helpers_1.cssPath(td);
             selector && selectors.push(selector);
         });
-        style.innerHTML = selectors.length
-            ? selectors.join(',') + ("{" + this.j.o.table.selectionCellStyle + "}")
-            : '';
+        if (this.jodit.options.hasOwnProperty('table')) {
+            style.innerHTML = selectors.length
+                ? selectors.join(',') + ("{" + this.jodit.options.table.selectionCellStyle + "}")
+                : '';
+        }
     };
     Table.prototype.addSelection = function (td) {
         this.selected.add(td);

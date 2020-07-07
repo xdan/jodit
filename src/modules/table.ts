@@ -34,14 +34,18 @@ export class Table extends ViewComponent<IJodit> {
 		const style = getContainer(this.j, Table, 'style', true);
 		const selectors: string[] = [];
 
+
 		this.selected.forEach(td => {
 			const selector = cssPath(td);
 			selector && selectors.push(selector);
 		});
 
-		style.innerHTML = selectors.length
-			? selectors.join(',') + `{${this.j.o.table.selectionCellStyle}}`
-			: '';
+		// eslint-disable-next-line no-prototype-builtins
+		if(this.jodit.options.hasOwnProperty('table')) {
+			style.innerHTML = selectors.length
+				? selectors.join(',') + `{${this.jodit.options.table.selectionCellStyle}}`
+				: '';
+		}
 	}
 
 	addSelection(td: HTMLTableCellElement): void {
