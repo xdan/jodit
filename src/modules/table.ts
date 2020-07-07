@@ -41,7 +41,7 @@ export class Table extends ViewComponent<IJodit> {
 
 		// eslint-disable-next-line no-prototype-builtins
 		style.innerHTML = selectors.length
-			? selectors.join(',') + `{${(this.jodit.options as Config).table.selectionCellStyle}}`
+			? selectors.join(',') + `{${(this.jodit.options as any).table.selectionCellStyle}}`
 			: '';
 	}
 
