@@ -9,14 +9,11 @@ import { IDictionary, IUIElement, IViewBased, Nullable } from '../../types';
 import { Dom } from '../dom';
 import { getClassName } from '../helpers/utils';
 
-// interface HTMLElement{
-// 	component: any;
-// }
 
 export abstract class UIElement<T extends IViewBased = IViewBased>
 	extends ViewComponent<T>
 	implements IUIElement {
-	container!: HTMLElement;
+	container!: HTMLElement & HTMLElem;
 
 	private __parentElement: Nullable<IUIElement> = null;
 	get parentElement(): Nullable<IUIElement> {
@@ -76,7 +73,6 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 
 			return false;
 		});
-		// @ts-ignore
 		return elm ? elm?.component : null;
 	}
 
@@ -143,7 +139,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	/**
 	 * Create main HTML container
 	 */
-	protected createContainer(): HTMLElement {
+	protected createContainer(): HTMLElement & HTMLElem {
 		return this.j.c.div(this.componentName);
 	}
 

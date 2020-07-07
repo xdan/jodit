@@ -5,10 +5,17 @@
  */
 
 import { Jodit as Super } from './src/jodit';
+
 export * from './src/types';
 
 declare global {
 	const Jodit: typeof Super;
+	const isProd: boolean;
+	const appVersion: string;
+
+	interface HTMLElem {
+		component?: any;
+	}
 }
 
 export { Jodit };

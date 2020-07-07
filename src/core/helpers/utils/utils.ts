@@ -19,10 +19,6 @@ import { IViewBased } from '../../../types';
  * ```
  */
 
-// interface HTMLElement {
-// 	component: any;
-// }
-
 export function call<T extends any[], R>(
 	func: (...args: T) => R,
 	...args: T
@@ -40,7 +36,7 @@ export function call<T extends any[], R>(
  * @param [value]
  */
 export function attr(
-	elm: HTMLElement | null,
+	elm: HTMLElement & HTMLElem | null,
 	key: string,
 	value?: string | number | boolean | null
 ): null | string {
@@ -74,10 +70,9 @@ export function attr(
  * Mark element for debugging
  * @param elm
  */
-export function markOwner(jodit: IViewBased, elm: HTMLElement): void {
+export function markOwner(jodit: IViewBased, elm: HTMLElement & HTMLElem): void {
 	attr(elm, 'data-editor_id', jodit.id);
 
-	// @ts-ignore
 	!elm.component &&
 		Object.defineProperty(elm, 'jodit', {
 			value: jodit

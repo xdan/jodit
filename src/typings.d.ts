@@ -13,6 +13,6 @@ declare module '*.svg' {
 // 	component: any;
 // }
 
-declare const appVersion: string;
+// declare const appVersion: string;
 
-declare const isProd: boolean;
+// declare const isProd: boolean;

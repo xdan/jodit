@@ -28,7 +28,6 @@ import { Async } from '../async';
 import { modules } from '../global';
 import { hook } from '../decorators';
 
-declare const appVersion: string;
 export abstract class View extends Component implements IViewBased {
 	readonly isView: true = true;
 

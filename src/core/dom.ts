@@ -661,7 +661,7 @@ export class Dom {
 	 * @param [root] Root element
 	 * @param [checkRoot]
 	 */
-	static up<T extends HTMLElement>(
+	static up<T extends HTMLElement & HTMLElem>(
 		node: Node,
 		condition: NodeCondition,
 		root?: Node,
@@ -720,7 +720,7 @@ export class Dom {
 		root: HTMLElement
 	): Nullable<T>;
 
-	static closest<T extends HTMLElement>(
+	static closest<T extends HTMLElement & HTMLElem>(
 		node: Node,
 		tagsOrCondition: HTMLTagNames | HTMLTagNames[] | NodeCondition,
 		root: HTMLElement
