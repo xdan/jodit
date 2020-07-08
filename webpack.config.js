@@ -14,6 +14,11 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MinimizeJSPlugin = require('terser-webpack-plugin');
 const PostBuild = require('./src/utils/post-build');
 
+/**
+ * @param {array} end
+ * @param {object} argv
+ * @param {string} dir
+ */
 module.exports = (env, argv, dir = __dirname) => {
 	const pkg = require(path.resolve(dir, './package.json'));
 

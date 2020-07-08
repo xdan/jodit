@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
 const webpack = require('./webpack.config');
 const webpackConfig = (es = 'es5') =>
 	webpack([], {
@@ -5,7 +11,7 @@ const webpackConfig = (es = 'es5') =>
 		isTest: true,
 		uglify: true,
 		es
-	});
+	}, process.cwd());
 
 module.exports = function(config) {
 	config.set({
