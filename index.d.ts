@@ -13,7 +13,7 @@ declare global {
 	const isProd: boolean;
 	const appVersion: string;
 
-	interface HTMLElem {
+	interface HTMLElement {
 		component?: any;
 	}
 }

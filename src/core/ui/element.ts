@@ -13,7 +13,7 @@ import { getClassName } from '../helpers/utils';
 export abstract class UIElement<T extends IViewBased = IViewBased>
 	extends ViewComponent<T>
 	implements IUIElement {
-	container!: HTMLElement & HTMLElem;
+	container!: HTMLElement;
 
 	private __parentElement: Nullable<IUIElement> = null;
 	get parentElement(): Nullable<IUIElement> {
@@ -139,7 +139,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	/**
 	 * Create main HTML container
 	 */
-	protected createContainer(): HTMLElement & HTMLElem {
+	protected createContainer(): HTMLElement {
 		return this.j.c.div(this.componentName);
 	}
 

@@ -36,7 +36,7 @@ export function call<T extends any[], R>(
  * @param [value]
  */
 export function attr(
-	elm: HTMLElement & HTMLElem | null,
+	elm: HTMLElement | null,
 	key: string,
 	value?: string | number | boolean | null
 ): null | string {
@@ -70,7 +70,7 @@ export function attr(
  * Mark element for debugging
  * @param elm
  */
-export function markOwner(jodit: IViewBased, elm: HTMLElement & HTMLElem): void {
+export function markOwner(jodit: IViewBased, elm: HTMLElement): void {
 	attr(elm, 'data-editor_id', jodit.id);
 
 	!elm.component &&
