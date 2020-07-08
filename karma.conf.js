@@ -1,11 +1,18 @@
-const webpack = require('./webpack.config');
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+const path = require('path');
+const webpack = require(path.resolve(process.cwd(), './webpack.config'));
 const webpackConfig = (es = 'es5') =>
 	webpack([], {
 		mode: 'production',
 		isTest: true,
 		uglify: true,
 		es
-	});
+	}, process.cwd());
 
 module.exports = function(config) {
 	config.set({
