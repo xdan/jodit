@@ -4,7 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const webpack = require('./webpack.config');
+const path = require('path');
+const webpack = require(path.resolve(process.cwd(), './webpack.config'));
 const webpackConfig = (es = 'es5') =>
 	webpack([], {
 		mode: 'production',
