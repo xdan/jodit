@@ -24,6 +24,8 @@ import {
 	isString
 } from './helpers';
 
+// declare const isProd: boolean;
+
 /**
  * Jodit plugin system
  * @example

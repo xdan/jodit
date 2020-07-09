@@ -56,6 +56,7 @@ import { ViewWithToolbar } from './core/view/view-with-toolbar';
 import { instances, pluginSystem, modules, lang } from './core/global';
 import { cache } from './core/decorators';
 
+// declare const isProd: boolean;
 /**
  * Class Jodit. Main class
  */

@@ -8,6 +8,7 @@ import { IJodit, SnapshotType } from '../../types';
 import { ViewComponent } from '../../core/component';
 import { Dom } from '../../core/dom';
 
+// declare const isProd: boolean;
 /**
  * Module for creating snapshot of editor which includes html content and the current selection
  */

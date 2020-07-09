@@ -18,6 +18,7 @@ import { IViewBased } from '../../../types';
  * Jodit.modules.Helpers.call(f > 0.5 ? Math.ceil : Math.floor, f);
  * ```
  */
+
 export function call<T extends any[], R>(
 	func: (...args: T) => R,
 	...args: T

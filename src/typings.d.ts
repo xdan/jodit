@@ -8,11 +8,3 @@ declare module '*.svg' {
 	const content: string;
 	export default content;
 }
-
-interface HTMLElement {
-	component: any;
-}
-
-declare const appVersion: string;
-
-declare const isProd: boolean;

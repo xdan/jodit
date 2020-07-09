@@ -12976,7 +12976,7 @@ class table_Table extends core_component["c" /* ViewComponent */] {
             selector && selectors.push(selector);
         });
         style.innerHTML = selectors.length
-            ? selectors.join(',') + `{${this.j.o.table.selectionCellStyle}}`
+            ? selectors.join(',') + `{${this.jodit.options.table.selectionCellStyle}}`
             : '';
     }
     addSelection(td) {
