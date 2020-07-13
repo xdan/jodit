@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export default {
+module.exports = {
 	'Type something': 'Напишите что-либо',
 	// About
 	'About Jodit': 'О Jodit',

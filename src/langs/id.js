@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export default {
+module.exports = {
 	// About
 	'Type something': 'Ketik sesuatu',
 	'About Jodit': 'Tentang Jodit',
