@@ -4,8 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary } from '../types';
-
 export default {
 	'Type something': 'なにかタイプしてください',
 	// About
@@ -238,4 +236,4 @@ export default {
 	'Border radius': '角の丸み',
 	'Show all': '全て表示',
 	Apply: '適用'
-} as IDictionary<string>;
+};

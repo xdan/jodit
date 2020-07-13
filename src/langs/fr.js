@@ -4,8 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary } from '../types';
-
 export default {
 	'Type something': 'Ecrivez ici',
 	// About
@@ -237,4 +235,4 @@ export default {
 	'Border radius': 'Rayon des frontières',
 	'Show all': 'Afficher tous les',
 	Apply: 'Appliquer'
-} as IDictionary<string>;
+};

@@ -4,8 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary } from '../types';
-
 export default {
 	'Type something': 'Írjon be valamit',
 
@@ -244,4 +242,4 @@ export default {
 	'Border radius': 'Határ sugár',
 	'Show all': 'Összes',
 	Apply: 'Alkalmazni'
-} as IDictionary<string>;
+};

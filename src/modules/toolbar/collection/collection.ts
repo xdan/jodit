@@ -29,7 +29,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	jodit!: T;
 
 	readonly listenEvents =
-		'changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
+		'updateToolbar changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
 		'selectionchange changeSelection focus afterSetMode touchstart focus blur';
 
 	/**

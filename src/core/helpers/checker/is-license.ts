@@ -6,5 +6,6 @@
 
 import { isString } from './is-string';
 
-export const isLicense = (license: string): boolean =>
-	isString(license) && license.length === 32 && /^[a-z0-9]+$/.test(license);
+export const isLicense = (license: string): boolean => {
+	return 	isString(license) && license.length === 23 && /^[a-z0-9-]+$/i.test(license);
+}

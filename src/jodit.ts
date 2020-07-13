@@ -48,7 +48,7 @@ import {
 	IUploader,
 	ICreate,
 	IFileBrowserCallBackData,
-	IStorage
+	IStorage, CanPromise
 } from './types';
 
 import { ViewWithToolbar } from './core/view/view-with-toolbar';
@@ -998,7 +998,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Hook before init
 	 */
-	beforeInitHook(): void {
+	beforeInitHook(): CanPromise<void> {
 		// do nothing
 	}
 
@@ -1057,34 +1057,46 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		this.selection = new Select(this);
 
-		this.initPlugins();
+		const beforeInitHookResult = this.beforeInitHook();
 
-		this.e.on('changePlace', () => {
-			this.setReadOnly(this.o.readonly);
-			this.setDisabled(this.o.disabled);
-		});
+		const afterBeforeInitHook = (): void => {
+			this.e.fire('beforeInit', this);
 
-		this.places.length = 0;
-		const addPlaceResult = this.addPlace(element, options);
+			this.initPlugins();
 
-		instances[this.id] = this;
+			this.e.on('changePlace', () => {
+				this.setReadOnly(this.o.readonly);
+				this.setDisabled(this.o.disabled);
+			});
 
-		const init = () => {
-			if (this.e) {
-				this.e.fire('afterInit', this);
+			this.places.length = 0;
+			const addPlaceResult = this.addPlace(element, options);
+
+			instances[this.id] = this;
+
+			const init = () => {
+				if (this.e) {
+					this.e.fire('afterInit', this);
+				}
+
+				this.afterInitHook();
+
+				this.setStatus(STATUSES.ready);
+
+				this.e.fire('afterConstructor', this);
+			};
+
+			if (isPromise(addPlaceResult)) {
+				addPlaceResult.finally(init);
+			} else {
+				init();
 			}
-
-			this.afterInitHook();
-
-			this.setStatus(STATUSES.ready);
-
-			this.e.fire('afterConstructor', this);
 		};
 
-		if (isPromise(addPlaceResult)) {
-			addPlaceResult.finally(init);
+		if (isPromise(beforeInitHookResult)) {
+			beforeInitHookResult.finally(afterBeforeInitHook);
 		} else {
-			init();
+			afterBeforeInitHook();
 		}
 	}
 
@@ -1257,10 +1269,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	private initPlugins(): void {
-		this.beforeInitHook();
-
-		this.e.fire('beforeInit', this);
-
 		try {
 			pluginSystem.init(this).catch(e => {
 				throw e;

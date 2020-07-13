@@ -4,8 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary } from '../types';
-
 export default {
 	'Type something': '輸入一些內容',
 	// About
@@ -239,4 +237,4 @@ export default {
 	'Border radius': 'เส้นขอบรัศมี',
 	'Show all': 'แสดงทั้งหมด',
 	Apply: 'ปรับใช้'
-} as IDictionary<string>;
+};

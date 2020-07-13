@@ -4,8 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary } from '../types';
-
 export default {
 	'Type something': 'Napisz coś',
 
@@ -241,4 +239,4 @@ export default {
 	'Border radius': 'Zaokrąglenie krawędzi',
 	'Show all': 'Pokaż wszystkie',
 	Apply: 'Zastosuj'
-} as IDictionary<string>;
+};

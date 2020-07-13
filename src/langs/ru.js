@@ -4,8 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary } from '../types';
-
 export default {
 	'Type something': 'Напишите что-либо',
 	// About
@@ -243,4 +241,4 @@ export default {
 	'Border radius': 'Радиус границы',
 	'Show all': 'Показать все',
 	Apply: 'Применить'
-} as IDictionary<string>;
+};

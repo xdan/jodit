@@ -4,8 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary } from '../types';
-
 export default {
 	'Type something': 'إبدأ في الكتابة...',
 	// About
@@ -229,4 +227,4 @@ export default {
 	'Border radius': 'دائرة نصف قطرها الحدود',
 	'Show all': 'عرض كل',
 	Apply: 'تطبيق'
-} as IDictionary<string>;
+};

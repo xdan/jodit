@@ -11,6 +11,10 @@ export class Icon {
 	private static icons: IDictionary<string> = {};
 
 	private static getIcon(name: string): string | undefined {
+		if (/^<svg/i.test(name)) {
+			return name;
+		}
+
 		return (
 			Icon.icons[name] ||
 			Icon.icons[name.replace(/-/g, '_')] ||

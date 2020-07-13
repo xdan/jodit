@@ -10,6 +10,7 @@ export interface IDictionary<T = any> {
 	[key: string]: T;
 }
 
+export type CanPromise<T> = T | Promise<T>;
 export type CanUndef<T> = T | undefined;
 export type Nullable<T> = T | null;
 

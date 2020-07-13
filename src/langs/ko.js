@@ -4,8 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary } from '../types';
-
 export default {
 	'Type something': '무엇이든 입력하세요',
 	// About
@@ -238,4 +236,4 @@ export default {
 	'Border radius': '둥근 테두리',
 	'Show all': '모두 보기',
 	Apply: '적용'
-} as IDictionary<string>;
+};

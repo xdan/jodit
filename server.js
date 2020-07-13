@@ -51,6 +51,10 @@ app.get("/", (req, res) => {
     res.sendFile(cwd + '/index.html')
 });
 
+app.get("/*.js", (req, res) => {
+	res.sendFile(cwd + '/' + req.url)
+});
+
 app.get("/icons.html", (req, res) => {
 	res.sendFile(cwd + '/icons.html')
 });

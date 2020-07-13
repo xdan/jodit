@@ -5,6 +5,24 @@
  */
 
 const https = require('https');
+const path = require('path');
+
+const { argv } = require('yargs')
+	.option('str', {
+		type: 'string',
+		required: true,
+		description: 'Translate sentence'
+	})
+	.option('ytak', {
+		type: 'string',
+		required: true,
+		description: 'Yandex Translate Api Key'
+	})
+	.option('dir', {
+		type: 'string',
+		default: path.resolve(process.cwd(), 'src/langs'),
+		description: 'Directory'
+	});
 
 const yandex_translate_api_key = process.argv[2];
 
@@ -40,9 +58,8 @@ const translate = async (text, lang) => {
 };
 
 const fs = require('fs');
-const path = require('path');
 
-const folder = path.resolve(__dirname, '../langs');
+const folder = path.resolve(path.resolve(__dirname, '../langs'));
 const files = fs.readdirSync(folder);
 
 const replace = {
@@ -65,24 +82,18 @@ const translateAll = text => {
 			lang = replace[lang];
 		}
 
-		const data = fs.readFileSync(filename, 'utf-8');
-
-		const end = data.indexOf('} as IDictionary<string>;');
-
-		if (end !== -1) {
-			const translated = await translate(text, lang);
-			const newHash =
-				data.substring(0, end - 1) +
-				"\n\t'" +
-				text.replace(/'/g, "\\'") +
-				"': '" +
-				translated.replace(/'/g, "\\'") +
-				"',\n" +
-				data.substring(end);
-
-			fs.writeFileSync(filename, newHash);
-		}
+		const data = fs.existsSync(filename)
+			? fs.require(filename).default
+			: {};
+		data[text] = await translate(text, lang);
+		fs.writeFileSync(
+			filename,
+			`${fs.readdirSync(
+				'../header.js',
+				'utf8'
+			)}\nexport default ${JSON.stringify(data, null, '\t')};`
+		);
 	});
 };
 
-translateAll('Apply');
+translateAll(argv.str);
