@@ -24,9 +24,7 @@ const { argv } = require('yargs')
 		description: 'Directory'
 	});
 
-const yandex_translate_api_key = process.argv[2];
-
-if (!yandex_translate_api_key) {
+if (!argv.ytak) {
 	throw new Error(
 		'Need Yandex Translate API key. https://translate.yandex.com/developers/keys\n' +
 			'You can run it file: node ./src/utils/lang-translater.js %api_key%'
@@ -38,7 +36,7 @@ const translate = async (text, lang) => {
 		https
 			.get(
 				`https://translate.yandex.net/api/v1.5/tr.json/translate?` +
-					`key=${yandex_translate_api_key}&text=${text}&lang=en-${lang}&format=plain`,
+					`key=${argv.ytak}&text=${text}&lang=en-${lang}&format=plain`,
 				res => {
 					res.on('data', d => {
 						const json = JSON.parse(d.toString());
@@ -72,7 +70,7 @@ const replace = {
 const translateAll = text => {
 	files.forEach(async file => {
 		const filename = path.join(folder, file);
-		let lang = file.replace(/\.ts$/, '');
+		let lang = file.replace(/\.(js|ts)$/, '');
 
 		if (['index', 'en'].includes(lang)) {
 			return;
@@ -82,14 +80,14 @@ const translateAll = text => {
 			lang = replace[lang];
 		}
 
-		const data = fs.existsSync(filename)
-			? fs.require(filename).default
-			: {};
+		const data = fs.existsSync(filename) ? require(filename) : {};
+
 		data[text] = await translate(text, lang);
+
 		fs.writeFileSync(
 			filename,
-			`${fs.readdirSync(
-				'../header.js',
+			`${fs.readFileSync(
+				path.resolve(process.cwd(), './src/header.js'),
 				'utf8'
 			)}\nexport default ${JSON.stringify(data, null, '\t')};`
 		);
