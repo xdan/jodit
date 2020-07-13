@@ -31,6 +31,8 @@ if (!argv.ytak) {
 	);
 }
 
+console.warn('Work directory:', argv.dir)
+
 const translate = async (text, lang) => {
 	return new Promise((resolve, reject) => {
 		https
@@ -69,7 +71,9 @@ const replace = {
 
 const translateAll = text => {
 	files.forEach(async file => {
-		const filename = path.join(folder, file);
+		const filepath = path.join(folder, file);
+		const newFilePath = path.join(path.resolve(argv.dir), path.parse(filepath).base);
+
 		let lang = file.replace(/\.(js|ts)$/, '');
 
 		if (['index', 'en'].includes(lang)) {
@@ -80,16 +84,16 @@ const translateAll = text => {
 			lang = replace[lang];
 		}
 
-		const data = fs.existsSync(filename) ? require(filename) : {};
+		const data = fs.existsSync(newFilePath) ? require(newFilePath) : {};
 
 		data[text] = await translate(text, lang);
 
 		fs.writeFileSync(
-			filename,
+			newFilePath,
 			`${fs.readFileSync(
 				path.resolve(process.cwd(), './src/header.js'),
 				'utf8'
-			)}\nexport default ${JSON.stringify(data, null, '\t')};`
+			)}\nmodule.exports = ${JSON.stringify(data, null, '\t')};`
 		);
 	});
 };
