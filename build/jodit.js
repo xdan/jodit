@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.14
+ * Version: v3.4.15
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -858,7 +858,7 @@ exports.INVISIBLE_SPACE_REG_EXP_START = function () { return /^[\uFEFF]+/g; };
 exports.SPACE_REG_EXP = function () { return /[\s\n\t\r\uFEFF\u200b]+/g; };
 exports.SPACE_REG_EXP_START = function () { return /^[\s\n\t\r\uFEFF\u200b]+/g; };
 exports.SPACE_REG_EXP_END = function () { return /[\s\n\t\r\uFEFF\u200b]+$/g; };
-exports.IS_BLOCK = /^(SCRIPT|IFRAME|JODIT|JODIT-MEDIA|PRE|DIV|P|LI|UL|OL|H[1-6]|BLOCKQUOTE|TD|TH|TABLE|BODY|HTML|FIGCAPTION|FIGURE|DT|DD)$/i;
+exports.IS_BLOCK = /^(ARTICLE|SCRIPT|IFRAME|JODIT|JODIT-MEDIA|PRE|DIV|P|LI|UL|OL|H[1-6]|BLOCKQUOTE|TR|TD|TH|TBODY|THEAD|TABLE|BODY|HTML|FIGCAPTION|FIGURE|DT|DD|DL|DFN)$/i;
 exports.IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB)$/i;
 exports.INSEPARABLE_TAGS = [
     'img',
@@ -973,6 +973,7 @@ var consts = __webpack_require__(3);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
 var widget_1 = __webpack_require__(18);
+var global_1 = __webpack_require__(11);
 var Config = (function () {
     function Config() {
         this.iframe = false;
@@ -1297,8 +1298,26 @@ exports.OptionsDefault = function (options, def) {
 Config.prototype.controls = {
     print: {
         exec: function (editor) {
-            var mywindow = window.open('', 'PRINT');
+            var iframe = editor.create.element('iframe');
+            Object.assign(iframe.style, {
+                position: 'fixed',
+                right: 0,
+                bottom: 0,
+                width: 0,
+                height: 0,
+                border: 0
+            });
+            global_1.getContainer(editor, Config).appendChild(iframe);
+            var afterFinishPrint = function () {
+                editor.e
+                    .off(editor.ow, 'mousemove', afterFinishPrint);
+                dom_1.Dom.safeRemove(iframe);
+            };
+            var mywindow = iframe.contentWindow;
             if (mywindow) {
+                editor.e
+                    .on(mywindow, 'onbeforeunload onafterprint', afterFinishPrint)
+                    .on(editor.ow, 'mousemove', afterFinishPrint);
                 if (editor.o.iframe) {
                     editor.e.fire('generateDocumentStructure.iframe', mywindow.document, editor);
                     mywindow.document.body.innerHTML = editor.value;
@@ -1314,7 +1333,6 @@ Config.prototype.controls = {
                 }
                 mywindow.focus();
                 mywindow.print();
-                mywindow.close();
             }
         },
         mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
@@ -2443,12 +2461,12 @@ var Dialog = (function (_super) {
         return res;
     };
     Dialog.prototype.setMaxZIndex = function () {
-        var maxzi = 0, zIndex = 0;
+        var maxZIndex = 20000004, zIndex = 0;
         helpers_1.$$('.jodit-dialog__box', this.destination).forEach(function (dialog) {
             zIndex = parseInt(helpers_1.css(dialog, 'zIndex'), 10);
-            maxzi = Math.max(isNaN(zIndex) ? 0 : zIndex, maxzi);
+            maxZIndex = Math.max(isNaN(zIndex) ? 0 : zIndex, maxZIndex);
         });
-        this.container.style.zIndex = (maxzi + 1).toString();
+        this.container.style.zIndex = (maxZIndex + 1).toString();
     };
     Dialog.prototype.maximization = function (condition) {
         if (typeof condition !== 'boolean') {
@@ -4367,7 +4385,7 @@ var View = (function (_super) {
         var _this = _super.call(this) || this;
         _this.isView = true;
         _this.components = new Set();
-        _this.version = "3.4.14";
+        _this.version = "3.4.15";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.__isFullSize = false;
@@ -4869,27 +4887,18 @@ var ToolbarButton = (function (_super) {
         if (!this.j.o.textIcons &&
             this.j.o.showTooltip &&
             !this.j.o.useNativeTooltip) {
-            var to_1 = this.j.o.showTooltipDelay || this.j.defaultTimeout;
-            var timeout_1 = 0;
             this.j.e
                 .off(this.container, 'mouseenter mouseleave')
                 .on(this.container, 'mousemove', function (e) {
                 if (!_this.state.tooltip) {
                     return;
                 }
-                timeout_1 = _this.j.async.setTimeout(function () {
-                    return !_this.state.disabled &&
-                        _this.j.e.fire('showTooltip', function () { return ({
-                            x: e.clientX + 10,
-                            y: e.clientY + 10
-                        }); }, _this.state.tooltip);
-                }, {
-                    timeout: to_1,
-                    label: 'tooltip'
-                });
+                !_this.state.disabled && _this.j.e.fire('delayShowTooltip', function () { return ({
+                    x: e.clientX + 10,
+                    y: e.clientY + 10
+                }); }, _this.state.tooltip);
             })
                 .on(this.container, 'mouseleave', function () {
-                _this.j.async.clearTimeout(timeout_1);
                 _this.j.e.fire('hideTooltip');
             });
         }
@@ -12968,7 +12977,7 @@ var FileBrowser = (function (_super) {
     };
     FileBrowser.prototype.loadTree = function () {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
-            var path, source, errorUni, tree, items;
+            var path, source, errorUni, items, tree;
             var _this = this;
             return tslib_1.__generator(this, function (_a) {
                 path = this.dataProvider.currentPath, source = this.dataProvider.currentSource, errorUni = function (e) {
@@ -12981,6 +12990,7 @@ var FileBrowser = (function (_super) {
                 this.tree.classList.add('jodit-filebrowser_active');
                 dom_1.Dom.detach(this.tree);
                 this.tree.appendChild(this.loader.cloneNode(true));
+                items = this.loadItems(path, source);
                 if (this.o.showFoldersPanel) {
                     tree = this.dataProvider
                         .tree(path, source)
@@ -12998,13 +13008,12 @@ var FileBrowser = (function (_super) {
                         _this.errorHandler(errorUni(_this.i18n('Error on load folders')));
                         errorUni(e);
                     });
-                    items = this.loadItems(path, source);
                     return [2, Promise.all([tree, items]).catch(helpers_1.error)];
                 }
                 else {
                     this.tree.classList.remove('jodit-filebrowser_active');
                 }
-                return [2];
+                return [2, items.catch(helpers_1.error)];
             });
         });
     };
@@ -25679,7 +25688,7 @@ var inlinePopup = (function (_super) {
             this.previousTarget = target;
             var data = this.j.o.popup[type];
             this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
-            this.toolbar.build(data, target);
+            this.toolbar.build(helpers_1.isFunction(data) ? data(this.j) : data, target);
             this.popup.setContent(this.toolbar.container);
             this.type = type;
         }
@@ -29949,16 +29958,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.tooltip = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(294);
+var autobind_decorator_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(1);
 var plugin_1 = __webpack_require__(7);
 var dom_1 = __webpack_require__(2);
 var global_1 = __webpack_require__(11);
-var autobind_decorator_1 = __webpack_require__(10);
 var tooltip = (function (_super) {
     tslib_1.__extends(tooltip, _super);
     function tooltip() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.isOpened = false;
+        _this.delayShowTimeout = 0;
         return _this;
     }
     tooltip.prototype.afterInit = function (jodit) {
@@ -29972,15 +29982,21 @@ var tooltip = (function (_super) {
             jodit.async.clearTimeout(timeout);
             _this.open(getPoint, content);
         })
+            .on('delayShowTooltip.tooltip', this.delayOpen)
             .on('escape.tooltip', this.close)
             .on('hideTooltip.tooltip change.tooltip scroll.tooltip changePlace.tooltip hidePopup.tooltip closeAllPopups.tooltip', function () {
+            _this.j.async.clearTimeout(_this.delayShowTimeout);
             timeout = jodit.async.setTimeout(_this.close, _this.j.defaultTimeout);
         });
     };
-    tooltip.prototype.beforeDestruct = function (jodit) {
-        jodit === null || jodit === void 0 ? void 0 : jodit.e.off('.tooltip');
-        this.close();
-        dom_1.Dom.safeRemove(this.container);
+    tooltip.prototype.delayOpen = function (getPoint, content) {
+        var _this = this;
+        var to = this.j.o.showTooltipDelay || this.j.defaultTimeout;
+        this.j.async.clearTimeout(this.delayShowTimeout);
+        this.delayShowTimeout = this.j.async.setTimeout(function () { return _this.open(getPoint, content); }, {
+            timeout: to,
+            label: 'tooltip'
+        });
     };
     tooltip.prototype.open = function (getPoint, content) {
         this.container.classList.add('jodit-tooltip_visible');
@@ -29996,6 +30012,7 @@ var tooltip = (function (_super) {
         });
     };
     tooltip.prototype.close = function () {
+        this.j.async.clearTimeout(this.delayShowTimeout);
         if (this.isOpened) {
             this.isOpened = false;
             this.container.classList.remove('jodit-tooltip_visible');
@@ -30004,6 +30021,14 @@ var tooltip = (function (_super) {
             });
         }
     };
+    tooltip.prototype.beforeDestruct = function (jodit) {
+        jodit === null || jodit === void 0 ? void 0 : jodit.e.off('.tooltip');
+        this.close();
+        dom_1.Dom.safeRemove(this.container);
+    };
+    tslib_1.__decorate([
+        autobind_decorator_1.default
+    ], tooltip.prototype, "delayOpen", null);
     tslib_1.__decorate([
         autobind_decorator_1.default
     ], tooltip.prototype, "close", null);

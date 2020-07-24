@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.14
+ * Version: v3.4.15
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -1658,7 +1658,7 @@ const INVISIBLE_SPACE_REG_EXP_START = () => /^[\uFEFF]+/g;
 const SPACE_REG_EXP = () => /[\s\n\t\r\uFEFF\u200b]+/g;
 const SPACE_REG_EXP_START = () => /^[\s\n\t\r\uFEFF\u200b]+/g;
 const SPACE_REG_EXP_END = () => /[\s\n\t\r\uFEFF\u200b]+$/g;
-const IS_BLOCK = /^(SCRIPT|IFRAME|JODIT|JODIT-MEDIA|PRE|DIV|P|LI|UL|OL|H[1-6]|BLOCKQUOTE|TD|TH|TABLE|BODY|HTML|FIGCAPTION|FIGURE|DT|DD)$/i;
+const IS_BLOCK = /^(ARTICLE|SCRIPT|IFRAME|JODIT|JODIT-MEDIA|PRE|DIV|P|LI|UL|OL|H[1-6]|BLOCKQUOTE|TR|TD|TH|TBODY|THEAD|TABLE|BODY|HTML|FIGCAPTION|FIGURE|DT|DD|DL|DFN)$/i;
 const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB)$/i;
 const INSEPARABLE_TAGS = [
     'img',
@@ -1767,11 +1767,13 @@ const BASE_PATH = (() => {
 /* harmony import */ var _core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 /* harmony import */ var _core_helpers___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(0);
 /* harmony import */ var _modules_widget__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(14);
+/* harmony import */ var _core_global__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 
 
 
@@ -2092,8 +2094,26 @@ const OptionsDefault = function (options, def = Config.defaultOptions) {
 Config.prototype.controls = {
     print: {
         exec: (editor) => {
-            const mywindow = window.open('', 'PRINT');
+            const iframe = editor.create.element('iframe');
+            Object.assign(iframe.style, {
+                position: 'fixed',
+                right: 0,
+                bottom: 0,
+                width: 0,
+                height: 0,
+                border: 0
+            });
+            Object(_core_global__WEBPACK_IMPORTED_MODULE_4__[/* getContainer */ "b"])(editor, Config).appendChild(iframe);
+            const afterFinishPrint = () => {
+                editor.e
+                    .off(editor.ow, 'mousemove', afterFinishPrint);
+                _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].safeRemove(iframe);
+            };
+            const mywindow = iframe.contentWindow;
             if (mywindow) {
+                editor.e
+                    .on(mywindow, 'onbeforeunload onafterprint', afterFinishPrint)
+                    .on(editor.ow, 'mousemove', afterFinishPrint);
                 if (editor.o.iframe) {
                     editor.e.fire('generateDocumentStructure.iframe', mywindow.document, editor);
                     mywindow.document.body.innerHTML = editor.value;
@@ -2109,7 +2129,6 @@ Config.prototype.controls = {
                 }
                 mywindow.focus();
                 mywindow.print();
-                mywindow.close();
             }
         },
         mode: _core_constants__WEBPACK_IMPORTED_MODULE_0__["MODE_SOURCE"] + _core_constants__WEBPACK_IMPORTED_MODULE_0__["MODE_WYSIWYG"],
@@ -2850,6 +2869,100 @@ function isPromise(val) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export boundMethod */
+/* unused harmony export boundClass */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return autobind; });
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/**
+ * Return a descriptor removing the value and returning a getter
+ * The getter will return a .bind version of the function
+ * and memoize the result against a symbol on the instance
+ */
+function boundMethod(target, key, descriptor) {
+  var fn = descriptor.value;
+
+  if (typeof fn !== 'function') {
+    throw new TypeError("@boundMethod decorator can only be applied to methods not: ".concat(_typeof(fn)));
+  } // In IE11 calling Object.defineProperty has a side-effect of evaluating the
+  // getter for the property which is being replaced. This causes infinite
+  // recursion and an "Out of stack space" error.
+
+
+  var definingProperty = false;
+  return {
+    configurable: true,
+    get: function get() {
+      // eslint-disable-next-line no-prototype-builtins
+      if (definingProperty || this === target.prototype || this.hasOwnProperty(key) || typeof fn !== 'function') {
+        return fn;
+      }
+
+      var boundFn = fn.bind(this);
+      definingProperty = true;
+      Object.defineProperty(this, key, {
+        configurable: true,
+        get: function get() {
+          return boundFn;
+        },
+        set: function set(value) {
+          fn = value;
+          delete this[key];
+        }
+      });
+      definingProperty = false;
+      return boundFn;
+    },
+    set: function set(value) {
+      fn = value;
+    }
+  };
+}
+/**
+ * Use boundMethod to bind all methods on the target.prototype
+ */
+
+function boundClass(target) {
+  // (Using reflect to get all keys including symbols)
+  var keys; // Use Reflect if exists
+
+  if (typeof Reflect !== 'undefined' && typeof Reflect.ownKeys === 'function') {
+    keys = Reflect.ownKeys(target.prototype);
+  } else {
+    keys = Object.getOwnPropertyNames(target.prototype); // Use symbols if support is provided
+
+    if (typeof Object.getOwnPropertySymbols === 'function') {
+      keys = keys.concat(Object.getOwnPropertySymbols(target.prototype));
+    }
+  }
+
+  keys.forEach(function (key) {
+    // Ignore special case target method
+    if (key === 'constructor') {
+      return;
+    }
+
+    var descriptor = Object.getOwnPropertyDescriptor(target.prototype, key); // Only methods need binding
+
+    if (typeof descriptor.value === 'function') {
+      Object.defineProperty(target.prototype, key, boundMethod(target, key, descriptor));
+    }
+  });
+  return target;
+}
+function autobind() {
+  if (arguments.length === 1) {
+    return boundClass.apply(void 0, arguments);
+  }
+
+  return boundMethod.apply(void 0, arguments);
+}
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, "e", function() { return /* reexport */ ui_element["a" /* UIElement */]; });
@@ -3114,100 +3227,6 @@ var icon = __webpack_require__(29);
 
 
 
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export boundMethod */
-/* unused harmony export boundClass */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return autobind; });
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-/**
- * Return a descriptor removing the value and returning a getter
- * The getter will return a .bind version of the function
- * and memoize the result against a symbol on the instance
- */
-function boundMethod(target, key, descriptor) {
-  var fn = descriptor.value;
-
-  if (typeof fn !== 'function') {
-    throw new TypeError("@boundMethod decorator can only be applied to methods not: ".concat(_typeof(fn)));
-  } // In IE11 calling Object.defineProperty has a side-effect of evaluating the
-  // getter for the property which is being replaced. This causes infinite
-  // recursion and an "Out of stack space" error.
-
-
-  var definingProperty = false;
-  return {
-    configurable: true,
-    get: function get() {
-      // eslint-disable-next-line no-prototype-builtins
-      if (definingProperty || this === target.prototype || this.hasOwnProperty(key) || typeof fn !== 'function') {
-        return fn;
-      }
-
-      var boundFn = fn.bind(this);
-      definingProperty = true;
-      Object.defineProperty(this, key, {
-        configurable: true,
-        get: function get() {
-          return boundFn;
-        },
-        set: function set(value) {
-          fn = value;
-          delete this[key];
-        }
-      });
-      definingProperty = false;
-      return boundFn;
-    },
-    set: function set(value) {
-      fn = value;
-    }
-  };
-}
-/**
- * Use boundMethod to bind all methods on the target.prototype
- */
-
-function boundClass(target) {
-  // (Using reflect to get all keys including symbols)
-  var keys; // Use Reflect if exists
-
-  if (typeof Reflect !== 'undefined' && typeof Reflect.ownKeys === 'function') {
-    keys = Reflect.ownKeys(target.prototype);
-  } else {
-    keys = Object.getOwnPropertyNames(target.prototype); // Use symbols if support is provided
-
-    if (typeof Object.getOwnPropertySymbols === 'function') {
-      keys = keys.concat(Object.getOwnPropertySymbols(target.prototype));
-    }
-  }
-
-  keys.forEach(function (key) {
-    // Ignore special case target method
-    if (key === 'constructor') {
-      return;
-    }
-
-    var descriptor = Object.getOwnPropertyDescriptor(target.prototype, key); // Only methods need binding
-
-    if (typeof descriptor.value === 'function') {
-      Object.defineProperty(target.prototype, key, boundMethod(target, key, descriptor));
-    }
-  });
-  return target;
-}
-function autobind() {
-  if (arguments.length === 1) {
-    return boundClass.apply(void 0, arguments);
-  }
-
-  return boundMethod.apply(void 0, arguments);
-}
 
 /***/ }),
 /* 8 */
@@ -3938,7 +3957,7 @@ var color_picker = __webpack_require__(111);
 var helpers = __webpack_require__(0);
 
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 5 modules
-var ui = __webpack_require__(6);
+var ui = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./src/core/dom.ts
 var dom = __webpack_require__(1);
@@ -4867,7 +4886,7 @@ var tslib_es6 = __webpack_require__(4);
 var popup = __webpack_require__(113);
 
 // EXTERNAL MODULE: ./node_modules/autobind-decorator/lib/esm/index.js
-var esm = __webpack_require__(7);
+var esm = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./src/core/dom.ts
 var dom = __webpack_require__(1);
@@ -4879,7 +4898,7 @@ var helpers = __webpack_require__(0);
 var global = __webpack_require__(8);
 
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 5 modules
-var ui = __webpack_require__(6);
+var ui = __webpack_require__(7);
 
 // CONCATENATED MODULE: ./src/core/ui/popup/popup.ts
 /*!
@@ -5532,14 +5551,14 @@ function error(message) {
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
 /* harmony import */ var _button_less__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(112);
 /* harmony import */ var _button_less__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_button_less__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var autobind_decorator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7);
+/* harmony import */ var autobind_decorator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
 /* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(19);
 /* harmony import */ var _core_decorators_watch__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(15);
 /* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9);
 /* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(0);
 /* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(29);
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6);
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(7);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -11998,7 +12017,7 @@ class context_menu_ContextMenu extends ui_popup["a" /* Popup */] {
 var dialog_dialog = __webpack_require__(118);
 
 // EXTERNAL MODULE: ./node_modules/autobind-decorator/lib/esm/index.js
-var esm = __webpack_require__(7);
+var esm = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./src/core/view/view-with-toolbar.less
 var view_with_toolbar = __webpack_require__(119);
@@ -12296,7 +12315,7 @@ class view_View extends core_component["a" /* Component */] {
         super();
         this.isView = true;
         this.components = new Set();
-        this.version = "3.4.14";
+        this.version = "3.4.15";
         this.async = new async_Async();
         this.buffer = storage_Storage.makeStorage();
         this.__isFullSize = false;
@@ -12443,7 +12462,7 @@ var dom = __webpack_require__(1);
 var collection_collection = __webpack_require__(120);
 
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 5 modules
-var ui = __webpack_require__(6);
+var ui = __webpack_require__(7);
 
 // CONCATENATED MODULE: ./src/modules/toolbar/collection/collection.ts
 /*!
@@ -12720,25 +12739,18 @@ class button_ToolbarButton extends ui_button["b" /* UIButton */] {
         if (!this.j.o.textIcons &&
             this.j.o.showTooltip &&
             !this.j.o.useNativeTooltip) {
-            const to = this.j.o.showTooltipDelay || this.j.defaultTimeout;
-            let timeout = 0;
             this.j.e
                 .off(this.container, 'mouseenter mouseleave')
                 .on(this.container, 'mousemove', (e) => {
                 if (!this.state.tooltip) {
                     return;
                 }
-                timeout = this.j.async.setTimeout(() => !this.state.disabled &&
-                    this.j.e.fire('showTooltip', () => ({
-                        x: e.clientX + 10,
-                        y: e.clientY + 10
-                    }), this.state.tooltip), {
-                    timeout: to,
-                    label: 'tooltip'
-                });
+                !this.state.disabled && this.j.e.fire('delayShowTooltip', () => ({
+                    x: e.clientX + 10,
+                    y: e.clientY + 10
+                }), this.state.tooltip);
             })
                 .on(this.container, 'mouseleave', () => {
-                this.j.async.clearTimeout(timeout);
                 this.j.e.fire('hideTooltip');
             });
         }
@@ -13281,12 +13293,12 @@ class dialog_Dialog extends view_with_toolbar_ViewWithToolbar {
         return res;
     }
     setMaxZIndex() {
-        let maxzi = 0, zIndex = 0;
+        let maxZIndex = 20000004, zIndex = 0;
         Object(helpers["$$"])('.jodit-dialog__box', this.destination).forEach(dialog => {
             zIndex = parseInt(Object(helpers["css"])(dialog, 'zIndex'), 10);
-            maxzi = Math.max(isNaN(zIndex) ? 0 : zIndex, maxzi);
+            maxZIndex = Math.max(isNaN(zIndex) ? 0 : zIndex, maxZIndex);
         });
-        this.container.style.zIndex = (maxzi + 1).toString();
+        this.container.style.zIndex = (maxZIndex + 1).toString();
     }
     maximization(condition) {
         if (typeof condition !== 'boolean') {
@@ -15008,6 +15020,7 @@ class file_browser_FileBrowser extends view_with_toolbar_ViewWithToolbar {
         this.tree.classList.add('jodit-filebrowser_active');
         dom["a" /* Dom */].detach(this.tree);
         this.tree.appendChild(this.loader.cloneNode(true));
+        const items = this.loadItems(path, source);
         if (this.o.showFoldersPanel) {
             const tree = this.dataProvider
                 .tree(path, source)
@@ -15025,12 +15038,12 @@ class file_browser_FileBrowser extends view_with_toolbar_ViewWithToolbar {
                 this.errorHandler(errorUni(this.i18n('Error on load folders')));
                 errorUni(e);
             });
-            const items = this.loadItems(path, source);
             return Promise.all([tree, items]).catch(helpers["error"]);
         }
         else {
             this.tree.classList.remove('jodit-filebrowser_active');
         }
+        return items.catch(helpers["error"]);
     }
     async deleteFile(name, source) {
         return this.dataProvider
@@ -23095,7 +23108,7 @@ class inline_popup_inlinePopup extends plugin_Plugin {
             this.previousTarget = target;
             const data = this.j.o.popup[type];
             this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
-            this.toolbar.build(data, target);
+            this.toolbar.build(Object(helpers["isFunction"])(data) ? data(this.j) : data, target);
             this.popup.setContent(this.toolbar.container);
             this.type = type;
         }
@@ -26850,6 +26863,7 @@ class tooltip_tooltip_tooltip extends plugin_Plugin {
     constructor() {
         super(...arguments);
         this.isOpened = false;
+        this.delayShowTimeout = 0;
     }
     afterInit(jodit) {
         this.container = jodit.c.div('jodit-tooltip');
@@ -26861,15 +26875,20 @@ class tooltip_tooltip_tooltip extends plugin_Plugin {
             jodit.async.clearTimeout(timeout);
             this.open(getPoint, content);
         })
+            .on('delayShowTooltip.tooltip', this.delayOpen)
             .on('escape.tooltip', this.close)
             .on('hideTooltip.tooltip change.tooltip scroll.tooltip changePlace.tooltip hidePopup.tooltip closeAllPopups.tooltip', () => {
+            this.j.async.clearTimeout(this.delayShowTimeout);
             timeout = jodit.async.setTimeout(this.close, this.j.defaultTimeout);
         });
     }
-    beforeDestruct(jodit) {
-        jodit === null || jodit === void 0 ? void 0 : jodit.e.off('.tooltip');
-        this.close();
-        dom["a" /* Dom */].safeRemove(this.container);
+    delayOpen(getPoint, content) {
+        const to = this.j.o.showTooltipDelay || this.j.defaultTimeout;
+        this.j.async.clearTimeout(this.delayShowTimeout);
+        this.delayShowTimeout = this.j.async.setTimeout(() => this.open(getPoint, content), {
+            timeout: to,
+            label: 'tooltip'
+        });
     }
     open(getPoint, content) {
         this.container.classList.add('jodit-tooltip_visible');
@@ -26885,6 +26904,7 @@ class tooltip_tooltip_tooltip extends plugin_Plugin {
         });
     }
     close() {
+        this.j.async.clearTimeout(this.delayShowTimeout);
         if (this.isOpened) {
             this.isOpened = false;
             this.container.classList.remove('jodit-tooltip_visible');
@@ -26893,7 +26913,15 @@ class tooltip_tooltip_tooltip extends plugin_Plugin {
             });
         }
     }
+    beforeDestruct(jodit) {
+        jodit === null || jodit === void 0 ? void 0 : jodit.e.off('.tooltip');
+        this.close();
+        dom["a" /* Dom */].safeRemove(this.container);
+    }
 }
+Object(tslib_es6["a" /* __decorate */])([
+    esm["a" /* default */]
+], tooltip_tooltip_tooltip.prototype, "delayOpen", null);
 Object(tslib_es6["a" /* __decorate */])([
     esm["a" /* default */]
 ], tooltip_tooltip_tooltip.prototype, "close", null);
