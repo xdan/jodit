@@ -9,6 +9,7 @@ import { IDictionary, IUIElement, IViewBased, Nullable } from '../../types';
 import { Dom } from '../dom';
 import { getClassName } from '../helpers/utils';
 
+
 export abstract class UIElement<T extends IViewBased = IViewBased>
 	extends ViewComponent<T>
 	implements IUIElement {
@@ -72,7 +73,6 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 
 			return false;
 		});
-
 		return elm ? elm?.component : null;
 	}
 

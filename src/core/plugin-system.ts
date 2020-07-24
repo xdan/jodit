@@ -26,6 +26,8 @@ import {
 	kebabCase, callPromise
 } from './helpers';
 
+// declare const isProd: boolean;
+
 /**
  * Jodit plugin system
  * @example

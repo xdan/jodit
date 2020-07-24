@@ -40,6 +40,9 @@
 		"url": "https://github.com/xdan/jodit/issues"
 	},
 	"homepage": "https://xdsoft.net/jodit/",
+	"dependencies": {
+		"autobind-decorator": "^2.4.0"
+	},
 	"devDependencies": {
 		"@types/ace": "0.0.42",
 		"@types/es6-promise": "^3.3.0",

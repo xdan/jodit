@@ -68,6 +68,7 @@ import {
 } from './core/global';
 import { cache } from './core/decorators';
 
+// declare const isProd: boolean;
 /**
  * Class Jodit. Main class
  */
