@@ -9,7 +9,7 @@ import { Config } from '../../../config';
 
 declare module '../../../config' {
 	interface Config {
-		popup: IDictionary<Array<IControlType | string>>;
+		popup: IDictionary<Array<IControlType | string> | ((editor: IJodit) => Array<IControlType | string>)>;
 		toolbarInline: boolean;
 		toolbarInlineForSelection: boolean;
 		toolbarInlineDisableFor: string | string[];

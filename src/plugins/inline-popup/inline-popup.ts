@@ -21,7 +21,7 @@ import {
 } from '../../types';
 import { makeCollection } from '../../modules/toolbar/factory';
 import { Popup } from '../../core/ui/popup';
-import { splitArray, isString, position } from '../../core/helpers';
+import { splitArray, isString, position, isFunction } from '../../core/helpers';
 import { Dom, ToolbarCollection } from '../../modules';
 import { debounce, wait } from '../../core/decorators';
 
@@ -106,7 +106,7 @@ export class inlinePopup extends Plugin {
 			const data = this.j.o.popup[type];
 
 			this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
-			this.toolbar.build(data, target);
+			this.toolbar.build(isFunction(data) ? data(this.j) : data, target);
 			this.popup.setContent(this.toolbar.container);
 
 			this.type = type;

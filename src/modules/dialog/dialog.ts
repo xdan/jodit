@@ -481,15 +481,15 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 * Sets the maximum z-index dialog box, displaying it on top of all the dialog boxes
 	 */
 	setMaxZIndex(): void {
-		let maxzi: number = 0,
+		let maxZIndex: number = 20000004,
 			zIndex: number = 0;
 
 		$$('.jodit-dialog__box', this.destination).forEach(dialog => {
 			zIndex = parseInt(css(dialog, 'zIndex') as string, 10);
-			maxzi = Math.max(isNaN(zIndex) ? 0 : zIndex, maxzi);
+			maxZIndex = Math.max(isNaN(zIndex) ? 0 : zIndex, maxZIndex);
 		});
 
-		this.container.style.zIndex = (maxzi + 1).toString();
+		this.container.style.zIndex = (maxZIndex + 1).toString();
 	}
 
 	/**
