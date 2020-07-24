@@ -11,6 +11,7 @@ import {
 	Dom,
 	FileBrowser,
 	Observer,
+	Plugin,
 	Select,
 	StatusBar,
 	STATUSES
@@ -28,7 +29,8 @@ import {
 	resolveElement,
 	isVoid,
 	JoditArray,
-	JoditObject
+	JoditObject,
+	callPromise
 } from './core/helpers/';
 
 import { Storage } from './core/storage/';
@@ -48,12 +50,22 @@ import {
 	IUploader,
 	ICreate,
 	IFileBrowserCallBackData,
-	IStorage, CanPromise
+	IStorage,
+	CanPromise,
+	HTMLTagNames,
+	IViewBased,
+	IViewComponent
 } from './types';
 
 import { ViewWithToolbar } from './core/view/view-with-toolbar';
 
-import { instances, pluginSystem, modules, lang } from './core/global';
+import {
+	instances,
+	pluginSystem,
+	modules,
+	lang,
+	getContainer
+} from './core/global';
 import { cache } from './core/decorators';
 
 /**
@@ -141,7 +153,16 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	static decorators: IDictionary<Function> = {};
 	static instances: IDictionary<IJodit> = instances;
+	static getContainer: <T extends HTMLTagNames = HTMLTagNames>(
+		jodit: IViewBased | IViewComponent,
+		classFunc: Function,
+		tag: T,
+		inside: boolean
+	) => HTMLElementTagNameMap[T] = getContainer;
 	static lang: any = lang;
+	static core = {
+		Plugin
+	};
 
 	private __defaultStyleDisplayKey = 'data-jodit-default-style-display';
 	private __defaultClassesKey = 'data-jodit-default-classes';
@@ -1059,45 +1080,37 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		const beforeInitHookResult = this.beforeInitHook();
 
-		const afterBeforeInitHook = (): void => {
+		callPromise(beforeInitHookResult, (): void => {
 			this.e.fire('beforeInit', this);
 
-			this.initPlugins();
+			const initPluginsResult = pluginSystem.init(this);
 
-			this.e.on('changePlace', () => {
-				this.setReadOnly(this.o.readonly);
-				this.setDisabled(this.o.disabled);
+			callPromise(initPluginsResult, () => {
+				this.e.on('changePlace', () => {
+					this.setReadOnly(this.o.readonly);
+					this.setDisabled(this.o.disabled);
+				});
+
+				this.places.length = 0;
+				const addPlaceResult = this.addPlace(element, options);
+
+				instances[this.id] = this;
+
+				const init = () => {
+					if (this.e) {
+						this.e.fire('afterInit', this);
+					}
+
+					this.afterInitHook();
+
+					this.setStatus(STATUSES.ready);
+
+					this.e.fire('afterConstructor', this);
+				};
+
+				callPromise(addPlaceResult, init);
 			});
-
-			this.places.length = 0;
-			const addPlaceResult = this.addPlace(element, options);
-
-			instances[this.id] = this;
-
-			const init = () => {
-				if (this.e) {
-					this.e.fire('afterInit', this);
-				}
-
-				this.afterInitHook();
-
-				this.setStatus(STATUSES.ready);
-
-				this.e.fire('afterConstructor', this);
-			};
-
-			if (isPromise(addPlaceResult)) {
-				addPlaceResult.finally(init);
-			} else {
-				init();
-			}
-		};
-
-		if (isPromise(beforeInitHookResult)) {
-			beforeInitHookResult.finally(afterBeforeInitHook);
-		} else {
-			afterBeforeInitHook();
-		}
+		});
 	}
 
 	currentPlace!: IWorkPlace;
@@ -1265,18 +1278,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		if (this.isReady) {
 			this.e.fire('changePlace', place);
-		}
-	}
-
-	private initPlugins(): void {
-		try {
-			pluginSystem.init(this).catch(e => {
-				throw e;
-			});
-		} catch (e) {
-			if (!isProd) {
-				throw e;
-			}
 		}
 	}
 

@@ -31,7 +31,7 @@ if (!argv.ytak) {
 	);
 }
 
-console.warn('Work directory:', argv.dir)
+console.warn('Work directory:', argv.dir);
 
 const translate = async (text, lang) => {
 	return new Promise((resolve, reject) => {
@@ -69,20 +69,35 @@ const replace = {
 	pt_br: 'pt'
 };
 
+const header = fs.readFileSync(
+	path.resolve(process.cwd(), './src/header.js'),
+	'utf8'
+);
+
 const translateAll = text => {
-	files.forEach(async file => {
+	const langs = files
+		.map(file => {
+			let lang = file.replace(/\.(js|ts)$/, '');
+			const realLang = lang;
+
+			if (['index', 'en'].includes(lang)) {
+				return ['', file, realLang];
+			}
+
+			if (replace[lang]) {
+				lang = replace[lang];
+			}
+
+			return [lang, file, realLang];
+		})
+		.filter(([lang]) => lang);
+
+	langs.forEach(async ([lang, file]) => {
 		const filepath = path.join(folder, file);
-		const newFilePath = path.join(path.resolve(argv.dir), path.parse(filepath).base);
-
-		let lang = file.replace(/\.(js|ts)$/, '');
-
-		if (['index', 'en'].includes(lang)) {
-			return;
-		}
-
-		if (replace[lang]) {
-			lang = replace[lang];
-		}
+		const newFilePath = path.join(
+			path.resolve(argv.dir),
+			path.parse(filepath).base
+		);
 
 		const data = fs.existsSync(newFilePath) ? require(newFilePath) : {};
 
@@ -90,12 +105,22 @@ const translateAll = text => {
 
 		fs.writeFileSync(
 			newFilePath,
-			`${fs.readFileSync(
-				path.resolve(process.cwd(), './src/header.js'),
-				'utf8'
-			)}\nmodule.exports = ${JSON.stringify(data, null, '\t')};`
+			`${header}\nmodule.exports = ${JSON.stringify(data, null, '\t')};`
 		);
 	});
+
+	const indexFile = path.join(path.resolve(argv.dir), 'index.ts');
+
+	if (!fs.existsSync(indexFile)) {
+		fs.writeFileSync(
+			indexFile,
+			`${header}\n${langs
+				.map(
+					([lang, file, realLang]) => `const ${realLang} = require('./${file}');\n`
+				)
+				.join('')}\nexport default {${langs.map(([,,lang]) => lang).join(',')}};`
+		);
+	}
 };
 
 translateAll(argv.str);

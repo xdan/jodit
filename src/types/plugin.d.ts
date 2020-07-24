@@ -5,7 +5,7 @@
  */
 
 import { IJodit } from './jodit';
-import { IDestructible, IInitable } from './types';
+import { CanPromise, IDestructible, IInitable } from './types';
 import { IViewBased } from './view';
 
 export class IPlugin implements IDestructible, IInitable {
@@ -37,5 +37,5 @@ export interface IPluginSystem {
 	add(name: string, plugin: PluginType): void;
 	get(name: string): PluginType | void;
 	remove(name: string): void;
-	init(jodit: IJodit): Promise<void>;
+	init(jodit: IJodit): CanPromise<void>;
 }

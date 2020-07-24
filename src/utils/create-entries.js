@@ -18,22 +18,22 @@ function resolve(entries) {
 	);
 }
 
-function resolveFiles(directory) {
-	const rootPath = path.resolve(process.cwd());
-	const fullPath = path.resolve(directory);
-	const files = fs.readdirSync(fullPath);
+function resolveFiles(entry) {
+	const rootPath = process.cwd();
+	const fullPath = path.resolve(rootPath, entry);
 
-	return files.reduce((entries, file) => {
-		const filename = path.join(fullPath, file);
+	const entryName = path.basename(fullPath);
+	const list = [];
 
-		if (fs.lstatSync(filename).isFile()) {
-			entries.push(filename.replace(rootPath, '.'));
-		} else {
-			Object.assign(entries, resolveFiles(filename));
+	['config.ts', 'ts', 'less', 'svg', 'png', 'jpeg', 'jpg'].forEach(ext => {
+		const file = path.resolve(fullPath, `${entryName}.${ext}`);
+
+		if (fs.existsSync(file)) {
+			list.push(file);
 		}
+	});
 
-		return entries;
-	}, []);
+	return list;
 }
 
 /**
@@ -45,12 +45,7 @@ function resolveFiles(directory) {
  */
 function filter(files, checker) {
 	return files.filter(file =>
-		checker(
-			path
-				.extname(file)
-				.toLowerCase()
-				.substr(1)
-		)
+		checker(path.extname(file).toLowerCase().substr(1))
 	);
 }
 

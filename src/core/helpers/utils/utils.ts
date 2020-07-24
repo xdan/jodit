@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { isFunction } from '../checker';
-import { IViewBased } from '../../../types';
+import { isFunction, isPromise } from '../checker';
+import { CanPromise, IViewBased } from '../../../types';
 
 /**
  * Call function with parameters
@@ -76,4 +76,12 @@ export function markOwner(jodit: IViewBased, elm: HTMLElement): void {
 		Object.defineProperty(elm, 'jodit', {
 			value: jodit
 		});
+}
+
+export function callPromise(condition: CanPromise<unknown>, callback: () => CanPromise<void>): CanPromise<void> {
+	if (isPromise(condition)) {
+		return condition.finally(callback);
+	} else {
+		return callback();
+	}
 }

@@ -1,5 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 import { IJodit, IPlugin, IControlType } from '../../src/types';
-declare let Jodit: any;
 
 Jodit.defaultOptions.controls.example = {
 	iconURL: '{basePath}plugins/example/icon.svg',
@@ -46,4 +50,4 @@ Jodit.plugins.add('example2', {
 		alert('Example2 plugin');
 	},
 	destruct() {}
-});
+} as any);

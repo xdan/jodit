@@ -6,25 +6,25 @@
 import { isArray } from '../core/helpers/checker';
 import { IDictionary } from '../types';
 
-import ar from './ar';
-import cs_cz from './cs_cz';
-import de from './de';
-import en from './en';
-import es from './es';
-import fr from './fr';
-import he from './he';
-import hu from './hu';
-import id from './id';
-import it from './it';
-import ja from './ja';
-import ko from './ko';
-import nl from './nl';
-import pl from './pl';
-import pt_br from './pt_br';
-import ru from './ru';
-import tr from './tr';
-import zh_cn from './zh_cn';
-import zh_tw from './zh_tw';
+const ar = require('./ar');
+const cs_cz = require('./cs_cz');
+const de = require('./de');
+const en = require('./en');
+const es = require('./es');
+const fr = require('./fr');
+const he = require('./he');
+const hu = require('./hu');
+const id = require('./id');
+const it = require('./it');
+const ja = require('./ja');
+const ko = require('./ko');
+const nl = require('./nl');
+const pl = require('./pl');
+const pt_br = require('./pt_br');
+const ru = require('./ru');
+const tr = require('./tr');
+const zh_cn = require('./zh_cn');
+const zh_tw = require('./zh_tw');
 
 const exp: IDictionary<IDictionary<string>> = {
 	ar,

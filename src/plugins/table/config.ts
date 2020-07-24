@@ -10,18 +10,6 @@ import { Dom } from '../../core/dom';
 import { attr } from '../../core/helpers/utils';
 import { $$, scrollIntoView } from '../../core/helpers';
 
-declare module '../../config' {
-	interface Config {
-		table: {
-			allowCellSelection: boolean;
-			selectionCellStyle: string;
-
-			allowCellResize: boolean;
-			useExtraClassesOptions: boolean;
-		};
-	}
-}
-
 Config.prototype.table = {
 	allowCellSelection: true,
 	selectionCellStyle: 'border: 1px double #1e88e5 !important;',

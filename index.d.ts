@@ -12,3 +12,8 @@ declare global {
 }
 
 export { Jodit };
+
+declare global {
+	const appVersion: string;
+	const isProd: boolean;
+}

@@ -1,37 +1,58 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
 const gulp = require('gulp');
 const path = require('path');
-const ts = require('gulp-typescript');
+const webpack = require('webpack-stream');
 const less = require('gulp-less');
 const imagemin = require('gulp-imagemin');
-
-const tsProject = ts.createProject('tsconfig.json', {
-	target: 'es5',
-	module: 'es2015'
-});
-
-const make = require('./make.js');
-const entries = require('./src/utils/create-entries');
 const rootPath = path.resolve(process.cwd()) + path.sep;
+
+const make = require(path.resolve(rootPath, './make.js'));
+const entries = require('./src/utils/create-entries');
 const mergeStream = require('merge-stream');
 const files = entries.resolve(make.paths);
 
-function buildOneFile(file) {
+function buildOneFile(file, list) {
 	console.log('Build file: ' + file);
 
-	const full = path.dirname(path.resolve(file)).replace(rootPath, '');
+	file = path.resolve(file);
+	const full = path.dirname(file).replace(rootPath, '');
+	const ext = path.extname(file).toLowerCase();
+	const filename = path.basename(file, ext);
 
-	let pipe = gulp.src(path.resolve(file)).on('error', error => {
+	let pipe = gulp.src(file).on('error', error => {
 		console.warn(error);
 	});
 
-	const ext = path.extname(path.resolve(file)).toLowerCase();
-
 	switch (ext) {
-		case '.ts':
-			pipe = pipe.pipe(tsProject(ts.reporter.defaultReporter())).js;
+		case '.ts': {
+			const opt = require(path.resolve(rootPath, './webpack.config.js'))([], {
+				mode: 'production',
+				isTest: false,
+				uglify: true,
+				es: 'es5'
+			}, process.cwd(), true);
+
+			pipe = pipe.pipe(
+				webpack({
+					...opt,
+					entry: file,
+					output: {
+						filename: filename + '.js'
+					},
+				})
+			);
+
 			break;
+		}
 
 		case '.less':
+			console.log(file, ext);
+
 			pipe = pipe.pipe(less());
 			break;
 
@@ -55,7 +76,15 @@ function build() {
 		return gulp.src('.');
 	}
 
-	return mergeStream.apply(null, files.map(file => buildOneFile(file)));
+	const list = [...files];
+	let pipes = [];
+
+	while (list.length) {
+		const file = list.shift();
+		file && pipes.push(buildOneFile(file, list));
+	}
+
+	return mergeStream.apply(null, pipes);
 }
 
 exports.watch = function watch() {

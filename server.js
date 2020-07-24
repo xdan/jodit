@@ -21,14 +21,13 @@ process.argv.filter(a => reg.test(a)).forEach((c) => {
 	args[res[1]] = res[2];
 });
 
-const gulptasks = require(path.resolve(cwd, './gulpfile'));
+// const gulptasks = require(path.resolve(cwd, './gulpfile'));
+// gulptasks.watch();
 
 const config = require(path.resolve(cwd, './webpack.config'))([], {
 	es: 'es5',
 	isTest: true
 }, cwd);
-
-gulptasks.watch();
 
 const compression = require('compression');
 const app = new (require('express'))();

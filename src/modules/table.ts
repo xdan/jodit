@@ -22,6 +22,18 @@ import { ViewComponent } from '../core/component';
 import { getContainer } from '../core/global';
 import { debounce } from '../core/decorators';
 
+declare module '../config' {
+	interface Config {
+		table: {
+			allowCellSelection: boolean;
+			selectionCellStyle: string;
+
+			allowCellResize: boolean;
+			useExtraClassesOptions: boolean;
+		};
+	}
+}
+
 export class Table extends ViewComponent<IJodit> {
 	private selected: Set<HTMLTableCellElement> = new Set();
 	private static selectedByTable: WeakMap<

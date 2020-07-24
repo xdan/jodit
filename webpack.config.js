@@ -19,7 +19,7 @@ const PostBuild = require('./src/utils/post-build');
  * @param {object} argv
  * @param {string} dir
  */
-module.exports = (env, argv, dir = __dirname) => {
+module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 	const pkg = require(path.resolve(dir, './package.json'));
 
 	const banner = `/*!
@@ -30,7 +30,6 @@ module.exports = (env, argv, dir = __dirname) => {
  * License(s): ${pkg.license}
  */
 	`;
-
 
 	const debug = !argv || !argv.mode || !argv.mode.match(/production/);
 	const isTest = argv && Boolean(argv.isTest);
@@ -139,8 +138,7 @@ module.exports = (env, argv, dir = __dirname) => {
 			rules: [
 				{
 					test: /\.less$/,
-					use: css_loaders,
-					include: path.resolve(__dirname, './src')
+					use: css_loaders
 				},
 
 				{
@@ -247,7 +245,7 @@ module.exports = (env, argv, dir = __dirname) => {
 			})
 		);
 
-		if (isProd && !ESNext) {
+		if (isProd && !ESNext && !onlyTS) {
 			config.plugins.push(
 				new PostBuild(() => {
 					const postcss = require('postcss');
@@ -262,6 +260,11 @@ module.exports = (env, argv, dir = __dirname) => {
 					);
 
 					fs.readFile(file, (err, css) => {
+						if (err) {
+							console.log(err);
+							return;
+						}
+
 						plugins
 							.process(css, { from: file, to: file })
 							.then(result => {

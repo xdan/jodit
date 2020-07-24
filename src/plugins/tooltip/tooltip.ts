@@ -35,7 +35,7 @@ export class tooltip extends Plugin {
 			)
 			.on('escape.tooltip', this.close)
 			.on(
-				'hideTooltip.tooltip change.tooltip updateToolbar.tooltip scroll.tooltip changePlace.tooltip hidePopup.tooltip closeAllPopups.tooltip',
+				'hideTooltip.tooltip change.tooltip scroll.tooltip changePlace.tooltip hidePopup.tooltip closeAllPopups.tooltip',
 				() => {
 					timeout = jodit.async.setTimeout(
 						this.close,
