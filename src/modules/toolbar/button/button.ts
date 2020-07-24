@@ -165,10 +165,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 			this.j.o.showTooltip &&
 			!this.j.o.useNativeTooltip
 		) {
-			const to = this.j.o.showTooltipDelay || this.j.defaultTimeout;
-
-			let timeout: number = 0;
-
 			this.j.e
 				.off(this.container, 'mouseenter mouseleave')
 				.on(this.container, 'mousemove', (e: MouseEvent) => {
@@ -176,25 +172,16 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 						return;
 					}
 
-					timeout = this.j.async.setTimeout(
-						() =>
-							!this.state.disabled &&
-							this.j.e.fire(
-								'showTooltip',
-								() => ({
-									x: e.clientX + 10,
-									y: e.clientY + 10
-								}),
-								this.state.tooltip
-							),
-						{
-							timeout: to,
-							label: 'tooltip'
-						}
-					);
+					!this.state.disabled && this.j.e.fire(
+						'delayShowTooltip',
+						() => ({
+							x: e.clientX + 10,
+							y: e.clientY + 10
+						}),
+						this.state.tooltip
+					)
 				})
 				.on(this.container, 'mouseleave', () => {
-					this.j.async.clearTimeout(timeout);
 					this.j.e.fire('hideTooltip');
 				});
 		}

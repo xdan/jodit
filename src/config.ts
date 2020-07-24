@@ -31,6 +31,7 @@ import {
 	Nullable
 } from './types';
 import { FileSelectorWidget, TabOption, TabsWidget } from './modules/widget';
+import { getContainer } from './core/global';
 
 /**
  * Default Editor's Configuration
@@ -854,9 +855,31 @@ export const OptionsDefault: any = function (
 Config.prototype.controls = {
 	print: {
 		exec: (editor: IJodit) => {
-			const mywindow: Window | null = window.open('', 'PRINT');
+			const iframe = editor.create.element('iframe');
 
+			Object.assign(iframe.style, {
+				position: 'fixed',
+				right: 0,
+				bottom: 0,
+				width: 0,
+				height: 0,
+				border: 0
+			});
+
+			getContainer(editor, Config).appendChild(iframe);
+
+			const afterFinishPrint = () => {
+				editor.e
+					.off(editor.ow, 'mousemove', afterFinishPrint);
+				Dom.safeRemove(iframe);
+			};
+
+			const mywindow = iframe.contentWindow;
 			if (mywindow) {
+				editor.e
+					.on(mywindow, 'onbeforeunload onafterprint', afterFinishPrint)
+					.on(editor.ow, 'mousemove', afterFinishPrint);
+
 				if (editor.o.iframe) {
 					/**
 					 * @event generateDocumentStructure.iframe
@@ -881,9 +904,9 @@ Config.prototype.controls = {
 					);
 					mywindow.document.close();
 				}
+
 				mywindow.focus();
-				(mywindow as any).print();
-				mywindow.close();
+				mywindow.print();
 			}
 		},
 		mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
@@ -987,7 +1010,7 @@ Config.prototype.controls = {
 							current,
 							'a',
 							editor.editor
-					) as HTMLAnchorElement);
+					  ) as HTMLAnchorElement);
 			}
 
 			return FileSelectorWidget(

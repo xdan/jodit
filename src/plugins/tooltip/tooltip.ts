@@ -6,12 +6,13 @@
 
 import './tooltip.less';
 
+import autobind from 'autobind-decorator';
+
 import { IJodit, IPoint } from '../../types';
 import { css } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { Dom } from '../../core/dom';
 import { getContainer } from '../../core/global';
-import autobind from 'autobind-decorator';
 
 export class tooltip extends Plugin {
 	private isOpened = false;
@@ -33,10 +34,15 @@ export class tooltip extends Plugin {
 					this.open(getPoint, content);
 				}
 			)
+
+			.on('delayShowTooltip.tooltip', this.delayOpen)
+
 			.on('escape.tooltip', this.close)
 			.on(
 				'hideTooltip.tooltip change.tooltip scroll.tooltip changePlace.tooltip hidePopup.tooltip closeAllPopups.tooltip',
 				() => {
+					this.j.async.clearTimeout(this.delayShowTimeout);
+
 					timeout = jodit.async.setTimeout(
 						this.close,
 						this.j.defaultTimeout
@@ -45,10 +51,21 @@ export class tooltip extends Plugin {
 			);
 	}
 
-	beforeDestruct(jodit: IJodit): void {
-		jodit?.e.off('.tooltip');
-		this.close();
-		Dom.safeRemove(this.container);
+	private delayShowTimeout: number = 0;
+
+	@autobind
+	private delayOpen(getPoint: () => IPoint, content: string): void {
+		const to = this.j.o.showTooltipDelay || this.j.defaultTimeout;
+
+		this.j.async.clearTimeout(this.delayShowTimeout);
+
+		this.delayShowTimeout = this.j.async.setTimeout(
+			() => this.open(getPoint, content),
+			{
+				timeout: to,
+				label: 'tooltip'
+			}
+		);
 	}
 
 	private open(getPoint: () => IPoint, content: string): void {
@@ -70,6 +87,8 @@ export class tooltip extends Plugin {
 
 	@autobind
 	private close(): void {
+		this.j.async.clearTimeout(this.delayShowTimeout);
+
 		if (this.isOpened) {
 			this.isOpened = false;
 			this.container.classList.remove('jodit-tooltip_visible');
@@ -78,5 +97,11 @@ export class tooltip extends Plugin {
 				left: -5000
 			});
 		}
+	}
+
+	beforeDestruct(jodit: IJodit): void {
+		jodit?.e.off('.tooltip');
+		this.close();
+		Dom.safeRemove(this.container);
 	}
 }
