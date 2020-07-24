@@ -73,7 +73,8 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 
 			return false;
 		});
-		return elm ? elm?.component : null;
+
+		return elm ? elm?.component as IUIElement : null;
 	}
 
 	readonly mods: IDictionary<string | boolean | null> = {};

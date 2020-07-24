@@ -119,6 +119,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		this.tree.classList.add('jodit-filebrowser_active');
 		Dom.detach(this.tree);
 		this.tree.appendChild(this.loader.cloneNode(true));
+		const items = this.loadItems(path, source);
 
 		if (this.o.showFoldersPanel) {
 			const tree = this.dataProvider
@@ -127,9 +128,11 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 					let process:
 						| ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)
 						| undefined = (this.o.folder as any).process;
+
 					if (!process) {
 						process = this.o.ajax.process;
 					}
+
 					if (process) {
 						const respData = process.call(
 							self,
@@ -147,12 +150,13 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 					errorUni(e);
 				});
 
-			const items = this.loadItems(path, source);
 
 			return Promise.all([tree, items]).catch(error);
 		} else {
 			this.tree.classList.remove('jodit-filebrowser_active');
 		}
+
+		return items.catch(error);
 	}
 
 	async deleteFile(name: string, source: string): Promise<any> {

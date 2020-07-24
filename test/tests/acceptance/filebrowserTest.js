@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Jodit FileBrowser Tests', function() {
 	describe('Constructor/Destructor', function() {
 		describe('Without Jodit', function() {
@@ -89,6 +90,40 @@ describe('Jodit FileBrowser Tests', function() {
 					.querySelector('[aria-pressed="true"]')
 					.innerText.trim()
 			).equals('Upload');
+		});
+
+		describe('Without folders panel', function () {
+			it('Should create dialog and load files', function(done) {
+				const editor = getJodit({
+					filebrowser: {
+						ajax: {
+							url: 'https://xdsoft.net/jodit/connector/index.php'
+						},
+						showFoldersPanel: false
+					}
+				});
+
+				const filebrowser = editor.filebrowser
+
+				filebrowser
+					.open(function() {})
+					.then(function() {
+						const files = filebrowser.browser.querySelector(
+							'.jodit-filebrowser__files'
+						);
+
+						expect(files).is.not.null;
+
+						expect(files.querySelector(
+							'.jodit-filebrowser__files-item img[data-src="https://xdsoft.net/jodit/files/images.jpg"]'
+						)).is.not.null;
+
+
+						done();
+					}).catch(function(e) {
+					throw e;
+				})
+			});
 		});
 	});
 
