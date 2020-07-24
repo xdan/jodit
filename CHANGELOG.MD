@@ -1,6 +1,8 @@
 # Changelog
 ## 3.4.15
+* Fixed https://github.com/xdan/jodit/issues/441
 * Fixed https://github.com/xdan/jodit/issues/437
+* Fixed https://github.com/xdan/jodit/issues/435
 * Fixed https://github.com/xdan/jodit/issues/431
 
 ## 3.4.13
