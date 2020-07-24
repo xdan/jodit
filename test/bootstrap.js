@@ -350,8 +350,8 @@ function appendTestArea(id, noput) {
 /**
  * Jodit Factory
  *
- * @param {object} options
- * @param {HTMLElement|undefined} element
+ * @param {object} [options]
+ * @param {HTMLElement|undefined} [element]
  * @return {Jodit}
  */
 function getJodit(options, element) {
