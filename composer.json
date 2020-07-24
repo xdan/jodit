@@ -2,7 +2,7 @@
     "name": "xdan/jodit",
     "description": "Awesome WYSIWYG editor and FileBrowser",
     "type": "library",
-    "license": "GPL-2.0-or-later",
+    "license": "MIT",
     "authors": [
         {
             "name": "Chupurnov Valeriy",
