@@ -5,7 +5,6 @@
  */
 module.exports = {
 	paths: [
-		require('path').resolve(__dirname, './plugins/example/'),
-		require('path').resolve(__dirname, './plugins/show-blocks/'),
+		// require('path').resolve(__dirname, './plugins/example/'),
 	]
 };

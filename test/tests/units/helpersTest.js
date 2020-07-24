@@ -263,12 +263,15 @@ describe('Test helpers', function() {
 						'Type something',
 						'Напишите что-либо',
 						'ru',
+
 						'About Jodit',
 						'حول جوديت',
 						'ar',
+
 						'About Jodit',
-						'About Jodit',
+						'{About Jodit}',
 						'ar1',
+
 						'British people',
 						'{British people}',
 						'ar'

@@ -106,7 +106,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 
 		super.update();
 
-		this.j.e.fire('updateToolbar');
+		this.j.e.fire('afterUpdateToolbar');
 	}
 
 	update = this.j.async.debounce(this.immediateUpdate, this.j.defaultTimeout);

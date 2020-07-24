@@ -26,7 +26,7 @@ describe('Test interface', function () {
 		describe('Set license', function () {
 			it('Should show License in about dialog', function () {
 				const editor = getJodit({
-					license: '12345678901234567890123456789022', // don't use this key - it is wrong
+					license: '12345-67890-12345-67890', // don't use this key - it is wrong
 					toolbarAdaptive: false
 				});
 
@@ -42,7 +42,7 @@ describe('Test interface', function () {
 
 				expect(
 					dialog.textContent.match(
-						/License: 12345678-\*\*\*\*\*\*\*\*-\*\*\*\*\*\*\*\*-56789022/
+						/License: 12345-67-\*\*\*\*\*\*\*\*-\*\*\*\*\*\*\*/
 					)
 				).is.not.null;
 			});

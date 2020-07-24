@@ -198,7 +198,7 @@ export function size(editor: IJodit): void {
 		)
 		.on(window, 'load', resizeWorkspace)
 		.on(
-			'afterInit resize updateToolbar scroll afterResize',
+			'afterInit resize afterUpdateToolbar scroll afterResize',
 			resizeWorkspace
 		);
 }
