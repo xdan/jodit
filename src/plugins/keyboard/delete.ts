@@ -104,8 +104,8 @@ export class Delete extends Plugin {
 			normalizeCursorPosition(fakeNode, backspace);
 
 			if (
-				this.checkRemoveChar(fakeNode, backspace) ||
 				this.checkRemoveInseparableElement(fakeNode, backspace) ||
+				this.checkRemoveChar(fakeNode, backspace) ||
 				this.checkTableCell(fakeNode, backspace) ||
 				this.checkRemoveEmptyParent(fakeNode, backspace) ||
 				this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||

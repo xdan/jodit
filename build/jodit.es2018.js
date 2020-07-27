@@ -19593,8 +19593,8 @@ class delete_Delete extends plugin_Plugin {
                 return;
             }
             Object(keyboard_helpers["d" /* normalizeCursorPosition */])(fakeNode, backspace);
-            if (this.checkRemoveChar(fakeNode, backspace) ||
-                this.checkRemoveInseparableElement(fakeNode, backspace) ||
+            if (this.checkRemoveInseparableElement(fakeNode, backspace) ||
+                this.checkRemoveChar(fakeNode, backspace) ||
                 this.checkTableCell(fakeNode, backspace) ||
                 this.checkRemoveEmptyParent(fakeNode, backspace) ||
                 this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||

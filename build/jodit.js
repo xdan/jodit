@@ -22445,8 +22445,8 @@ var Delete = (function (_super) {
                 return;
             }
             helpers_2.normalizeCursorPosition(fakeNode, backspace);
-            if (this.checkRemoveChar(fakeNode, backspace) ||
-                this.checkRemoveInseparableElement(fakeNode, backspace) ||
+            if (this.checkRemoveInseparableElement(fakeNode, backspace) ||
+                this.checkRemoveChar(fakeNode, backspace) ||
                 this.checkTableCell(fakeNode, backspace) ||
                 this.checkRemoveEmptyParent(fakeNode, backspace) ||
                 this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
