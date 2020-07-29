@@ -142,7 +142,7 @@ export const cssPath = (el: Element): Nullable<string> => {
 		return null;
 	}
 
-	const path = [];
+	const path: string[] = [];
 
 	let start: Nullable<Element> = el;
 
