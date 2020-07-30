@@ -8,6 +8,7 @@ import { Plugin } from '../../core/plugin';
 import { CanUndef, IJodit, Nullable } from '../../types';
 import { Dom } from '../../core/dom';
 import {
+	CONTENTEDITABLE_ATTRIBUTE,
 	INSEPARABLE_TAGS,
 	INVISIBLE_SPACE,
 	KEY_BACKSPACE,
@@ -104,8 +105,17 @@ export class Delete extends Plugin {
 			normalizeCursorPosition(fakeNode, backspace);
 
 			if (
-				this.checkRemoveInseparableElement(fakeNode, backspace) ||
+				this.checkRemoveEntireElement(
+					fakeNode,
+					backspace,
+					this.isContentUneditableElement
+				) ||
 				this.checkRemoveChar(fakeNode, backspace) ||
+				this.checkRemoveEntireElement(
+					fakeNode,
+					backspace,
+					this.isInseparableElement
+				) ||
 				this.checkTableCell(fakeNode, backspace) ||
 				this.checkRemoveEmptyParent(fakeNode, backspace) ||
 				this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
@@ -277,18 +287,57 @@ export class Delete extends Plugin {
 	 * ```html
 	 * <p>first second | stop</p>
 	 * ```
+	 * @param neighbor
+	 */
+	private isInseparableElement(neighbor: Nullable<Node>): boolean {
+		return Dom.isTag(neighbor, INSEPARABLE_TAGS);
+	}
+
+	/**
+	 * Check if Element should be treated as contenteditable=false
+	 *
+	 * @example
+	 * ```html
+	 * <p>first second <a contenteditable="false">link</a>| stop</p>
+	 * ```
+	 * result
+	 * ```html
+	 * <p>first second | stop</p>
+	 * ```
+	 * @param neighbor
+	 */
+	private isContentUneditableElement(neighbor: Nullable<Node>): boolean {
+		const element = neighbor as HTMLElement;
+		return (
+			!element?.isContentEditable ||
+			element?.getAttribute(CONTENTEDITABLE_ATTRIBUTE) === 'false'
+		);
+	}
+
+	/**
+	 * Check if element should be removed as a whole
+	 *
+	 * @example
+	 * ```html
+	 * <p>first second <img>| stop</p>
+	 * ```
+	 * result
+	 * ```html
+	 * <p>first second | stop</p>
+	 * ```
 	 * @param fakeNode
 	 * @param backspace
 	 */
-	private checkRemoveInseparableElement(
+	private checkRemoveEntireElement(
 		fakeNode: Node,
-		backspace: boolean
+		backspace: boolean,
+		isQualifyingElementType: (neighbor: Nullable<Node>) => boolean
 	): void | true {
 		const neighbor = Dom.getNormalSibling(fakeNode, backspace);
 
 		if (
 			Dom.isElement(neighbor) &&
-			(Dom.isTag(neighbor, INSEPARABLE_TAGS) || Dom.isEmpty(neighbor))
+			(isQualifyingElementType(neighbor) || Dom.isEmpty(neighbor))
 		) {
 			Dom.safeRemove(neighbor);
 			this.j.s.setCursorBefore(fakeNode);

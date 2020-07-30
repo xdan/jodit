@@ -100,6 +100,7 @@ export const TEXT_PLAIN = IS_IE ? 'text' : 'text/plain';
 export const TEXT_HTML = IS_IE ? 'text' : 'text/html';
 
 export const MARKER_CLASS = 'jodit-selection_marker';
+export const CONTENTEDITABLE_ATTRIBUTE = 'data-jodit-contenteditable';
 
 export const EMULATE_DBLCLICK_TIMEOUT = 300;
 

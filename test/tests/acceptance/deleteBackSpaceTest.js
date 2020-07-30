@@ -267,10 +267,11 @@ describe('Backspace/Delete key', function () {
 		});
 	});
 
-	describe('Near with some inseparable element', function () {
+	describe('Near a content uneditable element', function () {
 		describe('Backspace', function () {
 			it('Should remove this element like simple char', function () {
-				editor.value = '<p>test<img/>test</p>';
+				editor.value =
+					'<p>test<a contenteditable="false">link</a>test</p>';
 
 				range.setStartAfter(
 					editor.editor.firstChild.firstChild.nextSibling
@@ -281,9 +282,63 @@ describe('Backspace/Delete key', function () {
 
 				expect(editor.value).equals('<p>testtest</p>');
 			});
+		});
 
-			it('Should remove elements with children like simple char', function () {
-				editor.value = '<p>test<jodit>child</jodit>test</p>';
+		describe('Delete', function () {
+			it('Should remove this element like simple char', function () {
+				editor.value =
+					'<p>test<a contenteditable="false">link</a>test</p>';
+
+				range.setStartBefore(
+					editor.editor.firstChild.firstChild.nextSibling
+				);
+				editor.s.selectRange(range);
+
+				simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
+
+				expect(editor.value).equals('<p>testtest</p>');
+			});
+		});
+	});
+
+	describe('Near an element with a false jodit-contenteditable data attribute', function () {
+		describe('Backspace', function () {
+			it('Should remove this element like simple char', function () {
+				editor.value =
+					'<p>test<a data-jodit-contenteditable="false">link</a>test</p>';
+
+				range.setStartAfter(
+					editor.editor.firstChild.firstChild.nextSibling
+				);
+				editor.s.selectRange(range);
+
+				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+				expect(editor.value).equals('<p>testtest</p>');
+			});
+		});
+
+		describe('Delete', function () {
+			it('Should remove this element like simple char', function () {
+				editor.value =
+					'<p>test<a data-jodit-contenteditable="false">link</a>test</p>';
+
+				range.setStartBefore(
+					editor.editor.firstChild.firstChild.nextSibling
+				);
+				editor.s.selectRange(range);
+
+				simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
+
+				expect(editor.value).equals('<p>testtest</p>');
+			});
+		});
+	});
+
+	describe('Near with some inseparable element', function () {
+		describe('Backspace', function () {
+			it('Should remove this element like simple char', function () {
+				editor.value = '<p>test<img/>test</p>';
 
 				range.setStartAfter(
 					editor.editor.firstChild.firstChild.nextSibling

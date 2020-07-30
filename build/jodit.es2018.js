@@ -1637,6 +1637,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TEXT_PLAIN", function() { return TEXT_PLAIN; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TEXT_HTML", function() { return TEXT_HTML; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MARKER_CLASS", function() { return MARKER_CLASS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CONTENTEDITABLE_ATTRIBUTE", function() { return CONTENTEDITABLE_ATTRIBUTE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EMULATE_DBLCLICK_TIMEOUT", function() { return EMULATE_DBLCLICK_TIMEOUT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INSERT_AS_HTML", function() { return INSERT_AS_HTML; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INSERT_CLEAR_HTML", function() { return INSERT_CLEAR_HTML; });
@@ -1708,6 +1709,7 @@ const URL_LIST = IS_IE ? 'url' : 'text/uri-list';
 const TEXT_PLAIN = IS_IE ? 'text' : 'text/plain';
 const TEXT_HTML = IS_IE ? 'text' : 'text/html';
 const MARKER_CLASS = 'jodit-selection_marker';
+const CONTENTEDITABLE_ATTRIBUTE = 'data-jodit-contenteditable';
 const EMULATE_DBLCLICK_TIMEOUT = 300;
 const INSERT_AS_HTML = 'insert_as_html';
 const INSERT_CLEAR_HTML = 'insert_clear_html';
@@ -19593,8 +19595,9 @@ class delete_Delete extends plugin_Plugin {
                 return;
             }
             Object(keyboard_helpers["d" /* normalizeCursorPosition */])(fakeNode, backspace);
-            if (this.checkRemoveInseparableElement(fakeNode, backspace) ||
+            if (this.checkRemoveEntireElement(fakeNode, backspace, this.isContentUneditableElement) ||
                 this.checkRemoveChar(fakeNode, backspace) ||
+                this.checkRemoveEntireElement(fakeNode, backspace, this.isInseparableElement) ||
                 this.checkTableCell(fakeNode, backspace) ||
                 this.checkRemoveEmptyParent(fakeNode, backspace) ||
                 this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
@@ -19686,10 +19689,18 @@ class delete_Delete extends plugin_Plugin {
             dom["a" /* Dom */].after(node, this.j.createInside.element('br'));
         }
     }
-    checkRemoveInseparableElement(fakeNode, backspace) {
+    isInseparableElement(neighbor) {
+        return dom["a" /* Dom */].isTag(neighbor, constants["INSEPARABLE_TAGS"]);
+    }
+    isContentUneditableElement(neighbor) {
+        const element = neighbor;
+        return (!(element === null || element === void 0 ? void 0 : element.isContentEditable) ||
+            (element === null || element === void 0 ? void 0 : element.getAttribute(constants["CONTENTEDITABLE_ATTRIBUTE"])) === 'false');
+    }
+    checkRemoveEntireElement(fakeNode, backspace, isQualifyingElementType) {
         const neighbor = dom["a" /* Dom */].getNormalSibling(fakeNode, backspace);
         if (dom["a" /* Dom */].isElement(neighbor) &&
-            (dom["a" /* Dom */].isTag(neighbor, constants["INSEPARABLE_TAGS"]) || dom["a" /* Dom */].isEmpty(neighbor))) {
+            (isQualifyingElementType(neighbor) || dom["a" /* Dom */].isEmpty(neighbor))) {
             dom["a" /* Dom */].safeRemove(neighbor);
             this.j.s.setCursorBefore(fakeNode);
             if (dom["a" /* Dom */].isTag(neighbor, 'br')) {

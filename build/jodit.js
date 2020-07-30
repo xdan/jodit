@@ -850,7 +850,7 @@ exports.Dom = Dom;
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BASE_PATH = exports.KEY_ALIASES = exports.IS_MAC = exports.SAFE_COUNT_CHANGE_CALL = exports.INSERT_ONLY_TEXT = exports.INSERT_AS_TEXT = exports.INSERT_CLEAR_HTML = exports.INSERT_AS_HTML = exports.EMULATE_DBLCLICK_TIMEOUT = exports.MARKER_CLASS = exports.TEXT_HTML = exports.TEXT_PLAIN = exports.URL_LIST = exports.IS_IE = exports.MODE_SPLIT = exports.MODE_SOURCE = exports.MODE_WYSIWYG = exports.PARAGRAPH = exports.BR = exports.COMMAND_KEYS = exports.ACCURACY = exports.NEARBY = exports.KEY_F3 = exports.KEY_DELETE = exports.KEY_DOWN = exports.KEY_RIGHT = exports.KEY_UP = exports.KEY_LEFT = exports.KEY_ESC = exports.KEY_ENTER = exports.KEY_TAB = exports.KEY_BACKSPACE = exports.MAY_BE_REMOVED_WITH_KEY = exports.INSEPARABLE_TAGS = exports.IS_INLINE = exports.IS_BLOCK = exports.SPACE_REG_EXP_END = exports.SPACE_REG_EXP_START = exports.SPACE_REG_EXP = exports.INVISIBLE_SPACE_REG_EXP_START = exports.INVISIBLE_SPACE_REG_EXP_END = exports.INVISIBLE_SPACE_REG_EXP = exports.INVISIBLE_SPACE = void 0;
+exports.BASE_PATH = exports.KEY_ALIASES = exports.IS_MAC = exports.SAFE_COUNT_CHANGE_CALL = exports.INSERT_ONLY_TEXT = exports.INSERT_AS_TEXT = exports.INSERT_CLEAR_HTML = exports.INSERT_AS_HTML = exports.EMULATE_DBLCLICK_TIMEOUT = exports.CONTENTEDITABLE_ATTRIBUTE = exports.MARKER_CLASS = exports.TEXT_HTML = exports.TEXT_PLAIN = exports.URL_LIST = exports.IS_IE = exports.MODE_SPLIT = exports.MODE_SOURCE = exports.MODE_WYSIWYG = exports.PARAGRAPH = exports.BR = exports.COMMAND_KEYS = exports.ACCURACY = exports.NEARBY = exports.KEY_F3 = exports.KEY_DELETE = exports.KEY_DOWN = exports.KEY_RIGHT = exports.KEY_UP = exports.KEY_LEFT = exports.KEY_ESC = exports.KEY_ENTER = exports.KEY_TAB = exports.KEY_BACKSPACE = exports.MAY_BE_REMOVED_WITH_KEY = exports.INSEPARABLE_TAGS = exports.IS_INLINE = exports.IS_BLOCK = exports.SPACE_REG_EXP_END = exports.SPACE_REG_EXP_START = exports.SPACE_REG_EXP = exports.INVISIBLE_SPACE_REG_EXP_START = exports.INVISIBLE_SPACE_REG_EXP_END = exports.INVISIBLE_SPACE_REG_EXP = exports.INVISIBLE_SPACE = void 0;
 exports.INVISIBLE_SPACE = '\uFEFF';
 exports.INVISIBLE_SPACE_REG_EXP = function () { return /[\uFEFF]/g; };
 exports.INVISIBLE_SPACE_REG_EXP_END = function () { return /[\uFEFF]+$/g; };
@@ -908,6 +908,7 @@ exports.URL_LIST = exports.IS_IE ? 'url' : 'text/uri-list';
 exports.TEXT_PLAIN = exports.IS_IE ? 'text' : 'text/plain';
 exports.TEXT_HTML = exports.IS_IE ? 'text' : 'text/html';
 exports.MARKER_CLASS = 'jodit-selection_marker';
+exports.CONTENTEDITABLE_ATTRIBUTE = 'data-jodit-contenteditable';
 exports.EMULATE_DBLCLICK_TIMEOUT = 300;
 exports.INSERT_AS_HTML = 'insert_as_html';
 exports.INSERT_CLEAR_HTML = 'insert_clear_html';
@@ -22445,8 +22446,9 @@ var Delete = (function (_super) {
                 return;
             }
             helpers_2.normalizeCursorPosition(fakeNode, backspace);
-            if (this.checkRemoveInseparableElement(fakeNode, backspace) ||
+            if (this.checkRemoveEntireElement(fakeNode, backspace, this.isContentUneditableElement) ||
                 this.checkRemoveChar(fakeNode, backspace) ||
+                this.checkRemoveEntireElement(fakeNode, backspace, this.isInseparableElement) ||
                 this.checkTableCell(fakeNode, backspace) ||
                 this.checkRemoveEmptyParent(fakeNode, backspace) ||
                 this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
@@ -22538,10 +22540,18 @@ var Delete = (function (_super) {
             dom_1.Dom.after(node, this.j.createInside.element('br'));
         }
     };
-    Delete.prototype.checkRemoveInseparableElement = function (fakeNode, backspace) {
+    Delete.prototype.isInseparableElement = function (neighbor) {
+        return dom_1.Dom.isTag(neighbor, constants_1.INSEPARABLE_TAGS);
+    };
+    Delete.prototype.isContentUneditableElement = function (neighbor) {
+        var element = neighbor;
+        return (!(element === null || element === void 0 ? void 0 : element.isContentEditable) ||
+            (element === null || element === void 0 ? void 0 : element.getAttribute(constants_1.CONTENTEDITABLE_ATTRIBUTE)) === 'false');
+    };
+    Delete.prototype.checkRemoveEntireElement = function (fakeNode, backspace, isQualifyingElementType) {
         var neighbor = dom_1.Dom.getNormalSibling(fakeNode, backspace);
         if (dom_1.Dom.isElement(neighbor) &&
-            (dom_1.Dom.isTag(neighbor, constants_1.INSEPARABLE_TAGS) || dom_1.Dom.isEmpty(neighbor))) {
+            (isQualifyingElementType(neighbor) || dom_1.Dom.isEmpty(neighbor))) {
             dom_1.Dom.safeRemove(neighbor);
             this.j.s.setCursorBefore(fakeNode);
             if (dom_1.Dom.isTag(neighbor, 'br')) {
