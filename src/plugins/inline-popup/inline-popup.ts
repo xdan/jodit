@@ -24,6 +24,7 @@ import { Popup } from '../../core/ui/popup';
 import { splitArray, isString, position, isFunction } from '../../core/helpers';
 import { Dom, Table, ToolbarCollection } from '../../modules';
 import { debounce, wait } from '../../core/decorators';
+import { isArray } from 'util';
 
 /**
  * Plugin for show inline popup dialog
@@ -78,9 +79,20 @@ export class inlinePopup extends Plugin {
 
 			const data = this.j.o.popup[type];
 
-			this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
-			this.toolbar.build(isFunction(data) ? data(this.j) : data, target);
-			this.popup.setContent(this.toolbar.container);
+			let content;
+
+			if (isFunction(data)) {
+				content = data(this.j, target, this.popup.close);
+			} else {
+				content = data;
+			}
+
+			if (isArray(content)) {
+				this.toolbar.build(content, target);
+				this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
+				content = this.toolbar.container;
+			}
+			this.popup.setContent(content);
 
 			this.type = type;
 		}
