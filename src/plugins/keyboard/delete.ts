@@ -285,7 +285,6 @@ export class Delete extends Plugin {
 		backspace: boolean
 	): void | true {
 		const neighbor = Dom.getNormalSibling(fakeNode, backspace);
-
 		if (
 			Dom.isElement(neighbor) &&
 			(Dom.isTag(neighbor, INSEPARABLE_TAGS) || Dom.isEmpty(neighbor))
@@ -381,7 +380,7 @@ export class Delete extends Plugin {
 			return true;
 		}
 
-		if (neighbor) {
+		if (neighbor && !Dom.isText(neighbor) && !Dom.isTag(neighbor, ['br', 'hr', 'img', 'link'])) {
 			setCursorIn(neighbor, !backspace);
 		} else {
 			setCursorBefore(fakeNode);
