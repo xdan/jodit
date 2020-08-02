@@ -4,7 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import autobind from 'autobind-decorator';
+
 import { Config } from '../config';
+import { Plugin } from '../core/plugin';
 import {
 	COMMAND_KEYS,
 	INVISIBLE_SPACE_REG_EXP,
@@ -38,73 +41,109 @@ Config.prototype.limitHTML = false;
 
 /**
  * Plugin control for chars or words count
- * @param jodit
  */
-export function limit(jodit: IJodit): void {
-	if (jodit && (jodit.o.limitWords || jodit.o.limitChars)) {
-		const callback = (
-			event: KeyboardEvent | null,
-			inputText: string = ''
-		): void | boolean => {
-			const text: string =
-				inputText || (jodit.o.limitHTML ? jodit.value : jodit.text);
+export class limit extends Plugin {
+	/** @override **/
+	protected afterInit(jodit: IJodit) {
+		const { limitWords, limitChars } = jodit.o;
 
-			const words: string[] = text
-				.replace(INVISIBLE_SPACE_REG_EXP(), '')
-				.split(SPACE_REG_EXP())
-				.filter((e: string) => e.length);
+		if (jodit && (limitWords || limitChars)) {
+			let snapshot: SnapshotType | null = null;
 
-			if (event && COMMAND_KEYS.includes(event.key)) {
-				return;
-			}
-
-			if (jodit.o.limitWords && jodit.o.limitWords <= words.length) {
-				return jodit.o.limitWords === words.length;
-			}
-
-			if (
-				jodit.o.limitChars &&
-				jodit.o.limitChars <= words.join('').length
-			) {
-				return jodit.o.limitChars === words.join('').length;
-			}
-
-			return;
-		};
-
-		let snapshot: SnapshotType | null = null;
-
-		jodit.e
-			.off('.limit')
-			.on('beforePaste.limit', () => {
-				snapshot = jodit.observer.snapshot.make();
-			})
-			.on(
-				'keydown.limit keyup.limit beforeEnter.limit beforePaste.limit',
-				(event: KeyboardEvent): false | void => {
-					if (callback(event) !== undefined) {
+			jodit.e
+				.off('.limit')
+				.on('beforePaste.limit', () => {
+					snapshot = jodit.observer.snapshot.make();
+				})
+				.on(
+					'keydown.limit keyup.limit beforeEnter.limit beforePaste.limit',
+					this.checkPreventKeyPressOrPaste
+				)
+				.on('change.limit', this.checkPreventChanging)
+				.on('afterPaste.limit', (): false | void => {
+					if (this.shouldPreventInsertHTML() && snapshot) {
+						jodit.observer.snapshot.restore(snapshot);
 						return false;
 					}
-				}
-			)
-			.on(
-				'change.limit',
-				jodit.async.debounce((newValue: string, oldValue: string) => {
-					if (
-						callback(
-							null,
-							jodit.o.limitHTML ? newValue : stripTags(newValue)
-						) === false
-					) {
-						jodit.value = oldValue;
-					}
-				}, jodit.defaultTimeout)
-			)
-			.on('afterPaste.limit', (): false | void => {
-				if (callback(null) === false && snapshot) {
-					jodit.observer.snapshot.restore(snapshot);
-					return false;
-				}
-			});
+				});
+		}
+	}
+
+	/**
+	 * Action should be prevented
+	 *
+	 * @param event
+	 * @param inputText
+	 */
+	private shouldPreventInsertHTML(
+		event: KeyboardEvent | null = null,
+		inputText: string = ''
+	): boolean {
+		if (event && COMMAND_KEYS.includes(event.key)) {
+			return false;
+		}
+
+		const { jodit } = this;
+		const { limitWords, limitChars } = jodit.o;
+		const text =
+			inputText || (jodit.o.limitHTML ? jodit.value : jodit.text);
+
+		const words = this.splitWords(text);
+
+		if (limitWords && words.length >= limitWords) {
+			return true;
+		}
+
+		return Boolean(limitChars) && words.join('').length >= limitChars;
+	}
+
+	/**
+	 * Check if some keypress or paste should be prevented
+	 * @param event
+	 * @private
+	 */
+	@autobind
+	private checkPreventKeyPressOrPaste(event: KeyboardEvent): void | false {
+		if (this.shouldPreventInsertHTML(event)) {
+			return false;
+		}
+	}
+
+	/**
+	 * Check if some external changing should be prevented
+	 * @param newValue
+	 * @param oldValue
+	 */
+	@autobind
+	private checkPreventChanging(newValue: string, oldValue: string) {
+		const { jodit } = this;
+		const { limitWords, limitChars } = jodit.o;
+
+		const text = jodit.o.limitHTML ? newValue : stripTags(newValue),
+			words = this.splitWords(text);
+
+		if (
+			(limitWords && words.length > limitWords) ||
+			(Boolean(limitChars) && words.join('').length > limitChars)
+		) {
+			jodit.value = oldValue;
+		}
+	}
+
+	/**
+	 * Split text on words without technical characters
+	 * @param text
+	 * @private
+	 */
+	private splitWords(text: string): string[] {
+		return text
+			.replace(INVISIBLE_SPACE_REG_EXP(), '')
+			.split(SPACE_REG_EXP())
+			.filter(e => e.length);
+	}
+
+	/** @override **/
+	protected beforeDestruct(jodit: IJodit) {
+		jodit.e.off('.limit');
 	}
 }

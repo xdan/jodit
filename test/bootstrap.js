@@ -248,8 +248,9 @@ Jodit.prototype.i18n = function (key) {
 };
 
 Jodit.defaultOptions.events.afterInit = function (editor) {
-	editor && editor.container.setAttribute('data-test-case', window.mochaTestName);
-}
+	editor &&
+		editor.container.setAttribute('data-test-case', window.mochaTestName);
+};
 Jodit.defaultOptions.filebrowser.saveStateInStorage = false;
 Jodit.defaultOptions.observer.timeout = 0;
 Jodit.modules.View.defaultOptions.defaultTimeout = 0;
@@ -584,6 +585,8 @@ const keyCode = Object.keys(codeKey).reduce((res, code) => {
  * @param {string|number|HTMLElement} keyCodeOrElement
  * @param {HTMLElement} [element]
  * @param {Function} applyOpt
+ *
+ * @returns boolean
  */
 function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
 	if (Array.isArray(type)) {
@@ -649,7 +652,7 @@ function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
 		evt.changedTouches = changedTouches;
 	}
 
-	element.dispatchEvent(evt);
+	return element.dispatchEvent(evt);
 }
 
 /**

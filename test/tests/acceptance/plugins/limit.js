@@ -56,7 +56,7 @@ describe('Limit plugin', function() {
 							}
 						});
 
-						editor.value = '1111';
+						editor.value = '<p>1111</p>';
 
 						const
 							range = editor.s.createRange(true);
@@ -64,18 +64,17 @@ describe('Limit plugin', function() {
 						range.setEndAfter(editor.editor.firstChild.firstChild);
 						range.collapse(false);
 
-						range.insertNode(editor.createInside.text('v'));
-						simulateEvent('keydown', Jodit.KEY_V, editor.editor);
+						expect(simulateEvent('keydown', 'v', editor.editor)).is.true;
 
-						range.insertNode(editor.createInside.text('v'));
-						simulateEvent('keydown', Jodit.KEY_V, editor.editor);
+						editor.value = '<p>11111</p>';
+						expect(simulateEvent('keydown', 'v', editor.editor)).is.false;
 
 						setTimeout(() => {
-							expect(editor.value).equals('<p>1111vv</p>');
+							expect(editor.value).equals('<p>11111</p>');
 							const chars = editor.statusbar.container.querySelector(
 								'.jodit-status-bar__item'
 							);
-							expect(chars.textContent.trim()).equals('Chars: 6');
+							expect(chars.textContent.trim()).equals('Chars: 5');
 							done();
 						}, 200);
 					});
@@ -145,7 +144,7 @@ describe('Limit plugin', function() {
 
 					const timeout = () => {
 						setTimeout(() => {
-							expect(editor.value).equals('<p>11111 aaa aaa</p>');
+							expect(editor.value).equals('<p>11111 aaa</p>');
 							done();
 						}, 200);
 					};
@@ -154,7 +153,7 @@ describe('Limit plugin', function() {
 					expect(editor.value).equals('<p>11111 aaa</p>');
 
 					paste();
-					expect(editor.value).equals('<p>11111 aaa aaa</p>');
+					expect(editor.value).equals('<p>11111 aaa</p>');
 
 					paste();
 					timeout();
