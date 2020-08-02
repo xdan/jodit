@@ -33,6 +33,12 @@ export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 	): this;
 }
 
+export interface IUIIconState {
+	name: string;
+	iconURL: string;
+	fill: string;
+}
+
 export interface IUIButtonState {
 	size: 'tiny' | 'xsmall' | 'small' | 'middle' | 'large';
 	name: string;
@@ -40,11 +46,7 @@ export interface IUIButtonState {
 	disabled: boolean;
 	activated: boolean;
 
-	icon: {
-		name: string;
-		iconURL: string;
-		fill: string;
-	};
+	icon: IUIIconState;
 
 	text: string;
 	tooltip: string;

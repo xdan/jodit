@@ -37,8 +37,6 @@ import { IStyle, Style } from './style/style';
 
 type WindowSelection = Selection | null;
 
-// declare const isProd: boolean;
-
 export class Select {
 	constructor(readonly jodit: IJodit) {
 		jodit.e.on('removeMarkers', () => {
@@ -559,7 +557,7 @@ export class Select {
 
 			if (Dom.isOrContains(this.area, range.commonAncestorContainer)) {
 				if (
-					/^(BR|HR|IMG|VIDEO)$/i.test(
+					/^(BR|HR|IMG|VIDEO|LINK)$/i.test(
 						range.startContainer.nodeName
 					) &&
 					range.collapsed
@@ -613,7 +611,7 @@ export class Select {
 		const node = this.j.createInside.div(),
 			fragment = this.j.createInside.fragment();
 
-		let lastChild: Node | null, lastEditorElement: Node | null;
+		let lastChild: Node | null;
 
 		if (!this.isFocused() && this.j.isEditorMode()) {
 			this.focus();
@@ -649,29 +647,6 @@ export class Select {
 			this.setCursorAfter(lastChild);
 		} else {
 			this.setCursorIn(fragment);
-		}
-
-		lastEditorElement = this.area.lastChild;
-
-		while (
-			Dom.isText(lastEditorElement) &&
-			lastEditorElement.previousSibling &&
-			lastEditorElement.nodeValue &&
-			/^\s*$/.test(lastEditorElement.nodeValue)
-		) {
-			lastEditorElement = lastEditorElement.previousSibling;
-		}
-
-		if (lastChild) {
-			if (
-				lastEditorElement &&
-				lastChild === lastEditorElement &&
-				Dom.isElement(lastChild)
-			) {
-				this.area.appendChild(this.j.createInside.element('br'));
-			}
-
-			this.setCursorAfter(lastChild);
 		}
 
 		if (this.j.e) {

@@ -4,9 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IControlTypeStrong, IDictionary, IViewBased } from '../../types';
-import { css, isString, trim } from '../helpers';
-
+import { CanUndef, IDictionary, IUIIconState, IViewBased } from '../../types';
+import { css } from '../helpers';
 export class Icon {
 	private static icons: IDictionary<string> = {};
 
@@ -49,42 +48,49 @@ export class Icon {
 	static set(name: string, value: string): void {
 		this.icons[name.replace('_', '-')] = value;
 	}
-}
 
-export function createIcon(
-	jodit: IViewBased,
-	clearName: string,
-	control?: IControlTypeStrong
-): HTMLElement {
-	const icon: string = control ? control.icon || control.name : clearName;
+	/**
+	 * Make icon html element
+	 *
+	 * @param jodit
+	 * @param icon
+	 */
+	static makeIcon(jodit: IViewBased, icon: IUIIconState): CanUndef<Node> {
+		let iconElement: CanUndef<HTMLElement>;
 
-	let iconSVG: string | void | HTMLElement = jodit.e.fire(
-		'getIcon',
-		icon,
-		control,
-		clearName
-	);
+		if (icon) {
+			const clearName = icon.name.replace(/[^a-zA-Z0-9]/g, '_');
 
-	let iconElement: HTMLElement;
+			if (icon.iconURL) {
+				iconElement = jodit.c.span();
 
-	if (control && control.iconURL && iconSVG === undefined) {
-		iconElement = jodit.c.element('span');
-		css(
-			iconElement,
-			'backgroundImage',
-			'url(' + control.iconURL.replace('{basePath}', jodit.basePath) + ')'
-		);
-	} else {
-		if (iconSVG === undefined) {
-			iconSVG = Icon.get(Icon.exists(icon) ? icon : 'empty');
+				css(
+					iconElement,
+					'backgroundImage',
+					'url(' +
+						icon.iconURL.replace(
+							'{basePath}',
+							jodit?.basePath || ''
+						) +
+						')'
+				);
+			} else {
+				const svg =
+					jodit.e.fire('getIcon', icon.name, icon, clearName) ||
+					Icon.get(icon.name, '');
+
+				if (svg) {
+					iconElement = jodit.c.fromHTML(svg.trim());
+					iconElement.classList.add('jodit-icon_' + clearName);
+				}
+			}
 		}
 
-		iconElement = isString(iconSVG)
-			? jodit.c.fromHTML(trim(iconSVG))
-			: iconSVG;
+		if (iconElement) {
+			iconElement.classList.add('jodit-icon');
+			iconElement.style.fill = icon.fill;
+		}
+
+		return iconElement;
 	}
-
-	iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
-
-	return iconElement;
 }

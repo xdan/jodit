@@ -3,9 +3,9 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Toolbar', function() {
-	describe('Custom buttons', function() {
-		it('should create normal button in toolbar', function() {
+describe('Toolbar', function () {
+	describe('Custom buttons', function () {
+		it('should create normal button in toolbar', function () {
 			const editor = getJodit({
 				toolbarAdaptive: false,
 				buttons: [
@@ -14,7 +14,7 @@ describe('Toolbar', function() {
 						name: 'alert_some',
 						iconURL:
 							'https://xdsoft.net/jodit/build/images/icons/045-copy.png',
-						exec: function() {
+						exec: function () {
 							alert('test');
 						}
 					}
@@ -27,7 +27,7 @@ describe('Toolbar', function() {
 
 			expect(btns.length).equals(2);
 
-			btns.forEach(function(btn) {
+			btns.forEach(function (btn) {
 				const icon = btn.querySelector('.jodit-icon');
 
 				expect(icon).is.not.null;
@@ -41,8 +41,8 @@ describe('Toolbar', function() {
 			});
 		});
 
-		describe('Use controls', function() {
-			it('should create normal button in toolbar', function() {
+		describe('Use controls', function () {
+			it('should create normal button in toolbar', function () {
 				const editor = getJodit({
 					toolbarAdaptive: false,
 					controls: {
@@ -50,7 +50,7 @@ describe('Toolbar', function() {
 							name: 'alert_some',
 							iconURL:
 								'https://xdsoft.net/jodit/build/images/icons/045-copy.png',
-							exec: function() {
+							exec: function () {
 								editor.s.insertHTML(
 									'<p><span>indigo</span></p>'
 								);
@@ -67,14 +67,73 @@ describe('Toolbar', function() {
 				clickButton('alert_some', editor);
 
 				expect(editor.value).equals(
-					'<p><span>indigo</span></p><p><br></p>'
+					'<p><span>indigo</span></p>'
 				);
 			});
 		});
 	});
 
-	describe('Set toolbar options to false', function() {
-		it('Should hide toolbar', function() {
+	describe('Custom icons', function () {
+		describe('Use getIcon event', function () {
+			it('should create buttons with custom icons', function () {
+				const editor = getJodit({
+					toolbarAdaptive: false,
+					buttons: ['image', 'redo', 'about'],
+					events: {
+						getIcon: function (name, control, clearName) {
+							var code = clearName;
+							console.log(code);
+							switch (clearName) {
+								case 'redo':
+									code = 'rotate-right';
+									break;
+								case 'about':
+									code = 'question';
+									break;
+							}
+
+							return (
+								'<i style="font-size:14px" class="fa fa-' +
+								code +
+								' fa-xs"></i>'
+							);
+						}
+					}
+				});
+
+				expect(editor.toolbar.getButtonsNames().toString()).equals(
+					'image,redo,about'
+				);
+
+				expect(
+					sortAttributes(getButton('image', editor).innerHTML)
+				).equals(
+					'<span class="jodit-toolbar-button__icon">' +
+					'<i class="fa fa-image fa-xs jodit-icon_image jodit-icon" style="font-size:14px"></i>' +
+					'</span><span class="jodit-toolbar-button__text"></span>'
+				);
+
+				expect(
+					sortAttributes(getButton('redo', editor).innerHTML)
+				).equals(
+					'<span class="jodit-toolbar-button__icon">' +
+					'<i class="fa fa-rotate-right fa-xs jodit-icon_redo jodit-icon" style="font-size:14px"></i>' +
+					'</span><span class="jodit-toolbar-button__text"></span>'
+				);
+
+				expect(
+					sortAttributes(getButton('about', editor).innerHTML)
+				).equals(
+					'<span class="jodit-toolbar-button__icon">' +
+					'<i class="fa fa-question fa-xs jodit-icon_about jodit-icon" style="font-size:14px"></i>' +
+					'</span><span class="jodit-toolbar-button__text"></span>'
+				);
+			});
+		});
+	});
+
+	describe('Set toolbar options to false', function () {
+		it('Should hide toolbar', function () {
 			const editor = getJodit({
 				toolbar: false
 			});
@@ -85,8 +144,8 @@ describe('Toolbar', function() {
 		});
 	});
 
-	describe('Set toolbar options to css selector', function() {
-		it('Should render toolbar in different container', function() {
+	describe('Set toolbar options to css selector', function () {
+		it('Should render toolbar in different container', function () {
 			const div = appendTestDiv(),
 				editor = getJodit(
 					{
@@ -107,8 +166,8 @@ describe('Toolbar', function() {
 			expect(defaultContainer).does.not.equal(toolbar.parentElement);
 		});
 
-		describe('After enable Fullsize mode', function() {
-			it('Should render toolbar in default container', function() {
+		describe('After enable Fullsize mode', function () {
+			it('Should render toolbar in default container', function () {
 				const div = appendTestDiv(),
 					editor = Jodit.make(appendTestArea(), {
 						toolbar: div
@@ -125,8 +184,8 @@ describe('Toolbar', function() {
 			});
 		});
 
-		describe('Change toolbar container dynamically', function() {
-			it('Should render toolbar in different containers every call setPanel', function() {
+		describe('Change toolbar container dynamically', function () {
+			it('Should render toolbar in different containers every call setPanel', function () {
 				const div1 = appendTestDiv(),
 					div2 = appendTestDiv(),
 					div3 = appendTestDiv(),
@@ -153,9 +212,9 @@ describe('Toolbar', function() {
 		});
 	});
 
-	describe('Popups', function() {
-		describe('Click on dots buttons in mobile size', function() {
-			it('Should open popup with several buttons', function() {
+	describe('Popups', function () {
+		describe('Click on dots buttons in mobile size', function () {
+			it('Should open popup with several buttons', function () {
 				getBox().style.width = '300px';
 				const editor = getJodit();
 
@@ -173,9 +232,9 @@ describe('Toolbar', function() {
 			});
 		});
 
-		describe('Click on some link', function() {
-			describe('in the left side of editor', function() {
-				it('Should open inline popup with float by left editor side', function() {
+		describe('Click on some link', function () {
+			describe('in the left side of editor', function () {
+				it('Should open inline popup with float by left editor side', function () {
 					const editor = getJodit({});
 
 					editor.value = 'asas <a href="#">test</a>';
@@ -196,8 +255,8 @@ describe('Toolbar', function() {
 			});
 		});
 
-		describe('Click on some button with defined popup field', function() {
-			it('Should open popup in toolbar', function() {
+		describe('Click on some button with defined popup field', function () {
+			it('Should open popup in toolbar', function () {
 				const editor = getJodit({
 					disablePlugins: 'mobile'
 				});
@@ -209,8 +268,8 @@ describe('Toolbar', function() {
 				expect(popup).is.not.null;
 			});
 
-			describe('in the left side', function() {
-				it('Should open popup in toolbar with float by left editor side', function() {
+			describe('in the left side', function () {
+				it('Should open popup in toolbar with float by left editor side', function () {
 					const editor = getJodit({
 						buttons: ['video'],
 						disablePlugins: 'mobile'
@@ -231,8 +290,8 @@ describe('Toolbar', function() {
 				});
 			});
 
-			describe('in the right side', function() {
-				it('Should open popup in toolbar with float by left editor side', function() {
+			describe('in the right side', function () {
+				it('Should open popup in toolbar with float by left editor side', function () {
 					const editor = getJodit({
 						width: 306,
 						buttons: [
@@ -271,7 +330,7 @@ describe('Toolbar', function() {
 
 		getBox().style.width = 'auto';
 
-		it('Open and close popap after clicking in another place', function() {
+		it('Open and close popup after clicking in another place', function () {
 			const editor = getJodit({
 				disablePlugins: 'mobile'
 			});
@@ -288,8 +347,8 @@ describe('Toolbar', function() {
 			expect(popup && popup.parentNode === null).is.true;
 		});
 
-		describe('Open list', function() {
-			it('Should Open list in toolbar', function() {
+		describe('Open list', function () {
+			it('Should Open list in toolbar', function () {
 				const editor = getJodit({
 					toolbarAdaptive: false
 				});
@@ -305,8 +364,8 @@ describe('Toolbar', function() {
 				).is.true;
 			});
 
-			describe('Change default list', function() {
-				it('Should change default FONT list in toolbar', function() {
+			describe('Change default list', function () {
+				it('Should change default FONT list in toolbar', function () {
 					const editor = getJodit({
 						toolbarAdaptive: false,
 						controls: {
@@ -340,7 +399,7 @@ describe('Toolbar', function() {
 					expect(list.textContent.match('Custom')).is.not.null;
 				});
 
-				it('Should change default FONT size list in toolbar', function() {
+				it('Should change default FONT size list in toolbar', function () {
 					const editor = getJodit({
 						toolbarAdaptive: false,
 						controls: {
@@ -361,7 +420,7 @@ describe('Toolbar', function() {
 			});
 		});
 
-		it('Open and close list after clicking in another place', function() {
+		it('Open and close list after clicking in another place', function () {
 			const editor = getJodit();
 
 			clickTrigger('fontsize', editor);
@@ -376,7 +435,7 @@ describe('Toolbar', function() {
 			expect(list && list.parentNode === null).is.true;
 		});
 
-		it('Open format list set H1 for current cursor position. Restore selection after that', function() {
+		it('Open format list set H1 for current cursor position. Restore selection after that', function () {
 			const editor = getJodit();
 
 			editor.value = 'text2text';
@@ -406,7 +465,7 @@ describe('Toolbar', function() {
 			expect(editor.value).equals('<h1>tex a ext</h1>');
 		});
 
-		it('Open video dialog and insert video by url from youtube.', function() {
+		it('Open video dialog and insert video by url from youtube.', function () {
 			const editor = getJodit({
 				disablePlugins: 'mobile'
 			});
@@ -427,6 +486,7 @@ describe('Toolbar', function() {
 
 			popup.querySelector('input[name=code]').value =
 				'https://www.youtube.com/watch?v=7CcEYRfxUOQ';
+
 			simulateEvent('submit', 0, popup.querySelector('.jodit-form'));
 
 			expect(sortAttributes(editor.value)).equals(
@@ -437,7 +497,7 @@ describe('Toolbar', function() {
 
 			expect(popup.parentNode).is.null;
 		});
-		it('Open align list and choose Right align.', function() {
+		it('Open align list and choose Right align.', function () {
 			const editor = getJodit();
 
 			editor.value = 'Test';
@@ -459,8 +519,8 @@ describe('Toolbar', function() {
 			expect(list.parentNode).is.null;
 		});
 
-		describe('Click inside the link', function() {
-			it('Should open link popup', function() {
+		describe('Click inside the link', function () {
+			it('Should open link popup', function () {
 				const editor = getJodit({
 					observer: {
 						timeout: 0
@@ -476,8 +536,8 @@ describe('Toolbar', function() {
 				expect(popup).is.not.null;
 			});
 
-			describe('Click on pencil', function() {
-				it('Should open edit link popup', function() {
+			describe('Click on pencil', function () {
+				it('Should open edit link popup', function () {
 					const editor = getJodit({
 						observer: {
 							timeout: 0
@@ -495,7 +555,7 @@ describe('Toolbar', function() {
 					const pencil = getButton('link', popup);
 					expect(pencil).is.not.null;
 
-					simulateEvent('click',  pencil);
+					simulateEvent('click', pencil);
 					const subpopup = getOpenedPopup(editor);
 
 					expect(subpopup).is.not.null;
@@ -507,9 +567,9 @@ describe('Toolbar', function() {
 			});
 		});
 
-		describe('Create table', function() {
-			describe('Mouse move', function() {
-				it('Should highlight cells in table-creator', function() {
+		describe('Create table', function () {
+			describe('Mouse move', function () {
+				it('Should highlight cells in table-creator', function () {
 					const editor = getJodit();
 					clickButton('table', editor);
 
@@ -532,8 +592,8 @@ describe('Toolbar', function() {
 					).equals(10);
 				});
 
-				describe('In iframe mode', function() {
-					it('Should works same way', function() {
+				describe('In iframe mode', function () {
+					it('Should works same way', function () {
 						const editor = getJodit({
 							iframe: true
 						});
@@ -565,9 +625,9 @@ describe('Toolbar', function() {
 		});
 	});
 
-	describe('Buttons', function() {
-		describe('Text mode', function() {
-			it('Should work i18n', function() {
+	describe('Buttons', function () {
+		describe('Text mode', function () {
+			it('Should work i18n', function () {
 				const editor = getJodit({
 						textIcons: true,
 						language: 'ru'
@@ -583,7 +643,7 @@ describe('Toolbar', function() {
 				expect(label1).does.not.equal(label2);
 			});
 
-			it('Should create buttons with text', function() {
+			it('Should create buttons with text', function () {
 				const editor = getJodit({
 					textIcons: true
 				});
@@ -595,7 +655,7 @@ describe('Toolbar', function() {
 				).equals(0);
 			});
 
-			it("Should add jodit_text_icons class to editor's container", function() {
+			it("Should add jodit_text_icons class to editor's container", function () {
 				const editor = getJodit({
 					textIcons: true
 				});
@@ -608,7 +668,7 @@ describe('Toolbar', function() {
 				).is.true;
 			});
 
-			it('Should set font-size more them 0', function() {
+			it('Should set font-size more them 0', function () {
 				const editor = getJodit({
 					textIcons: true
 				});
@@ -623,8 +683,8 @@ describe('Toolbar', function() {
 				).to.be.above(10);
 			});
 
-			describe('In tabs', function() {
-				it('Should be also only text', function() {
+			describe('In tabs', function () {
+				it('Should be also only text', function () {
 					const editor = getJodit({
 						textIcons: true
 					});
@@ -639,8 +699,8 @@ describe('Toolbar', function() {
 				});
 			});
 
-			describe('In video popup', function() {
-				it('Should be also only text', function() {
+			describe('In video popup', function () {
+				it('Should be also only text', function () {
 					const editor = getJodit({
 						textIcons: true,
 						toolbarAdaptive: false
@@ -657,7 +717,7 @@ describe('Toolbar', function() {
 			});
 		});
 
-		it('Remove default buttons functionality', function() {
+		it('Remove default buttons functionality', function () {
 			const editor = getJodit();
 			expect(getButton('source', editor)).is.not.null;
 			editor.destruct();
@@ -669,14 +729,14 @@ describe('Toolbar', function() {
 			expect(getButton('source', editor2)).is.null;
 		});
 
-		it('Add own button', function() {
+		it('Add own button', function () {
 			const editor = getJodit({
 				disablePlugins: ['mobile'],
 				buttons: Jodit.defaultOptions.buttons.concat([
 					{
 						name: 'insertDate',
 						iconURL: 'http://xdsoft.net/jodit/images/logo.png',
-						exec: function(editor) {
+						exec: function (editor) {
 							editor.s.insertHTML(
 								new Date('2016/03/16').toDateString()
 							);
@@ -695,7 +755,7 @@ describe('Toolbar', function() {
 			expect(editor.value).equals('<p>Wed Mar 16 2016</p>');
 		});
 
-		it('When cursor inside STRONG tag, Bold button should be selected', function() {
+		it('When cursor inside STRONG tag, Bold button should be selected', function () {
 			const editor = getJodit({
 					observer: {
 						timeout: 0 // disable delay
@@ -763,8 +823,8 @@ describe('Toolbar', function() {
 			expect(italic.getAttribute('aria-pressed')).equals('false');
 		});
 
-		describe('Disable for mode', function() {
-			it('Should disable buttons which can not be used in that mode', function() {
+		describe('Disable for mode', function () {
+			it('Should disable buttons which can not be used in that mode', function () {
 				const editor = getJodit({
 					observer: {
 						timeout: 0 // disable delay
@@ -789,9 +849,9 @@ describe('Toolbar', function() {
 					.false;
 			});
 
-			describe('For list', function() {
-				describe('enable', function() {
-					it('Should enable buttons which can be used in this mode', function() {
+			describe('For list', function () {
+				describe('enable', function () {
+					it('Should enable buttons which can be used in this mode', function () {
 						const editor = getJodit({
 							observer: {
 								timeout: 0 // disable delay
@@ -806,7 +866,7 @@ describe('Toolbar', function() {
 										h2: 'insert Header 2',
 										clear: 'Empty editor'
 									},
-									exec: function(editor) {
+									exec: function (editor) {
 										const key = this.args[0];
 
 										if (key === 'clear') {
@@ -818,7 +878,7 @@ describe('Toolbar', function() {
 											'&nbsp;{{test' + key + '}}&nbsp;'
 										);
 									},
-									childTemplate: function(key, value) {
+									childTemplate: function (key, value) {
 										return '<div>' + value + '</div>';
 									}
 								}
@@ -841,8 +901,8 @@ describe('Toolbar', function() {
 					});
 				});
 
-				describe('disable', function() {
-					it('Should disable buttons which can not be used in that mode', function() {
+				describe('disable', function () {
+					it('Should disable buttons which can not be used in that mode', function () {
 						const editor = getJodit({
 							observer: {
 								timeout: 0 // disable delay
@@ -857,7 +917,7 @@ describe('Toolbar', function() {
 										h2: 'insert Header 2',
 										clear: 'Empty editor'
 									},
-									exec: function(editor) {
+									exec: function (editor) {
 										const key = this.args[0];
 
 										if (key === 'clear') {
@@ -869,7 +929,7 @@ describe('Toolbar', function() {
 											'&nbsp;{{test' + key + '}}&nbsp;'
 										);
 									},
-									childTemplate: function(key, value) {
+									childTemplate: function (key, value) {
 										return '<div>' + value + '</div>';
 									}
 								}
@@ -890,8 +950,8 @@ describe('Toolbar', function() {
 			});
 		});
 
-		describe('Set size', function() {
-			it('Should add modification to button', function() {
+		describe('Set size', function () {
+			it('Should add modification to button', function () {
 				const editor = getJodit({
 					toolbarButtonSize: 'small'
 				});
@@ -906,9 +966,9 @@ describe('Toolbar', function() {
 				).is.true;
 			});
 
-			describe('For list', function() {
-				describe('enable', function() {
-					it('Should enable buttons which can be used in this mode', function() {
+			describe('For list', function () {
+				describe('enable', function () {
+					it('Should enable buttons which can be used in this mode', function () {
 						const editor = getJodit({
 							observer: {
 								timeout: 0 // disable delay
@@ -923,7 +983,7 @@ describe('Toolbar', function() {
 										h2: 'insert Header 2',
 										clear: 'Empty editor'
 									},
-									exec: function(editor) {
+									exec: function (editor) {
 										const key = this.args[0];
 
 										if (key === 'clear') {
@@ -935,7 +995,7 @@ describe('Toolbar', function() {
 											'&nbsp;{{test' + key + '}}&nbsp;'
 										);
 									},
-									childTemplate: function(key, value) {
+									childTemplate: function (key, value) {
 										return '<div>' + value + '</div>';
 									}
 								}
@@ -958,8 +1018,8 @@ describe('Toolbar', function() {
 					});
 				});
 
-				describe('disable', function() {
-					it('Should disable buttons which can not be used in that mode', function() {
+				describe('disable', function () {
+					it('Should disable buttons which can not be used in that mode', function () {
 						const editor = getJodit({
 							observer: {
 								timeout: 0 // disable delay
@@ -974,7 +1034,7 @@ describe('Toolbar', function() {
 										h2: 'insert Header 2',
 										clear: 'Empty editor'
 									},
-									exec: function(editor) {
+									exec: function (editor) {
 										const key = this.args[0];
 
 										if (key === 'clear') {
@@ -986,7 +1046,7 @@ describe('Toolbar', function() {
 											'&nbsp;{{test' + key + '}}&nbsp;'
 										);
 									},
-									childTemplate: function(key, value) {
+									childTemplate: function (key, value) {
 										return '<div>' + value + '</div>';
 									}
 								}
@@ -1007,39 +1067,33 @@ describe('Toolbar', function() {
 			});
 		});
 
-		describe('Allow tab navigation', function() {
-			describe('Enable', function() {
-				it('Should set tabindex=0 for all buttons', function() {
+		describe('Allow tab navigation', function () {
+			describe('Enable', function () {
+				it('Should set tabindex=0 for all buttons', function () {
 					const editor = getJodit({
 						allowTabNavigation: true
 					});
 
 					expect(
-						getButton(
-							'source',
-							editor
-						).getAttribute('tabindex')
+						getButton('source', editor).getAttribute('tabindex')
 					).equals('0');
 				});
 			});
 
-			describe('Disable', function() {
-				it('Should set tabindex=-1 for all buttons', function() {
+			describe('Disable', function () {
+				it('Should set tabindex=-1 for all buttons', function () {
 					const editor = getJodit({
 						allowTabNavigation: false // default
 					});
 
 					expect(
-						getButton(
-							'source',
-							editor
-						).getAttribute('tabindex')
+						getButton('source', editor).getAttribute('tabindex')
 					).equals('-1');
 				});
 			});
 		});
 
-		it('When cursor inside SPAN tag with style="font-weight: bold" or style="font-weight: 700", Bold button should be selected', function() {
+		it('When cursor inside SPAN tag with style="font-weight: bold" or style="font-weight: 700", Bold button should be selected', function () {
 			const editor = getJodit({
 					observer: {
 						timeout: 0 // disable delay
@@ -1062,8 +1116,8 @@ describe('Toolbar', function() {
 			expect(bold.getAttribute('aria-pressed')).equals('true');
 		});
 
-		describe('Check Redo Undo functionality', function() {
-			it('Should change disable in icon then then can not be executed', function() {
+		describe('Check Redo Undo functionality', function () {
+			it('Should change disable in icon then then can not be executed', function () {
 				const area = appendTestArea();
 				area.value = 'top';
 				const editor = new Jodit(area, {
@@ -1090,7 +1144,7 @@ describe('Toolbar', function() {
 			});
 		});
 
-		it('Full size button', function() {
+		it('Full size button', function () {
 			const editor = getJodit({
 				observer: {
 					timeout: 0 // disable delay
@@ -1109,14 +1163,14 @@ describe('Toolbar', function() {
 			}
 		});
 
-		describe('Extra buttons', function() {
-			describe('Options extraButtons', function() {
-				it('Should add extra buttons', function() {
+		describe('Extra buttons', function () {
+			describe('Options extraButtons', function () {
+				it('Should add extra buttons', function () {
 					const editor = getJodit({
 						extraButtons: [
 							{
 								name: 'adddate',
-								exec: function(editor) {
+								exec: function (editor) {
 									const a = editor.createInside.text('111');
 									editor.s.insertNode(a);
 								}
@@ -1133,8 +1187,8 @@ describe('Toolbar', function() {
 					expect(editor.value).equals('<p>111</p>');
 				});
 
-				describe('extraButtons always append in the end', function() {
-					it('Should add extra buttons on postion by buttons potions', function() {
+				describe('extraButtons always append in the end', function () {
+					it('Should add extra buttons on postion by buttons potions', function () {
 						const editor = getJodit({
 							buttons: [
 								'indent',
@@ -1147,7 +1201,7 @@ describe('Toolbar', function() {
 							extraButtons: [
 								{
 									name: 'adddate',
-									exec: function(editor) {
+									exec: function (editor) {
 										const a = editor.createInside.text(
 											'111'
 										);
@@ -1165,8 +1219,8 @@ describe('Toolbar', function() {
 			});
 		});
 
-		describe('Add button', function() {
-			it('Should create buttons in toolbar', function() {
+		describe('Add button', function () {
+			it('Should create buttons in toolbar', function () {
 				const editor = getJodit({
 					buttons: ['indent', 'outdent', 'bold', 'customxxx'],
 					disablePlugins: 'mobile'
@@ -1180,9 +1234,9 @@ describe('Toolbar', function() {
 			});
 		});
 
-		describe('Button Bold', function() {
-			describe('In collapsed selection', function() {
-				it('Should reactivate Bold button after second click and move cursor out of Strong element', function() {
+		describe('Button Bold', function () {
+			describe('In collapsed selection', function () {
+				it('Should reactivate Bold button after second click and move cursor out of Strong element', function () {
 					const editor = getJodit({
 						buttons: ['bold']
 					});
@@ -1203,8 +1257,8 @@ describe('Toolbar', function() {
 				});
 			});
 
-			describe('Not collapsed selection', function() {
-				it('Should reactivate Bold button after second click and move cursor out of Strong element', function() {
+			describe('Not collapsed selection', function () {
+				it('Should reactivate Bold button after second click and move cursor out of Strong element', function () {
 					const editor = getJodit({
 						buttons: ['bold']
 					});
@@ -1226,8 +1280,8 @@ describe('Toolbar', function() {
 			});
 		});
 
-		describe('Active button', function() {
-			it('Should not be activated then element has default style', function() {
+		describe('Active button', function () {
+			it('Should not be activated then element has default style', function () {
 				const editor = getJodit({
 					observer: {
 						timeout: 0
@@ -1260,9 +1314,9 @@ describe('Toolbar', function() {
 				expect(align.getAttribute('aria-pressed')).equals('true');
 			});
 
-			describe('In list', function() {
-				describe('Format block button', function() {
-					it('Should be activated then element has some tagname', function() {
+			describe('In list', function () {
+				describe('Format block button', function () {
+					it('Should be activated then element has some tagname', function () {
 						const editor = getJodit({
 							observer: {
 								timeout: 0
@@ -1303,8 +1357,8 @@ describe('Toolbar', function() {
 				});
 			});
 
-			describe('Select text with several properties', function() {
-				it('Should select all buttons with conditions', function() {
+			describe('Select text with several properties', function () {
+				it('Should select all buttons with conditions', function () {
 					const editor = getJodit({
 						observer: {
 							timeout: 0
@@ -1336,10 +1390,10 @@ describe('Toolbar', function() {
 			});
 		});
 
-		describe('Disable button', function() {
-			describe('Cut and Copy', function() {
-				describe('Cut', function() {
-					it('Should be activated editor has some selected text', function() {
+		describe('Disable button', function () {
+			describe('Cut and Copy', function () {
+				describe('Cut', function () {
+					it('Should be activated editor has some selected text', function () {
 						const editor = getJodit({
 							toolbarAdaptive: false,
 							observer: {
@@ -1362,8 +1416,8 @@ describe('Toolbar', function() {
 					});
 				});
 
-				describe('Copy', function() {
-					it('Should be activated editor has some selected text', function() {
+				describe('Copy', function () {
+					it('Should be activated editor has some selected text', function () {
 						const editor = getJodit({
 							toolbarAdaptive: false,
 							observer: {
@@ -1389,8 +1443,8 @@ describe('Toolbar', function() {
 		});
 	});
 
-	describe('Commands', function() {
-		it('Click on Source button should change current mode', function() {
+	describe('Commands', function () {
+		it('Click on Source button should change current mode', function () {
 			const editor = getJodit();
 
 			clickButton('source', editor);
@@ -1398,7 +1452,7 @@ describe('Toolbar', function() {
 			expect(editor.getMode()).equals(Jodit.MODE_SOURCE);
 		});
 
-		it('Click on Bold button should wrap current selection in <strong>', function() {
+		it('Click on Bold button should wrap current selection in <strong>', function () {
 			const editor = getJodit();
 
 			editor.value = 'Text to text';
@@ -1414,7 +1468,7 @@ describe('Toolbar', function() {
 			expect(editor.value).equals('<p>Tex<strong>t to te</strong>xt</p>');
 		});
 
-		it('Click on Italic button when selection is collapsed should create new <em> element and set cursor into it', function() {
+		it('Click on Italic button when selection is collapsed should create new <em> element and set cursor into it', function () {
 			const editor = getJodit();
 
 			editor.value = 'Text to text';
@@ -1433,9 +1487,9 @@ describe('Toolbar', function() {
 		});
 	});
 
-	describe('In fileBrowser', function() {
-		describe('Hide buttons ', function() {
-			it('should hide toolbar buttons', function() {
+	describe('In fileBrowser', function () {
+		describe('Hide buttons ', function () {
+			it('should hide toolbar buttons', function () {
 				const editor = getJodit({
 					filebrowser: {
 						buttons: Jodit.Array([
@@ -1471,8 +1525,8 @@ describe('Toolbar', function() {
 		});
 	});
 
-	describe('One toolbar for several editors', function() {
-		it('Should create one Jodit instance but with several edit places', function() {
+	describe('One toolbar for several editors', function () {
+		it('Should create one Jodit instance but with several edit places', function () {
 			const toolbarBox = appendTestDiv(),
 				firstEditPlace = appendTestDiv('firstEditPlace'),
 				secondEditPlace = appendTestDiv('secondEditPlace'),
@@ -1500,8 +1554,8 @@ describe('Toolbar', function() {
 			expect(thirdEditPlace.innerHTML).equals('<p>third</p>');
 		});
 
-		describe('For all instances you can set self options', function() {
-			it('Should change options for all instances', function() {
+		describe('For all instances you can set self options', function () {
+			it('Should change options for all instances', function () {
 				const toolbarBox = appendTestDiv(),
 					firstEditPlace = appendTestDiv('firstEditPlace'),
 					secondEditPlace = appendTestDiv('secondEditPlace'),
