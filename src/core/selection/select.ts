@@ -643,7 +643,7 @@ export class Select {
 			fragment.appendChild(node.firstChild);
 		}
 
-		this.insertNode(fragment, false);
+		this.insertNode(fragment, false, false);
 
 		if (lastChild) {
 			this.setCursorAfter(lastChild);
@@ -672,6 +672,10 @@ export class Select {
 			}
 
 			this.setCursorAfter(lastChild);
+		}
+
+		if (this.j.e) {
+			this.j.e.fire('synchro');
 		}
 	}
 
@@ -1247,65 +1251,85 @@ export class Select {
 		const cursorOnTheRight = this.cursorOnTheRight(currentBox);
 		const cursorOnTheLeft = this.cursorOnTheLeft(currentBox);
 
-		let br: HTMLElement | null = null;
+		const br = this.j.createInside.element('br'),
+			prevFake = this.j.createInside.text(INVISIBLE_SPACE),
+			nextFake = prevFake.cloneNode();
 
-		if (cursorOnTheRight || cursorOnTheLeft) {
-			br = this.j.createInside.element('br');
+		try {
+			if (cursorOnTheRight || cursorOnTheLeft) {
+				range.insertNode(br);
 
-			range.insertNode(br);
+				const clearBR = (
+					start: Node,
+					getNext: (node: Node) => Node | null
+				) => {
+					let next = getNext(start);
 
-			const clearBR = (
-				start: Node,
-				getNext: (node: Node) => Node | null
-			) => {
-				let next = getNext(start);
+					while (next) {
+						const nextSib = getNext(next);
 
-				while (next) {
-					const nextSib = getNext(next);
+						if (
+							next &&
+							(Dom.isTag(next, 'br') || Dom.isEmptyTextNode(next))
+						) {
+							Dom.safeRemove(next);
+						} else {
+							break;
+						}
 
-					if (
-						next &&
-						(Dom.isTag(next, 'br') || Dom.isEmptyTextNode(next))
-					) {
-						Dom.safeRemove(next);
-					} else {
-						break;
+						next = nextSib;
 					}
+				};
 
-					next = nextSib;
+				clearBR(br, (n: Node) => n.nextSibling);
+				clearBR(br, (n: Node) => n.previousSibling);
+
+				Dom.after(br, nextFake);
+				Dom.before(br, prevFake);
+
+				if (cursorOnTheRight) {
+					leftRange.setEndBefore(br);
+					range.setEndBefore(br);
+				} else {
+					leftRange.setEndAfter(br);
+					range.setEndAfter(br);
+				}
+			} else {
+				leftRange.setEnd(range.startContainer, range.startOffset);
+			}
+
+			const fragment = leftRange.extractContents();
+
+			if (currentBox.parentNode) {
+				try {
+					currentBox.parentNode.insertBefore(fragment, currentBox);
+
+					if (cursorOnTheRight && br?.parentNode) {
+						const range = this.createRange();
+						range.setStartBefore(br);
+						this.selectRange(range);
+					}
+				} catch (e) {
+					if (!isProd) {
+						throw e;
+					}
+				}
+			}
+
+			// After splitting some part can be empty
+			const fillFakeParent = (fake: Node) => {
+				if (
+					fake?.parentNode?.firstChild === fake?.parentNode?.lastChild
+				) {
+					fake?.parentNode?.appendChild(br.cloneNode());
 				}
 			};
 
-			clearBR(br, (n: Node) => n.nextSibling);
-			clearBR(br, (n: Node) => n.previousSibling);
-
-			if (cursorOnTheRight) {
-				leftRange.setEndBefore(br);
-				range.setEndBefore(br);
-			} else {
-				leftRange.setEndAfter(br);
-				range.setEndAfter(br);
-			}
-		} else {
-			leftRange.setEnd(range.startContainer, range.startOffset);
-		}
-
-		const fragment = leftRange.extractContents();
-
-		if (currentBox.parentNode) {
-			try {
-				currentBox.parentNode.insertBefore(fragment, currentBox);
-
-				if (cursorOnTheRight && br && br.parentNode) {
-					const range = this.createRange();
-					range.setStartBefore(br);
-					this.selectRange(range);
-				}
-			} catch (e) {
-				if (!isProd) {
-					throw e;
-				}
-			}
+			fillFakeParent(prevFake);
+			fillFakeParent(nextFake);
+		} finally {
+			Dom.safeRemove(prevFake);
+			Dom.safeRemove(nextFake);
 		}
 
 		return currentBox.previousElementSibling;

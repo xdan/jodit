@@ -986,12 +986,13 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				it('Should add 2 P', function() {
 					const editor = getJodit();
 
-					editor.value = '<span style="color:red">test</span>';
+					editor.value = '<p><span style="color:red">test</span></p>';
 
 					editor.s.setCursorIn(
 						editor.editor.querySelector('span'),
 						false
 					);
+
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 

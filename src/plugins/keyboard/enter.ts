@@ -74,33 +74,33 @@ export class enter extends Plugin {
 				: (this.defaultTag as 'p' | 'div');
 		}
 
-		editor.e
-			.off('.enter')
-			.on('keydown.enter', (event: KeyboardEvent): false | void => {
-				if (event.key === consts.KEY_ENTER) {
-					/**
-					 * Fired on processing `Enter` key. If return some value, plugin `enter` will do nothing.
-					 * if return false - prevent default Enter behavior
-					 *
-					 * @event beforeEnter
-					 */
-					const beforeEnter = editor.e.fire('beforeEnter', event);
+		editor.e.off('.enter').on('keydown.enter', (event: KeyboardEvent):
+			| false
+			| void => {
+			if (event.key === consts.KEY_ENTER) {
+				/**
+				 * Fired on processing `Enter` key. If return some value, plugin `enter` will do nothing.
+				 * if return false - prevent default Enter behavior
+				 *
+				 * @event beforeEnter
+				 */
+				const beforeEnter = editor.e.fire('beforeEnter', event);
 
-					if (beforeEnter !== undefined) {
-						return beforeEnter;
-					}
-
-					if (!editor.s.isCollapsed()) {
-						editor.execCommand('Delete');
-					}
-
-					editor.s.focus();
-
-					this.onEnter(event);
-
-					return false;
+				if (beforeEnter !== undefined) {
+					return beforeEnter;
 				}
-			});
+
+				if (!editor.s.isCollapsed()) {
+					editor.execCommand('Delete');
+				}
+
+				editor.s.focus();
+
+				this.onEnter(event);
+
+				return false;
+			}
+		});
 	}
 
 	private onEnter(event: KeyboardEvent): false | void {
@@ -150,10 +150,7 @@ export class enter extends Plugin {
 		const cursorOnTheRight = sel.cursorOnTheRight(currentBox);
 		const cursorOnTheLeft = sel.cursorOnTheLeft(currentBox);
 
-		if (
-			(!canSplit || Dom.isEmpty(currentBox)) &&
-			(cursorOnTheRight || cursorOnTheLeft)
-		) {
+		if (!canSplit && (cursorOnTheRight || cursorOnTheLeft)) {
 			let fake: Nullable<Text> = null;
 
 			if (cursorOnTheRight) {
