@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Enter behavior Jodit Editor Tests', function() {
 	describe('Enter key', function() {
 		describe('Enter BR', function() {
@@ -963,7 +964,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 		});
 
 		describe('Press Enter inside SPAN with some color', function() {
-			it('Should add new P element after this span and this SPAN sholud wrap in P', function() {
+			it('Should add new P(with SPAN with same style) element after this span and this SPAN should wrap in P', function() {
 				const editor = getJodit();
 
 				editor.value = '<span style="color:red">test</span>';
@@ -979,6 +980,29 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				expect(sortAttributes(editor.value)).equals(
 					'<p><span style="color:red">test</span></p><p><span style="color:red">test<br></span></p>'
 				);
+			});
+
+			describe('Enter two times', function() {
+				it('Should add 2 P', function() {
+					const editor = getJodit();
+
+					editor.value = '<span style="color:red">test</span>';
+
+					editor.s.setCursorIn(
+						editor.editor.querySelector('span'),
+						false
+					);
+					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+
+					editor.s.insertNode(editor.createInside.text('test'));
+
+					expect(sortAttributes(editor.value)).equals(
+						'<p><span style="color:red">test</span></p>' +
+						'<p><span style="color:red"><br></span></p>' +
+						'<p><span style="color:red">test<br></span></p>'
+					);
+				});
 			});
 		});
 	});
