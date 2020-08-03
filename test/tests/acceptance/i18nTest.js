@@ -41,10 +41,10 @@ describe('Test i18n functionality', function() {
 							language: language,
 							debugLanguage: true
 						});
-debugger
+
 						i18nkeys
 							.filter(function(key) {
-								return filter.indexOf(key) === -1;
+								return filter.indexOf(key) === -1 && !/^[0-9]+$/.test(key);
 							})
 							.forEach(function(key) {
 								expect('{' + key + '}').does.not.equal(

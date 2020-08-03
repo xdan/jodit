@@ -236,7 +236,30 @@ if (typeof window.chai !== 'undefined') {
 }
 
 const i18nkeys = [];
-const excludeI18nKeys = ['adddate', 'URL'];
+const excludeI18nKeys = [
+	'adddate',
+	'URL',
+	'Custom',
+	'list_test',
+	'OS System Font',
+	'insert Header 1',
+	'insert Header 2',
+	'Empty editor',
+	'Helvetica,sans-serif',
+	'Helvetica',
+	'Arial,Helvetica,sans-serif',
+	'Arial',
+	'Georgia,serif',
+	'Georgia',
+	'Impact,Charcoal,sans-serif',
+	'Impact',
+	'Tahoma,Geneva,sans-serif',
+	'Tahoma',
+	"'Times New Roman',Times,serif",
+	'Times New Roman',
+	'Verdana,Geneva,sans-serif',
+	'Verdana'
+];
 
 Jodit.prototype.i18n = function (key) {
 	!excludeI18nKeys.includes(key) &&

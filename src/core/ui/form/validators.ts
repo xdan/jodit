@@ -27,7 +27,7 @@ export const required = <IUIInputValidator>function (input: IUIInput): boolean {
  */
 export const url = <IUIInputValidator>function (input: IUIInput): boolean {
 	if (!isURL(trim(input.value))) {
-		input.error = 'Please enter a web adress';
+		input.error = 'Please enter a web address';
 		return false;
 	}
 
