@@ -18,6 +18,10 @@ export function keepModuleNames(modules: IDictionary<Function>): void {
 	keepNames.set(modules.UISeparator, 'UISeparator');
 	keepNames.set(modules.UIList, 'UIList');
 	keepNames.set(modules.UIGroup, 'UIGroup');
+	keepNames.set(modules.UIForm, 'UIForm');
+	keepNames.set(modules.UIInput, 'UIInput');
+	keepNames.set(modules.UITextArea, 'UITextArea');
+	keepNames.set(modules.UIBlock, 'UIBlock');
 	keepNames.set(modules.Popup, 'Popup');
 	keepNames.set(modules.ContextMenu, 'ContextMenu');
 	keepNames.set(modules.ToolbarButton, 'ToolbarButton');

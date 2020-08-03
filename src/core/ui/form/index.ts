@@ -4,11 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from './element';
-export * from './button';
-export * from './popup';
-export * from './separator';
-export * from './list/group';
-export * from './list/list';
-export * from './form';
-export * from './icon';
+export * from "./form";
+export * from "./input";
+export * from "./inputs";
+export * from "./block";

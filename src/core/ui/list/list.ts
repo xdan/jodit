@@ -59,20 +59,7 @@ export class UIList<T extends IViewBased = IViewBased> extends UIGroup<T>
 	 * All buttons from list
 	 */
 	get buttons(): IUIButton[] {
-		const walk = (elms: IUIElement[]): IUIButton[] =>
-			elms.reduce((res, elm) => {
-				if (elm instanceof UIGroup) {
-					return res.concat(walk(elm.elements));
-				}
-
-				if (elm instanceof UIButton) {
-					res.push(elm);
-				}
-
-				return res;
-			}, [] as IUIButton[]);
-
-		return walk(this.elements);
+		return this.allChildren.filter(elm => elm instanceof UIButton) as IUIButton[];
 	}
 
 	/**

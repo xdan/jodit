@@ -43,4 +43,6 @@ export { sticky } from './sticky/sticky';
 export { symbols } from './symbols/symbols';
 export * from './table';
 export { tooltip } from './tooltip/tooltip';
+import './video';
+import './print';
 export { xpath } from './xpath/xpath';

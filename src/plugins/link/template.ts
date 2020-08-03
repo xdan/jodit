@@ -4,32 +4,69 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IJodit } from '../../types';
+import { IJodit, IUIForm } from '../../types';
+import { UIBlock, UICheckbox, UIForm, UIInput } from '../../core/ui/form';
+import { UIButton } from '../../core/ui/button';
 
-export const formTemplate = (editor: IJodit): string =>
-	`<form class="jodit-form">
-		<div class="jodit-form__group">
-			<input ref="url_input" class="jodit-input" required type="text" name="url" placeholder="http://" type="text"/>
-		</div>
-		<div ref="content_input_box" class="jodit-form__group">
-			<input ref="content_input" class="jodit-input" name="text" placeholder="${editor.i18n(
-				'Text'
-			)}" type="text"/>
-		</div>
-		<label ref="target_checkbox_box">
-			<input ref="target_checkbox" class="jodit-checkbox" name="target" type="checkbox"/>
-			<span>${editor.i18n('Open in new tab')}</span>
-		</label>
-		<label ref="nofollow_checkbox_box">
-			<input ref="nofollow_checkbox" class="jodit-checkbox" name="nofollow" type="checkbox"/>
-			<span>${editor.i18n('No follow')}</span>
-		</label>
-		<div class="jodit-buttons">
-			<button ref="unlink" class="jodit-button" type="button">${editor.i18n(
-				'Unlink'
-			)}</button>
-			<button ref="insert" class="jodit-button" type="submit">${editor.i18n(
-				'Insert'
-			)}</button>
-		</div>
-	<form/>`;
+export const formTemplate = (editor: IJodit): IUIForm => {
+	const { openInNewTabCheckbox, noFollowCheckbox } = editor.o.link;
+
+	return new UIForm(editor, [
+		new UIBlock(editor, [
+			new UIInput(editor, {
+				name: 'url',
+				type: 'url',
+				ref: 'url_input',
+				label: 'URL',
+				placeholder: 'http://',
+				required: true
+			})
+		]),
+		new UIBlock(
+			editor,
+			[
+				new UIInput(editor, {
+					name: 'content',
+					ref: 'content_input',
+					label: 'Text'
+				})
+			],
+			{
+				ref: 'content_input_box'
+			}
+		),
+		openInNewTabCheckbox
+			? new UICheckbox(editor, {
+					name: 'target',
+					ref: 'target_checkbox',
+					label: 'Open in new tab'
+			  })
+			: null,
+		noFollowCheckbox
+			? new UICheckbox(editor, {
+					name: 'nofollow',
+					ref: 'nofollow_checkbox',
+					label: 'No follow'
+			  })
+			: null,
+		new UIBlock(
+			editor,
+			[
+				new UIButton(editor, {
+					name: 'unlink',
+					status: 'default',
+					text: 'Unlink'
+				}),
+				new UIButton(editor, {
+					name: 'insert',
+					type: 'submit',
+					status: 'primary',
+					text: 'Insert'
+				})
+			],
+			{
+				align: 'full'
+			}
+		)
+	]);
+};

@@ -24,6 +24,7 @@ import { UIList } from '..';
 
 export const UIButtonState = (): IUIButtonState => ({
 	size: 'middle',
+	type: 'button',
 	name: '',
 
 	status: '',
@@ -73,6 +74,11 @@ export class UIButton extends UIElement implements IUIButton {
 		this.setMod('size', this.state.size);
 	}
 
+	@watch('state.type')
+	protected onChangeType(): void {
+		attr(this.container,'type', this.state.type);
+	}
+
 	/**
 	 * Set size from parent list
 	 */
@@ -116,6 +122,9 @@ export class UIButton extends UIElement implements IUIButton {
 		this.container.classList.add(
 			`${this.componentName}_${this.clearName(this.state.name)}`
 		);
+
+		attr(this.container, 'data-ref', this.state.name);
+		attr(this.container, 'ref', this.state.name);
 	}
 
 	@watch('state.tooltip')
@@ -184,7 +193,7 @@ export class UIButton extends UIElement implements IUIButton {
 		return button;
 	}
 
-	constructor(jodit: IViewBased) {
+	constructor(jodit: IViewBased, state?: IUIButtonStatePartial) {
 		super(jodit);
 
 		this.updateSize();
@@ -193,6 +202,10 @@ export class UIButton extends UIElement implements IUIButton {
 
 		if (getClassName(this) === getClassName(UIButton.prototype)) {
 			this.setStatus(STATUSES.ready);
+		}
+
+		if (state) {
+			this.setState(state);
 		}
 	}
 

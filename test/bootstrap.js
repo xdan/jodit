@@ -236,11 +236,11 @@ if (typeof window.chai !== 'undefined') {
 }
 
 const i18nkeys = [];
-const excludeI18nKeys = ['adddate'];
+const excludeI18nKeys = ['adddate', 'URL'];
 
 Jodit.prototype.i18n = function (key) {
 	!excludeI18nKeys.includes(key) &&
-		i18nkeys.includes(key) &&
+		!i18nkeys.includes(key) &&
 		!key.includes('<svg') &&
 		i18nkeys.push(key);
 

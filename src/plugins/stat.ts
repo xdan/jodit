@@ -12,11 +12,13 @@ import { Dom } from '../core/dom';
 declare module '../config' {
 	interface Config {
 		showCharsCounter: boolean;
+		countHTMLChars: boolean;
 		showWordsCounter: boolean;
 	}
 }
 
 Config.prototype.showCharsCounter = true;
+Config.prototype.countHTMLChars = false;
 Config.prototype.showWordsCounter = true;
 
 /**
@@ -51,9 +53,13 @@ export class stat extends Plugin {
 		const text = this.j.text;
 
 		if (this.j.o.showCharsCounter) {
+			const chars = this.j.o.countHTMLChars
+				? this.j.value
+				: text.replace(SPACE_REG_EXP(), '');
+
 			this.charCounter.textContent = this.j.i18n(
 				'Chars: %d',
-				text.replace(SPACE_REG_EXP(), '').length
+				chars.length
 			);
 		}
 

@@ -41,7 +41,7 @@ describe('Test i18n functionality', function() {
 							language: language,
 							debugLanguage: true
 						});
-
+debugger
 						i18nkeys
 							.filter(function(key) {
 								return filter.indexOf(key) === -1;

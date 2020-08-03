@@ -9,12 +9,19 @@ import { Dom } from '../../core/dom';
 import {
 	attr,
 	convertMediaUrlToVideoEmbed,
+	isString,
 	isURL,
 	refs,
 	stripTags
 } from '../../core/helpers';
-import { Select } from '../../core/selection/select';
-import { IDictionary, IJodit, IControlType, Nullable } from '../../types';
+import { Select } from '../../core/selection/';
+import {
+	IDictionary,
+	IJodit,
+	IControlType,
+	Nullable,
+	IUIForm
+} from '../../types';
 import { formTemplate } from './template';
 
 /**
@@ -29,7 +36,7 @@ import { formTemplate } from './template';
 declare module '../../config' {
 	interface Config {
 		link: {
-			formTemplate: (editor: IJodit) => string;
+			formTemplate: (editor: IJodit) => string | HTMLElement | IUIForm;
 			formClassName?: string;
 			followOnDblClick: boolean;
 			processVideoLink: boolean;
@@ -82,13 +89,18 @@ Config.prototype.controls.link = {
 				noFollowCheckbox,
 				formTemplate,
 				formClassName
-			} = editor.o.link,
-			form = editor.c.fromHTML(formTemplate(editor), {
-				target_checkbox_box: openInNewTabCheckbox,
-				nofollow_checkbox_box: noFollowCheckbox
-			}) as HTMLFormElement;
+			} = editor.o.link;
 
-		const elements = refs(form),
+		const html = formTemplate(editor),
+			form = isString(html)
+				? (editor.c.fromHTML(html, {
+						target_checkbox_box: openInNewTabCheckbox,
+						nofollow_checkbox_box: noFollowCheckbox
+				  }) as HTMLFormElement)
+				: html,
+			htmlForm = Dom.isElement(form) ? form : form.container;
+
+		const elements = refs(htmlForm),
 			{ insert, unlink, content_input_box } = elements,
 			{
 				target_checkbox,
@@ -108,7 +120,7 @@ Config.prototype.controls.link = {
 		}
 
 		if (formClassName) {
-			form.classList.add(formClassName);
+			htmlForm.classList.add(formClassName);
 		}
 
 		if (isImageContent) {
@@ -169,10 +181,7 @@ Config.prototype.controls.link = {
 			});
 		}
 
-		editor.e.on(form, 'submit', (event: Event) => {
-			event.preventDefault();
-			event.stopImmediatePropagation();
-
+		const onSubmit = (): false => {
 			if (!url_input.value.trim().length) {
 				url_input.focus();
 				url_input.classList.add('jodit_error');
@@ -229,9 +238,22 @@ Config.prototype.controls.link = {
 			});
 
 			editor.setEditorValue();
+
 			close();
+
 			return false;
-		});
+		};
+
+		if (Dom.isElement(form)) {
+			editor.e.on(form, 'submit', (event: Event) => {
+				event.preventDefault();
+				event.stopImmediatePropagation();
+				onSubmit();
+				return false;
+			});
+		} else {
+			form.onSubmit(onSubmit);
+		}
 
 		return form;
 	},

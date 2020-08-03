@@ -476,18 +476,19 @@ describe('Toolbar', function () {
 
 			const popup = getOpenedPopup(editor);
 
-			popup.querySelector('input[name=code]').value =
+			popup.querySelector('input[name=url]').value =
 				'sddhttps://www.youtube.com/watch?v=7CcEYRfxUOQ'; // try wrong url
-			simulateEvent('submit', 0, popup.querySelector('.jodit-form'));
+
+			simulateEvent('submit', popup.querySelector('.jodit-ui-form'));
 
 			expect(
-				popup.querySelectorAll('input[name=code].jodit_error').length
+				popup.querySelectorAll('.jodit-ui-input.jodit-ui-input_has-error_true').length
 			).equals(1);
 
-			popup.querySelector('input[name=code]').value =
+			popup.querySelector('input[name=url]').value =
 				'https://www.youtube.com/watch?v=7CcEYRfxUOQ';
 
-			simulateEvent('submit', 0, popup.querySelector('.jodit-form'));
+			simulateEvent('submit', popup.querySelector('.jodit-ui-form'));
 
 			expect(sortAttributes(editor.value)).equals(
 				'<iframe allowfullscreen="" frameborder="0" height="345" src="https://www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe>'
@@ -497,6 +498,7 @@ describe('Toolbar', function () {
 
 			expect(popup.parentNode).is.null;
 		});
+
 		it('Open align list and choose Right align.', function () {
 			const editor = getJodit();
 

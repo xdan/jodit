@@ -1,7 +1,30 @@
 # Changelog
 ## 3.4.16
+### Bug fixes
 * Fixed https://github.com/xdan/jodit/issues/454
+* Fixed https://github.com/xdan/jodit/issues/453
 * Fixed https://github.com/xdan/jodit/issues/451
+* Fixed https://github.com/xdan/jodit/issues/444
+
+### Features
+* https://github.com/xdan/jodit/issues/449
+Added `showCharsCounter` options.
+```js
+const editor = getJodit({
+    language: 'en',
+    showCharsCounter: true,
+    countHTMLChars: true
+});
+
+editor.value = '<p>Simple text</p><p>Simple text</p>';
+const statusbar = editor.container.querySelector(
+'.jodit-status-bar'
+);
+
+expect(
+    statusbar.textContent.match(/Chars: 36/)
+).is.not.null;
+```
 
 ## 3.4.15
 * Fixed https://github.com/xdan/jodit/issues/441
