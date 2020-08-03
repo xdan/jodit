@@ -86,6 +86,19 @@ export const getDataTransfer = (
 	}
 };
 
+function pasteInsertHtml(editor: IJodit, html: number | string | Node): void {
+	const result = editor.e.fire(
+		'beforePasteInsert',
+		html,
+	);
+
+	if(result !== false && (typeof result === 'string' || typeof result === 'number' || result instanceof Node)) {
+		html = result;
+	}
+
+	editor.s.insertHTML(html);
+}
+
 Config.prototype.controls.paste = {
 	tooltip: 'Paste from clipboard',
 
@@ -125,7 +138,7 @@ Config.prototype.controls.paste = {
 		}
 
 		if (text) {
-			editor.s.insertHTML(text);
+			pasteInsertHtml(editor, text);
 		} else {
 			if (error) {
 				Alert(
@@ -242,7 +255,7 @@ export function paste(editor: IJodit): void {
 			editor.buffer.set(clipboardPluginKey, html);
 		}
 
-		editor.s.insertHTML(html);
+		pasteInsertHtml(editor, html);
 	};
 
 	const insertHTML = (
@@ -351,7 +364,7 @@ export function paste(editor: IJodit): void {
 								html = stripTags(cleanFromWord(html));
 							}
 
-							editor.s.insertHTML(html);
+							pasteInsertHtml(editor, html);
 							editor.setEditorValue();
 						};
 
@@ -359,7 +372,7 @@ export function paste(editor: IJodit): void {
 							clearOrKeep(
 								editor.i18n(
 									'The pasted content is coming from a Microsoft Word/Excel document. ' +
-										'Do you want to keep the format or clean it up?'
+									'Do you want to keep the format or clean it up?'
 								),
 
 								editor.i18n('Word Paste Detected'),
@@ -431,7 +444,7 @@ export function paste(editor: IJodit): void {
 						removeFakeFocus();
 
 						if (processHTMLData(pastedData) !== false) {
-							editor.s.insertHTML(pastedData);
+							pasteInsertHtml(editor, pastedData);
 						}
 
 						return;
