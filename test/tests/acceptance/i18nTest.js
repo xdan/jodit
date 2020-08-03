@@ -44,7 +44,7 @@ describe('Test i18n functionality', function() {
 
 						i18nkeys
 							.filter(function(key) {
-								return filter.indexOf(key) === -1 && !/^[0-9]+$/.test(key);
+								return filter.indexOf(key) === -1 && !/^[0-9]+(pt|px)?$/.test(key);
 							})
 							.forEach(function(key) {
 								expect('{' + key + '}').does.not.equal(

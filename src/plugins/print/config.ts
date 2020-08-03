@@ -80,6 +80,9 @@ Config.prototype.controls.preview = {
 		});
 
 		const div = editor.c.div();
+		css(div, {
+			padding: 16
+		});
 
 		if (editor.iframe) {
 			const iframe = editor.create.element('iframe');
@@ -108,6 +111,8 @@ Config.prototype.controls.preview = {
 			div.innerHTML = editor.value;
 			dialog.open(div, editor.i18n('Preview'));
 		}
+
+		dialog.setModal(true);
 	},
 	mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
 	tooltip: 'Preview'

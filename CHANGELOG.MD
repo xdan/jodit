@@ -7,10 +7,18 @@
 * Fixed https://github.com/xdan/jodit/issues/444
 
 ### Features
+* https://github.com/xdan/jodit/issues/417
+Added `defaultFontSizePoints` options. Possible values `pt` or `px`. By default: `px`
+```js
+const editor = new Jodit('#editor', {
+    defaultFontSizePoints: 'pt'
+});
+```
+
 * https://github.com/xdan/jodit/issues/449
 Added `showCharsCounter` options.
 ```js
-const editor = getJodit({
+const editor = new Jodit('#editor', {
     language: 'en',
     showCharsCounter: true,
     countHTMLChars: true

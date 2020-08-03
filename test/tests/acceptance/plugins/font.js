@@ -106,55 +106,73 @@ describe('Font test', function () {
 		});
 	});
 
-	describe('Font size', function () {
-		describe('State', function () {
-			describe('First click on the button', function () {
-				it('Should open list', function () {
-					const editor = getJodit();
-
-					clickButton('fontsize', editor);
-
-					const popup = getOpenedPopup(editor);
-
-					expect(popup).is.not.null;
-				});
-
-				describe('Second click on the button', function () {
-					it('Should apply previous choice', function () {
-						const editor = getJodit();
-
-						editor.value = 'text2text';
-
-						const range = editor.s.createRange(true);
-
-						range.setStart(editor.editor.firstChild.firstChild, 3);
-						range.setEnd(editor.editor.firstChild.firstChild, 6);
+	['pt', 'px'].forEach(function (point) {
+		describe('Font size:' + point, function () {
+			describe('State', function () {
+				describe('First click on the button', function () {
+					it('Should open list', function () {
+						const editor = getJodit({
+							defaultFontSizePoints: point
+						});
 
 						clickButton('fontsize', editor);
 
 						const popup = getOpenedPopup(editor);
 
 						expect(popup).is.not.null;
+					});
 
-						clickButton('8', popup);
+					describe('Second click on the button', function () {
+						it('Should apply previous choice', function () {
+							const editor = getJodit({
+								defaultFontSizePoints: point
+							});
 
-						expect(sortAttributes(editor.value)).equals(
-							'<p>tex<span style="font-size:8px">t2t</span>ext</p>'
-						);
+							editor.value = 'text2text';
 
-						const range2 = editor.s.createRange(true);
+							const range = editor.s.createRange(true);
 
-						range2.setStartAfter(editor.editor.firstChild);
+							range.setStart(
+								editor.editor.firstChild.firstChild,
+								3
+							);
+							range.setEnd(
+								editor.editor.firstChild.firstChild,
+								6
+							);
 
-						clickButton('fontsize', editor);
+							clickButton('fontsize', editor);
 
-						const popup2 = getOpenedPopup(editor);
+							const popup = getOpenedPopup(editor);
 
-						expect(popup2).is.null;
+							expect(popup).is.not.null;
 
-						expect(editor.value).equals(
-							'<p>tex<span style="font-size: 8px;">t2t</span>ext</p><p><span style="font-size: 8px;"></span></p>'
-						);
+							clickButton('8', popup);
+
+							expect(sortAttributes(editor.value)).equals(
+								'<p>tex<span style="font-size:8' +
+									point +
+									'">t2t</span>ext</p>'
+							);
+
+							const range2 = editor.s.createRange(true);
+
+							range2.setStartAfter(editor.editor.firstChild);
+
+							clickButton('fontsize', editor);
+
+							const popup2 = getOpenedPopup(editor);
+
+							expect(popup2).is.null;
+
+							expect(editor.value).equals(
+								'<p>tex<span style="font-size: 8' +
+									point +
+									';">t2t</span>ext</p><p><span style="font-size: 8' +
+									point +
+									';"></span></p>'
+							);
+						});
 					});
 				});
 			});

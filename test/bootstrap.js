@@ -258,7 +258,12 @@ const excludeI18nKeys = [
 	"'Times New Roman',Times,serif",
 	'Times New Roman',
 	'Verdana,Geneva,sans-serif',
-	'Verdana'
+	'Verdana',
+	'Lower Alpha',
+	'Lower Greek',
+	'Lower Roman',
+	'Upper Alpha',
+	'Upper Roman'
 ];
 
 Jodit.prototype.i18n = function (key) {
