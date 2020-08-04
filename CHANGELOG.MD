@@ -8,6 +8,7 @@
 * Fixed https://github.com/xdan/jodit/issues/444
 * Fixed https://github.com/xdan/jodit/issues/428
 * Fixed https://github.com/xdan/jodit/issues/427
+* Fixed https://github.com/xdan/jodit/issues/426
 
 ### Features
 * https://github.com/xdan/jodit/issues/417

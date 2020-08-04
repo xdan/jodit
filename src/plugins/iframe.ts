@@ -340,6 +340,7 @@ export function iframe(editor: IJodit): void {
 										editor.editor = doc.body;
 
 										toggleEditable();
+										editor.e.fire('prepareWYSIWYGEditor');
 									}
 								} else {
 									doc.body.innerHTML = value;
