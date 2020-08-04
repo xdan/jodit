@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.16
+ * Version: v3.4.17
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -4450,7 +4450,7 @@ var View = (function (_super) {
         _this.isJodit = isJodit;
         _this.isView = true;
         _this.components = new Set();
-        _this.version = "3.4.16";
+        _this.version = "3.4.17";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.__isFullSize = false;
@@ -5699,6 +5699,13 @@ exports.getDataTransfer = function (event) {
         return null;
     }
 };
+function pasteInsertHtml(editor, html) {
+    var result = editor.e.fire('beforePasteInsert', html);
+    if (result !== false && (typeof result === 'string' || typeof result === 'number' || result instanceof Node)) {
+        html = result;
+    }
+    editor.s.insertHTML(html);
+}
 config_1.Config.prototype.controls.paste = {
     tooltip: 'Paste from clipboard',
     exec: function (editor) {
@@ -5752,7 +5759,7 @@ config_1.Config.prototype.controls.paste = {
                             error = value !== editor.value;
                         }
                         if (text) {
-                            editor.s.insertHTML(text);
+                            pasteInsertHtml(editor, text);
                         }
                         else {
                             if (error) {
@@ -5823,7 +5830,7 @@ function paste(editor) {
         if (helpers_1.isString(html)) {
             editor.buffer.set(cut_1.pluginKey, html);
         }
-        editor.s.insertHTML(html);
+        pasteInsertHtml(editor, html);
     };
     var insertHTML = function (html, event) {
         var buffer = editor.buffer.get(cut_1.pluginKey);
@@ -5894,7 +5901,7 @@ function paste(editor) {
                             if (method === constants_1.INSERT_ONLY_TEXT) {
                                 html = helpers_1.stripTags(helpers_1.cleanFromWord(html));
                             }
-                            editor.s.insertHTML(html);
+                            pasteInsertHtml(editor, html);
                             editor.setEditorValue();
                         };
                         if (opt.askBeforePasteFromWord) {
@@ -5953,7 +5960,7 @@ function paste(editor) {
                         var pastedData = div_1.innerHTML;
                         removeFakeFocus_1();
                         if (processHTMLData_1(pastedData) !== false) {
-                            editor.s.insertHTML(pastedData);
+                            pasteInsertHtml(editor, pastedData);
                         }
                         return;
                     }

@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.16
+ * Version: v3.4.17
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -12104,7 +12104,7 @@ class view_View extends core_component["a" /* Component */] {
         this.isJodit = isJodit;
         this.isView = true;
         this.components = new Set();
-        this.version = "3.4.16";
+        this.version = "3.4.17";
         this.async = new async_Async();
         this.buffer = storage_Storage.makeStorage();
         this.__isFullSize = false;
@@ -20138,6 +20138,13 @@ const getDataTransfer = (event) => {
         return null;
     }
 };
+function pasteInsertHtml(editor, html) {
+    const result = editor.e.fire('beforePasteInsert', html);
+    if (result !== false && (typeof result === 'string' || typeof result === 'number' || result instanceof Node)) {
+        html = result;
+    }
+    editor.s.insertHTML(html);
+}
 config["a" /* Config */].prototype.controls.paste = {
     tooltip: 'Paste from clipboard',
     async exec(editor) {
@@ -20170,7 +20177,7 @@ config["a" /* Config */].prototype.controls.paste = {
             error = value !== editor.value;
         }
         if (text) {
-            editor.s.insertHTML(text);
+            pasteInsertHtml(editor, text);
         }
         else {
             if (error) {
@@ -20235,7 +20242,7 @@ function paste(editor) {
         if (Object(helpers["isString"])(html)) {
             editor.buffer.set(pluginKey, html);
         }
-        editor.s.insertHTML(html);
+        pasteInsertHtml(editor, html);
     };
     const insertHTML = (html, event) => {
         const buffer = editor.buffer.get(pluginKey);
@@ -20306,7 +20313,7 @@ function paste(editor) {
                             if (method === constants["INSERT_ONLY_TEXT"]) {
                                 html = Object(helpers["stripTags"])(Object(helpers["cleanFromWord"])(html));
                             }
-                            editor.s.insertHTML(html);
+                            pasteInsertHtml(editor, html);
                             editor.setEditorValue();
                         };
                         if (opt.askBeforePasteFromWord) {
@@ -20365,7 +20372,7 @@ function paste(editor) {
                         const pastedData = div.innerHTML;
                         removeFakeFocus();
                         if (processHTMLData(pastedData) !== false) {
-                            editor.s.insertHTML(pastedData);
+                            pasteInsertHtml(editor, pastedData);
                         }
                         return;
                     }
