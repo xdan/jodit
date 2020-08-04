@@ -1047,6 +1047,24 @@ describe('Jodit FileBrowser Tests', function() {
 						);
 
 						expect(trigger).is.not.null;
+
+						expect(trigger.parentElement.textContent.trim()).equals('ceicom')
+						simulateEvent('click', trigger);
+
+						const dialog = getOpenedDialog(editor);
+						expect(dialog).is.not.null;
+						expect(dialog).does.not.equal(filebrowser.dialog);
+
+						expect(dialog.querySelector('input').value).equals('ceicom');
+
+						dialog.querySelector('input').value = 'ceicom1';
+						clickButton('ok', dialog);
+
+						const trigger2 = tree.querySelector(
+							'.jodit-icon_folder_rename'
+						);
+						expect(trigger2.parentElement.textContent.trim()).equals('ceicom1')
+
 						filebrowser.destruct();
 
 						done();
@@ -1054,6 +1072,87 @@ describe('Jodit FileBrowser Tests', function() {
 					.catch(function(e) {
 						throw e;
 					});
+			});
+		});
+	});
+
+	describe('Create', function() {
+		describe('Folder', function() {
+			it('Should create button below folders list', function(done) {
+				const editor = getJodit({
+					filebrowser: {
+						ajax: {
+							url: 'https://xdsoft.net/jodit/connector/index.php'
+						}
+					}
+				});
+
+				const filebrowser = editor.filebrowser;
+
+				filebrowser
+					.open(function() {})
+					.then(function() {
+						const addfolder = filebrowser.browser.querySelector(
+							'.jodit-filebrowser__addfolder'
+						);
+
+						expect(addfolder).is.not.null;
+						filebrowser.destruct();
+
+						done();
+					})
+					.catch(function(e) {
+						throw e;
+					});
+			});
+
+			describe('Create new folder', function() {
+				it('Should create new folder', function(done) {
+					const editor = getJodit({
+						filebrowser: {
+							ajax: {
+								url: 'https://xdsoft.net/jodit/connector/index.php'
+							}
+						}
+					});
+
+					const filebrowser = editor.filebrowser;
+
+					filebrowser
+						.open(function() {})
+						.then(function() {
+							const addfolder = filebrowser.browser.querySelector(
+								'.jodit-filebrowser__addfolder'
+							);
+
+							expect(addfolder).is.not.null;
+
+							simulateEvent('click', addfolder);
+
+							const dialog = getOpenedDialog(editor);
+
+							expect(dialog).is.not.null;
+							dialog.querySelector('input').value = "free";
+							clickButton('ok', dialog);
+
+							const tree = filebrowser.browser.querySelector(
+								'.jodit-filebrowser__tree'
+							);
+
+							const trigger = tree.querySelector(
+								'.jodit-icon_folder_rename'
+							);
+							expect(trigger.parentElement.textContent.trim()).equals('free')
+
+
+							filebrowser.destruct();
+
+							done();
+						})
+						.catch(function(e) {
+							throw e;
+						});
+				});
 			});
 		});
 	});

@@ -43,6 +43,7 @@ const defaultPermissions = {
 
 function mockAjax() {
 	if (typeof window.chai !== 'undefined') {
+		let temp = {};
 		Jodit.modules.Ajax.prototype.send = function () {
 			const ajax = this;
 
@@ -65,6 +66,25 @@ function mockAjax() {
 
 			return new Promise(function (resolve) {
 				switch (action) {
+					case 'folderCreate': {
+						temp.folderName = ajax.options.data.name;
+						resolve({
+							success: true,
+							time: '2020-08-04 19:03:23',
+							data: { code: 220 }
+						});
+						break;
+					}
+
+					case 'folderRename': {
+						temp.folderName = ajax.options.data.newname;
+						resolve({
+							success: true,
+							time: '2020-08-04 19:03:23',
+							data: { code: 220 }
+						});
+						break;
+					}
 					case 'fileUpload': {
 						const file = ajax.options.data.get('files[0]');
 						resolve({
@@ -129,7 +149,10 @@ function mockAjax() {
 							}
 						});
 						break;
-					case 'folders':
+					case 'folders': {
+						const folderName = temp.folderName || 'ceicom';
+						delete temp.folderName;
+
 						resolve({
 							success: true,
 							time: '2018-03-15 12:49:49',
@@ -139,13 +162,14 @@ function mockAjax() {
 										baseurl:
 											'https://xdsoft.net/jodit/files/',
 										path: '',
-										folders: ['.', 'ceicom', 'test']
+										folders: ['.', folderName, 'test']
 									}
 								},
 								code: 220
 							}
 						});
 						break;
+					}
 					case 'permissions':
 						resolve({
 							success: true,
