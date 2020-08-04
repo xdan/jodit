@@ -27,7 +27,6 @@ export function makeCollection(
 	jodit: IViewBased,
 	parentElement?: IUIElement
 ): IToolbarCollection {
-
 	const collection = isJoditObject(jodit)
 		? new ToolbarEditorCollection(jodit)
 		: new ToolbarCollection(jodit);
