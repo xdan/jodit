@@ -243,13 +243,15 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		path: string,
 		source: string
 	): Promise<IFileBrowserAnswer> {
-		if (!this.o.c) {
+		const {create} = this.o;
+
+		if (!create) {
 			return Promise.reject('Set Create api options');
 		}
 
-		this.o.c.data.source = source;
-		this.o.c.data.path = path;
-		this.o.c.data.name = name;
+		create.data.source = source;
+		create.data.path = path;
+		create.data.name = name;
 
 		return this.get('create').then(resp => {
 			this.currentPath = path;

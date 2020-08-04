@@ -89,9 +89,15 @@ export function nativeListeners(this: IFileBrowser): void {
 			return false;
 		})
 		.on(self.tree, 'click', (e: MouseEvent): void | false => {
-			const a = getItem(e.target, self.dialog.container, 'i');
+			const i = getItem(e.target, self.dialog.container, 'i');
 
-			if (!a || !a.classList.contains('jodit-icon_folder_rename')) {
+			if (!i || !i.classList.contains('jodit-icon_folder_rename')) {
+				return;
+			}
+
+			const a = i.parentElement;
+
+			if (!a || !a.classList.contains('jodit-filebrowser__tree-item')) {
 				return;
 			}
 
