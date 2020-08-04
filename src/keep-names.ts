@@ -21,6 +21,7 @@ export function keepModuleNames(modules: IDictionary<Function>): void {
 	keepNames.set(modules.UIForm, 'UIForm');
 	keepNames.set(modules.UIInput, 'UIInput');
 	keepNames.set(modules.UITextArea, 'UITextArea');
+	keepNames.set(modules.UICheckbox, 'UICheckbox');
 	keepNames.set(modules.UIBlock, 'UIBlock');
 	keepNames.set(modules.Popup, 'Popup');
 	keepNames.set(modules.ContextMenu, 'ContextMenu');
