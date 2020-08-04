@@ -196,7 +196,7 @@ export abstract class View extends Component implements IViewBased {
 	 */
 	protected initOwners(): void {}
 
-	constructor(options?: IViewOptions) {
+	constructor(options?: IViewOptions, readonly isJodit: boolean = false) {
 		super();
 
 		this.id = new Date().getTime().toString();
