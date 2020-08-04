@@ -206,5 +206,8 @@ module.exports = {
 	"Default": "Par défaut",
 	"Circle": "Cercle",
 	"Dot": "Dot",
-	"Quadrate": "Quadrate"
+	"Quadrate": "Quadrate",
+	"Find": "Trouver",
+	"Find Previous": "Trouvez Précédente",
+	"Find Next": "Suivant"
 };

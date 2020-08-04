@@ -63,6 +63,7 @@ import * as resize from './resize.svg';
 import * as resizer from './resizer.svg';
 import * as right from './right.svg';
 import * as save from './save.svg';
+import * as search from './search.svg';
 import * as select_all from './select-all.svg';
 import * as shrink from './shrink.svg';
 import * as source from './source.svg';
@@ -144,6 +145,7 @@ export {
 	resizer,
 	right,
 	save,
+	search,
 	select_all,
 	shrink,
 	source,

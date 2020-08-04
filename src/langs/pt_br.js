@@ -211,5 +211,8 @@ module.exports = {
 	"Default": "Padrão",
 	"Circle": "Círculo",
 	"Dot": "Ponto",
-	"Quadrate": "Quadrate"
+	"Quadrate": "Quadrate",
+	"Find": "Encontrar",
+	"Find Previous": "Encontrar Anteriores",
+	"Find Next": "Localizar Próxima"
 };

@@ -189,7 +189,7 @@ module.exports = {
 	"Break": "Berhenti",
 	"Search for": "Mencari",
 	"Replace with": "Ganti dengan",
-	"Replace": "Ganti",
+	"Replace": "Mengganti",
 	"Paste": "Paste",
 	"Choose Content to Paste": "Pilih konten untuk dipaste",
 	"You can only edit your own images. Download this image on the host?": "Anda hanya dapat mengedit gambar Anda sendiri. Unduh gambar ini di host?",
@@ -212,5 +212,8 @@ module.exports = {
 	"Default": "Default",
 	"Circle": "Lingkaran",
 	"Dot": "Dot",
-	"Quadrate": "Kuadrat"
+	"Quadrate": "Kuadrat",
+	"Find": "Menemukan",
+	"Find Previous": "Menemukan Sebelumnya",
+	"Find Next": "Menemukan Berikutnya"
 };

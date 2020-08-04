@@ -210,5 +210,8 @@ module.exports = {
 	"Default": "По умолчанию",
 	"Circle": "Круг",
 	"Dot": "Точка",
-	"Quadrate": "Квадрат"
+	"Quadrate": "Квадрат",
+	"Find": "Найти",
+	"Find Previous": "Найти Предыдущие",
+	"Find Next": "Найти Далее"
 };

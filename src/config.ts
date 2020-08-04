@@ -694,6 +694,7 @@ export class Config implements IViewOptions {
 		'fullsize',
 		'print',
 		'preview',
+		'search',
 		'about'
 	];
 

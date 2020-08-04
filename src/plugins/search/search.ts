@@ -11,7 +11,7 @@ import * as consts from '../../core/constants';
 import { MODE_WYSIWYG } from '../../core/constants';
 import { Dom } from '../../core/dom';
 import { Plugin } from '../../core/plugin';
-import { ISelectionRange, markerInfo, IJodit, Nullable } from '../../types';
+import { ISelectionRange, markerInfo, IJodit, Nullable, IControlType } from '../../types';
 import { Icon } from '../../core/ui';
 import { refs, trim } from '../../core/helpers';
 
@@ -27,6 +27,38 @@ declare module '../../config' {
 }
 
 Config.prototype.useSearch = true;
+
+Config.prototype.controls.search = {
+	command: 'openSearchDialog',
+	tooltip: 'Find',
+	exec(jodit: IJodit, _, { control }) {
+		const value = control.args && control.args[0];
+
+		switch (value) {
+			case 'findPrevious':
+				jodit.e.fire('searchPrevious');
+				break;
+
+			case 'findNext':
+				jodit.e.fire('searchNext');
+				break;
+
+			case 'replace':
+				jodit.execCommand('openReplaceDialog');
+				break;
+
+			default:
+				jodit.execCommand('openSearchDialog');
+		}
+	},
+
+	list: {
+		find: 'Find',
+		findNext: 'Find Next',
+		findPrevious: 'Find Previous',
+		replace: 'Replace',
+	}
+} as IControlType
 
 /**
  * Search plugin. it is used for custom search in text
@@ -646,6 +678,10 @@ export class search extends Plugin {
 					}
 				})
 				.on('searchNext.search searchPrevious.search', () => {
+					if (!self.isOpened) {
+						return self.open();
+					}
+
 					return self.findAndSelect(
 						editor.s.current() || editor.editor.firstChild,
 						self.queryInput.value,
@@ -667,6 +703,7 @@ export class search extends Plugin {
 						value || '',
 						next
 					);
+
 					return false;
 				}
 			});

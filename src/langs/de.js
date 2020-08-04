@@ -211,5 +211,8 @@ module.exports = {
 	"Default": "Standard",
 	"Circle": "Kreis",
 	"Dot": "Dot",
-	"Quadrate": "Quadrate"
+	"Quadrate": "Quadrate",
+	"Find": "Finden",
+	"Find Previous": "Finden Frühere",
+	"Find Next": "Weitersuchen"
 };

@@ -276,6 +276,21 @@ describe('Backspace/Delete key', function() {
 
 				expect(editor.value).equals('<p>testtest</p>');
 			});
+
+			describe('Previous element has contenteditable false', function() {
+				it('Should remove this element like simple char', function() {
+					editor.value = '<p>test<a href="#" contenteditable="false">pop</a>test</p>';
+
+					range.setStartAfter(
+						editor.editor.firstChild.firstChild.nextSibling
+					);
+					editor.s.selectRange(range);
+
+					simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+					expect(editor.value).equals('<p>testtest</p>');
+				});
+			});
 		});
 
 		describe('Delete', function() {
@@ -290,6 +305,21 @@ describe('Backspace/Delete key', function() {
 				simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
 
 				expect(editor.value).equals('<p>testtest</p>');
+			});
+
+			describe('Next element has contenteditable false', function() {
+				it('Should remove this element like simple char', function() {
+					editor.value = '<p>test<a href="#" contenteditable="false">pop</a>test</p>';
+
+					range.setStartBefore(
+						editor.editor.firstChild.firstChild.nextSibling
+					);
+					editor.s.selectRange(range);
+
+					simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
+
+					expect(editor.value).equals('<p>testtest</p>');
+				});
 			});
 		});
 	});

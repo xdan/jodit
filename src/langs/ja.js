@@ -120,7 +120,7 @@ module.exports = {
 	"Break": "Pause",
 	"Search for": "検索",
 	"Replace with": "置換",
-	"Replace": "置換",
+	"Replace": "交換",
 	"Paste": "貼付け",
 	"Choose Content to Paste": "選択した内容を貼付け",
 	"All": "全部",
@@ -211,5 +211,8 @@ module.exports = {
 	"Default": "デフォルト",
 	"Circle": "円",
 	"Dot": "恐竜",
-	"Quadrate": "Quadrate"
+	"Quadrate": "Quadrate",
+	"Find": "見",
+	"Find Previous": "探前",
+	"Find Next": "由来"
 };

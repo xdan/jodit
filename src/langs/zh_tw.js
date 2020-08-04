@@ -120,7 +120,7 @@ module.exports = {
 	"Break": "Pause",
 	"Search for": "查找",
 	"Replace with": "替換為",
-	"Replace": "替換",
+	"Replace": "แทนที่",
 	"Paste": "黏貼",
 	"Choose Content to Paste": "選擇內容並黏貼",
 	"All": "全部",
@@ -210,5 +210,8 @@ module.exports = {
 	"Default": "ค่าปริยาย",
 	"Circle": "วงกลม",
 	"Dot": "จุด",
-	"Quadrate": "Quadrate"
+	"Quadrate": "Quadrate",
+	"Find": "ค้นหา",
+	"Find Previous": "ค้นหาก่อนหน้านี้",
+	"Find Next": "ค้นหาถัดไป"
 };

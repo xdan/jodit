@@ -13,7 +13,7 @@ import {
 	KEY_BACKSPACE,
 	KEY_DELETE
 } from '../../core/constants';
-import { isVoid, call, trim } from '../../core/helpers';
+import { isVoid, call, trim, attr } from '../../core/helpers';
 import {
 	getNeighbor,
 	getNotSpaceSibling,
@@ -104,8 +104,8 @@ export class Delete extends Plugin {
 			normalizeCursorPosition(fakeNode, backspace);
 
 			if (
-				this.checkRemoveChar(fakeNode, backspace) ||
 				this.checkRemoveInseparableElement(fakeNode, backspace) ||
+				this.checkRemoveChar(fakeNode, backspace) ||
 				this.checkTableCell(fakeNode, backspace) ||
 				this.checkRemoveEmptyParent(fakeNode, backspace) ||
 				this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
@@ -285,9 +285,10 @@ export class Delete extends Plugin {
 		backspace: boolean
 	): void | true {
 		const neighbor = Dom.getNormalSibling(fakeNode, backspace);
+
 		if (
 			Dom.isElement(neighbor) &&
-			(Dom.isTag(neighbor, INSEPARABLE_TAGS) || Dom.isEmpty(neighbor))
+			(Dom.isTag(neighbor, INSEPARABLE_TAGS) || Dom.isEmpty(neighbor) || attr(neighbor, 'contenteditable') === 'false')
 		) {
 			Dom.safeRemove(neighbor);
 			this.j.s.setCursorBefore(fakeNode);

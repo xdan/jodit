@@ -9,8 +9,10 @@
 * Fixed https://github.com/xdan/jodit/issues/428
 * Fixed https://github.com/xdan/jodit/issues/427
 * Fixed https://github.com/xdan/jodit/issues/426
+* Fixed https://github.com/xdan/jodit/issues/222
 
 ### Features
+* Added Find and Preview buttons
 * https://github.com/xdan/jodit/issues/417
 Added `defaultFontSizePoints` options. Possible values `pt` or `px`. By default: `px`
 ```js

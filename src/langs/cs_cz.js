@@ -189,7 +189,7 @@ module.exports = {
 	"Break": "Zalomení",
 	"Search for": "Najdi",
 	"Replace with": "Nahradit za",
-	"Replace": "Nahradit",
+	"Replace": "Vyměňte",
 	"Paste": "Vložit",
 	"Choose Content to Paste": "Vyber obsah pro vložení",
 	"You can only edit your own images. Download this image on the host?": "Můžete upravovat pouze své obrázky. Načíst obrázek?",
@@ -212,5 +212,8 @@ module.exports = {
 	"Default": "Výchozí",
 	"Circle": "Kruh",
 	"Dot": "Dot",
-	"Quadrate": "Quadrate"
+	"Quadrate": "Quadrate",
+	"Find": "Najít",
+	"Find Previous": "Najít Předchozí",
+	"Find Next": "Najít Další"
 };

@@ -117,7 +117,7 @@ module.exports = {
 	"Break": "Szünet",
 	"Search for": "Keresés",
 	"Replace with": "Csere erre",
-	"Replace": "Csere",
+	"Replace": "Cserélje ki",
 	"Edit": "Szerkeszt",
 	"Vertical align": "Függőleges igazítás",
 	"Horizontal align": "Vízszintes igazítás",
@@ -213,5 +213,8 @@ module.exports = {
 	"Default": "Alapértelmezett",
 	"Circle": "Kör",
 	"Dot": "Pont",
-	"Quadrate": "Quadrate"
+	"Quadrate": "Quadrate",
+	"Find": "Találni",
+	"Find Previous": "Megtalálja Előző",
+	"Find Next": "Következő Keresése"
 };

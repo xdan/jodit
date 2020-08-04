@@ -115,7 +115,7 @@ module.exports = {
 	"Break": "Pausa",
 	"Search for": "Cerca",
 	"Replace with": "Sostituisci con",
-	"Replace": "Sostituisci",
+	"Replace": "Sostituire",
 	"Edit": "Modifica",
 	"Vertical align": "Allineamento verticala",
 	"Horizontal align": "Allineamento orizzontale",
@@ -211,5 +211,8 @@ module.exports = {
 	"Default": "Di Default",
 	"Circle": "Cerchio",
 	"Dot": "Dot",
-	"Quadrate": "Quadrate"
+	"Quadrate": "Quadrate",
+	"Find": "Trovare",
+	"Find Previous": "Trova Precedente",
+	"Find Next": "Trova Successivo"
 };

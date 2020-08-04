@@ -210,5 +210,8 @@ module.exports = {
 	"Default": "기본",
 	"Circle": "원",
 	"Dot": "점",
-	"Quadrate": "정방형"
+	"Quadrate": "정방형",
+	"Find": "찾기",
+	"Find Previous": "이전 찾기",
+	"Find Next": "다음 찾기"
 };

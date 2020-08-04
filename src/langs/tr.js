@@ -115,7 +115,7 @@ module.exports = {
 	"Break": "Durdur",
 	"Search for": "Ara",
 	"Replace with": "Şununla değiştir",
-	"Replace": "Değiştir",
+	"Replace": "Değiştirin",
 	"Edit": "Düzenle",
 	"Vertical align": "Dikey hizalama",
 	"Horizontal align": "Yatay hizalama",
@@ -211,5 +211,8 @@ module.exports = {
 	"Default": "Varsayılan",
 	"Circle": "Daire",
 	"Dot": "Nokta",
-	"Quadrate": "Kadranı"
+	"Quadrate": "Kadranı",
+	"Find": "Bul",
+	"Find Previous": "Önceki Bul ",
+	"Find Next": "Sonrakini Bul "
 };

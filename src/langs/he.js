@@ -115,7 +115,7 @@ module.exports = {
 	"Break": "שבירת שורה",
 	"Search for": "חפש",
 	"Replace with": "החלף ב",
-	"Replace": "החלף",
+	"Replace": "להחליף",
 	"Edit": "ערוך",
 	"Vertical align": "יישור אנכי",
 	"Horizontal align": "יישור אופקי",
@@ -211,5 +211,8 @@ module.exports = {
 	"Default": "ברירת המחדל",
 	"Circle": "מעגל",
 	"Dot": "נקודה",
-	"Quadrate": "הריבוע הזה"
+	"Quadrate": "הריבוע הזה",
+	"Find": "למצוא",
+	"Find Previous": "מצא את הקודם",
+	"Find Next": "חפש את הבא"
 };

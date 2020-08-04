@@ -211,5 +211,8 @@ module.exports = {
 	"Default": "به طور پیش فرض",
 	"Circle": "دایره",
 	"Dot": "پورنو نقطه",
-	"Quadrate": "Quadrate"
+	"Quadrate": "Quadrate",
+	"Find": "پیدا کردن",
+	"Find Previous": "پیدا کردن قبلی",
+	"Find Next": "پیدا کردن بعدی"
 };

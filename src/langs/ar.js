@@ -111,7 +111,7 @@ module.exports = {
 	"Break": "استراحة",
 	"Search for": "البحث عن",
 	"Replace with": "استبدل ب",
-	"Replace": "يحل محل",
+	"Replace": "محل",
 	"Paste": "معجون",
 	"Choose Content to Paste": "اختر محتوى للصق",
 	"source": "مصدر",
@@ -207,5 +207,8 @@ module.exports = {
 	"Default": "الافتراضي",
 	"Circle": "دائرة",
 	"Dot": "نقطة",
-	"Quadrate": "المربعة"
+	"Quadrate": "المربعة",
+	"Find": "البحث",
+	"Find Previous": "تجد السابقة",
+	"Find Next": "تجد التالي"
 };

@@ -211,5 +211,8 @@ module.exports = {
 	"Default": "默认的",
 	"Circle": "圆圈",
 	"Dot": "点",
-	"Quadrate": "方形"
+	"Quadrate": "方形",
+	"Find": "找到",
+	"Find Previous": "找到以前的",
+	"Find Next": "找到下一个"
 };

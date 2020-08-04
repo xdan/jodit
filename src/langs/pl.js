@@ -115,7 +115,7 @@ module.exports = {
 	"Break": "Przerwa",
 	"Search for": "Szukaj",
 	"Replace with": "Zamień na",
-	"Replace": "Zamień",
+	"Replace": "Wymienić",
 	"Edit": "Edytuj",
 	"Vertical align": "Wyrównywanie w pionie",
 	"Horizontal align": "Wyrównywanie w poziomie",
@@ -211,5 +211,8 @@ module.exports = {
 	"Default": "Domyślnie",
 	"Circle": "Koło",
 	"Dot": "Punkt",
-	"Quadrate": "Kwadrat"
+	"Quadrate": "Kwadrat",
+	"Find": "Znaleźć",
+	"Find Previous": "Znaleźć Poprzednie",
+	"Find Next": "Znajdź Dalej"
 };
