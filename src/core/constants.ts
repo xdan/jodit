@@ -21,11 +21,13 @@ export const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB)$/i;
 export const INSEPARABLE_TAGS: Array<keyof HTMLElementTagNameMap> = [
 	'img',
 	'br',
+	'video',
 	'iframe',
 	'script',
 	'input',
 	'textarea',
 	'hr',
+	'link',
 	'jodit',
 	'jodit-media'
 ];

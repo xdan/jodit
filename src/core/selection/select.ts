@@ -8,6 +8,7 @@ import autobind from 'autobind-decorator';
 
 import * as consts from '../constants';
 import {
+	INSEPARABLE_TAGS,
 	INVISIBLE_SPACE,
 	INVISIBLE_SPACE_REG_EXP_END as INV_END,
 	INVISIBLE_SPACE_REG_EXP_START as INV_START
@@ -557,9 +558,7 @@ export class Select {
 
 			if (Dom.isOrContains(this.area, range.commonAncestorContainer)) {
 				if (
-					/^(BR|HR|IMG|VIDEO|LINK)$/i.test(
-						range.startContainer.nodeName
-					) &&
+					Dom.isTag(range.startContainer, INSEPARABLE_TAGS) &&
 					range.collapsed
 				) {
 					range.startContainer.parentNode?.insertBefore(

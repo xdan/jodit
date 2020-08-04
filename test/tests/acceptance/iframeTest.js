@@ -147,10 +147,13 @@ describe('Iframe mode', function () {
 
 							expect(
 								sortAttributes(
-									editor.value.replace(/[\t\n]/g, '')
+									editor.value
+										.replace(/[\t\n]/g, '')
+										.replace(/ {2,}/g, ' ')
+										.replace(/[\s]+>/g, '>')
 								)
 							).equals(
-								'<!DOCTYPE html><html lang="en"><head><title>Hi</title></head><body ><p><strong>Test1</strong></p></body></html>'
+								'<!DOCTYPE html><html lang="en"><head><title>Hi</title></head><body spellcheck="true"><p><strong>Test1</strong></p></body></html>'
 							);
 						});
 					});
@@ -210,7 +213,7 @@ describe('Iframe mode', function () {
 						editor.editor.appendChild(editor.createInside.text('x'));
 						simulateEvent('keydown', 'x', editor.editor);
 
-						expect(changeCounter).equals(5);
+						expect(changeCounter).above(5);
 					});
 				});
 			});

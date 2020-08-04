@@ -11,7 +11,13 @@ import * as consts from '../../core/constants';
 import { MODE_WYSIWYG } from '../../core/constants';
 import { Dom } from '../../core/dom';
 import { Plugin } from '../../core/plugin';
-import { ISelectionRange, markerInfo, IJodit, Nullable, IControlType } from '../../types';
+import {
+	ISelectionRange,
+	markerInfo,
+	IJodit,
+	Nullable,
+	IControlType
+} from '../../types';
 import { Icon } from '../../core/ui';
 import { refs, trim } from '../../core/helpers';
 
@@ -28,9 +34,9 @@ declare module '../../config' {
 
 Config.prototype.useSearch = true;
 
-Config.prototype.controls.search = {
-	command: 'openSearchDialog',
+Config.prototype.controls.find = {
 	tooltip: 'Find',
+	icon: 'search',
 	exec(jodit: IJodit, _, { control }) {
 		const value = control.args && control.args[0];
 
@@ -53,12 +59,14 @@ Config.prototype.controls.search = {
 	},
 
 	list: {
-		find: 'Find',
+		search: 'Find',
 		findNext: 'Find Next',
 		findPrevious: 'Find Previous',
-		replace: 'Replace',
-	}
-} as IControlType
+		replace: 'Replace'
+	},
+
+	childTemplate: (_, k, v) => v
+} as IControlType;
 
 /**
  * Search plugin. it is used for custom search in text
@@ -632,7 +640,7 @@ export class search extends Plugin {
 					e.preventDefault();
 					e.stopImmediatePropagation();
 				})
-				.on([self.nextButton, self.prevButton], 'click', function(
+				.on([self.nextButton, self.prevButton], 'click', function (
 					this: HTMLButtonElement,
 					e: MouseEvent
 				) {

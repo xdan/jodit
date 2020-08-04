@@ -575,7 +575,7 @@ describe('Search plugin', function() {
 					}
 				});
 
-				clickButton('search', editor);
+				clickButton('find', editor);
 
 				expect(editor.container.querySelector('.jodit-search.jodit-search_active')).is.not.null;
 			});
@@ -589,7 +589,7 @@ describe('Search plugin', function() {
 					}
 				});
 
-				clickTrigger('search', editor);
+				clickTrigger('find', editor);
 				clickButton('replace', getOpenedPopup(editor));
 
 				expect(editor.container.querySelector('.jodit-search.jodit-search_active.jodit-search_replace')).is.not.null;

@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.15
+ * Version: v3.4.16
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -11,8 +11,11 @@
   --jd-color-gray:#dadada;
   --jd-color-gray-dark:#a5a5a5;
   --jd-color-dark:#4c4c4c;
+  --jd-color-red:#ff3b3b;
   --jd-color-default:var(--jd-color-dark);
   --jd-color-text:#222;
+  --jd-color-label:var(--jd-color-gray-dark);
+  --jd-color-error:var(--jd-color-red);
   --jd-color-border:var(--jd-color-gray);
   --jd-color-border-dark:var(--jd-color-dark);
   --jd-color-border-selected:#1e88e5;
@@ -20,7 +23,6 @@
   --jd-color-selection:var(--jd-color-dark);
   --jd-color-selection-area:#bdbdbd;
   --jd-color-separator:var(--jd-color-border);
-  --jd-color-error:#f7d1d1;
   --jd-color-placeholder:var(--jd-color-gray-dark);
   --jd-color-panel:#f9f9f9;
   --jd-color-resizer:#c8c8c8;
@@ -177,6 +179,9 @@
 .jodit-input[disabled],.jodit-select[disabled],.jodit-textarea[disabled]{
   background-color:#f0f0f0;
   color:var(--jd-color-border);
+}
+.jodit-input_has-error_true,.jodit-select_has-error_true,.jodit-textarea_has-error_true{
+  border-color:var(--jd-color-red);
 }
 .jodit-input:focus{
   border-color:#66afe9;
@@ -875,7 +880,7 @@ svg.jodit-icon{
   border-radius:var(--jd-border-radius-default);
 }
 .jodit-ui-button,.jodit-ui-button-style{
-  display:flex;
+  display:inline-flex;
   justify-content:center;
   align-items:center;
 }
@@ -1182,6 +1187,112 @@ svg.jodit-icon{
   width:0;
   border-top:1px solid var(--jd-color-border);
   height:0 !important;
+}
+
+.jodit-ui-input{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:var(--jd-padding-default);
+}
+.jodit-ui-input__input{
+  font-family:var(--jd-font-default);
+  font-size:var(--jd-font-size-default);
+  width:100%;
+  height:32px;
+  padding:calc(var(--jd-padding-default)/2) var(--jd-padding-default);
+  line-height:100%;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  outline:none;
+  box-sizing:border-box;
+  border:1px solid var(--jd-color-border);
+  border-radius:0;
+  background-color:var(--jd-color-white);
+  min-width:200px;
+}
+.jodit-ui-input__input[disabled]{
+  background-color:#f0f0f0;
+  color:var(--jd-color-border);
+}
+.jodit-ui-input__input_has-error_true,.jodit-ui-input_has-error_true .jodit-ui-input__input{
+  border-color:var(--jd-color-red);
+}
+.jodit-ui-input__error,.jodit-ui-input__label{
+  display:block;
+  color:var(--jd-color-label);
+  font-size:.8em;
+}
+.jodit-ui-input__error,.jodit-ui-input_has-error_true .jodit-ui-input__label{
+  color:var(--jd-color-error);
+}
+.jodit-ui-block .jodit-ui-input{
+  margin-bottom:0;
+}
+
+.jodit-ui-text-area{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:var(--jd-padding-default);
+}
+.jodit-ui-text-area__input{
+  font-family:var(--jd-font-default);
+  font-size:var(--jd-font-size-default);
+  width:100%;
+  height:32px;
+  padding:calc(var(--jd-padding-default)/2) var(--jd-padding-default);
+  line-height:100%;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  outline:none;
+  box-sizing:border-box;
+  border:1px solid var(--jd-color-border);
+  border-radius:0;
+  background-color:var(--jd-color-white);
+  min-width:200px;
+}
+.jodit-ui-text-area__input[disabled]{
+  background-color:#f0f0f0;
+  color:var(--jd-color-border);
+}
+.jodit-ui-text-area__input_has-error_true,.jodit-ui-text-area_has-error_true .jodit-ui-text-area__input{
+  border-color:var(--jd-color-red);
+}
+.jodit-ui-text-area__error,.jodit-ui-text-area__label{
+  display:block;
+  color:var(--jd-color-label);
+  font-size:.8em;
+}
+.jodit-ui-text-area__error,.jodit-ui-text-area_has-error_true .jodit-ui-text-area__label{
+  color:var(--jd-color-error);
+}
+.jodit-ui-text-area__input{
+  min-height:60px;
+}
+
+.jodit-ui-checkbox{
+  display:flex;
+  flex-direction:row-reverse;
+  align-items:center;
+  justify-content:flex-end;
+  margin-bottom:var(--jd-padding-default);
+}
+.jodit-ui-checkbox__input{
+  margin-right:var(--jd-padding-default);
+}
+.jodit-ui-block .jodit-ui-checkbox{
+  margin-bottom:0;
+}
+
+.jodit-ui-block{
+  margin-bottom:var(--jd-padding-default);
+  display:flex;
+  justify-content:stretch;
+  align-items:center;
+}
+.jodit-ui-block_align_full{
+  justify-content:space-between;
 }
 .jodit-tabs{
   font-family:var(--jd-font-default);
@@ -1681,7 +1792,7 @@ svg.jodit-icon{
   background-clip:padding-box;
   text-decoration:none;
   outline:0;
-  display:flex;
+  display:inline-flex;
   justify-content:center;
   align-items:center;
   padding:0 var(--jd-padding-default);
@@ -1771,7 +1882,7 @@ svg.jodit-icon{
   background-clip:padding-box;
   text-decoration:none;
   outline:0;
-  display:flex;
+  display:inline-flex;
   justify-content:center;
   align-items:center;
   border-radius:var(--jd-border-radius-default);

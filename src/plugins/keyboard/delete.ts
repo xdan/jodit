@@ -381,7 +381,7 @@ export class Delete extends Plugin {
 			return true;
 		}
 
-		if (neighbor && !Dom.isText(neighbor) && !Dom.isTag(neighbor, ['br', 'hr', 'img', 'link'])) {
+		if (neighbor && !Dom.isText(neighbor) && !Dom.isTag(neighbor, INSEPARABLE_TAGS)) {
 			setCursorIn(neighbor, !backspace);
 		} else {
 			setCursorBefore(fakeNode);
