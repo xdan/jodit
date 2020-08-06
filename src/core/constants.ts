@@ -97,7 +97,6 @@ export const IS_IE =
 /**
  * @property {string} TEXT_PLAIN='text/plain'  For IE11 it will be 'text'. Need for dataTransfer.setData
  */
-export const URL_LIST = IS_IE ? 'url' : 'text/uri-list';
 export const TEXT_PLAIN = IS_IE ? 'text' : 'text/plain';
 export const TEXT_HTML = IS_IE ? 'text' : 'text/html';
 
@@ -106,7 +105,7 @@ export const MARKER_CLASS = 'jodit-selection_marker';
 export const EMULATE_DBLCLICK_TIMEOUT = 300;
 
 export const INSERT_AS_HTML = 'insert_as_html';
-export const INSERT_CLEAR_HTML = 'insert_clear_html';
+export const 	INSERT_CLEAR_HTML = 'insert_clear_html';
 export const INSERT_AS_TEXT = 'insert_as_text';
 export const INSERT_ONLY_TEXT = 'insert_only_text';
 

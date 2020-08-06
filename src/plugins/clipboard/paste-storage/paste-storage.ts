@@ -187,6 +187,7 @@ export class pasteStorage extends Plugin {
 	afterInit(): void {
 		this.j.e
 			.off('afterCopy.paste-storage')
+			.on('pasteStorageList.paste-storage', () => this.list.length)
 			.on('afterCopy.paste-storage', (html: string) => {
 				if (this.list.indexOf(html) !== -1) {
 					this.list.splice(this.list.indexOf(html), 1);
@@ -206,6 +207,9 @@ export class pasteStorage extends Plugin {
 
 	beforeDestruct(): void {
 		this.dialog && this.dialog.destruct();
+
+		this.j.e
+			.off('.paste-storage');
 
 		Dom.safeRemove(this.previewBox);
 		Dom.safeRemove(this.listBox);

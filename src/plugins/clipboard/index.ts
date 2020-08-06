@@ -4,7 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import './config';
 export * from './cut';
-export * from './paste';
+export * from './paste/paste';
 export * from './paste-storage/paste-storage';
 import './copy-format';

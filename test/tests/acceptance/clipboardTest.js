@@ -158,6 +158,50 @@ describe('Clipboard text', function() {
 			const dialog = getOpenedDialog(editor);
 			expect(dialog).is.null;
 		});
+
+		describe('nl2brInPlainText', function() {
+			describe('Enable', function() {
+				it('Should replace all \n to <BR>', function() {
+					const editor = getJodit({
+						nl2brInPlainText: true
+					});
+
+					const pastedText = 'test\ntest\ntest';
+
+					simulateEvent('paste', editor.editor, function(data) {
+						data.clipboardData = {
+							types: ['text/plain'],
+							getData: function(type) {
+								return pastedText;
+							}
+						};
+					});
+
+					expect(editor.value).equals('<p>test<br>ntest<br>ntest</p>');
+				});
+			});
+
+			describe('Disable', function() {
+				it('Should not replace all \n to <BR>', function() {
+					const editor = getJodit({
+						nl2brInPlainText: false
+					});
+
+					const pastedText = 'test\ntest\ntest';
+
+					simulateEvent('paste', editor.editor, function(data) {
+						data.clipboardData = {
+							types: ['text/plain'],
+							getData: function(type) {
+								return pastedText;
+							}
+						};
+					});
+
+					expect(editor.value).equals('<p>test\ntest\ntest</p>');
+				});
+			});
+		});
 	});
 
 	describe('Paste', function() {

@@ -9,7 +9,7 @@ import { Dom } from '../../core/dom';
 import { attr, css, ctrlKey, dataBind } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { IPoint } from '../../types';
-import { getDataTransfer } from './index';
+import { getDataTransfer } from './paste/helpers';
 import { getContainer } from '../../core/global';
 
 /**
