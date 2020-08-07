@@ -50,6 +50,8 @@ export interface IUIButtonState {
 	disabled: boolean;
 	activated: boolean;
 
+	data: IDictionary;
+
 	icon: IUIIconState;
 
 	text: string;
@@ -63,6 +65,7 @@ export interface IUIButtonStatePartial {
 	size?: IUIButtonState['size'];
 	status?: IUIButtonState['status'];
 	type?: IUIButtonState['type'];
+	data?: IUIButtonState['data'];
 	disabled?: boolean;
 	activated?: boolean;
 	icon?: {
@@ -71,6 +74,7 @@ export interface IUIButtonStatePartial {
 	};
 	text?: string;
 	tooltip?: string;
+	tabIndex?: IUIButtonState['tabIndex'];
 }
 
 export interface IUIButton extends IViewComponent, IUIElement, IFocusable {

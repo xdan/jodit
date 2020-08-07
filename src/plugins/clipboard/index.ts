@@ -5,7 +5,7 @@
  */
 
 import './config';
-export * from './cut';
+export * from './clipboard';
 export * from './paste/paste';
 export * from './paste-storage/paste-storage';
 import './copy-format';

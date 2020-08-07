@@ -101,12 +101,14 @@ const translateAll = text => {
 
 		const data = fs.existsSync(newFilePath) ? require(newFilePath) : {};
 
-		data[text] = await translate(text, lang);
+		if (!data[text]) {
+			data[text] = await translate(text, lang);
 
-		fs.writeFileSync(
-			newFilePath,
-			`${header}\nmodule.exports = ${JSON.stringify(data, null, '\t')};`
-		);
+			fs.writeFileSync(
+				newFilePath,
+				`${header}\nmodule.exports = ${JSON.stringify(data, null, '\t')};`
+			);
+		}
 	});
 
 	const indexFile = path.join(path.resolve(argv.dir), 'index.ts');

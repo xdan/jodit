@@ -5,50 +5,57 @@
  */
 import autobind from 'autobind-decorator';
 
-import { IJodit, Nullable } from '../../../types';
+import type { IJodit } from '../../../types';
+import { Plugin } from '../../../core/plugin';
+import { InsertMode, PasteEvent } from '../config';
+import { getAllTypes, getDataTransfer, pasteInsertHtml } from './helpers';
 
 import {
 	INSERT_AS_HTML,
+	INSERT_AS_TEXT,
 	INSERT_CLEAR_HTML,
 	INSERT_ONLY_TEXT,
-	IS_IE,
 	TEXT_HTML,
-	INSERT_AS_TEXT,
 	TEXT_PLAIN
 } from '../../../core/constants';
 
-import { Confirm, Dialog } from '../../../modules/dialog/';
-
 import {
-	applyStyles,
-	browser,
-	cleanFromWord,
-	htmlspecialchars,
 	isHTML,
 	isHtmlFromWord,
-	trim,
-	type,
-	stripTags,
 	isString,
+	trim,
+	applyStyles,
+	cleanFromWord,
+	htmlspecialchars,
+	LimitedStack,
 	markOwner,
-	isArray,
-	nl2br
-} from '../../../core/helpers/';
+	nl2br,
+	stripTags
+} from '../../../core/helpers';
 
+import { pluginKey as clipboardPluginKey } from '../clipboard';
 import { Dom } from '../../../core/dom';
-import { Plugin } from '../../../core/plugin';
-import { pluginKey as clipboardPluginKey } from '../cut';
-import { Button } from '../../../core/ui';
-import { getDataTransfer, pasteInsertHtml } from './helpers';
-import { InsertMode, PasteEvent } from '../config';
+import { Confirm, Dialog } from '../../../modules/dialog';
+import { Button } from '../../../core/ui/button';
+
+type PastedValue = {
+	html: string | Node;
+	action?: InsertMode;
+};
 
 /**
  * Ask before paste HTML source
  */
 export class paste extends Plugin {
+	pasteStack: LimitedStack<PastedValue> = new LimitedStack(20);
+
 	/** @override **/
 	protected afterInit(jodit: IJodit) {
-		jodit.e.on('paste.paste', this.onPaste);
+		jodit.e
+			.on('paste.paste', this.onPaste)
+			.on('pasteStack.paste', (item: PastedValue) =>
+				this.pasteStack.push(item)
+			);
 
 		if (jodit.o.nl2brInPlainText) {
 			this.j.e.on('processPaste.paste', this.onProcessPasteReplaceNl2Br);
@@ -56,22 +63,22 @@ export class paste extends Plugin {
 	}
 
 	/**
-	 * Process Paste event
-	 * @param event
+	 * Paste event handler
+	 * @param e
 	 */
 	@autobind
-	private onPaste(event: PasteEvent): false | void {
+	private onPaste(e: PasteEvent): void | false {
 		if (
-			this.j.e.fire('beforePaste', event) === false ||
-			this.customPasteProcess(event) === false
+			this.j.e.fire('beforePaste', e) === false ||
+			this.customPasteProcess(e) === false
 		) {
-			event.preventDefault();
+			e.preventDefault();
 			return false;
 		}
 
-		this.defaultPasteProcess(event);
+		this.defaultPasteProcess(e);
 
-		if (this.j.e.fire('afterPaste', event) === false) {
+		if (this.j.e.fire('afterPaste', e) === false) {
 			return false;
 		}
 	}
@@ -80,25 +87,21 @@ export class paste extends Plugin {
 	 * Process before paste
 	 * @param event
 	 */
-	private customPasteProcess(event: PasteEvent): false | void {
-		const dt = getDataTransfer(event);
-
-		if (!dt || !event || !dt.getData) {
+	private customPasteProcess(e: PasteEvent): void | false {
+		if (!this.j.o.processPasteHTML) {
 			return;
 		}
 
-		if (dt.getData(TEXT_HTML)) {
-			if (dt.types && Array.from(dt.types).includes(TEXT_HTML)) {
-				return this.processHTMLData(dt.getData(TEXT_HTML), event);
-			}
+		const dt = getDataTransfer(e),
+			texts = [dt?.getData(TEXT_HTML), dt?.getData(TEXT_PLAIN)];
 
-			if (event.type !== 'drop') {
-				this.useFakeDivBox(event);
+		for (const text of texts) {
+			if (
+				isHTML(text) &&
+				(this.processWordHTML(e, text) || this.processHTML(e, text))
+			) {
+				return false;
 			}
-		}
-
-		if (dt.getData(TEXT_PLAIN)) {
-			return this.insertHTML(dt.getData(TEXT_PLAIN), event);
 		}
 	}
 
@@ -106,42 +109,165 @@ export class paste extends Plugin {
 	 * Default paster process
 	 * @param event
 	 */
-	private defaultPasteProcess(event: PasteEvent) {
-		const dt = getDataTransfer(event);
+	private defaultPasteProcess(e: PasteEvent): void {
+		const dt = getDataTransfer(e);
+		let text = dt?.getData(TEXT_HTML) || dt?.getData(TEXT_PLAIN);
 
-		if (event && dt) {
-			let html = this.getText(dt, this.getAllTypes(dt));
+		if (dt && text && trim(text) !== '') {
+			const result = this.j.e.fire(
+				'processPaste',
+				e,
+				text,
+				getAllTypes(dt)
+			);
 
-			if (html && trim(html) !== '') {
-				html = this.trimFragment(html);
+			if (result !== undefined) {
+				text = result;
+			}
 
-				const buffer = this.j.buffer.get(clipboardPluginKey);
+			if (isString(text) || Dom.isNode(text, this.j.ew)) {
+				this.insertByType(e, text, this.j.o.defaultActionOnPaste);
+			}
 
-				if (buffer !== html) {
-					const result = this.j.e.fire(
-						'processPaste',
-						event,
-						html,
-						this.getAllTypes(dt)
-					);
+			e.preventDefault();
+			e.stopPropagation();
+		}
+	}
 
-					if (result !== undefined) {
-						html = result;
+	/**
+	 * Try if text is Word's document fragment and try process this
+	 * @param text
+	 */
+	private processWordHTML(e: PasteEvent, text: string): boolean {
+		if (this.j.o.processPasteFromWord && isHtmlFromWord(text)) {
+			if (this.j.o.askBeforePasteFromWord) {
+				this.askInsertTypeDialog(
+					'The pasted content is coming from a Microsoft Word/Excel document. ' +
+						'Do you want to keep the format or clean it up?',
+					'Word Paste Detected',
+					insertType => {
+						this.insertFromWordByType(e, text, insertType);
+					}
+				);
+			} else {
+				this.insertFromWordByType(
+					e,
+					text,
+					this.j.o.defaultActionOnPaste
+				);
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Process usual HTML text fragment
+	 * @param e
+	 * @param html
+	 */
+	private processHTML(e: PasteEvent, html: string): boolean {
+		if (this.j.o.askBeforePasteHTML) {
+			const cached = this.pasteStack.find(({ html }) => html === html);
+
+			if (cached) {
+				this.insertByType(
+					e,
+					html,
+					cached.action || this.j.o.defaultActionOnPaste
+				);
+				return true;
+			}
+
+			this.askInsertTypeDialog(
+				'Your code is similar to HTML. Keep as HTML?',
+				'Paste as HTML',
+				(insertType: InsertMode) => {
+					this.insertByType(e, html, insertType);
+				},
+				'Insert as Text'
+			);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Clear extra styles and tags from Word's pasted text
+	 *
+	 * @param e
+	 * @param html
+	 * @param insertType
+	 */
+	private insertFromWordByType(
+		e: PasteEvent,
+		html: string,
+		insertType: InsertMode
+	) {
+		switch (insertType) {
+			case INSERT_AS_HTML: {
+				html = applyStyles(html);
+
+				if (this.j.o.beautifyHTML) {
+					const value = this.j.events?.fire('beautifyHTML', html);
+
+					if (isString(value)) {
+						html = value;
 					}
 				}
 
-				if (isString(html)) {
-					this.pasteHTMLByType(
-						html,
-						this.j.o.defaultActionOnPaste,
-						event
-					);
-				}
+				break;
+			}
 
-				event.preventDefault();
-				event.stopPropagation();
+			case INSERT_AS_TEXT: {
+				html = cleanFromWord(html);
+				break;
+			}
+
+			case INSERT_ONLY_TEXT: {
+				html = stripTags(cleanFromWord(html));
+				break;
 			}
 		}
+
+		pasteInsertHtml(e, this.j, html);
+	}
+
+	/**
+	 * Insert HTML by option type
+	 *
+	 * @param e
+	 * @param html
+	 * @param action
+	 */
+	insertByType(e: PasteEvent, html: string | Node, action: InsertMode): void {
+		this.pasteStack.push({ html, action });
+
+		if (isString(html)) {
+			this.j.buffer.set(clipboardPluginKey, html);
+
+			switch (action) {
+				case INSERT_CLEAR_HTML:
+					html = cleanFromWord(html);
+					break;
+
+				case INSERT_ONLY_TEXT:
+					html = stripTags(html);
+					break;
+
+				case INSERT_AS_TEXT:
+					html = htmlspecialchars(html);
+					break;
+
+				default:
+			}
+		}
+
+		pasteInsertHtml(e, this.j, html);
 	}
 
 	/**
@@ -154,7 +280,7 @@ export class paste extends Plugin {
 	 * @param insertText
 	 * @private
 	 */
-	private clearOrKeep(
+	private askInsertTypeDialog(
 		msg: string,
 		title: string,
 		callback: (yes: InsertMode) => void,
@@ -162,8 +288,7 @@ export class paste extends Plugin {
 		insertText: string = 'Insert only Text'
 	): Dialog | void {
 		if (
-			this.j.e &&
-			this.j.e.fire(
+			this.j?.e?.fire(
 				'beforeOpenPasteDialog',
 				msg,
 				title,
@@ -186,10 +311,27 @@ export class paste extends Plugin {
 
 		markOwner(this.j, dialog.container);
 
-		const keep = Button(this.j, '', 'Keep');
-		const clear = Button(this.j, '', clearButton);
-		const clear2 = Button(this.j, '', insertText);
-		const cancel = Button(this.j, '', 'Cancel');
+		const keep = Button(this.j, {
+			text: 'Keep',
+			name: 'keep',
+			status: 'primary',
+			tabIndex: 0
+		});
+
+		const clear = Button(this.j, {
+			text: clearButton,
+			tabIndex: 0
+		});
+
+		const clear2 = Button(this.j, {
+			text: insertText,
+			tabIndex: 0
+		});
+
+		const cancel = Button(this.j, {
+			text: 'Cancel',
+			tabIndex: 0
+		});
 
 		keep.onAction(() => {
 			dialog.close();
@@ -212,7 +354,9 @@ export class paste extends Plugin {
 
 		dialog.setFooter([keep, clear, insertText ? clear2 : '', cancel]);
 
-		this.j.e?.fire(
+		keep.focus();
+
+		this.j?.e?.fire(
 			'afterOpenPasteDialog',
 			dialog,
 			msg,
@@ -226,159 +370,29 @@ export class paste extends Plugin {
 	}
 
 	/**
-	 * Insert HTML by option type
+	 * Replace all \n chars in plain text to br
 	 *
-	 * @param html
-	 * @param subtype
+	 * @param event
+	 * @param text
+	 * @param type
 	 */
-	insertByType(html: string | Node, subtype: InsertMode): void {
-		if (isString(html)) {
-			switch (subtype) {
-				case INSERT_CLEAR_HTML:
-					html = cleanFromWord(html);
-					break;
-
-				case INSERT_ONLY_TEXT:
-					html = stripTags(html);
-					break;
-
-				case INSERT_AS_TEXT:
-					html = htmlspecialchars(html);
-					break;
-
-				default:
-			}
-		}
-
-		if (this.j.isInDestruct) {
-			return;
-		}
-
-		if (isString(html)) {
-			this.j.buffer.set(clipboardPluginKey, html);
-		}
-
-		pasteInsertHtml(this.j, html);
-	}
-
-	/**
-	 * Paste HTML
-	 * @param html
-	 */
-	insertHTML(html: string, event: DragEvent | ClipboardEvent): void | false {
-		const buffer = this.j.buffer.get(clipboardPluginKey);
-
-		if (isHTML(html) && buffer !== this.trimFragment(html)) {
-			html = this.trimFragment(html);
-
-			if (this.j.o.askBeforePasteHTML) {
-				this.clearOrKeep(
-					'Your code is similar to HTML. Keep as HTML?',
-					'Paste as HTML',
-					(insertType: InsertMode) => {
-						this.pasteHTMLByType(html, insertType, event);
-					},
-					'Insert as Text'
-				);
-			} else {
-				this.pasteHTMLByType(
-					html,
-					this.j.o.defaultActionOnPaste,
-					event
-				);
-			}
-
-			return false;
+	@autobind
+	private onProcessPasteReplaceNl2Br(
+		event: PasteEvent,
+		text: string,
+		type: string
+	): string | void {
+		if (type === TEXT_PLAIN + ';' && !isHTML(text)) {
+			return nl2br(text);
 		}
 	}
 
 	/**
-	 * Remove special HTML comments
-	 * @param html
+	 * Deprecated browser helper.
+	 * TODO: need check all browser, now not used
+	 * @param event
 	 */
-	private trimFragment(html: string): string {
-		const start: number = html.search(/<!--StartFragment-->/i);
-
-		if (start !== -1) {
-			html = html.substr(start + 20);
-		}
-
-		const end: number = html.search(/<!--EndFragment-->/i);
-
-		if (end !== -1) {
-			html = html.substr(0, end);
-		}
-
-		return html;
-	}
-
-	/**
-	 * Get string from DataTransfer
-	 *
-	 * @param dt
-	 * @param typesStr
-	 */
-	private getText(dt: DataTransfer, typesStr: string): Nullable<string> {
-		if (/text\/html/i.test(typesStr)) {
-			return dt.getData('text/html');
-		}
-
-		if (/text\/rtf/i.test(typesStr) && browser('safari')) {
-			return dt.getData('text/rtf');
-		}
-
-		if (/text\/plain/i.test(typesStr) && !browser('mozilla')) {
-			return dt.getData(TEXT_PLAIN);
-		}
-
-		if (/text/i.test(typesStr) && IS_IE) {
-			return dt.getData(TEXT_PLAIN);
-		}
-
-		return null;
-	}
-
-	/** @override **/
-	protected beforeDestruct(jodit: IJodit) {
-		this.j.e.off('.paste');
-	}
-
-	private processHTMLData(
-		html: string,
-		event: DragEvent | ClipboardEvent
-	): void | false {
-		const buffer = this.j.buffer.get(clipboardPluginKey);
-
-		if (
-			this.j.o.processPasteHTML &&
-			isHTML(html) &&
-			buffer !== this.trimFragment(html)
-		) {
-			if (this.j.o.processPasteFromWord && isHtmlFromWord(html)) {
-				if (this.j.o.askBeforePasteFromWord) {
-					this.clearOrKeep(
-						'The pasted content is coming from a Microsoft Word/Excel document. ' +
-							'Do you want to keep the format or clean it up?',
-						'Word Paste Detected',
-						(insertType: InsertMode) => {
-							this.pasteFromWordByType(html, insertType);
-						}
-					);
-				} else {
-					this.pasteFromWordByType(
-						html,
-						this.j.o.defaultActionOnPaste
-					);
-				}
-			} else {
-				this.insertHTML(html, event);
-			}
-
-			return false;
-		}
-	}
-
-	private useFakeDivBox(event: PasteEvent) {
+	useFakeDivBox(event: PasteEvent) {
 		const div = this.j.c.div('', {
 			tabindex: -1,
 			contenteditable: true,
@@ -413,13 +427,8 @@ export class paste extends Plugin {
 			// If data has been processes by browser, process it
 			if (div.childNodes && div.childNodes.length > 0) {
 				const pastedData = div.innerHTML;
-
 				removeFakeFocus();
-
-				if (this.processHTMLData(pastedData, event) !== false) {
-					pasteInsertHtml(this.j, pastedData);
-				}
-
+				this.processHTML(event, pastedData);
 				return;
 			}
 
@@ -433,86 +442,8 @@ export class paste extends Plugin {
 		waitData();
 	}
 
-	private pasteHTMLByType(
-		html: string,
-		insertType: InsertMode,
-		event: PasteEvent
-	) {
-		if (event.type === 'drop') {
-			this.j.s.insertCursorAtPoint(
-				(event as DragEvent).clientX,
-				(event as DragEvent).clientY
-			);
-		}
-
-		this.insertByType(html, insertType);
-
-		this.j.setEditorValue();
-	}
-
-	private pasteFromWordByType(html: string, insertType: InsertMode) {
-		switch (insertType) {
-			case INSERT_AS_HTML: {
-				html = applyStyles(html);
-
-				if (this.j.o.beautifyHTML) {
-					const value = this.j.events?.fire('beautifyHTML', html);
-
-					if (isString(value)) {
-						html = value;
-					}
-				}
-
-				break;
-			}
-
-			case INSERT_AS_TEXT: {
-				html = cleanFromWord(html);
-				break;
-			}
-
-			case INSERT_ONLY_TEXT: {
-				html = stripTags(cleanFromWord(html));
-				break;
-			}
-		}
-
-		pasteInsertHtml(this.j, html);
-
-		this.j.setEditorValue();
-	}
-
-	private getAllTypes(dt: DataTransfer): string {
-		const types: ReadonlyArray<string> | string = dt.types;
-
-		let types_str: string = '';
-
-		if (isArray(types) || type(types) === 'domstringlist') {
-			for (let i = 0; i < types.length; i += 1) {
-				types_str += types[i] + ';';
-			}
-		} else {
-			types_str = (types || TEXT_PLAIN).toString() + ';';
-		}
-
-		return types_str;
-	}
-
-	/**
-	 * Replace all \n chars in plain text to br
-	 *
-	 * @param event
-	 * @param text
-	 * @param type
-	 */
-	@autobind
-	private onProcessPasteReplaceNl2Br(
-		event: PasteEvent,
-		text: string,
-		type: string
-	): string | void {
-		if (type === TEXT_PLAIN + ';' && !isHTML(text)) {
-			return nl2br(text);
-		}
+	/** @override **/
+	protected beforeDestruct(jodit: IJodit) {
+		jodit.e.off('paste.paste', this.onPaste);
 	}
 }

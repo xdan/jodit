@@ -102,6 +102,7 @@ export interface IFileBrowserOptions extends IViewOptions {
 
 	createNewFolder: boolean;
 	deleteFolder: boolean;
+	renameFolder: boolean;
 	moveFolder: boolean;
 	moveFile: boolean;
 	showFoldersPanel: boolean;
@@ -157,10 +158,6 @@ export interface IFileBrowserCallBackData {
 }
 
 export interface IFileBrowserDataProvider extends IDestructible {
-	currentPath: string;
-	currentSource: string;
-	currentBaseUrl: string;
-
 	getPathByUrl(
 		url: string,
 		success: (path: string, name: string, source: string) => void,
@@ -273,6 +270,10 @@ export interface IFileBrowser extends IViewWithToolbar<IFileBrowserOptions> {
 }
 
 export interface IFileBrowserState {
+	currentPath: string;
+	currentSource: string;
+	currentBaseUrl: string;
+
 	view: 'tiles' | 'list';
 	sortBy: string;
 	filterWord: string;
@@ -280,7 +281,7 @@ export interface IFileBrowserState {
 
 	elements: IFileBrowserItem[];
 	activeElements: IFileBrowserItem[];
-	folders: IFileBrowserFolder[];
+	sources: ISourcesFiles;
 }
 
 export interface IFileBrowserFolder {

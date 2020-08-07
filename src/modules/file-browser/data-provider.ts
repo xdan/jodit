@@ -56,10 +56,6 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		);
 	}
 
-	currentPath: string = '';
-	currentSource: string = DEFAULT_SOURCE_NAME;
-	currentBaseUrl: string = '';
-
 	constructor(
 		readonly parent: IViewBased,
 		readonly options: IFileBrowserOptions
@@ -120,10 +116,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param path
 	 * @param source
 	 */
-	async permissions(
-		path: string = this.currentPath,
-		source: string = this.currentSource
-	): Promise<void> {
+	async permissions(path: string, source: string): Promise<void> {
 		if (!this.o.permissions) {
 			return Promise.resolve();
 		}
@@ -164,8 +157,8 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param source
 	 */
 	async items(
-		path: string = this.currentPath,
-		source: string = this.currentSource
+		path: string,
+		source: string
 	): Promise<IFileBrowserAnswer> {
 		const opt = this.options;
 
@@ -180,8 +173,8 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	}
 
 	async tree(
-		path: string = this.currentPath,
-		source: string = this.currentSource
+		path: string,
+		source: string
 	): Promise<IFileBrowserAnswer> {
 		path = normalizeRelativePath(path);
 
@@ -243,7 +236,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		path: string,
 		source: string
 	): Promise<IFileBrowserAnswer> {
-		const {create} = this.o;
+		const { create } = this.o;
 
 		if (!create) {
 			return Promise.reject('Set Create api options');
@@ -253,11 +246,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		create.data.path = path;
 		create.data.name = name;
 
-		return this.get('create').then(resp => {
-			this.currentPath = path;
-			this.currentSource = source;
-			return resp;
-		});
+		return this.get('create');
 	}
 
 	/**
