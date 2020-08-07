@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.17
+ * Version: v3.4.18
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -99,7 +99,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 111);
+/******/ 	return __webpack_require__(__webpack_require__.s = 110);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -111,15 +111,16 @@ return /******/ (function(modules) { // webpackBootstrap
 __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
-__webpack_require__.d(__webpack_exports__, "cns", function() { return /* reexport */ utils["d" /* cns */]; });
-__webpack_require__.d(__webpack_exports__, "markDeprecated", function() { return /* reexport */ utils["h" /* markDeprecated */]; });
-__webpack_require__.d(__webpack_exports__, "call", function() { return /* reexport */ utils["b" /* call */]; });
-__webpack_require__.d(__webpack_exports__, "attr", function() { return /* reexport */ utils["a" /* attr */]; });
-__webpack_require__.d(__webpack_exports__, "markOwner", function() { return /* reexport */ utils["i" /* markOwner */]; });
-__webpack_require__.d(__webpack_exports__, "callPromise", function() { return /* reexport */ utils["c" /* callPromise */]; });
-__webpack_require__.d(__webpack_exports__, "get", function() { return /* reexport */ utils["e" /* get */]; });
-__webpack_require__.d(__webpack_exports__, "keepNames", function() { return /* reexport */ utils["g" /* keepNames */]; });
-__webpack_require__.d(__webpack_exports__, "getClassName", function() { return /* reexport */ utils["f" /* getClassName */]; });
+__webpack_require__.d(__webpack_exports__, "cns", function() { return /* reexport */ utils["e" /* cns */]; });
+__webpack_require__.d(__webpack_exports__, "markDeprecated", function() { return /* reexport */ utils["i" /* markDeprecated */]; });
+__webpack_require__.d(__webpack_exports__, "call", function() { return /* reexport */ utils["c" /* call */]; });
+__webpack_require__.d(__webpack_exports__, "attr", function() { return /* reexport */ utils["b" /* attr */]; });
+__webpack_require__.d(__webpack_exports__, "markOwner", function() { return /* reexport */ utils["j" /* markOwner */]; });
+__webpack_require__.d(__webpack_exports__, "callPromise", function() { return /* reexport */ utils["d" /* callPromise */]; });
+__webpack_require__.d(__webpack_exports__, "get", function() { return /* reexport */ utils["f" /* get */]; });
+__webpack_require__.d(__webpack_exports__, "keepNames", function() { return /* reexport */ utils["h" /* keepNames */]; });
+__webpack_require__.d(__webpack_exports__, "getClassName", function() { return /* reexport */ utils["g" /* getClassName */]; });
+__webpack_require__.d(__webpack_exports__, "LimitedStack", function() { return /* reexport */ utils["a" /* LimitedStack */]; });
 __webpack_require__.d(__webpack_exports__, "asArray", function() { return /* reexport */ asArray; });
 __webpack_require__.d(__webpack_exports__, "splitArray", function() { return /* reexport */ splitArray; });
 __webpack_require__.d(__webpack_exports__, "setTimeout", function() { return /* reexport */ set_timeout_setTimeout; });
@@ -206,7 +207,7 @@ __webpack_require__.d(__webpack_exports__, "type", function() { return /* reexpo
 __webpack_require__.d(__webpack_exports__, "error", function() { return /* reexport */ type["a" /* error */]; });
 __webpack_require__.d(__webpack_exports__, "val", function() { return /* reexport */ val; });
 
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 4 modules
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 5 modules
 var utils = __webpack_require__(10);
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 20 modules
@@ -269,10 +270,10 @@ function set_timeout_clearTimeout(timer) {
 
 
 // EXTERNAL MODULE: ./src/core/helpers/extend.ts
-var extend = __webpack_require__(25);
+var extend = __webpack_require__(24);
 
 // EXTERNAL MODULE: ./src/core/helpers/color/index.ts + 1 modules
-var color = __webpack_require__(26);
+var color = __webpack_require__(25);
 
 // EXTERNAL MODULE: ./src/core/dom.ts
 var dom = __webpack_require__(1);
@@ -342,7 +343,7 @@ const getXPathByElement = (element, root) => {
 };
 const refs = (root) => {
     return $$('[ref],[data-ref]', root).reduce((def, child) => {
-        const key = Object(utils["a" /* attr */])(child, '-ref');
+        const key = Object(utils["b" /* attr */])(child, '-ref');
         if (key && Object(checker["s" /* isString */])(key)) {
             def[Object(string["a" /* camelCase */])(key)] = child;
             def[key] = child;
@@ -1026,7 +1027,7 @@ const dataBind = (elm, key, value) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/default-language.ts
-var default_language = __webpack_require__(27);
+var default_language = __webpack_require__(26);
 
 // CONCATENATED MODULE: ./src/core/helpers/each.ts
 /*!
@@ -1073,10 +1074,10 @@ const humanSizeToBytes = (human) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/jodit-array.ts
-var jodit_array = __webpack_require__(24);
+var jodit_array = __webpack_require__(23);
 
 // EXTERNAL MODULE: ./src/core/helpers/jodit-object.ts
-var jodit_object = __webpack_require__(28);
+var jodit_object = __webpack_require__(27);
 
 // CONCATENATED MODULE: ./src/core/helpers/build-query.ts
 /*!
@@ -1633,7 +1634,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MODE_SOURCE", function() { return MODE_SOURCE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MODE_SPLIT", function() { return MODE_SPLIT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IS_IE", function() { return IS_IE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "URL_LIST", function() { return URL_LIST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TEXT_PLAIN", function() { return TEXT_PLAIN; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TEXT_HTML", function() { return TEXT_HTML; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MARKER_CLASS", function() { return MARKER_CLASS; });
@@ -1706,7 +1706,6 @@ const MODE_SPLIT = 3;
 const IS_IE = typeof navigator !== 'undefined' &&
     (navigator.userAgent.indexOf('MSIE') !== -1 ||
         /rv:11.0/i.test(navigator.userAgent));
-const URL_LIST = IS_IE ? 'url' : 'text/uri-list';
 const TEXT_PLAIN = IS_IE ? 'text' : 'text/plain';
 const TEXT_HTML = IS_IE ? 'text' : 'text/html';
 const MARKER_CLASS = 'jodit-selection_marker';
@@ -2222,7 +2221,7 @@ PERFORMANCE OF THIS SOFTWARE.
 var extendStatics = function(d, b) {
     extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
     return extendStatics(d, b);
 };
 
@@ -2316,8 +2315,8 @@ var __createBinding = Object.create ? (function(o, m, k, k2) {
     o[k2] = m[k];
 });
 
-function __exportStar(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+function __exportStar(m, o) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
 }
 
 function __values(o) {
@@ -2407,7 +2406,7 @@ var __setModuleDefault = Object.create ? (function(o, v) {
 function __importStar(mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 }
@@ -2485,7 +2484,7 @@ function hasBrowserColorPicker() {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/jodit-array.ts
-var jodit_array = __webpack_require__(24);
+var jodit_array = __webpack_require__(23);
 
 // CONCATENATED MODULE: ./src/core/helpers/checker/is-array.ts
 /*!
@@ -2535,13 +2534,24 @@ function isFunction(value) {
     return typeof value === 'function';
 }
 
+// CONCATENATED MODULE: ./src/core/helpers/checker/is-string.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function isString(value) {
+    return typeof value === 'string';
+}
+
 // CONCATENATED MODULE: ./src/core/helpers/checker/is-html.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-const isHTML = (str) => /<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m.test(str);
+
+const isHTML = (str) => isString(str) && /<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m.test(str);
 
 // CONCATENATED MODULE: ./src/core/helpers/checker/is-html-from-word.ts
 /*!
@@ -2574,16 +2584,6 @@ function isDestructable(value) {
 }
 function hasContainer(value) {
     return value && dom["a" /* Dom */].isElement(value.container);
-}
-
-// CONCATENATED MODULE: ./src/core/helpers/checker/is-string.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isString(value) {
-    return typeof value === 'string';
 }
 
 // CONCATENATED MODULE: ./src/core/helpers/checker/is-numeric.ts
@@ -2778,6 +2778,100 @@ function isPromise(val) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export boundMethod */
+/* unused harmony export boundClass */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return autobind; });
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/**
+ * Return a descriptor removing the value and returning a getter
+ * The getter will return a .bind version of the function
+ * and memoize the result against a symbol on the instance
+ */
+function boundMethod(target, key, descriptor) {
+  var fn = descriptor.value;
+
+  if (typeof fn !== 'function') {
+    throw new TypeError("@boundMethod decorator can only be applied to methods not: ".concat(_typeof(fn)));
+  } // In IE11 calling Object.defineProperty has a side-effect of evaluating the
+  // getter for the property which is being replaced. This causes infinite
+  // recursion and an "Out of stack space" error.
+
+
+  var definingProperty = false;
+  return {
+    configurable: true,
+    get: function get() {
+      // eslint-disable-next-line no-prototype-builtins
+      if (definingProperty || this === target.prototype || this.hasOwnProperty(key) || typeof fn !== 'function') {
+        return fn;
+      }
+
+      var boundFn = fn.bind(this);
+      definingProperty = true;
+      Object.defineProperty(this, key, {
+        configurable: true,
+        get: function get() {
+          return boundFn;
+        },
+        set: function set(value) {
+          fn = value;
+          delete this[key];
+        }
+      });
+      definingProperty = false;
+      return boundFn;
+    },
+    set: function set(value) {
+      fn = value;
+    }
+  };
+}
+/**
+ * Use boundMethod to bind all methods on the target.prototype
+ */
+
+function boundClass(target) {
+  // (Using reflect to get all keys including symbols)
+  var keys; // Use Reflect if exists
+
+  if (typeof Reflect !== 'undefined' && typeof Reflect.ownKeys === 'function') {
+    keys = Reflect.ownKeys(target.prototype);
+  } else {
+    keys = Object.getOwnPropertyNames(target.prototype); // Use symbols if support is provided
+
+    if (typeof Object.getOwnPropertySymbols === 'function') {
+      keys = keys.concat(Object.getOwnPropertySymbols(target.prototype));
+    }
+  }
+
+  keys.forEach(function (key) {
+    // Ignore special case target method
+    if (key === 'constructor') {
+      return;
+    }
+
+    var descriptor = Object.getOwnPropertyDescriptor(target.prototype, key); // Only methods need binding
+
+    if (typeof descriptor.value === 'function') {
+      Object.defineProperty(target.prototype, key, boundMethod(target, key, descriptor));
+    }
+  });
+  return target;
+}
+function autobind() {
+  if (arguments.length === 1) {
+    return boundClass.apply(void 0, arguments);
+  }
+
+  return boundMethod.apply(void 0, arguments);
+}
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, "g", function() { return /* reexport */ ui_element["a" /* UIElement */]; });
@@ -2799,7 +2893,7 @@ __webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport 
 // EXTERNAL MODULE: ./src/core/ui/element.ts
 var ui_element = __webpack_require__(18);
 
-// EXTERNAL MODULE: ./src/core/ui/button/index.ts
+// EXTERNAL MODULE: ./src/core/ui/button/index.ts + 1 modules
 var ui_button = __webpack_require__(11);
 
 // EXTERNAL MODULE: ./src/core/ui/popup/index.ts + 1 modules
@@ -2819,7 +2913,7 @@ class separator_UISeparator extends ui_element["a" /* UIElement */] {
 var tslib_es6 = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./src/core/ui/list/group.less
-var list_group = __webpack_require__(116);
+var list_group = __webpack_require__(115);
 
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 4 modules
 var decorators = __webpack_require__(14);
@@ -2886,7 +2980,7 @@ Object(tslib_es6["a" /* __decorate */])([
 ], group_UIGroup.prototype, "update", null);
 
 // EXTERNAL MODULE: ./src/core/ui/list/list.less
-var list = __webpack_require__(117);
+var list = __webpack_require__(116);
 
 // CONCATENATED MODULE: ./src/core/ui/helpers/get-control-type.ts
 /*!
@@ -3044,7 +3138,7 @@ Object(tslib_es6["a" /* __decorate */])([
 var ui_form = __webpack_require__(13);
 
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
-var icon = __webpack_require__(30);
+var icon = __webpack_require__(29);
 
 // CONCATENATED MODULE: ./src/core/ui/index.ts
 /*!
@@ -3063,100 +3157,6 @@ var icon = __webpack_require__(30);
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export boundMethod */
-/* unused harmony export boundClass */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return autobind; });
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-/**
- * Return a descriptor removing the value and returning a getter
- * The getter will return a .bind version of the function
- * and memoize the result against a symbol on the instance
- */
-function boundMethod(target, key, descriptor) {
-  var fn = descriptor.value;
-
-  if (typeof fn !== 'function') {
-    throw new TypeError("@boundMethod decorator can only be applied to methods not: ".concat(_typeof(fn)));
-  } // In IE11 calling Object.defineProperty has a side-effect of evaluating the
-  // getter for the property which is being replaced. This causes infinite
-  // recursion and an "Out of stack space" error.
-
-
-  var definingProperty = false;
-  return {
-    configurable: true,
-    get: function get() {
-      // eslint-disable-next-line no-prototype-builtins
-      if (definingProperty || this === target.prototype || this.hasOwnProperty(key) || typeof fn !== 'function') {
-        return fn;
-      }
-
-      var boundFn = fn.bind(this);
-      definingProperty = true;
-      Object.defineProperty(this, key, {
-        configurable: true,
-        get: function get() {
-          return boundFn;
-        },
-        set: function set(value) {
-          fn = value;
-          delete this[key];
-        }
-      });
-      definingProperty = false;
-      return boundFn;
-    },
-    set: function set(value) {
-      fn = value;
-    }
-  };
-}
-/**
- * Use boundMethod to bind all methods on the target.prototype
- */
-
-function boundClass(target) {
-  // (Using reflect to get all keys including symbols)
-  var keys; // Use Reflect if exists
-
-  if (typeof Reflect !== 'undefined' && typeof Reflect.ownKeys === 'function') {
-    keys = Reflect.ownKeys(target.prototype);
-  } else {
-    keys = Object.getOwnPropertyNames(target.prototype); // Use symbols if support is provided
-
-    if (typeof Object.getOwnPropertySymbols === 'function') {
-      keys = keys.concat(Object.getOwnPropertySymbols(target.prototype));
-    }
-  }
-
-  keys.forEach(function (key) {
-    // Ignore special case target method
-    if (key === 'constructor') {
-      return;
-    }
-
-    var descriptor = Object.getOwnPropertyDescriptor(target.prototype, key); // Only methods need binding
-
-    if (typeof descriptor.value === 'function') {
-      Object.defineProperty(target.prototype, key, boundMethod(target, key, descriptor));
-    }
-  });
-  return target;
-}
-function autobind() {
-  if (arguments.length === 1) {
-    return boundClass.apply(void 0, arguments);
-  }
-
-  return boundMethod.apply(void 0, arguments);
-}
-
-/***/ }),
 /* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3168,7 +3168,7 @@ function autobind() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return lang; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getContainer; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return eventEmitter; });
-/* harmony import */ var _plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(29);
+/* harmony import */ var _plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(28);
 /* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 /* harmony import */ var _helpers___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(0);
 /* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(19);
@@ -3374,15 +3374,16 @@ class viewComponent_ViewComponent extends component_Component {
 "use strict";
 
 // EXPORTS
-__webpack_require__.d(__webpack_exports__, "d", function() { return /* reexport */ cns; });
-__webpack_require__.d(__webpack_exports__, "h", function() { return /* reexport */ markDeprecated; });
-__webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport */ call; });
-__webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport */ attr; });
-__webpack_require__.d(__webpack_exports__, "i", function() { return /* reexport */ markOwner; });
-__webpack_require__.d(__webpack_exports__, "c", function() { return /* reexport */ callPromise; });
-__webpack_require__.d(__webpack_exports__, "e", function() { return /* reexport */ get; });
-__webpack_require__.d(__webpack_exports__, "g", function() { return /* reexport */ keepNames; });
-__webpack_require__.d(__webpack_exports__, "f", function() { return /* reexport */ getClassName; });
+__webpack_require__.d(__webpack_exports__, "e", function() { return /* reexport */ cns; });
+__webpack_require__.d(__webpack_exports__, "i", function() { return /* reexport */ markDeprecated; });
+__webpack_require__.d(__webpack_exports__, "c", function() { return /* reexport */ call; });
+__webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport */ attr; });
+__webpack_require__.d(__webpack_exports__, "j", function() { return /* reexport */ markOwner; });
+__webpack_require__.d(__webpack_exports__, "d", function() { return /* reexport */ callPromise; });
+__webpack_require__.d(__webpack_exports__, "f", function() { return /* reexport */ get; });
+__webpack_require__.d(__webpack_exports__, "h", function() { return /* reexport */ keepNames; });
+__webpack_require__.d(__webpack_exports__, "g", function() { return /* reexport */ getClassName; });
+__webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport */ LimitedStack; });
 
 // CONCATENATED MODULE: ./src/core/helpers/utils/mark-deprecated.ts
 /*!
@@ -3494,6 +3495,27 @@ const getClassName = (obj) => {
     return res ? res[1] : '';
 };
 
+// CONCATENATED MODULE: ./src/core/helpers/utils/stack.ts
+class LimitedStack {
+    constructor(limit) {
+        this.limit = limit;
+        this.stack = [];
+    }
+    push(item) {
+        this.stack.push(item);
+        if (this.stack.length > this.limit) {
+            this.stack.shift();
+        }
+        return this;
+    }
+    pop() {
+        return this.stack.pop();
+    }
+    find(clb) {
+        return this.stack.find(clb);
+    }
+}
+
 // CONCATENATED MODULE: ./src/core/helpers/utils/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -3506,18 +3528,247 @@ const getClassName = (obj) => {
 
 
 
+
 /***/ }),
 /* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(23);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _button__WEBPACK_IMPORTED_MODULE_0__["a"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "b", function() { return _button__WEBPACK_IMPORTED_MODULE_0__["b"]; });
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "c", function() { return /* reexport */ UIButtonState; });
+__webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport */ button_UIButton; });
+__webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport */ Button; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "c", function() { return _button__WEBPACK_IMPORTED_MODULE_0__["c"]; });
+// EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
+var tslib_es6 = __webpack_require__(4);
 
+// EXTERNAL MODULE: ./src/core/ui/button/button.less
+var button_button = __webpack_require__(113);
+
+// EXTERNAL MODULE: ./node_modules/autobind-decorator/lib/esm/index.js
+var esm = __webpack_require__(6);
+
+// EXTERNAL MODULE: ./src/core/ui/element.ts
+var ui_element = __webpack_require__(18);
+
+// EXTERNAL MODULE: ./src/core/decorators/watch.ts
+var watch = __webpack_require__(16);
+
+// EXTERNAL MODULE: ./src/core/component/index.ts + 3 modules
+var component = __webpack_require__(9);
+
+// EXTERNAL MODULE: ./src/core/dom.ts
+var dom = __webpack_require__(1);
+
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 30 modules
+var helpers = __webpack_require__(0);
+
+// EXTERNAL MODULE: ./src/core/ui/icon.ts
+var icon = __webpack_require__(29);
+
+// EXTERNAL MODULE: ./src/core/ui/index.ts + 5 modules
+var ui = __webpack_require__(7);
+
+// CONCATENATED MODULE: ./src/core/ui/button/button.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+
+
+
+const UIButtonState = () => ({
+    size: 'middle',
+    type: 'button',
+    name: '',
+    status: '',
+    disabled: false,
+    activated: false,
+    data: {},
+    icon: {
+        name: 'empty',
+        fill: '',
+        iconURL: ''
+    },
+    tooltip: '',
+    text: '',
+    tabIndex: undefined
+});
+class button_UIButton extends ui_element["a" /* UIElement */] {
+    constructor(jodit, state) {
+        super(jodit);
+        this.isButton = true;
+        this.state = UIButtonState();
+        this.actionHandlers = [];
+        this.updateSize();
+        this.onChangeSize();
+        this.onChangeStatus();
+        if (Object(helpers["getClassName"])(this) === Object(helpers["getClassName"])(button_UIButton.prototype)) {
+            this.setStatus(component["b" /* STATUSES */].ready);
+        }
+        if (state) {
+            this.setState(state);
+        }
+    }
+    setState(state) {
+        Object.assign(this.state, state);
+        return this;
+    }
+    onChangeSize() {
+        this.setMod('size', this.state.size);
+    }
+    onChangeType() {
+        Object(helpers["attr"])(this.container, 'type', this.state.type);
+    }
+    updateSize() {
+        const pe = this.closest(ui["k" /* UIList */]);
+        if (pe) {
+            this.state.size = pe.buttonSize;
+            return;
+        }
+    }
+    onChangeStatus() {
+        this.setMod('status', this.state.status);
+    }
+    onChangeText() {
+        this.text.textContent = this.jodit.i18n(this.state.text);
+    }
+    onChangeTextSetMode() {
+        this.setMod('text-icons', Boolean(this.state.text.trim().length));
+    }
+    onChangeDisabled() {
+        Object(helpers["attr"])(this.container, 'disabled', this.state.disabled || null);
+    }
+    onChangeActivated() {
+        Object(helpers["attr"])(this.container, 'aria-pressed', this.state.activated);
+    }
+    onChangeName() {
+        this.container.classList.add(`${this.componentName}_${this.clearName(this.state.name)}`);
+        Object(helpers["attr"])(this.container, 'data-ref', this.state.name);
+        Object(helpers["attr"])(this.container, 'ref', this.state.name);
+    }
+    onChangeTooltip() {
+        if (this.get('j.o.useNativeTooltip')) {
+            Object(helpers["attr"])(this.container, 'title', this.state.tooltip);
+        }
+        Object(helpers["attr"])(this.container, 'aria-label', this.state.tooltip);
+    }
+    onChangeTabIndex() {
+        Object(helpers["attr"])(this.container, 'tabIndex', this.state.tabIndex);
+    }
+    onChangeIcon() {
+        if (this.get('j.o.textIcons')) {
+            return;
+        }
+        dom["a" /* Dom */].detach(this.icon);
+        const iconElement = icon["a" /* Icon */].makeIcon(this.j, this.state.icon);
+        iconElement && this.icon.appendChild(iconElement);
+    }
+    focus() {
+        this.container.focus();
+    }
+    isFocused() {
+        const { activeElement } = this.od;
+        return Boolean(activeElement && dom["a" /* Dom */].isOrContains(this.container, activeElement));
+    }
+    createContainer() {
+        const cn = this.componentName;
+        const button = this.j.c.element('button', {
+            class: cn,
+            type: 'button',
+            role: 'button',
+            ariaPressed: false
+        });
+        this.icon = this.j.c.span(cn + '__icon');
+        this.text = this.j.c.span(cn + '__text');
+        button.appendChild(this.icon);
+        button.appendChild(this.text);
+        this.j.e.on(button, `click`, this.onActionFire);
+        return button;
+    }
+    destruct() {
+        this.j.e.off(this.container);
+        return super.destruct();
+    }
+    onAction(callback) {
+        this.actionHandlers.push(callback);
+        return this;
+    }
+    onActionFire(e) {
+        e.buffer = {
+            actionTrigger: this
+        };
+        this.actionHandlers.forEach(callback => callback.call(this, e));
+    }
+}
+Object(tslib_es6["a" /* __decorate */])([
+    Object(watch["a" /* default */])('state.size')
+], button_UIButton.prototype, "onChangeSize", null);
+Object(tslib_es6["a" /* __decorate */])([
+    Object(watch["a" /* default */])('state.type')
+], button_UIButton.prototype, "onChangeType", null);
+Object(tslib_es6["a" /* __decorate */])([
+    Object(watch["a" /* default */])('parentElement')
+], button_UIButton.prototype, "updateSize", null);
+Object(tslib_es6["a" /* __decorate */])([
+    Object(watch["a" /* default */])('state.status')
+], button_UIButton.prototype, "onChangeStatus", null);
+Object(tslib_es6["a" /* __decorate */])([
+    Object(watch["a" /* default */])('state.text')
+], button_UIButton.prototype, "onChangeText", null);
+Object(tslib_es6["a" /* __decorate */])([
+    Object(watch["a" /* default */])('state.text')
+], button_UIButton.prototype, "onChangeTextSetMode", null);
+Object(tslib_es6["a" /* __decorate */])([
+    Object(watch["a" /* default */])('state.disabled')
+], button_UIButton.prototype, "onChangeDisabled", null);
+Object(tslib_es6["a" /* __decorate */])([
+    Object(watch["a" /* default */])('state.activated')
+], button_UIButton.prototype, "onChangeActivated", null);
+Object(tslib_es6["a" /* __decorate */])([
+    Object(watch["a" /* default */])('state.name')
+], button_UIButton.prototype, "onChangeName", null);
+Object(tslib_es6["a" /* __decorate */])([
+    Object(watch["a" /* default */])('state.tooltip')
+], button_UIButton.prototype, "onChangeTooltip", null);
+Object(tslib_es6["a" /* __decorate */])([
+    Object(watch["a" /* default */])('state.tabIndex')
+], button_UIButton.prototype, "onChangeTabIndex", null);
+Object(tslib_es6["a" /* __decorate */])([
+    Object(watch["a" /* default */])('state.icon')
+], button_UIButton.prototype, "onChangeIcon", null);
+Object(tslib_es6["a" /* __decorate */])([
+    esm["a" /* default */]
+], button_UIButton.prototype, "onActionFire", null);
+function Button(jodit, stateOrText, text, status) {
+    const button = new button_UIButton(jodit);
+    button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
+    if (Object(helpers["isString"])(stateOrText)) {
+        button.state.icon.name = stateOrText;
+        button.state.name = stateOrText;
+        if (status) {
+            button.state.status = status;
+        }
+        if (text) {
+            button.state.text = text;
+        }
+    }
+    else {
+        button.setState(stateOrText);
+    }
+    return button;
+}
+
+// CONCATENATED MODULE: ./src/core/ui/button/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -3633,7 +3884,7 @@ const ucfirst = (value) => {
 var config = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./src/core/helpers/default-language.ts
-var default_language = __webpack_require__(27);
+var default_language = __webpack_require__(26);
 
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 30 modules
 var helpers = __webpack_require__(0);
@@ -3754,10 +4005,10 @@ __webpack_require__.d(validators_namespaceObject, "required", function() { retur
 __webpack_require__.d(validators_namespaceObject, "url", function() { return url; });
 
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 5 modules
-var ui = __webpack_require__(6);
+var ui = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./src/core/ui/form/input.less
-var form_input = __webpack_require__(118);
+var form_input = __webpack_require__(117);
 
 // EXTERNAL MODULE: ./src/core/ui/element.ts
 var ui_element = __webpack_require__(18);
@@ -3899,7 +4150,7 @@ class form_UIForm extends ui["i" /* UIGroup */] {
 }
 
 // EXTERNAL MODULE: ./src/core/ui/form/inputs/area.less
-var inputs_area = __webpack_require__(119);
+var inputs_area = __webpack_require__(118);
 
 // CONCATENATED MODULE: ./src/core/ui/form/inputs/area.ts
 
@@ -3912,7 +4163,7 @@ class area_UITextArea extends input_UIInput {
 }
 
 // EXTERNAL MODULE: ./src/core/ui/form/inputs/checkbox.less
-var inputs_checkbox = __webpack_require__(120);
+var inputs_checkbox = __webpack_require__(119);
 
 // CONCATENATED MODULE: ./src/core/ui/form/inputs/checkbox.ts
 
@@ -3938,9 +4189,9 @@ class checkbox_UICheckbox extends input_UIInput {
 
 
 // EXTERNAL MODULE: ./src/core/ui/form/block.less
-var block = __webpack_require__(121);
+var block = __webpack_require__(120);
 
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 4 modules
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 5 modules
 var utils = __webpack_require__(10);
 
 // CONCATENATED MODULE: ./src/core/ui/form/block.ts
@@ -3954,8 +4205,8 @@ class block_UIBlock extends ui["i" /* UIGroup */] {
         super(jodit, elements);
         this.options = options;
         this.setMod('align', this.options.align || 'left');
-        Object(utils["a" /* attr */])(this.container, 'data-ref', options.ref);
-        Object(utils["a" /* attr */])(this.container, 'ref', options.ref);
+        Object(utils["b" /* attr */])(this.container, 'data-ref', options.ref);
+        Object(utils["b" /* attr */])(this.container, 'ref', options.ref);
     }
 }
 
@@ -4116,13 +4367,13 @@ __webpack_require__.d(__webpack_exports__, "c", function() { return /* reexport 
 __webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport */ FileSelectorWidget; });
 
 // EXTERNAL MODULE: ./src/modules/widget/color-picker/color-picker.less
-var color_picker = __webpack_require__(113);
+var color_picker = __webpack_require__(112);
 
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 30 modules
 var helpers = __webpack_require__(0);
 
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 5 modules
-var ui = __webpack_require__(6);
+var ui = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./src/core/dom.ts
 var dom = __webpack_require__(1);
@@ -4215,7 +4466,7 @@ const ColorPickerWidget = (editor, callback, coldColor) => {
 };
 
 // EXTERNAL MODULE: ./src/modules/widget/tabs/tabs.less
-var tabs_tabs = __webpack_require__(122);
+var tabs_tabs = __webpack_require__(121);
 
 // CONCATENATED MODULE: ./src/modules/widget/tabs/tabs.ts
 /*!
@@ -4286,7 +4537,7 @@ const TabsWidget = (editor, tabs, state) => {
 // EXTERNAL MODULE: ./src/core/ui/form/index.ts + 7 modules
 var ui_form = __webpack_require__(13);
 
-// EXTERNAL MODULE: ./src/core/ui/button/index.ts
+// EXTERNAL MODULE: ./src/core/ui/button/index.ts + 1 modules
 var ui_button = __webpack_require__(11);
 
 // CONCATENATED MODULE: ./src/modules/widget/file-selector/file-selector.ts
@@ -4513,7 +4764,7 @@ function watch(observeFields) {
 
 
 function getNeighbor(node, backspace, root) {
-    return Object(_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__[/* call */ "b"])(backspace ? _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].prev : _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].next, node, n => { var _a; return Boolean(n && (!_core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].isText(n) || ((_a = n.nodeValue) === null || _a === void 0 ? void 0 : _a.length))); }, root);
+    return Object(_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__[/* call */ "c"])(backspace ? _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].prev : _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].next, node, n => { var _a; return Boolean(n && (!_core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].isText(n) || ((_a = n.nodeValue) === null || _a === void 0 ? void 0 : _a.length))); }, root);
 }
 function getSibling(node, backspace) {
     return backspace ? node.previousSibling : node.nextSibling;
@@ -4568,7 +4819,7 @@ class UIElement extends _component__WEBPACK_IMPORTED_MODULE_0__[/* ViewComponent
         Object.defineProperty(this.container, 'component', {
             value: this
         });
-        if (Object(_helpers_utils__WEBPACK_IMPORTED_MODULE_2__[/* getClassName */ "f"])(this) === Object(_helpers_utils__WEBPACK_IMPORTED_MODULE_2__[/* getClassName */ "f"])(UIElement.prototype)) {
+        if (Object(_helpers_utils__WEBPACK_IMPORTED_MODULE_2__[/* getClassName */ "g"])(this) === Object(_helpers_utils__WEBPACK_IMPORTED_MODULE_2__[/* getClassName */ "g"])(UIElement.prototype)) {
             this.setStatus(_component__WEBPACK_IMPORTED_MODULE_0__[/* STATUSES */ "b"].ready);
         }
     }
@@ -5077,15 +5328,32 @@ class events_native_EventsNative {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+var __classPrivateFieldSet = (undefined && undefined.__classPrivateFieldSet) || function (receiver, privateMap, value) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to set private field on non-instance");
+    }
+    privateMap.set(receiver, value);
+    return value;
+};
+var __classPrivateFieldGet = (undefined && undefined.__classPrivateFieldGet) || function (receiver, privateMap) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to get private field on non-instance");
+    }
+    return privateMap.get(receiver);
+};
+var _data, _prefix, _onEvents, ___lockEvent;
 
 class observe_object_ObserveObject {
     constructor(data, prefix = [], onEvents = {}) {
-        this.data = data;
-        this.prefix = prefix;
-        this.onEvents = onEvents;
-        this.__lockEvent = {};
+        _data.set(this, void 0);
+        _prefix.set(this, void 0);
+        _onEvents.set(this, void 0);
+        ___lockEvent.set(this, {});
+        __classPrivateFieldSet(this, _data, data);
+        __classPrivateFieldSet(this, _prefix, prefix);
+        __classPrivateFieldSet(this, _onEvents, onEvents);
         Object.keys(data).forEach(key => {
-            const prefix = this.prefix.concat(key).filter(a => a.length);
+            const prefix = __classPrivateFieldGet(this, _prefix).concat(key).filter(a => a.length);
             Object.defineProperty(this, key, {
                 set: value => {
                     const oldValue = data[key];
@@ -5095,7 +5363,7 @@ class observe_object_ObserveObject {
                             `beforeChange.${prefix.join('.')}`
                         ], key, value);
                         if (Object(helpers["isPlainObject"])(value)) {
-                            value = new observe_object_ObserveObject(value, prefix, this.onEvents);
+                            value = new observe_object_ObserveObject(value, prefix, __classPrivateFieldGet(this, _onEvents));
                         }
                         data[key] = value;
                         const sum = [];
@@ -5111,15 +5379,16 @@ class observe_object_ObserveObject {
                 },
                 get: () => {
                     return data[key];
-                }
+                },
+                enumerable: true
             });
             if (Object(helpers["isPlainObject"])(data[key])) {
-                data[key] = new observe_object_ObserveObject(data[key], prefix, this.onEvents);
+                data[key] = new observe_object_ObserveObject(data[key], prefix, __classPrivateFieldGet(this, _onEvents));
             }
         });
     }
     valueOf() {
-        return this.data;
+        return __classPrivateFieldGet(this, _data);
     }
     toString() {
         return JSON.stringify(this.valueOf());
@@ -5129,10 +5398,10 @@ class observe_object_ObserveObject {
             event.map(e => this.on(e, callback));
             return this;
         }
-        if (!this.onEvents[event]) {
-            this.onEvents[event] = [];
+        if (!__classPrivateFieldGet(this, _onEvents)[event]) {
+            __classPrivateFieldGet(this, _onEvents)[event] = [];
         }
-        this.onEvents[event].push(callback);
+        __classPrivateFieldGet(this, _onEvents)[event].push(callback);
         return this;
     }
     fire(event, ...attr) {
@@ -5141,13 +5410,13 @@ class observe_object_ObserveObject {
             return;
         }
         try {
-            if (!this.__lockEvent[event] && this.onEvents[event]) {
-                this.__lockEvent[event] = true;
-                this.onEvents[event].forEach(clb => clb.call(this, ...attr));
+            if (!__classPrivateFieldGet(this, ___lockEvent)[event] && __classPrivateFieldGet(this, _onEvents)[event]) {
+                __classPrivateFieldGet(this, ___lockEvent)[event] = true;
+                __classPrivateFieldGet(this, _onEvents)[event].forEach(clb => clb.call(this, ...attr));
             }
         }
         finally {
-            this.__lockEvent[event] = false;
+            __classPrivateFieldGet(this, ___lockEvent)[event] = false;
         }
     }
     static create(data, prefix = []) {
@@ -5157,6 +5426,7 @@ class observe_object_ObserveObject {
         return new observe_object_ObserveObject(data, prefix);
     }
 }
+_data = new WeakMap(), _prefix = new WeakMap(), _onEvents = new WeakMap(), ___lockEvent = new WeakMap();
 
 // CONCATENATED MODULE: ./src/core/events/index.ts
 /*!
@@ -5182,10 +5452,10 @@ __webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport 
 var tslib_es6 = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./src/core/ui/popup/popup.less
-var popup = __webpack_require__(115);
+var popup = __webpack_require__(114);
 
 // EXTERNAL MODULE: ./node_modules/autobind-decorator/lib/esm/index.js
-var esm = __webpack_require__(7);
+var esm = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./src/core/dom.ts
 var dom = __webpack_require__(1);
@@ -5197,7 +5467,7 @@ var helpers = __webpack_require__(0);
 var global = __webpack_require__(8);
 
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 5 modules
-var ui = __webpack_require__(6);
+var ui = __webpack_require__(7);
 
 // CONCATENATED MODULE: ./src/core/ui/popup/popup.ts
 /*!
@@ -5604,7 +5874,7 @@ const normalizeUrl = (...urls) => {
 var checker = __webpack_require__(5);
 
 // EXTERNAL MODULE: ./src/core/helpers/color/index.ts + 1 modules
-var helpers_color = __webpack_require__(26);
+var helpers_color = __webpack_require__(25);
 
 // CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-css-value.ts
 /*!
@@ -5739,224 +6009,8 @@ function error(message) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return UIButtonState; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return UIButton; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Button; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
-/* harmony import */ var _button_less__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(114);
-/* harmony import */ var _button_less__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_button_less__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var autobind_decorator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7);
-/* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(18);
-/* harmony import */ var _core_decorators_watch__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(16);
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9);
-/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1);
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(0);
-/* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(30);
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6);
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-
-const UIButtonState = () => ({
-    size: 'middle',
-    type: 'button',
-    name: '',
-    status: '',
-    disabled: false,
-    activated: false,
-    icon: {
-        name: 'empty',
-        fill: '',
-        iconURL: ''
-    },
-    tooltip: '',
-    text: '',
-    tabIndex: undefined
-});
-class UIButton extends _element__WEBPACK_IMPORTED_MODULE_3__[/* UIElement */ "a"] {
-    constructor(jodit, state) {
-        super(jodit);
-        this.isButton = true;
-        this.state = UIButtonState();
-        this.actionHandlers = [];
-        this.updateSize();
-        this.onChangeSize();
-        this.onChangeStatus();
-        if (Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["getClassName"])(this) === Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["getClassName"])(UIButton.prototype)) {
-            this.setStatus(_component__WEBPACK_IMPORTED_MODULE_5__[/* STATUSES */ "b"].ready);
-        }
-        if (state) {
-            this.setState(state);
-        }
-    }
-    setState(state) {
-        Object.assign(this.state, state);
-        return this;
-    }
-    onChangeSize() {
-        this.setMod('size', this.state.size);
-    }
-    onChangeType() {
-        Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["attr"])(this.container, 'type', this.state.type);
-    }
-    updateSize() {
-        const pe = this.closest(___WEBPACK_IMPORTED_MODULE_9__[/* UIList */ "k"]);
-        if (pe) {
-            this.state.size = pe.buttonSize;
-            return;
-        }
-    }
-    onChangeStatus() {
-        this.setMod('status', this.state.status);
-    }
-    onChangeText() {
-        this.text.textContent = this.jodit.i18n(this.state.text);
-    }
-    onChangeTextSetMode() {
-        this.setMod('text-icons', Boolean(this.state.text.trim().length));
-    }
-    onChangeDisabled() {
-        Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["attr"])(this.container, 'disabled', this.state.disabled || null);
-    }
-    onChangeActivated() {
-        Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["attr"])(this.container, 'aria-pressed', this.state.activated);
-    }
-    onChangeName() {
-        this.container.classList.add(`${this.componentName}_${this.clearName(this.state.name)}`);
-        Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["attr"])(this.container, 'data-ref', this.state.name);
-        Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["attr"])(this.container, 'ref', this.state.name);
-    }
-    onChangeTooltip() {
-        if (this.get('j.o.useNativeTooltip')) {
-            Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["attr"])(this.container, 'title', this.state.tooltip);
-        }
-        Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["attr"])(this.container, 'aria-label', this.state.tooltip);
-    }
-    onChangeTabIndex() {
-        Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["attr"])(this.container, 'tabIndex', this.state.tabIndex);
-    }
-    onChangeIcon() {
-        if (this.get('j.o.textIcons')) {
-            return;
-        }
-        _dom__WEBPACK_IMPORTED_MODULE_6__[/* Dom */ "a"].detach(this.icon);
-        const iconElement = _icon__WEBPACK_IMPORTED_MODULE_8__[/* Icon */ "a"].makeIcon(this.j, this.state.icon);
-        iconElement && this.icon.appendChild(iconElement);
-    }
-    focus() {
-        this.container.focus();
-    }
-    isFocused() {
-        const { activeElement } = this.od;
-        return Boolean(activeElement && _dom__WEBPACK_IMPORTED_MODULE_6__[/* Dom */ "a"].isOrContains(this.container, activeElement));
-    }
-    createContainer() {
-        const cn = this.componentName;
-        const button = this.j.c.element('button', {
-            class: cn,
-            type: 'button',
-            role: 'button',
-            ariaPressed: false
-        });
-        this.icon = this.j.c.span(cn + '__icon');
-        this.text = this.j.c.span(cn + '__text');
-        button.appendChild(this.icon);
-        button.appendChild(this.text);
-        this.j.e.on(button, `click`, this.onActionFire);
-        return button;
-    }
-    destruct() {
-        this.j.e.off(this.container);
-        return super.destruct();
-    }
-    onAction(callback) {
-        this.actionHandlers.push(callback);
-        return this;
-    }
-    onActionFire(e) {
-        e.buffer = {
-            actionTrigger: this
-        };
-        this.actionHandlers.forEach(callback => callback.call(this, e));
-    }
-}
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __decorate */ "a"])([
-    Object(_core_decorators_watch__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"])('state.size')
-], UIButton.prototype, "onChangeSize", null);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __decorate */ "a"])([
-    Object(_core_decorators_watch__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"])('state.type')
-], UIButton.prototype, "onChangeType", null);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __decorate */ "a"])([
-    Object(_core_decorators_watch__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"])('parentElement')
-], UIButton.prototype, "updateSize", null);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __decorate */ "a"])([
-    Object(_core_decorators_watch__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"])('state.status')
-], UIButton.prototype, "onChangeStatus", null);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __decorate */ "a"])([
-    Object(_core_decorators_watch__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"])('state.text')
-], UIButton.prototype, "onChangeText", null);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __decorate */ "a"])([
-    Object(_core_decorators_watch__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"])('state.text')
-], UIButton.prototype, "onChangeTextSetMode", null);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __decorate */ "a"])([
-    Object(_core_decorators_watch__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"])('state.disabled')
-], UIButton.prototype, "onChangeDisabled", null);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __decorate */ "a"])([
-    Object(_core_decorators_watch__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"])('state.activated')
-], UIButton.prototype, "onChangeActivated", null);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __decorate */ "a"])([
-    Object(_core_decorators_watch__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"])('state.name')
-], UIButton.prototype, "onChangeName", null);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __decorate */ "a"])([
-    Object(_core_decorators_watch__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"])('state.tooltip')
-], UIButton.prototype, "onChangeTooltip", null);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __decorate */ "a"])([
-    Object(_core_decorators_watch__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"])('state.tabIndex')
-], UIButton.prototype, "onChangeTabIndex", null);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __decorate */ "a"])([
-    Object(_core_decorators_watch__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"])('state.icon')
-], UIButton.prototype, "onChangeIcon", null);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__[/* __decorate */ "a"])([
-    autobind_decorator__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"]
-], UIButton.prototype, "onActionFire", null);
-function Button(jodit, stateOrText, text, status) {
-    const button = new UIButton(jodit);
-    button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
-    if (Object(_helpers__WEBPACK_IMPORTED_MODULE_7__["isString"])(stateOrText)) {
-        button.state.icon.name = stateOrText;
-        button.state.name = stateOrText;
-        if (status) {
-            button.state.status = status;
-        }
-        if (text) {
-            button.state.text = text;
-        }
-    }
-    else {
-        button.setState(stateOrText);
-    }
-    return button;
-}
-
-
-/***/ }),
-/* 24 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JoditArray; });
-/* harmony import */ var _extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(25);
+/* harmony import */ var _extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6005,13 +6059,13 @@ class JoditArray {
 
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return extend; });
-/* harmony import */ var _jodit_object__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(28);
-/* harmony import */ var _jodit_array__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(24);
+/* harmony import */ var _jodit_object__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/* harmony import */ var _jodit_array__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
 /* harmony import */ var _checker___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6072,7 +6126,7 @@ function extend(...args) {
 
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6119,7 +6173,7 @@ const colorToHex = (color) => {
 
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6146,12 +6200,12 @@ const defaultLanguage = (language, defaultLanguage = 'en') => {
 
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JoditObject; });
-/* harmony import */ var _extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(25);
+/* harmony import */ var _extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6166,7 +6220,7 @@ class JoditObject {
 
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6300,7 +6354,7 @@ class PluginSystem {
 
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6360,491 +6414,497 @@ Icon.icons = {};
 
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg viewBox=\"0 0 1792 1792\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z\"/> </svg> "
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg viewBox=\"0 0 18.151 18.151\" xmlns=\"http://www.w3.org/2000/svg\"> <g> <g> <path stroke-width=\"0\" d=\"M6.237,16.546H3.649V1.604h5.916v5.728c0.474-0.122,0.968-0.194,1.479-0.194 c0.042,0,0.083,0.006,0.125,0.006V0H2.044v18.15h5.934C7.295,17.736,6.704,17.19,6.237,16.546z\"/> <path stroke-width=\"0\" d=\"M11.169,8.275c-2.723,0-4.938,2.215-4.938,4.938s2.215,4.938,4.938,4.938s4.938-2.215,4.938-4.938 S13.892,8.275,11.169,8.275z M11.169,16.81c-1.983,0-3.598-1.612-3.598-3.598c0-1.983,1.614-3.597,3.598-3.597 s3.597,1.613,3.597,3.597C14.766,15.198,13.153,16.81,11.169,16.81z\"/> <polygon stroke-width=\"0\" points=\"11.792,11.073 10.502,11.073 10.502,12.578 9.03,12.578 9.03,13.868 10.502,13.868 10.502,15.352 11.792,15.352 11.792,13.868 13.309,13.868 13.309,12.578 11.792,12.578 \"/> </g> </g> </svg> "
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <rect x=\"252\" y=\"96\"/> <rect/> <rect x=\"252\" y=\"288\"/> <rect y=\"384\"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176 \"/> </g> </g> </svg> "
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg> "
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg> "
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg> "
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg> "
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1411 541l-355 355 355 355 144-144q29-31 70-14 39 17 39 59v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l144-144-355-355-355 355 144 144q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l144 144 355-355-355-355-144 144q-19 19-45 19-12 0-24-5-40-17-40-59v-448q0-26 19-45t45-19h448q42 0 59 40 17 39-14 69l-144 144 355 355 355-355-144-144q-31-30-14-69 17-40 59-40h448q26 0 45 19t19 45v448q0 42-39 59-13 5-25 5-26 0-45-19z\"/> </svg> "
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1792 896q0 26-19 45l-256 256q-19 19-45 19t-45-19-19-45v-128h-1024v128q0 26-19 45t-45 19-45-19l-256-256q-19-19-19-45t19-45l256-256q19-19 45-19t45 19 19 45v128h1024v-128q0-26 19-45t45-19 45 19l256 256q19 19 19 45z\"/></svg> "
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1596 1385q0 117-79 196t-196 79q-135 0-235-100l-777-776q-113-115-113-271 0-159 110-270t269-111q158 0 273 113l605 606q10 10 10 22 0 16-30.5 46.5t-46.5 30.5q-13 0-23-10l-606-607q-79-77-181-77-106 0-179 75t-73 181q0 105 76 181l776 777q63 63 145 63 64 0 106-42t42-106q0-82-63-145l-581-581q-26-24-60-24-29 0-48 19t-19 48q0 32 25 59l410 410q10 10 10 22 0 16-31 47t-47 31q-12 0-22-10l-410-410q-63-61-63-149 0-82 57-139t139-57q88 0 149 63l581 581q100 98 100 235z\"/></svg> "
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z\"/> </svg> "
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z\"/></svg> "
 
 /***/ }),
-/* 43 */
+/* 42 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M896 1152q0-36-20-69-1-1-15.5-22.5t-25.5-38-25-44-21-50.5q-4-16-21-16t-21 16q-7 23-21 50.5t-25 44-25.5 38-15.5 22.5q-20 33-20 69 0 53 37.5 90.5t90.5 37.5 90.5-37.5 37.5-90.5zm512-128q0 212-150 362t-362 150-362-150-150-362q0-145 81-275 6-9 62.5-90.5t101-151 99.5-178 83-201.5q9-30 34-47t51-17 51.5 17 33.5 47q28 93 83 201.5t99.5 178 101 151 62.5 90.5q81 127 81 275z\"/></svg> "
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg viewBox=\"0 0 14 14\" xmlns=\"http://www.w3.org/2000/svg\"> <g stroke=\"none\" stroke-width=\"1\"> <path d=\"M14,1.4 L12.6,0 L7,5.6 L1.4,0 L0,1.4 L5.6,7 L0,12.6 L1.4,14 L7,8.4 L12.6,14 L14,12.6 L8.4,7 L14,1.4 Z\"/> </g> </svg> "
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h896q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-640q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h640q26 0 45 19t19 45z\"/></svg> "
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/></svg> "
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/></svg> "
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg> "
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg> "
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg> "
 
 /***/ }),
-/* 51 */
+/* 50 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg> "
 
 /***/ }),
-/* 52 */
+/* 51 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg> "
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg> "
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg> "
 
 /***/ }),
-/* 55 */
+/* 54 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg> "
 
 /***/ }),
-/* 56 */
+/* 55 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <g> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125 \"/> </g> </svg> "
 
 /***/ }),
-/* 57 */
+/* 56 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg> "
 
 /***/ }),
-/* 58 */
+/* 57 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/></svg> "
 
 /***/ }),
-/* 59 */
+/* 58 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg> "
 
 /***/ }),
-/* 60 */
+/* 59 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg> "
 
 /***/ }),
-/* 61 */
+/* 60 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/></svg> "
 
 /***/ }),
-/* 62 */
+/* 61 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/></svg> "
 
 /***/ }),
-/* 63 */
+/* 62 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg> "
 
 /***/ }),
-/* 64 */
+/* 63 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/></svg> "
 
 /***/ }),
-/* 65 */
+/* 64 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/></svg> "
 
 /***/ }),
-/* 66 */
+/* 65 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg> "
 
 /***/ }),
-/* 67 */
+/* 66 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/></svg> "
 
 /***/ }),
-/* 68 */
+/* 67 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/></svg> "
 
 /***/ }),
-/* 69 */
+/* 68 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/></svg> "
 
 /***/ }),
-/* 70 */
+/* 69 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/></svg> "
 
 /***/ }),
-/* 71 */
+/* 70 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/></svg> "
 
 /***/ }),
-/* 72 */
+/* 71 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg> "
 
 /***/ }),
-/* 73 */
+/* 72 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg> "
 
 /***/ }),
-/* 74 */
+/* 73 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg> "
 
 /***/ }),
-/* 75 */
+/* 74 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 32 32\"> <path d=\"M27 4l-15 15-7-7-5 5 12 12 20-20z\"/> </svg> "
 
 /***/ }),
-/* 76 */
+/* 75 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg> "
 
 /***/ }),
-/* 77 */
+/* 76 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg> "
 
 /***/ }),
-/* 78 */
+/* 77 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg> "
 
 /***/ }),
-/* 79 */
+/* 78 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </g> </svg> "
 
 /***/ }),
-/* 80 */
+/* 79 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg> "
 
 /***/ }),
-/* 81 */
+/* 80 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg> "
 
 /***/ }),
-/* 82 */
+/* 81 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg> "
 
 /***/ }),
-/* 83 */
+/* 82 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg> "
 
 /***/ }),
-/* 84 */
+/* 83 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg> "
 
 /***/ }),
-/* 85 */
+/* 84 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg> "
 
 /***/ }),
-/* 86 */
+/* 85 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <g> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </g> </svg> "
 
 /***/ }),
-/* 87 */
+/* 86 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg> "
 
 /***/ }),
-/* 88 */
+/* 87 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg> "
 
 /***/ }),
-/* 89 */
+/* 88 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg> "
 
 /***/ }),
-/* 90 */
+/* 89 */
 /***/ (function(module, exports) {
 
 module.exports = "<?xml version=\"1.0\" ?> <svg viewBox=\"0 0 500 500\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg> "
 
 /***/ }),
-/* 91 */
+/* 90 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg> "
 
 /***/ }),
-/* 92 */
+/* 91 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg> "
 
 /***/ }),
-/* 93 */
+/* 92 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg> "
 
 /***/ }),
-/* 94 */
+/* 93 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/><path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg> "
 
 /***/ }),
-/* 95 */
+/* 94 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg> "
 
 /***/ }),
-/* 96 */
+/* 95 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg> "
 
 /***/ }),
-/* 97 */
+/* 96 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg> "
 
 /***/ }),
-/* 98 */
+/* 97 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg> "
 
 /***/ }),
-/* 99 */
+/* 98 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg> "
 
 /***/ }),
-/* 100 */
+/* 99 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg> "
 
 /***/ }),
-/* 101 */
+/* 100 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg> "
 
 /***/ }),
-/* 102 */
+/* 101 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg> "
 
 /***/ }),
-/* 103 */
+/* 102 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg> "
 
 /***/ }),
-/* 104 */
+/* 103 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg> "
 
 /***/ }),
-/* 105 */
+/* 104 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg> "
 
 /***/ }),
-/* 106 */
+/* 105 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/> </svg> "
 
 /***/ }),
-/* 107 */
+/* 106 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/> </svg> "
 
 /***/ }),
-/* 108 */
+/* 107 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/> </svg> "
 
 /***/ }),
-/* 109 */
+/* 108 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/> </svg> "
 
 /***/ }),
-/* 110 */
+/* 109 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 352v1088q0 42-39 59-13 5-25 5-27 0-45-19l-403-403v166q0 119-84.5 203.5t-203.5 84.5h-704q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h704q119 0 203.5 84.5t84.5 203.5v165l403-402q18-19 45-19 12 0 25 5 39 17 39 59z\"/> </svg> "
 
 /***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(172);
+
+
+/***/ }),
 /* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(173);
-
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 /* 112 */
@@ -6974,12 +7034,6 @@ module.exports = __webpack_require__(173);
 
 /***/ }),
 /* 133 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-/* 134 */
 /***/ (function(module, exports) {
 
 /*!
@@ -7194,11 +7248,14 @@ module.exports = {
 	"Quadrate": "المربعة",
 	"Find": "البحث",
 	"Find Previous": "تجد السابقة",
-	"Find Next": "تجد التالي"
+	"Find Next": "تجد التالي",
+	"The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?": "للصق المحتوى قادم من Microsoft Word/Excel الوثيقة. هل تريد أن تبقي شكل أو تنظيفه ؟ ",
+	"Word Paste Detected": "كلمة لصق الكشف عن",
+	"Clean": "نظيفة"
 };
 
 /***/ }),
-/* 135 */
+/* 134 */
 /***/ (function(module, exports) {
 
 /*!
@@ -7422,7 +7479,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 136 */
+/* 135 */
 /***/ (function(module, exports) {
 
 /*!
@@ -7645,7 +7702,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 137 */
+/* 136 */
 /***/ (function(module, exports) {
 
 /*!
@@ -7662,7 +7719,7 @@ module.exports = {
 
 
 /***/ }),
-/* 138 */
+/* 137 */
 /***/ (function(module, exports) {
 
 /*!
@@ -7885,7 +7942,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 139 */
+/* 138 */
 /***/ (function(module, exports) {
 
 /*!
@@ -8103,7 +8160,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 140 */
+/* 139 */
 /***/ (function(module, exports) {
 
 /*!
@@ -8326,7 +8383,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 141 */
+/* 140 */
 /***/ (function(module, exports) {
 
 /*!
@@ -8551,7 +8608,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 142 */
+/* 141 */
 /***/ (function(module, exports) {
 
 /*!
@@ -8775,7 +8832,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 143 */
+/* 142 */
 /***/ (function(module, exports) {
 
 /*!
@@ -8998,7 +9055,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 144 */
+/* 143 */
 /***/ (function(module, exports) {
 
 /*!
@@ -9221,7 +9278,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 145 */
+/* 144 */
 /***/ (function(module, exports) {
 
 /*!
@@ -9443,7 +9500,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 146 */
+/* 145 */
 /***/ (function(module, exports) {
 
 /*!
@@ -9667,7 +9724,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 147 */
+/* 146 */
 /***/ (function(module, exports) {
 
 /*!
@@ -9890,7 +9947,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 148 */
+/* 147 */
 /***/ (function(module, exports) {
 
 /*!
@@ -10113,7 +10170,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 149 */
+/* 148 */
 /***/ (function(module, exports) {
 
 /*!
@@ -10335,7 +10392,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 150 */
+/* 149 */
 /***/ (function(module, exports) {
 
 /*!
@@ -10558,7 +10615,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 151 */
+/* 150 */
 /***/ (function(module, exports) {
 
 /*!
@@ -10781,7 +10838,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 152 */
+/* 151 */
 /***/ (function(module, exports) {
 
 /*!
@@ -11003,6 +11060,12 @@ module.exports = {
 };
 
 /***/ }),
+/* 152 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
 /* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11040,12 +11103,6 @@ module.exports = {
 
 /***/ }),
 /* 159 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-/* 160 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11062,7 +11119,7 @@ __webpack_require__.r(__webpack_exports__);
         name: 'eye',
         tooltip: 'Open link',
         exec: (editor, current) => {
-            const href = Object(_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__[/* attr */ "a"])(current, 'href');
+            const href = Object(_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__[/* attr */ "b"])(current, 'href');
             if (current && href) {
                 editor.ow.open(href);
             }
@@ -11080,7 +11137,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 161 */
+/* 160 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11177,7 +11234,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 162 */
+/* 161 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11320,6 +11377,12 @@ const cmd = (control) => control.args && Object(_core_helpers_checker__WEBPACK_I
 
 
 /***/ }),
+/* 162 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
 /* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11375,12 +11438,6 @@ const cmd = (control) => control.args && Object(_core_helpers_checker__WEBPACK_I
 
 /***/ }),
 /* 172 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-/* 173 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11450,8 +11507,8 @@ __webpack_require__.d(plugins_namespaceObject, "Delete", function() { return del
 __webpack_require__.d(plugins_namespaceObject, "bold", function() { return bold; });
 __webpack_require__.d(plugins_namespaceObject, "cleanHtml", function() { return clean_html_cleanHtml; });
 __webpack_require__.d(plugins_namespaceObject, "WrapTextNodes", function() { return wrap_text_nodes_WrapTextNodes; });
-__webpack_require__.d(plugins_namespaceObject, "clipboard", function() { return cut_clipboard; });
-__webpack_require__.d(plugins_namespaceObject, "paste", function() { return paste; });
+__webpack_require__.d(plugins_namespaceObject, "clipboard", function() { return clipboard_clipboard; });
+__webpack_require__.d(plugins_namespaceObject, "paste", function() { return paste_paste; });
 __webpack_require__.d(plugins_namespaceObject, "pasteStorage", function() { return paste_storage_pasteStorage; });
 __webpack_require__.d(plugins_namespaceObject, "color", function() { return color_color; });
 __webpack_require__.d(plugins_namespaceObject, "DragAndDrop", function() { return drag_and_drop_DragAndDrop; });
@@ -11520,7 +11577,7 @@ __webpack_require__.d(icons_namespaceObject, "enter", function() { return icons_
 __webpack_require__.d(icons_namespaceObject, "eraser", function() { return eraser; });
 __webpack_require__.d(icons_namespaceObject, "eye", function() { return eye; });
 __webpack_require__.d(icons_namespaceObject, "file", function() { return icons_file; });
-__webpack_require__.d(icons_namespaceObject, "folder", function() { return icons_folder; });
+__webpack_require__.d(icons_namespaceObject, "folder", function() { return folder; });
 __webpack_require__.d(icons_namespaceObject, "font", function() { return icons_font; });
 __webpack_require__.d(icons_namespaceObject, "fontsize", function() { return fontsize; });
 __webpack_require__.d(icons_namespaceObject, "fullsize", function() { return icons_fullsize; });
@@ -11573,7 +11630,7 @@ __webpack_require__.d(icons_namespaceObject, "valign", function() { return valig
 __webpack_require__.d(icons_namespaceObject, "video", function() { return video; });
 
 // EXTERNAL MODULE: ./src/styles/index.less
-var src_styles = __webpack_require__(112);
+var src_styles = __webpack_require__(111);
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__(4);
@@ -11753,12 +11810,12 @@ ajax_Ajax.log = [];
 var core_component = __webpack_require__(9);
 
 // EXTERNAL MODULE: ./src/modules/context-menu/context-menu.less
-var context_menu = __webpack_require__(123);
+var context_menu = __webpack_require__(122);
 
 // EXTERNAL MODULE: ./src/core/ui/popup/index.ts + 1 modules
 var ui_popup = __webpack_require__(20);
 
-// EXTERNAL MODULE: ./src/core/ui/button/index.ts
+// EXTERNAL MODULE: ./src/core/ui/button/index.ts + 1 modules
 var ui_button = __webpack_require__(11);
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 20 modules
@@ -11802,13 +11859,13 @@ class context_menu_ContextMenu extends ui_popup["a" /* Popup */] {
 }
 
 // EXTERNAL MODULE: ./src/modules/dialog/dialog.less
-var dialog_dialog = __webpack_require__(124);
+var dialog_dialog = __webpack_require__(123);
 
 // EXTERNAL MODULE: ./node_modules/autobind-decorator/lib/esm/index.js
-var esm = __webpack_require__(7);
+var esm = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./src/core/view/view-with-toolbar.less
-var view_with_toolbar = __webpack_require__(125);
+var view_with_toolbar = __webpack_require__(124);
 
 // CONCATENATED MODULE: ./src/core/storage/engines/memory-storage-provider.ts
 /*!
@@ -12104,7 +12161,7 @@ class view_View extends core_component["a" /* Component */] {
         this.isJodit = isJodit;
         this.isView = true;
         this.components = new Set();
-        this.version = "3.4.17";
+        this.version = "3.4.18";
         this.async = new async_Async();
         this.buffer = storage_Storage.makeStorage();
         this.__isFullSize = false;
@@ -12248,10 +12305,10 @@ view_View.defaultOptions = {
 var dom = __webpack_require__(1);
 
 // EXTERNAL MODULE: ./src/modules/toolbar/collection/collection.less
-var collection_collection = __webpack_require__(126);
+var collection_collection = __webpack_require__(125);
 
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 5 modules
-var ui = __webpack_require__(6);
+var ui = __webpack_require__(7);
 
 // CONCATENATED MODULE: ./src/modules/toolbar/collection/collection.ts
 /*!
@@ -12422,7 +12479,7 @@ class editor_collection_ToolbarEditorCollection extends collection_ToolbarCollec
 }
 
 // EXTERNAL MODULE: ./src/modules/toolbar/button/button.less
-var button_button = __webpack_require__(127);
+var button_button = __webpack_require__(126);
 
 // CONCATENATED MODULE: ./src/modules/toolbar/button/button.ts
 /*!
@@ -12680,9 +12737,9 @@ Object(tslib_es6["a" /* __decorate */])([
 ], button_ToolbarButton.prototype, "onChangeHasTrigger", null);
 
 // EXTERNAL MODULE: ./src/modules/toolbar/button/content.less
-var button_content = __webpack_require__(128);
+var button_content = __webpack_require__(127);
 
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 4 modules
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 5 modules
 var utils = __webpack_require__(10);
 
 // CONCATENATED MODULE: ./src/modules/toolbar/button/content.ts
@@ -12702,7 +12759,7 @@ class content_ToolbarContent extends ui_button["b" /* UIButton */] {
         this.control = control;
         this.target = target;
         this.container.classList.add(`${this.componentName}_${this.clearName(control.name)}`);
-        Object(utils["a" /* attr */])(this.container, 'role', 'content');
+        Object(utils["b" /* attr */])(this.container, 'role', 'content');
     }
     update() {
         const content = this.control.getContent(this.j, this.control, this);
@@ -13471,7 +13528,7 @@ class create_Create {
 }
 
 // EXTERNAL MODULE: ./src/modules/file-browser/styles/index.less
-var file_browser_styles = __webpack_require__(129);
+var file_browser_styles = __webpack_require__(128);
 
 // CONCATENATED MODULE: ./src/modules/file-browser/consts.ts
 /*!
@@ -13552,6 +13609,7 @@ config["a" /* Config */].prototype.filebrowser = {
     howLongShowMsg: 3000,
     createNewFolder: true,
     deleteFolder: true,
+    renameFolder: true,
     moveFolder: true,
     moveFile: true,
     showFoldersPanel: true,
@@ -13881,9 +13939,6 @@ class data_provider_DataProvider {
         this.parent = parent;
         this.options = options;
         this.__currentPermissions = null;
-        this.currentPath = '';
-        this.currentSource = DEFAULT_SOURCE_NAME;
-        this.currentBaseUrl = '';
         this.ajaxInstances = [];
         this.getPathByUrl = (url, success, onFailed) => {
             const action = 'getLocalFileByUrl';
@@ -13924,7 +13979,7 @@ class data_provider_DataProvider {
         }
         return promise;
     }
-    async permissions(path = this.currentPath, source = this.currentSource) {
+    async permissions(path, source) {
         if (!this.o.permissions) {
             return Promise.resolve();
         }
@@ -13946,7 +14001,7 @@ class data_provider_DataProvider {
         }
         return Promise.resolve();
     }
-    async items(path = this.currentPath, source = this.currentSource) {
+    async items(path, source) {
         const opt = this.options;
         if (!opt.items) {
             return Promise.reject('Set Items api options');
@@ -13955,7 +14010,7 @@ class data_provider_DataProvider {
         opt.items.data.source = source;
         return this.get('items');
     }
-    async tree(path = this.currentPath, source = this.currentSource) {
+    async tree(path, source) {
         path = Object(helpers["normalizeRelativePath"])(path);
         await this.permissions(path, source);
         if (!this.o.folder) {
@@ -13973,11 +14028,7 @@ class data_provider_DataProvider {
         create.data.source = source;
         create.data.path = path;
         create.data.name = name;
-        return this.get('create').then(resp => {
-            this.currentPath = path;
-            this.currentSource = source;
-            return resp;
-        });
+        return this.get('create');
     }
     move(filepath, path, source, isFile) {
         const mode = isFile
@@ -14120,6 +14171,9 @@ function stateListeners() {
         return this.elementsMap[key].elm;
     };
     state
+        .on(['change.currentPath', 'change.currentSource'], this.async.debounce(() => {
+        this.loadTree();
+    }, this.defaultTimeout))
         .on('beforeChange.activeElements', () => {
         state.activeElements.forEach(item => {
             const key = item.uniqueHashKey, { elm } = this.elementsMap[key];
@@ -14153,59 +14207,70 @@ function stateListeners() {
             files.appendChild(create.div(F_CLASS + '_no_files', this.i18n('There are no files')));
         }
     }, this.defaultTimeout))
-        .on('change.folders', this.async.debounce(() => {
+        .on('change.sources', this.async.debounce(() => {
         dom["a" /* Dom */].detach(this.tree);
-        let lastSource = state_listeners_DEFAULT_SOURCE_NAME, lastSource2 = null;
-        const appendCreateButton = (source, sourceName, force = false) => {
-            if (source &&
-                lastSource2 &&
-                (source !== lastSource2 || force) &&
-                options.createNewFolder &&
-                this.dataProvider.canI('FolderCreate')) {
-                this.tree.appendChild(create.a('jodit-button jodit-filebrowser__addfolder', {
-                    href: 'javascript:void(0)',
-                    'data-path': Object(helpers_normalize["f" /* normalizePath */])(source.path + '/'),
-                    'data-source': sourceName
-                }, ui["b" /* Icon */].get('plus') + ' ' + this.i18n('Add folder')));
-                lastSource2 = source;
-            }
-        };
-        state.folders.forEach(folder => {
-            const { name, source, sourceName } = folder;
-            if (sourceName && sourceName !== lastSource) {
+        Object.keys(state.sources).forEach((sourceName) => {
+            const source = state.sources[sourceName];
+            if (sourceName && sourceName !== state_listeners_DEFAULT_SOURCE_NAME) {
                 this.tree.appendChild(create.div(F_CLASS + '__source-title', sourceName));
-                lastSource = sourceName;
             }
-            const folderElm = create.a(F_CLASS + '__tree-item', {
-                draggable: 'draggable',
-                href: 'javascript:void(0)',
-                'data-path': Object(helpers_normalize["f" /* normalizePath */])(source.path, name + '/'),
-                'data-name': name,
-                'data-source': sourceName,
-                'data-source-path': source.path
-            }, create.span(F_CLASS + '__tree-item-title', name));
-            appendCreateButton(source, sourceName);
-            lastSource2 = source;
-            this.tree.appendChild(folderElm);
-            if (name === '..' || name === '.') {
-                return;
-            }
-            if (options.deleteFolder &&
-                this.dataProvider.canI('FolderRename')) {
-                folderElm.appendChild(create.element('i', {
-                    class: 'jodit-icon_folder jodit-icon_folder_rename',
-                    title: this.i18n('Rename')
-                }, ui["b" /* Icon */].get('pencil')));
-            }
-            if (options.deleteFolder &&
-                this.dataProvider.canI('FolderRemove')) {
-                folderElm.appendChild(create.element('i', {
-                    class: 'jodit-icon_folder jodit-icon_folder_remove',
-                    title: this.i18n('Delete')
-                }, ui["b" /* Icon */].get('cancel')));
+            source.folders.forEach(name => {
+                const folderElm = create.a(F_CLASS + '__tree-item', {
+                    draggable: 'draggable',
+                    href: 'javascript:void(0)',
+                    'data-path': Object(helpers_normalize["f" /* normalizePath */])(source.path, name + '/'),
+                    'data-name': name,
+                    'data-source': sourceName,
+                    'data-source-path': source.path
+                }, create.span(F_CLASS + '__tree-item-title', name));
+                const action = (actionName) => (e) => {
+                    this.e.fire(`${actionName}.filebrowser`, {
+                        name,
+                        path: Object(helpers_normalize["f" /* normalizePath */])(source.path + '/'),
+                        source: sourceName
+                    });
+                    e.stopPropagation();
+                };
+                this.e.on(folderElm, 'click', action('openFolder'));
+                this.tree.appendChild(folderElm);
+                if (name === '..' || name === '.') {
+                    return;
+                }
+                if (options.renameFolder &&
+                    this.dataProvider.canI('FolderRename')) {
+                    const btn = Object(ui["a" /* Button */])(this, {
+                        icon: { name: 'pencil' },
+                        name: 'rename',
+                        tooltip: 'Rename',
+                        size: 'tiny'
+                    });
+                    btn.onAction(action('renameFolder'));
+                    folderElm.appendChild(btn.container);
+                }
+                if (options.deleteFolder &&
+                    this.dataProvider.canI('FolderRemove')) {
+                    const btn = Object(ui["a" /* Button */])(this, {
+                        icon: { name: 'cancel' },
+                        name: 'remove',
+                        tooltip: 'Delete',
+                        size: 'tiny'
+                    });
+                    btn.onAction(action('removeFolder'));
+                    folderElm.appendChild(btn.container);
+                }
+            });
+            if (options.createNewFolder &&
+                this.dataProvider.canI('FolderCreate')) {
+                const button = Object(ui["a" /* Button */])(this, 'plus', 'Add folder', 'secondary');
+                button.onAction(() => {
+                    this.e.fire('addFolder', {
+                        path: Object(helpers_normalize["f" /* normalizePath */])(source.path + '/'),
+                        source: sourceName
+                    });
+                });
+                this.tree.appendChild(button.container);
             }
         });
-        appendCreateButton(lastSource2, lastSource, true);
     }, this.defaultTimeout));
 }
 
@@ -14371,7 +14436,6 @@ const CLASS_PREVIEW = F_CLASS + '_preview_', preview_tpl_next = (next = 'next', 
 
 
 
-
 const getItem = (node, root, tag = 'a') => dom["a" /* Dom */].closest(node, elm => dom["a" /* Dom */].isElement(elm) && dom["a" /* Dom */].isTag(elm, tag), root);
 function nativeListeners() {
     let dragElement = false;
@@ -14381,99 +14445,6 @@ function nativeListeners() {
         return item;
     };
     self.e
-        .on(self.tree, 'click', (e) => {
-        const a = getItem(e.target, self.dialog.container, 'i');
-        if (!a || !a.classList.contains('jodit-icon_folder_remove')) {
-            return;
-        }
-        const path = Object(helpers["attr"])(a, '-path') || '';
-        Confirm(self.i18n('Are you sure?'), self.i18n('Delete'), (yes) => {
-            if (yes) {
-                self.dataProvider
-                    .folderRemove(path, Object(helpers["attr"])(a, '-name') || '', Object(helpers["attr"])(a, '-source') || '')
-                    .then(resp => {
-                    if (self.o.folderRemove &&
-                        self.o.folderRemove.process) {
-                        resp = self.o.folderRemove.process.call(self, resp);
-                    }
-                    if (!self.o.isSuccess(resp)) {
-                        throw Object(helpers["error"])(self.o.getMessage(resp));
-                    }
-                    else {
-                        self.state.activeElements = [];
-                        self.status(self.o.getMessage(resp), true);
-                    }
-                    self.loadTree();
-                })
-                    .catch(self.status);
-            }
-        }).bindDestruct(self);
-        e.stopImmediatePropagation();
-        return false;
-    })
-        .on(self.tree, 'click', (e) => {
-        const i = getItem(e.target, self.dialog.container, 'i');
-        if (!i || !i.classList.contains('jodit-icon_folder_rename')) {
-            return;
-        }
-        const a = i.parentElement;
-        if (!a || !a.classList.contains('jodit-filebrowser__tree-item')) {
-            return;
-        }
-        const name = Object(helpers["attr"])(a, '-name') || '', path = Object(helpers["attr"])(a, '-source-path') || '';
-        Prompt(self.i18n('Enter new name'), self.i18n('Rename'), (newName) => {
-            if (!Object(helpers["isValidName"])(newName)) {
-                self.status(self.i18n('Enter new name'));
-                return false;
-            }
-            self.dataProvider
-                .folderRename(path, Object(helpers["attr"])(a, '-name') || '', newName, Object(helpers["attr"])(a, '-source') || '')
-                .then(resp => {
-                if (self.o.folderRename &&
-                    self.o.folderRename.process) {
-                    resp = self.o.folderRename.process.call(self, resp);
-                }
-                if (!self.o.isSuccess(resp)) {
-                    throw Object(helpers["error"])(self.o.getMessage(resp));
-                }
-                else {
-                    self.state.activeElements = [];
-                    self.status(self.o.getMessage(resp), true);
-                }
-                self.loadTree();
-            })
-                .catch(self.status);
-            return;
-        }, self.i18n('type name'), name).bindDestruct(self);
-        e.stopImmediatePropagation();
-        return false;
-    })
-        .on(self.tree, 'click', (e) => {
-        const a = getItem(e.target, self.dialog.container);
-        if (!a) {
-            return;
-        }
-        if (a.classList.contains('jodit-filebrowser__addfolder')) {
-            Prompt(self.i18n('Enter Directory name'), self.i18n('Create directory'), (name) => {
-                self.dataProvider
-                    .createFolder(name, Object(helpers["attr"])(a, '-path') || '', Object(helpers["attr"])(a, '-source') || '')
-                    .then(resp => {
-                    if (self.o.isSuccess(resp)) {
-                        self.loadTree();
-                    }
-                    else {
-                        self.status(self.o.getMessage(resp));
-                    }
-                    return resp;
-                }, self.status);
-            }, self.i18n('type name')).bindDestruct(self);
-        }
-        else {
-            self.dataProvider.currentPath = Object(helpers["attr"])(a, '-path') || '';
-            self.dataProvider.currentSource = Object(helpers["attr"])(a, '-source') || '';
-            self.loadTree();
-        }
-    })
         .on(self.tree, 'dragstart', (e) => {
         const a = getItem(e.target, self.dialog.container);
         if (!a) {
@@ -14561,6 +14532,7 @@ function nativeListeners() {
 
 
 
+
 function selfListeners() {
     const state = this.state, self = this;
     self.e
@@ -14580,6 +14552,86 @@ function selfListeners() {
             state.filterWord = value;
             self.loadItems();
         }
+    })
+        .on('openFolder.filebrowser', (data) => {
+        let path;
+        if (data.name === '..') {
+            path = data.path
+                .split('/')
+                .filter((p) => p.length)
+                .slice(0, -1)
+                .join('/');
+        }
+        else {
+            path = Object(helpers["normalizePath"])(data.path, data.name);
+        }
+        self.state.currentPath = path;
+        self.state.currentSource =
+            data.name === '.' ? DEFAULT_SOURCE_NAME : data.source;
+    })
+        .on('removeFolder.filebrowser', (data) => {
+        Confirm(self.i18n('Are you sure?'), self.i18n('Delete'), (yes) => {
+            if (yes) {
+                self.dataProvider
+                    .folderRemove(data.path, data.name, data.source)
+                    .then(resp => {
+                    var _a;
+                    if ((_a = self.o.folderRemove) === null || _a === void 0 ? void 0 : _a.process) {
+                        resp = self.o.folderRemove.process.call(self, resp);
+                    }
+                    if (!self.o.isSuccess(resp)) {
+                        throw Object(helpers["error"])(self.o.getMessage(resp));
+                    }
+                    else {
+                        self.state.activeElements = [];
+                        self.status(self.o.getMessage(resp), true);
+                    }
+                    self.loadTree();
+                })
+                    .catch(self.status);
+            }
+        }).bindDestruct(self);
+    })
+        .on('renameFolder.filebrowser', (data) => {
+        Prompt(self.i18n('Enter new name'), self.i18n('Rename'), (newName) => {
+            if (!Object(checker["u" /* isValidName */])(newName)) {
+                self.status(self.i18n('Enter new name'));
+                return false;
+            }
+            self.dataProvider
+                .folderRename(data.path, data.name, newName, data.source)
+                .then(resp => {
+                if (self.o.folderRename &&
+                    self.o.folderRename.process) {
+                    resp = self.o.folderRename.process.call(self, resp);
+                }
+                if (!self.o.isSuccess(resp)) {
+                    throw Object(helpers["error"])(self.o.getMessage(resp));
+                }
+                else {
+                    self.state.activeElements = [];
+                    self.status(self.o.getMessage(resp), true);
+                }
+                self.loadTree();
+            })
+                .catch(self.status);
+            return;
+        }, self.i18n('type name'), data.name).bindDestruct(self);
+    })
+        .on('addFolder.filebrowser', (data) => {
+        Prompt(self.i18n('Enter Directory name'), self.i18n('Create directory'), (name) => {
+            self.dataProvider
+                .createFolder(name, data.path, data.source)
+                .then(resp => {
+                if (self.o.isSuccess(resp)) {
+                    self.loadTree();
+                }
+                else {
+                    self.status(self.o.getMessage(resp));
+                }
+                return resp;
+            }, self.status);
+        }, self.i18n('type name')).bindDestruct(self);
     })
         .on('fileRemove.filebrowser', () => {
         if (self.state.activeElements.length) {
@@ -14660,6 +14712,7 @@ function selfListeners() {
 
 
 
+
 class file_browser_FileBrowser extends view_with_toolbar_ViewWithToolbar {
     constructor(options) {
         super(options);
@@ -14669,9 +14722,12 @@ class file_browser_FileBrowser extends view_with_toolbar_ViewWithToolbar {
         this.tree = this.c.div(F_CLASS + '__tree');
         this.files = this.c.div(F_CLASS + '__files');
         this.state = events["c" /* ObserveObject */].create({
+            currentPath: '',
+            currentSource: DEFAULT_SOURCE_NAME,
+            currentBaseUrl: '',
             activeElements: [],
             elements: [],
-            folders: [],
+            sources: {},
             view: 'tiles',
             sortBy: 'changed-desc',
             filterWord: '',
@@ -14782,11 +14838,11 @@ class file_browser_FileBrowser extends view_with_toolbar_ViewWithToolbar {
         }
         self.initUploader(self);
     }
-    async loadItems(path = this.dataProvider.currentPath, source = this.dataProvider.currentSource) {
+    async loadItems() {
         this.files.classList.add('jodit-filebrowser_active');
         this.files.appendChild(this.loader.cloneNode(true));
         return this.dataProvider
-            .items(path, source)
+            .items(this.state.currentPath, this.state.currentSource)
             .then(resp => {
             let process = this.o.items.process;
             if (!process) {
@@ -14804,20 +14860,20 @@ class file_browser_FileBrowser extends view_with_toolbar_ViewWithToolbar {
         });
     }
     async loadTree() {
-        const path = this.dataProvider.currentPath, source = this.dataProvider.currentSource, errorUni = (e) => {
+        const errorUni = (e) => {
             throw e instanceof Error ? e : Object(helpers["error"])(e);
         };
         if (this.uploader) {
-            this.uploader.setPath(path);
-            this.uploader.setSource(source);
+            this.uploader.setPath(this.state.currentPath);
+            this.uploader.setSource(this.state.currentSource);
         }
         this.tree.classList.add('jodit-filebrowser_active');
         dom["a" /* Dom */].detach(this.tree);
         this.tree.appendChild(this.loader.cloneNode(true));
-        const items = this.loadItems(path, source);
+        const items = this.loadItems();
         if (this.o.showFoldersPanel) {
             const tree = this.dataProvider
-                .tree(path, source)
+                .tree(this.state.currentPath, this.state.currentSource)
                 .then(resp => {
                 let process = this.o.folder.process;
                 if (!process) {
@@ -14825,7 +14881,7 @@ class file_browser_FileBrowser extends view_with_toolbar_ViewWithToolbar {
                 }
                 if (process) {
                     const respData = process.call(self, resp);
-                    this.generateFolderTree(respData.data.sources);
+                    this.state.sources = respData.data.sources;
                 }
             })
                 .catch(e => {
@@ -14841,7 +14897,7 @@ class file_browser_FileBrowser extends view_with_toolbar_ViewWithToolbar {
     }
     async deleteFile(name, source) {
         return this.dataProvider
-            .fileRemove(this.dataProvider.currentPath, name, source)
+            .fileRemove(this.state.currentPath, name, source)
             .then(resp => {
             if (this.o.remove && this.o.remove.process) {
                 resp = this.o.remove.process.call(this, resp);
@@ -14855,19 +14911,6 @@ class file_browser_FileBrowser extends view_with_toolbar_ViewWithToolbar {
             }
         })
             .catch(this.status);
-    }
-    generateFolderTree(sources) {
-        const folders = [];
-        Object(helpers["each"])(sources, (source_name, source) => {
-            source.folders.forEach((name) => {
-                folders.push({
-                    name,
-                    source,
-                    sourceName: source_name
-                });
-            });
-        });
-        this.state.folders = folders;
     }
     generateItemsList(sources) {
         const elements = [];
@@ -14979,8 +15022,8 @@ class file_browser_FileBrowser extends view_with_toolbar_ViewWithToolbar {
             return this.loadItems();
         };
         self.uploader = self.getInstance('Uploader', uploaderOptions);
-        self.uploader.setPath(self.dataProvider.currentPath);
-        self.uploader.setSource(self.dataProvider.currentSource);
+        self.uploader.setPath(self.state.currentPath);
+        self.uploader.setSource(self.state.currentSource);
         self.uploader.bind(self.browser, uploadHandler, self.errorHandler);
         self.e.on('bindUploader.filebrowser', (button) => {
             self.uploader.bind(button, uploadHandler, self.errorHandler);
@@ -15006,7 +15049,7 @@ Object(tslib_es6["a" /* __decorate */])([
 ], file_browser_FileBrowser.prototype, "open", null);
 
 // EXTERNAL MODULE: ./src/modules/image-editor/image-editor.less
-var image_editor = __webpack_require__(130);
+var image_editor = __webpack_require__(129);
 
 // CONCATENATED MODULE: ./src/modules/image-editor/templates/form.ts
 /*!
@@ -15955,7 +15998,7 @@ Object(tslib_es6["a" /* __decorate */])([
 ], observer_Observer.prototype, "onChange", null);
 
 // EXTERNAL MODULE: ./src/modules/progress-bar/progress-bar.less
-var progress_bar = __webpack_require__(131);
+var progress_bar = __webpack_require__(130);
 
 // CONCATENATED MODULE: ./src/modules/progress-bar/progress-bar.ts
 /*!
@@ -17073,7 +17116,7 @@ Object(tslib_es6["a" /* __decorate */])([
 
 
 // EXTERNAL MODULE: ./src/modules/status-bar/status-bar.less
-var status_bar = __webpack_require__(132);
+var status_bar = __webpack_require__(131);
 
 // CONCATENATED MODULE: ./src/modules/status-bar/status-bar.ts
 /*!
@@ -17709,7 +17752,7 @@ const table_instance = (j) => j.getInstance('Table', j.o);
 
 
 // EXTERNAL MODULE: ./src/modules/uploader/uploader.less
-var uploader_uploader = __webpack_require__(133);
+var uploader_uploader = __webpack_require__(132);
 
 // CONCATENATED MODULE: ./src/modules/uploader/uploader.ts
 /*!
@@ -18153,7 +18196,7 @@ class uploader_Uploader extends core_component["c" /* ViewComponent */] {
 }
 
 // EXTERNAL MODULE: ./src/core/plugin-system.ts
-var plugin_system = __webpack_require__(29);
+var plugin_system = __webpack_require__(28);
 
 // CONCATENATED MODULE: ./src/modules/index.ts
 /*!
@@ -19000,25 +19043,25 @@ Object(tslib_es6["a" /* __decorate */])([
 
 // CONCATENATED MODULE: ./src/langs/index.ts
 
-const ar = __webpack_require__(134);
-const cs_cz = __webpack_require__(135);
-const de = __webpack_require__(136);
-const en = __webpack_require__(137);
-const es = __webpack_require__(138);
-const fr = __webpack_require__(139);
-const he = __webpack_require__(140);
-const hu = __webpack_require__(141);
-const langs_id = __webpack_require__(142);
-const it = __webpack_require__(143);
-const ja = __webpack_require__(144);
-const ko = __webpack_require__(145);
-const nl = __webpack_require__(146);
-const pl = __webpack_require__(147);
-const pt_br = __webpack_require__(148);
-const ru = __webpack_require__(149);
-const langs_tr = __webpack_require__(150);
-const zh_cn = __webpack_require__(151);
-const zh_tw = __webpack_require__(152);
+const ar = __webpack_require__(133);
+const cs_cz = __webpack_require__(134);
+const de = __webpack_require__(135);
+const en = __webpack_require__(136);
+const es = __webpack_require__(137);
+const fr = __webpack_require__(138);
+const he = __webpack_require__(139);
+const hu = __webpack_require__(140);
+const langs_id = __webpack_require__(141);
+const it = __webpack_require__(142);
+const ja = __webpack_require__(143);
+const ko = __webpack_require__(144);
+const nl = __webpack_require__(145);
+const pl = __webpack_require__(146);
+const pt_br = __webpack_require__(147);
+const ru = __webpack_require__(148);
+const langs_tr = __webpack_require__(149);
+const zh_cn = __webpack_require__(150);
+const zh_tw = __webpack_require__(151);
 const exp = {
     ar,
     cs_cz,
@@ -19058,7 +19101,7 @@ Object.keys(exp).forEach((lang) => {
 /* harmony default export */ var langs = (exp);
 
 // EXTERNAL MODULE: ./src/plugins/add-new-line/add-new-line.less
-var add_new_line = __webpack_require__(153);
+var add_new_line = __webpack_require__(152);
 
 // CONCATENATED MODULE: ./src/plugins/add-new-line/add-new-line.ts
 /*!
@@ -19255,7 +19298,7 @@ class add_new_line_addNewLine extends plugin_Plugin {
 }
 
 // EXTERNAL MODULE: ./src/plugins/about/about.less
-var about = __webpack_require__(154);
+var about = __webpack_require__(153);
 
 // CONCATENATED MODULE: ./src/plugins/about/about.ts
 /*!
@@ -20104,10 +20147,7 @@ Object(tslib_es6["a" /* __decorate */])([
     esm["a" /* default */]
 ], wrap_text_nodes_WrapTextNodes.prototype, "postProcessSetEditorValue", null);
 
-// EXTERNAL MODULE: ./src/core/ui/button/button.ts
-var ui_button_button = __webpack_require__(23);
-
-// CONCATENATED MODULE: ./src/plugins/clipboard/paste.ts
+// CONCATENATED MODULE: ./src/plugins/clipboard/paste/helpers.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -20116,17 +20156,6 @@ var ui_button_button = __webpack_require__(23);
 
 
 
-
-
-
-
-
-config["a" /* Config */].prototype.askBeforePasteHTML = true;
-config["a" /* Config */].prototype.processPasteHTML = true;
-config["a" /* Config */].prototype.askBeforePasteFromWord = true;
-config["a" /* Config */].prototype.processPasteFromWord = true;
-config["a" /* Config */].prototype.nl2brInPlainText = true;
-config["a" /* Config */].prototype.defaultActionOnPaste = constants["INSERT_AS_HTML"];
 const getDataTransfer = (event) => {
     if (event.clipboardData) {
         return event.clipboardData;
@@ -20138,16 +20167,124 @@ const getDataTransfer = (event) => {
         return null;
     }
 };
-function pasteInsertHtml(editor, html) {
+function removeExtraFragments(html) {
+    html = html.replace(/<meta[^>]+?>/g, '');
+    const start = html.search(/<!--StartFragment-->/i);
+    if (start !== -1) {
+        html = html.substr(start + 20);
+    }
+    const end = html.search(/<!--EndFragment-->/i);
+    if (end !== -1) {
+        html = html.substr(0, end);
+    }
+    return html;
+}
+function pasteInsertHtml(e, editor, html) {
+    if (editor.isInDestruct) {
+        return;
+    }
+    if ((e === null || e === void 0 ? void 0 : e.type) === 'drop') {
+        editor.s.insertCursorAtPoint(e.clientX, e.clientY);
+    }
     const result = editor.e.fire('beforePasteInsert', html);
-    if (result !== false && (typeof result === 'string' || typeof result === 'number' || result instanceof Node)) {
+    if (!Object(helpers["isVoid"])(result) &&
+        (Object(helpers["isString"])(result) || Object(helpers["isNumber"])(result) || dom["a" /* Dom */].isNode(result, editor.ew))) {
         html = result;
+    }
+    if (Object(helpers["isString"])(html)) {
+        html = removeExtraFragments(html);
     }
     editor.s.insertHTML(html);
 }
+function getAllTypes(dt) {
+    const types = dt.types;
+    let types_str = '';
+    if (Object(helpers["isArray"])(types) || Object(helpers["type"])(types) === 'domstringlist') {
+        for (let i = 0; i < types.length; i += 1) {
+            types_str += types[i] + ';';
+        }
+    }
+    else {
+        types_str = (types || constants["TEXT_PLAIN"]).toString() + ';';
+    }
+    return types_str;
+}
+
+// CONCATENATED MODULE: ./src/plugins/clipboard/clipboard.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+const pluginKey = 'clipboard';
+class clipboard_clipboard {
+    init(editor) {
+        editor.e
+            .off(`copy.${pluginKey} cut.${pluginKey}`)
+            .on(`copy.${pluginKey} cut.${pluginKey}`, (event) => {
+            var _a;
+            const selectedText = editor.s.html;
+            const clipboardData = getDataTransfer(event) ||
+                getDataTransfer(editor.ew) ||
+                getDataTransfer(event.originalEvent);
+            if (clipboardData) {
+                clipboardData.setData(constants["TEXT_PLAIN"], Object(helpers["stripTags"])(selectedText));
+                clipboardData.setData(constants["TEXT_HTML"], selectedText);
+            }
+            editor.buffer.set(pluginKey, selectedText);
+            editor.e.fire('pasteStack', {
+                html: selectedText,
+                action: editor.o.defaultActionOnPaste
+            });
+            if (event.type === 'cut') {
+                editor.s.remove();
+                editor.s.focus();
+            }
+            event.preventDefault();
+            (_a = editor === null || editor === void 0 ? void 0 : editor.events) === null || _a === void 0 ? void 0 : _a.fire('afterCopy', selectedText);
+        });
+    }
+    destruct(editor) {
+        var _a, _b;
+        (_a = editor === null || editor === void 0 ? void 0 : editor.buffer) === null || _a === void 0 ? void 0 : _a.set(pluginKey, '');
+        (_b = editor === null || editor === void 0 ? void 0 : editor.events) === null || _b === void 0 ? void 0 : _b.off('.' + pluginKey);
+    }
+}
+
+// CONCATENATED MODULE: ./src/plugins/clipboard/config.ts
+
+
+
+
+
+config["a" /* Config */].prototype.askBeforePasteHTML = true;
+config["a" /* Config */].prototype.processPasteHTML = true;
+config["a" /* Config */].prototype.askBeforePasteFromWord = true;
+config["a" /* Config */].prototype.processPasteFromWord = true;
+config["a" /* Config */].prototype.nl2brInPlainText = true;
+config["a" /* Config */].prototype.defaultActionOnPaste = constants["INSERT_AS_HTML"];
+config["a" /* Config */].prototype.draggableTags = ['img', 'a', 'jodit-media', 'jodit'];
+config["a" /* Config */].prototype.controls.cut = {
+    command: 'cut',
+    isDisabled: (editor) => editor.s.isCollapsed(),
+    tooltip: 'Cut selection'
+};
+config["a" /* Config */].prototype.controls.copy = {
+    command: 'copy',
+    isDisabled: (editor) => editor.s.isCollapsed(),
+    tooltip: 'Copy selection'
+};
+const psKey = 'pasteStorage';
 config["a" /* Config */].prototype.controls.paste = {
     tooltip: 'Paste from clipboard',
-    async exec(editor) {
+    async exec(editor, _, { control }) {
+        if (control.name === psKey) {
+            editor.execCommand('showPasteStorage');
+            return;
+        }
         editor.s.focus();
         let text = '', error = true;
         if (error) {
@@ -20177,7 +20314,7 @@ config["a" /* Config */].prototype.controls.paste = {
             error = value !== editor.value;
         }
         if (text) {
-            pasteInsertHtml(editor, text);
+            pasteInsertHtml(null, editor, text);
         }
         else {
             if (error) {
@@ -20186,44 +20323,135 @@ config["a" /* Config */].prototype.controls.paste = {
                 }).bindDestruct(editor);
             }
         }
+    },
+    list: {
+        [psKey]: 'Paste Storage'
+    },
+    isChildDisabled(j) {
+        return j.e.fire('pasteStorageList') < 2;
     }
 };
-function paste(editor) {
-    const opt = editor.options, clearOrKeep = (msg, title, callback, clearButton = 'Clean', clear2Button = 'Insert only Text') => {
-        var _a;
-        if (editor.events &&
-            editor.e.fire('beforeOpenPasteDialog', msg, title, callback, clearButton, clear2Button) === false) {
+
+// CONCATENATED MODULE: ./src/plugins/clipboard/paste/paste.ts
+
+
+
+
+
+
+
+
+
+
+class paste_paste extends plugin_Plugin {
+    constructor() {
+        super(...arguments);
+        this.pasteStack = new helpers["LimitedStack"](20);
+    }
+    afterInit(jodit) {
+        jodit.e
+            .on('paste.paste', this.onPaste)
+            .on('pasteStack.paste', (item) => this.pasteStack.push(item));
+        if (jodit.o.nl2brInPlainText) {
+            this.j.e.on('processPaste.paste', this.onProcessPasteReplaceNl2Br);
+        }
+    }
+    onPaste(e) {
+        if (this.j.e.fire('beforePaste', e) === false ||
+            this.customPasteProcess(e) === false) {
+            e.preventDefault();
+            return false;
+        }
+        this.defaultPasteProcess(e);
+        if (this.j.e.fire('afterPaste', e) === false) {
+            return false;
+        }
+    }
+    customPasteProcess(e) {
+        if (!this.j.o.processPasteHTML) {
             return;
         }
-        const dialog = Confirm(`<div style="word-break: normal; white-space: normal">${msg}</div>`, title, callback);
-        dialog.bindDestruct(editor);
-        Object(helpers["markOwner"])(editor, dialog.container);
-        const keep = Object(ui_button_button["a" /* Button */])(editor, '', 'Keep');
-        const clear = Object(ui_button_button["a" /* Button */])(editor, '', clearButton);
-        const clear2 = Object(ui_button_button["a" /* Button */])(editor, '', clear2Button);
-        const cancel = Object(ui_button_button["a" /* Button */])(editor, '', 'Cancel');
-        keep.onAction(() => {
-            dialog.close();
-            callback && callback(true);
-        });
-        clear.onAction(() => {
-            dialog.close();
-            callback && callback(false);
-        });
-        clear2.onAction(() => {
-            dialog.close();
-            callback && callback(0);
-        });
-        cancel.onAction(() => {
-            dialog.close();
-        });
-        dialog.setFooter([keep, clear, clear2Button ? clear2 : '', cancel]);
-        (_a = editor.events) === null || _a === void 0 ? void 0 : _a.fire('afterOpenPasteDialog', dialog, msg, title, callback, clearButton, clear2Button);
-        return dialog;
-    };
-    const insertByType = (html, subtype) => {
+        const dt = getDataTransfer(e), texts = [dt === null || dt === void 0 ? void 0 : dt.getData(constants["TEXT_HTML"]), dt === null || dt === void 0 ? void 0 : dt.getData(constants["TEXT_PLAIN"])];
+        for (const text of texts) {
+            if (Object(helpers["isHTML"])(text) &&
+                (this.processWordHTML(e, text) || this.processHTML(e, text))) {
+                return false;
+            }
+        }
+    }
+    defaultPasteProcess(e) {
+        const dt = getDataTransfer(e);
+        let text = (dt === null || dt === void 0 ? void 0 : dt.getData(constants["TEXT_HTML"])) || (dt === null || dt === void 0 ? void 0 : dt.getData(constants["TEXT_PLAIN"]));
+        if (dt && text && Object(helpers["trim"])(text) !== '') {
+            const result = this.j.e.fire('processPaste', e, text, getAllTypes(dt));
+            if (result !== undefined) {
+                text = result;
+            }
+            if (Object(helpers["isString"])(text) || dom["a" /* Dom */].isNode(text, this.j.ew)) {
+                this.insertByType(e, text, this.j.o.defaultActionOnPaste);
+            }
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    }
+    processWordHTML(e, text) {
+        if (this.j.o.processPasteFromWord && Object(helpers["isHtmlFromWord"])(text)) {
+            if (this.j.o.askBeforePasteFromWord) {
+                this.askInsertTypeDialog('The pasted content is coming from a Microsoft Word/Excel document. ' +
+                    'Do you want to keep the format or clean it up?', 'Word Paste Detected', insertType => {
+                    this.insertFromWordByType(e, text, insertType);
+                });
+            }
+            else {
+                this.insertFromWordByType(e, text, this.j.o.defaultActionOnPaste);
+            }
+            return true;
+        }
+        return false;
+    }
+    processHTML(e, html) {
+        if (this.j.o.askBeforePasteHTML) {
+            const cached = this.pasteStack.find(({ html }) => html === html);
+            if (cached) {
+                this.insertByType(e, html, cached.action || this.j.o.defaultActionOnPaste);
+                return true;
+            }
+            this.askInsertTypeDialog('Your code is similar to HTML. Keep as HTML?', 'Paste as HTML', (insertType) => {
+                this.insertByType(e, html, insertType);
+            }, 'Insert as Text');
+            return true;
+        }
+        return false;
+    }
+    insertFromWordByType(e, html, insertType) {
+        var _a;
+        switch (insertType) {
+            case constants["INSERT_AS_HTML"]: {
+                html = Object(helpers["applyStyles"])(html);
+                if (this.j.o.beautifyHTML) {
+                    const value = (_a = this.j.events) === null || _a === void 0 ? void 0 : _a.fire('beautifyHTML', html);
+                    if (Object(helpers["isString"])(value)) {
+                        html = value;
+                    }
+                }
+                break;
+            }
+            case constants["INSERT_AS_TEXT"]: {
+                html = Object(helpers["cleanFromWord"])(html);
+                break;
+            }
+            case constants["INSERT_ONLY_TEXT"]: {
+                html = Object(helpers["stripTags"])(Object(helpers["cleanFromWord"])(html));
+                break;
+            }
+        }
+        pasteInsertHtml(e, this.j, html);
+    }
+    insertByType(e, html, action) {
+        this.pasteStack.push({ html, action });
         if (Object(helpers["isString"])(html)) {
-            switch (subtype) {
+            this.j.buffer.set(pluginKey, html);
+            switch (action) {
                 case constants["INSERT_CLEAR_HTML"]:
                     html = Object(helpers["cleanFromWord"])(html);
                     break;
@@ -20236,285 +20464,113 @@ function paste(editor) {
                 default:
             }
         }
-        if (editor.isInDestruct) {
+        pasteInsertHtml(e, this.j, html);
+    }
+    askInsertTypeDialog(msg, title, callback, clearButton = 'Clean', insertText = 'Insert only Text') {
+        var _a, _b, _c, _d;
+        if (((_b = (_a = this.j) === null || _a === void 0 ? void 0 : _a.e) === null || _b === void 0 ? void 0 : _b.fire('beforeOpenPasteDialog', msg, title, callback, clearButton, insertText)) === false) {
             return;
         }
-        if (Object(helpers["isString"])(html)) {
-            editor.buffer.set(pluginKey, html);
+        const dialog = Confirm(`<div style="word-break: normal; white-space: normal">${this.j.i18n(msg)}</div>`, this.j.i18n(title));
+        dialog.bindDestruct(this.j);
+        Object(helpers["markOwner"])(this.j, dialog.container);
+        const keep = Object(ui_button["a" /* Button */])(this.j, {
+            text: 'Keep',
+            name: 'keep',
+            status: 'primary',
+            tabIndex: 0
+        });
+        const clear = Object(ui_button["a" /* Button */])(this.j, {
+            text: clearButton,
+            tabIndex: 0
+        });
+        const clear2 = Object(ui_button["a" /* Button */])(this.j, {
+            text: insertText,
+            tabIndex: 0
+        });
+        const cancel = Object(ui_button["a" /* Button */])(this.j, {
+            text: 'Cancel',
+            tabIndex: 0
+        });
+        keep.onAction(() => {
+            dialog.close();
+            callback && callback(constants["INSERT_AS_HTML"]);
+        });
+        clear.onAction(() => {
+            dialog.close();
+            callback && callback(constants["INSERT_AS_TEXT"]);
+        });
+        clear2.onAction(() => {
+            dialog.close();
+            callback && callback(constants["INSERT_ONLY_TEXT"]);
+        });
+        cancel.onAction(() => {
+            dialog.close();
+        });
+        dialog.setFooter([keep, clear, insertText ? clear2 : '', cancel]);
+        keep.focus();
+        (_d = (_c = this.j) === null || _c === void 0 ? void 0 : _c.e) === null || _d === void 0 ? void 0 : _d.fire('afterOpenPasteDialog', dialog, msg, title, callback, clearButton, insertText);
+        return dialog;
+    }
+    onProcessPasteReplaceNl2Br(event, text, type) {
+        if (type === constants["TEXT_PLAIN"] + ';' && !Object(helpers["isHTML"])(text)) {
+            return Object(helpers["nl2br"])(text);
         }
-        pasteInsertHtml(editor, html);
-    };
-    const insertHTML = (html, event) => {
-        const buffer = editor.buffer.get(pluginKey);
-        if (Object(helpers["isHTML"])(html) && buffer !== trimFragment(html)) {
-            html = trimFragment(html);
-            const pasteHTMLByType = (insertType) => {
-                if (event.type === 'drop') {
-                    editor.s.insertCursorAtPoint(event.clientX, event.clientY);
-                }
-                insertByType(html, insertType);
-                editor.setEditorValue();
-            };
-            if (opt.askBeforePasteHTML) {
-                clearOrKeep(editor.i18n('Your code is similar to HTML. Keep as HTML?'), editor.i18n('Paste as HTML'), (agree) => {
-                    let insertType = constants["INSERT_AS_HTML"];
-                    if (agree === false) {
-                        insertType = constants["INSERT_AS_TEXT"];
-                    }
-                    if (agree === 0) {
-                        insertType = constants["INSERT_ONLY_TEXT"];
-                    }
-                    pasteHTMLByType(insertType);
-                }, 'Insert as Text');
-            }
-            else {
-                pasteHTMLByType(opt.defaultActionOnPaste);
-            }
-            return false;
-        }
-    };
-    const trimFragment = (html) => {
-        const start = html.search(/<!--StartFragment-->/i);
-        if (start !== -1) {
-            html = html.substr(start + 20);
-        }
-        const end = html.search(/<!--EndFragment-->/i);
-        if (end !== -1) {
-            html = html.substr(0, end);
-        }
-        return html;
-    };
-    const beforePaste = (event) => {
-        const dt = getDataTransfer(event);
-        if (!dt || !event || !dt.getData) {
-            return;
-        }
-        if (dt.getData(constants["TEXT_HTML"])) {
-            const processHTMLData = (html) => {
-                const buffer = editor.buffer.get(pluginKey);
-                if (opt.processPasteHTML &&
-                    Object(helpers["isHTML"])(html) &&
-                    buffer !== trimFragment(html)) {
-                    if (opt.processPasteFromWord && Object(helpers["isHtmlFromWord"])(html)) {
-                        const pasteFromWordByType = (method) => {
-                            var _a;
-                            if (method === constants["INSERT_AS_HTML"]) {
-                                html = Object(helpers["applyStyles"])(html);
-                                if (opt.beautifyHTML) {
-                                    const value = (_a = editor.events) === null || _a === void 0 ? void 0 : _a.fire('beautifyHTML', html);
-                                    if (Object(helpers["isString"])(value)) {
-                                        html = value;
-                                    }
-                                }
-                            }
-                            if (method === constants["INSERT_AS_TEXT"]) {
-                                html = Object(helpers["cleanFromWord"])(html);
-                            }
-                            if (method === constants["INSERT_ONLY_TEXT"]) {
-                                html = Object(helpers["stripTags"])(Object(helpers["cleanFromWord"])(html));
-                            }
-                            pasteInsertHtml(editor, html);
-                            editor.setEditorValue();
-                        };
-                        if (opt.askBeforePasteFromWord) {
-                            clearOrKeep(editor.i18n('The pasted content is coming from a Microsoft Word/Excel document. ' +
-                                'Do you want to keep the format or clean it up?'), editor.i18n('Word Paste Detected'), (agree) => {
-                                let insertType = constants["INSERT_AS_HTML"];
-                                if (agree === false) {
-                                    insertType = constants["INSERT_AS_TEXT"];
-                                }
-                                if (agree === 0) {
-                                    insertType = constants["INSERT_ONLY_TEXT"];
-                                }
-                                pasteFromWordByType(insertType);
-                            });
-                        }
-                        else {
-                            pasteFromWordByType(opt.defaultActionOnPaste);
-                        }
-                    }
-                    else {
-                        insertHTML(html, event);
-                    }
-                    return false;
-                }
-            };
-            if (dt.types && Array.from(dt.types).includes(constants["TEXT_HTML"])) {
-                return processHTMLData(dt.getData(constants["TEXT_HTML"]));
-            }
-            if (event.type !== 'drop') {
-                const div = editor.c.div('', {
-                    tabindex: -1,
-                    contenteditable: true,
-                    style: {
-                        left: -9999,
-                        top: 0,
-                        width: 0,
-                        height: '100%',
-                        lineHeight: '140%',
-                        overflow: 'hidden',
-                        position: 'fixed',
-                        zIndex: 2147483647,
-                        wordBreak: 'break-all'
-                    }
-                });
-                editor.container.appendChild(div);
-                const selData = editor.s.save();
-                div.focus();
-                let tick = 0;
-                const removeFakeFocus = () => {
-                    dom["a" /* Dom */].safeRemove(div);
-                    editor.selection && editor.s.restore(selData);
-                };
-                const waitData = () => {
-                    tick += 1;
-                    if (div.childNodes && div.childNodes.length > 0) {
-                        const pastedData = div.innerHTML;
-                        removeFakeFocus();
-                        if (processHTMLData(pastedData) !== false) {
-                            pasteInsertHtml(editor, pastedData);
-                        }
-                        return;
-                    }
-                    if (tick < 5) {
-                        editor.async.setTimeout(waitData, 20);
-                    }
-                    else {
-                        removeFakeFocus();
-                    }
-                };
-                waitData();
-            }
-        }
-        if (dt.getData(constants["TEXT_PLAIN"])) {
-            return insertHTML(dt.getData(constants["TEXT_PLAIN"]), event);
-        }
-    };
-    editor.e
-        .off('paste.paste')
-        .on('paste.paste', (event) => {
-        if (beforePaste(event) === false ||
-            editor.e.fire('beforePaste', event) === false) {
-            event.preventDefault();
-            return false;
-        }
-        const dt = getDataTransfer(event);
-        if (event && dt) {
-            const types = dt.types;
-            let types_str = '';
-            if (Object(helpers["isArray"])(types) || Object(helpers["type"])(types) === 'domstringlist') {
-                for (let i = 0; i < types.length; i += 1) {
-                    types_str += types[i] + ';';
-                }
-            }
-            else {
-                types_str = (types || constants["TEXT_PLAIN"]).toString() + ';';
-            }
-            const getText = () => {
-                if (/text\/html/i.test(types_str)) {
-                    return dt.getData('text/html');
-                }
-                if (/text\/rtf/i.test(types_str) && Object(helpers["browser"])('safari')) {
-                    return dt.getData('text/rtf');
-                }
-                if (/text\/plain/i.test(types_str) && !Object(helpers["browser"])('mozilla')) {
-                    return dt.getData(constants["TEXT_PLAIN"]);
-                }
-                if (/text/i.test(types_str) && constants["IS_IE"]) {
-                    return dt.getData(constants["TEXT_PLAIN"]);
-                }
-                return null;
-            };
-            let clipboard_html = getText();
-            if (dom["a" /* Dom */].isNode(clipboard_html, editor.ew) ||
-                (clipboard_html && Object(helpers["trim"])(clipboard_html) !== '')) {
-                clipboard_html = trimFragment(clipboard_html);
-                const buffer = editor.buffer.get(pluginKey);
-                if (buffer !== clipboard_html) {
-                    const result = editor.e.fire('processPaste', event, clipboard_html, types_str);
-                    if (result !== undefined) {
-                        clipboard_html = result;
-                    }
-                }
-                if (Object(helpers["isString"])(clipboard_html) ||
-                    dom["a" /* Dom */].isNode(clipboard_html, editor.ew)) {
-                    if (event.type === 'drop') {
-                        editor.s.insertCursorAtPoint(event.clientX, event.clientY);
-                    }
-                    insertByType(clipboard_html, opt.defaultActionOnPaste);
-                }
-                event.preventDefault();
-                event.stopPropagation();
-            }
-        }
-        if (editor.e.fire('afterPaste', event) === false) {
-            return false;
-        }
-    });
-    if (opt.nl2brInPlainText) {
-        editor.e
-            .off('processPaste.paste')
-            .on('processPaste.paste', (event, text, type) => {
-            if (type === constants["TEXT_PLAIN"] + ';' && !Object(helpers["isHTML"])(text)) {
-                return Object(helpers["nl2br"])(text);
+    }
+    useFakeDivBox(event) {
+        const div = this.j.c.div('', {
+            tabindex: -1,
+            contenteditable: true,
+            style: {
+                left: -9999,
+                top: 0,
+                width: 0,
+                height: '100%',
+                lineHeight: '140%',
+                overflow: 'hidden',
+                position: 'fixed',
+                zIndex: 2147483647,
+                wordBreak: 'break-all'
             }
         });
+        this.j.container.appendChild(div);
+        const selData = this.j.s.save();
+        div.focus();
+        let tick = 0;
+        const removeFakeFocus = () => {
+            dom["a" /* Dom */].safeRemove(div);
+            this.j.selection && this.j.s.restore(selData);
+        };
+        const waitData = () => {
+            tick += 1;
+            if (div.childNodes && div.childNodes.length > 0) {
+                const pastedData = div.innerHTML;
+                removeFakeFocus();
+                this.processHTML(event, pastedData);
+                return;
+            }
+            if (tick < 5) {
+                this.j.async.setTimeout(waitData, 20);
+            }
+            else {
+                removeFakeFocus();
+            }
+        };
+        waitData();
+    }
+    beforeDestruct(jodit) {
+        jodit.e.off('paste.paste', this.onPaste);
     }
 }
-
-// CONCATENATED MODULE: ./src/plugins/clipboard/cut.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-config["a" /* Config */].prototype.controls.cut = {
-    command: 'cut',
-    isDisabled: (editor) => editor.s.isCollapsed(),
-    tooltip: 'Cut selection'
-};
-config["a" /* Config */].prototype.controls.copy = {
-    command: 'copy',
-    isDisabled: (editor) => editor.s.isCollapsed(),
-    tooltip: 'Copy selection'
-};
-const pluginKey = 'clipboard';
-class cut_clipboard {
-    init(editor) {
-        editor.e
-            .off(`copy.${pluginKey} cut.${pluginKey}`)
-            .on(`copy.${pluginKey} cut.${pluginKey}`, (event) => {
-            var _a;
-            const selectedText = editor.s.html;
-            const clipboardData = getDataTransfer(event) ||
-                getDataTransfer(editor.ew) ||
-                getDataTransfer(event.originalEvent);
-            if (clipboardData) {
-                clipboardData.setData(constants["TEXT_PLAIN"], Object(helpers["stripTags"])(selectedText));
-                clipboardData.setData(constants["TEXT_HTML"], selectedText);
-            }
-            editor.buffer.set(pluginKey, selectedText);
-            if (event.type === 'cut') {
-                editor.s.remove();
-                editor.s.focus();
-            }
-            event.preventDefault();
-            (_a = editor === null || editor === void 0 ? void 0 : editor.events) === null || _a === void 0 ? void 0 : _a.fire('afterCopy', selectedText);
-        });
-    }
-    destruct(editor) {
-        var _a, _b;
-        (_a = editor === null || editor === void 0 ? void 0 : editor.buffer) === null || _a === void 0 ? void 0 : _a.set(pluginKey, '');
-        (_b = editor === null || editor === void 0 ? void 0 : editor.events) === null || _b === void 0 ? void 0 : _b.off('.' + pluginKey);
-    }
-}
+Object(tslib_es6["a" /* __decorate */])([
+    esm["a" /* default */]
+], paste_paste.prototype, "onPaste", null);
+Object(tslib_es6["a" /* __decorate */])([
+    esm["a" /* default */]
+], paste_paste.prototype, "onProcessPasteReplaceNl2Br", null);
 
 // EXTERNAL MODULE: ./src/plugins/clipboard/paste-storage/paste-storage.less
-var paste_storage = __webpack_require__(155);
+var paste_storage = __webpack_require__(154);
 
 // CONCATENATED MODULE: ./src/plugins/clipboard/paste-storage/paste-storage.ts
 /*!
@@ -20658,6 +20714,7 @@ class paste_storage_pasteStorage extends plugin_Plugin {
     afterInit() {
         this.j.e
             .off('afterCopy.paste-storage')
+            .on('pasteStorageList.paste-storage', () => this.list.length)
             .on('afterCopy.paste-storage', (html) => {
             if (this.list.indexOf(html) !== -1) {
                 this.list.splice(this.list.indexOf(html), 1);
@@ -20674,6 +20731,8 @@ class paste_storage_pasteStorage extends plugin_Plugin {
     }
     beforeDestruct() {
         this.dialog && this.dialog.destruct();
+        this.j.e
+            .off('.paste-storage');
         dom["a" /* Dom */].safeRemove(this.previewBox);
         dom["a" /* Dom */].safeRemove(this.listBox);
         dom["a" /* Dom */].safeRemove(this.container);
@@ -20784,6 +20843,7 @@ config["a" /* Config */].prototype.controls.copyformat = {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 
 
 
@@ -21105,8 +21165,6 @@ class drag_and_drop_DragAndDrop extends plugin_Plugin {
 
 
 
-
-config["a" /* Config */].prototype.draggableTags = ['img', 'a', 'jodit-media', 'jodit'];
 class drag_and_drop_element_DragAndDropElement extends plugin_Plugin {
     constructor() {
         super(...arguments);
@@ -21424,7 +21482,7 @@ class enter_enter extends plugin_Plugin {
 }
 
 // EXTERNAL MODULE: ./src/plugins/error-messages/errors-messages.less
-var errors_messages = __webpack_require__(156);
+var errors_messages = __webpack_require__(155);
 
 // CONCATENATED MODULE: ./src/plugins/error-messages/error-messages.ts
 /*!
@@ -21678,7 +21736,7 @@ function formatBlock(editor) {
 }
 
 // EXTERNAL MODULE: ./src/plugins/fullsize/fullsize.less
-var fullsize = __webpack_require__(157);
+var fullsize = __webpack_require__(156);
 
 // CONCATENATED MODULE: ./src/plugins/fullsize/fullsize.ts
 /*!
@@ -22141,7 +22199,7 @@ function iframe_iframe(editor) {
 }
 
 // EXTERNAL MODULE: ./src/plugins/image/image-properties/image-properties.less
-var image_properties = __webpack_require__(158);
+var image_properties = __webpack_require__(157);
 
 // CONCATENATED MODULE: ./src/plugins/image/image-properties/templates/form.ts
 /*!
@@ -22831,7 +22889,7 @@ function indent(editor) {
 }
 
 // EXTERNAL MODULE: ./src/plugins/inline-popup/inline-popup.less
-var inline_popup = __webpack_require__(159);
+var inline_popup = __webpack_require__(158);
 
 // CONCATENATED MODULE: ./src/plugins/inline-popup/config/config.ts
 /*!
@@ -22844,9 +22902,9 @@ config["a" /* Config */].prototype.toolbarInline = true;
 config["a" /* Config */].prototype.toolbarInlineForSelection = false;
 config["a" /* Config */].prototype.toolbarInlineDisableFor = [];
 config["a" /* Config */].prototype.popup = {
-    a: __webpack_require__(160).default,
-    img: __webpack_require__(161).default,
-    cells: __webpack_require__(162).default,
+    a: __webpack_require__(159).default,
+    img: __webpack_require__(160).default,
+    cells: __webpack_require__(161).default,
     jodit: [
         {
             name: 'bin',
@@ -23742,7 +23800,7 @@ function orderedList(editor) {
 }
 
 // EXTERNAL MODULE: ./src/plugins/placeholder/placeholder.less
-var placeholder_placeholder = __webpack_require__(163);
+var placeholder_placeholder = __webpack_require__(162);
 
 // CONCATENATED MODULE: ./src/plugins/placeholder/placeholder.ts
 /*!
@@ -23916,7 +23974,7 @@ class redo_undo_redoUndo extends plugin_Plugin {
 }
 
 // EXTERNAL MODULE: ./src/plugins/resizer/resizer.less
-var resizer_resizer = __webpack_require__(164);
+var resizer_resizer = __webpack_require__(163);
 
 // CONCATENATED MODULE: ./src/plugins/resizer/resizer.ts
 /*!
@@ -24263,7 +24321,7 @@ Object(tslib_es6["a" /* __decorate */])([
 ], resizer_resizer_resizer.prototype, "hide", null);
 
 // EXTERNAL MODULE: ./src/plugins/search/search.less
-var search_search = __webpack_require__(165);
+var search_search = __webpack_require__(164);
 
 // CONCATENATED MODULE: ./src/plugins/search/search.ts
 /*!
@@ -24703,7 +24761,7 @@ class search_search_search extends plugin_Plugin {
 }
 
 // EXTERNAL MODULE: ./src/plugins/size/size.less
-var size = __webpack_require__(166);
+var size = __webpack_require__(165);
 
 // CONCATENATED MODULE: ./src/plugins/size/size.ts
 /*!
@@ -24872,7 +24930,7 @@ config["a" /* Config */].prototype.controls.source = {
 };
 
 // EXTERNAL MODULE: ./src/plugins/source/source.less
-var source_source = __webpack_require__(167);
+var source_source = __webpack_require__(166);
 
 // CONCATENATED MODULE: ./src/plugins/source/editor/sourceEditor.ts
 /*!
@@ -25562,7 +25620,7 @@ class stat_stat extends plugin_Plugin {
 }
 
 // EXTERNAL MODULE: ./src/plugins/sticky/sticky.less
-var sticky_sticky = __webpack_require__(168);
+var sticky_sticky = __webpack_require__(167);
 
 // CONCATENATED MODULE: ./src/plugins/sticky/sticky.ts
 /*!
@@ -25650,7 +25708,7 @@ class sticky_sticky_sticky extends plugin_Plugin {
 }
 
 // EXTERNAL MODULE: ./src/plugins/symbols/symbols.less
-var symbols_symbols = __webpack_require__(169);
+var symbols_symbols = __webpack_require__(168);
 
 // CONCATENATED MODULE: ./src/plugins/symbols/config.ts
 /*!
@@ -25956,7 +26014,7 @@ class symbols_symbols_symbols extends plugin_Plugin {
                 .on(chars, 'keydown', (e) => {
                 const target = e.target;
                 if (dom["a" /* Dom */].isTag(target, 'a')) {
-                    const index = parseInt(Object(utils["a" /* attr */])(target, '-index') || '0', 10), jIndex = parseInt(Object(utils["a" /* attr */])(target, 'data-index-j') || '0', 10);
+                    const index = parseInt(Object(utils["b" /* attr */])(target, '-index') || '0', 10), jIndex = parseInt(Object(utils["b" /* attr */])(target, 'data-index-j') || '0', 10);
                     let newIndex;
                     switch (e.key) {
                         case constants["KEY_UP"]:
@@ -26073,7 +26131,7 @@ config["a" /* Config */].prototype.controls.table = {
                 return;
             }
             const k = index === undefined || isNaN(index)
-                ? parseInt(Object(utils["a" /* attr */])(dv, '-index') || '0', 10)
+                ? parseInt(Object(utils["b" /* attr */])(dv, '-index') || '0', 10)
                 : index || 0;
             const rows_count = Math.ceil((k + 1) / default_cols_count), cols_count = (k % default_cols_count) + 1;
             for (let i = 0; i < cells.length; i += 1) {
@@ -26097,7 +26155,7 @@ config["a" /* Config */].prototype.controls.table = {
             if (!dom["a" /* Dom */].isTag(dv, 'span')) {
                 return;
             }
-            const k = parseInt(Object(utils["a" /* attr */])(dv, '-index') || '0', 10);
+            const k = parseInt(Object(utils["b" /* attr */])(dv, '-index') || '0', 10);
             const rows_count = Math.ceil((k + 1) / default_cols_count), cols_count = (k % default_cols_count) + 1;
             const crt = editor.createInside, tbody = crt.element('tbody'), table = crt.element('table');
             table.appendChild(tbody);
@@ -26160,7 +26218,7 @@ config["a" /* Config */].prototype.controls.table = {
 };
 
 // EXTERNAL MODULE: ./src/plugins/table/table.less
-var table_table = __webpack_require__(170);
+var table_table = __webpack_require__(169);
 
 // CONCATENATED MODULE: ./src/plugins/table/resize-cells.ts
 /*!
@@ -26784,7 +26842,7 @@ function tableKeyboardNavigation(editor) {
 
 
 // EXTERNAL MODULE: ./src/plugins/tooltip/tooltip.less
-var tooltip_tooltip = __webpack_require__(171);
+var tooltip_tooltip = __webpack_require__(170);
 
 // CONCATENATED MODULE: ./src/plugins/tooltip/tooltip.ts
 /*!
@@ -27035,7 +27093,7 @@ config["a" /* Config */].prototype.controls.preview = {
 
 
 // EXTERNAL MODULE: ./src/plugins/xpath/xpath.less
-var xpath_xpath = __webpack_require__(172);
+var xpath_xpath = __webpack_require__(171);
 
 // CONCATENATED MODULE: ./src/plugins/xpath/xpath.ts
 /*!
@@ -27242,244 +27300,244 @@ class xpath_xpath_xpath extends plugin_Plugin {
 
 
 // EXTERNAL MODULE: ./src/styles/icons/about.svg
-var icons_about = __webpack_require__(31);
+var icons_about = __webpack_require__(30);
 
 // EXTERNAL MODULE: ./src/styles/icons/addcolumn.svg
-var addcolumn = __webpack_require__(32);
+var addcolumn = __webpack_require__(31);
 
 // EXTERNAL MODULE: ./src/styles/icons/addrow.svg
-var addrow = __webpack_require__(33);
+var addrow = __webpack_require__(32);
 
 // EXTERNAL MODULE: ./src/styles/icons/angle-down.svg
-var angle_down = __webpack_require__(34);
+var angle_down = __webpack_require__(33);
 
 // EXTERNAL MODULE: ./src/styles/icons/angle-left.svg
-var angle_left = __webpack_require__(35);
+var angle_left = __webpack_require__(34);
 
 // EXTERNAL MODULE: ./src/styles/icons/angle-right.svg
-var angle_right = __webpack_require__(36);
+var angle_right = __webpack_require__(35);
 
 // EXTERNAL MODULE: ./src/styles/icons/angle-up.svg
-var angle_up = __webpack_require__(37);
+var angle_up = __webpack_require__(36);
 
 // EXTERNAL MODULE: ./src/styles/icons/arrows-alt.svg
-var arrows_alt = __webpack_require__(38);
+var arrows_alt = __webpack_require__(37);
 
 // EXTERNAL MODULE: ./src/styles/icons/arrows-h.svg
-var arrows_h = __webpack_require__(39);
+var arrows_h = __webpack_require__(38);
 
 // EXTERNAL MODULE: ./src/styles/icons/attachment.svg
-var attachment = __webpack_require__(40);
+var attachment = __webpack_require__(39);
 
 // EXTERNAL MODULE: ./src/styles/icons/bin.svg
-var bin = __webpack_require__(41);
+var bin = __webpack_require__(40);
 
 // EXTERNAL MODULE: ./src/styles/icons/bold.svg
-var icons_bold = __webpack_require__(42);
+var icons_bold = __webpack_require__(41);
 
 // EXTERNAL MODULE: ./src/styles/icons/brush.svg
-var brush = __webpack_require__(43);
+var brush = __webpack_require__(42);
 
 // EXTERNAL MODULE: ./src/styles/icons/cancel.svg
-var icons_cancel = __webpack_require__(44);
+var icons_cancel = __webpack_require__(43);
 
 // EXTERNAL MODULE: ./src/styles/icons/center.svg
-var center = __webpack_require__(45);
+var center = __webpack_require__(44);
 
 // EXTERNAL MODULE: ./src/styles/icons/chain-broken.svg
-var chain_broken = __webpack_require__(46);
+var chain_broken = __webpack_require__(45);
 
 // EXTERNAL MODULE: ./src/styles/icons/check.svg
-var icons_check = __webpack_require__(47);
+var icons_check = __webpack_require__(46);
 
 // EXTERNAL MODULE: ./src/styles/icons/check-square.svg
-var check_square = __webpack_require__(48);
+var check_square = __webpack_require__(47);
 
 // EXTERNAL MODULE: ./src/styles/icons/chevron.svg
-var chevron = __webpack_require__(49);
+var chevron = __webpack_require__(48);
 
 // EXTERNAL MODULE: ./src/styles/icons/copyformat.svg
-var copyformat = __webpack_require__(50);
+var copyformat = __webpack_require__(49);
 
 // EXTERNAL MODULE: ./src/styles/icons/crop.svg
-var crop = __webpack_require__(51);
+var crop = __webpack_require__(50);
 
 // EXTERNAL MODULE: ./src/styles/icons/copy.svg
-var copy = __webpack_require__(52);
+var copy = __webpack_require__(51);
 
 // EXTERNAL MODULE: ./src/styles/icons/cut.svg
-var cut = __webpack_require__(53);
+var cut = __webpack_require__(52);
 
 // EXTERNAL MODULE: ./src/styles/icons/dedent.svg
-var dedent = __webpack_require__(54);
+var dedent = __webpack_require__(53);
 
 // EXTERNAL MODULE: ./src/styles/icons/dots.svg
-var dots = __webpack_require__(55);
+var dots = __webpack_require__(54);
 
 // EXTERNAL MODULE: ./src/styles/icons/enter.svg
-var icons_enter = __webpack_require__(56);
+var icons_enter = __webpack_require__(55);
 
 // EXTERNAL MODULE: ./src/styles/icons/eraser.svg
-var eraser = __webpack_require__(57);
+var eraser = __webpack_require__(56);
 
 // EXTERNAL MODULE: ./src/styles/icons/eye.svg
-var eye = __webpack_require__(58);
+var eye = __webpack_require__(57);
 
 // EXTERNAL MODULE: ./src/styles/icons/file.svg
-var icons_file = __webpack_require__(59);
+var icons_file = __webpack_require__(58);
 
 // EXTERNAL MODULE: ./src/styles/icons/folder.svg
-var icons_folder = __webpack_require__(60);
+var folder = __webpack_require__(59);
 
 // EXTERNAL MODULE: ./src/styles/icons/font.svg
-var icons_font = __webpack_require__(61);
+var icons_font = __webpack_require__(60);
 
 // EXTERNAL MODULE: ./src/styles/icons/fontsize.svg
-var fontsize = __webpack_require__(62);
+var fontsize = __webpack_require__(61);
 
 // EXTERNAL MODULE: ./src/styles/icons/fullsize.svg
-var icons_fullsize = __webpack_require__(63);
+var icons_fullsize = __webpack_require__(62);
 
 // EXTERNAL MODULE: ./src/styles/icons/hr.svg
-var icons_hr = __webpack_require__(64);
+var icons_hr = __webpack_require__(63);
 
 // EXTERNAL MODULE: ./src/styles/icons/image.svg
-var icons_image = __webpack_require__(65);
+var icons_image = __webpack_require__(64);
 
 // EXTERNAL MODULE: ./src/styles/icons/indent.svg
-var icons_indent = __webpack_require__(66);
+var icons_indent = __webpack_require__(65);
 
 // EXTERNAL MODULE: ./src/styles/icons/info-circle.svg
-var info_circle = __webpack_require__(67);
+var info_circle = __webpack_require__(66);
 
 // EXTERNAL MODULE: ./src/styles/icons/italic.svg
-var italic = __webpack_require__(68);
+var italic = __webpack_require__(67);
 
 // EXTERNAL MODULE: ./src/styles/icons/justify.svg
-var icons_justify = __webpack_require__(69);
+var icons_justify = __webpack_require__(68);
 
 // EXTERNAL MODULE: ./src/styles/icons/left.svg
-var icons_left = __webpack_require__(70);
+var icons_left = __webpack_require__(69);
 
 // EXTERNAL MODULE: ./src/styles/icons/link.svg
-var icons_link = __webpack_require__(71);
+var icons_link = __webpack_require__(70);
 
 // EXTERNAL MODULE: ./src/styles/icons/lock.svg
-var lock = __webpack_require__(72);
+var lock = __webpack_require__(71);
 
 // EXTERNAL MODULE: ./src/styles/icons/menu.svg
-var icons_menu = __webpack_require__(73);
+var icons_menu = __webpack_require__(72);
 
 // EXTERNAL MODULE: ./src/styles/icons/merge.svg
-var merge = __webpack_require__(74);
+var merge = __webpack_require__(73);
 
 // EXTERNAL MODULE: ./src/styles/icons/ok.svg
-var ok = __webpack_require__(75);
+var ok = __webpack_require__(74);
 
 // EXTERNAL MODULE: ./src/styles/icons/ol.svg
-var ol = __webpack_require__(76);
+var ol = __webpack_require__(75);
 
 // EXTERNAL MODULE: ./src/styles/icons/omega.svg
-var omega = __webpack_require__(77);
+var omega = __webpack_require__(76);
 
 // EXTERNAL MODULE: ./src/styles/icons/outdent.svg
-var outdent = __webpack_require__(78);
+var outdent = __webpack_require__(77);
 
 // EXTERNAL MODULE: ./src/styles/icons/palette.svg
-var palette = __webpack_require__(79);
+var palette = __webpack_require__(78);
 
 // EXTERNAL MODULE: ./src/styles/icons/paragraph.svg
-var paragraph = __webpack_require__(80);
+var paragraph = __webpack_require__(79);
 
 // EXTERNAL MODULE: ./src/styles/icons/paste.svg
-var icons_paste = __webpack_require__(81);
+var icons_paste = __webpack_require__(80);
 
 // EXTERNAL MODULE: ./src/styles/icons/pencil.svg
-var pencil = __webpack_require__(82);
+var pencil = __webpack_require__(81);
 
 // EXTERNAL MODULE: ./src/styles/icons/plus.svg
-var plus = __webpack_require__(83);
+var plus = __webpack_require__(82);
 
 // EXTERNAL MODULE: ./src/styles/icons/print.svg
-var print = __webpack_require__(84);
+var print = __webpack_require__(83);
 
 // EXTERNAL MODULE: ./src/styles/icons/redo.svg
-var redo = __webpack_require__(85);
+var redo = __webpack_require__(84);
 
 // EXTERNAL MODULE: ./src/styles/icons/resize.svg
-var icons_resize = __webpack_require__(86);
+var icons_resize = __webpack_require__(85);
 
 // EXTERNAL MODULE: ./src/styles/icons/resizer.svg
-var icons_resizer = __webpack_require__(87);
+var icons_resizer = __webpack_require__(86);
 
 // EXTERNAL MODULE: ./src/styles/icons/right.svg
-var icons_right = __webpack_require__(88);
+var icons_right = __webpack_require__(87);
 
 // EXTERNAL MODULE: ./src/styles/icons/save.svg
-var icons_save = __webpack_require__(89);
+var icons_save = __webpack_require__(88);
 
 // EXTERNAL MODULE: ./src/styles/icons/search.svg
-var icons_search = __webpack_require__(90);
+var icons_search = __webpack_require__(89);
 
 // EXTERNAL MODULE: ./src/styles/icons/select-all.svg
-var select_all = __webpack_require__(91);
+var select_all = __webpack_require__(90);
 
 // EXTERNAL MODULE: ./src/styles/icons/shrink.svg
-var shrink = __webpack_require__(92);
+var shrink = __webpack_require__(91);
 
 // EXTERNAL MODULE: ./src/styles/icons/source.svg
-var icons_source = __webpack_require__(93);
+var icons_source = __webpack_require__(92);
 
 // EXTERNAL MODULE: ./src/styles/icons/splitg.svg
-var splitg = __webpack_require__(94);
+var splitg = __webpack_require__(93);
 
 // EXTERNAL MODULE: ./src/styles/icons/splitv.svg
-var splitv = __webpack_require__(95);
+var splitv = __webpack_require__(94);
 
 // EXTERNAL MODULE: ./src/styles/icons/strikethrough.svg
-var strikethrough = __webpack_require__(96);
+var strikethrough = __webpack_require__(95);
 
 // EXTERNAL MODULE: ./src/styles/icons/subscript.svg
-var subscript = __webpack_require__(97);
+var subscript = __webpack_require__(96);
 
 // EXTERNAL MODULE: ./src/styles/icons/superscript.svg
-var superscript = __webpack_require__(98);
+var superscript = __webpack_require__(97);
 
 // EXTERNAL MODULE: ./src/styles/icons/table.svg
-var icons_table = __webpack_require__(99);
+var icons_table = __webpack_require__(98);
 
 // EXTERNAL MODULE: ./src/styles/icons/th.svg
-var th = __webpack_require__(100);
+var th = __webpack_require__(99);
 
 // EXTERNAL MODULE: ./src/styles/icons/th-list.svg
-var th_list = __webpack_require__(101);
+var th_list = __webpack_require__(100);
 
 // EXTERNAL MODULE: ./src/styles/icons/ul.svg
-var icons_ul = __webpack_require__(102);
+var icons_ul = __webpack_require__(101);
 
 // EXTERNAL MODULE: ./src/styles/icons/underline.svg
-var underline = __webpack_require__(103);
+var underline = __webpack_require__(102);
 
 // EXTERNAL MODULE: ./src/styles/icons/undo.svg
-var undo = __webpack_require__(104);
+var undo = __webpack_require__(103);
 
 // EXTERNAL MODULE: ./src/styles/icons/unlink.svg
-var icons_unlink = __webpack_require__(105);
+var icons_unlink = __webpack_require__(104);
 
 // EXTERNAL MODULE: ./src/styles/icons/unlock.svg
-var unlock = __webpack_require__(106);
+var unlock = __webpack_require__(105);
 
 // EXTERNAL MODULE: ./src/styles/icons/update.svg
-var icons_update = __webpack_require__(107);
+var icons_update = __webpack_require__(106);
 
 // EXTERNAL MODULE: ./src/styles/icons/upload.svg
-var upload = __webpack_require__(108);
+var upload = __webpack_require__(107);
 
 // EXTERNAL MODULE: ./src/styles/icons/valign.svg
-var valign = __webpack_require__(109);
+var valign = __webpack_require__(108);
 
 // EXTERNAL MODULE: ./src/styles/icons/video.svg
-var video = __webpack_require__(110);
+var video = __webpack_require__(109);
 
 // CONCATENATED MODULE: ./src/styles/icons/index.ts
 /*!
@@ -27577,25 +27635,26 @@ var video = __webpack_require__(110);
  */
 
 function keepModuleNames(modules) {
-    utils["g" /* keepNames */].set(modules.UIButton, 'UIButton');
-    utils["g" /* keepNames */].set(modules.UIElement, 'UIElement');
-    utils["g" /* keepNames */].set(modules.UISeparator, 'UISeparator');
-    utils["g" /* keepNames */].set(modules.UIList, 'UIList');
-    utils["g" /* keepNames */].set(modules.UIGroup, 'UIGroup');
-    utils["g" /* keepNames */].set(modules.UIForm, 'UIForm');
-    utils["g" /* keepNames */].set(modules.UIInput, 'UIInput');
-    utils["g" /* keepNames */].set(modules.UITextArea, 'UITextArea');
-    utils["g" /* keepNames */].set(modules.UIBlock, 'UIBlock');
-    utils["g" /* keepNames */].set(modules.Popup, 'Popup');
-    utils["g" /* keepNames */].set(modules.ContextMenu, 'ContextMenu');
-    utils["g" /* keepNames */].set(modules.ToolbarButton, 'ToolbarButton');
-    utils["g" /* keepNames */].set(modules.ToolbarContent, 'ToolbarContent');
-    utils["g" /* keepNames */].set(modules.ToolbarCollection, 'ToolbarCollection');
-    utils["g" /* keepNames */].set(modules.ToolbarEditorCollection, 'ToolbarEditorCollection');
-    utils["g" /* keepNames */].set(modules.Component, 'Component');
-    utils["g" /* keepNames */].set(modules.Table, 'Table');
-    utils["g" /* keepNames */].set(modules.Uploader, 'Uploader');
-    utils["g" /* keepNames */].set(modules.FileBrowser, 'FileBrowser');
+    utils["h" /* keepNames */].set(modules.UIButton, 'UIButton');
+    utils["h" /* keepNames */].set(modules.UIElement, 'UIElement');
+    utils["h" /* keepNames */].set(modules.UISeparator, 'UISeparator');
+    utils["h" /* keepNames */].set(modules.UIList, 'UIList');
+    utils["h" /* keepNames */].set(modules.UIGroup, 'UIGroup');
+    utils["h" /* keepNames */].set(modules.UIForm, 'UIForm');
+    utils["h" /* keepNames */].set(modules.UIInput, 'UIInput');
+    utils["h" /* keepNames */].set(modules.UITextArea, 'UITextArea');
+    utils["h" /* keepNames */].set(modules.UICheckbox, 'UICheckbox');
+    utils["h" /* keepNames */].set(modules.UIBlock, 'UIBlock');
+    utils["h" /* keepNames */].set(modules.Popup, 'Popup');
+    utils["h" /* keepNames */].set(modules.ContextMenu, 'ContextMenu');
+    utils["h" /* keepNames */].set(modules.ToolbarButton, 'ToolbarButton');
+    utils["h" /* keepNames */].set(modules.ToolbarContent, 'ToolbarContent');
+    utils["h" /* keepNames */].set(modules.ToolbarCollection, 'ToolbarCollection');
+    utils["h" /* keepNames */].set(modules.ToolbarEditorCollection, 'ToolbarEditorCollection');
+    utils["h" /* keepNames */].set(modules.Component, 'Component');
+    utils["h" /* keepNames */].set(modules.Table, 'Table');
+    utils["h" /* keepNames */].set(modules.Uploader, 'Uploader');
+    utils["h" /* keepNames */].set(modules.FileBrowser, 'FileBrowser');
 }
 
 // CONCATENATED MODULE: ./src/index.ts
