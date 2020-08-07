@@ -38,14 +38,14 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 	const isProd = mode === 'production';
 	const uglify = !debug && argv && Boolean(argv.uglify);
 
-	const ES = argv && ['es5', 'es2018'].includes(argv.es) ? argv.es : 'es2018';
+	const ES = argv && ['es2015', 'es2018'].includes(argv.es) ? argv.es : 'es2018';
 	const ESNext = ES === 'es2018';
 
 	console.warn('ES mode: ' + ES);
 
 	const filename = name =>
 		name +
-		(ES === 'es5' || isTest ? '' : '.' + ES) +
+		(ES === 'es2015' || isTest ? '' : '.' + ES) +
 		(uglify ? '.min' : '');
 
 	const css_loaders = [

@@ -31,6 +31,8 @@ export const UIButtonState = (): IUIButtonState => ({
 	disabled: false,
 	activated: false,
 
+	data: {},
+
 	icon: {
 		name: 'empty',
 		fill: '',

@@ -6,7 +6,7 @@
 
 const path = require('path');
 const webpack = require(path.resolve(process.cwd(), './webpack.config'));
-const webpackConfig = (es = 'es5') =>
+const webpackConfig = (es = 'es2015') =>
 	webpack([], {
 		mode: 'production',
 		isTest: true,

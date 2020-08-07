@@ -76,6 +76,7 @@ function mockAjax() {
 						break;
 					}
 
+					case 'folderRemove':
 					case 'folderRename': {
 						temp.folderName = ajax.options.data.newname;
 						resolve({
@@ -497,6 +498,9 @@ function sortStyles(matches) {
 				keyValue[1] = keyValue[1]
 					.split(',')
 					.map(Jodit.modules.Helpers.trim)
+					.map(function (value) {
+						return value.replace(/['"]/g, '');
+					})
 					.join(',');
 			}
 

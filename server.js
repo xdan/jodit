@@ -25,7 +25,7 @@ process.argv.filter(a => reg.test(a)).forEach((c) => {
 // gulptasks.watch();
 
 const config = require(path.resolve(cwd, './webpack.config'))([], {
-	es: 'es5',
+	es: 'es2015',
 	isTest: true
 }, cwd);
 

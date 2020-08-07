@@ -36,6 +36,10 @@ export class clipboard implements IPlugin {
 				}
 
 				editor.buffer.set(pluginKey, selectedText);
+				editor.e.fire('pasteStack', {
+					html: selectedText,
+					action: editor.o.defaultActionOnPaste
+				});
 
 				if (event.type === 'cut') {
 					editor.s.remove();

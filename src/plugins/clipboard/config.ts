@@ -11,7 +11,7 @@ import {
 	INSERT_AS_TEXT
 } from '../../core/constants';
 import { IControlType, IJodit } from '../../types';
-import { pluginKey as clipboardPluginKey } from './cut';
+import { pluginKey as clipboardPluginKey } from './clipboard';
 import { Alert } from '../../modules/dialog';
 import { pasteInsertHtml } from './paste/helpers';
 
@@ -118,7 +118,7 @@ Config.prototype.controls.paste = {
 		}
 
 		if (text) {
-			pasteInsertHtml(editor, text);
+			pasteInsertHtml(null, editor, text);
 		} else {
 			if (error) {
 				Alert(

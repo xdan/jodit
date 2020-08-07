@@ -61,6 +61,10 @@
 			stroke: @color_active;
 		}
 	}
+
+	&:focus:not([disabled]) {
+		outline: 1px dashed @background_active;
+	}
 }
 
 .jodit-box() {
