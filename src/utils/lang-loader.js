@@ -17,7 +17,7 @@ module.exports = function(source) {
 	try {
 		const transpile = ts.transpileModule(source, {
 			compilerOptions: {
-				module: ts.ModuleKind.ES2015
+				module: ts.ModuleKind.es5
 			}
 		});
 

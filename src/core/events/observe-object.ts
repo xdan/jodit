@@ -6,23 +6,29 @@
 
 import { CallbackFunction, IDictionary } from '../../types';
 import { isPlainObject, isFastEqual, isArray } from '../helpers';
+import { nonenumerable } from '../decorators';
 
 export class ObserveObject {
-	#data!: IDictionary;
-	#prefix!: string[];
-	#onEvents!: IDictionary<CallbackFunction[]>;
+	@nonenumerable
+	private data!: IDictionary;
+
+	@nonenumerable
+	private prefix!: string[];
+
+	@nonenumerable
+	private onEvents!: IDictionary<CallbackFunction[]>;
 
 	protected constructor(
 		data: IDictionary,
 		prefix: string[] = [],
 		onEvents: IDictionary<CallbackFunction[]> = {}
 	) {
-		this.#data = data;
-		this.#prefix = prefix;
-		this.#onEvents = onEvents;
+		this.data = data;
+		this.prefix = prefix;
+		this.onEvents = onEvents;
 
 		Object.keys(data).forEach(key => {
-			const prefix = this.#prefix.concat(key).filter(a => a.length);
+			const prefix = this.prefix.concat(key).filter(a => a.length);
 
 			Object.defineProperty(this, key, {
 				set: value => {
@@ -42,7 +48,7 @@ export class ObserveObject {
 							value = new ObserveObject(
 								value,
 								prefix,
-								this.#onEvents
+								this.onEvents
 							);
 						}
 
@@ -68,17 +74,18 @@ export class ObserveObject {
 				get: () => {
 					return data[key];
 				},
-				enumerable: true
+				enumerable: true,
+				configurable: true
 			});
 
 			if (isPlainObject(data[key])) {
-				data[key] = new ObserveObject(data[key], prefix, this.#onEvents);
+				data[key] = new ObserveObject(data[key], prefix, this.onEvents);
 			}
 		});
 	}
 
 	valueOf(): any {
-		return this.#data;
+		return this.data;
 	}
 
 	toString(): string {
@@ -96,16 +103,17 @@ export class ObserveObject {
 			return this;
 		}
 
-		if (!this.#onEvents[event]) {
-			this.#onEvents[event] = [];
+		if (!this.onEvents[event]) {
+			this.onEvents[event] = [];
 		}
 
-		this.#onEvents[event].push(callback);
+		this.onEvents[event].push(callback);
 
 		return this;
 	}
 
-	#__lockEvent: IDictionary<boolean> = {};
+	@nonenumerable
+	private __lockEvent: IDictionary<boolean> = {};
 
 	fire(event: string | string[], ...attr: any[]): void {
 		if (isArray(event)) {
@@ -114,12 +122,12 @@ export class ObserveObject {
 		}
 
 		try {
-			if (!this.#__lockEvent[event] && this.#onEvents[event]) {
-				this.#__lockEvent[event] = true;
-				this.#onEvents[event].forEach(clb => clb.call(this, ...attr));
+			if (!this.__lockEvent[event] && this.onEvents[event]) {
+				this.__lockEvent[event] = true;
+				this.onEvents[event].forEach(clb => clb.call(this, ...attr));
 			}
 		} finally {
-			this.#__lockEvent[event] = false;
+			this.__lockEvent[event] = false;
 		}
 	}
 

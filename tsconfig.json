@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "es2015",
+		"target": "es5",
 		"moduleResolution": "node",
 
 		"removeComments": true,
@@ -25,7 +25,7 @@
 
 		"importHelpers": true,
 
-		"lib": ["es2015", "esnext", "dom", "scripthost"]
+		"lib": ["es5", "esnext", "dom", "scripthost"]
 	},
 	"exclude": ["build"]
 }

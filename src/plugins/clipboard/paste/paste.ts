@@ -68,18 +68,19 @@ export class paste extends Plugin {
 	 */
 	@autobind
 	private onPaste(e: PasteEvent): void | false {
-		if (
-			this.j.e.fire('beforePaste', e) === false ||
-			this.customPasteProcess(e) === false
-		) {
-			e.preventDefault();
-			return false;
-		}
+		try {
+			if (
+				this.j.e.fire('beforePaste', e) === false ||
+				this.customPasteProcess(e) === false
+			) {
+				e.preventDefault();
+				return false;
+			}
 
-		this.defaultPasteProcess(e);
+			this.defaultPasteProcess(e);
 
-		if (this.j.e.fire('afterPaste', e) === false) {
-			return false;
+		} finally {
+			this.j.e.fire('afterPaste', e);
 		}
 	}
 

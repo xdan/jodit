@@ -44,6 +44,8 @@ export class pasteStorage extends Plugin {
 
 		this.dialog && this.dialog.close();
 		this.j.setEditorValue();
+
+		this.j.e.fire('afterPaste');
 	};
 
 	private onKeyDown = (e: KeyboardEvent) => {

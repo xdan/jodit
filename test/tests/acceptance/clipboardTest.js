@@ -30,7 +30,7 @@ describe('Clipboard text', function() {
 			expect(dialog).is.not.null;
 		});
 
-		describe('Double times', function() {
+		describe('Two times times', function() {
 			it('Should not show dialog', function() {
 				const editor = getJodit({
 					defaultActionOnPaste: Jodit.INSERT_AS_HTML
@@ -59,6 +59,36 @@ describe('Clipboard text', function() {
 				simulateEvent('paste', editor.editor, emulatePasteEvent);
 
 				expect(getOpenedDialog(editor)).is.null;
+			});
+
+			it('Should fire afterPaste two times', function() {
+				const editor = getJodit({
+					defaultActionOnPaste: Jodit.INSERT_AS_HTML
+				});
+
+				let counter = 0;
+				editor.e.on('afterPaste', function () {
+					counter += 1;
+				});
+
+				const pastedText = '<p>test</p>';
+
+				const emulatePasteEvent = function(data) {
+					data.clipboardData = {
+						types: ['text/html'],
+						getData: function() {
+							return pastedText;
+						}
+					};
+				};
+
+				simulateEvent('paste', editor.editor, emulatePasteEvent);
+				const dialog = getOpenedDialog(editor);
+				clickButton('keep', dialog);
+
+				simulateEvent('paste', editor.editor, emulatePasteEvent);
+
+				expect(counter).equals(2);
 			});
 		});
 

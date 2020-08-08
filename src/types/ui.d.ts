@@ -50,8 +50,6 @@ export interface IUIButtonState {
 	disabled: boolean;
 	activated: boolean;
 
-	data: IDictionary;
-
 	icon: IUIIconState;
 
 	text: string;
@@ -65,7 +63,6 @@ export interface IUIButtonStatePartial {
 	size?: IUIButtonState['size'];
 	status?: IUIButtonState['status'];
 	type?: IUIButtonState['type'];
-	data?: IUIButtonState['data'];
 	disabled?: boolean;
 	activated?: boolean;
 	icon?: {

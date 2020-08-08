@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Test object observer', function() {
+describe('Test object observer', function () {
 	function getTestObject() {
 		return {
 			editable: true,
@@ -22,7 +22,7 @@ describe('Test object observer', function() {
 	const stringify = Jodit.modules.Helpers.stringify;
 	const isEqual = Jodit.modules.Helpers.isEqual;
 
-	const A = function(result, keyA, keyB) {
+	const A = function (result, keyA, keyB) {
 		function A() {
 			this.setStatus('ready');
 		}
@@ -33,15 +33,15 @@ describe('Test object observer', function() {
 		__.prototype = Jodit.modules.Component.prototype;
 		A.prototype = new __();
 
-		A.prototype.methodA = function() {
+		A.prototype.methodA = function () {
 			result.push(['A', get(keyA, this)]);
 		};
 
-		A.prototype.methodB = function() {
+		A.prototype.methodB = function () {
 			result.push(['B', get(keyB || keyA, this)]);
 		};
 
-		A.prototype.methodC = function(key, oldValue, newValue) {
+		A.prototype.methodC = function (key, oldValue, newValue) {
 			result.push(['C', oldValue, newValue]);
 		};
 
@@ -50,8 +50,8 @@ describe('Test object observer', function() {
 		return A;
 	};
 
-	describe('Test watch decorator', function() {
-		it('Should add watcher to whole field object', function() {
+	describe('Test watch decorator', function () {
+		it('Should add watcher to whole field object', function () {
 			const result = [],
 				AClass = A(result, 'state.editable');
 
@@ -73,7 +73,7 @@ describe('Test object observer', function() {
 			]);
 		});
 
-		it('Should add watcher to some field in Component', function() {
+		it('Should add watcher to some field in Component', function () {
 			const result = [],
 				AClass = A(result, 'state.some.element.enable');
 
@@ -93,9 +93,9 @@ describe('Test object observer', function() {
 			]);
 		});
 
-		describe('Add several watchers', function() {
-			describe('on same fields', function() {
-				it('Should call all handlers', function() {
+		describe('Add several watchers', function () {
+			describe('on same fields', function () {
+				it('Should call all handlers', function () {
 					const result = [],
 						AClass = A(result, 'state.some.element.enable');
 
@@ -123,8 +123,8 @@ describe('Test object observer', function() {
 				});
 			});
 
-			describe('on different fields', function() {
-				it('Should call only matched handlers', function() {
+			describe('on different fields', function () {
+				it('Should call only matched handlers', function () {
 					const result = [],
 						AClass = A(
 							result,
@@ -157,8 +157,8 @@ describe('Test object observer', function() {
 			});
 		});
 
-		describe('On change field', function() {
-			it('Should fire change all parent field', function() {
+		describe('On change field', function () {
+			it('Should fire change all parent field', function () {
 				const result = [],
 					AClass = A(result, 'state.some.element.one');
 
@@ -178,7 +178,7 @@ describe('Test object observer', function() {
 					['A', 15]
 				]);
 			});
-			it('Should add in handler - old value as first argument', function() {
+			it('Should add in handler - old value as first argument', function () {
 				const result = [],
 					AClass = A(result, 'state.some.element.one');
 
@@ -200,8 +200,8 @@ describe('Test object observer', function() {
 		});
 	});
 
-	describe('Test safe stringify', function() {
-		it('Should safe stringify any circular object to string', function() {
+	describe('Test safe stringify', function () {
+		it('Should safe stringify any circular object to string', function () {
 			const a = {},
 				b = getTestObject();
 
@@ -218,10 +218,20 @@ describe('Test object observer', function() {
 		});
 	});
 
-	describe('Test equal checker', function() {
-		describe('Two object', function() {
-			describe('Check one object', function() {
-				it('Should check that is one object', function() {
+	describe('Test object properties', function () {
+		describe('Observed object', function () {
+			it('Should has only own object properties', function () {
+				const a = { a: 1, b: 2 };
+				const observed = Jodit.modules.ObserveObject.create(a);
+				expect(Object.keys(observed)).deep.equals(Object.keys(a));
+			});
+		});
+	});
+
+	describe('Test equal checker', function () {
+		describe('Two object', function () {
+			describe('Check one object', function () {
+				it('Should check that is one object', function () {
 					const a = {},
 						b = [];
 
@@ -231,21 +241,21 @@ describe('Test object observer', function() {
 				});
 			});
 
-			describe('Check scalar value', function() {
-				it('Should check normal', function() {
+			describe('Check scalar value', function () {
+				it('Should check normal', function () {
 					expect(
 						isEqual(
-							function() {},
-							function() {}
+							function () {},
+							function () {}
 						)
 					).is.true;
 
 					expect(
 						isEqual(
-							function() {
+							function () {
 								return 1;
 							},
-							function() {}
+							function () {}
 						)
 					).is.false;
 
@@ -257,8 +267,8 @@ describe('Test object observer', function() {
 				});
 			});
 
-			describe('Check array', function() {
-				it('Should deep check', function() {
+			describe('Check array', function () {
+				it('Should deep check', function () {
 					expect(isEqual([1], [1])).is.true;
 					expect(isEqual([1], [2])).is.false;
 					expect(isEqual(['test'], ['test'])).is.true;
@@ -266,8 +276,8 @@ describe('Test object observer', function() {
 				});
 			});
 
-			describe('Check ref object', function() {
-				it('Should deep check and add instead ref some const', function() {
+			describe('Check ref object', function () {
+				it('Should deep check and add instead ref some const', function () {
 					const a = getTestObject(),
 						b = getTestObject();
 
@@ -289,13 +299,13 @@ describe('Test object observer', function() {
 		});
 	});
 
-	describe('Event on change', function() {
-		it('Should fire event when field value was changed', function() {
+	describe('Event on change', function () {
+		it('Should fire event when field value was changed', function () {
 			const counter = [];
 
 			const data = Jodit.modules.ObserveObject.create(getTestObject());
 
-			data.on('change', function(key) {
+			data.on('change', function (key) {
 				counter.push(key);
 			});
 
@@ -308,15 +318,15 @@ describe('Test object observer', function() {
 			expect(counter).to.deep.equal(['editable', 'some.element.one']);
 		});
 
-		describe('Key change event', function() {
-			it('Should fire event.key when field value was changed', function() {
+		describe('Key change event', function () {
+			it('Should fire event.key when field value was changed', function () {
 				const counter = [];
 
 				const data = Jodit.modules.ObserveObject.create(
 					getTestObject()
 				);
 
-				data.on('change.some.element.one', function(key) {
+				data.on('change.some.element.one', function (key) {
 					counter.push(key);
 				});
 
@@ -329,36 +339,44 @@ describe('Test object observer', function() {
 				expect(counter).to.deep.equal(['some.element.one']);
 			});
 
-			it('Should fire event with old and new Value', function() {
+			it('Should fire event with old and new Value', function () {
 				const counter = [];
 
 				const data = Jodit.modules.ObserveObject.create(
 					getTestObject()
 				);
 
-				data.on('change.some.element.one', function(key, oldValue, newValue) {
+				data.on('change.some.element.one', function (
+					key,
+					oldValue,
+					newValue
+				) {
 					counter.push(key, oldValue, newValue);
 				});
-
 
 				data.some.element.one = 2;
 				data.some.element.one = 3;
 
 				expect(counter).to.deep.equal([
-					'some.element.one', 1, 2,
-					'some.element.one', 2, 3
+					'some.element.one',
+					1,
+					2,
+					'some.element.one',
+					2,
+					3
 				]);
 			});
 		});
 
-		describe('Change watched property', function() {
-			it('Should fire handler', function() {
-				const counter = [], obj = {
-					mode: 'top',
-					methodA: function () {
-						counter.push(obj.mode);
-					}
-				};
+		describe('Change watched property', function () {
+			it('Should fire handler', function () {
+				const counter = [],
+					obj = {
+						mode: 'top',
+						methodA: function () {
+							counter.push(obj.mode);
+						}
+					};
 
 				Jodit.decorators.watch('mode')(obj, 'methodA');
 
@@ -369,21 +387,19 @@ describe('Test object observer', function() {
 				expect(obj.mode).equals('left');
 				expect(obj.mode).equals('left');
 
-				expect(counter).to.deep.equal([
-					'left'
-				]);
+				expect(counter).to.deep.equal(['left']);
 			});
 		});
 
-		describe('Change whole branch', function() {
-			it('Should fire event.key when field value was changed', function() {
+		describe('Change whole branch', function () {
+			it('Should fire event.key when field value was changed', function () {
 				const counter = [];
 
 				const data = Jodit.modules.ObserveObject.create(
 					getTestObject()
 				);
 
-				data.on(['change.some.element.test', 'change.some'], function(
+				data.on(['change.some.element.test', 'change.some'], function (
 					key
 				) {
 					counter.push(key);

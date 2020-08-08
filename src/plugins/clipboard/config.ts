@@ -8,12 +8,13 @@ import {
 	INSERT_AS_HTML,
 	INSERT_CLEAR_HTML,
 	INSERT_ONLY_TEXT,
-	INSERT_AS_TEXT
+	INSERT_AS_TEXT,
+	TEXT_PLAIN
 } from '../../core/constants';
 import { IControlType, IJodit } from '../../types';
-import { pluginKey as clipboardPluginKey } from './clipboard';
 import { Alert } from '../../modules/dialog';
 import { pasteInsertHtml } from './paste/helpers';
+import { pluginKey as clipboardPluginKey } from './clipboard';
 
 export type PasteEvent = ClipboardEvent | DragEvent;
 export type InsertMode =
@@ -74,6 +75,7 @@ Config.prototype.controls.copy = {
 } as IControlType;
 
 const psKey = 'pasteStorage';
+
 Config.prototype.controls.paste = {
 	tooltip: 'Paste from clipboard',
 
@@ -88,37 +90,48 @@ Config.prototype.controls.paste = {
 		let text = '',
 			error = true;
 
-		if (error) {
-			text = editor.buffer.get<string>(clipboardPluginKey) || '';
-			error = text.length === 0;
-		}
-
-		if (error && navigator.clipboard) {
+		if (navigator.clipboard) {
 			try {
 				const items = await (navigator.clipboard as any).read();
 
 				if (items && items.length) {
-					const textBlob = await items[0].getType('text/plain');
+					const textBlob = await items[0].getType(TEXT_PLAIN);
 					text = await new Response(textBlob).text();
 				}
-			} catch {}
+
+				error = false;
+			} catch (e) {
+				if (!isProd) {
+					console.log(e);
+				}
+			}
 
 			if (error) {
 				try {
 					text = await navigator.clipboard.readText();
 					error = false;
-				} catch {}
+				} catch (e) {
+					if (!isProd) {
+						console.log(e);
+					}
+				}
 			}
 		}
 
 		if (error) {
-			const value = editor.value;
-			editor.ed.execCommand('paste');
-			error = value !== editor.value;
+			text = editor.buffer.get<string>(clipboardPluginKey) || '';
+			error = text.length === 0;
 		}
 
-		if (text) {
+		const value = editor.value;
+
+		if (error) {
+			editor.ed.execCommand('paste');
+			error = value === editor.value;
+			!error && editor.e.fire('afterPaste');
+		} else if (text.length) {
 			pasteInsertHtml(null, editor, text);
+			editor.e.fire('afterPaste');
 		} else {
 			if (error) {
 				Alert(
