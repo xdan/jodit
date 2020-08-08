@@ -121,7 +121,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 
 							pure_getters: true,
 							unsafe_comps: true,
-							passes: 3
+							passes: 5
 						},
 
 						output: {
