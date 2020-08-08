@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.18
+ * Version: v3.4.19
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -2915,8 +2915,8 @@ var tslib_es6 = __webpack_require__(4);
 // EXTERNAL MODULE: ./src/core/ui/list/group.less
 var list_group = __webpack_require__(115);
 
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 4 modules
-var decorators = __webpack_require__(14);
+// EXTERNAL MODULE: ./src/core/decorators/index.ts + 5 modules
+var decorators = __webpack_require__(13);
 
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 30 modules
 var helpers = __webpack_require__(0);
@@ -3135,7 +3135,7 @@ Object(tslib_es6["a" /* __decorate */])([
 ], list_UIList.prototype, "onChangeMode", null);
 
 // EXTERNAL MODULE: ./src/core/ui/form/index.ts + 7 modules
-var ui_form = __webpack_require__(13);
+var ui_form = __webpack_require__(14);
 
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
 var icon = __webpack_require__(29);
@@ -3593,7 +3593,6 @@ const UIButtonState = () => ({
     status: '',
     disabled: false,
     activated: false,
-    data: {},
     icon: {
         name: 'empty',
         fill: '',
@@ -3990,6 +3989,163 @@ const i18n = (key, params, options) => {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "getPropertyDescriptor", function() { return /* reexport */ watch["b" /* getPropertyDescriptor */]; });
+__webpack_require__.d(__webpack_exports__, "watch", function() { return /* reexport */ watch["c" /* watch */]; });
+__webpack_require__.d(__webpack_exports__, "debounce", function() { return /* reexport */ debounce; });
+__webpack_require__.d(__webpack_exports__, "cache", function() { return /* reexport */ cache; });
+__webpack_require__.d(__webpack_exports__, "wait", function() { return /* reexport */ wait; });
+__webpack_require__.d(__webpack_exports__, "hook", function() { return /* reexport */ hook; });
+__webpack_require__.d(__webpack_exports__, "nonenumerable", function() { return /* reexport */ nonenumerable; });
+
+// EXTERNAL MODULE: ./src/core/decorators/watch.ts
+var watch = __webpack_require__(16);
+
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 30 modules
+var helpers = __webpack_require__(0);
+
+// EXTERNAL MODULE: ./src/core/component/index.ts + 3 modules
+var core_component = __webpack_require__(9);
+
+// CONCATENATED MODULE: ./src/core/decorators/debounce.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function debounce(timeout) {
+    return (target, propertyKey) => {
+        if (!Object(helpers["isFunction"])(target[propertyKey])) {
+            throw Object(helpers["error"])('Handler must be a Function');
+        }
+        target.hookStatus(core_component["b" /* STATUSES */].ready, (component) => {
+            const view = Object(helpers["isViewObject"])(component) ? component : component.j;
+            component[propertyKey] = view.async.debounce(component[propertyKey].bind(component), (Object(helpers["isFunction"])(timeout) ? timeout(component) : timeout) ||
+                view.defaultTimeout);
+        });
+    };
+}
+
+// CONCATENATED MODULE: ./src/core/decorators/cache.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function cache(target, name, descriptor) {
+    const getter = descriptor.get;
+    if (!getter) {
+        throw Object(helpers["error"])('Getter property descriptor expected');
+    }
+    descriptor.get = function () {
+        const value = getter.call(this);
+        Object.defineProperty(this, name, {
+            configurable: descriptor.configurable,
+            enumerable: descriptor.enumerable,
+            writable: false,
+            value
+        });
+        return value;
+    };
+}
+
+// CONCATENATED MODULE: ./src/core/decorators/wait.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function wait(condition) {
+    return (target, propertyKey) => {
+        if (!Object(helpers["isFunction"])(target[propertyKey])) {
+            throw Object(helpers["error"])('Handler must be a Function');
+        }
+        target.hookStatus(core_component["b" /* STATUSES */].ready, (component) => {
+            const async = Object(helpers["isViewObject"])(component)
+                ? component.async
+                : component.j.async;
+            const realMethod = component[propertyKey];
+            let timeout = 0;
+            component[propertyKey] = function callProxy(...args) {
+                async.clearTimeout(timeout);
+                if (condition(component)) {
+                    realMethod.apply(component, args);
+                }
+                else {
+                    timeout = async.setTimeout(() => callProxy(...args), 10);
+                }
+            };
+        });
+    };
+}
+
+// CONCATENATED MODULE: ./src/core/decorators/hook.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function hook(status) {
+    return (target, propertyKey) => {
+        if (!Object(helpers["isFunction"])(target[propertyKey])) {
+            throw Object(helpers["error"])('Handler must be a Function');
+        }
+        target.hookStatus(status, (component) => {
+            target[propertyKey].call(component);
+        });
+    };
+}
+
+// CONCATENATED MODULE: ./src/core/decorators/nonenumerable.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const nonenumerable = (target, propertyKey) => {
+    const descriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {};
+    if (descriptor.enumerable !== false) {
+        Object.defineProperty(target, propertyKey, {
+            enumerable: false,
+            set(value) {
+                Object.defineProperty(this, propertyKey, {
+                    enumerable: false,
+                    writable: true,
+                    value
+                });
+            }
+        });
+    }
+};
+
+// CONCATENATED MODULE: ./src/core/decorators/index.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, "c", function() { return /* reexport */ form_UIForm; });
@@ -4223,139 +4379,6 @@ class block_UIBlock extends ui["i" /* UIGroup */] {
 
 
 /***/ }),
-/* 14 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, "getPropertyDescriptor", function() { return /* reexport */ watch["b" /* getPropertyDescriptor */]; });
-__webpack_require__.d(__webpack_exports__, "watch", function() { return /* reexport */ watch["c" /* watch */]; });
-__webpack_require__.d(__webpack_exports__, "debounce", function() { return /* reexport */ debounce; });
-__webpack_require__.d(__webpack_exports__, "cache", function() { return /* reexport */ cache; });
-__webpack_require__.d(__webpack_exports__, "wait", function() { return /* reexport */ wait; });
-__webpack_require__.d(__webpack_exports__, "hook", function() { return /* reexport */ hook; });
-
-// EXTERNAL MODULE: ./src/core/decorators/watch.ts
-var watch = __webpack_require__(16);
-
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 30 modules
-var helpers = __webpack_require__(0);
-
-// EXTERNAL MODULE: ./src/core/component/index.ts + 3 modules
-var core_component = __webpack_require__(9);
-
-// CONCATENATED MODULE: ./src/core/decorators/debounce.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function debounce(timeout) {
-    return (target, propertyKey) => {
-        if (!Object(helpers["isFunction"])(target[propertyKey])) {
-            throw Object(helpers["error"])('Handler must be a Function');
-        }
-        target.hookStatus(core_component["b" /* STATUSES */].ready, (component) => {
-            const view = Object(helpers["isViewObject"])(component) ? component : component.j;
-            component[propertyKey] = view.async.debounce(component[propertyKey].bind(component), (Object(helpers["isFunction"])(timeout) ? timeout(component) : timeout) ||
-                view.defaultTimeout);
-        });
-    };
-}
-
-// CONCATENATED MODULE: ./src/core/decorators/cache.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function cache(target, name, descriptor) {
-    const getter = descriptor.get;
-    if (!getter) {
-        throw Object(helpers["error"])('Getter property descriptor expected');
-    }
-    descriptor.get = function () {
-        const value = getter.call(this);
-        Object.defineProperty(this, name, {
-            configurable: descriptor.configurable,
-            enumerable: descriptor.enumerable,
-            writable: false,
-            value
-        });
-        return value;
-    };
-}
-
-// CONCATENATED MODULE: ./src/core/decorators/wait.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function wait(condition) {
-    return (target, propertyKey) => {
-        if (!Object(helpers["isFunction"])(target[propertyKey])) {
-            throw Object(helpers["error"])('Handler must be a Function');
-        }
-        target.hookStatus(core_component["b" /* STATUSES */].ready, (component) => {
-            const async = Object(helpers["isViewObject"])(component)
-                ? component.async
-                : component.j.async;
-            const realMethod = component[propertyKey];
-            let timeout = 0;
-            component[propertyKey] = function callProxy(...args) {
-                async.clearTimeout(timeout);
-                if (condition(component)) {
-                    realMethod.apply(component, args);
-                }
-                else {
-                    timeout = async.setTimeout(() => callProxy(...args), 10);
-                }
-            };
-        });
-    };
-}
-
-// CONCATENATED MODULE: ./src/core/decorators/hook.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function hook(status) {
-    return (target, propertyKey) => {
-        if (!Object(helpers["isFunction"])(target[propertyKey])) {
-            throw Object(helpers["error"])('Handler must be a Function');
-        }
-        target.hookStatus(status, (component) => {
-            target[propertyKey].call(component);
-        });
-    };
-}
-
-// CONCATENATED MODULE: ./src/core/decorators/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-/***/ }),
 /* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4535,7 +4558,7 @@ const TabsWidget = (editor, tabs, state) => {
 };
 
 // EXTERNAL MODULE: ./src/core/ui/form/index.ts + 7 modules
-var ui_form = __webpack_require__(13);
+var ui_form = __webpack_require__(14);
 
 // EXTERNAL MODULE: ./src/core/ui/button/index.ts + 1 modules
 var ui_button = __webpack_require__(11);
@@ -5322,38 +5345,29 @@ class events_native_EventsNative {
     }
 }
 
+// EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
+var tslib_es6 = __webpack_require__(4);
+
+// EXTERNAL MODULE: ./src/core/decorators/index.ts + 5 modules
+var decorators = __webpack_require__(13);
+
 // CONCATENATED MODULE: ./src/core/events/observe-object.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-var __classPrivateFieldSet = (undefined && undefined.__classPrivateFieldSet) || function (receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
-};
-var __classPrivateFieldGet = (undefined && undefined.__classPrivateFieldGet) || function (receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
-};
-var _data, _prefix, _onEvents, ___lockEvent;
+
+
 
 class observe_object_ObserveObject {
     constructor(data, prefix = [], onEvents = {}) {
-        _data.set(this, void 0);
-        _prefix.set(this, void 0);
-        _onEvents.set(this, void 0);
-        ___lockEvent.set(this, {});
-        __classPrivateFieldSet(this, _data, data);
-        __classPrivateFieldSet(this, _prefix, prefix);
-        __classPrivateFieldSet(this, _onEvents, onEvents);
+        this.__lockEvent = {};
+        this.data = data;
+        this.prefix = prefix;
+        this.onEvents = onEvents;
         Object.keys(data).forEach(key => {
-            const prefix = __classPrivateFieldGet(this, _prefix).concat(key).filter(a => a.length);
+            const prefix = this.prefix.concat(key).filter(a => a.length);
             Object.defineProperty(this, key, {
                 set: value => {
                     const oldValue = data[key];
@@ -5363,7 +5377,7 @@ class observe_object_ObserveObject {
                             `beforeChange.${prefix.join('.')}`
                         ], key, value);
                         if (Object(helpers["isPlainObject"])(value)) {
-                            value = new observe_object_ObserveObject(value, prefix, __classPrivateFieldGet(this, _onEvents));
+                            value = new observe_object_ObserveObject(value, prefix, this.onEvents);
                         }
                         data[key] = value;
                         const sum = [];
@@ -5380,15 +5394,16 @@ class observe_object_ObserveObject {
                 get: () => {
                     return data[key];
                 },
-                enumerable: true
+                enumerable: true,
+                configurable: true
             });
             if (Object(helpers["isPlainObject"])(data[key])) {
-                data[key] = new observe_object_ObserveObject(data[key], prefix, __classPrivateFieldGet(this, _onEvents));
+                data[key] = new observe_object_ObserveObject(data[key], prefix, this.onEvents);
             }
         });
     }
     valueOf() {
-        return __classPrivateFieldGet(this, _data);
+        return this.data;
     }
     toString() {
         return JSON.stringify(this.valueOf());
@@ -5398,10 +5413,10 @@ class observe_object_ObserveObject {
             event.map(e => this.on(e, callback));
             return this;
         }
-        if (!__classPrivateFieldGet(this, _onEvents)[event]) {
-            __classPrivateFieldGet(this, _onEvents)[event] = [];
+        if (!this.onEvents[event]) {
+            this.onEvents[event] = [];
         }
-        __classPrivateFieldGet(this, _onEvents)[event].push(callback);
+        this.onEvents[event].push(callback);
         return this;
     }
     fire(event, ...attr) {
@@ -5410,13 +5425,13 @@ class observe_object_ObserveObject {
             return;
         }
         try {
-            if (!__classPrivateFieldGet(this, ___lockEvent)[event] && __classPrivateFieldGet(this, _onEvents)[event]) {
-                __classPrivateFieldGet(this, ___lockEvent)[event] = true;
-                __classPrivateFieldGet(this, _onEvents)[event].forEach(clb => clb.call(this, ...attr));
+            if (!this.__lockEvent[event] && this.onEvents[event]) {
+                this.__lockEvent[event] = true;
+                this.onEvents[event].forEach(clb => clb.call(this, ...attr));
             }
         }
         finally {
-            __classPrivateFieldGet(this, ___lockEvent)[event] = false;
+            this.__lockEvent[event] = false;
         }
     }
     static create(data, prefix = []) {
@@ -5426,7 +5441,18 @@ class observe_object_ObserveObject {
         return new observe_object_ObserveObject(data, prefix);
     }
 }
-_data = new WeakMap(), _prefix = new WeakMap(), _onEvents = new WeakMap(), ___lockEvent = new WeakMap();
+Object(tslib_es6["a" /* __decorate */])([
+    decorators["nonenumerable"]
+], observe_object_ObserveObject.prototype, "data", void 0);
+Object(tslib_es6["a" /* __decorate */])([
+    decorators["nonenumerable"]
+], observe_object_ObserveObject.prototype, "prefix", void 0);
+Object(tslib_es6["a" /* __decorate */])([
+    decorators["nonenumerable"]
+], observe_object_ObserveObject.prototype, "onEvents", void 0);
+Object(tslib_es6["a" /* __decorate */])([
+    decorators["nonenumerable"]
+], observe_object_ObserveObject.prototype, "__lockEvent", void 0);
 
 // CONCATENATED MODULE: ./src/core/events/index.ts
 /*!
@@ -12138,8 +12164,8 @@ class async_Async {
 // EXTERNAL MODULE: ./src/core/global.ts
 var global = __webpack_require__(8);
 
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 4 modules
-var decorators = __webpack_require__(14);
+// EXTERNAL MODULE: ./src/core/decorators/index.ts + 5 modules
+var decorators = __webpack_require__(13);
 
 // CONCATENATED MODULE: ./src/core/view/view.ts
 /*!
@@ -12161,7 +12187,7 @@ class view_View extends core_component["a" /* Component */] {
         this.isJodit = isJodit;
         this.isView = true;
         this.components = new Set();
-        this.version = "3.4.18";
+        this.version = "3.4.19";
         this.async = new async_Async();
         this.buffer = storage_Storage.makeStorage();
         this.__isFullSize = false;
@@ -20287,34 +20313,41 @@ config["a" /* Config */].prototype.controls.paste = {
         }
         editor.s.focus();
         let text = '', error = true;
-        if (error) {
-            text = editor.buffer.get(pluginKey) || '';
-            error = text.length === 0;
-        }
-        if (error && navigator.clipboard) {
+        if (navigator.clipboard) {
             try {
                 const items = await navigator.clipboard.read();
                 if (items && items.length) {
-                    const textBlob = await items[0].getType('text/plain');
+                    const textBlob = await items[0].getType(constants["TEXT_PLAIN"]);
                     text = await new Response(textBlob).text();
                 }
+                error = false;
             }
-            catch (_a) { }
+            catch (e) {
+                if (false) {}
+            }
             if (error) {
                 try {
                     text = await navigator.clipboard.readText();
                     error = false;
                 }
-                catch (_b) { }
+                catch (e) {
+                    if (false) {}
+                }
             }
         }
         if (error) {
-            const value = editor.value;
-            editor.ed.execCommand('paste');
-            error = value !== editor.value;
+            text = editor.buffer.get(pluginKey) || '';
+            error = text.length === 0;
         }
-        if (text) {
+        const value = editor.value;
+        if (error) {
+            editor.ed.execCommand('paste');
+            error = value === editor.value;
+            !error && editor.e.fire('afterPaste');
+        }
+        else if (text.length) {
             pasteInsertHtml(null, editor, text);
+            editor.e.fire('afterPaste');
         }
         else {
             if (error) {
@@ -20357,14 +20390,16 @@ class paste_paste extends plugin_Plugin {
         }
     }
     onPaste(e) {
-        if (this.j.e.fire('beforePaste', e) === false ||
-            this.customPasteProcess(e) === false) {
-            e.preventDefault();
-            return false;
+        try {
+            if (this.j.e.fire('beforePaste', e) === false ||
+                this.customPasteProcess(e) === false) {
+                e.preventDefault();
+                return false;
+            }
+            this.defaultPasteProcess(e);
         }
-        this.defaultPasteProcess(e);
-        if (this.j.e.fire('afterPaste', e) === false) {
-            return false;
+        finally {
+            this.j.e.fire('afterPaste', e);
         }
     }
     customPasteProcess(e) {
@@ -20603,6 +20638,7 @@ class paste_storage_pasteStorage extends plugin_Plugin {
             }
             this.dialog && this.dialog.close();
             this.j.setEditorValue();
+            this.j.e.fire('afterPaste');
         };
         this.onKeyDown = (e) => {
             let index = this.currentIndex;
@@ -23271,7 +23307,7 @@ Object(tslib_es6["a" /* __decorate */])([
 ], limit_limit.prototype, "checkPreventChanging", null);
 
 // EXTERNAL MODULE: ./src/core/ui/form/index.ts + 7 modules
-var ui_form = __webpack_require__(13);
+var ui_form = __webpack_require__(14);
 
 // CONCATENATED MODULE: ./src/plugins/link/template.ts
 /*!
