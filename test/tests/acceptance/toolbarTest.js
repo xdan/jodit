@@ -25,6 +25,8 @@ describe('Toolbar', function() {
 				editor.toolbar.container.querySelectorAll('[role="listitem"]')
 			);
 
+			console.log(btns);
+
 			expect(btns.length).equals(2);
 
 			btns.forEach(function(btn) {
