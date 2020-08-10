@@ -366,6 +366,30 @@ describe('Backspace/Delete key', function() {
 					);
 				});
 
+				describe('For formatted HTML', function() {
+					it('Should work same', function() {
+						editor.value =
+							'<p>asdas</p>\n' +
+							'<p><br></p>';
+
+						const range = editor.s.createRange(true);
+
+						range.setStartBefore(editor.editor.lastChild.firstChild);
+
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_BACKSPACE,
+							editor.editor
+						);
+
+						editor.s.insertNode(editor.createInside.text(' 2 '));
+
+						expect(editor.value).equals(
+							'<p>asdas 2 </p>\n'
+						);
+					});
+				});
+
 				describe('Inside this element and this element empty', function() {
 					it('Should remove empty this empty element', function() {
 						editor.value = '';

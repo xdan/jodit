@@ -63,19 +63,33 @@ export class Async implements IAsync {
 	 *
 	 * @param fn
 	 * @param timeout
+	 * @param firstCallImmediately
 	 */
-	debounce(fn: CallbackFunction, timeout: number): CallbackFunction {
+	debounce(fn: CallbackFunction, timeout: number, firstCallImmediately: boolean = false): CallbackFunction {
 		let timer: number = 0,
-			lastArgs: any[];
+			fired: boolean = false;
+
+		const
+			callFn = (...args: any[]) => {
+				if (!fired) {
+					timer = 0;
+					fn(...args);
+					fired = true;
+				}
+			};
 
 		return (...args: any[]) => {
-			lastArgs = args;
+			fired = false;
 
 			if (!timeout) {
-				fn(...lastArgs);
+				callFn(...args);
 			} else {
+				if (!timer && firstCallImmediately) {
+					callFn(...args);
+				}
+
 				clearTimeout(timer);
-				timer = this.setTimeout(() => fn(...lastArgs), timeout);
+				timer = this.setTimeout(() => callFn(...args), timeout);
 				this.timers.set(fn, timer);
 			}
 		};

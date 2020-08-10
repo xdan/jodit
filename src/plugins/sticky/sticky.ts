@@ -75,7 +75,7 @@ export class sticky extends Plugin {
 
 		// on resize it should work always
 		css(toolbar, {
-			top: this.j.o.toolbarStickyOffset,
+			top: this.j.o.toolbarStickyOffset || null,
 			width: this.j.container.offsetWidth - 2
 		});
 

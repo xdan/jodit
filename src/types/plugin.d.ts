@@ -11,7 +11,9 @@ import { IViewBased } from './view';
 export class IPlugin implements IDestructible, IInitable {
 	jodit: IJodit;
 
+	static requires?: string[];
 	requires?: string[];
+
 	hasStyle?: boolean;
 
 	init(jodit: IJodit): void;
@@ -25,7 +27,7 @@ interface PluginFunction {
 	constructor(jodit: IViewBased): void;
 }
 
-export type PluginType = typeof IPlugin | IPlugin | PluginFunction;
+export type PluginType = typeof IPlugin | PluginFunction;
 export type PluginInstance = IPlugin | object;
 
 export interface IExtraPlugin {

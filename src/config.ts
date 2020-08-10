@@ -144,11 +144,6 @@ export class Config implements IViewOptions {
 	saveModeInStorage: boolean = false;
 
 	/**
-	 * if set true and height !== auto then after reload editor will be have latest height
-	 */
-	saveHeightInStorage: boolean = false;
-
-	/**
 	 * Options specifies whether the editor is to have its spelling and grammar checked or not
 	 * @see {@link http://www.w3schools.com/tags/att_global_spellcheck.asp}
 	 */
@@ -202,75 +197,6 @@ export class Config implements IViewOptions {
 	 * ```
 	 */
 	triggerChangeEvent: boolean = true;
-
-	/**
-	 * Editor's width
-	 *
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    width: '100%',
-	 * })
-	 * ```
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    width: 600, // equivalent for '600px'
-	 * })
-	 * ```
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    width: 'auto', // autosize
-	 * })
-	 * ```
-	 */
-
-	width: number | string = 'auto';
-	minWidth: number | string = '200px';
-	maxWidth: number | string = '100%';
-
-	/**
-	 * Editor's height
-	 *
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    height: '100%',
-	 * })
-	 * ```
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    height: 600, // equivalent for '600px'
-	 * })
-	 * ```
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    height: 'auto', // default - autosize
-	 * })
-	 * ```
-	 */
-	height: string | number = 'auto';
-
-	/**
-	 * Editor's min-height
-	 *
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    minHeight: '30%' //min-height: 30%
-	 * })
-	 * ```
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    minHeight: 200 //min-height: 200px
-	 * })
-	 * ```
-	 */
-	minHeight: number | string = 200;
 
 	/**
 	 * The writing direction of the language which is used to create editor content. Allowed values are: ''

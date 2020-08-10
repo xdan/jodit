@@ -41,7 +41,7 @@ export class Delete extends Plugin {
 				if (event.key === KEY_BACKSPACE || event.key === KEY_DELETE) {
 					return this.onDelete(event.key === KEY_BACKSPACE);
 				}
-			});
+			}, undefined, true);
 	}
 
 	/** @override */

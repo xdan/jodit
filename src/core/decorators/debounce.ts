@@ -5,15 +5,17 @@
  */
 
 import { IDictionary, IViewBased, IViewComponent } from '../../types';
-import { error, isFunction, isViewObject } from '../helpers';
+import { error, isFunction, isNumber, isViewObject } from '../helpers';
 import { Component, STATUSES } from '../component';
 
 /**
  * Wrap function in debounce wrapper
  * @param timeout
+ * @param firstCallImmediately
  */
 export function debounce(
-	timeout?: number | ((ctx: IViewComponent | IViewBased) => number)
+	timeout?: number | ((ctx: IViewComponent | IViewBased) => number),
+	firstCallImmediately: boolean = false
 ) {
 	return <T extends Component & IDictionary>(
 		target: IDictionary,
@@ -27,11 +29,14 @@ export function debounce(
 			STATUSES.ready,
 			(component: IViewComponent | IViewBased) => {
 				const view = isViewObject(component) ? component : component.j;
+				const realTimeout = isFunction(timeout)
+					? timeout(component)
+					: timeout;
 
 				(component as any)[propertyKey] = view.async.debounce(
 					(component as any)[propertyKey].bind(component),
-					(isFunction(timeout) ? timeout(component) : timeout) ||
-						view.defaultTimeout
+					isNumber(realTimeout) ? realTimeout : view.defaultTimeout,
+					firstCallImmediately
 				);
 			}
 		);

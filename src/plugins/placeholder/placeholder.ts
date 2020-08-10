@@ -13,6 +13,7 @@ import { Dom } from '../../core/dom';
 import { IJodit } from '../../types';
 import { Plugin } from '../../core/plugin';
 import { MAY_BE_REMOVED_WITH_KEY } from '../../core/constants';
+import { debounce } from '../../core/decorators';
 
 /**
  * Show placeholder
@@ -72,11 +73,6 @@ export class placeholder extends Plugin {
 			return;
 		}
 
-		this.toggle = editor.async.debounce(
-			this.toggle.bind(this),
-			this.j.defaultTimeout / 10
-		);
-
 		this.placeholderElm = editor.c.fromHTML(
 			`<span data-ref="placeholder" style="display: none;" class="jodit-placeholder">${editor.i18n(
 				editor.o.placeholder
@@ -96,10 +92,20 @@ export class placeholder extends Plugin {
 					this.toggle();
 				}
 			})
-			.on('changePlace', this.init);
+			.on('changePlace', this.addEvents);
 
 		this.addEvents();
 	}
+
+	private addNativeListeners = () => {
+		this.j.e
+			.off(this.j.editor, 'input.placeholder keydown.placeholder')
+			.on(
+				this.j.editor,
+				'input.placeholder keydown.placeholder',
+				this.toggle
+			);
+	};
 
 	private addEvents = () => {
 		const editor = this.j;
@@ -116,12 +122,15 @@ export class placeholder extends Plugin {
 
 		editor.e
 			.off('.placeholder')
+			.on('changePlace.placeholder', this.addNativeListeners)
 			.on(
 				'change.placeholder focus.placeholder keyup.placeholder mouseup.placeholder keydown.placeholder ' +
 					'mousedown.placeholder afterSetMode.placeholder changePlace.placeholder',
 				this.toggle
 			)
 			.on(window, 'load', this.toggle);
+
+		this.addNativeListeners();
 
 		this.toggle();
 	};
@@ -192,6 +201,7 @@ export class placeholder extends Plugin {
 		Dom.safeRemove(this.placeholderElm);
 	}
 
+	@debounce(ctx => ctx.defaultTimeout / 10, true)
 	private toggle() {
 		const editor = this.j;
 
