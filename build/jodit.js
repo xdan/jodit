@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.20
+ * Version: v3.4.21
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -2492,6 +2492,9 @@ var Dialog = (function (_super) {
         this.dialog.classList.toggle('jodit-dialog_footer_true', !!content);
         return this;
     };
+    Dialog.prototype.getZIndex = function () {
+        return parseInt(helpers_1.css(this.container, 'zIndex'), 10) || 0;
+    };
     Dialog.prototype.getMaxZIndexDialog = function () {
         var maxZi = 0, dlg, zIndex, res = this;
         helpers_1.$$('.jodit-dialog__box', this.destination).forEach(function (dialog) {
@@ -4621,7 +4624,7 @@ var View = (function (_super) {
         _this.isJodit = isJodit;
         _this.isView = true;
         _this.components = new Set();
-        _this.version = "3.4.20";
+        _this.version = "3.4.21";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.__isFullSize = false;
@@ -9318,11 +9321,11 @@ var ObserveObject = (function () {
         if (prefix === void 0) { prefix = []; }
         if (onEvents === void 0) { onEvents = {}; }
         this.__lockEvent = {};
-        this.data = data;
-        this.prefix = prefix;
-        this.onEvents = onEvents;
+        this.__data = data;
+        this.__prefix = prefix;
+        this.__onEvents = onEvents;
         Object.keys(data).forEach(function (key) {
-            var prefix = _this.prefix.concat(key).filter(function (a) { return a.length; });
+            var prefix = _this.__prefix.concat(key).filter(function (a) { return a.length; });
             Object.defineProperty(_this, key, {
                 set: function (value) {
                     var oldValue = data[key];
@@ -9332,7 +9335,7 @@ var ObserveObject = (function () {
                             "beforeChange." + prefix.join('.')
                         ], key, value);
                         if (helpers_1.isPlainObject(value)) {
-                            value = new ObserveObject(value, prefix, _this.onEvents);
+                            value = new ObserveObject(value, prefix, _this.__onEvents);
                         }
                         data[key] = value;
                         var sum_1 = [];
@@ -9352,12 +9355,12 @@ var ObserveObject = (function () {
                 configurable: true
             });
             if (helpers_1.isPlainObject(data[key])) {
-                data[key] = new ObserveObject(data[key], prefix, _this.onEvents);
+                data[key] = new ObserveObject(data[key], prefix, _this.__onEvents);
             }
         });
     }
     ObserveObject.prototype.valueOf = function () {
-        return this.data;
+        return this.__data;
     };
     ObserveObject.prototype.toString = function () {
         return JSON.stringify(this.valueOf());
@@ -9368,10 +9371,10 @@ var ObserveObject = (function () {
             event.map(function (e) { return _this.on(e, callback); });
             return this;
         }
-        if (!this.onEvents[event]) {
-            this.onEvents[event] = [];
+        if (!this.__onEvents[event]) {
+            this.__onEvents[event] = [];
         }
-        this.onEvents[event].push(callback);
+        this.__onEvents[event].push(callback);
         return this;
     };
     ObserveObject.prototype.fire = function (event) {
@@ -9385,9 +9388,9 @@ var ObserveObject = (function () {
             return;
         }
         try {
-            if (!this.__lockEvent[event] && this.onEvents[event]) {
+            if (!this.__lockEvent[event] && this.__onEvents[event]) {
                 this.__lockEvent[event] = true;
-                this.onEvents[event].forEach(function (clb) { return clb.call.apply(clb, tslib_1.__spreadArrays([_this], attr)); });
+                this.__onEvents[event].forEach(function (clb) { return clb.call.apply(clb, tslib_1.__spreadArrays([_this], attr)); });
             }
         }
         finally {
@@ -9403,13 +9406,13 @@ var ObserveObject = (function () {
     };
     tslib_1.__decorate([
         decorators_1.nonenumerable
-    ], ObserveObject.prototype, "data", void 0);
+    ], ObserveObject.prototype, "__data", void 0);
     tslib_1.__decorate([
         decorators_1.nonenumerable
-    ], ObserveObject.prototype, "prefix", void 0);
+    ], ObserveObject.prototype, "__prefix", void 0);
     tslib_1.__decorate([
         decorators_1.nonenumerable
-    ], ObserveObject.prototype, "onEvents", void 0);
+    ], ObserveObject.prototype, "__onEvents", void 0);
     tslib_1.__decorate([
         decorators_1.nonenumerable
     ], ObserveObject.prototype, "__lockEvent", void 0);
@@ -11893,6 +11896,9 @@ var Popup = (function (_super) {
             .off(ow, 'mousedown touchstart', this.closeOnOutsideClick)
             .off(ow, 'scroll', up)
             .off(ow, 'resize', up);
+    };
+    Popup.prototype.setZIndex = function (index) {
+        this.container.style.zIndex = index.toString();
     };
     Popup.prototype.destruct = function () {
         this.close();
@@ -25371,6 +25377,7 @@ var imageProperties = (function (_super) {
     imageProperties.prototype.openImagePopup = function (event) {
         var _this = this;
         var popup = new modules_1.Popup(this.j), changeImage = helpers_1.refs(this.form).changeImage;
+        popup.setZIndex(this.dialog.getZIndex() + 1);
         popup
             .setContent(widget_1.FileSelectorWidget(this.j, {
             upload: function (data) {

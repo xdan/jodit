@@ -13,7 +13,7 @@ describe('Text Inline Popup plugin', function () {
 				editor.value = '<img alt="" src="../artio.jpg"/>';
 				editor.s.focus();
 
-				simulateEvent('click', 0, editor.editor.querySelector('img'));
+				simulateEvent('click', editor.editor.querySelector('img'));
 
 				const popup = getOpenedPopup(editor);
 

@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.20
+ * Version: v3.4.21
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -5363,11 +5363,11 @@ var decorators = __webpack_require__(13);
 class observe_object_ObserveObject {
     constructor(data, prefix = [], onEvents = {}) {
         this.__lockEvent = {};
-        this.data = data;
-        this.prefix = prefix;
-        this.onEvents = onEvents;
+        this.__data = data;
+        this.__prefix = prefix;
+        this.__onEvents = onEvents;
         Object.keys(data).forEach(key => {
-            const prefix = this.prefix.concat(key).filter(a => a.length);
+            const prefix = this.__prefix.concat(key).filter(a => a.length);
             Object.defineProperty(this, key, {
                 set: value => {
                     const oldValue = data[key];
@@ -5377,7 +5377,7 @@ class observe_object_ObserveObject {
                             `beforeChange.${prefix.join('.')}`
                         ], key, value);
                         if (Object(helpers["isPlainObject"])(value)) {
-                            value = new observe_object_ObserveObject(value, prefix, this.onEvents);
+                            value = new observe_object_ObserveObject(value, prefix, this.__onEvents);
                         }
                         data[key] = value;
                         const sum = [];
@@ -5398,12 +5398,12 @@ class observe_object_ObserveObject {
                 configurable: true
             });
             if (Object(helpers["isPlainObject"])(data[key])) {
-                data[key] = new observe_object_ObserveObject(data[key], prefix, this.onEvents);
+                data[key] = new observe_object_ObserveObject(data[key], prefix, this.__onEvents);
             }
         });
     }
     valueOf() {
-        return this.data;
+        return this.__data;
     }
     toString() {
         return JSON.stringify(this.valueOf());
@@ -5413,10 +5413,10 @@ class observe_object_ObserveObject {
             event.map(e => this.on(e, callback));
             return this;
         }
-        if (!this.onEvents[event]) {
-            this.onEvents[event] = [];
+        if (!this.__onEvents[event]) {
+            this.__onEvents[event] = [];
         }
-        this.onEvents[event].push(callback);
+        this.__onEvents[event].push(callback);
         return this;
     }
     fire(event, ...attr) {
@@ -5425,9 +5425,9 @@ class observe_object_ObserveObject {
             return;
         }
         try {
-            if (!this.__lockEvent[event] && this.onEvents[event]) {
+            if (!this.__lockEvent[event] && this.__onEvents[event]) {
                 this.__lockEvent[event] = true;
-                this.onEvents[event].forEach(clb => clb.call(this, ...attr));
+                this.__onEvents[event].forEach(clb => clb.call(this, ...attr));
             }
         }
         finally {
@@ -5443,13 +5443,13 @@ class observe_object_ObserveObject {
 }
 Object(tslib_es6["a" /* __decorate */])([
     decorators["nonenumerable"]
-], observe_object_ObserveObject.prototype, "data", void 0);
+], observe_object_ObserveObject.prototype, "__data", void 0);
 Object(tslib_es6["a" /* __decorate */])([
     decorators["nonenumerable"]
-], observe_object_ObserveObject.prototype, "prefix", void 0);
+], observe_object_ObserveObject.prototype, "__prefix", void 0);
 Object(tslib_es6["a" /* __decorate */])([
     decorators["nonenumerable"]
-], observe_object_ObserveObject.prototype, "onEvents", void 0);
+], observe_object_ObserveObject.prototype, "__onEvents", void 0);
 Object(tslib_es6["a" /* __decorate */])([
     decorators["nonenumerable"]
 ], observe_object_ObserveObject.prototype, "__lockEvent", void 0);
@@ -5702,6 +5702,9 @@ class popup_Popup extends ui["g" /* UIElement */] {
             .off(ow, 'mousedown touchstart', this.closeOnOutsideClick)
             .off(ow, 'scroll', up)
             .off(ow, 'resize', up);
+    }
+    setZIndex(index) {
+        this.container.style.zIndex = index.toString();
     }
     destruct() {
         this.close();
@@ -12188,7 +12191,7 @@ class view_View extends core_component["a" /* Component */] {
         this.isJodit = isJodit;
         this.isView = true;
         this.components = new Set();
-        this.version = "3.4.20";
+        this.version = "3.4.21";
         this.async = new async_Async();
         this.buffer = storage_Storage.makeStorage();
         this.__isFullSize = false;
@@ -13152,6 +13155,9 @@ class dialog_Dialog extends view_with_toolbar_ViewWithToolbar {
         this.setElements(this.dialogbox_footer, content);
         this.dialog.classList.toggle('jodit-dialog_footer_true', !!content);
         return this;
+    }
+    getZIndex() {
+        return parseInt(Object(helpers["css"])(this.container, 'zIndex'), 10) || 0;
     }
     getMaxZIndexDialog() {
         let maxZi = 0, dlg, zIndex, res = this;
@@ -22741,6 +22747,7 @@ class image_properties_imageProperties extends plugin_Plugin {
     }
     openImagePopup(event) {
         const popup = new ui["c" /* Popup */](this.j), { changeImage } = Object(helpers["refs"])(this.form);
+        popup.setZIndex(this.dialog.getZIndex() + 1);
         popup
             .setContent(Object(widget["b" /* FileSelectorWidget */])(this.j, {
             upload: (data) => {
