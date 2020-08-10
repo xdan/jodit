@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import {
+import type {
 	IExtraPlugin,
 	IDictionary,
 	IJodit,
@@ -12,7 +12,8 @@ import {
 	IPluginSystem,
 	PluginInstance,
 	PluginType,
-	CanPromise, CanUndef
+	CanPromise,
+	// CanUndef
 } from '../types';
 
 import {
@@ -23,10 +24,10 @@ import {
 	splitArray,
 	appendStyleAsync,
 	isString,
-	kebabCase, callPromise, isArray
+	kebabCase,
+	callPromise,
+	// isArray
 } from './helpers';
-
-// declare const isProd: boolean;
 
 /**
  * Jodit plugin system
@@ -93,13 +94,17 @@ export class PluginSystem implements IPluginSystem {
 					return;
 				}
 
-				const requires = (plugin as any).requires as CanUndef<string[]>;
-					if (name === 'resizehandler') {
-					debugger
-				}
-				if (requires && isArray(requires) && this.hasDisabledRequires(disableList, requires)) {
-					return;
-				}
+				// const requires = (plugin as any)?.requires as CanUndef<
+				// 	string[]
+				// >;
+				//
+				// if (
+				// 	requires &&
+				// 	isArray(requires) &&
+				// 	this.hasDisabledRequires(disableList, requires)
+				// ) {
+				// 	return;
+				// }
 
 				const instance = PluginSystem.makePluginInstance(jodit, plugin);
 
@@ -129,9 +134,15 @@ export class PluginSystem implements IPluginSystem {
 	 * @param disableList
 	 * @param requires
 	 */
-	private hasDisabledRequires(disableList: string[], requires: string[]): boolean {
-		return Boolean(requires?.length && disableList.some((disabled) => requires.includes(disabled)));
-	}
+	// private hasDisabledRequires(
+	// 	disableList: string[],
+	// 	requires: string[]
+	// ): boolean {
+	// 	return Boolean(
+	// 		requires?.length &&
+	// 			disableList.some(disabled => requires.includes(disabled))
+	// 	);
+	// }
 
 	/**
 	 * Create instance of plugin
