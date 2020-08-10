@@ -4,6 +4,15 @@
 * https://github.com/xdan/jodit/issues/467
 * https://github.com/xdan/jodit/issues/466
 
+### Features
+Added `maxHeight` option.
+```js
+const jodit = Jodit.make('#editor', {
+    minHeight: 200,
+    maxHeight: 500
+});
+```
+
 ## 3.4.18
 * https://github.com/xdan/jodit/issues/463
 * https://github.com/xdan/jodit/issues/446

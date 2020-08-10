@@ -22,6 +22,9 @@ export class resizeHandler extends Plugin {
 			(editor.o.allowResizeX || editor.o.allowResizeY)
 		) {
 			editor.e
+				.on('toggleFullSize.resizeHandler', () => {
+					this.handle.style.display = editor.isFullSize ? 'none' : 'block';
+				})
 				.on(
 					this.handle,
 					'mousedown touchstart',

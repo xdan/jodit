@@ -8,13 +8,11 @@ import type { IControlType, IJodit } from '../../types';
 import { Config } from '../../config';
 import { Dom } from '../../core/dom';
 
-Config.prototype.controls = {
-	hr: {
-		command: 'insertHorizontalRule',
-		tags: ['hr'],
-		tooltip: 'Insert Horizontal Line'
-	} as IControlType
-};
+Config.prototype.controls.hr = {
+	command: 'insertHorizontalRule',
+	tags: ['hr'],
+	tooltip: 'Insert Horizontal Line'
+} as IControlType;
 
 export function hr(editor: IJodit): void {
 	editor.registerCommand('insertHorizontalRule', () => {
@@ -38,7 +36,6 @@ export function hr(editor: IJodit): void {
 			editor.editor,
 			false
 		);
-
 
 		if (!p) {
 			p = editor.createInside.element(editor.o.enter);

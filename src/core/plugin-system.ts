@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type {
+import {
 	IExtraPlugin,
 	IDictionary,
 	IJodit,
@@ -13,7 +13,7 @@ import type {
 	PluginInstance,
 	PluginType,
 	CanPromise,
-	// CanUndef
+	CanUndef
 } from '../types';
 
 import {
@@ -26,7 +26,7 @@ import {
 	isString,
 	kebabCase,
 	callPromise,
-	// isArray
+	isArray
 } from './helpers';
 
 /**
@@ -94,17 +94,17 @@ export class PluginSystem implements IPluginSystem {
 					return;
 				}
 
-				// const requires = (plugin as any)?.requires as CanUndef<
-				// 	string[]
-				// >;
-				//
-				// if (
-				// 	requires &&
-				// 	isArray(requires) &&
-				// 	this.hasDisabledRequires(disableList, requires)
-				// ) {
-				// 	return;
-				// }
+				const requires = (plugin as any)?.requires as CanUndef<
+					string[]
+				>;
+
+				if (
+					requires &&
+					isArray(requires) &&
+					this.hasDisabledRequires(disableList, requires)
+				) {
+					return;
+				}
 
 				const instance = PluginSystem.makePluginInstance(jodit, plugin);
 
@@ -134,15 +134,15 @@ export class PluginSystem implements IPluginSystem {
 	 * @param disableList
 	 * @param requires
 	 */
-	// private hasDisabledRequires(
-	// 	disableList: string[],
-	// 	requires: string[]
-	// ): boolean {
-	// 	return Boolean(
-	// 		requires?.length &&
-	// 			disableList.some(disabled => requires.includes(disabled))
-	// 	);
-	// }
+	private hasDisabledRequires(
+		disableList: string[],
+		requires: string[]
+	): boolean {
+		return Boolean(
+			requires?.length &&
+				disableList.some(disabled => requires.includes(disabled))
+		);
+	}
 
 	/**
 	 * Create instance of plugin

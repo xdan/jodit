@@ -711,7 +711,7 @@ export class Config implements IViewOptions {
 	/**
 	 * Behavior for buttons
 	 */
-	controls: Controls = {};
+	controls!: Controls;
 
 	events: IDictionary<(...args: any[]) => any> = {};
 

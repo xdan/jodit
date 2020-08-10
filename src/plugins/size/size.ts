@@ -30,7 +30,7 @@ export class size extends Plugin {
 			.on(editor.ow, 'load.size', this.resizeWorkspaces)
 			.on(
 				'afterInit.size resize.size afterUpdateToolbar.size ' +
-					'croll.size afterResize.size toggleFullSize.size',
+					'scroll.size afterResize.size toggleFullSize.size',
 				this.resizeWorkspaces
 			);
 

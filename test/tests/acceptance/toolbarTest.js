@@ -82,7 +82,7 @@ describe('Toolbar', function () {
 					events: {
 						getIcon: function (name, control, clearName) {
 							var code = clearName;
-							console.log(code);
+
 							switch (clearName) {
 								case 'redo':
 									code = 'rotate-right';

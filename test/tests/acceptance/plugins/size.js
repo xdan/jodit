@@ -99,6 +99,7 @@ describe('Test editor size plugin', function() {
 
 					expect(handle).is.not.null;
 					editor.toggleFullSize(true);
+
 					expect(
 						editor.ownerWindow.getComputedStyle(handle).display
 					).equals('none');
