@@ -849,12 +849,6 @@ export const OptionsDefault: any = function (
 };
 
 Config.prototype.controls = {
-	hr: {
-		command: 'insertHorizontalRule',
-		tags: ['hr'],
-		tooltip: 'Insert Horizontal Line'
-	} as IControlType,
-
 	image: {
 		popup: (editor: IJodit, current, self, close) => {
 			let sourceImage: HTMLImageElement | null = null;

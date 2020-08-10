@@ -108,8 +108,7 @@ export class cleanHtml extends Plugin {
 				jodit.async.debounce(this.onChange, jodit.o.cleanHTML.timeout)
 			)
 			.on('keyup.cleanHtml', this.onKeyUpCleanUp)
-			.on('beforeCommand.cleanHtml', this.beforeCommand)
-			.on('afterCommand.cleanHtml', this.afterCommand);
+			.on('beforeCommand.cleanHtml', this.beforeCommand);
 	}
 
 	private onChange = () => {
@@ -338,38 +337,6 @@ export class cleanHtml extends Plugin {
 			return false;
 		}
 	};
-
-	private afterCommand = (command: string) => {
-		if (command.toLowerCase() === 'inserthorizontalrule') {
-			this.onInsertHorizontalLine();
-			return;
-		}
-	};
-
-	private onInsertHorizontalLine() {
-		const hr: HTMLHRElement | null = this.j.editor.querySelector(
-			'hr[id=null]'
-		);
-
-		if (hr) {
-			let node = Dom.next(
-				hr,
-				node => Dom.isBlock(node, this.j.ew),
-				this.j.editor,
-				false
-			) as Node | null;
-
-			if (!node) {
-				node = this.j.createInside.element(this.j.o.enter);
-
-				if (node) {
-					Dom.after(hr, node as HTMLElement);
-				}
-			}
-
-			this.j.s.setCursorIn(node);
-		}
-	}
 
 	private onRemoveFormat() {
 		const sel = this.j.selection;

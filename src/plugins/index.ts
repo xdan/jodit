@@ -7,7 +7,6 @@
 export { addNewLine } from './add-new-line/add-new-line';
 export { about } from './about/about';
 export { autofocus } from './autofocus';
-// export { backspace } from './keyboard/backspace';
 export { Delete } from './keyboard/delete';
 export { bold } from './bold';
 export { cleanHtml } from './fix/clean-html';
@@ -25,6 +24,7 @@ export { hotkeys } from './keyboard/hotkeys';
 export { iframe } from './iframe';
 export * from './image';
 export { indent } from './indent';
+export { hr } from './insert';
 export { inlinePopup } from './inline-popup/inline-popup';
 export { justify } from './justify';
 export { limit } from './limit';

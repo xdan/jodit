@@ -662,14 +662,14 @@ export class Dom {
 	 * @param [checkRoot]
 	 */
 	static up<T extends HTMLElement>(
-		node: Node,
+		node: Nullable<Node>,
 		condition: NodeCondition,
 		root?: Node,
 		checkRoot: boolean = false
 	): Nullable<T> {
 		let start = node;
 
-		if (!node) {
+		if (!start) {
 			return null;
 		}
 
@@ -700,7 +700,7 @@ export class Dom {
 	 * @param root
 	 */
 	static closest<T extends HTMLElement, K extends HTMLTagNames>(
-		node: Node,
+		node: Nullable<Node>,
 		tags: K,
 		root: HTMLElement
 	): Nullable<HTMLElementTagNameMap[K]>;
@@ -709,19 +709,19 @@ export class Dom {
 		T extends HTMLElement,
 		K extends keyof HTMLElementTagNameMap
 	>(
-		node: Node,
+		node: Nullable<Node>,
 		tags: K[],
 		root: HTMLElement
 	): Nullable<HTMLElementTagNameMap[K]>;
 
 	static closest<T extends HTMLElement>(
-		node: Node,
+		node: Nullable<Node>,
 		condition: NodeCondition,
 		root: HTMLElement
 	): Nullable<T>;
 
 	static closest<T extends HTMLElement>(
-		node: Node,
+		node: Nullable<Node>,
 		tagsOrCondition: HTMLTagNames | HTMLTagNames[] | NodeCondition,
 		root: HTMLElement
 	): Nullable<T> {

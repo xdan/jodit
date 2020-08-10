@@ -631,7 +631,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		this.commands[commandName].push(command);
 
-		if (typeof command !== 'function') {
+		if (!isFunction(command)) {
 			const hotkeys: string | string[] | void =
 				this.o.commandToHotkeys[commandName] ||
 				this.o.commandToHotkeys[commandNameOriginal] ||
