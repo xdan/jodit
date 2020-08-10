@@ -452,6 +452,13 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	}
 
 	/**
+	 * Get zIndex from dialog
+	 */
+	getZIndex(): number {
+		return parseInt(css(this.container, 'zIndex') as string, 10) || 0;
+	}
+
+	/**
 	 * Get dialog instance with maximum z-index displaying it on top of all the dialog boxes
 	 *
 	 * @return {Dialog}

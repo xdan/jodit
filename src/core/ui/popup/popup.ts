@@ -364,6 +364,14 @@ export class Popup extends UIElement implements IPopup {
 			.off(ow, 'resize', up);
 	}
 
+	/**
+	 * Set ZIndex
+	 * @param index
+	 */
+	setZIndex(index: number) {
+		this.container.style.zIndex = index.toString();
+	}
+
 	constructor(jodit: IViewBased) {
 		super(jodit);
 		attr(this.container, 'role', 'popup');

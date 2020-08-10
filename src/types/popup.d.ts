@@ -25,4 +25,6 @@ export interface IPopup extends IUIElement, IDestructible {
 	updatePosition(): this;
 
 	close(): this;
+
+	setZIndex(index: number): void;
 }
