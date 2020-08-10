@@ -36,8 +36,15 @@ export class resizeHandler extends Plugin {
 		}
 	}
 
+	/**
+	 * Plugin in resize process
+	 */
 	private isResized: boolean = false;
 
+	/**
+	 * Start point
+	 * @private
+	 */
 	private start: IPointBound = {
 		x: 0,
 		y: 0,
@@ -45,6 +52,10 @@ export class resizeHandler extends Plugin {
 		h: 0
 	};
 
+	/**
+	 * Handler: Click on handle - start resizing
+	 * @param e
+	 */
 	private onHandleResizeStart(e: MouseEvent) {
 		this.isResized = true;
 
@@ -60,6 +71,10 @@ export class resizeHandler extends Plugin {
 		e.preventDefault();
 	}
 
+	/**
+	 * Handler: Mouse move after start resizing
+	 * @param e
+	 */
 	private onHandleResize(e: MouseEvent) {
 		if (!this.isResized) {
 			return;
@@ -76,6 +91,9 @@ export class resizeHandler extends Plugin {
 		this.j.e.fire('resize');
 	}
 
+	/**
+	 * End of resizing
+	 */
 	private onHandleResizeEnd() {
 		if (this.isResized) {
 			this.isResized = false;
@@ -86,6 +104,9 @@ export class resizeHandler extends Plugin {
 		}
 	}
 
+	/**
+	 * Resize handle
+	 */
 	private handle = this.j.c.div(
 		'jodit-editor__resize',
 		'<a tabindex="-1" href="javascript:void(0)"></a>'
