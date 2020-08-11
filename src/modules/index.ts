@@ -5,6 +5,7 @@
  */
 
 export * from '../core/events';
+export { Async } from '../core/async';
 export { Ajax } from '../core/ajax';
 export { Component, ViewComponent, STATUSES } from '../core/component';
 export { ContextMenu } from './context-menu/context-menu';

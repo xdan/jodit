@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.22
+ * Version: v3.4.23
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -11485,6 +11485,7 @@ __webpack_require__.d(modules_namespaceObject, "EventsNative", function() { retu
 __webpack_require__.d(modules_namespaceObject, "ObserveObject", function() { return events["c" /* ObserveObject */]; });
 __webpack_require__.d(modules_namespaceObject, "defaultNameSpace", function() { return events["d" /* defaultNameSpace */]; });
 __webpack_require__.d(modules_namespaceObject, "EventHandlersStore", function() { return events["a" /* EventHandlersStore */]; });
+__webpack_require__.d(modules_namespaceObject, "Async", function() { return async_Async; });
 __webpack_require__.d(modules_namespaceObject, "Ajax", function() { return ajax_Ajax; });
 __webpack_require__.d(modules_namespaceObject, "Component", function() { return core_component["a" /* Component */]; });
 __webpack_require__.d(modules_namespaceObject, "ViewComponent", function() { return core_component["c" /* ViewComponent */]; });
@@ -11679,6 +11680,138 @@ var events = __webpack_require__(19);
 
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 30 modules
 var helpers = __webpack_require__(0);
+
+// CONCATENATED MODULE: ./src/core/async.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+class async_Async {
+    constructor() {
+        this.timers = new Map();
+        this.promisesRejections = new Set();
+        this.isDestructed = false;
+    }
+    setTimeout(callback, timeout, ...args) {
+        if (this.isDestructed) {
+            return 0;
+        }
+        let options = {};
+        if (typeof timeout !== 'number') {
+            options = timeout;
+            timeout = options.timeout || 0;
+        }
+        if (options.label && this.timers.has(options.label)) {
+            Object(helpers["clearTimeout"])(this.timers.get(options.label));
+            this.timers.delete(options.label);
+        }
+        const timer = Object(helpers["setTimeout"])(callback, timeout, ...args), key = options.label || timer;
+        this.timers.set(key, timer);
+        return timer;
+    }
+    clearTimeout(timer) {
+        Object(helpers["clearTimeout"])(timer);
+        this.timers.delete(timer);
+    }
+    debounce(fn, timeout, firstCallImmediately = false) {
+        let timer = 0, fired = false;
+        const callFn = (...args) => {
+            if (!fired) {
+                timer = 0;
+                fn(...args);
+                fired = true;
+            }
+        };
+        return (...args) => {
+            fired = false;
+            if (!timeout) {
+                callFn(...args);
+            }
+            else {
+                if (!timer && firstCallImmediately) {
+                    callFn(...args);
+                }
+                Object(helpers["clearTimeout"])(timer);
+                timer = this.setTimeout(() => callFn(...args), timeout);
+                this.timers.set(fn, timer);
+            }
+        };
+    }
+    throttle(fn, timeout) {
+        let timer = null, needInvoke, callee, lastArgs;
+        return (...args) => {
+            needInvoke = true;
+            lastArgs = args;
+            if (!timeout) {
+                fn(...lastArgs);
+                return;
+            }
+            if (!timer) {
+                callee = () => {
+                    if (needInvoke) {
+                        fn(...lastArgs);
+                        needInvoke = false;
+                        timer = this.setTimeout(callee, timeout);
+                        this.timers.set(callee, timer);
+                    }
+                    else {
+                        timer = null;
+                    }
+                };
+                callee();
+            }
+        };
+    }
+    promise(executor) {
+        let rejectCallback = () => { };
+        const promise = new Promise((resolve, reject) => {
+            this.promisesRejections.add(reject);
+            rejectCallback = reject;
+            return executor(resolve, reject);
+        });
+        promise.finally(() => {
+            this.promisesRejections.delete(rejectCallback);
+        });
+        return promise;
+    }
+    promiseState(p) {
+        if (p.status) {
+            return p.status;
+        }
+        if (!Promise.race) {
+            return new Promise(resolve => {
+                p.then(v => {
+                    resolve('fulfilled');
+                    return v;
+                }, e => {
+                    resolve('rejected');
+                    throw e;
+                });
+                this.setTimeout(() => {
+                    resolve('pending');
+                }, 100);
+            });
+        }
+        const t = {};
+        return Promise.race([p, t]).then(v => (v === t ? 'pending' : 'fulfilled'), () => 'rejected');
+    }
+    clear() {
+        this.timers.forEach(key => {
+            Object(helpers["clearTimeout"])(this.timers.get(key));
+        });
+        this.timers.clear();
+        this.promisesRejections.forEach(reject => {
+            reject();
+        });
+        this.promisesRejections.clear();
+    }
+    destruct() {
+        this.clear();
+        this.isDestructed = true;
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/ajax.ts
 /*!
@@ -12046,138 +12179,6 @@ class storage_Storage {
 
 
 
-// CONCATENATED MODULE: ./src/core/async.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-class async_Async {
-    constructor() {
-        this.timers = new Map();
-        this.promisesRejections = new Set();
-        this.isDestructed = false;
-    }
-    setTimeout(callback, timeout, ...args) {
-        if (this.isDestructed) {
-            return 0;
-        }
-        let options = {};
-        if (typeof timeout !== 'number') {
-            options = timeout;
-            timeout = options.timeout || 0;
-        }
-        if (options.label && this.timers.has(options.label)) {
-            Object(helpers["clearTimeout"])(this.timers.get(options.label));
-            this.timers.delete(options.label);
-        }
-        const timer = Object(helpers["setTimeout"])(callback, timeout, ...args), key = options.label || timer;
-        this.timers.set(key, timer);
-        return timer;
-    }
-    clearTimeout(timer) {
-        Object(helpers["clearTimeout"])(timer);
-        this.timers.delete(timer);
-    }
-    debounce(fn, timeout, firstCallImmediately = false) {
-        let timer = 0, fired = false;
-        const callFn = (...args) => {
-            if (!fired) {
-                timer = 0;
-                fn(...args);
-                fired = true;
-            }
-        };
-        return (...args) => {
-            fired = false;
-            if (!timeout) {
-                callFn(...args);
-            }
-            else {
-                if (!timer && firstCallImmediately) {
-                    callFn(...args);
-                }
-                Object(helpers["clearTimeout"])(timer);
-                timer = this.setTimeout(() => callFn(...args), timeout);
-                this.timers.set(fn, timer);
-            }
-        };
-    }
-    throttle(fn, timeout) {
-        let timer = null, needInvoke, callee, lastArgs;
-        return (...args) => {
-            needInvoke = true;
-            lastArgs = args;
-            if (!timeout) {
-                fn(...lastArgs);
-                return;
-            }
-            if (!timer) {
-                callee = () => {
-                    if (needInvoke) {
-                        fn(...lastArgs);
-                        needInvoke = false;
-                        timer = this.setTimeout(callee, timeout);
-                        this.timers.set(callee, timer);
-                    }
-                    else {
-                        timer = null;
-                    }
-                };
-                callee();
-            }
-        };
-    }
-    promise(executor) {
-        let rejectCallback = () => { };
-        const promise = new Promise((resolve, reject) => {
-            this.promisesRejections.add(reject);
-            rejectCallback = reject;
-            return executor(resolve, reject);
-        });
-        promise.finally(() => {
-            this.promisesRejections.delete(rejectCallback);
-        });
-        return promise;
-    }
-    promiseState(p) {
-        if (p.status) {
-            return p.status;
-        }
-        if (!Promise.race) {
-            return new Promise(resolve => {
-                p.then(v => {
-                    resolve('fulfilled');
-                    return v;
-                }, e => {
-                    resolve('rejected');
-                    throw e;
-                });
-                this.setTimeout(() => {
-                    resolve('pending');
-                }, 100);
-            });
-        }
-        const t = {};
-        return Promise.race([p, t]).then(v => (v === t ? 'pending' : 'fulfilled'), () => 'rejected');
-    }
-    clear() {
-        this.timers.forEach(key => {
-            Object(helpers["clearTimeout"])(this.timers.get(key));
-        });
-        this.timers.clear();
-        this.promisesRejections.forEach(reject => {
-            reject();
-        });
-        this.promisesRejections.clear();
-    }
-    destruct() {
-        this.clear();
-        this.isDestructed = true;
-    }
-}
-
 // EXTERNAL MODULE: ./src/core/global.ts
 var global = __webpack_require__(8);
 
@@ -12204,7 +12205,7 @@ class view_View extends core_component["a" /* Component */] {
         this.isJodit = isJodit;
         this.isView = true;
         this.components = new Set();
-        this.version = "3.4.22";
+        this.version = "3.4.23";
         this.async = new async_Async();
         this.buffer = storage_Storage.makeStorage();
         this.__isFullSize = false;
@@ -18277,6 +18278,7 @@ var plugin_system = __webpack_require__(28);
 
 
 
+
 // CONCATENATED MODULE: ./src/jodit.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -20292,6 +20294,7 @@ config["a" /* Config */].prototype.askBeforePasteFromWord = true;
 config["a" /* Config */].prototype.processPasteFromWord = true;
 config["a" /* Config */].prototype.nl2brInPlainText = true;
 config["a" /* Config */].prototype.defaultActionOnPaste = constants["INSERT_AS_HTML"];
+config["a" /* Config */].prototype.defaultActionOnPasteFromWord = null;
 config["a" /* Config */].prototype.draggableTags = ['img', 'a', 'jodit-media', 'jodit'];
 config["a" /* Config */].prototype.controls.cut = {
     command: 'cut',
@@ -20438,7 +20441,7 @@ class paste_paste extends plugin_Plugin {
                 });
             }
             else {
-                this.insertFromWordByType(e, text, this.j.o.defaultActionOnPaste);
+                this.insertFromWordByType(e, text, this.j.o.defaultActionOnPasteFromWord || this.j.o.defaultActionOnPaste);
             }
             return true;
         }
