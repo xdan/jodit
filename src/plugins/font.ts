@@ -9,12 +9,22 @@ import { Dom } from '../core/dom';
 import { css, dataBind, isVoid, normalizeSize } from '../core/helpers/';
 import { IControlType, IJodit } from '../types/';
 
+declare module '../config' {
+	interface Config {
+		defaultFontSizePoints: 'px' | 'pt'
+	}
+}
+
+/**
+ * Default font-size points
+ */
+Config.prototype.defaultFontSizePoints = 'px';
+
 Config.prototype.controls.fontsize = ({
 	command: 'fontSize',
 
 	data: {
 		cssRule: 'font-size',
-		normalize: <T>(v: T): T => v
 	},
 
 	list: [
@@ -38,7 +48,7 @@ Config.prototype.controls.fontsize = ({
 	exec: (editor, event, { control }): void | false => {
 		const key = `button${control.command}`;
 
-		const value =
+		let value =
 			(control.args && control.args[0]) || dataBind(editor, key);
 
 		if (isVoid(value)) {
@@ -47,6 +57,10 @@ Config.prototype.controls.fontsize = ({
 
 		dataBind(editor, key, value);
 
+		if (control.command?.toLowerCase() === 'fontsize') {
+			value = `${value}${editor.o.defaultFontSizePoints}`;
+		}
+
 		editor.execCommand(
 			control.command as string,
 			false,
@@ -54,14 +68,22 @@ Config.prototype.controls.fontsize = ({
 		);
 	},
 
-	childTemplate: (editor, key: string, value: string) => value,
+	childTemplate: (editor, key: string, value: string) => {
+		return `${value}${editor.o.defaultFontSizePoints}`
+	},
 
 	tooltip: 'Font size',
 
 	isChildActive: (editor, control: IControlType): boolean => {
 		const current = editor.s.current(),
 			cssKey = control.data?.cssRule || 'font-size',
-			normalize = control.data?.normalize || ((v: string): string => v);
+			normalize = control.data?.normalize || ((v: string): string => {
+				if (/pt$/i.test(v) && editor.o.defaultFontSizePoints === 'pt') {
+					return v.replace(/pt$/i, '');
+				}
+
+				return v;
+			});
 
 		if (current) {
 			const currentBpx: HTMLElement =

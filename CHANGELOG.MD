@@ -1,4 +1,65 @@
 # Changelog
+## 3.4.22
+
+* https://github.com/xdan/jodit/issues/467
+* https://github.com/xdan/jodit/issues/466
+
+### Features
+Added `maxHeight` option.
+```js
+const jodit = Jodit.make('#editor', {
+    minHeight: 200,
+    maxHeight: 500
+});
+```
+
+## 3.4.18
+* https://github.com/xdan/jodit/issues/463
+* https://github.com/xdan/jodit/issues/446
+* https://github.com/xdan/jodit/issues/342
+* https://github.com/xdan/jodit/issues/340
+
+## 3.4.16
+### Bug fixes
+* Fixed https://github.com/xdan/jodit/issues/456
+* Fixed https://github.com/xdan/jodit/issues/454
+* Fixed https://github.com/xdan/jodit/issues/453
+* Fixed https://github.com/xdan/jodit/issues/451
+* Fixed https://github.com/xdan/jodit/issues/444
+* Fixed https://github.com/xdan/jodit/issues/428
+* Fixed https://github.com/xdan/jodit/issues/427
+* Fixed https://github.com/xdan/jodit/issues/426
+* Fixed https://github.com/xdan/jodit/issues/222
+
+### Features
+* Added Find and Preview buttons
+* https://github.com/xdan/jodit/issues/417
+Added `defaultFontSizePoints` options. Possible values `pt` or `px`. By default: `px`
+```js
+const editor = new Jodit('#editor', {
+    defaultFontSizePoints: 'pt'
+});
+```
+
+* https://github.com/xdan/jodit/issues/449
+Added `showCharsCounter` options.
+```js
+const editor = new Jodit('#editor', {
+    language: 'en',
+    showCharsCounter: true,
+    countHTMLChars: true
+});
+
+editor.value = '<p>Simple text</p><p>Simple text</p>';
+const statusbar = editor.container.querySelector(
+'.jodit-status-bar'
+);
+
+expect(
+    statusbar.textContent.match(/Chars: 36/)
+).is.not.null;
+```
+
 ## 3.4.15
 * Fixed https://github.com/xdan/jodit/issues/441
 * Fixed https://github.com/xdan/jodit/issues/437

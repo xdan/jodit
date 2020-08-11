@@ -8,11 +8,6 @@ import * as consts from './core/constants';
 import { Dom } from './core/dom';
 import {
 	$$,
-	convertMediaUrlToVideoEmbed,
-	defaultLanguage,
-	isURL,
-	trim,
-	val,
 	extend,
 	isArray
 } from './core/helpers/';
@@ -30,8 +25,7 @@ import {
 	IUIButtonState,
 	Nullable
 } from './types';
-import { FileSelectorWidget, TabOption, TabsWidget } from './modules/widget';
-import { getContainer } from './core/global';
+import { FileSelectorWidget } from './modules/widget';
 
 /**
  * Default Editor's Configuration
@@ -150,11 +144,6 @@ export class Config implements IViewOptions {
 	saveModeInStorage: boolean = false;
 
 	/**
-	 * if set true and height !== auto then after reload editor will be have latest height
-	 */
-	saveHeightInStorage: boolean = false;
-
-	/**
 	 * Options specifies whether the editor is to have its spelling and grammar checked or not
 	 * @see {@link http://www.w3schools.com/tags/att_global_spellcheck.asp}
 	 */
@@ -208,75 +197,6 @@ export class Config implements IViewOptions {
 	 * ```
 	 */
 	triggerChangeEvent: boolean = true;
-
-	/**
-	 * Editor's width
-	 *
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    width: '100%',
-	 * })
-	 * ```
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    width: 600, // equivalent for '600px'
-	 * })
-	 * ```
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    width: 'auto', // autosize
-	 * })
-	 * ```
-	 */
-
-	width: number | string = 'auto';
-	minWidth: number | string = '200px';
-	maxWidth: number | string = '100%';
-
-	/**
-	 * Editor's height
-	 *
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    height: '100%',
-	 * })
-	 * ```
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    height: 600, // equivalent for '600px'
-	 * })
-	 * ```
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    height: 'auto', // default - autosize
-	 * })
-	 * ```
-	 */
-	height: string | number = 'auto';
-
-	/**
-	 * Editor's min-height
-	 *
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    minHeight: '30%' //min-height: 30%
-	 * })
-	 * ```
-	 * @example
-	 * ```javascript
-	 * new Jodit('.editor', {
-	 *    minHeight: 200 //min-height: 200px
-	 * })
-	 * ```
-	 */
-	minHeight: number | string = 200;
 
 	/**
 	 * The writing direction of the language which is used to create editor content. Allowed values are: ''
@@ -699,6 +619,8 @@ export class Config implements IViewOptions {
 		'symbol',
 		'fullsize',
 		'print',
+		'preview',
+		'find',
 		'about'
 	];
 
@@ -853,72 +775,6 @@ export const OptionsDefault: any = function (
 };
 
 Config.prototype.controls = {
-	print: {
-		exec: (editor: IJodit) => {
-			const iframe = editor.create.element('iframe');
-
-			Object.assign(iframe.style, {
-				position: 'fixed',
-				right: 0,
-				bottom: 0,
-				width: 0,
-				height: 0,
-				border: 0
-			});
-
-			getContainer(editor, Config).appendChild(iframe);
-
-			const afterFinishPrint = () => {
-				editor.e
-					.off(editor.ow, 'mousemove', afterFinishPrint);
-				Dom.safeRemove(iframe);
-			};
-
-			const mywindow = iframe.contentWindow;
-			if (mywindow) {
-				editor.e
-					.on(mywindow, 'onbeforeunload onafterprint', afterFinishPrint)
-					.on(editor.ow, 'mousemove', afterFinishPrint);
-
-				if (editor.o.iframe) {
-					/**
-					 * @event generateDocumentStructure.iframe
-					 * @property {Document} doc Iframe document
-					 * @property {Jodit} editor
-					 */
-					editor.e.fire(
-						'generateDocumentStructure.iframe',
-						mywindow.document,
-						editor
-					);
-
-					mywindow.document.body.innerHTML = editor.value;
-				} else {
-					mywindow.document.write(
-						'<!doctype html><html lang="' +
-							defaultLanguage(editor.o.language) +
-							'"><head><title></title></head>' +
-							'<body>' +
-							editor.value +
-							'</body></html>'
-					);
-					mywindow.document.close();
-				}
-
-				mywindow.focus();
-				mywindow.print();
-			}
-		},
-		mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
-		tooltip: 'Print'
-	} as IControlType,
-
-	hr: {
-		command: 'insertHorizontalRule',
-		tags: ['hr'],
-		tooltip: 'Insert Horizontal Line'
-	} as IControlType,
-
 	image: {
 		popup: (editor: IJodit, current, self, close) => {
 			let sourceImage: HTMLImageElement | null = null;
@@ -1042,89 +898,6 @@ Config.prototype.controls = {
 		},
 		tags: ['a'],
 		tooltip: 'Insert file'
-	} as IControlType,
-
-	video: {
-		popup: (editor: IJodit, current, control, close) => {
-			const bylink = editor.c.fromHTML(
-					`<form class="jodit-form">
-					<div class="jodit jodit-form__group">
-						<input class="jodit-input" required name="code" placeholder="http://" type="url"/>
-						<button class="jodit-button" type="submit">${editor.i18n('Insert')}</button>
-					</div>
-				</form>`
-				) as HTMLFormElement,
-				bycode = editor.c.fromHTML(
-					`<form class="jodit-form">
-									<div class="jodit-form__group">
-										<textarea class="jodit-textarea" required name="code" placeholder="${editor.i18n(
-											'Embed code'
-										)}"></textarea>
-										<button class="jodit-button" type="submit">${editor.i18n('Insert')}</button>
-									</div>
-								</form>`
-				) as HTMLFormElement,
-				tabs: TabOption[] = [],
-				selinfo = editor.s.save(),
-				insertCode = (code: string) => {
-					editor.s.restore(selinfo);
-					editor.s.insertHTML(code);
-					close();
-				};
-
-			tabs.push(
-				{
-					icon: 'link',
-					name: 'Link',
-					content: bylink
-				},
-				{
-					icon: 'source',
-					name: 'Code',
-					content: bycode
-				}
-			);
-
-			editor.e.on(bycode, 'submit', event => {
-				event.preventDefault();
-
-				if (!trim(val(bycode, 'textarea[name=code]'))) {
-					(bycode.querySelector(
-						'textarea[name=code]'
-					) as HTMLTextAreaElement).focus();
-					(bycode.querySelector(
-						'textarea[name=code]'
-					) as HTMLTextAreaElement).classList.add('jodit_error');
-					return false;
-				}
-
-				insertCode(val(bycode, 'textarea[name=code]'));
-				return false;
-			});
-
-			editor.e.on(bylink, 'submit', event => {
-				event.preventDefault();
-
-				if (!isURL(val(bylink, 'input[name=code]'))) {
-					(bylink.querySelector(
-						'input[name=code]'
-					) as HTMLInputElement).focus();
-					(bylink.querySelector(
-						'input[name=code]'
-					) as HTMLInputElement).classList.add('jodit_error');
-					return false;
-				}
-				insertCode(
-					convertMediaUrlToVideoEmbed(val(bylink, 'input[name=code]'))
-				);
-				return false;
-			});
-
-			return TabsWidget(editor, tabs);
-		},
-
-		tags: ['iframe'],
-		tooltip: 'Insert youtube/vimeo video'
 	} as IControlType
 };
 

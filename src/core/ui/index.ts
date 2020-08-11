@@ -10,4 +10,5 @@ export * from './popup';
 export * from './separator';
 export * from './list/group';
 export * from './list/list';
+export * from './form';
 export * from './icon';

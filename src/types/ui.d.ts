@@ -18,6 +18,7 @@ import { IViewBased } from './view';
 
 export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 	parentElement: Nullable<IUIElement>;
+	container: HTMLElement;
 
 	closest<T extends Function>(type: T | IUIElement): Nullable<IUIElement>;
 
@@ -26,25 +27,30 @@ export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 	appendTo(element: HTMLElement): this;
 
 	mods: IDictionary<string | boolean | null>;
+
 	setMod(
 		name: string,
 		value: string | boolean | null,
 		container?: HTMLElement
 	): this;
+	getClassName(elementName: string): string;
+}
+
+export interface IUIIconState {
+	name: string;
+	iconURL: string;
+	fill: string;
 }
 
 export interface IUIButtonState {
 	size: 'tiny' | 'xsmall' | 'small' | 'middle' | 'large';
 	name: string;
 	status: string;
+	type: 'button' | 'submit';
 	disabled: boolean;
 	activated: boolean;
 
-	icon: {
-		name: string;
-		iconURL: string;
-		fill: string;
-	};
+	icon: IUIIconState;
 
 	text: string;
 	tooltip: string;
@@ -53,7 +59,10 @@ export interface IUIButtonState {
 }
 
 export interface IUIButtonStatePartial {
+	name?: IUIButtonState['name'];
 	size?: IUIButtonState['size'];
+	status?: IUIButtonState['status'];
+	type?: IUIButtonState['type'];
 	disabled?: boolean;
 	activated?: boolean;
 	icon?: {
@@ -62,6 +71,7 @@ export interface IUIButtonStatePartial {
 	};
 	text?: string;
 	tooltip?: string;
+	tabIndex?: IUIButtonState['tabIndex'];
 }
 
 export interface IUIButton extends IViewComponent, IUIElement, IFocusable {
@@ -79,6 +89,7 @@ export interface IUIButton extends IViewComponent, IUIElement, IFocusable {
 
 export interface IUIGroup extends IUIElement {
 	elements: IUIElement[];
+	allChildren: IUIElement[];
 	append(elm: IUIElement): void;
 	clear(): void;
 }
@@ -100,3 +111,30 @@ export interface IUIList extends IUIGroup {
 		target?: Nullable<HTMLElement>
 	): IUIList;
 }
+
+export interface IUIForm extends IUIGroup {
+	container: HTMLFormElement;
+	submit(): void;
+	validate(): boolean;
+	onSubmit(handler: (data: IDictionary) => false | void): void;
+}
+
+export interface IUIInput extends IUIElement{
+	nativeInput: HTMLInputElement | HTMLTextAreaElement;
+	options: {
+		name: string;
+		label?: string;
+		ref?: string;
+		type?: 'text' | 'checkbox' | 'url';
+		placeholder?: string;
+		required?: boolean;
+		validators?: string[]
+	}
+	value: string;
+	error: string;
+	validate(): boolean;
+	focus(): void;
+}
+
+export type IUIInputValidator = (input: IUIInput) => boolean;
+

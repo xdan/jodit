@@ -6,6 +6,7 @@
 
 import 'classlist-polyfill';
 import 'es6-promise/auto';
+import { IDictionary } from './types';
 
 if (!Array.from) {
 	Array.from = <T>(object: T[]): T[] => {
@@ -19,6 +20,38 @@ if (!Array.prototype.includes) {
 	Array.prototype.includes = function(value: any) {
 		return this.indexOf(value) > -1;
 	};
+}
+
+// for ie11
+if (typeof Object.assign !== 'function') {
+	// Must be writable: true, enumerable: false, configurable: true
+	Object.defineProperty(Object, "assign", {
+		value: function assign(target: IDictionary, varArgs: IDictionary) { // .length of function is 2
+			'use strict';
+			if (target === null || target === undefined) {
+				throw new TypeError('Cannot convert undefined or null to object');
+			}
+
+			const to = Object(target);
+
+			for (let index = 1; index < arguments.length; index++) {
+				// eslint-disable-next-line prefer-rest-params
+				const nextSource = arguments[index];
+
+				if (nextSource !== null && nextSource !== undefined) {
+					for (const nextKey in nextSource) {
+						// Avoid bugs when hasOwnProperty is shadowed
+						if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+							to[nextKey] = nextSource[nextKey];
+						}
+					}
+				}
+			}
+			return to;
+		},
+		writable: true,
+		configurable: true
+	});
 }
 
 if (!Array.prototype.find) {

@@ -4,22 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../../config';
 import { css, ctrlKey, dataBind, splitArray } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { Dom } from '../../core/dom';
 import { getContainer } from '../../core/global';
-
-declare module '../../config' {
-	interface Config {
-		draggableTags: string | string[];
-	}
-}
-
-/**
- * Draggable elements
- */
-Config.prototype.draggableTags = ['img', 'a', 'jodit-media', 'jodit'];
 
 /**
  * Process drag and drop image or another element inside the editor

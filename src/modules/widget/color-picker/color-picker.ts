@@ -101,7 +101,7 @@ export const ColorPickerWidget = (
 			editor.c.fromHTML(
 				'<div class="jodit-color-picker__native">' +
 					iconPalette +
-					'<input type="color" value=""/>' +
+					'<input type="color" value="#ffffff"/>' +
 					'</div>'
 			)
 		);

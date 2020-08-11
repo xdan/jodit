@@ -112,6 +112,7 @@ Config.prototype.filebrowser = {
 
 	createNewFolder: true,
 	deleteFolder: true,
+	renameFolder: true,
 	moveFolder: true,
 	moveFile: true,
 	showFoldersPanel: true,

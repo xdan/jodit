@@ -6,8 +6,9 @@
 
 import { Confirm, Prompt } from '../../dialog';
 import { isValidName } from '../../../core/helpers/checker';
-import { error } from '../../../core/helpers';
-import { IFileBrowser } from '../../../types';
+import { error, normalizePath } from '../../../core/helpers';
+import { IDictionary, IFileBrowser } from '../../../types';
+import { DEFAULT_SOURCE_NAME } from '../data-provider';
 
 export function selfListeners(this: IFileBrowser): void {
 	const state = this.state,
@@ -30,6 +31,118 @@ export function selfListeners(this: IFileBrowser): void {
 				state.filterWord = value;
 				self.loadItems();
 			}
+		})
+		.on('openFolder.filebrowser', (data: IDictionary): void => {
+			let path;
+
+			if (data.name === '..') {
+				path = data.path
+					.split('/')
+					.filter((p: string) => p.length)
+					.slice(0, -1)
+					.join('/');
+			} else {
+				path = normalizePath(data.path, data.name);
+			}
+
+			self.state.currentPath = path;
+			self.state.currentSource =
+				data.name === '.' ? DEFAULT_SOURCE_NAME : data.source;
+		})
+		.on('removeFolder.filebrowser', (data: IDictionary): void => {
+			Confirm(
+				self.i18n('Are you sure?'),
+				self.i18n('Delete'),
+				(yes: boolean) => {
+					if (yes) {
+						self.dataProvider
+							.folderRemove(data.path, data.name, data.source)
+							.then(resp => {
+								if (self.o.folderRemove?.process) {
+									resp = self.o.folderRemove.process.call(
+										self,
+										resp
+									);
+								}
+
+								if (!self.o.isSuccess(resp)) {
+									throw error(self.o.getMessage(resp));
+								} else {
+									self.state.activeElements = [];
+									self.status(self.o.getMessage(resp), true);
+								}
+
+								self.loadTree();
+							})
+							.catch(self.status);
+					}
+				}
+			).bindDestruct(self);
+		})
+		.on('renameFolder.filebrowser', (data: IDictionary): void => {
+			Prompt(
+				self.i18n('Enter new name'),
+				self.i18n('Rename'),
+				(newName: string): false | void => {
+					if (!isValidName(newName)) {
+						self.status(self.i18n('Enter new name'));
+						return false;
+					}
+
+					self.dataProvider
+						.folderRename(
+							data.path,
+							data.name,
+							newName,
+							data.source
+						)
+						.then(resp => {
+							if (
+								self.o.folderRename &&
+								self.o.folderRename.process
+							) {
+								resp = self.o.folderRename.process.call(
+									self,
+									resp
+								);
+							}
+
+							if (!self.o.isSuccess(resp)) {
+								throw error(self.o.getMessage(resp));
+							} else {
+								self.state.activeElements = [];
+								self.status(self.o.getMessage(resp), true);
+							}
+
+							self.loadTree();
+						})
+						.catch(self.status);
+
+					return;
+				},
+				self.i18n('type name'),
+				data.name
+			).bindDestruct(self);
+		})
+		.on('addFolder.filebrowser', (data: IDictionary): void => {
+			Prompt(
+				self.i18n('Enter Directory name'),
+				self.i18n('Create directory'),
+				(name: string) => {
+					self.dataProvider
+						.createFolder(name, data.path, data.source)
+						.then(resp => {
+							if (self.o.isSuccess(resp)) {
+								self.loadTree();
+							} else {
+								self.status(self.o.getMessage(resp));
+							}
+
+							return resp;
+						}, self.status);
+				},
+				self.i18n('type name')
+			).bindDestruct(self);
 		})
 		.on('fileRemove.filebrowser', () => {
 			if (self.state.activeElements.length) {

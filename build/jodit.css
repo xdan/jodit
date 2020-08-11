@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.15
+ * Version: v3.4.22
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -50,7 +50,7 @@
   color:#4c4c4c;
 }
 .jodit-form.jodit_error{
-  border-color:#f7d1d1;
+  border-color:#ff3b3b;
   box-shadow:inset 0 0 3px 0 hsla(0, 0%, 74.1%, .3);
 }
 @media (max-width:768px){
@@ -156,6 +156,15 @@
 .jodit-textarea[disabled]{
   background-color:#f0f0f0;
   color:#dadada;
+}
+.jodit-input_has-error_true{
+  border-color:#ff3b3b;
+}
+.jodit-select_has-error_true{
+  border-color:#ff3b3b;
+}
+.jodit-textarea_has-error_true{
+  border-color:#ff3b3b;
 }
 .jodit-input:focus{
   border-color:#66afe9;
@@ -490,6 +499,7 @@ svg.jodit-icon{
 }
 .jodit-container:not(.jodit_inline) .jodit-workplace{
   border:0 solid #dadada;
+  max-height:100%;
 }
 .jodit-container:not(.jodit_inline).jodit_disabled{
   background:rvar(--jd-color-gray);
@@ -865,6 +875,9 @@ svg.jodit-icon{
   fill:#212529;
   stroke:#212529;
 }
+.jodit-ui-button-statuses_status_default:focus:not([disabled]){
+  outline:1px dashed #dae0e5;
+}
 .jodit-ui-button-statuses_status_primary{
   background-color:#007bff;
   color:#fff;
@@ -891,6 +904,40 @@ svg.jodit-icon{
 .jodit-ui-button-statuses_status_primary:active:not([disabled]) svg{
   fill:#fff;
   stroke:#fff;
+}
+.jodit-ui-button-statuses_status_primary:focus:not([disabled]){
+  outline:1px dashed #0062cc;
+}
+.jodit-ui-button-statuses_status_secondary{
+  background-color:#d8d8d8;
+  color:#212529;
+  border-radius:0;
+}
+.jodit-ui-button-statuses_status_secondary svg{
+  fill:#212529;
+  stroke:#212529;
+}
+.jodit-ui-button-statuses_status_secondary [disabled]{
+  opacity:.7;
+}
+.jodit-ui-button-statuses_status_secondary:hover:not([disabled]){
+  background-color:#c9cdd1;
+  color:#212529;
+}
+.jodit-ui-button-statuses_status_secondary:hover:not([disabled]) svg{
+  fill:#212529;
+  stroke:#212529;
+}
+.jodit-ui-button-statuses_status_secondary:active:not([disabled]){
+  background-color:#dae0e5;
+  color:#212529;
+}
+.jodit-ui-button-statuses_status_secondary:active:not([disabled]) svg{
+  fill:#212529;
+  stroke:#212529;
+}
+.jodit-ui-button-statuses_status_secondary:focus:not([disabled]){
+  outline:1px dashed #dae0e5;
 }
 .jodit-ui-button-statuses_status_success{
   background-color:#28a745;
@@ -919,6 +966,9 @@ svg.jodit-icon{
   fill:#fff;
   stroke:#fff;
 }
+.jodit-ui-button-statuses_status_success:focus:not([disabled]){
+  outline:1px dashed #1e7e34;
+}
 .jodit-ui-button-statuses_status_danger{
   background-color:#dc3545;
   color:#fff;
@@ -946,12 +996,15 @@ svg.jodit-icon{
   fill:#fff;
   stroke:#fff;
 }
+.jodit-ui-button-statuses_status_danger:focus:not([disabled]){
+  outline:1px dashed #bd2130;
+}
 .jodit-ui-button-style{
   padding:0 8px;
   border-radius:3px;
 }
 .jodit-ui-button,.jodit-ui-button-style{
-  display:flex;
+  display:inline-flex;
   justify-content:center;
   align-items:center;
 }
@@ -1088,6 +1141,9 @@ svg.jodit-icon{
 .jodit-ui-button__icon:empty+.jodit-ui-button__text:not(:empty){
   padding:0 8px;
 }
+.jodit-ui-button:focus:not([disabled]){
+  outline:1px dashed #b5d6fd;
+}
 .jodit-ui-button_status_default{
   background-color:#d8d8d8;
   color:#212529;
@@ -1114,6 +1170,9 @@ svg.jodit-icon{
 .jodit-ui-button_status_default:active:not([disabled]) svg{
   fill:#212529;
   stroke:#212529;
+}
+.jodit-ui-button_status_default:focus:not([disabled]){
+  outline:1px dashed #dae0e5;
 }
 .jodit-ui-button_status_primary{
   background-color:#007bff;
@@ -1142,6 +1201,40 @@ svg.jodit-icon{
   fill:#fff;
   stroke:#fff;
 }
+.jodit-ui-button_status_primary:focus:not([disabled]){
+  outline:1px dashed #0062cc;
+}
+.jodit-ui-button_status_secondary{
+  background-color:#d8d8d8;
+  color:#212529;
+  border-radius:0;
+}
+.jodit-ui-button_status_secondary svg{
+  fill:#212529;
+  stroke:#212529;
+}
+.jodit-ui-button_status_secondary [disabled]{
+  opacity:.7;
+}
+.jodit-ui-button_status_secondary:hover:not([disabled]){
+  background-color:#c9cdd1;
+  color:#212529;
+}
+.jodit-ui-button_status_secondary:hover:not([disabled]) svg{
+  fill:#212529;
+  stroke:#212529;
+}
+.jodit-ui-button_status_secondary:active:not([disabled]){
+  background-color:#dae0e5;
+  color:#212529;
+}
+.jodit-ui-button_status_secondary:active:not([disabled]) svg{
+  fill:#212529;
+  stroke:#212529;
+}
+.jodit-ui-button_status_secondary:focus:not([disabled]){
+  outline:1px dashed #dae0e5;
+}
 .jodit-ui-button_status_success{
   background-color:#28a745;
   color:#fff;
@@ -1169,6 +1262,9 @@ svg.jodit-icon{
   fill:#fff;
   stroke:#fff;
 }
+.jodit-ui-button_status_success:focus:not([disabled]){
+  outline:1px dashed #1e7e34;
+}
 .jodit-ui-button_status_danger{
   background-color:#dc3545;
   color:#fff;
@@ -1195,6 +1291,9 @@ svg.jodit-icon{
 .jodit-ui-button_status_danger:active:not([disabled]) svg{
   fill:#fff;
   stroke:#fff;
+}
+.jodit-ui-button_status_danger:focus:not([disabled]){
+  outline:1px dashed #bd2130;
 }
 .jodit-popup{
   background:0 0;
@@ -1267,6 +1366,136 @@ svg.jodit-icon{
   border-top:1px solid #dadada;
   height:0 !important;
 }
+
+.jodit-ui-input{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:8px;
+}
+.jodit-ui-input__input{
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size:14px;
+  width:100%;
+  height:32px;
+  padding:calc(8px/2) 8px;
+  line-height:100%;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  outline:none;
+  box-sizing:border-box;
+  border:1px solid #dadada;
+  border-radius:0;
+  background-color:#fff;
+  min-width:200px;
+}
+.jodit-ui-input__input[disabled]{
+  background-color:#f0f0f0;
+  color:#dadada;
+}
+.jodit-ui-input__input_has-error_true{
+  border-color:#ff3b3b;
+}
+.jodit-ui-input_has-error_true .jodit-ui-input__input{
+  border-color:#ff3b3b;
+}
+.jodit-ui-input__error{
+  display:block;
+  color:#a5a5a5;
+  font-size:.8em;
+}
+.jodit-ui-input__label{
+  display:block;
+  color:#a5a5a5;
+  font-size:.8em;
+}
+.jodit-ui-input__error{
+  color:#ff3b3b;
+}
+.jodit-ui-input_has-error_true .jodit-ui-input__label{
+  color:#ff3b3b;
+}
+.jodit-ui-block .jodit-ui-input{
+  margin-bottom:0;
+}
+
+.jodit-ui-text-area{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:8px;
+}
+.jodit-ui-text-area__input{
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size:14px;
+  width:100%;
+  height:32px;
+  padding:calc(8px/2) 8px;
+  line-height:100%;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  outline:none;
+  box-sizing:border-box;
+  border:1px solid #dadada;
+  border-radius:0;
+  background-color:#fff;
+  min-width:200px;
+}
+.jodit-ui-text-area__input[disabled]{
+  background-color:#f0f0f0;
+  color:#dadada;
+}
+.jodit-ui-text-area__input_has-error_true{
+  border-color:#ff3b3b;
+}
+.jodit-ui-text-area_has-error_true .jodit-ui-text-area__input{
+  border-color:#ff3b3b;
+}
+.jodit-ui-text-area__error{
+  display:block;
+  color:#a5a5a5;
+  font-size:.8em;
+}
+.jodit-ui-text-area__label{
+  display:block;
+  color:#a5a5a5;
+  font-size:.8em;
+}
+.jodit-ui-text-area__error{
+  color:#ff3b3b;
+}
+.jodit-ui-text-area_has-error_true .jodit-ui-text-area__label{
+  color:#ff3b3b;
+}
+.jodit-ui-text-area__input{
+  min-height:60px;
+}
+
+.jodit-ui-checkbox{
+  display:flex;
+  flex-direction:row-reverse;
+  align-items:center;
+  justify-content:flex-end;
+  margin-bottom:8px;
+}
+.jodit-ui-checkbox__input{
+  margin-right:8px;
+}
+.jodit-ui-block .jodit-ui-checkbox{
+  margin-bottom:0;
+}
+
+.jodit-ui-block{
+  margin-bottom:8px;
+  display:flex;
+  justify-content:stretch;
+  align-items:center;
+}
+.jodit-ui-block_align_full{
+  justify-content:space-between;
+}
 .jodit-tabs{
   font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 		Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
@@ -1333,20 +1562,22 @@ svg.jodit-icon{
   transform:translateZ(0);
   box-shadow:0 4px 1px -2px rgba(76, 76, 76, 0.2),
 		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
+  z-index:30000005;
 }
 .jodit-context-menu__content{
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size:14px;
   padding:8px;
   background:#fff;
   overflow-scrolling:touch;
   overflow:auto;
   max-height:300px;
 }
-.jodit-context-menu__actions{
-  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-		Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size:14px;
+.jodit-context-menu .jodit-ui-button{
+  display:flex;
 }
-.jodit-context-menu__content{
+.jodit-context-menu__actions{
   font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 		Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size:14px;
@@ -1602,9 +1833,7 @@ svg.jodit-icon{
   background-color:#f9f9f9;
   overflow:hidden;
   border-radius:3px 3px 0 0;
-}
-.jodit-toolbar__box:not(:empty)+.jodit-workplace{
-  border-top-width:1px;
+  border-bottom:1px solid #dadada;
 }
 .jodit-toolbar-collection,.jodit-toolbar-editor-collection{
   display:flex;
@@ -1863,7 +2092,7 @@ svg.jodit-icon{
   background-clip:padding-box;
   text-decoration:none;
   outline:0;
-  display:flex;
+  display:inline-flex;
   justify-content:center;
   align-items:center;
   padding:0 8px;
@@ -1964,7 +2193,7 @@ svg.jodit-icon{
   background-clip:padding-box;
   text-decoration:none;
   outline:0;
-  display:flex;
+  display:inline-flex;
   justify-content:center;
   align-items:center;
   border-radius:3px;
@@ -2082,6 +2311,9 @@ svg.jodit-icon{
 .jodit-toolbar-content__icon:empty+.jodit-toolbar-content__text:not(:empty){
   padding:0 8px;
 }
+.jodit-toolbar-content:focus:not([disabled]){
+  outline:1px dashed #b5d6fd;
+}
 .jodit-toolbar-content_status_default{
   background-color:#d8d8d8;
   color:#212529;
@@ -2108,6 +2340,9 @@ svg.jodit-icon{
 .jodit-toolbar-content_status_default:active:not([disabled]) svg{
   fill:#212529;
   stroke:#212529;
+}
+.jodit-toolbar-content_status_default:focus:not([disabled]){
+  outline:1px dashed #dae0e5;
 }
 .jodit-toolbar-content_status_primary{
   background-color:#007bff;
@@ -2136,6 +2371,40 @@ svg.jodit-icon{
   fill:#fff;
   stroke:#fff;
 }
+.jodit-toolbar-content_status_primary:focus:not([disabled]){
+  outline:1px dashed #0062cc;
+}
+.jodit-toolbar-content_status_secondary{
+  background-color:#d8d8d8;
+  color:#212529;
+  border-radius:0;
+}
+.jodit-toolbar-content_status_secondary svg{
+  fill:#212529;
+  stroke:#212529;
+}
+.jodit-toolbar-content_status_secondary [disabled]{
+  opacity:.7;
+}
+.jodit-toolbar-content_status_secondary:hover:not([disabled]){
+  background-color:#c9cdd1;
+  color:#212529;
+}
+.jodit-toolbar-content_status_secondary:hover:not([disabled]) svg{
+  fill:#212529;
+  stroke:#212529;
+}
+.jodit-toolbar-content_status_secondary:active:not([disabled]){
+  background-color:#dae0e5;
+  color:#212529;
+}
+.jodit-toolbar-content_status_secondary:active:not([disabled]) svg{
+  fill:#212529;
+  stroke:#212529;
+}
+.jodit-toolbar-content_status_secondary:focus:not([disabled]){
+  outline:1px dashed #dae0e5;
+}
 .jodit-toolbar-content_status_success{
   background-color:#28a745;
   color:#fff;
@@ -2163,6 +2432,9 @@ svg.jodit-icon{
   fill:#fff;
   stroke:#fff;
 }
+.jodit-toolbar-content_status_success:focus:not([disabled]){
+  outline:1px dashed #1e7e34;
+}
 .jodit-toolbar-content_status_danger{
   background-color:#dc3545;
   color:#fff;
@@ -2189,6 +2461,9 @@ svg.jodit-icon{
 .jodit-toolbar-content_status_danger:active:not([disabled]) svg{
   fill:#fff;
   stroke:#fff;
+}
+.jodit-toolbar-content_status_danger:focus:not([disabled]){
+  outline:1px dashed #bd2130;
 }
 .jodit-toolbar-content:hover:not([disabled]){
   background-color:transparent;
@@ -2305,15 +2580,13 @@ svg.jodit-icon{
       -ms-user-select:none;
           user-select:none;
   display:block;
-  padding:8px;
+  padding:2px 4px;
   color:#969696;
   border-bottom:1px solid #484848;
-  line-height:17px;
-  min-height:38px;
   position:relative;
   word-break:break-all;
   background:#5a5a5a;
-  font-size:16px;
+  font-size:12px;
 }
 .jodit-filebrowser__tree.jodit-filebrowser_active .jodit-filebrowser__tree-item{
   display:flex;
@@ -2372,8 +2645,6 @@ svg.jodit-icon{
   margin-bottom:0;
   display:block;
   padding:8px;
-  line-height:17px;
-  min-height:38px;
   position:relative;
   word-break:break-all;
   background:#5a5a5a;

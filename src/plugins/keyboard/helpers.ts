@@ -18,7 +18,7 @@ export function getNeighbor(
 	return call(
 		backspace ? Dom.prev : Dom.next,
 		node,
-		n => Boolean(n && (!Dom.isText(n) || n.nodeValue?.length)),
+		n => Boolean(n && (!Dom.isText(n) || trim(n?.nodeValue || '').length)),
 		root
 	);
 }

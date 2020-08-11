@@ -36,7 +36,7 @@ export function call<T extends any[], R>(
  * @param [value]
  */
 export function attr(
-	elm: HTMLElement | null,
+	elm: Element | null,
 	key: string,
 	value?: string | number | boolean | null
 ): null | string {

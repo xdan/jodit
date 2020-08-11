@@ -809,13 +809,10 @@ describe('Test Selection.applyStyle method', function() {
 			const editor = getJodit();
 			editor.value = 'test';
 
-			const sel = editor.s.sel,
-				range = editor.s.createRange();
+			const range = editor.s.createRange(true);
 
 			range.selectNodeContents(editor.editor.firstChild);
 			range.collapse(false);
-			sel.removeAllRanges();
-			sel.addRange(range);
 
 			editor.execCommand('bold');
 

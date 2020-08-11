@@ -38,4 +38,5 @@ export interface IDialog extends IComponent, IContainer {
 	setContent(content: Content): this;
 	setFooter(content: Content): this;
 	setModal(modal: undefined | boolean): this;
+	getZIndex(): number;
 }

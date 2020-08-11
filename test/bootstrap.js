@@ -43,6 +43,7 @@ const defaultPermissions = {
 
 function mockAjax() {
 	if (typeof window.chai !== 'undefined') {
+		let temp = {};
 		Jodit.modules.Ajax.prototype.send = function () {
 			const ajax = this;
 
@@ -65,6 +66,26 @@ function mockAjax() {
 
 			return new Promise(function (resolve) {
 				switch (action) {
+					case 'folderCreate': {
+						temp.folderName = ajax.options.data.name;
+						resolve({
+							success: true,
+							time: '2020-08-04 19:03:23',
+							data: { code: 220 }
+						});
+						break;
+					}
+
+					case 'folderRemove':
+					case 'folderRename': {
+						temp.folderName = ajax.options.data.newname;
+						resolve({
+							success: true,
+							time: '2020-08-04 19:03:23',
+							data: { code: 220 }
+						});
+						break;
+					}
 					case 'fileUpload': {
 						const file = ajax.options.data.get('files[0]');
 						resolve({
@@ -129,7 +150,10 @@ function mockAjax() {
 							}
 						});
 						break;
-					case 'folders':
+					case 'folders': {
+						const folderName = temp.folderName || 'ceicom';
+						delete temp.folderName;
+
 						resolve({
 							success: true,
 							time: '2018-03-15 12:49:49',
@@ -139,13 +163,14 @@ function mockAjax() {
 										baseurl:
 											'https://xdsoft.net/jodit/files/',
 										path: '',
-										folders: ['.', 'ceicom', 'test']
+										folders: ['.', folderName, 'test']
 									}
 								},
 								code: 220
 							}
 						});
 						break;
+					}
 					case 'permissions':
 						resolve({
 							success: true,
@@ -236,11 +261,39 @@ if (typeof window.chai !== 'undefined') {
 }
 
 const i18nkeys = [];
-const excludeI18nKeys = ['adddate'];
+const excludeI18nKeys = [
+	'adddate',
+	'URL',
+	'Custom',
+	'list_test',
+	'OS System Font',
+	'insert Header 1',
+	'insert Header 2',
+	'Empty editor',
+	'Helvetica,sans-serif',
+	'Helvetica',
+	'Arial,Helvetica,sans-serif',
+	'Arial',
+	'Georgia,serif',
+	'Georgia',
+	'Impact,Charcoal,sans-serif',
+	'Impact',
+	'Tahoma,Geneva,sans-serif',
+	'Tahoma',
+	"'Times New Roman',Times,serif",
+	'Times New Roman',
+	'Verdana,Geneva,sans-serif',
+	'Verdana',
+	'Lower Alpha',
+	'Lower Greek',
+	'Lower Roman',
+	'Upper Alpha',
+	'Upper Roman'
+];
 
 Jodit.prototype.i18n = function (key) {
 	!excludeI18nKeys.includes(key) &&
-		i18nkeys.includes(key) &&
+		!i18nkeys.includes(key) &&
 		!key.includes('<svg') &&
 		i18nkeys.push(key);
 
@@ -248,8 +301,9 @@ Jodit.prototype.i18n = function (key) {
 };
 
 Jodit.defaultOptions.events.afterInit = function (editor) {
-	editor && editor.container.setAttribute('data-test-case', window.mochaTestName);
-}
+	editor &&
+		editor.container.setAttribute('data-test-case', window.mochaTestName);
+};
 Jodit.defaultOptions.filebrowser.saveStateInStorage = false;
 Jodit.defaultOptions.observer.timeout = 0;
 Jodit.modules.View.defaultOptions.defaultTimeout = 0;
@@ -444,6 +498,9 @@ function sortStyles(matches) {
 				keyValue[1] = keyValue[1]
 					.split(',')
 					.map(Jodit.modules.Helpers.trim)
+					.map(function (value) {
+						return value.replace(/['"]/g, '');
+					})
 					.join(',');
 			}
 
@@ -584,6 +641,8 @@ const keyCode = Object.keys(codeKey).reduce((res, code) => {
  * @param {string|number|HTMLElement} keyCodeOrElement
  * @param {HTMLElement} [element]
  * @param {Function} applyOpt
+ *
+ * @returns boolean
  */
 function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
 	if (Array.isArray(type)) {
@@ -649,7 +708,7 @@ function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
 		evt.changedTouches = changedTouches;
 	}
 
-	element.dispatchEvent(evt);
+	return element.dispatchEvent(evt);
 }
 
 /**

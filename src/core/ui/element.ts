@@ -115,6 +115,14 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	}
 
 	/**
+	 * Calc BEM element class name
+	 * @param elementName
+	 */
+	getClassName(elementName: string): string {
+		return `${this.componentName}__${elementName}`;
+	}
+
+	/**
 	 * Update UI from state
 	 */
 	update(): void {
@@ -138,16 +146,24 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	}
 
 	/**
-	 * Create main HTML container
+	 * Method create only box
+	 * @param options
 	 */
-	protected createContainer(): HTMLElement {
+	protected makeContainer(options?: IDictionary): HTMLElement {
 		return this.j.c.div(this.componentName);
 	}
 
-	constructor(jodit: T) {
+	/**
+	 * Create main HTML container
+	 */
+	protected createContainer(options?: IDictionary): HTMLElement {
+		return this.makeContainer(options);
+	}
+
+	constructor(jodit: T, options?: IDictionary) {
 		super(jodit);
 
-		this.container = this.createContainer();
+		this.container = this.createContainer(options);
 
 		Object.defineProperty(this.container, 'component', {
 			value: this

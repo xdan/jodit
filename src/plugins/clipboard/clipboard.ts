@@ -4,23 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IControlType, IJodit, IPlugin } from '../../types';
-import { Config } from '../../config';
+import { IJodit, IPlugin } from '../../types';
 import { TEXT_HTML, TEXT_PLAIN } from '../../core/constants';
 import { stripTags } from '../../core/helpers';
-import { getDataTransfer } from './paste';
-
-Config.prototype.controls.cut = {
-	command: 'cut',
-	isDisabled: (editor: IJodit) => editor.s.isCollapsed(),
-	tooltip: 'Cut selection'
-} as IControlType;
-
-Config.prototype.controls.copy = {
-	command: 'copy',
-	isDisabled: (editor: IJodit) => editor.s.isCollapsed(),
-	tooltip: 'Copy selection'
-} as IControlType;
+import { getDataTransfer } from './paste/helpers';
 
 export const pluginKey = 'clipboard';
 
@@ -49,6 +36,10 @@ export class clipboard implements IPlugin {
 				}
 
 				editor.buffer.set(pluginKey, selectedText);
+				editor.e.fire('pasteStack', {
+					html: selectedText,
+					action: editor.o.defaultActionOnPaste
+				});
 
 				if (event.type === 'cut') {
 					editor.s.remove();

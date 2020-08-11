@@ -12,7 +12,8 @@ import {
 	IPluginSystem,
 	PluginInstance,
 	PluginType,
-	CanPromise
+	CanPromise,
+	CanUndef
 } from '../types';
 
 import {
@@ -23,10 +24,10 @@ import {
 	splitArray,
 	appendStyleAsync,
 	isString,
-	kebabCase, callPromise
+	kebabCase,
+	callPromise,
+	isArray
 } from './helpers';
-
-// declare const isProd: boolean;
 
 /**
  * Jodit plugin system
@@ -93,6 +94,18 @@ export class PluginSystem implements IPluginSystem {
 					return;
 				}
 
+				const requires = (plugin as any)?.requires as CanUndef<
+					string[]
+				>;
+
+				if (
+					requires &&
+					isArray(requires) &&
+					this.hasDisabledRequires(disableList, requires)
+				) {
+					return;
+				}
+
 				const instance = PluginSystem.makePluginInstance(jodit, plugin);
 
 				this.initOrWait(jodit, name, instance, doneList, promiseList);
@@ -114,6 +127,21 @@ export class PluginSystem implements IPluginSystem {
 
 			(jodit as any).__plugins = pluginsMap;
 		});
+	}
+
+	/**
+	 * Plugin type has disabled requires
+	 * @param disableList
+	 * @param requires
+	 */
+	private hasDisabledRequires(
+		disableList: string[],
+		requires: string[]
+	): boolean {
+		return Boolean(
+			requires?.length &&
+				disableList.some(disabled => requires.includes(disabled))
+		);
 	}
 
 	/**
@@ -154,8 +182,7 @@ export class PluginSystem implements IPluginSystem {
 				const req = (plugin as IPlugin).requires;
 
 				if (
-					!req ||
-					!req.length ||
+					!req?.length ||
 					req.every(name => doneList.includes(name))
 				) {
 					plugin.init(jodit);

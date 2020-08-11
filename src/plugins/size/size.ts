@@ -5,200 +5,190 @@
  */
 
 import './size.less';
+import autobind from 'autobind-decorator';
 
-import { Config } from '../../config';
-import { css } from '../../core/helpers';
-import { IJodit, IPointBound } from '../../types';
-
-declare module '../../config' {
-	interface Config {
-		allowResizeX: boolean;
-		allowResizeY: boolean;
-	}
-}
-
-Config.prototype.allowResizeX = false;
-Config.prototype.allowResizeY = true;
+import { css, isNumber } from '../../core/helpers';
+import { IJodit } from '../../types';
+import { Plugin } from '../../core/plugin';
 
 /**
- * Resize editor
- * @param {Jodit} editor
+ * Calculate sizes for editor workspace and handle setHeight and setWidth events
  */
-export function size(editor: IJodit): void {
-	const setHeight = (height: number | string) => {
-		css(editor.container, 'height', height);
-
-		if (editor.o.saveHeightInStorage) {
-			editor.storage.set('height', height);
-		}
-	};
-
-	const setWidth = (width: number | string) =>
-		css(editor.container, 'width', width);
-
-	const setHeightWorkPlace = (height: number | string) =>
-		css(editor.workplace, 'height', height);
-	// const setWidthWorkPlace = (width: number | string) => css(editor.workplace, 'width', width);
-
-	if (
-		editor.o.height !== 'auto' &&
-		(editor.o.allowResizeX || editor.o.allowResizeY)
-	) {
-		const handle = editor.c.div(
-				'jodit-editor__resize',
-				'<a tabindex="-1" href="javascript:void(0)"></a>'
-			),
-			start: IPointBound = {
-				x: 0,
-				y: 0,
-				w: 0,
-				h: 0
-			};
-
-		let isResized: boolean = false;
-
-		const onMouseMove = editor.async.throttle((e: MouseEvent) => {
-			if (!isResized) {
-				return;
-			}
-
-			if (editor.o.allowResizeY) {
-				setHeight(start.h + e.clientY - start.y);
-			}
-
-			if (editor.o.allowResizeX) {
-				setWidth(start.w + e.clientX - start.x);
-			}
-
-			resizeWorkspaceImd();
-
-			editor.e.fire('resize');
-		}, editor.defaultTimeout / 10);
-
+@autobind
+export class size extends Plugin {
+	/** @override **/
+	protected afterInit(editor: IJodit) {
 		editor.e
-			.on(handle, 'mousedown touchstart', (e: MouseEvent) => {
-				isResized = true;
+			.on('setHeight.size', this.setHeight)
+			.on('setWidth.size', this.setWidth)
+			.on(
+				'afterInit.size changePlace.size',
+				this.initialize,
+				undefined,
+				true
+			)
+			.on(editor.ow, 'load.size', this.resizeWorkspaces)
+			.on(
+				'afterInit.size resize.size afterUpdateToolbar.size ' +
+					'scroll.size afterResize.size toggleFullSize.size',
+				this.resizeWorkspaces
+			);
 
-				start.x = e.clientX;
-				start.y = e.clientY;
-				start.w = editor.container.offsetWidth;
-				start.h = editor.container.offsetHeight;
-
-				editor.lock();
-
-				editor.e.on(editor.ow, 'mousemove touchmove', onMouseMove);
-
-				e.preventDefault();
-			})
-			.on(editor.ow, 'mouseup touchsend', () => {
-				if (isResized) {
-					isResized = false;
-
-					editor.e.off(editor.ow, 'mousemove touchmove', onMouseMove);
-
-					editor.unlock();
-				}
-			})
-			.on('afterInit', () => {
-				editor.container.appendChild(handle);
-			})
-			.on('toggleFullSize', (fullSize: boolean) => {
-				handle.style.display = fullSize ? 'none' : 'block';
-			});
+		this.initialize();
 	}
 
-	const getNotWorkHeight = (): number =>
-		(editor.o.toolbar ? editor.toolbar.container.offsetHeight : 0) +
-		(editor.statusbar ? editor.statusbar.getHeight() : 0);
+	/**
+	 * Set editor size by options
+	 */
+	private initialize() {
+		const { j } = this;
 
-	const calcMinHeightWorkspace = () => {
-		if (!editor.container || !editor.container.parentNode) {
+		if (j.o.inline) {
 			return;
 		}
 
-		const minHeight: number =
-			(css(editor.container, 'minHeight') as number) - getNotWorkHeight();
+		let { height } = j.o;
 
-		[editor.workplace, editor.iframe, editor.editor].map(elm => {
-			const minHeightD: number =
-				elm === editor.editor ? minHeight - 2 : minHeight; // borders
-			elm && css(elm as HTMLElement, 'minHeight', minHeightD);
-			editor.e.fire('setMinHeight', minHeightD);
+		if (j.o.saveHeightInStorage && height !== 'auto') {
+			const localHeight = j.storage.get<string>('height');
+
+			if (localHeight) {
+				height = localHeight;
+			}
+		}
+
+		css(j.editor, {
+			minHeight: '100%'
 		});
-	};
 
-	const resizeWorkspaceImd = () => {
-		if (
-			!editor ||
-			editor.isDestructed ||
-			!editor.options ||
-			editor.o.inline
-		) {
+		css(j.container, {
+			minHeight: j.o.minHeight,
+			maxHeight: j.o.maxHeight,
+			minWidth: j.o.minWidth,
+			maxWidth: j.o.maxWidth
+		});
+
+		this.setHeight(height);
+		this.setWidth(j.o.width);
+	}
+
+	/**
+	 * Manually change height
+	 * @param height
+	 */
+	private setHeight(height: number | string) {
+		if (isNumber(height)) {
+			const { minHeight, maxHeight } = this.j.o;
+
+			if (isNumber(minHeight) && minHeight > height) {
+				height = minHeight;
+			}
+
+			if (isNumber(maxHeight) && maxHeight < height) {
+				height = maxHeight;
+			}
+		}
+
+		css(this.j.container, 'height', height);
+
+		if (this.j.o.saveHeightInStorage) {
+			this.j.storage.set('height', height);
+		}
+
+		this.resizeWorkspaceImd();
+	}
+
+	/**
+	 * Manually change width
+	 * @param width
+	 */
+	private setWidth(width: number | string) {
+		if (isNumber(width)) {
+			const { minWidth, maxWidth } = this.j.o;
+
+			if (isNumber(minWidth) && minWidth > width) {
+				width = minWidth;
+			}
+
+			if (isNumber(maxWidth) && maxWidth < width) {
+				width = maxWidth;
+			}
+		}
+
+		css(this.j.container, 'width', width);
+
+		this.resizeWorkspaceImd();
+	}
+
+	/**
+	 * Returns service spaces: toolbar + statusbar
+	 */
+	private getNotWorkHeight(): number {
+		return (
+			(this.j.toolbarContainer?.offsetHeight || 0) +
+			(this.j.statusbar?.getHeight() || 0) +
+			2
+		);
+	}
+
+	/**
+	 * Calculate workspace height
+	 */
+	private resizeWorkspaceImd() {
+		if (!this.j || this.j.isDestructed || !this.j.o || this.j.o.inline) {
 			return;
 		}
 
-		calcMinHeightWorkspace();
+		if (!this.j.container || !this.j.container.parentNode) {
+			return;
+		}
 
-		if (
-			editor.container &&
-			(editor.o.height !== 'auto' || editor.isFullSize)
-		) {
-			setHeightWorkPlace(
-				editor.container.offsetHeight - getNotWorkHeight()
+		const minHeight =
+			((css(this.j.container, 'minHeight') as number) || 0) -
+			this.getNotWorkHeight();
+
+		if (isNumber(minHeight) && minHeight > 0) {
+			[this.j.workplace, this.j.iframe, this.j.editor].map(elm => {
+				elm && css(elm, 'minHeight', minHeight);
+			});
+
+			this.j.e.fire('setMinHeight', minHeight);
+		}
+
+		if (isNumber(this.j.o.maxHeight)) {
+			const maxHeight = this.j.o.maxHeight - this.getNotWorkHeight();
+
+			[this.j.workplace, this.j.iframe, this.j.editor].map(elm => {
+				elm && css(elm, 'maxHeight', maxHeight);
+			});
+
+			this.j.e.fire('setMaxHeight', maxHeight);
+		}
+
+		if (this.j.container) {
+			css(
+				this.j.workplace,
+				'height',
+				this.j.o.height !== 'auto' || this.j.isFullSize
+					? this.j.container.offsetHeight - this.getNotWorkHeight()
+					: 'auto'
 			);
 		}
-	};
+	}
 
-	const resizeWorkspace = editor.async.debounce(
-		resizeWorkspaceImd,
-		editor.defaultTimeout
+	/**
+	 * Debounced wrapper for resizeWorkspaceImd
+	 */
+	private resizeWorkspaces = this.j.async.debounce(
+		this.resizeWorkspaceImd,
+		this.j.defaultTimeout,
+		true
 	);
 
-	editor.e
-		.on('toggleFullSize', (fullsize: boolean) => {
-			if (!fullsize && editor.o.height === 'auto') {
-				setHeightWorkPlace('auto');
-				calcMinHeightWorkspace();
-			}
-		})
-		.on(
-			'afterInit changePlace',
-			() => {
-				if (!editor.o.inline) {
-					css(editor.editor, {
-						minHeight: '100%'
-					});
-
-					css(editor.container, {
-						minHeight: editor.o.minHeight,
-						minWidth: editor.o.minWidth,
-						maxWidth: editor.o.maxWidth
-					});
-				}
-
-				let height: string | number = editor.o.height;
-
-				if (editor.o.saveHeightInStorage && height !== 'auto') {
-					const localHeight = editor.storage.get<string>('height');
-
-					if (localHeight) {
-						height = localHeight;
-					}
-				}
-
-				if (!editor.o.inline) {
-					setHeight(height);
-					setWidth(editor.o.width);
-				}
-
-				resizeWorkspaceImd();
-			},
-			undefined,
-			true
-		)
-		.on(window, 'load', resizeWorkspace)
-		.on(
-			'afterInit resize afterUpdateToolbar scroll afterResize',
-			resizeWorkspace
-		);
+	/** @override **/
+	protected beforeDestruct(jodit: IJodit) {
+		this.j.e
+			.off(this.j.ow, 'load.size', this.resizeWorkspaces)
+			.off('.size');
+	}
 }

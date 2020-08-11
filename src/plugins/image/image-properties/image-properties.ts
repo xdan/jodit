@@ -714,6 +714,8 @@ export class imageProperties extends Plugin {
 		const popup = new Popup(this.j),
 			{ changeImage } = refs(this.form);
 
+		popup.setZIndex(this.dialog.getZIndex() + 1);
+
 		popup
 			.setContent(
 				FileSelectorWidget(

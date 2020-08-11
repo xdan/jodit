@@ -12,6 +12,8 @@ import {
 import { isFunction, $$, attr, val } from '../../../core/helpers';
 import { Dom } from '../../../core/dom';
 import { TabOption, TabsWidget } from '../';
+import { UIBlock, UIForm, UIInput } from '../../../core/ui/form';
+import { UIButton } from '../../../core/ui/button';
 
 /**
  * Generate 3 tabs
@@ -134,23 +136,28 @@ export const FileSelectorWidget = (
 	}
 
 	if (callbacks.url) {
-		const form = editor.c.fromHTML(
-				`<form onsubmit="return false;" class="jodit-form">
-						<div class="jodit-form__group">
-							<input class="jodit-input" type="text" required name="url" placeholder="http://"/>
-						</div>
-						<div class="jodit-form__group">
-							<input class="jodit-input" type="text" name="text" placeholder="${editor.i18n(
-								'Alternative text'
-							)}"/>
-						</div>
-						<div style="text-align: right"><button class="jodit-button">${editor.i18n(
-							'Insert'
-						)}</button></div>
-					</form>`
-			) as HTMLFormElement,
-			button = form.querySelector('button') as HTMLButtonElement,
-			url = form.querySelector('input[name=url]') as HTMLInputElement;
+		const
+			button = new UIButton(editor, {
+				type: 'submit',
+				status: 'primary',
+				text: 'Insert'
+			}),
+			form = (new UIForm(editor, [
+			new UIInput(editor, {
+				required: true,
+				label: 'URL',
+				name: 'url',
+				type: 'url',
+				placeholder: 'http://',
+			}),
+			new UIInput(editor, {
+				name: 'text',
+				label: 'Alternative text'
+			}),
+			new UIBlock(editor, [
+				button
+			])
+		]));
 
 		currentImage = null;
 
@@ -160,46 +167,33 @@ export const FileSelectorWidget = (
 			(Dom.isTag(elm, 'img') || $$('img', elm).length)
 		) {
 			currentImage = elm.tagName === 'IMG' ? elm : $$('img', elm)[0];
-			val(form, 'input[name=url]', attr(currentImage, 'src'));
-			val(form, 'input[name=text]', attr(currentImage, 'alt'));
-			button.textContent = editor.i18n('Update');
+			val(form.container, 'input[name=url]', attr(currentImage, 'src'));
+			val(form.container, 'input[name=text]', attr(currentImage, 'alt'));
+			button.state.text = 'Update';
 		}
 
 		if (elm && Dom.isTag(elm, 'a')) {
-			val(form, 'input[name=url]', attr(elm, 'href'));
-			val(form, 'input[name=text]', attr(elm, 'title'));
-			button.textContent = editor.i18n('Update');
+			val(form.container, 'input[name=url]', attr(elm, 'href'));
+			val(form.container, 'input[name=text]', attr(elm, 'title'));
+			button.state.text = 'Update';
 		}
 
-		form.addEventListener(
-			'submit',
-			(event: Event) => {
-				event.preventDefault();
-				event.stopPropagation();
-
-				if (!val(form, 'input[name=url]')) {
-					url.focus();
-					url.classList.add('jodit_error');
-					return false;
-				}
-
-				if (typeof callbacks.url === 'function') {
+		form.onSubmit(
+			(data) => {
+				if (isFunction(callbacks.url)) {
 					callbacks.url.call(
 						editor,
-						val(form, 'input[name=url]'),
-						val(form, 'input[name=text]')
+						data.url,
+						data.text
 					);
 				}
-
-				return false;
-			},
-			false
+			}
 		);
 
 		tabs.push({
 			icon: 'link',
 			name: 'URL',
-			content: form
+			content: form.container
 		});
 	}
 

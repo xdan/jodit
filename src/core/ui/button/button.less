@@ -138,6 +138,11 @@
 		.jodit_status(#007bff, #fff, #0069d9, #fff, #0062cc, #fff);
 	}
 
+	&_status_secondary {
+		.jodit_status(#d8d8d8, #212529, #c9cdd1, #212529, #dae0e5, #212529);
+		border-radius: 0;
+	}
+
 	&_status_success {
 		.jodit_status(#28a745, #fff, #218838, #fff, #1e7e34, #fff);
 	}
@@ -148,7 +153,7 @@
 }
 
 .jodit-ui-button-style {
-	display: flex;
+	display: inline-flex;
 	justify-content: center;
 	align-items: center;
 
@@ -167,5 +172,8 @@
 
 	.jodit-ui-button-icon-text();
 
+	&:focus:not([disabled]) {
+		outline: 1px dashed var(--color-background-selection);
+	}
 	.jodit-ui-button-statuses();
 }

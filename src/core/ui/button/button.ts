@@ -10,7 +10,6 @@ import autobind from 'autobind-decorator';
 
 import { UIElement } from '../element';
 import {
-	CanUndef,
 	IUIButton,
 	IUIButtonState,
 	IUIButtonStatePartial,
@@ -19,12 +18,13 @@ import {
 import watch from '../../../core/decorators/watch';
 import { STATUSES } from '../../component';
 import { Dom } from '../../dom';
-import { css, attr, isString, getClassName } from '../../helpers';
+import { attr, isString, getClassName } from '../../helpers';
 import { Icon } from '../icon';
 import { UIList } from '..';
 
 export const UIButtonState = (): IUIButtonState => ({
 	size: 'middle',
+	type: 'button',
 	name: '',
 
 	status: '',
@@ -74,6 +74,11 @@ export class UIButton extends UIElement implements IUIButton {
 		this.setMod('size', this.state.size);
 	}
 
+	@watch('state.type')
+	protected onChangeType(): void {
+		attr(this.container,'type', this.state.type);
+	}
+
 	/**
 	 * Set size from parent list
 	 */
@@ -117,6 +122,9 @@ export class UIButton extends UIElement implements IUIButton {
 		this.container.classList.add(
 			`${this.componentName}_${this.clearName(this.state.name)}`
 		);
+
+		attr(this.container, 'data-ref', this.state.name);
+		attr(this.container, 'ref', this.state.name);
 	}
 
 	@watch('state.tooltip')
@@ -141,42 +149,8 @@ export class UIButton extends UIElement implements IUIButton {
 
 		Dom.detach(this.icon);
 
-		const { jodit, state } = this;
-
-		let iconElement: CanUndef<HTMLElement>;
-
-		if (state.icon) {
-			if (state.icon.iconURL) {
-				iconElement = this.j.c.span();
-
-				css(
-					iconElement,
-					'backgroundImage',
-					'url(' +
-						state.icon.iconURL.replace(
-							'{basePath}',
-							jodit?.basePath || ''
-						) +
-						')'
-				);
-			} else {
-				const svg = Icon.get(this.state.icon.name, '');
-
-				if (svg) {
-					iconElement = this.j.c.fromHTML(svg.trim());
-					iconElement.classList.add(
-						'jodit-icon_' + this.clearName(this.state.icon.name)
-					);
-				}
-			}
-		}
-
-		if (iconElement) {
-			iconElement.classList.add('jodit-icon');
-			iconElement.style.fill = state.icon.fill;
-
-			this.icon.appendChild(iconElement);
-		}
+		const iconElement = Icon.makeIcon(this.j, this.state.icon);
+		iconElement && this.icon.appendChild(iconElement);
 	}
 
 	/**
@@ -219,7 +193,7 @@ export class UIButton extends UIElement implements IUIButton {
 		return button;
 	}
 
-	constructor(jodit: IViewBased) {
+	constructor(jodit: IViewBased, state?: IUIButtonStatePartial) {
 		super(jodit);
 
 		this.updateSize();
@@ -228,6 +202,10 @@ export class UIButton extends UIElement implements IUIButton {
 
 		if (getClassName(this) === getClassName(UIButton.prototype)) {
 			this.setStatus(STATUSES.ready);
+		}
+
+		if (state) {
+			this.setState(state);
 		}
 	}
 

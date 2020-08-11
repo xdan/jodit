@@ -370,15 +370,16 @@ describe('Link plugin', function() {
 						list.querySelector('[ref="unlink"]').style.display
 					).equals('none');
 
-					const url = list.querySelector('input[name=url]');
+					const url = list.querySelector('[ref=url_input]');
 					expect(url).is.not.null;
 
 					url.focus();
 					url.value = ''; // try wrong url
-					list.querySelector('input[name=text]').value = '123';
-					simulateEvent('submit', 0, list.querySelector('form'));
+					list.querySelector('[ref=content_input]').value = '123';
 
-					expect(url.classList.contains('jodit_error')).is.true;
+					simulateEvent('submit', list.querySelector('form'));
+
+					expect(url.parentNode.classList.contains('jodit-ui-input_has-error_true')).is.true;
 
 					url.focus();
 					url.value = 'tests/artio.jpg';
@@ -795,13 +796,15 @@ describe('Link plugin', function() {
 							);
 
 							expect(
-								textInput.parentElement.style.display
+								textInput.parentElement.parentElement.style.display
 							).equals('none');
+
 							expect(textInput.value).equals('');
 
 							const urlInput = popup.querySelector(
 								'input[ref=url_input]'
 							);
+
 							expect(urlInput).is.not.null;
 							urlInput.focus();
 							urlInput.value = 'https://xdsoft.net';
@@ -837,7 +840,7 @@ describe('Link plugin', function() {
 
 						const popup = getOpenedPopup(editor);
 
-						const form = popup.querySelector('.jodit-form');
+						const form = popup.querySelector('.jodit-ui-form');
 						expect(form).is.not.null;
 
 						const input = form.querySelector(

@@ -30,7 +30,7 @@ describe('Process Images plugins', function() {
 				simulateEvent('submit', 0, list.querySelector('form'));
 
 				expect(
-					list.querySelectorAll('input[name=url].jodit_error').length
+					list.querySelectorAll('.jodit-ui-input_has-error_true').length
 				).equals(1);
 
 				list.querySelector('input[name=url]').value =

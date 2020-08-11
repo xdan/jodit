@@ -6,5 +6,6 @@
 
 module.exports = {
 	'Type something': 'Start writing...',
-	pencil: 'Edit'
+	pencil: 'Edit',
+	Quadrate: 'Square',
 };

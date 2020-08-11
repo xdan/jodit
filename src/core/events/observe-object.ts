@@ -6,15 +6,29 @@
 
 import { CallbackFunction, IDictionary } from '../../types';
 import { isPlainObject, isFastEqual, isArray } from '../helpers';
+import { nonenumerable } from '../decorators';
 
 export class ObserveObject {
+	@nonenumerable
+	private __data!: IDictionary;
+
+	@nonenumerable
+	private __prefix!: string[];
+
+	@nonenumerable
+	private __onEvents!: IDictionary<CallbackFunction[]>;
+
 	protected constructor(
-		readonly data: IDictionary,
-		readonly prefix: string[] = [],
-		readonly onEvents: IDictionary<CallbackFunction[]> = {}
+		data: IDictionary,
+		prefix: string[] = [],
+		onEvents: IDictionary<CallbackFunction[]> = {}
 	) {
+		this.__data = data;
+		this.__prefix = prefix;
+		this.__onEvents = onEvents;
+
 		Object.keys(data).forEach(key => {
-			const prefix = this.prefix.concat(key).filter(a => a.length);
+			const prefix = this.__prefix.concat(key).filter(a => a.length);
 
 			Object.defineProperty(this, key, {
 				set: value => {
@@ -34,7 +48,7 @@ export class ObserveObject {
 							value = new ObserveObject(
 								value,
 								prefix,
-								this.onEvents
+								this.__onEvents
 							);
 						}
 
@@ -59,17 +73,19 @@ export class ObserveObject {
 				},
 				get: () => {
 					return data[key];
-				}
+				},
+				enumerable: true,
+				configurable: true
 			});
 
 			if (isPlainObject(data[key])) {
-				data[key] = new ObserveObject(data[key], prefix, this.onEvents);
+				data[key] = new ObserveObject(data[key], prefix, this.__onEvents);
 			}
 		});
 	}
 
 	valueOf(): any {
-		return this.data;
+		return this.__data;
 	}
 
 	toString(): string {
@@ -87,15 +103,16 @@ export class ObserveObject {
 			return this;
 		}
 
-		if (!this.onEvents[event]) {
-			this.onEvents[event] = [];
+		if (!this.__onEvents[event]) {
+			this.__onEvents[event] = [];
 		}
 
-		this.onEvents[event].push(callback);
+		this.__onEvents[event].push(callback);
 
 		return this;
 	}
 
+	@nonenumerable
 	private __lockEvent: IDictionary<boolean> = {};
 
 	fire(event: string | string[], ...attr: any[]): void {
@@ -105,9 +122,9 @@ export class ObserveObject {
 		}
 
 		try {
-			if (!this.__lockEvent[event] && this.onEvents[event]) {
+			if (!this.__lockEvent[event] && this.__onEvents[event]) {
 				this.__lockEvent[event] = true;
-				this.onEvents[event].forEach(clb => clb.call(this, ...attr));
+				this.__onEvents[event].forEach(clb => clb.call(this, ...attr));
 			}
 		} finally {
 			this.__lockEvent[event] = false;

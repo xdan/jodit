@@ -259,7 +259,7 @@ export class EventsNative implements IEventsNative {
 		const isDOMElement = isFunction((subject as any).addEventListener),
 			self: EventsNative = this;
 
-		let syntheticCallback = function(
+		let syntheticCallback = function (
 			this: any,
 			event: MouseEvent | TouchEvent,
 			...args: any[]
@@ -268,7 +268,7 @@ export class EventsNative implements IEventsNative {
 		};
 
 		if (isDOMElement) {
-			syntheticCallback = function(
+			syntheticCallback = function (
 				this: any,
 				event: MouseEvent | TouchEvent
 			): void | false {
@@ -299,10 +299,23 @@ export class EventsNative implements IEventsNative {
 				store.set(event, namespace, block, onTop);
 
 				if (isDOMElement) {
+					const options: AddEventListenerOptions | false = [
+						'touchstart',
+						'touchend',
+						'scroll',
+						'mousewheel',
+						'mousemove',
+						'touchmove',
+					].includes(event)
+						? {
+								passive: true
+						  }
+						: false;
+
 					(subject as HTMLElement).addEventListener(
 						event,
 						syntheticCallback as EventListener,
-						false
+						options
 					);
 				}
 			}

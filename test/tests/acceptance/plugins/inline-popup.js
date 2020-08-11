@@ -13,7 +13,7 @@ describe('Text Inline Popup plugin', function () {
 				editor.value = '<img alt="" src="../artio.jpg"/>';
 				editor.s.focus();
 
-				simulateEvent('click', 0, editor.editor.querySelector('img'));
+				simulateEvent('click', editor.editor.querySelector('img'));
 
 				const popup = getOpenedPopup(editor);
 
@@ -89,7 +89,7 @@ describe('Text Inline Popup plugin', function () {
 					expect(linkEditor).is.not.null;
 
 					expect(
-						linkEditor.querySelector('[ref="url_input"]').value
+						linkEditor.querySelector('[data-ref="url_input"]').value
 					).equals('../artio.jpg');
 				});
 
@@ -113,7 +113,7 @@ describe('Text Inline Popup plugin', function () {
 						const linkEditor = getOpenedPopup(editor);
 
 						expect(
-							linkEditor.querySelector('[ref="url_input"]').value
+							linkEditor.querySelector('[data-ref="url_input"]').value
 						).equals('#test1');
 
 						simulateEvent(
@@ -128,7 +128,7 @@ describe('Text Inline Popup plugin', function () {
 						const linkEditor2 = getOpenedPopup(editor);
 
 						expect(
-							linkEditor2.querySelector('[ref="url_input"]').value
+							linkEditor2.querySelector('[data-ref="url_input"]').value
 						).equals('#test2');
 					});
 				});

@@ -9,7 +9,8 @@ describe('Stat plugin', function() {
 			const editor = getJodit({
 				language: 'en',
 				showCharsCounter: true,
-				showWordsCounter: true,
+				countHTMLChars: false,
+				showHTMLCharsCounter: true,
 				observer: {
 					timeout: 0
 				}
@@ -30,6 +31,30 @@ describe('Stat plugin', function() {
 				null
 			);
 		});
+
+		describe('Count HTML Chars', function() {
+			it('Should show real HTML chars count', function() {
+				const editor = getJodit({
+					language: 'en',
+					showCharsCounter: true,
+					countHTMLChars: true,
+					showHTMLCharsCounter: true,
+					observer: {
+						timeout: 0
+					}
+				});
+
+				editor.value = '<p>Simple text</p><p>Simple text</p>';
+				const statusbar = editor.container.querySelector(
+					'.jodit-status-bar'
+				);
+
+				expect(
+					statusbar.textContent.match(/Chars: 36/)
+				).is.not.null;
+			});
+		});
+
 		describe('Hide chars count', function() {
 			it('Should show only words count', function() {
 				const editor = getJodit({

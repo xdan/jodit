@@ -27,8 +27,8 @@ Config.prototype.controls.ul = {
 	list: {
 		default: 'Default',
 		circle: 'Circle',
-		disc: 'Disc',
-		square: 'Square'
+		disc: 'Dot',
+		square: 'Quadrate'
 	},
 	exec
 } as IControlType;

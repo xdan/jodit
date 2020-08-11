@@ -38,7 +38,7 @@ describe('Test editor size plugin', function() {
 
 				editor.value = '<p>test</p>'.repeat(100);
 
-				expect(editor.container.offsetHeight).to.be.below(1000);
+				expect(editor.container.offsetHeight).equals(300);
 			});
 
 			it('Should set editor height by option for iframe', function() {
@@ -48,7 +48,7 @@ describe('Test editor size plugin', function() {
 				});
 
 				editor.value = '<p>test</p>'.repeat(100);
-				expect(editor.container.offsetHeight).is.below(1000);
+				expect(editor.container.offsetHeight).equals(300);
 			});
 
 			it('Should not change size by content after window was resized', function() {
@@ -99,6 +99,7 @@ describe('Test editor size plugin', function() {
 
 					expect(handle).is.not.null;
 					editor.toggleFullSize(true);
+
 					expect(
 						editor.ownerWindow.getComputedStyle(handle).display
 					).equals('none');
@@ -164,6 +165,21 @@ describe('Test editor size plugin', function() {
 				const editor = getJodit();
 				editor.value = '<p>test</p>'.repeat(100);
 				expect(editor.container.offsetHeight).to.be.above(1000);
+			});
+
+			describe('Max height', function() {
+				it('Should set limited height', function() {
+					const editor = getJodit({
+						maxHeight: 500
+					});
+
+					editor.value = '<p>test</p>'.repeat(1);
+					expect(editor.container.offsetHeight).equals(200);
+
+
+					editor.value = '<p>test</p>'.repeat(100);
+					expect(editor.container.offsetHeight).equals(500);
+				});
 			});
 
 			it('Should set editor height by content in iframe mode', function() {

@@ -13,7 +13,7 @@ import {
 	KEY_BACKSPACE,
 	KEY_DELETE
 } from '../../core/constants';
-import { isVoid, call, trim } from '../../core/helpers';
+import { isVoid, call, trim, attr } from '../../core/helpers';
 import {
 	getNeighbor,
 	getNotSpaceSibling,
@@ -41,7 +41,7 @@ export class Delete extends Plugin {
 				if (event.key === KEY_BACKSPACE || event.key === KEY_DELETE) {
 					return this.onDelete(event.key === KEY_BACKSPACE);
 				}
-			});
+			}, undefined, true);
 	}
 
 	/** @override */
@@ -104,8 +104,8 @@ export class Delete extends Plugin {
 			normalizeCursorPosition(fakeNode, backspace);
 
 			if (
-				this.checkRemoveChar(fakeNode, backspace) ||
 				this.checkRemoveInseparableElement(fakeNode, backspace) ||
+				this.checkRemoveChar(fakeNode, backspace) ||
 				this.checkTableCell(fakeNode, backspace) ||
 				this.checkRemoveEmptyParent(fakeNode, backspace) ||
 				this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
@@ -288,7 +288,7 @@ export class Delete extends Plugin {
 
 		if (
 			Dom.isElement(neighbor) &&
-			(Dom.isTag(neighbor, INSEPARABLE_TAGS) || Dom.isEmpty(neighbor))
+			(Dom.isTag(neighbor, INSEPARABLE_TAGS) || Dom.isEmpty(neighbor) || attr(neighbor, 'contenteditable') === 'false')
 		) {
 			Dom.safeRemove(neighbor);
 			this.j.s.setCursorBefore(fakeNode);
@@ -381,7 +381,7 @@ export class Delete extends Plugin {
 			return true;
 		}
 
-		if (neighbor) {
+		if (neighbor && !Dom.isText(neighbor) && !Dom.isTag(neighbor, INSEPARABLE_TAGS)) {
 			setCursorIn(neighbor, !backspace);
 		} else {
 			setCursorBefore(fakeNode);

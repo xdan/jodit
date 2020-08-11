@@ -11,7 +11,9 @@ import { IViewBased } from './view';
 export class IPlugin implements IDestructible, IInitable {
 	jodit: IJodit;
 
+	static requires?: string[];
 	requires?: string[];
+
 	hasStyle?: boolean;
 
 	init(jodit: IJodit): void;

@@ -5,6 +5,7 @@
  */
 describe('Backspace/Delete key', function() {
 	let editor, range;
+
 	beforeEach(function() {
 		editor = getJodit();
 		editor.value = '<p>test</p>';
@@ -275,6 +276,21 @@ describe('Backspace/Delete key', function() {
 
 				expect(editor.value).equals('<p>testtest</p>');
 			});
+
+			describe('Previous element has contenteditable false', function() {
+				it('Should remove this element like simple char', function() {
+					editor.value = '<p>test<a href="#" contenteditable="false">pop</a>test</p>';
+
+					range.setStartAfter(
+						editor.editor.firstChild.firstChild.nextSibling
+					);
+					editor.s.selectRange(range);
+
+					simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+					expect(editor.value).equals('<p>testtest</p>');
+				});
+			});
 		});
 
 		describe('Delete', function() {
@@ -289,6 +305,21 @@ describe('Backspace/Delete key', function() {
 				simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
 
 				expect(editor.value).equals('<p>testtest</p>');
+			});
+
+			describe('Next element has contenteditable false', function() {
+				it('Should remove this element like simple char', function() {
+					editor.value = '<p>test<a href="#" contenteditable="false">pop</a>test</p>';
+
+					range.setStartBefore(
+						editor.editor.firstChild.firstChild.nextSibling
+					);
+					editor.s.selectRange(range);
+
+					simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
+
+					expect(editor.value).equals('<p>testtest</p>');
+				});
 			});
 		});
 	});
@@ -333,6 +364,78 @@ describe('Backspace/Delete key', function() {
 							'<tr><td>1 2 </td></tr>' +
 							'</tbody></table>'
 					);
+				});
+
+				describe('For formatted HTML', function() {
+					it('Should work same', function() {
+						editor.value =
+							'<p>asdas</p>\n' +
+							'<p><br></p>';
+
+						const range = editor.s.createRange(true);
+
+						range.setStartBefore(editor.editor.lastChild.firstChild);
+
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_BACKSPACE,
+							editor.editor
+						);
+
+						editor.s.insertNode(editor.createInside.text(' 2 '));
+
+						expect(editor.value).equals(
+							'<p>asdas 2 </p>\n'
+						);
+					});
+				});
+
+				describe('Inside this element and this element empty', function() {
+					it('Should remove empty this empty element', function() {
+						editor.value = '';
+
+						editor.s.focus();
+
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_ENTER,
+							editor.editor
+						);
+
+						editor.s.insertHTML('b');
+						expect(editor.value).equals('<p><br></p><p>b<br></p>');
+
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_BACKSPACE,
+							editor.editor
+						);
+						expect(editor.value).equals('<p><br></p><p><br></p>');
+
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_BACKSPACE,
+							editor.editor
+						);
+
+						expect(editor.value).equals('<p><br></p>');
+
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_BACKSPACE,
+							editor.editor
+						);
+
+						expect(editor.value).equals('');
+
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_BACKSPACE,
+							editor.editor
+						);
+
+						expect(editor.value).equals('');
+					});
 				});
 			});
 		});

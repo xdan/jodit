@@ -565,4 +565,35 @@ describe('Search plugin', function() {
 			expect(3).equals(range.startOffset);
 		});
 	});
+
+	describe('Find by toolbar button event', function() {
+		describe('Press Search button', function() {
+			it('Should open search dialog', function() {
+				const editor = getJodit({
+					observer: {
+						timeout: 0
+					}
+				});
+
+				clickButton('find', editor);
+
+				expect(editor.container.querySelector('.jodit-search.jodit-search_active')).is.not.null;
+			});
+		});
+
+		describe('Press Replace button', function() {
+			it('Should open search dialog', function() {
+				const editor = getJodit({
+					observer: {
+						timeout: 0
+					}
+				});
+
+				clickTrigger('find', editor);
+				clickButton('replace', getOpenedPopup(editor));
+
+				expect(editor.container.querySelector('.jodit-search.jodit-search_active.jodit-search_replace')).is.not.null;
+			});
+		});
+	});
 });

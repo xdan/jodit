@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IFileBrowser, IFileBrowserItem, ISource } from '../../../types';
+import { IFileBrowser, IFileBrowserItem } from '../../../types';
 import { F_CLASS, ITEM_CLASS } from '../consts';
 import { Dom } from '../../../core/dom';
 import { normalizePath } from '../../../core/helpers/normalize';
-import { Icon } from '../../../core/ui';
+import { Button } from '../../../core/ui';
 
 const DEFAULT_SOURCE_NAME = 'default',
 	ITEM_ACTIVE_CLASS = ITEM_CLASS + '_active_true';
@@ -45,6 +45,12 @@ export function stateListeners(this: IFileBrowser): void {
 		};
 
 	state
+		.on(
+			['change.currentPath', 'change.currentSource'],
+			this.async.debounce(() => {
+				this.loadTree();
+			}, this.defaultTimeout)
+		)
 		.on('beforeChange.activeElements', () => {
 			state.activeElements.forEach(item => {
 				const key = item.uniqueHashKey,
@@ -98,112 +104,110 @@ export function stateListeners(this: IFileBrowser): void {
 		)
 
 		.on(
-			'change.folders',
+			'change.sources',
 			this.async.debounce(() => {
 				Dom.detach(this.tree);
 
-				let lastSource = DEFAULT_SOURCE_NAME,
-					lastSource2: ISource | null = null;
+				Object.keys(state.sources).forEach((sourceName: string) => {
+					const source = state.sources[sourceName];
 
-				const appendCreateButton = (
-					source: ISource | null,
-					sourceName: string,
-					force: boolean = false
-				) => {
-					if (
-						source &&
-						lastSource2 &&
-						(source !== lastSource2 || force) &&
-						options.createNewFolder &&
-						this.dataProvider.canI('FolderCreate')
-					) {
-						this.tree.appendChild(
-							create.a(
-								'jodit-button jodit-filebrowser__addfolder',
-								{
-									href: 'javascript:void(0)',
-									'data-path': normalizePath(
-										source.path + '/'
-									),
-									'data-source': sourceName
-								},
-								Icon.get('plus') + ' ' + this.i18n('Add folder')
-							)
-						);
-
-						lastSource2 = source;
-					}
-				};
-
-				state.folders.forEach(folder => {
-					const { name, source, sourceName } = folder;
-
-					if (sourceName && sourceName !== lastSource) {
+					if (sourceName && sourceName !== DEFAULT_SOURCE_NAME) {
 						this.tree.appendChild(
 							create.div(F_CLASS + '__source-title', sourceName)
 						);
-						lastSource = sourceName;
 					}
 
-					const folderElm = create.a(
-						F_CLASS + '__tree-item',
-						{
-							draggable: 'draggable',
-							href: 'javascript:void(0)',
-							'data-path': normalizePath(source.path, name + '/'),
-							'data-name': name,
-							'data-source': sourceName,
-							'data-source-path': source.path
-						},
-						create.span(F_CLASS + '__tree-item-title', name)
-					);
+					source.folders.forEach(name => {
+						const folderElm = create.a(
+							F_CLASS + '__tree-item',
+							{
+								draggable: 'draggable',
+								href: 'javascript:void(0)',
+								'data-path': normalizePath(
+									source.path,
+									name + '/'
+								),
+								'data-name': name,
+								'data-source': sourceName,
+								'data-source-path': source.path
+							},
+							create.span(F_CLASS + '__tree-item-title', name)
+						);
 
-					appendCreateButton(source, sourceName);
+						const action = (actionName: string) => (
+							e: MouseEvent
+						) => {
+							this.e.fire(`${actionName}.filebrowser`, {
+								name,
+								path: normalizePath(source.path + '/'),
+								source: sourceName
+							});
 
-					lastSource2 = source;
+							e.stopPropagation();
+						};
 
-					this.tree.appendChild(folderElm);
+						this.e.on(folderElm, 'click', action('openFolder'));
 
-					if (name === '..' || name === '.') {
-						return;
-					}
+						this.tree.appendChild(folderElm);
+
+						if (name === '..' || name === '.') {
+							return;
+						}
+
+						if (
+							options.renameFolder &&
+							this.dataProvider.canI('FolderRename')
+						) {
+							const btn = Button(this, {
+								icon: { name: 'pencil' },
+								name: 'rename',
+								tooltip: 'Rename',
+								size: 'tiny'
+							});
+
+							btn.onAction(action('renameFolder'));
+
+							folderElm.appendChild(btn.container);
+						}
+
+						if (
+							options.deleteFolder &&
+							this.dataProvider.canI('FolderRemove')
+						) {
+							const btn = Button(this, {
+								icon: { name: 'cancel' },
+								name: 'remove',
+								tooltip: 'Delete',
+								size: 'tiny'
+							});
+
+							btn.onAction(action('removeFolder'));
+
+							folderElm.appendChild(btn.container);
+						}
+					});
 
 					if (
-						options.deleteFolder &&
-						this.dataProvider.canI('FolderRename')
+						options.createNewFolder &&
+						this.dataProvider.canI('FolderCreate')
 					) {
-						folderElm.appendChild(
-							create.element(
-								'i',
-								{
-									class:
-										'jodit-icon_folder jodit-icon_folder_rename',
-									title: this.i18n('Rename')
-								},
-								Icon.get('pencil')
-							)
+						const button = Button(
+							this,
+							'plus',
+							'Add folder',
+							'secondary'
 						);
-					}
 
-					if (
-						options.deleteFolder &&
-						this.dataProvider.canI('FolderRemove')
-					) {
-						folderElm.appendChild(
-							create.element(
-								'i',
-								{
-									class:
-										'jodit-icon_folder jodit-icon_folder_remove',
-									title: this.i18n('Delete')
-								},
-								Icon.get('cancel')
-							)
-						);
+						button.onAction(() => {
+							this.e.fire('addFolder', {
+								path: normalizePath(source.path + '/'),
+								source: sourceName
+							});
+						});
+
+						this.tree.appendChild(button.container);
 					}
 				});
-
-				appendCreateButton(lastSource2, lastSource, true);
 			}, this.defaultTimeout)
 		);
 }

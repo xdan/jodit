@@ -9,3 +9,4 @@ export * from './debounce';
 export * from './cache';
 export * from './wait';
 export * from './hook';
+export * from './nonenumerable';

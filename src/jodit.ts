@@ -67,6 +67,7 @@ import {
 	getContainer
 } from './core/global';
 import { cache } from './core/decorators';
+import autobind from 'autobind-decorator';
 
 // declare const isProd: boolean;
 /**
@@ -630,7 +631,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		this.commands[commandName].push(command);
 
-		if (typeof command !== 'function') {
+		if (!isFunction(command)) {
 			const hotkeys: string | string[] | void =
 				this.o.commandToHotkeys[commandName] ||
 				this.o.commandToHotkeys[commandNameOriginal] ||
@@ -1051,7 +1052,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param {object} options Editor's options
 	 */
 	constructor(element: HTMLElement | string, options?: object) {
-		super(options as IViewOptions);
+		super(options as IViewOptions, true);
 
 		try {
 			resolveElement(element, this.o.shadowRoot || this.od); // check element valid
@@ -1076,6 +1077,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				this.e.fire('resize');
 			}
 		});
+
+		this.e.on('prepareWYSIWYGEditor', this.prepareWYSIWYGEditor);
 
 		this.selection = new Select(this);
 
@@ -1374,8 +1377,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				css(this.editor, this.o.style);
 			}
 
-			const editor = this.editor;
-			// proxy events
 			this.e
 				.on('synchro', () => {
 					this.setEditorValue();
@@ -1383,53 +1384,16 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				.on('focus', () => {
 					this.editorIsActive = true;
 				})
-				.on('blur', () => (this.editorIsActive = false))
-				.on(editor, 'mousedown touchstart focus', () => {
-					const place = this.elementToPlace.get(editor);
-					if (place) {
-						this.setCurrentPlace(place);
-					}
-				})
-				.on(editor, 'compositionend', () => {
-					this.setEditorValue();
-				})
-				.on(
-					editor,
-					'selectionchange selectionstart keydown keyup keypress dblclick mousedown mouseup ' +
-						'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
-					(event: Event): false | void => {
-						if (this.o.readonly) {
-							return;
-						}
-						if (
-							event instanceof KeyboardEvent &&
-							event.isComposing
-						) {
-							return;
-						}
+				.on('blur', () => (this.editorIsActive = false));
 
-						if (this.e && this.e.fire) {
-							if (this.e.fire(event.type, event) === false) {
-								return false;
-							}
-
-							this.setEditorValue();
-						}
-					}
-				);
-
-			if (this.o.spellcheck) {
-				this.editor.setAttribute('spellcheck', 'true');
-			}
+			this.prepareWYSIWYGEditor();
 
 			// direction
 			if (this.o.direction) {
 				const direction =
 					this.o.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
 
-				this.editor.style.direction = direction;
 				this.container.style.direction = direction;
-				this.editor.setAttribute('dir', direction);
 				this.container.setAttribute('dir', direction);
 
 				this.toolbar.setDirection(direction);
@@ -1459,6 +1423,65 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	private attachEvents(options: IViewOptions) {
 		const e = options?.events;
 		e && Object.keys(e).forEach((key: string) => this.e.on(key, e[key]));
+	}
+
+
+	/**
+	 * Attach some native event listeners
+	 */
+	@autobind
+	private prepareWYSIWYGEditor() {
+		const { editor } = this;
+
+		if (this.o.spellcheck) {
+			this.editor.setAttribute('spellcheck', 'true');
+		}
+
+		// direction
+		if (this.o.direction) {
+			const direction =
+				this.o.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
+
+			this.editor.style.direction = direction;
+			this.editor.setAttribute('dir', direction);
+		}
+
+		// proxy events
+		this.e
+			.on(editor, 'mousedown touchstart focus', () => {
+				const place = this.elementToPlace.get(editor);
+
+				if (place) {
+					this.setCurrentPlace(place);
+				}
+			})
+			.on(editor, 'compositionend', () => {
+				this.setEditorValue();
+			})
+			.on(
+				editor,
+				'selectionchange selectionstart keydown keyup keypress dblclick mousedown mouseup ' +
+				'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
+				(event: Event): false | void => {
+
+					if (this.o.readonly) {
+						return;
+					}
+
+					const w = this.ew;
+					if (event instanceof (w as any).KeyboardEvent && (event as KeyboardEvent).isComposing) {
+						return;
+					}
+
+					if (this.e && this.e.fire) {
+						if (this.e.fire(event.type, event) === false) {
+							return false;
+						}
+
+						this.setEditorValue();
+					}
+				}
+			);
 	}
 
 	/**
