@@ -154,7 +154,7 @@ export class paste extends Plugin {
 				this.insertFromWordByType(
 					e,
 					text,
-					this.j.o.defaultActionOnPaste
+					this.j.o.defaultActionOnPasteFromWord || this.j.o.defaultActionOnPaste
 				);
 			}
 

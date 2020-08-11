@@ -45,6 +45,11 @@ declare module '../../config' {
 		defaultActionOnPaste: InsertMode;
 
 		/**
+		 * Default insert method from word, if not define, it will use defaultActionOnPaste instead
+		 */
+		defaultActionOnPasteFromWord: InsertMode | null;
+
+		/**
 		 * Draggable elements
 		 */
 		draggableTags: string | string[];
@@ -59,6 +64,7 @@ Config.prototype.processPasteFromWord = true;
 
 Config.prototype.nl2brInPlainText = true;
 Config.prototype.defaultActionOnPaste = INSERT_AS_HTML;
+Config.prototype.defaultActionOnPasteFromWord = null;
 
 Config.prototype.draggableTags = ['img', 'a', 'jodit-media', 'jodit'];
 
