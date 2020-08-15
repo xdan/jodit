@@ -62,7 +62,7 @@ describe('Color plugin', function() {
             popup.querySelector('[data-color="#FF0000"]')
 		);
 		
-		// then select red forecolor
+		// then select yellow forecolor
         simulateEvent(
             'mousedown',
             0,
