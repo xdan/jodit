@@ -105,7 +105,7 @@ Config.prototype.controls.brush = {
 		const backgroundTag: HTMLElement = ColorPickerWidget(
 			editor,
 			(value: string) => {
-				if (!currentElement) {
+				if (!currentElement || currentElement===editor.s.current()) {
 					editor.execCommand('background', false, value);
 				} else {
 					currentElement.style.backgroundColor = value;
@@ -122,7 +122,7 @@ Config.prototype.controls.brush = {
 		const colorTab: HTMLElement = ColorPickerWidget(
 			editor,
 			(value: string) => {
-				if (!currentElement) {
+				if (!currentElement || currentElement===editor.s.current()) {
 					editor.execCommand('forecolor', false, value);
 				} else {
 					currentElement.style.color = value;

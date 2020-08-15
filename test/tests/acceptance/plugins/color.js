@@ -45,6 +45,35 @@ describe('Color plugin', function() {
 		expect(popup2).is.null;
 	});
 
+	it('somthing (like img or just empty paragraph) before the text paragraph , select all, then click color, should change all text color', function() {
+        const editor = getJodit();
+
+        editor.value = '<p><br></p><p>test</p>';
+
+        clickButton('selectall', editor);
+
+		// select red background
+        clickButton('brush', editor);
+        let popup = getOpenedPopup(editor);
+		expect(window.getComputedStyle(popup).display).equals('block');
+        simulateEvent(
+            'mousedown',
+            0,
+            popup.querySelector('[data-color="#FF0000"]')
+		);
+		
+		// then select red forecolor
+        simulateEvent(
+            'mousedown',
+            0,
+            popup.querySelectorAll('[data-color="#FFFF00"]')[1] // the forecolor color
+		);
+
+        expect(editor.value).include(
+            '<p><span style="background-color: rgb(255, 0, 0); color: rgb(255, 255, 0);">test</span></p>'
+        );
+	});
+
 	describe('Show native color picker', function() {
 		describe('Enable', function() {
 			it('should open color picker with button - native color picker', function() {
