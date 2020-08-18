@@ -251,10 +251,6 @@ https://github.com/xdan/jodit
 
 ## License
 
-Licensed under GNU General Public License v2.0 or later or MIT or [Commercial](https://xdsoft.net/jodit/commercial/)
-Jodit is licensed under a triple license system (MIT or GPL version 2-or-later or Commercial). This means you are free to choose with which of these licenses you want to use this library.
-It does not mean what for commercial products you need `Commercial` license. You can use any of these licenses in commercial and non commercial products.
-
-
+MIT
 
 
