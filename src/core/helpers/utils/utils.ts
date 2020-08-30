@@ -79,7 +79,7 @@ export function markOwner(jodit: IViewBased, elm: HTMLElement): void {
 		});
 }
 
-export function callPromise(condition: CanPromise<unknown>, callback: () => CanPromise<void>): CanPromise<void> {
+export function callPromise(condition: CanPromise<unknown>, callback: () => CanPromise<any>): CanPromise<void> {
 	if (isPromise(condition)) {
 		return condition.finally(callback);
 	} else {
