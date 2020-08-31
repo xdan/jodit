@@ -810,16 +810,14 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					const editor = getJodit();
 					editor.value = '<ul><li>Some text</li><li> </li></ul>';
 
-					const sel = editor.s.sel,
-						range = editor.s.createRange();
+					const
+						range = editor.s.createRange(true);
 
 					range.setStart(
 						editor.editor.firstChild.lastChild.firstChild,
 						1
 					);
 					range.collapse(true);
-					sel.removeAllRanges();
-					sel.addRange(range);
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 

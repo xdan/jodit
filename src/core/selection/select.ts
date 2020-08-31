@@ -957,7 +957,7 @@ export class Select {
 		const range = this.createRange();
 		let fakeNode: Nullable<Text> = null;
 
-		if (!Dom.isText(node)) {
+		if (!Dom.isText(node) || node.nodeValue === consts.INVISIBLE_SPACE) {
 			fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
 			range.setStartBefore(node);
 			range.collapse(true);

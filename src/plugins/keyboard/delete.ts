@@ -115,6 +115,12 @@ export class Delete extends Plugin {
 			) {
 				return false;
 			}
+		} catch (e) {
+			if (!isProd) {
+				console.error(e);
+			}
+
+			throw e;
 		} finally {
 			Dom.safeRemove(fakeNode);
 		}
