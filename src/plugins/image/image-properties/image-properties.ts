@@ -429,13 +429,9 @@ export class imageProperties extends Plugin {
 				imageHeight.value = image.offsetHeight.toString();
 			},
 			updateText = () => {
-				if (image.hasAttribute('title')) {
-					imageTitle.value = attr(image, 'title') || '';
-				}
+				imageTitle.value = attr(image, 'title') || '';
 
-				if (image.hasAttribute('alt')) {
-					imageAlt.value = attr(image, 'alt') || '';
-				}
+				imageAlt.value = attr(image, 'alt') || '';
 
 				const a = Dom.closest(image, 'a', this.j.editor);
 
@@ -444,6 +440,9 @@ export class imageProperties extends Plugin {
 
 					imageLinkOpenInNewTab.checked =
 						attr(a, 'target') === '_blank';
+				} else {
+					imageLink.value = '';
+					imageLinkOpenInNewTab.checked = false;
 				}
 			},
 			updateSrc = () => {
