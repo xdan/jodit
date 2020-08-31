@@ -11,7 +11,7 @@ import {
 	extend,
 	isArray
 } from './core/helpers/';
-import {
+import type {
 	IExtraPlugin,
 	IDictionary,
 	IJodit,

@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import {
+import type {
 	IFileBrowserCallBackData,
 	IJodit,
 	IUploaderData
@@ -12,8 +12,7 @@ import {
 import { isFunction, $$, attr, val } from '../../../core/helpers';
 import { Dom } from '../../../core/dom';
 import { TabOption, TabsWidget } from '../';
-import { UIBlock, UIForm, UIInput } from '../../../core/ui/form';
-import { UIButton } from '../../../core/ui/button';
+import { UIBlock, UIForm, UIInput, UIButton } from '../../../core/ui';
 
 /**
  * Generate 3 tabs

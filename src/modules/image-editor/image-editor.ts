@@ -851,24 +851,17 @@ export class ImageEditor extends ViewComponent {
 		this.setHandlers();
 	}
 
+	/** @override */
 	destruct(): any {
 		if (this.isDestructed) {
 			return;
 		}
 
-		if (this.dialog) {
+		if (this.dialog && !this.dialog.isInDestruct) {
 			this.dialog.destruct();
-			delete this.dialog;
 		}
 
 		Dom.safeRemove(this.editor);
-
-		delete this.resize_box;
-		delete this.crop_box;
-		delete this.sizes;
-		delete this.resizeHandler;
-		delete this.cropHandler;
-		delete this.editor;
 
 		if (this.j.e) {
 			this.j.e.off(this.ow, `.${jie}`);

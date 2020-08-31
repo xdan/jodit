@@ -8,6 +8,7 @@ import { Config } from '../config';
 import { INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from '../core/constants';
 import { Plugin } from '../core/plugin';
 import { Dom } from '../core/dom';
+import { Nullable } from '../types';
 
 declare module '../config' {
 	interface Config {
@@ -25,15 +26,15 @@ Config.prototype.showWordsCounter = true;
  * Show stat data - words and chars count
  */
 export class stat extends Plugin {
-	private charCounter!: HTMLElement;
-	private wordCounter!: HTMLElement;
+	private charCounter: Nullable<HTMLElement> = null;
+	private wordCounter: Nullable<HTMLElement> = null;
 
 	private reInit = (): void => {
-		if (this.j.o.showCharsCounter) {
+		if (this.j.o.showCharsCounter && this.charCounter) {
 			this.j.statusbar.append(this.charCounter, true);
 		}
 
-		if (this.j.o.showWordsCounter) {
+		if (this.j.o.showWordsCounter && this.wordCounter) {
 			this.j.statusbar.append(this.wordCounter, true);
 		}
 
@@ -42,6 +43,7 @@ export class stat extends Plugin {
 		this.calc();
 	};
 
+	/** @override */
 	afterInit(): void {
 		this.charCounter = this.j.c.span();
 		this.wordCounter = this.j.c.span();
@@ -52,7 +54,7 @@ export class stat extends Plugin {
 	private calc = this.j.async.throttle(() => {
 		const text = this.j.text;
 
-		if (this.j.o.showCharsCounter) {
+		if (this.j.o.showCharsCounter && this.charCounter) {
 			const chars = this.j.o.countHTMLChars
 				? this.j.value
 				: text.replace(SPACE_REG_EXP(), '');
@@ -63,7 +65,7 @@ export class stat extends Plugin {
 			);
 		}
 
-		if (this.j.o.showWordsCounter) {
+		if (this.j.o.showWordsCounter && this.wordCounter) {
 			this.wordCounter.textContent = this.j.i18n(
 				'Words: %d',
 				text
@@ -80,7 +82,7 @@ export class stat extends Plugin {
 
 		this.j.e.off('afterInit changePlace afterAddPlace', this.reInit);
 
-		delete this.charCounter;
-		delete this.wordCounter;
+		this.charCounter = null;
+		this.wordCounter = null;
 	}
 }

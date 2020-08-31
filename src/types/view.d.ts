@@ -16,7 +16,7 @@ import { Attributes, ICreate } from './create';
 import { IStorage } from './storage';
 import { IAsync } from './async';
 import { IUIButtonState } from './ui';
-import { EventsNative } from '../core/events';
+import { IEventsNative } from './events';
 
 interface ILanguageOptions {
 	language?: string;
@@ -93,7 +93,7 @@ interface IViewBased<T = IViewOptions> extends IContainer, IComponent {
 
 	progressbar: IProgressBar;
 
-	events: EventsNative;
+	events: IEventsNative;
 	e: this['events'];
 
 	async: IAsync;
@@ -101,7 +101,8 @@ interface IViewBased<T = IViewOptions> extends IContainer, IComponent {
 	create: ICreate;
 	c: this['create'];
 
-	options: T;
+	OPTIONS: T;
+	options: this['OPTIONS'];
 	// alias
 	o: this['options'];
 

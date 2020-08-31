@@ -14,7 +14,7 @@ import {
 	INVISIBLE_SPACE_REG_EXP_START as INV_START
 } from '../constants';
 
-import {
+import type {
 	CanUndef,
 	HTMLTagNames,
 	IDictionary,

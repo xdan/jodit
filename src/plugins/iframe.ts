@@ -5,7 +5,7 @@
  */
 
 import { Config } from '../config';
-import { isPromise, css, defaultLanguage, attr } from '../core/helpers/';
+import { css, defaultLanguage, attr, callPromise } from '../core/helpers/';
 import { IJodit } from '../types';
 import { error } from '../core/helpers';
 import { MODE_SOURCE } from '../core/constants';
@@ -413,14 +413,10 @@ export function iframe(editor: IJodit): void {
 							}
 						);
 				}
+
+				return false;
 			};
 
-			if (isPromise(result)) {
-				return result.then(init);
-			}
-
-			init();
-
-			return false;
+			return callPromise(result, init);
 		});
 }

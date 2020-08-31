@@ -8,10 +8,10 @@ import './status-bar.less';
 
 import { ViewComponent, STATUSES } from '../../core/component';
 import { Dom } from '../../core/dom';
-import { IJodit, IStatusBar } from '../../types';
+import { IJodit, IStatusBar, Nullable } from '../../types';
 
 export class StatusBar extends ViewComponent implements IStatusBar {
-	container: HTMLElement;
+	container: Nullable<HTMLElement> = null;
 
 	/**
 	 * Hide statusbar
@@ -31,18 +31,20 @@ export class StatusBar extends ViewComponent implements IStatusBar {
 	 * Height of statusbar
 	 */
 	getHeight(): number {
-		return this.container.offsetHeight;
+		return this.container?.offsetHeight ?? 0;
 	}
 
 	private findEmpty(inTheRight: boolean = false): HTMLDivElement | void {
-		const items = this.container.querySelectorAll(
+		const items = this.container?.querySelectorAll(
 			'.jodit-status-bar__item' +
 				(inTheRight ? '.jodit-status-bar__item-right' : '')
 		);
 
-		for (let i = 0; i < items.length; i += 1) {
-			if (!items[i].innerHTML.trim().length) {
-				return items[i] as HTMLDivElement;
+		if (items) {
+			for (let i = 0; i < items.length; i += 1) {
+				if (!items[i].innerHTML.trim().length) {
+					return items[i] as HTMLDivElement;
+				}
 			}
 		}
 	}
@@ -64,7 +66,7 @@ export class StatusBar extends ViewComponent implements IStatusBar {
 
 		wrapper.appendChild(child);
 
-		this.container.appendChild(wrapper);
+		this.container?.appendChild(wrapper);
 		this.show();
 		this.j.e.fire('resize');
 	}
@@ -82,7 +84,7 @@ export class StatusBar extends ViewComponent implements IStatusBar {
 		this.setStatus(STATUSES.beforeDestruct);
 
 		Dom.safeRemove(this.container);
-		delete this.container;
+		this.container = null;
 
 		super.destruct();
 	}

@@ -5,7 +5,7 @@
  */
 
 import * as consts from './constants';
-import {
+import type {
 	HTMLTagNames,
 	ICreate,
 	IJodit,

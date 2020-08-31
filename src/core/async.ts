@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { CallbackFunction, IAsync, IAsyncParams } from '../types';
-import { setTimeout, clearTimeout } from './helpers/';
+import { CallbackFunction, IAsync, IAsyncParams, ITimeout } from '../types';
+import { setTimeout, clearTimeout, isFunction } from './helpers/';
 
 export class Async implements IAsync {
 	private timers: Map<number | string | Function, number> = new Map();
@@ -65,7 +65,7 @@ export class Async implements IAsync {
 	 * @param timeout
 	 * @param firstCallImmediately
 	 */
-	debounce(fn: CallbackFunction, timeout: number, firstCallImmediately: boolean = false): CallbackFunction {
+	debounce(fn: CallbackFunction, timeout: ITimeout, firstCallImmediately: boolean = false): CallbackFunction {
 		let timer: number = 0,
 			fired: boolean = false;
 
@@ -89,7 +89,7 @@ export class Async implements IAsync {
 				}
 
 				clearTimeout(timer);
-				timer = this.setTimeout(() => callFn(...args), timeout);
+				timer = this.setTimeout(() => callFn(...args), isFunction(timeout) ? timeout() : timeout);
 				this.timers.set(fn, timer);
 			}
 		};
@@ -112,7 +112,7 @@ export class Async implements IAsync {
 	 * }, 100));
 	 * ```
 	 */
-	throttle(fn: CallbackFunction, timeout: number): CallbackFunction {
+	throttle(fn: CallbackFunction, timeout: ITimeout): CallbackFunction {
 		let timer: number | null = null,
 			needInvoke: boolean,
 			callee: () => void,
@@ -132,7 +132,7 @@ export class Async implements IAsync {
 					if (needInvoke) {
 						fn(...lastArgs);
 						needInvoke = false;
-						timer = this.setTimeout(callee, timeout);
+						timer = this.setTimeout(callee, isFunction(timeout) ? timeout() : timeout);
 						this.timers.set(callee, timer);
 					} else {
 						timer = null;

@@ -26,9 +26,7 @@ export function imageProcessor(editor: IJodit): void {
 							elm.addEventListener(
 								'load',
 								function ElementOnLoad() {
-									editor.events &&
-										editor.e.fire &&
-										editor.e.fire('resize');
+									!editor.isInDestruct && editor.e?.fire('resize');
 									elm.removeEventListener(
 										'load',
 										ElementOnLoad

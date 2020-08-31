@@ -71,7 +71,7 @@ export class PluginSystem implements IPluginSystem {
 	}
 
 	/**
-	 * Public methos for async init all plugins
+	 * Public method for async init all plugins
 	 * @param jodit
 	 */
 	init(jodit: IJodit): CanPromise<void> {

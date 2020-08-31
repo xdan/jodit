@@ -20,7 +20,7 @@ import { createSourceEditor } from './editor/factory';
  * @module source
  */
 export class source extends Plugin {
-	sourceEditor!: ISourceEditor;
+	sourceEditor?: ISourceEditor;
 
 	private mirrorContainer!: HTMLDivElement;
 
@@ -35,7 +35,7 @@ export class source extends Plugin {
 	private selInfo: markerInfo[] = [];
 
 	private insertHTML = (html: string) => {
-		this.sourceEditor.insertRaw(html);
+		this.sourceEditor?.insertRaw(html);
 
 		this.toWYSIWYG();
 	};
@@ -96,7 +96,7 @@ export class source extends Plugin {
 		str.replace(consts.INVISIBLE_SPACE_REG_EXP(), '');
 
 	private selectAll = () => {
-		this.sourceEditor.selectAll();
+		this.sourceEditor?.selectAll();
 	};
 
 	private onSelectAll = (command: string): void | false => {
@@ -111,23 +111,23 @@ export class source extends Plugin {
 
 	// override it for ace editors
 	private getSelectionStart = (): number => {
-		return this.sourceEditor.getSelectionStart();
+		return this.sourceEditor?.getSelectionStart() ?? 0;
 	};
 
 	private getSelectionEnd = (): number => {
-		return this.sourceEditor.getSelectionEnd();
+		return this.sourceEditor?.getSelectionEnd() ?? 0;
 	};
 
 	private getMirrorValue(): string {
-		return this.sourceEditor.getValue();
+		return this.sourceEditor?.getValue() || '';
 	}
 
 	private setMirrorValue(value: string) {
-		this.sourceEditor.setValue(value);
+		this.sourceEditor?.setValue(value);
 	}
 
 	private setFocusToMirror() {
-		this.sourceEditor.focus();
+		this.sourceEditor?.focus();
 	}
 
 	private saveSelection = (): void => {
@@ -263,11 +263,11 @@ export class source extends Plugin {
 		start: number,
 		end: number
 	) => {
-		this.sourceEditor.setSelectionRange(start, end);
+		this.sourceEditor?.setSelectionRange(start, end);
 	};
 
 	private onReadonlyReact = () => {
-		this.sourceEditor.setReadOnly(this.j.o.readonly);
+		this.sourceEditor?.setReadOnly(this.j.o.readonly);
 	};
 
 	private initSourceEditor(editor: IJodit): void {
@@ -287,7 +287,7 @@ export class source extends Plugin {
 				editor.events?.fire('sourceEditorReady', editor);
 			});
 		} else {
-			this.sourceEditor.onReadyAlways(() => {
+			this.sourceEditor?.onReadyAlways(() => {
 				this.fromWYSIWYG(true);
 				editor.events?.fire('sourceEditorReady', editor);
 			});
@@ -330,7 +330,7 @@ export class source extends Plugin {
 			})
 			.on('readonly.source', this.onReadonlyReact)
 			.on('placeholder.source', (text: string) => {
-				this.sourceEditor.setPlaceHolder(text);
+				this.sourceEditor?.setPlaceHolder(text);
 			})
 			.on('beforeCommand.source', this.onSelectAll)
 			.on('change.source', this.fromWYSIWYG);

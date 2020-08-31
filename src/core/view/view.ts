@@ -28,7 +28,7 @@ import { Async } from '../async';
 import { modules } from '../global';
 import { hook } from '../decorators';
 
-export abstract class View extends Component implements IViewBased {
+export abstract class View extends Component implements IViewBased<IViewOptions> {
 	readonly isView: true = true;
 
 	/**
@@ -79,7 +79,14 @@ export abstract class View extends Component implements IViewBased {
 		return this.create;
 	}
 
-	container!: HTMLDivElement;
+	private __container!: HTMLDivElement;
+	get container(): HTMLDivElement {
+		return this.__container;
+	}
+
+	set container(container: HTMLDivElement) {
+		this.__container = container;
+	}
 
 	events!: EventsNative;
 	get e(): this['events'] {
@@ -91,7 +98,15 @@ export abstract class View extends Component implements IViewBased {
 	 */
 	progressbar!: IProgressBar;
 
-	options!: IViewOptions;
+	OPTIONS: IViewOptions = View.defaultOptions;
+	private __options!: this['OPTIONS'];
+	get options(): this['OPTIONS'] {
+		return this.__options;
+	}
+
+	set options(options: this['OPTIONS']) {
+		this.__options = options;
+	}
 
 	/**
 	 * Short alias for options
@@ -267,17 +282,14 @@ export abstract class View extends Component implements IViewBased {
 
 		if (this.async) {
 			this.async.destruct();
-			delete this.async;
 		}
 
 		if (this.events) {
 			this.e.destruct();
-			delete this.events;
 		}
 
 		if (this.buffer) {
 			this.buffer.clear();
-			delete this.buffer;
 		}
 
 		Dom.safeRemove(this.container);

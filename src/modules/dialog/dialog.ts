@@ -325,7 +325,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			.off(self.ow, 'mouseup', self.onMouseUp);
 	}
 
-	options!: IDialogOptions;
+	OPTIONS!: IDialogOptions;
 
 	/**
 	 * @property {HTMLDivElement} dialog

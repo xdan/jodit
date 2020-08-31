@@ -110,7 +110,7 @@ export class xpath extends Plugin {
 		return item;
 	};
 
-	private selectAllButton!: IToolbarButton;
+	private selectAllButton?: IToolbarButton;
 
 	private removeSelectAll = () => {
 		if (this.selectAllButton) {
@@ -185,8 +185,8 @@ export class xpath extends Plugin {
 		this.j.defaultTimeout * 2
 	);
 
-	container!: HTMLElement;
-	menu: ContextMenu | null = null;
+	container?: HTMLElement;
+	menu?: ContextMenu;
 
 	afterInit(): void {
 		if (this.j.o.showXPathInStatusbar) {
@@ -201,7 +201,7 @@ export class xpath extends Plugin {
 				.on(
 					'afterSetMode.xpath afterInit.xpath changePlace.xpath',
 					() => {
-						if (!this.j.o.showXPathInStatusbar) {
+						if (!this.j.o.showXPathInStatusbar || !this.container) {
 							return;
 						}
 

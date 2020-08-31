@@ -8,7 +8,7 @@ import './uploader.less';
 
 import { Config } from '../../config';
 import { IS_IE, TEXT_PLAIN } from '../../core/constants';
-import {
+import type {
 	BuildDataResult,
 	HandlerError,
 	HandlerSuccess,
@@ -769,8 +769,6 @@ export class Uploader extends ViewComponent implements IUploader {
 				ajax.destruct();
 			} catch {}
 		});
-
-		delete this.options;
 
 		super.destruct();
 	}

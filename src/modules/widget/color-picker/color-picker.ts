@@ -6,7 +6,7 @@
 
 import './color-picker.less';
 
-import { IDictionary, IJodit } from '../../../types';
+import type { IDictionary, IJodit } from '../../../types';
 import {
 	normalizeColor,
 	hasBrowserColorPicker,

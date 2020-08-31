@@ -260,7 +260,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		}
 	};
 
-	options!: IFileBrowserOptions;
+	OPTIONS!: IFileBrowserOptions;
 
 	dialog!: IDialog;
 
@@ -506,6 +506,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			)
 		) as IFileBrowserOptions;
 
+		debugger
 		self.storage = Storage.makeStorage(
 			this.o.filebrowser.saveStateInStorage
 		);
@@ -549,7 +550,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			'permissions'
 		].forEach(key => {
 			if (this.options[key] !== null) {
-				this.options[key] = extend(
+				(this.options as IDictionary)[key] = extend(
 					true,
 					{},
 					this.o.ajax,
@@ -594,10 +595,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		}
 
 		this.dialog.destruct();
-		delete this.dialog;
 		this.events && this.e.off('.filebrowser');
 		this.uploader && this.uploader.destruct();
-		delete this.uploader;
 
 		super.destruct();
 	}

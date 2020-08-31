@@ -68,7 +68,6 @@ export class EventHandlersStore {
 	}
 
 	clear(): void {
-		delete this.__store;
 		this.__store = {};
 	}
 }

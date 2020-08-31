@@ -5,12 +5,12 @@
  */
 
 import { IViewOptions, IViewWithToolbar } from './view';
-import { Config } from '../config';
-import { Select } from '../core/selection/select';
+import type { Config } from '../config';
+import type { Select } from '../core/selection/select';
 import { CustomCommand, ICreate, IStatusBar, IStorage, Modes } from './';
 import { IUploader } from './uploader';
 import { IFileBrowser } from './file-browser';
-import { Observer } from '../modules';
+import type { Observer } from '../modules';
 
 interface IWorkPlace {
 	editor: HTMLDivElement | HTMLBodyElement;

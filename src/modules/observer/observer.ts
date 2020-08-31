@@ -179,10 +179,6 @@ export class Observer extends ViewComponent<IJodit> {
 
 		this.snapshot.destruct();
 
-		delete this.snapshot;
-		delete this.stack;
-		delete this.startValue;
-
 		super.destruct();
 	}
 }

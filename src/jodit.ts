@@ -35,7 +35,7 @@ import {
 
 import { Storage } from './core/storage/';
 
-import {
+import type {
 	CustomCommand,
 	ExecCommandCallback,
 	IDictionary,
@@ -1256,11 +1256,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.e.fire('afterAddPlace', currentPlace);
 		};
 
-		if (isPromise(initResult)) {
-			return initResult.then(init);
-		}
-
-		init();
+		return callPromise(initResult, init);
 	}
 
 	/**
@@ -1288,7 +1284,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	private initEditor(buffer: null | string): void | Promise<any> {
 		const result = this.createEditor();
 
-		const init = () => {
+		return callPromise(result, () => {
 			if (this.isInDestruct) {
 				return;
 			}
@@ -1338,13 +1334,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			try {
 				this.ed.execCommand('enableInlineTableEditing', false, 'false');
 			} catch {}
-		};
-
-		if (isPromise(result)) {
-			return result.then(init);
-		}
-
-		init();
+		});
 	}
 
 	/**
@@ -1360,7 +1350,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this
 		);
 
-		const init = () => {
+		return callPromise(stayDefault, () => {
 			if (this.isInDestruct) {
 				return;
 			}
@@ -1407,13 +1397,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 					}, this.defaultTimeout)
 				);
 			}
-		};
-
-		if (isPromise(stayDefault)) {
-			return stayDefault.then(init);
-		}
-
-		init();
+		});
 	}
 
 	/**
@@ -1505,11 +1489,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.storage.clear();
 
 		this.buffer.clear();
-		delete this.buffer;
 
 		this.commands = {};
 
-		delete this.selection;
 		this.__selectionLocked = null;
 
 		this.e.off(this.ow, 'resize');

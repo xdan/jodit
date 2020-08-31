@@ -5,7 +5,7 @@
  */
 
 import './tabs.less';
-import { IDictionary, IJodit, IUIButton } from '../../../types';
+import type { IDictionary, IJodit, IUIButton } from '../../../types';
 import { $$, isFunction } from '../../../core/helpers';
 import { Button } from '../../../core/ui';
 
