@@ -99,7 +99,7 @@ export const FileSelectorWidget = (
 					: editor.o.uploader.defaultHandlerSuccess;
 
 				if (isFunction(handler)) {
-					handler.call(editor.uploader, resp);
+					handler.call(editor, resp);
 				}
 
 				editor.e.fire('closeAllPopups');
