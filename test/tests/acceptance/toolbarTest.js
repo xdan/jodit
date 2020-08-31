@@ -1158,7 +1158,7 @@ describe('Toolbar', function () {
 			let node = editor.container.parentNode;
 
 			while (node && node.nodeType !== Node.DOCUMENT_NODE) {
-				expect(node.classList.contains('jodit-fullsize_box')).equals(
+				expect(node.classList.contains('jodit_fullsize-box_true')).equals(
 					true
 				);
 				node = node.parentNode;

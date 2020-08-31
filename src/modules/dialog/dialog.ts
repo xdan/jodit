@@ -522,7 +522,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 				box &&
 					(box as HTMLElement).classList &&
 					(box as HTMLElement).classList.toggle(
-						'jodit-fullsize_box',
+						'jodit_fullsize-box_true',
 						condition
 					);
 			}

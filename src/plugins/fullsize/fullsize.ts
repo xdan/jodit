@@ -20,7 +20,7 @@ import { IViewWithToolbar, IControlType, IViewBased } from '../../types';
 /**
  * @property{boolean} fullsize=false true Editor toWYSIWYG open toWYSIWYG full screen
  * @property{boolean} globalFullSize=true if true, after `fullsize` -  all editors element
- * get jodit-fullsize_box class (z-index: 100000 !important;)
+ * get jodit_fullsize-box_true class (z-index: 100000 !important;)
  * @example
  * ```javascript
  * var editor = new jodit({
@@ -75,20 +75,21 @@ Config.prototype.controls.fullsize = {
  * @param {Jodit} editor
  */
 export function fullsize(editor: IViewWithToolbar): void {
-	let shown: boolean = false,
+	let isEnabled: boolean = false,
 		oldHeight: number = 0,
 		oldWidth: number = 0,
 		wasToggled = false;
 
 	const resize = () => {
 			if (editor.events) {
-				if (shown) {
-					oldHeight = css(editor.container, 'height') as number;
-					oldWidth = css(editor.container, 'width') as number;
+				if (isEnabled) {
+					oldHeight = css(editor.container, 'height', undefined, true) as number;
+					oldWidth = css(editor.container, 'width', undefined, true) as number;
 					css(editor.container, {
 						height: editor.ow.innerHeight,
 						width: editor.ow.innerWidth
 					});
+
 					wasToggled = true;
 				} else if (wasToggled) {
 					css(editor.container, {
@@ -113,7 +114,7 @@ export function fullsize(editor: IViewWithToolbar): void {
 
 			editor.o.fullsize = enable;
 
-			shown = enable;
+			isEnabled = enable;
 
 			editor.container.classList.toggle('jodit_fullsize', enable);
 
@@ -129,7 +130,7 @@ export function fullsize(editor: IViewWithToolbar): void {
 				let node = editor.container.parentNode as HTMLElement;
 
 				while (node && node.nodeType !== Node.DOCUMENT_NODE) {
-					node.classList.toggle('jodit-fullsize_box', enable);
+					node.classList.toggle('jodit_fullsize-box_true', enable);
 					node = node.parentNode as HTMLElement;
 				}
 
