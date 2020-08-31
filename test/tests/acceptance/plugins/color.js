@@ -24,7 +24,6 @@ describe('Color plugin', function() {
 
 		simulateEvent(
 			'mousedown',
-			0,
 			popup.querySelector('[data-color="#F9CB9C"]')
 		);
 
@@ -47,6 +46,35 @@ describe('Color plugin', function() {
 
 	describe('Show native color picker', function() {
 		describe('Enable', function() {
+			describe('Select all content by edges', function () {
+				it('Should apply style to all elements', function () {
+					const editor = getJodit();
+
+					editor.value = '<p><br></p><p>test</p>';
+					const range = editor.s.createRange(true);
+
+					range.setStart(editor.editor.firstChild, 0);
+					range.setEnd(editor.editor.lastChild.firstChild, 4);
+					editor.s.selectRange(range);
+
+					clickButton('brush', editor);
+
+					const popup = getOpenedPopup(editor);
+
+					expect(popup).is.not.null;
+
+					simulateEvent(
+						'mousedown',
+						popup.querySelector('[data-color="#F9CB9C"]')
+					);
+
+					expect(sortAttributes(editor.value)).equals(
+						'<p><span style="color:yellow"><br></span></p>' +
+						'<p><span style="color:yellow">test</span></p>'
+					);
+				});
+			});
+
 			it('should open color picker with button - native color picker', function() {
 				const editor = getJodit({
 					showBrowserColorPicker: true
@@ -133,7 +161,6 @@ describe('Color plugin', function() {
 
 					simulateEvent(
 						'mousedown',
-						0,
 						popup.querySelector('[data-color="#F9CB9C"]')
 					);
 

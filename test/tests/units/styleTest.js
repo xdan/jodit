@@ -48,6 +48,30 @@ describe('Test Style module', function () {
 					'<p><span style="color:yellow">test</span></p>'
 				);
 			});
+
+			describe('Select all content by edges', function () {
+				it('Should apply style to all elements', function () {
+					editor.value = '<p><br></p><p>test</p>';
+					const range = editor.s.createRange(true);
+
+					range.setStart(editor.editor.firstChild, 0);
+					range.setEnd(editor.editor.lastChild.firstChild, 4);
+					editor.s.selectRange(range);
+
+					const style = new Style({
+						style: {
+							color: 'yellow'
+						}
+					});
+
+					style.apply(editor);
+
+					expect(sortAttributes(editor.value)).equals(
+						'<p><span style="color:yellow"><br></span></p>' +
+						'<p><span style="color:yellow">test</span></p>'
+					);
+				});
+			});
 		});
 
 		describe('Two times', function () {
