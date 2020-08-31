@@ -69,8 +69,8 @@ describe('Color plugin', function() {
 					);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<p><span style="color:yellow"><br></span></p>' +
-						'<p><span style="color:yellow">test</span></p>'
+						'<p><span style="background-color:#F9CB9C"><br></span></p>' +
+						'<p><span style="background-color:#F9CB9C">test</span></p>'
 					);
 				});
 			});

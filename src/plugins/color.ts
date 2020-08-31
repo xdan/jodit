@@ -71,7 +71,11 @@ Config.prototype.controls.brush = {
 			current !== editor.editor &&
 			Dom.isNode(current, editor.ew)
 		) {
-			if (Dom.isElement(current)) {
+			if (
+				Dom.isElement(current) &&
+				editor.s.isCollapsed() &&
+				!Dom.isTag(current, ['br', 'hr'])
+			) {
 				currentElement = current as HTMLElement;
 			}
 
