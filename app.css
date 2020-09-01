@@ -104,6 +104,8 @@ body,
 	margin: 0 0 16px 0;
 }
 
-h1, p {
+h1,
+p {
 	margin-bottom: 16px;
+	line-height: 1;
 }

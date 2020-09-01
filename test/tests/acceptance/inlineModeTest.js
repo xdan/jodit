@@ -417,9 +417,10 @@ describe('Test Inline mode', function() {
 				});
 
 				editor.value = 'test<br>test';
-				editor.s.select(editor.editor.firstChild);
 
-				simulateEvent('selectionchange', 0, editor.ed);
+				simulateEvent('mousedown', editor.ed);
+				editor.s.select(editor.editor.firstChild);
+				simulateEvent('mouseup', editor.ed);
 
 				const popup = getOpenedPopup(editor);
 				expect(popup).is.not.null;
@@ -432,8 +433,9 @@ describe('Test Inline mode', function() {
 						readonly: true
 					});
 					editor.value = 'test<br>test';
+					simulateEvent('mousedown', editor.ed);
 					editor.s.select(editor.editor.firstChild);
-					simulateEvent('selectionchange', 0, editor.ed);
+					simulateEvent('mouseup', editor.ed);
 					const popup = getOpenedPopup(editor);
 					expect(popup).is.null;
 				});
@@ -445,16 +447,18 @@ describe('Test Inline mode', function() {
 							readonly: true
 						});
 						editor.value = 'test<br>test';
+						simulateEvent('mousedown', editor.ed);
 						editor.s.select(editor.editor.firstChild);
-						simulateEvent('selectionchange', 0, editor.ed);
+						simulateEvent('mouseup', editor.ed);
 
 						let popup = getOpenedPopup(editor);
 						expect(popup).is.null;
 
 						editor.setReadOnly(false);
 
+						simulateEvent('mousedown', editor.ed);
 						editor.s.select(editor.editor.firstChild);
-						simulateEvent('selectionchange', 0, editor.ed);
+						simulateEvent('mouseup', editor.ed);
 						popup = getOpenedPopup(editor);
 						expect(popup).is.not.null;
 
@@ -471,15 +475,18 @@ describe('Test Inline mode', function() {
 						preset: 'inline'
 					});
 					editor.value = 'test<br>test';
+
+					simulateEvent('mousedown', editor.ed);
 					editor.s.select(editor.editor.firstChild);
-					simulateEvent('selectionchange', 0, editor.ed);
+					simulateEvent('mouseup', editor.ed);
+
 					const popup = getOpenedPopup(editor);
 					expect(popup).is.not.null;
 					const range = editor.s.createRange();
 					range.setStart(editor.editor.firstChild, 0);
 					range.collapse(true);
 					editor.s.selectRange(range);
-					simulateEvent('mousedown', 0, editor.editor);
+					simulateEvent('mousedown', editor.editor);
 					expect(popup.parentNode).is.null;
 				});
 			});
@@ -504,9 +511,10 @@ describe('Test Inline mode', function() {
 					editor.value = 'test<br>test';
 					editor2.value = 'test<br>test';
 
+					simulateEvent('mousedown', editor.ed);
 					editor.s.select(editor.editor.firstChild);
+					simulateEvent('mouseup', editor.ed);
 
-					simulateEvent('selectionchange', 0, editor.ed);
 					const popup = getOpenedPopup(editor);
 					expect(popup).is.not.null;
 					expect(popup.parentNode).is.not.null;
@@ -734,14 +742,11 @@ describe('Test Inline mode', function() {
 						events: {
 							afterConstructor: function(editor) {
 								editor.value = 'test<br>test';
-								editor.s.select(
-									editor.editor.firstChild
-								);
-								simulateEvent(
-									'selectionchange',
-									0,
-									editor.editor
-								);
+
+								simulateEvent('mousedown', editor.ed);
+								editor.s.select(editor.editor.firstChild);
+								simulateEvent('mouseup', editor.ed);
+
 								const popup = getOpenedPopup(editor);
 								expect(popup).is.not.null;
 								done();

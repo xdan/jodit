@@ -22,7 +22,7 @@ import {
 import { makeCollection } from '../../modules/toolbar/factory';
 import { Popup } from '../../core/ui/popup';
 import { splitArray, isString, position, isFunction } from '../../core/helpers';
-import { Dom, ToolbarCollection } from '../../modules';
+import { Dom, Table, ToolbarCollection } from '../../modules';
 import { debounce, wait } from '../../core/decorators';
 
 /**
@@ -52,33 +52,6 @@ export class inlinePopup extends Plugin {
 				target
 			);
 		}
-	}
-
-	@debounce(ctx => ctx.defaultTimeout * 5)
-	private onSelectionChange(): void {
-		if (!this.j.o.toolbarInlineForSelection) {
-			return;
-		}
-
-		const type = 'selection',
-			sel = this.j.s.sel,
-			range = this.j.s.range;
-
-		if (sel?.isCollapsed) {
-			if (this.type === type && this.popup.isOpened) {
-				this.hidePopup();
-			}
-
-			return;
-		}
-
-		const node = this.j.s.current();
-
-		if (!node) {
-			return;
-		}
-
-		this.showPopup(() => range.getBoundingClientRect(), type);
 	}
 
 	/**
@@ -151,6 +124,7 @@ export class inlinePopup extends Plugin {
 			.includes(type.toLowerCase());
 	}
 
+	/** @override **/
 	protected afterInit(jodit: IJodit): void {
 		this.j.e
 			.on(
@@ -186,13 +160,99 @@ export class inlinePopup extends Plugin {
 				}
 			)
 			.on('click', this.onClick)
-			.on(this.j.ed, 'selectionchange', this.onSelectionChange);
+			.on('mousedown keydown', this.onSelectionStart)
+			.on(
+				[this.j.ew, this.j.ow],
+				'mouseup keyup',
+				this.onSelectionEnd
+			);
 	}
 
+	private snapRange: Nullable<Range> = null;
+
+	@autobind
+	private onSelectionStart() {
+		this.snapRange = this.j.s.range.cloneRange();
+	}
+
+	@autobind
+	private onSelectionEnd() {
+		const { snapRange } = this,
+			{ range } = this.j.s;
+
+		if (
+			!snapRange ||
+			range.collapsed ||
+			range.startContainer !== snapRange.startContainer ||
+			range.startOffset !== snapRange.startOffset ||
+			range.endContainer !== snapRange.endContainer ||
+			range.endOffset !== snapRange.endOffset
+		) {
+			this.onSelectionChange();
+		}
+	}
+
+	/**
+	 * Selection change handler
+	 */
+	@debounce(ctx => ctx.defaultTimeout)
+	private onSelectionChange(): void {
+		if (!this.j.o.toolbarInlineForSelection) {
+			return;
+		}
+
+		const type = 'selection',
+			sel = this.j.s.sel,
+			range = this.j.s.range;
+
+		if (
+			sel?.isCollapsed ||
+			this.isSelectedTarget(range) ||
+			this.tableModule.getAllSelectedCells().length
+		) {
+			if (this.type === type && this.popup.isOpened) {
+				this.hidePopup();
+			}
+
+			return;
+		}
+
+		const node = this.j.s.current();
+
+		if (!node) {
+			return;
+		}
+
+		this.showPopup(() => range.getBoundingClientRect(), type);
+	}
+
+	/**
+	 * In not collapsed selection - only one image
+	 * @param r
+	 */
+	private isSelectedTarget(r: Range): boolean {
+		const sc = r.startContainer;
+
+		return (
+			Dom.isElement(sc) &&
+			sc === r.endContainer &&
+			Dom.isTag(sc.childNodes[r.startOffset], Object.keys(this.j.o.popup) as any) &&
+			r.startOffset === r.endOffset - 1
+		);
+	}
+
+	/**
+	 * Shortcut for Table module
+	 */
+	private get tableModule(): Table {
+		return this.j.getInstance<Table>('Table', this.j.o);
+	}
+
+	/** @override **/
 	protected beforeDestruct(jodit: IJodit): void {
 		jodit.e
 			.off('showPopup')
 			.off('click', this.onClick)
-			.off(this.j.ed, 'selectionchange', this.onSelectionChange);
+			.off([this.j.ew, this.j.ow], 'mouseup', this.onSelectionEnd);
 	}
 }

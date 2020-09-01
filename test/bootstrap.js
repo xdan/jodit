@@ -600,7 +600,9 @@ function sortAttributes(html) {
 		html = html.replace(elm.name, elm.value);
 	});
 
-	return html.replace(/&nbsp;/g, ' ');
+	return html
+		.replace(/&nbsp;/g, ' ')
+		.replace(Jodit.INVISIBLE_SPACE_REG_EXP(), '');
 }
 
 /**

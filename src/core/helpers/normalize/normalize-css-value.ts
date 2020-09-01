@@ -31,7 +31,7 @@ export function normalizeCssValue(
 			return isNumeric(value) ? +value : value;
 	}
 
-	if (/color/i.test(key)) {
+	if (/color/i.test(key) && /^rgb/i.test(value.toString())) {
 		return colorToHex(value.toString()) || value;
 	}
 
