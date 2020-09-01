@@ -180,7 +180,7 @@ editor.s.applyStyle({color: 'red'}) // will add to all selection text - red colo
 Before:
 ```js
 const editor = Jodit.make('#editor');
-const fb = Jodit.modules.FileBroser(editor, {
+const fb = Jodit.modules.FileBrowser(editor, {
     ajax: {
         url: 'https://xdsoft.net'
     }
@@ -195,7 +195,7 @@ fb.open(); // error, fb is already destructed
 Now:
 ```js
 const editor = Jodit.make('#editor');
-const fb = Jodit.modules.FileBroser({
+const fb = Jodit.modules.FileBrowser({
     ajax: {
         url: 'https://xdsoft.net'
     }
