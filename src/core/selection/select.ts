@@ -18,7 +18,7 @@ import type {
 	CanUndef,
 	HTMLTagNames,
 	IDictionary,
-	IJodit,
+	IJodit, IStyle,
 	markerInfo,
 	Nullable
 } from '../../types';
@@ -34,7 +34,7 @@ import {
 	isArray,
 	call
 } from '../helpers';
-import { IStyle, Style } from './style/style';
+import { Style } from './style/style';
 
 type WindowSelection = Selection | null;
 

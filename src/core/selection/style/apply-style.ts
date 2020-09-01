@@ -6,7 +6,7 @@
 
 import autobind from 'autobind-decorator';
 
-import { CanUndef, IJodit, markerInfo, Nullable } from '../../../types';
+import { CanUndef, IJodit, IStyle, markerInfo, Nullable } from '../../../types';
 import { isPlainObject, isVoid } from '../../helpers/checker';
 import { Dom } from '../../dom';
 import {
@@ -17,7 +17,7 @@ import {
 	normalizeNode,
 	trim
 } from '../../helpers';
-import { IStyle, Style } from './style';
+import { Style } from './style';
 
 enum mode {
 	UNWRAP = 'UNWRAP',
@@ -244,7 +244,7 @@ export class ApplyStyle {
 	/**
 	 * Element has all rules
 	 * @param elm
-	 * @param rules
+	 * @param [rules]
 	 */
 	private elementHasSameStyle(elm: Node, rules: CanUndef<IStyle>): boolean {
 		return Boolean(

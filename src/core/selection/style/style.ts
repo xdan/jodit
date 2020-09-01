@@ -4,19 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { CanUndef, HTMLTagNames, IDictionary, IJodit } from '../../../types';
+import type { HTMLTagNames, IJodit, IStyleOptions } from '../../../types';
 import { IS_BLOCK } from '../../constants';
 import { ApplyStyle } from './apply-style';
-
-export type StyleValue = number | string | null | undefined;
-
-export type IStyle = IDictionary<StyleValue>
-
-export interface IStyleOptions {
-	style: CanUndef<IStyle>;
-	element: CanUndef<HTMLTagNames>;
-	defaultTag: CanUndef<HTMLTagNames>;
-}
 
 export class Style {
 	get element(): HTMLTagNames {
