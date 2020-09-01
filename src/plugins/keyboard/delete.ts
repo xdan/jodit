@@ -37,11 +37,19 @@ export class Delete extends Plugin {
 					this.afterDeleteCommand();
 				}
 			})
-			.on('keydown', (event: KeyboardEvent): false | void => {
-				if (event.key === KEY_BACKSPACE || event.key === KEY_DELETE) {
-					return this.onDelete(event.key === KEY_BACKSPACE);
-				}
-			}, undefined, true);
+			.on(
+				'keydown',
+				(event: KeyboardEvent): false | void => {
+					if (
+						event.key === KEY_BACKSPACE ||
+						event.key === KEY_DELETE
+					) {
+						return this.onDelete(event.key === KEY_BACKSPACE);
+					}
+				},
+				undefined,
+				true
+			);
 	}
 
 	/** @override */
@@ -122,7 +130,7 @@ export class Delete extends Plugin {
 
 			throw e;
 		} finally {
-			Dom.safeRemove(fakeNode);
+			this.safeRemoveEmptyNode(fakeNode);
 		}
 
 		return false;
@@ -294,7 +302,9 @@ export class Delete extends Plugin {
 
 		if (
 			Dom.isElement(neighbor) &&
-			(Dom.isTag(neighbor, INSEPARABLE_TAGS) || Dom.isEmpty(neighbor) || attr(neighbor, 'contenteditable') === 'false')
+			(Dom.isTag(neighbor, INSEPARABLE_TAGS) ||
+				Dom.isEmpty(neighbor) ||
+				attr(neighbor, 'contenteditable') === 'false')
 		) {
 			Dom.safeRemove(neighbor);
 			this.j.s.setCursorBefore(fakeNode);
@@ -387,7 +397,11 @@ export class Delete extends Plugin {
 			return true;
 		}
 
-		if (neighbor && !Dom.isText(neighbor) && !Dom.isTag(neighbor, INSEPARABLE_TAGS)) {
+		if (
+			neighbor &&
+			!Dom.isText(neighbor) &&
+			!Dom.isTag(neighbor, INSEPARABLE_TAGS)
+		) {
 			setCursorIn(neighbor, !backspace);
 		} else {
 			setCursorBefore(fakeNode);
@@ -590,5 +604,37 @@ export class Delete extends Plugin {
 				return true;
 			}
 		}
+	}
+
+	/**
+	 * Remove node and replace cursor position out of it
+	 * @param fakeNode
+	 */
+	private safeRemoveEmptyNode(fakeNode: Node) {
+		const { range } = this.j.s;
+
+		if (range.startContainer === fakeNode) {
+			if (fakeNode.previousSibling) {
+				if (Dom.isText(fakeNode.previousSibling)) {
+					range.setStart(
+						fakeNode.previousSibling,
+						fakeNode.previousSibling.nodeValue?.length ?? 0
+					);
+				} else {
+					range.setStartAfter(fakeNode.previousSibling);
+				}
+			} else if (fakeNode.nextSibling) {
+				if (Dom.isText(fakeNode.nextSibling)) {
+					range.setStart(fakeNode.nextSibling, 0);
+				} else {
+					range.setStartBefore(fakeNode.nextSibling);
+				}
+			}
+
+			range.collapse(true);
+			this.j.s.selectRange(range);
+		}
+
+		Dom.safeRemove(fakeNode);
 	}
 }

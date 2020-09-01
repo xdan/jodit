@@ -18,7 +18,8 @@ import type {
 	CanUndef,
 	HTMLTagNames,
 	IDictionary,
-	IJodit, IStyle,
+	IJodit,
+	IStyle,
 	markerInfo,
 	Nullable
 } from '../../types';
@@ -811,51 +812,6 @@ export class Select {
 	};
 
 	/**
-	 * Set cursor after the node
-	 *
-	 * @param {Node} node
-	 * @return {Node} fake invisible textnode. After insert it can be removed
-	 */
-	@autobind
-	setCursorAfter(
-		node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement
-	): Nullable<Text> {
-		this.errorNode(node);
-
-		if (
-			!Dom.up(
-				node,
-				elm =>
-					elm === this.area || (elm && elm.parentNode === this.area),
-				this.area
-			)
-		) {
-			throw error('Node element must be in editor');
-		}
-
-		const range = this.createRange();
-		let fakeNode: Nullable<Text> = null;
-
-		if (!Dom.isText(node)) {
-			fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
-			range.setStartAfter(node);
-			range.insertNode(fakeNode);
-			range.selectNode(fakeNode);
-		} else {
-			range.setEnd(
-				node,
-				node.nodeValue !== null ? node.nodeValue.length : 0
-			);
-		}
-
-		range.collapse(false);
-
-		this.selectRange(range);
-
-		return fakeNode;
-	}
-
-	/**
 	 * Checks if the cursor is at the end(start) block
 	 *
 	 * @param  {boolean} start=false true - check whether the cursor is at the start block
@@ -935,6 +891,17 @@ export class Select {
 	}
 
 	/**
+	 * Set cursor after the node
+	 *
+	 * @param {Node} node
+	 * @return {Node} fake invisible textnode. After insert it can be removed
+	 */
+	@autobind
+	setCursorAfter(node: Node): Nullable<Text> {
+		return this.setCursorNearWith(node, false);
+	}
+
+	/**
 	 * Set cursor before the node
 	 *
 	 * @param node
@@ -942,6 +909,16 @@ export class Select {
 	 */
 	@autobind
 	setCursorBefore(node: Node): Nullable<Text> {
+		return this.setCursorNearWith(node, true);
+	}
+
+	/**
+	 * Add fake node for new cursor position
+	 *
+	 * @param node
+	 * @param inStart
+	 */
+	private setCursorNearWith(node: Node, inStart: boolean): Nullable<Text> {
 		this.errorNode(node);
 
 		if (
@@ -958,20 +935,24 @@ export class Select {
 		const range = this.createRange();
 		let fakeNode: Nullable<Text> = null;
 
-		if (!Dom.isText(node) || node.nodeValue === consts.INVISIBLE_SPACE) {
+		if (!Dom.isText(node)) {
 			fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
-			range.setStartBefore(node);
-			range.collapse(true);
+
+			inStart ? range.setStartBefore(node) : range.setEndAfter(node);
+
+			range.collapse(inStart);
+
 			range.insertNode(fakeNode);
 			range.selectNode(fakeNode);
 		} else {
-			range.setStart(
-				node,
-				node.nodeValue !== null ? node.nodeValue.length : 0
-			);
+			if (inStart) {
+				range.setStart(node, 0);
+			} else {
+				range.setEnd(node, node.nodeValue?.length ?? 0);
+			}
 		}
 
-		range.collapse(true);
+		range.collapse(inStart);
 		this.selectRange(range);
 
 		return fakeNode;
