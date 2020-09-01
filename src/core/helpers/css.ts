@@ -40,12 +40,14 @@ export const css = (
 				_value = parseInt(_value.toString(), 10) + 'px';
 			}
 
-			if (
-				!isVoid(_value) &&
-				css(elm, _key, undefined, true) !==
-					normalizeCssValue(_key, _value)
-			) {
-				(elm.style as any)[_key] = _value;
+			if (isVoid(_value)) {
+				return;
+			}
+
+			const oldValue = normalizeCssValue(_key, elm.style.getPropertyValue(_key));
+
+			if (oldValue !== normalizeCssValue(_key, _value)) {
+				(elm.style as any)[_key] = normalizeCssValue(_key, _value).toString();
 			}
 		};
 

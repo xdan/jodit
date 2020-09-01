@@ -506,7 +506,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			)
 		) as IFileBrowserOptions;
 
-		debugger
 		self.storage = Storage.makeStorage(
 			this.o.filebrowser.saveStateInStorage
 		);

@@ -126,9 +126,6 @@ export function mobile(editor: IJodit): void {
 			.on(
 				'resize afterInit recalcAdaptive changePlace afterAddPlace',
 				() => {
-					if (!editor.o) {
-						debugger
-					}
 					if (!editor.o.toolbar) {
 						return;
 					}
