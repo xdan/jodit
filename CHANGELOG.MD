@@ -7,6 +7,7 @@
 * https://github.com/xdan/jodit/issues/485
 * https://github.com/xdan/jodit/issues/483
 * https://github.com/xdan/jodit/issues/478
+* https://github.com/xdan/jodit/issues/476
 * https://github.com/xdan/jodit/issues/475
 
 ## 3.4.22
