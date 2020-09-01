@@ -664,8 +664,8 @@ export class Select {
 	 */
 	insertImage(
 		url: string | HTMLImageElement,
-		styles: IDictionary<string> | null,
-		defaultWidth: number | string | null
+		styles: Nullable<IDictionary<string>> = null,
+		defaultWidth: Nullable<number | string> = null
 	): void {
 		const image = isString(url) ? this.j.createInside.element('img') : url;
 
@@ -675,6 +675,7 @@ export class Select {
 
 		if (defaultWidth !== null) {
 			let dw: string = defaultWidth.toString();
+
 			if (
 				dw &&
 				'auto' !== dw &&
