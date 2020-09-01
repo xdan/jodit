@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.23
+ * Version: v3.4.24
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -373,14 +373,14 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(15), exports);
+tslib_1.__exportStar(__webpack_require__(14), exports);
 tslib_1.__exportStar(__webpack_require__(115), exports);
 tslib_1.__exportStar(__webpack_require__(118), exports);
-tslib_1.__exportStar(__webpack_require__(30), exports);
+tslib_1.__exportStar(__webpack_require__(29), exports);
 tslib_1.__exportStar(__webpack_require__(5), exports);
-tslib_1.__exportStar(__webpack_require__(33), exports);
+tslib_1.__exportStar(__webpack_require__(32), exports);
 tslib_1.__exportStar(__webpack_require__(121), exports);
-tslib_1.__exportStar(__webpack_require__(35), exports);
+tslib_1.__exportStar(__webpack_require__(34), exports);
 tslib_1.__exportStar(__webpack_require__(136), exports);
 tslib_1.__exportStar(__webpack_require__(12), exports);
 tslib_1.__exportStar(__webpack_require__(141), exports);
@@ -393,13 +393,13 @@ tslib_1.__exportStar(__webpack_require__(42), exports);
 tslib_1.__exportStar(__webpack_require__(147), exports);
 tslib_1.__exportStar(__webpack_require__(50), exports);
 tslib_1.__exportStar(__webpack_require__(148), exports);
-tslib_1.__exportStar(__webpack_require__(29), exports);
+tslib_1.__exportStar(__webpack_require__(28), exports);
 tslib_1.__exportStar(__webpack_require__(41), exports);
 tslib_1.__exportStar(__webpack_require__(51), exports);
 tslib_1.__exportStar(__webpack_require__(149), exports);
 tslib_1.__exportStar(__webpack_require__(150), exports);
-tslib_1.__exportStar(__webpack_require__(34), exports);
-tslib_1.__exportStar(__webpack_require__(32), exports);
+tslib_1.__exportStar(__webpack_require__(33), exports);
+tslib_1.__exportStar(__webpack_require__(31), exports);
 tslib_1.__exportStar(__webpack_require__(151), exports);
 
 
@@ -1401,7 +1401,7 @@ tslib_1.__exportStar(__webpack_require__(82), exports);
 tslib_1.__exportStar(__webpack_require__(83), exports);
 tslib_1.__exportStar(__webpack_require__(84), exports);
 tslib_1.__exportStar(__webpack_require__(99), exports);
-tslib_1.__exportStar(__webpack_require__(31), exports);
+tslib_1.__exportStar(__webpack_require__(30), exports);
 tslib_1.__exportStar(__webpack_require__(100), exports);
 tslib_1.__exportStar(__webpack_require__(101), exports);
 tslib_1.__exportStar(__webpack_require__(102), exports);
@@ -1433,7 +1433,7 @@ tslib_1.__exportStar(__webpack_require__(111), exports);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Plugin = void 0;
 var tslib_1 = __webpack_require__(0);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var component_1 = __webpack_require__(9);
 var Plugin = (function (_super) {
     tslib_1.__extends(Plugin, _super);
@@ -1466,6 +1466,29 @@ exports.Plugin = Plugin;
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(0);
+tslib_1.__exportStar(__webpack_require__(20), exports);
+tslib_1.__exportStar(__webpack_require__(15), exports);
+tslib_1.__exportStar(__webpack_require__(23), exports);
+tslib_1.__exportStar(__webpack_require__(54), exports);
+tslib_1.__exportStar(__webpack_require__(55), exports);
+tslib_1.__exportStar(__webpack_require__(159), exports);
+tslib_1.__exportStar(__webpack_require__(35), exports);
+tslib_1.__exportStar(__webpack_require__(53), exports);
+
+
+/***/ }),
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1560,29 +1583,6 @@ function autobind() {
 }
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(20), exports);
-tslib_1.__exportStar(__webpack_require__(14), exports);
-tslib_1.__exportStar(__webpack_require__(23), exports);
-tslib_1.__exportStar(__webpack_require__(54), exports);
-tslib_1.__exportStar(__webpack_require__(55), exports);
-tslib_1.__exportStar(__webpack_require__(159), exports);
-tslib_1.__exportStar(__webpack_require__(24), exports);
-tslib_1.__exportStar(__webpack_require__(53), exports);
-
-
-/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1612,7 +1612,7 @@ tslib_1.__exportStar(__webpack_require__(93), exports);
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Helpers = void 0;
+exports.PluginSystem = exports.Uploader = exports.ToolbarCollection = exports.ToolbarEditorCollection = exports.Table = exports.StatusBar = exports.Snapshot = exports.Style = exports.Select = exports.ProgressBar = exports.Observer = exports.ImageEditor = exports.Helpers = exports.FileBrowser = exports.ViewWithToolbar = exports.View = exports.Icon = exports.UIBlock = exports.UICheckbox = exports.UITextArea = exports.UIInput = exports.UIForm = exports.UIList = exports.UIGroup = exports.UISeparator = exports.Popup = exports.UIButton = exports.UIElement = exports.Create = exports.Plugin = exports.Dom = exports.Dialog = exports.Prompt = exports.Confirm = exports.Alert = exports.ContextMenu = exports.STATUSES = exports.ViewComponent = exports.Component = exports.Ajax = exports.Async = void 0;
 var tslib_1 = __webpack_require__(0);
 tslib_1.__exportStar(__webpack_require__(22), exports);
 var async_1 = __webpack_require__(56);
@@ -1636,7 +1636,7 @@ var plugin_1 = __webpack_require__(6);
 Object.defineProperty(exports, "Plugin", { enumerable: true, get: function () { return plugin_1.Plugin; } });
 var create_1 = __webpack_require__(186);
 Object.defineProperty(exports, "Create", { enumerable: true, get: function () { return create_1.Create; } });
-var ui_1 = __webpack_require__(8);
+var ui_1 = __webpack_require__(7);
 Object.defineProperty(exports, "UIElement", { enumerable: true, get: function () { return ui_1.UIElement; } });
 Object.defineProperty(exports, "UIButton", { enumerable: true, get: function () { return ui_1.UIButton; } });
 Object.defineProperty(exports, "Popup", { enumerable: true, get: function () { return ui_1.Popup; } });
@@ -1651,7 +1651,7 @@ Object.defineProperty(exports, "UIBlock", { enumerable: true, get: function () {
 Object.defineProperty(exports, "Icon", { enumerable: true, get: function () { return ui_1.Icon; } });
 var view_1 = __webpack_require__(58);
 Object.defineProperty(exports, "View", { enumerable: true, get: function () { return view_1.View; } });
-var view_with_toolbar_1 = __webpack_require__(27);
+var view_with_toolbar_1 = __webpack_require__(26);
 Object.defineProperty(exports, "ViewWithToolbar", { enumerable: true, get: function () { return view_with_toolbar_1.ViewWithToolbar; } });
 var file_browser_1 = __webpack_require__(187);
 Object.defineProperty(exports, "FileBrowser", { enumerable: true, get: function () { return file_browser_1.FileBrowser; } });
@@ -1799,7 +1799,11 @@ tslib_1.__exportStar(__webpack_require__(98), exports);
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(154), exports);
+tslib_1.__exportStar(__webpack_require__(80), exports);
+tslib_1.__exportStar(__webpack_require__(81), exports);
+tslib_1.__exportStar(__webpack_require__(112), exports);
+tslib_1.__exportStar(__webpack_require__(113), exports);
+tslib_1.__exportStar(__webpack_require__(114), exports);
 
 
 /***/ }),
@@ -1815,11 +1819,7 @@ tslib_1.__exportStar(__webpack_require__(154), exports);
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(80), exports);
-tslib_1.__exportStar(__webpack_require__(81), exports);
-tslib_1.__exportStar(__webpack_require__(112), exports);
-tslib_1.__exportStar(__webpack_require__(113), exports);
-tslib_1.__exportStar(__webpack_require__(114), exports);
+tslib_1.__exportStar(__webpack_require__(154), exports);
 
 
 /***/ }),
@@ -1834,7 +1834,8 @@ tslib_1.__exportStar(__webpack_require__(114), exports);
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var dialog_1 = __webpack_require__(26);
+exports.Confirm = exports.Prompt = exports.Alert = exports.Dialog = void 0;
+var dialog_1 = __webpack_require__(25);
 Object.defineProperty(exports, "Dialog", { enumerable: true, get: function () { return dialog_1.Dialog; } });
 var alert_1 = __webpack_require__(183);
 Object.defineProperty(exports, "Alert", { enumerable: true, get: function () { return alert_1.Alert; } });
@@ -1943,7 +1944,7 @@ exports.UIElement = void 0;
 var tslib_1 = __webpack_require__(0);
 var component_1 = __webpack_require__(9);
 var dom_1 = __webpack_require__(2);
-var utils_1 = __webpack_require__(15);
+var utils_1 = __webpack_require__(14);
 var UIElement = (function (_super) {
     tslib_1.__extends(UIElement, _super);
     function UIElement(jodit, options) {
@@ -2112,25 +2113,6 @@ tslib_1.__exportStar(__webpack_require__(156), exports);
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(163), exports);
-tslib_1.__exportStar(__webpack_require__(25), exports);
-tslib_1.__exportStar(__webpack_require__(166), exports);
-tslib_1.__exportStar(__webpack_require__(171), exports);
-
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.UIInput = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(164);
@@ -2212,7 +2194,7 @@ exports.UIInput = UIInput;
 
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2226,11 +2208,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Dialog = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(177);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var config_1 = __webpack_require__(4);
 var constants_1 = __webpack_require__(3);
 var helpers_1 = __webpack_require__(1);
-var view_with_toolbar_1 = __webpack_require__(27);
+var view_with_toolbar_1 = __webpack_require__(26);
 var dom_1 = __webpack_require__(2);
 var component_1 = __webpack_require__(9);
 var global_1 = __webpack_require__(11);
@@ -2514,7 +2496,7 @@ var Dialog = (function (_super) {
         [this.destination, this.destination.parentNode].forEach(function (box) {
             box &&
                 box.classList &&
-                box.classList.toggle('jodit-fullsize_box', condition);
+                box.classList.toggle('jodit_fullsize-box_true', condition);
         });
         this.iSetMaximization = condition;
         return condition;
@@ -2621,7 +2603,7 @@ exports.Dialog = Dialog;
 
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2684,7 +2666,6 @@ var ViewWithToolbar = (function (_super) {
         }
         this.setStatus(component_1.STATUSES.beforeDestruct);
         this.toolbar.destruct();
-        delete this.toolbar;
         _super.prototype.destruct.call(this);
     };
     return ViewWithToolbar;
@@ -2693,7 +2674,7 @@ exports.ViewWithToolbar = ViewWithToolbar;
 
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2766,7 +2747,7 @@ exports.getAllTypes = getAllTypes;
 
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2778,7 +2759,7 @@ exports.getAllTypes = getAllTypes;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JoditArray = void 0;
-var extend_1 = __webpack_require__(30);
+var extend_1 = __webpack_require__(29);
 var JoditArray = (function () {
     function JoditArray(data) {
         var _this = this;
@@ -2824,7 +2805,7 @@ exports.JoditArray = JoditArray;
 
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2837,7 +2818,7 @@ exports.JoditArray = JoditArray;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.extend = void 0;
 var jodit_object_1 = __webpack_require__(41);
-var jodit_array_1 = __webpack_require__(29);
+var jodit_array_1 = __webpack_require__(28);
 var checker_1 = __webpack_require__(5);
 function extend() {
     var args = [];
@@ -2895,7 +2876,7 @@ exports.extend = extend;
 
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2914,7 +2895,7 @@ exports.isFunction = isFunction;
 
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2966,7 +2947,7 @@ exports.error = error;
 
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2982,7 +2963,7 @@ tslib_1.__exportStar(__webpack_require__(120), exports);
 
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2996,8 +2977,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolveElement = exports.cssPath = exports.refs = exports.getXPathByElement = exports.$$ = void 0;
 var constants_1 = __webpack_require__(3);
 var checker_1 = __webpack_require__(5);
-var utils_1 = __webpack_require__(15);
-var type_1 = __webpack_require__(32);
+var utils_1 = __webpack_require__(14);
+var type_1 = __webpack_require__(31);
 var dom_1 = __webpack_require__(2);
 var string_1 = __webpack_require__(12);
 var temp = 1;
@@ -3103,7 +3084,7 @@ exports.resolveElement = resolveElement;
 
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3124,6 +3105,25 @@ tslib_1.__exportStar(__webpack_require__(132), exports);
 tslib_1.__exportStar(__webpack_require__(133), exports);
 tslib_1.__exportStar(__webpack_require__(134), exports);
 tslib_1.__exportStar(__webpack_require__(135), exports);
+
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(0);
+tslib_1.__exportStar(__webpack_require__(163), exports);
+tslib_1.__exportStar(__webpack_require__(24), exports);
+tslib_1.__exportStar(__webpack_require__(166), exports);
+tslib_1.__exportStar(__webpack_require__(171), exports);
 
 
 /***/ }),
@@ -3338,10 +3338,10 @@ tslib_1.__exportStar(__webpack_require__(179), exports);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToolbarCollection = void 0;
 var tslib_1 = __webpack_require__(0);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 __webpack_require__(180);
 var helpers_1 = __webpack_require__(1);
-var ui_1 = __webpack_require__(8);
+var ui_1 = __webpack_require__(7);
 var factory_1 = __webpack_require__(18);
 var component_1 = __webpack_require__(9);
 var ToolbarCollection = (function (_super) {
@@ -3350,7 +3350,7 @@ var ToolbarCollection = (function (_super) {
         var _this = _super.call(this, jodit) || this;
         _this.listenEvents = 'updateToolbar changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
             'selectionchange changeSelection focus afterSetMode touchstart focus blur';
-        _this.update = _this.j.async.debounce(_this.immediateUpdate, _this.j.defaultTimeout);
+        _this.update = _this.j.async.debounce(_this.immediateUpdate, function () { return _this.j.defaultTimeout; });
         _this.initEvents();
         _this.setStatus(component_1.STATUSES.ready);
         return _this;
@@ -3694,7 +3694,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.clipboard = exports.pluginKey = void 0;
 var constants_1 = __webpack_require__(3);
 var helpers_1 = __webpack_require__(1);
-var helpers_2 = __webpack_require__(28);
+var helpers_2 = __webpack_require__(27);
 exports.pluginKey = 'clipboard';
 var clipboard = (function () {
     function clipboard() {
@@ -3748,7 +3748,7 @@ exports.clipboard = clipboard;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JoditObject = void 0;
-var extend_1 = __webpack_require__(30);
+var extend_1 = __webpack_require__(29);
 var JoditObject = (function () {
     function JoditObject(data) {
         extend_1.extend(true, this, data);
@@ -4002,7 +4002,6 @@ var EventHandlersStore = (function () {
         }
     };
     EventHandlersStore.prototype.clear = function () {
-        delete this.__store;
         this.__store = {};
     };
     return EventHandlersStore;
@@ -4341,7 +4340,7 @@ exports.parseQuery = function (queryString) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.normalizeCursorPosition = exports.getNotSpaceSibling = exports.getSibling = exports.getNeighbor = void 0;
-var utils_1 = __webpack_require__(15);
+var utils_1 = __webpack_require__(14);
 var dom_1 = __webpack_require__(2);
 var constants_1 = __webpack_require__(3);
 var string_1 = __webpack_require__(12);
@@ -4619,7 +4618,7 @@ var Async = (function () {
                     callFn.apply(void 0, args);
                 }
                 helpers_1.clearTimeout(timer);
-                timer = _this.setTimeout(function () { return callFn.apply(void 0, args); }, timeout);
+                timer = _this.setTimeout(function () { return callFn.apply(void 0, args); }, helpers_1.isFunction(timeout) ? timeout() : timeout);
                 _this.timers.set(fn, timer);
             }
         };
@@ -4643,7 +4642,7 @@ var Async = (function () {
                     if (needInvoke) {
                         fn.apply(void 0, lastArgs);
                         needInvoke = false;
-                        timer = _this.setTimeout(callee, timeout);
+                        timer = _this.setTimeout(callee, helpers_1.isFunction(timeout) ? timeout() : timeout);
                         _this.timers.set(callee, timer);
                     }
                     else {
@@ -4725,7 +4724,7 @@ exports.ContextMenu = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(176);
 var popup_1 = __webpack_require__(23);
-var button_1 = __webpack_require__(14);
+var button_1 = __webpack_require__(15);
 var checker_1 = __webpack_require__(5);
 var ContextMenu = (function (_super) {
     tslib_1.__extends(ContextMenu, _super);
@@ -4790,9 +4789,10 @@ var View = (function (_super) {
         _this.isJodit = isJodit;
         _this.isView = true;
         _this.components = new Set();
-        _this.version = "3.4.23";
+        _this.version = "3.4.24";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
+        _this.OPTIONS = View.defaultOptions;
         _this.__isFullSize = false;
         _this.__whoLocked = '';
         _this.isLockedNotBy = function (name) {
@@ -4834,9 +4834,29 @@ var View = (function (_super) {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(View.prototype, "container", {
+        get: function () {
+            return this.__container;
+        },
+        set: function (container) {
+            this.__container = container;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(View.prototype, "e", {
         get: function () {
             return this.events;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "options", {
+        get: function () {
+            return this.__options;
+        },
+        set: function (options) {
+            this.__options = options;
         },
         enumerable: false,
         configurable: true
@@ -4932,15 +4952,12 @@ var View = (function (_super) {
         }
         if (this.async) {
             this.async.destruct();
-            delete this.async;
         }
         if (this.events) {
             this.e.destruct();
-            delete this.events;
         }
         if (this.buffer) {
             this.buffer.clear();
-            delete this.buffer;
         }
         modules_1.Dom.safeRemove(this.container);
         _super.prototype.destruct.call(this);
@@ -5187,7 +5204,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToolbarButton = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(181);
-var button_1 = __webpack_require__(14);
+var button_1 = __webpack_require__(15);
 var decorators_1 = __webpack_require__(13);
 var dom_1 = __webpack_require__(2);
 var popup_1 = __webpack_require__(23);
@@ -5458,10 +5475,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToolbarContent = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(182);
-var button_1 = __webpack_require__(14);
+var button_1 = __webpack_require__(15);
 var checker_1 = __webpack_require__(5);
 var dom_1 = __webpack_require__(2);
-var utils_1 = __webpack_require__(15);
+var utils_1 = __webpack_require__(14);
 var ToolbarContent = (function (_super) {
     tslib_1.__extends(ToolbarContent, _super);
     function ToolbarContent(jodit, control, target) {
@@ -7815,10 +7832,10 @@ var consts = __webpack_require__(3);
 var modules_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(1);
 var storage_1 = __webpack_require__(37);
-var view_with_toolbar_1 = __webpack_require__(27);
+var view_with_toolbar_1 = __webpack_require__(26);
 var global_1 = __webpack_require__(11);
 var decorators_1 = __webpack_require__(13);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var Jodit = (function (_super) {
     tslib_1.__extends(Jodit, _super);
     function Jodit(element, options) {
@@ -8464,10 +8481,7 @@ var Jodit = (function (_super) {
             }
             _this.e.fire('afterAddPlace', currentPlace);
         };
-        if (helpers_1.isPromise(initResult)) {
-            return initResult.then(init);
-        }
-        init();
+        return helpers_1.callPromise(initResult, init);
     };
     Jodit.prototype.setCurrentPlace = function (place) {
         if (this.currentPlace === place) {
@@ -8485,7 +8499,7 @@ var Jodit = (function (_super) {
     Jodit.prototype.initEditor = function (buffer) {
         var _this = this;
         var result = this.createEditor();
-        var init = function () {
+        return helpers_1.callPromise(result, function () {
             if (_this.isInDestruct) {
                 return;
             }
@@ -8522,17 +8536,13 @@ var Jodit = (function (_super) {
                 _this.ed.execCommand('enableInlineTableEditing', false, 'false');
             }
             catch (_c) { }
-        };
-        if (helpers_1.isPromise(result)) {
-            return result.then(init);
-        }
-        init();
+        });
     };
     Jodit.prototype.createEditor = function () {
         var _this = this;
         var defaultEditorArea = this.editor;
         var stayDefault = this.e.fire('createEditor', this);
-        var init = function () {
+        return helpers_1.callPromise(stayDefault, function () {
             if (_this.isInDestruct) {
                 return;
             }
@@ -8565,11 +8575,7 @@ var Jodit = (function (_super) {
                     _this.e && _this.e.fire(_this.element, 'change');
                 }, _this.defaultTimeout));
             }
-        };
-        if (helpers_1.isPromise(stayDefault)) {
-            return stayDefault.then(init);
-        }
-        init();
+        });
     };
     Jodit.prototype.attachEvents = function (options) {
         var _this = this;
@@ -8627,9 +8633,7 @@ var Jodit = (function (_super) {
         var buffer = this.getEditorValue();
         this.storage.clear();
         this.buffer.clear();
-        delete this.buffer;
         this.commands = {};
-        delete this.selection;
         this.__selectionLocked = null;
         this.e.off(this.ow, 'resize');
         this.e.off(this.ow);
@@ -8840,7 +8844,7 @@ exports.hasBrowserColorPicker = hasBrowserColorPicker;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isArray = void 0;
-var jodit_array_1 = __webpack_require__(29);
+var jodit_array_1 = __webpack_require__(28);
 function isArray(elm) {
     return Array.isArray(elm) || elm instanceof jodit_array_1.JoditArray;
 }
@@ -9877,7 +9881,7 @@ exports.isHtmlFromWord = isHtmlFromWord;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.hasContainer = exports.isDestructable = exports.isInitable = void 0;
-var is_function_1 = __webpack_require__(31);
+var is_function_1 = __webpack_require__(30);
 var dom_1 = __webpack_require__(2);
 function isInitable(value) {
     return value && is_function_1.isFunction(value.init);
@@ -9930,7 +9934,7 @@ exports.isInt = isInt;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isViewObject = exports.isJoditObject = void 0;
-var is_function_1 = __webpack_require__(31);
+var is_function_1 = __webpack_require__(30);
 var global_1 = __webpack_require__(11);
 function isJoditObject(jodit) {
     return Boolean(jodit &&
@@ -10001,7 +10005,7 @@ exports.isNumber = isNumber;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isPlainObject = void 0;
 var is_window_1 = __webpack_require__(49);
-var type_1 = __webpack_require__(32);
+var type_1 = __webpack_require__(31);
 function isPlainObject(obj) {
     if (!obj || typeof obj !== 'object' || obj.nodeType || is_window_1.isWindow(obj)) {
         return false;
@@ -10205,6 +10209,7 @@ exports.LimitedStack = LimitedStack;
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.splitArray = exports.asArray = void 0;
 var as_array_1 = __webpack_require__(116);
 Object.defineProperty(exports, "asArray", { enumerable: true, get: function () { return as_array_1.asArray; } });
 var split_array_1 = __webpack_require__(117);
@@ -10369,7 +10374,7 @@ tslib_1.__exportStar(__webpack_require__(126), exports);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.applyStyles = void 0;
 var dom_1 = __webpack_require__(2);
-var selector_1 = __webpack_require__(34);
+var selector_1 = __webpack_require__(33);
 var string_1 = __webpack_require__(12);
 function normalizeCSS(s) {
     return s
@@ -10567,7 +10572,7 @@ exports.htmlspecialchars = htmlspecialchars;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.stripTags = void 0;
 var checker_1 = __webpack_require__(5);
-var selector_1 = __webpack_require__(34);
+var selector_1 = __webpack_require__(33);
 var string_1 = __webpack_require__(12);
 var dom_1 = __webpack_require__(2);
 function stripTags(html, doc) {
@@ -10840,7 +10845,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.normalizeCssValue = void 0;
 var checker_1 = __webpack_require__(5);
 var string_1 = __webpack_require__(12);
-var color_1 = __webpack_require__(33);
+var color_1 = __webpack_require__(32);
 function normalizeCssValue(key, value) {
     switch (string_1.kebabCase(key)) {
         case 'font-weight':
@@ -10857,7 +10862,7 @@ function normalizeCssValue(key, value) {
             }
             return checker_1.isNumeric(value) ? +value : value;
     }
-    if (/color/i.test(key)) {
+    if (/color/i.test(key) && /^rgb/i.test(value.toString())) {
         return color_1.colorToHex(value.toString()) || value;
     }
     return value;
@@ -10878,7 +10883,7 @@ exports.normalizeCssValue = normalizeCssValue;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.normalizeColor = void 0;
-var color_1 = __webpack_require__(33);
+var color_1 = __webpack_require__(32);
 var string_1 = __webpack_require__(12);
 exports.normalizeColor = function (colorInput) {
     var newcolor = ['#'];
@@ -11249,7 +11254,7 @@ exports.convertMediaUrlToVideoEmbed = function (url, width, height) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.clearCenterAlign = exports.css = void 0;
 var checker_1 = __webpack_require__(5);
-var normalize_1 = __webpack_require__(35);
+var normalize_1 = __webpack_require__(34);
 var string_1 = __webpack_require__(12);
 exports.css = function (element, key, value, onlyStyleMode) {
     if (onlyStyleMode === void 0) { onlyStyleMode = false; }
@@ -11544,7 +11549,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ColorPickerWidget = void 0;
 __webpack_require__(153);
 var helpers_1 = __webpack_require__(1);
-var ui_1 = __webpack_require__(8);
+var ui_1 = __webpack_require__(7);
 var dom_1 = __webpack_require__(2);
 exports.ColorPickerWidget = function (editor, callback, coldColor) {
     var valueHex = helpers_1.normalizeColor(coldColor), form = editor.c.div('jodit-color-picker'), iconPalette = editor.o.textIcons
@@ -11645,14 +11650,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Button = exports.UIButton = exports.UIButtonState = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(155);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var element_1 = __webpack_require__(20);
 var watch_1 = __webpack_require__(45);
 var component_1 = __webpack_require__(9);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
 var icon_1 = __webpack_require__(53);
-var __1 = __webpack_require__(8);
+var __1 = __webpack_require__(7);
 exports.UIButtonState = function () { return ({
     size: 'middle',
     type: 'button',
@@ -11862,11 +11867,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Popup = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(157);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
 var global_1 = __webpack_require__(11);
-var __1 = __webpack_require__(8);
+var __1 = __webpack_require__(7);
 var Popup = (function (_super) {
     tslib_1.__extends(Popup, _super);
     function Popup(jodit) {
@@ -12114,7 +12119,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UIList = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(160);
-var button_1 = __webpack_require__(14);
+var button_1 = __webpack_require__(15);
 var get_strong_control_types_1 = __webpack_require__(161);
 var component_1 = __webpack_require__(9);
 var decorators_1 = __webpack_require__(13);
@@ -12291,8 +12296,8 @@ exports.getControlType = getControlType;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UIForm = void 0;
 var tslib_1 = __webpack_require__(0);
-var __1 = __webpack_require__(8);
-var input_1 = __webpack_require__(25);
+var __1 = __webpack_require__(7);
+var input_1 = __webpack_require__(24);
 var UIForm = (function (_super) {
     tslib_1.__extends(UIForm, _super);
     function UIForm() {
@@ -12400,7 +12405,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UITextArea = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(168);
-var input_1 = __webpack_require__(25);
+var input_1 = __webpack_require__(24);
 var UITextArea = (function (_super) {
     tslib_1.__extends(UITextArea, _super);
     function UITextArea() {
@@ -12431,7 +12436,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UICheckbox = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(170);
-var input_1 = __webpack_require__(25);
+var input_1 = __webpack_require__(24);
 var UICheckbox = (function (_super) {
     tslib_1.__extends(UICheckbox, _super);
     function UICheckbox() {
@@ -12465,9 +12470,9 @@ exports.UICheckbox = UICheckbox;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UIBlock = void 0;
 var tslib_1 = __webpack_require__(0);
-var __1 = __webpack_require__(8);
+var __1 = __webpack_require__(7);
 __webpack_require__(172);
-var utils_1 = __webpack_require__(15);
+var utils_1 = __webpack_require__(14);
 var UIBlock = (function (_super) {
     tslib_1.__extends(UIBlock, _super);
     function UIBlock(jodit, elements, options) {
@@ -12507,7 +12512,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TabsWidget = void 0;
 __webpack_require__(174);
 var helpers_1 = __webpack_require__(1);
-var ui_1 = __webpack_require__(8);
+var ui_1 = __webpack_require__(7);
 exports.TabsWidget = function (editor, tabs, state) {
     var box = editor.c.div('jodit-tabs'), tabBox = editor.c.div('jodit-tabs__wrapper'), buttons = editor.c.div('jodit-tabs__buttons'), nameToTab = {}, buttonList = [];
     var firstTab = '', tabcount = 0;
@@ -12589,8 +12594,7 @@ exports.FileSelectorWidget = void 0;
 var helpers_1 = __webpack_require__(1);
 var dom_1 = __webpack_require__(2);
 var __1 = __webpack_require__(17);
-var form_1 = __webpack_require__(24);
-var button_1 = __webpack_require__(14);
+var ui_1 = __webpack_require__(7);
 exports.FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
     if (isImage === void 0) { isImage = true; }
     var currentImage;
@@ -12608,7 +12612,7 @@ exports.FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
                 ? callbacks.upload
                 : editor.o.uploader.defaultHandlerSuccess;
             if (helpers_1.isFunction(handler)) {
-                handler.call(editor.uploader, resp);
+                handler.call(editor, resp);
             }
             editor.e.fire('closeAllPopups');
         }, function (error) {
@@ -12636,23 +12640,23 @@ exports.FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
         }
     }
     if (callbacks.url) {
-        var button = new button_1.UIButton(editor, {
+        var button = new ui_1.UIButton(editor, {
             type: 'submit',
             status: 'primary',
             text: 'Insert'
-        }), form = (new form_1.UIForm(editor, [
-            new form_1.UIInput(editor, {
+        }), form = (new ui_1.UIForm(editor, [
+            new ui_1.UIInput(editor, {
                 required: true,
                 label: 'URL',
                 name: 'url',
                 type: 'url',
                 placeholder: 'http://',
             }),
-            new form_1.UIInput(editor, {
+            new ui_1.UIInput(editor, {
                 name: 'text',
                 label: 'Alternative text'
             }),
-            new form_1.UIBlock(editor, [
+            new ui_1.UIBlock(editor, [
                 button
             ])
         ]));
@@ -12790,10 +12794,10 @@ exports.Storage = Storage;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Alert = void 0;
-var dialog_1 = __webpack_require__(26);
+var dialog_1 = __webpack_require__(25);
 var helpers_1 = __webpack_require__(1);
 var dom_1 = __webpack_require__(2);
-var ui_1 = __webpack_require__(8);
+var ui_1 = __webpack_require__(7);
 exports.Alert = function (msg, title, callback, className) {
     if (className === void 0) { className = 'jodit-dialog_alert'; }
     if (helpers_1.isFunction(title)) {
@@ -12831,8 +12835,8 @@ exports.Alert = function (msg, title, callback, className) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Prompt = void 0;
-var dialog_1 = __webpack_require__(26);
-var ui_1 = __webpack_require__(8);
+var dialog_1 = __webpack_require__(25);
+var ui_1 = __webpack_require__(7);
 var helpers_1 = __webpack_require__(1);
 exports.Prompt = function (msg, title, callback, placeholder, defaultValue) {
     var dialog = new dialog_1.Dialog(), cancelButton = ui_1.Button(dialog, 'cancel', 'Cancel'), okButton = ui_1.Button(dialog, 'ok', 'Ok'), form = dialog.c.element('form', {
@@ -12888,9 +12892,9 @@ exports.Prompt = function (msg, title, callback, placeholder, defaultValue) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Confirm = void 0;
-var dialog_1 = __webpack_require__(26);
+var dialog_1 = __webpack_require__(25);
 var helpers_1 = __webpack_require__(1);
-var ui_1 = __webpack_require__(8);
+var ui_1 = __webpack_require__(7);
 exports.Confirm = function (msg, title, callback) {
     var dialog = new dialog_1.Dialog(), $div = dialog.c.fromHTML('<form class="jodit-dialog_prompt"></form>'), $label = dialog.c.element('label');
     if (helpers_1.isFunction(title)) {
@@ -13065,14 +13069,14 @@ var consts = __webpack_require__(3);
 var dialog_1 = __webpack_require__(16);
 var storage_1 = __webpack_require__(37);
 var helpers_1 = __webpack_require__(1);
-var view_with_toolbar_1 = __webpack_require__(27);
+var view_with_toolbar_1 = __webpack_require__(26);
 __webpack_require__(189);
 var dom_1 = __webpack_require__(2);
 var events_1 = __webpack_require__(22);
 var item_1 = __webpack_require__(190);
 var consts_1 = __webpack_require__(21);
 var factories_1 = __webpack_require__(64);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var state_listeners_1 = __webpack_require__(191);
 var native_listeners_1 = __webpack_require__(65);
 var self_listeners_1 = __webpack_require__(193);
@@ -13423,10 +13427,8 @@ var FileBrowser = (function (_super) {
             return;
         }
         this.dialog.destruct();
-        delete this.dialog;
         this.events && this.e.off('.filebrowser');
         this.uploader && this.uploader.destruct();
-        delete this.uploader;
         _super.prototype.destruct.call(this);
     };
     tslib_1.__decorate([
@@ -13461,7 +13463,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var config_1 = __webpack_require__(4);
 var helpers_1 = __webpack_require__(1);
 var consts_1 = __webpack_require__(21);
-var ui_1 = __webpack_require__(8);
+var ui_1 = __webpack_require__(7);
 config_1.Config.prototype.filebrowser = {
     extraButtons: [],
     filter: function (item, search) {
@@ -13847,8 +13849,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.stateListeners = void 0;
 var consts_1 = __webpack_require__(21);
 var dom_1 = __webpack_require__(2);
-var normalize_1 = __webpack_require__(35);
-var ui_1 = __webpack_require__(8);
+var normalize_1 = __webpack_require__(34);
+var ui_1 = __webpack_require__(7);
 var DEFAULT_SOURCE_NAME = 'default', ITEM_ACTIVE_CLASS = consts_1.ITEM_CLASS + '_active_true';
 function stateListeners() {
     var _this = this;
@@ -13989,7 +13991,7 @@ var dom_1 = __webpack_require__(2);
 var consts_1 = __webpack_require__(21);
 var helpers_1 = __webpack_require__(1);
 var factories_1 = __webpack_require__(64);
-var ui_1 = __webpack_require__(8);
+var ui_1 = __webpack_require__(7);
 var native_listeners_1 = __webpack_require__(65);
 var CLASS_PREVIEW = consts_1.F_CLASS + '_preview_', preview_tpl_next = function (next, right) {
     if (next === void 0) { next = 'next'; }
@@ -14337,13 +14339,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageEditor = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(195);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var config_1 = __webpack_require__(4);
 var component_1 = __webpack_require__(9);
 var dialog_1 = __webpack_require__(16);
 var helpers_1 = __webpack_require__(1);
 var dom_1 = __webpack_require__(2);
-var button_1 = __webpack_require__(14);
+var button_1 = __webpack_require__(15);
 var form_1 = __webpack_require__(196);
 config_1.Config.prototype.imageeditor = {
     min_width: 20,
@@ -14849,17 +14851,10 @@ var ImageEditor = (function (_super) {
         if (this.isDestructed) {
             return;
         }
-        if (this.dialog) {
+        if (this.dialog && !this.dialog.isInDestruct) {
             this.dialog.destruct();
-            delete this.dialog;
         }
         dom_1.Dom.safeRemove(this.editor);
-        delete this.resize_box;
-        delete this.crop_box;
-        delete this.sizes;
-        delete this.resizeHandler;
-        delete this.cropHandler;
-        delete this.editor;
         if (this.j.e) {
             this.j.e.off(this.ow, "." + jie);
             this.j.e.off("." + jie);
@@ -14896,7 +14891,7 @@ exports.ImageEditor = ImageEditor;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.form = void 0;
-var ui_1 = __webpack_require__(8);
+var ui_1 = __webpack_require__(7);
 var jie = 'jodit-image-editor';
 var gi = ui_1.Icon.get.bind(ui_1.Icon);
 var act = function (el, className) {
@@ -15046,9 +15041,6 @@ var Observer = (function (_super) {
             this.j.e.off('.observer');
         }
         this.snapshot.destruct();
-        delete this.snapshot;
-        delete this.stack;
-        delete this.startValue;
         _super.prototype.destruct.call(this);
     };
     tslib_1.__decorate([
@@ -15247,7 +15239,7 @@ tslib_1.__exportStar(__webpack_require__(204), exports);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApplyStyle = void 0;
 var tslib_1 = __webpack_require__(0);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var checker_1 = __webpack_require__(5);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
@@ -15550,7 +15542,7 @@ exports.ApplyStyle = ApplyStyle;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Select = void 0;
 var tslib_1 = __webpack_require__(0);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var consts = __webpack_require__(3);
 var constants_1 = __webpack_require__(3);
 var dom_1 = __webpack_require__(2);
@@ -16017,6 +16009,8 @@ var Select = (function () {
         }
     };
     Select.prototype.insertImage = function (url, styles, defaultWidth) {
+        if (styles === void 0) { styles = null; }
+        if (defaultWidth === void 0) { defaultWidth = null; }
         var image = helpers_1.isString(url) ? this.j.createInside.element('img') : url;
         if (helpers_1.isString(url)) {
             image.setAttribute('src', url);
@@ -16049,29 +16043,6 @@ var Select = (function () {
         var result = this.insertNode(image);
         this.j.e.fire('afterInsertImage', image);
         return result;
-    };
-    Select.prototype.setCursorAfter = function (node) {
-        var _this = this;
-        this.errorNode(node);
-        if (!dom_1.Dom.up(node, function (elm) {
-            return elm === _this.area || (elm && elm.parentNode === _this.area);
-        }, this.area)) {
-            throw helpers_1.error('Node element must be in editor');
-        }
-        var range = this.createRange();
-        var fakeNode = null;
-        if (!dom_1.Dom.isText(node)) {
-            fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
-            range.setStartAfter(node);
-            range.insertNode(fakeNode);
-            range.selectNode(fakeNode);
-        }
-        else {
-            range.setEnd(node, node.nodeValue !== null ? node.nodeValue.length : 0);
-        }
-        range.collapse(false);
-        this.selectRange(range);
-        return fakeNode;
     };
     Select.prototype.cursorInTheEdge = function (start, parentBlock) {
         var _a, _b;
@@ -16118,8 +16089,15 @@ var Select = (function () {
     Select.prototype.cursorOnTheRight = function (parentBlock) {
         return this.cursorInTheEdge(false, parentBlock);
     };
+    Select.prototype.setCursorAfter = function (node) {
+        return this.setCursorNearWith(node, false);
+    };
     Select.prototype.setCursorBefore = function (node) {
+        return this.setCursorNearWith(node, true);
+    };
+    Select.prototype.setCursorNearWith = function (node, inStart) {
         var _this = this;
+        var _a, _b;
         this.errorNode(node);
         if (!dom_1.Dom.up(node, function (elm) {
             return elm === _this.area || (elm && elm.parentNode === _this.area);
@@ -16130,15 +16108,20 @@ var Select = (function () {
         var fakeNode = null;
         if (!dom_1.Dom.isText(node)) {
             fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
-            range.setStartBefore(node);
-            range.collapse(true);
+            inStart ? range.setStartBefore(node) : range.setEndAfter(node);
+            range.collapse(inStart);
             range.insertNode(fakeNode);
             range.selectNode(fakeNode);
         }
         else {
-            range.setStart(node, node.nodeValue !== null ? node.nodeValue.length : 0);
+            if (inStart) {
+                range.setStart(node, 0);
+            }
+            else {
+                range.setEnd(node, (_b = (_a = node.nodeValue) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0);
+            }
         }
-        range.collapse(true);
+        range.collapse(inStart);
         this.selectRange(range);
         return fakeNode;
     };
@@ -16380,6 +16363,7 @@ var StatusBar = (function (_super) {
     function StatusBar(jodit, target) {
         var _this = _super.call(this, jodit) || this;
         _this.target = target;
+        _this.container = null;
         _this.container = jodit.c.div('jodit-status-bar');
         target.appendChild(_this.container);
         _this.hide();
@@ -16392,19 +16376,24 @@ var StatusBar = (function (_super) {
         this.container && this.container.classList.remove('jodit_hidden');
     };
     StatusBar.prototype.getHeight = function () {
-        return this.container.offsetHeight;
+        var _a, _b;
+        return (_b = (_a = this.container) === null || _a === void 0 ? void 0 : _a.offsetHeight) !== null && _b !== void 0 ? _b : 0;
     };
     StatusBar.prototype.findEmpty = function (inTheRight) {
+        var _a;
         if (inTheRight === void 0) { inTheRight = false; }
-        var items = this.container.querySelectorAll('.jodit-status-bar__item' +
+        var items = (_a = this.container) === null || _a === void 0 ? void 0 : _a.querySelectorAll('.jodit-status-bar__item' +
             (inTheRight ? '.jodit-status-bar__item-right' : ''));
-        for (var i = 0; i < items.length; i += 1) {
-            if (!items[i].innerHTML.trim().length) {
-                return items[i];
+        if (items) {
+            for (var i = 0; i < items.length; i += 1) {
+                if (!items[i].innerHTML.trim().length) {
+                    return items[i];
+                }
             }
         }
     };
     StatusBar.prototype.append = function (child, inTheRight) {
+        var _a;
         if (inTheRight === void 0) { inTheRight = false; }
         var wrapper = this.findEmpty(inTheRight) ||
             this.j.c.div('jodit-status-bar__item');
@@ -16412,14 +16401,14 @@ var StatusBar = (function (_super) {
             wrapper.classList.add('jodit-status-bar__item-right');
         }
         wrapper.appendChild(child);
-        this.container.appendChild(wrapper);
+        (_a = this.container) === null || _a === void 0 ? void 0 : _a.appendChild(wrapper);
         this.show();
         this.j.e.fire('resize');
     };
     StatusBar.prototype.destruct = function () {
         this.setStatus(component_1.STATUSES.beforeDestruct);
         dom_1.Dom.safeRemove(this.container);
-        delete this.container;
+        this.container = null;
         _super.prototype.destruct.call(this);
     };
     return StatusBar;
@@ -17496,7 +17485,6 @@ var Uploader = (function (_super) {
             }
             catch (_a) { }
         });
-        delete this.options;
         _super.prototype.destruct.call(this);
     };
     return Uploader;
@@ -18476,14 +18464,21 @@ module.exports = {
 	"Apply": "Aplicar",
 	"Please fill out this field": "Por favor, rellene este campo",
 	"Please enter a web address": "Por favor, introduzca una dirección web",
-	"Default": "Por defecto",
+	"Default": "Predeterminado",
 	"Circle": "Círculo",
-	"Dot": "Dot",
-	"Quadrate": "Quadrate",
+	"Dot": "Punto",
+	"Quadrate": "Cuadro",
+	//Ordered list
+	'Lower Alpha': 'Letra Minúscula',
+	'Lower Greek': 'Griego Minúscula',
+	'Lower Roman': 'Romano Minúscula',
+	'Upper Alpha': 'Letra Mayúscula',
+	'Upper Roman': 'Romano Mayúscula',
 	"Find": "Encontrar",
 	"Find Previous": "Buscar Anterior",
 	"Find Next": "Buscar Siguiente"
 };
+
 
 /***/ }),
 /* 217 */
@@ -20707,11 +20702,18 @@ module.exports = {
 	"Default": "Padrão",
 	"Circle": "Círculo",
 	"Dot": "Ponto",
-	"Quadrate": "Quadrate",
+	"Quadrate": "Quadro",
+	//Ordered list
+	'Lower Alpha': 'Letra Minúscula',
+	'Lower Greek': 'Grego Minúscula',
+	'Lower Roman': 'Romano Minúscula',
+	'Upper Alpha': 'Letra Maiúscula',
+	'Upper Roman': 'Romano Maiúscula',
 	"Find": "Encontrar",
 	"Find Previous": "Encontrar Anteriores",
 	"Find Next": "Localizar Próxima"
 };
+
 
 /***/ }),
 /* 227 */
@@ -21616,6 +21618,7 @@ module.exports = {
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.xpath = exports.tooltip = exports.symbols = exports.sticky = exports.stat = exports.source = exports.resizeHandler = exports.size = exports.search = exports.resizer = exports.redoUndo = exports.placeholder = exports.orderedList = exports.mobile = exports.media = exports.link = exports.limit = exports.justify = exports.inlinePopup = exports.hr = exports.indent = exports.iframe = exports.hotkeys = exports.fullsize = exports.formatBlock = exports.font = exports.errorMessages = exports.enter = exports.DragAndDropElement = exports.DragAndDrop = exports.color = exports.pasteStorage = exports.paste = exports.clipboard = exports.WrapTextNodes = exports.cleanHtml = exports.bold = exports.Delete = exports.autofocus = exports.about = exports.addNewLine = void 0;
 var tslib_1 = __webpack_require__(0);
 var add_new_line_1 = __webpack_require__(232);
 Object.defineProperty(exports, "addNewLine", { enumerable: true, get: function () { return add_new_line_1.addNewLine; } });
@@ -22050,7 +22053,8 @@ var Delete = (function (_super) {
             }
         })
             .on('keydown', function (event) {
-            if (event.key === constants_1.KEY_BACKSPACE || event.key === constants_1.KEY_DELETE) {
+            if (event.key === constants_1.KEY_BACKSPACE ||
+                event.key === constants_1.KEY_DELETE) {
                 return _this.onDelete(event.key === constants_1.KEY_BACKSPACE);
             }
         }, undefined, true);
@@ -22101,8 +22105,12 @@ var Delete = (function (_super) {
                 return false;
             }
         }
+        catch (e) {
+            if (false) {}
+            throw e;
+        }
         finally {
-            dom_1.Dom.safeRemove(fakeNode);
+            this.safeRemoveEmptyNode(fakeNode);
         }
         return false;
     };
@@ -22186,7 +22194,9 @@ var Delete = (function (_super) {
     Delete.prototype.checkRemoveInseparableElement = function (fakeNode, backspace) {
         var neighbor = dom_1.Dom.getNormalSibling(fakeNode, backspace);
         if (dom_1.Dom.isElement(neighbor) &&
-            (dom_1.Dom.isTag(neighbor, constants_1.INSEPARABLE_TAGS) || dom_1.Dom.isEmpty(neighbor) || helpers_1.attr(neighbor, 'contenteditable') === 'false')) {
+            (dom_1.Dom.isTag(neighbor, constants_1.INSEPARABLE_TAGS) ||
+                dom_1.Dom.isEmpty(neighbor) ||
+                helpers_1.attr(neighbor, 'contenteditable') === 'false')) {
             dom_1.Dom.safeRemove(neighbor);
             this.j.s.setCursorBefore(fakeNode);
             if (dom_1.Dom.isTag(neighbor, 'br')) {
@@ -22224,7 +22234,9 @@ var Delete = (function (_super) {
         if (found && this.checkJoinTwoLists(fakeNode, backspace)) {
             return true;
         }
-        if (neighbor && !dom_1.Dom.isText(neighbor) && !dom_1.Dom.isTag(neighbor, constants_1.INSEPARABLE_TAGS)) {
+        if (neighbor &&
+            !dom_1.Dom.isText(neighbor) &&
+            !dom_1.Dom.isTag(neighbor, constants_1.INSEPARABLE_TAGS)) {
             setCursorIn(neighbor, !backspace);
         }
         else {
@@ -22319,6 +22331,31 @@ var Delete = (function (_super) {
                 return true;
             }
         }
+    };
+    Delete.prototype.safeRemoveEmptyNode = function (fakeNode) {
+        var _a, _b;
+        var range = this.j.s.range;
+        if (range.startContainer === fakeNode) {
+            if (fakeNode.previousSibling) {
+                if (dom_1.Dom.isText(fakeNode.previousSibling)) {
+                    range.setStart(fakeNode.previousSibling, (_b = (_a = fakeNode.previousSibling.nodeValue) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0);
+                }
+                else {
+                    range.setStartAfter(fakeNode.previousSibling);
+                }
+            }
+            else if (fakeNode.nextSibling) {
+                if (dom_1.Dom.isText(fakeNode.nextSibling)) {
+                    range.setStart(fakeNode.nextSibling, 0);
+                }
+                else {
+                    range.setStartBefore(fakeNode.nextSibling);
+                }
+            }
+            range.collapse(true);
+            this.j.s.selectRange(range);
+        }
+        dom_1.Dom.safeRemove(fakeNode);
     };
     return Delete;
 }(plugin_1.Plugin));
@@ -22752,7 +22789,7 @@ exports.cleanHtml = cleanHtml;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WrapTextNodes = void 0;
 var tslib_1 = __webpack_require__(0);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var plugin_1 = __webpack_require__(6);
 var dom_1 = __webpack_require__(2);
 var checker_1 = __webpack_require__(5);
@@ -22853,7 +22890,7 @@ var tslib_1 = __webpack_require__(0);
 var config_1 = __webpack_require__(4);
 var constants_1 = __webpack_require__(3);
 var dialog_1 = __webpack_require__(16);
-var helpers_1 = __webpack_require__(28);
+var helpers_1 = __webpack_require__(27);
 var clipboard_1 = __webpack_require__(40);
 config_1.Config.prototype.askBeforePasteHTML = true;
 config_1.Config.prototype.processPasteHTML = true;
@@ -22970,15 +23007,15 @@ config_1.Config.prototype.controls.paste = {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.paste = void 0;
 var tslib_1 = __webpack_require__(0);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var plugin_1 = __webpack_require__(6);
-var helpers_1 = __webpack_require__(28);
+var helpers_1 = __webpack_require__(27);
 var constants_1 = __webpack_require__(3);
 var helpers_2 = __webpack_require__(1);
 var clipboard_1 = __webpack_require__(40);
 var dom_1 = __webpack_require__(2);
 var dialog_1 = __webpack_require__(16);
-var button_1 = __webpack_require__(14);
+var button_1 = __webpack_require__(15);
 var paste = (function (_super) {
     tslib_1.__extends(paste, _super);
     function paste() {
@@ -23568,7 +23605,9 @@ config_1.Config.prototype.controls.brush = {
         if (current &&
             current !== editor.editor &&
             modules_1.Dom.isNode(current, editor.ew)) {
-            if (modules_1.Dom.isElement(current)) {
+            if (modules_1.Dom.isElement(current) &&
+                editor.s.isCollapsed() &&
+                !modules_1.Dom.isTag(current, ['br', 'hr'])) {
                 currentElement = current;
             }
             modules_1.Dom.up(current, function (node) {
@@ -23690,7 +23729,7 @@ var constants_1 = __webpack_require__(3);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
 var plugin_1 = __webpack_require__(6);
-var helpers_2 = __webpack_require__(28);
+var helpers_2 = __webpack_require__(27);
 var global_1 = __webpack_require__(11);
 var DragAndDrop = (function (_super) {
     tslib_1.__extends(DragAndDrop, _super);
@@ -24521,12 +24560,12 @@ config_1.Config.prototype.controls.fullsize = {
     mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
 };
 function fullsize(editor) {
-    var shown = false, oldHeight = 0, oldWidth = 0, wasToggled = false;
+    var isEnabled = false, oldHeight = 0, oldWidth = 0, wasToggled = false;
     var resize = function () {
         if (editor.events) {
-            if (shown) {
-                oldHeight = helpers_1.css(editor.container, 'height');
-                oldWidth = helpers_1.css(editor.container, 'width');
+            if (isEnabled) {
+                oldHeight = helpers_1.css(editor.container, 'height', undefined, true);
+                oldWidth = helpers_1.css(editor.container, 'width', undefined, true);
                 helpers_1.css(editor.container, {
                     height: editor.ow.innerHeight,
                     width: editor.ow.innerWidth
@@ -24549,7 +24588,7 @@ function fullsize(editor) {
             enable = !editor.container.classList.contains('jodit_fullsize');
         }
         editor.o.fullsize = enable;
-        shown = enable;
+        isEnabled = enable;
         editor.container.classList.toggle('jodit_fullsize', enable);
         if (editor.toolbar) {
             helpers_1.isJoditObject(editor) &&
@@ -24559,7 +24598,7 @@ function fullsize(editor) {
         if (editor.o.globalFullSize) {
             var node = editor.container.parentNode;
             while (node && node.nodeType !== Node.DOCUMENT_NODE) {
-                node.classList.toggle('jodit-fullsize_box', enable);
+                node.classList.toggle('jodit_fullsize-box_true', enable);
                 node = node.parentNode;
             }
             resize();
@@ -24973,12 +25012,9 @@ function iframe(editor) {
                     (_a = editor.events) === null || _a === void 0 ? void 0 : _a.fire(editor.ow, e);
                 });
             }
+            return false;
         };
-        if (helpers_1.isPromise(result)) {
-            return result.then(init);
-        }
-        init();
-        return false;
+        return helpers_1.callPromise(result, init);
     });
 }
 exports.iframe = iframe;
@@ -25016,12 +25052,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.imageProperties = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(261);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var config_1 = __webpack_require__(4);
 var modules_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(1);
 var widget_1 = __webpack_require__(17);
-var button_1 = __webpack_require__(14);
+var button_1 = __webpack_require__(15);
 var templates_1 = __webpack_require__(262);
 var decorators_1 = __webpack_require__(13);
 config_1.Config.prototype.image = {
@@ -25212,17 +25248,17 @@ var imageProperties = (function (_super) {
             imageWidth.value = image.offsetWidth.toString();
             imageHeight.value = image.offsetHeight.toString();
         }, updateText = function () {
-            if (image.hasAttribute('title')) {
-                imageTitle.value = helpers_1.attr(image, 'title') || '';
-            }
-            if (image.hasAttribute('alt')) {
-                imageAlt.value = helpers_1.attr(image, 'alt') || '';
-            }
+            imageTitle.value = helpers_1.attr(image, 'title') || '';
+            imageAlt.value = helpers_1.attr(image, 'alt') || '';
             var a = modules_1.Dom.closest(image, 'a', _this.j.editor);
             if (a) {
                 imageLink.value = helpers_1.attr(a, 'href') || '';
                 imageLinkOpenInNewTab.checked =
                     helpers_1.attr(a, 'target') === '_blank';
+            }
+            else {
+                imageLink.value = '';
+                imageLinkOpenInNewTab.checked = false;
             }
         }, updateSrc = function () {
             imageSrc.value = helpers_1.attr(image, 'src') || '';
@@ -25491,7 +25527,7 @@ tslib_1.__exportStar(__webpack_require__(265), exports);
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.form = void 0;
-var ui_1 = __webpack_require__(8);
+var ui_1 = __webpack_require__(7);
 function form(editor) {
     var _a = editor.o.image, showPreview = _a.showPreview, editSize = _a.editSize, gi = ui_1.Icon.get.bind(ui_1.Icon);
     return editor.c.fromHTML("<form class=\"jodit-properties\">\n\t\t<div class=\"jodit-grid jodit-grid_xs-column\">\n\t\t\t<div class=\"jodit_col-lg-2-5 jodit_col-xs-5-5\">\n\t\t\t\t<div class=\"jodit-properties_view_box\">\n\t\t\t\t\t<div style=\"" + (!showPreview ? 'display:none' : '') + "\" class=\"jodit-properties_image_view\">\n\t\t\t\t\t\t<img data-ref=\"imageViewSrc\" src=\"\" alt=\"\"/>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div style=\"" + (!editSize ? 'display:none' : '') + "\" class=\"jodit-form__group jodit-properties_image_sizes\">\n\t\t\t\t\t\t<input data-ref=\"imageWidth\" type=\"number\" class=\"jodit-input\"/>\n\t\t\t\t\t\t<a data-ref=\"lockSize\" class=\"jodit-properties__lock\">" + gi('lock') + "</a>\n\t\t\t\t\t\t<input data-ref=\"imageHeight\" type=\"number\" class=\"imageHeight jodit-input\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div data-ref=\"tabsBox\" class=\"jodit_col-lg-3-5 jodit_col-xs-5-5\"></div>\n\t\t</div>\n\t</form>");
@@ -25512,7 +25548,7 @@ exports.form = form;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.mainTab = void 0;
-var ui_1 = __webpack_require__(8);
+var ui_1 = __webpack_require__(7);
 function mainTab(editor) {
     var opt = editor.o, i18n = editor.i18n.bind(editor), gi = ui_1.Icon.get.bind(ui_1.Icon), hasFbUrl = opt.filebrowser.ajax.url || opt.uploader.url, hasEditor = opt.image.useImageEditor;
     return editor.c.fromHTML("<div style=\"" + (!opt.image.editSrc ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>" + i18n('Src') + "</label>\n\t\t\t<div class=\"jodit-input_group\">\n\t\t\t\t<input data-ref=\"imageSrc\" class=\"jodit-input\" type=\"text\"/>\n\t\t\t\t<div\n\t\t\t\t\tclass=\"jodit-input_group-buttons\"\n\t\t\t\t\tstyle=\"" + (hasFbUrl ? '' : 'display: none') + "\"\n\t\t\t\t>\n\t\t\t\t\t\t<a\n\t\t\t\t\t\t\tdata-ref=\"changeImage\"\n\t\t\t\t\t\t\tclass=\"jodit-button\"\n\t\t\t\t\t\t>" + gi('image') + "</a>\n\t\t\t\t\t\t<a\n\t\t\t\t\t\t\tdata-ref=\"editImage\"\n\t\t\t\t\t\t\tclass=\"jodit-button\"\n\t\t\t\t\t\t\tstyle=\"" + (hasEditor ? '' : 'display: none') + "\"\n\t\t\t\t\t\t>" + gi('crop') + "</a>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div style=\"" + (!opt.image.editTitle ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>" + i18n('Title') + "</label>\n\t\t\t<input data-ref=\"imageTitle\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"" + (!opt.image.editAlt ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>" + i18n('Alternative') + "</label>\n\t\t\t<input data-ref=\"imageAlt\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"" + (!opt.image.editLink ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>" + i18n('Link') + "</label>\n\t\t\t<input data-ref=\"imageLink\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"" + (!opt.image.editLink ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label class=\"jodit_vertical_middle\">\n\t\t\t\t<input data-ref=\"imageLinkOpenInNewTab\" type=\"checkbox\" class=\"jodit-checkbox\"/>\n\t\t\t\t<span>" + i18n('Open link in new tab') + "</span>\n\t\t\t</label>\n\t\t</div>");
@@ -25533,7 +25569,7 @@ exports.mainTab = mainTab;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.positionTab = void 0;
-var ui_1 = __webpack_require__(8);
+var ui_1 = __webpack_require__(7);
 function positionTab(editor) {
     var opt = editor.o, i18n = editor.i18n.bind(editor), gi = ui_1.Icon.get.bind(ui_1.Icon);
     return editor.c.fromHTML("<div style=\"" + (!opt.image.editMargins ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>" + i18n('Margins') + "</label>\n\t\t\t<div class=\"jodit-grid jodit_vertical_middle\">\n\t\t\t\t<input class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginTop\" type=\"text\" placeholder=\"" + i18n('top') + "\"/>\n\t\t\t\t<a style=\"text-align: center;\" data-ref=\"lockMargin\" class=\"jodit-properties__lock jodit_col-lg-1-5\">" + gi('lock') + "</a>\n\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginRight\" type=\"text\" placeholder=\"" + i18n('right') + "\"/>\n\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginBottom\" type=\"text\" placeholder=\"" + i18n('bottom') + "\"/>\n\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginLeft\" type=\"text\" placeholder=\"" + i18n('left') + "\"/>\n\t\t\t</div>\n\t\t</div>\n\t\t<div style=\"" + (!opt.image.editStyle ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>" + i18n('Styles') + "</label>\n\t\t\t<input data-ref=\"style\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"" + (!opt.image.editClass ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>" + i18n('Classes') + "</label>\n\t\t\t<input data-ref=\"classes\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"" + (!opt.image.editId ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>Id</label>\n\t\t\t<input data-ref=\"id\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div\n\t\t\tstyle=\"" + (!opt.image.editBorderRadius ? 'display:none' : '') + "\"\n\t\t\tclass=\"jodit-form__group\"\n\t\t>\n\t\t\t<label>" + i18n('Border radius') + "</label>\n\t\t\t\t<input data-ref=\"borderRadius\" type=\"number\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div\n\t\t\tstyle=\"" + (!opt.image.editAlign ? 'display:none' : '') + "\"\n\t\t\tclass=\"jodit-form__group\"\n\t\t>\n\t\t\t<label>" + i18n('Align') + "</label>\n\t\t\t<select data-ref=\"align\" class=\"jodit-select\">\n\t\t\t\t<option value=\"\">" + i18n('--Not Set--') + "</option>\n\t\t\t\t<option value=\"left\">" + i18n('Left') + "</option>\n\t\t\t\t<option value=\"center\">" + i18n('Center') + "</option>\n\t\t\t\t<option value=\"right\">" + i18n('Right') + "</option>\n\t\t\t</select>\n\t\t</div>");
@@ -25564,9 +25600,8 @@ function imageProcessor(editor) {
                     elm[JODIT_IMAGE_PROCESSOR_BINDED] = true;
                     if (!elm.complete) {
                         elm.addEventListener('load', function ElementOnLoad() {
-                            editor.events &&
-                                editor.e.fire &&
-                                editor.e.fire('resize');
+                            var _a;
+                            !editor.isInDestruct && ((_a = editor.e) === null || _a === void 0 ? void 0 : _a.fire('resize'));
                             elm.removeEventListener('load', ElementOnLoad);
                         });
                     }
@@ -25739,7 +25774,7 @@ exports.inlinePopup = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(271);
 __webpack_require__(272);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var plugin_1 = __webpack_require__(6);
 var factory_1 = __webpack_require__(18);
 var popup_1 = __webpack_require__(23);
@@ -25753,6 +25788,7 @@ var inlinePopup = (function (_super) {
         _this.type = null;
         _this.popup = new popup_1.Popup(_this.jodit);
         _this.toolbar = factory_1.makeCollection(_this.jodit, _this.popup);
+        _this.snapRange = null;
         return _this;
     }
     inlinePopup.prototype.onClick = function (e) {
@@ -25763,23 +25799,6 @@ var inlinePopup = (function (_super) {
         if (target && this.canShowPopupForType(target.nodeName.toLowerCase())) {
             this.showPopup(function () { return helpers_1.position(target, _this.j); }, target.nodeName.toLowerCase(), target);
         }
-    };
-    inlinePopup.prototype.onSelectionChange = function () {
-        if (!this.j.o.toolbarInlineForSelection) {
-            return;
-        }
-        var type = 'selection', sel = this.j.s.sel, range = this.j.s.range;
-        if (sel === null || sel === void 0 ? void 0 : sel.isCollapsed) {
-            if (this.type === type && this.popup.isOpened) {
-                this.hidePopup();
-            }
-            return;
-        }
-        var node = this.j.s.current();
-        if (!node) {
-            return;
-        }
-        this.showPopup(function () { return range.getBoundingClientRect(); }, type);
     };
     inlinePopup.prototype.showPopup = function (rect, type, target) {
         type = type.toLowerCase();
@@ -25831,26 +25850,80 @@ var inlinePopup = (function (_super) {
             _this.showPopup(rect, type || (helpers_1.isString(elm) ? elm : elm.nodeName), helpers_1.isString(elm) ? undefined : elm);
         })
             .on('click', this.onClick)
-            .on(this.j.ed, 'selectionchange', this.onSelectionChange);
+            .on('mousedown keydown', this.onSelectionStart)
+            .on([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
     };
+    inlinePopup.prototype.onSelectionStart = function () {
+        this.snapRange = this.j.s.range.cloneRange();
+    };
+    inlinePopup.prototype.onSelectionEnd = function () {
+        var snapRange = this.snapRange, range = this.j.s.range;
+        if (!snapRange ||
+            range.collapsed ||
+            range.startContainer !== snapRange.startContainer ||
+            range.startOffset !== snapRange.startOffset ||
+            range.endContainer !== snapRange.endContainer ||
+            range.endOffset !== snapRange.endOffset) {
+            this.onSelectionChange();
+        }
+    };
+    inlinePopup.prototype.onSelectionChange = function () {
+        if (!this.j.o.toolbarInlineForSelection) {
+            return;
+        }
+        var type = 'selection', sel = this.j.s.sel, range = this.j.s.range;
+        if ((sel === null || sel === void 0 ? void 0 : sel.isCollapsed) ||
+            this.isSelectedTarget(range) ||
+            this.tableModule.getAllSelectedCells().length) {
+            if (this.type === type && this.popup.isOpened) {
+                this.hidePopup();
+            }
+            return;
+        }
+        var node = this.j.s.current();
+        if (!node) {
+            return;
+        }
+        this.showPopup(function () { return range.getBoundingClientRect(); }, type);
+    };
+    inlinePopup.prototype.isSelectedTarget = function (r) {
+        var sc = r.startContainer;
+        return (modules_1.Dom.isElement(sc) &&
+            sc === r.endContainer &&
+            modules_1.Dom.isTag(sc.childNodes[r.startOffset], Object.keys(this.j.o.popup)) &&
+            r.startOffset === r.endOffset - 1);
+    };
+    Object.defineProperty(inlinePopup.prototype, "tableModule", {
+        get: function () {
+            return this.j.getInstance('Table', this.j.o);
+        },
+        enumerable: false,
+        configurable: true
+    });
     inlinePopup.prototype.beforeDestruct = function (jodit) {
         jodit.e
             .off('showPopup')
             .off('click', this.onClick)
-            .off(this.j.ed, 'selectionchange', this.onSelectionChange);
+            .off([this.j.ew, this.j.ow], 'mouseup', this.onSelectionEnd);
     };
     tslib_1.__decorate([
         autobind_decorator_1.default
     ], inlinePopup.prototype, "onClick", null);
-    tslib_1.__decorate([
-        decorators_1.debounce(function (ctx) { return ctx.defaultTimeout * 5; })
-    ], inlinePopup.prototype, "onSelectionChange", null);
     tslib_1.__decorate([
         decorators_1.wait(function (ctx) { return !ctx.j.isLocked; })
     ], inlinePopup.prototype, "showPopup", null);
     tslib_1.__decorate([
         autobind_decorator_1.default
     ], inlinePopup.prototype, "hidePopup", null);
+    tslib_1.__decorate([
+        autobind_decorator_1.default
+    ], inlinePopup.prototype, "onSelectionStart", null);
+    tslib_1.__decorate([
+        autobind_decorator_1.default
+    ], inlinePopup.prototype, "onSelectionEnd", null);
+    tslib_1.__decorate([
+        decorators_1.debounce(function (ctx) { return ctx.defaultTimeout; })
+    ], inlinePopup.prototype, "onSelectionChange", null);
     return inlinePopup;
 }(plugin_1.Plugin));
 exports.inlinePopup = inlinePopup;
@@ -25933,7 +26006,7 @@ config_1.Config.prototype.popup = {
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var utils_1 = __webpack_require__(15);
+var utils_1 = __webpack_require__(14);
 exports.default = [
     {
         name: 'eye',
@@ -26214,7 +26287,7 @@ exports.default = [
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.limit = void 0;
 var tslib_1 = __webpack_require__(0);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var config_1 = __webpack_require__(4);
 var plugin_1 = __webpack_require__(6);
 var constants_1 = __webpack_require__(3);
@@ -26546,8 +26619,8 @@ exports.link = link;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.formTemplate = void 0;
-var form_1 = __webpack_require__(24);
-var button_1 = __webpack_require__(14);
+var form_1 = __webpack_require__(35);
+var button_1 = __webpack_require__(15);
 exports.formTemplate = function (editor) {
     var _a = editor.o.link, openInNewTabCheckbox = _a.openInNewTabCheckbox, noFollowCheckbox = _a.noFollowCheckbox;
     return new form_1.UIForm(editor, [
@@ -26691,7 +26764,7 @@ var config_1 = __webpack_require__(4);
 var consts = __webpack_require__(3);
 var helpers_1 = __webpack_require__(1);
 var factory_1 = __webpack_require__(18);
-var ui_1 = __webpack_require__(8);
+var ui_1 = __webpack_require__(7);
 config_1.Config.prototype.mobileTapTimeout = 300;
 config_1.Config.prototype.toolbarAdaptive = true;
 config_1.Config.prototype.controls.dots = {
@@ -27112,7 +27185,7 @@ var constants_1 = __webpack_require__(3);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
 var plugin_1 = __webpack_require__(6);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var global_1 = __webpack_require__(11);
 config_1.Config.prototype.useIframeResizer = true;
 config_1.Config.prototype.useTableResizer = true;
@@ -27471,7 +27544,7 @@ var consts = __webpack_require__(3);
 var constants_1 = __webpack_require__(3);
 var dom_1 = __webpack_require__(2);
 var plugin_1 = __webpack_require__(6);
-var ui_1 = __webpack_require__(8);
+var ui_1 = __webpack_require__(7);
 var helpers_1 = __webpack_require__(1);
 config_1.Config.prototype.useSearch = true;
 config_1.Config.prototype.controls.find = {
@@ -27951,7 +28024,7 @@ config_1.Config.prototype.saveHeightInStorage = false;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resizeHandler = void 0;
 var tslib_1 = __webpack_require__(0);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var plugin_1 = __webpack_require__(6);
 var dom_1 = __webpack_require__(2);
 var resizeHandler = (function (_super) {
@@ -28039,7 +28112,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.size = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(293);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var helpers_1 = __webpack_require__(1);
 var plugin_1 = __webpack_require__(6);
 var size = (function (_super) {
@@ -28259,7 +28332,8 @@ var source = (function (_super) {
         _this.tempMarkerEndReg = /{end-jodit-selection}/g;
         _this.selInfo = [];
         _this.insertHTML = function (html) {
-            _this.sourceEditor.insertRaw(html);
+            var _a;
+            (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.insertRaw(html);
             _this.toWYSIWYG();
         };
         _this.fromWYSIWYG = function (force) {
@@ -28305,7 +28379,8 @@ var source = (function (_super) {
             return str.replace(consts.INVISIBLE_SPACE_REG_EXP(), '');
         };
         _this.selectAll = function () {
-            _this.sourceEditor.selectAll();
+            var _a;
+            (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.selectAll();
         };
         _this.onSelectAll = function (command) {
             if (command.toLowerCase() === 'selectall' &&
@@ -28315,10 +28390,12 @@ var source = (function (_super) {
             }
         };
         _this.getSelectionStart = function () {
-            return _this.sourceEditor.getSelectionStart();
+            var _a, _b;
+            return (_b = (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.getSelectionStart()) !== null && _b !== void 0 ? _b : 0;
         };
         _this.getSelectionEnd = function () {
-            return _this.sourceEditor.getSelectionEnd();
+            var _a, _b;
+            return (_b = (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.getSelectionEnd()) !== null && _b !== void 0 ? _b : 0;
         };
         _this.saveSelection = function () {
             if (_this.j.getRealMode() === consts.MODE_WYSIWYG) {
@@ -28409,24 +28486,30 @@ var source = (function (_super) {
             _this.setFocusToMirror();
         };
         _this.setMirrorSelectionRange = function (start, end) {
-            _this.sourceEditor.setSelectionRange(start, end);
+            var _a;
+            (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.setSelectionRange(start, end);
         };
         _this.onReadonlyReact = function () {
-            _this.sourceEditor.setReadOnly(_this.j.o.readonly);
+            var _a;
+            (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.setReadOnly(_this.j.o.readonly);
         };
         return _this;
     }
     source.prototype.getMirrorValue = function () {
-        return this.sourceEditor.getValue();
+        var _a;
+        return ((_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.getValue()) || '';
     };
     source.prototype.setMirrorValue = function (value) {
-        this.sourceEditor.setValue(value);
+        var _a;
+        (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.setValue(value);
     };
     source.prototype.setFocusToMirror = function () {
-        this.sourceEditor.focus();
+        var _a;
+        (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.focus();
     };
     source.prototype.initSourceEditor = function (editor) {
         var _this = this;
+        var _a;
         if (editor.o.sourceEditor !== 'area') {
             var sourceEditor_1 = factory_1.createSourceEditor(editor.o.sourceEditor, editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
             sourceEditor_1.onReadyAlways(function () {
@@ -28438,7 +28521,7 @@ var source = (function (_super) {
             });
         }
         else {
-            this.sourceEditor.onReadyAlways(function () {
+            (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.onReadyAlways(function () {
                 var _a;
                 _this.fromWYSIWYG(true);
                 (_a = editor.events) === null || _a === void 0 ? void 0 : _a.fire('sourceEditorReady', editor);
@@ -28470,7 +28553,8 @@ var source = (function (_super) {
         })
             .on('readonly.source', this.onReadonlyReact)
             .on('placeholder.source', function (text) {
-            _this.sourceEditor.setPlaceHolder(text);
+            var _a;
+            (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.setPlaceHolder(text);
         })
             .on('beforeCommand.source', this.onSelectAll)
             .on('change.source', this.fromWYSIWYG);
@@ -28909,11 +28993,13 @@ var stat = (function (_super) {
     tslib_1.__extends(stat, _super);
     function stat() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.charCounter = null;
+        _this.wordCounter = null;
         _this.reInit = function () {
-            if (_this.j.o.showCharsCounter) {
+            if (_this.j.o.showCharsCounter && _this.charCounter) {
                 _this.j.statusbar.append(_this.charCounter, true);
             }
-            if (_this.j.o.showWordsCounter) {
+            if (_this.j.o.showWordsCounter && _this.wordCounter) {
                 _this.j.statusbar.append(_this.wordCounter, true);
             }
             _this.j.e.off('change keyup', _this.calc).on('change keyup', _this.calc);
@@ -28921,13 +29007,13 @@ var stat = (function (_super) {
         };
         _this.calc = _this.j.async.throttle(function () {
             var text = _this.j.text;
-            if (_this.j.o.showCharsCounter) {
+            if (_this.j.o.showCharsCounter && _this.charCounter) {
                 var chars = _this.j.o.countHTMLChars
                     ? _this.j.value
                     : text.replace(constants_1.SPACE_REG_EXP(), '');
                 _this.charCounter.textContent = _this.j.i18n('Chars: %d', chars.length);
             }
-            if (_this.j.o.showWordsCounter) {
+            if (_this.j.o.showWordsCounter && _this.wordCounter) {
                 _this.wordCounter.textContent = _this.j.i18n('Words: %d', text
                     .replace(constants_1.INVISIBLE_SPACE_REG_EXP(), '')
                     .split(constants_1.SPACE_REG_EXP())
@@ -28946,8 +29032,8 @@ var stat = (function (_super) {
         dom_1.Dom.safeRemove(this.charCounter);
         dom_1.Dom.safeRemove(this.wordCounter);
         this.j.e.off('afterInit changePlace afterAddPlace', this.reInit);
-        delete this.charCounter;
-        delete this.wordCounter;
+        this.charCounter = null;
+        this.wordCounter = null;
     };
     return stat;
 }(plugin_1.Plugin));
@@ -29077,7 +29163,7 @@ __webpack_require__(306);
 __webpack_require__(307);
 var constants_1 = __webpack_require__(3);
 var modules_1 = __webpack_require__(10);
-var utils_1 = __webpack_require__(15);
+var utils_1 = __webpack_require__(14);
 var symbols = (function (_super) {
     tslib_1.__extends(symbols, _super);
     function symbols() {
@@ -29468,7 +29554,7 @@ tslib_1.__exportStar(__webpack_require__(313), exports);
 Object.defineProperty(exports, "__esModule", { value: true });
 var config_1 = __webpack_require__(4);
 var dom_1 = __webpack_require__(2);
-var utils_1 = __webpack_require__(15);
+var utils_1 = __webpack_require__(14);
 var helpers_1 = __webpack_require__(1);
 config_1.Config.prototype.table = {
     allowCellSelection: true,
@@ -29628,7 +29714,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.resizeCells = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(311);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var consts = __webpack_require__(3);
 var modules_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(1);
@@ -29921,7 +30007,7 @@ exports.resizeCells = resizeCells;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.selectCells = void 0;
 var tslib_1 = __webpack_require__(0);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var plugin_1 = __webpack_require__(6);
 var modules_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(1);
@@ -30313,7 +30399,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.tooltip = void 0;
 var tslib_1 = __webpack_require__(0);
 __webpack_require__(315);
-var autobind_decorator_1 = __webpack_require__(7);
+var autobind_decorator_1 = __webpack_require__(8);
 var helpers_1 = __webpack_require__(1);
 var plugin_1 = __webpack_require__(6);
 var dom_1 = __webpack_require__(2);
@@ -30428,8 +30514,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var config_1 = __webpack_require__(4);
 var widget_1 = __webpack_require__(17);
 var helpers_1 = __webpack_require__(1);
-var form_1 = __webpack_require__(24);
-var button_1 = __webpack_require__(14);
+var form_1 = __webpack_require__(35);
+var button_1 = __webpack_require__(15);
 config_1.Config.prototype.controls.video = {
     popup: function (editor, current, control, close) {
         var bylink = new form_1.UIForm(editor, [
@@ -30722,7 +30808,6 @@ var xpath = (function (_super) {
             _this.appendSelectAll();
         };
         _this.calcPath = _this.j.async.debounce(_this.calcPathImd, _this.j.defaultTimeout * 2);
-        _this.menu = null;
         return _this;
     }
     xpath.prototype.afterInit = function () {
@@ -30733,7 +30818,7 @@ var xpath = (function (_super) {
                 .off('.xpath')
                 .on('mouseup.xpath change.xpath keydown.xpath changeSelection.xpath', this.calcPath)
                 .on('afterSetMode.xpath afterInit.xpath changePlace.xpath', function () {
-                if (!_this.j.o.showXPathInStatusbar) {
+                if (!_this.j.o.showXPathInStatusbar || !_this.container) {
                     return;
                 }
                 _this.j.statusbar.append(_this.container);
@@ -31439,7 +31524,7 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.keepModuleNames = void 0;
-var utils_1 = __webpack_require__(15);
+var utils_1 = __webpack_require__(14);
 function keepModuleNames(modules) {
     utils_1.keepNames.set(modules.UIButton, 'UIButton');
     utils_1.keepNames.set(modules.UIElement, 'UIElement');

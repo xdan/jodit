@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.23
+ * Version: v3.4.24
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -3361,17 +3361,17 @@ svg.jodit-icon{
   color:#5d5a5a;
   border:1px solid hsla(0, 0%, 58%, .44);
 }
-.jodit-fullsize_box{
+.jodit_fullsize-box_true{
   z-index:100000 !important;
   position:static !important;
   overflow:visible !important;
 }
-body.jodit-fullsize_box,html.jodit-fullsize_box{
+body.jodit_fullsize-box_true,html.jodit_fullsize-box_true{
   height:0 !important;
   width:0 !important;
   overflow:initial !important;
 }
-html.jodit-fullsize_box{
+html.jodit_fullsize-box_true{
   position:fixed !important;
 }
 .jodit_fullsize{
@@ -3648,20 +3648,20 @@ html.jodit-fullsize_box{
 .jodit-search.jodit-search_replace .jodit-search__buttons button[data-ref=replace-btn],.jodit-search.jodit-search_replace .jodit-search__inputs input[data-ref=replace]{
   display:block;
 }
-.jodit-container{
+.jodit-container:not(.jodit_inline){
   min-height:100px;
 }
-.jodit-container .jodit-workplace{
+.jodit-container:not(.jodit_inline) .jodit-workplace{
   display:flex;
   flex-direction:column;
   height:auto;
   min-height:50px;
   overflow:hidden;
 }
-.jodit-editor__resize{
+.jodit-container:not(.jodit_inline) .jodit-editor__resize{
   position:relative;
 }
-.jodit-editor__resize a{
+.jodit-container:not(.jodit_inline) .jodit-editor__resize a{
   position:absolute;
   bottom:0;
   right:0;

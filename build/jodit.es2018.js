@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.23
+ * Version: v3.4.24
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -4548,19 +4548,12 @@ const TabsWidget = (editor, tabs, state) => {
     return box;
 };
 
-// EXTERNAL MODULE: ./src/core/ui/form/index.ts + 7 modules
-var ui_form = __webpack_require__(14);
-
-// EXTERNAL MODULE: ./src/core/ui/button/index.ts + 1 modules
-var ui_button = __webpack_require__(11);
-
 // CONCATENATED MODULE: ./src/modules/widget/file-selector/file-selector.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
 
 
 
@@ -4581,7 +4574,7 @@ const FileSelectorWidget = (editor, callbacks, elm, close, isImage = true) => {
                 ? callbacks.upload
                 : editor.o.uploader.defaultHandlerSuccess;
             if (Object(helpers["isFunction"])(handler)) {
-                handler.call(editor.uploader, resp);
+                handler.call(editor, resp);
             }
             editor.e.fire('closeAllPopups');
         }, (error) => {
@@ -4609,23 +4602,23 @@ const FileSelectorWidget = (editor, callbacks, elm, close, isImage = true) => {
         }
     }
     if (callbacks.url) {
-        const button = new ui_button["b" /* UIButton */](editor, {
+        const button = new ui["e" /* UIButton */](editor, {
             type: 'submit',
             status: 'primary',
             text: 'Insert'
-        }), form = (new ui_form["c" /* UIForm */](editor, [
-            new ui_form["d" /* UIInput */](editor, {
+        }), form = (new ui["h" /* UIForm */](editor, [
+            new ui["j" /* UIInput */](editor, {
                 required: true,
                 label: 'URL',
                 name: 'url',
                 type: 'url',
                 placeholder: 'http://',
             }),
-            new ui_form["d" /* UIInput */](editor, {
+            new ui["j" /* UIInput */](editor, {
                 name: 'text',
                 label: 'Alternative text'
             }),
-            new ui_form["a" /* UIBlock */](editor, [
+            new ui["d" /* UIBlock */](editor, [
                 button
             ])
         ]));
@@ -4981,7 +4974,6 @@ class EventHandlersStore {
         }
     }
     clear() {
-        delete this.__store;
         this.__store = {};
     }
 }
@@ -5921,7 +5913,7 @@ function normalizeCssValue(key, value) {
             }
             return Object(checker["p" /* isNumeric */])(value) ? +value : value;
     }
-    if (/color/i.test(key)) {
+    if (/color/i.test(key) && /^rgb/i.test(value.toString())) {
         return Object(helpers_color["a" /* colorToHex */])(value.toString()) || value;
     }
     return value;
@@ -7962,14 +7954,21 @@ module.exports = {
 	"Apply": "Aplicar",
 	"Please fill out this field": "Por favor, rellene este campo",
 	"Please enter a web address": "Por favor, introduzca una dirección web",
-	"Default": "Por defecto",
+	"Default": "Predeterminado",
 	"Circle": "Círculo",
-	"Dot": "Dot",
-	"Quadrate": "Quadrate",
+	"Dot": "Punto",
+	"Quadrate": "Cuadro",
+	//Ordered list
+	'Lower Alpha': 'Letra Minúscula',
+	'Lower Greek': 'Griego Minúscula',
+	'Lower Roman': 'Romano Minúscula',
+	'Upper Alpha': 'Letra Mayúscula',
+	'Upper Roman': 'Romano Mayúscula',
 	"Find": "Encontrar",
 	"Find Previous": "Buscar Anterior",
 	"Find Next": "Buscar Siguiente"
 };
+
 
 /***/ }),
 /* 138 */
@@ -10193,11 +10192,18 @@ module.exports = {
 	"Default": "Padrão",
 	"Circle": "Círculo",
 	"Dot": "Ponto",
-	"Quadrate": "Quadrate",
+	"Quadrate": "Quadro",
+	//Ordered list
+	'Lower Alpha': 'Letra Minúscula',
+	'Lower Greek': 'Grego Minúscula',
+	'Lower Roman': 'Romano Minúscula',
+	'Upper Alpha': 'Letra Maiúscula',
+	'Upper Roman': 'Romano Maiúscula',
 	"Find": "Encontrar",
 	"Find Previous": "Encontrar Anteriores",
 	"Find Next": "Localizar Próxima"
 };
+
 
 /***/ }),
 /* 148 */
@@ -11734,7 +11740,7 @@ class async_Async {
                     callFn(...args);
                 }
                 Object(helpers["clearTimeout"])(timer);
-                timer = this.setTimeout(() => callFn(...args), timeout);
+                timer = this.setTimeout(() => callFn(...args), Object(helpers["isFunction"])(timeout) ? timeout() : timeout);
                 this.timers.set(fn, timer);
             }
         };
@@ -11753,7 +11759,7 @@ class async_Async {
                     if (needInvoke) {
                         fn(...lastArgs);
                         needInvoke = false;
-                        timer = this.setTimeout(callee, timeout);
+                        timer = this.setTimeout(callee, Object(helpers["isFunction"])(timeout) ? timeout() : timeout);
                         this.timers.set(callee, timer);
                     }
                     else {
@@ -12205,9 +12211,10 @@ class view_View extends core_component["a" /* Component */] {
         this.isJodit = isJodit;
         this.isView = true;
         this.components = new Set();
-        this.version = "3.4.23";
+        this.version = "3.4.24";
         this.async = new async_Async();
         this.buffer = storage_Storage.makeStorage();
+        this.OPTIONS = view_View.defaultOptions;
         this.__isFullSize = false;
         this.__whoLocked = '';
         this.isLockedNotBy = (name) => this.isLocked && this.__whoLocked !== name;
@@ -12234,8 +12241,20 @@ class view_View extends core_component["a" /* Component */] {
     get c() {
         return this.create;
     }
+    get container() {
+        return this.__container;
+    }
+    set container(container) {
+        this.__container = container;
+    }
     get e() {
         return this.events;
+    }
+    get options() {
+        return this.__options;
+    }
+    set options(options) {
+        this.__options = options;
     }
     get o() {
         return this.options;
@@ -12315,15 +12334,12 @@ class view_View extends core_component["a" /* Component */] {
         }
         if (this.async) {
             this.async.destruct();
-            delete this.async;
         }
         if (this.events) {
             this.e.destruct();
-            delete this.events;
         }
         if (this.buffer) {
             this.buffer.clear();
-            delete this.buffer;
         }
         dom["a" /* Dom */].safeRemove(this.container);
         super.destruct();
@@ -12372,7 +12388,7 @@ class collection_ToolbarCollection extends ui["k" /* UIList */] {
         super(jodit);
         this.listenEvents = 'updateToolbar changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
             'selectionchange changeSelection focus afterSetMode touchstart focus blur';
-        this.update = this.j.async.debounce(this.immediateUpdate, this.j.defaultTimeout);
+        this.update = this.j.async.debounce(this.immediateUpdate, () => this.j.defaultTimeout);
         this.initEvents();
         this.setStatus(core_component["b" /* STATUSES */].ready);
     }
@@ -12903,7 +12919,6 @@ class view_with_toolbar_ViewWithToolbar extends view_View {
         }
         this.setStatus(core_component["b" /* STATUSES */].beforeDestruct);
         this.toolbar.destruct();
-        delete this.toolbar;
         super.destruct();
     }
 }
@@ -13201,7 +13216,7 @@ class dialog_Dialog extends view_with_toolbar_ViewWithToolbar {
         [this.destination, this.destination.parentNode].forEach((box) => {
             box &&
                 box.classList &&
-                box.classList.toggle('jodit-fullsize_box', condition);
+                box.classList.toggle('jodit_fullsize-box_true', condition);
         });
         this.iSetMaximization = condition;
         return condition;
@@ -15081,10 +15096,8 @@ class file_browser_FileBrowser extends view_with_toolbar_ViewWithToolbar {
             return;
         }
         this.dialog.destruct();
-        delete this.dialog;
         this.events && this.e.off('.filebrowser');
         this.uploader && this.uploader.destruct();
-        delete this.uploader;
         super.destruct();
     }
 }
@@ -15691,17 +15704,10 @@ class image_editor_ImageEditor extends core_component["c" /* ViewComponent */] {
         if (this.isDestructed) {
             return;
         }
-        if (this.dialog) {
+        if (this.dialog && !this.dialog.isInDestruct) {
             this.dialog.destruct();
-            delete this.dialog;
         }
         dom["a" /* Dom */].safeRemove(this.editor);
-        delete this.resize_box;
-        delete this.crop_box;
-        delete this.sizes;
-        delete this.resizeHandler;
-        delete this.cropHandler;
-        delete this.editor;
         if (this.j.e) {
             this.j.e.off(this.ow, `.${image_editor_jie}`);
             this.j.e.off(`.${image_editor_jie}`);
@@ -16034,9 +16040,6 @@ class observer_Observer extends core_component["c" /* ViewComponent */] {
             this.j.e.off('.observer');
         }
         this.snapshot.destruct();
-        delete this.snapshot;
-        delete this.stack;
-        delete this.startValue;
         super.destruct();
     }
 }
@@ -16837,7 +16840,7 @@ class select_Select {
             this.j.e.fire('synchro');
         }
     }
-    insertImage(url, styles, defaultWidth) {
+    insertImage(url, styles = null, defaultWidth = null) {
         const image = Object(helpers["isString"])(url) ? this.j.createInside.element('img') : url;
         if (Object(helpers["isString"])(url)) {
             image.setAttribute('src', url);
@@ -16870,26 +16873,6 @@ class select_Select {
         const result = this.insertNode(image);
         this.j.e.fire('afterInsertImage', image);
         return result;
-    }
-    setCursorAfter(node) {
-        this.errorNode(node);
-        if (!dom["a" /* Dom */].up(node, elm => elm === this.area || (elm && elm.parentNode === this.area), this.area)) {
-            throw Object(helpers["error"])('Node element must be in editor');
-        }
-        const range = this.createRange();
-        let fakeNode = null;
-        if (!dom["a" /* Dom */].isText(node)) {
-            fakeNode = this.j.createInside.text(constants["INVISIBLE_SPACE"]);
-            range.setStartAfter(node);
-            range.insertNode(fakeNode);
-            range.selectNode(fakeNode);
-        }
-        else {
-            range.setEnd(node, node.nodeValue !== null ? node.nodeValue.length : 0);
-        }
-        range.collapse(false);
-        this.selectRange(range);
-        return fakeNode;
     }
     cursorInTheEdge(start, parentBlock) {
         var _a, _b;
@@ -16934,7 +16917,14 @@ class select_Select {
     cursorOnTheRight(parentBlock) {
         return this.cursorInTheEdge(false, parentBlock);
     }
+    setCursorAfter(node) {
+        return this.setCursorNearWith(node, false);
+    }
     setCursorBefore(node) {
+        return this.setCursorNearWith(node, true);
+    }
+    setCursorNearWith(node, inStart) {
+        var _a, _b;
         this.errorNode(node);
         if (!dom["a" /* Dom */].up(node, (elm) => elm === this.area || (elm && elm.parentNode === this.area), this.area)) {
             throw Object(helpers["error"])('Node element must be in editor');
@@ -16943,15 +16933,20 @@ class select_Select {
         let fakeNode = null;
         if (!dom["a" /* Dom */].isText(node)) {
             fakeNode = this.j.createInside.text(constants["INVISIBLE_SPACE"]);
-            range.setStartBefore(node);
-            range.collapse(true);
+            inStart ? range.setStartBefore(node) : range.setEndAfter(node);
+            range.collapse(inStart);
             range.insertNode(fakeNode);
             range.selectNode(fakeNode);
         }
         else {
-            range.setStart(node, node.nodeValue !== null ? node.nodeValue.length : 0);
+            if (inStart) {
+                range.setStart(node, 0);
+            }
+            else {
+                range.setEnd(node, (_b = (_a = node.nodeValue) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0);
+            }
         }
-        range.collapse(true);
+        range.collapse(inStart);
         this.selectRange(range);
         return fakeNode;
     }
@@ -17178,6 +17173,7 @@ class status_bar_StatusBar extends core_component["c" /* ViewComponent */] {
     constructor(jodit, target) {
         super(jodit);
         this.target = target;
+        this.container = null;
         this.container = jodit.c.div('jodit-status-bar');
         target.appendChild(this.container);
         this.hide();
@@ -17189,32 +17185,37 @@ class status_bar_StatusBar extends core_component["c" /* ViewComponent */] {
         this.container && this.container.classList.remove('jodit_hidden');
     }
     getHeight() {
-        return this.container.offsetHeight;
+        var _a, _b;
+        return (_b = (_a = this.container) === null || _a === void 0 ? void 0 : _a.offsetHeight) !== null && _b !== void 0 ? _b : 0;
     }
     findEmpty(inTheRight = false) {
-        const items = this.container.querySelectorAll('.jodit-status-bar__item' +
+        var _a;
+        const items = (_a = this.container) === null || _a === void 0 ? void 0 : _a.querySelectorAll('.jodit-status-bar__item' +
             (inTheRight ? '.jodit-status-bar__item-right' : ''));
-        for (let i = 0; i < items.length; i += 1) {
-            if (!items[i].innerHTML.trim().length) {
-                return items[i];
+        if (items) {
+            for (let i = 0; i < items.length; i += 1) {
+                if (!items[i].innerHTML.trim().length) {
+                    return items[i];
+                }
             }
         }
     }
     append(child, inTheRight = false) {
+        var _a;
         const wrapper = this.findEmpty(inTheRight) ||
             this.j.c.div('jodit-status-bar__item');
         if (inTheRight) {
             wrapper.classList.add('jodit-status-bar__item-right');
         }
         wrapper.appendChild(child);
-        this.container.appendChild(wrapper);
+        (_a = this.container) === null || _a === void 0 ? void 0 : _a.appendChild(wrapper);
         this.show();
         this.j.e.fire('resize');
     }
     destruct() {
         this.setStatus(core_component["b" /* STATUSES */].beforeDestruct);
         dom["a" /* Dom */].safeRemove(this.container);
-        delete this.container;
+        this.container = null;
         super.destruct();
     }
 }
@@ -18237,7 +18238,6 @@ class uploader_Uploader extends core_component["c" /* ViewComponent */] {
             }
             catch (_a) { }
         });
-        delete this.options;
         super.destruct();
     }
 }
@@ -18859,10 +18859,7 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
             }
             this.e.fire('afterAddPlace', currentPlace);
         };
-        if (Object(helpers["isPromise"])(initResult)) {
-            return initResult.then(init);
-        }
-        init();
+        return Object(helpers["callPromise"])(initResult, init);
     }
     setCurrentPlace(place) {
         if (this.currentPlace === place) {
@@ -18879,7 +18876,7 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
     }
     initEditor(buffer) {
         const result = this.createEditor();
-        const init = () => {
+        return Object(helpers["callPromise"])(result, () => {
             if (this.isInDestruct) {
                 return;
             }
@@ -18916,16 +18913,12 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
                 this.ed.execCommand('enableInlineTableEditing', false, 'false');
             }
             catch (_c) { }
-        };
-        if (Object(helpers["isPromise"])(result)) {
-            return result.then(init);
-        }
-        init();
+        });
     }
     createEditor() {
         const defaultEditorArea = this.editor;
         const stayDefault = this.e.fire('createEditor', this);
-        const init = () => {
+        return Object(helpers["callPromise"])(stayDefault, () => {
             if (this.isInDestruct) {
                 return;
             }
@@ -18958,11 +18951,7 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
                     this.e && this.e.fire(this.element, 'change');
                 }, this.defaultTimeout));
             }
-        };
-        if (Object(helpers["isPromise"])(stayDefault)) {
-            return stayDefault.then(init);
-        }
-        init();
+        });
     }
     attachEvents(options) {
         const e = options === null || options === void 0 ? void 0 : options.events;
@@ -19017,9 +19006,7 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
         const buffer = this.getEditorValue();
         this.storage.clear();
         this.buffer.clear();
-        delete this.buffer;
         this.commands = {};
-        delete this.selection;
         this.__selectionLocked = null;
         this.e.off(this.ow, 'resize');
         this.e.off(this.ow);
@@ -19453,7 +19440,8 @@ class delete_Delete extends plugin_Plugin {
             }
         })
             .on('keydown', (event) => {
-            if (event.key === constants["KEY_BACKSPACE"] || event.key === constants["KEY_DELETE"]) {
+            if (event.key === constants["KEY_BACKSPACE"] ||
+                event.key === constants["KEY_DELETE"]) {
                 return this.onDelete(event.key === constants["KEY_BACKSPACE"]);
             }
         }, undefined, true);
@@ -19504,8 +19492,12 @@ class delete_Delete extends plugin_Plugin {
                 return false;
             }
         }
+        catch (e) {
+            if (false) {}
+            throw e;
+        }
         finally {
-            dom["a" /* Dom */].safeRemove(fakeNode);
+            this.safeRemoveEmptyNode(fakeNode);
         }
         return false;
     }
@@ -19589,7 +19581,9 @@ class delete_Delete extends plugin_Plugin {
     checkRemoveInseparableElement(fakeNode, backspace) {
         const neighbor = dom["a" /* Dom */].getNormalSibling(fakeNode, backspace);
         if (dom["a" /* Dom */].isElement(neighbor) &&
-            (dom["a" /* Dom */].isTag(neighbor, constants["INSEPARABLE_TAGS"]) || dom["a" /* Dom */].isEmpty(neighbor) || Object(helpers["attr"])(neighbor, 'contenteditable') === 'false')) {
+            (dom["a" /* Dom */].isTag(neighbor, constants["INSEPARABLE_TAGS"]) ||
+                dom["a" /* Dom */].isEmpty(neighbor) ||
+                Object(helpers["attr"])(neighbor, 'contenteditable') === 'false')) {
             dom["a" /* Dom */].safeRemove(neighbor);
             this.j.s.setCursorBefore(fakeNode);
             if (dom["a" /* Dom */].isTag(neighbor, 'br')) {
@@ -19627,7 +19621,9 @@ class delete_Delete extends plugin_Plugin {
         if (found && this.checkJoinTwoLists(fakeNode, backspace)) {
             return true;
         }
-        if (neighbor && !dom["a" /* Dom */].isText(neighbor) && !dom["a" /* Dom */].isTag(neighbor, constants["INSEPARABLE_TAGS"])) {
+        if (neighbor &&
+            !dom["a" /* Dom */].isText(neighbor) &&
+            !dom["a" /* Dom */].isTag(neighbor, constants["INSEPARABLE_TAGS"])) {
             setCursorIn(neighbor, !backspace);
         }
         else {
@@ -19722,6 +19718,31 @@ class delete_Delete extends plugin_Plugin {
                 return true;
             }
         }
+    }
+    safeRemoveEmptyNode(fakeNode) {
+        var _a, _b;
+        const { range } = this.j.s;
+        if (range.startContainer === fakeNode) {
+            if (fakeNode.previousSibling) {
+                if (dom["a" /* Dom */].isText(fakeNode.previousSibling)) {
+                    range.setStart(fakeNode.previousSibling, (_b = (_a = fakeNode.previousSibling.nodeValue) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0);
+                }
+                else {
+                    range.setStartAfter(fakeNode.previousSibling);
+                }
+            }
+            else if (fakeNode.nextSibling) {
+                if (dom["a" /* Dom */].isText(fakeNode.nextSibling)) {
+                    range.setStart(fakeNode.nextSibling, 0);
+                }
+                else {
+                    range.setStartBefore(fakeNode.nextSibling);
+                }
+            }
+            range.collapse(true);
+            this.j.s.selectRange(range);
+        }
+        dom["a" /* Dom */].safeRemove(fakeNode);
     }
 }
 
@@ -20933,7 +20954,9 @@ config["a" /* Config */].prototype.controls.brush = {
         if (current &&
             current !== editor.editor &&
             dom["a" /* Dom */].isNode(current, editor.ew)) {
-            if (dom["a" /* Dom */].isElement(current)) {
+            if (dom["a" /* Dom */].isElement(current) &&
+                editor.s.isCollapsed() &&
+                !dom["a" /* Dom */].isTag(current, ['br', 'hr'])) {
                 currentElement = current;
             }
             dom["a" /* Dom */].up(current, (node) => {
@@ -21807,12 +21830,12 @@ config["a" /* Config */].prototype.controls.fullsize = {
     mode: constants["MODE_SOURCE"] + constants["MODE_WYSIWYG"]
 };
 function fullsize_fullsize(editor) {
-    let shown = false, oldHeight = 0, oldWidth = 0, wasToggled = false;
+    let isEnabled = false, oldHeight = 0, oldWidth = 0, wasToggled = false;
     const resize = () => {
         if (editor.events) {
-            if (shown) {
-                oldHeight = Object(helpers["css"])(editor.container, 'height');
-                oldWidth = Object(helpers["css"])(editor.container, 'width');
+            if (isEnabled) {
+                oldHeight = Object(helpers["css"])(editor.container, 'height', undefined, true);
+                oldWidth = Object(helpers["css"])(editor.container, 'width', undefined, true);
                 Object(helpers["css"])(editor.container, {
                     height: editor.ow.innerHeight,
                     width: editor.ow.innerWidth
@@ -21835,7 +21858,7 @@ function fullsize_fullsize(editor) {
             enable = !editor.container.classList.contains('jodit_fullsize');
         }
         editor.o.fullsize = enable;
-        shown = enable;
+        isEnabled = enable;
         editor.container.classList.toggle('jodit_fullsize', enable);
         if (editor.toolbar) {
             Object(helpers["isJoditObject"])(editor) &&
@@ -21845,7 +21868,7 @@ function fullsize_fullsize(editor) {
         if (editor.o.globalFullSize) {
             let node = editor.container.parentNode;
             while (node && node.nodeType !== Node.DOCUMENT_NODE) {
-                node.classList.toggle('jodit-fullsize_box', enable);
+                node.classList.toggle('jodit_fullsize-box_true', enable);
                 node = node.parentNode;
             }
             resize();
@@ -22228,12 +22251,9 @@ function iframe_iframe(editor) {
                     (_a = editor.events) === null || _a === void 0 ? void 0 : _a.fire(editor.ow, e);
                 });
             }
+            return false;
         };
-        if (Object(helpers["isPromise"])(result)) {
-            return result.then(init);
-        }
-        init();
-        return false;
+        return Object(helpers["callPromise"])(result, init);
     });
 }
 
@@ -22578,17 +22598,17 @@ class image_properties_imageProperties extends plugin_Plugin {
             imageWidth.value = image.offsetWidth.toString();
             imageHeight.value = image.offsetHeight.toString();
         }, updateText = () => {
-            if (image.hasAttribute('title')) {
-                imageTitle.value = Object(helpers["attr"])(image, 'title') || '';
-            }
-            if (image.hasAttribute('alt')) {
-                imageAlt.value = Object(helpers["attr"])(image, 'alt') || '';
-            }
+            imageTitle.value = Object(helpers["attr"])(image, 'title') || '';
+            imageAlt.value = Object(helpers["attr"])(image, 'alt') || '';
             const a = dom["a" /* Dom */].closest(image, 'a', this.j.editor);
             if (a) {
                 imageLink.value = Object(helpers["attr"])(a, 'href') || '';
                 imageLinkOpenInNewTab.checked =
                     Object(helpers["attr"])(a, 'target') === '_blank';
+            }
+            else {
+                imageLink.value = '';
+                imageLinkOpenInNewTab.checked = false;
             }
         }, updateSrc = () => {
             imageSrc.value = Object(helpers["attr"])(image, 'src') || '';
@@ -22830,9 +22850,8 @@ function imageProcessor(editor) {
                     elm[JODIT_IMAGE_PROCESSOR_BINDED] = true;
                     if (!elm.complete) {
                         elm.addEventListener('load', function ElementOnLoad() {
-                            editor.events &&
-                                editor.e.fire &&
-                                editor.e.fire('resize');
+                            var _a;
+                            !editor.isInDestruct && ((_a = editor.e) === null || _a === void 0 ? void 0 : _a.fire('resize'));
                             elm.removeEventListener('load', ElementOnLoad);
                         });
                     }
@@ -23045,6 +23064,7 @@ class inline_popup_inlinePopup extends plugin_Plugin {
         this.type = null;
         this.popup = new ui_popup["a" /* Popup */](this.jodit);
         this.toolbar = makeCollection(this.jodit, this.popup);
+        this.snapRange = null;
     }
     onClick(e) {
         const node = e.target, elements = Object.keys(this.j.o.popup), target = dom["a" /* Dom */].isTag(node, 'img')
@@ -23053,23 +23073,6 @@ class inline_popup_inlinePopup extends plugin_Plugin {
         if (target && this.canShowPopupForType(target.nodeName.toLowerCase())) {
             this.showPopup(() => Object(helpers["position"])(target, this.j), target.nodeName.toLowerCase(), target);
         }
-    }
-    onSelectionChange() {
-        if (!this.j.o.toolbarInlineForSelection) {
-            return;
-        }
-        const type = 'selection', sel = this.j.s.sel, range = this.j.s.range;
-        if (sel === null || sel === void 0 ? void 0 : sel.isCollapsed) {
-            if (this.type === type && this.popup.isOpened) {
-                this.hidePopup();
-            }
-            return;
-        }
-        const node = this.j.s.current();
-        if (!node) {
-            return;
-        }
-        this.showPopup(() => range.getBoundingClientRect(), type);
     }
     showPopup(rect, type, target) {
         type = type.toLowerCase();
@@ -23120,27 +23123,77 @@ class inline_popup_inlinePopup extends plugin_Plugin {
             this.showPopup(rect, type || (Object(helpers["isString"])(elm) ? elm : elm.nodeName), Object(helpers["isString"])(elm) ? undefined : elm);
         })
             .on('click', this.onClick)
-            .on(this.j.ed, 'selectionchange', this.onSelectionChange);
+            .on('mousedown keydown', this.onSelectionStart)
+            .on([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
+    }
+    onSelectionStart() {
+        this.snapRange = this.j.s.range.cloneRange();
+    }
+    onSelectionEnd() {
+        const { snapRange } = this, { range } = this.j.s;
+        if (!snapRange ||
+            range.collapsed ||
+            range.startContainer !== snapRange.startContainer ||
+            range.startOffset !== snapRange.startOffset ||
+            range.endContainer !== snapRange.endContainer ||
+            range.endOffset !== snapRange.endOffset) {
+            this.onSelectionChange();
+        }
+    }
+    onSelectionChange() {
+        if (!this.j.o.toolbarInlineForSelection) {
+            return;
+        }
+        const type = 'selection', sel = this.j.s.sel, range = this.j.s.range;
+        if ((sel === null || sel === void 0 ? void 0 : sel.isCollapsed) ||
+            this.isSelectedTarget(range) ||
+            this.tableModule.getAllSelectedCells().length) {
+            if (this.type === type && this.popup.isOpened) {
+                this.hidePopup();
+            }
+            return;
+        }
+        const node = this.j.s.current();
+        if (!node) {
+            return;
+        }
+        this.showPopup(() => range.getBoundingClientRect(), type);
+    }
+    isSelectedTarget(r) {
+        const sc = r.startContainer;
+        return (dom["a" /* Dom */].isElement(sc) &&
+            sc === r.endContainer &&
+            dom["a" /* Dom */].isTag(sc.childNodes[r.startOffset], Object.keys(this.j.o.popup)) &&
+            r.startOffset === r.endOffset - 1);
+    }
+    get tableModule() {
+        return this.j.getInstance('Table', this.j.o);
     }
     beforeDestruct(jodit) {
         jodit.e
             .off('showPopup')
             .off('click', this.onClick)
-            .off(this.j.ed, 'selectionchange', this.onSelectionChange);
+            .off([this.j.ew, this.j.ow], 'mouseup', this.onSelectionEnd);
     }
 }
 Object(tslib_es6["a" /* __decorate */])([
     esm["a" /* default */]
 ], inline_popup_inlinePopup.prototype, "onClick", null);
 Object(tslib_es6["a" /* __decorate */])([
-    Object(decorators["debounce"])(ctx => ctx.defaultTimeout * 5)
-], inline_popup_inlinePopup.prototype, "onSelectionChange", null);
-Object(tslib_es6["a" /* __decorate */])([
     Object(decorators["wait"])((ctx) => !ctx.j.isLocked)
 ], inline_popup_inlinePopup.prototype, "showPopup", null);
 Object(tslib_es6["a" /* __decorate */])([
     esm["a" /* default */]
 ], inline_popup_inlinePopup.prototype, "hidePopup", null);
+Object(tslib_es6["a" /* __decorate */])([
+    esm["a" /* default */]
+], inline_popup_inlinePopup.prototype, "onSelectionStart", null);
+Object(tslib_es6["a" /* __decorate */])([
+    esm["a" /* default */]
+], inline_popup_inlinePopup.prototype, "onSelectionEnd", null);
+Object(tslib_es6["a" /* __decorate */])([
+    Object(decorators["debounce"])(ctx => ctx.defaultTimeout)
+], inline_popup_inlinePopup.prototype, "onSelectionChange", null);
 
 // CONCATENATED MODULE: ./src/plugins/justify.ts
 /*!
@@ -25500,7 +25553,8 @@ class source_source_source extends plugin_Plugin {
         this.tempMarkerEndReg = /{end-jodit-selection}/g;
         this.selInfo = [];
         this.insertHTML = (html) => {
-            this.sourceEditor.insertRaw(html);
+            var _a;
+            (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.insertRaw(html);
             this.toWYSIWYG();
         };
         this.fromWYSIWYG = (force = false) => {
@@ -25543,7 +25597,8 @@ class source_source_source extends plugin_Plugin {
         };
         this.__clear = (str) => str.replace(constants["INVISIBLE_SPACE_REG_EXP"](), '');
         this.selectAll = () => {
-            this.sourceEditor.selectAll();
+            var _a;
+            (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.selectAll();
         };
         this.onSelectAll = (command) => {
             if (command.toLowerCase() === 'selectall' &&
@@ -25553,10 +25608,12 @@ class source_source_source extends plugin_Plugin {
             }
         };
         this.getSelectionStart = () => {
-            return this.sourceEditor.getSelectionStart();
+            var _a, _b;
+            return (_b = (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.getSelectionStart()) !== null && _b !== void 0 ? _b : 0;
         };
         this.getSelectionEnd = () => {
-            return this.sourceEditor.getSelectionEnd();
+            var _a, _b;
+            return (_b = (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.getSelectionEnd()) !== null && _b !== void 0 ? _b : 0;
         };
         this.saveSelection = () => {
             if (this.j.getRealMode() === constants["MODE_WYSIWYG"]) {
@@ -25647,22 +25704,28 @@ class source_source_source extends plugin_Plugin {
             this.setFocusToMirror();
         };
         this.setMirrorSelectionRange = (start, end) => {
-            this.sourceEditor.setSelectionRange(start, end);
+            var _a;
+            (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.setSelectionRange(start, end);
         };
         this.onReadonlyReact = () => {
-            this.sourceEditor.setReadOnly(this.j.o.readonly);
+            var _a;
+            (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.setReadOnly(this.j.o.readonly);
         };
     }
     getMirrorValue() {
-        return this.sourceEditor.getValue();
+        var _a;
+        return ((_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.getValue()) || '';
     }
     setMirrorValue(value) {
-        this.sourceEditor.setValue(value);
+        var _a;
+        (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.setValue(value);
     }
     setFocusToMirror() {
-        this.sourceEditor.focus();
+        var _a;
+        (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.focus();
     }
     initSourceEditor(editor) {
+        var _a;
         if (editor.o.sourceEditor !== 'area') {
             const sourceEditor = createSourceEditor(editor.o.sourceEditor, editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
             sourceEditor.onReadyAlways(() => {
@@ -25674,7 +25737,7 @@ class source_source_source extends plugin_Plugin {
             });
         }
         else {
-            this.sourceEditor.onReadyAlways(() => {
+            (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.onReadyAlways(() => {
                 var _a;
                 this.fromWYSIWYG(true);
                 (_a = editor.events) === null || _a === void 0 ? void 0 : _a.fire('sourceEditorReady', editor);
@@ -25705,7 +25768,8 @@ class source_source_source extends plugin_Plugin {
         })
             .on('readonly.source', this.onReadonlyReact)
             .on('placeholder.source', (text) => {
-            this.sourceEditor.setPlaceHolder(text);
+            var _a;
+            (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.setPlaceHolder(text);
         })
             .on('beforeCommand.source', this.onSelectAll)
             .on('change.source', this.fromWYSIWYG);
@@ -25761,11 +25825,13 @@ config["a" /* Config */].prototype.showWordsCounter = true;
 class stat_stat extends plugin_Plugin {
     constructor() {
         super(...arguments);
+        this.charCounter = null;
+        this.wordCounter = null;
         this.reInit = () => {
-            if (this.j.o.showCharsCounter) {
+            if (this.j.o.showCharsCounter && this.charCounter) {
                 this.j.statusbar.append(this.charCounter, true);
             }
-            if (this.j.o.showWordsCounter) {
+            if (this.j.o.showWordsCounter && this.wordCounter) {
                 this.j.statusbar.append(this.wordCounter, true);
             }
             this.j.e.off('change keyup', this.calc).on('change keyup', this.calc);
@@ -25773,13 +25839,13 @@ class stat_stat extends plugin_Plugin {
         };
         this.calc = this.j.async.throttle(() => {
             const text = this.j.text;
-            if (this.j.o.showCharsCounter) {
+            if (this.j.o.showCharsCounter && this.charCounter) {
                 const chars = this.j.o.countHTMLChars
                     ? this.j.value
                     : text.replace(Object(constants["SPACE_REG_EXP"])(), '');
                 this.charCounter.textContent = this.j.i18n('Chars: %d', chars.length);
             }
-            if (this.j.o.showWordsCounter) {
+            if (this.j.o.showWordsCounter && this.wordCounter) {
                 this.wordCounter.textContent = this.j.i18n('Words: %d', text
                     .replace(Object(constants["INVISIBLE_SPACE_REG_EXP"])(), '')
                     .split(Object(constants["SPACE_REG_EXP"])())
@@ -25797,8 +25863,8 @@ class stat_stat extends plugin_Plugin {
         dom["a" /* Dom */].safeRemove(this.charCounter);
         dom["a" /* Dom */].safeRemove(this.wordCounter);
         this.j.e.off('afterInit changePlace afterAddPlace', this.reInit);
-        delete this.charCounter;
-        delete this.wordCounter;
+        this.charCounter = null;
+        this.wordCounter = null;
     }
 }
 
@@ -27396,7 +27462,6 @@ class xpath_xpath_xpath extends plugin_Plugin {
             this.appendSelectAll();
         };
         this.calcPath = this.j.async.debounce(this.calcPathImd, this.j.defaultTimeout * 2);
-        this.menu = null;
     }
     afterInit() {
         if (this.j.o.showXPathInStatusbar) {
@@ -27405,7 +27470,7 @@ class xpath_xpath_xpath extends plugin_Plugin {
                 .off('.xpath')
                 .on('mouseup.xpath change.xpath keydown.xpath changeSelection.xpath', this.calcPath)
                 .on('afterSetMode.xpath afterInit.xpath changePlace.xpath', () => {
-                if (!this.j.o.showXPathInStatusbar) {
+                if (!this.j.o.showXPathInStatusbar || !this.container) {
                     return;
                 }
                 this.j.statusbar.append(this.container);
