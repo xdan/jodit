@@ -211,7 +211,13 @@ module.exports = {
 	"Default": "Padrão",
 	"Circle": "Círculo",
 	"Dot": "Ponto",
-	"Quadrate": "Quadrate",
+	"Quadrate": "Quadro",
+	//Ordered list
+	'Lower Alpha': 'Letra Minúscula',
+	'Lower Greek': 'Grego Minúscula',
+	'Lower Roman': 'Romano Minúscula',
+	'Upper Alpha': 'Letra Maiúscula',
+	'Upper Roman': 'Romano Maiúscula',
 	"Find": "Encontrar",
 	"Find Previous": "Encontrar Anteriores",
 	"Find Next": "Localizar Próxima"
