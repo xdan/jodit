@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.25
+ * Version: v3.4.26
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -4848,7 +4848,7 @@ var View = (function (_super) {
         _this.isJodit = isJodit;
         _this.isView = true;
         _this.components = new Set();
-        _this.version = "3.4.25";
+        _this.version = "3.4.26";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.OPTIONS = View.defaultOptions;
@@ -8885,6 +8885,9 @@ exports.reset = function (key) {
                 map[key] = func.bind(bind);
             }
         }
+        catch (e) {
+            if (false) {}
+        }
         finally {
             (_a = iframe.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(iframe);
         }
@@ -10301,11 +10304,18 @@ exports.splitArray = splitArray;
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.toArray = void 0;
 var utils_1 = __webpack_require__(12);
-exports.toArray = (_a = utils_1.reset('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
+exports.toArray = (function toArray() {
+    var _a;
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    var func = (_a = utils_1.reset('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
+    return func.apply(Array, args);
+});
 
 
 /***/ }),

@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.25
+ * Version: v3.4.26
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -3314,6 +3314,9 @@ const utils_reset = function (key) {
                 map[key] = func.bind(bind);
             }
         }
+        catch (e) {
+            if (false) {}
+        }
         finally {
             (_a = iframe.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(iframe);
         }
@@ -5982,7 +5985,7 @@ const normalizeColor = (colorInput) => {
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport */ asArray; });
 __webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport */ splitArray; });
-__webpack_require__.d(__webpack_exports__, "c", function() { return /* reexport */ toArray; });
+__webpack_require__.d(__webpack_exports__, "c", function() { return /* reexport */ to_array_toArray; });
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 20 modules
 var checker = __webpack_require__(5);
@@ -6016,9 +6019,12 @@ var utils = __webpack_require__(9);
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-var _a;
 
-const toArray = (_a = Object(utils["k" /* reset */])('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
+const to_array_toArray = (function toArray(...args) {
+    var _a;
+    const func = (_a = Object(utils["k" /* reset */])('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
+    return func.apply(Array, args);
+});
 
 // CONCATENATED MODULE: ./src/core/helpers/array/index.ts
 /*!
@@ -12277,7 +12283,7 @@ class view_View extends core_component["a" /* Component */] {
         this.isJodit = isJodit;
         this.isView = true;
         this.components = new Set();
-        this.version = "3.4.25";
+        this.version = "3.4.26";
         this.async = new async_Async();
         this.buffer = storage_Storage.makeStorage();
         this.OPTIONS = view_View.defaultOptions;

@@ -5,7 +5,12 @@
  */
 
 import { isFunction, isPromise } from '../checker';
-import type { CanPromise, IDictionary, IViewBased, Nullable } from '../../../types';
+import type {
+	CanPromise,
+	IDictionary,
+	IViewBased,
+	Nullable
+} from '../../../types';
 import { get } from './get';
 
 /**
@@ -121,6 +126,10 @@ export const reset = function <T extends Function>(key: string): Nullable<T> {
 
 			if (isFunction(func)) {
 				map[key] = func.bind(bind);
+			}
+		} catch(e) {
+			if (!isProd) {
+				throw e;
 			}
 		} finally {
 			iframe.parentNode?.removeChild(iframe);
