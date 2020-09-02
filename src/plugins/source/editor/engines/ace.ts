@@ -9,7 +9,8 @@ import * as constants from '../../../../core/constants';
 import { isString, loadNext } from '../../../../core/helpers';
 import { SourceEditor } from '../sourceEditor';
 
-export class AceEditor extends SourceEditor<AceAjax.Editor>
+export class AceEditor
+	extends SourceEditor<AceAjax.Editor>
 	implements ISourceEditor {
 	className = 'jodit_ace_editor';
 
@@ -196,7 +197,7 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 	}
 
 	setValue(value: string) {
-		if (this.j.o.beautifyHTML) {
+		if (!this.j.o.editHTMLDocumentMode && this.j.o.beautifyHTML) {
 			const html = this.j.e.fire('beautifyHTML', value);
 
 			if (isString(html)) {

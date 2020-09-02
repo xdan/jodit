@@ -230,8 +230,9 @@ export class source extends Plugin {
 				);
 			}
 
-			if (this.j.o.beautifyHTML) {
+			if (!this.j.o.editHTMLDocumentMode && this.j.o.beautifyHTML) {
 				const html = this.j.e.fire('beautifyHTML', value);
+
 				if (isString(html)) {
 					value = html;
 				}
