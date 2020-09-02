@@ -62,6 +62,7 @@ export class UIInput extends UIElement implements IUIInput {
 		container.appendChild(this.nativeInput);
 
 		attr(this.nativeInput, 'name', options.name);
+		attr(this.nativeInput, 'dir', this.j.o.direction || 'auto');
 		attr(this.nativeInput, 'type', options.type);
 		attr(this.nativeInput, 'data-ref', options.ref || options.name);
 		attr(this.nativeInput, 'ref', options.ref || options.name);

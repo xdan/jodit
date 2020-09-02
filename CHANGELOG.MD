@@ -2,6 +2,7 @@
 ## 3.4.25
 * https://github.com/xdan/jodit/issues/422
 * https://github.com/xdan/jodit/issues/375
+* https://github.com/xdan/jodit/issues/343
 
 ### Features
 * https://github.com/xdan/jodit/issues/489

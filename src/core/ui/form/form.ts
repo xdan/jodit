@@ -6,6 +6,7 @@
 import { IDictionary, IUIForm, IUIInput } from '../../../types';
 import { UIGroup } from '..';
 import { UIInput } from './input';
+import { attr } from '../../helpers/utils';
 
 export class UIForm extends UIGroup implements IUIForm {
 	container!: HTMLFormElement;
@@ -49,6 +50,7 @@ export class UIForm extends UIGroup implements IUIForm {
 	protected createContainer(): HTMLElement {
 		const form =  this.j.c.element('form');
 		form.classList.add(this.componentName);
+		attr(form, 'dir', this.j.o.direction || 'auto');
 		return form;
 	}
 }
