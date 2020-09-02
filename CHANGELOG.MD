@@ -2,6 +2,15 @@
 ## 3.4.25
 * https://github.com/xdan/jodit/issues/422
 
+### Features
+* https://github.com/xdan/jodit/issues/489
+In textIcons - besides `boolean`, you can put `function(key: string): boolean`;
+```js
+var editor = new Jodit('#editor', {
+    textIcons: (key) => key !== 'bold'
+})
+```
+
 ## 3.4.24
 ### Bug fixes
 

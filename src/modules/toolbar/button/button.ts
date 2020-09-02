@@ -33,7 +33,8 @@ import {
 } from '../../../core/helpers/';
 import { Icon, STATUSES, ToolbarCollection } from '../..';
 
-export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
+export class ToolbarButton<T extends IViewBased = IViewBased>
+	extends UIButton
 	implements IToolbarButton {
 	state = {
 		...UIButtonState(),
@@ -172,14 +173,15 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 						return;
 					}
 
-					!this.state.disabled && this.j.e.fire(
-						'delayShowTooltip',
-						() => ({
-							x: e.clientX + 10,
-							y: e.clientY + 10
-						}),
-						this.state.tooltip
-					)
+					!this.state.disabled &&
+						this.j.e.fire(
+							'delayShowTooltip',
+							() => ({
+								x: e.clientX + 10,
+								y: e.clientY + 10
+							}),
+							this.state.tooltip
+						);
 				})
 				.on(this.container, 'mouseleave', () => {
 					this.j.e.fire('hideTooltip');
@@ -218,7 +220,13 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends UIButton
 
 		state.name = control.name;
 
-		if (this.j.o.textIcons || control.template) {
+		const { textIcons } = this.j.o;
+
+		if (
+			textIcons === true ||
+			(isFunction(textIcons) && textIcons(control.name)) ||
+			control.template
+		) {
 			state.icon = UIButtonState().icon;
 			state.text = control.text || control.name;
 		} else {

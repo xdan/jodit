@@ -29,7 +29,8 @@ import {
 	isPlainObject,
 	isJoditObject,
 	isArray,
-	isFunction, toArray
+	isFunction,
+	toArray
 } from '../../core/helpers';
 import { Dom } from '../../core/dom';
 import { ViewComponent, STATUSES } from '../../core/component/';

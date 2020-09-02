@@ -28,7 +28,7 @@ interface IToolbarOptions {
 	theme?: string;
 	toolbar?: boolean | string | HTMLElement;
 	toolbarButtonSize?: IUIButtonState['size'];
-	textIcons?: boolean;
+	textIcons?: boolean | ((key: string) => boolean);
 
 	extraButtons?: Buttons;
 	removeButtons?: string[];

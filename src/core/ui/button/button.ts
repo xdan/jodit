@@ -18,7 +18,7 @@ import {
 import watch from '../../../core/decorators/watch';
 import { STATUSES } from '../../component';
 import { Dom } from '../../dom';
-import { attr, isString, getClassName } from '../../helpers';
+import { attr, isString, getClassName, isFunction } from '../../helpers';
 import { Icon } from '../icon';
 import { UIList } from '..';
 
@@ -143,7 +143,8 @@ export class UIButton extends UIElement implements IUIButton {
 
 	@watch('state.icon')
 	protected onChangeIcon(): void {
-		if (this.get('j.o.textIcons')) {
+		const textIcons = this.get('j.o.textIcons');
+		if (textIcons === true || (isFunction(textIcons) && textIcons(this.state.name))) {
 			return;
 		}
 
