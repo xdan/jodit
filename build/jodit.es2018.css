@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.24
+ * Version: v3.4.25
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -160,7 +160,7 @@
 .jodit-form .jodit-form__center{
   justify-content:center;
 }
-.jodit-input,.jodit-select,.jodit-textarea{
+.jodit .jodit-input,.jodit .jodit-select,.jodit .jodit-textarea{
   font-family:var(--jd-font-default);
   font-size:var(--jd-font-size-default);
   width:100%;
@@ -176,14 +176,14 @@
   border-radius:0;
   background-color:var(--jd-color-white);
 }
-.jodit-input[disabled],.jodit-select[disabled],.jodit-textarea[disabled]{
+.jodit .jodit-input[disabled],.jodit .jodit-select[disabled],.jodit .jodit-textarea[disabled]{
   background-color:#f0f0f0;
   color:var(--jd-color-border);
 }
-.jodit-input_has-error_true,.jodit-select_has-error_true,.jodit-textarea_has-error_true{
+.jodit .jodit-input_has-error_true,.jodit .jodit-select_has-error_true,.jodit .jodit-textarea_has-error_true{
   border-color:var(--jd-color-red);
 }
-.jodit-input:focus{
+.jodit .jodit-input:focus{
   border-color:#66afe9;
   outline:0;
 }

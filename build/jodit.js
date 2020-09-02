@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.24
+ * Version: v3.4.25
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -99,7 +99,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 70);
+/******/ 	return __webpack_require__(__webpack_require__.s = 72);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -373,34 +373,34 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(14), exports);
-tslib_1.__exportStar(__webpack_require__(115), exports);
-tslib_1.__exportStar(__webpack_require__(118), exports);
-tslib_1.__exportStar(__webpack_require__(29), exports);
-tslib_1.__exportStar(__webpack_require__(5), exports);
-tslib_1.__exportStar(__webpack_require__(32), exports);
-tslib_1.__exportStar(__webpack_require__(121), exports);
-tslib_1.__exportStar(__webpack_require__(34), exports);
-tslib_1.__exportStar(__webpack_require__(136), exports);
 tslib_1.__exportStar(__webpack_require__(12), exports);
-tslib_1.__exportStar(__webpack_require__(141), exports);
+tslib_1.__exportStar(__webpack_require__(23), exports);
+tslib_1.__exportStar(__webpack_require__(119), exports);
+tslib_1.__exportStar(__webpack_require__(30), exports);
+tslib_1.__exportStar(__webpack_require__(5), exports);
+tslib_1.__exportStar(__webpack_require__(33), exports);
+tslib_1.__exportStar(__webpack_require__(122), exports);
+tslib_1.__exportStar(__webpack_require__(35), exports);
+tslib_1.__exportStar(__webpack_require__(137), exports);
+tslib_1.__exportStar(__webpack_require__(13), exports);
 tslib_1.__exportStar(__webpack_require__(142), exports);
 tslib_1.__exportStar(__webpack_require__(143), exports);
 tslib_1.__exportStar(__webpack_require__(144), exports);
 tslib_1.__exportStar(__webpack_require__(145), exports);
 tslib_1.__exportStar(__webpack_require__(146), exports);
-tslib_1.__exportStar(__webpack_require__(42), exports);
 tslib_1.__exportStar(__webpack_require__(147), exports);
-tslib_1.__exportStar(__webpack_require__(50), exports);
+tslib_1.__exportStar(__webpack_require__(43), exports);
 tslib_1.__exportStar(__webpack_require__(148), exports);
-tslib_1.__exportStar(__webpack_require__(28), exports);
-tslib_1.__exportStar(__webpack_require__(41), exports);
-tslib_1.__exportStar(__webpack_require__(51), exports);
+tslib_1.__exportStar(__webpack_require__(52), exports);
 tslib_1.__exportStar(__webpack_require__(149), exports);
+tslib_1.__exportStar(__webpack_require__(29), exports);
+tslib_1.__exportStar(__webpack_require__(42), exports);
+tslib_1.__exportStar(__webpack_require__(53), exports);
 tslib_1.__exportStar(__webpack_require__(150), exports);
-tslib_1.__exportStar(__webpack_require__(33), exports);
-tslib_1.__exportStar(__webpack_require__(31), exports);
 tslib_1.__exportStar(__webpack_require__(151), exports);
+tslib_1.__exportStar(__webpack_require__(34), exports);
+tslib_1.__exportStar(__webpack_require__(32), exports);
+tslib_1.__exportStar(__webpack_require__(152), exports);
 
 
 /***/ }),
@@ -418,7 +418,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Dom = void 0;
 var consts = __webpack_require__(3);
 var helpers_1 = __webpack_require__(1);
-var helpers_2 = __webpack_require__(52);
+var helpers_2 = __webpack_require__(54);
 var Dom = (function () {
     function Dom() {
     }
@@ -511,7 +511,7 @@ var Dom = (function () {
             }
         }
         if (withAttributes) {
-            Array.from(elm.attributes).forEach(function (attr) {
+            helpers_1.toArray(elm.attributes).forEach(function (attr) {
                 tag.setAttribute(attr.name, attr.value);
             });
         }
@@ -743,7 +743,7 @@ var Dom = (function () {
     Dom.moveContent = function (from, to, inStart) {
         if (inStart === void 0) { inStart = false; }
         var fragment = (from.ownerDocument || document).createDocumentFragment();
-        Array.from(from.childNodes).forEach(function (node) {
+        helpers_1.toArray(from.childNodes).forEach(function (node) {
             fragment.appendChild(node);
         });
         if (!inStart || !to.firstChild) {
@@ -755,7 +755,7 @@ var Dom = (function () {
     };
     Dom.all = function (node, condition, prev) {
         if (prev === void 0) { prev = false; }
-        var nodes = node.childNodes ? Array.from(node.childNodes) : [];
+        var nodes = node.childNodes ? helpers_1.toArray(node.childNodes) : [];
         if (condition(node)) {
             return node;
         }
@@ -1397,26 +1397,26 @@ exports.configFactory = configFactory;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(82), exports);
-tslib_1.__exportStar(__webpack_require__(83), exports);
 tslib_1.__exportStar(__webpack_require__(84), exports);
-tslib_1.__exportStar(__webpack_require__(99), exports);
-tslib_1.__exportStar(__webpack_require__(30), exports);
-tslib_1.__exportStar(__webpack_require__(100), exports);
+tslib_1.__exportStar(__webpack_require__(85), exports);
+tslib_1.__exportStar(__webpack_require__(86), exports);
 tslib_1.__exportStar(__webpack_require__(101), exports);
+tslib_1.__exportStar(__webpack_require__(31), exports);
 tslib_1.__exportStar(__webpack_require__(102), exports);
 tslib_1.__exportStar(__webpack_require__(103), exports);
 tslib_1.__exportStar(__webpack_require__(104), exports);
 tslib_1.__exportStar(__webpack_require__(105), exports);
 tslib_1.__exportStar(__webpack_require__(106), exports);
-tslib_1.__exportStar(__webpack_require__(48), exports);
 tslib_1.__exportStar(__webpack_require__(107), exports);
-tslib_1.__exportStar(__webpack_require__(19), exports);
 tslib_1.__exportStar(__webpack_require__(108), exports);
-tslib_1.__exportStar(__webpack_require__(109), exports);
-tslib_1.__exportStar(__webpack_require__(110), exports);
 tslib_1.__exportStar(__webpack_require__(49), exports);
+tslib_1.__exportStar(__webpack_require__(109), exports);
+tslib_1.__exportStar(__webpack_require__(19), exports);
+tslib_1.__exportStar(__webpack_require__(110), exports);
 tslib_1.__exportStar(__webpack_require__(111), exports);
+tslib_1.__exportStar(__webpack_require__(112), exports);
+tslib_1.__exportStar(__webpack_require__(50), exports);
+tslib_1.__exportStar(__webpack_require__(113), exports);
 
 
 /***/ }),
@@ -1479,12 +1479,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
 tslib_1.__exportStar(__webpack_require__(20), exports);
 tslib_1.__exportStar(__webpack_require__(15), exports);
-tslib_1.__exportStar(__webpack_require__(23), exports);
-tslib_1.__exportStar(__webpack_require__(54), exports);
+tslib_1.__exportStar(__webpack_require__(24), exports);
+tslib_1.__exportStar(__webpack_require__(56), exports);
+tslib_1.__exportStar(__webpack_require__(57), exports);
+tslib_1.__exportStar(__webpack_require__(160), exports);
+tslib_1.__exportStar(__webpack_require__(36), exports);
 tslib_1.__exportStar(__webpack_require__(55), exports);
-tslib_1.__exportStar(__webpack_require__(159), exports);
-tslib_1.__exportStar(__webpack_require__(35), exports);
-tslib_1.__exportStar(__webpack_require__(53), exports);
 
 
 /***/ }),
@@ -1595,9 +1595,9 @@ function autobind() {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(46), exports);
 tslib_1.__exportStar(__webpack_require__(47), exports);
-tslib_1.__exportStar(__webpack_require__(93), exports);
+tslib_1.__exportStar(__webpack_require__(48), exports);
+tslib_1.__exportStar(__webpack_require__(95), exports);
 
 
 /***/ }),
@@ -1615,15 +1615,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PluginSystem = exports.Uploader = exports.ToolbarCollection = exports.ToolbarEditorCollection = exports.Table = exports.StatusBar = exports.Snapshot = exports.Style = exports.Select = exports.ProgressBar = exports.Observer = exports.ImageEditor = exports.Helpers = exports.FileBrowser = exports.ViewWithToolbar = exports.View = exports.Icon = exports.UIBlock = exports.UICheckbox = exports.UITextArea = exports.UIInput = exports.UIForm = exports.UIList = exports.UIGroup = exports.UISeparator = exports.Popup = exports.UIButton = exports.UIElement = exports.Create = exports.Plugin = exports.Dom = exports.Dialog = exports.Prompt = exports.Confirm = exports.Alert = exports.ContextMenu = exports.STATUSES = exports.ViewComponent = exports.Component = exports.Ajax = exports.Async = void 0;
 var tslib_1 = __webpack_require__(0);
 tslib_1.__exportStar(__webpack_require__(22), exports);
-var async_1 = __webpack_require__(56);
+var async_1 = __webpack_require__(58);
 Object.defineProperty(exports, "Async", { enumerable: true, get: function () { return async_1.Async; } });
-var ajax_1 = __webpack_require__(36);
+var ajax_1 = __webpack_require__(37);
 Object.defineProperty(exports, "Ajax", { enumerable: true, get: function () { return ajax_1.Ajax; } });
 var component_1 = __webpack_require__(9);
 Object.defineProperty(exports, "Component", { enumerable: true, get: function () { return component_1.Component; } });
 Object.defineProperty(exports, "ViewComponent", { enumerable: true, get: function () { return component_1.ViewComponent; } });
 Object.defineProperty(exports, "STATUSES", { enumerable: true, get: function () { return component_1.STATUSES; } });
-var context_menu_1 = __webpack_require__(57);
+var context_menu_1 = __webpack_require__(59);
 Object.defineProperty(exports, "ContextMenu", { enumerable: true, get: function () { return context_menu_1.ContextMenu; } });
 var dialog_1 = __webpack_require__(16);
 Object.defineProperty(exports, "Alert", { enumerable: true, get: function () { return dialog_1.Alert; } });
@@ -1634,7 +1634,7 @@ var dom_1 = __webpack_require__(2);
 Object.defineProperty(exports, "Dom", { enumerable: true, get: function () { return dom_1.Dom; } });
 var plugin_1 = __webpack_require__(6);
 Object.defineProperty(exports, "Plugin", { enumerable: true, get: function () { return plugin_1.Plugin; } });
-var create_1 = __webpack_require__(186);
+var create_1 = __webpack_require__(187);
 Object.defineProperty(exports, "Create", { enumerable: true, get: function () { return create_1.Create; } });
 var ui_1 = __webpack_require__(7);
 Object.defineProperty(exports, "UIElement", { enumerable: true, get: function () { return ui_1.UIElement; } });
@@ -1649,37 +1649,37 @@ Object.defineProperty(exports, "UITextArea", { enumerable: true, get: function (
 Object.defineProperty(exports, "UICheckbox", { enumerable: true, get: function () { return ui_1.UICheckbox; } });
 Object.defineProperty(exports, "UIBlock", { enumerable: true, get: function () { return ui_1.UIBlock; } });
 Object.defineProperty(exports, "Icon", { enumerable: true, get: function () { return ui_1.Icon; } });
-var view_1 = __webpack_require__(58);
+var view_1 = __webpack_require__(60);
 Object.defineProperty(exports, "View", { enumerable: true, get: function () { return view_1.View; } });
-var view_with_toolbar_1 = __webpack_require__(26);
+var view_with_toolbar_1 = __webpack_require__(27);
 Object.defineProperty(exports, "ViewWithToolbar", { enumerable: true, get: function () { return view_with_toolbar_1.ViewWithToolbar; } });
-var file_browser_1 = __webpack_require__(187);
+var file_browser_1 = __webpack_require__(188);
 Object.defineProperty(exports, "FileBrowser", { enumerable: true, get: function () { return file_browser_1.FileBrowser; } });
 var Helpers = __webpack_require__(1);
 exports.Helpers = Helpers;
-var image_editor_1 = __webpack_require__(194);
+var image_editor_1 = __webpack_require__(195);
 Object.defineProperty(exports, "ImageEditor", { enumerable: true, get: function () { return image_editor_1.ImageEditor; } });
-var observer_1 = __webpack_require__(197);
+var observer_1 = __webpack_require__(198);
 Object.defineProperty(exports, "Observer", { enumerable: true, get: function () { return observer_1.Observer; } });
-var progress_bar_1 = __webpack_require__(200);
+var progress_bar_1 = __webpack_require__(201);
 Object.defineProperty(exports, "ProgressBar", { enumerable: true, get: function () { return progress_bar_1.ProgressBar; } });
-var selection_1 = __webpack_require__(202);
+var selection_1 = __webpack_require__(203);
 Object.defineProperty(exports, "Select", { enumerable: true, get: function () { return selection_1.Select; } });
 Object.defineProperty(exports, "Style", { enumerable: true, get: function () { return selection_1.Style; } });
-var snapshot_1 = __webpack_require__(66);
+var snapshot_1 = __webpack_require__(68);
 Object.defineProperty(exports, "Snapshot", { enumerable: true, get: function () { return snapshot_1.Snapshot; } });
-var status_bar_1 = __webpack_require__(205);
+var status_bar_1 = __webpack_require__(206);
 Object.defineProperty(exports, "StatusBar", { enumerable: true, get: function () { return status_bar_1.StatusBar; } });
-var table_1 = __webpack_require__(207);
+var table_1 = __webpack_require__(208);
 Object.defineProperty(exports, "Table", { enumerable: true, get: function () { return table_1.Table; } });
-var editor_collection_1 = __webpack_require__(61);
+var editor_collection_1 = __webpack_require__(63);
 Object.defineProperty(exports, "ToolbarEditorCollection", { enumerable: true, get: function () { return editor_collection_1.ToolbarEditorCollection; } });
-var collection_1 = __webpack_require__(38);
+var collection_1 = __webpack_require__(39);
 Object.defineProperty(exports, "ToolbarCollection", { enumerable: true, get: function () { return collection_1.ToolbarCollection; } });
-tslib_1.__exportStar(__webpack_require__(208), exports);
-var uploader_1 = __webpack_require__(209);
+tslib_1.__exportStar(__webpack_require__(209), exports);
+var uploader_1 = __webpack_require__(210);
 Object.defineProperty(exports, "Uploader", { enumerable: true, get: function () { return uploader_1.Uploader; } });
-var plugin_system_1 = __webpack_require__(43);
+var plugin_system_1 = __webpack_require__(44);
 Object.defineProperty(exports, "PluginSystem", { enumerable: true, get: function () { return plugin_system_1.PluginSystem; } });
 
 
@@ -1696,7 +1696,7 @@ Object.defineProperty(exports, "PluginSystem", { enumerable: true, get: function
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.eventEmitter = exports.getContainer = exports.lang = exports.modules = exports.pluginSystem = exports.uniqueUid = exports.instances = void 0;
-var plugin_system_1 = __webpack_require__(43);
+var plugin_system_1 = __webpack_require__(44);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
 var events_1 = __webpack_require__(22);
@@ -1757,12 +1757,11 @@ exports.eventEmitter = new events_1.EventsNative();
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(85), exports);
-tslib_1.__exportStar(__webpack_require__(86), exports);
-tslib_1.__exportStar(__webpack_require__(87), exports);
-tslib_1.__exportStar(__webpack_require__(88), exports);
-tslib_1.__exportStar(__webpack_require__(89), exports);
-tslib_1.__exportStar(__webpack_require__(90), exports);
+tslib_1.__exportStar(__webpack_require__(82), exports);
+tslib_1.__exportStar(__webpack_require__(83), exports);
+tslib_1.__exportStar(__webpack_require__(51), exports);
+tslib_1.__exportStar(__webpack_require__(114), exports);
+tslib_1.__exportStar(__webpack_require__(115), exports);
 
 
 /***/ }),
@@ -1778,12 +1777,12 @@ tslib_1.__exportStar(__webpack_require__(90), exports);
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(45), exports);
-tslib_1.__exportStar(__webpack_require__(94), exports);
-tslib_1.__exportStar(__webpack_require__(95), exports);
-tslib_1.__exportStar(__webpack_require__(96), exports);
-tslib_1.__exportStar(__webpack_require__(97), exports);
-tslib_1.__exportStar(__webpack_require__(98), exports);
+tslib_1.__exportStar(__webpack_require__(87), exports);
+tslib_1.__exportStar(__webpack_require__(88), exports);
+tslib_1.__exportStar(__webpack_require__(89), exports);
+tslib_1.__exportStar(__webpack_require__(90), exports);
+tslib_1.__exportStar(__webpack_require__(91), exports);
+tslib_1.__exportStar(__webpack_require__(92), exports);
 
 
 /***/ }),
@@ -1799,11 +1798,12 @@ tslib_1.__exportStar(__webpack_require__(98), exports);
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(80), exports);
-tslib_1.__exportStar(__webpack_require__(81), exports);
-tslib_1.__exportStar(__webpack_require__(112), exports);
-tslib_1.__exportStar(__webpack_require__(113), exports);
-tslib_1.__exportStar(__webpack_require__(114), exports);
+tslib_1.__exportStar(__webpack_require__(46), exports);
+tslib_1.__exportStar(__webpack_require__(96), exports);
+tslib_1.__exportStar(__webpack_require__(97), exports);
+tslib_1.__exportStar(__webpack_require__(98), exports);
+tslib_1.__exportStar(__webpack_require__(99), exports);
+tslib_1.__exportStar(__webpack_require__(100), exports);
 
 
 /***/ }),
@@ -1819,7 +1819,7 @@ tslib_1.__exportStar(__webpack_require__(114), exports);
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(154), exports);
+tslib_1.__exportStar(__webpack_require__(155), exports);
 
 
 /***/ }),
@@ -1835,13 +1835,13 @@ tslib_1.__exportStar(__webpack_require__(154), exports);
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Confirm = exports.Prompt = exports.Alert = exports.Dialog = void 0;
-var dialog_1 = __webpack_require__(25);
+var dialog_1 = __webpack_require__(26);
 Object.defineProperty(exports, "Dialog", { enumerable: true, get: function () { return dialog_1.Dialog; } });
-var alert_1 = __webpack_require__(183);
+var alert_1 = __webpack_require__(184);
 Object.defineProperty(exports, "Alert", { enumerable: true, get: function () { return alert_1.Alert; } });
-var prompt_1 = __webpack_require__(184);
+var prompt_1 = __webpack_require__(185);
 Object.defineProperty(exports, "Prompt", { enumerable: true, get: function () { return prompt_1.Prompt; } });
-var confirm_1 = __webpack_require__(185);
+var confirm_1 = __webpack_require__(186);
 Object.defineProperty(exports, "Confirm", { enumerable: true, get: function () { return confirm_1.Confirm; } });
 
 
@@ -1858,9 +1858,9 @@ Object.defineProperty(exports, "Confirm", { enumerable: true, get: function () {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(152), exports);
-tslib_1.__exportStar(__webpack_require__(173), exports);
-tslib_1.__exportStar(__webpack_require__(175), exports);
+tslib_1.__exportStar(__webpack_require__(153), exports);
+tslib_1.__exportStar(__webpack_require__(174), exports);
+tslib_1.__exportStar(__webpack_require__(176), exports);
 
 
 /***/ }),
@@ -1877,10 +1877,10 @@ tslib_1.__exportStar(__webpack_require__(175), exports);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.makeButton = exports.makeCollection = void 0;
 var helpers_1 = __webpack_require__(1);
-var collection_1 = __webpack_require__(38);
-var editor_collection_1 = __webpack_require__(61);
-var button_1 = __webpack_require__(62);
-var content_1 = __webpack_require__(63);
+var collection_1 = __webpack_require__(39);
+var editor_collection_1 = __webpack_require__(63);
+var button_1 = __webpack_require__(64);
+var content_1 = __webpack_require__(65);
 function makeCollection(jodit, parentElement) {
     var collection = helpers_1.isJoditObject(jodit)
         ? new editor_collection_1.ToolbarEditorCollection(jodit)
@@ -1944,7 +1944,8 @@ exports.UIElement = void 0;
 var tslib_1 = __webpack_require__(0);
 var component_1 = __webpack_require__(9);
 var dom_1 = __webpack_require__(2);
-var utils_1 = __webpack_require__(14);
+var utils_1 = __webpack_require__(12);
+var array_1 = __webpack_require__(23);
 var UIElement = (function (_super) {
     tslib_1.__extends(UIElement, _super);
     function UIElement(jodit, options) {
@@ -2010,7 +2011,7 @@ var UIElement = (function (_super) {
             return this;
         }
         var mod = this.componentName + "_" + name, cl = container.classList;
-        Array.from(cl).forEach(function (className) {
+        array_1.toArray(cl).forEach(function (className) {
             if (className.indexOf(mod) === 0) {
                 cl.remove(className);
             }
@@ -2080,9 +2081,9 @@ exports.ICON_LOADER = '<i class="jodit-icon_loader"></i>';
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(91), exports);
-tslib_1.__exportStar(__webpack_require__(92), exports);
-tslib_1.__exportStar(__webpack_require__(44), exports);
+tslib_1.__exportStar(__webpack_require__(93), exports);
+tslib_1.__exportStar(__webpack_require__(94), exports);
+tslib_1.__exportStar(__webpack_require__(45), exports);
 
 
 /***/ }),
@@ -2097,8 +2098,13 @@ tslib_1.__exportStar(__webpack_require__(44), exports);
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(156), exports);
+exports.toArray = exports.splitArray = exports.asArray = void 0;
+var as_array_1 = __webpack_require__(116);
+Object.defineProperty(exports, "asArray", { enumerable: true, get: function () { return as_array_1.asArray; } });
+var split_array_1 = __webpack_require__(117);
+Object.defineProperty(exports, "splitArray", { enumerable: true, get: function () { return split_array_1.splitArray; } });
+var to_array_1 = __webpack_require__(118);
+Object.defineProperty(exports, "toArray", { enumerable: true, get: function () { return to_array_1.toArray; } });
 
 
 /***/ }),
@@ -2113,13 +2119,29 @@ tslib_1.__exportStar(__webpack_require__(156), exports);
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(0);
+tslib_1.__exportStar(__webpack_require__(157), exports);
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.UIInput = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(164);
+__webpack_require__(165);
 var element_1 = __webpack_require__(20);
 var helpers_1 = __webpack_require__(1);
 var dom_1 = __webpack_require__(2);
-var validators = __webpack_require__(165);
+var validators = __webpack_require__(166);
 var UIInput = (function (_super) {
     tslib_1.__extends(UIInput, _super);
     function UIInput(jodit, options) {
@@ -2180,6 +2202,7 @@ var UIInput = (function (_super) {
         }
         container.appendChild(this.nativeInput);
         helpers_1.attr(this.nativeInput, 'name', options.name);
+        helpers_1.attr(this.nativeInput, 'dir', this.j.o.direction || 'auto');
         helpers_1.attr(this.nativeInput, 'type', options.type);
         helpers_1.attr(this.nativeInput, 'data-ref', options.ref || options.name);
         helpers_1.attr(this.nativeInput, 'ref', options.ref || options.name);
@@ -2194,7 +2217,7 @@ exports.UIInput = UIInput;
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2207,12 +2230,12 @@ exports.UIInput = UIInput;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Dialog = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(177);
+__webpack_require__(178);
 var autobind_decorator_1 = __webpack_require__(8);
 var config_1 = __webpack_require__(4);
 var constants_1 = __webpack_require__(3);
 var helpers_1 = __webpack_require__(1);
-var view_with_toolbar_1 = __webpack_require__(26);
+var view_with_toolbar_1 = __webpack_require__(27);
 var dom_1 = __webpack_require__(2);
 var component_1 = __webpack_require__(9);
 var global_1 = __webpack_require__(11);
@@ -2332,7 +2355,7 @@ var Dialog = (function (_super) {
                 root.appendChild(element);
             }
         });
-        Array.from(root.childNodes).forEach(function (elm) {
+        helpers_1.toArray(root.childNodes).forEach(function (elm) {
             if (elements_list.indexOf(elm) === -1) {
                 root.removeChild(elm);
             }
@@ -2603,7 +2626,7 @@ exports.Dialog = Dialog;
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2616,8 +2639,8 @@ exports.Dialog = Dialog;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ViewWithToolbar = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(178);
-var view_1 = __webpack_require__(58);
+__webpack_require__(179);
+var view_1 = __webpack_require__(60);
 var helpers_1 = __webpack_require__(1);
 var dom_1 = __webpack_require__(2);
 var factory_1 = __webpack_require__(18);
@@ -2674,7 +2697,7 @@ exports.ViewWithToolbar = ViewWithToolbar;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2747,7 +2770,7 @@ exports.getAllTypes = getAllTypes;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2759,7 +2782,7 @@ exports.getAllTypes = getAllTypes;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JoditArray = void 0;
-var extend_1 = __webpack_require__(29);
+var extend_1 = __webpack_require__(30);
 var JoditArray = (function () {
     function JoditArray(data) {
         var _this = this;
@@ -2805,7 +2828,7 @@ exports.JoditArray = JoditArray;
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2817,8 +2840,8 @@ exports.JoditArray = JoditArray;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.extend = void 0;
-var jodit_object_1 = __webpack_require__(41);
-var jodit_array_1 = __webpack_require__(28);
+var jodit_object_1 = __webpack_require__(42);
+var jodit_array_1 = __webpack_require__(29);
 var checker_1 = __webpack_require__(5);
 function extend() {
     var args = [];
@@ -2876,7 +2899,7 @@ exports.extend = extend;
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2895,7 +2918,7 @@ exports.isFunction = isFunction;
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2947,7 +2970,7 @@ exports.error = error;
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2959,11 +2982,11 @@ exports.error = error;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(120), exports);
+tslib_1.__exportStar(__webpack_require__(121), exports);
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2977,10 +3000,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolveElement = exports.cssPath = exports.refs = exports.getXPathByElement = exports.$$ = void 0;
 var constants_1 = __webpack_require__(3);
 var checker_1 = __webpack_require__(5);
-var utils_1 = __webpack_require__(14);
-var type_1 = __webpack_require__(31);
+var utils_1 = __webpack_require__(12);
+var type_1 = __webpack_require__(32);
 var dom_1 = __webpack_require__(2);
-var string_1 = __webpack_require__(12);
+var string_1 = __webpack_require__(13);
+var array_1 = __webpack_require__(23);
 var temp = 1;
 var $$temp = function () {
     temp++;
@@ -3021,7 +3045,7 @@ exports.getXPathByElement = function (element, root) {
         '/' +
         element.nodeName.toLowerCase() +
         (sames.length > 1
-            ? '[' + (Array.from(sames).indexOf(element) + 1) + ']'
+            ? '[' + (array_1.toArray(sames).indexOf(element) + 1) + ']'
             : ''));
 };
 exports.refs = function (root) {
@@ -3084,30 +3108,6 @@ exports.resolveElement = resolveElement;
 
 
 /***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(127), exports);
-tslib_1.__exportStar(__webpack_require__(128), exports);
-tslib_1.__exportStar(__webpack_require__(129), exports);
-tslib_1.__exportStar(__webpack_require__(130), exports);
-tslib_1.__exportStar(__webpack_require__(131), exports);
-tslib_1.__exportStar(__webpack_require__(132), exports);
-tslib_1.__exportStar(__webpack_require__(133), exports);
-tslib_1.__exportStar(__webpack_require__(134), exports);
-tslib_1.__exportStar(__webpack_require__(135), exports);
-
-
-/***/ }),
 /* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3120,14 +3120,38 @@ tslib_1.__exportStar(__webpack_require__(135), exports);
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(163), exports);
-tslib_1.__exportStar(__webpack_require__(24), exports);
-tslib_1.__exportStar(__webpack_require__(166), exports);
-tslib_1.__exportStar(__webpack_require__(171), exports);
+tslib_1.__exportStar(__webpack_require__(128), exports);
+tslib_1.__exportStar(__webpack_require__(129), exports);
+tslib_1.__exportStar(__webpack_require__(130), exports);
+tslib_1.__exportStar(__webpack_require__(131), exports);
+tslib_1.__exportStar(__webpack_require__(132), exports);
+tslib_1.__exportStar(__webpack_require__(133), exports);
+tslib_1.__exportStar(__webpack_require__(134), exports);
+tslib_1.__exportStar(__webpack_require__(135), exports);
+tslib_1.__exportStar(__webpack_require__(136), exports);
 
 
 /***/ }),
 /* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(0);
+tslib_1.__exportStar(__webpack_require__(164), exports);
+tslib_1.__exportStar(__webpack_require__(25), exports);
+tslib_1.__exportStar(__webpack_require__(167), exports);
+tslib_1.__exportStar(__webpack_require__(172), exports);
+
+
+/***/ }),
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3307,7 +3331,7 @@ exports.Ajax = Ajax;
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3319,13 +3343,13 @@ exports.Ajax = Ajax;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(59), exports);
-tslib_1.__exportStar(__webpack_require__(60), exports);
-tslib_1.__exportStar(__webpack_require__(179), exports);
+tslib_1.__exportStar(__webpack_require__(61), exports);
+tslib_1.__exportStar(__webpack_require__(62), exports);
+tslib_1.__exportStar(__webpack_require__(180), exports);
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3339,7 +3363,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToolbarCollection = void 0;
 var tslib_1 = __webpack_require__(0);
 var autobind_decorator_1 = __webpack_require__(8);
-__webpack_require__(180);
+__webpack_require__(181);
 var helpers_1 = __webpack_require__(1);
 var ui_1 = __webpack_require__(7);
 var factory_1 = __webpack_require__(18);
@@ -3428,7 +3452,7 @@ exports.ToolbarCollection = ToolbarCollection;
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3442,7 +3466,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DEFAULT_SOURCE_NAME = void 0;
 var tslib_1 = __webpack_require__(0);
 var helpers_1 = __webpack_require__(1);
-var ajax_1 = __webpack_require__(36);
+var ajax_1 = __webpack_require__(37);
 exports.DEFAULT_SOURCE_NAME = 'default';
 var possibleRules = [
     'allowFiles',
@@ -3680,7 +3704,7 @@ exports.default = DataProvider;
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3694,7 +3718,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.clipboard = exports.pluginKey = void 0;
 var constants_1 = __webpack_require__(3);
 var helpers_1 = __webpack_require__(1);
-var helpers_2 = __webpack_require__(27);
+var helpers_2 = __webpack_require__(28);
 exports.pluginKey = 'clipboard';
 var clipboard = (function () {
     function clipboard() {
@@ -3736,7 +3760,7 @@ exports.clipboard = clipboard;
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3748,7 +3772,7 @@ exports.clipboard = clipboard;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JoditObject = void 0;
-var extend_1 = __webpack_require__(29);
+var extend_1 = __webpack_require__(30);
 var JoditObject = (function () {
     function JoditObject(data) {
         extend_1.extend(true, this, data);
@@ -3759,7 +3783,7 @@ exports.JoditObject = JoditObject;
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3788,7 +3812,7 @@ exports.defaultLanguage = function (language, defaultLanguage) {
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3943,7 +3967,7 @@ exports.PluginSystem = PluginSystem;
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4010,7 +4034,7 @@ exports.EventHandlersStore = EventHandlersStore;
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4102,7 +4126,7 @@ exports.default = watch;
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4124,7 +4148,7 @@ var STATUSES;
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4138,7 +4162,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Component = void 0;
 var helpers_1 = __webpack_require__(1);
 var global_1 = __webpack_require__(11);
-var statuses_1 = __webpack_require__(46);
+var statuses_1 = __webpack_require__(47);
 var Component = (function () {
     function Component() {
         this.ownerWindow = window;
@@ -4239,7 +4263,7 @@ exports.Component = Component;
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4265,7 +4289,7 @@ exports.isNumeric = isNumeric;
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4284,7 +4308,42 @@ exports.isWindow = isWindow;
 
 
 /***/ }),
-/* 50 */
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.get = void 0;
+var checker_1 = __webpack_require__(5);
+function get(chain, obj) {
+    if (!checker_1.isString(chain) || !chain.length) {
+        return null;
+    }
+    var parts = chain.split('.');
+    var result = obj;
+    for (var _i = 0, parts_1 = parts; _i < parts_1.length; _i++) {
+        var part = parts_1[_i];
+        if (checker_1.isVoid(result[part])) {
+            return null;
+        }
+        result = result[part];
+    }
+    if (checker_1.isVoid(result)) {
+        return null;
+    }
+    return result;
+}
+exports.get = get;
+
+
+/***/ }),
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4305,7 +4364,7 @@ exports.completeUrl = function (url) {
 
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4328,7 +4387,7 @@ exports.parseQuery = function (queryString) {
 
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4340,10 +4399,10 @@ exports.parseQuery = function (queryString) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.normalizeCursorPosition = exports.getNotSpaceSibling = exports.getSibling = exports.getNeighbor = void 0;
-var utils_1 = __webpack_require__(14);
+var utils_1 = __webpack_require__(12);
 var dom_1 = __webpack_require__(2);
 var constants_1 = __webpack_require__(3);
-var string_1 = __webpack_require__(12);
+var string_1 = __webpack_require__(13);
 function getNeighbor(node, backspace, root) {
     return utils_1.call(backspace ? dom_1.Dom.prev : dom_1.Dom.next, node, function (n) { return Boolean(n && (!dom_1.Dom.isText(n) || string_1.trim((n === null || n === void 0 ? void 0 : n.nodeValue) || '').length)); }, root);
 }
@@ -4379,7 +4438,7 @@ exports.normalizeCursorPosition = normalizeCursorPosition;
 
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4445,7 +4504,7 @@ exports.Icon = Icon;
 
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4470,7 +4529,7 @@ exports.UISeparator = UISeparator;
 
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4483,9 +4542,9 @@ exports.UISeparator = UISeparator;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UIGroup = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(158);
+__webpack_require__(159);
 var element_1 = __webpack_require__(20);
-var decorators_1 = __webpack_require__(13);
+var decorators_1 = __webpack_require__(14);
 var helpers_1 = __webpack_require__(1);
 var UIGroup = (function (_super) {
     tslib_1.__extends(UIGroup, _super);
@@ -4544,7 +4603,7 @@ exports.UIGroup = UIGroup;
 
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4709,7 +4768,7 @@ exports.Async = Async;
 
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4722,8 +4781,8 @@ exports.Async = Async;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ContextMenu = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(176);
-var popup_1 = __webpack_require__(23);
+__webpack_require__(177);
+var popup_1 = __webpack_require__(24);
 var button_1 = __webpack_require__(15);
 var checker_1 = __webpack_require__(5);
 var ContextMenu = (function (_super) {
@@ -4761,7 +4820,7 @@ exports.ContextMenu = ContextMenu;
 
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4774,13 +4833,13 @@ exports.ContextMenu = ContextMenu;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.View = void 0;
 var tslib_1 = __webpack_require__(0);
-var storage_1 = __webpack_require__(37);
+var storage_1 = __webpack_require__(38);
 var helpers_1 = __webpack_require__(1);
 var constants_1 = __webpack_require__(3);
 var modules_1 = __webpack_require__(10);
-var async_1 = __webpack_require__(56);
+var async_1 = __webpack_require__(58);
 var global_1 = __webpack_require__(11);
-var decorators_1 = __webpack_require__(13);
+var decorators_1 = __webpack_require__(14);
 var View = (function (_super) {
     tslib_1.__extends(View, _super);
     function View(options, isJodit) {
@@ -4789,7 +4848,7 @@ var View = (function (_super) {
         _this.isJodit = isJodit;
         _this.isView = true;
         _this.components = new Set();
-        _this.version = "3.4.24";
+        _this.version = "3.4.25";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.OPTIONS = View.defaultOptions;
@@ -4983,7 +5042,7 @@ View.defaultOptions = {
 
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5020,7 +5079,7 @@ exports.MemoryStorageProvider = MemoryStorageProvider;
 
 
 /***/ }),
-/* 60 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5094,7 +5153,7 @@ exports.LocalStorageProvider = LocalStorageProvider;
 
 
 /***/ }),
-/* 61 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5107,7 +5166,7 @@ exports.LocalStorageProvider = LocalStorageProvider;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToolbarEditorCollection = void 0;
 var tslib_1 = __webpack_require__(0);
-var collection_1 = __webpack_require__(38);
+var collection_1 = __webpack_require__(39);
 var consts = __webpack_require__(3);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
@@ -5190,7 +5249,7 @@ exports.ToolbarEditorCollection = ToolbarEditorCollection;
 
 
 /***/ }),
-/* 62 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5203,11 +5262,11 @@ exports.ToolbarEditorCollection = ToolbarEditorCollection;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToolbarButton = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(181);
+__webpack_require__(182);
 var button_1 = __webpack_require__(15);
-var decorators_1 = __webpack_require__(13);
+var decorators_1 = __webpack_require__(14);
 var dom_1 = __webpack_require__(2);
-var popup_1 = __webpack_require__(23);
+var popup_1 = __webpack_require__(24);
 var factory_1 = __webpack_require__(18);
 var helpers_1 = __webpack_require__(1);
 var __1 = __webpack_require__(10);
@@ -5315,10 +5374,11 @@ var ToolbarButton = (function (_super) {
                 if (!_this.state.tooltip) {
                     return;
                 }
-                !_this.state.disabled && _this.j.e.fire('delayShowTooltip', function () { return ({
-                    x: e.clientX + 10,
-                    y: e.clientY + 10
-                }); }, _this.state.tooltip);
+                !_this.state.disabled &&
+                    _this.j.e.fire('delayShowTooltip', function () { return ({
+                        x: e.clientX + 10,
+                        y: e.clientY + 10
+                    }); }, _this.state.tooltip);
             })
                 .on(this.container, 'mouseleave', function () {
                 _this.j.e.fire('hideTooltip');
@@ -5329,7 +5389,10 @@ var ToolbarButton = (function (_super) {
         var _a = this, control = _a.control, state = _a.state;
         this.updateSize();
         state.name = control.name;
-        if (this.j.o.textIcons || control.template) {
+        var textIcons = this.j.o.textIcons;
+        if (textIcons === true ||
+            (helpers_1.isFunction(textIcons) && textIcons(control.name)) ||
+            control.template) {
             state.icon = button_1.UIButtonState().icon;
             state.text = control.text || control.name;
         }
@@ -5461,7 +5524,7 @@ exports.ToolbarButton = ToolbarButton;
 
 
 /***/ }),
-/* 63 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5474,11 +5537,11 @@ exports.ToolbarButton = ToolbarButton;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToolbarContent = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(182);
+__webpack_require__(183);
 var button_1 = __webpack_require__(15);
 var checker_1 = __webpack_require__(5);
 var dom_1 = __webpack_require__(2);
-var utils_1 = __webpack_require__(14);
+var utils_1 = __webpack_require__(12);
 var ToolbarContent = (function (_super) {
     tslib_1.__extends(ToolbarContent, _super);
     function ToolbarContent(jodit, control, target) {
@@ -5507,7 +5570,7 @@ exports.ToolbarContent = ToolbarContent;
 
 
 /***/ }),
-/* 64 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5519,8 +5582,8 @@ exports.ToolbarContent = ToolbarContent;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.makeContextMenu = exports.makeDataProvider = void 0;
-var data_provider_1 = __webpack_require__(39);
-var context_menu_1 = __webpack_require__(57);
+var data_provider_1 = __webpack_require__(40);
+var context_menu_1 = __webpack_require__(59);
 function makeDataProvider(parent, options) {
     return new data_provider_1.default(parent, options);
 }
@@ -5532,7 +5595,7 @@ exports.makeContextMenu = makeContextMenu;
 
 
 /***/ }),
-/* 65 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5547,7 +5610,7 @@ exports.nativeListeners = exports.getItem = void 0;
 var tslib_1 = __webpack_require__(0);
 var helpers_1 = __webpack_require__(1);
 var consts_1 = __webpack_require__(21);
-var context_menu_1 = __webpack_require__(192);
+var context_menu_1 = __webpack_require__(193);
 var dom_1 = __webpack_require__(2);
 exports.getItem = function (node, root, tag) {
     if (tag === void 0) { tag = 'a'; }
@@ -5644,7 +5707,7 @@ exports.nativeListeners = nativeListeners;
 
 
 /***/ }),
-/* 66 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5783,7 +5846,7 @@ exports.Snapshot = Snapshot;
 
 
 /***/ }),
-/* 67 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5796,7 +5859,7 @@ exports.Snapshot = Snapshot;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Style = void 0;
 var constants_1 = __webpack_require__(3);
-var apply_style_1 = __webpack_require__(203);
+var apply_style_1 = __webpack_require__(204);
 var Style = (function () {
     function Style(options) {
         this.options = options;
@@ -5842,7 +5905,7 @@ exports.Style = Style;
 
 
 /***/ }),
-/* 68 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5980,7 +6043,7 @@ exports.justify = justify;
 
 
 /***/ }),
-/* 69 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6028,14 +6091,14 @@ exports.SourceEditor = SourceEditor;
 
 
 /***/ }),
-/* 70 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(71);
+module.exports = __webpack_require__(73);
 
 
 /***/ }),
-/* 71 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6047,19 +6110,19 @@ module.exports = __webpack_require__(71);
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Jodit = void 0;
-__webpack_require__(72);
+__webpack_require__(74);
 if ( true && typeof window !== 'undefined') {
-    __webpack_require__(73);
+    __webpack_require__(75);
 }
-var jodit_1 = __webpack_require__(79);
-var langs_1 = __webpack_require__(211);
-var decorators = __webpack_require__(13);
+var jodit_1 = __webpack_require__(81);
+var langs_1 = __webpack_require__(212);
+var decorators = __webpack_require__(14);
 var consts = __webpack_require__(3);
 var Modules = __webpack_require__(10);
-var Plugins = __webpack_require__(231);
-var Icons = __webpack_require__(322);
+var Plugins = __webpack_require__(232);
+var Icons = __webpack_require__(323);
 var config_1 = __webpack_require__(4);
-var keep_names_1 = __webpack_require__(403);
+var keep_names_1 = __webpack_require__(404);
 Object.keys(consts).forEach(function (key) {
     jodit_1.Jodit[key] = consts[key];
 });
@@ -6099,13 +6162,13 @@ exports.Jodit = jodit_1.Jodit;
 
 
 /***/ }),
-/* 72 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 73 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6116,11 +6179,16 @@ exports.Jodit = jodit_1.Jodit;
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-__webpack_require__(74);
-__webpack_require__(75);
+__webpack_require__(76);
+__webpack_require__(77);
 if (!Array.from) {
     Array.from = function (object) {
         'use strict';
+        if (object instanceof Set) {
+            var res_1 = [];
+            object.forEach(function (a) { return res_1.push(a); });
+            return res_1;
+        }
         return [].slice.call(object);
     };
 }
@@ -6161,7 +6229,7 @@ if (!Array.prototype.find) {
 
 
 /***/ }),
-/* 74 */
+/* 76 */
 /***/ (function(module, exports) {
 
 /*
@@ -6407,18 +6475,18 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 75 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 // This file can be required in Browserify and Node.js for automatic polyfill
 // To use it:  require('es6-promise/auto');
 
-module.exports = __webpack_require__(76).polyfill();
+module.exports = __webpack_require__(78).polyfill();
 
 
 /***/ }),
-/* 76 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -7595,10 +7663,10 @@ return Promise$1;
 
 //# sourceMappingURL=es6-promise.map
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(77), __webpack_require__(78)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(79), __webpack_require__(80)))
 
 /***/ }),
-/* 77 */
+/* 79 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -7788,7 +7856,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 78 */
+/* 80 */
 /***/ (function(module, exports) {
 
 var g;
@@ -7814,7 +7882,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 79 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7831,10 +7899,10 @@ var config_1 = __webpack_require__(4);
 var consts = __webpack_require__(3);
 var modules_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(1);
-var storage_1 = __webpack_require__(37);
-var view_with_toolbar_1 = __webpack_require__(26);
+var storage_1 = __webpack_require__(38);
+var view_with_toolbar_1 = __webpack_require__(27);
 var global_1 = __webpack_require__(11);
-var decorators_1 = __webpack_require__(13);
+var decorators_1 = __webpack_require__(14);
 var autobind_decorator_1 = __webpack_require__(8);
 var Jodit = (function (_super) {
     tslib_1.__extends(Jodit, _super);
@@ -8403,7 +8471,7 @@ var Jodit = (function (_super) {
         var element = helpers_1.resolveElement(source, this.o.shadowRoot || this.od);
         this.attachEvents(options);
         if (element.attributes) {
-            Array.from(element.attributes).forEach(function (attr) {
+            helpers_1.toArray(element.attributes).forEach(function (attr) {
                 var name = attr.name;
                 var value = attr.value;
                 if (Jodit.defaultOptions[name] !== undefined &&
@@ -8708,7 +8776,7 @@ exports.Jodit = Jodit;
 
 
 /***/ }),
-/* 80 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8739,7 +8807,7 @@ exports.markDeprecated = markDeprecated;
 
 
 /***/ }),
-/* 81 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8750,8 +8818,9 @@ exports.markDeprecated = markDeprecated;
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.callPromise = exports.markOwner = exports.attr = exports.call = void 0;
+exports.reset = exports.callPromise = exports.markOwner = exports.attr = exports.call = void 0;
 var checker_1 = __webpack_require__(5);
+var get_1 = __webpack_require__(51);
 function call(func) {
     var args = [];
     for (var _i = 1; _i < arguments.length; _i++) {
@@ -8800,10 +8869,32 @@ function callPromise(condition, callback) {
     }
 }
 exports.callPromise = callPromise;
+var map = {};
+exports.reset = function (key) {
+    var _a, _b;
+    if (!(key in map)) {
+        var iframe = document.createElement('iframe');
+        try {
+            iframe.src = 'about:blank';
+            document.body.appendChild(iframe);
+            if (!iframe.contentWindow) {
+                return null;
+            }
+            var func = get_1.get(key, iframe.contentWindow), bind = get_1.get(key.split('.').slice(0, -1).join('.'), iframe.contentWindow);
+            if (checker_1.isFunction(func)) {
+                map[key] = func.bind(bind);
+            }
+        }
+        finally {
+            (_a = iframe.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(iframe);
+        }
+    }
+    return (_b = map[key]) !== null && _b !== void 0 ? _b : null;
+};
 
 
 /***/ }),
-/* 82 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8832,7 +8923,7 @@ exports.hasBrowserColorPicker = hasBrowserColorPicker;
 
 
 /***/ }),
-/* 83 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8844,7 +8935,7 @@ exports.hasBrowserColorPicker = hasBrowserColorPicker;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isArray = void 0;
-var jodit_array_1 = __webpack_require__(28);
+var jodit_array_1 = __webpack_require__(29);
 function isArray(elm) {
     return Array.isArray(elm) || elm instanceof jodit_array_1.JoditArray;
 }
@@ -8852,7 +8943,7 @@ exports.isArray = isArray;
 
 
 /***/ }),
-/* 84 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8864,7 +8955,7 @@ exports.isArray = isArray;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isFastEqual = exports.isEqual = void 0;
-var string_1 = __webpack_require__(12);
+var string_1 = __webpack_require__(13);
 function isEqual(a, b) {
     return a === b || string_1.stringify(a) === string_1.stringify(b);
 }
@@ -8876,7 +8967,7 @@ exports.isFastEqual = isFastEqual;
 
 
 /***/ }),
-/* 85 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8896,7 +8987,7 @@ exports.camelCase = function (key) {
 
 
 /***/ }),
-/* 86 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8933,7 +9024,7 @@ exports.stringify = stringify;
 
 
 /***/ }),
-/* 87 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8955,7 +9046,7 @@ exports.kebabCase = function (key) {
 
 
 /***/ }),
-/* 88 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8983,7 +9074,7 @@ exports.trimInv = trimInv;
 
 
 /***/ }),
-/* 89 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9004,7 +9095,7 @@ exports.ucfirst = function (value) {
 
 
 /***/ }),
-/* 90 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9017,7 +9108,7 @@ exports.ucfirst = function (value) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.i18n = exports.sprintf = void 0;
 var config_1 = __webpack_require__(4);
-var default_language_1 = __webpack_require__(42);
+var default_language_1 = __webpack_require__(43);
 var index_1 = __webpack_require__(1);
 var global_1 = __webpack_require__(11);
 exports.sprintf = function (str, args) {
@@ -9093,7 +9184,7 @@ exports.i18n = function (key, params, options) {
 
 
 /***/ }),
-/* 91 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9106,7 +9197,7 @@ exports.i18n = function (key, params, options) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventsNative = void 0;
 var tslib_1 = __webpack_require__(0);
-var store_1 = __webpack_require__(44);
+var store_1 = __webpack_require__(45);
 var helpers_1 = __webpack_require__(1);
 var EventsNative = (function () {
     function EventsNative(doc) {
@@ -9470,7 +9561,7 @@ exports.EventsNative = EventsNative;
 
 
 /***/ }),
-/* 92 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9484,7 +9575,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ObserveObject = void 0;
 var tslib_1 = __webpack_require__(0);
 var helpers_1 = __webpack_require__(1);
-var decorators_1 = __webpack_require__(13);
+var decorators_1 = __webpack_require__(14);
 var ObserveObject = (function () {
     function ObserveObject(data, prefix, onEvents) {
         var _this = this;
@@ -9592,7 +9683,7 @@ exports.ObserveObject = ObserveObject;
 
 
 /***/ }),
-/* 93 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9605,7 +9696,7 @@ exports.ObserveObject = ObserveObject;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ViewComponent = void 0;
 var tslib_1 = __webpack_require__(0);
-var component_1 = __webpack_require__(47);
+var component_1 = __webpack_require__(48);
 var ViewComponent = (function (_super) {
     tslib_1.__extends(ViewComponent, _super);
     function ViewComponent(jodit) {
@@ -9642,7 +9733,7 @@ exports.ViewComponent = ViewComponent;
 
 
 /***/ }),
-/* 94 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9675,7 +9766,7 @@ exports.debounce = debounce;
 
 
 /***/ }),
-/* 95 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9708,7 +9799,7 @@ exports.cache = cache;
 
 
 /***/ }),
-/* 96 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9753,7 +9844,7 @@ exports.wait = wait;
 
 
 /***/ }),
-/* 97 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9780,7 +9871,7 @@ exports.hook = hook;
 
 
 /***/ }),
-/* 98 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9810,7 +9901,7 @@ exports.nonenumerable = function (target, propertyKey) {
 
 
 /***/ }),
-/* 99 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9829,7 +9920,7 @@ exports.isBoolean = isBoolean;
 
 
 /***/ }),
-/* 100 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9848,7 +9939,7 @@ exports.isHTML = function (str) {
 
 
 /***/ }),
-/* 101 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9869,7 +9960,7 @@ exports.isHtmlFromWord = isHtmlFromWord;
 
 
 /***/ }),
-/* 102 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9881,7 +9972,7 @@ exports.isHtmlFromWord = isHtmlFromWord;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.hasContainer = exports.isDestructable = exports.isInitable = void 0;
-var is_function_1 = __webpack_require__(30);
+var is_function_1 = __webpack_require__(31);
 var dom_1 = __webpack_require__(2);
 function isInitable(value) {
     return value && is_function_1.isFunction(value.init);
@@ -9898,7 +9989,7 @@ exports.hasContainer = hasContainer;
 
 
 /***/ }),
-/* 103 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9910,7 +10001,7 @@ exports.hasContainer = hasContainer;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isInt = void 0;
-var is_numeric_1 = __webpack_require__(48);
+var is_numeric_1 = __webpack_require__(49);
 var is_string_1 = __webpack_require__(19);
 function isInt(value) {
     if (is_string_1.isString(value) && is_numeric_1.isNumeric(value)) {
@@ -9922,7 +10013,7 @@ exports.isInt = isInt;
 
 
 /***/ }),
-/* 104 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9934,7 +10025,7 @@ exports.isInt = isInt;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isViewObject = exports.isJoditObject = void 0;
-var is_function_1 = __webpack_require__(30);
+var is_function_1 = __webpack_require__(31);
 var global_1 = __webpack_require__(11);
 function isJoditObject(jodit) {
     return Boolean(jodit &&
@@ -9954,7 +10045,7 @@ exports.isViewObject = isViewObject;
 
 
 /***/ }),
-/* 105 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9973,7 +10064,7 @@ exports.isLicense = function (license) {
 
 
 /***/ }),
-/* 106 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9992,7 +10083,7 @@ exports.isNumber = isNumber;
 
 
 /***/ }),
-/* 107 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10004,8 +10095,8 @@ exports.isNumber = isNumber;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isPlainObject = void 0;
-var is_window_1 = __webpack_require__(49);
-var type_1 = __webpack_require__(31);
+var is_window_1 = __webpack_require__(50);
+var type_1 = __webpack_require__(32);
 function isPlainObject(obj) {
     if (!obj || typeof obj !== 'object' || obj.nodeType || is_window_1.isWindow(obj)) {
         return false;
@@ -10017,7 +10108,7 @@ exports.isPlainObject = isPlainObject;
 
 
 /***/ }),
-/* 108 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10042,7 +10133,7 @@ exports.isURL = isURL;
 
 
 /***/ }),
-/* 109 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10067,7 +10158,7 @@ exports.isValidName = isValidName;
 
 
 /***/ }),
-/* 110 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10086,7 +10177,7 @@ exports.isVoid = isVoid;
 
 
 /***/ }),
-/* 111 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10105,42 +10196,7 @@ exports.isPromise = isPromise;
 
 
 /***/ }),
-/* 112 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.get = void 0;
-var checker_1 = __webpack_require__(5);
-function get(chain, obj) {
-    if (!checker_1.isString(chain) || !chain.length) {
-        return null;
-    }
-    var parts = chain.split('.');
-    var result = obj;
-    for (var _i = 0, parts_1 = parts; _i < parts_1.length; _i++) {
-        var part = parts_1[_i];
-        if (checker_1.isVoid(result[part])) {
-            return null;
-        }
-        result = result[part];
-    }
-    if (checker_1.isVoid(result)) {
-        return null;
-    }
-    return result;
-}
-exports.get = get;
-
-
-/***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10167,7 +10223,7 @@ exports.getClassName = function (obj) {
 
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10195,25 +10251,6 @@ var LimitedStack = (function () {
     return LimitedStack;
 }());
 exports.LimitedStack = LimitedStack;
-
-
-/***/ }),
-/* 115 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.splitArray = exports.asArray = void 0;
-var as_array_1 = __webpack_require__(116);
-Object.defineProperty(exports, "asArray", { enumerable: true, get: function () { return as_array_1.asArray; } });
-var split_array_1 = __webpack_require__(117);
-Object.defineProperty(exports, "splitArray", { enumerable: true, get: function () { return split_array_1.splitArray; } });
 
 
 /***/ }),
@@ -10264,13 +10301,31 @@ exports.splitArray = splitArray;
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(119), exports);
+exports.toArray = void 0;
+var utils_1 = __webpack_require__(12);
+exports.toArray = (_a = utils_1.reset('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
 
 
 /***/ }),
 /* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(0);
+tslib_1.__exportStar(__webpack_require__(120), exports);
+
+
+/***/ }),
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10304,7 +10359,7 @@ exports.clearTimeout = clearTimeout;
 
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10341,7 +10396,7 @@ exports.colorToHex = function (color) {
 
 
 /***/ }),
-/* 121 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10353,15 +10408,15 @@ exports.colorToHex = function (color) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(122), exports);
 tslib_1.__exportStar(__webpack_require__(123), exports);
 tslib_1.__exportStar(__webpack_require__(124), exports);
 tslib_1.__exportStar(__webpack_require__(125), exports);
 tslib_1.__exportStar(__webpack_require__(126), exports);
+tslib_1.__exportStar(__webpack_require__(127), exports);
 
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10374,8 +10429,8 @@ tslib_1.__exportStar(__webpack_require__(126), exports);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.applyStyles = void 0;
 var dom_1 = __webpack_require__(2);
-var selector_1 = __webpack_require__(33);
-var string_1 = __webpack_require__(12);
+var selector_1 = __webpack_require__(34);
+var string_1 = __webpack_require__(13);
 function normalizeCSS(s) {
     return s
         .replace(/mso-[a-z-]+:[\s]*[^;]+;/gi, '')
@@ -10456,7 +10511,7 @@ exports.applyStyles = applyStyles;
 
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10469,7 +10524,8 @@ exports.applyStyles = applyStyles;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cleanFromWord = void 0;
 var dom_1 = __webpack_require__(2);
-var string_1 = __webpack_require__(12);
+var string_1 = __webpack_require__(13);
+var array_1 = __webpack_require__(23);
 function cleanFromWord(html) {
     if (html.indexOf('<html ') !== -1) {
         html = html.substring(html.indexOf('<html '), html.length);
@@ -10499,7 +10555,7 @@ function cleanFromWord(html) {
                                 dom_1.Dom.unwrap(node);
                                 break;
                             default:
-                                Array.from(node.attributes).forEach(function (attr) {
+                                array_1.toArray(node.attributes).forEach(function (attr) {
                                     if ([
                                         'src',
                                         'href',
@@ -10538,7 +10594,7 @@ exports.cleanFromWord = cleanFromWord;
 
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10559,7 +10615,7 @@ exports.htmlspecialchars = htmlspecialchars;
 
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10572,8 +10628,8 @@ exports.htmlspecialchars = htmlspecialchars;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.stripTags = void 0;
 var checker_1 = __webpack_require__(5);
-var selector_1 = __webpack_require__(33);
-var string_1 = __webpack_require__(12);
+var selector_1 = __webpack_require__(34);
+var string_1 = __webpack_require__(13);
 var dom_1 = __webpack_require__(2);
 function stripTags(html, doc) {
     if (doc === void 0) { doc = document; }
@@ -10603,7 +10659,7 @@ exports.stripTags = stripTags;
 
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10622,7 +10678,7 @@ exports.nl2br = nl2br;
 
 
 /***/ }),
-/* 127 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10634,7 +10690,7 @@ exports.nl2br = nl2br;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.normalizeKeyAliases = void 0;
-var string_1 = __webpack_require__(12);
+var string_1 = __webpack_require__(13);
 var constants_1 = __webpack_require__(3);
 function normalizeKeyAliases(keys) {
     var memory = {};
@@ -10651,7 +10707,7 @@ exports.normalizeKeyAliases = normalizeKeyAliases;
 
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10677,7 +10733,7 @@ exports.normalizeLicense = function (license, count) {
 
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10712,7 +10768,7 @@ exports.normalizeNode = function (node) {
 
 
 /***/ }),
-/* 130 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10724,7 +10780,7 @@ exports.normalizeNode = function (node) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.normalizePath = void 0;
-var string_1 = __webpack_require__(12);
+var string_1 = __webpack_require__(13);
 exports.normalizePath = function () {
     var path = [];
     for (var _i = 0; _i < arguments.length; _i++) {
@@ -10747,7 +10803,7 @@ exports.normalizePath = function () {
 
 
 /***/ }),
-/* 131 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10784,7 +10840,7 @@ exports.normalizeRelativePath = function (path) {
 
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10805,7 +10861,7 @@ exports.normalizeSize = function (value) {
 
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10831,7 +10887,7 @@ exports.normalizeUrl = function () {
 
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10844,8 +10900,8 @@ exports.normalizeUrl = function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.normalizeCssValue = void 0;
 var checker_1 = __webpack_require__(5);
-var string_1 = __webpack_require__(12);
-var color_1 = __webpack_require__(32);
+var string_1 = __webpack_require__(13);
+var color_1 = __webpack_require__(33);
 function normalizeCssValue(key, value) {
     switch (string_1.kebabCase(key)) {
         case 'font-weight':
@@ -10871,7 +10927,7 @@ exports.normalizeCssValue = normalizeCssValue;
 
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10883,8 +10939,8 @@ exports.normalizeCssValue = normalizeCssValue;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.normalizeColor = void 0;
-var color_1 = __webpack_require__(32);
-var string_1 = __webpack_require__(12);
+var color_1 = __webpack_require__(33);
+var string_1 = __webpack_require__(13);
 exports.normalizeColor = function (colorInput) {
     var newcolor = ['#'];
     var color = color_1.colorToHex(colorInput);
@@ -10908,7 +10964,7 @@ exports.normalizeColor = function (colorInput) {
 
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10920,14 +10976,14 @@ exports.normalizeColor = function (colorInput) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(137), exports);
 tslib_1.__exportStar(__webpack_require__(138), exports);
 tslib_1.__exportStar(__webpack_require__(139), exports);
 tslib_1.__exportStar(__webpack_require__(140), exports);
+tslib_1.__exportStar(__webpack_require__(141), exports);
 
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10946,7 +11002,7 @@ exports.getContentWidth = function (element, win) {
 
 
 /***/ }),
-/* 138 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10969,7 +11025,7 @@ exports.innerWidth = function (element, win) {
 
 
 /***/ }),
-/* 139 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11024,7 +11080,7 @@ exports.offset = function (elm, jodit, doc, recurse) {
 
 
 /***/ }),
-/* 140 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11057,7 +11113,7 @@ exports.position = position;
 
 
 /***/ }),
-/* 141 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11070,7 +11126,7 @@ exports.position = position;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loadNext = exports.appendStyleAsync = exports.appendScriptAsync = exports.appendScript = void 0;
 var tslib_1 = __webpack_require__(0);
-var complete_url_1 = __webpack_require__(50);
+var complete_url_1 = __webpack_require__(52);
 var checker_1 = __webpack_require__(5);
 var alreadyLoadedList = new Map();
 var cacheLoaders = function (loader) {
@@ -11137,7 +11193,7 @@ exports.loadNext = function (jodit, urls, i) {
 
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11175,7 +11231,7 @@ exports.browser = function (browser) {
 
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11188,7 +11244,7 @@ exports.browser = function (browser) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.convertMediaUrlToVideoEmbed = void 0;
 var checker_1 = __webpack_require__(5);
-var parse_query_1 = __webpack_require__(51);
+var parse_query_1 = __webpack_require__(53);
 exports.convertMediaUrlToVideoEmbed = function (url, width, height) {
     if (width === void 0) { width = 400; }
     if (height === void 0) { height = 345; }
@@ -11241,7 +11297,7 @@ exports.convertMediaUrlToVideoEmbed = function (url, width, height) {
 
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11254,8 +11310,8 @@ exports.convertMediaUrlToVideoEmbed = function (url, width, height) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.clearCenterAlign = exports.css = void 0;
 var checker_1 = __webpack_require__(5);
-var normalize_1 = __webpack_require__(34);
-var string_1 = __webpack_require__(12);
+var normalize_1 = __webpack_require__(35);
+var string_1 = __webpack_require__(13);
 exports.css = function (element, key, value, onlyStyleMode) {
     if (onlyStyleMode === void 0) { onlyStyleMode = false; }
     var numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size/i;
@@ -11311,7 +11367,7 @@ exports.clearCenterAlign = function (image) {
 
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11338,7 +11394,7 @@ exports.ctrlKey = function (e) {
 
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11379,7 +11435,7 @@ exports.dataBind = function (elm, key, value) {
 
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11416,7 +11472,7 @@ exports.each = each;
 
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11440,7 +11496,7 @@ exports.humanSizeToBytes = function (human) {
 
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11468,7 +11524,7 @@ exports.buildQuery = function (data, prefix) {
 
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11510,7 +11566,7 @@ exports.scrollIntoView = function (elm, root, doc) {
 
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11535,7 +11591,7 @@ exports.val = function (elm, selector, value) {
 
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11547,7 +11603,7 @@ exports.val = function (elm, selector, value) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ColorPickerWidget = void 0;
-__webpack_require__(153);
+__webpack_require__(154);
 var helpers_1 = __webpack_require__(1);
 var ui_1 = __webpack_require__(7);
 var dom_1 = __webpack_require__(2);
@@ -11630,13 +11686,13 @@ exports.ColorPickerWidget = function (editor, callback, coldColor) {
 
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 154 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11649,14 +11705,14 @@ exports.ColorPickerWidget = function (editor, callback, coldColor) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Button = exports.UIButton = exports.UIButtonState = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(155);
+__webpack_require__(156);
 var autobind_decorator_1 = __webpack_require__(8);
 var element_1 = __webpack_require__(20);
-var watch_1 = __webpack_require__(45);
+var watch_1 = __webpack_require__(46);
 var component_1 = __webpack_require__(9);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
-var icon_1 = __webpack_require__(53);
+var icon_1 = __webpack_require__(55);
 var __1 = __webpack_require__(7);
 exports.UIButtonState = function () { return ({
     size: 'middle',
@@ -11739,7 +11795,8 @@ var UIButton = (function (_super) {
         helpers_1.attr(this.container, 'tabIndex', this.state.tabIndex);
     };
     UIButton.prototype.onChangeIcon = function () {
-        if (this.get('j.o.textIcons')) {
+        var textIcons = this.get('j.o.textIcons');
+        if (textIcons === true || (helpers_1.isFunction(textIcons) && textIcons(this.state.name))) {
             return;
         }
         dom_1.Dom.detach(this.icon);
@@ -11847,13 +11904,13 @@ exports.Button = Button;
 
 
 /***/ }),
-/* 155 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 156 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11866,7 +11923,7 @@ exports.Button = Button;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Popup = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(157);
+__webpack_require__(158);
 var autobind_decorator_1 = __webpack_require__(8);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
@@ -12093,12 +12150,6 @@ exports.Popup = Popup;
 
 
 /***/ }),
-/* 157 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
 /* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12106,6 +12157,12 @@ exports.Popup = Popup;
 
 /***/ }),
 /* 159 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12118,13 +12175,13 @@ exports.Popup = Popup;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UIList = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(160);
+__webpack_require__(161);
 var button_1 = __webpack_require__(15);
-var get_strong_control_types_1 = __webpack_require__(161);
+var get_strong_control_types_1 = __webpack_require__(162);
 var component_1 = __webpack_require__(9);
-var decorators_1 = __webpack_require__(13);
-var group_1 = __webpack_require__(55);
-var separator_1 = __webpack_require__(54);
+var decorators_1 = __webpack_require__(14);
+var group_1 = __webpack_require__(57);
+var separator_1 = __webpack_require__(56);
 var helpers_1 = __webpack_require__(1);
 var UIList = (function (_super) {
     tslib_1.__extends(UIList, _super);
@@ -12203,13 +12260,13 @@ exports.UIList = UIList;
 
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12222,7 +12279,7 @@ exports.UIList = UIList;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getStrongControlTypes = void 0;
 var tslib_1 = __webpack_require__(0);
-var get_control_type_1 = __webpack_require__(162);
+var get_control_type_1 = __webpack_require__(163);
 var config_1 = __webpack_require__(4);
 var checker_1 = __webpack_require__(5);
 function getStrongControlTypes(items, controls) {
@@ -12240,7 +12297,7 @@ exports.getStrongControlTypes = getStrongControlTypes;
 
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12288,7 +12345,7 @@ exports.getControlType = getControlType;
 
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12297,7 +12354,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UIForm = void 0;
 var tslib_1 = __webpack_require__(0);
 var __1 = __webpack_require__(7);
-var input_1 = __webpack_require__(24);
+var input_1 = __webpack_require__(25);
+var utils_1 = __webpack_require__(12);
 var UIForm = (function (_super) {
     tslib_1.__extends(UIForm, _super);
     function UIForm() {
@@ -12335,6 +12393,7 @@ var UIForm = (function (_super) {
     UIForm.prototype.createContainer = function () {
         var form = this.j.c.element('form');
         form.classList.add(this.componentName);
+        utils_1.attr(form, 'dir', this.j.o.direction || 'auto');
         return form;
     };
     return UIForm;
@@ -12343,13 +12402,13 @@ exports.UIForm = UIForm;
 
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12379,7 +12438,7 @@ exports.url = function (input) {
 
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12391,12 +12450,12 @@ exports.url = function (input) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(167), exports);
-tslib_1.__exportStar(__webpack_require__(169), exports);
+tslib_1.__exportStar(__webpack_require__(168), exports);
+tslib_1.__exportStar(__webpack_require__(170), exports);
 
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12404,8 +12463,8 @@ tslib_1.__exportStar(__webpack_require__(169), exports);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UITextArea = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(168);
-var input_1 = __webpack_require__(24);
+__webpack_require__(169);
+var input_1 = __webpack_require__(25);
 var UITextArea = (function (_super) {
     tslib_1.__extends(UITextArea, _super);
     function UITextArea() {
@@ -12421,13 +12480,13 @@ exports.UITextArea = UITextArea;
 
 
 /***/ }),
-/* 168 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 169 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12435,8 +12494,8 @@ exports.UITextArea = UITextArea;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UICheckbox = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(170);
-var input_1 = __webpack_require__(24);
+__webpack_require__(171);
+var input_1 = __webpack_require__(25);
 var UICheckbox = (function (_super) {
     tslib_1.__extends(UICheckbox, _super);
     function UICheckbox() {
@@ -12456,13 +12515,13 @@ exports.UICheckbox = UICheckbox;
 
 
 /***/ }),
-/* 170 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 171 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12471,8 +12530,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UIBlock = void 0;
 var tslib_1 = __webpack_require__(0);
 var __1 = __webpack_require__(7);
-__webpack_require__(172);
-var utils_1 = __webpack_require__(14);
+__webpack_require__(173);
+var utils_1 = __webpack_require__(12);
 var UIBlock = (function (_super) {
     tslib_1.__extends(UIBlock, _super);
     function UIBlock(jodit, elements, options) {
@@ -12492,13 +12551,13 @@ exports.UIBlock = UIBlock;
 
 
 /***/ }),
-/* 172 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 173 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12510,7 +12569,7 @@ exports.UIBlock = UIBlock;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TabsWidget = void 0;
-__webpack_require__(174);
+__webpack_require__(175);
 var helpers_1 = __webpack_require__(1);
 var ui_1 = __webpack_require__(7);
 exports.TabsWidget = function (editor, tabs, state) {
@@ -12573,13 +12632,13 @@ exports.TabsWidget = function (editor, tabs, state) {
 
 
 /***/ }),
-/* 174 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 175 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12690,12 +12749,6 @@ exports.FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
 
 
 /***/ }),
-/* 176 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
 /* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12711,6 +12764,12 @@ exports.FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
 /* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 180 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 /*!
@@ -12721,8 +12780,8 @@ exports.FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Storage = exports.StorageKey = void 0;
 var helpers_1 = __webpack_require__(1);
-var local_storage_provider_1 = __webpack_require__(60);
-var memory_storage_provider_1 = __webpack_require__(59);
+var local_storage_provider_1 = __webpack_require__(62);
+var memory_storage_provider_1 = __webpack_require__(61);
 exports.StorageKey = 'Jodit_';
 var Storage = (function () {
     function Storage(provider, suffix) {
@@ -12764,12 +12823,6 @@ exports.Storage = Storage;
 
 
 /***/ }),
-/* 180 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
 /* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12785,6 +12838,12 @@ exports.Storage = Storage;
 /* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 184 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 /*!
@@ -12794,7 +12853,7 @@ exports.Storage = Storage;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Alert = void 0;
-var dialog_1 = __webpack_require__(25);
+var dialog_1 = __webpack_require__(26);
 var helpers_1 = __webpack_require__(1);
 var dom_1 = __webpack_require__(2);
 var ui_1 = __webpack_require__(7);
@@ -12823,7 +12882,7 @@ exports.Alert = function (msg, title, callback, className) {
 
 
 /***/ }),
-/* 184 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12835,7 +12894,7 @@ exports.Alert = function (msg, title, callback, className) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Prompt = void 0;
-var dialog_1 = __webpack_require__(25);
+var dialog_1 = __webpack_require__(26);
 var ui_1 = __webpack_require__(7);
 var helpers_1 = __webpack_require__(1);
 exports.Prompt = function (msg, title, callback, placeholder, defaultValue) {
@@ -12880,7 +12939,7 @@ exports.Prompt = function (msg, title, callback, placeholder, defaultValue) {
 
 
 /***/ }),
-/* 185 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12892,7 +12951,7 @@ exports.Prompt = function (msg, title, callback, placeholder, defaultValue) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Confirm = void 0;
-var dialog_1 = __webpack_require__(25);
+var dialog_1 = __webpack_require__(26);
 var helpers_1 = __webpack_require__(1);
 var ui_1 = __webpack_require__(7);
 exports.Confirm = function (msg, title, callback) {
@@ -12930,7 +12989,7 @@ exports.Confirm = function (msg, title, callback) {
 
 
 /***/ }),
-/* 186 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13050,7 +13109,7 @@ exports.Create = Create;
 
 
 /***/ }),
-/* 187 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13063,24 +13122,24 @@ exports.Create = Create;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileBrowser = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(188);
+__webpack_require__(189);
 var config_1 = __webpack_require__(4);
 var consts = __webpack_require__(3);
 var dialog_1 = __webpack_require__(16);
-var storage_1 = __webpack_require__(37);
+var storage_1 = __webpack_require__(38);
 var helpers_1 = __webpack_require__(1);
-var view_with_toolbar_1 = __webpack_require__(26);
-__webpack_require__(189);
+var view_with_toolbar_1 = __webpack_require__(27);
+__webpack_require__(190);
 var dom_1 = __webpack_require__(2);
 var events_1 = __webpack_require__(22);
-var item_1 = __webpack_require__(190);
+var item_1 = __webpack_require__(191);
 var consts_1 = __webpack_require__(21);
-var factories_1 = __webpack_require__(64);
+var factories_1 = __webpack_require__(66);
 var autobind_decorator_1 = __webpack_require__(8);
-var state_listeners_1 = __webpack_require__(191);
-var native_listeners_1 = __webpack_require__(65);
-var self_listeners_1 = __webpack_require__(193);
-var data_provider_1 = __webpack_require__(39);
+var state_listeners_1 = __webpack_require__(192);
+var native_listeners_1 = __webpack_require__(67);
+var self_listeners_1 = __webpack_require__(194);
+var data_provider_1 = __webpack_require__(40);
 var FileBrowser = (function (_super) {
     tslib_1.__extends(FileBrowser, _super);
     function FileBrowser(options) {
@@ -13443,13 +13502,13 @@ exports.FileBrowser = FileBrowser;
 
 
 /***/ }),
-/* 188 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 189 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13747,7 +13806,7 @@ config_1.Config.prototype.controls.filebrowser = {
 
 
 /***/ }),
-/* 190 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13835,7 +13894,7 @@ exports.FileBrowserItem = FileBrowserItem;
 
 
 /***/ }),
-/* 191 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13849,7 +13908,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.stateListeners = void 0;
 var consts_1 = __webpack_require__(21);
 var dom_1 = __webpack_require__(2);
-var normalize_1 = __webpack_require__(34);
+var normalize_1 = __webpack_require__(35);
 var ui_1 = __webpack_require__(7);
 var DEFAULT_SOURCE_NAME = 'default', ITEM_ACTIVE_CLASS = consts_1.ITEM_CLASS + '_active_true';
 function stateListeners() {
@@ -13974,7 +14033,7 @@ exports.stateListeners = stateListeners;
 
 
 /***/ }),
-/* 192 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13990,9 +14049,9 @@ var dialog_1 = __webpack_require__(16);
 var dom_1 = __webpack_require__(2);
 var consts_1 = __webpack_require__(21);
 var helpers_1 = __webpack_require__(1);
-var factories_1 = __webpack_require__(64);
+var factories_1 = __webpack_require__(66);
 var ui_1 = __webpack_require__(7);
-var native_listeners_1 = __webpack_require__(65);
+var native_listeners_1 = __webpack_require__(67);
 var CLASS_PREVIEW = consts_1.F_CLASS + '_preview_', preview_tpl_next = function (next, right) {
     if (next === void 0) { next = 'next'; }
     if (right === void 0) { right = 'right'; }
@@ -14150,7 +14209,7 @@ exports.default = (function (self) {
 
 
 /***/ }),
-/* 193 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14165,7 +14224,7 @@ exports.selfListeners = void 0;
 var dialog_1 = __webpack_require__(16);
 var checker_1 = __webpack_require__(5);
 var helpers_1 = __webpack_require__(1);
-var data_provider_1 = __webpack_require__(39);
+var data_provider_1 = __webpack_require__(40);
 function selfListeners() {
     var _this = this;
     var state = this.state, self = this;
@@ -14325,7 +14384,7 @@ exports.selfListeners = selfListeners;
 
 
 /***/ }),
-/* 194 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14338,7 +14397,7 @@ exports.selfListeners = selfListeners;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageEditor = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(195);
+__webpack_require__(196);
 var autobind_decorator_1 = __webpack_require__(8);
 var config_1 = __webpack_require__(4);
 var component_1 = __webpack_require__(9);
@@ -14346,7 +14405,7 @@ var dialog_1 = __webpack_require__(16);
 var helpers_1 = __webpack_require__(1);
 var dom_1 = __webpack_require__(2);
 var button_1 = __webpack_require__(15);
-var form_1 = __webpack_require__(196);
+var form_1 = __webpack_require__(197);
 config_1.Config.prototype.imageeditor = {
     min_width: 20,
     min_height: 20,
@@ -14873,13 +14932,13 @@ exports.ImageEditor = ImageEditor;
 
 
 /***/ }),
-/* 195 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 196 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14917,7 +14976,7 @@ exports.form = function (editor, o) {
 
 
 /***/ }),
-/* 197 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14932,10 +14991,10 @@ exports.Observer = void 0;
 var tslib_1 = __webpack_require__(0);
 var config_1 = __webpack_require__(4);
 var component_1 = __webpack_require__(9);
-var snapshot_1 = __webpack_require__(66);
-var stack_1 = __webpack_require__(198);
-var command_1 = __webpack_require__(199);
-var decorators_1 = __webpack_require__(13);
+var snapshot_1 = __webpack_require__(68);
+var stack_1 = __webpack_require__(199);
+var command_1 = __webpack_require__(200);
+var decorators_1 = __webpack_require__(14);
 config_1.Config.prototype.observer = {
     timeout: 100
 };
@@ -15052,7 +15111,7 @@ exports.Observer = Observer;
 
 
 /***/ }),
-/* 198 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15126,7 +15185,7 @@ exports.Stack = Stack;
 
 
 /***/ }),
-/* 199 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15157,7 +15216,7 @@ exports.Command = Command;
 
 
 /***/ }),
-/* 200 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15170,7 +15229,7 @@ exports.Command = Command;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProgressBar = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(201);
+__webpack_require__(202);
 var component_1 = __webpack_require__(9);
 var dom_1 = __webpack_require__(2);
 var ProgressBar = (function (_super) {
@@ -15203,13 +15262,13 @@ exports.ProgressBar = ProgressBar;
 
 
 /***/ }),
-/* 201 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 202 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15221,12 +15280,12 @@ exports.ProgressBar = ProgressBar;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(67), exports);
-tslib_1.__exportStar(__webpack_require__(204), exports);
+tslib_1.__exportStar(__webpack_require__(69), exports);
+tslib_1.__exportStar(__webpack_require__(205), exports);
 
 
 /***/ }),
-/* 203 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15529,7 +15588,7 @@ exports.ApplyStyle = ApplyStyle;
 
 
 /***/ }),
-/* 204 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15547,7 +15606,7 @@ var consts = __webpack_require__(3);
 var constants_1 = __webpack_require__(3);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
-var style_1 = __webpack_require__(67);
+var style_1 = __webpack_require__(69);
 var Select = (function () {
     function Select(jodit) {
         var _this = this;
@@ -15582,7 +15641,7 @@ var Select = (function () {
                         return;
                     }
                     if (current.nodeName.match(/^(UL|OL)$/)) {
-                        return Array.from(current.childNodes).forEach(forEvery_1);
+                        return helpers_1.toArray(current.childNodes).forEach(forEvery_1);
                     }
                     if (dom_1.Dom.isTag(current, 'li')) {
                         if (current.firstChild) {
@@ -16069,7 +16128,7 @@ var Select = (function () {
             }
         }
         else {
-            var children = Array.from(container.childNodes);
+            var children = helpers_1.toArray(container.childNodes);
             if (end) {
                 if (children.slice(offset).some(check)) {
                     return false;
@@ -16342,7 +16401,7 @@ exports.Select = Select;
 
 
 /***/ }),
-/* 205 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16355,7 +16414,7 @@ exports.Select = Select;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StatusBar = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(206);
+__webpack_require__(207);
 var component_1 = __webpack_require__(9);
 var dom_1 = __webpack_require__(2);
 var StatusBar = (function (_super) {
@@ -16417,13 +16476,13 @@ exports.StatusBar = StatusBar;
 
 
 /***/ }),
-/* 206 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 207 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16441,7 +16500,7 @@ var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
 var component_1 = __webpack_require__(9);
 var global_1 = __webpack_require__(11);
-var decorators_1 = __webpack_require__(13);
+var decorators_1 = __webpack_require__(14);
 var Table = (function (_super) {
     tslib_1.__extends(Table, _super);
     function Table() {
@@ -16485,11 +16544,11 @@ var Table = (function (_super) {
         }
     };
     Table.prototype.getAllSelectedCells = function () {
-        return Array.from(this.selected);
+        return helpers_1.toArray(this.selected);
     };
     Table.getSelectedCellsByTable = function (table) {
         var cells = Table.selectedByTable.get(table);
-        return cells ? Array.from(cells) : [];
+        return cells ? helpers_1.toArray(cells) : [];
     };
     Table.prototype.destruct = function () {
         this.selected.clear();
@@ -16506,7 +16565,7 @@ var Table = (function (_super) {
     };
     Table.formalMatrix = function (table, callback) {
         var matrix = [[]];
-        var rows = Array.from(table.rows);
+        var rows = helpers_1.toArray(table.rows);
         var setCell = function (cell, i) {
             if (matrix[i] === undefined) {
                 matrix[i] = [];
@@ -16530,7 +16589,7 @@ var Table = (function (_super) {
             }
         };
         for (var i = 0; i < rows.length; i += 1) {
-            var cells = Array.from(rows[i].cells);
+            var cells = helpers_1.toArray(rows[i].cells);
             for (var j = 0; j < cells.length; j += 1) {
                 if (setCell(cells[j], i) === false) {
                     return matrix;
@@ -16854,7 +16913,7 @@ var Table = (function (_super) {
                 delete first.__i_am_already_was;
                 Table.__unmark(__marked);
                 Table.normalizeTable(table);
-                helpers_1.each(Array.from(table.rows), function (index, tr) {
+                helpers_1.each(helpers_1.toArray(table.rows), function (index, tr) {
                     if (!tr.cells.length) {
                         dom_1.Dom.safeRemove(tr);
                     }
@@ -17006,7 +17065,7 @@ var instance = function (j) { return j.getInstance('Table', j.o); };
 
 
 /***/ }),
-/* 208 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17018,12 +17077,12 @@ var instance = function (j) { return j.getInstance('Table', j.o); };
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(62), exports);
-tslib_1.__exportStar(__webpack_require__(63), exports);
+tslib_1.__exportStar(__webpack_require__(64), exports);
+tslib_1.__exportStar(__webpack_require__(65), exports);
 
 
 /***/ }),
-/* 209 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17036,10 +17095,10 @@ tslib_1.__exportStar(__webpack_require__(63), exports);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Uploader = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(210);
+__webpack_require__(211);
 var config_1 = __webpack_require__(4);
 var constants_1 = __webpack_require__(3);
-var ajax_1 = __webpack_require__(36);
+var ajax_1 = __webpack_require__(37);
 var helpers_1 = __webpack_require__(1);
 var dom_1 = __webpack_require__(2);
 var component_1 = __webpack_require__(9);
@@ -17227,7 +17286,7 @@ var Uploader = (function (_super) {
             return Promise.reject(helpers_1.error('Need files'));
         }
         var uploader = this;
-        var fileList = Array.from(files);
+        var fileList = helpers_1.toArray(files);
         if (!fileList.length) {
             return Promise.reject(helpers_1.error('Need files'));
         }
@@ -17493,38 +17552,38 @@ exports.Uploader = Uploader;
 
 
 /***/ }),
-/* 210 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 211 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var checker_1 = __webpack_require__(5);
-var ar = __webpack_require__(212);
-var cs_cz = __webpack_require__(213);
-var de = __webpack_require__(214);
-var en = __webpack_require__(215);
-var es = __webpack_require__(216);
-var fr = __webpack_require__(217);
-var he = __webpack_require__(218);
-var hu = __webpack_require__(219);
-var id = __webpack_require__(220);
-var it = __webpack_require__(221);
-var ja = __webpack_require__(222);
-var ko = __webpack_require__(223);
-var nl = __webpack_require__(224);
-var pl = __webpack_require__(225);
-var pt_br = __webpack_require__(226);
-var ru = __webpack_require__(227);
-var tr = __webpack_require__(228);
-var zh_cn = __webpack_require__(229);
-var zh_tw = __webpack_require__(230);
+var ar = __webpack_require__(213);
+var cs_cz = __webpack_require__(214);
+var de = __webpack_require__(215);
+var en = __webpack_require__(216);
+var es = __webpack_require__(217);
+var fr = __webpack_require__(218);
+var he = __webpack_require__(219);
+var hu = __webpack_require__(220);
+var id = __webpack_require__(221);
+var it = __webpack_require__(222);
+var ja = __webpack_require__(223);
+var ko = __webpack_require__(224);
+var nl = __webpack_require__(225);
+var pl = __webpack_require__(226);
+var pt_br = __webpack_require__(227);
+var ru = __webpack_require__(228);
+var tr = __webpack_require__(229);
+var zh_cn = __webpack_require__(230);
+var zh_tw = __webpack_require__(231);
 var exp = {
     ar: ar,
     cs_cz: cs_cz,
@@ -17565,7 +17624,7 @@ exports.default = exp;
 
 
 /***/ }),
-/* 212 */
+/* 213 */
 /***/ (function(module, exports) {
 
 /*!
@@ -17787,7 +17846,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 213 */
+/* 214 */
 /***/ (function(module, exports) {
 
 /*!
@@ -18011,7 +18070,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 214 */
+/* 215 */
 /***/ (function(module, exports) {
 
 /*!
@@ -18234,7 +18293,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 215 */
+/* 216 */
 /***/ (function(module, exports) {
 
 /*!
@@ -18251,7 +18310,7 @@ module.exports = {
 
 
 /***/ }),
-/* 216 */
+/* 217 */
 /***/ (function(module, exports) {
 
 /*!
@@ -18481,7 +18540,7 @@ module.exports = {
 
 
 /***/ }),
-/* 217 */
+/* 218 */
 /***/ (function(module, exports) {
 
 /*!
@@ -18699,7 +18758,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 218 */
+/* 219 */
 /***/ (function(module, exports) {
 
 /*!
@@ -18922,7 +18981,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 219 */
+/* 220 */
 /***/ (function(module, exports) {
 
 /*!
@@ -19147,7 +19206,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 220 */
+/* 221 */
 /***/ (function(module, exports) {
 
 /*!
@@ -19371,7 +19430,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 221 */
+/* 222 */
 /***/ (function(module, exports) {
 
 /*!
@@ -19594,7 +19653,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 222 */
+/* 223 */
 /***/ (function(module, exports) {
 
 /*!
@@ -19817,7 +19876,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 223 */
+/* 224 */
 /***/ (function(module, exports) {
 
 /*!
@@ -20039,7 +20098,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 224 */
+/* 225 */
 /***/ (function(module, exports) {
 
 /*!
@@ -20263,7 +20322,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 225 */
+/* 226 */
 /***/ (function(module, exports) {
 
 /*!
@@ -20486,7 +20545,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 226 */
+/* 227 */
 /***/ (function(module, exports) {
 
 /*!
@@ -20716,7 +20775,7 @@ module.exports = {
 
 
 /***/ }),
-/* 227 */
+/* 228 */
 /***/ (function(module, exports) {
 
 /*!
@@ -20938,7 +20997,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 228 */
+/* 229 */
 /***/ (function(module, exports) {
 
 /*!
@@ -21162,7 +21221,7 @@ module.exports = {
 
 
 /***/ }),
-/* 229 */
+/* 230 */
 /***/ (function(module, exports) {
 
 /*!
@@ -21385,7 +21444,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 230 */
+/* 231 */
 /***/ (function(module, exports) {
 
 /*!
@@ -21607,7 +21666,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 231 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21620,93 +21679,93 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.xpath = exports.tooltip = exports.symbols = exports.sticky = exports.stat = exports.source = exports.resizeHandler = exports.size = exports.search = exports.resizer = exports.redoUndo = exports.placeholder = exports.orderedList = exports.mobile = exports.media = exports.link = exports.limit = exports.justify = exports.inlinePopup = exports.hr = exports.indent = exports.iframe = exports.hotkeys = exports.fullsize = exports.formatBlock = exports.font = exports.errorMessages = exports.enter = exports.DragAndDropElement = exports.DragAndDrop = exports.color = exports.pasteStorage = exports.paste = exports.clipboard = exports.WrapTextNodes = exports.cleanHtml = exports.bold = exports.Delete = exports.autofocus = exports.about = exports.addNewLine = void 0;
 var tslib_1 = __webpack_require__(0);
-var add_new_line_1 = __webpack_require__(232);
+var add_new_line_1 = __webpack_require__(233);
 Object.defineProperty(exports, "addNewLine", { enumerable: true, get: function () { return add_new_line_1.addNewLine; } });
-var about_1 = __webpack_require__(234);
+var about_1 = __webpack_require__(235);
 Object.defineProperty(exports, "about", { enumerable: true, get: function () { return about_1.about; } });
-var autofocus_1 = __webpack_require__(236);
+var autofocus_1 = __webpack_require__(237);
 Object.defineProperty(exports, "autofocus", { enumerable: true, get: function () { return autofocus_1.autofocus; } });
-var delete_1 = __webpack_require__(237);
+var delete_1 = __webpack_require__(238);
 Object.defineProperty(exports, "Delete", { enumerable: true, get: function () { return delete_1.Delete; } });
-var bold_1 = __webpack_require__(238);
+var bold_1 = __webpack_require__(239);
 Object.defineProperty(exports, "bold", { enumerable: true, get: function () { return bold_1.bold; } });
-var clean_html_1 = __webpack_require__(239);
+var clean_html_1 = __webpack_require__(240);
 Object.defineProperty(exports, "cleanHtml", { enumerable: true, get: function () { return clean_html_1.cleanHtml; } });
-var wrap_text_nodes_1 = __webpack_require__(240);
+var wrap_text_nodes_1 = __webpack_require__(241);
 Object.defineProperty(exports, "WrapTextNodes", { enumerable: true, get: function () { return wrap_text_nodes_1.WrapTextNodes; } });
-var clipboard_1 = __webpack_require__(241);
+var clipboard_1 = __webpack_require__(242);
 Object.defineProperty(exports, "clipboard", { enumerable: true, get: function () { return clipboard_1.clipboard; } });
 Object.defineProperty(exports, "paste", { enumerable: true, get: function () { return clipboard_1.paste; } });
 Object.defineProperty(exports, "pasteStorage", { enumerable: true, get: function () { return clipboard_1.pasteStorage; } });
-var color_1 = __webpack_require__(247);
+var color_1 = __webpack_require__(248);
 Object.defineProperty(exports, "color", { enumerable: true, get: function () { return color_1.color; } });
-var drag_and_drop_1 = __webpack_require__(248);
+var drag_and_drop_1 = __webpack_require__(249);
 Object.defineProperty(exports, "DragAndDrop", { enumerable: true, get: function () { return drag_and_drop_1.DragAndDrop; } });
-var drag_and_drop_element_1 = __webpack_require__(249);
+var drag_and_drop_element_1 = __webpack_require__(250);
 Object.defineProperty(exports, "DragAndDropElement", { enumerable: true, get: function () { return drag_and_drop_element_1.DragAndDropElement; } });
-var enter_1 = __webpack_require__(250);
+var enter_1 = __webpack_require__(251);
 Object.defineProperty(exports, "enter", { enumerable: true, get: function () { return enter_1.enter; } });
-var error_messages_1 = __webpack_require__(251);
+var error_messages_1 = __webpack_require__(252);
 Object.defineProperty(exports, "errorMessages", { enumerable: true, get: function () { return error_messages_1.errorMessages; } });
-var font_1 = __webpack_require__(253);
+var font_1 = __webpack_require__(254);
 Object.defineProperty(exports, "font", { enumerable: true, get: function () { return font_1.font; } });
-var format_block_1 = __webpack_require__(254);
+var format_block_1 = __webpack_require__(255);
 Object.defineProperty(exports, "formatBlock", { enumerable: true, get: function () { return format_block_1.formatBlock; } });
-var fullsize_1 = __webpack_require__(255);
+var fullsize_1 = __webpack_require__(256);
 Object.defineProperty(exports, "fullsize", { enumerable: true, get: function () { return fullsize_1.fullsize; } });
-var hotkeys_1 = __webpack_require__(257);
+var hotkeys_1 = __webpack_require__(258);
 Object.defineProperty(exports, "hotkeys", { enumerable: true, get: function () { return hotkeys_1.hotkeys; } });
-var iframe_1 = __webpack_require__(258);
+var iframe_1 = __webpack_require__(259);
 Object.defineProperty(exports, "iframe", { enumerable: true, get: function () { return iframe_1.iframe; } });
-tslib_1.__exportStar(__webpack_require__(259), exports);
-var indent_1 = __webpack_require__(267);
+tslib_1.__exportStar(__webpack_require__(260), exports);
+var indent_1 = __webpack_require__(268);
 Object.defineProperty(exports, "indent", { enumerable: true, get: function () { return indent_1.indent; } });
-var insert_1 = __webpack_require__(268);
+var insert_1 = __webpack_require__(269);
 Object.defineProperty(exports, "hr", { enumerable: true, get: function () { return insert_1.hr; } });
-var inline_popup_1 = __webpack_require__(270);
+var inline_popup_1 = __webpack_require__(271);
 Object.defineProperty(exports, "inlinePopup", { enumerable: true, get: function () { return inline_popup_1.inlinePopup; } });
-var justify_1 = __webpack_require__(68);
+var justify_1 = __webpack_require__(70);
 Object.defineProperty(exports, "justify", { enumerable: true, get: function () { return justify_1.justify; } });
-var limit_1 = __webpack_require__(276);
+var limit_1 = __webpack_require__(277);
 Object.defineProperty(exports, "limit", { enumerable: true, get: function () { return limit_1.limit; } });
-var link_1 = __webpack_require__(277);
+var link_1 = __webpack_require__(278);
 Object.defineProperty(exports, "link", { enumerable: true, get: function () { return link_1.link; } });
-var media_1 = __webpack_require__(279);
+var media_1 = __webpack_require__(280);
 Object.defineProperty(exports, "media", { enumerable: true, get: function () { return media_1.media; } });
-var mobile_1 = __webpack_require__(280);
+var mobile_1 = __webpack_require__(281);
 Object.defineProperty(exports, "mobile", { enumerable: true, get: function () { return mobile_1.mobile; } });
-var ordered_list_1 = __webpack_require__(281);
+var ordered_list_1 = __webpack_require__(282);
 Object.defineProperty(exports, "orderedList", { enumerable: true, get: function () { return ordered_list_1.orderedList; } });
-var placeholder_1 = __webpack_require__(282);
+var placeholder_1 = __webpack_require__(283);
 Object.defineProperty(exports, "placeholder", { enumerable: true, get: function () { return placeholder_1.placeholder; } });
-var redo_undo_1 = __webpack_require__(284);
+var redo_undo_1 = __webpack_require__(285);
 Object.defineProperty(exports, "redoUndo", { enumerable: true, get: function () { return redo_undo_1.redoUndo; } });
-var resizer_1 = __webpack_require__(285);
+var resizer_1 = __webpack_require__(286);
 Object.defineProperty(exports, "resizer", { enumerable: true, get: function () { return resizer_1.resizer; } });
-var search_1 = __webpack_require__(287);
+var search_1 = __webpack_require__(288);
 Object.defineProperty(exports, "search", { enumerable: true, get: function () { return search_1.search; } });
-var size_1 = __webpack_require__(289);
+var size_1 = __webpack_require__(290);
 Object.defineProperty(exports, "size", { enumerable: true, get: function () { return size_1.size; } });
 Object.defineProperty(exports, "resizeHandler", { enumerable: true, get: function () { return size_1.resizeHandler; } });
-var source_1 = __webpack_require__(294);
+var source_1 = __webpack_require__(295);
 Object.defineProperty(exports, "source", { enumerable: true, get: function () { return source_1.source; } });
-var stat_1 = __webpack_require__(302);
+var stat_1 = __webpack_require__(303);
 Object.defineProperty(exports, "stat", { enumerable: true, get: function () { return stat_1.stat; } });
-var sticky_1 = __webpack_require__(303);
+var sticky_1 = __webpack_require__(304);
 Object.defineProperty(exports, "sticky", { enumerable: true, get: function () { return sticky_1.sticky; } });
-var symbols_1 = __webpack_require__(305);
+var symbols_1 = __webpack_require__(306);
 Object.defineProperty(exports, "symbols", { enumerable: true, get: function () { return symbols_1.symbols; } });
-tslib_1.__exportStar(__webpack_require__(308), exports);
-var tooltip_1 = __webpack_require__(314);
+tslib_1.__exportStar(__webpack_require__(309), exports);
+var tooltip_1 = __webpack_require__(315);
 Object.defineProperty(exports, "tooltip", { enumerable: true, get: function () { return tooltip_1.tooltip; } });
-__webpack_require__(316);
-__webpack_require__(318);
-var xpath_1 = __webpack_require__(320);
+__webpack_require__(317);
+__webpack_require__(319);
+var xpath_1 = __webpack_require__(321);
 Object.defineProperty(exports, "xpath", { enumerable: true, get: function () { return xpath_1.xpath; } });
 
 
 /***/ }),
-/* 232 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21719,7 +21778,7 @@ Object.defineProperty(exports, "xpath", { enumerable: true, get: function () { r
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.addNewLine = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(233);
+__webpack_require__(234);
 var config_1 = __webpack_require__(4);
 var modules_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(1);
@@ -21916,13 +21975,13 @@ exports.addNewLine = addNewLine;
 
 
 /***/ }),
-/* 233 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 234 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21934,7 +21993,7 @@ exports.addNewLine = addNewLine;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.about = void 0;
-__webpack_require__(235);
+__webpack_require__(236);
 var config_1 = __webpack_require__(4);
 var helpers_1 = __webpack_require__(1);
 var constants = __webpack_require__(3);
@@ -21960,13 +22019,13 @@ exports.about = about;
 
 
 /***/ }),
-/* 235 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 236 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22014,7 +22073,7 @@ exports.autofocus = autofocus;
 
 
 /***/ }),
-/* 237 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22031,7 +22090,7 @@ var plugin_1 = __webpack_require__(6);
 var dom_1 = __webpack_require__(2);
 var constants_1 = __webpack_require__(3);
 var helpers_1 = __webpack_require__(1);
-var helpers_2 = __webpack_require__(52);
+var helpers_2 = __webpack_require__(54);
 var Delete = (function (_super) {
     tslib_1.__extends(Delete, _super);
     function Delete() {
@@ -22363,7 +22422,7 @@ exports.Delete = Delete;
 
 
 /***/ }),
-/* 238 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22453,7 +22512,7 @@ exports.bold = bold;
 
 
 /***/ }),
-/* 239 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22604,7 +22663,7 @@ var cleanHtml = (function (_super) {
                         modules_1.Dom.unwrap(elm);
                     }
                     else if (!onlyRemoveFont) {
-                        Array.from(elm.attributes).forEach(function (attr) {
+                        helpers_1.toArray(elm.attributes).forEach(function (attr) {
                             if (['src', 'href', 'rel', 'content'].indexOf(attr.name.toLowerCase()) === -1) {
                                 elm.removeAttribute(attr.name);
                             }
@@ -22776,7 +22835,7 @@ exports.cleanHtml = cleanHtml;
 
 
 /***/ }),
-/* 240 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22859,7 +22918,7 @@ exports.WrapTextNodes = WrapTextNodes;
 
 
 /***/ }),
-/* 241 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22871,15 +22930,15 @@ exports.WrapTextNodes = WrapTextNodes;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(242);
-tslib_1.__exportStar(__webpack_require__(40), exports);
-tslib_1.__exportStar(__webpack_require__(243), exports);
+__webpack_require__(243);
+tslib_1.__exportStar(__webpack_require__(41), exports);
 tslib_1.__exportStar(__webpack_require__(244), exports);
-__webpack_require__(246);
+tslib_1.__exportStar(__webpack_require__(245), exports);
+__webpack_require__(247);
 
 
 /***/ }),
-/* 242 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22890,8 +22949,8 @@ var tslib_1 = __webpack_require__(0);
 var config_1 = __webpack_require__(4);
 var constants_1 = __webpack_require__(3);
 var dialog_1 = __webpack_require__(16);
-var helpers_1 = __webpack_require__(27);
-var clipboard_1 = __webpack_require__(40);
+var helpers_1 = __webpack_require__(28);
+var clipboard_1 = __webpack_require__(41);
 config_1.Config.prototype.askBeforePasteHTML = true;
 config_1.Config.prototype.processPasteHTML = true;
 config_1.Config.prototype.askBeforePasteFromWord = true;
@@ -22999,7 +23058,7 @@ config_1.Config.prototype.controls.paste = {
 
 
 /***/ }),
-/* 243 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23009,10 +23068,10 @@ exports.paste = void 0;
 var tslib_1 = __webpack_require__(0);
 var autobind_decorator_1 = __webpack_require__(8);
 var plugin_1 = __webpack_require__(6);
-var helpers_1 = __webpack_require__(27);
+var helpers_1 = __webpack_require__(28);
 var constants_1 = __webpack_require__(3);
 var helpers_2 = __webpack_require__(1);
-var clipboard_1 = __webpack_require__(40);
+var clipboard_1 = __webpack_require__(41);
 var dom_1 = __webpack_require__(2);
 var dialog_1 = __webpack_require__(16);
 var button_1 = __webpack_require__(15);
@@ -23262,7 +23321,7 @@ exports.paste = paste;
 
 
 /***/ }),
-/* 244 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23275,7 +23334,7 @@ exports.paste = paste;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.pasteStorage = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(245);
+__webpack_require__(246);
 var constants_1 = __webpack_require__(3);
 var dialog_1 = __webpack_require__(16);
 var plugin_1 = __webpack_require__(6);
@@ -23336,7 +23395,7 @@ var pasteStorage = (function (_super) {
         };
         _this.selectIndex = function (index) {
             if (_this.listBox) {
-                Array.from(_this.listBox.childNodes).forEach(function (a, i) {
+                helpers_1.toArray(_this.listBox.childNodes).forEach(function (a, i) {
                     a.classList.remove('jodit_active');
                     if (index === i && _this.previewBox) {
                         a.classList.add('jodit_active');
@@ -23433,8 +23492,7 @@ var pasteStorage = (function (_super) {
     };
     pasteStorage.prototype.beforeDestruct = function () {
         this.dialog && this.dialog.destruct();
-        this.j.e
-            .off('.paste-storage');
+        this.j.e.off('.paste-storage');
         dom_1.Dom.safeRemove(this.previewBox);
         dom_1.Dom.safeRemove(this.listBox);
         dom_1.Dom.safeRemove(this.container);
@@ -23450,13 +23508,13 @@ exports.pasteStorage = pasteStorage;
 
 
 /***/ }),
-/* 245 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 246 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23557,7 +23615,7 @@ config_1.Config.prototype.controls.copyformat = {
 
 
 /***/ }),
-/* 247 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23712,7 +23770,7 @@ exports.color = color;
 
 
 /***/ }),
-/* 248 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23729,7 +23787,7 @@ var constants_1 = __webpack_require__(3);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
 var plugin_1 = __webpack_require__(6);
-var helpers_2 = __webpack_require__(27);
+var helpers_2 = __webpack_require__(28);
 var global_1 = __webpack_require__(11);
 var DragAndDrop = (function (_super) {
     tslib_1.__extends(DragAndDrop, _super);
@@ -23885,7 +23943,7 @@ exports.DragAndDrop = DragAndDrop;
 
 
 /***/ }),
-/* 249 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24028,7 +24086,7 @@ exports.DragAndDropElement = DragAndDropElement;
 
 
 /***/ }),
-/* 250 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24242,7 +24300,7 @@ exports.enter = enter;
 
 
 /***/ }),
-/* 251 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24254,7 +24312,7 @@ exports.enter = enter;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.errorMessages = void 0;
-__webpack_require__(252);
+__webpack_require__(253);
 var config_1 = __webpack_require__(4);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
@@ -24266,7 +24324,7 @@ function errorMessages(editor) {
         var height_1;
         var messagesBox_1 = editor.c.div('jodit_error_box_for_messages'), recalcOffsets_1 = function () {
             height_1 = 5;
-            Array.from(messagesBox_1.childNodes).forEach(function (elm) {
+            helpers_1.toArray(messagesBox_1.childNodes).forEach(function (elm) {
                 helpers_1.css(messagesBox_1, 'bottom', height_1 + 'px');
                 height_1 +=
                     elm.offsetWidth + editor.o.showMessageErrorOffsetPx;
@@ -24295,13 +24353,13 @@ exports.errorMessages = errorMessages;
 
 
 /***/ }),
-/* 252 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 253 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24425,7 +24483,7 @@ exports.font = font;
 
 
 /***/ }),
-/* 254 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24524,7 +24582,7 @@ exports.formatBlock = formatBlock;
 
 
 /***/ }),
-/* 255 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24536,7 +24594,7 @@ exports.formatBlock = formatBlock;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fullsize = void 0;
-__webpack_require__(256);
+__webpack_require__(257);
 var config_1 = __webpack_require__(4);
 var consts = __webpack_require__(3);
 var helpers_1 = __webpack_require__(1);
@@ -24625,13 +24683,13 @@ exports.fullsize = fullsize;
 
 
 /***/ }),
-/* 256 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 257 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24777,7 +24835,7 @@ exports.hotkeys = hotkeys;
 
 
 /***/ }),
-/* 258 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25021,7 +25079,7 @@ exports.iframe = iframe;
 
 
 /***/ }),
-/* 259 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25033,12 +25091,12 @@ exports.iframe = iframe;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(260), exports);
-tslib_1.__exportStar(__webpack_require__(266), exports);
+tslib_1.__exportStar(__webpack_require__(261), exports);
+tslib_1.__exportStar(__webpack_require__(267), exports);
 
 
 /***/ }),
-/* 260 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25051,15 +25109,15 @@ tslib_1.__exportStar(__webpack_require__(266), exports);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.imageProperties = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(261);
+__webpack_require__(262);
 var autobind_decorator_1 = __webpack_require__(8);
 var config_1 = __webpack_require__(4);
 var modules_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(1);
 var widget_1 = __webpack_require__(17);
 var button_1 = __webpack_require__(15);
-var templates_1 = __webpack_require__(262);
-var decorators_1 = __webpack_require__(13);
+var templates_1 = __webpack_require__(263);
+var decorators_1 = __webpack_require__(14);
 config_1.Config.prototype.image = {
     dialogWidth: 600,
     openOnDblClick: true,
@@ -25491,13 +25549,13 @@ exports.imageProperties = imageProperties;
 
 
 /***/ }),
-/* 261 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 262 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25509,13 +25567,13 @@ exports.imageProperties = imageProperties;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(263), exports);
 tslib_1.__exportStar(__webpack_require__(264), exports);
 tslib_1.__exportStar(__webpack_require__(265), exports);
+tslib_1.__exportStar(__webpack_require__(266), exports);
 
 
 /***/ }),
-/* 263 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25536,7 +25594,7 @@ exports.form = form;
 
 
 /***/ }),
-/* 264 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25557,7 +25615,7 @@ exports.mainTab = mainTab;
 
 
 /***/ }),
-/* 265 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25578,7 +25636,7 @@ exports.positionTab = positionTab;
 
 
 /***/ }),
-/* 266 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25617,7 +25675,7 @@ exports.imageProcessor = imageProcessor;
 
 
 /***/ }),
-/* 267 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25702,7 +25760,7 @@ exports.indent = indent;
 
 
 /***/ }),
-/* 268 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25714,11 +25772,11 @@ exports.indent = indent;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(269), exports);
+tslib_1.__exportStar(__webpack_require__(270), exports);
 
 
 /***/ }),
-/* 269 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25759,7 +25817,7 @@ exports.hr = hr;
 
 
 /***/ }),
-/* 270 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25772,15 +25830,15 @@ exports.hr = hr;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.inlinePopup = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(271);
 __webpack_require__(272);
+__webpack_require__(273);
 var autobind_decorator_1 = __webpack_require__(8);
 var plugin_1 = __webpack_require__(6);
 var factory_1 = __webpack_require__(18);
-var popup_1 = __webpack_require__(23);
+var popup_1 = __webpack_require__(24);
 var helpers_1 = __webpack_require__(1);
 var modules_1 = __webpack_require__(10);
-var decorators_1 = __webpack_require__(13);
+var decorators_1 = __webpack_require__(14);
 var inlinePopup = (function (_super) {
     tslib_1.__extends(inlinePopup, _super);
     function inlinePopup() {
@@ -25930,13 +25988,13 @@ exports.inlinePopup = inlinePopup;
 
 
 /***/ }),
-/* 271 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 272 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25952,9 +26010,9 @@ config_1.Config.prototype.toolbarInline = true;
 config_1.Config.prototype.toolbarInlineForSelection = false;
 config_1.Config.prototype.toolbarInlineDisableFor = [];
 config_1.Config.prototype.popup = {
-    a: __webpack_require__(273).default,
-    img: __webpack_require__(274).default,
-    cells: __webpack_require__(275).default,
+    a: __webpack_require__(274).default,
+    img: __webpack_require__(275).default,
+    cells: __webpack_require__(276).default,
     jodit: [
         {
             name: 'bin',
@@ -25995,7 +26053,7 @@ config_1.Config.prototype.popup = {
 
 
 /***/ }),
-/* 273 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26006,7 +26064,7 @@ config_1.Config.prototype.popup = {
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var utils_1 = __webpack_require__(14);
+var utils_1 = __webpack_require__(12);
 exports.default = [
     {
         name: 'eye',
@@ -26030,7 +26088,7 @@ exports.default = [
 
 
 /***/ }),
-/* 274 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26127,7 +26185,7 @@ exports.default = [
 
 
 /***/ }),
-/* 275 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26274,7 +26332,7 @@ exports.default = [
 
 
 /***/ }),
-/* 276 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26370,7 +26428,7 @@ exports.limit = limit;
 
 
 /***/ }),
-/* 277 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26385,7 +26443,7 @@ exports.link = void 0;
 var config_1 = __webpack_require__(4);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
-var template_1 = __webpack_require__(278);
+var template_1 = __webpack_require__(279);
 config_1.Config.prototype.link = {
     formTemplate: template_1.formTemplate,
     followOnDblClick: false,
@@ -26607,7 +26665,7 @@ exports.link = link;
 
 
 /***/ }),
-/* 278 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26619,7 +26677,7 @@ exports.link = link;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.formTemplate = void 0;
-var form_1 = __webpack_require__(35);
+var form_1 = __webpack_require__(36);
 var button_1 = __webpack_require__(15);
 exports.formTemplate = function (editor) {
     var _a = editor.o.link, openInNewTabCheckbox = _a.openInNewTabCheckbox, noFollowCheckbox = _a.noFollowCheckbox;
@@ -26677,7 +26735,7 @@ exports.formTemplate = function (editor) {
 
 
 /***/ }),
-/* 279 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26748,7 +26806,7 @@ exports.media = media;
 
 
 /***/ }),
-/* 280 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26845,7 +26903,7 @@ exports.mobile = mobile;
 
 
 /***/ }),
-/* 281 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26932,7 +26990,7 @@ function orderedList(editor) {
             if (ul && dom_1.Dom.isTag(ul.parentNode, 'p')) {
                 var selection = editor.s.save();
                 dom_1.Dom.unwrap(ul.parentNode);
-                Array.from(ul.childNodes).forEach(function (li) {
+                helpers_1.toArray(ul.childNodes).forEach(function (li) {
                     if (dom_1.Dom.isTag(li.lastChild, 'br')) {
                         dom_1.Dom.safeRemove(li.lastChild);
                     }
@@ -26947,7 +27005,7 @@ exports.orderedList = orderedList;
 
 
 /***/ }),
-/* 282 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26960,14 +27018,14 @@ exports.orderedList = orderedList;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.placeholder = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(283);
+__webpack_require__(284);
 var config_1 = __webpack_require__(4);
 var consts = __webpack_require__(3);
 var helpers_1 = __webpack_require__(1);
 var dom_1 = __webpack_require__(2);
 var plugin_1 = __webpack_require__(6);
 var constants_1 = __webpack_require__(3);
-var decorators_1 = __webpack_require__(13);
+var decorators_1 = __webpack_require__(14);
 config_1.Config.prototype.showPlaceholder = true;
 config_1.Config.prototype.useInputsPlaceholder = true;
 config_1.Config.prototype.placeholder = 'Type something';
@@ -27106,13 +27164,13 @@ exports.placeholder = placeholder;
 
 
 /***/ }),
-/* 283 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 284 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27165,7 +27223,7 @@ exports.redoUndo = redoUndo;
 
 
 /***/ }),
-/* 285 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27178,7 +27236,7 @@ exports.redoUndo = redoUndo;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resizer = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(286);
+__webpack_require__(287);
 var config_1 = __webpack_require__(4);
 var consts = __webpack_require__(3);
 var constants_1 = __webpack_require__(3);
@@ -27519,13 +27577,13 @@ exports.resizer = resizer;
 
 
 /***/ }),
-/* 286 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 287 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27538,7 +27596,7 @@ exports.resizer = resizer;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.search = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(288);
+__webpack_require__(289);
 var config_1 = __webpack_require__(4);
 var consts = __webpack_require__(3);
 var constants_1 = __webpack_require__(3);
@@ -27968,13 +28026,13 @@ exports.search = search;
 
 
 /***/ }),
-/* 288 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 289 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27986,13 +28044,13 @@ exports.search = search;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(290);
-tslib_1.__exportStar(__webpack_require__(291), exports);
+__webpack_require__(291);
 tslib_1.__exportStar(__webpack_require__(292), exports);
+tslib_1.__exportStar(__webpack_require__(293), exports);
 
 
 /***/ }),
-/* 290 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28011,7 +28069,7 @@ config_1.Config.prototype.saveHeightInStorage = false;
 
 
 /***/ }),
-/* 291 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28098,7 +28156,7 @@ exports.resizeHandler = resizeHandler;
 
 
 /***/ }),
-/* 292 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28111,7 +28169,7 @@ exports.resizeHandler = resizeHandler;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.size = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(293);
+__webpack_require__(294);
 var autobind_decorator_1 = __webpack_require__(8);
 var helpers_1 = __webpack_require__(1);
 var plugin_1 = __webpack_require__(6);
@@ -28233,13 +28291,13 @@ exports.size = size;
 
 
 /***/ }),
-/* 293 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 294 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28251,12 +28309,12 @@ exports.size = size;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(295);
-tslib_1.__exportStar(__webpack_require__(296), exports);
+__webpack_require__(296);
+tslib_1.__exportStar(__webpack_require__(297), exports);
 
 
 /***/ }),
-/* 295 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28281,11 +28339,11 @@ config_1.Config.prototype.sourceEditorNativeOptions = {
     highlightActiveLine: true
 };
 config_1.Config.prototype.sourceEditorCDNUrlsJS = [
-    'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.10/ace.js'
+    'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js'
 ];
 config_1.Config.prototype.beautifyHTMLCDNUrlsJS = [
-    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.11.0/beautify.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.11.0/beautify-html.min.js'
+    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.13.0/beautify.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.13.0/beautify-html.min.js'
 ];
 config_1.Config.prototype.controls.source = {
     mode: consts.MODE_SPLIT,
@@ -28300,7 +28358,7 @@ config_1.Config.prototype.controls.source = {
 
 
 /***/ }),
-/* 296 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28313,13 +28371,13 @@ config_1.Config.prototype.controls.source = {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.source = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(297);
+__webpack_require__(298);
 var consts = __webpack_require__(3);
 var constants_1 = __webpack_require__(3);
 var plugin_1 = __webpack_require__(6);
 var dom_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(1);
-var factory_1 = __webpack_require__(298);
+var factory_1 = __webpack_require__(299);
 var source = (function (_super) {
     tslib_1.__extends(source, _super);
     function source() {
@@ -28405,6 +28463,9 @@ var source = (function (_super) {
             }
             else {
                 _this.selInfo.length = 0;
+                if (_this.j.o.editHTMLDocumentMode) {
+                    return;
+                }
                 var value = _this.getMirrorValue();
                 if (_this.getSelectionStart() === _this.getSelectionEnd()) {
                     var marker = _this.j.s.marker(true);
@@ -28458,7 +28519,7 @@ var source = (function (_super) {
                 if (_this.selInfo[0].endMarker) {
                     value = value.replace(/<span[^>]+data-jodit-selection_marker="end"[^>]*>[<>]*?<\/span>/gim, _this.tempMarkerEnd);
                 }
-                if (_this.j.o.beautifyHTML) {
+                if (!_this.j.o.editHTMLDocumentMode && _this.j.o.beautifyHTML) {
                     var html = _this.j.e.fire('beautifyHTML', value);
                     if (helpers_1.isString(html)) {
                         value = html;
@@ -28589,13 +28650,13 @@ exports.source = source;
 
 
 /***/ }),
-/* 297 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 298 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28607,7 +28668,7 @@ exports.source = source;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createSourceEditor = void 0;
-var engines_1 = __webpack_require__(299);
+var engines_1 = __webpack_require__(300);
 function createSourceEditor(type, editor, container, toWYSIWYG, fromWYSIWYG) {
     var sourceEditor;
     switch (type) {
@@ -28629,7 +28690,7 @@ exports.createSourceEditor = createSourceEditor;
 
 
 /***/ }),
-/* 299 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28641,12 +28702,12 @@ exports.createSourceEditor = createSourceEditor;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-tslib_1.__exportStar(__webpack_require__(300), exports);
 tslib_1.__exportStar(__webpack_require__(301), exports);
+tslib_1.__exportStar(__webpack_require__(302), exports);
 
 
 /***/ }),
-/* 300 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28661,7 +28722,7 @@ exports.TextAreaEditor = void 0;
 var tslib_1 = __webpack_require__(0);
 var helpers_1 = __webpack_require__(1);
 var modules_1 = __webpack_require__(10);
-var sourceEditor_1 = __webpack_require__(69);
+var sourceEditor_1 = __webpack_require__(71);
 var TextAreaEditor = (function (_super) {
     tslib_1.__extends(TextAreaEditor, _super);
     function TextAreaEditor() {
@@ -28761,7 +28822,7 @@ exports.TextAreaEditor = TextAreaEditor;
 
 
 /***/ }),
-/* 301 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28776,7 +28837,7 @@ exports.AceEditor = void 0;
 var tslib_1 = __webpack_require__(0);
 var constants = __webpack_require__(3);
 var helpers_1 = __webpack_require__(1);
-var sourceEditor_1 = __webpack_require__(69);
+var sourceEditor_1 = __webpack_require__(71);
 var AceEditor = (function (_super) {
     tslib_1.__extends(AceEditor, _super);
     function AceEditor() {
@@ -28905,7 +28966,7 @@ var AceEditor = (function (_super) {
         (_b = (_a = this.j) === null || _a === void 0 ? void 0 : _a.events) === null || _b === void 0 ? void 0 : _b.off('aceInited.source');
     };
     AceEditor.prototype.setValue = function (value) {
-        if (this.j.o.beautifyHTML) {
+        if (!this.j.o.editHTMLDocumentMode && this.j.o.beautifyHTML) {
             var html = this.j.e.fire('beautifyHTML', value);
             if (helpers_1.isString(html)) {
                 value = html;
@@ -28969,7 +29030,7 @@ exports.AceEditor = AceEditor;
 
 
 /***/ }),
-/* 302 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29041,7 +29102,7 @@ exports.stat = stat;
 
 
 /***/ }),
-/* 303 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29054,7 +29115,7 @@ exports.stat = stat;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sticky = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(304);
+__webpack_require__(305);
 var config_1 = __webpack_require__(4);
 var constants_1 = __webpack_require__(3);
 var modules_1 = __webpack_require__(10);
@@ -29140,13 +29201,13 @@ exports.sticky = sticky;
 
 
 /***/ }),
-/* 304 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 305 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29159,11 +29220,11 @@ exports.sticky = sticky;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.symbols = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(306);
 __webpack_require__(307);
+__webpack_require__(308);
 var constants_1 = __webpack_require__(3);
 var modules_1 = __webpack_require__(10);
-var utils_1 = __webpack_require__(14);
+var utils_1 = __webpack_require__(12);
 var symbols = (function (_super) {
     tslib_1.__extends(symbols, _super);
     function symbols() {
@@ -29265,13 +29326,13 @@ exports.symbols = symbols;
 
 
 /***/ }),
-/* 306 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 307 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29522,7 +29583,7 @@ config_1.Config.prototype.controls.symbol = {
 
 
 /***/ }),
-/* 308 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29534,14 +29595,14 @@ config_1.Config.prototype.controls.symbol = {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(309);
-tslib_1.__exportStar(__webpack_require__(310), exports);
-tslib_1.__exportStar(__webpack_require__(312), exports);
+__webpack_require__(310);
+tslib_1.__exportStar(__webpack_require__(311), exports);
 tslib_1.__exportStar(__webpack_require__(313), exports);
+tslib_1.__exportStar(__webpack_require__(314), exports);
 
 
 /***/ }),
-/* 309 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29554,7 +29615,7 @@ tslib_1.__exportStar(__webpack_require__(313), exports);
 Object.defineProperty(exports, "__esModule", { value: true });
 var config_1 = __webpack_require__(4);
 var dom_1 = __webpack_require__(2);
-var utils_1 = __webpack_require__(14);
+var utils_1 = __webpack_require__(12);
 var helpers_1 = __webpack_require__(1);
 config_1.Config.prototype.table = {
     allowCellSelection: true,
@@ -29700,7 +29761,7 @@ config_1.Config.prototype.controls.table = {
 
 
 /***/ }),
-/* 310 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29713,7 +29774,7 @@ config_1.Config.prototype.controls.table = {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resizeCells = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(311);
+__webpack_require__(312);
 var autobind_decorator_1 = __webpack_require__(8);
 var consts = __webpack_require__(3);
 var modules_1 = __webpack_require__(10);
@@ -29988,13 +30049,13 @@ exports.resizeCells = resizeCells;
 
 
 /***/ }),
-/* 311 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 312 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30011,7 +30072,7 @@ var autobind_decorator_1 = __webpack_require__(8);
 var plugin_1 = __webpack_require__(6);
 var modules_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(1);
-var justify_1 = __webpack_require__(68);
+var justify_1 = __webpack_require__(70);
 var constants_1 = __webpack_require__(3);
 var key = 'table_processor_observer';
 var selectCells = (function (_super) {
@@ -30095,9 +30156,6 @@ var selectCells = (function (_super) {
         }
         if (cell !== this.selectedCell) {
             this.j.lock(key);
-            if (e.preventDefault) {
-                e.preventDefault();
-            }
         }
         this.unselectCells(table);
         var bound = modules_1.Table.getSelectedBound(table, [cell, this.selectedCell]), box = modules_1.Table.formalMatrix(table);
@@ -30254,7 +30312,7 @@ exports.selectCells = selectCells;
 
 
 /***/ }),
-/* 313 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30385,7 +30443,7 @@ exports.tableKeyboardNavigation = tableKeyboardNavigation;
 
 
 /***/ }),
-/* 314 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30398,7 +30456,7 @@ exports.tableKeyboardNavigation = tableKeyboardNavigation;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.tooltip = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(315);
+__webpack_require__(316);
 var autobind_decorator_1 = __webpack_require__(8);
 var helpers_1 = __webpack_require__(1);
 var plugin_1 = __webpack_require__(6);
@@ -30479,25 +30537,10 @@ exports.tooltip = tooltip;
 
 
 /***/ }),
-/* 315 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
 /* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", { value: true });
-__webpack_require__(317);
-
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 /* 317 */
@@ -30511,10 +30554,25 @@ __webpack_require__(317);
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+__webpack_require__(318);
+
+
+/***/ }),
+/* 318 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
 var config_1 = __webpack_require__(4);
 var widget_1 = __webpack_require__(17);
 var helpers_1 = __webpack_require__(1);
-var form_1 = __webpack_require__(35);
+var form_1 = __webpack_require__(36);
 var button_1 = __webpack_require__(15);
 config_1.Config.prototype.controls.video = {
     popup: function (editor, current, control, close) {
@@ -30574,7 +30632,7 @@ config_1.Config.prototype.controls.video = {
 
 
 /***/ }),
-/* 318 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30585,11 +30643,11 @@ config_1.Config.prototype.controls.video = {
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-__webpack_require__(319);
+__webpack_require__(320);
 
 
 /***/ }),
-/* 319 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30685,7 +30743,7 @@ config_1.Config.prototype.controls.preview = {
 
 
 /***/ }),
-/* 320 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30698,7 +30756,7 @@ config_1.Config.prototype.controls.preview = {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.xpath = void 0;
 var tslib_1 = __webpack_require__(0);
-__webpack_require__(321);
+__webpack_require__(322);
 var config_1 = __webpack_require__(4);
 var constants_1 = __webpack_require__(3);
 var modules_1 = __webpack_require__(10);
@@ -30851,13 +30909,13 @@ exports.xpath = xpath;
 
 
 /***/ }),
-/* 321 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 322 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30869,650 +30927,650 @@ exports.xpath = xpath;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.video = exports.valign = exports.upload = exports.update = exports.unlock = exports.unlink = exports.undo = exports.underline = exports.ul = exports.th_list = exports.th = exports.table = exports.superscript = exports.subscript = exports.strikethrough = exports.splitv = exports.splitg = exports.source = exports.shrink = exports.select_all = exports.search = exports.save = exports.right = exports.resizer = exports.resize = exports.redo = exports.print = exports.plus = exports.pencil = exports.paste = exports.paragraph = exports.palette = exports.outdent = exports.omega = exports.ol = exports.ok = exports.merge = exports.menu = exports.lock = exports.link = exports.left = exports.justify = exports.italic = exports.info_circle = exports.indent = exports.image = exports.hr = exports.fullsize = exports.fontsize = exports.font = exports.folder = exports.file = exports.eye = exports.eraser = exports.enter = exports.chevron = exports.dots = exports.dedent = exports.cut = exports.crop = exports.copy = exports.copyformat = exports.check_square = exports.check = exports.chain_broken = exports.center = exports.cancel = exports.brush = exports.bold = exports.bin = exports.attachment = exports.arrows_h = exports.arrows_alt = exports.angle_up = exports.angle_right = exports.angle_left = exports.angle_down = exports.addrow = exports.addcolumn = exports.about = void 0;
-var about = __webpack_require__(323);
+var about = __webpack_require__(324);
 exports.about = about;
-var addcolumn = __webpack_require__(324);
+var addcolumn = __webpack_require__(325);
 exports.addcolumn = addcolumn;
-var addrow = __webpack_require__(325);
+var addrow = __webpack_require__(326);
 exports.addrow = addrow;
-var angle_down = __webpack_require__(326);
+var angle_down = __webpack_require__(327);
 exports.angle_down = angle_down;
-var angle_left = __webpack_require__(327);
+var angle_left = __webpack_require__(328);
 exports.angle_left = angle_left;
-var angle_right = __webpack_require__(328);
+var angle_right = __webpack_require__(329);
 exports.angle_right = angle_right;
-var angle_up = __webpack_require__(329);
+var angle_up = __webpack_require__(330);
 exports.angle_up = angle_up;
-var arrows_alt = __webpack_require__(330);
+var arrows_alt = __webpack_require__(331);
 exports.arrows_alt = arrows_alt;
-var arrows_h = __webpack_require__(331);
+var arrows_h = __webpack_require__(332);
 exports.arrows_h = arrows_h;
-var attachment = __webpack_require__(332);
+var attachment = __webpack_require__(333);
 exports.attachment = attachment;
-var bin = __webpack_require__(333);
+var bin = __webpack_require__(334);
 exports.bin = bin;
-var bold = __webpack_require__(334);
+var bold = __webpack_require__(335);
 exports.bold = bold;
-var brush = __webpack_require__(335);
+var brush = __webpack_require__(336);
 exports.brush = brush;
-var cancel = __webpack_require__(336);
+var cancel = __webpack_require__(337);
 exports.cancel = cancel;
-var center = __webpack_require__(337);
+var center = __webpack_require__(338);
 exports.center = center;
-var chain_broken = __webpack_require__(338);
+var chain_broken = __webpack_require__(339);
 exports.chain_broken = chain_broken;
-var check = __webpack_require__(339);
+var check = __webpack_require__(340);
 exports.check = check;
-var check_square = __webpack_require__(340);
+var check_square = __webpack_require__(341);
 exports.check_square = check_square;
-var chevron = __webpack_require__(341);
+var chevron = __webpack_require__(342);
 exports.chevron = chevron;
-var copyformat = __webpack_require__(342);
+var copyformat = __webpack_require__(343);
 exports.copyformat = copyformat;
-var crop = __webpack_require__(343);
+var crop = __webpack_require__(344);
 exports.crop = crop;
-var copy = __webpack_require__(344);
+var copy = __webpack_require__(345);
 exports.copy = copy;
-var cut = __webpack_require__(345);
+var cut = __webpack_require__(346);
 exports.cut = cut;
-var dedent = __webpack_require__(346);
+var dedent = __webpack_require__(347);
 exports.dedent = dedent;
-var dots = __webpack_require__(347);
+var dots = __webpack_require__(348);
 exports.dots = dots;
-var enter = __webpack_require__(348);
+var enter = __webpack_require__(349);
 exports.enter = enter;
-var eraser = __webpack_require__(349);
+var eraser = __webpack_require__(350);
 exports.eraser = eraser;
-var eye = __webpack_require__(350);
+var eye = __webpack_require__(351);
 exports.eye = eye;
-var file = __webpack_require__(351);
+var file = __webpack_require__(352);
 exports.file = file;
-var folder = __webpack_require__(352);
+var folder = __webpack_require__(353);
 exports.folder = folder;
-var font = __webpack_require__(353);
+var font = __webpack_require__(354);
 exports.font = font;
-var fontsize = __webpack_require__(354);
+var fontsize = __webpack_require__(355);
 exports.fontsize = fontsize;
-var fullsize = __webpack_require__(355);
+var fullsize = __webpack_require__(356);
 exports.fullsize = fullsize;
-var hr = __webpack_require__(356);
+var hr = __webpack_require__(357);
 exports.hr = hr;
-var image = __webpack_require__(357);
+var image = __webpack_require__(358);
 exports.image = image;
-var indent = __webpack_require__(358);
+var indent = __webpack_require__(359);
 exports.indent = indent;
-var info_circle = __webpack_require__(359);
+var info_circle = __webpack_require__(360);
 exports.info_circle = info_circle;
-var italic = __webpack_require__(360);
+var italic = __webpack_require__(361);
 exports.italic = italic;
-var justify = __webpack_require__(361);
+var justify = __webpack_require__(362);
 exports.justify = justify;
-var left = __webpack_require__(362);
+var left = __webpack_require__(363);
 exports.left = left;
-var link = __webpack_require__(363);
+var link = __webpack_require__(364);
 exports.link = link;
-var lock = __webpack_require__(364);
+var lock = __webpack_require__(365);
 exports.lock = lock;
-var menu = __webpack_require__(365);
+var menu = __webpack_require__(366);
 exports.menu = menu;
-var merge = __webpack_require__(366);
+var merge = __webpack_require__(367);
 exports.merge = merge;
-var ok = __webpack_require__(367);
+var ok = __webpack_require__(368);
 exports.ok = ok;
-var ol = __webpack_require__(368);
+var ol = __webpack_require__(369);
 exports.ol = ol;
-var omega = __webpack_require__(369);
+var omega = __webpack_require__(370);
 exports.omega = omega;
-var outdent = __webpack_require__(370);
+var outdent = __webpack_require__(371);
 exports.outdent = outdent;
-var palette = __webpack_require__(371);
+var palette = __webpack_require__(372);
 exports.palette = palette;
-var paragraph = __webpack_require__(372);
+var paragraph = __webpack_require__(373);
 exports.paragraph = paragraph;
-var paste = __webpack_require__(373);
+var paste = __webpack_require__(374);
 exports.paste = paste;
-var pencil = __webpack_require__(374);
+var pencil = __webpack_require__(375);
 exports.pencil = pencil;
-var plus = __webpack_require__(375);
+var plus = __webpack_require__(376);
 exports.plus = plus;
-var print = __webpack_require__(376);
+var print = __webpack_require__(377);
 exports.print = print;
-var redo = __webpack_require__(377);
+var redo = __webpack_require__(378);
 exports.redo = redo;
-var resize = __webpack_require__(378);
+var resize = __webpack_require__(379);
 exports.resize = resize;
-var resizer = __webpack_require__(379);
+var resizer = __webpack_require__(380);
 exports.resizer = resizer;
-var right = __webpack_require__(380);
+var right = __webpack_require__(381);
 exports.right = right;
-var save = __webpack_require__(381);
+var save = __webpack_require__(382);
 exports.save = save;
-var search = __webpack_require__(382);
+var search = __webpack_require__(383);
 exports.search = search;
-var select_all = __webpack_require__(383);
+var select_all = __webpack_require__(384);
 exports.select_all = select_all;
-var shrink = __webpack_require__(384);
+var shrink = __webpack_require__(385);
 exports.shrink = shrink;
-var source = __webpack_require__(385);
+var source = __webpack_require__(386);
 exports.source = source;
-var splitg = __webpack_require__(386);
+var splitg = __webpack_require__(387);
 exports.splitg = splitg;
-var splitv = __webpack_require__(387);
+var splitv = __webpack_require__(388);
 exports.splitv = splitv;
-var strikethrough = __webpack_require__(388);
+var strikethrough = __webpack_require__(389);
 exports.strikethrough = strikethrough;
-var subscript = __webpack_require__(389);
+var subscript = __webpack_require__(390);
 exports.subscript = subscript;
-var superscript = __webpack_require__(390);
+var superscript = __webpack_require__(391);
 exports.superscript = superscript;
-var table = __webpack_require__(391);
+var table = __webpack_require__(392);
 exports.table = table;
-var th = __webpack_require__(392);
+var th = __webpack_require__(393);
 exports.th = th;
-var th_list = __webpack_require__(393);
+var th_list = __webpack_require__(394);
 exports.th_list = th_list;
-var ul = __webpack_require__(394);
+var ul = __webpack_require__(395);
 exports.ul = ul;
-var underline = __webpack_require__(395);
+var underline = __webpack_require__(396);
 exports.underline = underline;
-var undo = __webpack_require__(396);
+var undo = __webpack_require__(397);
 exports.undo = undo;
-var unlink = __webpack_require__(397);
+var unlink = __webpack_require__(398);
 exports.unlink = unlink;
-var unlock = __webpack_require__(398);
+var unlock = __webpack_require__(399);
 exports.unlock = unlock;
-var update = __webpack_require__(399);
+var update = __webpack_require__(400);
 exports.update = update;
-var upload = __webpack_require__(400);
+var upload = __webpack_require__(401);
 exports.upload = upload;
-var valign = __webpack_require__(401);
+var valign = __webpack_require__(402);
 exports.valign = valign;
-var video = __webpack_require__(402);
+var video = __webpack_require__(403);
 exports.video = video;
 
-
-/***/ }),
-/* 323 */
-/***/ (function(module, exports) {
-
-module.exports = "<svg viewBox=\"0 0 1792 1792\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z\"/> </svg> "
 
 /***/ }),
 /* 324 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 18.151 18.151\" xmlns=\"http://www.w3.org/2000/svg\"> <g> <g> <path stroke-width=\"0\" d=\"M6.237,16.546H3.649V1.604h5.916v5.728c0.474-0.122,0.968-0.194,1.479-0.194 c0.042,0,0.083,0.006,0.125,0.006V0H2.044v18.15h5.934C7.295,17.736,6.704,17.19,6.237,16.546z\"/> <path stroke-width=\"0\" d=\"M11.169,8.275c-2.723,0-4.938,2.215-4.938,4.938s2.215,4.938,4.938,4.938s4.938-2.215,4.938-4.938 S13.892,8.275,11.169,8.275z M11.169,16.81c-1.983,0-3.598-1.612-3.598-3.598c0-1.983,1.614-3.597,3.598-3.597 s3.597,1.613,3.597,3.597C14.766,15.198,13.153,16.81,11.169,16.81z\"/> <polygon stroke-width=\"0\" points=\"11.792,11.073 10.502,11.073 10.502,12.578 9.03,12.578 9.03,13.868 10.502,13.868 10.502,15.352 11.792,15.352 11.792,13.868 13.309,13.868 13.309,12.578 11.792,12.578 \"/> </g> </g> </svg> "
+module.exports = "<svg viewBox=\"0 0 1792 1792\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z\"/> </svg> "
 
 /***/ }),
 /* 325 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <rect x=\"252\" y=\"96\"/> <rect/> <rect x=\"252\" y=\"288\"/> <rect y=\"384\"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176 \"/> </g> </g> </svg> "
+module.exports = "<svg viewBox=\"0 0 18.151 18.151\" xmlns=\"http://www.w3.org/2000/svg\"> <g> <g> <path stroke-width=\"0\" d=\"M6.237,16.546H3.649V1.604h5.916v5.728c0.474-0.122,0.968-0.194,1.479-0.194 c0.042,0,0.083,0.006,0.125,0.006V0H2.044v18.15h5.934C7.295,17.736,6.704,17.19,6.237,16.546z\"/> <path stroke-width=\"0\" d=\"M11.169,8.275c-2.723,0-4.938,2.215-4.938,4.938s2.215,4.938,4.938,4.938s4.938-2.215,4.938-4.938 S13.892,8.275,11.169,8.275z M11.169,16.81c-1.983,0-3.598-1.612-3.598-3.598c0-1.983,1.614-3.597,3.598-3.597 s3.597,1.613,3.597,3.597C14.766,15.198,13.153,16.81,11.169,16.81z\"/> <polygon stroke-width=\"0\" points=\"11.792,11.073 10.502,11.073 10.502,12.578 9.03,12.578 9.03,13.868 10.502,13.868 10.502,15.352 11.792,15.352 11.792,13.868 13.309,13.868 13.309,12.578 11.792,12.578 \"/> </g> </g> </svg> "
 
 /***/ }),
 /* 326 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <rect x=\"252\" y=\"96\"/> <rect/> <rect x=\"252\" y=\"288\"/> <rect y=\"384\"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176 \"/> </g> </g> </svg> "
 
 /***/ }),
 /* 327 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg> "
 
 /***/ }),
 /* 328 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg> "
 
 /***/ }),
 /* 329 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg> "
 
 /***/ }),
 /* 330 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1411 541l-355 355 355 355 144-144q29-31 70-14 39 17 39 59v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l144-144-355-355-355 355 144 144q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l144 144 355-355-355-355-144 144q-19 19-45 19-12 0-24-5-40-17-40-59v-448q0-26 19-45t45-19h448q42 0 59 40 17 39-14 69l-144 144 355 355 355-355-144-144q-31-30-14-69 17-40 59-40h448q26 0 45 19t19 45v448q0 42-39 59-13 5-25 5-26 0-45-19z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg> "
 
 /***/ }),
 /* 331 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1792 896q0 26-19 45l-256 256q-19 19-45 19t-45-19-19-45v-128h-1024v128q0 26-19 45t-45 19-45-19l-256-256q-19-19-19-45t19-45l256-256q19-19 45-19t45 19 19 45v128h1024v-128q0-26 19-45t45-19 45 19l256 256q19 19 19 45z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1411 541l-355 355 355 355 144-144q29-31 70-14 39 17 39 59v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l144-144-355-355-355 355 144 144q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l144 144 355-355-355-355-144 144q-19 19-45 19-12 0-24-5-40-17-40-59v-448q0-26 19-45t45-19h448q42 0 59 40 17 39-14 69l-144 144 355 355 355-355-144-144q-31-30-14-69 17-40 59-40h448q26 0 45 19t19 45v448q0 42-39 59-13 5-25 5-26 0-45-19z\"/> </svg> "
 
 /***/ }),
 /* 332 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1596 1385q0 117-79 196t-196 79q-135 0-235-100l-777-776q-113-115-113-271 0-159 110-270t269-111q158 0 273 113l605 606q10 10 10 22 0 16-30.5 46.5t-46.5 30.5q-13 0-23-10l-606-607q-79-77-181-77-106 0-179 75t-73 181q0 105 76 181l776 777q63 63 145 63 64 0 106-42t42-106q0-82-63-145l-581-581q-26-24-60-24-29 0-48 19t-19 48q0 32 25 59l410 410q10 10 10 22 0 16-31 47t-47 31q-12 0-22-10l-410-410q-63-61-63-149 0-82 57-139t139-57q88 0 149 63l581 581q100 98 100 235z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1792 896q0 26-19 45l-256 256q-19 19-45 19t-45-19-19-45v-128h-1024v128q0 26-19 45t-45 19-45-19l-256-256q-19-19-19-45t19-45l256-256q19-19 45-19t45 19 19 45v128h1024v-128q0-26 19-45t45-19 45 19l256 256q19 19 19 45z\"/></svg> "
 
 /***/ }),
 /* 333 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1596 1385q0 117-79 196t-196 79q-135 0-235-100l-777-776q-113-115-113-271 0-159 110-270t269-111q158 0 273 113l605 606q10 10 10 22 0 16-30.5 46.5t-46.5 30.5q-13 0-23-10l-606-607q-79-77-181-77-106 0-179 75t-73 181q0 105 76 181l776 777q63 63 145 63 64 0 106-42t42-106q0-82-63-145l-581-581q-26-24-60-24-29 0-48 19t-19 48q0 32 25 59l410 410q10 10 10 22 0 16-31 47t-47 31q-12 0-22-10l-410-410q-63-61-63-149 0-82 57-139t139-57q88 0 149 63l581 581q100 98 100 235z\"/></svg> "
 
 /***/ }),
 /* 334 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z\"/> </svg> "
 
 /***/ }),
 /* 335 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M896 1152q0-36-20-69-1-1-15.5-22.5t-25.5-38-25-44-21-50.5q-4-16-21-16t-21 16q-7 23-21 50.5t-25 44-25.5 38-15.5 22.5q-20 33-20 69 0 53 37.5 90.5t90.5 37.5 90.5-37.5 37.5-90.5zm512-128q0 212-150 362t-362 150-362-150-150-362q0-145 81-275 6-9 62.5-90.5t101-151 99.5-178 83-201.5q9-30 34-47t51-17 51.5 17 33.5 47q28 93 83 201.5t99.5 178 101 151 62.5 90.5q81 127 81 275z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z\"/></svg> "
 
 /***/ }),
 /* 336 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 14 14\" xmlns=\"http://www.w3.org/2000/svg\"> <g stroke=\"none\" stroke-width=\"1\"> <path d=\"M14,1.4 L12.6,0 L7,5.6 L1.4,0 L0,1.4 L5.6,7 L0,12.6 L1.4,14 L7,8.4 L12.6,14 L14,12.6 L8.4,7 L14,1.4 Z\"/> </g> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M896 1152q0-36-20-69-1-1-15.5-22.5t-25.5-38-25-44-21-50.5q-4-16-21-16t-21 16q-7 23-21 50.5t-25 44-25.5 38-15.5 22.5q-20 33-20 69 0 53 37.5 90.5t90.5 37.5 90.5-37.5 37.5-90.5zm512-128q0 212-150 362t-362 150-362-150-150-362q0-145 81-275 6-9 62.5-90.5t101-151 99.5-178 83-201.5q9-30 34-47t51-17 51.5 17 33.5 47q28 93 83 201.5t99.5 178 101 151 62.5 90.5q81 127 81 275z\"/></svg> "
 
 /***/ }),
 /* 337 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h896q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-640q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h640q26 0 45 19t19 45z\"/></svg> "
+module.exports = "<svg viewBox=\"0 0 14 14\" xmlns=\"http://www.w3.org/2000/svg\"> <g stroke=\"none\" stroke-width=\"1\"> <path d=\"M14,1.4 L12.6,0 L7,5.6 L1.4,0 L0,1.4 L5.6,7 L0,12.6 L1.4,14 L7,8.4 L12.6,14 L14,12.6 L8.4,7 L14,1.4 Z\"/> </g> </svg> "
 
 /***/ }),
 /* 338 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h896q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-640q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h640q26 0 45 19t19 45z\"/></svg> "
 
 /***/ }),
 /* 339 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/></svg> "
 
 /***/ }),
 /* 340 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/></svg> "
 
 /***/ }),
 /* 341 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg> "
 
 /***/ }),
 /* 342 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg> "
 
 /***/ }),
 /* 343 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg> "
 
 /***/ }),
 /* 344 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg> "
 
 /***/ }),
 /* 345 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg> "
+module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg> "
 
 /***/ }),
 /* 346 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg> "
 
 /***/ }),
 /* 347 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg> "
 
 /***/ }),
 /* 348 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <g> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125 \"/> </g> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg> "
 
 /***/ }),
 /* 349 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <g> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125 \"/> </g> </svg> "
 
 /***/ }),
 /* 350 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg> "
 
 /***/ }),
 /* 351 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/></svg> "
 
 /***/ }),
 /* 352 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg> "
 
 /***/ }),
 /* 353 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg> "
 
 /***/ }),
 /* 354 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/></svg> "
 
 /***/ }),
 /* 355 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/></svg> "
 
 /***/ }),
 /* 356 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg> "
 
 /***/ }),
 /* 357 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/></svg> "
 
 /***/ }),
 /* 358 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/></svg> "
 
 /***/ }),
 /* 359 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg> "
 
 /***/ }),
 /* 360 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/></svg> "
 
 /***/ }),
 /* 361 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/></svg> "
 
 /***/ }),
 /* 362 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/></svg> "
 
 /***/ }),
 /* 363 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/></svg> "
 
 /***/ }),
 /* 364 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/></svg> "
 
 /***/ }),
 /* 365 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg> "
 
 /***/ }),
 /* 366 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg> "
 
 /***/ }),
 /* 367 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 32 32\"> <path d=\"M27 4l-15 15-7-7-5 5 12 12 20-20z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg> "
 
 /***/ }),
 /* 368 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 32 32\"> <path d=\"M27 4l-15 15-7-7-5 5 12 12 20-20z\"/> </svg> "
 
 /***/ }),
 /* 369 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg> "
 
 /***/ }),
 /* 370 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg> "
 
 /***/ }),
 /* 371 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </g> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg> "
 
 /***/ }),
 /* 372 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </g> </svg> "
 
 /***/ }),
 /* 373 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg> "
 
 /***/ }),
 /* 374 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg> "
+module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg> "
 
 /***/ }),
 /* 375 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg> "
 
 /***/ }),
 /* 376 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg> "
 
 /***/ }),
 /* 377 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg> "
 
 /***/ }),
 /* 378 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <g> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </g> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg> "
 
 /***/ }),
 /* 379 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <g> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </g> </svg> "
 
 /***/ }),
 /* 380 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg> "
 
 /***/ }),
 /* 381 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg> "
 
 /***/ }),
 /* 382 */
 /***/ (function(module, exports) {
 
-module.exports = "<?xml version=\"1.0\" ?> <svg viewBox=\"0 0 500 500\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg> "
 
 /***/ }),
 /* 383 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg> "
+module.exports = "<?xml version=\"1.0\" ?> <svg viewBox=\"0 0 500 500\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg> "
 
 /***/ }),
 /* 384 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg> "
 
 /***/ }),
 /* 385 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg> "
 
 /***/ }),
 /* 386 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/><path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg> "
 
 /***/ }),
 /* 387 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/><path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg> "
 
 /***/ }),
 /* 388 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg> "
 
 /***/ }),
 /* 389 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg> "
 
 /***/ }),
 /* 390 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg> "
 
 /***/ }),
 /* 391 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg> "
 
 /***/ }),
 /* 392 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg> "
 
 /***/ }),
 /* 393 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg> "
 
 /***/ }),
 /* 394 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg> "
 
 /***/ }),
 /* 395 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg> "
 
 /***/ }),
 /* 396 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg> "
 
 /***/ }),
 /* 397 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg> "
 
 /***/ }),
 /* 398 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg> "
 
 /***/ }),
 /* 399 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/> </svg> "
 
 /***/ }),
 /* 400 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/> </svg> "
 
 /***/ }),
 /* 401 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/> </svg> "
 
 /***/ }),
 /* 402 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 352v1088q0 42-39 59-13 5-25 5-27 0-45-19l-403-403v166q0 119-84.5 203.5t-203.5 84.5h-704q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h704q119 0 203.5 84.5t84.5 203.5v165l403-402q18-19 45-19 12 0 25 5 39 17 39 59z\"/> </svg> "
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/> </svg> "
 
 /***/ }),
 /* 403 */
+/***/ (function(module, exports) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 352v1088q0 42-39 59-13 5-25 5-27 0-45-19l-403-403v166q0 119-84.5 203.5t-203.5 84.5h-704q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h704q119 0 203.5 84.5t84.5 203.5v165l403-402q18-19 45-19 12 0 25 5 39 17 39 59z\"/> </svg> "
+
+/***/ }),
+/* 404 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31524,7 +31582,7 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.keepModuleNames = void 0;
-var utils_1 = __webpack_require__(14);
+var utils_1 = __webpack_require__(12);
 function keepModuleNames(modules) {
     utils_1.keepNames.set(modules.UIButton, 'UIButton');
     utils_1.keepNames.set(modules.UIElement, 'UIElement');

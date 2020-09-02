@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.24
+ * Version: v3.4.25
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -94,7 +94,7 @@
 .jodit-form .jodit-form__center{
   justify-content:center;
 }
-.jodit-input{
+.jodit .jodit-input{
   font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 		Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size:14px;
@@ -111,7 +111,7 @@
   border-radius:0;
   background-color:#fff;
 }
-.jodit-select{
+.jodit .jodit-select{
   font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 		Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size:14px;
@@ -128,7 +128,7 @@
   border-radius:0;
   background-color:#fff;
 }
-.jodit-textarea{
+.jodit .jodit-textarea{
   font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 		Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size:14px;
@@ -145,28 +145,28 @@
   border-radius:0;
   background-color:#fff;
 }
-.jodit-input[disabled]{
+.jodit .jodit-input[disabled]{
   background-color:#f0f0f0;
   color:#dadada;
 }
-.jodit-select[disabled]{
+.jodit .jodit-select[disabled]{
   background-color:#f0f0f0;
   color:#dadada;
 }
-.jodit-textarea[disabled]{
+.jodit .jodit-textarea[disabled]{
   background-color:#f0f0f0;
   color:#dadada;
 }
-.jodit-input_has-error_true{
+.jodit .jodit-input_has-error_true{
   border-color:#ff3b3b;
 }
-.jodit-select_has-error_true{
+.jodit .jodit-select_has-error_true{
   border-color:#ff3b3b;
 }
-.jodit-textarea_has-error_true{
+.jodit .jodit-textarea_has-error_true{
   border-color:#ff3b3b;
 }
-.jodit-input:focus{
+.jodit .jodit-input:focus{
   border-color:#66afe9;
   outline:0;
 }
