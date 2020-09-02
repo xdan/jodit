@@ -64,9 +64,7 @@
 	}
 }
 
-.jodit-textarea,
-.jodit-select,
-.jodit-input {
+.jodit-input-mx() {
 	.font();
 
 	width: 100%;
@@ -94,9 +92,17 @@
 	}
 }
 
-.jodit-input:focus {
-	border-color: #66afe9;
-	outline: 0;
+.jodit {
+	.jodit-textarea,
+	.jodit-select,
+	.jodit-input {
+		.jodit-input-mx();
+	}
+
+	.jodit-input:focus {
+		border-color: #66afe9;
+		outline: 0;
+	}
 }
 
 .jodit-checkbox {

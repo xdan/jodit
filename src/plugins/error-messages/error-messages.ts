@@ -8,7 +8,7 @@ import './errors-messages.less';
 
 import { Config } from '../../config';
 import { Dom } from '../../core/dom';
-import { css } from '../../core/helpers';
+import { css, toArray } from '../../core/helpers';
 import { IJodit } from '../../types';
 
 declare module '../../config' {
@@ -45,7 +45,7 @@ export function errorMessages(editor: IJodit): void {
 			),
 			recalcOffsets = () => {
 				height = 5;
-				Array.from(
+				toArray(
 					messagesBox.childNodes as NodeListOf<HTMLElement>
 				).forEach((elm: HTMLElement) => {
 					css(messagesBox, 'bottom', height + 'px');

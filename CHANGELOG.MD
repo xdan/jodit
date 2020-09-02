@@ -1,4 +1,7 @@
 # Changelog
+## 3.4.25
+* https://github.com/xdan/jodit/issues/422
+
 ## 3.4.24
 ### Bug fixes
 

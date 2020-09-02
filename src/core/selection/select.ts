@@ -33,7 +33,7 @@ import {
 	$$,
 	css,
 	isArray,
-	call
+	call, toArray
 } from '../helpers';
 import { Style } from './style/style';
 
@@ -784,7 +784,7 @@ export class Select {
 				}
 
 				if (current.nodeName.match(/^(UL|OL)$/)) {
-					return Array.from(current.childNodes).forEach(forEvery);
+					return toArray(current.childNodes).forEach(forEvery);
 				}
 
 				if (Dom.isTag(current, 'li')) {
@@ -858,7 +858,7 @@ export class Select {
 				return false;
 			}
 		} else {
-			const children = Array.from(container.childNodes);
+			const children = toArray(container.childNodes);
 
 			if (end) {
 				if (children.slice(offset).some(check)) {

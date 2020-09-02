@@ -11,6 +11,13 @@ import { IDictionary } from './types';
 if (!Array.from) {
 	Array.from = <T>(object: T[]): T[] => {
 		'use strict';
+
+		if (object instanceof Set) {
+			const res: T[] = [];
+			object.forEach(a => res.push(a));
+			return res;
+		}
+
 		return [].slice.call(object);
 	};
 }

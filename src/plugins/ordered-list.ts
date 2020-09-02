@@ -7,7 +7,7 @@
 import { Config } from '../config';
 import { Dom } from '../core/dom';
 import { IControlType, IJodit, markerInfo } from '../types';
-import { dataBind } from '../core/helpers';
+import { dataBind, toArray } from '../core/helpers';
 
 const exec: IControlType<IJodit>['exec'] = (jodit, _, { control }): void => {
 	const key = `button${control.command}`;
@@ -110,7 +110,7 @@ export function orderedList(editor: IJodit): void {
 
 					Dom.unwrap(ul.parentNode);
 
-					Array.from(ul.childNodes).forEach((li: Node) => {
+					toArray(ul.childNodes).forEach((li: Node) => {
 						if (Dom.isTag(li.lastChild, 'br')) {
 							Dom.safeRemove(li.lastChild);
 						}

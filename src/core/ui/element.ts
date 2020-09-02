@@ -5,10 +5,10 @@
  */
 
 import { ViewComponent, STATUSES } from '../component';
-import { IDictionary, IUIElement, IViewBased, Nullable } from '../../types';
+import type { IDictionary, IUIElement, IViewBased, Nullable } from '../../types';
 import { Dom } from '../dom';
 import { getClassName } from '../helpers/utils';
-
+import { toArray } from '../helpers/array';
 
 export abstract class UIElement<T extends IViewBased = IViewBased>
 	extends ViewComponent<T>
@@ -74,7 +74,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 			return false;
 		});
 
-		return elm ? elm?.component as IUIElement : null;
+		return elm ? (elm?.component as IUIElement) : null;
 	}
 
 	readonly mods: IDictionary<string | boolean | null> = {};
@@ -99,7 +99,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		const mod = `${this.componentName}_${name}`,
 			cl = container.classList;
 
-		Array.from(cl).forEach(className => {
+		toArray(cl).forEach(className => {
 			if (className.indexOf(mod) === 0) {
 				cl.remove(className);
 			}

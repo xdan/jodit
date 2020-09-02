@@ -32,7 +32,7 @@ import {
 	isBoolean,
 	isFunction,
 	isString,
-	splitArray
+	splitArray, toArray
 } from '../../core/helpers/';
 import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 import { Dom } from '../../core/dom';
@@ -140,7 +140,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			}
 		);
 
-		Array.from(root.childNodes).forEach((elm: ChildNode) => {
+		toArray(root.childNodes).forEach((elm: ChildNode) => {
 			if (elements_list.indexOf(elm as HTMLElement) === -1) {
 				root.removeChild(elm);
 			}

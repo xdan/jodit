@@ -32,6 +32,7 @@ module.exports = {
 		'no-fallthrough': 'off'
 	},
 	globals: {
+		"Set": true,
 		"createPoint": true,
 		"afterEach": true,
 		"SynchronousPromise": true,

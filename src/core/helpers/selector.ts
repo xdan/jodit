@@ -11,6 +11,7 @@ import { attr } from './utils';
 import { error } from './type';
 import { Dom } from '../dom';
 import { camelCase } from './string';
+import { toArray } from './array';
 
 let temp = 1;
 
@@ -109,7 +110,7 @@ export const getXPathByElement = (
 		'/' +
 		element.nodeName.toLowerCase() +
 		(sames.length > 1
-			? '[' + (Array.from(sames).indexOf(element) + 1) + ']'
+			? '[' + (toArray(sames).indexOf(element) + 1) + ']'
 			: '')
 	);
 };

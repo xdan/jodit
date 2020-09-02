@@ -16,7 +16,7 @@
 
 import * as consts from '../core/constants';
 import { Dom } from '../core/dom';
-import { $$, attr, cssPath, each, trim } from '../core/helpers/';
+import { $$, attr, cssPath, each, toArray, trim } from '../core/helpers/';
 import { ICreate, IJodit } from '../types';
 import { ViewComponent } from '../core/component';
 import { getContainer } from '../core/global';
@@ -92,14 +92,14 @@ export class Table extends ViewComponent<IJodit> {
 	 * Returns array of selected cells
 	 */
 	getAllSelectedCells(): HTMLTableCellElement[] {
-		return Array.from(this.selected);
+		return toArray(this.selected);
 	}
 
 	static getSelectedCellsByTable(
 		table: HTMLTableElement
 	): HTMLTableCellElement[] {
 		const cells = Table.selectedByTable.get(table);
-		return cells ? Array.from(cells) : [];
+		return cells ? toArray(cells) : [];
 	}
 
 	/** @override **/
@@ -145,7 +145,7 @@ export class Table extends ViewComponent<IJodit> {
 		) => false | void
 	): HTMLTableCellElement[][] {
 		const matrix: HTMLTableCellElement[][] = [[]];
-		const rows = Array.from(table.rows);
+		const rows = toArray(table.rows);
 
 		const setCell = (
 			cell: HTMLTableCellElement,
@@ -188,7 +188,7 @@ export class Table extends ViewComponent<IJodit> {
 		};
 
 		for (let i = 0; i < rows.length; i += 1) {
-			const cells = Array.from<HTMLTableCellElement>(rows[i].cells);
+			const cells = toArray(rows[i].cells);
 
 			for (let j = 0; j < cells.length; j += 1) {
 				if (setCell(cells[j], i) === false) {
@@ -731,7 +731,7 @@ export class Table extends ViewComponent<IJodit> {
 
 				Table.normalizeTable(table);
 
-				each(Array.from(table.rows), (index, tr) => {
+				each(toArray(table.rows), (index, tr) => {
 					if (!tr.cells.length) {
 						Dom.safeRemove(tr);
 					}

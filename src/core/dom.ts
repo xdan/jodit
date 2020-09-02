@@ -19,6 +19,7 @@ import {
 	isArray,
 	isFunction,
 	isString,
+	toArray,
 	trim
 } from './helpers';
 import { getSibling } from '../plugins/keyboard/helpers';
@@ -226,7 +227,7 @@ export class Dom {
 		}
 
 		if (withAttributes) {
-			Array.from(elm.attributes).forEach(attr => {
+			toArray(elm.attributes).forEach(attr => {
 				tag.setAttribute(attr.name, attr.value);
 			});
 		}
@@ -831,7 +832,7 @@ export class Dom {
 			from.ownerDocument || document
 		).createDocumentFragment();
 
-		Array.from(from.childNodes).forEach((node: Node) => {
+		toArray(from.childNodes).forEach((node: Node) => {
 			fragment.appendChild(node);
 		});
 
@@ -854,7 +855,7 @@ export class Dom {
 		condition: NodeCondition,
 		prev: boolean = false
 	): Nullable<Node> {
-		let nodes: Node[] = node.childNodes ? Array.from(node.childNodes) : [];
+		let nodes: Node[] = node.childNodes ? toArray(node.childNodes) : [];
 
 		if (condition(node)) {
 			return node;

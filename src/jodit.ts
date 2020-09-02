@@ -30,7 +30,7 @@ import {
 	isVoid,
 	JoditArray,
 	JoditObject,
-	callPromise
+	callPromise, toArray
 } from './core/helpers/';
 
 import { Storage } from './core/storage/';
@@ -1136,7 +1136,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.attachEvents(options as IViewOptions);
 
 		if (element.attributes) {
-			Array.from(element.attributes).forEach((attr: Attr) => {
+			toArray(element.attributes).forEach((attr: Attr) => {
 				const name: string = attr.name;
 				let value: string | boolean | number = attr.value;
 

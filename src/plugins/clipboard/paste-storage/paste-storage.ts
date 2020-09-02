@@ -15,7 +15,7 @@ import {
 import { Dialog } from '../../../modules/dialog';
 import { Plugin } from '../../../core/plugin';
 import { Dom } from '../../../core/dom';
-import { attr } from '../../../core/helpers';
+import { attr, toArray } from '../../../core/helpers';
 
 /**
  * Show dialog choose content to paste
@@ -84,7 +84,7 @@ export class pasteStorage extends Plugin {
 
 	private selectIndex = (index: number) => {
 		if (this.listBox) {
-			Array.from(
+			toArray(
 				this.listBox.childNodes as NodeListOf<HTMLAnchorElement>
 			).forEach((a, i) => {
 				a.classList.remove('jodit_active');
@@ -210,8 +210,7 @@ export class pasteStorage extends Plugin {
 	beforeDestruct(): void {
 		this.dialog && this.dialog.destruct();
 
-		this.j.e
-			.off('.paste-storage');
+		this.j.e.off('.paste-storage');
 
 		Dom.safeRemove(this.previewBox);
 		Dom.safeRemove(this.listBox);

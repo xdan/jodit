@@ -6,6 +6,7 @@
 
 import { Dom } from '../../dom';
 import { trim } from '../string';
+import { toArray } from '../array';
 
 /**
  * The method automatically cleans up content from Microsoft Word and other HTML sources to ensure clean, compliant
@@ -49,7 +50,7 @@ export function cleanFromWord(html: string): string {
 								break;
 
 							default:
-								Array.from(
+								toArray(
 									(node as Element).attributes
 								).forEach((attr: Attr) => {
 									if (

@@ -29,7 +29,7 @@ import {
 	isPlainObject,
 	isJoditObject,
 	isArray,
-	isFunction
+	isFunction, toArray
 } from '../../core/helpers';
 import { Dom } from '../../core/dom';
 import { ViewComponent, STATUSES } from '../../core/component/';
@@ -316,7 +316,7 @@ export class Uploader extends ViewComponent implements IUploader {
 
 		const uploader: Uploader = this;
 
-		let fileList: File[] = Array.from(files);
+		let fileList: File[] = toArray(files);
 
 		if (!fileList.length) {
 			return Promise.reject(error('Need files'));

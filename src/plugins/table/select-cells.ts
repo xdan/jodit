@@ -152,10 +152,6 @@ export class selectCells extends Plugin {
 
 		if (cell !== this.selectedCell) {
 			this.j.lock(key);
-
-			if (e.preventDefault) {
-				e.preventDefault();
-			}
 		}
 
 		this.unselectCells(table);

@@ -3,10 +3,10 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Test helpers', function() {
-	describe('Normalizers', function() {
-		describe('normalizeKeyAliases', function() {
-			it('Should convert some hotkeys to normal', function() {
+describe('Test helpers', function () {
+	describe('Normalizers', function () {
+		describe('normalizeKeyAliases', function () {
+			it('Should convert some hotkeys to normal', function () {
 				const hotkeys = {
 					'cmd+ alt+s': 'alt+meta+s',
 					'cmd++': '++meta',
@@ -19,7 +19,7 @@ describe('Test helpers', function() {
 					'return + esc ': 'enter+escape'
 				};
 
-				Object.keys(hotkeys).forEach(function(key) {
+				Object.keys(hotkeys).forEach(function (key) {
 					expect(hotkeys[key]).equals(
 						Jodit.modules.Helpers.normalizeKeyAliases(key)
 					);
@@ -27,8 +27,8 @@ describe('Test helpers', function() {
 			});
 		});
 
-		describe('normalizePath', function() {
-			it('Should normalize slashes and join some parts', function() {
+		describe('normalizePath', function () {
+			it('Should normalize slashes and join some parts', function () {
 				const variants = {
 					'/data/test/': ['/data/test/'],
 					'data/test/': ['data/test/'],
@@ -45,7 +45,7 @@ describe('Test helpers', function() {
 					]
 				};
 
-				Object.keys(variants).forEach(function(key) {
+				Object.keys(variants).forEach(function (key) {
 					expect(key).equals(
 						Jodit.modules.Helpers.normalizePath.apply(
 							null,
@@ -57,9 +57,9 @@ describe('Test helpers', function() {
 		});
 	});
 
-	describe('Checkers', function() {
-		describe('isVoid', function() {
-			it('Should check value is undefned or null', function() {
+	describe('Checkers', function () {
+		describe('isVoid', function () {
+			it('Should check value is undefned or null', function () {
 				const values = [
 					[1, false],
 					[undefined, true],
@@ -76,8 +76,8 @@ describe('Test helpers', function() {
 			});
 		});
 
-		describe('isInt', function() {
-			it('Should check value is int or not', function() {
+		describe('isInt', function () {
+			it('Should check value is int or not', function () {
 				const values = [
 					'cmd+ alt+s',
 					false,
@@ -109,8 +109,8 @@ describe('Test helpers', function() {
 			});
 		});
 
-		describe('isNumeric', function() {
-			it('Should check value is int or not', function() {
+		describe('isNumeric', function () {
+			it('Should check value is int or not', function () {
 				const values = [
 					'cmd+ alt+s',
 					false,
@@ -150,8 +150,8 @@ describe('Test helpers', function() {
 			});
 		});
 
-		describe('isNumber', function() {
-			it('Should check value is a number', function() {
+		describe('isNumber', function () {
+			it('Should check value is a number', function () {
 				const values = [
 					'cmd+ alt+s',
 					false,
@@ -172,12 +172,12 @@ describe('Test helpers', function() {
 		});
 	});
 
-	describe('String', function() {
-		describe('18n', function() {
+	describe('String', function () {
+		describe('18n', function () {
 			const i18n = Jodit.modules.Helpers.i18n;
 
-			describe('Put defined sentence', function() {
-				it('Should replace it on defined language', function() {
+			describe('Put defined sentence', function () {
+				it('Should replace it on defined language', function () {
 					const values = [
 						'Type something',
 						'Напишите что-либо',
@@ -216,8 +216,8 @@ describe('Test helpers', function() {
 					}
 				});
 
-				describe('Put some information inside sentence', function() {
-					it('Should put this information inside new sentence', function() {
+				describe('Put some information inside sentence', function () {
+					it('Should put this information inside new sentence', function () {
 						const values = [
 							'Chars: %d',
 							'Символов: 1',
@@ -257,8 +257,8 @@ describe('Test helpers', function() {
 				});
 			});
 
-			describe('Debug mode', function() {
-				it('Should show debug brackets for undefined keys', function() {
+			describe('Debug mode', function () {
+				it('Should show debug brackets for undefined keys', function () {
 					const values = [
 						'Type something',
 						'Напишите что-либо',
@@ -293,8 +293,8 @@ describe('Test helpers', function() {
 				});
 			});
 
-			describe('Define i18n property inside input options', function() {
-				it('Should use it', function() {
+			describe('Define i18n property inside input options', function () {
+				it('Should use it', function () {
 					const values = [
 						'Type something',
 						'Привет',
@@ -336,10 +336,10 @@ describe('Test helpers', function() {
 		});
 	});
 
-	describe('HTML', function() {
-		describe('stripTags', function() {
-			describe('Put HTML text', function() {
-				it('Should return only text', function() {
+	describe('HTML', function () {
+		describe('stripTags', function () {
+			describe('Put HTML text', function () {
+				it('Should return only text', function () {
 					const values = [
 						['<p>Type something<p>', 'Type something'],
 						[
@@ -358,7 +358,9 @@ describe('Test helpers', function() {
 
 					for (let i = 0; i < values.length; i += 1) {
 						expect(values[i][1]).equals(
-							Jodit.modules.Helpers.stripTags(values[i][0]).replace(/\n/g, '')
+							Jodit.modules.Helpers.stripTags(
+								values[i][0]
+							).replace(/\n/g, '')
 						);
 					}
 				});
@@ -367,8 +369,8 @@ describe('Test helpers', function() {
 	});
 
 	describe('Object', function () {
-		describe('get', function() {
-			it('Should get value from keyChain else return null', function() {
+		describe('get', function () {
+			it('Should get value from keyChain else return null', function () {
 				const obj = {
 					a1: 2,
 					a: {
@@ -399,7 +401,7 @@ describe('Test helpers', function() {
 					['a.b.c.e', false],
 					['a.b.r.d.e', null],
 					['a.b1.0.key', 5],
-					['a.b1.0.key1', null],
+					['a.b1.0.key1', null]
 				];
 
 				for (let i = 0, value = values[i]; i < values.length; i += 1) {
@@ -412,14 +414,52 @@ describe('Test helpers', function() {
 	});
 
 	describe('Utils', function () {
+		describe('reset', function () {
+			it('It should reset native browser method', function () {
+				expect(typeof Jodit.modules.Helpers.reset('Array.from')).equals(
+					'function'
+				);
+
+				expect(Jodit.modules.Helpers.reset('Array.from') !== Array.from)
+					.is.true;
+
+				expect(
+					Jodit.modules.Helpers.reset('Array.from')(
+						new Set([1, 2, 3])
+					)
+				).deep.equals([1, 2, 3]);
+
+				expect(
+					Jodit.modules.Helpers.reset('Array.from')('123')
+				).deep.equals(['1', '2', '3']);
+			});
+
+			it('should be cached', function () {
+				expect(Jodit.modules.Helpers.reset('Array.from') !== Array.from)
+					.is.true;
+
+				expect(
+					Jodit.modules.Helpers.reset('Array.from') ===
+						Jodit.modules.Helpers.reset('Array.from')
+				).is.true;
+			});
+		});
 		describe('getClassName', function () {
 			const getClassName = Jodit.modules.Helpers.getClassName;
 
 			it('Should return normal(not uglifyed) name for instance of class', function () {
-				expect(getClassName(Jodit.modules.Popup.prototype)).equals('Popup');
-				expect(getClassName(Jodit.modules.UIButton.prototype)).equals('UIButton');
-				expect(getClassName(Jodit.modules.ToolbarButton.prototype)).equals('ToolbarButton');
-				expect(getClassName(Jodit.modules.Component.prototype)).equals('Component');
+				expect(getClassName(Jodit.modules.Popup.prototype)).equals(
+					'Popup'
+				);
+				expect(getClassName(Jodit.modules.UIButton.prototype)).equals(
+					'UIButton'
+				);
+				expect(
+					getClassName(Jodit.modules.ToolbarButton.prototype)
+				).equals('ToolbarButton');
+				expect(getClassName(Jodit.modules.Component.prototype)).equals(
+					'Component'
+				);
 			});
 		});
 	});

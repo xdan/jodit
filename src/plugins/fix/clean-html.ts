@@ -13,7 +13,7 @@ import {
 	IS_INLINE
 } from '../../core/constants';
 import { Dom } from '../../modules';
-import { isString, normalizeNode, trim } from '../../core/helpers';
+import { isString, normalizeNode, toArray, trim } from '../../core/helpers';
 import { HTMLTagNames, IDictionary, IJodit, Nullable } from '../../types';
 import { Plugin } from '../../core/plugin';
 
@@ -428,7 +428,7 @@ export class cleanHtml extends Plugin {
 					Dom.unwrap(elm);
 				} else if (!onlyRemoveFont) {
 					// clean some "style" attributes in selected range
-					Array.from((elm as Element).attributes).forEach(
+					toArray((elm as Element).attributes).forEach(
 						(attr: Attr) => {
 							if (
 								['src', 'href', 'rel', 'content'].indexOf(
