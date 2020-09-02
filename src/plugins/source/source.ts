@@ -137,7 +137,13 @@ export class source extends Plugin {
 			this.fromWYSIWYG(true);
 		} else {
 			this.selInfo.length = 0;
+
+			if (this.j.o.editHTMLDocumentMode) {
+				return;
+			}
+
 			const value: string = this.getMirrorValue();
+
 			if (this.getSelectionStart() === this.getSelectionEnd()) {
 				const marker = this.j.s.marker(true);
 

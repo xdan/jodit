@@ -1,6 +1,7 @@
 # Changelog
 ## 3.4.25
 * https://github.com/xdan/jodit/issues/422
+* https://github.com/xdan/jodit/issues/375 Partial
 
 ### Features
 * https://github.com/xdan/jodit/issues/489
