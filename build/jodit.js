@@ -150,7 +150,7 @@ PERFORMANCE OF THIS SOFTWARE.
 var extendStatics = function(d, b) {
     extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
     return extendStatics(d, b);
 };
 
@@ -244,8 +244,8 @@ var __createBinding = Object.create ? (function(o, m, k, k2) {
     o[k2] = m[k];
 });
 
-function __exportStar(m, o) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
+function __exportStar(m, exports) {
+    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
 }
 
 function __values(o) {
@@ -335,7 +335,7 @@ var __setModuleDefault = Object.create ? (function(o, v) {
 function __importStar(mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 }
@@ -1612,7 +1612,7 @@ tslib_1.__exportStar(__webpack_require__(95), exports);
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PluginSystem = exports.Uploader = exports.ToolbarCollection = exports.ToolbarEditorCollection = exports.Table = exports.StatusBar = exports.Snapshot = exports.Style = exports.Select = exports.ProgressBar = exports.Observer = exports.ImageEditor = exports.Helpers = exports.FileBrowser = exports.ViewWithToolbar = exports.View = exports.Icon = exports.UIBlock = exports.UICheckbox = exports.UITextArea = exports.UIInput = exports.UIForm = exports.UIList = exports.UIGroup = exports.UISeparator = exports.Popup = exports.UIButton = exports.UIElement = exports.Create = exports.Plugin = exports.Dom = exports.Dialog = exports.Prompt = exports.Confirm = exports.Alert = exports.ContextMenu = exports.STATUSES = exports.ViewComponent = exports.Component = exports.Ajax = exports.Async = void 0;
+exports.Helpers = void 0;
 var tslib_1 = __webpack_require__(0);
 tslib_1.__exportStar(__webpack_require__(22), exports);
 var async_1 = __webpack_require__(58);
@@ -1834,7 +1834,6 @@ tslib_1.__exportStar(__webpack_require__(155), exports);
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Confirm = exports.Prompt = exports.Alert = exports.Dialog = void 0;
 var dialog_1 = __webpack_require__(26);
 Object.defineProperty(exports, "Dialog", { enumerable: true, get: function () { return dialog_1.Dialog; } });
 var alert_1 = __webpack_require__(184);
@@ -2098,7 +2097,6 @@ tslib_1.__exportStar(__webpack_require__(45), exports);
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.toArray = exports.splitArray = exports.asArray = void 0;
 var as_array_1 = __webpack_require__(116);
 Object.defineProperty(exports, "asArray", { enumerable: true, get: function () { return as_array_1.asArray; } });
 var split_array_1 = __webpack_require__(117);
@@ -21687,7 +21685,6 @@ module.exports = {
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.xpath = exports.tooltip = exports.symbols = exports.sticky = exports.stat = exports.source = exports.resizeHandler = exports.size = exports.search = exports.resizer = exports.redoUndo = exports.placeholder = exports.orderedList = exports.mobile = exports.media = exports.link = exports.limit = exports.justify = exports.inlinePopup = exports.hr = exports.indent = exports.iframe = exports.hotkeys = exports.fullsize = exports.formatBlock = exports.font = exports.errorMessages = exports.enter = exports.DragAndDropElement = exports.DragAndDrop = exports.color = exports.pasteStorage = exports.paste = exports.clipboard = exports.WrapTextNodes = exports.cleanHtml = exports.bold = exports.Delete = exports.autofocus = exports.about = exports.addNewLine = void 0;
 var tslib_1 = __webpack_require__(0);
 var add_new_line_1 = __webpack_require__(233);
 Object.defineProperty(exports, "addNewLine", { enumerable: true, get: function () { return add_new_line_1.addNewLine; } });
@@ -25876,9 +25873,19 @@ var inlinePopup = (function (_super) {
         if (this.type !== type || target !== this.previousTarget) {
             this.previousTarget = target;
             var data = this.j.o.popup[type];
-            this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
-            this.toolbar.build(helpers_1.isFunction(data) ? data(this.j) : data, target);
-            this.popup.setContent(this.toolbar.container);
+            var content = void 0;
+            if (helpers_1.isFunction(data)) {
+                content = data(this.j, target, this.popup.close);
+            }
+            else {
+                content = data;
+            }
+            if (helpers_1.isArray(content)) {
+                this.toolbar.build(content, target);
+                this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
+                content = this.toolbar.container;
+            }
+            this.popup.setContent(content);
             this.type = type;
         }
         this.popup.open(rect);

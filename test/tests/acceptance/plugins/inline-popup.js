@@ -493,4 +493,26 @@ describe('Text Inline Popup plugin', function () {
 			expect(popup && popup.parentNode).is.null;
 		});
 	});
+
+	describe('when a string is passed to the popup config', function () {
+		it('Should show the content of the string in the popup', function () {
+			it('Should Open inline popup', function () {
+				const editor = getJodit({
+					popup: {
+						a: '<div class="custom-popup-test">foo</div>'
+					}
+				});
+
+				editor.value = '<a href="../artio.jpg"/>test</a>';
+
+				simulateEvent('click', editor.editor.querySelector('a'));
+
+				const popup = getOpenedPopup(editor);
+
+				expect(
+					popup.getElementsByClassName('.custom-popup-test').length
+				).equals(1);
+			});
+		});
+	});
 });

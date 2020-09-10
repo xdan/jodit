@@ -2188,7 +2188,7 @@ PERFORMANCE OF THIS SOFTWARE.
 var extendStatics = function(d, b) {
     extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
     return extendStatics(d, b);
 };
 
@@ -2282,8 +2282,8 @@ var __createBinding = Object.create ? (function(o, m, k, k2) {
     o[k2] = m[k];
 });
 
-function __exportStar(m, o) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
+function __exportStar(m, exports) {
+    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
 }
 
 function __values(o) {
@@ -2373,7 +2373,7 @@ var __setModuleDefault = Object.create ? (function(o, v) {
 function __importStar(mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 }
@@ -23157,9 +23157,19 @@ class inline_popup_inlinePopup extends plugin_Plugin {
         if (this.type !== type || target !== this.previousTarget) {
             this.previousTarget = target;
             const data = this.j.o.popup[type];
-            this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
-            this.toolbar.build(Object(helpers["isFunction"])(data) ? data(this.j) : data, target);
-            this.popup.setContent(this.toolbar.container);
+            let content;
+            if (Object(helpers["isFunction"])(data)) {
+                content = data(this.j, target, this.popup.close);
+            }
+            else {
+                content = data;
+            }
+            if (Object(helpers["isArray"])(content)) {
+                this.toolbar.build(content, target);
+                this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
+                content = this.toolbar.container;
+            }
+            this.popup.setContent(content);
             this.type = type;
         }
         this.popup.open(rect);
