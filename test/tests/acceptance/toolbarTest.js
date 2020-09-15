@@ -719,6 +719,22 @@ describe('Toolbar', function () {
 			});
 		});
 
+		describe('Set empty Jodit.Array', function () {
+			it('Should remove all buttons', function () {
+				const editor = getJodit({
+					buttons: []
+				});
+				expect(getButton('source', editor)).is.not.null;
+				editor.destruct();
+
+				const editor2 = getJodit({
+					buttons: Jodit.Array([])
+				});
+
+				expect(getButton('source', editor2)).is.null;
+			});
+		});
+
 		it('Remove default buttons functionality', function () {
 			const editor = getJodit();
 			expect(getButton('source', editor)).is.not.null;
