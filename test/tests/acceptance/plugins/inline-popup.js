@@ -492,6 +492,34 @@ describe('Text Inline Popup plugin', function () {
 
 			expect(popup && popup.parentNode).is.null;
 		});
+
+		describe('Link inside cell', function () {
+			describe('Click on the link', function () {
+				it('Should Open inline popup', function () {
+					const editor = getJodit();
+
+					editor.value = '<a href="https://xdsoft.net"/>test</a>';
+
+					simulateEvent('click', editor.editor.querySelector('a'));
+
+					const popup = getOpenedPopup(editor);
+
+					expect(popup && popup.parentNode.parentNode !== null).equals(
+						true
+					);
+
+					clickButton('link', popup);
+
+					const linkEditor = getOpenedPopup(editor);
+
+					expect(linkEditor).is.not.null;
+
+					expect(
+						linkEditor.querySelector('[data-ref="url_input"]').value
+					).equals('https://xdsoft.net');
+				});
+			});
+		});
 	});
 
 	describe('when a string is passed to the popup config', function () {
