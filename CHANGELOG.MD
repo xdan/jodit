@@ -1,4 +1,8 @@
 # Changelog
+## 3.4.26
+
+* https://github.com/xdan/jodit/issues/495
+
 ## 3.4.25
 * https://github.com/xdan/jodit/issues/422
 * https://github.com/xdan/jodit/issues/375
