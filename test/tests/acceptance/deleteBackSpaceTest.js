@@ -76,6 +76,21 @@ describe('Backspace/Delete key', function() {
 				expect(editor.value).equals('<p>tst</p>');
 			});
 
+			describe('With spaces', function () {
+				it('Should remove previous char before cursor', function() {
+					editor.value = '<p>a b c d e</p>';
+					range.setStart(editor.editor.firstChild.firstChild, 6);
+					range.collapse(true);
+					editor.s.selectRange(range);
+
+					for (let i = 1; i <= 5; i += 1) {
+						simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+					}
+
+					expect(editor.value).equals('<p>a</p>');
+				});
+			});
+
 			describe('Text after SPAN and cursor in the left edge of text', function () {
 				it('Should remove char inside span', function() {
 					editor.value = '<p><span>AAA</span>test</p>';
