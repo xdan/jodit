@@ -830,13 +830,14 @@ function onLoadImage(image, callback) {
 
 /**
  *
- * @param element
- * @param pastedText
+ * @param {HTMLElement} element
+ * @param {string} pastedText
+ * @param {string} type
  */
-function simulatePaste(element, pastedText) {
-	simulateEvent('paste', 0, element, function (data) {
+function simulatePaste(element, pastedText, type) {
+	simulateEvent('paste', element, function (data) {
 		data.clipboardData = {
-			types: ['text/html'],
+			types: [type || 'text/html'],
 			getData: function () {
 				return pastedText;
 			}

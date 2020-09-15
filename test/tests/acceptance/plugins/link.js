@@ -10,7 +10,7 @@ describe('Link plugin', function() {
 			it('Should insert as simple link', function() {
 				const editor = getJodit();
 
-				simulatePaste(editor.editor, 'https://www.youtube.com');
+				simulatePaste(editor.editor, 'https://www.youtube.com', 'text/plain');
 
 				expect(editor.value).equal(
 					'<p><a href="https://www.youtube.com">https://www.youtube.com</a></p>'
