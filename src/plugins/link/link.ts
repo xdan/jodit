@@ -306,6 +306,8 @@ export function link(jodit: IJodit): void {
 					a.setAttribute('href', html);
 					a.textContent = html;
 
+					jodit.e.stopPropagation('processPaste');
+
 					return a;
 				}
 			}
