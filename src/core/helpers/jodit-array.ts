@@ -41,7 +41,8 @@ export class JoditArray {
 			'shift',
 			'unshift',
 			'slice',
-			'splice'
+			'splice',
+			'concat',
 		].forEach(method => {
 			Object.defineProperty(this, method, {
 				value: proto[method],

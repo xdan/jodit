@@ -724,7 +724,8 @@ describe('Toolbar', function () {
 				const editor = getJodit({
 					buttons: []
 				});
-				expect(getButton('source', editor)).is.not.null;
+
+				expect(getButton('source', editor)).is.null;
 				editor.destruct();
 
 				const editor2 = getJodit({
