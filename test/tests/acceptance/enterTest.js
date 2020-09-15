@@ -853,6 +853,69 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				});
 			});
 
+			describe('Inside not empty LI', function() {
+				describe('In the middle of LI', function() {
+					it('should split LI on two parts', function() {
+						const editor = getJodit();
+						editor.value =
+							'<ul>\n' +
+								'\t<li>first</li>\n' +
+								'\t<li>second</li>\n' +
+								'\t<li>third</li>\n' +
+							'</ul>';
+
+						const range = editor.s.createRange(true);
+
+						range.setStart(editor.editor.querySelectorAll('li')[1].firstChild, 3);
+						range.collapse(true);
+
+						simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+
+						editor.s.insertNode(editor.createInside.text(' a '));
+
+						expect(editor.value).equals(
+							'<ul>\n' +
+							'\t<li>first</li>\n' +
+							'\t<li>sec</li>\n' +
+							'<li> a ond</li>' +
+							'\t<li>third</li>\n' +
+							'</ul>'
+						);
+					});
+
+					describe('With Shift', function () {
+						it('should only add new BR', function() {
+							const editor = getJodit();
+							editor.value =
+								'<ul>\n' +
+								'\t<li>first</li>\n' +
+								'\t<li>second</li>\n' +
+								'\t<li>third</li>\n' +
+								'</ul>';
+
+							const range = editor.s.createRange(true);
+
+							range.setStart(editor.editor.querySelectorAll('li')[1].firstChild, 3);
+							range.collapse(true);
+
+							simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor, function (options) {
+								options.shiftKey = true;
+							});
+
+							editor.s.insertNode(editor.createInside.text(' a '));
+
+							expect(editor.value).equals(
+								'<ul>\n' +
+								'\t<li>first</li>\n' +
+								'\t<li>sec <br> a ond</li>\n' +
+								'\t<li>third</li>\n' +
+								'</ul>'
+							);
+						});
+					});
+				});
+			});
+
 			describe('If Enter was pressed inside start of first(not empty) LI', function() {
 				it('should add empty LI and cursor should not move', function() {
 					const editor = getJodit();
