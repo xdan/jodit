@@ -62,5 +62,32 @@ describe('Test Creator module', function() {
 
 			expect(editor2.value).equals('<p data-attr="stop"><strong test="true">test</strong></p>');
 		});
+
+		describe('For UL and LI', function () {
+			it('Should add to every nodes some attributes', function() {
+				const editor = getJodit( {
+					createAttributes: {
+						ul: {class: 'indent_small list list_offset_left'},
+						li: {class: 'some_li'},
+						ol: {class: 'indent_small ollist list_offset_left'}
+					}
+				});
+
+				const ul = editor.createInside.element('ul');
+				expect(ul.className).equals('indent_small list list_offset_left');
+
+				const li = editor.createInside.element('li');
+				expect(li.className).equals('some_li');
+
+				const ol = editor.createInside.element('ol');
+				expect(ol.className).equals('indent_small ollist list_offset_left');
+
+				editor.value = "one"
+				editor.execCommand('selectall');
+				editor.execCommand('insertUnorderedList');
+
+				expect(editor.value).equals('<ul class="indent_small list list_offset_left"><li class="some_li">one</li></ul>');
+			});
+		});
 	});
 });
