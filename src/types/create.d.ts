@@ -84,4 +84,10 @@ interface ICreate {
 	 * @return HTMLElement
 	 */
 	fromHTML(html: string, refs?: IDictionary<boolean>): HTMLElement;
+
+	/**
+	 * Apply to element `createAttributes` options
+	 * @param elm
+	 */
+	applyCreateAttributes(elm: HTMLElement): void;
 }

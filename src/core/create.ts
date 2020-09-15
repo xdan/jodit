@@ -73,19 +73,7 @@ export class Create implements ICreate {
 	): HTMLElement {
 		const elm = this.doc.createElement(tagName.toLowerCase());
 
-		if (this.createAttributes) {
-			const ca = this.createAttributes;
-
-			if (ca && ca[tagName.toLowerCase()]) {
-				const attrs = ca[tagName.toLowerCase()];
-
-				if (isFunction(attrs)) {
-					attrs(elm);
-				} else if (isPlainObject(attrs)) {
-					this.applyAttributes(elm, attrs);
-				}
-			}
-		}
+		this.applyCreateAttributes(elm);
 
 		if (childrenOrAttributes) {
 			if (isPlainObject(childrenOrAttributes)) {
@@ -222,5 +210,25 @@ export class Create implements ICreate {
 		}
 
 		return child;
+	}
+
+	/**
+	 * Apply to element `createAttributes` options
+	 * @param elm
+	 */
+	applyCreateAttributes(elm: HTMLElement): void {
+		if (this.createAttributes) {
+			const ca = this.createAttributes;
+
+			if (ca && ca[elm.tagName.toLowerCase()]) {
+				const attrs = ca[elm.tagName.toLowerCase()];
+
+				if (isFunction(attrs)) {
+					attrs(elm);
+				} else if (isPlainObject(attrs)) {
+					this.applyAttributes(elm, attrs);
+				}
+			}
+		}
 	}
 }

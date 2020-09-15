@@ -103,6 +103,11 @@ export function orderedList(editor: IJodit): void {
 
 				if (ul) {
 					setListStyleType(ul, listStyleType);
+					editor.createInside.applyCreateAttributes(ul);
+
+					ul.querySelectorAll('li').forEach((li) => {
+						editor.createInside.applyCreateAttributes(li);
+					});
 				}
 
 				if (ul && Dom.isTag(ul.parentNode, 'p')) {
