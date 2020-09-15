@@ -69,7 +69,6 @@ import {
 import { cache } from './core/decorators';
 import autobind from 'autobind-decorator';
 
-// declare const isProd: boolean;
 /**
  * Class Jodit. Main class
  */

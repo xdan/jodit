@@ -876,8 +876,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 						expect(editor.value).equals(
 							'<ul>\n' +
 							'\t<li>first</li>\n' +
-							'\t<li>sec</li>\n' +
-							'<li> a ond</li>' +
+							'\t<li>sec</li>' +
+							'<li> a ond</li>\n' +
 							'\t<li>third</li>\n' +
 							'</ul>'
 						);
@@ -907,7 +907,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							expect(editor.value).equals(
 								'<ul>\n' +
 								'\t<li>first</li>\n' +
-								'\t<li>sec <br> a ond</li>\n' +
+								'\t<li>sec<br> a ond</li>\n' +
 								'\t<li>third</li>\n' +
 								'</ul>'
 							);

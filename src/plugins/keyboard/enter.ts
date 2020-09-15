@@ -121,7 +121,7 @@ export class enter extends Plugin {
 		const isLi = Dom.isTag(currentBox, 'li');
 
 		// if use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
-		if (!isLi && !this.checkBR(current, event.shiftKey)) {
+		if ((!isLi || event.shiftKey) && !this.checkBR(current, event.shiftKey)) {
 			return false;
 		}
 
@@ -201,7 +201,7 @@ export class enter extends Plugin {
 	}
 
 	private checkBR(current: Node, shiftKeyPressed: boolean): boolean {
-		const isMultyLineBlock = Dom.closest(
+		const isMultiLineBlock = Dom.closest(
 			current,
 			['pre', 'blockquote'],
 			this.j.editor
@@ -210,8 +210,8 @@ export class enter extends Plugin {
 		// if use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
 		if (
 			this.brMode ||
-			(shiftKeyPressed && !isMultyLineBlock) ||
-			(!shiftKeyPressed && isMultyLineBlock)
+			(shiftKeyPressed && !isMultiLineBlock) ||
+			(!shiftKeyPressed && isMultiLineBlock)
 		) {
 			const br = this.j.createInside.element('br');
 

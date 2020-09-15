@@ -1,6 +1,7 @@
 # Changelog
 ## 3.4.26
 
+* https://github.com/xdan/jodit/issues/501
 * https://github.com/xdan/jodit/issues/496
 * https://github.com/xdan/jodit/issues/495
 
