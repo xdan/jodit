@@ -7,6 +7,7 @@
 import { IDictionary } from '../types';
 
 export const INVISIBLE_SPACE = '\uFEFF';
+export const NBSP_SPACE = '\u00A0';
 export const INVISIBLE_SPACE_REG_EXP = (): RegExp => /[\uFEFF]/g;
 export const INVISIBLE_SPACE_REG_EXP_END = (): RegExp => /[\uFEFF]+$/g;
 export const INVISIBLE_SPACE_REG_EXP_START = (): RegExp => /^[\uFEFF]+/g;

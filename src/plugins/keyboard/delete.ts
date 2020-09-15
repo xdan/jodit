@@ -10,10 +10,11 @@ import { Dom } from '../../core/dom';
 import {
 	INSEPARABLE_TAGS,
 	INVISIBLE_SPACE,
+	NBSP_SPACE,
 	KEY_BACKSPACE,
 	KEY_DELETE
 } from '../../core/constants';
-import { isVoid, call, trim, attr } from '../../core/helpers';
+import { isVoid, call, trim, attr, trimInv } from '../../core/helpers';
 import {
 	getNeighbor,
 	getNotSpaceSibling,
@@ -174,6 +175,8 @@ export class Delete extends Plugin {
 	private checkRemoveChar(fakeNode: Node, backspace: boolean): void | true {
 		const step = backspace ? -1 : 1;
 
+		const anotherSibling: Nullable<Node> = getSibling(fakeNode, !backspace);
+
 		let sibling: Nullable<Node> = getSibling(fakeNode, backspace),
 			removeNeighbor: Nullable<Node> = null;
 
@@ -192,7 +195,8 @@ export class Delete extends Plugin {
 			}
 
 			if (sibling.nodeValue?.length) {
-				const value = sibling.nodeValue;
+				let value = sibling.nodeValue;
+
 				const length = value.length;
 
 				let index = backspace ? length - 1 : 0;
@@ -215,10 +219,23 @@ export class Delete extends Plugin {
 					index += backspace ? 1 : -1;
 				}
 
-				sibling.nodeValue = value.substr(
+				value = value.substr(
 					backspace ? 0 : index + 1,
 					backspace ? index : length
 				);
+
+				if (
+					!anotherSibling ||
+					!Dom.isText(anotherSibling) ||
+					(!backspace ? / $/ : /^ /).test(
+						anotherSibling.nodeValue ?? ''
+					) ||
+					!trimInv(anotherSibling.nodeValue || '').length
+				) {
+					value = value.replace(backspace ? / +$/ : /^ +/, NBSP_SPACE);
+				}
+
+				sibling.nodeValue = value;
 			}
 
 			if (!sibling.nodeValue?.length) {

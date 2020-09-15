@@ -83,11 +83,13 @@ describe('Backspace/Delete key', function() {
 					range.collapse(true);
 					editor.s.selectRange(range);
 
-					for (let i = 1; i <= 5; i += 1) {
+					for (let i = 1; i <= 4; i += 1) {
 						simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+						simulateEvent('keyup', Jodit.KEY_BACKSPACE, editor.editor);
+						simulateEvent('keypress', Jodit.KEY_BACKSPACE, editor.editor);
 					}
 
-					expect(editor.value).equals('<p>a</p>');
+					expect(editor.value).equals('<p>a&nbsp;d e</p>');
 				});
 			});
 
