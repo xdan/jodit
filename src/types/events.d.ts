@@ -152,7 +152,7 @@ interface IEventsNative extends IDestructible {
 	 *  ```
 	 *
 	 */
-	fire(subjectOrEvents: string, eventsList?: any, ...args: any[]): any;
+	fire(subjectOrEvents: string, ...args: any[]): any;
 	fire(
 		subjectOrEvents: object,
 		eventsList: string | Event,

@@ -38,6 +38,7 @@ export class inlinePopup extends Plugin {
 	private type: Nullable<string> = null;
 
 	private popup: IPopup = new Popup(this.jodit);
+
 	private toolbar: IToolbarCollection = makeCollection(
 		this.jodit,
 		this.popup
@@ -113,8 +114,10 @@ export class inlinePopup extends Plugin {
 	 * Hide opened popup
 	 */
 	@autobind
-	private hidePopup(): void {
-		this.popup.close();
+	private hidePopup(type?: string): void {
+		if (!type || type === this.type) {
+			this.popup.close();
+		}
 	}
 
 	/**

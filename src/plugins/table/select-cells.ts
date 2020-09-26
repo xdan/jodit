@@ -40,7 +40,7 @@ export class selectCells extends Plugin {
 			.on('afterCommand.select-cells', this.onAfterCommand)
 
 			.on(
-				'change afterCommand afterSetMode click'
+				'change afterCommand afterSetMode click afterInit'
 					.split(' ')
 					.map(e => e + '.select-cells')
 					.join(' '),
@@ -69,17 +69,11 @@ export class selectCells extends Plugin {
 
 		dataBind(table, key, true);
 
-		this.j.e
-			.on(
-				table,
-				'mousedown.select-cells touchstart.select-cells',
-				this.onStartSelection.bind(this, table)
-			)
-			.on(
-				table,
-				'mouseup.select-cells touchend.select-cells',
-				this.onStopSelection.bind(this, table)
-			);
+		this.j.e.on(
+			table,
+			'mousedown.select-cells touchstart.select-cells',
+			this.onStartSelection.bind(this, table)
+		);
 	}
 
 	/**
@@ -109,11 +103,17 @@ export class selectCells extends Plugin {
 
 		this.module.addSelection(cell);
 
-		this.j.e.on(
-			table,
-			'mousemove.select-cells touchmove.select-cells',
-			this.onMove.bind(this, table)
-		);
+		this.j.e
+			.on(
+				table,
+				'mousemove.select-cells touchmove.select-cells',
+				this.onMove.bind(this, table)
+			)
+			.on(
+				table,
+				'mouseup.select-cells touchend.select-cells',
+				this.onStopSelection.bind(this, table)
+			);
 
 		this.j.e.fire(
 			'showPopup',
@@ -194,7 +194,7 @@ export class selectCells extends Plugin {
 		) {
 			this.j.unlock();
 			this.unselectCells();
-			this.j.e.fire('hidePopup');
+			this.j.e.fire('hidePopup', 'cells');
 			return;
 		}
 
@@ -257,7 +257,7 @@ export class selectCells extends Plugin {
 		$$('table', this.j.editor).forEach(table => {
 			this.j.e.off(
 				table,
-				'mousemove.select-cells touchmove.select-cells'
+				'mousemove.select-cells touchmove.select-cells mouseup.select-cells touchend.select-cells'
 			);
 		});
 	}

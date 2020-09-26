@@ -498,8 +498,19 @@ describe('Text Inline Popup plugin', function () {
 				it('Should Open inline popup', function () {
 					const editor = getJodit();
 
-					editor.value = '<a href="https://xdsoft.net"/>test</a>';
+					editor.value = '<table style="width: 100%;">' +
+						'<tbody>' +
+							'<tr>' +
+								'<td><a href="http://localhost:8000/">href</a></td>' +
+								'<td><br></td>' +
+							'</tr>' +
+					'</tbody>' +
+				'</table>';
 
+					simulateEvent('click', editor.editor.querySelector('a'));
+
+					simulateEvent('mousedown', editor.editor.querySelector('a'));
+					simulateEvent('mouseup', editor.editor.querySelector('a'));
 					simulateEvent('click', editor.editor.querySelector('a'));
 
 					const popup = getOpenedPopup(editor);
@@ -514,9 +525,24 @@ describe('Text Inline Popup plugin', function () {
 
 					expect(linkEditor).is.not.null;
 
+					const input = linkEditor.querySelector('[data-ref="url_input"]');
+
 					expect(
-						linkEditor.querySelector('[data-ref="url_input"]').value
-					).equals('https://xdsoft.net');
+						input.value
+					).equals('http://localhost:8000/');
+
+
+					simulateEvent('mousedown', input);
+					simulateEvent('mouseup', input);
+					simulateEvent('click', input);
+
+					input.focus();
+
+					expect(popup && popup.parentNode.parentNode !== null).equals(
+						true
+					);
+
+					linkEditor.querySelector('[data-ref="url_input"]').value = 'https://xdsoft.net';
 				});
 			});
 		});

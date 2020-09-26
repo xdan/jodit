@@ -262,6 +262,7 @@ if (typeof window.chai !== 'undefined') {
 
 const i18nkeys = [];
 const excludeI18nKeys = [
+	'empty',
 	'adddate',
 	'URL',
 	'Custom',

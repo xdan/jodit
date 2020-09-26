@@ -102,11 +102,13 @@ export class resizeCells extends Plugin {
 
 		this.drag = true;
 
-		this.j.e.on(
-			this.j.ew,
-			'mousemove.table touchmove.table',
-			this.onMouseMove
-		);
+		this.j.e
+			.on(
+				this.j.ow,
+				'mouseup.resize-cells touchend.resize-cells',
+				this.onMouseUp
+			)
+			.on(this.j.ew, 'mousemove.table touchmove.table', this.onMouseMove);
 
 		this.startX = event.clientX;
 
@@ -407,11 +409,6 @@ export class resizeCells extends Plugin {
 				() => {
 					$$('table', editor.editor).forEach(this.observe);
 				}
-			)
-			.on(
-				this.j.ow,
-				'mouseup.resize-cells touchend.resize-cells',
-				this.onMouseUp
 			)
 			.on(this.j.ow, 'scroll.resize-cells', () => {
 				if (!this.drag) {
