@@ -47,8 +47,8 @@ ES2018 Version (if your users use only modern browsers)
 
 ### CDN
 ```html
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.3.1/jodit.min.css"/>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.3.1/jodit.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.4.25/jodit.min.css"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.4.25/jodit.min.js"></script>
 ```
 
 ### USAGE
