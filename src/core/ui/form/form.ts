@@ -16,8 +16,9 @@ export class UIForm extends UIGroup implements IUIForm {
 	}
 
 	validate(): boolean {
-		const inputs = this.allChildren
-			.filter(elm => elm instanceof UIInput) as IUIInput[];
+		const inputs = this.allChildren.filter(
+			elm => elm instanceof UIInput
+		) as IUIInput[];
 
 		for (const input of inputs) {
 			if (!input.validate()) {
@@ -30,17 +31,20 @@ export class UIForm extends UIGroup implements IUIForm {
 
 	onSubmit(handler: (data: IDictionary) => false | void) {
 		this.j.e.on(this.container, 'submit', (): false => {
-			const inputs = this.allChildren
-				.filter(elm => elm instanceof UIInput) as IUIInput[];
+			const inputs = this.allChildren.filter(
+				elm => elm instanceof UIInput
+			) as IUIInput[];
 
 			if (!this.validate()) {
 				return false;
 			}
 
-			handler(inputs.reduce((res, item) => {
-				res[item.options.name] = item.value;
-				return res;
-			}, {} as IDictionary))
+			handler(
+				inputs.reduce((res, item) => {
+					res[item.options.name] = item.value;
+					return res;
+				}, {} as IDictionary)
+			);
 
 			return false;
 		});
@@ -48,7 +52,7 @@ export class UIForm extends UIGroup implements IUIForm {
 
 	/** @override */
 	protected createContainer(): HTMLElement {
-		const form =  this.j.c.element('form');
+		const form = this.j.c.element('form');
 		form.classList.add(this.componentName);
 		attr(form, 'dir', this.j.o.direction || 'auto');
 		return form;

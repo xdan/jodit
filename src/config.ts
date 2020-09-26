@@ -6,11 +6,7 @@
 
 import * as consts from './core/constants';
 import { Dom } from './core/dom';
-import {
-	$$,
-	extend,
-	isArray
-} from './core/helpers/';
+import { $$, extend, isArray } from './core/helpers/';
 import type {
 	IExtraPlugin,
 	IDictionary,

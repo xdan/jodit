@@ -5,7 +5,13 @@
  */
 
 import { IJodit, Nullable } from '../../../types';
-import { isArray, isNumber, isString, isVoid, type } from '../../../core/helpers';
+import {
+	isArray,
+	isNumber,
+	isString,
+	isVoid,
+	type
+} from '../../../core/helpers';
 import { Dom } from '../../../core/dom';
 import { TEXT_PLAIN } from '../../../core/constants';
 import { PasteEvent } from '../config';

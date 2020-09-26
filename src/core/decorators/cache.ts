@@ -21,7 +21,7 @@ export function cache<T, R>(
 		throw error('Getter property descriptor expected');
 	}
 
-	descriptor.get = function(this: T) {
+	descriptor.get = function (this: T) {
 		const value = getter.call(this);
 
 		Object.defineProperty(this, name, {

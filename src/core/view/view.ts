@@ -28,7 +28,9 @@ import { Async } from '../async';
 import { modules } from '../global';
 import { hook } from '../decorators';
 
-export abstract class View extends Component implements IViewBased<IViewOptions> {
+export abstract class View
+	extends Component
+	implements IViewBased<IViewOptions> {
 	readonly isView: true = true;
 
 	/**

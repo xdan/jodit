@@ -43,7 +43,7 @@ export const css = (
 			if (
 				!isVoid(_value) &&
 				css(elm, _key, undefined, true) !==
-				normalizeCssValue(_key, _value)
+					normalizeCssValue(_key, _value)
 			) {
 				(elm.style as any)[_key] = _value;
 			}

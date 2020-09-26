@@ -29,7 +29,11 @@ export class ContextMenu extends Popup implements IContextMenu {
 	 * parent.show(e.clientX, e.clientY, [{icon: 'bin', title: 'Delete', exec: function () { alert(1) }]);
 	 * ```
 	 */
-	show(x: number, y: number, actions: Array<false | IContextMenuAction>): void {
+	show(
+		x: number,
+		y: number,
+		actions: Array<false | IContextMenuAction>
+	): void {
 		const self = this,
 			content = this.j.c.div('jodit-context-menu__actions');
 

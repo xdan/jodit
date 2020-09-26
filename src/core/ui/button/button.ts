@@ -76,7 +76,7 @@ export class UIButton extends UIElement implements IUIButton {
 
 	@watch('state.type')
 	protected onChangeType(): void {
-		attr(this.container,'type', this.state.type);
+		attr(this.container, 'type', this.state.type);
 	}
 
 	/**
@@ -144,7 +144,10 @@ export class UIButton extends UIElement implements IUIButton {
 	@watch('state.icon')
 	protected onChangeIcon(): void {
 		const textIcons = this.get('j.o.textIcons');
-		if (textIcons === true || (isFunction(textIcons) && textIcons(this.state.name))) {
+		if (
+			textIcons === true ||
+			(isFunction(textIcons) && textIcons(this.state.name))
+		) {
 			return;
 		}
 

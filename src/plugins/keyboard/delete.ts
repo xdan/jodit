@@ -232,7 +232,10 @@ export class Delete extends Plugin {
 					) ||
 					!trimInv(anotherSibling.nodeValue || '').length
 				) {
-					value = value.replace(backspace ? / +$/ : /^ +/, NBSP_SPACE);
+					value = value.replace(
+						backspace ? / +$/ : /^ +/,
+						NBSP_SPACE
+					);
 				}
 
 				sibling.nodeValue = value;

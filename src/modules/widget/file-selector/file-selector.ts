@@ -135,28 +135,25 @@ export const FileSelectorWidget = (
 	}
 
 	if (callbacks.url) {
-		const
-			button = new UIButton(editor, {
+		const button = new UIButton(editor, {
 				type: 'submit',
 				status: 'primary',
 				text: 'Insert'
 			}),
-			form = (new UIForm(editor, [
-			new UIInput(editor, {
-				required: true,
-				label: 'URL',
-				name: 'url',
-				type: 'url',
-				placeholder: 'http://',
-			}),
-			new UIInput(editor, {
-				name: 'text',
-				label: 'Alternative text'
-			}),
-			new UIBlock(editor, [
-				button
-			])
-		]));
+			form = new UIForm(editor, [
+				new UIInput(editor, {
+					required: true,
+					label: 'URL',
+					name: 'url',
+					type: 'url',
+					placeholder: 'http://'
+				}),
+				new UIInput(editor, {
+					name: 'text',
+					label: 'Alternative text'
+				}),
+				new UIBlock(editor, [button])
+			]);
 
 		currentImage = null;
 
@@ -177,17 +174,11 @@ export const FileSelectorWidget = (
 			button.state.text = 'Update';
 		}
 
-		form.onSubmit(
-			(data) => {
-				if (isFunction(callbacks.url)) {
-					callbacks.url.call(
-						editor,
-						data.url,
-						data.text
-					);
-				}
+		form.onSubmit(data => {
+			if (isFunction(callbacks.url)) {
+				callbacks.url.call(editor, data.url, data.text);
 			}
-		);
+		});
 
 		tabs.push({
 			icon: 'link',

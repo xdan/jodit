@@ -17,6 +17,6 @@ export class UICheckbox extends UIInput {
 
 	/** @override */
 	protected createContainer(options: this['options']): HTMLElement {
-		return super.createContainer({...options, type: 'checkbox'});
+		return super.createContainer({ ...options, type: 'checkbox' });
 	}
 }

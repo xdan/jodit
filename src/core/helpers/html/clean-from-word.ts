@@ -50,23 +50,24 @@ export function cleanFromWord(html: string): string {
 								break;
 
 							default:
-								toArray(
-									(node as Element).attributes
-								).forEach((attr: Attr) => {
-									if (
-										[
-											'src',
-											'href',
-											'rel',
-											'content'
-										].indexOf(attr.name.toLowerCase()) ===
-										-1
-									) {
-										(node as Element).removeAttribute(
-											attr.name
-										);
+								toArray((node as Element).attributes).forEach(
+									(attr: Attr) => {
+										if (
+											[
+												'src',
+												'href',
+												'rel',
+												'content'
+											].indexOf(
+												attr.name.toLowerCase()
+											) === -1
+										) {
+											(node as Element).removeAttribute(
+												attr.name
+											);
+										}
 									}
-								});
+								);
 						}
 						break;
 					case Node.TEXT_NODE:
@@ -86,10 +87,7 @@ export function cleanFromWord(html: string): string {
 		html = convertedString;
 	}
 
-	html = html
-		.split(/(\n)/)
-		.filter(trim)
-		.join('\n');
+	html = html.split(/(\n)/).filter(trim).join('\n');
 
 	return html
 		.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')

@@ -109,7 +109,10 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		this.j.e.fire('afterUpdateToolbar');
 	}
 
-	update = this.j.async.debounce(this.immediateUpdate, () => this.j.defaultTimeout);
+	update = this.j.async.debounce(
+		this.immediateUpdate,
+		() => this.j.defaultTimeout
+	);
 
 	/**
 	 * Set direction

@@ -5,7 +5,12 @@
  */
 
 import { ViewComponent, STATUSES } from '../component';
-import type { IDictionary, IUIElement, IViewBased, Nullable } from '../../types';
+import type {
+	IDictionary,
+	IUIElement,
+	IViewBased,
+	Nullable
+} from '../../types';
 import { Dom } from '../dom';
 import { getClassName } from '../helpers/utils';
 import { toArray } from '../helpers/array';

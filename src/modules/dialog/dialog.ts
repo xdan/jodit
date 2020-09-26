@@ -32,7 +32,8 @@ import {
 	isBoolean,
 	isFunction,
 	isString,
-	splitArray, toArray
+	splitArray,
+	toArray
 } from '../../core/helpers/';
 import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 import { Dom } from '../../core/dom';

@@ -57,7 +57,7 @@ export default (self: IFileBrowser) => {
 									ga('data-source')
 								);
 							}
-						}
+					  }
 					: false,
 
 				self.dataProvider.canI('FileRename')
@@ -72,7 +72,7 @@ export default (self: IFileBrowser) => {
 									ga('data-source')
 								);
 							}
-						}
+					  }
 					: false,
 
 				self.dataProvider.canI('FileRemove')
@@ -89,7 +89,7 @@ export default (self: IFileBrowser) => {
 
 								await self.loadTree();
 							}
-						}
+					  }
 					: false,
 
 				opt.preview

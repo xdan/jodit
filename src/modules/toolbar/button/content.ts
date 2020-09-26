@@ -17,7 +17,8 @@ import { isString } from '../../../core/helpers/checker';
 import { Dom } from '../../../core/dom';
 import { attr } from '../../../core/helpers/utils';
 
-export class ToolbarContent<T extends IViewBased = IViewBased> extends UIButton
+export class ToolbarContent<T extends IViewBased = IViewBased>
+	extends UIButton
 	implements IToolbarButton {
 	/** @override */
 	update(): void {

@@ -83,8 +83,18 @@ export function fullsize(editor: IViewWithToolbar): void {
 	const resize = () => {
 			if (editor.events) {
 				if (isEnabled) {
-					oldHeight = css(editor.container, 'height', undefined, true) as number;
-					oldWidth = css(editor.container, 'width', undefined, true) as number;
+					oldHeight = css(
+						editor.container,
+						'height',
+						undefined,
+						true
+					) as number;
+					oldWidth = css(
+						editor.container,
+						'width',
+						undefined,
+						true
+					) as number;
 					css(editor.container, {
 						height: editor.ow.innerHeight,
 						width: editor.ow.innerWidth

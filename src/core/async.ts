@@ -65,18 +65,21 @@ export class Async implements IAsync {
 	 * @param timeout
 	 * @param firstCallImmediately
 	 */
-	debounce(fn: CallbackFunction, timeout: ITimeout, firstCallImmediately: boolean = false): CallbackFunction {
+	debounce(
+		fn: CallbackFunction,
+		timeout: ITimeout,
+		firstCallImmediately: boolean = false
+	): CallbackFunction {
 		let timer: number = 0,
 			fired: boolean = false;
 
-		const
-			callFn = (...args: any[]) => {
-				if (!fired) {
-					timer = 0;
-					fn(...args);
-					fired = true;
-				}
-			};
+		const callFn = (...args: any[]) => {
+			if (!fired) {
+				timer = 0;
+				fn(...args);
+				fired = true;
+			}
+		};
 
 		return (...args: any[]) => {
 			fired = false;
@@ -89,7 +92,10 @@ export class Async implements IAsync {
 				}
 
 				clearTimeout(timer);
-				timer = this.setTimeout(() => callFn(...args), isFunction(timeout) ? timeout() : timeout);
+				timer = this.setTimeout(
+					() => callFn(...args),
+					isFunction(timeout) ? timeout() : timeout
+				);
 				this.timers.set(fn, timer);
 			}
 		};
@@ -132,7 +138,10 @@ export class Async implements IAsync {
 					if (needInvoke) {
 						fn(...lastArgs);
 						needInvoke = false;
-						timer = this.setTimeout(callee, isFunction(timeout) ? timeout() : timeout);
+						timer = this.setTimeout(
+							callee,
+							isFunction(timeout) ? timeout() : timeout
+						);
 						this.timers.set(callee, timer);
 					} else {
 						timer = null;

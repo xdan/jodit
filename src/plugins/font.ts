@@ -11,7 +11,7 @@ import { IControlType, IJodit } from '../types/';
 
 declare module '../config' {
 	interface Config {
-		defaultFontSizePoints: 'px' | 'pt'
+		defaultFontSizePoints: 'px' | 'pt';
 	}
 }
 
@@ -24,7 +24,7 @@ Config.prototype.controls.fontsize = ({
 	command: 'fontSize',
 
 	data: {
-		cssRule: 'font-size',
+		cssRule: 'font-size'
 	},
 
 	list: [
@@ -48,8 +48,7 @@ Config.prototype.controls.fontsize = ({
 	exec: (editor, event, { control }): void | false => {
 		const key = `button${control.command}`;
 
-		let value =
-			(control.args && control.args[0]) || dataBind(editor, key);
+		let value = (control.args && control.args[0]) || dataBind(editor, key);
 
 		if (isVoid(value)) {
 			return false;
@@ -69,7 +68,7 @@ Config.prototype.controls.fontsize = ({
 	},
 
 	childTemplate: (editor, key: string, value: string) => {
-		return `${value}${editor.o.defaultFontSizePoints}`
+		return `${value}${editor.o.defaultFontSizePoints}`;
 	},
 
 	tooltip: 'Font size',
@@ -77,13 +76,18 @@ Config.prototype.controls.fontsize = ({
 	isChildActive: (editor, control: IControlType): boolean => {
 		const current = editor.s.current(),
 			cssKey = control.data?.cssRule || 'font-size',
-			normalize = control.data?.normalize || ((v: string): string => {
-				if (/pt$/i.test(v) && editor.o.defaultFontSizePoints === 'pt') {
-					return v.replace(/pt$/i, '');
-				}
+			normalize =
+				control.data?.normalize ||
+				((v: string): string => {
+					if (
+						/pt$/i.test(v) &&
+						editor.o.defaultFontSizePoints === 'pt'
+					) {
+						return v.replace(/pt$/i, '');
+					}
 
-				return v;
-			});
+					return v;
+				});
 
 		if (current) {
 			const currentBpx: HTMLElement =

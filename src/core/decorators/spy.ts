@@ -19,7 +19,10 @@ export const spy = function spy(target: Function) {
 			return;
 		}
 
-		const descriptor = Object.getOwnPropertyDescriptor(target.prototype, key);
+		const descriptor = Object.getOwnPropertyDescriptor(
+			target.prototype,
+			key
+		);
 
 		// Only methods need binding
 		if (descriptor && isFunction(descriptor.value)) {
@@ -28,12 +31,16 @@ export const spy = function spy(target: Function) {
 			Object.defineProperty(target.prototype, key, {
 				configurable: true,
 				get() {
-					return function(this: typeof target, ...args: any[])	{
-						console.log(`Class: ${getClassName(target.prototype)} call: ${String(key)}`);
+					return function (this: typeof target, ...args: any[]) {
+						console.log(
+							`Class: ${getClassName(
+								target.prototype
+							)} call: ${String(key)}`
+						);
 						return fn.apply(this, args);
-					}
+					};
 				}
 			});
 		}
 	});
-}
+};

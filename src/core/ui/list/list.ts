@@ -26,7 +26,8 @@ import { UIGroup } from './group';
 import { UISeparator } from '../separator';
 import { getClassName } from '../../helpers';
 
-export class UIList<T extends IViewBased = IViewBased> extends UIGroup<T>
+export class UIList<T extends IViewBased = IViewBased>
+	extends UIGroup<T>
 	implements IUIList {
 	jodit!: T;
 
@@ -59,7 +60,9 @@ export class UIList<T extends IViewBased = IViewBased> extends UIGroup<T>
 	 * All buttons from list
 	 */
 	get buttons(): IUIButton[] {
-		return this.allChildren.filter(elm => elm instanceof UIButton) as IUIButton[];
+		return this.allChildren.filter(
+			elm => elm instanceof UIButton
+		) as IUIButton[];
 	}
 
 	/**

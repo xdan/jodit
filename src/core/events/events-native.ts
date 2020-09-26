@@ -305,7 +305,7 @@ export class EventsNative implements IEventsNative {
 						'scroll',
 						'mousewheel',
 						'mousemove',
-						'touchmove',
+						'touchmove'
 					].includes(event)
 						? {
 								passive: true

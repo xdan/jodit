@@ -4,4 +4,4 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from "./hr";
+export * from './hr';

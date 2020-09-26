@@ -33,7 +33,8 @@ import {
 	$$,
 	css,
 	isArray,
-	call, toArray
+	call,
+	toArray
 } from '../helpers';
 import { Style } from './style/style';
 

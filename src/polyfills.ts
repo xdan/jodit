@@ -24,7 +24,7 @@ if (!Array.from) {
 
 // for ie11
 if (!Array.prototype.includes) {
-	Array.prototype.includes = function(value: any) {
+	Array.prototype.includes = function (value: any) {
 		return this.indexOf(value) > -1;
 	};
 }
@@ -32,11 +32,14 @@ if (!Array.prototype.includes) {
 // for ie11
 if (typeof Object.assign !== 'function') {
 	// Must be writable: true, enumerable: false, configurable: true
-	Object.defineProperty(Object, "assign", {
-		value: function assign(target: IDictionary, varArgs: IDictionary) { // .length of function is 2
+	Object.defineProperty(Object, 'assign', {
+		value: function assign(target: IDictionary, varArgs: IDictionary) {
+			// .length of function is 2
 			'use strict';
 			if (target === null || target === undefined) {
-				throw new TypeError('Cannot convert undefined or null to object');
+				throw new TypeError(
+					'Cannot convert undefined or null to object'
+				);
 			}
 
 			const to = Object(target);
@@ -48,7 +51,12 @@ if (typeof Object.assign !== 'function') {
 				if (nextSource !== null && nextSource !== undefined) {
 					for (const nextKey in nextSource) {
 						// Avoid bugs when hasOwnProperty is shadowed
-						if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+						if (
+							Object.prototype.hasOwnProperty.call(
+								nextSource,
+								nextKey
+							)
+						) {
 							to[nextKey] = nextSource[nextKey];
 						}
 					}
@@ -62,7 +70,7 @@ if (typeof Object.assign !== 'function') {
 }
 
 if (!Array.prototype.find) {
-	Array.prototype.find = function(value: any) {
+	Array.prototype.find = function (value: any) {
 		return this.indexOf(value) > -1 ? value : undefined;
 	};
 }

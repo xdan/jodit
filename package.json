@@ -20,7 +20,7 @@
 		"test-chrome": "karma start --browsers Chrome karma.conf.js",
 		"jodit": "cd ../jodit-react/ && npm update && npm run newversion && cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion && cd ../jodit-docs && npm run newversion && cd ../jodit-master && npm run newversion",
 		"types": "rm -rf types/* && tsc --project . --declaration --outDir types --emitDeclarationOnly",
-		"pretty": "prettier --write ./src/*.{ts,less} ./src/**/*.{ts,less} ./src/**/**/*.{ts,less}",
+		"pretty": "prettier --write ./src/*.{ts,less} ./src/**/*.{ts,less} ./src/**/**/*.{ts,less} ./src/**/**/**/*.{ts,less} ./src/**/**/**/**/*.{ts,less}",
 		"fix": "eslint ./src/* ./test/ --fix && npm run pretty",
 		"lint": "eslint ./src/* ./test/"
 	},

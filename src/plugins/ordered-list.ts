@@ -105,7 +105,7 @@ export function orderedList(editor: IJodit): void {
 					setListStyleType(ul, listStyleType);
 					editor.createInside.applyCreateAttributes(ul);
 
-					ul.querySelectorAll('li').forEach((li) => {
+					ul.querySelectorAll('li').forEach(li => {
 						editor.createInside.applyCreateAttributes(li);
 					});
 				}

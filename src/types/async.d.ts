@@ -6,7 +6,7 @@
 
 import { CallbackFunction, IDestructible } from './types';
 
-export type ITimeout  = number | (() => number);
+export type ITimeout = number | (() => number);
 export interface IAsyncParams {
 	timeout?: number;
 	label?: string;
@@ -34,7 +34,11 @@ export interface IAsync extends IDestructible {
 		p: Promise<any>
 	): Promise<'pending' | 'fulfilled' | 'rejected'>;
 
-	debounce(fn: CallbackFunction, timeout: ITimeout, firstCallImmediately?: boolean): CallbackFunction;
+	debounce(
+		fn: CallbackFunction,
+		timeout: ITimeout,
+		firstCallImmediately?: boolean
+	): CallbackFunction;
 
 	throttle(fn: CallbackFunction, timeout: ITimeout): CallbackFunction;
 }

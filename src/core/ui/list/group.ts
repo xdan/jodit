@@ -16,7 +16,8 @@ import { UIElement } from '../element';
 import { watch } from '../../decorators';
 import { isArray } from '../../helpers';
 
-export class UIGroup<T extends IViewBased = IViewBased> extends UIElement<T>
+export class UIGroup<T extends IViewBased = IViewBased>
+	extends UIElement<T>
 	implements IUIGroup {
 	elements: IUIElement[] = [];
 
@@ -25,18 +26,20 @@ export class UIGroup<T extends IViewBased = IViewBased> extends UIElement<T>
 	 */
 	get allChildren(): IUIElement[] {
 		const result: IUIElement[] = [];
-		const stack: Array<IUIElement | IUIElement[] | IUIGroup> = [...this.elements];
+		const stack: Array<IUIElement | IUIElement[] | IUIGroup> = [
+			...this.elements
+		];
 
 		while (stack.length) {
 			const elm = stack.pop();
 
-				if (isArray(elm)) {
-					stack.push(...elm);
-				} else if (elm instanceof UIGroup) {
-						stack.push(...elm.elements.reverse());
-				} else {
-					elm && result.push(elm);
-				}
+			if (isArray(elm)) {
+				stack.push(...elm);
+			} else if (elm instanceof UIGroup) {
+				stack.push(...elm.elements.reverse());
+			} else {
+				elm && result.push(elm);
+			}
 		}
 
 		return result;

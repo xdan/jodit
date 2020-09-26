@@ -121,7 +121,10 @@ export class enter extends Plugin {
 		const isLi = Dom.isTag(currentBox, 'li');
 
 		// if use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
-		if ((!isLi || event.shiftKey) && !this.checkBR(current, event.shiftKey)) {
+		if (
+			(!isLi || event.shiftKey) &&
+			!this.checkBR(current, event.shiftKey)
+		) {
 			return false;
 		}
 

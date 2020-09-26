@@ -27,8 +27,7 @@ Config.prototype.controls.print = {
 		getContainer(editor, Config).appendChild(iframe);
 
 		const afterFinishPrint = () => {
-			editor.e
-				.off(editor.ow, 'mousemove', afterFinishPrint);
+			editor.e.off(editor.ow, 'mousemove', afterFinishPrint);
 			Dom.safeRemove(iframe);
 		};
 
@@ -54,11 +53,11 @@ Config.prototype.controls.print = {
 			} else {
 				mywindow.document.write(
 					'<!doctype html><html lang="' +
-					defaultLanguage(editor.o.language) +
-					'"><head><title></title></head>' +
-					'<body>' +
-					editor.value +
-					'</body></html>'
+						defaultLanguage(editor.o.language) +
+						'"><head><title></title></head>' +
+						'<body>' +
+						editor.value +
+						'</body></html>'
 				);
 				mywindow.document.close();
 			}
@@ -76,7 +75,7 @@ Config.prototype.controls.preview = {
 	exec: (editor: IJodit) => {
 		const dialog = <IDialog>editor.getInstance('Dialog', {
 			language: editor.o.language,
-			theme: editor.o.theme,
+			theme: editor.o.theme
 		});
 
 		const div = editor.c.div();

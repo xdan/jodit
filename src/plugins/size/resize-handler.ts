@@ -23,7 +23,9 @@ export class resizeHandler extends Plugin {
 		) {
 			editor.e
 				.on('toggleFullSize.resizeHandler', () => {
-					this.handle.style.display = editor.isFullSize ? 'none' : 'block';
+					this.handle.style.display = editor.isFullSize
+						? 'none'
+						: 'block';
 				})
 				.on(
 					this.handle,
@@ -116,7 +118,6 @@ export class resizeHandler extends Plugin {
 	protected beforeDestruct(editor: IJodit) {
 		Dom.safeRemove(this.handle);
 
-		this.j.e
-			.off(this.j.ow, 'mouseup touchsend', this.onHandleResizeEnd);
+		this.j.e.off(this.j.ow, 'mouseup touchsend', this.onHandleResizeEnd);
 	}
 }

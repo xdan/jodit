@@ -9,7 +9,8 @@ import { css } from '../../../../core/helpers';
 import { Dom } from '../../../../modules';
 import { SourceEditor } from '../sourceEditor';
 
-export class TextAreaEditor extends SourceEditor<HTMLTextAreaElement>
+export class TextAreaEditor
+	extends SourceEditor<HTMLTextAreaElement>
 	implements ISourceEditor {
 	private autosize = this.j.async.debounce(() => {
 		this.instance.style.height = 'auto';

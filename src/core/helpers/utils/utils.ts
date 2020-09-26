@@ -127,7 +127,7 @@ export const reset = function <T extends Function>(key: string): Nullable<T> {
 			if (isFunction(func)) {
 				map[key] = func.bind(bind);
 			}
-		} catch(e) {
+		} catch (e) {
 			if (!isProd) {
 				throw e;
 			}

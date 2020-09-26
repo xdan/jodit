@@ -10,12 +10,16 @@ import './block.less';
 import { attr } from '../../helpers/utils';
 
 export class UIBlock extends UIGroup {
-	constructor(jodit: IViewBased, elements?: Array<IUIElement | void | null | false>, readonly options: {
-		align?: 'center' | 'left' | 'right' | 'full',
-		ref?: string
-	} = {
-		align: 'left'
-	}) {
+	constructor(
+		jodit: IViewBased,
+		elements?: Array<IUIElement | void | null | false>,
+		readonly options: {
+			align?: 'center' | 'left' | 'right' | 'full';
+			ref?: string;
+		} = {
+			align: 'left'
+		}
+	) {
 		super(jodit, elements);
 		this.setMod('align', this.options.align || 'left');
 

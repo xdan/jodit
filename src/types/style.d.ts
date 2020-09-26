@@ -8,7 +8,7 @@ import { CanUndef, HTMLTagNames, IDictionary } from './types';
 
 export type StyleValue = number | string | null | undefined;
 
-export type IStyle = IDictionary<StyleValue>
+export type IStyle = IDictionary<StyleValue>;
 
 export interface IStyleOptions {
 	style: CanUndef<IStyle>;

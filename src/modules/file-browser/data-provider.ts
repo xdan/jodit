@@ -156,10 +156,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param path
 	 * @param source
 	 */
-	async items(
-		path: string,
-		source: string
-	): Promise<IFileBrowserAnswer> {
+	async items(path: string, source: string): Promise<IFileBrowserAnswer> {
 		const opt = this.options;
 
 		if (!opt.items) {
@@ -172,10 +169,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		return this.get('items');
 	}
 
-	async tree(
-		path: string,
-		source: string
-	): Promise<IFileBrowserAnswer> {
+	async tree(path: string, source: string): Promise<IFileBrowserAnswer> {
 		path = normalizeRelativePath(path);
 
 		await this.permissions(path, source);

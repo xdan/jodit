@@ -4,6 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import "./config";
-export * from "./resize-handler";
-export * from "./size";
+import './config';
+export * from './resize-handler';
+export * from './size';

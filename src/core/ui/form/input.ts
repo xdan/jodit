@@ -7,7 +7,12 @@
 import './input.less';
 
 import { UIElement } from '../element';
-import type { IDictionary, IUIInput, IUIInputValidator, IViewBased } from '../../../types';
+import type {
+	IDictionary,
+	IUIInput,
+	IUIInputValidator,
+	IViewBased
+} from '../../../types';
 import { attr } from '../../helpers';
 import { Dom } from '../../dom';
 import * as validators from './validators';
@@ -40,7 +45,7 @@ export class UIInput extends UIElement implements IUIInput {
 	validate(): boolean {
 		this.error = '';
 
-		return this.validators.every(validator => validator(this))
+		return this.validators.every(validator => validator(this));
 	}
 
 	/** @override **/
@@ -83,8 +88,10 @@ export class UIInput extends UIElement implements IUIInput {
 			attr(this.nativeInput, 'placeholder', this.options.placeholder);
 		}
 
-		options.validators?.forEach((name) => {
-			const validator = (validators as IDictionary<IUIInputValidator>)[name];
+		options.validators?.forEach(name => {
+			const validator = (validators as IDictionary<IUIInputValidator>)[
+				name
+			];
 			validator && this.validators.push(validator);
 		});
 	}

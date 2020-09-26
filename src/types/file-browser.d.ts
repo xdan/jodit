@@ -5,12 +5,7 @@
  */
 
 import { Buttons } from './toolbar';
-import {
-	IDestructible,
-	IDictionary,
-	ImageBox,
-	IPermissions
-} from './types';
+import { IDestructible, IDictionary, ImageBox, IPermissions } from './types';
 import { IUploader, IUploaderOptions } from './uploader';
 import { IViewOptions, IViewWithToolbar } from './view';
 import { IDialog, IStorage, ObservableObject } from '../types';

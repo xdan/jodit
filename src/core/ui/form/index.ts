@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from "./form";
-export * from "./input";
-export * from "./inputs";
-export * from "./block";
+export * from './form';
+export * from './input';
+export * from './inputs';
+export * from './block';

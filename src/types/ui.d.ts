@@ -119,7 +119,7 @@ export interface IUIForm extends IUIGroup {
 	onSubmit(handler: (data: IDictionary) => false | void): void;
 }
 
-export interface IUIInput extends IUIElement{
+export interface IUIInput extends IUIElement {
 	nativeInput: HTMLInputElement | HTMLTextAreaElement;
 	options: {
 		name: string;
@@ -128,8 +128,8 @@ export interface IUIInput extends IUIElement{
 		type?: 'text' | 'checkbox' | 'url';
 		placeholder?: string;
 		required?: boolean;
-		validators?: string[]
-	}
+		validators?: string[];
+	};
 	value: string;
 	error: string;
 	validate(): boolean;
@@ -137,4 +137,3 @@ export interface IUIInput extends IUIElement{
 }
 
 export type IUIInputValidator = (input: IUIInput) => boolean;
-

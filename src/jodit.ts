@@ -30,7 +30,8 @@ import {
 	isVoid,
 	JoditArray,
 	JoditObject,
-	callPromise, toArray
+	callPromise,
+	toArray
 } from './core/helpers/';
 
 import { Storage } from './core/storage/';
@@ -1408,7 +1409,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		e && Object.keys(e).forEach((key: string) => this.e.on(key, e[key]));
 	}
 
-
 	/**
 	 * Attach some native event listeners
 	 */
@@ -1444,15 +1444,17 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			.on(
 				editor,
 				'selectionchange selectionstart keydown keyup keypress dblclick mousedown mouseup ' +
-				'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
+					'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
 				(event: Event): false | void => {
-
 					if (this.o.readonly) {
 						return;
 					}
 
 					const w = this.ew;
-					if (event instanceof (w as any).KeyboardEvent && (event as KeyboardEvent).isComposing) {
+					if (
+						event instanceof (w as any).KeyboardEvent &&
+						(event as KeyboardEvent).isComposing
+					) {
 						return;
 					}
 

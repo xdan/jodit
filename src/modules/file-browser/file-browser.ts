@@ -106,10 +106,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	}
 
 	async loadTree(): Promise<any> {
-		const
-			errorUni = (e: string | Error) => {
-				throw e instanceof Error ? e : error(e);
-			};
+		const errorUni = (e: string | Error) => {
+			throw e instanceof Error ? e : error(e);
+		};
 
 		if (this.uploader) {
 			this.uploader.setPath(this.state.currentPath);
@@ -149,7 +148,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 					errorUni(e);
 				});
-
 
 			return Promise.all([tree, items]).catch(error);
 		} else {
