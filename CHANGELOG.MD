@@ -1,13 +1,30 @@
 # Changelog
+=========
+
+> **Tags:**
+> - :boom:       [Breaking Change]
+> - :rocket:     [New Feature]
+> - :bug:        [Bug Fix]
+> - :memo:       [Documentation]
+> - :house:      [Internal]
+> - :nail_care:  [Polish]
+
 ## 3.4.26
 
+#### :bug: Bug Fix
+
 * https://github.com/xdan/jodit/issues/506
+* https://github.com/xdan/jodit/issues/505
 * https://github.com/xdan/jodit/issues/503
 * https://github.com/xdan/jodit/issues/501
 * https://github.com/xdan/jodit/issues/500
 * https://github.com/xdan/jodit/issues/496
 * https://github.com/xdan/jodit/issues/495
 * https://github.com/xdan/jodit/issues/490
+
+#### :rocket: New Feature
+
+* https://github.com/xdan/jodit/issues/513 allow set percentage and another points inside width and height inputs
 
 ## 3.4.25
 * https://github.com/xdan/jodit/issues/422

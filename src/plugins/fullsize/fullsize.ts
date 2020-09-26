@@ -149,7 +149,7 @@ export function fullsize(editor: IViewWithToolbar): void {
 			editor.toggleFullSize(editor?.options?.fullsize);
 		})
 		.on('toggleFullSize', toggle)
-		.on('beforeDestruct beforeClose', () => {
+		.on('beforeDestruct', () => {
 			toggle(false);
 		})
 		.on('beforeDestruct', () => {
