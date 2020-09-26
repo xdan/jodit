@@ -135,8 +135,14 @@ export abstract class Component implements IComponent {
 	 * @param jodit
 	 */
 	bindDestruct(jodit: IViewBased): this {
-		jodit.e.on(STATUSES.beforeDestruct, () => {
+		const destructMe = () => {
 			!this.isInDestruct && this.destruct();
+		};
+
+		jodit.e && jodit.e.on(STATUSES.beforeDestruct, destructMe);
+
+		this.hookStatus(STATUSES.beforeDestruct, () => {
+			jodit.e && jodit.e.off(STATUSES.beforeDestruct, destructMe);
 		});
 
 		return this;

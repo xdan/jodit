@@ -312,7 +312,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		self.e
 			.on(self.ow, 'mousemove', self.onMouseMove)
-			.on(self.container, 'close_dialog', self.close)
 			.on(self.ow, 'mouseup', self.onMouseUp);
 	}
 
@@ -321,7 +320,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		self.e
 			.off(self.ow, 'mousemove', self.onMouseMove)
-			.off(self.container, 'close_dialog', self.close)
 			.off(self.ow, 'mouseup', self.onMouseUp);
 	}
 
@@ -794,6 +792,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		self.setStatus(STATUSES.ready);
 
 		this.e
+			.on(self.container, 'close_dialog', self.close)
 			.on(this.ow, 'keydown', this.onEsc)
 			.on(this.ow, 'resize', this.onResize);
 	}
@@ -816,8 +815,9 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			this.removeGlobalListeners();
 
 			this.events
-				.on(this.ow, 'keydown', this.onEsc)
-				.on(this.ow, 'resize', this.onResize);
+				.off(this.container, 'close_dialog', self.close)
+				.off(this.ow, 'keydown', this.onEsc)
+				.off(this.ow, 'resize', this.onResize);
 		}
 
 		super.destruct();

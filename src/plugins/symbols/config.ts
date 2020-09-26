@@ -238,6 +238,7 @@ Config.prototype.controls.symbol = {
 		const container: HTMLElement | undefined = editor.e.fire(
 			'generateSpecialCharactersTable.symbols'
 		);
+
 		if (container) {
 			if (editor.o.usePopupForSpecialCharacters) {
 				const box = editor.c.div();
