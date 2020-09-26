@@ -196,30 +196,30 @@ Jodit.plugins.add('insertText', function (editor) {
 
 Jodit.plugins.add('textLength', {
 	init(editor) {
-        const div = editor.create.div('jodit_div');
-        editor.container.appendChild(div);
-        editor.events.on('change.textLength', () => {
-        	div.innerText = editor.value.length;
-        });
+		const div = editor.create.div('jodit_div');
+		editor.container.appendChild(div);
+		editor.events.on('change.textLength', () => {
+			div.innerText = editor.value.length;
+		});
 	},
 	destruct(editor) {
-        editor.events.off('change.textLength')
-    }
+		editor.events.off('change.textLength')
+	}
 });
 
 // or use class
 
 Jodit.plugins.add('textLength', class textLength {
 	init(editor) {
-        const div = editor.create.div('jodit_div');
-        editor.container.appendChild(div);
-        editor.events.on('change.textLength', () => {
-        	div.innerText = editor.value.length;
-        });
+		const div = editor.create.div('jodit_div');
+		editor.container.appendChild(div);
+		editor.events.on('change.textLength', () => {
+			div.innerText = editor.value.length;
+		});
 	}
 	destruct(editor) {
-        editor.events.off('change.textLength')
-    }
+		editor.events.off('change.textLength')
+	}
 });
 
 var editor = new Jodit('.someselector', {
