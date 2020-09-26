@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.26
+ * Version: v3.4.27
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -150,7 +150,7 @@ PERFORMANCE OF THIS SOFTWARE.
 var extendStatics = function(d, b) {
     extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
     return extendStatics(d, b);
 };
 
@@ -244,8 +244,8 @@ var __createBinding = Object.create ? (function(o, m, k, k2) {
     o[k2] = m[k];
 });
 
-function __exportStar(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+function __exportStar(m, o) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
 }
 
 function __values(o) {
@@ -335,7 +335,7 @@ var __setModuleDefault = Object.create ? (function(o, v) {
 function __importStar(mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 }
@@ -850,8 +850,9 @@ exports.Dom = Dom;
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BASE_PATH = exports.KEY_ALIASES = exports.IS_MAC = exports.SAFE_COUNT_CHANGE_CALL = exports.INSERT_ONLY_TEXT = exports.INSERT_AS_TEXT = exports.INSERT_CLEAR_HTML = exports.INSERT_AS_HTML = exports.EMULATE_DBLCLICK_TIMEOUT = exports.MARKER_CLASS = exports.TEXT_HTML = exports.TEXT_PLAIN = exports.IS_IE = exports.MODE_SPLIT = exports.MODE_SOURCE = exports.MODE_WYSIWYG = exports.PARAGRAPH = exports.BR = exports.COMMAND_KEYS = exports.ACCURACY = exports.NEARBY = exports.KEY_F3 = exports.KEY_DELETE = exports.KEY_DOWN = exports.KEY_RIGHT = exports.KEY_UP = exports.KEY_LEFT = exports.KEY_ESC = exports.KEY_ENTER = exports.KEY_TAB = exports.KEY_BACKSPACE = exports.MAY_BE_REMOVED_WITH_KEY = exports.INSEPARABLE_TAGS = exports.IS_INLINE = exports.IS_BLOCK = exports.SPACE_REG_EXP_END = exports.SPACE_REG_EXP_START = exports.SPACE_REG_EXP = exports.INVISIBLE_SPACE_REG_EXP_START = exports.INVISIBLE_SPACE_REG_EXP_END = exports.INVISIBLE_SPACE_REG_EXP = exports.INVISIBLE_SPACE = void 0;
+exports.BASE_PATH = exports.KEY_ALIASES = exports.IS_MAC = exports.SAFE_COUNT_CHANGE_CALL = exports.INSERT_ONLY_TEXT = exports.INSERT_AS_TEXT = exports.INSERT_CLEAR_HTML = exports.INSERT_AS_HTML = exports.EMULATE_DBLCLICK_TIMEOUT = exports.MARKER_CLASS = exports.TEXT_HTML = exports.TEXT_PLAIN = exports.IS_IE = exports.MODE_SPLIT = exports.MODE_SOURCE = exports.MODE_WYSIWYG = exports.PARAGRAPH = exports.BR = exports.COMMAND_KEYS = exports.ACCURACY = exports.NEARBY = exports.KEY_F3 = exports.KEY_DELETE = exports.KEY_DOWN = exports.KEY_RIGHT = exports.KEY_UP = exports.KEY_LEFT = exports.KEY_ESC = exports.KEY_ENTER = exports.KEY_TAB = exports.KEY_BACKSPACE = exports.MAY_BE_REMOVED_WITH_KEY = exports.INSEPARABLE_TAGS = exports.IS_INLINE = exports.IS_BLOCK = exports.SPACE_REG_EXP_END = exports.SPACE_REG_EXP_START = exports.SPACE_REG_EXP = exports.INVISIBLE_SPACE_REG_EXP_START = exports.INVISIBLE_SPACE_REG_EXP_END = exports.INVISIBLE_SPACE_REG_EXP = exports.NBSP_SPACE = exports.INVISIBLE_SPACE = void 0;
 exports.INVISIBLE_SPACE = '\uFEFF';
+exports.NBSP_SPACE = '\u00A0';
 exports.INVISIBLE_SPACE_REG_EXP = function () { return /[\uFEFF]/g; };
 exports.INVISIBLE_SPACE_REG_EXP_END = function () { return /[\uFEFF]+$/g; };
 exports.INVISIBLE_SPACE_REG_EXP_START = function () { return /^[\uFEFF]+/g; };
@@ -907,7 +908,7 @@ exports.IS_IE = typeof navigator !== 'undefined' &&
     (navigator.userAgent.indexOf('MSIE') !== -1 ||
         /rv:11.0/i.test(navigator.userAgent));
 exports.TEXT_PLAIN = exports.IS_IE ? 'text' : 'text/plain';
-exports.TEXT_HTML = exports.IS_IE ? 'text' : 'text/html';
+exports.TEXT_HTML = exports.IS_IE ? 'html' : 'text/html';
 exports.MARKER_CLASS = 'jodit-selection_marker';
 exports.EMULATE_DBLCLICK_TIMEOUT = 300;
 exports.INSERT_AS_HTML = 'insert_as_html';
@@ -1440,9 +1441,11 @@ var Plugin = (function (_super) {
     function Plugin(jodit) {
         var _this = _super.call(this, jodit) || this;
         jodit.e
-            .on('afterInit', _this.afterInit.bind(_this, jodit))
+            .on('afterInit', function () {
+            _this.setStatus(component_1.STATUSES.ready);
+            _this.afterInit(jodit);
+        })
             .on('beforeDestruct', _this.destruct);
-        _this.setStatus(component_1.STATUSES.ready);
         return _this;
     }
     Plugin.prototype.init = function (jodit) {
@@ -1612,7 +1615,7 @@ tslib_1.__exportStar(__webpack_require__(95), exports);
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Helpers = void 0;
+exports.PluginSystem = exports.Uploader = exports.ToolbarCollection = exports.ToolbarEditorCollection = exports.Table = exports.StatusBar = exports.Snapshot = exports.Style = exports.Select = exports.ProgressBar = exports.Observer = exports.ImageEditor = exports.Helpers = exports.FileBrowser = exports.ViewWithToolbar = exports.View = exports.Icon = exports.UIBlock = exports.UICheckbox = exports.UITextArea = exports.UIInput = exports.UIForm = exports.UIList = exports.UIGroup = exports.UISeparator = exports.Popup = exports.UIButton = exports.UIElement = exports.Create = exports.Plugin = exports.Dom = exports.Dialog = exports.Prompt = exports.Confirm = exports.Alert = exports.ContextMenu = exports.STATUSES = exports.ViewComponent = exports.Component = exports.Ajax = exports.Async = void 0;
 var tslib_1 = __webpack_require__(0);
 tslib_1.__exportStar(__webpack_require__(22), exports);
 var async_1 = __webpack_require__(58);
@@ -1834,6 +1837,7 @@ tslib_1.__exportStar(__webpack_require__(155), exports);
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Confirm = exports.Prompt = exports.Alert = exports.Dialog = void 0;
 var dialog_1 = __webpack_require__(26);
 Object.defineProperty(exports, "Dialog", { enumerable: true, get: function () { return dialog_1.Dialog; } });
 var alert_1 = __webpack_require__(184);
@@ -2097,6 +2101,7 @@ tslib_1.__exportStar(__webpack_require__(45), exports);
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.toArray = exports.splitArray = exports.asArray = void 0;
 var as_array_1 = __webpack_require__(116);
 Object.defineProperty(exports, "asArray", { enumerable: true, get: function () { return as_array_1.asArray; } });
 var split_array_1 = __webpack_require__(117);
@@ -2327,6 +2332,7 @@ var Dialog = (function (_super) {
         helpers_1.isFunction(fullSize) && fullSize(self);
         self.setStatus(component_1.STATUSES.ready);
         _this.e
+            .on(self.container, 'close_dialog', self.close)
             .on(_this.ow, 'keydown', _this.onEsc)
             .on(_this.ow, 'resize', _this.onResize);
         return _this;
@@ -2436,14 +2442,12 @@ var Dialog = (function (_super) {
         var self = this;
         self.e
             .on(self.ow, 'mousemove', self.onMouseMove)
-            .on(self.container, 'close_dialog', self.close)
             .on(self.ow, 'mouseup', self.onMouseUp);
     };
     Dialog.prototype.removeGlobalListeners = function () {
         var self = this;
         self.e
             .off(self.ow, 'mousemove', self.onMouseMove)
-            .off(self.container, 'close_dialog', self.close)
             .off(self.ow, 'mouseup', self.onMouseUp);
     };
     Dialog.prototype.setSize = function (w, h) {
@@ -2595,8 +2599,9 @@ var Dialog = (function (_super) {
         if (this.events) {
             this.removeGlobalListeners();
             this.events
-                .on(this.ow, 'keydown', this.onEsc)
-                .on(this.ow, 'resize', this.onResize);
+                .off(this.container, 'close_dialog', self.close)
+                .off(this.ow, 'keydown', this.onEsc)
+                .off(this.ow, 'resize', this.onResize);
         }
         _super.prototype.destruct.call(this);
     };
@@ -2811,7 +2816,8 @@ var JoditArray = (function () {
             'shift',
             'unshift',
             'slice',
-            'splice'
+            'splice',
+            'concat'
         ].forEach(function (method) {
             Object.defineProperty(_this, method, {
                 value: proto[method],
@@ -4237,8 +4243,12 @@ var Component = (function () {
     });
     Component.prototype.bindDestruct = function (jodit) {
         var _this = this;
-        jodit.e.on(statuses_1.STATUSES.beforeDestruct, function () {
+        var destructMe = function () {
             !_this.isInDestruct && _this.destruct();
+        };
+        jodit.e && jodit.e.on(statuses_1.STATUSES.beforeDestruct, destructMe);
+        this.hookStatus(statuses_1.STATUSES.beforeDestruct, function () {
+            jodit.e && jodit.e.off(statuses_1.STATUSES.beforeDestruct, destructMe);
         });
         return this;
     };
@@ -4846,7 +4856,7 @@ var View = (function (_super) {
         _this.isJodit = isJodit;
         _this.isView = true;
         _this.components = new Set();
-        _this.version = "3.4.26";
+        _this.version = "3.4.27";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.OPTIONS = View.defaultOptions;
@@ -6196,7 +6206,7 @@ if (!Array.prototype.includes) {
     };
 }
 if (typeof Object.assign !== 'function') {
-    Object.defineProperty(Object, "assign", {
+    Object.defineProperty(Object, 'assign', {
         value: function assign(target, varArgs) {
             'use strict';
             if (target === null || target === undefined) {
@@ -8675,7 +8685,8 @@ var Jodit = (function (_super) {
                 return;
             }
             var w = _this.ew;
-            if (event instanceof w.KeyboardEvent && event.isComposing) {
+            if (event instanceof w.KeyboardEvent &&
+                event.isComposing) {
                 return;
             }
             if (_this.e && _this.e.fire) {
@@ -9380,7 +9391,7 @@ var EventsNative = (function () {
                         'scroll',
                         'mousewheel',
                         'mousemove',
-                        'touchmove',
+                        'touchmove'
                     ].includes(event)
                         ? {
                             passive: true
@@ -10060,7 +10071,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.isLicense = void 0;
 var is_string_1 = __webpack_require__(19);
 exports.isLicense = function (license) {
-    return is_string_1.isString(license) && license.length === 23 && /^[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}$/i.test(license);
+    return (is_string_1.isString(license) &&
+        license.length === 23 &&
+        /^[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}$/i.test(license));
 };
 
 
@@ -10305,7 +10318,7 @@ exports.splitArray = splitArray;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.toArray = void 0;
 var utils_1 = __webpack_require__(12);
-exports.toArray = (function toArray() {
+exports.toArray = function toArray() {
     var _a;
     var args = [];
     for (var _i = 0; _i < arguments.length; _i++) {
@@ -10313,7 +10326,7 @@ exports.toArray = (function toArray() {
     }
     var func = (_a = utils_1.reset('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
     return func.apply(Array, args);
-});
+};
 
 
 /***/ }),
@@ -10569,8 +10582,7 @@ function cleanFromWord(html) {
                                         'href',
                                         'rel',
                                         'content'
-                                    ].indexOf(attr.name.toLowerCase()) ===
-                                        -1) {
+                                    ].indexOf(attr.name.toLowerCase()) === -1) {
                                         node.removeAttribute(attr.name);
                                     }
                                 });
@@ -10590,10 +10602,7 @@ function cleanFromWord(html) {
     if (convertedString) {
         html = convertedString;
     }
-    html = html
-        .split(/(\n)/)
-        .filter(string_1.trim)
-        .join('\n');
+    html = html.split(/(\n)/).filter(string_1.trim).join('\n');
     return html
         .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
         .replace(/<!--[^>]*>/g, '');
@@ -11804,7 +11813,8 @@ var UIButton = (function (_super) {
     };
     UIButton.prototype.onChangeIcon = function () {
         var textIcons = this.get('j.o.textIcons');
-        if (textIcons === true || (helpers_1.isFunction(textIcons) && textIcons(this.state.name))) {
+        if (textIcons === true ||
+            (helpers_1.isFunction(textIcons) && textIcons(this.state.name))) {
             return;
         }
         dom_1.Dom.detach(this.icon);
@@ -12373,8 +12383,7 @@ var UIForm = (function (_super) {
         this.j.e.fire(this.container, 'submit');
     };
     UIForm.prototype.validate = function () {
-        var inputs = this.allChildren
-            .filter(function (elm) { return elm instanceof input_1.UIInput; });
+        var inputs = this.allChildren.filter(function (elm) { return elm instanceof input_1.UIInput; });
         for (var _i = 0, inputs_1 = inputs; _i < inputs_1.length; _i++) {
             var input = inputs_1[_i];
             if (!input.validate()) {
@@ -12386,8 +12395,7 @@ var UIForm = (function (_super) {
     UIForm.prototype.onSubmit = function (handler) {
         var _this = this;
         this.j.e.on(this.container, 'submit', function () {
-            var inputs = _this.allChildren
-                .filter(function (elm) { return elm instanceof input_1.UIInput; });
+            var inputs = _this.allChildren.filter(function (elm) { return elm instanceof input_1.UIInput; });
             if (!_this.validate()) {
                 return false;
             }
@@ -12711,22 +12719,20 @@ exports.FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
             type: 'submit',
             status: 'primary',
             text: 'Insert'
-        }), form = (new ui_1.UIForm(editor, [
+        }), form = new ui_1.UIForm(editor, [
             new ui_1.UIInput(editor, {
                 required: true,
                 label: 'URL',
                 name: 'url',
                 type: 'url',
-                placeholder: 'http://',
+                placeholder: 'http://'
             }),
             new ui_1.UIInput(editor, {
                 name: 'text',
                 label: 'Alternative text'
             }),
-            new ui_1.UIBlock(editor, [
-                button
-            ])
-        ]));
+            new ui_1.UIBlock(editor, [button])
+        ]);
         currentImage = null;
         if (elm &&
             !dom_1.Dom.isText(elm) &&
@@ -13039,18 +13045,7 @@ var Create = (function () {
     Create.prototype.element = function (tagName, childrenOrAttributes, children) {
         var _this = this;
         var elm = this.doc.createElement(tagName.toLowerCase());
-        if (this.createAttributes) {
-            var ca = this.createAttributes;
-            if (ca && ca[tagName.toLowerCase()]) {
-                var attrs = ca[tagName.toLowerCase()];
-                if (helpers_1.isFunction(attrs)) {
-                    attrs(elm);
-                }
-                else if (helpers_1.isPlainObject(attrs)) {
-                    this.applyAttributes(elm, attrs);
-                }
-            }
-        }
+        this.applyCreateAttributes(elm);
         if (childrenOrAttributes) {
             if (helpers_1.isPlainObject(childrenOrAttributes)) {
                 this.applyAttributes(elm, childrenOrAttributes);
@@ -13110,6 +13105,20 @@ var Create = (function () {
             });
         }
         return child;
+    };
+    Create.prototype.applyCreateAttributes = function (elm) {
+        if (this.createAttributes) {
+            var ca = this.createAttributes;
+            if (ca && ca[elm.tagName.toLowerCase()]) {
+                var attrs = ca[elm.tagName.toLowerCase()];
+                if (helpers_1.isFunction(attrs)) {
+                    attrs(elm);
+                }
+                else if (helpers_1.isPlainObject(attrs)) {
+                    this.applyAttributes(elm, attrs);
+                }
+            }
+        }
     };
     return Create;
 }());
@@ -16524,7 +16533,8 @@ var Table = (function (_super) {
             selector && selectors.push(selector);
         });
         style.innerHTML = selectors.length
-            ? selectors.join(',') + ("{" + this.jodit.options.table.selectionCellStyle + "}")
+            ? selectors.join(',') +
+                ("{" + this.jodit.options.table.selectionCellStyle + "}")
             : '';
     };
     Table.prototype.addSelection = function (td) {
@@ -21685,6 +21695,7 @@ module.exports = {
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.xpath = exports.tooltip = exports.symbols = exports.sticky = exports.stat = exports.source = exports.resizeHandler = exports.size = exports.search = exports.resizer = exports.redoUndo = exports.placeholder = exports.orderedList = exports.mobile = exports.media = exports.link = exports.limit = exports.justify = exports.inlinePopup = exports.hr = exports.indent = exports.iframe = exports.hotkeys = exports.fullsize = exports.formatBlock = exports.font = exports.errorMessages = exports.enter = exports.DragAndDropElement = exports.DragAndDrop = exports.color = exports.pasteStorage = exports.paste = exports.clipboard = exports.WrapTextNodes = exports.cleanHtml = exports.bold = exports.Delete = exports.autofocus = exports.about = exports.addNewLine = void 0;
 var tslib_1 = __webpack_require__(0);
 var add_new_line_1 = __webpack_require__(233);
 Object.defineProperty(exports, "addNewLine", { enumerable: true, get: function () { return add_new_line_1.addNewLine; } });
@@ -22188,8 +22199,9 @@ var Delete = (function (_super) {
         }
     };
     Delete.prototype.checkRemoveChar = function (fakeNode, backspace) {
-        var _a, _b;
+        var _a, _b, _c;
         var step = backspace ? -1 : 1;
+        var anotherSibling = helpers_2.getSibling(fakeNode, !backspace);
         var sibling = helpers_2.getSibling(fakeNode, backspace), removeNeighbor = null;
         var charRemoved = false, removed;
         while (sibling && (dom_1.Dom.isText(sibling) || dom_1.Dom.isInlineBlock(sibling))) {
@@ -22217,9 +22229,16 @@ var Delete = (function (_super) {
                     }
                     index += backspace ? 1 : -1;
                 }
-                sibling.nodeValue = value.substr(backspace ? 0 : index + 1, backspace ? index : length_1);
+                value = value.substr(backspace ? 0 : index + 1, backspace ? index : length_1);
+                if (!anotherSibling ||
+                    !dom_1.Dom.isText(anotherSibling) ||
+                    (!backspace ? / $/ : /^ /).test((_b = anotherSibling.nodeValue) !== null && _b !== void 0 ? _b : '') ||
+                    !helpers_1.trimInv(anotherSibling.nodeValue || '').length) {
+                    value = value.replace(backspace ? / +$/ : /^ +/, constants_1.NBSP_SPACE);
+                }
+                sibling.nodeValue = value;
             }
-            if (!((_b = sibling.nodeValue) === null || _b === void 0 ? void 0 : _b.length)) {
+            if (!((_c = sibling.nodeValue) === null || _c === void 0 ? void 0 : _c.length)) {
                 removeNeighbor = sibling;
             }
             if (!helpers_1.isVoid(removed) && removed !== constants_1.INVISIBLE_SPACE) {
@@ -23151,7 +23170,8 @@ var paste = (function (_super) {
                 });
             }
             else {
-                this.insertFromWordByType(e, text, this.j.o.defaultActionOnPasteFromWord || this.j.o.defaultActionOnPaste);
+                this.insertFromWordByType(e, text, this.j.o.defaultActionOnPasteFromWord ||
+                    this.j.o.defaultActionOnPaste);
             }
             return true;
         }
@@ -24171,7 +24191,8 @@ var enter = (function (_super) {
         }
         var currentBox = this.getBlockWrapper(current);
         var isLi = dom_1.Dom.isTag(currentBox, 'li');
-        if (!isLi && !this.checkBR(current, event.shiftKey)) {
+        if ((!isLi || event.shiftKey) &&
+            !this.checkBR(current, event.shiftKey)) {
             return false;
         }
         if (!currentBox && !this.hasPreviousBlock(current)) {
@@ -24227,10 +24248,10 @@ var enter = (function (_super) {
         return null;
     };
     enter.prototype.checkBR = function (current, shiftKeyPressed) {
-        var isMultyLineBlock = dom_1.Dom.closest(current, ['pre', 'blockquote'], this.j.editor);
+        var isMultiLineBlock = dom_1.Dom.closest(current, ['pre', 'blockquote'], this.j.editor);
         if (this.brMode ||
-            (shiftKeyPressed && !isMultyLineBlock) ||
-            (!shiftKeyPressed && isMultyLineBlock)) {
+            (shiftKeyPressed && !isMultiLineBlock) ||
+            (!shiftKeyPressed && isMultiLineBlock)) {
             var br = this.j.createInside.element('br');
             this.j.s.insertNode(br, true);
             helpers_1.scrollIntoView(br, this.j.editor, this.j.ed);
@@ -24386,7 +24407,7 @@ config_1.Config.prototype.defaultFontSizePoints = 'px';
 config_1.Config.prototype.controls.fontsize = {
     command: 'fontSize',
     data: {
-        cssRule: 'font-size',
+        cssRule: 'font-size'
     },
     list: [
         '8',
@@ -24425,12 +24446,14 @@ config_1.Config.prototype.controls.fontsize = {
     tooltip: 'Font size',
     isChildActive: function (editor, control) {
         var _a, _b;
-        var current = editor.s.current(), cssKey = ((_a = control.data) === null || _a === void 0 ? void 0 : _a.cssRule) || 'font-size', normalize = ((_b = control.data) === null || _b === void 0 ? void 0 : _b.normalize) || (function (v) {
-            if (/pt$/i.test(v) && editor.o.defaultFontSizePoints === 'pt') {
-                return v.replace(/pt$/i, '');
-            }
-            return v;
-        });
+        var current = editor.s.current(), cssKey = ((_a = control.data) === null || _a === void 0 ? void 0 : _a.cssRule) || 'font-size', normalize = ((_b = control.data) === null || _b === void 0 ? void 0 : _b.normalize) ||
+            (function (v) {
+                if (/pt$/i.test(v) &&
+                    editor.o.defaultFontSizePoints === 'pt') {
+                    return v.replace(/pt$/i, '');
+                }
+                return v;
+            });
         if (current) {
             var currentBpx = dom_1.Dom.closest(current, function (elm) {
                 return (dom_1.Dom.isBlock(elm, editor.ew) ||
@@ -24679,7 +24702,7 @@ function fullsize(editor) {
         editor.toggleFullSize((_a = editor === null || editor === void 0 ? void 0 : editor.options) === null || _a === void 0 ? void 0 : _a.fullsize);
     })
         .on('toggleFullSize', toggle)
-        .on('beforeDestruct beforeClose', function () {
+        .on('beforeDestruct', function () {
         toggle(false);
     })
         .on('beforeDestruct', function () {
@@ -25143,6 +25166,15 @@ config_1.Config.prototype.image = {
     showPreview: true,
     selectImageAfterClose: true
 };
+var normalSizeToString = function (value) {
+    value = helpers_1.trim(value);
+    return /^[0-9]+$/.test(value) ? value + 'px' : value;
+};
+var normalSizeFromString = function (value) {
+    return /^[-+]?[0-9.]+px$/.test(value.toString())
+        ? parseFloat(value.toString())
+        : value;
+};
 var imageProperties = (function (_super) {
     tslib_1.__extends(imageProperties, _super);
     function imageProperties() {
@@ -25168,6 +25200,19 @@ var imageProperties = (function (_super) {
         });
         lockMargin.innerHTML = modules_1.Icon.get(this.state.marginIsLocked ? 'lock' : 'unlock');
     };
+    imageProperties.prototype.onChangeSizeIsLocked = function () {
+        if (!this.form) {
+            return;
+        }
+        var _a = helpers_1.refs(this.form), lockSize = _a.lockSize, imageWidth = _a.imageWidth;
+        lockSize.innerHTML = modules_1.Icon.get(this.state.sizeIsLocked ? 'lock' : 'unlock');
+        lockSize.classList.remove('jodit-properties__lock');
+        lockSize.classList.remove('jodit-properties__unlock');
+        lockSize.classList.add(this.state.sizeIsLocked
+            ? 'jodit-properties__lock'
+            : 'jodit-properties__unlock');
+        this.j.e.fire(imageWidth, 'change');
+    };
     imageProperties.prototype.open = function () {
         this.makeForm();
         this.j.e.fire('hidePopup');
@@ -25175,10 +25220,7 @@ var imageProperties = (function (_super) {
         this.state.marginIsLocked = true;
         this.state.sizeIsLocked = true;
         this.updateValues();
-        this.dialog
-            .open()
-            .setModal(true)
-            .setPosition();
+        this.dialog.open().setModal(true).setPosition();
         return false;
     };
     imageProperties.prototype.makeForm = function () {
@@ -25228,15 +25270,17 @@ var imageProperties = (function (_super) {
         if (lockSize) {
             editor.e.on(lockSize, 'click', function () {
                 _this.state.sizeIsLocked = !_this.state.sizeIsLocked;
-                lockSize.innerHTML = modules_1.Icon.get(_this.state.sizeIsLocked ? 'lock' : 'unlock');
-                editor.e.fire(imageWidth, 'change');
             });
         }
-        editor.e.on(lockMargin, 'click', function () {
+        editor.e.on(lockMargin, 'click', function (e) {
             _this.state.marginIsLocked = !_this.state.marginIsLocked;
+            e.preventDefault();
         });
         var changeSizes = function (event) {
-            var w = parseInt(imageWidth.value, 10), h = parseInt(imageHeight.value, 10);
+            if (!helpers_1.isNumeric(imageWidth.value) || !helpers_1.isNumeric(imageHeight.value)) {
+                return;
+            }
+            var w = parseFloat(imageWidth.value), h = parseFloat(imageHeight.value);
             if (event.target === imageWidth) {
                 imageHeight.value = Math.round(w / _this.state.ratio).toString();
             }
@@ -25310,8 +25354,27 @@ var imageProperties = (function (_super) {
             });
             _this.state.marginIsLocked = equal;
         }, updateSizes = function () {
-            imageWidth.value = image.offsetWidth.toString();
-            imageHeight.value = image.offsetHeight.toString();
+            var width = helpers_1.attr(image, 'width') ||
+                helpers_1.css(image, 'width', undefined, true) ||
+                false, height = helpers_1.attr(image, 'height') ||
+                helpers_1.css(image, 'height', undefined, true) ||
+                false;
+            imageWidth.value =
+                width !== false
+                    ? normalSizeFromString(width).toString()
+                    : image.offsetWidth.toString();
+            imageHeight.value =
+                height !== false
+                    ? normalSizeFromString(height).toString()
+                    : image.offsetHeight.toString();
+            _this.state.sizeIsLocked = (function () {
+                if (!helpers_1.isNumeric(imageWidth.value) ||
+                    !helpers_1.isNumeric(imageHeight.value)) {
+                    return false;
+                }
+                var w = parseFloat(imageWidth.value), h = parseFloat(imageHeight.value);
+                return Math.abs(w - h * _this.state.ratio) < 1;
+            })();
         }, updateText = function () {
             imageTitle.value = helpers_1.attr(image, 'title') || '';
             imageAlt.value = helpers_1.attr(image, 'alt') || '';
@@ -25378,31 +25441,29 @@ var imageProperties = (function (_super) {
                 link.parentNode.replaceChild(image, link);
             }
         }
-        var normalSize = function (value) {
-            value = helpers_1.trim(value);
-            return /^[0-9]+$/.test(value) ? value + 'px' : value;
-        };
         if (imageWidth.value !== image.offsetWidth.toString() ||
             imageHeight.value !== image.offsetHeight.toString()) {
             helpers_1.css(image, {
                 width: helpers_1.trim(imageWidth.value)
-                    ? normalSize(imageWidth.value)
+                    ? normalSizeToString(imageWidth.value)
                     : null,
                 height: helpers_1.trim(imageHeight.value)
-                    ? normalSize(imageHeight.value)
+                    ? normalSizeToString(imageHeight.value)
                     : null
             });
+            helpers_1.attr(image, 'width', null);
+            helpers_1.attr(image, 'height', null);
         }
         var margins = [marginTop, marginRight, marginBottom, marginLeft];
         if (opt.image.editMargins) {
             if (!this.state.marginIsLocked) {
                 margins.forEach(function (margin) {
                     var side = helpers_1.attr(margin, 'data-ref') || '';
-                    helpers_1.css(image, side, normalSize(margin.value));
+                    helpers_1.css(image, side, normalSizeToString(margin.value));
                 });
             }
             else {
-                helpers_1.css(image, 'margin', normalSize(marginTop.value));
+                helpers_1.css(image, 'margin', normalSizeToString(marginTop.value));
             }
         }
         if (opt.image.editClass) {
@@ -25428,9 +25489,7 @@ var imageProperties = (function (_super) {
             }
             else {
                 if (helpers_1.css(image, 'float') &&
-                    ['right', 'left'].indexOf(helpers_1.css(image, 'float')
-                        .toString()
-                        .toLowerCase()) !== -1) {
+                    ['right', 'left'].indexOf(helpers_1.css(image, 'float').toString().toLowerCase()) !== -1) {
                     helpers_1.css(image, 'float', '');
                 }
                 helpers_1.clearCenterAlign(image);
@@ -25542,6 +25601,9 @@ var imageProperties = (function (_super) {
         decorators_1.watch('state.marginIsLocked')
     ], imageProperties.prototype, "onChangeMarginIsLocked", null);
     tslib_1.__decorate([
+        decorators_1.watch('state.sizeIsLocked')
+    ], imageProperties.prototype, "onChangeSizeIsLocked", null);
+    tslib_1.__decorate([
         autobind_decorator_1.default
     ], imageProperties.prototype, "onApply", null);
     tslib_1.__decorate([
@@ -25595,7 +25657,7 @@ exports.form = void 0;
 var ui_1 = __webpack_require__(7);
 function form(editor) {
     var _a = editor.o.image, showPreview = _a.showPreview, editSize = _a.editSize, gi = ui_1.Icon.get.bind(ui_1.Icon);
-    return editor.c.fromHTML("<form class=\"jodit-properties\">\n\t\t<div class=\"jodit-grid jodit-grid_xs-column\">\n\t\t\t<div class=\"jodit_col-lg-2-5 jodit_col-xs-5-5\">\n\t\t\t\t<div class=\"jodit-properties_view_box\">\n\t\t\t\t\t<div style=\"" + (!showPreview ? 'display:none' : '') + "\" class=\"jodit-properties_image_view\">\n\t\t\t\t\t\t<img data-ref=\"imageViewSrc\" src=\"\" alt=\"\"/>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div style=\"" + (!editSize ? 'display:none' : '') + "\" class=\"jodit-form__group jodit-properties_image_sizes\">\n\t\t\t\t\t\t<input data-ref=\"imageWidth\" type=\"number\" class=\"jodit-input\"/>\n\t\t\t\t\t\t<a data-ref=\"lockSize\" class=\"jodit-properties__lock\">" + gi('lock') + "</a>\n\t\t\t\t\t\t<input data-ref=\"imageHeight\" type=\"number\" class=\"imageHeight jodit-input\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div data-ref=\"tabsBox\" class=\"jodit_col-lg-3-5 jodit_col-xs-5-5\"></div>\n\t\t</div>\n\t</form>");
+    return editor.c.fromHTML("<form class=\"jodit-properties\">\n\t\t<div class=\"jodit-grid jodit-grid_xs-column\">\n\t\t\t<div class=\"jodit_col-lg-2-5 jodit_col-xs-5-5\">\n\t\t\t\t<div class=\"jodit-properties_view_box\">\n\t\t\t\t\t<div style=\"" + (!showPreview ? 'display:none' : '') + "\" class=\"jodit-properties_image_view\">\n\t\t\t\t\t\t<img data-ref=\"imageViewSrc\" src=\"\" alt=\"\"/>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div style=\"" + (!editSize ? 'display:none' : '') + "\" class=\"jodit-form__group jodit-properties_image_sizes\">\n\t\t\t\t\t\t<input data-ref=\"imageWidth\" type=\"text\" class=\"jodit-input\"/>\n\t\t\t\t\t\t<a data-ref=\"lockSize\" class=\"jodit-properties__lock\">" + gi('lock') + "</a>\n\t\t\t\t\t\t<input data-ref=\"imageHeight\" type=\"text\" class=\"imageHeight jodit-input\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div data-ref=\"tabsBox\" class=\"jodit_col-lg-3-5 jodit_col-xs-5-5\"></div>\n\t\t</div>\n\t</form>");
 }
 exports.form = form;
 
@@ -25891,8 +25953,10 @@ var inlinePopup = (function (_super) {
         this.popup.open(rect);
         return true;
     };
-    inlinePopup.prototype.hidePopup = function () {
-        this.popup.close();
+    inlinePopup.prototype.hidePopup = function (type) {
+        if (!type || type === this.type) {
+            this.popup.close();
+        }
     };
     inlinePopup.prototype.canShowPopupForType = function (type) {
         var data = this.j.o.popup[type.toLowerCase()];
@@ -26648,6 +26712,7 @@ function link(jodit) {
                 var a = jodit.createInside.element('a');
                 a.setAttribute('href', html);
                 a.textContent = html;
+                jodit.e.stopPropagation('processPaste');
                 return a;
             }
         });
@@ -27003,6 +27068,10 @@ function orderedList(editor) {
             var ul = getListWrapper();
             if (ul) {
                 setListStyleType(ul, listStyleType);
+                editor.createInside.applyCreateAttributes(ul);
+                ul.querySelectorAll('li').forEach(function (li) {
+                    editor.createInside.applyCreateAttributes(li);
+                });
             }
             if (ul && dom_1.Dom.isTag(ul.parentNode, 'p')) {
                 var selection = editor.s.save();
@@ -28122,7 +28191,9 @@ var resizeHandler = (function (_super) {
             (editor.o.allowResizeX || editor.o.allowResizeY)) {
             editor.e
                 .on('toggleFullSize.resizeHandler', function () {
-                _this.handle.style.display = editor.isFullSize ? 'none' : 'block';
+                _this.handle.style.display = editor.isFullSize
+                    ? 'none'
+                    : 'block';
             })
                 .on(this.handle, 'mousedown touchstart', this.onHandleResizeStart)
                 .on(editor.ow, 'mouseup touchsend', this.onHandleResizeEnd);
@@ -28160,8 +28231,7 @@ var resizeHandler = (function (_super) {
     };
     resizeHandler.prototype.beforeDestruct = function (editor) {
         dom_1.Dom.safeRemove(this.handle);
-        this.j.e
-            .off(this.j.ow, 'mouseup touchsend', this.onHandleResizeEnd);
+        this.j.e.off(this.j.ow, 'mouseup touchsend', this.onHandleResizeEnd);
     };
     resizeHandler.requires = ['size'];
     resizeHandler = tslib_1.__decorate([
@@ -29853,7 +29923,9 @@ var resizeCells = (function (_super) {
             return;
         }
         this.drag = true;
-        this.j.e.on(this.j.ew, 'mousemove.table touchmove.table', this.onMouseMove);
+        this.j.e
+            .on(this.j.ow, 'mouseup.resize-cells touchend.resize-cells', this.onMouseUp)
+            .on(this.j.ew, 'mousemove.table touchmove.table', this.onMouseMove);
         this.startX = event.clientX;
         this.j.lock(key);
         this.resizeHandler.classList.add('jodit-table-resizer_moved');
@@ -29999,7 +30071,6 @@ var resizeCells = (function (_super) {
             .on('change.resize-cells afterCommand.resize-cells afterSetMode.resize-cells', function () {
             helpers_1.$$('table', editor.editor).forEach(_this.observe);
         })
-            .on(this.j.ow, 'mouseup.resize-cells touchend.resize-cells', this.onMouseUp)
             .on(this.j.ow, 'scroll.resize-cells', function () {
             if (!_this.drag) {
                 return;
@@ -30120,7 +30191,7 @@ var selectCells = (function (_super) {
         })
             .on('beforeCommand.select-cells', this.onExecCommand)
             .on('afterCommand.select-cells', this.onAfterCommand)
-            .on('change afterCommand afterSetMode click'
+            .on('change afterCommand afterSetMode click afterInit'
             .split(' ')
             .map(function (e) { return e + '.select-cells'; })
             .join(' '), function () {
@@ -30133,9 +30204,7 @@ var selectCells = (function (_super) {
         }
         this.onRemoveSelection();
         helpers_1.dataBind(table, key, true);
-        this.j.e
-            .on(table, 'mousedown.select-cells touchstart.select-cells', this.onStartSelection.bind(this, table))
-            .on(table, 'mouseup.select-cells touchend.select-cells', this.onStopSelection.bind(this, table));
+        this.j.e.on(table, 'mousedown.select-cells touchstart.select-cells', this.onStartSelection.bind(this, table));
     };
     selectCells.prototype.onStartSelection = function (table, e) {
         var _this = this;
@@ -30152,7 +30221,9 @@ var selectCells = (function (_super) {
         }
         this.selectedCell = cell;
         this.module.addSelection(cell);
-        this.j.e.on(table, 'mousemove.select-cells touchmove.select-cells', this.onMove.bind(this, table));
+        this.j.e
+            .on(table, 'mousemove.select-cells touchmove.select-cells', this.onMove.bind(this, table))
+            .on(table, 'mouseup.select-cells touchend.select-cells', this.onStopSelection.bind(this, table));
         this.j.e.fire('showPopup', table, function () { return helpers_1.position(cell, _this.j); }, 'cells');
     };
     selectCells.prototype.onMove = function (table, e) {
@@ -30199,7 +30270,7 @@ var selectCells = (function (_super) {
             this.module.getAllSelectedCells().length) {
             this.j.unlock();
             this.unselectCells();
-            this.j.e.fire('hidePopup');
+            this.j.e.fire('hidePopup', 'cells');
             return;
         }
         this.selectedCell = null;
@@ -30234,7 +30305,7 @@ var selectCells = (function (_super) {
             };
         }, 'cells');
         helpers_1.$$('table', this.j.editor).forEach(function (table) {
-            _this.j.e.off(table, 'mousemove.select-cells touchmove.select-cells');
+            _this.j.e.off(table, 'mousemove.select-cells touchmove.select-cells mouseup.select-cells touchend.select-cells');
         });
     };
     selectCells.prototype.unselectCells = function (table, currentCell) {
@@ -30693,8 +30764,7 @@ config_1.Config.prototype.controls.print = {
         });
         global_1.getContainer(editor, config_1.Config).appendChild(iframe);
         var afterFinishPrint = function () {
-            editor.e
-                .off(editor.ow, 'mousemove', afterFinishPrint);
+            editor.e.off(editor.ow, 'mousemove', afterFinishPrint);
             dom_1.Dom.safeRemove(iframe);
         };
         var mywindow = iframe.contentWindow;
@@ -30727,7 +30797,7 @@ config_1.Config.prototype.controls.preview = {
     exec: function (editor) {
         var dialog = editor.getInstance('Dialog', {
             language: editor.o.language,
-            theme: editor.o.theme,
+            theme: editor.o.theme
         });
         var div = editor.c.div();
         helpers_1.css(div, {

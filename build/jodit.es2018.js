@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.26
+ * Version: v3.4.27
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -502,8 +502,7 @@ function cleanFromWord(html) {
                                         'href',
                                         'rel',
                                         'content'
-                                    ].indexOf(attr.name.toLowerCase()) ===
-                                        -1) {
+                                    ].indexOf(attr.name.toLowerCase()) === -1) {
                                         node.removeAttribute(attr.name);
                                     }
                                 });
@@ -523,10 +522,7 @@ function cleanFromWord(html) {
     if (convertedString) {
         html = convertedString;
     }
-    html = html
-        .split(/(\n)/)
-        .filter(string["f" /* trim */])
-        .join('\n');
+    html = html.split(/(\n)/).filter(string["f" /* trim */]).join('\n');
     return html
         .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
         .replace(/<!--[^>]*>/g, '');
@@ -1583,6 +1579,7 @@ Dom.findInline = (node, toLeft, root) => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INVISIBLE_SPACE", function() { return INVISIBLE_SPACE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NBSP_SPACE", function() { return NBSP_SPACE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INVISIBLE_SPACE_REG_EXP", function() { return INVISIBLE_SPACE_REG_EXP; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INVISIBLE_SPACE_REG_EXP_END", function() { return INVISIBLE_SPACE_REG_EXP_END; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INVISIBLE_SPACE_REG_EXP_START", function() { return INVISIBLE_SPACE_REG_EXP_START; });
@@ -1630,6 +1627,7 @@ __webpack_require__.r(__webpack_exports__);
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const INVISIBLE_SPACE = '\uFEFF';
+const NBSP_SPACE = '\u00A0';
 const INVISIBLE_SPACE_REG_EXP = () => /[\uFEFF]/g;
 const INVISIBLE_SPACE_REG_EXP_END = () => /[\uFEFF]+$/g;
 const INVISIBLE_SPACE_REG_EXP_START = () => /^[\uFEFF]+/g;
@@ -1685,7 +1683,7 @@ const IS_IE = typeof navigator !== 'undefined' &&
     (navigator.userAgent.indexOf('MSIE') !== -1 ||
         /rv:11.0/i.test(navigator.userAgent));
 const TEXT_PLAIN = IS_IE ? 'text' : 'text/plain';
-const TEXT_HTML = IS_IE ? 'text' : 'text/html';
+const TEXT_HTML = IS_IE ? 'html' : 'text/html';
 const MARKER_CLASS = 'jodit-selection_marker';
 const EMULATE_DBLCLICK_TIMEOUT = 300;
 const INSERT_AS_HTML = 'insert_as_html';
@@ -2188,7 +2186,7 @@ PERFORMANCE OF THIS SOFTWARE.
 var extendStatics = function(d, b) {
     extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
     return extendStatics(d, b);
 };
 
@@ -2282,8 +2280,8 @@ var __createBinding = Object.create ? (function(o, m, k, k2) {
     o[k2] = m[k];
 });
 
-function __exportStar(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+function __exportStar(m, o) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
 }
 
 function __values(o) {
@@ -2373,7 +2371,7 @@ var __setModuleDefault = Object.create ? (function(o, v) {
 function __importStar(mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 }
@@ -2618,7 +2616,9 @@ function isViewObject(jodit) {
  */
 
 const isLicense = (license) => {
-    return isString(license) && license.length === 23 && /^[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}$/i.test(license);
+    return (isString(license) &&
+        license.length === 23 &&
+        /^[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}$/i.test(license));
 };
 
 // CONCATENATED MODULE: ./src/core/helpers/checker/is-number.ts
@@ -2908,7 +2908,9 @@ class group_UIGroup extends ui_element["a" /* UIElement */] {
     }
     get allChildren() {
         const result = [];
-        const stack = [...this.elements];
+        const stack = [
+            ...this.elements
+        ];
         while (stack.length) {
             const elm = stack.pop();
             if (Object(helpers["isArray"])(elm)) {
@@ -3463,8 +3465,12 @@ class component_Component {
             STATUSES.destructed === this.componentStatus);
     }
     bindDestruct(jodit) {
-        jodit.e.on(STATUSES.beforeDestruct, () => {
+        const destructMe = () => {
             !this.isInDestruct && this.destruct();
+        };
+        jodit.e && jodit.e.on(STATUSES.beforeDestruct, destructMe);
+        this.hookStatus(STATUSES.beforeDestruct, () => {
+            jodit.e && jodit.e.off(STATUSES.beforeDestruct, destructMe);
         });
         return this;
     }
@@ -3660,7 +3666,8 @@ class button_UIButton extends ui_element["a" /* UIElement */] {
     }
     onChangeIcon() {
         const textIcons = this.get('j.o.textIcons');
-        if (textIcons === true || (Object(helpers["isFunction"])(textIcons) && textIcons(this.state.name))) {
+        if (textIcons === true ||
+            (Object(helpers["isFunction"])(textIcons) && textIcons(this.state.name))) {
             return;
         }
         dom["a" /* Dom */].detach(this.icon);
@@ -4219,7 +4226,7 @@ class input_UIInput extends ui_element["a" /* UIElement */] {
         if (this.options.placeholder) {
             Object(helpers["attr"])(this.nativeInput, 'placeholder', this.options.placeholder);
         }
-        (_a = options.validators) === null || _a === void 0 ? void 0 : _a.forEach((name) => {
+        (_a = options.validators) === null || _a === void 0 ? void 0 : _a.forEach(name => {
             const validator = validators_namespaceObject[name];
             validator && this.validators.push(validator);
         });
@@ -4277,8 +4284,7 @@ class form_UIForm extends ui["i" /* UIGroup */] {
         this.j.e.fire(this.container, 'submit');
     }
     validate() {
-        const inputs = this.allChildren
-            .filter(elm => elm instanceof input_UIInput);
+        const inputs = this.allChildren.filter(elm => elm instanceof input_UIInput);
         for (const input of inputs) {
             if (!input.validate()) {
                 return false;
@@ -4288,8 +4294,7 @@ class form_UIForm extends ui["i" /* UIGroup */] {
     }
     onSubmit(handler) {
         this.j.e.on(this.container, 'submit', () => {
-            const inputs = this.allChildren
-                .filter(elm => elm instanceof input_UIInput);
+            const inputs = this.allChildren.filter(elm => elm instanceof input_UIInput);
             if (!this.validate()) {
                 return false;
             }
@@ -4615,22 +4620,20 @@ const FileSelectorWidget = (editor, callbacks, elm, close, isImage = true) => {
             type: 'submit',
             status: 'primary',
             text: 'Insert'
-        }), form = (new ui["h" /* UIForm */](editor, [
+        }), form = new ui["h" /* UIForm */](editor, [
             new ui["j" /* UIInput */](editor, {
                 required: true,
                 label: 'URL',
                 name: 'url',
                 type: 'url',
-                placeholder: 'http://',
+                placeholder: 'http://'
             }),
             new ui["j" /* UIInput */](editor, {
                 name: 'text',
                 label: 'Alternative text'
             }),
-            new ui["d" /* UIBlock */](editor, [
-                button
-            ])
-        ]));
+            new ui["d" /* UIBlock */](editor, [button])
+        ]);
         currentImage = null;
         if (elm &&
             !dom["a" /* Dom */].isText(elm) &&
@@ -4645,7 +4648,7 @@ const FileSelectorWidget = (editor, callbacks, elm, close, isImage = true) => {
             Object(helpers["val"])(form.container, 'input[name=text]', Object(helpers["attr"])(elm, 'title'));
             button.state.text = 'Update';
         }
-        form.onSubmit((data) => {
+        form.onSubmit(data => {
             if (Object(helpers["isFunction"])(callbacks.url)) {
                 callbacks.url.call(editor, data.url, data.text);
             }
@@ -5168,7 +5171,7 @@ class events_native_EventsNative {
                         'scroll',
                         'mousewheel',
                         'mousemove',
-                        'touchmove',
+                        'touchmove'
                     ].includes(event)
                         ? {
                             passive: true
@@ -6020,11 +6023,11 @@ var utils = __webpack_require__(9);
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const to_array_toArray = (function toArray(...args) {
+const to_array_toArray = function toArray(...args) {
     var _a;
     const func = (_a = Object(utils["k" /* reset */])('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
     return func.apply(Array, args);
-});
+};
 
 // CONCATENATED MODULE: ./src/core/helpers/array/index.ts
 /*!
@@ -6130,7 +6133,8 @@ class JoditArray {
             'shift',
             'unshift',
             'slice',
-            'splice'
+            'splice',
+            'concat'
         ].forEach(method => {
             Object.defineProperty(this, method, {
                 value: proto[method],
@@ -12283,7 +12287,7 @@ class view_View extends core_component["a" /* Component */] {
         this.isJodit = isJodit;
         this.isView = true;
         this.components = new Set();
-        this.version = "3.4.26";
+        this.version = "3.4.27";
         this.async = new async_Async();
         this.buffer = storage_Storage.makeStorage();
         this.OPTIONS = view_View.defaultOptions;
@@ -13104,6 +13108,7 @@ class dialog_Dialog extends view_with_toolbar_ViewWithToolbar {
         Object(helpers["isFunction"])(fullSize) && fullSize(self);
         self.setStatus(core_component["b" /* STATUSES */].ready);
         this.e
+            .on(self.container, 'close_dialog', self.close)
             .on(this.ow, 'keydown', this.onEsc)
             .on(this.ow, 'resize', this.onResize);
     }
@@ -13211,14 +13216,12 @@ class dialog_Dialog extends view_with_toolbar_ViewWithToolbar {
         const self = this;
         self.e
             .on(self.ow, 'mousemove', self.onMouseMove)
-            .on(self.container, 'close_dialog', self.close)
             .on(self.ow, 'mouseup', self.onMouseUp);
     }
     removeGlobalListeners() {
         const self = this;
         self.e
             .off(self.ow, 'mousemove', self.onMouseMove)
-            .off(self.container, 'close_dialog', self.close)
             .off(self.ow, 'mouseup', self.onMouseUp);
     }
     setSize(w, h) {
@@ -13370,8 +13373,9 @@ class dialog_Dialog extends view_with_toolbar_ViewWithToolbar {
         if (this.events) {
             this.removeGlobalListeners();
             this.events
-                .on(this.ow, 'keydown', this.onEsc)
-                .on(this.ow, 'resize', this.onResize);
+                .off(this.container, 'close_dialog', self.close)
+                .off(this.ow, 'keydown', this.onEsc)
+                .off(this.ow, 'resize', this.onResize);
         }
         super.destruct();
     }
@@ -13542,9 +13546,11 @@ class plugin_Plugin extends core_component["c" /* ViewComponent */] {
     constructor(jodit) {
         super(jodit);
         jodit.e
-            .on('afterInit', this.afterInit.bind(this, jodit))
+            .on('afterInit', () => {
+            this.setStatus(core_component["b" /* STATUSES */].ready);
+            this.afterInit(jodit);
+        })
             .on('beforeDestruct', this.destruct);
-        this.setStatus(core_component["b" /* STATUSES */].ready);
     }
     init(jodit) {
     }
@@ -13593,18 +13599,7 @@ class create_Create {
     }
     element(tagName, childrenOrAttributes, children) {
         const elm = this.doc.createElement(tagName.toLowerCase());
-        if (this.createAttributes) {
-            const ca = this.createAttributes;
-            if (ca && ca[tagName.toLowerCase()]) {
-                const attrs = ca[tagName.toLowerCase()];
-                if (Object(helpers["isFunction"])(attrs)) {
-                    attrs(elm);
-                }
-                else if (Object(helpers["isPlainObject"])(attrs)) {
-                    this.applyAttributes(elm, attrs);
-                }
-            }
-        }
+        this.applyCreateAttributes(elm);
         if (childrenOrAttributes) {
             if (Object(helpers["isPlainObject"])(childrenOrAttributes)) {
                 this.applyAttributes(elm, childrenOrAttributes);
@@ -13662,6 +13657,20 @@ class create_Create {
             });
         }
         return child;
+    }
+    applyCreateAttributes(elm) {
+        if (this.createAttributes) {
+            const ca = this.createAttributes;
+            if (ca && ca[elm.tagName.toLowerCase()]) {
+                const attrs = ca[elm.tagName.toLowerCase()];
+                if (Object(helpers["isFunction"])(attrs)) {
+                    attrs(elm);
+                }
+                else if (Object(helpers["isPlainObject"])(attrs)) {
+                    this.applyAttributes(elm, attrs);
+                }
+            }
+        }
     }
 }
 
@@ -17322,7 +17331,8 @@ class table_Table extends core_component["c" /* ViewComponent */] {
             selector && selectors.push(selector);
         });
         style.innerHTML = selectors.length
-            ? selectors.join(',') + `{${this.jodit.options.table.selectionCellStyle}}`
+            ? selectors.join(',') +
+                `{${this.jodit.options.table.selectionCellStyle}}`
             : '';
     }
     addSelection(td) {
@@ -19059,7 +19069,8 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
                 return;
             }
             const w = this.ew;
-            if (event instanceof w.KeyboardEvent && event.isComposing) {
+            if (event instanceof w.KeyboardEvent &&
+                event.isComposing) {
                 return;
             }
             if (this.e && this.e.fire) {
@@ -19585,8 +19596,9 @@ class delete_Delete extends plugin_Plugin {
         }
     }
     checkRemoveChar(fakeNode, backspace) {
-        var _a, _b;
+        var _a, _b, _c;
         const step = backspace ? -1 : 1;
+        const anotherSibling = Object(keyboard_helpers["c" /* getSibling */])(fakeNode, !backspace);
         let sibling = Object(keyboard_helpers["c" /* getSibling */])(fakeNode, backspace), removeNeighbor = null;
         let charRemoved = false, removed;
         while (sibling && (dom["a" /* Dom */].isText(sibling) || dom["a" /* Dom */].isInlineBlock(sibling))) {
@@ -19598,7 +19610,7 @@ class delete_Delete extends plugin_Plugin {
                 break;
             }
             if ((_a = sibling.nodeValue) === null || _a === void 0 ? void 0 : _a.length) {
-                const value = sibling.nodeValue;
+                let value = sibling.nodeValue;
                 const length = value.length;
                 let index = backspace ? length - 1 : 0;
                 if (value[index] === constants["INVISIBLE_SPACE"]) {
@@ -19614,9 +19626,16 @@ class delete_Delete extends plugin_Plugin {
                     }
                     index += backspace ? 1 : -1;
                 }
-                sibling.nodeValue = value.substr(backspace ? 0 : index + 1, backspace ? index : length);
+                value = value.substr(backspace ? 0 : index + 1, backspace ? index : length);
+                if (!anotherSibling ||
+                    !dom["a" /* Dom */].isText(anotherSibling) ||
+                    (!backspace ? / $/ : /^ /).test((_b = anotherSibling.nodeValue) !== null && _b !== void 0 ? _b : '') ||
+                    !Object(helpers["trimInv"])(anotherSibling.nodeValue || '').length) {
+                    value = value.replace(backspace ? / +$/ : /^ +/, constants["NBSP_SPACE"]);
+                }
+                sibling.nodeValue = value;
             }
-            if (!((_b = sibling.nodeValue) === null || _b === void 0 ? void 0 : _b.length)) {
+            if (!((_c = sibling.nodeValue) === null || _c === void 0 ? void 0 : _c.length)) {
                 removeNeighbor = sibling;
             }
             if (!Object(helpers["isVoid"])(removed) && removed !== constants["INVISIBLE_SPACE"]) {
@@ -20538,7 +20557,8 @@ class paste_paste extends plugin_Plugin {
                 });
             }
             else {
-                this.insertFromWordByType(e, text, this.j.o.defaultActionOnPasteFromWord || this.j.o.defaultActionOnPaste);
+                this.insertFromWordByType(e, text, this.j.o.defaultActionOnPasteFromWord ||
+                    this.j.o.defaultActionOnPaste);
             }
             return true;
         }
@@ -21490,7 +21510,8 @@ class enter_enter extends plugin_Plugin {
         }
         let currentBox = this.getBlockWrapper(current);
         const isLi = dom["a" /* Dom */].isTag(currentBox, 'li');
-        if (!isLi && !this.checkBR(current, event.shiftKey)) {
+        if ((!isLi || event.shiftKey) &&
+            !this.checkBR(current, event.shiftKey)) {
             return false;
         }
         if (!currentBox && !this.hasPreviousBlock(current)) {
@@ -21545,10 +21566,10 @@ class enter_enter extends plugin_Plugin {
         return null;
     }
     checkBR(current, shiftKeyPressed) {
-        const isMultyLineBlock = dom["a" /* Dom */].closest(current, ['pre', 'blockquote'], this.j.editor);
+        const isMultiLineBlock = dom["a" /* Dom */].closest(current, ['pre', 'blockquote'], this.j.editor);
         if (this.brMode ||
-            (shiftKeyPressed && !isMultyLineBlock) ||
-            (!shiftKeyPressed && isMultyLineBlock)) {
+            (shiftKeyPressed && !isMultiLineBlock) ||
+            (!shiftKeyPressed && isMultiLineBlock)) {
             const br = this.j.createInside.element('br');
             this.j.s.insertNode(br, true);
             Object(helpers["scrollIntoView"])(br, this.j.editor, this.j.ed);
@@ -21678,7 +21699,7 @@ config["a" /* Config */].prototype.defaultFontSizePoints = 'px';
 config["a" /* Config */].prototype.controls.fontsize = {
     command: 'fontSize',
     data: {
-        cssRule: 'font-size',
+        cssRule: 'font-size'
     },
     list: [
         '8',
@@ -21716,12 +21737,14 @@ config["a" /* Config */].prototype.controls.fontsize = {
     tooltip: 'Font size',
     isChildActive: (editor, control) => {
         var _a, _b;
-        const current = editor.s.current(), cssKey = ((_a = control.data) === null || _a === void 0 ? void 0 : _a.cssRule) || 'font-size', normalize = ((_b = control.data) === null || _b === void 0 ? void 0 : _b.normalize) || ((v) => {
-            if (/pt$/i.test(v) && editor.o.defaultFontSizePoints === 'pt') {
-                return v.replace(/pt$/i, '');
-            }
-            return v;
-        });
+        const current = editor.s.current(), cssKey = ((_a = control.data) === null || _a === void 0 ? void 0 : _a.cssRule) || 'font-size', normalize = ((_b = control.data) === null || _b === void 0 ? void 0 : _b.normalize) ||
+            ((v) => {
+                if (/pt$/i.test(v) &&
+                    editor.o.defaultFontSizePoints === 'pt') {
+                    return v.replace(/pt$/i, '');
+                }
+                return v;
+            });
         if (current) {
             const currentBpx = dom["a" /* Dom */].closest(current, elm => {
                 return (dom["a" /* Dom */].isBlock(elm, editor.ew) ||
@@ -21959,7 +21982,7 @@ function fullsize_fullsize(editor) {
         editor.toggleFullSize((_a = editor === null || editor === void 0 ? void 0 : editor.options) === null || _a === void 0 ? void 0 : _a.fullsize);
     })
         .on('toggleFullSize', toggle)
-        .on('beforeDestruct beforeClose', () => {
+        .on('beforeDestruct', () => {
         toggle(false);
     })
         .on('beforeDestruct', () => {
@@ -22352,9 +22375,9 @@ function templates_form_form(editor) {
 						<img data-ref="imageViewSrc" src="" alt=""/>
 					</div>
 					<div style="${!editSize ? 'display:none' : ''}" class="jodit-form__group jodit-properties_image_sizes">
-						<input data-ref="imageWidth" type="number" class="jodit-input"/>
+						<input data-ref="imageWidth" type="text" class="jodit-input"/>
 						<a data-ref="lockSize" class="jodit-properties__lock">${gi('lock')}</a>
-						<input data-ref="imageHeight" type="number" class="imageHeight jodit-input"/>
+						<input data-ref="imageHeight" type="text" class="imageHeight jodit-input"/>
 					</div>
 				</div>
 			</div>
@@ -22508,6 +22531,15 @@ config["a" /* Config */].prototype.image = {
     showPreview: true,
     selectImageAfterClose: true
 };
+const normalSizeToString = (value) => {
+    value = Object(helpers["trim"])(value);
+    return /^[0-9]+$/.test(value) ? value + 'px' : value;
+};
+const normalSizeFromString = (value) => {
+    return /^[-+]?[0-9.]+px$/.test(value.toString())
+        ? parseFloat(value.toString())
+        : value;
+};
 class image_properties_imageProperties extends plugin_Plugin {
     constructor() {
         super(...arguments);
@@ -22530,6 +22562,19 @@ class image_properties_imageProperties extends plugin_Plugin {
         });
         lockMargin.innerHTML = ui["b" /* Icon */].get(this.state.marginIsLocked ? 'lock' : 'unlock');
     }
+    onChangeSizeIsLocked() {
+        if (!this.form) {
+            return;
+        }
+        const { lockSize, imageWidth } = Object(helpers["refs"])(this.form);
+        lockSize.innerHTML = ui["b" /* Icon */].get(this.state.sizeIsLocked ? 'lock' : 'unlock');
+        lockSize.classList.remove('jodit-properties__lock');
+        lockSize.classList.remove('jodit-properties__unlock');
+        lockSize.classList.add(this.state.sizeIsLocked
+            ? 'jodit-properties__lock'
+            : 'jodit-properties__unlock');
+        this.j.e.fire(imageWidth, 'change');
+    }
     open() {
         this.makeForm();
         this.j.e.fire('hidePopup');
@@ -22537,10 +22582,7 @@ class image_properties_imageProperties extends plugin_Plugin {
         this.state.marginIsLocked = true;
         this.state.sizeIsLocked = true;
         this.updateValues();
-        this.dialog
-            .open()
-            .setModal(true)
-            .setPosition();
+        this.dialog.open().setModal(true).setPosition();
         return false;
     }
     makeForm() {
@@ -22589,15 +22631,17 @@ class image_properties_imageProperties extends plugin_Plugin {
         if (lockSize) {
             editor.e.on(lockSize, 'click', () => {
                 this.state.sizeIsLocked = !this.state.sizeIsLocked;
-                lockSize.innerHTML = ui["b" /* Icon */].get(this.state.sizeIsLocked ? 'lock' : 'unlock');
-                editor.e.fire(imageWidth, 'change');
             });
         }
-        editor.e.on(lockMargin, 'click', () => {
+        editor.e.on(lockMargin, 'click', (e) => {
             this.state.marginIsLocked = !this.state.marginIsLocked;
+            e.preventDefault();
         });
         const changeSizes = (event) => {
-            const w = parseInt(imageWidth.value, 10), h = parseInt(imageHeight.value, 10);
+            if (!Object(helpers["isNumeric"])(imageWidth.value) || !Object(helpers["isNumeric"])(imageHeight.value)) {
+                return;
+            }
+            const w = parseFloat(imageWidth.value), h = parseFloat(imageHeight.value);
             if (event.target === imageWidth) {
                 imageHeight.value = Math.round(w / this.state.ratio).toString();
             }
@@ -22670,8 +22714,27 @@ class image_properties_imageProperties extends plugin_Plugin {
             });
             this.state.marginIsLocked = equal;
         }, updateSizes = () => {
-            imageWidth.value = image.offsetWidth.toString();
-            imageHeight.value = image.offsetHeight.toString();
+            const width = Object(helpers["attr"])(image, 'width') ||
+                Object(helpers["css"])(image, 'width', undefined, true) ||
+                false, height = Object(helpers["attr"])(image, 'height') ||
+                Object(helpers["css"])(image, 'height', undefined, true) ||
+                false;
+            imageWidth.value =
+                width !== false
+                    ? normalSizeFromString(width).toString()
+                    : image.offsetWidth.toString();
+            imageHeight.value =
+                height !== false
+                    ? normalSizeFromString(height).toString()
+                    : image.offsetHeight.toString();
+            this.state.sizeIsLocked = (() => {
+                if (!Object(helpers["isNumeric"])(imageWidth.value) ||
+                    !Object(helpers["isNumeric"])(imageHeight.value)) {
+                    return false;
+                }
+                const w = parseFloat(imageWidth.value), h = parseFloat(imageHeight.value);
+                return Math.abs(w - h * this.state.ratio) < 1;
+            })();
         }, updateText = () => {
             imageTitle.value = Object(helpers["attr"])(image, 'title') || '';
             imageAlt.value = Object(helpers["attr"])(image, 'alt') || '';
@@ -22738,31 +22801,29 @@ class image_properties_imageProperties extends plugin_Plugin {
                 link.parentNode.replaceChild(image, link);
             }
         }
-        const normalSize = (value) => {
-            value = Object(helpers["trim"])(value);
-            return /^[0-9]+$/.test(value) ? value + 'px' : value;
-        };
         if (imageWidth.value !== image.offsetWidth.toString() ||
             imageHeight.value !== image.offsetHeight.toString()) {
             Object(helpers["css"])(image, {
                 width: Object(helpers["trim"])(imageWidth.value)
-                    ? normalSize(imageWidth.value)
+                    ? normalSizeToString(imageWidth.value)
                     : null,
                 height: Object(helpers["trim"])(imageHeight.value)
-                    ? normalSize(imageHeight.value)
+                    ? normalSizeToString(imageHeight.value)
                     : null
             });
+            Object(helpers["attr"])(image, 'width', null);
+            Object(helpers["attr"])(image, 'height', null);
         }
         const margins = [marginTop, marginRight, marginBottom, marginLeft];
         if (opt.image.editMargins) {
             if (!this.state.marginIsLocked) {
                 margins.forEach((margin) => {
                     const side = Object(helpers["attr"])(margin, 'data-ref') || '';
-                    Object(helpers["css"])(image, side, normalSize(margin.value));
+                    Object(helpers["css"])(image, side, normalSizeToString(margin.value));
                 });
             }
             else {
-                Object(helpers["css"])(image, 'margin', normalSize(marginTop.value));
+                Object(helpers["css"])(image, 'margin', normalSizeToString(marginTop.value));
             }
         }
         if (opt.image.editClass) {
@@ -22788,9 +22849,7 @@ class image_properties_imageProperties extends plugin_Plugin {
             }
             else {
                 if (Object(helpers["css"])(image, 'float') &&
-                    ['right', 'left'].indexOf(Object(helpers["css"])(image, 'float')
-                        .toString()
-                        .toLowerCase()) !== -1) {
+                    ['right', 'left'].indexOf(Object(helpers["css"])(image, 'float').toString().toLowerCase()) !== -1) {
                     Object(helpers["css"])(image, 'float', '');
                 }
                 Object(helpers["clearCenterAlign"])(image);
@@ -22899,6 +22958,9 @@ class image_properties_imageProperties extends plugin_Plugin {
 Object(tslib_es6["a" /* __decorate */])([
     Object(decorators["watch"])('state.marginIsLocked')
 ], image_properties_imageProperties.prototype, "onChangeMarginIsLocked", null);
+Object(tslib_es6["a" /* __decorate */])([
+    Object(decorators["watch"])('state.sizeIsLocked')
+], image_properties_imageProperties.prototype, "onChangeSizeIsLocked", null);
 Object(tslib_es6["a" /* __decorate */])([
     esm["a" /* default */]
 ], image_properties_imageProperties.prototype, "onApply", null);
@@ -23175,8 +23237,10 @@ class inline_popup_inlinePopup extends plugin_Plugin {
         this.popup.open(rect);
         return true;
     }
-    hidePopup() {
-        this.popup.close();
+    hidePopup(type) {
+        if (!type || type === this.type) {
+            this.popup.close();
+        }
     }
     canShowPopupForType(type) {
         const data = this.j.o.popup[type.toLowerCase()];
@@ -23748,6 +23812,7 @@ function link_link(jodit) {
                 const a = jodit.createInside.element('a');
                 a.setAttribute('href', html);
                 a.textContent = html;
+                jodit.e.stopPropagation('processPaste');
                 return a;
             }
         });
@@ -24001,6 +24066,10 @@ function orderedList(editor) {
             const ul = getListWrapper();
             if (ul) {
                 setListStyleType(ul, listStyleType);
+                editor.createInside.applyCreateAttributes(ul);
+                ul.querySelectorAll('li').forEach(li => {
+                    editor.createInside.applyCreateAttributes(li);
+                });
             }
             if (ul && dom["a" /* Dom */].isTag(ul.parentNode, 'p')) {
                 const selection = editor.s.save();
@@ -25028,7 +25097,9 @@ let resize_handler_resizeHandler = class resizeHandler extends plugin_Plugin {
             (editor.o.allowResizeX || editor.o.allowResizeY)) {
             editor.e
                 .on('toggleFullSize.resizeHandler', () => {
-                this.handle.style.display = editor.isFullSize ? 'none' : 'block';
+                this.handle.style.display = editor.isFullSize
+                    ? 'none'
+                    : 'block';
             })
                 .on(this.handle, 'mousedown touchstart', this.onHandleResizeStart)
                 .on(editor.ow, 'mouseup touchsend', this.onHandleResizeEnd);
@@ -25066,8 +25137,7 @@ let resize_handler_resizeHandler = class resizeHandler extends plugin_Plugin {
     }
     beforeDestruct(editor) {
         dom["a" /* Dom */].safeRemove(this.handle);
-        this.j.e
-            .off(this.j.ow, 'mouseup touchsend', this.onHandleResizeEnd);
+        this.j.e.off(this.j.ow, 'mouseup touchsend', this.onHandleResizeEnd);
     }
 };
 resize_handler_resizeHandler.requires = ['size'];
@@ -26614,7 +26684,9 @@ class resize_cells_resizeCells extends plugin_Plugin {
             return;
         }
         this.drag = true;
-        this.j.e.on(this.j.ew, 'mousemove.table touchmove.table', this.onMouseMove);
+        this.j.e
+            .on(this.j.ow, 'mouseup.resize-cells touchend.resize-cells', this.onMouseUp)
+            .on(this.j.ew, 'mousemove.table touchmove.table', this.onMouseMove);
         this.startX = event.clientX;
         this.j.lock(resize_cells_key);
         this.resizeHandler.classList.add('jodit-table-resizer_moved');
@@ -26754,7 +26826,6 @@ class resize_cells_resizeCells extends plugin_Plugin {
             .on('change.resize-cells afterCommand.resize-cells afterSetMode.resize-cells', () => {
             Object(helpers["$$"])('table', editor.editor).forEach(this.observe);
         })
-            .on(this.j.ow, 'mouseup.resize-cells touchend.resize-cells', this.onMouseUp)
             .on(this.j.ow, 'scroll.resize-cells', () => {
             if (!this.drag) {
                 return;
@@ -26851,7 +26922,7 @@ class select_cells_selectCells extends plugin_Plugin {
         })
             .on('beforeCommand.select-cells', this.onExecCommand)
             .on('afterCommand.select-cells', this.onAfterCommand)
-            .on('change afterCommand afterSetMode click'
+            .on('change afterCommand afterSetMode click afterInit'
             .split(' ')
             .map(e => e + '.select-cells')
             .join(' '), () => {
@@ -26864,9 +26935,7 @@ class select_cells_selectCells extends plugin_Plugin {
         }
         this.onRemoveSelection();
         Object(helpers["dataBind"])(table, select_cells_key, true);
-        this.j.e
-            .on(table, 'mousedown.select-cells touchstart.select-cells', this.onStartSelection.bind(this, table))
-            .on(table, 'mouseup.select-cells touchend.select-cells', this.onStopSelection.bind(this, table));
+        this.j.e.on(table, 'mousedown.select-cells touchstart.select-cells', this.onStartSelection.bind(this, table));
     }
     onStartSelection(table, e) {
         if (this.j.o.readonly) {
@@ -26882,7 +26951,9 @@ class select_cells_selectCells extends plugin_Plugin {
         }
         this.selectedCell = cell;
         this.module.addSelection(cell);
-        this.j.e.on(table, 'mousemove.select-cells touchmove.select-cells', this.onMove.bind(this, table));
+        this.j.e
+            .on(table, 'mousemove.select-cells touchmove.select-cells', this.onMove.bind(this, table))
+            .on(table, 'mouseup.select-cells touchend.select-cells', this.onStopSelection.bind(this, table));
         this.j.e.fire('showPopup', table, () => Object(helpers["position"])(cell, this.j), 'cells');
     }
     onMove(table, e) {
@@ -26928,7 +26999,7 @@ class select_cells_selectCells extends plugin_Plugin {
             this.module.getAllSelectedCells().length) {
             this.j.unlock();
             this.unselectCells();
-            this.j.e.fire('hidePopup');
+            this.j.e.fire('hidePopup', 'cells');
             return;
         }
         this.selectedCell = null;
@@ -26962,7 +27033,7 @@ class select_cells_selectCells extends plugin_Plugin {
             };
         }, 'cells');
         Object(helpers["$$"])('table', this.j.editor).forEach(table => {
-            this.j.e.off(table, 'mousemove.select-cells touchmove.select-cells');
+            this.j.e.off(table, 'mousemove.select-cells touchmove.select-cells mouseup.select-cells touchend.select-cells');
         });
     }
     unselectCells(table, currentCell) {
@@ -27353,8 +27424,7 @@ config["a" /* Config */].prototype.controls.print = {
         });
         Object(global["b" /* getContainer */])(editor, config["a" /* Config */]).appendChild(iframe);
         const afterFinishPrint = () => {
-            editor.e
-                .off(editor.ow, 'mousemove', afterFinishPrint);
+            editor.e.off(editor.ow, 'mousemove', afterFinishPrint);
             dom["a" /* Dom */].safeRemove(iframe);
         };
         const mywindow = iframe.contentWindow;
@@ -27387,7 +27457,7 @@ config["a" /* Config */].prototype.controls.preview = {
     exec: (editor) => {
         const dialog = editor.getInstance('Dialog', {
             language: editor.o.language,
-            theme: editor.o.theme,
+            theme: editor.o.theme
         });
         const div = editor.c.div();
         Object(helpers["css"])(div, {
