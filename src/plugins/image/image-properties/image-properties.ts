@@ -29,7 +29,8 @@ import {
 	markOwner,
 	isString,
 	refs,
-	kebabCase
+	kebabCase,
+	isNumeric
 } from '../../../core/helpers';
 
 import {
@@ -116,6 +117,17 @@ Config.prototype.image = {
 	selectImageAfterClose: true
 };
 
+const normalSizeToString = (value: string): string => {
+	value = trim(value);
+	return /^[0-9]+$/.test(value) ? value + 'px' : value;
+};
+
+const normalSizeFromString = (value: string | number): string | number => {
+	return /^[-+]?[0-9.]+px$/.test(value.toString())
+		? parseFloat(value.toString())
+		: value;
+};
+
 /**
  * Show dialog with image's options
  */
@@ -153,6 +165,30 @@ export class imageProperties extends Plugin {
 		);
 	}
 
+	@watch('state.sizeIsLocked')
+	onChangeSizeIsLocked(): void {
+		if (!this.form) {
+			return;
+		}
+
+		const { lockSize, imageWidth } = refs<HTMLInputElement>(this.form);
+
+		lockSize.innerHTML = Icon.get(
+			this.state.sizeIsLocked ? 'lock' : 'unlock'
+		);
+
+		lockSize.classList.remove('jodit-properties__lock');
+		lockSize.classList.remove('jodit-properties__unlock');
+
+		lockSize.classList.add(
+			this.state.sizeIsLocked
+				? 'jodit-properties__lock'
+				: 'jodit-properties__unlock'
+		);
+
+		this.j.e.fire(imageWidth, 'change');
+	}
+
 	private form!: HTMLElement;
 
 	/**
@@ -186,10 +222,7 @@ export class imageProperties extends Plugin {
 
 		this.updateValues();
 
-		this.dialog
-			.open()
-			.setModal(true)
-			.setPosition();
+		this.dialog.open().setModal(true).setPosition();
 
 		return false;
 	}
@@ -268,22 +301,21 @@ export class imageProperties extends Plugin {
 		if (lockSize) {
 			editor.e.on(lockSize, 'click', () => {
 				this.state.sizeIsLocked = !this.state.sizeIsLocked;
-
-				lockSize.innerHTML = Icon.get(
-					this.state.sizeIsLocked ? 'lock' : 'unlock'
-				);
-
-				editor.e.fire(imageWidth, 'change');
 			});
 		}
 
-		editor.e.on(lockMargin, 'click', () => {
+		editor.e.on(lockMargin, 'click', (e: MouseEvent) => {
 			this.state.marginIsLocked = !this.state.marginIsLocked;
+			e.preventDefault();
 		});
 
 		const changeSizes = (event: any): void => {
-			const w = parseInt(imageWidth.value, 10),
-				h = parseInt(imageHeight.value, 10);
+			if (!isNumeric(imageWidth.value) || !isNumeric(imageHeight.value)) {
+				return;
+			}
+
+			const w = parseFloat(imageWidth.value),
+				h = parseFloat(imageHeight.value);
 
 			if (event.target === imageWidth) {
 				imageHeight.value = Math.round(w / this.state.ratio).toString();
@@ -425,8 +457,38 @@ export class imageProperties extends Plugin {
 				this.state.marginIsLocked = equal;
 			},
 			updateSizes = () => {
-				imageWidth.value = image.offsetWidth.toString();
-				imageHeight.value = image.offsetHeight.toString();
+				const width =
+						attr(image, 'width') ||
+						css(image, 'width', undefined, true) ||
+						false,
+					height =
+						attr(image, 'height') ||
+						css(image, 'height', undefined, true) ||
+						false;
+
+				imageWidth.value =
+					width !== false
+						? normalSizeFromString(width).toString()
+						: image.offsetWidth.toString();
+
+				imageHeight.value =
+					height !== false
+						? normalSizeFromString(height).toString()
+						: image.offsetHeight.toString();
+
+				this.state.sizeIsLocked = ((): boolean => {
+					if (
+						!isNumeric(imageWidth.value) ||
+						!isNumeric(imageHeight.value)
+					) {
+						return false;
+					}
+
+					const w = parseFloat(imageWidth.value),
+						h = parseFloat(imageHeight.value);
+
+					return Math.abs(w - h * this.state.ratio) < 1;
+				})();
 			},
 			updateText = () => {
 				imageTitle.value = attr(image, 'title') || '';
@@ -540,11 +602,6 @@ export class imageProperties extends Plugin {
 			}
 		}
 
-		const normalSize = (value: string): string => {
-			value = trim(value);
-			return /^[0-9]+$/.test(value) ? value + 'px' : value;
-		};
-
 		// Size
 		if (
 			imageWidth.value !== image.offsetWidth.toString() ||
@@ -552,12 +609,15 @@ export class imageProperties extends Plugin {
 		) {
 			css(image, {
 				width: trim(imageWidth.value)
-					? normalSize(imageWidth.value)
+					? normalSizeToString(imageWidth.value)
 					: null,
 				height: trim(imageHeight.value)
-					? normalSize(imageHeight.value)
+					? normalSizeToString(imageHeight.value)
 					: null
 			});
+
+			attr(image, 'width', null);
+			attr(image, 'height', null);
 		}
 
 		const margins = [marginTop, marginRight, marginBottom, marginLeft];
@@ -566,10 +626,10 @@ export class imageProperties extends Plugin {
 			if (!this.state.marginIsLocked) {
 				margins.forEach((margin: HTMLInputElement) => {
 					const side = attr(margin, 'data-ref') || '';
-					css(image, side, normalSize(margin.value));
+					css(image, side, normalSizeToString(margin.value));
 				});
 			} else {
-				css(image, 'margin', normalSize(marginTop.value));
+				css(image, 'margin', normalSizeToString(marginTop.value));
 			}
 		}
 
@@ -598,9 +658,7 @@ export class imageProperties extends Plugin {
 				if (
 					css(image, 'float') &&
 					['right', 'left'].indexOf(
-						css(image, 'float')
-							.toString()
-							.toLowerCase()
+						css(image, 'float').toString().toLowerCase()
 					) !== -1
 				) {
 					css(image, 'float', '');

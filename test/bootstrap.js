@@ -643,7 +643,7 @@ const keyCode = Object.keys(codeKey).reduce((res, code) => {
  * @param {string} type
  * @param {string|number|HTMLElement} keyCodeOrElement
  * @param {HTMLElement} [element]
- * @param {Function} applyOpt
+ * @param {Function} [applyOpt]
  *
  * @returns boolean
  */
@@ -772,8 +772,8 @@ function getButton(buttonName, joditOrElement, role, last) {
  *
  * @param {string} buttonName
  * @param {Jodit|HTMLElement} joditOrElement
- * @param {string} role
- * @param {boolean} last
+ * @param {string} [role]
+ * @param {boolean} [last]
  */
 function clickButton(buttonName, joditOrElement, role, last) {
 	simulateEvent(

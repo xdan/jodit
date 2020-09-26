@@ -17,10 +17,11 @@ export abstract class Plugin extends ViewComponent<IJodit> implements IPlugin {
 		super(jodit);
 
 		jodit.e
-			.on('afterInit', this.afterInit.bind(this, jodit))
+			.on('afterInit', () => {
+				this.setStatus(STATUSES.ready);
+				this.afterInit(jodit);
+			})
 			.on('beforeDestruct', this.destruct);
-
-		this.setStatus(STATUSES.ready);
 	}
 
 	init(jodit: IJodit): void {

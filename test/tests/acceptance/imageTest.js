@@ -3,10 +3,10 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Test image', function() {
-	describe('Image properties dialog', function() {
-		describe('Double click on image', function() {
-			it('should open image properties dialog', function() {
+describe('Test image', function () {
+	describe('Image properties dialog', function () {
+		describe('Double click on image', function () {
+			it('should open image properties dialog', function () {
 				const editor = getJodit();
 
 				editor.value = '<img src="tests/artio.jpg"/>';
@@ -22,8 +22,8 @@ describe('Test image', function() {
 				expect(dialog).is.not.null;
 			});
 
-			describe('Disable by image.openOnDblClick', function() {
-				it('should not open image properties dialog', function() {
+			describe('Disable by image.openOnDblClick', function () {
+				it('should not open image properties dialog', function () {
 					const editor = getJodit({
 						image: {
 							openOnDblClick: false
@@ -44,8 +44,8 @@ describe('Test image', function() {
 			});
 		});
 
-		describe('Change border radius', function() {
-			it('should change image border radius', function() {
+		describe('Change border radius', function () {
+			it('should change image border radius', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -85,8 +85,8 @@ describe('Test image', function() {
 			});
 		});
 
-		describe('Change classes', function() {
-			it('should change image classlist', function() {
+		describe('Change classes', function () {
+			it('should change image classlist', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -125,8 +125,8 @@ describe('Test image', function() {
 			});
 		});
 
-		describe('Change styles', function() {
-			it('should change image styles', function() {
+		describe('Change styles', function () {
+			it('should change image styles', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -166,8 +166,8 @@ describe('Test image', function() {
 			});
 		});
 
-		describe('Change id', function() {
-			it('should change image id', function() {
+		describe('Change id', function () {
+			it('should change image id', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -206,9 +206,9 @@ describe('Test image', function() {
 			});
 		});
 
-		describe('Change align', function() {
-			describe('left', function() {
-				it('should change image horizontal align', function() {
+		describe('Change align', function () {
+			describe('left', function () {
+				it('should change image horizontal align', function () {
 					const editor = getJodit();
 
 					editor.value =
@@ -249,8 +249,8 @@ describe('Test image', function() {
 				});
 			});
 
-			describe('right', function() {
-				it('should change image horizontal align', function() {
+			describe('right', function () {
+				it('should change image horizontal align', function () {
 					const editor = getJodit();
 
 					editor.value =
@@ -290,8 +290,8 @@ describe('Test image', function() {
 				});
 			});
 
-			describe('center', function() {
-				it('should change image horizontal align', function() {
+			describe('center', function () {
+				it('should change image horizontal align', function () {
 					const editor = getJodit();
 
 					editor.value =
@@ -331,8 +331,8 @@ describe('Test image', function() {
 				});
 			});
 
-			describe('Clear align', function() {
-				it('should clear some align', function() {
+			describe('Clear align', function () {
+				it('should clear some align', function () {
 					const editor = getJodit();
 
 					editor.value =
@@ -374,9 +374,9 @@ describe('Test image', function() {
 			});
 		});
 
-		describe('Change margins', function() {
-			describe('Change marginTop with lock', function() {
-				it('should change all margins', function() {
+		describe('Change margins', function () {
+			describe('Change marginTop with lock', function () {
+				it('should change all margins', function () {
 					const editor = getJodit();
 
 					editor.value =
@@ -426,15 +426,15 @@ describe('Test image', function() {
 				});
 			});
 
-			describe('Change marginTop with unlock', function() {
-				it('should change only marginTop', function() {
+			describe('Change marginTop with unlock', function () {
+				it('should change only marginTop', function () {
 					const editor = getJodit();
 
 					editor.value =
 						'<img style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/>';
+
 					simulateEvent(
 						'dblclick',
-						0,
 						editor.editor.querySelector('img')
 					);
 
@@ -442,7 +442,6 @@ describe('Test image', function() {
 
 					simulateEvent(
 						'click',
-						0,
 						dialog.querySelectorAll(
 							'.jodit-tabs__buttons button'
 						)[1]
@@ -452,42 +451,49 @@ describe('Test image', function() {
 						'.jodit-tab.jodit-tab_active'
 					);
 
-					const locker = tab.querySelector('[data-ref="lockMargin"]');
-					expect(locker).is.not.null;
-					const lockerimg = locker.innerHTML;
-					simulateEvent('click', 0, locker);
-					expect(locker.innerHTML).does.not.equal(lockerimg);
+					const {
+						marginBottom,
+						marginTop,
+						marginLeft,
+						marginRight,
+						lockMargin
+					} = Jodit.modules.Helpers.refs(dialog);
+
+					expect(lockMargin).is.not.null;
+					const lockerimg = lockMargin.innerHTML;
+					simulateEvent('click', lockMargin);
+					expect(lockMargin.innerHTML).does.not.equal(lockerimg);
 
 					expect(
-						tab
-							.querySelector('[data-ref="marginTop"]')
+						marginTop
 							.value.toString()
 					).equals('10');
+
 					expect(
-						tab
-							.querySelector('[data-ref="marginBottom"]')
+						marginBottom
 							.value.toString()
 					).equals('10');
+
 					expect(
-						tab
-							.querySelector('[data-ref="marginLeft"]')
+						marginLeft
 							.value.toString()
 					).equals('10');
+
 					expect(
-						tab
-							.querySelector('[data-ref="marginRight"]')
+						marginRight
 							.value.toString()
 					).equals('10');
+
 					expect(
-						tab
-							.querySelector('[data-ref="marginBottom"]')
+						marginBottom
 							.hasAttribute('disabled')
 					).is.false;
 
-					tab.querySelector('[data-ref="marginTop"]').value = 100;
-					tab.querySelector('[data-ref="marginBottom"]').value = 10;
-					tab.querySelector('[data-ref="marginRight"]').value = 20;
-					tab.querySelector('[data-ref="marginLeft"]').value = 220;
+					marginTop.value = 100;
+					marginBottom.value = 10;
+					marginRight.value = 20;
+					marginLeft.value = 220;
+
 					clickButton('ok', dialog);
 
 					expect(sortAttributes(editor.value)).equals(
@@ -497,8 +503,8 @@ describe('Test image', function() {
 			});
 		});
 
-		describe('Change title', function() {
-			it('should change image title', function() {
+		describe('Change title', function () {
+			it('should change image title', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -529,11 +535,11 @@ describe('Test image', function() {
 			});
 		});
 
-		describe('Change alt', function() {
-			it('should change image alt', function(done) {
+		describe('Change alt', function () {
+			it('should change image alt', function (done) {
 				const editor = getJodit();
 				const image = new Image();
-				const doTest = function() {
+				const doTest = function () {
 					editor.value =
 						'<img alt="test" style="width:100px; height: 100px;" src="tests/artio.jpg"/>';
 
@@ -573,8 +579,8 @@ describe('Test image', function() {
 			});
 		});
 
-		describe('Change link', function() {
-			it('should change image wrapper', function() {
+		describe('Change link', function () {
+			it('should change image wrapper', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -606,8 +612,8 @@ describe('Test image', function() {
 				);
 			});
 
-			describe('open link in new tab', function() {
-				it('should change image wrapper with target="_blank"', function() {
+			describe('open link in new tab', function () {
+				it('should change image wrapper with target="_blank"', function () {
 					const editor = getJodit();
 
 					editor.value =
@@ -645,8 +651,8 @@ describe('Test image', function() {
 				});
 			});
 
-			describe('Open dialog for image wrapped in link', function() {
-				it('should change image wrapper', function() {
+			describe('Open dialog for image wrapped in link', function () {
+				it('should change image wrapper', function () {
 					const editor = getJodit();
 
 					editor.value =
@@ -688,8 +694,8 @@ describe('Test image', function() {
 				});
 			});
 
-			describe('Unlink', function() {
-				it('should remove image wrapper', function() {
+			describe('Unlink', function () {
+				it('should remove image wrapper', function () {
 					const editor = getJodit();
 
 					editor.value =
@@ -731,16 +737,62 @@ describe('Test image', function() {
 			});
 		});
 
-		describe('Change size', function() {
-			describe('dblclick on image and open dialog', function() {
-				it('should create inputs contains width and height', function(done) {
+		describe('Change size', function () {
+			describe('dblclick on image and open dialog', function () {
+				describe('width and height were not changed', function () {
+					it('should not set style', function (done) {
+						const area = appendTestArea();
+						const editor = new Jodit(area);
+
+						editor.value = '<p><img src="tests/artio.jpg"/></p>';
+						const img = editor.editor.querySelector('img');
+
+						const callback = function () {
+							simulateEvent('dblclick', 0, img);
+
+							expect(area.id).equals(editor.id);
+
+							const dialog = getOpenedDialog(editor);
+							expect(dialog).is.not.null;
+
+							const {
+								imageWidth,
+								imageHeight,
+								lockSize
+							} = Jodit.modules.Helpers.refs(dialog);
+
+							expect(imageWidth.value).equals(
+								img.offsetWidth.toString()
+							);
+							expect(imageHeight.value).equals(
+								img.offsetHeight.toString()
+							);
+							expect(
+								lockSize.classList.contains(
+									'jodit-properties__lock'
+								)
+							).is.true;
+
+							clickButton('ok', dialog);
+
+							expect(sortAttributes(editor.value)).equals(
+								'<p><img src="tests/artio.jpg"></p>'
+							);
+
+							done();
+						};
+
+						onLoadImage(img, callback);
+					});
+				});
+				it('should create inputs contains width and height', function (done) {
 					const area = appendTestArea();
 					const editor = new Jodit(area);
 
 					editor.value = '<img src="tests/artio.jpg"/>';
 					const img = editor.editor.querySelector('img');
 
-					const callback = function() {
+					const callback = function () {
 						simulateEvent('dblclick', 0, img);
 
 						expect(area.id).equals(editor.id);
@@ -748,12 +800,11 @@ describe('Test image', function() {
 						const dialog = getOpenedDialog(editor);
 						expect(dialog).is.not.null;
 
-						const imageWidth = dialog.querySelector(
-							'[data-ref="imageWidth"]'
-						);
-						const imageHeight = dialog.querySelector(
-							'[data-ref="imageHeight"]'
-						);
+						const {
+							imageWidth,
+							imageHeight,
+							lockSize
+						} = Jodit.modules.Helpers.refs(dialog);
 
 						expect(imageWidth).is.not.null;
 						expect(imageHeight).is.not.null;
@@ -764,6 +815,11 @@ describe('Test image', function() {
 						expect(imageHeight.value).equals(
 							img.offsetHeight.toString()
 						);
+						expect(
+							lockSize.classList.contains(
+								'jodit-properties__lock'
+							)
+						).is.true;
 
 						imageWidth.value = 100;
 						simulateEvent('change', 0, imageWidth);
@@ -786,33 +842,279 @@ describe('Test image', function() {
 
 					onLoadImage(img, callback);
 				});
+
+				describe('image has width in attributes', function () {
+					it('should put this width in input, inside height should be auto', function (done) {
+						const area = appendTestArea();
+						const editor = new Jodit(area);
+
+						editor.value =
+							'<img width="100px" src="tests/artio.jpg"/>';
+
+						const img = editor.editor.querySelector('img');
+
+						const callback = function () {
+							simulateEvent('dblclick', img);
+
+							expect(area.id).equals(editor.id);
+
+							const dialog = getOpenedDialog(editor);
+
+							const {
+								imageWidth,
+								imageHeight
+							} = Jodit.modules.Helpers.refs(dialog);
+
+							expect(imageWidth.value).equals('100');
+							expect(imageHeight.value).equals('56');
+
+							imageWidth.value = 200;
+							simulateEvent('change', imageWidth);
+
+							expect(imageHeight.value).equals('112');
+
+							imageHeight.value = 200;
+							simulateEvent('change', imageHeight);
+							expect(imageWidth.value).equals('356');
+
+							clickButton('ok', dialog);
+
+							expect(sortAttributes(editor.value)).equals(
+								'<p><img src="tests/artio.jpg" style="height:200px;width:356px"></p>'
+							);
+
+							done();
+						};
+
+						onLoadImage(img, callback);
+					});
+
+					describe('same in style', function () {
+						it('should put this width in input, inside height should be auto', function (done) {
+							const area = appendTestArea();
+							const editor = new Jodit(area);
+
+							editor.value =
+								'<img style="width:100px" src="tests/artio.jpg"/>';
+
+							const img = editor.editor.querySelector('img');
+
+							const callback = function () {
+								simulateEvent('dblclick', img);
+
+								expect(area.id).equals(editor.id);
+
+								const dialog = getOpenedDialog(editor);
+
+								const {
+									imageWidth,
+									imageHeight,
+									lockSize
+								} = Jodit.modules.Helpers.refs(dialog);
+
+								expect(imageWidth.value).equals('100');
+								expect(imageHeight.value).equals('56');
+								expect(
+									lockSize.classList.contains(
+										'jodit-properties__lock'
+									)
+								).is.true;
+
+								imageWidth.value = 200;
+								simulateEvent('change', imageWidth);
+
+								expect(imageHeight.value).equals('112');
+
+								imageHeight.value = 200;
+								simulateEvent('change', imageHeight);
+								expect(imageWidth.value).equals('356');
+
+								clickButton('ok', dialog);
+
+								expect(sortAttributes(editor.value)).equals(
+									'<p><img src="tests/artio.jpg" style="height:200px;width:356px"></p>'
+								);
+
+								done();
+							};
+
+							onLoadImage(img, callback);
+						});
+
+						describe('Attributes has not pixel value', function () {
+							it('should put these values in inputs', function (done) {
+								const area = appendTestArea();
+								const editor = new Jodit(area);
+
+								editor.value =
+									'<img style="width:100%;height:30rem" src="tests/artio.jpg"/>';
+
+								const img = editor.editor.querySelector('img');
+
+								const callback = function () {
+									simulateEvent('dblclick', img);
+
+									expect(area.id).equals(editor.id);
+
+									const dialog = getOpenedDialog(editor);
+
+									const {
+										imageWidth,
+										imageHeight,
+										lockSize
+									} = Jodit.modules.Helpers.refs(dialog);
+
+									expect(imageWidth.value).equals('100%');
+									expect(imageHeight.value).equals('30rem');
+									expect(
+										lockSize.classList.contains(
+											'jodit-properties__unlock'
+										)
+									).is.true;
+
+									clickButton('ok', dialog);
+
+									expect(sortAttributes(editor.value)).equals(
+										'<p><img src="tests/artio.jpg" style="height:30rem;width:100%"></p>'
+									);
+
+									done();
+								};
+
+								onLoadImage(img, callback);
+							});
+						});
+					});
+				});
+
+				describe('image has width and height attributes', function () {
+					it('should put these attributes in inputs and lock button should be switch off', function (done) {
+						const area = appendTestArea();
+						const editor = new Jodit(area);
+
+						editor.value =
+							'<img width="100px" height="200px" src="tests/artio.jpg"/>';
+
+						const img = editor.editor.querySelector('img');
+
+						const callback = function () {
+							simulateEvent('dblclick', img);
+
+							expect(area.id).equals(editor.id);
+
+							const dialog = getOpenedDialog(editor);
+
+							const {
+								imageWidth,
+								imageHeight,
+								lockSize
+							} = Jodit.modules.Helpers.refs(dialog);
+
+							expect(imageWidth.value).equals('100');
+							expect(imageHeight.value).equals('200');
+
+							expect(
+								lockSize.classList.contains(
+									'jodit-properties__unlock'
+								)
+							).is.true;
+
+							imageWidth.value = 200;
+							simulateEvent('change', imageWidth);
+							expect(imageHeight.value).equals('200');
+
+							imageHeight.value = 1900;
+							simulateEvent('change', imageHeight);
+							expect(imageWidth.value).equals('200');
+
+							clickButton('ok', dialog);
+
+							expect(sortAttributes(editor.value)).equals(
+								'<p><img src="tests/artio.jpg" style="height:1900px;width:200px"></p>'
+							);
+
+							done();
+						};
+
+						onLoadImage(img, callback);
+					});
+
+					describe('same in style', function () {
+						it('should put these values in inputs and lock button should be switch off', function (done) {
+							const area = appendTestArea();
+							const editor = new Jodit(area);
+
+							editor.value =
+								'<img style="width:100px;height:200px" src="tests/artio.jpg"/>';
+
+							const img = editor.editor.querySelector('img');
+
+							const callback = function () {
+								simulateEvent('dblclick', img);
+
+								expect(area.id).equals(editor.id);
+
+								const dialog = getOpenedDialog(editor);
+
+								const {
+									imageWidth,
+									imageHeight,
+									lockSize
+								} = Jodit.modules.Helpers.refs(dialog);
+
+								expect(imageWidth.value).equals('100');
+								expect(imageHeight.value).equals('200');
+
+								expect(
+									lockSize.classList.contains(
+										'jodit-properties__unlock'
+									)
+								).is.true;
+
+								imageWidth.value = 200;
+								simulateEvent('change', imageWidth);
+								expect(imageHeight.value).equals('200');
+
+								imageHeight.value = 1900;
+								simulateEvent('change', imageHeight);
+								expect(imageWidth.value).equals('200');
+
+								clickButton('ok', dialog);
+
+								expect(sortAttributes(editor.value)).equals(
+									'<p><img src="tests/artio.jpg" style="height:1900px;width:200px"></p>'
+								);
+
+								done();
+							};
+
+							onLoadImage(img, callback);
+						});
+					});
+				});
 			});
 
-			describe('unlock ratio', function() {
-				it('should create inputs with width and height', function(done) {
+			describe('unlock ratio', function () {
+				it('should create inputs with width and height', function (done) {
 					const editor = getJodit();
 
 					editor.value = '<img src="tests/artio.jpg"/>';
 					const img = editor.editor.querySelector('img');
 
-					const callback = function() {
+					const callback = function () {
 						simulateEvent('dblclick', 0, img);
 
 						const dialog = getOpenedDialog(editor);
 
 						expect(dialog).is.not.null;
 
-						const imageWidth = dialog.querySelector(
-							'[data-ref="imageWidth"]'
-						);
-						const imageHeight = dialog.querySelector(
-							'[data-ref="imageHeight"]'
-						);
-						const locker = dialog.querySelector(
-							'[data-ref="lockSize"]'
-						);
+						const {
+							imageWidth,
+							imageHeight,
+							lockSize
+						} = Jodit.modules.Helpers.refs(dialog);
 
-						expect(locker).is.not.null;
+						expect(lockSize).is.not.null;
 						expect(imageWidth).is.not.null;
 						expect(imageHeight).is.not.null;
 
@@ -823,16 +1125,16 @@ describe('Test image', function() {
 							img.offsetHeight.toString()
 						);
 
-						simulateEvent('click', 0, locker);
+						simulateEvent('click', lockSize);
 
 						imageWidth.value = 100;
-						simulateEvent('change', 0, imageWidth);
+						simulateEvent('change', imageWidth);
 						expect(imageHeight.value).equals(
 							img.offsetHeight.toString()
 						);
 
 						imageHeight.value = 200;
-						simulateEvent('change', 0, imageHeight);
+						simulateEvent('change', imageHeight);
 						expect(imageWidth.value).equals('100');
 
 						clickButton('ok', dialog);
@@ -847,43 +1149,74 @@ describe('Test image', function() {
 					onLoadImage(img, callback);
 				});
 
-				describe('Toggle ratio again', function() {
-					it('should create connected inputs with width and height', function(done) {
+				describe('For no propprtional value', function () {
+					it('should not create connected size inputs', function (done) {
+						const editor = getJodit();
+
+						editor.value =
+							'<img width="45px" height="212px" src="tests/artio.jpg"/>';
+						const img = editor.editor.querySelector('img');
+
+						const callback = function () {
+							simulateEvent('dblclick', img);
+
+							const dialog = getOpenedDialog(editor);
+
+							expect(dialog).is.not.null;
+
+							const { lockSize } = Jodit.modules.Helpers.refs(
+								dialog
+							);
+
+							expect(
+								lockSize.classList.contains(
+									'jodit-properties__unlock'
+								)
+							).is.true;
+
+							done();
+						};
+
+						onLoadImage(img, callback);
+					});
+				});
+
+				describe('Toggle ratio again', function () {
+					it('should create connected inputs with width and height', function (done) {
 						const editor = getJodit();
 
 						editor.value = '<img src="tests/artio.jpg"/>';
 						const img = editor.editor.querySelector('img');
 
-						const callback = function() {
+						const callback = function () {
 							simulateEvent('dblclick', 0, img);
 
 							const dialog = getOpenedDialog(editor);
 							expect(dialog).is.not.null;
 
-							const imageWidth = dialog.querySelector(
-								'[data-ref="imageWidth"]'
-							);
-							const imageHeight = dialog.querySelector(
-								'[data-ref="imageHeight"]'
-							);
-							const locker = dialog.querySelector(
-								'[data-ref="lockSize"]'
-							);
-							const lockerimg = locker.innerHTML;
+							const {
+								imageWidth,
+								imageHeight,
+								lockSize
+							} = Jodit.modules.Helpers.refs(dialog);
 
-							simulateEvent('click', 0, locker);
-							expect(locker.innerHTML).does.not.equal(lockerimg);
-							simulateEvent('click', 0, locker);
-							expect(locker.innerHTML).equals(lockerimg);
+							const lockerimg = lockSize.innerHTML;
+
+							simulateEvent('click', lockSize);
+							expect(lockSize.innerHTML).does.not.equal(
+								lockerimg
+							);
+							simulateEvent('click', lockSize);
+							expect(lockSize.innerHTML).equals(lockerimg);
 
 							imageWidth.value = 100;
-							simulateEvent('change', 0, imageWidth);
+							simulateEvent('change', imageWidth);
 							expect(imageHeight.value).does.not.equal(
 								img.offsetHeight.toString()
 							);
 
 							imageHeight.value = 200;
-							simulateEvent('change', 0, imageHeight);
+							simulateEvent('change', imageHeight);
 							expect(imageWidth.value).does.not.equal('100');
 
 							clickButton('ok', dialog);
@@ -901,9 +1234,9 @@ describe('Test image', function() {
 			});
 		});
 
-		describe('Show filebrowser buttons and edit image button', function() {
-			describe("If uploader or filebrowser settings don't setted", function() {
-				it('should not show buttons', function() {
+		describe('Show filebrowser buttons and edit image button', function () {
+			describe("If uploader or filebrowser settings don't setted", function () {
+				it('should not show buttons', function () {
 					const editor = getJodit();
 
 					editor.value = '<img src="tests/artio.jpg"/>';
@@ -929,7 +1262,7 @@ describe('Test image', function() {
 				});
 			});
 
-			describe('Uploader and filebrowser settings set', function() {
+			describe('Uploader and filebrowser settings set', function () {
 				const settings = {
 					uploader: {
 						url:
@@ -944,7 +1277,7 @@ describe('Test image', function() {
 					}
 				};
 
-				it('should not show buttons', function() {
+				it('should not show buttons', function () {
 					const editor = new Jodit(appendTestArea(), settings);
 
 					editor.value = '<img src="tests/artio.jpg"/>';
@@ -963,8 +1296,8 @@ describe('Test image', function() {
 						.not.null;
 				});
 
-				describe('Click on filebrowser button', function() {
-					it('should open popup', function() {
+				describe('Click on filebrowser button', function () {
+					it('should open popup', function () {
 						const editor = new Jodit(appendTestArea(), settings);
 
 						editor.value = '<img src="tests/artio.jpg"/>';
@@ -988,9 +1321,9 @@ describe('Test image', function() {
 					});
 				});
 
-				describe('Click on edit button', function() {
-					describe('When photo it is not my', function() {
-						it('should open image editor', function(done) {
+				describe('Click on edit button', function () {
+					describe('When photo it is not my', function () {
+						it('should open image editor', function (done) {
 							const editor = new Jodit(
 								appendTestArea(),
 								settings
@@ -1050,7 +1383,7 @@ describe('Test image', function() {
 		});
 	});
 
-	it('Double click on image then openOnDblClick=false should select image', function() {
+	it('Double click on image then openOnDblClick=false should select image', function () {
 		const editor = getJodit({
 			image: { openOnDblClick: false }
 		});
@@ -1064,8 +1397,8 @@ describe('Test image', function() {
 		expect(editor.s.current().tagName).equals('IMG');
 	});
 
-	describe('One click on image', function() {
-		it('should show resizer', function() {
+	describe('One click on image', function () {
+		it('should show resizer', function () {
 			const editor = getJodit();
 			editor.value = '<img src="tests/artio.jpg"/>';
 
@@ -1080,8 +1413,8 @@ describe('Test image', function() {
 			expect(resizer).is.not.null;
 		});
 
-		describe('in full size mode', function() {
-			it('should show resizer and set mmaximum zIndex', function() {
+		describe('in full size mode', function () {
+			it('should show resizer and set mmaximum zIndex', function () {
 				const editor = getJodit({
 					fullsize: true
 				});
@@ -1103,7 +1436,7 @@ describe('Test image', function() {
 		});
 	});
 
-	it('One click inside table cell should show resizer', function() {
+	it('One click inside table cell should show resizer', function () {
 		const editor = getJodit();
 		editor.value = '<table><tr><td>1</td></tr></table>';
 
@@ -1118,9 +1451,9 @@ describe('Test image', function() {
 		expect(resizer).is.not.null;
 	});
 
-	describe('Popup box', function() {
-		describe('In relative object', function() {
-			it('should be under image', function() {
+	describe('Popup box', function () {
+		describe('In relative object', function () {
+			it('should be under image', function () {
 				const div = document.createElement('div');
 				div.innerHTML =
 					'<div style="width:800px; margin:auto; border:1px solid red;">\n' +
@@ -1163,15 +1496,18 @@ describe('Test image', function() {
 			});
 		});
 
-		describe('Click on button', function() {
-			describe('H Align', function() {
-				describe('Right', function() {
-					it('Should change img H align to right', function() {
+		describe('Click on button', function () {
+			describe('H Align', function () {
+				describe('Right', function () {
+					it('Should change img H align to right', function () {
 						const editor = getJodit();
 						editor.value =
 							'<p><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
 
-						simulateEvent('click', editor.editor.querySelector('img'));
+						simulateEvent(
+							'click',
+							editor.editor.querySelector('img')
+						);
 
 						const popup = getOpenedPopup(editor);
 						clickTrigger('left', popup);
@@ -1179,17 +1515,22 @@ describe('Test image', function() {
 
 						clickButton('Right', list);
 
-						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="float:right;height:100px;width:100px"></p>');
+						expect(sortAttributes(editor.value)).equals(
+							'<p><img src="tests/artio.jpg" style="float:right;height:100px;width:100px"></p>'
+						);
 					});
 				});
 
-				describe('Left', function() {
-					it('Should change img H align to left', function() {
+				describe('Left', function () {
+					it('Should change img H align to left', function () {
 						const editor = getJodit();
 						editor.value =
 							'<p><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
 
-						simulateEvent('click', editor.editor.querySelector('img'));
+						simulateEvent(
+							'click',
+							editor.editor.querySelector('img')
+						);
 
 						const popup = getOpenedPopup(editor);
 						clickTrigger('left', popup);
@@ -1197,17 +1538,22 @@ describe('Test image', function() {
 
 						clickButton('Left', list);
 
-						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="float:left;height:100px;width:100px"></p>');
+						expect(sortAttributes(editor.value)).equals(
+							'<p><img src="tests/artio.jpg" style="float:left;height:100px;width:100px"></p>'
+						);
 					});
 				});
 
-				describe('Center', function() {
-					it('Should change img H align to center', function() {
+				describe('Center', function () {
+					it('Should change img H align to center', function () {
 						const editor = getJodit();
 						editor.value =
 							'<p><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
 
-						simulateEvent('click', editor.editor.querySelector('img'));
+						simulateEvent(
+							'click',
+							editor.editor.querySelector('img')
+						);
 
 						const popup = getOpenedPopup(editor);
 						clickTrigger('left', popup);
@@ -1215,17 +1561,22 @@ describe('Test image', function() {
 
 						clickButton('Center', list);
 
-						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="display:block;height:100px;margin-left:auto;margin-right:auto;width:100px"></p>');
+						expect(sortAttributes(editor.value)).equals(
+							'<p><img src="tests/artio.jpg" style="display:block;height:100px;margin-left:auto;margin-right:auto;width:100px"></p>'
+						);
 					});
 				});
 
-				describe('Normal', function() {
-					it('Should change img H align to center', function() {
+				describe('Normal', function () {
+					it('Should change img H align to center', function () {
 						const editor = getJodit();
 						editor.value =
 							'<p><img style="width:100px; height: 100px; float: right" src="tests/artio.jpg"/></p>';
 
-						simulateEvent('click', editor.editor.querySelector('img'));
+						simulateEvent(
+							'click',
+							editor.editor.querySelector('img')
+						);
 
 						const popup = getOpenedPopup(editor);
 						clickTrigger('left', popup);
@@ -1233,19 +1584,24 @@ describe('Test image', function() {
 
 						clickButton('Normal', list);
 
-						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="height:100px;width:100px"></p>');
+						expect(sortAttributes(editor.value)).equals(
+							'<p><img src="tests/artio.jpg" style="height:100px;width:100px"></p>'
+						);
 					});
 				});
 			});
 
-			describe('V Align', function() {
-				describe('Top', function() {
-					it('Should change img V align to top', function() {
+			describe('V Align', function () {
+				describe('Top', function () {
+					it('Should change img V align to top', function () {
 						const editor = getJodit();
 						editor.value =
 							'<p><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
 
-						simulateEvent('click', editor.editor.querySelector('img'));
+						simulateEvent(
+							'click',
+							editor.editor.querySelector('img')
+						);
 
 						const popup = getOpenedPopup(editor);
 
@@ -1254,17 +1610,22 @@ describe('Test image', function() {
 
 						clickButton('Top', list);
 
-						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="height:100px;vertical-align:top;width:100px"></p>');
+						expect(sortAttributes(editor.value)).equals(
+							'<p><img src="tests/artio.jpg" style="height:100px;vertical-align:top;width:100px"></p>'
+						);
 					});
 				});
 
-				describe('Bottom', function() {
-					it('Should change img V align to bottom', function() {
+				describe('Bottom', function () {
+					it('Should change img V align to bottom', function () {
 						const editor = getJodit();
 						editor.value =
 							'<p><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
 
-						simulateEvent('click', editor.editor.querySelector('img'));
+						simulateEvent(
+							'click',
+							editor.editor.querySelector('img')
+						);
 
 						const popup = getOpenedPopup(editor);
 
@@ -1273,17 +1634,22 @@ describe('Test image', function() {
 
 						clickButton('Bottom', list);
 
-						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="height:100px;vertical-align:bottom;width:100px"></p>');
+						expect(sortAttributes(editor.value)).equals(
+							'<p><img src="tests/artio.jpg" style="height:100px;vertical-align:bottom;width:100px"></p>'
+						);
 					});
 				});
 
-				describe('Middle', function() {
-					it('Should change img V align to Middle', function() {
+				describe('Middle', function () {
+					it('Should change img V align to Middle', function () {
 						const editor = getJodit();
 						editor.value =
 							'<p><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
 
-						simulateEvent('click', editor.editor.querySelector('img'));
+						simulateEvent(
+							'click',
+							editor.editor.querySelector('img')
+						);
 
 						const popup = getOpenedPopup(editor);
 
@@ -1292,17 +1658,22 @@ describe('Test image', function() {
 
 						clickButton('Middle', list);
 
-						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="height:100px;vertical-align:middle;width:100px"></p>');
+						expect(sortAttributes(editor.value)).equals(
+							'<p><img src="tests/artio.jpg" style="height:100px;vertical-align:middle;width:100px"></p>'
+						);
 					});
 				});
 
-				describe('Normal', function() {
-					it('Should change img V align to Normal', function() {
+				describe('Normal', function () {
+					it('Should change img V align to Normal', function () {
 						const editor = getJodit();
 						editor.value =
 							'<p><img style="width:100px; vertical-align:middle; height: 100px;" src="tests/artio.jpg"/></p>';
 
-						simulateEvent('click', editor.editor.querySelector('img'));
+						simulateEvent(
+							'click',
+							editor.editor.querySelector('img')
+						);
 
 						const popup = getOpenedPopup(editor);
 
@@ -1311,16 +1682,18 @@ describe('Test image', function() {
 
 						clickButton('Normal', list);
 
-						expect(sortAttributes(editor.value)).equals('<p><img src="tests/artio.jpg" style="height:100px;width:100px"></p>');
+						expect(sortAttributes(editor.value)).equals(
+							'<p><img src="tests/artio.jpg" style="height:100px;width:100px"></p>'
+						);
 					});
 				});
 			});
 		});
 	});
 
-	describe('Resize box', function() {
-		describe('In relative object', function() {
-			it('should be in front of image', function() {
+	describe('Resize box', function () {
+		describe('In relative object', function () {
+			it('should be in front of image', function () {
 				const div = document.createElement('div');
 				div.innerHTML =
 					'<div style="width:800px; margin:auto; border:1px solid red;">\n' +
@@ -1353,8 +1726,8 @@ describe('Test image', function() {
 			});
 		});
 
-		describe('After resize - popup', function() {
-			it('should be hidden and after this should be shown', function() {
+		describe('After resize - popup', function () {
+			it('should be hidden and after this should be shown', function () {
 				const div = document.createElement('div');
 				div.innerHTML =
 					'<div style="width:800px; margin:auto; border:1px solid red;">\n' +
@@ -1391,7 +1764,7 @@ describe('Test image', function() {
 					0,
 					resizer.getElementsByTagName('i')[0]
 				);
-				simulateEvent('mousemove', 0, editor.ownerWindow, function(
+				simulateEvent('mousemove', 0, editor.ownerWindow, function (
 					data
 				) {
 					data.clientX = positionResizer.left - 10;
@@ -1400,7 +1773,9 @@ describe('Test image', function() {
 				//
 				expect(popup.parentNode).is.null;
 
-				simulateEvent('mouseup', 0, editor.ownerWindow, function(data) {
+				simulateEvent('mouseup', 0, editor.ownerWindow, function (
+					data
+				) {
 					data.clientX = positionResizer.left - 10;
 					data.clientY = positionResizer.top - 10;
 				});
@@ -1412,9 +1787,9 @@ describe('Test image', function() {
 			});
 		});
 
-		describe('Resize image', function() {
-			describe('Size box', function() {
-				it('Should show size for image', function(done) {
+		describe('Resize image', function () {
+			describe('Size box', function () {
+				it('Should show size for image', function (done) {
 					const editor = getJodit({
 						observer: {
 							timeout: 0
@@ -1452,14 +1827,14 @@ describe('Test image', function() {
 						resizer.getElementsByTagName('i')[1]
 					);
 
-					simulateEvent('mousemove', 0, editor.ownerWindow, function(
+					simulateEvent('mousemove', 0, editor.ownerWindow, function (
 						data
 					) {
 						data.clientX = positionResizer.left + 10;
 						data.clientY = positionResizer.top + 10;
 					});
 
-					simulateEvent('mouseup', 0, editor.ownerWindow, function(
+					simulateEvent('mouseup', 0, editor.ownerWindow, function (
 						data
 					) {
 						data.clientX = positionResizer.left + 10;
@@ -1468,14 +1843,14 @@ describe('Test image', function() {
 
 					expect(sizer.style.opacity).equals('1');
 
-					setTimeout(function() {
+					setTimeout(function () {
 						expect(sizer.style.opacity).equals('0');
 						done();
 					}, 500);
 				});
 
-				describe('For small state', function() {
-					it('Should hide size', function() {
+				describe('For small state', function () {
+					it('Should hide size', function () {
 						const editor = getJodit({
 							observer: {
 								timeout: 0
@@ -1513,14 +1888,16 @@ describe('Test image', function() {
 							resizer.getElementsByTagName('i')[2]
 						);
 
-						simulateEvent('mousemove', editor.ownerWindow, function(
-							data
-						) {
-							data.clientX = positionResizer.left - 480;
-							data.clientY = positionResizer.top - 200;
-						});
+						simulateEvent(
+							'mousemove',
+							editor.ownerWindow,
+							function (data) {
+								data.clientX = positionResizer.left - 480;
+								data.clientY = positionResizer.top - 200;
+							}
+						);
 
-						simulateEvent('mouseup', editor.ownerWindow, function(
+						simulateEvent('mouseup', editor.ownerWindow, function (
 							data
 						) {
 							data.clientX = positionResizer.left - 480;
@@ -1532,13 +1909,13 @@ describe('Test image', function() {
 				});
 			});
 
-			it('Should not allow to resize image more then width of editor', function(done) {
+			it('Should not allow to resize image more then width of editor', function (done) {
 				getBox().style.width = '600px';
 				const editor = getJodit();
 				const image = new Image();
 				image.src = 'tests/artio.jpg';
 
-				const callback = function() {
+				const callback = function () {
 					const ratio = image.naturalWidth / image.naturalHeight;
 
 					editor.value =
@@ -1558,14 +1935,14 @@ describe('Test image', function() {
 						0,
 						resizer.getElementsByTagName('i')[1]
 					);
-					simulateEvent('mousemove', 0, editor.ownerWindow, function(
+					simulateEvent('mousemove', 0, editor.ownerWindow, function (
 						data
 					) {
 						data.clientX = positionResizer.left + 1000;
 						data.clientY = positionResizer.top + 1000;
 					});
 
-					simulateEvent('mouseup', 0, editor.ownerWindow, function(
+					simulateEvent('mouseup', 0, editor.ownerWindow, function (
 						data
 					) {
 						data.clientX = positionResizer.left + 1000;
