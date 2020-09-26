@@ -1,5 +1,4 @@
 # Changelog
-=========
 
 > **Tags:**
 > - :boom:       [Breaking Change]
