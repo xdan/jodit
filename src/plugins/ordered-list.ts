@@ -110,7 +110,7 @@ export function orderedList(editor: IJodit): void {
 					});
 				}
 
-				if (ul && Dom.isTag(ul.parentNode, 'p')) {
+				if (ul && Dom.isBlock(ul.parentNode)) {
 					const selection: markerInfo[] = editor.s.save();
 
 					Dom.unwrap(ul.parentNode);
