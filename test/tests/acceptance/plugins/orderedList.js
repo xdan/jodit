@@ -7,7 +7,7 @@ describe('Test orderedList plugin', function() {
 	describe('Commands', function() {
 		describe('Unordered', function() {
 			describe('insertUnorderedList', function() {
-				it('Run command insertUnorderedList should wrap or replace all block elements to ul>li', function() {
+				it('Run command insertUnorderedList should wrap or replace all paragraphs and headings to ul>li', function() {
 					const editor = getJodit();
 					editor.value = '<h1>test</h1><h2>test</h2><p>test</p>';
 
