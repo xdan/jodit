@@ -144,6 +144,7 @@ export class UIButton extends UIElement implements IUIButton {
 	@watch('state.icon')
 	protected onChangeIcon(): void {
 		const textIcons = this.get('j.o.textIcons');
+
 		if (
 			textIcons === true ||
 			(isFunction(textIcons) && textIcons(this.state.name))

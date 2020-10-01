@@ -74,7 +74,8 @@ export class UIList<T extends IViewBased = IViewBased>
 			.filter(a => a !== '');
 	}
 
-	removeButtons: string[] = [];
+	protected removeButtons: string[] = [];
+
 	setRemoveButtons(removeButtons?: string[]): this {
 		this.removeButtons = removeButtons || [];
 		return this;

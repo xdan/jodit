@@ -103,7 +103,6 @@ export interface IUIList extends IUIGroup {
 	buttons: IUIButton[];
 	getButtonsNames(): string[];
 
-	removeButtons: string[];
 	setRemoveButtons(removeButtons?: string[]): this;
 
 	build(
