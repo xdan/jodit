@@ -8,6 +8,11 @@
 > - :house:      [Internal]
 > - :nail_care:  [Polish]
 
+## 3.4.27
+
+* https://github.com/xdan/jodit/issues/514
+Run command insertUnorderedList & insertOrderedList should replace all headings (h1, h2, etc) to ul>li
+
 ## 3.4.26
 
 #### :bug: Bug Fix
