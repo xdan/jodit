@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.27
+ * Version: v3.4.28
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -4856,7 +4856,7 @@ var View = (function (_super) {
         _this.isJodit = isJodit;
         _this.isView = true;
         _this.components = new Set();
-        _this.version = "3.4.27";
+        _this.version = "3.4.28";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.OPTIONS = View.defaultOptions;
@@ -27073,15 +27073,34 @@ function orderedList(editor) {
                     editor.createInside.applyCreateAttributes(li);
                 });
             }
-            if (ul && dom_1.Dom.isTag(ul.parentNode, 'p')) {
-                var selection = editor.s.save();
-                dom_1.Dom.unwrap(ul.parentNode);
-                helpers_1.toArray(ul.childNodes).forEach(function (li) {
-                    if (dom_1.Dom.isTag(li.lastChild, 'br')) {
-                        dom_1.Dom.safeRemove(li.lastChild);
-                    }
+            var unwrapList_1 = [], shouldUnwrap_1 = function (elm) {
+                if (dom_1.Dom.isTag(elm, [
+                    'p',
+                    'h1',
+                    'h2',
+                    'h3',
+                    'h4',
+                    'h5',
+                    'h6'
+                ])) {
+                    unwrapList_1.push(elm);
+                }
+            };
+            if (ul) {
+                shouldUnwrap_1(ul.parentNode);
+                ul.querySelectorAll('li').forEach(function (li) {
+                    return shouldUnwrap_1(li.firstChild);
                 });
-                editor.s.restore(selection);
+                if (unwrapList_1.length) {
+                    var selection = editor.s.save();
+                    helpers_1.toArray(ul.childNodes).forEach(function (li) {
+                        if (dom_1.Dom.isTag(li.lastChild, 'br')) {
+                            dom_1.Dom.safeRemove(li.lastChild);
+                        }
+                    });
+                    unwrapList_1.forEach(function (elm) { return dom_1.Dom.unwrap(elm); });
+                    editor.s.restore(selection);
+                }
             }
             editor.setEditorValue();
         }

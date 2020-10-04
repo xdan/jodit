@@ -6,7 +6,7 @@
 
 import { Config } from '../config';
 import { Dom } from '../core/dom';
-import { IControlType, IJodit, markerInfo } from '../types';
+import { IControlType, IJodit, Nullable } from '../types';
 import { dataBind, toArray } from '../core/helpers';
 
 const exec: IControlType<IJodit>['exec'] = (jodit, _, { control }): void => {
@@ -110,18 +110,43 @@ export function orderedList(editor: IJodit): void {
 					});
 				}
 
-				if (ul && Dom.isTag(ul.parentNode, ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'])) {
-					const selection: markerInfo[] = editor.s.save();
-
-					Dom.unwrap(ul.parentNode);
-
-					toArray(ul.childNodes).forEach((li: Node) => {
-						if (Dom.isTag(li.lastChild, 'br')) {
-							Dom.safeRemove(li.lastChild);
+				const unwrapList: Node[] = [],
+					shouldUnwrap = (elm: Nullable<Node>): void => {
+						if (
+							Dom.isTag(elm, [
+								'p',
+								'h1',
+								'h2',
+								'h3',
+								'h4',
+								'h5',
+								'h6'
+							])
+						) {
+							unwrapList.push(elm);
 						}
-					});
+					};
 
-					editor.s.restore(selection);
+				if (ul) {
+					shouldUnwrap(ul.parentNode);
+
+					ul.querySelectorAll('li').forEach(li =>
+						shouldUnwrap(li.firstChild)
+					);
+
+					if (unwrapList.length) {
+						const selection = editor.s.save();
+
+						toArray(ul.childNodes).forEach(li => {
+							if (Dom.isTag(li.lastChild, 'br')) {
+								Dom.safeRemove(li.lastChild);
+							}
+						});
+
+						unwrapList.forEach(elm => Dom.unwrap(elm));
+
+						editor.s.restore(selection);
+					}
 				}
 
 				editor.setEditorValue();

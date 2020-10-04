@@ -445,7 +445,7 @@ export class Config implements IViewOptions {
 	 * Do not display these buttons that are on the list
 	 * @example
 	 * ```javascript
-	 * new Jodit('#editor2', {
+	 * Jodit.make('#editor2', {
 	 *     removeButtons: ['hr', 'source']
 	 * });
 	 * ```

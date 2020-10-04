@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.27
+ * Version: v3.4.28
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -12287,7 +12287,7 @@ class view_View extends core_component["a" /* Component */] {
         this.isJodit = isJodit;
         this.isView = true;
         this.components = new Set();
-        this.version = "3.4.27";
+        this.version = "3.4.28";
         this.async = new async_Async();
         this.buffer = storage_Storage.makeStorage();
         this.OPTIONS = view_View.defaultOptions;
@@ -24071,15 +24071,32 @@ function orderedList(editor) {
                     editor.createInside.applyCreateAttributes(li);
                 });
             }
-            if (ul && dom["a" /* Dom */].isTag(ul.parentNode, 'p')) {
-                const selection = editor.s.save();
-                dom["a" /* Dom */].unwrap(ul.parentNode);
-                Object(helpers["toArray"])(ul.childNodes).forEach((li) => {
-                    if (dom["a" /* Dom */].isTag(li.lastChild, 'br')) {
-                        dom["a" /* Dom */].safeRemove(li.lastChild);
-                    }
-                });
-                editor.s.restore(selection);
+            const unwrapList = [], shouldUnwrap = (elm) => {
+                if (dom["a" /* Dom */].isTag(elm, [
+                    'p',
+                    'h1',
+                    'h2',
+                    'h3',
+                    'h4',
+                    'h5',
+                    'h6'
+                ])) {
+                    unwrapList.push(elm);
+                }
+            };
+            if (ul) {
+                shouldUnwrap(ul.parentNode);
+                ul.querySelectorAll('li').forEach(li => shouldUnwrap(li.firstChild));
+                if (unwrapList.length) {
+                    const selection = editor.s.save();
+                    Object(helpers["toArray"])(ul.childNodes).forEach(li => {
+                        if (dom["a" /* Dom */].isTag(li.lastChild, 'br')) {
+                            dom["a" /* Dom */].safeRemove(li.lastChild);
+                        }
+                    });
+                    unwrapList.forEach(elm => dom["a" /* Dom */].unwrap(elm));
+                    editor.s.restore(selection);
+                }
             }
             editor.setEditorValue();
         }
