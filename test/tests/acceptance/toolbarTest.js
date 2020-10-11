@@ -66,14 +66,27 @@ describe('Toolbar', function () {
 
 				clickButton('alert_some', editor);
 
-				expect(editor.value).equals(
-					'<p><span>indigo</span></p>'
-				);
+				expect(editor.value).equals('<p><span>indigo</span></p>');
 			});
 		});
 	});
 
 	describe('Custom icons', function () {
+		describe('By default for unknown icons', function () {
+			it('should create button as text mode', function () {
+				const editor = getJodit({
+					toolbarAdaptive: false,
+					buttons: ['rect']
+				});
+
+				expect(
+					sortAttributes(getButton('rect', editor).innerHTML)
+				).equals(
+					'<span class="jodit-toolbar-button__icon"></span><span class="jodit-toolbar-button__text">rect</span>'
+				);
+			});
+		});
+
 		describe('Use getIcon event', function () {
 			it('should create buttons with custom icons', function () {
 				const editor = getJodit({
@@ -109,25 +122,92 @@ describe('Toolbar', function () {
 					sortAttributes(getButton('image', editor).innerHTML)
 				).equals(
 					'<span class="jodit-toolbar-button__icon">' +
-					'<i class="fa fa-image fa-xs jodit-icon_image jodit-icon" style="font-size:14px"></i>' +
-					'</span><span class="jodit-toolbar-button__text"></span>'
+						'<i class="fa fa-image fa-xs jodit-icon_image jodit-icon" style="font-size:14px"></i>' +
+						'</span><span class="jodit-toolbar-button__text"></span>'
 				);
 
 				expect(
 					sortAttributes(getButton('redo', editor).innerHTML)
 				).equals(
 					'<span class="jodit-toolbar-button__icon">' +
-					'<i class="fa fa-rotate-right fa-xs jodit-icon_redo jodit-icon" style="font-size:14px"></i>' +
-					'</span><span class="jodit-toolbar-button__text"></span>'
+						'<i class="fa fa-rotate-right fa-xs jodit-icon_redo jodit-icon" style="font-size:14px"></i>' +
+						'</span><span class="jodit-toolbar-button__text"></span>'
 				);
 
 				expect(
 					sortAttributes(getButton('about', editor).innerHTML)
 				).equals(
 					'<span class="jodit-toolbar-button__icon">' +
-					'<i class="fa fa-question fa-xs jodit-icon_about jodit-icon" style="font-size:14px"></i>' +
-					'</span><span class="jodit-toolbar-button__text"></span>'
+						'<i class="fa fa-question fa-xs jodit-icon_about jodit-icon" style="font-size:14px"></i>' +
+						'</span><span class="jodit-toolbar-button__text"></span>'
 				);
+			});
+		});
+
+		const rect =
+				'<svg width="400" height="110"><rect width="300" height="100"/></svg>',
+			rectResult =
+				'<span class="jodit-toolbar-button__icon">' +
+				'<svg class="jodit-icon_rect jodit-icon" height="110" width="400"><rect height="100" width="300"></rect></svg>' +
+				'</span><span class="jodit-toolbar-button__text"></span>';
+
+		describe('Use extraButtons options', function () {
+			it('should create buttons with custom icons', function () {
+				const editor = getJodit({
+					toolbarAdaptive: false,
+					buttons: [
+						{
+							name: 'rect'
+						}
+					],
+					extraIcons: {
+						rect: rect
+					}
+				});
+
+				expect(editor.toolbar.getButtonsNames().toString()).equals(
+					'rect'
+				);
+
+				expect(
+					sortAttributes(getButton('rect', editor).innerHTML)
+				).equals(rectResult);
+			});
+		});
+
+		describe('Use Icon module', function () {
+			it('should create buttons with custom icons', function () {
+				Jodit.modules.Icon.set('rect', rect);
+				const editor = getJodit({
+					toolbarAdaptive: false,
+					buttons: [
+						{
+							name: 'rect'
+						}
+					]
+				});
+
+				expect(
+					sortAttributes(getButton('rect', editor).innerHTML)
+				).equals(rectResult);
+			});
+		});
+
+		describe('Use svg in icon', function () {
+			it('should create buttons with custom icons', function () {
+				const editor = getJodit({
+					toolbarAdaptive: false,
+					buttons: [
+						{
+							name: 'rect',
+							icon: rect
+						}
+					]
+				});
+
+				expect(
+					sortAttributes(getButton('rect', editor).innerHTML)
+				).equals(rectResult.replace('jodit-icon_rect ', ''));
 			});
 		});
 	});
@@ -482,7 +562,9 @@ describe('Toolbar', function () {
 			simulateEvent('submit', popup.querySelector('.jodit-ui-form'));
 
 			expect(
-				popup.querySelectorAll('.jodit-ui-input.jodit-ui-input_has-error_true').length
+				popup.querySelectorAll(
+					'.jodit-ui-input.jodit-ui-input_has-error_true'
+				).length
 			).equals(1);
 
 			popup.querySelector('input[name=url]').value =
@@ -1175,9 +1257,9 @@ describe('Toolbar', function () {
 			let node = editor.container.parentNode;
 
 			while (node && node.nodeType !== Node.DOCUMENT_NODE) {
-				expect(node.classList.contains('jodit_fullsize-box_true')).equals(
-					true
-				);
+				expect(
+					node.classList.contains('jodit_fullsize-box_true')
+				).equals(true);
 				node = node.parentNode;
 			}
 		});

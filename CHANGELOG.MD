@@ -8,6 +8,52 @@
 > - :house:      [Internal]
 > - :nail_care:  [Polish]
 
+## 3.4.28
+
+#### :rocket: New Feature
+
+Added `extraIcons` option.
+By default, you can only install an icon from the Jodit suite.
+You can add your icon to the set using the `Jodit.modules.Icon.set (name, svg Code)` method.
+But for a declarative declaration, you can use this option.
+
+```js
+Jodit.modules.Icon.set('someIcon', '<svg><path.../></svg>');
+const editor = Jodit.make({
+	extraButtons: [
+		{
+			name: 'someButton',
+			icon: 'someIcon'
+		}
+	]
+});
+```
+
+```js
+const editor = Jodit.make({
+	extraIcons: {
+		someIcon: '<svg><path.../></svg>'
+	},
+	extraButtons: [
+		{
+			name: 'someButton',
+			icon: 'someIcon'
+		}
+	]
+});
+```
+
+```js
+const editor = Jodit.make({
+	extraButtons: [
+		{
+			name: 'someButton',
+			icon: '<svg><path.../></svg>'
+		}
+	]
+});
+```
+
 ## 3.4.27
 
 * https://github.com/xdan/jodit/issues/514

@@ -77,11 +77,15 @@ export class Icon {
 			} else {
 				const svg =
 					jodit.e.fire('getIcon', icon.name, icon, clearName) ||
-					Icon.get(icon.name, '');
+					Icon.get(icon.name, '') ||
+					jodit.o.extraIcons?.[icon.name];
 
 				if (svg) {
 					iconElement = jodit.c.fromHTML(svg.trim());
-					iconElement.classList.add('jodit-icon_' + clearName);
+
+					if (!/^<svg/i.test(icon.name)) {
+						iconElement.classList.add('jodit-icon_' + clearName);
+					}
 				}
 			}
 		}

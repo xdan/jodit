@@ -32,6 +32,7 @@ interface IToolbarOptions {
 
 	extraButtons?: Buttons;
 	removeButtons?: string[];
+	extraIcons?: IDictionary<string>;
 
 	buttons?: ButtonsOption;
 
