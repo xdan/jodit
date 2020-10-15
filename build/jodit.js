@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.28
+ * Version: v3.4.29
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -1126,6 +1126,7 @@ var Config = (function () {
         this.disablePlugins = [];
         this.extraPlugins = [];
         this.extraButtons = [];
+        this.extraIcons = {};
         this.createAttributes = {};
         this.sizeLG = 900;
         this.sizeMD = 700;
@@ -4481,6 +4482,7 @@ var Icon = (function () {
         this.icons[name.replace('_', '-')] = value;
     };
     Icon.makeIcon = function (jodit, icon) {
+        var _a;
         var iconElement;
         if (icon) {
             var clearName = icon.name.replace(/[^a-zA-Z0-9]/g, '_');
@@ -4492,10 +4494,12 @@ var Icon = (function () {
             }
             else {
                 var svg = jodit.e.fire('getIcon', icon.name, icon, clearName) ||
-                    Icon.get(icon.name, '');
+                    Icon.get(icon.name, '') || ((_a = jodit.o.extraIcons) === null || _a === void 0 ? void 0 : _a[icon.name]);
                 if (svg) {
                     iconElement = jodit.c.fromHTML(svg.trim());
-                    iconElement.classList.add('jodit-icon_' + clearName);
+                    if (!/^<svg/i.test(icon.name)) {
+                        iconElement.classList.add('jodit-icon_' + clearName);
+                    }
                 }
             }
         }
@@ -4856,7 +4860,7 @@ var View = (function (_super) {
         _this.isJodit = isJodit;
         _this.isView = true;
         _this.components = new Set();
-        _this.version = "3.4.28";
+        _this.version = "3.4.29";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.OPTIONS = View.defaultOptions;
@@ -5394,7 +5398,8 @@ var ToolbarButton = (function (_super) {
         }
     };
     ToolbarButton.prototype.initFromControl = function () {
-        var _a = this, control = _a.control, state = _a.state;
+        var _a;
+        var _b = this, control = _b.control, state = _b.state;
         this.updateSize();
         state.name = control.name;
         var textIcons = this.j.o.textIcons;
@@ -5410,7 +5415,7 @@ var ToolbarButton = (function (_super) {
             }
             else {
                 var name_1 = control.icon || control.name;
-                state.icon.name = __1.Icon.exists(name_1) ? name_1 : '';
+                state.icon.name = (__1.Icon.exists(name_1) || ((_a = this.j.o.extraIcons) === null || _a === void 0 ? void 0 : _a[name_1])) ? name_1 : '';
             }
             if (!control.iconURL && !state.icon.name) {
                 state.text = control.text || control.name;
@@ -5822,12 +5827,21 @@ var Snapshot = (function (_super) {
     };
     Snapshot.prototype.restore = function (snapshot) {
         this.isBlocked = true;
+        var scroll = this.storeScrollState();
         var value = this.j.getNativeEditorValue();
         if (value !== snapshot.html) {
             this.j.setEditorValue(snapshot.html);
         }
         this.restoreOnlySelection(snapshot);
+        this.restoreScrollState(scroll);
         this.isBlocked = false;
+    };
+    Snapshot.prototype.storeScrollState = function () {
+        return [window.scrollY, this.j.editor.scrollTop];
+    };
+    Snapshot.prototype.restoreScrollState = function (scrolls) {
+        window.scrollTo(window.scrollX, scrolls[0]);
+        this.j.editor.scrollTop = scrolls[1];
     };
     Snapshot.prototype.restoreOnlySelection = function (snapshot) {
         try {
@@ -8381,7 +8395,8 @@ var Jodit = (function (_super) {
         }
         var active = this.od.activeElement;
         if (active &&
-            (modules_1.Dom.isOrContains(this.editor, active) ||
+            (active === this.iframe ||
+                modules_1.Dom.isOrContains(this.editor, active) ||
                 modules_1.Dom.isOrContains(this.toolbar.container, active))) {
             return consts.MODE_WYSIWYG;
         }

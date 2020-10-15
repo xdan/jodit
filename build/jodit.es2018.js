@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.4.28
+ * Version: v3.4.29
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -1904,6 +1904,7 @@ class Config {
         this.disablePlugins = [];
         this.extraPlugins = [];
         this.extraButtons = [];
+        this.extraIcons = {};
         this.createAttributes = {};
         this.sizeLG = 900;
         this.sizeMD = 700;
@@ -6483,6 +6484,7 @@ class Icon {
         this.icons[name.replace('_', '-')] = value;
     }
     static makeIcon(jodit, icon) {
+        var _a;
         let iconElement;
         if (icon) {
             const clearName = icon.name.replace(/[^a-zA-Z0-9]/g, '_');
@@ -6494,10 +6496,12 @@ class Icon {
             }
             else {
                 const svg = jodit.e.fire('getIcon', icon.name, icon, clearName) ||
-                    Icon.get(icon.name, '');
+                    Icon.get(icon.name, '') || ((_a = jodit.o.extraIcons) === null || _a === void 0 ? void 0 : _a[icon.name]);
                 if (svg) {
                     iconElement = jodit.c.fromHTML(svg.trim());
-                    iconElement.classList.add('jodit-icon_' + clearName);
+                    if (!/^<svg/i.test(icon.name)) {
+                        iconElement.classList.add('jodit-icon_' + clearName);
+                    }
                 }
             }
         }
@@ -12287,7 +12291,7 @@ class view_View extends core_component["a" /* Component */] {
         this.isJodit = isJodit;
         this.isView = true;
         this.components = new Set();
-        this.version = "3.4.28";
+        this.version = "3.4.29";
         this.async = new async_Async();
         this.buffer = storage_Storage.makeStorage();
         this.OPTIONS = view_View.defaultOptions;
@@ -12739,6 +12743,7 @@ class button_ToolbarButton extends ui_button["b" /* UIButton */] {
         }
     }
     initFromControl() {
+        var _a;
         const { control, state } = this;
         this.updateSize();
         state.name = control.name;
@@ -12755,7 +12760,7 @@ class button_ToolbarButton extends ui_button["b" /* UIButton */] {
             }
             else {
                 const name = control.icon || control.name;
-                state.icon.name = ui["b" /* Icon */].exists(name) ? name : '';
+                state.icon.name = (ui["b" /* Icon */].exists(name) || ((_a = this.j.o.extraIcons) === null || _a === void 0 ? void 0 : _a[name])) ? name : '';
             }
             if (!control.iconURL && !state.icon.name) {
                 state.text = control.text || control.name;
@@ -15905,12 +15910,21 @@ class snapshot_Snapshot extends core_component["c" /* ViewComponent */] {
     }
     restore(snapshot) {
         this.isBlocked = true;
+        const scroll = this.storeScrollState();
         const value = this.j.getNativeEditorValue();
         if (value !== snapshot.html) {
             this.j.setEditorValue(snapshot.html);
         }
         this.restoreOnlySelection(snapshot);
+        this.restoreScrollState(scroll);
         this.isBlocked = false;
+    }
+    storeScrollState() {
+        return [window.scrollY, this.j.editor.scrollTop];
+    }
+    restoreScrollState(scrolls) {
+        window.scrollTo(window.scrollX, scrolls[0]);
+        this.j.editor.scrollTop = scrolls[1];
     }
     restoreOnlySelection(snapshot) {
         try {
@@ -18771,7 +18785,8 @@ class jodit_Jodit extends view_with_toolbar_ViewWithToolbar {
         }
         const active = this.od.activeElement;
         if (active &&
-            (dom["a" /* Dom */].isOrContains(this.editor, active) ||
+            (active === this.iframe ||
+                dom["a" /* Dom */].isOrContains(this.editor, active) ||
                 dom["a" /* Dom */].isOrContains(this.toolbar.container, active))) {
             return constants["MODE_WYSIWYG"];
         }
