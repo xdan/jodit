@@ -1,0 +1,176 @@
+<!doctype html>
+<!--
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License GNU General Public License version 2 or later;
+ * Copyright 2013-2020 Valeriy Chupurnov https://xdsoft.net
+-->
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Jodit All options</title>
+    <link rel="icon" type="image/png" href="assets/icon.png" />
+</head>
+<body>
+<header>
+    <nav>
+        <ul class="container">
+            <li><a href="https://xdsoft.net/jodit/">Jodit homepage</a></li>
+            <li><a href="https://xdsoft.net/jodit/play.html">Playground</a></li>
+            <li><a href="https://xdsoft.net/jodit/doc/">Documentation</a></li>
+            <li><a href="https://github.com/xdan/jodit/">Github</a></li>
+            <li><a href="https://github.com/xdan/jodit/blob/master/CHANGELOG.MD">Changelog</a></li>
+            <li>
+                <a href="javascript:void(0)">Examples</a>
+                <ul id="examples"><!-- see app.js--></ul>
+            </li>
+            <li style="float:right"><a href="https://github.com/xdan/jodit/releases/latest">Download</a></li>
+        </ul>
+    </nav>
+</header>
+<div id="main_container" class="container">
+    <div id="introduction">
+        <h3>HTML</h3>
+        <pre><code class="language-markup">
+            &lt;textarea id="editor">&lt;/textarea>
+        </code></pre>
+        <h3>JavaScript</h3>
+        <pre><code class="language-javascript">
+            var editor = new Jodit('#editor', {
+                zIndex: 0,
+                readonly: false,
+                activeButtonsInReadOnly: ['source', 'fullsize', 'print', 'about', 'dots'],
+                toolbarButtonSize: 'middle',
+                theme: 'default',
+                saveModeInCookie: false,
+                spellcheck: true,
+                editorCssClass: false,
+                triggerChangeEvent: true,
+                width: 'auto',
+                height: 'auto',
+                minHeight: 100,
+                direction: '',
+                language: 'auto',
+                debugLanguage: false,
+                i18n: 'en',
+                tabIndex: -1,
+                toolbar: true,
+                enter: "P",
+                defaultMode: Jodit.MODE_WYSIWYG,
+                useSplitMode: false,
+                colors: {
+                    greyscale:  ['#000000', '#434343', '#666666', '#999999', '#B7B7B7', '#CCCCCC', '#D9D9D9', '#EFEFEF', '#F3F3F3', '#FFFFFF'],
+                    palette:    ['#980000', '#FF0000', '#FF9900', '#FFFF00', '#00F0F0', '#00FFFF', '#4A86E8', '#0000FF', '#9900FF', '#FF00FF'],
+                    full: [
+                        '#E6B8AF', '#F4CCCC', '#FCE5CD', '#FFF2CC', '#D9EAD3', '#D0E0E3', '#C9DAF8', '#CFE2F3', '#D9D2E9', '#EAD1DC',
+                        '#DD7E6B', '#EA9999', '#F9CB9C', '#FFE599', '#B6D7A8', '#A2C4C9', '#A4C2F4', '#9FC5E8', '#B4A7D6', '#D5A6BD',
+                        '#CC4125', '#E06666', '#F6B26B', '#FFD966', '#93C47D', '#76A5AF', '#6D9EEB', '#6FA8DC', '#8E7CC3', '#C27BA0',
+                        '#A61C00', '#CC0000', '#E69138', '#F1C232', '#6AA84F', '#45818E', '#3C78D8', '#3D85C6', '#674EA7', '#A64D79',
+                        '#85200C', '#990000', '#B45F06', '#BF9000', '#38761D', '#134F5C', '#1155CC', '#0B5394', '#351C75', '#733554',
+                        '#5B0F00', '#660000', '#783F04', '#7F6000', '#274E13', '#0C343D', '#1C4587', '#073763', '#20124D', '#4C1130'
+                    ]
+                },
+                colorPickerDefaultTab: 'background',
+                imageDefaultWidth: 300,
+                removeButtons: [],
+                disablePlugins: [],
+                extraButtons: [],
+                sizeLG: 900,
+                sizeMD: 700,
+                sizeSM: 400,
+                sizeSM: 400,
+                buttons: [
+                    'source', '|',
+                    'bold',
+                    'strikethrough',
+                    'underline',
+                    'italic', '|',
+                    'ul',
+                    'ol', '|',
+                    'outdent', 'indent',  '|',
+                    'font',
+                    'fontsize',
+                    'brush',
+                    'paragraph', '|',
+                    'image',
+                    'video',
+                    'table',
+                    'link', '|',
+                    'align', 'undo', 'redo', '|',
+                    'hr',
+                    'eraser',
+                    'copyformat', '|',
+                    'symbol',
+                    'fullsize',
+                    'print',
+                    'about'
+                ],
+                buttonsXS: [
+                    'bold',
+                    'image', '|',
+                    'brush',
+                    'paragraph', '|',
+                    'align', '|',
+                    'undo', 'redo', '|',
+                    'eraser',
+                    'dots'
+                ],
+                events: {},
+                textIcons: false,
+            });
+            editor.setEditorValue('&lt;p>start&lt;/p>')
+        </code></pre>
+    </div>
+    <div class="result">
+        <textarea id="area_editor"></textarea>
+    </div>
+</div>
+<footer>
+    <nav>
+        <ul class="container">
+            <li><a href="https://xdsoft.net/jodit/">Jodit homepage</a></li>
+            <li><a href="https://xdsoft.net/jodit/play.html">Playground</a></li>
+            <li><a href="https://xdsoft.net/jodit/doc/">Documentation</a></li>
+            <li><a href="https://github.com/xdan/jodit/">Github</a></li>
+            <li><a href="https://github.com/xdan/jodit/blob/master/CHANGELOG.MD">Changelog</a></li>
+            <li style="float:right"><a href="https://github.com/xdan/jodit/releases/latest">Download</a></li>
+        </ul>
+    </nav>
+</footer>
+</body>
+<link rel="stylesheet" href="../build/jodit.min.css"/>
+<link rel="stylesheet" href="assets/app.css"/>
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,700,700i" rel="stylesheet">
+
+<script src="../build/jodit.min.js"></script>
+<script src="assets/prism.js"></script>
+<script src="assets/app.js"></script>
+<script>
+    var editor = new Jodit('#area_editor', {
+        textIcons: false,
+				toolbarButtonSize: 'small',
+        iframe: false,
+        iframeStyle: '*,.jodit-wysiwyg {color:red;}',
+        height: 300,
+        defaultMode: Jodit.MODE_WYSIWYG,
+        observer: {
+            timeout: 100
+        },
+        uploader: {
+            url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+        },
+        filebrowser: {
+            // buttons: ['list', 'tiles', 'sort'],
+            ajax: {
+                url: 'https://xdsoft.net/jodit/connector/index.php'
+            }
+        },
+        commandToHotkeys: {
+            'openreplacedialog': 'ctrl+p'
+        }
+        // buttons: ['symbol'],
+        // disablePlugins: 'hotkeys,mobile'
+    });
+</script>
+</html>
