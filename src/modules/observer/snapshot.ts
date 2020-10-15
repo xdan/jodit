@@ -186,13 +186,26 @@ export class Snapshot extends ViewComponent<IJodit> {
 	restore(snapshot: SnapshotType): void {
 		this.isBlocked = true;
 
+		const scroll = this.storeScrollState();
+
 		const value = this.j.getNativeEditorValue();
 		if (value !== snapshot.html) {
 			this.j.setEditorValue(snapshot.html);
 		}
 
-		this.restoreOnlySelection(snapshot);
+		this.restoreOnlySelection(snapshot)
+
+		this.restoreScrollState(scroll);
 		this.isBlocked = false;
+	}
+
+	private storeScrollState(): [number, number] {
+		return [window.scrollY, this.j.editor.scrollTop];
+	}
+
+	private restoreScrollState(scrolls: [number, number]): void {
+		window.scrollTo(window.scrollX, scrolls[0]);
+		this.j.editor.scrollTop = scrolls[1];
 	}
 
 	/**

@@ -12,7 +12,8 @@
 
 #### :bug: Bug Fix
 
-* https://github.com/xdan/jodit/issues/526 Editor disable in ifram with split_mode
+* [#526 Editor disable in ifram with split_mode](https://github.com/xdan/jodit/issues/526 )
+* [#519 Insert link scrolls user to top of text area](https://github.com/xdan/jodit/issues/519)
 
 #### :rocket: New Feature
 
