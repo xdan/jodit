@@ -10,6 +10,10 @@
 
 ## 3.4.28
 
+#### :bug: Bug Fix
+
+* https://github.com/xdan/jodit/issues/526 Editor disable in ifram with split_mode
+
 #### :rocket: New Feature
 
 Added `extraIcons` option.

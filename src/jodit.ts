@@ -850,11 +850,12 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			return this.getMode();
 		}
 
-		const active: Element | null = this.od.activeElement;
+		const active = this.od.activeElement;
 
 		if (
 			active &&
-			(Dom.isOrContains(this.editor, active) ||
+			(active === this.iframe ||
+				Dom.isOrContains(this.editor, active) ||
 				Dom.isOrContains(this.toolbar.container, active))
 		) {
 			return consts.MODE_WYSIWYG;
