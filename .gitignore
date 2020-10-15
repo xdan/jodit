@@ -6,6 +6,7 @@ yarn-error.log
 
 /vendor/
 /fake.html
+/test.html
 
 .DS_Store
 .vs
