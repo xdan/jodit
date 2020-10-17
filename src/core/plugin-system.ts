@@ -42,6 +42,10 @@ import {
  * ```
  */
 export class PluginSystem implements IPluginSystem {
+	private normalizeName(name: string): string {
+		return kebabCase(name).toLowerCase();
+	}
+
 	private items = new Map<string, PluginType>();
 
 	/**
@@ -51,7 +55,7 @@ export class PluginSystem implements IPluginSystem {
 	 * @param plugin
 	 */
 	add(name: string, plugin: PluginType): void {
-		this.items.set(name.toLowerCase(), plugin);
+		this.items.set(this.normalizeName(name), plugin);
 	}
 
 	/**
@@ -59,7 +63,7 @@ export class PluginSystem implements IPluginSystem {
 	 * @param name
 	 */
 	get(name: string): PluginType | void {
-		return this.items.get(name.toLowerCase());
+		return this.items.get(this.normalizeName(name));
 	}
 
 	/**
@@ -67,7 +71,7 @@ export class PluginSystem implements IPluginSystem {
 	 * @param name
 	 */
 	remove(name: string): void {
-		this.items.delete(name.toLowerCase());
+		this.items.delete(this.normalizeName(name));
 	}
 
 	/**
@@ -79,7 +83,7 @@ export class PluginSystem implements IPluginSystem {
 				isString(s) ? { name: s } : s
 			),
 			disableList = splitArray(jodit.o.disablePlugins).map(s =>
-				s.toLowerCase()
+				this.normalizeName(s)
 			),
 			doneList: string[] = [],
 			promiseList: IDictionary<PluginInstance | undefined> = {},
@@ -306,7 +310,7 @@ export class PluginSystem implements IPluginSystem {
 		if (extrasList && extrasList.length) {
 			try {
 				const needLoadExtras = extrasList.filter(
-					extra => !this.items.has(extra.name)
+					extra => !this.items.has(this.normalizeName(extra.name))
 				);
 
 				if (needLoadExtras.length) {
