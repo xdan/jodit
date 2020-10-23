@@ -5,12 +5,14 @@
  */
 
 import {
+	CanUndef,
 	Controls,
 	IControlType,
 	IControlTypeStrong,
 	IDictionary
 } from '../../../types';
 import { isString } from '../../helpers';
+import { Config } from '../../../config';
 
 /**
  * Get control for button name
@@ -19,9 +21,11 @@ import { isString } from '../../helpers';
  */
 export function getControlType(
 	button: IControlType | string,
-	controls: Controls
+	controls: CanUndef<Controls>
 ): IControlTypeStrong {
 	let buttonControl: IControlTypeStrong;
+
+	controls ||= Config.defaultOptions.controls;
 
 	if (!isString(button)) {
 		buttonControl = { name: 'empty', ...button };

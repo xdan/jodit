@@ -10,7 +10,6 @@ import './config/config';
 import autobind from 'autobind-decorator';
 import { Plugin } from '../../core/plugin';
 import {
-	Buttons,
 	HTMLTagNames,
 	IBound,
 	IJodit,
@@ -28,7 +27,7 @@ import {
 	isArray,
 	isFunction
 } from '../../core/helpers';
-import { Dom, Table, ToolbarCollection } from '../../modules';
+import { Dom, Table } from '../../modules';
 import { debounce, wait } from '../../core/decorators';
 
 /**
@@ -147,23 +146,25 @@ export class inlinePopup extends Plugin {
 	/** @override **/
 	protected afterInit(jodit: IJodit): void {
 		this.j.e
-			.on(
-				'getDiffButtons.mobile',
-				(toolbar: ToolbarCollection): void | Buttons => {
-					if (this.toolbar === toolbar) {
-						return splitArray(jodit.o.buttons).filter(item => {
-							const name = isString(item) ? item : item.name;
-
-							return (
-								name &&
-								name !== '|' &&
-								name !== '\n' &&
-								!this.toolbar.getButtonsNames().includes(name)
-							);
-						});
-					}
-				}
-			)
+			// .on(
+			// 	'getDiffButtons.mobile',
+			// 	(toolbar: ToolbarCollection): void | Buttons => {
+			// 		if (this.toolbar === toolbar) {
+			// 			const names = this.toolbar.getButtonsNames();
+			//
+			// 			return splitArray(jodit.o.buttons).filter(item => {
+			// 				const name = isString(item) ? item : item.name;
+			//
+			// 				return (
+			// 					name &&
+			// 					name !== '|' &&
+			// 					name !== '\n' &&
+			// 					!names.includes(name)
+			// 				);
+			// 			});
+			// 		}
+			// 	}
+			// )
 			.on('hidePopup', this.hidePopup)
 			.on(
 				'showPopup',

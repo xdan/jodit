@@ -413,6 +413,83 @@ describe('Test helpers', function () {
 		});
 	});
 
+	describe('Special objects', function () {
+		const JoditArray = Jodit.modules.Helpers.JoditArray;
+
+		describe('Jodit array', function () {
+			it('should be instanceof JoditArray', () => {
+				expect(Jodit.Array([1, 2, 3]) instanceof JoditArray).is.true;
+			});
+
+			describe('Iterable', () => {
+				it('should be iterable by index', () => {
+					const array = Jodit.Array([1, 2, 3]);
+					let i = 0;
+					for (const one in array) {
+						expect(one).equals(i.toString());
+						expect(array[one]).equals(i + 1);
+						i++;
+					}
+				});
+
+				it('should be iterable by value', () => {
+					const array = Jodit.Array([1, 2, 3]);
+					let i = 0;
+
+					for (const one of array) {
+						expect(one).equals(i + 1);
+						i++;
+					}
+				});
+			});
+
+			describe('Duck typings as Array', () => {
+				it('should have same push method', () => {
+					const array = Jodit.Array([1, 2, 3]);
+					array.push(4);
+					expect(array.toString()).equals('1,2,3,4');
+				});
+
+				it('should have same length property', () => {
+					const array = Jodit.Array([1, 2, 3]);
+					expect(array.length).equals(3);
+					array.pop();
+					expect(array.toString()).equals('1,2');
+					expect(array.length).equals(2);
+					array.push(4, 5, 6, 7);
+					expect(array.length).equals(6);
+					array.length = 4;
+					expect(array.toString()).equals('1,2,4,5');
+				});
+
+				it('should have same pop method', () => {
+					const array = Jodit.Array([1, 2, 3]);
+					array.pop();
+					expect(array.toString()).equals('1,2');
+				});
+
+				it('should have same concat method', () => {
+					const array = Jodit.Array([1, 2, 3]);
+					let a2 = array.concat(4);
+
+					expect(array.toString()).equals('1,2,3');
+					expect(a2 instanceof JoditArray).is.true;
+					expect(a2.toString()).equals('1,2,3,4');
+					expect(a2 !== array).is.true;
+				});
+
+				it('should have same map method', () => {
+					const array = Jodit.Array([1, 2, 3]);
+					let a2 = array.map(i => i + 1);
+
+					expect(array.toString()).equals('1,2,3');
+					expect(a2 instanceof JoditArray).is.true;
+					expect(a2.toString()).equals('2,3,4');
+				});
+			});
+		});
+	});
+
 	describe('Utils', function () {
 		describe('reset', function () {
 			it('It should reset native browser method', function () {

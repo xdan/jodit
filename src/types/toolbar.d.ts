@@ -258,7 +258,13 @@ export type Controls = IDictionary<IControlType>;
 
 export type Buttons = Array<string | IControlType>;
 
-export type ButtonsOption = Buttons | string;
+export interface ButtonsGroup {
+	group: string;
+	buttons: Buttons
+}
+
+export type ButtonsOption = Buttons | string | ButtonsGroup[];
+export type ButtonsGroups = Array<IControlType | string | ButtonsGroup>;
 
 interface IControlTypeStrongList extends IControlTypeStrong {
 	list: IDictionary<string> | string[];

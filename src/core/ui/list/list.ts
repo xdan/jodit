@@ -7,9 +7,8 @@
 import './list.less';
 
 import {
-	Buttons,
+	ButtonsGroups,
 	IControlTypeStrong,
-	IDictionary,
 	IUIButton,
 	IUIElement,
 	IUIGroup,
@@ -25,6 +24,8 @@ import { watch } from '../../decorators';
 import { UIGroup } from './group';
 import { UISeparator } from '../separator';
 import { getClassName } from '../../helpers';
+import { isButtonGroup } from '../helpers/buttons';
+import { getControlType } from '../helpers/get-control-type';
 
 export class UIList<T extends IViewBased = IViewBased>
 	extends UIGroup<T>
@@ -81,40 +82,50 @@ export class UIList<T extends IViewBased = IViewBased>
 		return this;
 	}
 
-	build(
-		items: Buttons | IDictionary<string>,
-		target: Nullable<HTMLElement> = null
-	): IUIList {
+	build(items: ButtonsGroups, target: Nullable<HTMLElement> = null): IUIList {
 		this.clear();
 
 		let lastBtnSeparator: boolean = false;
 
-		let group = this.addGroup();
+		let group: IUIGroup;
 
-		getStrongControlTypes(items, this.j.o.controls)
-			.filter(b => !this.removeButtons.includes(b.name))
-			.forEach(control => {
-				let elm: Nullable<IUIElement> = null;
+		const addButton = (control: IControlTypeStrong) => {
+			let elm: Nullable<IUIElement> = null;
 
-				switch (control.name) {
-					case '\n':
-						group = this.addGroup();
-						break;
+			switch (control.name) {
+				case '\n':
+					group = this.addGroup();
+					break;
 
-					case '|':
-						if (!lastBtnSeparator) {
-							lastBtnSeparator = true;
-							elm = new UISeparator(this.j);
-						}
-						break;
+				case '|':
+					if (!lastBtnSeparator) {
+						lastBtnSeparator = true;
+						elm = new UISeparator(this.j);
+					}
+					break;
 
-					default:
-						lastBtnSeparator = false;
-						elm = this.makeButton(control, target);
+				default:
+					lastBtnSeparator = false;
+					elm = this.makeButton(control, target);
+			}
+
+			if (elm) {
+				if (!group) {
+					group = this.addGroup()
 				}
 
-				elm && group.append(elm);
-			});
+				group.append(elm);
+			}
+		};
+
+		items.forEach(item => {
+			if (isButtonGroup(item)) {
+				group = this.addGroup();
+				getStrongControlTypes(item.buttons, this.j.o.controls).forEach(addButton)
+			} else {
+				addButton(getControlType(item, this.j.o.controls))
+			}
+		});
 
 		this.update();
 

@@ -13,7 +13,7 @@ import {
 	IViewComponent,
 	Nullable
 } from './types';
-import { Buttons } from './toolbar';
+import { Buttons, ButtonsGroups } from './toolbar';
 import { IViewBased } from './view';
 
 export interface IUIElement extends IViewComponent, IContainer, IDestructible {
@@ -106,7 +106,7 @@ export interface IUIList extends IUIGroup {
 	setRemoveButtons(removeButtons?: string[]): this;
 
 	build(
-		items: Buttons | IDictionary<string>,
+		items: ButtonsGroups,
 		target?: Nullable<HTMLElement>
 	): IUIList;
 }
