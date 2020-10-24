@@ -151,7 +151,7 @@ describe('Jodit Editor Tests', function () {
 					);
 				});
 
-				describe('Set nested array like Jodit.Array', function () {
+				describe('Set nested array like Jodit.atom', function () {
 					it('Should create editor with set array', function () {
 						Jodit.defaultOptions.someArray = {
 							data: [1, 2, 3, 4]
@@ -159,91 +159,13 @@ describe('Jodit Editor Tests', function () {
 
 						const editor = getJodit({
 							someArray: {
-								data: Jodit.Array([5, 6, 7])
+								data: Jodit.atom([5, 6, 7])
 							}
 						});
 
 						expect(editor.options.someArray.data.toString()).equals(
 							'5,6,7'
 						);
-					});
-
-					describe('Then Jodit.Array has another namespace', function () {
-						it('Should create editor with set array', function () {
-							const area = appendTestArea();
-
-							function JoditArray(data) {
-								const self = this;
-
-								Object.defineProperty(self, 'length', {
-									value: data.length,
-									enumerable: false,
-									configurable: false
-								});
-
-								Object.defineProperty(this, 'toString', {
-									value: function () {
-										const out = [];
-
-										for (
-											let i = 0;
-											i < self.length;
-											i += 1
-										) {
-											out[i] = self[i];
-										}
-
-										return out.toString();
-									},
-									enumerable: false,
-									configurable: false
-								});
-
-								Jodit.modules.Helpers.extend(true, this, data);
-
-								const proto = Array.prototype;
-
-								[
-									'map',
-									'forEach',
-									'reduce',
-									'push',
-									'pop',
-									'shift',
-									'unshift',
-									'slice',
-									'splice'
-								].forEach(function (method) {
-									Object.defineProperty(self, method, {
-										value: proto[method],
-										enumerable: false,
-										configurable: false
-									});
-								});
-							}
-
-							Jodit.defaultOptions.someArray = {
-								data: [1, 2, 3, 4]
-							};
-
-							const editor = new Jodit(area, {
-								someArray: {
-									data: new JoditArray([5, 6, 7])
-								}
-							});
-
-							expect(
-								editor.options.someArray.data.toString()
-							).equals('5,6,7');
-
-							const res = [];
-							for (const r in editor.options.someArray.data) {
-								res.push(r);
-							}
-
-							expect(res.length).equals(3);
-							expect(res.toString()).equals('0,1,2');
-						});
 					});
 				});
 			});
@@ -271,7 +193,7 @@ describe('Jodit Editor Tests', function () {
 					).equals('{"left":10,"right":10,"top":10}');
 				});
 
-				describe('Set nested object like Jodit.Object', function () {
+				describe('Set nested object like Jodit.atom', function () {
 					it('Should create editor with set object', function () {
 						Jodit.defaultOptions.someObject = {
 							data: {
@@ -282,7 +204,7 @@ describe('Jodit Editor Tests', function () {
 
 						const editor = getJodit({
 							someObject: {
-								data: Jodit.Object({
+								data: Jodit.atom({
 									top: 10,
 									right: 10
 								})

@@ -792,7 +792,7 @@ export const OptionsDefault: any = function (
 				isObject = typeof defValue === 'object' && defValue !== null;
 
 			if (isAtom(optValue)) {
-				self[key] = optValue._;
+				self[key] = optValue;
 			} else {
 				if (
 					isObject &&

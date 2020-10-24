@@ -7,6 +7,7 @@ describe('Test i18n functionality', function() {
 	describe('Test has keys in all functionality', function() {
 		const filter = [
 			'customxxx',
+			'customxxx',
 			'Ok',
 			'Link',
 			'Code',

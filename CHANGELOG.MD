@@ -9,29 +9,11 @@
 > - :nail_care:  [Polish]
 
 ## 3.4.29
-`Jodit.Array` and `Jodit.Object` marked as deprecated. In `3.5` they will be removed. Instead use `Jodit.atom`
-or special markers.
+`Jodit.Array` and `Jodit.Object` marked as deprecated. In `3.5` they will be removed. Instead, use `Jodit.atom`.
 
 ```
 const editor = Jodit.make('#editor', {
     buttons: Jodit.atom(['bold', 'italic']),
-    popup: {
-        img: {
-            _: {
-                // full rewrite
-            }
-        }
-    }
-});
-```
-
-or
-
-```
-const editor = Jodit.make('#editor', {
-    buttons: {
-        _: ['bold', 'italic']
-    },
     popup: {
         img: Jodit.atom({
             // full rewrite

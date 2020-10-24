@@ -47,7 +47,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 						editHTMLDocumentMode: true,
 						iframe: true,
 						iframeStyle: '',
-						iframeCSSLinks: Jodit.Array([])
+						iframeCSSLinks: Jodit.atom([])
 					});
 
 					editor.value = 'Some text';

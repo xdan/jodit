@@ -484,7 +484,7 @@ describe('Toolbar', function () {
 						toolbarAdaptive: false,
 						controls: {
 							fontsize: {
-								list: Jodit.Array('8,9,10'.split(','))
+								list: Jodit.atom('8,9,10'.split(','))
 							}
 						}
 					});
@@ -801,7 +801,7 @@ describe('Toolbar', function () {
 			});
 		});
 
-		describe('Set empty Jodit.Array', function () {
+		describe('Set empty Jodit.atom', function () {
 			it('Should remove all buttons', function () {
 				const editor = getJodit({
 					buttons: []
@@ -811,7 +811,7 @@ describe('Toolbar', function () {
 				editor.destruct();
 
 				const editor2 = getJodit({
-					buttons: Jodit.Array([])
+					buttons: Jodit.atom([])
 				});
 
 				expect(getButton('source', editor2)).is.null;
@@ -1593,7 +1593,7 @@ describe('Toolbar', function () {
 			it('should hide toolbar buttons', function () {
 				const editor = getJodit({
 					filebrowser: {
-						buttons: Jodit.Array([
+						buttons: Jodit.atom([
 							'filebrowser.list',
 							'filebrowser.tiles',
 							'filebrowser.sort'

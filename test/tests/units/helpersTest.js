@@ -490,11 +490,9 @@ describe('Test helpers', function () {
 							c: 3,
 							e: {
 								b: 8,
-								f: {
-									_: {
-										q: 3
-									}
-								}
+								f: Jodit.atom({
+									q: 3
+								})
 							}
 						};
 
@@ -509,6 +507,66 @@ describe('Test helpers', function () {
 								}
 							},
 							c: 3
+						});
+					});
+
+					describe('Save marker after merge', function () {
+						it('should work save this marker for sequence merge', function () {
+							const a = {
+								a: {
+									b: 1
+								}
+							};
+
+							const b = {
+								a: Jodit.atom({
+									q: 3
+								})
+							};
+
+							const merged = extend(true, a, b);
+
+							const c = {
+								a: {
+									c: 5
+								}
+							};
+
+							expect(extend(true, c, merged)).deep.equals({
+								a: {
+									q: 3
+								}
+							});
+						});
+
+						describe('Override marker', function () {
+							it('should not be possible', function () {
+								const a = {
+									a: {
+										b: 1
+									}
+								};
+
+								const b = {
+									a: Jodit.atom({
+										q: 3
+									})
+								};
+
+								const merged = extend(true, a, b);
+
+								const c = {
+									a: {
+										c: 5
+									}
+								};
+
+								expect(extend(true, merged, c)).deep.equals({
+									a: {
+										q: 3
+									}
+								});
+							});
 						});
 					});
 

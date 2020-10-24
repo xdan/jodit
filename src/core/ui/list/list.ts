@@ -118,12 +118,15 @@ export class UIList<T extends IViewBased = IViewBased>
 			}
 		};
 
+		const isNotRemoved = (b: IControlTypeStrong) => !this.removeButtons.includes(b.name);
+
 		items.forEach(item => {
 			if (isButtonGroup(item)) {
 				group = this.addGroup();
-				getStrongControlTypes(item.buttons, this.j.o.controls).forEach(addButton)
+				getStrongControlTypes(item.buttons, this.j.o.controls).filter(isNotRemoved).forEach(addButton)
 			} else {
-				addButton(getControlType(item, this.j.o.controls))
+				const control = getControlType(item, this.j.o.controls);
+				isNotRemoved(control) && addButton(control)
 			}
 		});
 

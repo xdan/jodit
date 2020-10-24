@@ -125,9 +125,13 @@ export function extend<T>(this: T, ...args: any[]): any {
 
 					// Atomic merge
 					if (isAtom(copy)) {
-						target[name] = copy._;
+						target[name] = copy;
 					} else {
-						target[name] = extend(deep, clone, copy);
+						if (isAtom(clone)) {
+							target[name] = clone;
+						} else {
+							target[name] = extend(deep, clone, copy);
+						}
 					}
 				} else if (copy !== undefined) {
 					target[name] = copy;
@@ -139,10 +143,17 @@ export function extend<T>(this: T, ...args: any[]): any {
 	return target;
 }
 
-export function isAtom(obj: unknown): obj is {_: object} {
-	return (
-		obj &&
-		(obj as any)['_'] &&
-		(isPlainObject((obj as any)['_']) || isArray((obj as any)['_']))
-	);
+export function isAtom(obj: unknown): boolean {
+	return obj && (obj as any).isAtom;
+}
+
+export function markAsAtomic<T>(obj: T): T {
+	debugger
+	Object.defineProperty(obj, 'isAtom', {
+		enumerable: false,
+		value: true,
+		configurable: false
+	});
+
+	return obj;
 }

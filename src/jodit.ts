@@ -31,7 +31,7 @@ import {
 	JoditArray,
 	JoditObject,
 	callPromise,
-	toArray
+	toArray, markAsAtomic
 } from './core/helpers/';
 
 import { Storage } from './core/storage/';
@@ -123,8 +123,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param array
 	 * @constructor
 	 */
-	static Array(array: never[]): JoditArray {
-		return new JoditArray(array);
+	static Array<T>(array: T[]): T[] {
+		return JoditArray(array);
 	}
 
 	/**
@@ -134,16 +134,16 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param object
 	 * @constructor
 	 */
-	static Object(object: never): JoditObject {
-		return new JoditObject(object);
+	static Object<T>(object: T): T {
+		return JoditObject(object);
 	}
 
 	/**
 	 * Method wrap usual Has Object in Object helper for prevent deep object merging in options*
 	 * @param object
 	 */
-	static atom<T>(object: T): {_: T} {
-		return {_: object};
+	static atom<T>(object: T): T {
+		return markAsAtomic(object);
 	}
 
 	/**

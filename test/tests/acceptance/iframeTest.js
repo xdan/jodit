@@ -166,7 +166,7 @@ describe('Iframe mode', function () {
 						editHTMLDocumentMode: true,
 						iframe: true,
 						iframeStyle: '',
-						iframeCSSLinks: Jodit.Array([])
+						iframeCSSLinks: Jodit.atom([])
 					});
 					editor.value = 'Some text';
 
@@ -187,7 +187,7 @@ describe('Iframe mode', function () {
 							sourceEdiotor: 'area',
 							iframe: true,
 							iframeStyle: '',
-							iframeCSSLinks: Jodit.Array([])
+							iframeCSSLinks: Jodit.atom([])
 						});
 						editor.value = 'Some text';
 
