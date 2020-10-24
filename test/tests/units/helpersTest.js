@@ -411,80 +411,160 @@ describe('Test helpers', function () {
 				}
 			});
 		});
-	});
 
-	describe('Special objects', function () {
-		const JoditArray = Jodit.modules.Helpers.JoditArray;
+		describe('extend', function () {
+			const extend = Jodit.modules.Helpers.extend;
 
-		describe('Jodit array', function () {
-			it('should be instanceof JoditArray', () => {
-				expect(Jodit.Array([1, 2, 3]) instanceof JoditArray).is.true;
+			it('should override part of first array', function () {
+				const a = [1, 2, 3];
+				const b = [4, 5, 6, 7];
+
+				expect(extend(true, a, b)).deep.equals([4, 5, 6, 7]);
 			});
 
-			describe('Iterable', () => {
-				it('should be iterable by index', () => {
-					const array = Jodit.Array([1, 2, 3]);
-					let i = 0;
-					for (const one in array) {
-						expect(one).equals(i.toString());
-						expect(array[one]).equals(i + 1);
-						i++;
-					}
-				});
+			describe('No deep', function () {
+				it('should merge two objects only in first level', function () {
+					const a = {
+						a: 1,
+						b: 2,
+						e: {
+							a: 6
+						}
+					};
+					const b = {
+						c: 3,
+						e: {
+							b: 8
+						}
+					};
 
-				it('should be iterable by value', () => {
-					const array = Jodit.Array([1, 2, 3]);
-					let i = 0;
-
-					for (const one of array) {
-						expect(one).equals(i + 1);
-						i++;
-					}
+					expect(extend(a, b)).deep.equals({
+						a: 1,
+						b: 2,
+						e: { b: 8 },
+						c: 3
+					});
 				});
 			});
 
-			describe('Duck typings as Array', () => {
-				it('should have same push method', () => {
-					const array = Jodit.Array([1, 2, 3]);
-					array.push(4);
-					expect(array.toString()).equals('1,2,3,4');
+			describe('Deep', function () {
+				it('should merge two objects', function () {
+					const a = {
+						a: 1,
+						b: 2,
+						e: {
+							g: [1, 2, 3, 7],
+							a: 6
+						}
+					};
+					const b = {
+						c: 3,
+						e: {
+							g: [4, 5, 6],
+							b: 8
+						}
+					};
+
+					expect(extend(true, a, b)).deep.equals({
+						a: 1,
+						b: 2,
+						e: { a: 6, b: 8, g: [4, 5, 6, 7] },
+						c: 3
+					});
 				});
 
-				it('should have same length property', () => {
-					const array = Jodit.Array([1, 2, 3]);
-					expect(array.length).equals(3);
-					array.pop();
-					expect(array.toString()).equals('1,2');
-					expect(array.length).equals(2);
-					array.push(4, 5, 6, 7);
-					expect(array.length).equals(6);
-					array.length = 4;
-					expect(array.toString()).equals('1,2,4,5');
-				});
+				describe('Atom marker', function () {
+					it('should work as no deep', function () {
+						const a = {
+							a: 1,
+							b: 2,
+							e: {
+								a: 6,
+								f: {
+									y: 1
+								}
+							}
+						};
 
-				it('should have same pop method', () => {
-					const array = Jodit.Array([1, 2, 3]);
-					array.pop();
-					expect(array.toString()).equals('1,2');
-				});
+						const b = {
+							c: 3,
+							e: {
+								b: 8,
+								f: {
+									_: {
+										q: 3
+									}
+								}
+							}
+						};
 
-				it('should have same concat method', () => {
-					const array = Jodit.Array([1, 2, 3]);
-					let a2 = array.concat(4);
+						expect(extend(true, a, b)).deep.equals({
+							a: 1,
+							b: 2,
+							e: {
+								a: 6,
+								b: 8,
+								f: {
+									q: 3
+								}
+							},
+							c: 3
+						});
+					});
 
-					expect(array.toString()).equals('1,2,3');
-					expect(a2 instanceof JoditArray).is.true;
-					expect(a2.toString()).equals('1,2,3,4');
-					expect(a2 !== array).is.true;
-				});
+					describe('Use Jodit.atom', function () {
+						it('should work same', function () {
+							const a = {
+								a: 1,
+								b: 2,
+								e: {
+									a: 6,
+									f: {
+										y: 1
+									}
+								}
+							};
 
-				it('should have same map method', () => {
-					const array = Jodit.Array([1, 2, 3]);
-					let a2 = array.map(i => i + 1);
+							const b = {
+								c: 3,
+								e: {
+									b: 8,
+									f: Jodit.atom({
+										q: 3
+									})
+								}
+							};
 
-					expect(array.toString()).equals('1,2,3');
-					expect(a2 instanceof JoditArray).is.true;
-					expect(a2.toString()).equals('2,3,4');
+							expect(extend(true, a, b)).deep.equals({
+								a: 1,
+								b: 2,
+								e: {
+									a: 6,
+									b: 8,
+									f: {
+										q: 3
+									}
+								},
+								c: 3
+							});
+						});
+
+						describe('For Array', function () {
+							it('should override first array', function () {
+								const a = {
+									e: [1, 2, 3]
+								};
+
+								const b = {
+									e: Jodit.atom([6, 7])
+								};
+
+								expect(extend(true, a, b)).deep.equals({
+									e: [6, 7]
+								});
+							});
+						});
+					});
 				});
 			});
 		});

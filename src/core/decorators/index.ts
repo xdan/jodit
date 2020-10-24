@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from './watch';
-export * from './debounce';
 export * from './cache';
-export * from './wait';
+export * from './debounce';
 export * from './hook';
 export * from './nonenumerable';
+export * from './wait';
+export * from './watch';

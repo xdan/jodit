@@ -6,7 +6,7 @@
 
 import { JoditObject } from './jodit-object';
 import { JoditArray } from './jodit-array';
-import { isFunction, isPlainObject } from './checker/';
+import { isArray, isFunction, isPlainObject } from './checker/';
 
 /**
  * Copy the values of all of the enumerable own properties from one or more source objects to a
@@ -65,6 +65,7 @@ export function extend(deep: true, target: object, ...sources: any[]): any;
 
 export function extend<T>(this: T, ...args: any[]): any {
 	const length = args.length;
+
 	let options,
 		name,
 		src,
@@ -94,8 +95,10 @@ export function extend<T>(this: T, ...args: any[]): any {
 
 	for (i; i < length; i += 1) {
 		options = args[i];
+
 		if (options !== null && options !== undefined) {
 			keys = Object.keys(options);
+
 			for (j = 0; j < keys.length; j += 1) {
 				name = keys[j];
 				src = target[name];
@@ -109,17 +112,23 @@ export function extend<T>(this: T, ...args: any[]): any {
 					deep &&
 					copy &&
 					((isPlainObject(copy) && !(copy instanceof JoditObject)) ||
-						(Array.isArray(copy) && !(copy instanceof JoditArray)))
+						(isArray(copy) && !(copy instanceof JoditArray)))
 				) {
-					copyIsArray = Array.isArray(copy);
+					copyIsArray = isArray(copy);
 
 					if (copyIsArray) {
 						copyIsArray = false;
-						clone = src && Array.isArray(src) ? src : [];
+						clone = src && isArray(src) ? src : [];
 					} else {
 						clone = src && isPlainObject(src) ? src : {};
 					}
-					target[name] = extend(deep, clone, copy);
+
+					// Atomic merge
+					if (isAtom(copy)) {
+						target[name] = copy._;
+					} else {
+						target[name] = extend(deep, clone, copy);
+					}
 				} else if (copy !== undefined) {
 					target[name] = copy;
 				}
@@ -128,4 +137,12 @@ export function extend<T>(this: T, ...args: any[]): any {
 	}
 
 	return target;
+}
+
+export function isAtom(obj: unknown): obj is {_: object} {
+	return (
+		obj &&
+		(obj as any)['_'] &&
+		(isPlainObject((obj as any)['_']) || isArray((obj as any)['_']))
+	);
 }

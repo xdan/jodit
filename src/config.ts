@@ -6,7 +6,7 @@
 
 import * as consts from './core/constants';
 import { Dom } from './core/dom';
-import { $$, extend, isArray } from './core/helpers/';
+import { $$, extend, isArray, isAtom } from './core/helpers/';
 import type {
 	IExtraPlugin,
 	IDictionary,
@@ -788,16 +788,21 @@ export const OptionsDefault: any = function (
 			}
 
 			const defValue = (def as any)[key],
+				optValue = (opt as any)[key],
 				isObject = typeof defValue === 'object' && defValue !== null;
 
-			if (
-				isObject &&
-				!['ownerWindow', 'ownerDocument'].includes(key) &&
-				!isArray(defValue)
-			) {
-				self[key] = extend(true, {}, defValue, (opt as any)[key]);
+			if (isAtom(optValue)) {
+				self[key] = optValue._;
 			} else {
-				self[key] = (opt as any)[key];
+				if (
+					isObject &&
+					!['ownerWindow', 'ownerDocument'].includes(key) &&
+					!isArray(defValue)
+				) {
+					self[key] = extend(true, {}, defValue, optValue);
+				} else {
+					self[key] = optValue;
+				}
 			}
 		};
 

@@ -119,6 +119,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Method wrap usual Array in Object helper for prevent deep array merging in options
 	 *
+	 * @deprecated Use Jodit.atom instead
 	 * @param array
 	 * @constructor
 	 */
@@ -129,11 +130,20 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Method wrap usual Has Object in Object helper for prevent deep object merging in options*
 	 *
+	 * @deprecated Use Jodit.atom instead
 	 * @param object
 	 * @constructor
 	 */
 	static Object(object: never): JoditObject {
 		return new JoditObject(object);
+	}
+
+	/**
+	 * Method wrap usual Has Object in Object helper for prevent deep object merging in options*
+	 * @param object
+	 */
+	static atom<T>(object: T): {_: T} {
+		return {_: object};
 	}
 
 	/**

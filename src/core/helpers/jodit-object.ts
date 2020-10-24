@@ -5,9 +5,17 @@
  */
 
 import { extend } from './extend';
+import { error } from './type';
 
+/**
+ * @deprecated Use `Jodit.atom` instead
+ */
 export class JoditObject {
 	constructor(data: any) {
+		if (!isProd) {
+			error('Deprecated class. Use `Jodit.atom` instead');
+		}
+
 		extend(true, this, data);
 	}
 }
