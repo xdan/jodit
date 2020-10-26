@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { HTMLTagNames, IJodit, Nullable } from '../../types';
 import * as consts from '../../core/constants';
 import { Dom } from '../../core/dom';
 import { $$, scrollIntoView } from '../../core/helpers';
-import { HTMLTagNames, IJodit, Nullable } from '../../types';
 import { Plugin } from '../../core/plugin';
 import { INVISIBLE_SPACE } from '../../core/constants';
 

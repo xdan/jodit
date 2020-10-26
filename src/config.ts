@@ -4,24 +4,20 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import * as consts from './core/constants';
-import { Dom } from './core/dom';
-import { $$, extend, isArray, isAtom } from './core/helpers/';
 import type {
 	IExtraPlugin,
 	IDictionary,
-	IJodit,
 	IViewOptions,
 	NodeFunction,
 	Attributes,
 	ButtonsOption,
-	IFileBrowserCallBackData,
 	Controls,
 	IControlType,
 	IUIButtonState,
 	Nullable
 } from './types';
-import { FileSelectorWidget } from './modules/widget';
+import * as consts from './core/constants';
+import { extend, isArray, isAtom } from './core/helpers/';
 
 /**
  * Default Editor's Configuration
@@ -608,51 +604,67 @@ export class Config implements IViewOptions {
 	 *  ```
 	 */
 	buttons: ButtonsOption = [
-		'source',
-		'|',
-		'bold',
-		'strikethrough',
-		'underline',
-		'italic',
-		'eraser',
-		'|',
-		'superscript',
-		'subscript',
-		'|',
-		'ul',
-		'ol',
-		'|',
-		'outdent',
-		'indent',
-		'|',
-		'font',
-		'fontsize',
-		'brush',
-		'paragraph',
-		'|',
-		'image',
-		'file',
-		'video',
-		'table',
-		'link',
-		'|',
-		'align',
-		'undo',
-		'redo',
+		{
+			group: 'source',
+			buttons: []
+		},
+		{
+			group: 'font-style',
+			buttons: []
+		},
+		{
+			group: 'script',
+			buttons: []
+		},
+		{
+			group: 'list',
+			buttons: ['ul', 'ol']
+		},
+		{
+			group: 'indent',
+			buttons: []
+		},
+		{
+			group: 'font',
+			buttons: []
+		},
+		{
+			group: 'color',
+			buttons: []
+		},
+		{
+			group: 'media',
+			buttons: []
+		},
 		'\n',
-		'selectall',
-		'cut',
-		'copy',
-		'paste',
-		'copyformat',
-		'|',
-		'hr',
-		'symbol',
-		'fullsize',
-		'print',
-		'preview',
-		'find',
-		'about'
+		{
+			group: 'state',
+			buttons: []
+		},
+		{
+			group: 'clipboard',
+			buttons: []
+		},
+		{
+			group: 'insert',
+			buttons: []
+		},
+		{
+			group: 'history',
+			buttons: []
+		},
+		{
+			group: 'search',
+			buttons: []
+		},
+		{
+			group: 'other',
+			buttons: []
+		},
+		{
+			group: 'info',
+			buttons: []
+		}
 	];
 
 	/**
@@ -810,132 +822,7 @@ export const OptionsDefault: any = function (
 	}
 };
 
-Config.prototype.controls = {
-	image: {
-		popup: (editor: IJodit, current, self, close) => {
-			let sourceImage: HTMLImageElement | null = null;
-
-			if (
-				current &&
-				!Dom.isText(current) &&
-				Dom.isHTMLElement(current, editor.ew) &&
-				(Dom.isTag(current, 'img') || $$('img', current).length)
-			) {
-				sourceImage = Dom.isTag(current, 'img')
-					? current
-					: $$('img', current)[0];
-			}
-
-			const selInfo = editor.s.save();
-
-			return FileSelectorWidget(
-				editor,
-				{
-					filebrowser: (data: IFileBrowserCallBackData) => {
-						editor.s.restore(selInfo);
-
-						data.files &&
-							data.files.forEach(file =>
-								editor.s.insertImage(
-									data.baseurl + file,
-									null,
-									editor.o.imageDefaultWidth
-								)
-							);
-
-						close();
-					},
-					upload: true,
-					url: async (url: string, text: string) => {
-						editor.s.restore(selInfo);
-
-						const image: HTMLImageElement =
-							sourceImage || editor.createInside.element('img');
-
-						image.setAttribute('src', url);
-						image.setAttribute('alt', text);
-
-						if (!sourceImage) {
-							await editor.s.insertImage(
-								image,
-								null,
-								editor.o.imageDefaultWidth
-							);
-						}
-
-						close();
-					}
-				},
-				sourceImage,
-				close
-			);
-		},
-		tags: ['img'],
-		tooltip: 'Insert Image'
-	} as IControlType,
-
-	file: {
-		popup: (
-			editor: IJodit,
-			current: Node | false,
-			self: IControlType,
-			close
-		) => {
-			const insert = (url: string, title: string = '') => {
-				editor.s.insertNode(
-					editor.createInside.fromHTML(
-						`<a href="${url}" title="${title}">${title || url}</a>`
-					)
-				);
-			};
-
-			let sourceAnchor: HTMLAnchorElement | null = null;
-
-			if (
-				current &&
-				(Dom.isTag(current, 'a') ||
-					Dom.closest(current, 'a', editor.editor))
-			) {
-				sourceAnchor = Dom.isTag(current, 'a')
-					? current
-					: (Dom.closest(
-							current,
-							'a',
-							editor.editor
-					  ) as HTMLAnchorElement);
-			}
-
-			return FileSelectorWidget(
-				editor,
-				{
-					filebrowser: (data: IFileBrowserCallBackData) => {
-						data.files &&
-							data.files.forEach(file =>
-								insert(data.baseurl + file)
-							);
-
-						close();
-					},
-					upload: true,
-					url: (url: string, text: string) => {
-						if (sourceAnchor) {
-							sourceAnchor.setAttribute('href', url);
-							sourceAnchor.setAttribute('title', text);
-						} else {
-							insert(url, text);
-						}
-						close();
-					}
-				},
-				sourceAnchor,
-				close,
-				false
-			);
-		},
-		tags: ['a'],
-		tooltip: 'Insert file'
-	} as IControlType
-};
+Config.prototype.controls = {};
 
 export function configFactory(options?: object): Config {
 	return new OptionsDefault(options) as Config;

@@ -6,9 +6,9 @@
 
 import './status-bar.less';
 
+import type { IJodit, IStatusBar, Nullable } from '../../types';
 import { ViewComponent, STATUSES } from '../../core/component';
 import { Dom } from '../../core/dom';
-import { IJodit, IStatusBar, Nullable } from '../../types';
 
 export class StatusBar extends ViewComponent implements IStatusBar {
 	container: Nullable<HTMLElement> = null;

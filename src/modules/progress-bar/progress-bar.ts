@@ -6,7 +6,7 @@
 
 import './progress-bar.less';
 
-import { IJodit, IProgressBar } from '../../types';
+import type { IJodit, IProgressBar } from '../../types';
 import { ViewComponent } from '../../core/component';
 import { Dom } from '../../core/dom';
 

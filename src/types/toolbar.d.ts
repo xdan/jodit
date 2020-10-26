@@ -245,6 +245,7 @@ interface IControlType<
 }
 
 import { IUIButton, IUIElement, IUIList } from './ui';
+import { IPluginButton } from './plugin';
 
 interface IControlTypeStrong extends IControlType {
 	name: NonNullable<IControlType['name']>;
@@ -263,8 +264,8 @@ export interface ButtonsGroup {
 	buttons: Buttons
 }
 
-export type ButtonsOption = Buttons | string | ButtonsGroup[];
 export type ButtonsGroups = Array<IControlType | string | ButtonsGroup>;
+export type ButtonsOption = string | ButtonsGroups;
 
 interface IControlTypeStrongList extends IControlTypeStrong {
 	list: IDictionary<string> | string[];

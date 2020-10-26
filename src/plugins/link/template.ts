@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IJodit, IUIForm } from '../../types';
+import type { IJodit, IUIForm } from '../../types';
 import { UIBlock, UICheckbox, UIForm, UIInput } from '../../core/ui/form';
 import { UIButton } from '../../core/ui/button';
 

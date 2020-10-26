@@ -4,7 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import * as consts from './constants';
 import type {
 	HTMLTagNames,
 	ICreate,
@@ -12,6 +11,7 @@ import type {
 	NodeCondition,
 	Nullable
 } from '../types';
+import * as consts from './constants';
 import {
 	asArray,
 	css,

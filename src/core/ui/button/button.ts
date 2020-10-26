@@ -20,7 +20,7 @@ import { STATUSES } from '../../component';
 import { Dom } from '../../dom';
 import { attr, isString, getClassName, isFunction } from '../../helpers';
 import { Icon } from '../icon';
-import { UIList } from '..';
+import { UIList } from '../list/list';
 
 export const UIButtonState = (): IUIButtonState => ({
 	size: 'middle',

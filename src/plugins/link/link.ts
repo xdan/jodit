@@ -4,6 +4,13 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type {
+	IDictionary,
+	IJodit,
+	IControlType,
+	Nullable,
+	IUIForm
+} from '../../types';
 import { Config } from '../../config';
 import { Dom } from '../../core/dom';
 import {
@@ -15,13 +22,6 @@ import {
 	stripTags
 } from '../../core/helpers';
 import { Select } from '../../core/selection/';
-import {
-	IDictionary,
-	IJodit,
-	IControlType,
-	Nullable,
-	IUIForm
-} from '../../types';
 import { formTemplate } from './template';
 
 /**
@@ -267,6 +267,11 @@ Config.prototype.controls.link = {
  * @module plugins/link
  */
 export function link(jodit: IJodit): void {
+	jodit.registerButton({
+		name: 'link',
+		group: 'insert'
+	});
+
 	if (jodit.o.link.followOnDblClick) {
 		jodit.e.on('afterInit changePlace', () => {
 			jodit.e

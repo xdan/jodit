@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IDictionary } from './types';
 import 'classlist-polyfill';
 import 'es6-promise/auto';
-import { IDictionary } from './types';
 
 if (!Array.from) {
 	Array.from = <T>(object: T[]): T[] => {

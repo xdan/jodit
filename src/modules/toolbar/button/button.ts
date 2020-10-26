@@ -6,7 +6,7 @@
 
 import './button.less';
 
-import {
+import type {
 	Controls,
 	IControlType,
 	IControlTypeStrong,
@@ -31,7 +31,9 @@ import {
 	call,
 	isArray
 } from '../../../core/helpers/';
-import { Icon, STATUSES, ToolbarCollection } from '../..';
+import { STATUSES } from '../../../core/component';
+import { Icon } from '../../../core/ui';
+import { ToolbarCollection } from '../../../modules/toolbar/collection/collection';
 
 export class ToolbarButton<T extends IViewBased = IViewBased>
 	extends UIButton

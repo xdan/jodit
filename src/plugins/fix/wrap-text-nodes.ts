@@ -6,8 +6,8 @@
 
 import autobind from 'autobind-decorator';
 
+import type { IJodit, markerInfo, Nullable } from '../../types';
 import { Plugin } from '../../core/plugin';
-import { IJodit, markerInfo, Nullable } from '../../types';
 import { Dom } from '../../core/dom';
 import { isString } from '../../core/helpers/checker';
 

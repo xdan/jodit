@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../config';
-import * as consts from '../core/constants';
-import { $$, attr } from '../core/helpers/';
-import { IJodit } from '../types';
+import type { IJodit } from '../../types';
+import { Config } from '../../config';
+import * as consts from '../../core/constants';
+import { $$, attr, dataBind } from '../../core/helpers/';
 
-declare module '../config' {
+declare module '../../config' {
 	interface Config {
 		mediaInFakeBlock: boolean;
 		mediaFakeTag: string;
@@ -32,7 +32,16 @@ Config.prototype.mediaInFakeBlock = true;
  */
 Config.prototype.mediaBlocks = ['video', 'audio'];
 
+/**
+ * Process `video` and `audio`
+ * @param editor
+ */
 export function media(editor: IJodit): void {
+	editor.registerButton({
+		name: 'file',
+		group: 'media'
+	});
+
 	const keyFake: string = 'jodit_fake_wrapper';
 
 	const { mediaFakeTag, mediaBlocks, mediaInFakeBlock } = editor.options;
@@ -92,8 +101,8 @@ export function media(editor: IJodit): void {
 					) {
 						$$(mediaBlocks.join(','), editor.editor).forEach(
 							(elm: HTMLElement) => {
-								if (!(elm as any)['__' + keyFake]) {
-									(elm as any)['__' + keyFake] = true;
+								if (!dataBind(elm, keyFake)) {
+									dataBind(elm, keyFake, true);
 									wrap(elm);
 								}
 							}

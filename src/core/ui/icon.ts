@@ -4,8 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { CanUndef, IDictionary, IUIIconState, IViewBased } from '../../types';
-import { css } from '../helpers';
+import type { CanUndef, IDictionary, IUIIconState, IViewBased } from '../../types';
+import { css } from '../helpers/css';
+
 export class Icon {
 	private static icons: IDictionary<string> = {};
 

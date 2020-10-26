@@ -5,7 +5,7 @@
  */
 
 import { Plugin } from '../../core/plugin';
-import { CanUndef, IJodit, Nullable } from '../../types';
+import type { CanUndef, IJodit, Nullable } from '../../types';
 import { Dom } from '../../core/dom';
 import {
 	INSEPARABLE_TAGS,

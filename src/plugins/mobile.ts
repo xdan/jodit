@@ -4,15 +4,15 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../config';
-import * as consts from '../core/constants';
-import {
+import type {
 	IControlType,
 	IToolbarCollection,
 	IJodit,
 	CanUndef,
 	ButtonsGroups
 } from '../types/';
+import { Config } from '../config';
+import * as consts from '../core/constants';
 import { splitArray } from '../core/helpers/';
 import { makeCollection } from '../modules/toolbar/factory';
 import { UIList } from '../core/ui';

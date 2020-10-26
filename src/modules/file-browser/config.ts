@@ -6,7 +6,7 @@
 
 import { Config } from '../../config';
 
-import {
+import type {
 	IFileBrowser,
 	IFileBrowserAnswer,
 	IFileBrowserItem,

@@ -4,14 +4,14 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../config';
-import {
+import type {
 	IDictionary,
 	IRequest,
 	IViewBased,
 	AjaxOptions,
 	IAjax
 } from '../types';
+import { Config } from '../config';
 import {
 	each,
 	error,

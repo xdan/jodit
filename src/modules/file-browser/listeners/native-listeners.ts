@@ -4,15 +4,15 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { ctrlKey, attr } from '../../../core/helpers';
-import { F_CLASS, ITEM_CLASS } from '../consts';
-import contextMenu from '../builders/context-menu';
-import {
+import type {
 	HTMLTagNames,
 	IFileBrowser,
 	IFileBrowserItem,
 	Nullable
 } from '../../../types';
+import { ctrlKey, attr } from '../../../core/helpers';
+import { F_CLASS, ITEM_CLASS } from '../consts';
+import contextMenu from '../builders/context-menu';
 import { Dom } from '../../../core/dom';
 
 export const getItem = (

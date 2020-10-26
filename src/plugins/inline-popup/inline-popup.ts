@@ -8,8 +8,8 @@ import './inline-popup.less';
 import './config/config';
 
 import autobind from 'autobind-decorator';
-import { Plugin } from '../../core/plugin';
-import {
+
+import type {
 	HTMLTagNames,
 	IBound,
 	IJodit,
@@ -18,6 +18,7 @@ import {
 	IViewComponent,
 	Nullable
 } from '../../types';
+import { Plugin } from '../../core/plugin';
 import { makeCollection } from '../../modules/toolbar/factory';
 import { Popup } from '../../core/ui/popup';
 import {

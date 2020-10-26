@@ -6,8 +6,6 @@
 
 import './uploader.less';
 
-import { Config } from '../../config';
-import { IS_IE, TEXT_PLAIN } from '../../core/constants';
 import type {
 	BuildDataResult,
 	HandlerError,
@@ -21,6 +19,8 @@ import type {
 	IUploaderOptions,
 	IViewBased
 } from '../../types';
+import { Config } from '../../config';
+import { IS_IE, TEXT_PLAIN } from '../../core/constants';
 import { Ajax } from '../../core/ajax';
 import {
 	attr,

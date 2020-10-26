@@ -4,5 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from "./preview";
-export * from "./print";
+import type { IJodit } from '../../types';
+
+export function table(editor: IJodit): void {
+	editor.registerButton({
+		name: 'table',
+		group: 'insert'
+	})
+}

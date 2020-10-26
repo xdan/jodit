@@ -6,11 +6,11 @@
 
 import './sticky.less';
 
+import type { IBound, IJodit } from '../../types';
 import { Config } from '../../config';
 import { IS_IE, MODE_WYSIWYG } from '../../core/constants';
 import { Plugin, Dom } from '../../modules';
 import { css, offset } from '../../core/helpers';
-import { IBound, IJodit } from '../../types';
 
 declare module '../../config' {
 	interface Config {

@@ -8,13 +8,15 @@ import autobind from 'autobind-decorator';
 
 import './collection.less';
 
-import {
+import type {
 	IToolbarButton,
 	IToolbarCollection,
 	IUIButton,
 	Nullable,
 	IControlTypeStrong,
-	IViewBased
+	IViewBased,
+	ButtonsGroups,
+	CanUndef
 } from '../../../types/';
 
 import { isFunction, isJoditObject } from '../../../core/helpers/';
@@ -134,6 +136,21 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 			// .on(this.j.ow, 'mousedown touchend', this.closeAllPopups)
 			.on(this.listenEvents, this.update)
 			.on('afterSetMode focus', this.immediateUpdate);
+	}
+
+	/** @override **/
+	build(items: ButtonsGroups, target: Nullable<HTMLElement> = null): this {
+		const itemsWithGroupps = this.j.e.fire(
+			'beforeToolbarBuild',
+			items
+		) as CanUndef<ButtonsGroups>;
+
+		if (itemsWithGroupps) {
+			items = itemsWithGroupps;
+		}
+
+		super.build(items, target);
+		return this;
 	}
 
 	/** @override **/

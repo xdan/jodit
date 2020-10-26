@@ -6,10 +6,12 @@
 
 import './resizer.less';
 
+import autobind from 'autobind-decorator';
+
+import type { IBound } from '../../types';
 import { Config } from '../../config';
 import * as consts from '../../core/constants';
 import { IS_IE } from '../../core/constants';
-import { IBound } from '../../types';
 import { Dom } from '../../core/dom';
 import {
 	$$,
@@ -21,7 +23,6 @@ import {
 } from '../../core/helpers';
 import { IJodit } from '../../types';
 import { Plugin } from '../../core/plugin';
-import autobind from 'autobind-decorator';
 import { eventEmitter } from '../../core/global';
 
 /**

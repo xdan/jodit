@@ -4,9 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IUIInput } from '../../../types';
+import type { IUIInput, IUIInputValidator } from '../../../types';
 import { isURL, trim } from '../../helpers';
-import { IUIInputValidator } from '../../../types';
 
 /**
  * Input is required

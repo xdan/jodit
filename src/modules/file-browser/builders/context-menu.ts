@@ -11,7 +11,7 @@ import { F_CLASS, ICON_LOADER, ITEM_CLASS } from '../consts';
 import { attr, error } from '../../../core/helpers';
 import { makeContextMenu } from '../factories';
 import { Icon } from '../../../core/ui';
-import { IFileBrowser } from '../../../types';
+import type { IFileBrowser } from '../../../types';
 import { getItem } from '../listeners/native-listeners';
 
 const CLASS_PREVIEW = F_CLASS + '_preview_',

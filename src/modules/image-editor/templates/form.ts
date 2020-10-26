@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { ImageEditorOptions, IViewBased } from '../../../types';
+import type { ImageEditorOptions, IViewBased } from '../../../types';
 import { Icon } from '../../../core/ui';
 
 const jie = 'jodit-image-editor';

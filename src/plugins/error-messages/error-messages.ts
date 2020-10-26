@@ -6,10 +6,10 @@
 
 import './errors-messages.less';
 
+import type { IJodit } from '../../types';
 import { Config } from '../../config';
 import { Dom } from '../../core/dom';
 import { css, toArray } from '../../core/helpers';
-import { IJodit } from '../../types';
 
 declare module '../../config' {
 	interface Config {

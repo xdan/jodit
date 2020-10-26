@@ -8,8 +8,7 @@ import './dialog.less';
 
 import autobind from 'autobind-decorator';
 
-import { Config, OptionsDefault } from '../../config';
-import {
+import type {
 	IControlType,
 	IDialogOptions,
 	IDictionary,
@@ -20,6 +19,7 @@ import {
 	Content,
 	IViewOptions
 } from '../../types/';
+import { Config, OptionsDefault } from '../../config';
 import { KEY_ESC } from '../../core/constants';
 import {
 	$$,
@@ -104,6 +104,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	private lockSelect = () => {
 		this.container.classList.add('jodit-dialog__box-moved');
 	};
+
 	private unlockSelect = () => {
 		this.container.classList.remove('jodit-dialog__box-moved');
 	};
@@ -253,9 +254,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 					e.clientY - this.startY
 				);
 			}
-
-			e.stopImmediatePropagation();
-			e.preventDefault();
 		}
 	}
 

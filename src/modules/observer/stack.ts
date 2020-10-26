@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { CanUndef } from '../../types';
 import { Command } from './command';
-import { CanUndef } from '../../types';
 
 export class Stack {
 	private commands: Command[] = [];

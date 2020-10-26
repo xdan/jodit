@@ -4,7 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { CallbackFunction, IAsync, IAsyncParams, ITimeout } from '../types';
+import type {
+	CallbackFunction,
+	IAsync,
+	IAsyncParams,
+	ITimeout
+} from '../types';
 import { setTimeout, clearTimeout, isFunction } from './helpers/';
 
 export class Async implements IAsync {

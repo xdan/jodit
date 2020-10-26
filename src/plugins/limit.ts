@@ -6,6 +6,7 @@
 
 import autobind from 'autobind-decorator';
 
+import type { IJodit, SnapshotType } from '../types';
 import { Config } from '../config';
 import { Plugin } from '../core/plugin';
 import {
@@ -13,7 +14,6 @@ import {
 	INVISIBLE_SPACE_REG_EXP,
 	SPACE_REG_EXP
 } from '../core/constants';
-import { IJodit, SnapshotType } from '../types';
 import { stripTags } from '../core/helpers';
 
 declare module '../config' {

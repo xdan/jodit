@@ -6,9 +6,9 @@
 
 import './about.less';
 
+import type { IControlType, IJodit } from '../../types';
 import { Config } from '../../config';
-import { IControlType, IJodit } from '../../types';
-import { isLicense, normalizeLicense } from '../../core/helpers/';
+import { css, isLicense, normalizeLicense } from '../../core/helpers/';
 import * as constants from '../../core/constants';
 import { Dialog } from '../../modules/dialog';
 
@@ -45,6 +45,11 @@ Config.prototype.controls.about = {
 				</div>`
 		);
 
+		css(dialog.dialog, {
+			minHeight: 200,
+			minWidth: 420,
+		});
+
 		dialog.open(true);
 		dialog.bindDestruct(editor);
 	},
@@ -52,6 +57,9 @@ Config.prototype.controls.about = {
 	mode: constants.MODE_SOURCE + constants.MODE_WYSIWYG
 } as IControlType;
 
-export function about(): void {
-	// Config.buttons.add('about', null, true);
+export function about(editor: IJodit): void {
+	editor.registerButton({
+		name: 'about',
+		group: 'info'
+	});
 }

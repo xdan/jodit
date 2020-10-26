@@ -6,7 +6,7 @@
 
 import './group.less';
 
-import {
+import type {
 	IUIButtonState,
 	IUIElement,
 	IUIGroup,

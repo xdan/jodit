@@ -6,13 +6,13 @@
 
 import './input.less';
 
-import { UIElement } from '../element';
 import type {
 	IDictionary,
 	IUIInput,
 	IUIInputValidator,
 	IViewBased
 } from '../../../types';
+import { UIElement } from '../element';
 import { attr } from '../../helpers';
 import { Dom } from '../../dom';
 import * as validators from './validators';

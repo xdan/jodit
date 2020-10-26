@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IDictionary, IFileBrowser } from '../../../types';
 import { Confirm, Prompt } from '../../dialog';
 import { isValidName } from '../../../core/helpers/checker';
 import { error, normalizePath } from '../../../core/helpers';
-import { IDictionary, IFileBrowser } from '../../../types';
 import { DEFAULT_SOURCE_NAME } from '../data-provider';
 
 export function selfListeners(this: IFileBrowser): void {

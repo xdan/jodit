@@ -8,4 +8,4 @@ import './config';
 export * from './clipboard';
 export * from './paste/paste';
 export * from './paste-storage/paste-storage';
-import './copy-format';
+export * from './copy-format';

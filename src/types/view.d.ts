@@ -17,6 +17,7 @@ import { IStorage } from './storage';
 import { IAsync } from './async';
 import { IUIButtonState } from './ui';
 import { IEventsNative } from './events';
+import { IPluginButton } from './plugin';
 
 interface ILanguageOptions {
 	language?: string;
@@ -120,6 +121,9 @@ interface IViewBased<T = IViewOptions> extends IContainer, IComponent {
 interface IViewWithToolbar<T = IViewOptions> extends IViewBased<T> {
 	toolbar: IToolbarCollection;
 	toolbarContainer: HTMLElement;
+
+	registerButton(btn: IPluginButton): this;
+	unregisterButton(btn: IPluginButton): this;
 
 	setPanel(element: HTMLElement | string): void;
 }

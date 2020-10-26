@@ -6,16 +6,15 @@
 
 import './content.less';
 
-import {
+import type {
 	IControlTypeContent,
 	IToolbarButton,
 	IViewBased,
 	Nullable
 } from '../../../types';
 import { UIButton } from '../../../core/ui/button';
-import { isString } from '../../../core/helpers/checker';
 import { Dom } from '../../../core/dom';
-import { attr } from '../../../core/helpers/utils';
+import { isString, attr } from '../../../core/helpers';
 
 export class ToolbarContent<T extends IViewBased = IViewBased>
 	extends UIButton

@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IDictionary, IJodit, IControlType } from '../types';
 import { Config } from '../config';
-import { IDictionary, IJodit, IControlType } from '../types';
 import { isArray } from '../core/helpers';
 
 Config.prototype.controls.subscript = {
@@ -83,6 +83,22 @@ export function bold(editor: IJodit): void {
 
 		return false;
 	};
+
+	[
+		'bold', 'italic', 'underline', 'strikethrough'
+	].forEach(name => {
+		editor.registerButton({
+			name, group: 'font-style'
+		});
+	});
+
+	[
+		'superscript', 'subscript'
+	].forEach(name => {
+		editor.registerButton({
+			name, group: 'script'
+		});
+	});
 
 	editor
 		.registerCommand('bold', {

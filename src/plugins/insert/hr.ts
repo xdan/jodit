@@ -15,6 +15,11 @@ Config.prototype.controls.hr = {
 } as IControlType;
 
 export function hr(editor: IJodit): void {
+	editor.registerButton({
+		name: 'hr',
+		group: 'insert'
+	})
+
 	editor.registerCommand('insertHorizontalRule', () => {
 		const elm = editor.createInside.element('hr');
 		editor.s.insertNode(elm, false, false);

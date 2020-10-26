@@ -3,6 +3,8 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
+import type { IControlType, IJodit } from '../../types';
 import { Config } from '../../config';
 import {
 	INSERT_AS_HTML,
@@ -11,7 +13,6 @@ import {
 	INSERT_AS_TEXT,
 	TEXT_PLAIN
 } from '../../core/constants';
-import { IControlType, IJodit } from '../../types';
 import { Alert } from '../../modules/dialog';
 import { pasteInsertHtml } from './paste/helpers';
 import { pluginKey as clipboardPluginKey } from './clipboard';
@@ -159,4 +160,10 @@ Config.prototype.controls.paste = {
 	isChildDisabled(j): boolean {
 		return j.e.fire('pasteStorageList') < 2;
 	}
+} as IControlType;
+
+Config.prototype.controls.selectall = {
+	icon: 'select-all',
+	command: 'selectall',
+	tooltip: 'Select all'
 } as IControlType;

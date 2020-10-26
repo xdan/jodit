@@ -6,10 +6,10 @@
 
 import './source.less';
 
+import type { IJodit, ISourceEditor, markerInfo } from '../../types';
 import * as consts from '../../core/constants';
 import { MODE_SOURCE } from '../../core/constants';
 import { Plugin } from '../../core/plugin';
-import { IJodit, ISourceEditor, markerInfo } from '../../types';
 import { Dom } from '../../core/dom';
 import { isString, loadNext } from '../../core/helpers';
 import { createSourceEditor } from './editor/factory';
@@ -20,6 +20,14 @@ import { createSourceEditor } from './editor/factory';
  * @module source
  */
 export class source extends Plugin {
+	/** @override */
+	buttons = [
+		{
+			name: 'source',
+			group: 'source'
+		}
+	];
+
 	sourceEditor?: ISourceEditor;
 
 	private mirrorContainer!: HTMLDivElement;

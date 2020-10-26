@@ -6,13 +6,13 @@
 
 import './xpath.less';
 
+import type { IControlTypeStrong, IToolbarButton } from '../../types';
 import { Config } from '../../config';
 import { INVISIBLE_SPACE, MODE_WYSIWYG } from '../../core/constants';
-import { ContextMenu } from '../../modules';
+import { ContextMenu } from '../../modules/context-menu/context-menu';
 import { Dom } from '../../core/dom';
 import { getXPathByElement, trim, attr } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
-import { IControlType, IControlTypeStrong, IToolbarButton } from '../../types';
 import { makeButton } from '../../modules/toolbar/factory';
 
 declare module '../../config' {
@@ -20,12 +20,6 @@ declare module '../../config' {
 		showXPathInStatusbar: boolean;
 	}
 }
-
-Config.prototype.controls.selectall = {
-	icon: 'select-all',
-	command: 'selectall',
-	tooltip: 'Select all'
-} as IControlType;
 
 Config.prototype.showXPathInStatusbar = true;
 

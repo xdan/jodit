@@ -10,7 +10,7 @@ import { Config, OptionsDefault } from '../../config';
 import * as consts from '../../core/constants';
 import { Dialog, Alert } from '../dialog/';
 
-import {
+import type {
 	IFileBrowser,
 	IFileBrowserAnswer,
 	IFileBrowserCallBackData,

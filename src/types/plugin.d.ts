@@ -8,6 +8,12 @@ import { IJodit } from './jodit';
 import { CanPromise, IDestructible, IInitable } from './types';
 import { IViewBased } from './view';
 
+export interface IPluginButton {
+	name: string,
+	group?: string;
+	position?: number;
+}
+
 export class IPlugin implements IDestructible, IInitable {
 	jodit: IJodit;
 
@@ -15,6 +21,11 @@ export class IPlugin implements IDestructible, IInitable {
 	requires?: string[];
 
 	hasStyle?: boolean;
+
+	/**
+	 * Plugin buttons
+	 */
+	buttons?: IPluginButton[];
 
 	init(jodit: IJodit): void;
 	destruct(jodit?: IJodit): void;

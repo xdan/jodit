@@ -6,10 +6,10 @@
 
 import './add-new-line.less';
 
+import type { IBound, IJodit, HTMLTagNames, Nullable } from '../../types';
 import { Config } from '../../config';
 import { Dom, Icon, Plugin } from '../../modules';
 import { offset, position, call, scrollIntoView } from '../../core/helpers';
-import { IBound, IJodit, HTMLTagNames, Nullable } from '../../types';
 
 declare module '../../config' {
 	interface Config {

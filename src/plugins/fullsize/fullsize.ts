@@ -6,10 +6,10 @@
 
 import './fullsize.less';
 
+import type { IViewWithToolbar, IControlType, IViewBased } from '../../types';
 import { Config } from '../../config';
 import * as consts from '../../core/constants';
 import { css, isJoditObject } from '../../core/helpers';
-import { IViewWithToolbar, IControlType, IViewBased } from '../../types';
 
 /**
  * Fullsize plugin
@@ -75,6 +75,10 @@ Config.prototype.controls.fullsize = {
  * @param {Jodit} editor
  */
 export function fullsize(editor: IViewWithToolbar): void {
+	editor.registerButton({
+		name: 'fullsize'
+	});
+
 	let isEnabled: boolean = false,
 		oldHeight: number = 0,
 		oldWidth: number = 0,

@@ -8,7 +8,7 @@ import './tooltip.less';
 
 import autobind from 'autobind-decorator';
 
-import { IJodit, IPoint } from '../../types';
+import type { IJodit, IPoint } from '../../types';
 import { css } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { Dom } from '../../core/dom';

@@ -6,11 +6,11 @@
 
 import './placeholder.less';
 
+import type { IJodit } from '../../types';
 import { Config } from '../../config';
 import * as consts from '../../core/constants';
 import { css, attr } from '../../core/helpers';
 import { Dom } from '../../core/dom';
-import { IJodit } from '../../types';
 import { Plugin } from '../../core/plugin';
 import { MAY_BE_REMOVED_WITH_KEY } from '../../core/constants';
 import { debounce } from '../../core/decorators';

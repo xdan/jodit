@@ -6,18 +6,18 @@
 
 import './search.less';
 
-import { Config } from '../../config';
-import * as consts from '../../core/constants';
-import { MODE_WYSIWYG } from '../../core/constants';
-import { Dom } from '../../core/dom';
-import { Plugin } from '../../core/plugin';
-import {
+import type {
 	ISelectionRange,
 	markerInfo,
 	IJodit,
 	Nullable,
 	IControlType
 } from '../../types';
+import { Config } from '../../config';
+import * as consts from '../../core/constants';
+import { MODE_WYSIWYG } from '../../core/constants';
+import { Dom } from '../../core/dom';
+import { Plugin } from '../../core/plugin';
 import { Icon } from '../../core/ui';
 import { refs, trim } from '../../core/helpers';
 
@@ -84,6 +84,13 @@ Config.prototype.controls.find = {
  * ```
  */
 export class search extends Plugin {
+	buttons = [
+		{
+			name: 'find',
+			group: 'search'
+		}
+	];
+
 	static getSomePartOfStringIndex(
 		needle: string,
 		haystack: string,

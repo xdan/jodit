@@ -11,7 +11,7 @@ import type {
 } from '../../../types';
 import { isFunction, $$, attr, val } from '../../../core/helpers';
 import { Dom } from '../../../core/dom';
-import { TabOption, TabsWidget } from '../';
+import { TabOption, TabsWidget } from '../tabs/tabs';
 import { UIBlock, UIForm, UIInput, UIButton } from '../../../core/ui';
 
 /**

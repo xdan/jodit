@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { CallbackFunction, IJodit, ISourceEditor } from '../../../types';
 import { AceEditor, TextAreaEditor } from './engines';
-import { CallbackFunction, IJodit, ISourceEditor } from '../../../types';
 
 export function createSourceEditor(
 	type: 'ace' | 'mirror' | 'area',

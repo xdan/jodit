@@ -8,7 +8,7 @@ import './popup.less';
 
 import autobind from 'autobind-decorator';
 
-import {
+import type {
 	CanUndef,
 	IBound,
 	IBoundP,
@@ -30,7 +30,7 @@ import {
 	ucfirst
 } from '../../helpers';
 import { eventEmitter, getContainer } from '../../global';
-import { UIElement } from '../';
+import { UIElement } from '../element';
 
 type getBoundFunc = () => IBound;
 

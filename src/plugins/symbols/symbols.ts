@@ -5,8 +5,10 @@
  */
 
 import './symbols.less';
+
 import './config';
 
+import type { IJodit } from '../../types';
 import {
 	KEY_DOWN,
 	KEY_ENTER,
@@ -14,7 +16,6 @@ import {
 	KEY_RIGHT,
 	KEY_UP
 } from '../../core/constants';
-import { IJodit } from '../../types';
 import { Dom, Plugin } from '../../modules';
 import { attr } from '../../core/helpers/utils';
 
@@ -22,6 +23,13 @@ import { attr } from '../../core/helpers/utils';
  * The plugin inserts characters that are not part of the standard keyboard.
  */
 export class symbols extends Plugin {
+	buttons = [
+		{
+			name: 'symbol',
+			group: 'insert'
+		}
+	];
+
 	private countInRow: number = 17;
 
 	/** @overdide */

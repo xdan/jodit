@@ -6,8 +6,8 @@
 
 import autobind from 'autobind-decorator';
 
+import type { IBound, IJodit, Nullable } from '../../types';
 import { Plugin } from '../../core/plugin';
-import { IBound, IJodit, Nullable } from '../../types';
 import { Dom, Table } from '../../modules';
 import { $$, dataBind, position } from '../../core/helpers';
 import { alignElement } from '../justify';

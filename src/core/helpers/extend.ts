@@ -148,7 +148,6 @@ export function isAtom(obj: unknown): boolean {
 }
 
 export function markAsAtomic<T>(obj: T): T {
-	debugger
 	Object.defineProperty(obj, 'isAtom', {
 		enumerable: false,
 		value: true,

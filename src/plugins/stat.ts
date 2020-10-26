@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { Nullable } from '../types';
 import { Config } from '../config';
 import { INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from '../core/constants';
 import { Plugin } from '../core/plugin';
 import { Dom } from '../core/dom';
-import { Nullable } from '../types';
 
 declare module '../config' {
 	interface Config {

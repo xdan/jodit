@@ -6,12 +6,23 @@
 
 import './view-with-toolbar.less';
 
-import { IViewWithToolbar, IToolbarCollection, Buttons } from '../../types';
+import autobind from 'autobind-decorator';
+
+import type {
+	IViewWithToolbar,
+	IToolbarCollection,
+	Buttons,
+	IDictionary,
+	IPluginButton,
+	IViewOptions,
+	ButtonsGroups
+} from '../../types';
 import { View } from './view';
 import { isString, resolveElement, splitArray } from '../helpers';
 import { Dom } from '../dom';
 import { makeCollection } from '../../modules/toolbar/factory';
 import { STATUSES } from '../component';
+import { isButtonGroup } from '../ui/helpers/buttons';
 
 export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	toolbar: IToolbarCollection = makeCollection(this);
@@ -65,12 +76,95 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 			.appendTo(this.toolbarContainer);
 	}
 
+	private groupToButtons: IDictionary<string[]> = {};
+
+	/**
+	 * Register button for group
+	 * @param btn
+	 */
+	registerButton(btn: IPluginButton): this {
+		const group = btn.group ?? 'other';
+
+		if (!this.groupToButtons[group]) {
+			this.groupToButtons[group] = [];
+		}
+
+		if (btn.position != null) {
+			this.groupToButtons[group][btn.position] = btn.name;
+		} else {
+			this.groupToButtons[group].push(btn.name);
+		}
+
+		return this;
+	}
+
+	/**
+	 * Remove button from group
+	 * @param btn
+	 */
+	unregisterButton(btn: IPluginButton): this {
+		const groupName = btn.group ?? 'other',
+			group = this.groupToButtons[groupName];
+
+		if (group) {
+			const index = group.indexOf(btn.name);
+
+			if (index !== -1) {
+				group.splice(index, 1);
+			}
+
+			if (group.length === 0) {
+				delete this.groupToButtons[groupName];
+			}
+		}
+
+		return this;
+	}
+
+	/**
+	 * Prepare toolbar items and append buttons in groups
+	 * @param items
+	 * @private
+	 */
+	@autobind
+	private beforeToolbarBuild(items: ButtonsGroups): ButtonsGroups | void {
+		if (Object.keys(this.groupToButtons).length) {
+			return items.map(item => {
+				if (
+					isButtonGroup(item) &&
+					item.group &&
+					this.groupToButtons[item.group]
+				) {
+					return {
+						group: item.group,
+						buttons: [
+							...item.buttons,
+							...this.groupToButtons[item.group]
+						]
+					};
+				}
+
+				return item;
+			});
+		}
+	}
+
+	/** @override **/
+	protected constructor(
+		options?: IViewOptions,
+		readonly isJodit: boolean = false
+	) {
+		super(options, isJodit);
+
+		this.e.on('beforeToolbarBuild', this.beforeToolbarBuild);
+	}
+
 	destruct(): void {
 		if (this.isDestructed) {
 			return;
 		}
-
 		this.setStatus(STATUSES.beforeDestruct);
+		this.e.off('beforeToolbarBuild', this.beforeToolbarBuild);
 		this.toolbar.destruct();
 		super.destruct();
 	}

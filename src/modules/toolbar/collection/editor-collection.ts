@@ -7,7 +7,7 @@
 import { ToolbarCollection } from './collection';
 import * as consts from '../../../core/constants';
 import { Dom } from '../../../core/dom';
-import {
+import type {
 	IDictionary,
 	IToolbarButton,
 	IViewBased,

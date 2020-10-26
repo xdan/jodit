@@ -6,8 +6,8 @@
 
 import autobind from 'autobind-decorator';
 
+import type { IJodit, IPointBound } from '../../types';
 import { Plugin } from '../../core/plugin';
-import { IJodit, IPointBound } from '../../types';
 import { Dom } from '../../core/dom';
 
 @autobind

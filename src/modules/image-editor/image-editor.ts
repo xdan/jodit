@@ -8,8 +8,7 @@ import './image-editor.less';
 
 import autobind from 'autobind-decorator';
 
-import { Config } from '../../config';
-import {
+import type {
 	ImageEditorActionBox,
 	IJodit,
 	ImageEditorOptions,
@@ -19,6 +18,7 @@ import {
 	IDictionary,
 	Nullable
 } from '../../types';
+import { Config } from '../../config';
 import { ViewComponent } from '../../core/component';
 import { Alert, Dialog, Prompt } from '../dialog';
 import { $$, attr, css, refs, trim } from '../../core/helpers';

@@ -4,14 +4,15 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import {
+import type {
 	IAsync,
 	IComponent,
 	ICreate,
 	IProgressBar,
-	IStorage
+	IStorage,
+	IViewBased,
+	IViewOptions
 } from '../../types';
-import { IViewBased, IViewOptions } from '../../types';
 import { Storage } from '../storage';
 import { error, i18n, isDestructable, isFunction, isVoid } from '../helpers';
 import { BASE_PATH } from '../constants';

@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IControlType, IJodit } from '../types/';
 import { Config } from '../config';
 import { Dom } from '../core/dom';
 import { css, dataBind, isVoid, normalizeSize } from '../core/helpers/';
-import { IControlType, IJodit } from '../types/';
 
 declare module '../config' {
 	interface Config {
@@ -153,6 +153,16 @@ Config.prototype.controls.font = ({
  * @param {Jodit} editor
  */
 export function font(editor: IJodit): void {
+	editor
+		.registerButton({
+		name: 'font',
+		group: 'font'
+	})
+		.registerButton({
+			name: 'fontsize',
+			group: 'font'
+		})
+
 	const callback = (
 		command: string,
 		second: string,

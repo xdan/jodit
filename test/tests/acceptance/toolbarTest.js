@@ -4,6 +4,14 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 describe('Toolbar', function () {
+	it('Should have buttons', function () {
+		const editor = getJodit({
+			toolbarAdaptive: true
+		});
+
+		expect(editor.toolbar.container.querySelectorAll('.jodit-toolbar-button').length).equals(36);
+	});
+
 	describe('Custom buttons', function () {
 		it('should create normal button in toolbar', function () {
 			const editor = getJodit({

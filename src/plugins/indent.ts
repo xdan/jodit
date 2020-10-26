@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IControlType, HTMLTagNames, IJodit } from '../types/';
 import { Config } from '../config';
 import { BR, PARAGRAPH } from '../core/constants';
 import { Dom } from '../core/dom';
-import { IControlType, HTMLTagNames, IJodit } from '../types/';
 import { attr } from '../core/helpers';
 
 Config.prototype.controls.indent = {
@@ -62,6 +62,14 @@ Config.prototype.indentMargin = 10;
  */
 export function indent(editor: IJodit): void {
 	const key = getKey(editor.o.direction);
+
+	editor
+		.registerButton({
+			name: 'indent', group: 'indent'
+		})
+		.registerButton({
+			name: 'outdent', group: 'indent'
+		})
 
 	const callback = (command: string): void | false => {
 		const indentedBoxes: HTMLElement[] = [];

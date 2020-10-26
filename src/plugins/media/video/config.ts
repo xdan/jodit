@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../../config';
-import { IControlType, IJodit, IUIForm } from '../../types';
-import { TabOption, TabsWidget } from '../../modules/widget';
-import { convertMediaUrlToVideoEmbed } from '../../core/helpers';
-import { UIForm, UIInput, UITextArea, UIBlock } from '../../core/ui/form';
-import { Button } from '../../core/ui/button';
+import type { IControlType, IJodit, IUIForm } from '../../../types';
+import { Config } from '../../../config';
+import { TabOption, TabsWidget } from '../../../modules/widget';
+import { convertMediaUrlToVideoEmbed } from '../../../core/helpers';
+import { UIForm, UIInput, UITextArea, UIBlock } from '../../../core/ui/form';
+import { Button } from '../../../core/ui/button';
 
 Config.prototype.controls.video = {
 	popup: (editor: IJodit, current, control, close) => {

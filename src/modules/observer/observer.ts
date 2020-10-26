@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IJodit, SnapshotType } from '../../types';
 import { Config } from '../../config';
-import { IJodit, SnapshotType } from '../../types';
 import { ViewComponent } from '../../core/component';
 import { Snapshot } from './snapshot';
 import { Stack } from './stack';

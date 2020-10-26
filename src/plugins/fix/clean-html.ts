@@ -4,6 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { HTMLTagNames, IDictionary, IJodit, Nullable } from '../../types';
 import { Config } from '../../config';
 import {
 	INVISIBLE_SPACE,
@@ -14,7 +15,6 @@ import {
 } from '../../core/constants';
 import { Dom } from '../../modules';
 import { isString, normalizeNode, toArray, trim } from '../../core/helpers';
-import { HTMLTagNames, IDictionary, IJodit, Nullable } from '../../types';
 import { Plugin } from '../../core/plugin';
 
 /**
@@ -100,6 +100,14 @@ Config.prototype.controls.eraser = {
  * Clean HTML after removeFormat and insertHorizontalRule command
  */
 export class cleanHtml extends Plugin {
+	/** @override */
+	buttons = [
+		{
+			name: 'eraser',
+			group: 'font-style'
+		}
+	];
+
 	protected afterInit(jodit: IJodit): void {
 		jodit.e
 			.off('.cleanHtml')

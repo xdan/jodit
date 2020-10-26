@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IJodit, IControlType } from '../types';
 import { Config } from '../config';
 import { Dom } from '../modules/';
 import { css, dataBind, normalizeColor } from '../core/helpers/';
-import { IJodit, IControlType } from '../types';
 import { ColorPickerWidget, TabOption, TabsWidget } from '../modules/widget';
 
 Config.prototype.controls.brush = {
@@ -195,6 +195,11 @@ Config.prototype.controls.brush = {
  * @param {Jodit} editor
  */
 export function color(editor: IJodit): void {
+	editor.registerButton({
+		name: 'brush',
+		group: 'color'
+	})
+
 	const callback = (
 		command: string,
 		second: string,

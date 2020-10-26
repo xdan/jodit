@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IControlType, IJodit } from '../../types';
 import { Config } from '../../config';
 import * as consts from '../../core/constants';
-import { IControlType, IJodit } from '../../types';
 import { IS_IE } from '../../core/constants';
 
 declare module '../../config' {

@@ -9,6 +9,10 @@
 > - :nail_care:  [Polish]
 
 ## 3.4.29
+
+#### :rocket: New Feature
+
+##### Jodit.atom
 `Jodit.Array` and `Jodit.Object` marked as deprecated. In `3.5` they will be removed. Instead, use `Jodit.atom`.
 
 ```
@@ -20,6 +24,35 @@ const editor = Jodit.make('#editor', {
         })
     }
 });
+```
+
+##### Buttons groups
+The `buttons` option can contain named groups of buttons.
+Each plugin decides which button belongs to which group.
+Thus, if you turn off the plugin, then its buttons will not be shown either.
+
+```js
+const editor = Jodit.make('#editor', {
+    buttons: [
+        {
+            group: "custom",
+            buttons: []
+        },
+        "bold"
+    ]
+});
+
+Jodit.defaultOptions.controls.someButton = {
+    icon: 'pencil',
+    command: 'selectall'
+};
+
+Jodit.plugins.add('somePlugin', function (editor) {
+    editor.registerButton({
+        name: 'someButton',
+        group: 'custom'
+    });
+})
 ```
 
 ## 3.4.28

@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IControlType, IJodit, Nullable } from '../types';
 import { Config } from '../config';
 import { Dom } from '../core/dom';
-import { IControlType, IJodit, Nullable } from '../types';
 import { dataBind, toArray } from '../core/helpers';
 
 const exec: IControlType<IJodit>['exec'] = (jodit, _, { control }): void => {

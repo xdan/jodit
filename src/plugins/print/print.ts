@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IControlType, IJodit } from '../../types';
 import { Config } from '../../config';
-import { IControlType, IDialog, IJodit } from '../../types';
-import { css, defaultLanguage } from '../../core/helpers';
 import { getContainer } from '../../core/global';
 import { Dom } from '../../core/dom';
+import { defaultLanguage } from '../../core/helpers';
 import * as consts from '../../core/constants';
 
 Config.prototype.controls.print = {
@@ -53,11 +53,11 @@ Config.prototype.controls.print = {
 			} else {
 				mywindow.document.write(
 					'<!doctype html><html lang="' +
-						defaultLanguage(editor.o.language) +
-						'"><head><title></title></head>' +
-						'<body>' +
-						editor.value +
-						'</body></html>'
+					defaultLanguage(editor.o.language) +
+					'"><head><title></title></head>' +
+					'<body>' +
+					editor.value +
+					'</body></html>'
 				);
 				mywindow.document.close();
 			}
@@ -70,49 +70,8 @@ Config.prototype.controls.print = {
 	tooltip: 'Print'
 } as IControlType;
 
-Config.prototype.controls.preview = {
-	icon: 'eye',
-	exec: (editor: IJodit) => {
-		const dialog = <IDialog>editor.getInstance('Dialog', {
-			language: editor.o.language,
-			theme: editor.o.theme
-		});
-
-		const div = editor.c.div();
-		css(div, {
-			padding: 16
-		});
-
-		if (editor.iframe) {
-			const iframe = editor.create.element('iframe');
-
-			css(iframe, {
-				minWidth: 800,
-				minHeight: 600,
-				border: 0
-			});
-
-			div.appendChild(iframe);
-			dialog.open(div, editor.i18n('Preview'));
-
-			const mywindow = iframe.contentWindow;
-
-			if (mywindow) {
-				editor.e.fire(
-					'generateDocumentStructure.iframe',
-					mywindow.document,
-					editor
-				);
-
-				mywindow.document.body.innerHTML = editor.value;
-			}
-		} else {
-			div.innerHTML = editor.value;
-			dialog.open(div, editor.i18n('Preview'));
-		}
-
-		dialog.setModal(true);
-	},
-	mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
-	tooltip: 'Preview'
-} as IControlType;
+export function print(editor: IJodit): void {
+	editor.registerButton({
+		name: 'print'
+	})
+}

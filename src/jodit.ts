@@ -4,8 +4,31 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type {
+	CustomCommand,
+	ExecCommandCallback,
+	IDictionary,
+	IPluginSystem,
+	IStatusBar,
+	IViewOptions,
+	IWorkPlace,
+	markerInfo,
+	Modes,
+	IFileBrowser,
+	IJodit,
+	IUploader,
+	ICreate,
+	IFileBrowserCallBackData,
+	IStorage,
+	CanPromise,
+	HTMLTagNames,
+	IViewBased,
+	IViewComponent
+} from './types';
+
 import { Config, configFactory } from './config';
 import * as consts from './core/constants';
+
 import {
 	Create,
 	Dom,
@@ -35,28 +58,6 @@ import {
 } from './core/helpers/';
 
 import { Storage } from './core/storage/';
-
-import type {
-	CustomCommand,
-	ExecCommandCallback,
-	IDictionary,
-	IPluginSystem,
-	IStatusBar,
-	IViewOptions,
-	IWorkPlace,
-	markerInfo,
-	Modes,
-	IFileBrowser,
-	IJodit,
-	IUploader,
-	ICreate,
-	IFileBrowserCallBackData,
-	IStorage,
-	CanPromise,
-	HTMLTagNames,
-	IViewBased,
-	IViewComponent
-} from './types';
 
 import { ViewWithToolbar } from './core/view/view-with-toolbar';
 
@@ -1099,6 +1100,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.e.fire('beforeInit', this);
 
 			const initPluginsResult = pluginSystem.init(this);
+
+			this.e.fire('afterPluginSystemInit', this);
 
 			callPromise(initPluginsResult, () => {
 				this.e.on('changePlace', () => {

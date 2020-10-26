@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IFileBrowser, IFileBrowserItem } from '../../../types';
+import type { IFileBrowser, IFileBrowserItem } from '../../../types';
 import { F_CLASS, ITEM_CLASS } from '../consts';
 import { Dom } from '../../../core/dom';
 import { normalizePath } from '../../../core/helpers/normalize';

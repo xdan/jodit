@@ -6,7 +6,7 @@
 
 import './list.less';
 
-import {
+import type {
 	ButtonsGroups,
 	IControlTypeStrong,
 	IUIButton,
@@ -51,10 +51,8 @@ export class UIList<T extends IViewBased = IViewBased>
 	/**
 	 * Make new group and append it in list of elements
 	 */
-	private addGroup(): IUIGroup {
-		const group = new UIGroup(this.jodit);
-		this.append(group);
-		return group;
+	private makeGroup(): IUIGroup {
+		return new UIGroup(this.jodit);
 	}
 
 	/**
@@ -87,6 +85,9 @@ export class UIList<T extends IViewBased = IViewBased>
 
 		let lastBtnSeparator: boolean = false;
 
+		let line: IUIGroup = this.makeGroup();
+		this.append(line);
+
 		let group: IUIGroup;
 
 		const addButton = (control: IControlTypeStrong) => {
@@ -94,7 +95,10 @@ export class UIList<T extends IViewBased = IViewBased>
 
 			switch (control.name) {
 				case '\n':
-					group = this.addGroup();
+					line = this.makeGroup();
+					group = this.makeGroup();
+					line.append(group);
+					this.append(line);
 					break;
 
 				case '|':
@@ -111,22 +115,32 @@ export class UIList<T extends IViewBased = IViewBased>
 
 			if (elm) {
 				if (!group) {
-					group = this.addGroup()
+					group = this.makeGroup();
+					line.append(group);
 				}
 
 				group.append(elm);
 			}
 		};
 
-		const isNotRemoved = (b: IControlTypeStrong) => !this.removeButtons.includes(b.name);
+		const isNotRemoved = (b: IControlTypeStrong) =>
+			!this.removeButtons.includes(b.name);
 
 		items.forEach(item => {
 			if (isButtonGroup(item)) {
-				group = this.addGroup();
-				getStrongControlTypes(item.buttons, this.j.o.controls).filter(isNotRemoved).forEach(addButton)
+				const buttons = item.buttons.filter(b => b);
+
+				if (buttons.length) {
+					group = this.makeGroup();
+					line.append(group);
+					group.setMod('separated', true).setMod('group', item.group);
+					getStrongControlTypes(buttons, this.j.o.controls)
+						.filter(isNotRemoved)
+						.forEach(addButton);
+				}
 			} else {
 				const control = getControlType(item, this.j.o.controls);
-				isNotRemoved(control) && addButton(control)
+				isNotRemoved(control) && addButton(control);
 			}
 		});
 
