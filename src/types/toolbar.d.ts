@@ -261,7 +261,7 @@ export type Buttons = Array<string | IControlType>;
 
 export interface ButtonsGroup {
 	group: string;
-	buttons: Buttons
+	buttons: Buttons;
 }
 
 export type ButtonsGroups = Array<IControlType | string | ButtonsGroup>;

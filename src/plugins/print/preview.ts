@@ -65,5 +65,5 @@ Config.prototype.controls.preview = {
 export function preview(editor: IJodit): void {
 	editor.registerButton({
 		name: 'preview'
-	})
+	});
 }

@@ -11,11 +11,11 @@ import { markAsAtomic } from './extend';
  * @deprecated Use `Jodit.atom` instead
  */
 export function JoditObject<T>(data: T): T {
-		if (!isProd) {
-			throw error('Deprecated class. Use `Jodit.atom` instead');
-		}
+	if (!isProd) {
+		throw error('Deprecated class. Use `Jodit.atom` instead');
+	}
 
-		markAsAtomic(data);
+	markAsAtomic(data);
 
-		return data;
+	return data;
 }

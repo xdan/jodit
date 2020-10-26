@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-module.exports = function(source) {
+module.exports = function (source) {
 	this.cacheable && this.cacheable(true);
 	return source.replace(/--([a-z0-9_-]+)/g, '--jd-$1');
 };

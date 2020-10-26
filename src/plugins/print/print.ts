@@ -53,11 +53,11 @@ Config.prototype.controls.print = {
 			} else {
 				mywindow.document.write(
 					'<!doctype html><html lang="' +
-					defaultLanguage(editor.o.language) +
-					'"><head><title></title></head>' +
-					'<body>' +
-					editor.value +
-					'</body></html>'
+						defaultLanguage(editor.o.language) +
+						'"><head><title></title></head>' +
+						'<body>' +
+						editor.value +
+						'</body></html>'
 				);
 				mywindow.document.close();
 			}
@@ -73,5 +73,5 @@ Config.prototype.controls.print = {
 export function print(editor: IJodit): void {
 	editor.registerButton({
 		name: 'print'
-	})
+	});
 }

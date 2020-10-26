@@ -155,13 +155,13 @@ Config.prototype.controls.font = ({
 export function font(editor: IJodit): void {
 	editor
 		.registerButton({
-		name: 'font',
-		group: 'font'
-	})
+			name: 'font',
+			group: 'font'
+		})
 		.registerButton({
 			name: 'fontsize',
 			group: 'font'
-		})
+		});
 
 	const callback = (
 		command: string,

@@ -9,7 +9,7 @@ const vm = require('vm');
 
 let keys = [];
 
-module.exports = function(source) {
+module.exports = function (source) {
 	this.cacheable && this.cacheable(true);
 
 	let result = [];

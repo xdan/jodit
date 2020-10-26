@@ -105,10 +105,7 @@ export interface IUIList extends IUIGroup {
 
 	setRemoveButtons(removeButtons?: string[]): this;
 
-	build(
-		items: ButtonsGroups,
-		target?: Nullable<HTMLElement>
-	): IUIList;
+	build(items: ButtonsGroups, target?: Nullable<HTMLElement>): IUIList;
 }
 
 export interface IUIForm extends IUIGroup {

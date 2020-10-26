@@ -236,7 +236,10 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 				state.icon.iconURL = control.iconURL;
 			} else {
 				const name = control.icon || control.name;
-				state.icon.name = (Icon.exists(name) || this.j.o.extraIcons?.[name]) ? name : '';
+				state.icon.name =
+					Icon.exists(name) || this.j.o.extraIcons?.[name]
+						? name
+						: '';
 			}
 
 			if (!control.iconURL && !state.icon.name) {

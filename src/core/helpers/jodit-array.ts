@@ -11,11 +11,11 @@ import { error } from './type';
  * @deprecated Use `Jodit.atom` instead
  */
 export function JoditArray(data: any[]) {
-		if (!isProd) {
-			throw error('Deprecated class. Use `Jodit.atom` instead');
-		}
+	if (!isProd) {
+		throw error('Deprecated class. Use `Jodit.atom` instead');
+	}
 
-		markAsAtomic(data);
+	markAsAtomic(data);
 
-		return data;
+	return data;
 }

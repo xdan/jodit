@@ -10,5 +10,5 @@ export function table(editor: IJodit): void {
 	editor.registerButton({
 		name: 'table',
 		group: 'insert'
-	})
+	});
 }

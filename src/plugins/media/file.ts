@@ -4,7 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IControlType, IFileBrowserCallBackData, IJodit } from '../../types';
+import type {
+	IControlType,
+	IFileBrowserCallBackData,
+	IJodit
+} from '../../types';
 import { Config } from '../../config';
 import { Dom } from '../../core/dom';
 import { FileSelectorWidget } from '../../modules/widget';
@@ -34,10 +38,10 @@ Config.prototype.controls.file = {
 			sourceAnchor = Dom.isTag(current, 'a')
 				? current
 				: (Dom.closest(
-					current,
-					'a',
-					editor.editor
-				) as HTMLAnchorElement);
+						current,
+						'a',
+						editor.editor
+				  ) as HTMLAnchorElement);
 		}
 
 		return FileSelectorWidget(
@@ -45,7 +49,7 @@ Config.prototype.controls.file = {
 			{
 				filebrowser: (data: IFileBrowserCallBackData) => {
 					data.files &&
-					data.files.forEach(file => insert(data.baseurl + file));
+						data.files.forEach(file => insert(data.baseurl + file));
 
 					close();
 				},

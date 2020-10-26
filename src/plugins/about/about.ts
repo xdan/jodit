@@ -47,7 +47,7 @@ Config.prototype.controls.about = {
 
 		css(dialog.dialog, {
 			minHeight: 200,
-			minWidth: 420,
+			minWidth: 420
 		});
 
 		dialog.open(true);

@@ -9,7 +9,7 @@ import { CanPromise, IDestructible, IInitable } from './types';
 import { IViewBased } from './view';
 
 export interface IPluginButton {
-	name: string,
+	name: string;
 	group?: string;
 	position?: number;
 }

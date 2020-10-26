@@ -143,5 +143,5 @@ export function copyFormat(editor: IJodit): void {
 	editor.registerButton({
 		name: 'copyformat',
 		group: 'clipboard'
-	})
+	});
 }

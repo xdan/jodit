@@ -11,5 +11,5 @@ export function video(editor: IJodit) {
 	editor.registerButton({
 		name: 'video',
 		group: 'media'
-	})
+	});
 }

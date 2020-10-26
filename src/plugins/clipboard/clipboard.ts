@@ -20,24 +20,24 @@ export class clipboard implements IPlugin {
 	buttons = [
 		{
 			name: 'cut',
-			group: 'clipboard',
+			group: 'clipboard'
 		},
 		{
 			name: 'copy',
-			group: 'clipboard',
+			group: 'clipboard'
 		},
 		{
 			name: 'paste',
-			group: 'clipboard',
+			group: 'clipboard'
 		},
 		{
 			name: 'selectall',
-			group: 'clipboard',
+			group: 'clipboard'
 		}
 	];
 
 	init(editor: IJodit): void {
-		this.buttons.forEach((btn) => editor.registerButton(btn))
+		this.buttons.forEach(btn => editor.registerButton(btn));
 
 		editor.e
 			.off(`copy.${pluginKey} cut.${pluginKey}`)

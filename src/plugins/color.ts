@@ -198,7 +198,7 @@ export function color(editor: IJodit): void {
 	editor.registerButton({
 		name: 'brush',
 		group: 'color'
-	})
+	});
 
 	const callback = (
 		command: string,

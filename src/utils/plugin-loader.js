@@ -6,7 +6,7 @@
 
 const ts = require('typescript');
 
-module.exports = function() {
+module.exports = function () {
 	this.cacheable && this.cacheable(true);
 	return 'module.exports.default = {};';
 };

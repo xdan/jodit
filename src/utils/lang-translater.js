@@ -106,7 +106,11 @@ const translateAll = text => {
 
 			fs.writeFileSync(
 				newFilePath,
-				`${header}\nmodule.exports = ${JSON.stringify(data, null, '\t')};`
+				`${header}\nmodule.exports = ${JSON.stringify(
+					data,
+					null,
+					'\t'
+				)};`
 			);
 		}
 	});
@@ -118,9 +122,12 @@ const translateAll = text => {
 			indexFile,
 			`${header}\n${langs
 				.map(
-					([lang, file, realLang]) => `const ${realLang} = require('./${file}');\n`
+					([lang, file, realLang]) =>
+						`const ${realLang} = require('./${file}');\n`
 				)
-				.join('')}\nexport default {${langs.map(([,,lang]) => lang).join(',')}};`
+				.join('')}\nexport default {${langs
+				.map(([, , lang]) => lang)
+				.join(',')}};`
 		);
 	}
 };

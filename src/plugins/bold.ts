@@ -84,19 +84,17 @@ export function bold(editor: IJodit): void {
 		return false;
 	};
 
-	[
-		'bold', 'italic', 'underline', 'strikethrough'
-	].forEach(name => {
+	['bold', 'italic', 'underline', 'strikethrough'].forEach(name => {
 		editor.registerButton({
-			name, group: 'font-style'
+			name,
+			group: 'font-style'
 		});
 	});
 
-	[
-		'superscript', 'subscript'
-	].forEach(name => {
+	['superscript', 'subscript'].forEach(name => {
 		editor.registerButton({
-			name, group: 'script'
+			name,
+			group: 'script'
 		});
 	});
 

@@ -54,7 +54,8 @@ import {
 	JoditArray,
 	JoditObject,
 	callPromise,
-	toArray, markAsAtomic
+	toArray,
+	markAsAtomic
 } from './core/helpers/';
 
 import { Storage } from './core/storage/';

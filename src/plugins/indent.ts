@@ -65,11 +65,13 @@ export function indent(editor: IJodit): void {
 
 	editor
 		.registerButton({
-			name: 'indent', group: 'indent'
+			name: 'indent',
+			group: 'indent'
 		})
 		.registerButton({
-			name: 'outdent', group: 'indent'
-		})
+			name: 'outdent',
+			group: 'indent'
+		});
 
 	const callback = (command: string): void | false => {
 		const indentedBoxes: HTMLElement[] = [];

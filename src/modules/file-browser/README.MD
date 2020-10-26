@@ -39,8 +39,8 @@ var editor = new Jodit('#editor', {
 			{
 				name: 'deleteall',
 				icon: 'remove',
-				exec: function(fb) {
-					fb.state.elements().forEach(function() {
+				exec: function (fb) {
+					fb.state.elements().forEach(function () {
 						editor.filebrowser.remove(
 							editor.filebrowser.currentPath,
 							$(this).data('name')
@@ -61,10 +61,10 @@ var editor = new Jodit('#editor', {
 ```javascript
 Jodit.make('#editor', {
 	filebrowser: {
-		isSuccess: function(resp) {
+		isSuccess: function (resp) {
 			return resp.status == 1;
 		},
-		getMessage: function(resp) {
+		getMessage: function (resp) {
 			return resp.message;
 		}
 	}
@@ -187,10 +187,10 @@ Example:
 ```javascript
 Jodit.make('#editor2', {
 	filebrowser: {
-		isSuccess: function(resp) {
+		isSuccess: function (resp) {
 			return resp.length !== 0;
 		},
-		getMessage: function(resp) {
+		getMessage: function (resp) {
 			return resp;
 		},
 		ajax: {
@@ -205,11 +205,11 @@ Jodit.make('#editor2', {
 			data: {
 				someparameter: 1
 			},
-			prepareData: function(data) {
+			prepareData: function (data) {
 				data.someparameter++;
 				return data;
 			},
-			process: function(resp) {
+			process: function (resp) {
 				return resp.split('|'); // return items list
 			}
 		}

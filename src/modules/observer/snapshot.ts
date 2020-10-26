@@ -193,7 +193,7 @@ export class Snapshot extends ViewComponent<IJodit> {
 			this.j.setEditorValue(snapshot.html);
 		}
 
-		this.restoreOnlySelection(snapshot)
+		this.restoreOnlySelection(snapshot);
 
 		this.restoreScrollState(scroll);
 		this.isBlocked = false;
