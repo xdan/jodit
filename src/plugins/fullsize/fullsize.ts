@@ -11,34 +11,29 @@ import { Config } from '../../config';
 import * as consts from '../../core/constants';
 import { css, isJoditObject } from '../../core/helpers';
 
-/**
- * Fullsize plugin
- *
- * @module Fullsize
- */
-
-/**
- * @property{boolean} fullsize=false true Editor toWYSIWYG open toWYSIWYG full screen
- * @property{boolean} globalFullSize=true if true, after `fullsize` -  all editors element
- * get jodit_fullsize-box_true class (z-index: 100000 !important;)
- * @example
- * ```javascript
- * var editor = new jodit({
- *     fullsize: true // fullsize editor
- * });
- * ```
- * @example
- * ```javascript
- * var editor = new Jodit();
- * editor.e.fire('toggleFullSize');
- * editor.e.fire('toggleFullSize', true); // fullsize
- * editor.e.fire('toggleFullSize', false); // usual mode
- * ```
- */
-
 declare module '../../config' {
 	interface Config {
+		/**
+		 * Open WYSIWYG in full screen
+		 * @example
+		 * ```javascript
+		 * var editor = new jodit({
+		 *     fullsize: true // fullsize editor
+		 * });
+		 * ```
+		 * @example
+		 * ```javascript
+		 * var editor = new Jodit();
+		 * editor.e.fire('toggleFullSize');
+		 * editor.e.fire('toggleFullSize', true); // fullsize
+		 * editor.e.fire('toggleFullSize', false); // usual mode
+		 * ```
+		 */
 		fullsize: boolean;
+
+		/**
+		 * True, after `fullsize` -  all editors elements above jodit will get `jodit_fullsize-box_true` class (z-index: 100000 !important;)
+		 */
 		globalFullSize: boolean;
 	}
 }
@@ -71,7 +66,6 @@ Config.prototype.controls.fullsize = {
 
 /**
  * Process `toggleFullSize` event, and behavior - set/unset fullsize mode
- *
  * @param {Jodit} editor
  */
 export function fullsize(editor: IViewWithToolbar): void {
@@ -137,6 +131,7 @@ export function fullsize(editor: IViewWithToolbar): void {
 					editor.toolbarContainer.appendChild(
 						editor.toolbar.container
 					);
+
 				css(editor.toolbar.container, 'width', 'auto');
 			}
 
