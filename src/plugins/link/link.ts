@@ -24,25 +24,45 @@ import {
 import { Select } from '../../core/selection/';
 import { formTemplate } from './template';
 
-/**
- * @property {object}  link `{@link link|link}` plugin's options
- * @property {boolean} link.followOnDblClick=true Follow lnk address after dblclick
- * @property {boolean} link.processVideoLink=true Replace inserted youtube/vimeo link toWYSIWYG `iframe`
- * @property {boolean} link.processPastedLink=true Wrap inserted link in &lt;a href="link">link&lt;/a>
- * @property {boolean} link.removeLinkAfterFormat=true When the button is pressed toWYSIWYG clean format,
- * if it was done on the link is removed like command `unlink`
- */
-
 declare module '../../config' {
 	interface Config {
 		link: {
+			/**
+			 * Template for the link dialog form
+			 * @param editor
+			 */
 			formTemplate: (editor: IJodit) => string | HTMLElement | IUIForm;
 			formClassName?: string;
+
+			/**
+			 * Follow link address after dblclick
+			 */
 			followOnDblClick: boolean;
+
+			/**
+			 * Replace inserted youtube/vimeo link toWYSIWYG `iframe`
+			 */
 			processVideoLink: boolean;
+
+			/**
+			 * Wrap inserted link in &lt;a href="link">link&lt;/a>
+			 */
 			processPastedLink: boolean;
+
+			/**
+			 * When the button is pressed toWYSIWYG clean format,
+			 * if it was done on the link is removed like command `unlink`
+			 */
 			removeLinkAfterFormat: boolean;
+
+			/**
+			 * Show `no follow` checkbox in link dialog.
+			 */
 			noFollowCheckbox: boolean;
+
+			/**
+			 * Show `Open in new tab` checkbox in link dialog.
+			 */
 			openInNewTabCheckbox: boolean;
 		};
 	}
@@ -262,9 +282,7 @@ Config.prototype.controls.link = {
 } as IControlType;
 
 /**
- * Process link. Insert, dbclick or remove format
- *
- * @module plugins/link
+ * Process link. Insert, dblclick or remove format
  */
 export function link(jodit: IJodit): void {
 	jodit.registerButton({
