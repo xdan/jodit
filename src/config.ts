@@ -270,6 +270,11 @@ export class Config implements IViewOptions {
 	toolbar: boolean | string | HTMLElement = true;
 
 	/**
+	 * Boolean, whether the statusbar should be shown.
+	 */
+	statusbar: boolean = true;
+
+	/**
 	 * Show tooltip after mouse enter on the button
 	 */
 	showTooltip: boolean = true;

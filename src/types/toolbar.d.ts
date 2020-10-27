@@ -293,6 +293,8 @@ export interface IStatusBar extends IComponent {
 
 	show(): void;
 	hide(): void;
+	isShown: boolean;
+
 	getHeight(): number;
 	append(el: HTMLElement, inTheRight?: boolean): void;
 }
@@ -302,5 +304,6 @@ export interface IProgressBar extends IDestructible {
 
 	show(): IProgressBar;
 	hide(): IProgressBar;
+
 	progress(percentage: number): IProgressBar;
 }

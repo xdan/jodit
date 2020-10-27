@@ -217,6 +217,61 @@ describe('Jodit Editor Tests', function () {
 					});
 				});
 			});
+
+			describe('Statusbar', function () {
+				describe('Hide', function () {
+					it('should not show statusbar', function () {
+						const editor = getJodit({
+							statusbar: false
+						});
+
+						expect(
+							editor.container
+								.querySelector('.jodit-status-bar')
+								.classList.contains('jodit_hidden')
+						).is.true;
+
+						expect(editor.statusbar.isShown).is.false;
+					});
+
+					describe('Show programmatically', function () {
+						it('should show statusbar', function () {
+							const editor = getJodit({
+								statusbar: false
+							});
+
+							expect(
+								editor.container
+									.querySelector('.jodit-status-bar')
+									.classList.contains('jodit_hidden')
+							).is.true;
+							expect(editor.statusbar.isShown).is.false;
+
+							editor.statusbar.show();
+
+							expect(
+								editor.container
+									.querySelector('.jodit-status-bar')
+									.classList.contains('jodit_hidden')
+							).is.false;
+							expect(editor.statusbar.isShown).is.true;
+						});
+					});
+				});
+
+				describe('Show', function () {
+					it('should show statusbar', function () {
+						const editor = getJodit();
+
+						expect(
+							editor.container
+								.querySelector('.jodit-status-bar')
+								.classList.contains('jodit_hidden')
+						).is.false;
+						expect(editor.statusbar.isShown).is.true;
+					});
+				});
+			});
 		});
 
 		describe('Set font for editor', function () {

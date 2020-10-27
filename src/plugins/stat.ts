@@ -76,6 +76,7 @@ export class stat extends Plugin {
 		}
 	}, this.j.defaultTimeout);
 
+	/** @override */
 	beforeDestruct(): void {
 		Dom.safeRemove(this.charCounter);
 		Dom.safeRemove(this.wordCounter);

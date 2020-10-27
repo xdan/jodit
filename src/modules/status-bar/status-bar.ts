@@ -6,25 +6,32 @@
 
 import './status-bar.less';
 
-import type { IJodit, IStatusBar, Nullable } from '../../types';
+import type { IJodit, IStatusBar } from '../../types';
 import { ViewComponent, STATUSES } from '../../core/component';
 import { Dom } from '../../core/dom';
 
-export class StatusBar extends ViewComponent implements IStatusBar {
-	container: Nullable<HTMLElement> = null;
+export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
+	container!: HTMLDivElement;
 
 	/**
 	 * Hide statusbar
 	 */
 	hide(): void {
-		this.container && this.container.classList.add('jodit_hidden');
+		this.container.classList.add('jodit_hidden');
 	}
 
 	/**
 	 * Show statusbar
 	 */
 	show(): void {
-		this.container && this.container.classList.remove('jodit_hidden');
+		this.container.classList.remove('jodit_hidden');
+	}
+
+	/**
+	 * Status bar is shown
+	 */
+	get isShown(): boolean {
+		return Boolean(this.container.classList.contains('jodit_hidden'));
 	}
 
 	/**
@@ -67,7 +74,11 @@ export class StatusBar extends ViewComponent implements IStatusBar {
 		wrapper.appendChild(child);
 
 		this.container?.appendChild(wrapper);
-		this.show();
+
+		if (this.j.o.statusbar) {
+			this.show();
+		}
+
 		this.j.e.fire('resize');
 	}
 
@@ -82,10 +93,7 @@ export class StatusBar extends ViewComponent implements IStatusBar {
 
 	destruct(): void {
 		this.setStatus(STATUSES.beforeDestruct);
-
 		Dom.safeRemove(this.container);
-		this.container = null;
-
 		super.destruct();
 	}
 }

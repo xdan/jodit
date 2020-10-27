@@ -30,6 +30,18 @@ const editor = Jodit.make('#editor', {
 });
 ```
 
+##### New option `statusbar: boolean = true`
+Issue https://github.com/xdan/jodit/issues/535
+
+```
+const editor = Jodit.make('#editor', {
+   statusbar: false
+});
+console.log(editor.statusbar.isShown); // false
+editor.statusbar.show();
+console.log(editor.statusbar.isShown); // true
+```
+
 ##### Buttons groups
 The `buttons` option can contain named groups of buttons.
 Each plugin decides which button belongs to which group.
