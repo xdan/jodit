@@ -10,6 +10,9 @@ import { IComponent, IContainer } from './types';
 export interface IDialogOptions extends IViewOptions {
 	resizable?: boolean;
 	draggable?: boolean;
+	maxWidth?: string | number;
+	minWidth?: string | number;
+	minHeight?: string | number;
 }
 
 export type ContentItem = string | HTMLElement | IContainer;
@@ -20,6 +23,7 @@ export type Content =
 
 export interface IDialog extends IComponent, IContainer {
 	isOpened: boolean;
+	dialog: HTMLDivElement;
 
 	open(destroyAfter: boolean): this;
 	open(destroyAfter: boolean, modal: boolean): this;

@@ -10,6 +10,10 @@
 
 ## 3.4.29
 
+#### :bug: Bug Fix
+
+* [#536 Layout bug and drag&drop image loading](https://github.com/xdan/jodit/issues/536)
+
 #### :rocket: New Feature
 
 ##### Jodit.atom

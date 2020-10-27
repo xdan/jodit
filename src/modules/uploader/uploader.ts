@@ -98,7 +98,7 @@ Config.prototype.uploader = {
 	},
 
 	defaultHandlerSuccess(this: Uploader, resp: IUploaderData) {
-		const j = this.j;
+		const j = this.j || this;
 
 		if (!isJoditObject(j)) {
 			return;
@@ -119,16 +119,14 @@ Config.prototype.uploader = {
 					elm.textContent = resp.baseurl + filename;
 				}
 
-				if (isJoditObject(this.j)) {
-					if (tagName === 'img') {
-						this.j.s.insertImage(
-							elm as HTMLImageElement,
-							null,
-							this.j.o.imageDefaultWidth
-						);
-					} else {
-						this.j.s.insertNode(elm);
-					}
+				if (tagName === 'img') {
+					j.s.insertImage(
+						elm as HTMLImageElement,
+						null,
+						j.o.imageDefaultWidth
+					);
+				} else {
+					j.s.insertNode(elm);
 				}
 			});
 		}

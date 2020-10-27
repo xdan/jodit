@@ -10,14 +10,13 @@ import autobind from 'autobind-decorator';
 
 import type {
 	IControlType,
-	IDialogOptions,
 	IDictionary,
 	IToolbarCollection,
 	IContainer,
 	IDialog,
 	ContentItem,
 	Content,
-	IViewOptions
+	IDialogOptions
 } from '../../types/';
 import { Config, OptionsDefault } from '../../config';
 import { KEY_ESC } from '../../core/constants';
@@ -699,7 +698,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		return this;
 	}
 
-	constructor(options?: IViewOptions) {
+	constructor(options?: IDialogOptions) {
 		super(options);
 
 		const self: Dialog = this;
@@ -749,6 +748,12 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		self.dialog = self.container.querySelector(
 			'.jodit-dialog'
 		) as HTMLDivElement;
+
+		css(self.dialog, {
+			maxWidth: self.options.maxWidth,
+			minHeight: self.options.minHeight,
+			minWidth: self.options.minWidth
+		});
 
 		self.resizer = self.container.querySelector(
 			'.jodit-dialog__resizer'

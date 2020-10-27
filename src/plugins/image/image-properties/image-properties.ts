@@ -239,6 +239,8 @@ export class imageProperties extends Plugin {
 			fullsize: this.j.o.fullsize,
 			globalFullSize: this.j.o.globalFullSize,
 			language: this.j.o.language,
+			minWidth: Math.min(400, screen.width),
+			minHeight: 400,
 			buttons: ['fullsize', 'dialog.close']
 		});
 

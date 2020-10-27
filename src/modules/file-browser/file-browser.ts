@@ -515,6 +515,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			theme: self.o.theme,
 			globalFullSize: self.o.globalFullSize,
 			language: this.o.language,
+			minWidth: Math.min(700, screen.width),
+			minHeight: 300,
 			buttons: ['fullsize', 'dialog.close']
 		});
 
