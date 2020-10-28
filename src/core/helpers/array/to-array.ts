@@ -5,6 +5,7 @@
  */
 
 import { reset } from '../utils';
+import { isNativeFunction } from '../checker';
 
 /**
  * Always return Array. In some cases(Joomla Mootools)
@@ -13,6 +14,8 @@ import { reset } from '../utils';
 export const toArray = function toArray<T extends typeof Array.from>(
 	...args: Parameters<T>
 ): ReturnType<T> {
-	const func = reset<typeof Array.from>('Array.from') ?? Array.from;
+	const func = isNativeFunction(Array.from)
+		? Array.from
+		: reset<typeof Array.from>('Array.from') ?? Array.from;
 	return func.apply(Array, args) as ReturnType<T>;
 } as typeof Array.from;

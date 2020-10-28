@@ -14,6 +14,7 @@
 
 * [#540 How i can get Iframe without parent element <jodit>...</jodit>](https://github.com/xdan/jodit/issues/540)
 * [#536 Layout bug and drag&drop image loading](https://github.com/xdan/jodit/issues/536)
+* [#531 Popups are not showing at all on Legacy Edge](https://github.com/xdan/jodit/issues/531)
 
 #### :rocket: New Feature
 
