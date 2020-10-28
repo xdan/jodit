@@ -31,7 +31,7 @@ export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 	 * Status bar is shown
 	 */
 	get isShown(): boolean {
-		return Boolean(this.container.classList.contains('jodit_hidden'));
+		return !this.container.classList.contains('jodit_hidden');
 	}
 
 	/**
