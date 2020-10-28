@@ -3,8 +3,15 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import { isFunction } from '../helpers/checker';
+import {
+	isBoolean,
+	isFunction,
+	isNumber,
+	isPlainObject,
+	isString
+} from '../helpers/checker';
 import { getClassName } from '../helpers/utils';
+import { type } from '../helpers';
 
 /**
  * Allow spy for the class
@@ -35,8 +42,16 @@ export const spy = function spy(target: Function) {
 						console.log(
 							`Class: ${getClassName(
 								target.prototype
-							)} call: ${String(key)}`
+							)} call: ${String(key)}(${args.map(a =>
+								isPlainObject(a) ||
+								isString(a) ||
+								isBoolean(a) ||
+								isNumber(a)
+									? JSON.stringify(a)
+									: `[${type(a)}]`
+							)})`
 						);
+
 						return fn.apply(this, args);
 					};
 				}

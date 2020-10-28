@@ -10,9 +10,7 @@ import { Dom } from '../../core/dom';
 import {
 	INSEPARABLE_TAGS,
 	INVISIBLE_SPACE,
-	NBSP_SPACE,
-	KEY_BACKSPACE,
-	KEY_DELETE
+	NBSP_SPACE
 } from '../../core/constants';
 import { isVoid, call, trim, attr, trimInv } from '../../core/helpers';
 import {
@@ -21,8 +19,34 @@ import {
 	getSibling,
 	normalizeCursorPosition
 } from './helpers';
+import { Config } from '../../config';
+
+declare module '../../config' {
+	interface Config {
+		delete: {
+			hotkeys: {
+				delete: string[];
+				deleteWord: string[];
+				backspace: string[];
+				backspaceWord: string[];
+			};
+		};
+	}
+}
+
+Config.prototype.delete = {
+	hotkeys: {
+		delete: ['delete', 'cmd+backspace'],
+		deleteWord: ['ctrl+delete', 'cmd+alt+backspace', 'ctrl+alt+backspace'],
+		backspace: ['backspace'],
+		backspaceWord: ['ctrl+backspace']
+	}
+};
 
 export class Delete extends Plugin {
+	/** @override */
+	requires = ['hotkeys'];
+
 	/**
 	 * Shortcut for jodit.editor
 	 */
@@ -32,30 +56,34 @@ export class Delete extends Plugin {
 
 	/** @override */
 	protected afterInit(jodit: IJodit): void {
-		jodit.e
-			.on('afterCommand', (command: string) => {
-				if (command === 'delete') {
-					this.afterDeleteCommand();
-				}
+		jodit.e.on('afterCommand.delete', (command: string) => {
+			if (command === 'delete') {
+				this.afterDeleteCommand();
+			}
+		});
+
+		jodit
+			.registerCommand('deleteButton', {
+				exec: () => this.onDelete(false),
+				hotkeys: jodit.o.delete.hotkeys.delete
 			})
-			.on(
-				'keydown',
-				(event: KeyboardEvent): false | void => {
-					if (
-						event.key === KEY_BACKSPACE ||
-						event.key === KEY_DELETE
-					) {
-						return this.onDelete(event.key === KEY_BACKSPACE);
-					}
-				},
-				undefined,
-				true
-			);
+			.registerCommand('backspaceButton', {
+				exec: () => this.onDelete(true),
+				hotkeys: jodit.o.delete.hotkeys.backspace
+			})
+			.registerCommand('deleteWordButton', {
+				exec: () => this.onDelete(false, true),
+				hotkeys: jodit.o.delete.hotkeys.deleteWord
+			})
+			.registerCommand('backspaceWordButton', {
+				exec: () => this.onDelete(true, true),
+				hotkeys: jodit.o.delete.hotkeys.backspaceWord
+			});
 	}
 
 	/** @override */
 	protected beforeDestruct(jodit: IJodit): void {
-		jodit.e.off('afterCommand').off('keydown');
+		jodit.e.off('afterCommand.delete');
 	}
 
 	/**
@@ -85,9 +113,11 @@ export class Delete extends Plugin {
 
 	/**
 	 * Listener BackSpace or Delete button
+	 *
 	 * @param backspace
+	 * @param block
 	 */
-	private onDelete(backspace: boolean): false | void {
+	private onDelete(backspace: boolean, block: boolean = false): false | void {
 		const sel = this.j.selection;
 
 		if (!sel.isFocused()) {
@@ -114,7 +144,7 @@ export class Delete extends Plugin {
 
 			if (
 				this.checkRemoveInseparableElement(fakeNode, backspace) ||
-				this.checkRemoveChar(fakeNode, backspace) ||
+				this.checkRemoveChar(fakeNode, backspace,block) ||
 				this.checkTableCell(fakeNode, backspace) ||
 				this.checkRemoveEmptyParent(fakeNode, backspace) ||
 				this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
@@ -171,8 +201,9 @@ export class Delete extends Plugin {
 	 * ```
 	 * @param fakeNode
 	 * @param backspace
+	 * @param block
 	 */
-	private checkRemoveChar(fakeNode: Node, backspace: boolean): void | true {
+	private checkRemoveChar(fakeNode: Node, backspace: boolean, block: boolean): void | true {
 		const step = backspace ? -1 : 1;
 
 		const anotherSibling: Nullable<Node> = getSibling(fakeNode, !backspace);
@@ -247,6 +278,11 @@ export class Delete extends Plugin {
 
 			if (!isVoid(removed) && removed !== INVISIBLE_SPACE) {
 				charRemoved = true;
+
+				if (block) {
+					while (this.checkRemoveChar(fakeNode, backspace, false)) {}
+				}
+
 				break;
 			}
 

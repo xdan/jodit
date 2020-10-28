@@ -21,8 +21,6 @@ export class EventsNative implements IEventsNative {
 
 	private doc: Document = document;
 
-	private __stopped: EventHandlerBlock[][] = [];
-
 	private eachEvent(
 		events: string,
 		callback: (event: string, namespace: string) => void
@@ -140,20 +138,6 @@ export class EventsNative implements IEventsNative {
 		}
 
 		element.dispatchEvent(evt);
-	}
-
-	private removeStop(currentBlocks: EventHandlerBlock[]) {
-		if (currentBlocks) {
-			const index: number = this.__stopped.indexOf(currentBlocks);
-			index !== -1 && this.__stopped.splice(index, 1);
-		}
-	}
-
-	private isStopped(currentBlocks: EventHandlerBlock[]): boolean {
-		return (
-			currentBlocks !== undefined &&
-			this.__stopped.indexOf(currentBlocks) !== -1
-		);
 	}
 
 	/**
@@ -450,9 +434,9 @@ export class EventsNative implements IEventsNative {
 	 * @param subjectOrEvents
 	 * @param eventsList
 	 */
-	stopPropagation(subjectOrEvents: string): void;
-	stopPropagation(subjectOrEvents: object, eventsList: string): void;
-	stopPropagation(subjectOrEvents: object | string, eventsList?: string) {
+	stopPropagation(events: string): void;
+	stopPropagation(subject: object, eventsList: string): void;
+	stopPropagation(subjectOrEvents: object | string, eventsList?: string): void {
 		const subject: object = isString(subjectOrEvents)
 			? this
 			: subjectOrEvents;
@@ -485,6 +469,22 @@ export class EventsNative implements IEventsNative {
 					);
 			}
 		});
+	}
+
+	private __stopped: EventHandlerBlock[][] = [];
+
+	private removeStop(currentBlocks: EventHandlerBlock[]) {
+		if (currentBlocks) {
+			const index: number = this.__stopped.indexOf(currentBlocks);
+			index !== -1 && this.__stopped.splice(0, index + 1);
+		}
+	}
+
+	private isStopped(currentBlocks: EventHandlerBlock[]): boolean {
+		return (
+			currentBlocks !== undefined &&
+			this.__stopped.indexOf(currentBlocks) !== -1
+		);
 	}
 
 	/**

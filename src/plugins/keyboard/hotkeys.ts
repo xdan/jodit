@@ -123,6 +123,7 @@ export class hotkeys extends Plugin {
 		222: "'"
 	};
 
+	/** @override */
 	afterInit(editor: IJodit): void {
 		const commands: string[] = Object.keys(editor.o.commandToHotkeys);
 
@@ -160,9 +161,7 @@ export class hotkeys extends Plugin {
 
 					if (resultOfFire === false) {
 						itIsHotkey = true;
-
 						editor.e.stopPropagation('keydown');
-
 						return false;
 					}
 				},
@@ -182,6 +181,8 @@ export class hotkeys extends Plugin {
 				true
 			);
 	}
+
+	/** @override */
 	beforeDestruct(jodit: IJodit): void {
 		if (jodit.events) {
 			jodit.e.off('.hotkeys');

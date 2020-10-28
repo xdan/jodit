@@ -71,6 +71,24 @@ Jodit.plugins.add('somePlugin', function (editor) {
 })
 ```
 
+##### Hotkeys for BackSpace and Delete and remove part of text
+Added hotkey settings for Delete and Backspace buttons.
+And added hotkey `ctrl+backspace` for removing left part of text.
+Issue: [https://github.com/xdan/jodit/issues/532](https://github.com/xdan/jodit/issues/532)
+
+```js
+Jodit.make('#editor', {
+    delete: Jodit.atom({
+        hotkeys: {
+            delete: ['delete', 'cmd+backspace'],
+            deleteWord: ['ctrl+delete', 'cmd+alt+backspace', 'ctrl+alt+backspace'],
+            backspace: ['backspace'],
+            backspaceWord: ['ctrl+backspace']
+        }
+    })
+});
+```
+
 ## 3.4.28
 
 #### :bug: Bug Fix
