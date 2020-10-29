@@ -6,18 +6,23 @@
 
 const webpack = require('webpack');
 const yargs = require('yargs/yargs');
-const { hideBin } = require('yargs/helpers')
+const { hideBin } = require('yargs/helpers');
 const path = require('path');
 const rootPath = path.resolve(process.cwd()) + path.sep;
 const config = require(path.resolve(rootPath, './webpack.config.js'));
 
-const argv = yargs(hideBin(process.argv)).argv;
+const argv = yargs(hideBin(process.argv)).option('uglify', { type: 'boolean' })
+	.argv;
 
-const opt = config([], {
-	mode: 'production',
-	uglify: true,
-	es: 'es5',
-	...argv
-}, process.cwd());
+const opt = config(
+	[],
+	{
+		mode: 'production',
+		uglify: true,
+		es: 'es5',
+		...argv
+	},
+	rootPath
+);
 
 webpack(opt).run();

@@ -11,7 +11,11 @@ module.exports = class PostBuild {
 	apply(compiler) {
 		const handler = stats => {
 			if (typeof this.fn === 'function') {
-				this.fn(stats);
+				try {
+					this.fn(stats);
+				} catch (e) {
+					console.log(e);
+				}
 			}
 		};
 

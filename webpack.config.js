@@ -10,8 +10,8 @@ const webpack = require('webpack');
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MinimizeJSPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const PostBuild = require('./src/utils/post-build');
 
 /**
@@ -96,7 +96,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 
 		optimization: {
 			minimize: !debug && uglify,
-			moduleIds: 'named',
+			moduleIds: debug ? 'named' : 'natural',
 			minimizer: [
 				new MinimizeJSPlugin({
 					parallel: true,
@@ -129,6 +129,18 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 							preamble: banner
 						}
 					}
+				}),
+				new CssMinimizerPlugin({
+					cache: true,
+					parallel: true,
+					minimizerOptions: {
+						preset: [
+							'advanced',
+							{
+								discardComments: { removeAll: true },
+							},
+						],
+					},
 				})
 			]
 		},
@@ -164,9 +176,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 							target: ES
 						}
 					},
-					include: [
-						path.resolve(__dirname, './src/')
-					],
+					include: [path.resolve(__dirname, './src/')],
 					exclude: [
 						/langs\/[a-z]{2}\.ts/,
 						/langs\/[a-z]{2}_[a-z]{2}\.ts/
@@ -225,21 +235,6 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 		}
 
 		config.plugins.push(
-			new OptimizeCssAssetsPlugin({
-				assetNameRegExp: /\.css$/,
-				cssProcessorPluginOptions: {
-					preset: [
-						'default',
-						{
-							discardComments: {
-								removeAll: true
-							},
-							normalizeWhitespace: uglify
-						}
-					]
-				}
-			}),
-
 			new webpack.BannerPlugin({
 				banner,
 				raw: true,
@@ -251,8 +246,16 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 			config.plugins.push(
 				new PostBuild(() => {
 					const postcss = require('postcss');
+
 					const plugins = postcss([
-						require('autoprefixer'),
+						require('autoprefixer')({
+							overrideBrowserslist: [
+								'>1%',
+								'last 4 versions',
+								'Firefox ESR',
+								"ie >= 11",
+							]
+						}),
 						require('postcss-css-variables')
 					]);
 
