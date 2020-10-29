@@ -273,7 +273,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 						plugins
 							.process(css, { from: file, to: file })
 							.then(result => {
-								fs.writeFile(file, result.css, () => true);
+								fs.writeFile(file, banner + result.css, () => true);
 							});
 					});
 				})
