@@ -3,25 +3,16 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 const webpack = require('webpack');
+const yargs = require('yargs/yargs');
+const { hideBin } = require('yargs/helpers')
 const path = require('path');
 const rootPath = path.resolve(process.cwd()) + path.sep;
+const config = require(path.resolve(rootPath, './webpack.config.js'));
 
-const opt = require(path.resolve(rootPath, './webpack.config.js'))([], {
-	mode: 'production',
-	isTest: false,
-	uglify: true,
-	es: 'es5'
-}, process.cwd(), true);
+const argv = yargs(hideBin(process.argv)).argv;
 
-const compiler = webpack({
-	...opt,
-	entry: {
-		jodit: ['./plugins/show-blocks/show-blocks.ts']
-	},
-	output: {
-		...opt.output,
-		filename: 'show-blocks.js'
-	}
-});
-compiler.run();
+const opt = config([], argv, process.cwd(), true);
+
+webpack(opt).run();

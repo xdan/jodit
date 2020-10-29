@@ -46,8 +46,6 @@ const compiler = webpack(config);
 
 app.use(
 	webpackDevMiddleware(compiler, {
-		stats: { colors: true },
-		noInfo: true,
 		publicPath: config.output.publicPath
 	})
 );
