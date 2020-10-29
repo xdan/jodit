@@ -215,6 +215,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 		switch (mode) {
 			case 'production':
 				config.plugins.push(
+					new webpack.ProgressPlugin(),
 					new MiniCssExtractPlugin({
 						filename: filename('[name]') + '.css'
 					})

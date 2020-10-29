@@ -13,6 +13,11 @@ const config = require(path.resolve(rootPath, './webpack.config.js'));
 
 const argv = yargs(hideBin(process.argv)).argv;
 
-const opt = config([], argv, process.cwd(), true);
+const opt = config([], {
+	mode: 'production',
+	uglify: true,
+	es: 'es5',
+	...argv
+}, process.cwd());
 
 webpack(opt).run();
