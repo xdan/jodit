@@ -12,10 +12,6 @@ import { IS_IE } from '../../core/constants';
 declare module '../../config' {
 	interface Config {
 		sourceEditor: 'area' | 'ace';
-		/**
-		 * Use ACE editor instead of usual textarea
-		 */
-		useAceEditor: boolean;
 
 		/**
 		 * Options for [ace](https://ace.c9.io/#config) editor
@@ -45,7 +41,6 @@ declare module '../../config' {
 }
 
 Config.prototype.beautifyHTML = !IS_IE;
-Config.prototype.useAceEditor = true;
 Config.prototype.sourceEditor = 'ace';
 
 Config.prototype.sourceEditorNativeOptions = {

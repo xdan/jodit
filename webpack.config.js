@@ -72,6 +72,18 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 		}
 	];
 
+	const plugins = [
+		new webpack.ProgressPlugin(),
+		new webpack.DefinePlugin({
+			appVersion: JSON.stringify(pkg.version),
+			isProd: isProd,
+			'process.env': {
+				TARGET_ES: JSON.stringify(ES),
+				NODE_ENV: JSON.stringify(mode)
+			}
+		})
+	];
+
 	const config = {
 		cache: !isProd,
 		mode,
@@ -137,10 +149,10 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 						preset: [
 							'advanced',
 							{
-								discardComments: { removeAll: true },
-							},
-						],
-					},
+								discardComments: { removeAll: true }
+							}
+						]
+					}
 				})
 			]
 		},
@@ -196,36 +208,14 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 		},
 
 		plugins: debug
-			? [
-					new webpack.DefinePlugin({
-						appVersion: JSON.stringify(pkg.version),
-						isProd: isProd,
-						'process.env': {
-							TARGET_ES: JSON.stringify(ES),
-							NODE_ENV: JSON.stringify(mode)
-						}
-					}),
-					// new webpack.NamedModulesPlugin(),
-					new webpack.HotModuleReplacementPlugin()
-			  ]
-			: [
-					// new webpack.optimize.OccurrenceOrderPlugin(),
-					new webpack.DefinePlugin({
-						appVersion: JSON.stringify(pkg.version),
-						isProd: isProd,
-						'process.env': {
-							TARGET_ES: JSON.stringify(ES),
-							NODE_ENV: JSON.stringify(mode)
-						}
-					})
-			  ]
+			? [...plugins, new webpack.HotModuleReplacementPlugin()]
+			: plugins
 	};
 
 	if (!debug && !isTest) {
 		switch (mode) {
 			case 'production':
 				config.plugins.push(
-					new webpack.ProgressPlugin(),
 					new MiniCssExtractPlugin({
 						filename: filename('[name]') + '.css'
 					})
@@ -253,7 +243,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 								'>1%',
 								'last 4 versions',
 								'Firefox ESR',
-								"ie >= 11",
+								'ie >= 11'
 							]
 						}),
 						require('postcss-css-variables')
@@ -273,7 +263,11 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 						plugins
 							.process(css, { from: file, to: file })
 							.then(result => {
-								fs.writeFile(file, banner + result.css, () => true);
+								fs.writeFile(
+									file,
+									banner + result.css,
+									() => true
+								);
 							});
 					});
 				})
