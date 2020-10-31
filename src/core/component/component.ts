@@ -44,40 +44,6 @@ export abstract class Component implements IComponent {
 		return this.ownerWindow;
 	}
 
-	private __componentStatus: ComponentStatus = STATUSES.beforeInit;
-
-	/**
-	 * Current component status
-	 */
-	get componentStatus(): ComponentStatus {
-		return this.__componentStatus;
-	}
-
-	/**
-	 * Setter for current component status
-	 */
-	set componentStatus(componentStatus: ComponentStatus) {
-		this.setStatus(componentStatus);
-	}
-
-	/**
-	 * Set component status
-	 * @param componentStatus
-	 */
-	setStatus(componentStatus: ComponentStatus): void {
-		if (componentStatus === this.__componentStatus) {
-			return;
-		}
-
-		this.__componentStatus = componentStatus;
-
-		const cbList = this.onStatusLst && this.onStatusLst[componentStatus];
-
-		if (cbList) {
-			cbList.forEach(cb => cb(this));
-		}
-	}
-
 	/**
 	 * Safe get any field
 	 * @example
@@ -158,6 +124,50 @@ export abstract class Component implements IComponent {
 	 */
 	destruct(): void {
 		this.setStatus(STATUSES.destructed);
+
+		if (this.onStatusList?.get(this)) {
+			this.onStatusList.delete(this);
+		}
+	}
+
+	private __componentStatus: ComponentStatus = STATUSES.beforeInit;
+
+	/**
+	 * Current component status
+	 */
+	get componentStatus(): ComponentStatus {
+		return this.__componentStatus;
+	}
+
+	/**
+	 * Setter for current component status
+	 */
+	set componentStatus(componentStatus: ComponentStatus) {
+		this.setStatus(componentStatus);
+	}
+
+	/**
+	 * Set component status
+	 * @param componentStatus
+	 */
+	setStatus(componentStatus: ComponentStatus): void {
+		if (componentStatus === this.__componentStatus) {
+			return;
+		}
+
+		this.__componentStatus = componentStatus;
+
+		this.onStatusList?.forEach((dict, ctx) => {
+			const list = dict[componentStatus];
+
+			if (list && list.length) {
+				list.forEach(cb => cb(this));
+
+				if (this === ctx) {
+					delete dict[componentStatus];
+				}
+			}
+		});
 	}
 
 	/**
@@ -170,16 +180,23 @@ export abstract class Component implements IComponent {
 		status: ComponentStatus,
 		callback: (component: this) => void
 	): void {
-		if (!this.onStatusLst) {
-			this.onStatusLst = {};
+		if (!this.onStatusList) {
+			this.onStatusList = new Map();
 		}
 
-		if (!this.onStatusLst[status]) {
-			this.onStatusLst[status] = [];
+		let list = this.onStatusList.get(this);
+
+		if (!list) {
+			list = {};
+			this.onStatusList.set(this, list);
 		}
 
-		this.onStatusLst[status].push(callback);
+		if (!list[status]) {
+			list[status] = [];
+		}
+
+		list[status].push(callback);
 	}
 
-	private onStatusLst!: IDictionary<CallableFunction[]>;
+	private onStatusList!: Map<Component, IDictionary<CallableFunction[]>>;
 }

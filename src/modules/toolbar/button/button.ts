@@ -17,7 +17,7 @@ import type {
 	Nullable
 } from '../../../types';
 import { UIButton, UIButtonState } from '../../../core/ui/button';
-import { watch } from '../../../core/decorators';
+import { component, watch } from '../../../core/decorators';
 import { Dom } from '../../../core/dom';
 import { Popup } from '../../../core/ui/popup/';
 import { makeCollection } from '../factory';
@@ -31,10 +31,11 @@ import {
 	call,
 	isArray
 } from '../../../core/helpers/';
-import { STATUSES } from '../../../core/component';
 import { Icon } from '../../../core/ui';
 import { ToolbarCollection } from '../../../modules/toolbar/collection/collection';
+import { STATUSES } from '../../../core/component';
 
+@component
 export class ToolbarButton<T extends IViewBased = IViewBased>
 	extends UIButton
 	implements IToolbarButton {
@@ -197,7 +198,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		readonly target: Nullable<HTMLElement> = null
 	) {
 		super(jodit);
-		this.setParentView(jodit);
 
 		// Prevent lost focus
 		jodit.e.on([this.button, this.trigger], 'mousedown', (e: MouseEvent) =>
@@ -205,102 +205,92 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		);
 
 		this.onAction(this.onClick);
-		this.setStatus(STATUSES.ready);
 
-		this.initFromControl();
-		this.initTooltip();
-		this.update();
+		this.hookStatus(STATUSES.ready, () => {
+			this.initFromControl();
+			this.initTooltip();
+
+			this.update();
+		});
 	}
 
 	/**
 	 * Init constant data from control
 	 */
 	private initFromControl(): void {
-		const { control, state } = this;
+		const { control: ctr, state } = this;
 
 		this.updateSize();
 
-		state.name = control.name;
+		state.name = ctr.name;
 
 		const { textIcons } = this.j.o;
 
 		if (
 			textIcons === true ||
-			(isFunction(textIcons) && textIcons(control.name)) ||
-			control.template
+			(isFunction(textIcons) && textIcons(ctr.name)) ||
+			ctr.template
 		) {
 			state.icon = UIButtonState().icon;
-			state.text = control.text || control.name;
+			state.text = ctr.text || ctr.name;
 		} else {
-			if (control.iconURL) {
-				state.icon.iconURL = control.iconURL;
+			if (ctr.iconURL) {
+				state.icon.iconURL = ctr.iconURL;
 			} else {
-				const name = control.icon || control.name;
+				const name = ctr.icon || ctr.name;
 				state.icon.name =
 					Icon.exists(name) || this.j.o.extraIcons?.[name]
 						? name
 						: '';
 			}
 
-			if (!control.iconURL && !state.icon.name) {
-				state.text = control.text || control.name;
+			if (!ctr.iconURL && !state.icon.name) {
+				state.text = ctr.text || ctr.name;
 			}
 		}
 
-		if (control.tooltip) {
-			state.tooltip = this.j.i18n(control.tooltip);
+		if (ctr.tooltip) {
+			state.tooltip = this.j.i18n(ctr.tooltip);
 		}
 
-		state.hasTrigger = Boolean(
-			control.list || (control.popup && control.exec)
-		);
+		state.hasTrigger = Boolean(ctr.list || (ctr.popup && ctr.exec));
 	}
 
 	/**
 	 * Click on trigger button
 	 */
 	protected onTriggerClick(e: MouseEvent): void {
-		const { control } = this;
+		const { control: ctr } = this;
 
 		e.buffer = {
 			actionTrigger: this
 		};
 
-		if (control.list) {
-			return this.openControlList(control as IControlTypeStrongList);
+		if (ctr.list) {
+			return this.openControlList(ctr as IControlTypeStrongList);
 		}
 
-		if (isFunction(control.popup)) {
+		if (isFunction(ctr.popup)) {
 			const popup = new Popup(this.j);
 			popup.parentElement = this;
 
 			if (
 				this.j.e.fire(
-					camelCase(`before-${control.name}-open-popup`),
+					camelCase(`before-${ctr.name}-open-popup`),
 					this.target,
-					control,
+					ctr,
 					popup
 				) !== false
 			) {
 				const target =
-					(this.toolbar
-						? this.toolbar.getTarget(this)
-						: this.target) || null;
+					this.toolbar?.getTarget(this) ?? this.target ?? null;
 
-				const popupElm = control.popup(
-					this.j,
-					target,
-					control,
-					popup.close,
-					this
-				);
+				const elm = ctr.popup(this.j, target, ctr, popup.close, this);
 
-				if (popupElm) {
+				if (elm) {
 					popup
 						.setContent(
-							isString(popupElm)
-								? this.j.c.fromHTML(popupElm)
-								: popupElm
+							isString(elm) ? this.j.c.fromHTML(elm) : elm
 						)
 						.open(() => position(this.container));
 				}
@@ -317,7 +307,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			 * @event closeAllPopups
 			 */
 			this.j.e.fire(
-				camelCase(`after-${control.name}-open-popup`),
+				camelCase(`after-${ctr.name}-open-popup`),
 				popup.container
 			);
 		}
@@ -400,15 +390,13 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	 * @param originalEvent
 	 */
 	protected onClick(originalEvent: MouseEvent): void {
-		const { control } = this;
+		const { control: ctr } = this;
 
-		if (isFunction(control.exec)) {
-			const target =
-				(this.toolbar ? this.toolbar.getTarget(this) : this.target) ||
-				null;
+		if (isFunction(ctr.exec)) {
+			const target = this.toolbar?.getTarget(this) ?? this.target ?? null;
 
-			const result = control.exec(this.j, target, {
-				control,
+			const result = ctr.exec(this.j, target, {
+				control: ctr,
 				originalEvent,
 				button: this
 			});
@@ -430,22 +418,22 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			}
 		}
 
-		if (control.list) {
-			return this.openControlList(control as IControlTypeStrongList);
+		if (ctr.list) {
+			return this.openControlList(ctr as IControlTypeStrongList);
 		}
 
-		if (isFunction(control.popup)) {
+		if (isFunction(ctr.popup)) {
 			return this.onTriggerClick(originalEvent);
 		}
 
-		if (control.command || control.name) {
+		if (ctr.command || ctr.name) {
 			call(
 				isJoditObject(this.j)
 					? this.j.execCommand.bind(this.j)
 					: this.j.od.execCommand.bind(this.j.od),
-				control.command || control.name,
+				ctr.command || ctr.name,
 				false,
-				control.args && control.args[0]
+				ctr.args && ctr.args[0]
 			);
 
 			this.j.e.fire('closeAllPopups');

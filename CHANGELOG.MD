@@ -10,6 +10,10 @@
 
 ## 3.4.29
 
+#### :house: Internal
+
+Removed `useAceEditor` option. [https://github.com/xdan/jodit/issues/544](https://github.com/xdan/jodit/issues/544)
+
 #### :bug: Bug Fix
 
 * [#543 editor.destruct throws error](https://github.com/xdan/jodit/issues/543)

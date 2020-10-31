@@ -5,6 +5,7 @@
  */
 
 export * from './cache';
+export * from './component';
 export * from './debounce';
 export * from './hook';
 export * from './nonenumerable';

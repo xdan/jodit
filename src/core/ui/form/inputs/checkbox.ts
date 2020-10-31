@@ -5,8 +5,10 @@
  */
 import './checkbox.less';
 import { UIInput } from '../input';
-import { IDictionary } from '../../../../types';
+import { IDictionary, IUIInput, IViewBased } from '../../../../types';
+import { component } from '../../../decorators';
 
+@component
 export class UICheckbox extends UIInput {
 	/** @override */
 	protected makeContainer(options?: IDictionary): HTMLElement {
@@ -15,8 +17,8 @@ export class UICheckbox extends UIInput {
 		});
 	}
 
-	/** @override */
-	protected createContainer(options: this['options']): HTMLElement {
-		return super.createContainer({ ...options, type: 'checkbox' });
+	/** @override **/
+	constructor(jodit: IViewBased, options: Partial<IUIInput['state']>) {
+		super(jodit, {...options, type: 'checkbox'});
 	}
 }

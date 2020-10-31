@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { ViewComponent, STATUSES } from '../component';
+import { ViewComponent } from '../component';
 import type {
 	IDictionary,
 	IUIElement,
@@ -12,7 +12,6 @@ import type {
 	Nullable
 } from '../../types';
 import { Dom } from '../dom';
-import { getClassName } from '../helpers/utils';
 import { toArray } from '../helpers/array';
 
 export abstract class UIElement<T extends IViewBased = IViewBased>
@@ -21,6 +20,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	container!: HTMLElement;
 
 	private __parentElement: Nullable<IUIElement> = null;
+
 	get parentElement(): Nullable<IUIElement> {
 		return this.__parentElement;
 	}
@@ -165,6 +165,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		return this.makeContainer(options);
 	}
 
+	/** @override */
 	constructor(jodit: T, options?: IDictionary) {
 		super(jodit);
 
@@ -173,12 +174,9 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		Object.defineProperty(this.container, 'component', {
 			value: this
 		});
-
-		if (getClassName(this) === getClassName(UIElement.prototype)) {
-			this.setStatus(STATUSES.ready);
-		}
 	}
 
+	/** @override */
 	destruct(): any {
 		Dom.safeRemove(this.container);
 		this.parentElement = null;

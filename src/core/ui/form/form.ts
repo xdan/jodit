@@ -8,7 +8,9 @@ import type { IDictionary, IUIForm, IUIInput } from '../../../types';
 import { UIGroup } from '../list/group';
 import { UIInput } from './input';
 import { attr } from '../../helpers/utils';
+import { component } from '../../decorators';
 
+@component
 export class UIForm extends UIGroup implements IUIForm {
 	container!: HTMLFormElement;
 
@@ -42,7 +44,7 @@ export class UIForm extends UIGroup implements IUIForm {
 
 			handler(
 				inputs.reduce((res, item) => {
-					res[item.options.name] = item.value;
+					res[item.state.name] = item.value;
 					return res;
 				}, {} as IDictionary)
 			);

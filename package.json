@@ -78,7 +78,7 @@
 		"karma-webpack": "^4.0.2",
 		"less": "^3.12.2",
 		"less-loader": "^7.0.2",
-		"lint-staged": "^10.5.0",
+		"lint-staged": "^10.5.1",
 		"merge-stream": "^2.0.0",
 		"mini-css-extract-plugin": "^1.2.1",
 		"mocha": "^8.2.0",

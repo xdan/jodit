@@ -117,14 +117,15 @@ export interface IUIForm extends IUIGroup {
 
 export interface IUIInput extends IUIElement {
 	nativeInput: HTMLInputElement | HTMLTextAreaElement;
-	options: {
+	state: {
 		name: string;
-		label?: string;
-		ref?: string;
-		type?: 'text' | 'checkbox' | 'url';
-		placeholder?: string;
-		required?: boolean;
-		validators?: string[];
+		icon: string;
+		label: string;
+		ref: string;
+		type: 'text' | 'checkbox' | 'url';
+		placeholder: string;
+		required: boolean;
+		validators: string[];
 	};
 	value: string;
 	error: string;

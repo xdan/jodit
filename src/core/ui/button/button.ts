@@ -16,11 +16,11 @@ import {
 	IViewBased
 } from '../../../types';
 import watch from '../../../core/decorators/watch';
-import { STATUSES } from '../../component';
 import { Dom } from '../../dom';
-import { attr, isString, getClassName, isFunction } from '../../helpers';
+import { attr, isString, isFunction } from '../../helpers';
 import { Icon } from '../icon';
 import { UIList } from '../list/list';
+import { component } from '../../decorators';
 
 export const UIButtonState = (): IUIButtonState => ({
 	size: 'middle',
@@ -42,6 +42,7 @@ export const UIButtonState = (): IUIButtonState => ({
 	tabIndex: undefined
 });
 
+@component
 export class UIButton extends UIElement implements IUIButton {
 	/**
 	 * Marker for buttons
@@ -204,10 +205,6 @@ export class UIButton extends UIElement implements IUIButton {
 		this.updateSize();
 		this.onChangeSize();
 		this.onChangeStatus();
-
-		if (getClassName(this) === getClassName(UIButton.prototype)) {
-			this.setStatus(STATUSES.ready);
-		}
 
 		if (state) {
 			this.setState(state);

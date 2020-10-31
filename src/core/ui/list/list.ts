@@ -19,14 +19,13 @@ import type {
 
 import { UIButton } from '../button';
 import { getStrongControlTypes } from '../helpers/get-strong-control-types';
-import { STATUSES } from '../../component';
-import { watch } from '../../decorators';
+import { component, watch } from '../../decorators';
 import { UIGroup } from './group';
 import { UISeparator } from '../separator';
-import { getClassName } from '../../helpers';
 import { isButtonGroup } from '../helpers/buttons';
 import { getControlType } from '../helpers/get-control-type';
 
+@component
 export class UIList<T extends IViewBased = IViewBased>
 	extends UIGroup<T>
 	implements IUIList {
@@ -42,10 +41,6 @@ export class UIList<T extends IViewBased = IViewBased>
 	constructor(jodit: T) {
 		super(jodit);
 		this.onChangeMode();
-
-		if (getClassName(this) === getClassName(UIList.prototype)) {
-			this.setStatus(STATUSES.ready);
-		}
 	}
 
 	/**

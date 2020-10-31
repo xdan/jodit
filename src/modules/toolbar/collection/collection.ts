@@ -23,8 +23,9 @@ import { isFunction, isJoditObject } from '../../../core/helpers/';
 
 import { UIList } from '../../../core/ui';
 import { makeButton } from '../factory';
-import { STATUSES } from '../../../core/component';
+import { component } from '../../../core/decorators';
 
+@component
 export class ToolbarCollection<T extends IViewBased = IViewBased>
 	extends UIList<T>
 	implements IToolbarCollection {
@@ -128,7 +129,6 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	constructor(jodit: IViewBased) {
 		super(jodit as T);
 		this.initEvents();
-		this.setStatus(STATUSES.ready);
 	}
 
 	private initEvents() {

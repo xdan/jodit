@@ -5,6 +5,7 @@
  */
 
 import {
+	CanPromise,
 	HTMLTagNames,
 	IComponent,
 	IDestructible,

@@ -9,7 +9,9 @@ import './block.less';
 import type { IUIElement, IViewBased } from '../../../types';
 import { UIGroup } from '../list/group';
 import { attr } from '../../helpers/utils';
+import { component } from '../../decorators';
 
+@component
 export class UIBlock extends UIGroup {
 	constructor(
 		jodit: IViewBased,

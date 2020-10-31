@@ -14,7 +14,9 @@ import type {
 	IJodit
 } from '../../../types';
 import { css, isFunction } from '../../../core/helpers';
+import { component } from '../../../core/decorators';
 
+@component
 export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 	/** @override */
 	shouldBeDisabled(button: IToolbarButton): boolean {

@@ -15,7 +15,9 @@ import type {
 import { UIButton } from '../../../core/ui/button';
 import { Dom } from '../../../core/dom';
 import { isString, attr } from '../../../core/helpers';
+import { component } from '../../../core/decorators';
 
+@component
 export class ToolbarContent<T extends IViewBased = IViewBased>
 	extends UIButton
 	implements IToolbarButton {
@@ -45,6 +47,7 @@ export class ToolbarContent<T extends IViewBased = IViewBased>
 		readonly target: Nullable<HTMLElement> = null
 	) {
 		super(jodit);
+
 		this.container.classList.add(
 			`${this.componentName}_${this.clearName(control.name)}`
 		);

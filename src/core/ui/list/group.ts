@@ -13,9 +13,10 @@ import type {
 	IViewBased
 } from '../../../types';
 import { UIElement } from '../element';
-import { watch } from '../../decorators';
+import { component, watch } from '../../decorators';
 import { isArray } from '../../helpers';
 
+@component
 export class UIGroup<T extends IViewBased = IViewBased>
 	extends UIElement<T>
 	implements IUIGroup {
@@ -56,6 +57,10 @@ export class UIGroup<T extends IViewBased = IViewBased>
 		this.setMod('size', this.buttonSize);
 	}
 
+	/**
+	 * Append new element into group
+	 * @param elm
+	 */
 	append(elm: IUIElement): void {
 		this.elements.push(elm);
 		this.container.appendChild(elm.container);
@@ -63,16 +68,25 @@ export class UIGroup<T extends IViewBased = IViewBased>
 		elm.update();
 	}
 
+	/**
+	 * Clear group
+	 */
 	clear(): void {
 		this.elements.forEach(elm => elm.destruct());
 		this.elements.length = 0;
 	}
 
+	/**
+	 * @override
+	 * @param jodit
+	 * @param elements Items of group
+	 */
 	constructor(jodit: T, elements?: Array<IUIElement | void | null | false>) {
 		super(jodit);
 		elements?.forEach(elm => elm && this.append(elm));
 	}
 
+	/** @override */
 	destruct(): any {
 		this.clear();
 		return super.destruct();
