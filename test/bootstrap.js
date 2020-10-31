@@ -262,6 +262,8 @@ if (typeof window.chai !== 'undefined') {
 
 const i18nkeys = [];
 const excludeI18nKeys = [
+	'https://',
+	'http://',
 	'rect',
 	'empty',
 	'adddate',

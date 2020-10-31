@@ -379,7 +379,7 @@ describe('Link plugin', function() {
 
 					simulateEvent('submit', list.querySelector('form'));
 
-					expect(url.parentNode.classList.contains('jodit-ui-input_has-error_true')).is.true;
+					expect(Boolean(url.closest('.jodit-ui-input_has-error_true'))).is.true;
 
 					url.focus();
 					url.value = 'tests/artio.jpg';
@@ -796,7 +796,7 @@ describe('Link plugin', function() {
 							);
 
 							expect(
-								textInput.parentElement.parentElement.style.display
+								textInput.closest('.jodit-ui-block').style.display
 							).equals('none');
 
 							expect(textInput.value).equals('');

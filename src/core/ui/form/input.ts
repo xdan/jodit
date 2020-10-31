@@ -60,7 +60,7 @@ export class UIInput extends UIElement implements IUIInput {
 		attr(input, 'data-ref', ref || name);
 		attr(input, 'ref', ref || name);
 		attr(input, 'required', required || null);
-		attr(input, 'placeholder', this.j.i18n(placeholder));
+		attr(input, 'placeholder', placeholder ? this.j.i18n(placeholder) : '');
 
 		if (icon && Icon.exists(icon)) {
 			Dom.before(input, this.icon);

@@ -146,7 +146,7 @@ export const FileSelectorWidget = (
 					label: 'URL',
 					name: 'url',
 					type: 'url',
-					placeholder: 'http://'
+					placeholder: 'https://'
 				}),
 				new UIInput(editor, {
 					name: 'text',

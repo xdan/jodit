@@ -21,6 +21,7 @@ import { attr, isString, isFunction } from '../../helpers';
 import { Icon } from '../icon';
 import { UIList } from '../list/list';
 import { component } from '../../decorators';
+import { STATUSES } from '../../component';
 
 export const UIButtonState = (): IUIButtonState => ({
 	size: 'middle',
@@ -207,7 +208,9 @@ export class UIButton extends UIElement implements IUIButton {
 		this.onChangeStatus();
 
 		if (state) {
-			this.setState(state);
+			this.hookStatus(STATUSES.ready, () => {
+				this.setState(state);
+			});
 		}
 	}
 

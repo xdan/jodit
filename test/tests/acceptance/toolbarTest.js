@@ -646,7 +646,7 @@ describe('Toolbar', function () {
 
 					const pencil = getButton('link', popup);
 					expect(pencil).is.not.null;
-
+debugger
 					simulateEvent('click', pencil);
 					const subpopup = getOpenedPopup(editor);
 

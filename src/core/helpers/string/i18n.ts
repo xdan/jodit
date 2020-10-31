@@ -75,6 +75,10 @@ export const i18n = (
 		throw error('i18n: Need string in first argument');
 	}
 
+	if (!key.length) {
+		return key;
+	}
+
 	const debug: boolean = Boolean(
 		options !== undefined && options.debugLanguage
 	);
