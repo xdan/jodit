@@ -41,9 +41,10 @@ export const css = (
 			}
 
 			if (
-				!isVoid(_value) &&
-				css(elm, _key, undefined, true) !==
-					normalizeCssValue(_key, _value)
+				_value !== undefined &&
+				(_value === null ||
+					css(elm, _key, undefined, true) !==
+						normalizeCssValue(_key, _value))
 			) {
 				(elm.style as any)[_key] = _value;
 			}

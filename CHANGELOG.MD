@@ -20,6 +20,7 @@ Removed `useAceEditor` option. [https://github.com/xdan/jodit/issues/544](https:
 * [#540 How i can get Iframe without parent element <jodit>...</jodit>](https://github.com/xdan/jodit/issues/540)
 * [#536 Layout bug and drag&drop image loading](https://github.com/xdan/jodit/issues/536)
 * [#531 Popups are not showing at all on Legacy Edge](https://github.com/xdan/jodit/issues/531)
+* Fixed a bug when the search bar was shown in the scrolling editor, the editor was scrolled up. And the search box was not in sticky mode.
 
 #### :rocket: New Feature
 

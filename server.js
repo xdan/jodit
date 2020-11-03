@@ -45,9 +45,7 @@ const port = args.port || 2000;
 const compiler = webpack(config);
 
 app.use(
-	webpackDevMiddleware(compiler, {
-		publicPath: config.output.publicPath
-	})
+	webpackDevMiddleware(compiler)
 );
 
 app.use(webpackHotMiddleware(compiler));

@@ -10,12 +10,15 @@ import { Component, STATUSES } from '../component';
 
 /**
  * Wrap function in debounce wrapper
+ *
  * @param timeout
  * @param firstCallImmediately
+ * @param method
  */
 export function debounce(
 	timeout?: number | ((ctx: IViewComponent | IViewBased) => number),
-	firstCallImmediately: boolean = false
+	firstCallImmediately: boolean = false,
+	method: 'debounce' | 'throttle' = 'debounce'
 ) {
 	return <T extends Component & IDictionary>(
 		target: IDictionary,
@@ -33,7 +36,7 @@ export function debounce(
 					? timeout(component)
 					: timeout;
 
-				(component as any)[propertyKey] = view.async.debounce(
+				(component as any)[propertyKey] = view.async[method](
 					(component as any)[propertyKey].bind(component),
 					isNumber(realTimeout) ? realTimeout : view.defaultTimeout,
 					firstCallImmediately
@@ -41,4 +44,18 @@ export function debounce(
 			}
 		);
 	};
+}
+
+/**
+ * Wrap function in throttle wrapper
+ *
+ * @param timeout
+ * @param firstCallImmediately
+ * @param method
+ */
+export function throttle(
+	timeout?: number | ((ctx: IViewComponent | IViewBased) => number),
+	firstCallImmediately: boolean = false
+) {
+	return debounce(timeout, firstCallImmediately, 'throttle');
 }
