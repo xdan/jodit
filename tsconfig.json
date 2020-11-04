@@ -26,6 +26,5 @@
 		"importHelpers": true,
 
 		"lib": ["es5", "esnext", "dom", "scripthost"]
-	},
-	"exclude": ["build"]
+	}
 }
