@@ -92,7 +92,7 @@
 		"stylelint-prettier": "^1.1.2",
 		"synchronous-promise": "^2.0.15",
 		"terser-webpack-plugin": "^5.0.3",
-		"ts-loader": "^8.0.7",
+		"ts-loader": "^8.0.8",
 		"ts-private-uglifier": "^1.0.2",
 		"tslib": "^2.0.3",
 		"typescript": "^4.0.5",
