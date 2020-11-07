@@ -119,6 +119,8 @@ export interface IUIForm extends IUIGroup {
 export interface IUIInput extends IUIElement {
 	nativeInput: HTMLInputElement | HTMLTextAreaElement;
 	state: {
+		clearButton: boolean;
+		autocomplete: boolean;
 		name: string;
 		icon: string;
 		label: string;

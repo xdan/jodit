@@ -4,17 +4,27 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Component, STATUSES } from '../component';
-import { IDictionary } from '../../types';
+import { STATUSES } from '../component';
+import { IDictionary, IJodit, IViewComponent } from '../../types';
 
-export function persistent(target: Component, propertyKey: string): void {
-	target.hookStatus(STATUSES.ready, (component: IDictionary) => {
-		component[propertyKey] = new Proxy(component[propertyKey], {
-			get(target, prop) {
-				return '1'
+/**
+ * Allow save value inside persistent storage as set/get to property
+ *
+ * @param target
+ * @param propertyKey
+ */
+export function persistent(target: IViewComponent, propertyKey: string): void {
+	target.hookStatus(STATUSES.ready, (component: IViewComponent) => {
+		const jodit = component.jodit as IJodit,
+			storageKey = `${component.componentName}_prop_${propertyKey}`,
+			initialValue = (component as IDictionary)[propertyKey];
+
+		Object.defineProperty(component, propertyKey, {
+			get() {
+				return jodit.storage.get(storageKey) ?? initialValue;
 			},
-			set() {
-				return '1'
+			set(value): void {
+				jodit.storage.set(storageKey, value);
 			}
 		});
 	});

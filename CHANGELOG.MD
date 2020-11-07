@@ -12,7 +12,29 @@
 
 #### :house: Internal
 
-Removed `useAceEditor` option. [https://github.com/xdan/jodit/issues/544](https://github.com/xdan/jodit/issues/544)
+* Removed `useAceEditor` option. [https://github.com/xdan/jodit/issues/544](https://github.com/xdan/jodit/issues/544)
+* Added `persistent` decorator
+```typescript
+import {component, persistent} from "./src/core/decorators";
+
+@component
+class Item extends UIElement{
+    @persistent
+    options = {
+        some: true
+    };
+}
+
+const item = new Item(jodit);
+console.log(item.options); // {some: true}
+
+item.options = {
+ some: false
+};
+
+const item2 = new Item(jodit); // or reload page
+console.log(item.options); // {some: false}
+```
 
 #### :bug: Bug Fix
 
@@ -81,6 +103,7 @@ Jodit.plugins.add('somePlugin', function (editor) {
 ```
 
 ##### Hotkeys for BackSpace and Delete and remove part of text
+
 Added hotkey settings for Delete and Backspace buttons.
 And added hotkey `ctrl+backspace` for removing left part of text.
 Issue: [https://github.com/xdan/jodit/issues/532](https://github.com/xdan/jodit/issues/532)
@@ -96,6 +119,20 @@ Jodit.make('#editor', {
         }
     })
 });
+```
+
+##### Added `one` method in event system
+
+```js
+const editor = Jodit.make('#editor');
+
+editor.events
+    .one('keydown', () => {
+        console.log('Fire only one time');
+    })
+    .on('keydown', () => {
+        console.log('Fire everytime');
+    });
 ```
 
 ## 3.4.28
