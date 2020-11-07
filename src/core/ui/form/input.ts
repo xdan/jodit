@@ -25,9 +25,15 @@ export class UIInput extends UIElement implements IUIInput {
 
 	private label = this.j.c.span(this.getFullElName('label'));
 	private icon = this.j.c.span(this.getFullElName('icon'));
+	private clearButton = this.j.c.span(
+		this.getFullElName('clear'),
+		Icon.get('cancel')
+	);
+
 	private wrapper!: HTMLElement;
 
 	static defaultState: IUIInput['state'] = {
+		autocomplete: true,
 		name: '',
 		icon: '',
 		label: '',
@@ -40,7 +46,23 @@ export class UIInput extends UIElement implements IUIInput {
 
 	state: IUIInput['state'] = { ...UIInput.defaultState };
 
-	@watch(['state.name', 'state.type', 'state.label', 'state.placeholder', 'state.icon'])
+	@watch('state.clearButton')
+	onChangeClear(): void {
+		if (this.state.clearButton) {
+			Dom.after(this.nativeInput, this.clearButton);
+		} else {
+			Dom.safeRemove(this.clearButton);
+		}
+	}
+
+	@watch([
+		'state.name',
+		'state.type',
+		'state.label',
+		'state.placeholder',
+		'state.autocomplete',
+		'state.icon'
+	])
 	@debounce()
 	onChangeState(): void {
 		const input = this.nativeInput,
@@ -52,6 +74,7 @@ export class UIInput extends UIElement implements IUIInput {
 				required,
 				placeholder,
 				validators,
+				autocomplete,
 				label
 			} = this.state;
 
@@ -60,6 +83,7 @@ export class UIInput extends UIElement implements IUIInput {
 		attr(input, 'data-ref', ref || name);
 		attr(input, 'ref', ref || name);
 		attr(input, 'required', required || null);
+		attr(input, 'autocomplete', !autocomplete ? 'off' : null);
 		attr(input, 'placeholder', placeholder ? this.j.i18n(placeholder) : '');
 
 		if (icon && Icon.exists(icon)) {
@@ -144,6 +168,22 @@ export class UIInput extends UIElement implements IUIInput {
 		super(jodit, options);
 
 		Object.assign(this.state, options);
+
+		if (this.state.clearButton !== undefined) {
+			this.j.e
+				.on(this.clearButton, 'click', (e: MouseEvent) => {
+					e.preventDefault();
+					this.nativeInput.value = '';
+					this.j.e.fire(this.nativeInput, 'input');
+					this.focus();
+				})
+				.on(this.nativeInput, 'input', () => {
+					this.state.clearButton = Boolean(this.value.length);
+				});
+
+			this.state.clearButton = Boolean(this.value.length);
+		}
+
 		this.onChangeState();
 	}
 

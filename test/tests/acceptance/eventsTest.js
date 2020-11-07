@@ -23,6 +23,7 @@ describe('Jodit Events system Tests', function () {
 
 			div.parentNode.removeChild(div);
 		});
+
 		it('Create simple event handler on some DOM element on few events', function () {
 			const editor = getJodit(),
 				div = document.createElement('button');
@@ -104,6 +105,7 @@ describe('Jodit Events system Tests', function () {
 				div.parentNode.removeChild(div);
 			});
 		});
+
 		it('Add event handler for several elements', function () {
 			const editor = getJodit(),
 				div1 = editor.ed.createElement('button'),
@@ -217,6 +219,24 @@ describe('Jodit Events system Tests', function () {
 
 			simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 			expect(enable).is.true;
+		});
+
+		describe('one', function () {
+			it('should call handler only one time', function () {
+				let count = 0;
+				const editor = getJodit();
+
+				editor.events.one('keydown', function (event) {
+					count++;
+				});
+
+				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+
+				expect(count).equals(1);
+			});
 		});
 
 		it('Delete event handler', function () {

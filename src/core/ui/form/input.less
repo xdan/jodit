@@ -51,6 +51,23 @@
 	&__icon:not(:empty) + &__input {
 		padding-left: 0;
 	}
+
+	&__clear {
+		padding: 0 var(--padding-default) 0 0;
+		display: flex;
+		align-items: center;
+		opacity: 0.8;
+
+		&:active {
+			transform: scale(1.1, 1.1);
+			opacity: 1;
+		}
+
+		svg {
+			.size(12px, 12px);
+			fill: var(--color-border);
+		}
+	}
 }
 
 .jodit-ui-block .jodit-ui-input {

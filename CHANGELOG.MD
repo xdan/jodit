@@ -13,7 +13,7 @@
 #### :house: Internal
 
 * Removed `useAceEditor` option. [https://github.com/xdan/jodit/issues/544](https://github.com/xdan/jodit/issues/544)
-* Added `persistent` decorator
+* Added `component` and `persistent` decorators
 ```typescript
 import {component, persistent} from "./src/core/decorators";
 
@@ -35,6 +35,7 @@ item.options = {
 const item2 = new Item(jodit); // or reload page
 console.log(item.options); // {some: false}
 ```
+* In `UIInput` added `autocomplete`, `clearButton`, `icon` options.
 
 #### :bug: Bug Fix
 

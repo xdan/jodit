@@ -118,6 +118,12 @@ const translateAll = text => {
 	const indexFile = path.join(path.resolve(argv.dir), 'index.ts');
 
 	if (!fs.existsSync(indexFile)) {
+		const folder = path.dirname(indexFile);
+
+		if (!fs.existsSync(folder)) {
+			fs.mkdirSync(folder, {recursive: true});
+		}
+
 		fs.writeFileSync(
 			indexFile,
 			`${header}\n${langs
