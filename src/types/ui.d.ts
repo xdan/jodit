@@ -33,7 +33,8 @@ export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 		value: string | boolean | null,
 		container?: HTMLElement
 	): this;
-	getClassName(elementName: string): string;
+
+	getFullElName(elementName: string): string;
 }
 
 export interface IUIIconState {

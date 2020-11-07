@@ -816,8 +816,27 @@ export class Dom {
 	 * @param elm
 	 * @param newElement
 	 */
-	static append(root: Node, newElement: Node | DocumentFragment): void {
-		root.appendChild(newElement);
+	static append(
+		root: Node,
+		newElements: Array<Node | DocumentFragment>
+	): void;
+
+	static append(
+		root: Node,
+		newElement: Node | DocumentFragment
+	): void;
+
+	static append(
+		root: Node,
+		newElement: Node | DocumentFragment | Array<Node | DocumentFragment>
+	): void {
+		if (isArray(newElement)) {
+			newElement.forEach(node => {
+				this.append(root, node);
+			});
+		} else {
+			root.appendChild(newElement);
+		}
 	}
 
 	/**

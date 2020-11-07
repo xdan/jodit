@@ -36,6 +36,8 @@ export function debounce(
 					? timeout(component)
 					: timeout;
 
+				console.log(propertyKey, method);
+
 				(component as any)[propertyKey] = view.async[method](
 					(component as any)[propertyKey].bind(component),
 					isNumber(realTimeout) ? realTimeout : view.defaultTimeout,

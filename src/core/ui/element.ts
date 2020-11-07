@@ -123,7 +123,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	 * Calc BEM element class name
 	 * @param elementName
 	 */
-	getClassName(elementName: string): string {
+	getFullElName(elementName: string): string {
 		return `${this.componentName}__${elementName}`;
 	}
 

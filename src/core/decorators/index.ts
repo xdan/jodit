@@ -9,5 +9,6 @@ export * from './component';
 export * from './debounce';
 export * from './hook';
 export * from './nonenumerable';
+export * from './persistent';
 export * from './wait';
 export * from './watch';

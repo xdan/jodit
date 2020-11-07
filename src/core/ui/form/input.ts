@@ -23,8 +23,8 @@ import { Icon } from '../icon';
 export class UIInput extends UIElement implements IUIInput {
 	nativeInput!: IUIInput['nativeInput'];
 
-	private label = this.j.c.span(this.getClassName('label'));
-	private icon = this.j.c.span(this.getClassName('icon'));
+	private label = this.j.c.span(this.getFullElName('label'));
+	private icon = this.j.c.span(this.getFullElName('icon'));
 	private wrapper!: HTMLElement;
 
 	static defaultState: IUIInput['state'] = {
@@ -91,7 +91,7 @@ export class UIInput extends UIElement implements IUIInput {
 		});
 	}
 
-	private __errorBox = this.j.c.span(this.getClassName('error'));
+	private __errorBox = this.j.c.span(this.getFullElName('error'));
 
 	set error(value: string) {
 		this.setMod('has-error', !!value);
@@ -123,13 +123,13 @@ export class UIInput extends UIElement implements IUIInput {
 	protected createContainer(options: Partial<this['state']>): HTMLElement {
 		const container = super.createContainer();
 
-		this.wrapper = this.j.c.div(this.getClassName('wrapper'));
+		this.wrapper = this.j.c.div(this.getFullElName('wrapper'));
 
 		if (!this.nativeInput) {
 			this.nativeInput = this.j.create.element('input');
 		}
 
-		this.nativeInput.classList.add(this.getClassName('input'));
+		this.nativeInput.classList.add(this.getFullElName('input'));
 
 		this.wrapper.appendChild(this.nativeInput);
 		container.appendChild(this.wrapper);

@@ -16,6 +16,7 @@ Removed `useAceEditor` option. [https://github.com/xdan/jodit/issues/544](https:
 
 #### :bug: Bug Fix
 
+* [#550 Table cell elements are always left-aligned](https://github.com/xdan/jodit/issues/550)
 * [#543 editor.destruct throws error](https://github.com/xdan/jodit/issues/543)
 * [#540 How i can get Iframe without parent element <jodit>...</jodit>](https://github.com/xdan/jodit/issues/540)
 * [#536 Layout bug and drag&drop image loading](https://github.com/xdan/jodit/issues/536)

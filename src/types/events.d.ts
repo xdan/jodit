@@ -76,6 +76,8 @@ interface IEventsNative extends IDestructible {
 		onTop?: boolean
 	): IEventsNative;
 
+	one(...args: Parameters<IEventsNative['on']>): IEventsNative;
+
 	/**
 	 * Disable all handlers specified event ( Event List ) for a given element. Either a specific event handler.
 	 *
