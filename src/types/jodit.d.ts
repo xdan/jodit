@@ -96,12 +96,16 @@ interface IJodit extends IViewWithToolbar {
 
 	registerCommand(
 		commandNameOriginal: string,
-		command: CustomCommand<IJodit>
+		command: CustomCommand<IJodit>,
+		options?: {
+			stopPropagation: boolean
+		}
 	): IJodit;
 
 	registerHotkeyToCommand(
 		hotkeys: string | string[],
-		commandName: string
+		commandName: string,
+		shouldStop?: boolean
 	): void;
 
 	/**

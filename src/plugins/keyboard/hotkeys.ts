@@ -152,17 +152,25 @@ export class hotkeys extends Plugin {
 			.on(
 				'keydown.hotkeys',
 				(event: KeyboardEvent): void | false => {
-					const shortcut: string = this.onKeyPress(event);
+					const shortcut: string = this.onKeyPress(event),
+						stop = {
+							shouldStop: true
+						};
 
 					const resultOfFire = this.j.e.fire(
 						shortcut + '.hotkey',
-						event.type
+						event.type,
+						stop
 					);
 
 					if (resultOfFire === false) {
-						itIsHotkey = true;
-						editor.e.stopPropagation('keydown');
-						return false;
+						if (stop.shouldStop) {
+							itIsHotkey = true;
+							editor.e.stopPropagation('keydown');
+							return false;
+						} else {
+							event.preventDefault();
+						}
 					}
 				},
 				undefined,

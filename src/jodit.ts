@@ -633,7 +633,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 */
 	registerCommand(
 		commandNameOriginal: string,
-		command: CustomCommand<IJodit>
+		command: CustomCommand<IJodit>,
+		options?: {
+			stopPropagation: boolean
+		}
 	): IJodit {
 		const commandName: string = commandNameOriginal.toLowerCase();
 
@@ -650,7 +653,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				command.hotkeys;
 
 			if (hotkeys) {
-				this.registerHotkeyToCommand(hotkeys, commandName);
+				this.registerHotkeyToCommand(hotkeys, commandName, options?.stopPropagation);
 			}
 		}
 
@@ -662,17 +665,20 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 *
 	 * @param hotkeys
 	 * @param commandName
+	 * @param shouldStop
 	 */
 	registerHotkeyToCommand(
 		hotkeys: string | string[],
-		commandName: string
+		commandName: string,
+		shouldStop: boolean = true
 	): void {
 		const shortcuts: string = asArray(hotkeys)
 			.map(normalizeKeyAliases)
 			.map(hotkey => hotkey + '.hotkey')
 			.join(' ');
 
-		this.e.off(shortcuts).on(shortcuts, () => {
+		this.e.off(shortcuts).on(shortcuts, (type: string, stop: {shouldStop: boolean}) => {
+			stop.shouldStop = shouldStop ?? true;
 			return this.execCommand(commandName); // because need `beforeCommand`
 		});
 	}

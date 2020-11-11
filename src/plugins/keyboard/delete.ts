@@ -63,14 +63,26 @@ export class Delete extends Plugin {
 		});
 
 		jodit
-			.registerCommand('deleteButton', {
-				exec: () => this.onDelete(false),
-				hotkeys: jodit.o.delete.hotkeys.delete
-			})
-			.registerCommand('backspaceButton', {
-				exec: () => this.onDelete(true),
-				hotkeys: jodit.o.delete.hotkeys.backspace
-			})
+			.registerCommand(
+				'deleteButton',
+				{
+					exec: () => this.onDelete(false),
+					hotkeys: jodit.o.delete.hotkeys.delete
+				},
+				{
+					stopPropagation: false
+				}
+			)
+			.registerCommand(
+				'backspaceButton',
+				{
+					exec: () => this.onDelete(true),
+					hotkeys: jodit.o.delete.hotkeys.backspace
+				},
+				{
+					stopPropagation: false
+				}
+			)
 			.registerCommand('deleteWordButton', {
 				exec: () => this.onDelete(false, true),
 				hotkeys: jodit.o.delete.hotkeys.deleteWord
@@ -144,7 +156,7 @@ export class Delete extends Plugin {
 
 			if (
 				this.checkRemoveInseparableElement(fakeNode, backspace) ||
-				this.checkRemoveChar(fakeNode, backspace,block) ||
+				this.checkRemoveChar(fakeNode, backspace, block) ||
 				this.checkTableCell(fakeNode, backspace) ||
 				this.checkRemoveEmptyParent(fakeNode, backspace) ||
 				this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
@@ -203,7 +215,11 @@ export class Delete extends Plugin {
 	 * @param backspace
 	 * @param block
 	 */
-	private checkRemoveChar(fakeNode: Node, backspace: boolean, block: boolean): void | true {
+	private checkRemoveChar(
+		fakeNode: Node,
+		backspace: boolean,
+		block: boolean
+	): void | true {
 		const step = backspace ? -1 : 1;
 
 		const anotherSibling: Nullable<Node> = getSibling(fakeNode, !backspace);
