@@ -89,7 +89,9 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 		mode,
 		context: dir,
 
-		stats: 'minimal',
+		stats: {
+			colors: true
+		},
 
 		devtool: debug ? 'inline-source-map' : false,
 
@@ -175,9 +177,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 						transpileOnly: true,
 						allowTsInNodeModules: true
 					},
-					include: [
-						path.resolve(__dirname, './node_modules')
-					]
+					include: [path.resolve(__dirname, './node_modules')]
 				},
 
 				{
@@ -204,9 +204,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 							target: ES
 						}
 					},
-					include: [
-						path.resolve(__dirname, './src/')
-					],
+					include: [path.resolve(__dirname, './src/')],
 					exclude: [
 						/langs\/[a-z]{2}\.ts/,
 						/langs\/[a-z]{2}_[a-z]{2}\.ts/

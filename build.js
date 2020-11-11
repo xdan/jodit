@@ -25,4 +25,10 @@ const opt = config(
 	rootPath
 );
 
-webpack(opt).run();
+webpack(opt, (err, stats) => {
+	if (err) {
+		console.log(err);
+	} else {
+		console.log(stats.toString({ colors: true }));
+	}
+});

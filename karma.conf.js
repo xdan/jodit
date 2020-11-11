@@ -7,8 +7,8 @@
 // FIXME Need check https://github.com/ryanclark/karma-webpack/issues/452 status and restore karma-webpack
 
 const path = require('path');
-const webpack = require(path.resolve(process.cwd(), './webpack.config'));
-const webpackConfig = webpack(
+const webpackConfFunc = require(path.resolve(process.cwd(), './webpack.config'));
+const webpackConfig = webpackConfFunc(
 	[],
 	{
 		mode: 'production',
