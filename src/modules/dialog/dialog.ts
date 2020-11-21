@@ -68,6 +68,7 @@ Config.prototype.controls.dialog = {
 		icon: 'cancel',
 		exec: dialog => {
 			(dialog as Dialog).close();
+			(dialog as Dialog).toggleFullSizeBox(false);
 		}
 	}
 } as IDictionary<IControlType>;
@@ -516,6 +517,14 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			condition
 		);
 
+		this.toggleFullSizeBox(condition);
+
+		this.iSetMaximization = condition;
+
+		return condition;
+	}
+
+	toggleFullSizeBox(condition: boolean): void {
 		[this.destination, this.destination.parentNode].forEach(
 			(box: Node | null) => {
 				box &&
@@ -526,10 +535,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 					);
 			}
 		);
-
-		this.iSetMaximization = condition;
-
-		return condition;
 	}
 
 	open(destroyAfterClose: boolean): this;
