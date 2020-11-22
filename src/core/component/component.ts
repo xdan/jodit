@@ -12,9 +12,14 @@ import {
 	Nullable
 } from '../../types';
 
-import { kebabCase, get, getClassName } from '../helpers';
+import { kebabCase, get, getClassName, isFunction } from '../helpers';
 import { uniqueUid } from '../global';
 import { STATUSES } from './statuses';
+
+const StatusListHandlers: Map<
+	Component,
+	IDictionary<CallableFunction[]>
+> = new Map();
 
 export abstract class Component implements IComponent {
 	static STATUSES = STATUSES;
@@ -32,7 +37,7 @@ export abstract class Component implements IComponent {
 	/**
 	 * Shortcut for `this.ownerDocument`
 	 */
-	get od(): this['ownerDocument'] {
+	get od(): Document {
 		return this.ownerDocument;
 	}
 
@@ -40,7 +45,7 @@ export abstract class Component implements IComponent {
 	 * The window in which jodit was created
 	 */
 	ownerWindow: Window = window;
-	get ow(): this['ownerWindow'] {
+	get ow(): Window {
 		return this.ownerWindow;
 	}
 
@@ -114,8 +119,10 @@ export abstract class Component implements IComponent {
 		return this;
 	}
 
+	abstract className(): string;
+
 	protected constructor() {
-		this.componentName = 'jodit-' + kebabCase(getClassName(this));
+		this.componentName = 'jodit-' + kebabCase(this.className() || getClassName(this));
 		this.uid = 'jodit-uid-' + uniqueUid();
 	}
 
@@ -125,8 +132,8 @@ export abstract class Component implements IComponent {
 	destruct(): void {
 		this.setStatus(STATUSES.destructed);
 
-		if (this.onStatusList?.get(this)) {
-			this.onStatusList.delete(this);
+		if (StatusListHandlers.get(this)) {
+			StatusListHandlers.delete(this);
 		}
 	}
 
@@ -151,23 +158,38 @@ export abstract class Component implements IComponent {
 	 * @param componentStatus
 	 */
 	setStatus(componentStatus: ComponentStatus): void {
+		return this.setStatusComponent(componentStatus, this);
+	}
+
+	/**
+	 * Set status recursively on all parents
+	 *
+	 * @param componentStatus
+	 * @param component
+	 * @private
+	 */
+	private setStatusComponent(componentStatus: ComponentStatus, component: this): void {
 		if (componentStatus === this.__componentStatus) {
 			return;
 		}
 
-		this.__componentStatus = componentStatus;
+		const proto = Object.getPrototypeOf(this);
 
-		this.onStatusList?.forEach((dict, ctx) => {
-			const list = dict[componentStatus];
+		if (proto && isFunction(proto.setStatusComponent)) {
+			proto.setStatusComponent(componentStatus, component);
+		}
 
-			if (list && list.length) {
-				list.forEach(cb => cb(this));
 
-				if (this === ctx) {
-					delete dict[componentStatus];
-				}
-			}
-		});
+		const statuses = StatusListHandlers.get(this),
+			list = statuses?.[componentStatus];
+
+		if (list && list.length) {
+			list.forEach(cb => cb(component));
+		}
+
+		if (component === this) {
+			this.__componentStatus = componentStatus;
+		}
 	}
 
 	/**
@@ -180,15 +202,11 @@ export abstract class Component implements IComponent {
 		status: ComponentStatus,
 		callback: (component: this) => void
 	): void {
-		if (!this.onStatusList) {
-			this.onStatusList = new Map();
-		}
-
-		let list = this.onStatusList.get(this);
+		let list = StatusListHandlers.get(this);
 
 		if (!list) {
 			list = {};
-			this.onStatusList.set(this, list);
+			StatusListHandlers.set(this, list);
 		}
 
 		if (!list[status]) {
@@ -197,6 +215,4 @@ export abstract class Component implements IComponent {
 
 		list[status].push(callback);
 	}
-
-	private onStatusList!: Map<Component, IDictionary<CallableFunction[]>>;
 }

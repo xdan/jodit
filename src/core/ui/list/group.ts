@@ -20,6 +20,11 @@ import { isArray } from '../../helpers';
 export class UIGroup<T extends IViewBased = IViewBased>
 	extends UIElement<T>
 	implements IUIGroup {
+	/** @override */
+	className(): string {
+		return 'UIGroup';
+	}
+
 	elements: IUIElement[] = [];
 
 	/**

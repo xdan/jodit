@@ -163,6 +163,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 		if (this.isDestructed) {
 			return;
 		}
+
 		this.setStatus(STATUSES.beforeDestruct);
 		this.e.off('beforeToolbarBuild', this.beforeToolbarBuild);
 		this.toolbar.destruct();

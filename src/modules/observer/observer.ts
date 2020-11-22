@@ -37,6 +37,11 @@ Config.prototype.observer = {
  * @params {Jodit} parent Jodit main object
  */
 export class Observer extends ViewComponent<IJodit> {
+	/** @override */
+	className(): string {
+		return 'Observer';
+	}
+
 	private __startValue!: SnapshotType;
 
 	get startValue(): SnapshotType {

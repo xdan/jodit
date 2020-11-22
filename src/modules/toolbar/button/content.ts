@@ -22,6 +22,11 @@ export class ToolbarContent<T extends IViewBased = IViewBased>
 	extends UIButton
 	implements IToolbarButton {
 	/** @override */
+	className(): string {
+		return 'ToolbarContent';
+	}
+
+	/** @override */
 	update(): void {
 		const content = this.control.getContent(this.j, this.control, this);
 

@@ -17,6 +17,10 @@ declare global {
 	interface HTMLElement {
 		component: Nullable<IComponent>;
 	}
+
+	interface Function {
+		originalConstructor: Function;
+	}
 }
 
 export { Jodit };

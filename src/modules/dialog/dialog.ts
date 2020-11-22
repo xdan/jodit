@@ -16,7 +16,8 @@ import type {
 	IDialog,
 	ContentItem,
 	Content,
-	IDialogOptions
+	IDialogOptions,
+	CanUndef
 } from '../../types/';
 import { Config, OptionsDefault } from '../../config';
 import { KEY_ESC } from '../../core/constants';
@@ -38,6 +39,7 @@ import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 import { Dom } from '../../core/dom';
 import { STATUSES } from '../../core/component';
 import { eventEmitter, pluginSystem } from '../../core/global';
+import { component, debounce } from '../../core/decorators';
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}
@@ -77,7 +79,13 @@ Config.prototype.controls.dialog = {
  * @param {Object} parent Jodit main object
  * @param {Object} [opt] Extend Options
  */
+@component
 export class Dialog extends ViewWithToolbar implements IDialog {
+	/** @override */
+	className(): string {
+		return 'Dialog';
+	}
+
 	/**
 	 * @property {HTMLDivElement} resizer
 	 */
@@ -158,7 +166,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			this.unlockSelect();
 
 			if (this.e) {
-				this.removeGlobalListeners();
+				this.removeGlobalResizeListeners();
 
 				/**
 				 * Fired when dialog box is finished to resizing
@@ -195,7 +203,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		this.lockSelect();
 
-		this.addGlobalListeners();
+		this.addGlobalResizeListeners();
 
 		if (this.e) {
 			/**
@@ -289,12 +297,13 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		this.resizable = true;
 		this.startX = e.clientX;
 		this.startY = e.clientY;
+
 		this.startPoint.w = this.dialog.offsetWidth;
 		this.startPoint.h = this.dialog.offsetHeight;
 
 		this.lockSelect();
 
-		this.addGlobalListeners();
+		this.addGlobalResizeListeners();
 
 		if (this.e) {
 			/**
@@ -305,7 +314,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		}
 	}
 
-	private addGlobalListeners(): void {
+	private addGlobalResizeListeners(): void {
 		const self = this;
 
 		self.e
@@ -313,7 +322,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			.on(self.ow, 'mouseup', self.onMouseUp);
 	}
 
-	private removeGlobalListeners(): void {
+	private removeGlobalResizeListeners(): void {
 		const self = this;
 
 		self.e
@@ -342,12 +351,28 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 * @param {number} [h] - The height of the window
 	 */
 	setSize(w?: number | string, h?: number | string): this {
-		if (w) {
-			css(this.dialog, 'width', w);
+		if (w == null) {
+			w = this.dialog.offsetWidth;
 		}
-		if (h) {
-			css(this.dialog, 'height', h);
+
+		if (h == null) {
+			h = this.dialog.offsetHeight;
 		}
+
+		css(this.dialog, {
+			width: w,
+			height: h
+		});
+
+		return this;
+	}
+
+	/**
+	 * Recalculate auto sizes
+	 */
+	calcAutoSize(): this {
+		this.setSize('auto', 'auto');
+		this.setSize();
 
 		return this;
 	}
@@ -360,11 +385,11 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 * @param {Number} [y] - Position px Vertical
 	 */
 	setPosition(x?: number, y?: number): this {
-		const w: number = this.ow.innerWidth,
-			h: number = this.ow.innerHeight;
+		const w = this.ow.innerWidth,
+			h = this.ow.innerHeight;
 
-		let left: number = w / 2 - this.dialog.offsetWidth / 2,
-			top: number = h / 2 - this.dialog.offsetHeight / 2;
+		let left = w / 2 - this.dialog.offsetWidth / 2,
+			top = h / 2 - this.dialog.offsetHeight / 2;
 
 		if (left < 0) {
 			left = 0;
@@ -598,6 +623,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		this.destination.appendChild(this.container);
 
 		this.setPosition(this.offsetX, this.offsetY);
+
 		this.setMaxZIndex();
 
 		if (this.o.fullsize) {
@@ -613,13 +639,48 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		return this;
 	}
 
+	private isModal: boolean = false;
+
 	/**
 	 * Set modal mode
 	 * @param modal
 	 */
 	setModal(modal: undefined | boolean): this {
-		this.container.classList.toggle('jodit-modal', Boolean(modal));
+		this.isModal = Boolean(modal);
+		this.container.classList.toggle('jodit-modal', this.isModal);
+
+		if (this.isModal) {
+			this.addModalFocusLoopListener();
+		} else {
+			this.removeModalFocusLoopListener();
+		}
+
 		return this;
+	}
+
+	private addModalFocusLoopListener(): void {
+		this.e.on(this.od.body, 'focusin', this.onFocusInTarget);
+	}
+
+	@debounce()
+	private onFocusInTarget(e: FocusEvent): void {
+		const elm = e.target as CanUndef<HTMLElement>;
+
+		if (
+			Dom.isHTMLElement(elm, this.ow) &&
+			!Dom.isOrContains(this.dialog, elm)
+		) {
+			const newFocus = this.dialog.querySelector<HTMLElement>(
+				'[tabIndex],button,input'
+			);
+			if (newFocus) {
+				newFocus.focus();
+			}
+		}
+	}
+
+	private removeModalFocusLoopListener(): void {
+		this.e.off(this.od.body, 'focusin', this.onFocusInTarget);
 	}
 
 	/**
@@ -680,7 +741,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			this.maximization(false);
 		}
 
-		this.removeGlobalListeners();
+		this.removeGlobalResizeListeners();
+		this.removeModalFocusLoopListener();
 
 		if (this.destroyAfterClose) {
 			this.destruct();
@@ -793,8 +855,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		const fullSize = pluginSystem.get('fullsize') as Function;
 		isFunction(fullSize) && fullSize(self);
 
-		self.setStatus(STATUSES.ready);
-
 		this.e
 			.on(self.container, 'close_dialog', self.close)
 			.on(this.ow, 'keydown', this.onEsc)
@@ -816,7 +876,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		}
 
 		if (this.events) {
-			this.removeGlobalListeners();
+			this.removeGlobalResizeListeners();
+			this.removeModalFocusLoopListener();
 
 			this.events
 				.off(this.container, 'close_dialog', self.close)

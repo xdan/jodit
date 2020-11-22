@@ -8,4 +8,9 @@ import { UIElement } from './element';
 import { component } from '../decorators';
 
 @component
-export class UISeparator extends UIElement {}
+export class UISeparator extends UIElement {
+	/** @override */
+	className(): string {
+		return 'UISeparator';
+	}
+}

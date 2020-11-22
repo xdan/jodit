@@ -11,6 +11,11 @@ import { component } from '../../../decorators';
 @component
 export class UICheckbox extends UIInput {
 	/** @override */
+	className(): string {
+		return 'UICheckbox';
+	}
+
+	/** @override */
 	protected makeContainer(options?: IDictionary): HTMLElement {
 		return this.j.c.element('label', {
 			className: this.componentName

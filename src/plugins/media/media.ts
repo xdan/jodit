@@ -37,11 +37,6 @@ Config.prototype.mediaBlocks = ['video', 'audio'];
  * @param editor
  */
 export function media(editor: IJodit): void {
-	editor.registerButton({
-		name: 'file',
-		group: 'media'
-	});
-
 	const keyFake: string = 'jodit_fake_wrapper';
 
 	const { mediaFakeTag, mediaBlocks, mediaInFakeBlock } = editor.options;

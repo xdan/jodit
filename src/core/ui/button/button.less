@@ -19,6 +19,7 @@
 	}
 
 	button {
+		appearance: none;
 		min-width: @size + @plus;
 		height: @size + @plus;
 	}
@@ -92,6 +93,7 @@
 }
 
 .jodit-ui-button_clear {
+	appearance: none;
 	padding: 0;
 	position: relative;
 	text-align: center;
@@ -175,5 +177,6 @@
 	&:focus:not([disabled]) {
 		outline: 1px dashed var(--color-background-selection);
 	}
+
 	.jodit-ui-button-statuses();
 }

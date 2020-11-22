@@ -45,6 +45,11 @@ export const UIButtonState = (): IUIButtonState => ({
 
 @component
 export class UIButton extends UIElement implements IUIButton {
+	/** @override */
+	className(): string {
+		return 'UIButton';
+	}
+
 	/**
 	 * Marker for buttons
 	 */

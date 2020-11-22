@@ -6,3 +6,4 @@
 
 export * from './media';
 export * from './video';
+export * from './file';

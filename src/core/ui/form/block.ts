@@ -13,11 +13,17 @@ import { component } from '../../decorators';
 
 @component
 export class UIBlock extends UIGroup {
+	/** @override */
+	className(): string {
+		return 'UIBlock';
+	}
+
 	constructor(
 		jodit: IViewBased,
 		elements?: Array<IUIElement | void | null | false>,
 		readonly options: {
 			align?: 'center' | 'left' | 'right' | 'full';
+			width?: 'full';
 			ref?: string;
 		} = {
 			align: 'left'
@@ -25,6 +31,7 @@ export class UIBlock extends UIGroup {
 	) {
 		super(jodit, elements);
 		this.setMod('align', this.options.align || 'left');
+		this.setMod('width', this.options.width || '');
 
 		attr(this.container, 'data-ref', options.ref);
 		attr(this.container, 'ref', options.ref);

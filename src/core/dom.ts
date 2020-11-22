@@ -18,10 +18,10 @@ import {
 	dataBind,
 	isArray,
 	isFunction,
-	isString,
+	isString, isVoid,
 	toArray,
 	trim
-} from './helpers';
+} from "./helpers";
 import { getSibling } from '../plugins/keyboard/helpers';
 
 /**
@@ -342,7 +342,7 @@ export class Dom {
 	 */
 	static isBlock(node: unknown, win: Window): node is HTMLElement {
 		return (
-			node &&
+			!isVoid(node) &&
 			typeof node === 'object' &&
 			Dom.isNode(node, win) &&
 			consts.IS_BLOCK.test((node as Node).nodeName)
@@ -396,7 +396,7 @@ export class Dom {
 	 */
 	static canSplitBlock(node: unknown, win: Window): boolean {
 		return (
-			node &&
+			!isVoid(node) &&
 			node instanceof (win as any).HTMLElement &&
 			Dom.isBlock(node, win) &&
 			!/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&

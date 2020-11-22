@@ -4,9 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { STATUSES } from '../component';
-import { getClassName } from '../helpers/utils';
-
 /**
  * Decorate components and set status isReady after constructor
  * @param constructorFunction
@@ -15,11 +12,9 @@ export function component<T extends { new (...constructorArgs: any[]): any }>(
 	constructorFunction: T
 ) {
 	const newConstructorFunction: any = function (this: any, ...args: any[]) {
-		if (
-			getClassName(this) === getClassName(constructorFunction.prototype)
-		) {
+		if (Object.getPrototypeOf(this) === newConstructorFunction.prototype) {
 			const result = new constructorFunction(...args);
-			result.setStatus(STATUSES.ready);
+			result.setStatus('ready');
 			return result;
 		}
 
@@ -37,6 +32,13 @@ export function component<T extends { new (...constructorArgs: any[]): any }>(
 			Object.defineProperty(newConstructorFunction, key, descriptor);
 		}
 	});
+
+	[newConstructorFunction, constructorFunction].forEach((constructor) => {
+		Object.defineProperty(constructor, 'originalConstructor', {
+			value: constructorFunction,
+			enumerable: false
+		});
+	})
 
 	newConstructorFunction.prototype = constructorFunction.prototype;
 

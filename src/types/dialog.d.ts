@@ -37,6 +37,8 @@ export interface IDialog extends IComponent, IContainer {
 	close(): this;
 
 	setSize(w?: number | string, h?: number | string): this;
+	calcAutoSize(): this;
+
 	setPosition(x?: number, y?: number): this;
 	setHeader(content: Content): this;
 	setContent(content: Content): this;

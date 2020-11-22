@@ -9,6 +9,11 @@ import { component } from '../../../decorators';
 
 @component
 export class UITextArea extends UIInput {
+	/** @override */
+	className(): string {
+		return 'UITextArea';
+	}
+
 	nativeInput!: HTMLTextAreaElement;
 
 	/** @override */

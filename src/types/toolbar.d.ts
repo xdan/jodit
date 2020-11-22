@@ -141,7 +141,7 @@ interface IControlType<
 	 *  });
 	 *  ```
 	 */
-	list?: IDictionary<string> | string[];
+	list?: IDictionary<string> | string[] | IControlType[];
 
 	/**
 	 * The command executes when the button is pressed. Allowed all

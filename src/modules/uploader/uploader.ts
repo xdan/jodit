@@ -145,6 +145,11 @@ Config.prototype.uploader = {
 } as IUploaderOptions<Uploader>;
 
 export class Uploader extends ViewComponent implements IUploader {
+	/** @override */
+	className(): string {
+		return 'Uploader';
+	}
+
 	/**
 	 * Convert dataURI to Blob
 	 *

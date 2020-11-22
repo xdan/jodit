@@ -22,7 +22,7 @@ export abstract class ViewComponent<T extends IViewBased = IViewBased>
 	/**
 	 * Shortcut for `this.jodit`
 	 */
-	get j(): this['jodit'] {
+	get j(): T {
 		return this.jodit;
 	}
 

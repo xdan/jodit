@@ -18,6 +18,11 @@ import { isArray } from '../../core/helpers/checker';
  * @param {Object} parent Jodit main object
  */
 export class ContextMenu extends Popup implements IContextMenu {
+	/** @override */
+	className(): string {
+		return 'ContextMenu';
+	}
+
 	/**
 	 * Generate and show context menu
 	 *

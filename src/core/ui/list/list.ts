@@ -29,6 +29,11 @@ import { getControlType } from '../helpers/get-control-type';
 export class UIList<T extends IViewBased = IViewBased>
 	extends UIGroup<T>
 	implements IUIList {
+	/** @override */
+	className(): string {
+		return 'UIList';
+	}
+
 	jodit!: T;
 
 	mode: IUIList['mode'] = 'horizontal';

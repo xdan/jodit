@@ -34,11 +34,17 @@ import {
 import { Icon } from '../../../core/ui';
 import { ToolbarCollection } from '../../../modules/toolbar/collection/collection';
 import { STATUSES } from '../../../core/component';
+import { findControlType } from '../../../core/ui/helpers/get-control-type';
 
 @component
 export class ToolbarButton<T extends IViewBased = IViewBased>
 	extends UIButton
 	implements IToolbarButton {
+	/** @override */
+	className(): string {
+		return 'ToolbarButton';
+	}
+
 	state = {
 		...UIButtonState(),
 		theme: 'toolbar',
@@ -318,9 +324,9 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	 * @param control
 	 */
 	private openControlList(control: IControlTypeStrongList): void {
-		const controls: Controls | void = this.jodit.options.controls,
+		const controls: Controls = this.jodit.options.controls ?? {},
 			getControl = (key: string): IControlType | void =>
-				controls && controls[key];
+				findControlType(key, controls);
 
 		const list = control.list,
 			menu = new Popup(this.j),

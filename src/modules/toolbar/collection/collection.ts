@@ -29,6 +29,11 @@ import { component } from '../../../core/decorators';
 export class ToolbarCollection<T extends IViewBased = IViewBased>
 	extends UIList<T>
 	implements IToolbarCollection {
+	/** @override */
+	className(): string {
+		return 'ToolbarCollection';
+	}
+
 	jodit!: T;
 
 	readonly listenEvents =

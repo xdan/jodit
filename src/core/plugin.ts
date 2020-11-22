@@ -13,6 +13,11 @@ export abstract class Plugin extends ViewComponent<IJodit> implements IPlugin {
 	/** @override */
 	buttons: IPlugin['buttons'] = [];
 
+	/** @override */
+	className(): string {
+		return "";
+	}
+
 	protected abstract afterInit(jodit: IJodit): void;
 	protected abstract beforeDestruct(jodit: IJodit): void;
 

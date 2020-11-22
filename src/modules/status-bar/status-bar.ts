@@ -11,6 +11,10 @@ import { ViewComponent, STATUSES } from '../../core/component';
 import { Dom } from '../../core/dom';
 
 export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
+	className(): string {
+		return 'StatusBar';
+	}
+
 	container!: HTMLDivElement;
 
 	/**

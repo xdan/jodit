@@ -35,6 +35,8 @@ export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 	): this;
 
 	getFullElName(elementName: string): string;
+	getElm(elementName: string): HTMLElement;
+	getElms(elementName: string): HTMLElement[];
 }
 
 export interface IUIIconState {
@@ -118,7 +120,9 @@ export interface IUIForm extends IUIGroup {
 
 export interface IUIInput extends IUIElement {
 	nativeInput: HTMLInputElement | HTMLTextAreaElement;
+
 	state: {
+		className: string;
 		autocomplete: boolean;
 		name: string;
 		icon: string;
@@ -130,6 +134,7 @@ export interface IUIInput extends IUIElement {
 		validators: string[];
 		clearButton?: boolean;
 	};
+
 	value: string;
 	error: string;
 	validate(): boolean;

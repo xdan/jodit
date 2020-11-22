@@ -11,6 +11,11 @@ import { ViewComponent } from '../../core/component';
 import { Dom } from '../../core/dom';
 
 export class ProgressBar extends ViewComponent implements IProgressBar {
+	/** @override */
+	className(): string {
+		return 'ProgressBar';
+	}
+
 	/**
 	 * progress_bar Progress bar
 	 */

@@ -21,6 +21,11 @@ import { Icon } from '../icon';
 
 @component
 export class UIInput extends UIElement implements IUIInput {
+	/** @override */
+	className(): string {
+		return 'UIInput';
+	}
+
 	nativeInput!: IUIInput['nativeInput'];
 
 	private label = this.j.c.span(this.getFullElName('label'));
@@ -33,6 +38,7 @@ export class UIInput extends UIElement implements IUIInput {
 	private wrapper!: HTMLElement;
 
 	static defaultState: IUIInput['state'] = {
+		className: '',
 		autocomplete: true,
 		name: '',
 		icon: '',
@@ -53,6 +59,12 @@ export class UIInput extends UIElement implements IUIInput {
 		} else {
 			Dom.safeRemove(this.clearButton);
 		}
+	}
+
+	@watch('state.className')
+	onChangeClassName(_?: unknown, oldClassName?: string): void {
+		oldClassName && this.container.classList.remove(oldClassName);
+		this.state.className && this.container.classList.add(this.state.className);
 	}
 
 	@watch([
@@ -164,7 +176,7 @@ export class UIInput extends UIElement implements IUIInput {
 	}
 
 	/** @override **/
-	constructor(jodit: IViewBased, options: Partial<IUIInput['state']>) {
+	constructor(jodit: IViewBased, options?: Partial<IUIInput['state']>) {
 		super(jodit, options);
 
 		Object.assign(this.state, options);
@@ -185,6 +197,7 @@ export class UIInput extends UIElement implements IUIInput {
 		}
 
 		this.onChangeState();
+		this.onChangeClassName();
 	}
 
 	focus() {

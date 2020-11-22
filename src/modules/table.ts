@@ -35,6 +35,11 @@ declare module '../config' {
 }
 
 export class Table extends ViewComponent<IJodit> {
+	/** @override */
+	className(): string {
+		return 'Table';
+	}
+
 	private selected: Set<HTMLTableCellElement> = new Set();
 	private static selectedByTable: WeakMap<
 		HTMLTableElement,

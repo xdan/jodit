@@ -128,6 +128,28 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	}
 
 	/**
+	 * Return element with BEM class name
+	 * @param elementName
+	 */
+	getElm(elementName: string): HTMLElement {
+		return this.container.querySelector<HTMLElement>(
+			`.${this.getFullElName(elementName)}`
+		)!;
+	}
+
+	/**
+	 * Return elements with BEM class name
+	 * @param elementName
+	 */
+	getElms(elementName: string): HTMLElement[] {
+		return toArray(
+			this.container.querySelectorAll(
+				`.${this.getFullElName(elementName)}`
+			)
+		);
+	}
+
+	/**
 	 * Update UI from state
 	 */
 	update(): void {

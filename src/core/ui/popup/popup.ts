@@ -35,6 +35,11 @@ import { UIElement } from '../element';
 type getBoundFunc = () => IBound;
 
 export class Popup extends UIElement implements IPopup {
+	/** @override */
+	className(): string {
+		return 'Popup';
+	}
+
 	isOpened: boolean = false;
 	strategy: PopupStrategy = 'leftBottom';
 
@@ -83,6 +88,7 @@ export class Popup extends UIElement implements IPopup {
 
 		if (content instanceof UIElement) {
 			elm = content.container;
+			// @ts-ignore
 			content.parentElement = this;
 		} else if (isString(content)) {
 			elm = this.j.c.fromHTML(content);

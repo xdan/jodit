@@ -76,6 +76,11 @@ import autobind from 'autobind-decorator';
  * Class Jodit. Main class
  */
 export class Jodit extends ViewWithToolbar implements IJodit {
+	/** @override */
+	className(): string {
+		return 'Jodit';
+	}
+
 	/**
 	 * Define if object is Jodit
 	 */

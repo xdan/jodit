@@ -100,6 +100,11 @@ const TABS = {
  *
  */
 export class ImageEditor extends ViewComponent {
+	/** @override */
+	className(): string {
+		return 'ImageEditor';
+	}
+
 	private resizeUseRatio: boolean = true;
 	private cropUseRatio: boolean = true;
 
@@ -503,9 +508,10 @@ export class ImageEditor extends ViewComponent {
 				}, 200)
 			);
 
-		const { keepAspectRatioResize, keepAspectRatioCrop } = refs<
-			HTMLInputElement
-		>(this.editor);
+		const {
+			keepAspectRatioResize,
+			keepAspectRatioCrop
+		} = refs<HTMLInputElement>(this.editor);
 
 		if (keepAspectRatioResize) {
 			keepAspectRatioResize.addEventListener('change', () => {
@@ -711,7 +717,7 @@ export class ImageEditor extends ViewComponent {
 			failed: (error: Error) => void
 		) => void
 	): Promise<Dialog> {
-		return this.j.async.promise<Dialog>(resolve => {
+		return this.j.async.promise<Dialog>((resolve: Function): void => {
 			const timestamp = new Date().getTime();
 
 			this.image = this.j.c.element('img');

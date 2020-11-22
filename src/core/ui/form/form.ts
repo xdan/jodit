@@ -12,6 +12,11 @@ import { component } from '../../decorators';
 
 @component
 export class UIForm extends UIGroup implements IUIForm {
+	/** @override */
+	className(): string {
+		return 'UIForm';
+	}
+
 	container!: HTMLFormElement;
 
 	submit() {

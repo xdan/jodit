@@ -37,27 +37,36 @@ export function getControlType(
 			} as IControlTypeStrong;
 		}
 	} else {
-		const list = button.split(/\./);
-
-		let store: IDictionary<IControlType> = controls;
-
-		if (list.length > 1) {
-			if (controls[list[0]] !== undefined) {
-				store = controls[list[0]] as IDictionary<IControlType>;
-				button = list[1];
-			}
-		}
-
-		if (store[button] !== undefined) {
-			buttonControl = { name: button, ...store[button] };
-		} else {
-			buttonControl = {
-				name: button,
-				command: button,
-				tooltip: button
-			};
-		}
+		buttonControl = findControlType(button, controls) || {
+			name: button,
+			command: button,
+			tooltip: button
+		};
 	}
 
 	return buttonControl;
+}
+
+export function findControlType(
+	path: string,
+	controls: Controls
+): IControlTypeStrong | void {
+	let [namespaceOrKey, key] = path.split(/\./) as string[];
+
+	let store: IDictionary<IControlType> = controls;
+
+	if (key != null) {
+		if (controls[namespaceOrKey] !== undefined) {
+			store = controls[namespaceOrKey] as IDictionary<IControlType>;
+		}
+	} else {
+		key = namespaceOrKey;
+	}
+
+	return store[key]
+		? {
+				name: key,
+				...store[key]
+		  }
+		: undefined;
 }

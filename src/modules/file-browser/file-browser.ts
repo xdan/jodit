@@ -50,6 +50,11 @@ import { selfListeners } from './listeners/self-listeners';
 import { DEFAULT_SOURCE_NAME } from './data-provider';
 
 export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
+	/** @override */
+	className(): string {
+		return 'FileBrowser';
+	}
+
 	private loader = this.c.div(F_CLASS + '__loader', ICON_LOADER);
 	private browser = this.c.div(F_CLASS + ' non-selected');
 	private status_line = this.c.div(F_CLASS + '__status');

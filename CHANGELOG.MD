@@ -78,6 +78,7 @@ console.log(editor.statusbar.isShown); // true
 The `buttons` option can contain named groups of buttons.
 Each plugin decides which button belongs to which group.
 Thus, if you turn off the plugin, then its buttons will not be shown either.
+Available groups: ["source", "font-style", "script", "list", "indent", "font", "color", "media", "state", "clipboard", "insert", "history", "search", "other", "info"];
 
 ```js
 const editor = Jodit.make('#editor', {
