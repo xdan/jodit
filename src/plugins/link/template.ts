@@ -35,16 +35,20 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 				ref: 'content_input_box'
 			}
 		),
-		// TODO BB : alimenter la liste des classes via les options du plugin
-		// TODO BB : alimenter la liste des classes via un appel ajax défini dans les options du plugin
-		// TODO BB : Mettre ça en option
+		// TODO BB : Mettre cette fonctionnalité de className en option
 		// TODO BB : Permettre une alternative avec juste un input text
+
+		// TODO BB : Récupérer la liste des classes via un autre module
+		// TODO BB : ce module pourra récupérer les classes via :
+		// TODO BB :   - les options de Jodit
+		// TODO BB :   - un url à appeler en Ajax
+		// TODO BB : il aura également une notion de context pour avoir des listes différentes selon que c'est un lien, un style, une table, ...
 		new UIBlock(
 			editor,
 			[
 				new UISelect(editor, {
 					name: 'className',
-					ref: 'className_input',
+					ref: 'className_select',
 					label: 'Class name',
 					options: [
 						{ value: "", text: "" },

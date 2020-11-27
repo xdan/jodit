@@ -1,4 +1,3 @@
-// TODO BB : vérifier les adaptations par rapport à ./input.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -9,12 +8,16 @@ import './select.less';
 
 import { UIElement } from '../element';
 import type {
+	// TODO BB : à supprimer ?
+//	IDictionary,
 	IUISelect,
 	IUISelectValidator,
 	IViewBased
 } from '../../../types';
 import { attr } from '../../helpers';
 import { Dom } from '../../dom';
+// TODO BB : à supprimer ?
+//import * as validators from './validators';
 
 export class UISelect extends UIElement implements IUISelect {
 	nativeInput!: IUISelect['nativeInput'];
@@ -73,9 +76,13 @@ export class UISelect extends UIElement implements IUISelect {
 		container.appendChild(this.nativeInput);
 
 		attr(this.nativeInput, 'name', options.name);
+		attr(this.nativeInput, 'dir', this.j.o.direction || 'auto');
 		attr(this.nativeInput, 'data-ref', options.ref || options.name);
 		attr(this.nativeInput, 'ref', options.ref || options.name);
-		// TODO BB : il manque certainement des attr
+		// TODO BB : à tester + mettre une valeur par défaut ?
+		attr(this.nativeInput, 'size', options.size);
+		// TODO BB : à tester + mettre une valeur par défaut ?
+		attr(this.nativeInput, 'multiple', options.multiple);
 
 		return container;
 	}
@@ -84,7 +91,26 @@ export class UISelect extends UIElement implements IUISelect {
 	constructor(jodit: IViewBased, readonly options: IUISelect['options']) {
 		super(jodit, options);
 
-		// TODO BB : J'ai du supprimer la partie des validators car je n'ai pas encore trouvé comment ça marche
+		// Début TODO BB : J'ai du supprimer la partie des validators car je n'ai pas encore trouvé comment ça marche
+		// TODO BB : Placeholder à supprimer ou s'en servir pour la valeur vide
+		/*
+		if (this.options.required) {
+			attr(this.nativeInput, 'required', true);
+			this.validators.push(validators.required);
+		}
+
+		if (this.options.placeholder) {
+			attr(this.nativeInput, 'placeholder', this.options.placeholder);
+		}
+
+		options.validators?.forEach(name => {
+			const validator = (validators as IDictionary<IUIInputValidator>)[
+				name
+			];
+			validator && this.validators.push(validator);
+		});
+		*/
+		// Fin TODO BB
 	}
 
 	focus() {

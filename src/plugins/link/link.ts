@@ -106,7 +106,7 @@ Config.prototype.controls.link = {
 				target_checkbox,
 				nofollow_checkbox,
 				url_input,
-				className_input
+				className_select
 			} = elements as IDictionary<HTMLInputElement>,
 			currentElement = current,
 			isImageContent = Dom.isImage(currentElement, editor.ew);
@@ -152,7 +152,7 @@ Config.prototype.controls.link = {
 		if (link) {
 			url_input.value = attr(link, 'href') || '';
 
-			className_input.value = attr(link, 'class') || '';
+			className_select.value = attr(link, 'class') || '';
 
 			if (openInNewTabCheckbox && target_checkbox) {
 				target_checkbox.checked = attr(link, 'target') === '_blank';
@@ -213,12 +213,12 @@ Config.prototype.controls.link = {
 			links.forEach(a => {
 				a.setAttribute('href', url_input.value);
 
-				if (className_input.value == "" && a.hasAttribute('class')) {
+				if (className_select.value == "" && a.hasAttribute('class')) {
 					a.removeAttribute ('class');
 				}
 
-				if (className_input.value != "") {
-					a.setAttribute('class', className_input.value);
+				if (className_select.value != "") {
+					a.setAttribute('class', className_select.value);
 				}
 
 				if (!isImageContent) {
