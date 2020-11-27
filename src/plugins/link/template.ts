@@ -5,7 +5,7 @@
  */
 
 import { IJodit, IUIForm } from '../../types';
-import { UIBlock, UICheckbox, UIForm, UIInput } from '../../core/ui/form';
+import { UIBlock, UICheckbox, UIForm, UIInput, UISelect } from '../../core/ui/form';
 import { UIButton } from '../../core/ui/button';
 
 export const formTemplate = (editor: IJodit): IUIForm => {
@@ -34,6 +34,26 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 			{
 				ref: 'content_input_box'
 			}
+		),
+		// TODO : alimenter la liste des classes via les options du plugin
+		// TODO : alimenter la liste des classes via un appel ajax défini dans les options du plugin
+		// TODO : Mettre ça en option
+		// TODO : Permettre une alternative avec juste un input text
+		new UIBlock(
+			editor,
+			[
+				new UISelect(editor, {
+					name: 'className',
+					ref: 'className_input',
+					label: 'Class name',
+					options: [
+						{ value: "", text: "" },
+						{ value: "val1", text: "text1" },
+						{ value: "val2", text: "text2" },
+						{ value: "val3", text: "text3" }
+					]
+				})
+			]
 		),
 		openInNewTabCheckbox
 			? new UICheckbox(editor, {
