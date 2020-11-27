@@ -1,4 +1,4 @@
-// TODO : vérifier les adaptations par rapport à ./input.ts
+// TODO BB : vérifier les adaptations par rapport à ./input.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -75,7 +75,7 @@ export class UISelect extends UIElement implements IUISelect {
 		attr(this.nativeInput, 'name', options.name);
 		attr(this.nativeInput, 'data-ref', options.ref || options.name);
 		attr(this.nativeInput, 'ref', options.ref || options.name);
-		// TODO : il manque certainement des attr
+		// TODO BB : il manque certainement des attr
 
 		return container;
 	}
@@ -84,7 +84,7 @@ export class UISelect extends UIElement implements IUISelect {
 	constructor(jodit: IViewBased, readonly options: IUISelect['options']) {
 		super(jodit, options);
 
-		// TODO : J'ai du supprimer la partie des validators car je n'ai pas encore trouvé comment ça marche
+		// TODO BB : J'ai du supprimer la partie des validators car je n'ai pas encore trouvé comment ça marche
 	}
 
 	focus() {

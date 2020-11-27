@@ -35,10 +35,10 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 				ref: 'content_input_box'
 			}
 		),
-		// TODO : alimenter la liste des classes via les options du plugin
-		// TODO : alimenter la liste des classes via un appel ajax défini dans les options du plugin
-		// TODO : Mettre ça en option
-		// TODO : Permettre une alternative avec juste un input text
+		// TODO BB : alimenter la liste des classes via les options du plugin
+		// TODO BB : alimenter la liste des classes via un appel ajax défini dans les options du plugin
+		// TODO BB : Mettre ça en option
+		// TODO BB : Permettre une alternative avec juste un input text
 		new UIBlock(
 			editor,
 			[

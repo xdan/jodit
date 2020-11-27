@@ -149,7 +149,7 @@ export interface IUISelect extends IUIElement {
 		label?: string;
 		ref?: string;
 		options: IUIOption[]
-		// TODO : il manque certainement des options
+		// TODO BB : il manque certainement des options
 	};
 	value: string;
 	error: string;
