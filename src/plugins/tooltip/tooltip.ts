@@ -6,13 +6,12 @@
 
 import './tooltip.less';
 
-import autobind from 'autobind-decorator';
-
 import type { IJodit, IPoint } from '../../types';
 import { css } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { Dom } from '../../core/dom';
 import { getContainer } from '../../core/global';
+import { autobind } from '../../core/decorators';
 
 export class tooltip extends Plugin {
 	private isOpened = false;

@@ -4,8 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import autobind from 'autobind-decorator';
-
 import './collection.less';
 
 import type {
@@ -23,7 +21,7 @@ import { isFunction, isJoditObject } from '../../../core/helpers/';
 
 import { UIList } from '../../../core/ui';
 import { makeButton } from '../factory';
-import { component } from '../../../core/decorators';
+import { component, autobind } from '../../../core/decorators';
 
 @component
 export class ToolbarCollection<T extends IViewBased = IViewBased>

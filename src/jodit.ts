@@ -69,8 +69,7 @@ import {
 	lang,
 	getContainer
 } from './core/global';
-import { cache } from './core/decorators';
-import autobind from 'autobind-decorator';
+import { autobind, cache } from './core/decorators';
 
 /**
  * Class Jodit. Main class

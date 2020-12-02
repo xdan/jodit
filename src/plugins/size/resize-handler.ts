@@ -4,11 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import autobind from 'autobind-decorator';
-
 import type { IJodit, IPointBound } from '../../types';
 import { Plugin } from '../../core/plugin';
 import { Dom } from '../../core/dom';
+import { autobind } from '../../core/decorators';
 
 @autobind
 export class resizeHandler extends Plugin {

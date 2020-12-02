@@ -6,8 +6,6 @@
 
 import './button.less';
 
-import autobind from 'autobind-decorator';
-
 import { UIElement } from '../element';
 import {
 	IUIButton,
@@ -20,7 +18,7 @@ import { Dom } from '../../dom';
 import { attr, isString, isFunction } from '../../helpers';
 import { Icon } from '../icon';
 import { UIList } from '../list/list';
-import { component } from '../../decorators';
+import { autobind, component } from "../../decorators";
 import { STATUSES } from '../../component';
 
 export const UIButtonState = (): IUIButtonState => ({

@@ -4,8 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import autobind from 'autobind-decorator';
-
 import * as consts from '../constants';
 import {
 	INSEPARABLE_TAGS,
@@ -37,6 +35,7 @@ import {
 	toArray
 } from '../helpers';
 import { Style } from './style/style';
+import { autobind } from '../decorators';
 
 type WindowSelection = Selection | null;
 

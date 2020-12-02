@@ -7,8 +7,6 @@
 import './inline-popup.less';
 import './config/config';
 
-import autobind from 'autobind-decorator';
-
 import type {
 	HTMLTagNames,
 	IBound,
@@ -29,7 +27,7 @@ import {
 	isFunction
 } from '../../core/helpers';
 import { Dom, Table } from '../../modules';
-import { debounce, wait } from '../../core/decorators';
+import { debounce, wait, autobind } from '../../core/decorators';
 
 /**
  * Plugin for show inline popup dialog

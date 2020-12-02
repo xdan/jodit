@@ -4,10 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import autobind from 'autobind-decorator';
-
 import type { IJodit, IPlugin } from '../types';
 import { ViewComponent, STATUSES } from './component';
+import { autobind } from './decorators';
 
 export abstract class Plugin extends ViewComponent<IJodit> implements IPlugin {
 	/** @override */

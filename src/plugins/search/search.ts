@@ -6,8 +6,6 @@
 
 import './search.less';
 
-import autobind from 'autobind-decorator';
-
 import type {
 	ISelectionRange,
 	markerInfo,
@@ -22,6 +20,7 @@ import { Dom } from '../../core/dom';
 import { Plugin } from '../../core/plugin';
 import { Icon } from '../../core/ui';
 import { css, position, refs, trim } from '../../core/helpers';
+import { autobind } from '../../core/decorators';
 
 declare module '../../config' {
 	interface Config {

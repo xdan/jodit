@@ -6,8 +6,6 @@
 
 import './resizer.less';
 
-import autobind from 'autobind-decorator';
-
 import type { IBound } from '../../types';
 import { Config } from '../../config';
 import * as consts from '../../core/constants';
@@ -24,6 +22,7 @@ import {
 import { IJodit } from '../../types';
 import { Plugin } from '../../core/plugin';
 import { eventEmitter } from '../../core/global';
+import { autobind } from '../../core/decorators';
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table

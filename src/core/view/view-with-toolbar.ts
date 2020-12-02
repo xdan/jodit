@@ -6,8 +6,6 @@
 
 import './view-with-toolbar.less';
 
-import autobind from 'autobind-decorator';
-
 import type {
 	IViewWithToolbar,
 	IToolbarCollection,
@@ -23,6 +21,7 @@ import { Dom } from '../dom';
 import { makeCollection } from '../../modules/toolbar/factory';
 import { STATUSES } from '../component';
 import { isButtonGroup } from '../ui/helpers/buttons';
+import { autobind } from '../decorators';
 
 export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	toolbar: IToolbarCollection = makeCollection(this);

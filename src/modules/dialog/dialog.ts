@@ -6,8 +6,6 @@
 
 import './dialog.less';
 
-import autobind from 'autobind-decorator';
-
 import type {
 	IControlType,
 	IDictionary,
@@ -38,7 +36,7 @@ import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 import { Dom } from '../../core/dom';
 import { STATUSES } from '../../core/component';
 import { eventEmitter, pluginSystem } from '../../core/global';
-import { component } from '../../core/decorators';
+import { component, autobind } from '../../core/decorators';
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}

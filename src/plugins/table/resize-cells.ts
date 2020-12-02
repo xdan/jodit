@@ -6,8 +6,6 @@
 
 import './table.less';
 
-import autobind from 'autobind-decorator';
-
 import type { IBound, IJodit } from '../../types';
 import * as consts from '../../core/constants';
 import { Plugin, Dom, Table } from '../../modules';
@@ -18,6 +16,7 @@ import {
 	getContentWidth,
 	offset
 } from '../../core/helpers';
+import { autobind } from '../../core/decorators';
 
 const key = 'table_processor_observer-resize';
 

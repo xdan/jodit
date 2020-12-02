@@ -4,12 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import autobind from 'autobind-decorator';
-
 import type { IJodit, markerInfo, Nullable } from '../../types';
 import { Plugin } from '../../core/plugin';
 import { Dom } from '../../core/dom';
 import { isString } from '../../core/helpers/checker';
+import { autobind } from '../../core/decorators';
 
 /**
  * Wrap single text nodes in block wrapper

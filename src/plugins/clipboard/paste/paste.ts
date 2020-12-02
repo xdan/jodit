@@ -3,7 +3,6 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import autobind from 'autobind-decorator';
 
 import type { IJodit } from '../../../types';
 import { Plugin } from '../../../core/plugin';
@@ -37,6 +36,7 @@ import { pluginKey as clipboardPluginKey } from '../clipboard';
 import { Dom } from '../../../core/dom';
 import { Confirm, Dialog } from '../../../modules/dialog';
 import { Button } from '../../../core/ui/button';
+import { autobind } from '../../../core/decorators';
 
 type PastedValue = {
 	html: string | Node;

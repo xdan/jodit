@@ -6,8 +6,6 @@
 
 import './image-properties.less';
 
-import autobind from 'autobind-decorator';
-
 import { Config } from '../../../config';
 import {
 	Alert,
@@ -42,7 +40,7 @@ import {
 import { FileSelectorWidget, TabsWidget } from '../../../modules/widget';
 import { Button } from '../../../core/ui/button';
 import { form, mainTab, positionTab } from './templates/';
-import { watch } from '../../../core/decorators';
+import { watch, autobind } from '../../../core/decorators';
 
 /**
  * Plug-in for image editing window

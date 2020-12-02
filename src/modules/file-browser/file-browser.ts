@@ -43,11 +43,11 @@ import { ObserveObject } from '../../core/events/';
 import { FileBrowserItem } from './builders/item';
 import { F_CLASS, ICON_LOADER } from './consts';
 import { makeDataProvider } from './factories';
-import autobind from 'autobind-decorator';
 import { stateListeners } from './listeners/state-listeners';
 import { nativeListeners } from './listeners/native-listeners';
 import { selfListeners } from './listeners/self-listeners';
 import { DEFAULT_SOURCE_NAME } from './data-provider';
+import { autobind } from '../../core/decorators';
 
 export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	/** @override */

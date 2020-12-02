@@ -4,14 +4,13 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import autobind from 'autobind-decorator';
-
 import type { IBound, IJodit, Nullable } from '../../types';
 import { Plugin } from '../../core/plugin';
 import { Dom, Table } from '../../modules';
 import { $$, dataBind, position } from '../../core/helpers';
 import { alignElement } from '../justify';
 import { KEY_TAB } from '../../core/constants';
+import { autobind } from '../../core/decorators';
 
 const key = 'table_processor_observer';
 
