@@ -160,8 +160,9 @@ export class ImageEditor extends ViewComponent {
 		value: number | string,
 		percent: string | number
 	): number => {
-		const percentStr: string = percent.toString();
-		const valueNbr: number = parseFloat(value.toString());
+		const percentStr = percent.toString();
+		const valueNbr = parseFloat(value.toString());
+
 		let match: string[] | null;
 
 		match = /^[-+]?[0-9]+(px)?$/.exec(percentStr);
@@ -179,19 +180,23 @@ export class ImageEditor extends ViewComponent {
 	};
 
 	private calcCropBox = () => {
-		const w = (this.crop_box.parentNode as HTMLElement).offsetWidth * 0.8,
-			h = (this.crop_box.parentNode as HTMLElement).offsetHeight * 0.8;
+		const node = this.crop_box.parentNode as HTMLElement,
+			w = node.offsetWidth * 0.8,
+			h = node.offsetHeight * 0.8;
+
 		let wn: number = w,
 			hn: number = h;
 
-		if (w > this.naturalWidth && h > this.naturalHeight) {
-			wn = this.naturalWidth;
-			hn = this.naturalHeight;
+		const { naturalWidth: nw, naturalHeight: nh } = this;
+
+		if (w > nw && h > nh) {
+			wn = nw;
+			hn = nh;
 		} else if (this.ratio > w / h) {
 			wn = w;
-			hn = this.naturalHeight * (w / this.naturalWidth);
+			hn = nh * (w / nw);
 		} else {
-			wn = this.naturalWidth * (h / this.naturalHeight);
+			wn = nw * (h / nh);
 			hn = h;
 		}
 
@@ -200,6 +205,7 @@ export class ImageEditor extends ViewComponent {
 			height: hn
 		});
 	};
+
 	private showCrop = () => {
 		if (!this.cropImage) {
 			return;
@@ -462,48 +468,41 @@ export class ImageEditor extends ViewComponent {
 				}
 			})
 			.on(
-				widthInput,
-				`change.${jie} mousedown.${jie} keydown.${jie}`,
-				self.j.async.debounce(() => {
-					const value: number = parseInt(widthInput.value, 10);
-					let another: number;
-					if (value > self.o.min_width) {
-						css(self.image, 'width', value + 'px');
+				[widthInput, heightInput],
+				`input.${jie}`,
+				self.j.async.debounce((e: MouseEvent) => {
+					const input = e.target as HTMLInputElement,
+						isWidth = attr(input, 'data-ref') === 'widthInput',
+						x = parseInt(input.value, 10),
+						minX = isWidth ? self.o.min_width : self.o.min_height,
+						minY = !isWidth ? self.o.min_width : self.o.min_height;
+
+					let y: number;
+
+					if (x > minX) {
+						css(self.image, isWidth ? 'width' : 'height', x);
 
 						if (self.resizeUseRatio) {
-							another = Math.round(value / self.ratio);
+							y = isWidth
+								? Math.round(x / self.ratio)
+								: Math.round(x * self.ratio);
 
-							if (another > self.o.min_height) {
-								css(self.image, 'height', another + 'px');
-								heightInput.value = another.toString();
+							if (y > minY) {
+								css(
+									self.image,
+									!isWidth ? 'width' : 'height',
+									y
+								);
+
+								if (isWidth) {
+									heightInput.value = y.toString();
+								} else {
+									widthInput.value = y.toString();
+								}
 							}
 						}
 					}
-					this.j.e.fire(self.resizeHandler, 'updatesize');
-				}, 200)
-			)
-			.on(
-				heightInput,
-				`change.${jie} mousedown.${jie} keydown.${jie}`,
-				self.j.async.debounce(() => {
-					if (this.isDestructed) {
-						return;
-					}
 
-					const value: number = parseInt(heightInput.value, 10);
-					let another: number;
-					if (value > self.o.min_height) {
-						css(self.image, 'height', value + 'px');
-
-						if (self.resizeUseRatio) {
-							another = Math.round(value * self.ratio);
-
-							if (another > self.o.min_width) {
-								css(self.image, 'width', another + 'px');
-								widthInput.value = another.toString();
-							}
-						}
-					}
 					this.j.e.fire(self.resizeHandler, 'updatesize');
 				}, 200)
 			);
@@ -530,9 +529,8 @@ export class ImageEditor extends ViewComponent {
 				css(self.resizeHandler, {
 					top: 0,
 					left: 0,
-					width: (self.image.offsetWidth || self.naturalWidth) + 'px',
-					height:
-						(self.image.offsetHeight || self.naturalHeight) + 'px'
+					width: self.image.offsetWidth || self.naturalWidth,
+					height: self.image.offsetHeight || self.naturalHeight
 				});
 
 				this.updateResizeBox();
@@ -641,10 +639,12 @@ export class ImageEditor extends ViewComponent {
 
 							widthInput.value = self.naturalWidth.toString();
 							heightInput.value = self.naturalHeight.toString();
+
 							self.j.e.fire(self.resizeHandler, 'updatesize');
 						} else {
 							self.showCrop();
 						}
+
 						break;
 				}
 			});

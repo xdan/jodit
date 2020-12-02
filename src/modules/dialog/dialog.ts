@@ -16,8 +16,7 @@ import type {
 	IDialog,
 	ContentItem,
 	Content,
-	IDialogOptions,
-	CanUndef
+	IDialogOptions
 } from '../../types/';
 import { Config, OptionsDefault } from '../../config';
 import { KEY_ESC } from '../../core/constants';
@@ -39,7 +38,7 @@ import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 import { Dom } from '../../core/dom';
 import { STATUSES } from '../../core/component';
 import { eventEmitter, pluginSystem } from '../../core/global';
-import { component, debounce } from '../../core/decorators';
+import { component } from '../../core/decorators';
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}
@@ -654,38 +653,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		this.isModal = Boolean(modal);
 		this.container.classList.toggle('jodit-modal', this.isModal);
 
-		if (this.isModal) {
-			this.addModalFocusLoopListener();
-		} else {
-			this.removeModalFocusLoopListener();
-		}
-
 		return this;
-	}
-
-	private addModalFocusLoopListener(): void {
-		this.e.on(this.od.body, 'focusin', this.onFocusInTarget);
-	}
-
-	@debounce()
-	private onFocusInTarget(e: FocusEvent): void {
-		const elm = e.target as CanUndef<HTMLElement>;
-
-		if (
-			Dom.isHTMLElement(elm, this.ow) &&
-			!Dom.isOrContains(this.dialog, elm)
-		) {
-			const newFocus = this.dialog.querySelector<HTMLElement>(
-				'[tabIndex],button,input'
-			);
-			if (newFocus) {
-				newFocus.focus();
-			}
-		}
-	}
-
-	private removeModalFocusLoopListener(): void {
-		this.e.off(this.od.body, 'focusin', this.onFocusInTarget);
 	}
 
 	/**
@@ -747,7 +715,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		}
 
 		this.removeGlobalResizeListeners();
-		this.removeModalFocusLoopListener();
 
 		if (this.destroyAfterClose) {
 			this.destruct();
@@ -882,7 +849,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		if (this.events) {
 			this.removeGlobalResizeListeners();
-			this.removeModalFocusLoopListener();
 
 			this.events
 				.off(this.container, 'close_dialog', self.close)

@@ -39,6 +39,7 @@ console.log(item.options); // {some: false}
 
 #### :bug: Bug Fix
 
+* [#568 Reset in size change not rescaling image](https://github.com/xdan/jodit/issues/568)
 * [#550 Table cell elements are always left-aligned](https://github.com/xdan/jodit/issues/550)
 * [#543 editor.destruct throws error](https://github.com/xdan/jodit/issues/543)
 * [#540 How i can get Iframe without parent element <jodit>...</jodit>](https://github.com/xdan/jodit/issues/540)
