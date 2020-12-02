@@ -854,6 +854,23 @@ describe('Backspace/Delete key', function () {
 				expect(editor.value).equals('<p>Test a Test</p>');
 			});
 
+			describe('With styles', function () {
+				it('Should connect both elements in one element', function () {
+					editor.value = '<div><span style="color: rgb(0, 0, 255);">This is</span></div>\n' +
+						'<div><span style="color: rgb(0, 0, 255);">my line</span></div>';
+
+					range.setStart(editor.editor.querySelectorAll('span')[1].firstChild, 0);
+					editor.s.selectRange(range);
+
+					simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+					expect(sortAttributes(editor.value)).equals('<div><span style="color:#0000FF">This ismy line</span></div>');
+
+					editor.s.insertHTML(' a ');
+					expect(sortAttributes(editor.value)).equals('<div><span style="color:#0000FF">This is a my line</span></div>');
+				});
+			});
+
 			describe('P after UL and cursor in the left edge of P', function () {
 				it('Should remove P and move all this content inside last LI', function () {
 					editor.value =
