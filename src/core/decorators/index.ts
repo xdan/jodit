@@ -12,3 +12,4 @@ export * from './nonenumerable';
 export * from './persistent';
 export * from './wait';
 export * from './watch';
+export { default as autobind } from 'autobind-decorator';

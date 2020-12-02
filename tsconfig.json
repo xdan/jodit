@@ -4,7 +4,10 @@
 		"moduleResolution": "node",
 
 		"removeComments": true,
+
 		"strict": true,
+		"alwaysStrict": true,
+
 		"strictNullChecks": true,
 		"strictFunctionTypes": true,
 		"strictBindCallApply": true,
