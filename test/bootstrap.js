@@ -857,6 +857,30 @@ function setCursor(elm, inEnd) {
 	window.getSelection().addRange(range);
 }
 
+/**
+ * Set cursor inside editor by some char
+ *
+ * @param {Jodit} editor
+ * @param {string} [char]
+ */
+function setCursorToChar(editor, char = '|') {
+	const r = editor.s.createRange();
+
+	Jodit.modules.Dom.each(editor.editor, function(node) {
+		if (node.nodeType === Node.TEXT_NODE && node.nodeValue.includes(char)) {
+			const index = node.nodeValue.indexOf(char);
+			node.nodeValue = node.nodeValue.replace(char, '');
+			r.setStart(node, index);
+			return false;
+		}
+
+		return true;
+	});
+
+	r.collapse(true);
+	editor.s.selectRange(r);
+}
+
 function createPoint(x, y, color, fixed = false) {
 	const div = document.createElement('div');
 

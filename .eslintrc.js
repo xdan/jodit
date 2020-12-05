@@ -34,6 +34,7 @@ module.exports = {
 	},
 	globals: {
 		"Set": true,
+		"setCursorToChar": true,
 		"createPoint": true,
 		"afterEach": true,
 		"SynchronousPromise": true,

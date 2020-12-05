@@ -22,7 +22,6 @@ import {
 	toArray,
 	trim
 } from "./helpers";
-import { getSibling } from '../plugins/keyboard/helpers';
 
 /**
  * Module for working with DOM
@@ -368,7 +367,7 @@ export class Dom {
 	}
 
 	/**
-	 * Check if element is HTMLelement node
+	 * Check if element is HTMLElement node
 	 * @param node
 	 */
 	static isHTMLElement(node: unknown, win: Window): node is HTMLElement {
@@ -638,20 +637,24 @@ export class Dom {
 	 *
 	 * @param node
 	 * @param [left]
-	 * @param [normal]
+	 * @param [cond]
 	 */
-	static getNormalSibling(
+	static findSibling(
 		node: Node,
 		left: boolean = true,
-		normal: (n: Node) => boolean = (n: Node) => !Dom.isEmptyTextNode(n)
+		cond:  (n: Node) => boolean = (n: Node) => !Dom.isEmptyTextNode(n)
 	): Nullable<Node> {
-		let start = getSibling(node, left);
-
-		while (start && !normal(start)) {
-			start = getSibling(start, left);
+		const getSibling = (node: Node): Nullable<Node> => {
+			return left ? node.previousSibling : node.nextSibling;
 		}
 
-		return start && normal(start) ? start : null;
+		let start = getSibling(node);
+
+		while (start && !cond(start)) {
+			start = getSibling(start);
+		}
+
+		return start && cond(start) ? start : null;
 	}
 
 	/**

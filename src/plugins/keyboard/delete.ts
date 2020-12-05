@@ -14,9 +14,11 @@ import {
 } from '../../core/constants';
 import { isVoid, call, trim, attr, trimInv } from '../../core/helpers';
 import {
-	getNeighbor,
-	getNotSpaceSibling,
+	findMostNestedNeighbor,
+	findNotEmptyNeighbor,
+	findNotEmptySibling,
 	getSibling,
+	getSiblingBox,
 	normalizeCursorPosition
 } from './helpers';
 import { Config } from '../../config';
@@ -221,7 +223,6 @@ export class Delete extends Plugin {
 		block: boolean
 	): void | true {
 		const step = backspace ? -1 : 1;
-
 		const anotherSibling: Nullable<Node> = getSibling(fakeNode, !backspace);
 
 		let sibling: Nullable<Node> = getSibling(fakeNode, backspace),
@@ -295,6 +296,8 @@ export class Delete extends Plugin {
 			if (!isVoid(removed) && removed !== INVISIBLE_SPACE) {
 				charRemoved = true;
 
+				Dom.after(sibling, fakeNode);
+
 				if (block) {
 					while (this.checkRemoveChar(fakeNode, backspace, false)) {}
 				}
@@ -302,12 +305,27 @@ export class Delete extends Plugin {
 				break;
 			}
 
-			sibling = getSibling(sibling, backspace);
+			let nextSibling = getSibling(sibling, backspace);
+
+			if (
+				!nextSibling &&
+				sibling.parentNode &&
+				sibling.parentNode !== this.root
+			) {
+				nextSibling = findMostNestedNeighbor(
+					sibling,
+					!backspace,
+					this.root,
+					true
+				);
+			}
 
 			if (removeNeighbor) {
 				Dom.safeRemove(removeNeighbor);
 				removeNeighbor = null;
 			}
+
+			sibling = nextSibling;
 		}
 
 		if (charRemoved) {
@@ -370,7 +388,7 @@ export class Delete extends Plugin {
 		fakeNode: Node,
 		backspace: boolean
 	): void | true {
-		const neighbor = Dom.getNormalSibling(fakeNode, backspace);
+		const neighbor = Dom.findSibling(fakeNode, backspace);
 
 		if (
 			Dom.isElement(neighbor) &&
@@ -430,7 +448,6 @@ export class Delete extends Plugin {
 		backspace: boolean
 	): true | void {
 		let found: boolean = false;
-
 		const { setCursorBefore, setCursorIn } = this.j.s;
 
 		let prn: Nullable<Node> = Dom.closest(
@@ -443,7 +460,7 @@ export class Delete extends Plugin {
 			return;
 		}
 
-		const neighbor = getNeighbor(fakeNode, backspace, this.root);
+		const neighbor = findNotEmptyNeighbor(fakeNode, backspace, this.root);
 
 		do {
 			if (prn && Dom.isEmpty(prn) && !Dom.isCell(prn, this.j.ew)) {
@@ -497,8 +514,8 @@ export class Delete extends Plugin {
 	 * ```
 	 */
 	private checkJoinTwoLists(fakeNode: Node, backspace: boolean): true | void {
-		const next = Dom.getNormalSibling(fakeNode, backspace),
-			prev = Dom.getNormalSibling(fakeNode, !backspace);
+		const next = Dom.findSibling(fakeNode, backspace),
+			prev = Dom.findSibling(fakeNode, !backspace);
 
 		if (
 			!Dom.closest(fakeNode, Dom.isElement, this.root) &&
@@ -548,7 +565,7 @@ export class Delete extends Plugin {
 			return;
 		}
 
-		const neighbor = getNotSpaceSibling(parent, backspace);
+		const neighbor = findNotEmptySibling(parent, backspace);
 
 		if (neighbor && Dom.isEmpty(neighbor)) {
 			Dom.safeRemove(neighbor);
@@ -560,16 +577,6 @@ export class Delete extends Plugin {
 	/**
 	 * Check if two separate elements can be connected
 	 *
-	 * @example
-	 * ```html
-	 * <p>a</p><p>|b</p>
-	 * <ul><li>a</li></ul><ul><li>|b</li></ul>
-	 * ```
-	 * result
-	 * ```html
-	 * <p>a|b</p>
-	 * <ul><li>a</li><li>|b</li></ul>
-	 * ```
 	 * @param fakeNode
 	 * @param backspace
 	 */
@@ -577,13 +584,72 @@ export class Delete extends Plugin {
 		fakeNode: Node,
 		backspace: boolean
 	): true | void {
+		const { jodit } = this;
+
+		let nextBox: Nullable<Node> = fakeNode,
+			mainClosestBox: Nullable<Node> = nextBox;
+
+		// Find main big closest element
+		while (
+			nextBox &&
+			!findNotEmptySibling(nextBox, backspace) &&
+			nextBox.parentElement !== this.root
+		) {
+			nextBox = nextBox.parentElement;
+			mainClosestBox = nextBox;
+		}
+
+		if (Dom.isElement(mainClosestBox)) {
+			let sibling = findNotEmptySibling(
+				mainClosestBox,
+				backspace
+			) as Nullable<Element>;
+
+			// Process UL/LI/OL cases
+			const siblingIsList = Dom.isTag(sibling, ['ol', 'ul']);
+			const boxIsList = Dom.isTag(mainClosestBox, ['ol', 'ul']);
+			const elementChild = (elm: Element, side: boolean) =>
+				side ? elm.firstElementChild : elm.lastElementChild;
+
+			if (boxIsList) {
+				sibling = jodit.createInside.element(jodit.o.enterBlock);
+				Dom.before(mainClosestBox, sibling);
+				mainClosestBox = elementChild(mainClosestBox, backspace);
+			} else if (sibling && siblingIsList && !boxIsList) {
+				sibling = elementChild(mainClosestBox, !backspace);
+			}
+
+			// Move content and remove empty nodes
+			if (mainClosestBox && Dom.isElement(sibling)) {
+				Dom.moveContent(mainClosestBox, sibling, !backspace);
+
+				let remove: Nullable<Node> = mainClosestBox;
+
+				while (remove && remove !== this.root && Dom.isEmpty(remove)) {
+					const parent: Nullable<Node> = remove.parentElement;
+					Dom.safeRemove(remove);
+					remove = parent;
+				}
+
+				jodit.s.setCursorBefore(fakeNode);
+				return true;
+			}
+		}
+	}
+
+	checkJoinNeighbors2(fakeNode: Node, backspace: boolean): true | void {
 		const parent = Dom.closest(fakeNode, Dom.isElement, this.root);
 
 		if (!parent) {
 			return;
 		}
 
-		let neighbor = getNotSpaceSibling(parent, backspace);
+		let neighbor = getSiblingBox(parent, backspace, this.root);
+
+		if (!neighbor) {
+			return;
+		}
+
 		const startNeighbor = neighbor;
 
 		this.j.s.setCursorBefore(fakeNode);
@@ -610,9 +676,29 @@ export class Delete extends Plugin {
 		) {
 			Dom.moveContent(parent, neighbor, !backspace);
 
+			// <p><b>ab</b></p><p><b></b></p>
+
 			let next;
+
+			// FIXME
 			do {
-				next = getSibling(startNeighbor, !backspace);
+				next = findMostNestedNeighbor(
+					startNeighbor,
+					backspace,
+					this.root
+				);
+
+				if (next === parent) {
+					let nextParentNode: Nullable<Node> = next;
+
+					do {
+						const nextParent: Nullable<Node> =
+							nextParentNode.parentElement;
+						Dom.safeRemove(nextParentNode);
+						nextParentNode = nextParent;
+					} while (nextParentNode && Dom.isEmpty(nextParentNode));
+				}
+
 				Dom.safeRemove(next);
 			} while (next !== parent);
 

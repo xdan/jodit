@@ -838,6 +838,44 @@ describe('Backspace/Delete key', function () {
 		});
 	});
 
+	describe('More cases', function () {
+		[
+			'<p><em>ab</em><em>|cd</em></p> => <p><em>a|</em><em>cd</em></p>',
+			'<table><tbody><tr><td>|ab</td></tr></tbody></table> => <table><tbody><tr><td>|ab</td></tr></tbody></table>',
+			'<table><tbody><tr><td>ab</td><td>|ab</td></tr></tbody></table> => <table><tbody><tr><td>ab</td><td>|ab</td></tr></tbody></table>',
+			'<p>ab|cd</p> => <p>a|cd</p>',
+			'<p>ab<strong>cd</strong>|ef</p> => <p>ab<strong>c|</strong>ef</p>',
+			'<p>ab<img src="tests/artio.jpg">|cd</p> => <p>ab|cd</p>',
+			'<p>ab</p>\n <p>|<br></p> => <p>ab|</p>\n ',
+			'<p>ab</p><p>|cd</p> => <p>ab|cd</p>',
+			'<p>ab</p>\n<blockquote>|cd</blockquote> => <p>ab|cd</p>\n',
+			'<p>ab</p>\n<h1>|cd</h1> => <p>ab|cd</p>\n',
+			'<h1>cd</h1><p>|ab</p> => <h1>cd|ab</h1>',
+			'<p>ab</p>\n\n\n<p><strong>|cd</strong></p> => <p>ab<strong>|cd</strong></p>\n\n\n',
+			'<p>ab</p><p><strong>|cd</strong><em>ef</em></p> => <p>ab<strong>|cd</strong><em>ef</em></p>',
+			'<p><strong>ab</strong></p><p><strong>|cd</strong></p> => <p><strong>ab</strong><strong>|cd</strong></p>',
+			'<p><strong>ab</strong></p><p><strong><em>|cd</em></strong></p> => <p><strong>ab</strong><strong><em>|cd</em></strong></p>',
+			'<p><strong>ab</strong></p><p><strong>|cd</strong><em>e</em></p> => <p><strong>ab</strong><strong>|cd</strong><em>e</em></p>',
+			'<p><a>ab</a></p><p><strong>|cd</strong><em>e</em></p> => <p><a>ab</a><strong>|cd</strong><em>e</em></p>',
+			'<ol><li>ab</li></ol><p>|cd</p> => <ol><li>ab|cd</li></ol>',
+			'<p>ab</p><ol><li>|cd</li></ol> => <p>ab</p><p>|cd</p>',
+			'<ol><li>ab</li><li>|cd</li></ol> => <ol><li>ab|cd</li></ol>',
+			'<ol><li>ab</li></ol><ul><li>|cd</li><li>e</li></ul> => <ol><li>ab</li></ol><p>|cd</p><ul><li>e</li></ul>'
+		].forEach(function (pars) {
+			const [key, value] = pars.split( ' => ');
+
+			describe(`For key "${key}"`, function() {
+				it(`Should be ${value}`, function () {
+					editor.value = key;
+					setCursorToChar(editor);
+					simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+					editor.s.insertHTML('|');
+					expect(sortAttributes(editor.value)).equals(value);
+				});
+			});
+		})
+	});
+
 	describe('On the edge of two tag', function () {
 		describe('Backspace', function () {
 			it('Should connect both elements in one element', function () {
@@ -868,6 +906,34 @@ describe('Backspace/Delete key', function () {
 
 					editor.s.insertHTML(' a ');
 					expect(sortAttributes(editor.value)).equals('<div><span style="color:#0000FF">This is a my line</span></div>');
+				});
+			});
+
+			describe('Several elements', function () {
+				it('Should connect both elements in one element and move all children in previous element', function () {
+					editor.value = '<div><span>This is</span></div>\n' +
+						'<div><span>my line</span><strong>test</strong></div>';
+
+					range.setStart(editor.editor.querySelectorAll('span')[1].firstChild, 0);
+					editor.s.selectRange(range);
+
+					simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+					expect(sortAttributes(editor.value)).equals('<div><span>This ismy line</span><strong>test</strong></div>');
+				});
+
+				describe('Different elements', function () {
+					it('Should move content', function () {
+						editor.value = '<div><span>This is</span></div>\n' +
+							'<div><strong>my line</strong><strong>test</strong></div>';
+
+						range.setStart(editor.editor.querySelectorAll('span')[1].firstChild, 0);
+						editor.s.selectRange(range);
+
+						simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+						expect(sortAttributes(editor.value)).equals('<div><span>This ismy line</span><strong>test</strong></div>');
+					});
 				});
 			});
 
