@@ -23705,7 +23705,7 @@ var ui_form = __webpack_require__(14);
 
 
 const template_formTemplate = (editor) => {
-    const { openInNewTabCheckbox, noFollowCheckbox, modeClassName } = editor.o.link;
+    const { openInNewTabCheckbox, noFollowCheckbox, modeClassName, selectSizeClassName, selectMultipleClassName, selectOptionsClassName } = editor.o.link;
     return new ui_form["c" /* UIForm */](editor, [
         new ui_form["a" /* UIBlock */](editor, [
             new ui_form["d" /* UIInput */](editor, {
@@ -23739,14 +23739,9 @@ const template_formTemplate = (editor) => {
                             name: 'className',
                             ref: 'className_select',
                             label: 'Class name',
-                            size: 3,
-                            multiple: true,
-                            options: [
-                                { value: "", text: "" },
-                                { value: "val1", text: "text1" },
-                                { value: "val2", text: "text2" },
-                                { value: "val3", text: "text3" }
-                            ]
+                            size: selectSizeClassName,
+                            multiple: selectMultipleClassName,
+                            options: selectOptionsClassName
                         })
                         : null
             ])
@@ -23801,7 +23796,15 @@ config["a" /* Config */].prototype.link = {
     removeLinkAfterFormat: true,
     noFollowCheckbox: true,
     openInNewTabCheckbox: true,
-    modeClassName: 'input'
+    modeClassName: 'input',
+    selectMultipleClassName: true,
+    selectSizeClassName: 3,
+    selectOptionsClassName: [
+        { value: "", text: "" },
+        { value: "val1", text: "text1" },
+        { value: "val2", text: "text2" },
+        { value: "val3", text: "text3" }
+    ]
 };
 config["a" /* Config */].prototype.controls.unlink = {
     exec: (editor, current) => {

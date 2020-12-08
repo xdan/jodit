@@ -26697,7 +26697,15 @@ config_1.Config.prototype.link = {
     removeLinkAfterFormat: true,
     noFollowCheckbox: true,
     openInNewTabCheckbox: true,
-    modeClassName: 'input'
+    modeClassName: 'input',
+    selectMultipleClassName: true,
+    selectSizeClassName: 3,
+    selectOptionsClassName: [
+        { value: "", text: "" },
+        { value: "val1", text: "text1" },
+        { value: "val2", text: "text2" },
+        { value: "val3", text: "text3" }
+    ]
 };
 config_1.Config.prototype.controls.unlink = {
     exec: function (editor, current) {
@@ -26981,7 +26989,7 @@ exports.formTemplate = void 0;
 var form_1 = __webpack_require__(36);
 var button_1 = __webpack_require__(15);
 exports.formTemplate = function (editor) {
-    var _a = editor.o.link, openInNewTabCheckbox = _a.openInNewTabCheckbox, noFollowCheckbox = _a.noFollowCheckbox, modeClassName = _a.modeClassName;
+    var _a = editor.o.link, openInNewTabCheckbox = _a.openInNewTabCheckbox, noFollowCheckbox = _a.noFollowCheckbox, modeClassName = _a.modeClassName, selectSizeClassName = _a.selectSizeClassName, selectMultipleClassName = _a.selectMultipleClassName, selectOptionsClassName = _a.selectOptionsClassName;
     return new form_1.UIForm(editor, [
         new form_1.UIBlock(editor, [
             new form_1.UIInput(editor, {
@@ -27015,14 +27023,9 @@ exports.formTemplate = function (editor) {
                             name: 'className',
                             ref: 'className_select',
                             label: 'Class name',
-                            size: 3,
-                            multiple: true,
-                            options: [
-                                { value: "", text: "" },
-                                { value: "val1", text: "text1" },
-                                { value: "val2", text: "text2" },
-                                { value: "val3", text: "text3" }
-                            ]
+                            size: selectSizeClassName,
+                            multiple: selectMultipleClassName,
+                            options: selectOptionsClassName
                         })
                         : null
             ])

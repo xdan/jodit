@@ -49,15 +49,8 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 								name: 'className',
 								ref: 'className_select',
 								label: 'Class name',
-								// TODO BB : avoir une option pour ça
 								size: selectSizeClassName,
-								// TODO BB : avoir une option pour ça
 								multiple: selectMultipleClassName,
-								// TODO BB : Récupérer la liste des classes via un autre module
-								// TODO BB : ce module pourra récupérer les classes via :
-								// TODO BB :   - les options de Jodit
-								// TODO BB :   - une url à appeler en Ajax
-								// TODO BB : il aura également une notion de context pour avoir des listes différentes selon que c'est un lien, un style, une table, ...
 								options: selectOptionsClassName
 							})
 							: null

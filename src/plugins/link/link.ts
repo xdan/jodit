@@ -62,14 +62,9 @@ Config.prototype.link = {
 	noFollowCheckbox: true,
 	openInNewTabCheckbox: true,
 	modeClassName: 'input',
-	selectMultipleClassName: true, // TODO BB : choisir la valeur par défaut
-	selectSizeClassName: 3, // TODO BB : choisir la valeur par défaut
-	selectOptionsClassName: [ // TODO BB : Vider ce tableau une fois les tests faits
-		{ value: "", text: "" },
-		{ value: "val1", text: "text1" },
-		{ value: "val2", text: "text2" },
-		{ value: "val3", text: "text3" }
-	]
+	selectMultipleClassName: true,
+	selectSizeClassName: 3,
+	selectOptionsClassName: []
 };
 
 Config.prototype.controls.unlink = {
