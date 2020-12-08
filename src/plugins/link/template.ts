@@ -9,7 +9,7 @@ import { UIBlock, UICheckbox, UIForm, UIInput, UISelect } from '../../core/ui/fo
 import { UIButton } from '../../core/ui/button';
 
 export const formTemplate = (editor: IJodit): IUIForm => {
-	const { openInNewTabCheckbox, noFollowCheckbox, modeClassName } = editor.o.link;
+	const { openInNewTabCheckbox, noFollowCheckbox, modeClassName, selectSizeClassName, selectMultipleClassName, selectOptionsClassName } = editor.o.link;
 
 	return new UIForm(editor, [
 		new UIBlock(editor, [
@@ -50,20 +50,15 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 								ref: 'className_select',
 								label: 'Class name',
 								// TODO BB : avoir une option pour ça
-								size: 3,
+								size: selectSizeClassName,
 								// TODO BB : avoir une option pour ça
-								multiple: true,
+								multiple: selectMultipleClassName,
 								// TODO BB : Récupérer la liste des classes via un autre module
 								// TODO BB : ce module pourra récupérer les classes via :
 								// TODO BB :   - les options de Jodit
 								// TODO BB :   - une url à appeler en Ajax
 								// TODO BB : il aura également une notion de context pour avoir des listes différentes selon que c'est un lien, un style, une table, ...
-								options: [
-									{ value: "", text: "" },
-									{ value: "val1", text: "text1" },
-									{ value: "val2", text: "text2" },
-									{ value: "val3", text: "text3" }
-								]
+								options: selectOptionsClassName
 							})
 							: null
 				]

@@ -20,7 +20,8 @@ import {
 	IJodit,
 	IControlType,
 	Nullable,
-	IUIForm
+	IUIForm,
+	IUIOption
 } from '../../types';
 import { formTemplate } from './template';
 
@@ -44,7 +45,10 @@ declare module '../../config' {
 			removeLinkAfterFormat: boolean;
 			noFollowCheckbox: boolean;
 			openInNewTabCheckbox: boolean;
-			modeClassName?: string;
+			modeClassName: string;
+			selectMultipleClassName: boolean;
+			selectSizeClassName?: number;
+			selectOptionsClassName: IUIOption[];
 		};
 	}
 }
@@ -57,7 +61,15 @@ Config.prototype.link = {
 	removeLinkAfterFormat: true,
 	noFollowCheckbox: true,
 	openInNewTabCheckbox: true,
-	modeClassName: 'input'
+	modeClassName: 'input',
+	selectMultipleClassName: true, // TODO BB : choisir la valeur par défaut
+	selectSizeClassName: 3, // TODO BB : choisir la valeur par défaut
+	selectOptionsClassName: [ // TODO BB : Vider ce tableau une fois les tests faits
+		{ value: "", text: "" },
+		{ value: "val1", text: "text1" },
+		{ value: "val2", text: "text2" },
+		{ value: "val3", text: "text3" }
+	]
 };
 
 Config.prototype.controls.unlink = {
