@@ -15,7 +15,7 @@ import type {
 } from '../../../types';
 import { attr } from '../../helpers';
 import { Dom } from '../../dom';
-import * as validators from './validators';
+import * as validators from './validators/input';
 
 export class UIInput extends UIElement implements IUIInput {
 	nativeInput!: IUIInput['nativeInput'];

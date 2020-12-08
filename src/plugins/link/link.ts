@@ -44,6 +44,7 @@ declare module '../../config' {
 			removeLinkAfterFormat: boolean;
 			noFollowCheckbox: boolean;
 			openInNewTabCheckbox: boolean;
+			modeClassName?: string;
 		};
 	}
 }
@@ -55,7 +56,8 @@ Config.prototype.link = {
 	processPastedLink: true,
 	removeLinkAfterFormat: true,
 	noFollowCheckbox: true,
-	openInNewTabCheckbox: true
+	openInNewTabCheckbox: true,
+	modeClassName: 'input'
 };
 
 Config.prototype.controls.unlink = {
@@ -88,7 +90,8 @@ Config.prototype.controls.link = {
 				openInNewTabCheckbox,
 				noFollowCheckbox,
 				formTemplate,
-				formClassName
+				formClassName,
+				modeClassName
 			} = editor.o.link;
 
 		const html = formTemplate(editor),
@@ -105,13 +108,14 @@ Config.prototype.controls.link = {
 			{
 				target_checkbox,
 				nofollow_checkbox,
-				url_input,
-				className_select
+				url_input
 			} = elements as IDictionary<HTMLInputElement>,
 			currentElement = current,
 			isImageContent = Dom.isImage(currentElement, editor.ew);
 
 		let { content_input } = elements as IDictionary<HTMLInputElement>;
+		let { className_input } = elements as IDictionary<HTMLInputElement>;
+		let { className_select } = elements as IDictionary<HTMLSelectElement>;
 
 		if (!content_input) {
 			content_input = editor.c.element('input', {
@@ -152,7 +156,39 @@ Config.prototype.controls.link = {
 		if (link) {
 			url_input.value = attr(link, 'href') || '';
 
-			className_select.value = attr(link, 'class') || '';
+			if (modeClassName) {
+				switch (modeClassName) {
+					case 'input':
+						if (className_input) {
+							className_input.value = attr(link, 'class') || '';
+						}
+						break;
+					case 'select':
+						if (className_select) {
+							for (let i = 0; i < className_select.selectedOptions.length; i++) {
+								let option = className_select.options.item (i);
+								if (option) {
+									option.selected = false;
+								}
+							}
+
+							let classNames = attr(link, 'class') || '';
+							classNames.split(' ').forEach (className => {
+								if (className) {
+									for (let i = 0; i < className_select.options.length; i++) {
+										let option = className_select.options.item (i);
+										
+			
+										if (option?.value && option.value == className) {
+											option.selected = true;
+										}
+									}
+								}
+							});
+						}
+						break;
+				}
+			}
 
 			if (openInNewTabCheckbox && target_checkbox) {
 				target_checkbox.checked = attr(link, 'target') === '_blank';
@@ -213,12 +249,29 @@ Config.prototype.controls.link = {
 			links.forEach(a => {
 				a.setAttribute('href', url_input.value);
 
-				if (className_select.value == "" && a.hasAttribute('class')) {
-					a.removeAttribute ('class');
-				}
+				if (modeClassName) {
+					if (modeClassName == 'input') {
+						if (className_input.value == "" && a.hasAttribute('class')) {
+							a.removeAttribute ('class');
+						}
+	
+						if (className_input.value != "") {
+							a.setAttribute('class', className_input.value);
+						}
+					}
+					else if (modeClassName == 'select') {
+						if (a.hasAttribute('class')) {
+							a.removeAttribute ('class');
+						}
+	
+						for (let i = 0; i < className_select.selectedOptions.length; i++) {
+							let className = className_select.selectedOptions.item (i)?.value;
 
-				if (className_select.value != "") {
-					a.setAttribute('class', className_select.value);
+							if (className) {
+								a.classList.add (className);
+							}
+						}
+					}
 				}
 
 				if (!isImageContent) {

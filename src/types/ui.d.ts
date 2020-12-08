@@ -149,12 +149,11 @@ export interface IUISelect extends IUIElement {
 		label?: string;
 		ref?: string;
 		options: IUIOption[];
-		// TODO BB : à tester
 		required?: boolean;
-		// TODO BB : à tester
-		multiple?: boolean;
-		// TODO BB : à tester
+		placeholder?: string;
+		validators?: string[];
 		size?: number;
+		multiple?: boolean;
 	};
 	value: string;
 	error: string;

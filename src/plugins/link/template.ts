@@ -9,7 +9,7 @@ import { UIBlock, UICheckbox, UIForm, UIInput, UISelect } from '../../core/ui/fo
 import { UIButton } from '../../core/ui/button';
 
 export const formTemplate = (editor: IJodit): IUIForm => {
-	const { openInNewTabCheckbox, noFollowCheckbox } = editor.o.link;
+	const { openInNewTabCheckbox, noFollowCheckbox, modeClassName } = editor.o.link;
 
 	return new UIForm(editor, [
 		new UIBlock(editor, [
@@ -35,30 +35,40 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 				ref: 'content_input_box'
 			}
 		),
-		// TODO BB : Mettre cette fonctionnalité de className en option
-		// TODO BB : Permettre une alternative avec juste un input text
-
-		// TODO BB : Récupérer la liste des classes via un autre module
-		// TODO BB : ce module pourra récupérer les classes via :
-		// TODO BB :   - les options de Jodit
-		// TODO BB :   - un url à appeler en Ajax
-		// TODO BB : il aura également une notion de context pour avoir des listes différentes selon que c'est un lien, un style, une table, ...
-		new UIBlock(
-			editor,
-			[
-				new UISelect(editor, {
-					name: 'className',
-					ref: 'className_select',
-					label: 'Class name',
-					options: [
-						{ value: "", text: "" },
-						{ value: "val1", text: "text1" },
-						{ value: "val2", text: "text2" },
-						{ value: "val3", text: "text3" }
-					]
-				})
-			]
-		),
+		modeClassName
+			? new UIBlock(editor, 
+				[
+					(modeClassName == 'input')
+						? new UIInput(editor, {
+							name: 'className',
+							ref: 'className_input',
+							label: 'Class name'
+						})
+						: (modeClassName == 'select')
+							? new UISelect(editor, {
+								name: 'className',
+								ref: 'className_select',
+								label: 'Class name',
+								// TODO BB : avoir une option pour ça
+								size: 3,
+								// TODO BB : avoir une option pour ça
+								multiple: true,
+								// TODO BB : Récupérer la liste des classes via un autre module
+								// TODO BB : ce module pourra récupérer les classes via :
+								// TODO BB :   - les options de Jodit
+								// TODO BB :   - une url à appeler en Ajax
+								// TODO BB : il aura également une notion de context pour avoir des listes différentes selon que c'est un lien, un style, une table, ...
+								options: [
+									{ value: "", text: "" },
+									{ value: "val1", text: "text1" },
+									{ value: "val2", text: "text2" },
+									{ value: "val3", text: "text3" }
+								]
+							})
+							: null
+				]
+			)
+			: null,
 		openInNewTabCheckbox
 			? new UICheckbox(editor, {
 					name: 'target',

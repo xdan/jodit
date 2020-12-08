@@ -3,9 +3,10 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import { IDictionary, IUIForm, IUIInput } from '../../../types';
+import { IDictionary, IUIForm, IUIInput, IUISelect } from '../../../types';
 import { UIGroup } from '..';
 import { UIInput } from './input';
+import { UISelect } from './select';
 import { attr } from '../../helpers/utils';
 
 export class UIForm extends UIGroup implements IUIForm {
@@ -22,6 +23,16 @@ export class UIForm extends UIGroup implements IUIForm {
 
 		for (const input of inputs) {
 			if (!input.validate()) {
+				return false;
+			}
+		}
+
+		const selects = this.allChildren.filter(
+			elm => elm instanceof UISelect
+		) as IUISelect[];
+
+		for (const select of selects) {
+			if (!select.validate()) {
 				return false;
 			}
 		}

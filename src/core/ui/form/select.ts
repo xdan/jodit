@@ -8,16 +8,14 @@ import './select.less';
 
 import { UIElement } from '../element';
 import type {
-	// TODO BB : à supprimer ?
-//	IDictionary,
+	IDictionary,
 	IUISelect,
 	IUISelectValidator,
 	IViewBased
 } from '../../../types';
 import { attr } from '../../helpers';
 import { Dom } from '../../dom';
-// TODO BB : à supprimer ?
-//import * as validators from './validators';
+import * as validators from './validators/select';
 
 export class UISelect extends UIElement implements IUISelect {
 	nativeInput!: IUISelect['nativeInput'];
@@ -66,6 +64,13 @@ export class UISelect extends UIElement implements IUISelect {
 			label.innerText = this.j.i18n(options.label);
 		}
 
+		if (options.placeholder !== undefined) {
+			let option = this.j.create.element('option');
+			option.value = "";
+			option.text = options.placeholder;
+			this.nativeInput.add(option);
+		}
+
 		options.options.forEach(element => {
 			let option = this.j.create.element('option');
 			option.value = element.value;
@@ -79,10 +84,12 @@ export class UISelect extends UIElement implements IUISelect {
 		attr(this.nativeInput, 'dir', this.j.o.direction || 'auto');
 		attr(this.nativeInput, 'data-ref', options.ref || options.name);
 		attr(this.nativeInput, 'ref', options.ref || options.name);
-		// TODO BB : à tester + mettre une valeur par défaut ?
-		attr(this.nativeInput, 'size', options.size);
-		// TODO BB : à tester + mettre une valeur par défaut ?
-		attr(this.nativeInput, 'multiple', options.multiple);
+		if (options.size && options.size > 0) {
+			attr(this.nativeInput, 'size', options.size);
+		}
+		if (options.multiple) {
+			attr(this.nativeInput, 'multiple', "");
+		}
 
 		return container;
 	}
@@ -91,26 +98,16 @@ export class UISelect extends UIElement implements IUISelect {
 	constructor(jodit: IViewBased, readonly options: IUISelect['options']) {
 		super(jodit, options);
 
-		// Début TODO BB : J'ai du supprimer la partie des validators car je n'ai pas encore trouvé comment ça marche
-		// TODO BB : Placeholder à supprimer ou s'en servir pour la valeur vide
-		/*
 		if (this.options.required) {
-			attr(this.nativeInput, 'required', true);
 			this.validators.push(validators.required);
 		}
 
-		if (this.options.placeholder) {
-			attr(this.nativeInput, 'placeholder', this.options.placeholder);
-		}
-
 		options.validators?.forEach(name => {
-			const validator = (validators as IDictionary<IUIInputValidator>)[
+			const validator = (validators as IDictionary<IUISelectValidator>)[
 				name
 			];
 			validator && this.validators.push(validator);
 		});
-		*/
-		// Fin TODO BB
 	}
 
 	focus() {
