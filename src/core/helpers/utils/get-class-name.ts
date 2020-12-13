@@ -4,9 +4,16 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import { isFunction } from "../checker";
+import { IDictionary } from "../../../types";
+
 export const keepNames = new Map<Function, string>();
 
-export const getClassName = (obj: object): string => {
+export const getClassName = (obj: IDictionary): string => {
+	if (isFunction(obj.className)) {
+		return obj.className();
+	}
+
 	const constructor = obj.constructor?.originalConstructor || obj.constructor;
 
 	if (keepNames.has(constructor)) {

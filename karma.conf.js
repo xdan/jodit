@@ -8,21 +8,33 @@
 
 const path = require('path');
 const webpackConfFunc = require(path.resolve(process.cwd(), './webpack.config'));
-const webpackConfig = webpackConfFunc(
-	[],
-	{
-		mode: 'production',
-		isTest: true,
-		uglify: true,
-		es: 'es5'
-	},
-	process.cwd()
-);
+const webpackConfig = (() => {
+	const config = webpackConfFunc(
+		[],
+		{
+			mode: 'production',
+			isTest: true,
+			uglify: true,
+			es: 'es5'
+		},
+		process.cwd()
+	);
+
+	delete config.context;
+	// delete config.entry;
+
+	delete config.output.path;
+	delete config.output.filename;
+	delete config.output.publicPath;
+	// delete config.output;
+
+	return config;
+})();
 
 module.exports = function (config) {
 	config.set({
 		basePath: '',
-		frameworks: ['mocha', 'chai'],
+		frameworks: ['mocha', 'chai', "webpack"],
 
 		mime: {
 			'text/css': ['css'],
@@ -45,8 +57,7 @@ module.exports = function (config) {
 			},
 
 			'app.css',
-			'build/jodit.js',
-			'build/jodit.css',
+			'src/index.ts',
 			'node_modules/synchronous-promise/dist/synchronous-promise.js',
 			'test/bootstrap.js',
 			'config.js',
@@ -88,9 +99,14 @@ module.exports = function (config) {
 		singleRun: true, // Karma captures browsers, runs the tests and exits
 		concurrency: Infinity,
 
+		preprocessors: {
+			'src/index.ts': ['webpack']
+		},
+
 		plugins: [
 			'karma-chrome-launcher',
 			'karma-firefox-launcher',
+			'karma-webpack',
 			'karma-mocha',
 			'karma-chai',
 			'karma-sourcemap-loader'
