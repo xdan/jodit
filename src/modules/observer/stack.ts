@@ -11,6 +11,9 @@ export class Stack {
 	private commands: Command[] = [];
 	private stackPosition: number = -1;
 
+	constructor(private size: number) {
+	}
+
 	get length(): number {
 		return this.commands.length;
 	}
@@ -28,6 +31,11 @@ export class Stack {
 		this.clearRedo();
 		this.commands.push(command);
 		this.stackPosition += 1;
+
+		if (this.commands.length > this.size) {
+			this.commands.shift();
+			this.stackPosition -= 1;
+		}
 	}
 
 	replace(command: Command): void {

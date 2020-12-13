@@ -15,16 +15,19 @@ import { debounce } from '../../core/decorators';
 /**
  * @property {object} observer module settings {@link Observer|Observer}
  * @property {int} observer.timeout=100 Delay on every change
+ * @property {int} observer.maxHistoryLength=Infinity Limit of history length
  */
 declare module '../../config' {
 	interface Config {
 		observer: {
+			maxHistoryLength: number;
 			timeout: number;
 		};
 	}
 }
 
 Config.prototype.observer = {
+	maxHistoryLength: Infinity,
 	timeout: 100
 };
 
@@ -52,7 +55,7 @@ export class Observer extends ViewComponent<IJodit> {
 		this.__startValue = value;
 	}
 
-	stack: Stack = new Stack();
+	stack: Stack = new Stack(this.j.o.observer.maxHistoryLength);
 	snapshot: Snapshot = new Snapshot(this.j);
 
 	private updateTick: number = 0;

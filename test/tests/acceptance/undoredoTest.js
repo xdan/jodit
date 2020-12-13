@@ -3,9 +3,10 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Undo/Redo behaviors', function() {
-	describe('Do some changes', function() {
-		it('Should change redo/undo stack', function() {
+
+describe('Undo/Redo behaviors', function () {
+	describe('Do some changes', function () {
+		it('Should change redo/undo stack', function () {
 			const editor = getJodit({
 				observer: {
 					timeout: 0
@@ -25,7 +26,6 @@ describe('Undo/Redo behaviors', function() {
 
 			clickButton('h1', list);
 
-
 			expect(editor.value).equals('<h1>test</h1>');
 
 			editor.execCommand('undo');
@@ -37,8 +37,8 @@ describe('Undo/Redo behaviors', function() {
 			expect(editor.value).equals('<h1>test</h1>');
 		});
 
-		describe('Several operations', function() {
-			it('Should work perfect', function() {
+		describe('Several operations', function () {
+			it('Should work perfect', function () {
 				const editor = getJodit();
 				editor.value =
 					'<p>test</p>' +
@@ -84,8 +84,8 @@ describe('Undo/Redo behaviors', function() {
 		});
 	});
 
-	describe('Commands', function() {
-		it('Undo. Enter text wait and again enter text. After execute "undo" command. First text should be returned', function() {
+	describe('Commands', function () {
+		it('Undo. Enter text wait and again enter text. After execute "undo" command. First text should be returned', function () {
 			const editor = getJodit({
 				observer: {
 					timeout: 0 // disable delay
@@ -98,7 +98,7 @@ describe('Undo/Redo behaviors', function() {
 			expect(editor.value).equals('<p>test</p>');
 		});
 
-		it('Redo. Enter text wait and again enter text. After execute "undo" + "redo" command in editor should be second text', function() {
+		it('Redo. Enter text wait and again enter text. After execute "undo" + "redo" command in editor should be second text', function () {
 			const editor = getJodit({
 				observer: {
 					timeout: 0
@@ -113,7 +113,7 @@ describe('Undo/Redo behaviors', function() {
 			expect(editor.value).equals('<p>test2</p>');
 		});
 
-		it('Check react UndoRedo to another changes', function() {
+		it('Check react UndoRedo to another changes', function () {
 			const editor = getJodit({
 				observer: {
 					timeout: 0
@@ -128,9 +128,7 @@ describe('Undo/Redo behaviors', function() {
 			editor.s.sel.removeAllRanges();
 			editor.s.sel.addRange(range);
 
-			editor.s.insertNode(
-				editor.createInside.text('test2')
-			);
+			editor.s.insertNode(editor.createInside.text('test2'));
 			editor.execCommand('undo');
 			expect(editor.value).equals('<p>test</p>');
 
@@ -139,8 +137,8 @@ describe('Undo/Redo behaviors', function() {
 		});
 	});
 
-	describe('Clear stack', function() {
-		it('Should disable both buttons in toolbar and all calls redo and undo must do nothing', function() {
+	describe('Clear stack', function () {
+		it('Should disable both buttons in toolbar and all calls redo and undo must do nothing', function () {
 			const editor = getJodit({
 				toolbarAdaptive: false,
 				observer: {
@@ -182,6 +180,42 @@ describe('Undo/Redo behaviors', function() {
 			expect(undo.hasAttribute('disabled')).is.true;
 			expect(redo.hasAttribute('disabled')).is.true;
 			expect(editor.value).equals('<p>stop</p>');
+		});
+	});
+
+	describe('Limited history', function () {
+		it('Should store only limited history', function () {
+			const editor = getJodit({
+				observer: {
+					maxHistoryLength: 3
+				}
+			});
+
+			editor.value = '<p>123456789|</p>';
+
+			setCursorToChar(editor);
+
+			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+			expect(editor.value).equals(
+				'<p>123</p>'
+			);
+
+			editor.execCommand('undo');
+			editor.execCommand('undo');
+			editor.execCommand('undo');
+			editor.execCommand('undo');
+			editor.execCommand('undo');
+			editor.execCommand('undo');
+
+			expect(editor.value).equals(
+				'<p>123456</p>'
+			);
 		});
 	});
 });

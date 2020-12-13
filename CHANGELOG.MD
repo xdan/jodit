@@ -64,6 +64,9 @@ const editor = Jodit.make('#editor', {
 });
 ```
 
+##### New option `observer.maxHistoryLength: number = Infinity`
+Related with https://github.com/xdan/jodit/issues/574. In some cases need to limit size of undo history.
+
 ##### New option `statusbar: boolean = true`
 Issue https://github.com/xdan/jodit/issues/535
 
