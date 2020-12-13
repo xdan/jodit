@@ -296,7 +296,7 @@ export class Delete extends Plugin {
 			if (!isVoid(removed) && removed !== INVISIBLE_SPACE) {
 				charRemoved = true;
 
-				Dom.after(sibling, fakeNode);
+				call(backspace ? Dom.after : Dom.before, sibling, fakeNode);
 
 				if (block) {
 					while (this.checkRemoveChar(fakeNode, backspace, false)) {}
@@ -531,10 +531,10 @@ export class Delete extends Plugin {
 
 			call(!backspace ? Dom.append : Dom.prepend, second, fakeNode);
 
-			this.checkJoinNeighbors(fakeNode, backspace);
+			Dom.moveContent(prev, next, !backspace);
+			Dom.safeRemove(prev);
 
 			call(backspace ? Dom.append : Dom.prepend, target, fakeNode);
-
 			call(backspace ? setCursorBefore : setCursorAfter, fakeNode);
 
 			return true;
@@ -600,41 +600,85 @@ export class Delete extends Plugin {
 		}
 
 		if (Dom.isElement(mainClosestBox)) {
-			let sibling = findNotEmptySibling(
+			const sibling = findNotEmptySibling(
 				mainClosestBox,
 				backspace
 			) as Nullable<Element>;
 
-			// Process UL/LI/OL cases
-			const siblingIsList = Dom.isTag(sibling, ['ol', 'ul']);
-			const boxIsList = Dom.isTag(mainClosestBox, ['ol', 'ul']);
-			const elementChild = (elm: Element, side: boolean) =>
-				side ? elm.firstElementChild : elm.lastElementChild;
-
-			if (boxIsList) {
-				sibling = jodit.createInside.element(jodit.o.enterBlock);
-				Dom.before(mainClosestBox, sibling);
-				mainClosestBox = elementChild(mainClosestBox, backspace);
-			} else if (sibling && siblingIsList && !boxIsList) {
-				sibling = elementChild(mainClosestBox, !backspace);
-			}
-
-			// Move content and remove empty nodes
-			if (mainClosestBox && Dom.isElement(sibling)) {
-				Dom.moveContent(mainClosestBox, sibling, !backspace);
-
-				let remove: Nullable<Node> = mainClosestBox;
-
-				while (remove && remove !== this.root && Dom.isEmpty(remove)) {
-					const parent: Nullable<Node> = remove.parentElement;
-					Dom.safeRemove(remove);
-					remove = parent;
-				}
-
+			if (
+				sibling &&
+				(this.checkMoveListContent(
+					mainClosestBox,
+					sibling,
+					backspace
+				) ||
+					this.moveContentAndRemoveEmpty(
+						mainClosestBox,
+						sibling,
+						backspace
+					))
+			) {
 				jodit.s.setCursorBefore(fakeNode);
 				return true;
 			}
 		}
+	}
+
+	private checkMoveListContent(
+		mainClosestBox: Element,
+		sibling: Element,
+		backspace: boolean
+	): boolean {
+		const { jodit } = this;
+
+		// Process UL/LI/OL cases
+		const siblingIsList = Dom.isTag(sibling, ['ol', 'ul']);
+		const boxIsList = Dom.isTag(mainClosestBox, ['ol', 'ul']);
+		const elementChild = (elm: Element, side: boolean) =>
+			side ? elm.firstElementChild : elm.lastElementChild;
+
+		if (boxIsList) {
+			sibling = jodit.createInside.element(jodit.o.enterBlock);
+			Dom.before(mainClosestBox, sibling);
+
+			return this.moveContentAndRemoveEmpty(
+				elementChild(mainClosestBox, backspace),
+				sibling,
+				backspace
+			);
+		}
+
+		if (sibling && siblingIsList && !boxIsList) {
+			return this.moveContentAndRemoveEmpty(
+				mainClosestBox,
+				elementChild(sibling, !backspace),
+				backspace
+			);
+		}
+
+		return false;
+	}
+	private moveContentAndRemoveEmpty(
+		mainClosestBox: Nullable<Node>,
+		sibling: Nullable<Node>,
+		backspace: boolean
+	): boolean {
+		// Move content and remove empty nodes
+		if (mainClosestBox && Dom.isElement(sibling)) {
+			Dom.moveContent(mainClosestBox, sibling, !backspace);
+
+			let remove: Nullable<Node> = mainClosestBox;
+
+			while (remove && remove !== this.root && Dom.isEmpty(remove)) {
+				const parent: Nullable<Node> = remove.parentElement;
+				Dom.safeRemove(remove);
+				remove = parent;
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	checkJoinNeighbors2(fakeNode: Node, backspace: boolean): true | void {

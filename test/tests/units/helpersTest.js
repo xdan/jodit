@@ -659,6 +659,7 @@ describe('Test helpers', function () {
 				).is.true;
 			});
 		});
+
 		describe('getClassName', function () {
 			const getClassName = Jodit.modules.Helpers.getClassName;
 
@@ -672,9 +673,6 @@ describe('Test helpers', function () {
 				expect(
 					getClassName(Jodit.modules.ToolbarButton.prototype)
 				).equals('ToolbarButton');
-				expect(getClassName(Jodit.modules.Component.prototype)).equals(
-					'Component'
-				);
 			});
 		});
 	});

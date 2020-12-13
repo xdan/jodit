@@ -892,8 +892,8 @@ describe('Backspace/Delete key', function () {
 				expect(editor.value).equals('<p>Test a Test</p>');
 			});
 
-			describe('With styles', function () {
-				it('Should connect both elements in one element', function () {
+			describe('inline elements', function () {
+				it('Should move cursor inside first element', function () {
 					editor.value = '<div><span style="color: rgb(0, 0, 255);">This is</span></div>\n' +
 						'<div><span style="color: rgb(0, 0, 255);">my line</span></div>';
 
@@ -902,37 +902,35 @@ describe('Backspace/Delete key', function () {
 
 					simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
-					expect(sortAttributes(editor.value)).equals('<div><span style="color:#0000FF">This ismy line</span></div>');
+					expect(sortAttributes(editor.value)).equals('<div><span style="color:#0000FF">This is</span><span style="color:#0000FF">my line</span></div>\n');
 
 					editor.s.insertHTML(' a ');
-					expect(sortAttributes(editor.value)).equals('<div><span style="color:#0000FF">This is a my line</span></div>');
+					expect(sortAttributes(editor.value)).equals('<div><span style="color:#0000FF">This is</span><span style="color:#0000FF"> a my line</span></div>\n');
 				});
 			});
 
 			describe('Several elements', function () {
 				it('Should connect both elements in one element and move all children in previous element', function () {
 					editor.value = '<div><span>This is</span></div>\n' +
-						'<div><span>my line</span><strong>test</strong></div>';
+						'<div><span>|my line</span><strong>test</strong></div>';
 
-					range.setStart(editor.editor.querySelectorAll('span')[1].firstChild, 0);
-					editor.s.selectRange(range);
+					setCursorToChar(editor);
 
 					simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
-					expect(sortAttributes(editor.value)).equals('<div><span>This ismy line</span><strong>test</strong></div>');
+					expect(sortAttributes(editor.value)).equals('<div><span>This is</span><span>my line</span><strong>test</strong></div>\n');
 				});
 
 				describe('Different elements', function () {
 					it('Should move content', function () {
 						editor.value = '<div><span>This is</span></div>\n' +
-							'<div><strong>my line</strong><strong>test</strong></div>';
+							'<div><strong>|my line</strong><strong>test</strong></div>';
 
-						range.setStart(editor.editor.querySelectorAll('span')[1].firstChild, 0);
-						editor.s.selectRange(range);
+						setCursorToChar(editor);
 
 						simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
-						expect(sortAttributes(editor.value)).equals('<div><span>This ismy line</span><strong>test</strong></div>');
+						expect(sortAttributes(editor.value)).equals('<div><span>This is</span><strong>my line</strong><strong>test</strong></div>\n');
 					});
 				});
 			});
@@ -1008,11 +1006,11 @@ describe('Backspace/Delete key', function () {
 					);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<p>TestTest</p>'
+						'<p>TestTest</p> \n '
 					);
 
 					editor.s.insertHTML(' a ');
-					expect(editor.value).equals('<p>Test a Test</p>');
+					expect(editor.value).equals('<p>Test a Test</p> \n ');
 				});
 			});
 		});
@@ -1037,15 +1035,11 @@ describe('Backspace/Delete key', function () {
 	describe('In the middle of two UL elements', function () {
 		describe('Backspace', function () {
 			describe('In first LI of second UL', function () {
-				it('Should connect both UL in one element', function () {
+				it('Should move content of this LI and put it inside new P', function () {
 					editor.value =
-						'<ul><li>Test</li></ul><ul><li>Some text</li></ul>';
+						'<ul><li>Test</li></ul><ul><li>|Some text</li></ul>';
 
-					range.setStart(
-						editor.editor.lastChild.firstChild.firstChild,
-						0
-					);
-					editor.s.selectRange(range);
+					setCursorToChar(editor);
 
 					simulateEvent(
 						'keydown',
@@ -1054,13 +1048,13 @@ describe('Backspace/Delete key', function () {
 					);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<ul><li>Test</li><li>Some text</li></ul>'
+						'<ul><li>Test</li></ul><p>Some text</p>'
 					);
 
 					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(sortAttributes(editor.value)).equals(
-						'<ul><li>Test</li><li> a Some text</li></ul>'
+						'<ul><li>Test</li></ul><p> a Some text</p>'
 					);
 				});
 			});
@@ -1068,22 +1062,12 @@ describe('Backspace/Delete key', function () {
 			describe('In the P element', function () {
 				it('Should connect both UL in one element', function () {
 					editor.value =
-						'<ul><li>Test</li><li> </li><li>Some text</li></ul>';
+						'<ul><li>Test</li></ul><p>|<br></p><ul><li>Some text</li></ul>';
 
-					const range = editor.s.createRange();
-
-					range.setStart(editor.editor.firstChild.childNodes[1], 0);
-					range.collapse(true);
-
-					editor.s.selectRange(range);
-
-					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-
-					expect(sortAttributes(editor.value)).equals(
-						'<ul><li>Test</li></ul><p><br></p><ul><li>Some text</li></ul>'
-					);
+					setCursorToChar(editor);
 
 					editor.s.focus();
+
 					simulateEvent(
 						'keydown',
 						Jodit.KEY_BACKSPACE,
@@ -1107,23 +1091,20 @@ describe('Backspace/Delete key', function () {
 			describe('In last LI of first UL', function () {
 				it('Should connect both UL in one element', function () {
 					editor.value =
-						'<ul><li>Test</li></ul><ul><li>Some text</li></ul>';
+						'<ul><li>Test|</li></ul><ul><li>Some text</li></ul>';
 
-					range.setStartAfter(
-						editor.editor.firstChild.firstChild.firstChild
-					);
-					editor.s.selectRange(range);
+					setCursorToChar(editor);
 
 					simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<ul><li>Test</li><li>Some text</li></ul>'
+						'<p>Test</p><ul><li>Some text</li></ul>'
 					);
 
 					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(sortAttributes(editor.value)).equals(
-						'<ul><li>Test a </li><li>Some text</li></ul>'
+						'<p>Test a </p><ul><li>Some text</li></ul>'
 					);
 				});
 			});

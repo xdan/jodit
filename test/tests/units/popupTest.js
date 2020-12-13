@@ -61,7 +61,7 @@ describe('Test popup', function() {
 
 	const openPopup = function(getBound, content, strategy) {
 		const editor = getJodit();
-		debugger
+
 		const popup = new Jodit.modules.Popup(editor);
 
 		if (strategy) {
