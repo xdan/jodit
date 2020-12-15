@@ -23799,12 +23799,7 @@ config["a" /* Config */].prototype.link = {
     modeClassName: 'input',
     selectMultipleClassName: true,
     selectSizeClassName: 3,
-    selectOptionsClassName: [
-        { value: "", text: "" },
-        { value: "val1", text: "text1" },
-        { value: "val2", text: "text2" },
-        { value: "val3", text: "text3" }
-    ]
+    selectOptionsClassName: []
 };
 config["a" /* Config */].prototype.controls.unlink = {
     exec: (editor, current) => {
