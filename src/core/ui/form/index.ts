@@ -8,3 +8,4 @@ export * from './form';
 export * from './input';
 export * from './inputs';
 export * from './block';
+export * from './select';
