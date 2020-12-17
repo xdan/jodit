@@ -5,11 +5,24 @@
  */
 
 import type { IJodit, IUIForm } from '../../types';
-import { UIBlock, UICheckbox, UIForm, UIInput } from '../../core/ui/form';
+import {
+	UIBlock,
+	UICheckbox,
+	UIForm,
+	UIInput,
+	UISelect
+} from '../../core/ui/form';
 import { UIButton } from '../../core/ui/button';
 
 export const formTemplate = (editor: IJodit): IUIForm => {
-	const { openInNewTabCheckbox, noFollowCheckbox } = editor.o.link;
+	const {
+		openInNewTabCheckbox,
+		noFollowCheckbox,
+		modeClassName,
+		selectSizeClassName,
+		selectMultipleClassName,
+		selectOptionsClassName
+	} = editor.o.link;
 
 	return new UIForm(editor, [
 		new UIBlock(editor, [
@@ -35,6 +48,32 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 				ref: 'content_input_box'
 			}
 		),
+		modeClassName
+			? new UIBlock(editor, [
+					(() => {
+						if (modeClassName === 'input') {
+							return new UIInput(editor, {
+								name: 'className',
+								ref: 'className_input',
+								label: 'Class name'
+							});
+						}
+
+						if (modeClassName === 'select') {
+							return new UISelect(editor, {
+								name: 'className',
+								ref: 'className_select',
+								label: 'Class name',
+								size: selectSizeClassName,
+								multiple: selectMultipleClassName,
+								options: selectOptionsClassName
+							});
+						}
+
+						return null;
+					})()
+			  ])
+			: null,
 		openInNewTabCheckbox
 			? new UICheckbox(editor, {
 					name: 'target',

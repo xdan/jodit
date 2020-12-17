@@ -132,6 +132,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	 * @param elementName
 	 */
 	getElm(elementName: string): HTMLElement {
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		return this.container.querySelector<HTMLElement>(
 			`.${this.getFullElName(elementName)}`
 		)!;

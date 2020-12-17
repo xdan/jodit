@@ -30,6 +30,7 @@ export class UIBlock extends UIGroup {
 		}
 	) {
 		super(jodit, elements);
+
 		this.setMod('align', this.options.align || 'left');
 		this.setMod('width', this.options.width || '');
 

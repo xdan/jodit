@@ -15,9 +15,9 @@ import type {
 import { UIElement } from '../element';
 import { attr, toArray } from '../../helpers';
 import { Dom } from '../../dom';
-import * as inputValidators from './validators';
 import { component, debounce, watch } from '../../decorators';
 import { Icon } from '../icon';
+import { inputValidators } from './validators';
 
 @component
 export class UIInput extends UIElement implements IUIInput {
@@ -62,9 +62,10 @@ export class UIInput extends UIElement implements IUIInput {
 	}
 
 	@watch('state.className')
-	onChangeClassName(_?: unknown, oldClassName?: string): void {
+	onChangeClassName(ignore?: unknown, oldClassName?: string): void {
 		oldClassName && this.container.classList.remove(oldClassName);
-		this.state.className && this.container.classList.add(this.state.className);
+		this.state.className &&
+			this.container.classList.add(this.state.className);
 	}
 
 	@watch([
@@ -119,9 +120,9 @@ export class UIInput extends UIElement implements IUIInput {
 		}
 
 		validators?.forEach(name => {
-			const validator = (inputValidators as IDictionary<
-				IUIInputValidator
-			>)[name];
+			const validator = (inputValidators as IDictionary<IUIInputValidator>)[
+				name
+			];
 
 			validator && this.validators.add(validator);
 		});

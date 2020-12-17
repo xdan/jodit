@@ -51,6 +51,7 @@ export function findControlType(
 	path: string,
 	controls: Controls
 ): IControlTypeStrong | void {
+	// eslint-disable-next-line prefer-const
 	let [namespaceOrKey, key] = path.split(/\./) as string[];
 
 	let store: IDictionary<IControlType> = controls;

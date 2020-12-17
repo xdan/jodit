@@ -862,4 +862,591 @@ describe('Link plugin', function() {
 			});
 		});
 	});
+	
+	describe('Link with class name (modeClassName=input/default)', function() {
+		describe('Add class name on link', function() {
+			it('Should insert new link with a class name', function() {
+				const editor = getJodit();
+
+				editor.value =
+					'<p>one green <strong>bottle hanging</strong> under wall</p>' +
+					'<p>two green <em>bottles hanging</em> under wall</p>';
+
+				const range = editor.s.createRange();
+				range.setStart(editor.editor.firstChild.firstChild, 4);
+				range.setEnd(editor.editor.lastChild.lastChild, 6);
+				editor.s.selectRange(range);
+
+				clickButton('link', editor);
+
+				const popup = getOpenedPopup(editor);
+
+				const form = popup.querySelector('.jodit-ui-form');
+				expect(form).is.not.null;
+
+				const input = form.querySelector(
+					'input[ref=url_input]'
+				);
+
+				expect(input).is.not.null;
+
+				input.value = 'https://xdsoft.net/jodit/';
+
+				const className_input = form.querySelector(
+					'input[ref=className_input]'
+				);
+
+				expect(className_input).is.not.null;
+
+				className_input.value = 'test';
+
+				simulateEvent('submit', 0, form);
+
+				expect(editor.value).equals(
+					'<p>one <a href="https://xdsoft.net/jodit/" class="test">green <strong>bottle hanging</strong> under wall</a></p>' +
+						'<p><a href="https://xdsoft.net/jodit/" class="test">two green <em>bottles hanging</em> under</a> wall</p>'
+				);
+			});
+		});
+
+		describe('Vérify class name on link', function() {
+			it('Should have link with a class name', function() {
+				const editor = getJodit();
+
+				editor.value =
+					'<p>one <a href="https://xdsoft.net/jodit/" class="test">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="test">two green <em>bottles hanging</em> under</a> wall</p>';
+
+				const range = editor.s.createRange();
+				range.setStart(
+					editor.editor.querySelector('a').firstChild,
+					4
+				);
+				range.collapse(true);
+				editor.s.selectRange(range);
+
+				clickButton('link', editor);
+
+				const popup = getOpenedPopup(editor);
+
+				const form = popup.querySelector('.jodit-ui-form');
+				expect(form).is.not.null;
+
+				const className_input = form.querySelector(
+					'input[ref=className_input]'
+				);
+
+				expect(className_input).is.not.null;
+				expect(className_input.value).equals('test');
+			});
+		});
+
+		describe('Modify class name on link', function() {
+			it('Should modify link with a new class name', function() {
+				const editor = getJodit();
+
+				editor.value =
+					'<p>one <a href="https://xdsoft.net/jodit/" class="test">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="test">two green <em>bottles hanging</em> under</a> wall</p>';
+
+				const range = editor.s.createRange();
+				range.setStart(
+					editor.editor.querySelector('a').firstChild,
+					4
+				);
+				range.collapse(true);
+				editor.s.selectRange(range);
+
+				clickButton('link', editor);
+
+				const popup = getOpenedPopup(editor);
+
+				const form = popup.querySelector('.jodit-ui-form');
+				expect(form).is.not.null;
+
+				const className_input = form.querySelector(
+					'input[ref=className_input]'
+				);
+
+				expect(className_input).is.not.null;
+
+				className_input.value = 'test2';
+
+				simulateEvent('submit', 0, form);
+
+				expect(editor.value).equals(
+					'<p>one <a href="https://xdsoft.net/jodit/" class="test2">green <strong>bottle hanging</strong> under wall</a></p>' +
+						'<p><a href="https://xdsoft.net/jodit/" class="test">two green <em>bottles hanging</em> under</a> wall</p>'
+				);
+			});
+		});
+
+		describe('Delete class name on link', function() {
+			it('Should modify link witout class name', function() {
+				const editor = getJodit();
+
+				editor.value =
+					'<p>one <a href="https://xdsoft.net/jodit/" class="test">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="test">two green <em>bottles hanging</em> under</a> wall</p>';
+
+				const range = editor.s.createRange();
+				range.setStart(
+					editor.editor.querySelector('a').firstChild,
+					4
+				);
+				range.collapse(true);
+				editor.s.selectRange(range);
+
+				clickButton('link', editor);
+
+				const popup = getOpenedPopup(editor);
+
+				const form = popup.querySelector('.jodit-ui-form');
+				expect(form).is.not.null;
+
+				const className_input = form.querySelector(
+					'input[ref=className_input]'
+				);
+
+				expect(className_input).is.not.null;
+
+				className_input.value = '';
+
+				simulateEvent('submit', 0, form);
+
+				expect(editor.value).equals(
+					'<p>one <a href="https://xdsoft.net/jodit/">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="test">two green <em>bottles hanging</em> under</a> wall</p>'
+				);
+			});
+		});
+	});
+
+	describe('Link with class name (modeClassName=select)', function() {
+		describe('Add class name on link', function() {
+			it('Should insert new link with a class name', function() {
+				const editor = getJodit({
+					link: {
+						modeClassName: 'select',
+						selectOptionsClassName: [
+							{ value: "", text: "" },
+							{ value: "val1", text: "text1" },
+							{ value: "val2", text: "text2" },
+							{ value: "val3", text: "text3" }
+						]
+					}
+				});
+
+				editor.value =
+					'<p>one green <strong>bottle hanging</strong> under wall</p>' +
+					'<p>two green <em>bottles hanging</em> under wall</p>';
+
+				const range = editor.s.createRange();
+				range.setStart(editor.editor.firstChild.firstChild, 4);
+				range.setEnd(editor.editor.lastChild.lastChild, 6);
+				editor.s.selectRange(range);
+
+				clickButton('link', editor);
+
+				const popup = getOpenedPopup(editor);
+
+				const form = popup.querySelector('.jodit-ui-form');
+				expect(form).is.not.null;
+
+				const input = form.querySelector(
+					'input[ref=url_input]'
+				);
+
+				expect(input).is.not.null;
+
+				input.value = 'https://xdsoft.net/jodit/';
+
+				const className_select = form.querySelector(
+					'select[ref=className_select]'
+				);
+
+				expect(className_select).is.not.null;
+
+				for (let i = 0; i < className_select.options.length; i++) {
+					let option = className_select.options.item (i);
+					option.selected = (option.value == 'val1') ? true : false;
+				}
+
+				simulateEvent('submit', 0, form);
+
+				expect(editor.value).equals(
+					'<p>one <a href="https://xdsoft.net/jodit/" class="val1">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>'
+				);
+			});
+		});
+
+		describe('Vérify class name on link', function() {
+			it('Should have link with a class name', function() {
+				const editor = getJodit({
+					link: {
+						modeClassName: 'select',
+						selectOptionsClassName: [
+							{ value: "", text: "" },
+							{ value: "val1", text: "text1" },
+							{ value: "val2", text: "text2" },
+							{ value: "val3", text: "text3" }
+						]
+					}
+				});
+
+				editor.value =
+					'<p>one <a href="https://xdsoft.net/jodit/" class="val1">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>';
+
+				const range = editor.s.createRange();
+				range.setStart(
+					editor.editor.querySelector('a').firstChild,
+					4
+				);
+				range.collapse(true);
+				editor.s.selectRange(range);
+
+				clickButton('link', editor);
+
+				const popup = getOpenedPopup(editor);
+
+				const form = popup.querySelector('.jodit-ui-form');
+				expect(form).is.not.null;
+
+				const className_select = form.querySelector(
+					'select[ref=className_select]'
+				);
+
+				expect(className_select).is.not.null;
+
+				for (let i = 0; i < className_select.options.length; i++) {
+					let option = className_select.options.item (i);
+					expect(option.selected).equals(option.value == "val1");
+				}
+			});
+		});
+
+		describe('Modify class name on link', function() {
+			it('Should modify link with a new class name', function() {
+				const editor = getJodit({
+					link: {
+						modeClassName: 'select',
+						selectOptionsClassName: [
+							{ value: "", text: "" },
+							{ value: "val1", text: "text1" },
+							{ value: "val2", text: "text2" },
+							{ value: "val3", text: "text3" }
+						]
+					}
+				});
+
+				editor.value =
+					'<p>one <a href="https://xdsoft.net/jodit/" class="val1">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>';
+
+				const range = editor.s.createRange();
+				range.setStart(
+					editor.editor.querySelector('a').firstChild,
+					4
+				);
+				range.collapse(true);
+				editor.s.selectRange(range);
+
+				clickButton('link', editor);
+
+				const popup = getOpenedPopup(editor);
+
+				const form = popup.querySelector('.jodit-ui-form');
+				expect(form).is.not.null;
+
+				const className_select = form.querySelector(
+					'select[ref=className_select]'
+				);
+
+				expect(className_select).is.not.null;
+
+				for (let i = 0; i < className_select.options.length; i++) {
+					let option = className_select.options.item (i);
+					option.selected = (option.value == 'val2') ? true : false;
+				}
+
+				simulateEvent('submit', 0, form);
+
+				expect(editor.value).equals(
+					'<p>one <a href="https://xdsoft.net/jodit/" class="val2">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>'
+				);
+			});
+		});
+
+		describe('Delete class name on link', function() {
+			it('Should modify link witout class name', function() {
+				const editor = getJodit({
+					link: {
+						modeClassName: 'select',
+						selectOptionsClassName: [
+							{ value: "", text: "" },
+							{ value: "val1", text: "text1" },
+							{ value: "val2", text: "text2" },
+							{ value: "val3", text: "text3" }
+						]
+					}
+				});
+
+				editor.value =
+					'<p>one <a href="https://xdsoft.net/jodit/" class="val1">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>';
+
+				const range = editor.s.createRange();
+				range.setStart(
+					editor.editor.querySelector('a').firstChild,
+					4
+				);
+				range.collapse(true);
+				editor.s.selectRange(range);
+
+				clickButton('link', editor);
+
+				const popup = getOpenedPopup(editor);
+
+				const form = popup.querySelector('.jodit-ui-form');
+				expect(form).is.not.null;
+
+				const className_select = form.querySelector(
+					'select[ref=className_select]'
+				);
+
+				expect(className_select).is.not.null;
+
+				for (let i = 0; i < className_select.options.length; i++) {
+					let option = className_select.options.item (i);
+					option.selected = false;
+				}
+
+				simulateEvent('submit', 0, form);
+
+				expect(editor.value).equals(
+					'<p>one <a href="https://xdsoft.net/jodit/">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>'
+				);
+			});
+		});
+	});
+
+	describe('Link with class name (modeClassName="select", selectMultipleClassName=true)', function() {
+		describe('Add class name on link', function() {
+			it('Should insert new link with a class name', function() {
+				const editor = getJodit({
+					link: {
+						modeClassName: 'select',
+						selectMultipleClassName: true,
+						selectOptionsClassName: [
+							{ value: "", text: "" },
+							{ value: "val1", text: "text1" },
+							{ value: "val2", text: "text2" },
+							{ value: "val3", text: "text3" }
+						]
+					}
+				});
+
+				editor.value =
+					'<p>one green <strong>bottle hanging</strong> under wall</p>' +
+					'<p>two green <em>bottles hanging</em> under wall</p>';
+
+				const range = editor.s.createRange();
+				range.setStart(editor.editor.firstChild.firstChild, 4);
+				range.setEnd(editor.editor.lastChild.lastChild, 6);
+				editor.s.selectRange(range);
+
+				clickButton('link', editor);
+
+				const popup = getOpenedPopup(editor);
+
+				const form = popup.querySelector('.jodit-ui-form');
+				expect(form).is.not.null;
+
+				const input = form.querySelector(
+					'input[ref=url_input]'
+				);
+
+				expect(input).is.not.null;
+
+				input.value = 'https://xdsoft.net/jodit/';
+
+				const className_select = form.querySelector(
+					'select[ref=className_select]'
+				);
+
+				expect(className_select).is.not.null;
+
+				for (let i = 0; i < className_select.options.length; i++) {
+					let option = className_select.options.item (i);
+					option.selected = ((option.value == 'val1') || (option.value == 'val3')) ? true : false;
+				}
+
+				simulateEvent('submit', 0, form);
+
+				expect(editor.value).equals(
+					'<p>one <a href="https://xdsoft.net/jodit/" class="val1 val3">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>'
+				);
+			});
+		});
+
+		describe('Vérify class name on link', function() {
+			it('Should have link with a class name', function() {
+				const editor = getJodit({
+					link: {
+						modeClassName: 'select',
+						selectMultipleClassName: true,
+						selectOptionsClassName: [
+							{ value: "", text: "" },
+							{ value: "val1", text: "text1" },
+							{ value: "val2", text: "text2" },
+							{ value: "val3", text: "text3" }
+						]
+					}
+				});
+
+				editor.value =
+					'<p>one <a href="https://xdsoft.net/jodit/" class="val1 val3">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>';
+
+				const range = editor.s.createRange();
+				range.setStart(
+					editor.editor.querySelector('a').firstChild,
+					4
+				);
+				range.collapse(true);
+				editor.s.selectRange(range);
+
+				clickButton('link', editor);
+
+				const popup = getOpenedPopup(editor);
+
+				const form = popup.querySelector('.jodit-ui-form');
+				expect(form).is.not.null;
+
+				const className_select = form.querySelector(
+					'select[ref=className_select]'
+				);
+
+				expect(className_select).is.not.null;
+
+				for (let i = 0; i < className_select.options.length; i++) {
+					let option = className_select.options.item (i);
+					expect(option.selected).equals((option.value == "val1") || (option.value == "val3"));
+				}
+			});
+		});
+
+		describe('Modify class name on link', function() {
+			it('Should modify link with a new class name', function() {
+				const editor = getJodit({
+					link: {
+						modeClassName: 'select',
+						selectMultipleClassName: true,
+						selectOptionsClassName: [
+							{ value: "", text: "" },
+							{ value: "val1", text: "text1" },
+							{ value: "val2", text: "text2" },
+							{ value: "val3", text: "text3" }
+						]
+					}
+				});
+
+				editor.value =
+					'<p>one <a href="https://xdsoft.net/jodit/" class="val1 val3">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>';
+
+				const range = editor.s.createRange();
+				range.setStart(
+					editor.editor.querySelector('a').firstChild,
+					4
+				);
+				range.collapse(true);
+				editor.s.selectRange(range);
+
+				clickButton('link', editor);
+
+				const popup = getOpenedPopup(editor);
+
+				const form = popup.querySelector('.jodit-ui-form');
+				expect(form).is.not.null;
+
+				const className_select = form.querySelector(
+					'select[ref=className_select]'
+				);
+
+				expect(className_select).is.not.null;
+
+				for (let i = 0; i < className_select.options.length; i++) {
+					let option = className_select.options.item (i);
+					option.selected = ((option.value == 'val1') || (option.value == "val2")) ? true : false;
+				}
+
+				simulateEvent('submit', 0, form);
+
+				expect(editor.value).equals(
+					'<p>one <a href="https://xdsoft.net/jodit/" class="val1 val2">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>'
+				);
+			});
+		});
+
+		describe('Delete class name on link', function() {
+			it('Should modify link witout class name', function() {
+				const editor = getJodit({
+					link: {
+						modeClassName: 'select',
+						selectMultipleClassName: true,
+						selectOptionsClassName: [
+							{ value: "", text: "" },
+							{ value: "val1", text: "text1" },
+							{ value: "val2", text: "text2" },
+							{ value: "val3", text: "text3" }
+						]
+					}
+				});
+
+				editor.value =
+					'<p>one <a href="https://xdsoft.net/jodit/" class="val1 val3">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>';
+
+				const range = editor.s.createRange();
+				range.setStart(
+					editor.editor.querySelector('a').firstChild,
+					4
+				);
+				range.collapse(true);
+				editor.s.selectRange(range);
+
+				clickButton('link', editor);
+
+				const popup = getOpenedPopup(editor);
+
+				const form = popup.querySelector('.jodit-ui-form');
+				expect(form).is.not.null;
+
+				const className_select = form.querySelector(
+					'select[ref=className_select]'
+				);
+
+				expect(className_select).is.not.null;
+
+				for (let i = 0; i < className_select.options.length; i++) {
+					let option = className_select.options.item (i);
+					option.selected = false;
+				}
+
+				simulateEvent('submit', 0, form);
+
+				expect(editor.value).equals(
+					'<p>one <a href="https://xdsoft.net/jodit/">green <strong>bottle hanging</strong> under wall</a></p>' +
+					'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>'
+				);
+			});
+		});
+	});
 });

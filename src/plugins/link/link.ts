@@ -9,7 +9,8 @@ import type {
 	IJodit,
 	IControlType,
 	Nullable,
-	IUIForm
+	IUIForm,
+	IUIOption
 } from '../../types';
 import { Config } from '../../config';
 import { Dom } from '../../core/dom';
@@ -23,6 +24,25 @@ import {
 } from '../../core/helpers';
 import { Select } from '../../core/selection/';
 import { formTemplate } from './template';
+
+/**
+ * @property {object}  link `{@link link|link}` plugin's options
+ * @property {boolean} link.followOnDblClick=true Follow lnk address after dblclick
+ * @property {boolean} link.processVideoLink=true Replace inserted youtube/vimeo link toWYSIWYG `iframe`
+ * @property {boolean} link.processPastedLink=true Wrap inserted link in &lt;a href="link">link&lt;/a>
+ * @property {boolean} link.removeLinkAfterFormat=true When the button is pressed toWYSIWYG clean format,
+ * if it was done on the link is removed like command `unlink`
+ * @property {"input"|"select"|""} link.modeClassName="input" Use an input text to ask the classname or a select or not ask
+ * @property {boolean} link.selectMultipleClassName=true Allow multiple choises (to use with modeClassName="select")
+ * @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
+ * @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
+ * ex: [
+ *			{ value: "", text: "" },
+ *			{ value: "val1", text: "text1" },
+ *			{ value: "val2", text: "text2" },
+ *			{ value: "val3", text: "text3" }
+ *		]
+ */
 
 declare module '../../config' {
 	interface Config {
@@ -64,6 +84,10 @@ declare module '../../config' {
 			 * Show `Open in new tab` checkbox in link dialog.
 			 */
 			openInNewTabCheckbox: boolean;
+			modeClassName: string;
+			selectMultipleClassName: boolean;
+			selectSizeClassName?: number;
+			selectOptionsClassName: IUIOption[];
 		};
 	}
 }
@@ -75,7 +99,11 @@ Config.prototype.link = {
 	processPastedLink: true,
 	removeLinkAfterFormat: true,
 	noFollowCheckbox: true,
-	openInNewTabCheckbox: true
+	openInNewTabCheckbox: true,
+	modeClassName: 'input',
+	selectMultipleClassName: true,
+	selectSizeClassName: 3,
+	selectOptionsClassName: []
 };
 
 Config.prototype.controls.unlink = {
@@ -108,7 +136,8 @@ Config.prototype.controls.link = {
 				openInNewTabCheckbox,
 				noFollowCheckbox,
 				formTemplate,
-				formClassName
+				formClassName,
+				modeClassName
 			} = editor.o.link;
 
 		const html = formTemplate(editor),
@@ -131,6 +160,8 @@ Config.prototype.controls.link = {
 			isImageContent = Dom.isImage(currentElement, editor.ew);
 
 		let { content_input } = elements as IDictionary<HTMLInputElement>;
+		const { className_input } = elements as IDictionary<HTMLInputElement>;
+		const { className_select } = elements as IDictionary<HTMLSelectElement>;
 
 		if (!content_input) {
 			content_input = editor.c.element('input', {
@@ -170,6 +201,41 @@ Config.prototype.controls.link = {
 
 		if (link) {
 			url_input.value = attr(link, 'href') || '';
+
+			if (modeClassName) {
+				switch (modeClassName) {
+					case 'input':
+						if (className_input) {
+							className_input.value = attr(link, 'class') || '';
+						}
+						break;
+					case 'select':
+						if (className_select) {
+							for (let i = 0; i < className_select.selectedOptions.length; i++) {
+								const option = className_select.options.item (i);
+
+								if (option) {
+									option.selected = false;
+								}
+							}
+
+							const classNames = attr(link, 'class') || '';
+							classNames.split(' ').forEach (className => {
+								if (className) {
+									for (let i = 0; i < className_select.options.length; i++) {
+										const option = className_select.options.item (i);
+
+
+										if (option?.value && option.value == className) {
+											option.selected = true;
+										}
+									}
+								}
+							});
+						}
+						break;
+				}
+			}
 
 			if (openInNewTabCheckbox && target_checkbox) {
 				target_checkbox.checked = attr(link, 'target') === '_blank';
@@ -229,6 +295,31 @@ Config.prototype.controls.link = {
 
 			links.forEach(a => {
 				a.setAttribute('href', url_input.value);
+
+				if (modeClassName) {
+					if (modeClassName == 'input') {
+						if (className_input.value == "" && a.hasAttribute('class')) {
+							a.removeAttribute ('class');
+						}
+
+						if (className_input.value != "") {
+							a.setAttribute('class', className_input.value);
+						}
+					}
+					else if (modeClassName == 'select') {
+						if (a.hasAttribute('class')) {
+							a.removeAttribute ('class');
+						}
+
+						for (let i = 0; i < className_select.selectedOptions.length; i++) {
+							const className = className_select.selectedOptions.item (i)?.value;
+
+							if (className) {
+								a.classList.add (className);
+							}
+						}
+					}
+				}
 
 				if (!isImageContent) {
 					if (content_input.value.trim().length) {

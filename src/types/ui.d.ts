@@ -142,3 +142,29 @@ export interface IUIInput extends IUIElement {
 }
 
 export type IUIInputValidator = (input: IUIInput) => boolean;
+
+export interface IUIOption {
+	value: string,
+	text: string
+}
+
+export interface IUISelect extends IUIElement {
+	nativeInput: HTMLSelectElement;
+	options: {
+		name: string;
+		label?: string;
+		ref?: string;
+		options: IUIOption[];
+		required?: boolean;
+		placeholder?: string;
+		validators?: string[];
+		size?: number;
+		multiple?: boolean;
+	};
+	value: string;
+	error: string;
+	validate(): boolean;
+	focus(): void;
+}
+
+export type IUISelectValidator = (select: IUISelect) => boolean;

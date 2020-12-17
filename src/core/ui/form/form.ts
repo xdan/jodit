@@ -4,9 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IDictionary, IUIForm, IUIInput } from '../../../types';
+import type { IDictionary, IUIForm, IUIInput, IUISelect } from '../../../types';
 import { UIGroup } from '../list/group';
 import { UIInput } from './input';
+import { UISelect } from './select';
 import { attr } from '../../helpers/utils';
 import { component } from '../../decorators';
 
@@ -30,6 +31,16 @@ export class UIForm extends UIGroup implements IUIForm {
 
 		for (const input of inputs) {
 			if (!input.validate()) {
+				return false;
+			}
+		}
+
+		const selects = this.allChildren.filter(
+			elm => elm instanceof UISelect
+		) as IUISelect[];
+
+		for (const select of selects) {
+			if (!select.validate()) {
 				return false;
 			}
 		}
