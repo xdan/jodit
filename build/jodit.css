@@ -1420,6 +1420,37 @@ svg.jodit-icon{
   margin-bottom:0;
 }
 
+.jodit-ui-select{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:8px;
+}
+.jodit-ui-select__select{
+  min-width:200px;
+}
+.jodit-ui-select_has-error_true .jodit-ui-select__select{
+  border-color:#ff3b3b;
+}
+.jodit-ui-select__error{
+  display:block;
+  color:#a5a5a5;
+  font-size:.8em;
+}
+.jodit-ui-select__label{
+  display:block;
+  color:#a5a5a5;
+  font-size:.8em;
+}
+.jodit-ui-select__error{
+  color:#ff3b3b;
+}
+.jodit-ui-select_has-error_true .jodit-ui-select__label{
+  color:#ff3b3b;
+}
+.jodit-ui-block .jodit-ui-select{
+  margin-bottom:0;
+}
+
 .jodit-ui-text-area{
   display:flex;
   flex-direction:column;

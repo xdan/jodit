@@ -4,21 +4,21 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import './input.less';
+import './select.less';
 
 import { UIElement } from '../element';
 import type {
 	IDictionary,
-	IUIInput,
-	IUIInputValidator,
+	IUISelect,
+	IUISelectValidator,
 	IViewBased
 } from '../../../types';
 import { attr } from '../../helpers';
 import { Dom } from '../../dom';
-import * as validators from './validators/input';
+import * as validators from './validators/select';
 
-export class UIInput extends UIElement implements IUIInput {
-	nativeInput!: IUIInput['nativeInput'];
+export class UISelect extends UIElement implements IUISelect {
+	nativeInput!: IUISelect['nativeInput'];
 
 	private __errorBox = this.j.c.span(this.getClassName('error'));
 
@@ -40,7 +40,7 @@ export class UIInput extends UIElement implements IUIInput {
 		return this.nativeInput.value;
 	}
 
-	private validators: IUIInputValidator[] = [];
+	private validators: IUISelectValidator[] = [];
 
 	validate(): boolean {
 		this.error = '';
@@ -53,10 +53,10 @@ export class UIInput extends UIElement implements IUIInput {
 		const container = super.createContainer();
 
 		if (!this.nativeInput) {
-			this.nativeInput = this.j.create.element('input');
+			this.nativeInput = this.j.create.element('select');
 		}
 
-		this.nativeInput.classList.add(this.getClassName('input'));
+		this.nativeInput.classList.add(this.getClassName('select'));
 
 		if (options.label) {
 			const label = this.j.c.span(this.getClassName('label'));
@@ -64,32 +64,46 @@ export class UIInput extends UIElement implements IUIInput {
 			label.innerText = this.j.i18n(options.label);
 		}
 
+		if (options.placeholder !== undefined) {
+			let option = this.j.create.element('option');
+			option.value = "";
+			option.text = options.placeholder;
+			this.nativeInput.add(option);
+		}
+
+		options.options.forEach(element => {
+			let option = this.j.create.element('option');
+			option.value = element.value;
+			option.text = element.text;
+			this.nativeInput.add(option);
+		});
+
 		container.appendChild(this.nativeInput);
 
 		attr(this.nativeInput, 'name', options.name);
 		attr(this.nativeInput, 'dir', this.j.o.direction || 'auto');
-		attr(this.nativeInput, 'type', options.type);
 		attr(this.nativeInput, 'data-ref', options.ref || options.name);
 		attr(this.nativeInput, 'ref', options.ref || options.name);
+		if (options.size && options.size > 0) {
+			attr(this.nativeInput, 'size', options.size);
+		}
+		if (options.multiple) {
+			attr(this.nativeInput, 'multiple', "");
+		}
 
 		return container;
 	}
 
 	/** @override **/
-	constructor(jodit: IViewBased, readonly options: IUIInput['options']) {
+	constructor(jodit: IViewBased, readonly options: IUISelect['options']) {
 		super(jodit, options);
 
 		if (this.options.required) {
-			attr(this.nativeInput, 'required', true);
 			this.validators.push(validators.required);
 		}
 
-		if (this.options.placeholder) {
-			attr(this.nativeInput, 'placeholder', this.options.placeholder);
-		}
-
 		options.validators?.forEach(name => {
-			const validator = (validators as IDictionary<IUIInputValidator>)[
+			const validator = (validators as IDictionary<IUISelectValidator>)[
 				name
 			];
 			validator && this.validators.push(validator);

@@ -1168,7 +1168,7 @@ const val = (elm, selector, value) => {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dom; });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
-/* harmony import */ var _plugins_keyboard_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(17);
+/* harmony import */ var _plugins_keyboard_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(18);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -2851,15 +2851,15 @@ __webpack_require__.d(__webpack_exports__, "i", function() { return /* reexport 
 __webpack_require__.d(__webpack_exports__, "k", function() { return /* reexport */ list_UIList; });
 __webpack_require__.d(__webpack_exports__, "h", function() { return /* reexport */ ui_form["c" /* UIForm */]; });
 __webpack_require__.d(__webpack_exports__, "j", function() { return /* reexport */ ui_form["d" /* UIInput */]; });
-__webpack_require__.d(__webpack_exports__, "m", function() { return /* reexport */ ui_form["e" /* UITextArea */]; });
+__webpack_require__.d(__webpack_exports__, "m", function() { return /* reexport */ ui_form["f" /* UITextArea */]; });
 __webpack_require__.d(__webpack_exports__, "f", function() { return /* reexport */ ui_form["b" /* UICheckbox */]; });
 __webpack_require__.d(__webpack_exports__, "d", function() { return /* reexport */ ui_form["a" /* UIBlock */]; });
 __webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport */ icon["a" /* Icon */]; });
 
-// UNUSED EXPORTS: UIButtonState
+// UNUSED EXPORTS: UIButtonState, UISelect
 
 // EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(18);
+var ui_element = __webpack_require__(17);
 
 // EXTERNAL MODULE: ./src/core/ui/button/index.ts + 1 modules
 var ui_button = __webpack_require__(11);
@@ -3104,7 +3104,7 @@ Object(tslib_es6["a" /* __decorate */])([
     Object(decorators["watch"])('mode')
 ], list_UIList.prototype, "onChangeMode", null);
 
-// EXTERNAL MODULE: ./src/core/ui/form/index.ts + 7 modules
+// EXTERNAL MODULE: ./src/core/ui/form/index.ts + 9 modules
 var ui_form = __webpack_require__(14);
 
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
@@ -3551,7 +3551,7 @@ var button_button = __webpack_require__(114);
 var esm = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(18);
+var ui_element = __webpack_require__(17);
 
 // EXTERNAL MODULE: ./src/core/decorators/watch.ts
 var watch = __webpack_require__(16);
@@ -4155,15 +4155,21 @@ const i18n = (key, params, options) => {
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, "c", function() { return /* reexport */ form_UIForm; });
 __webpack_require__.d(__webpack_exports__, "d", function() { return /* reexport */ input_UIInput; });
-__webpack_require__.d(__webpack_exports__, "e", function() { return /* reexport */ area_UITextArea; });
+__webpack_require__.d(__webpack_exports__, "f", function() { return /* reexport */ area_UITextArea; });
 __webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport */ checkbox_UICheckbox; });
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport */ block_UIBlock; });
+__webpack_require__.d(__webpack_exports__, "e", function() { return /* reexport */ select_UISelect; });
 
-// NAMESPACE OBJECT: ./src/core/ui/form/validators.ts
-var validators_namespaceObject = {};
-__webpack_require__.r(validators_namespaceObject);
-__webpack_require__.d(validators_namespaceObject, "required", function() { return required; });
-__webpack_require__.d(validators_namespaceObject, "url", function() { return url; });
+// NAMESPACE OBJECT: ./src/core/ui/form/validators/input.ts
+var validators_input_namespaceObject = {};
+__webpack_require__.r(validators_input_namespaceObject);
+__webpack_require__.d(validators_input_namespaceObject, "required", function() { return required; });
+__webpack_require__.d(validators_input_namespaceObject, "url", function() { return url; });
+
+// NAMESPACE OBJECT: ./src/core/ui/form/validators/select.ts
+var validators_select_namespaceObject = {};
+__webpack_require__.r(validators_select_namespaceObject);
+__webpack_require__.d(validators_select_namespaceObject, "required", function() { return select_required; });
 
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 5 modules
 var ui = __webpack_require__(7);
@@ -4172,7 +4178,7 @@ var ui = __webpack_require__(7);
 var form_input = __webpack_require__(118);
 
 // EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(18);
+var ui_element = __webpack_require__(17);
 
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 27 modules
 var helpers = __webpack_require__(0);
@@ -4180,7 +4186,7 @@ var helpers = __webpack_require__(0);
 // EXTERNAL MODULE: ./src/core/dom.ts
 var dom = __webpack_require__(1);
 
-// CONCATENATED MODULE: ./src/core/ui/form/validators.ts
+// CONCATENATED MODULE: ./src/core/ui/form/validators/input.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -4228,7 +4234,7 @@ class input_UIInput extends ui_element["a" /* UIElement */] {
             Object(helpers["attr"])(this.nativeInput, 'placeholder', this.options.placeholder);
         }
         (_a = options.validators) === null || _a === void 0 ? void 0 : _a.forEach(name => {
-            const validator = validators_namespaceObject[name];
+            const validator = validators_input_namespaceObject[name];
             validator && this.validators.push(validator);
         });
     }
@@ -4273,10 +4279,113 @@ class input_UIInput extends ui_element["a" /* UIElement */] {
     }
 }
 
+// EXTERNAL MODULE: ./src/core/ui/form/select.less
+var form_select = __webpack_require__(119);
+
+// CONCATENATED MODULE: ./src/core/ui/form/validators/select.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+const select_required = function (select) {
+    if (!Object(helpers["trim"])(select.value).length) {
+        select.error = 'Please fill out this field';
+        return false;
+    }
+    return true;
+};
+
+// CONCATENATED MODULE: ./src/core/ui/form/select.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+class select_UISelect extends ui_element["a" /* UIElement */] {
+    constructor(jodit, options) {
+        var _a;
+        super(jodit, options);
+        this.options = options;
+        this.__errorBox = this.j.c.span(this.getClassName('error'));
+        this.validators = [];
+        if (this.options.required) {
+            this.validators.push(select_required);
+        }
+        (_a = options.validators) === null || _a === void 0 ? void 0 : _a.forEach(name => {
+            const validator = validators_select_namespaceObject[name];
+            validator && this.validators.push(validator);
+        });
+    }
+    set error(value) {
+        this.setMod('has-error', !!value);
+        if (!value) {
+            dom["a" /* Dom */].safeRemove(this.__errorBox);
+        }
+        else {
+            this.__errorBox.innerText = this.j.i18n(value, this.j.i18n(this.options.label || ''));
+            this.container.appendChild(this.__errorBox);
+        }
+    }
+    get value() {
+        return this.nativeInput.value;
+    }
+    validate() {
+        this.error = '';
+        return this.validators.every(validator => validator(this));
+    }
+    createContainer(options) {
+        const container = super.createContainer();
+        if (!this.nativeInput) {
+            this.nativeInput = this.j.create.element('select');
+        }
+        this.nativeInput.classList.add(this.getClassName('select'));
+        if (options.label) {
+            const label = this.j.c.span(this.getClassName('label'));
+            container.appendChild(label);
+            label.innerText = this.j.i18n(options.label);
+        }
+        if (options.placeholder !== undefined) {
+            let option = this.j.create.element('option');
+            option.value = "";
+            option.text = options.placeholder;
+            this.nativeInput.add(option);
+        }
+        options.options.forEach(element => {
+            let option = this.j.create.element('option');
+            option.value = element.value;
+            option.text = element.text;
+            this.nativeInput.add(option);
+        });
+        container.appendChild(this.nativeInput);
+        Object(helpers["attr"])(this.nativeInput, 'name', options.name);
+        Object(helpers["attr"])(this.nativeInput, 'dir', this.j.o.direction || 'auto');
+        Object(helpers["attr"])(this.nativeInput, 'data-ref', options.ref || options.name);
+        Object(helpers["attr"])(this.nativeInput, 'ref', options.ref || options.name);
+        if (options.size && options.size > 0) {
+            Object(helpers["attr"])(this.nativeInput, 'size', options.size);
+        }
+        if (options.multiple) {
+            Object(helpers["attr"])(this.nativeInput, 'multiple', "");
+        }
+        return container;
+    }
+    focus() {
+        this.nativeInput.focus();
+    }
+}
+
 // EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 5 modules
 var utils = __webpack_require__(9);
 
 // CONCATENATED MODULE: ./src/core/ui/form/form.ts
+
 
 
 
@@ -4288,6 +4397,12 @@ class form_UIForm extends ui["i" /* UIGroup */] {
         const inputs = this.allChildren.filter(elm => elm instanceof input_UIInput);
         for (const input of inputs) {
             if (!input.validate()) {
+                return false;
+            }
+        }
+        const selects = this.allChildren.filter(elm => elm instanceof select_UISelect);
+        for (const select of selects) {
+            if (!select.validate()) {
                 return false;
             }
         }
@@ -4315,7 +4430,7 @@ class form_UIForm extends ui["i" /* UIGroup */] {
 }
 
 // EXTERNAL MODULE: ./src/core/ui/form/inputs/area.less
-var inputs_area = __webpack_require__(119);
+var inputs_area = __webpack_require__(120);
 
 // CONCATENATED MODULE: ./src/core/ui/form/inputs/area.ts
 
@@ -4328,7 +4443,7 @@ class area_UITextArea extends input_UIInput {
 }
 
 // EXTERNAL MODULE: ./src/core/ui/form/inputs/checkbox.less
-var inputs_checkbox = __webpack_require__(120);
+var inputs_checkbox = __webpack_require__(121);
 
 // CONCATENATED MODULE: ./src/core/ui/form/inputs/checkbox.ts
 
@@ -4354,7 +4469,7 @@ class checkbox_UICheckbox extends input_UIInput {
 
 
 // EXTERNAL MODULE: ./src/core/ui/form/block.less
-var block = __webpack_require__(121);
+var block = __webpack_require__(122);
 
 // CONCATENATED MODULE: ./src/core/ui/form/block.ts
 
@@ -4378,6 +4493,7 @@ class block_UIBlock extends ui["i" /* UIGroup */] {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 
 
 
@@ -4495,7 +4611,7 @@ const ColorPickerWidget = (editor, callback, coldColor) => {
 };
 
 // EXTERNAL MODULE: ./src/modules/widget/tabs/tabs.less
-var tabs_tabs = __webpack_require__(122);
+var tabs_tabs = __webpack_require__(123);
 
 // CONCATENATED MODULE: ./src/modules/widget/tabs/tabs.ts
 /*!
@@ -4766,58 +4882,6 @@ function watch(observeFields) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getNeighbor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getSibling; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getNotSpaceSibling; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return normalizeCursorPosition; });
-/* harmony import */ var _core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
-/* harmony import */ var _core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
-/* harmony import */ var _core_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2);
-/* harmony import */ var _core_helpers_string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13);
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-function getNeighbor(node, backspace, root) {
-    return Object(_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__[/* call */ "c"])(backspace ? _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].prev : _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].next, node, n => Boolean(n && (!_core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].isText(n) || Object(_core_helpers_string__WEBPACK_IMPORTED_MODULE_3__[/* trim */ "f"])((n === null || n === void 0 ? void 0 : n.nodeValue) || '').length)), root);
-}
-function getSibling(node, backspace) {
-    return backspace ? node.previousSibling : node.nextSibling;
-}
-function getNotSpaceSibling(node, backspace) {
-    return _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].getNormalSibling(node, backspace, n => {
-        var _a;
-        return (!_core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].isEmptyTextNode(n) &&
-            Boolean(!_core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].isText(n) || (((_a = n.nodeValue) === null || _a === void 0 ? void 0 : _a.length) && Object(_core_helpers_string__WEBPACK_IMPORTED_MODULE_3__[/* trim */ "f"])(n.nodeValue))));
-    });
-}
-function normalizeCursorPosition(node, backspace) {
-    let sibling = _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].getNormalSibling(node, backspace), anotherSibling = _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].getNormalSibling(node, !backspace);
-    while (_core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].isElement(sibling) &&
-        !_core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].isTag(sibling, _core_constants__WEBPACK_IMPORTED_MODULE_2__["INSEPARABLE_TAGS"]) &&
-        !anotherSibling) {
-        if (backspace || !sibling.firstChild) {
-            sibling.appendChild(node);
-        }
-        else {
-            _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].before(sibling.firstChild, node);
-        }
-        sibling = getSibling(node, backspace);
-        anotherSibling = getSibling(node, !backspace);
-    }
-}
-
-
-/***/ }),
-/* 18 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UIElement; });
 /* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
 /* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
@@ -4922,6 +4986,58 @@ class UIElement extends _component__WEBPACK_IMPORTED_MODULE_0__[/* ViewComponent
         _dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].safeRemove(this.container);
         this.parentElement = null;
         return super.destruct();
+    }
+}
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getNeighbor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getSibling; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getNotSpaceSibling; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return normalizeCursorPosition; });
+/* harmony import */ var _core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+/* harmony import */ var _core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var _core_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2);
+/* harmony import */ var _core_helpers_string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+function getNeighbor(node, backspace, root) {
+    return Object(_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__[/* call */ "c"])(backspace ? _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].prev : _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].next, node, n => Boolean(n && (!_core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].isText(n) || Object(_core_helpers_string__WEBPACK_IMPORTED_MODULE_3__[/* trim */ "f"])((n === null || n === void 0 ? void 0 : n.nodeValue) || '').length)), root);
+}
+function getSibling(node, backspace) {
+    return backspace ? node.previousSibling : node.nextSibling;
+}
+function getNotSpaceSibling(node, backspace) {
+    return _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].getNormalSibling(node, backspace, n => {
+        var _a;
+        return (!_core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].isEmptyTextNode(n) &&
+            Boolean(!_core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].isText(n) || (((_a = n.nodeValue) === null || _a === void 0 ? void 0 : _a.length) && Object(_core_helpers_string__WEBPACK_IMPORTED_MODULE_3__[/* trim */ "f"])(n.nodeValue))));
+    });
+}
+function normalizeCursorPosition(node, backspace) {
+    let sibling = _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].getNormalSibling(node, backspace), anotherSibling = _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].getNormalSibling(node, !backspace);
+    while (_core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].isElement(sibling) &&
+        !_core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].isTag(sibling, _core_constants__WEBPACK_IMPORTED_MODULE_2__["INSEPARABLE_TAGS"]) &&
+        !anotherSibling) {
+        if (backspace || !sibling.firstChild) {
+            sibling.appendChild(node);
+        }
+        else {
+            _core_dom__WEBPACK_IMPORTED_MODULE_1__[/* Dom */ "a"].before(sibling.firstChild, node);
+        }
+        sibling = getSibling(node, backspace);
+        anotherSibling = getSibling(node, !backspace);
     }
 }
 
@@ -6999,7 +7115,7 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 /* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(173);
+module.exports = __webpack_require__(174);
 
 
 /***/ }),
@@ -7136,6 +7252,12 @@ module.exports = __webpack_require__(173);
 
 /***/ }),
 /* 134 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 135 */
 /***/ (function(module, exports) {
 
 /*!
@@ -7357,7 +7479,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports) {
 
 /*!
@@ -7581,7 +7703,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, exports) {
 
 /*!
@@ -7804,7 +7926,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, exports) {
 
 /*!
@@ -7821,7 +7943,7 @@ module.exports = {
 
 
 /***/ }),
-/* 138 */
+/* 139 */
 /***/ (function(module, exports) {
 
 /*!
@@ -8051,7 +8173,7 @@ module.exports = {
 
 
 /***/ }),
-/* 139 */
+/* 140 */
 /***/ (function(module, exports) {
 
 /*!
@@ -8269,7 +8391,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 140 */
+/* 141 */
 /***/ (function(module, exports) {
 
 /*!
@@ -8492,7 +8614,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 141 */
+/* 142 */
 /***/ (function(module, exports) {
 
 /*!
@@ -8717,7 +8839,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, exports) {
 
 /*!
@@ -8941,7 +9063,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports) {
 
 /*!
@@ -9164,7 +9286,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports) {
 
 /*!
@@ -9387,7 +9509,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports) {
 
 /*!
@@ -9609,7 +9731,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports) {
 
 /*!
@@ -9833,7 +9955,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports) {
 
 /*!
@@ -10056,7 +10178,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports) {
 
 /*!
@@ -10286,7 +10408,7 @@ module.exports = {
 
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports) {
 
 /*!
@@ -10508,7 +10630,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports) {
 
 /*!
@@ -10732,7 +10854,7 @@ module.exports = {
 
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports) {
 
 /*!
@@ -10955,7 +11077,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports) {
 
 /*!
@@ -11177,12 +11299,6 @@ module.exports = {
 };
 
 /***/ }),
-/* 153 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
 /* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11220,6 +11336,12 @@ module.exports = {
 
 /***/ }),
 /* 160 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 161 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11254,7 +11376,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11351,7 +11473,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11494,12 +11616,6 @@ const cmd = (control) => control.args && Object(_core_helpers_checker__WEBPACK_I
 
 
 /***/ }),
-/* 163 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
 /* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11555,6 +11671,12 @@ const cmd = (control) => control.args && Object(_core_helpers_checker__WEBPACK_I
 
 /***/ }),
 /* 173 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 174 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12062,7 +12184,7 @@ ajax_Ajax.log = [];
 var core_component = __webpack_require__(10);
 
 // EXTERNAL MODULE: ./src/modules/context-menu/context-menu.less
-var context_menu = __webpack_require__(123);
+var context_menu = __webpack_require__(124);
 
 // EXTERNAL MODULE: ./src/core/ui/popup/index.ts + 1 modules
 var ui_popup = __webpack_require__(20);
@@ -12111,13 +12233,13 @@ class context_menu_ContextMenu extends ui_popup["a" /* Popup */] {
 }
 
 // EXTERNAL MODULE: ./src/modules/dialog/dialog.less
-var dialog_dialog = __webpack_require__(124);
+var dialog_dialog = __webpack_require__(125);
 
 // EXTERNAL MODULE: ./node_modules/autobind-decorator/lib/esm/index.js
 var esm = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./src/core/view/view-with-toolbar.less
-var view_with_toolbar = __webpack_require__(125);
+var view_with_toolbar = __webpack_require__(126);
 
 // CONCATENATED MODULE: ./src/core/storage/engines/memory-storage-provider.ts
 /*!
@@ -12445,7 +12567,7 @@ view_View.defaultOptions = {
 var dom = __webpack_require__(1);
 
 // EXTERNAL MODULE: ./src/modules/toolbar/collection/collection.less
-var collection_collection = __webpack_require__(126);
+var collection_collection = __webpack_require__(127);
 
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 5 modules
 var ui = __webpack_require__(7);
@@ -12619,7 +12741,7 @@ class editor_collection_ToolbarEditorCollection extends collection_ToolbarCollec
 }
 
 // EXTERNAL MODULE: ./src/modules/toolbar/button/button.less
-var button_button = __webpack_require__(127);
+var button_button = __webpack_require__(128);
 
 // CONCATENATED MODULE: ./src/modules/toolbar/button/button.ts
 /*!
@@ -12882,7 +13004,7 @@ Object(tslib_es6["a" /* __decorate */])([
 ], button_ToolbarButton.prototype, "onChangeHasTrigger", null);
 
 // EXTERNAL MODULE: ./src/modules/toolbar/button/content.less
-var button_content = __webpack_require__(128);
+var button_content = __webpack_require__(129);
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 5 modules
 var utils = __webpack_require__(9);
@@ -13036,6 +13158,7 @@ config["a" /* Config */].prototype.controls.dialog = {
         icon: 'cancel',
         exec: dialog => {
             dialog.close();
+            dialog.toggleFullSizeBox(false);
         }
     }
 };
@@ -13297,13 +13420,16 @@ class dialog_Dialog extends view_with_toolbar_ViewWithToolbar {
             condition = !this.container.classList.contains('jodit-dialog__box_fullsize');
         }
         this.container.classList.toggle('jodit-dialog__box_fullsize', condition);
+        this.toggleFullSizeBox(condition);
+        this.iSetMaximization = condition;
+        return condition;
+    }
+    toggleFullSizeBox(condition) {
         [this.destination, this.destination.parentNode].forEach((box) => {
             box &&
                 box.classList &&
                 box.classList.toggle('jodit_fullsize-box_true', condition);
         });
-        this.iSetMaximization = condition;
-        return condition;
     }
     open(contentOrClose, titleOrModal, destroyAfterClose, modal) {
         global["a" /* eventEmitter */].fire('closeAllPopups hideHelpers');
@@ -13680,7 +13806,7 @@ class create_Create {
 }
 
 // EXTERNAL MODULE: ./src/modules/file-browser/styles/index.less
-var file_browser_styles = __webpack_require__(129);
+var file_browser_styles = __webpack_require__(130);
 
 // CONCATENATED MODULE: ./src/modules/file-browser/consts.ts
 /*!
@@ -15199,7 +15325,7 @@ Object(tslib_es6["a" /* __decorate */])([
 ], file_browser_FileBrowser.prototype, "open", null);
 
 // EXTERNAL MODULE: ./src/modules/image-editor/image-editor.less
-var image_editor = __webpack_require__(130);
+var image_editor = __webpack_require__(131);
 
 // CONCATENATED MODULE: ./src/modules/image-editor/templates/form.ts
 /*!
@@ -16147,7 +16273,7 @@ Object(tslib_es6["a" /* __decorate */])([
 ], observer_Observer.prototype, "onChange", null);
 
 // EXTERNAL MODULE: ./src/modules/progress-bar/progress-bar.less
-var progress_bar = __webpack_require__(131);
+var progress_bar = __webpack_require__(132);
 
 // CONCATENATED MODULE: ./src/modules/progress-bar/progress-bar.ts
 /*!
@@ -17257,7 +17383,7 @@ Object(tslib_es6["a" /* __decorate */])([
 
 
 // EXTERNAL MODULE: ./src/modules/status-bar/status-bar.less
-var status_bar = __webpack_require__(132);
+var status_bar = __webpack_require__(133);
 
 // CONCATENATED MODULE: ./src/modules/status-bar/status-bar.ts
 /*!
@@ -17900,7 +18026,7 @@ const table_instance = (j) => j.getInstance('Table', j.o);
 
 
 // EXTERNAL MODULE: ./src/modules/uploader/uploader.less
-var uploader_uploader = __webpack_require__(133);
+var uploader_uploader = __webpack_require__(134);
 
 // CONCATENATED MODULE: ./src/modules/uploader/uploader.ts
 /*!
@@ -19180,25 +19306,25 @@ Object(tslib_es6["a" /* __decorate */])([
 
 // CONCATENATED MODULE: ./src/langs/index.ts
 
-const ar = __webpack_require__(134);
-const cs_cz = __webpack_require__(135);
-const de = __webpack_require__(136);
-const en = __webpack_require__(137);
-const es = __webpack_require__(138);
-const fr = __webpack_require__(139);
-const he = __webpack_require__(140);
-const hu = __webpack_require__(141);
-const langs_id = __webpack_require__(142);
-const it = __webpack_require__(143);
-const ja = __webpack_require__(144);
-const ko = __webpack_require__(145);
-const nl = __webpack_require__(146);
-const pl = __webpack_require__(147);
-const pt_br = __webpack_require__(148);
-const ru = __webpack_require__(149);
-const langs_tr = __webpack_require__(150);
-const zh_cn = __webpack_require__(151);
-const zh_tw = __webpack_require__(152);
+const ar = __webpack_require__(135);
+const cs_cz = __webpack_require__(136);
+const de = __webpack_require__(137);
+const en = __webpack_require__(138);
+const es = __webpack_require__(139);
+const fr = __webpack_require__(140);
+const he = __webpack_require__(141);
+const hu = __webpack_require__(142);
+const langs_id = __webpack_require__(143);
+const it = __webpack_require__(144);
+const ja = __webpack_require__(145);
+const ko = __webpack_require__(146);
+const nl = __webpack_require__(147);
+const pl = __webpack_require__(148);
+const pt_br = __webpack_require__(149);
+const ru = __webpack_require__(150);
+const langs_tr = __webpack_require__(151);
+const zh_cn = __webpack_require__(152);
+const zh_tw = __webpack_require__(153);
 const exp = {
     ar,
     cs_cz,
@@ -19238,7 +19364,7 @@ Object.keys(exp).forEach((lang) => {
 /* harmony default export */ var langs = (exp);
 
 // EXTERNAL MODULE: ./src/plugins/add-new-line/add-new-line.less
-var add_new_line = __webpack_require__(153);
+var add_new_line = __webpack_require__(154);
 
 // CONCATENATED MODULE: ./src/plugins/add-new-line/add-new-line.ts
 /*!
@@ -19435,7 +19561,7 @@ class add_new_line_addNewLine extends plugin_Plugin {
 }
 
 // EXTERNAL MODULE: ./src/plugins/about/about.less
-var about = __webpack_require__(154);
+var about = __webpack_require__(155);
 
 // CONCATENATED MODULE: ./src/plugins/about/about.ts
 /*!
@@ -19517,7 +19643,7 @@ function autofocus(editor) {
 }
 
 // EXTERNAL MODULE: ./src/plugins/keyboard/helpers.ts
-var keyboard_helpers = __webpack_require__(17);
+var keyboard_helpers = __webpack_require__(18);
 
 // CONCATENATED MODULE: ./src/plugins/keyboard/delete.ts
 /*!
@@ -20740,7 +20866,7 @@ Object(tslib_es6["a" /* __decorate */])([
 ], paste_paste.prototype, "onProcessPasteReplaceNl2Br", null);
 
 // EXTERNAL MODULE: ./src/plugins/clipboard/paste-storage/paste-storage.less
-var paste_storage = __webpack_require__(155);
+var paste_storage = __webpack_require__(156);
 
 // CONCATENATED MODULE: ./src/plugins/clipboard/paste-storage/paste-storage.ts
 /*!
@@ -21655,7 +21781,7 @@ class enter_enter extends plugin_Plugin {
 }
 
 // EXTERNAL MODULE: ./src/plugins/error-messages/errors-messages.less
-var errors_messages = __webpack_require__(156);
+var errors_messages = __webpack_require__(157);
 
 // CONCATENATED MODULE: ./src/plugins/error-messages/error-messages.ts
 /*!
@@ -21911,7 +22037,7 @@ function formatBlock(editor) {
 }
 
 // EXTERNAL MODULE: ./src/plugins/fullsize/fullsize.less
-var fullsize = __webpack_require__(157);
+var fullsize = __webpack_require__(158);
 
 // CONCATENATED MODULE: ./src/plugins/fullsize/fullsize.ts
 /*!
@@ -22371,7 +22497,7 @@ function iframe_iframe(editor) {
 }
 
 // EXTERNAL MODULE: ./src/plugins/image/image-properties/image-properties.less
-var image_properties = __webpack_require__(158);
+var image_properties = __webpack_require__(159);
 
 // CONCATENATED MODULE: ./src/plugins/image/image-properties/templates/form.ts
 /*!
@@ -23140,7 +23266,7 @@ function hr(editor) {
 
 
 // EXTERNAL MODULE: ./src/plugins/inline-popup/inline-popup.less
-var inline_popup = __webpack_require__(159);
+var inline_popup = __webpack_require__(160);
 
 // CONCATENATED MODULE: ./src/plugins/inline-popup/config/config.ts
 /*!
@@ -23153,9 +23279,9 @@ config["a" /* Config */].prototype.toolbarInline = true;
 config["a" /* Config */].prototype.toolbarInlineForSelection = false;
 config["a" /* Config */].prototype.toolbarInlineDisableFor = [];
 config["a" /* Config */].prototype.popup = {
-    a: __webpack_require__(160).default,
-    img: __webpack_require__(161).default,
-    cells: __webpack_require__(162).default,
+    a: __webpack_require__(161).default,
+    img: __webpack_require__(162).default,
+    cells: __webpack_require__(163).default,
     jodit: [
         {
             name: 'bin',
@@ -23567,7 +23693,7 @@ Object(tslib_es6["a" /* __decorate */])([
     esm["a" /* default */]
 ], limit_limit.prototype, "checkPreventChanging", null);
 
-// EXTERNAL MODULE: ./src/core/ui/form/index.ts + 7 modules
+// EXTERNAL MODULE: ./src/core/ui/form/index.ts + 9 modules
 var ui_form = __webpack_require__(14);
 
 // CONCATENATED MODULE: ./src/plugins/link/template.ts
@@ -23579,7 +23705,7 @@ var ui_form = __webpack_require__(14);
 
 
 const template_formTemplate = (editor) => {
-    const { openInNewTabCheckbox, noFollowCheckbox } = editor.o.link;
+    const { openInNewTabCheckbox, noFollowCheckbox, modeClassName, selectSizeClassName, selectMultipleClassName, selectOptionsClassName } = editor.o.link;
     return new ui_form["c" /* UIForm */](editor, [
         new ui_form["a" /* UIBlock */](editor, [
             new ui_form["d" /* UIInput */](editor, {
@@ -23600,6 +23726,26 @@ const template_formTemplate = (editor) => {
         ], {
             ref: 'content_input_box'
         }),
+        modeClassName
+            ? new ui_form["a" /* UIBlock */](editor, [
+                (modeClassName == 'input')
+                    ? new ui_form["d" /* UIInput */](editor, {
+                        name: 'className',
+                        ref: 'className_input',
+                        label: 'Class name'
+                    })
+                    : (modeClassName == 'select')
+                        ? new ui_form["e" /* UISelect */](editor, {
+                            name: 'className',
+                            ref: 'className_select',
+                            label: 'Class name',
+                            size: selectSizeClassName,
+                            multiple: selectMultipleClassName,
+                            options: selectOptionsClassName
+                        })
+                        : null
+            ])
+            : null,
         openInNewTabCheckbox
             ? new ui_form["b" /* UICheckbox */](editor, {
                 name: 'target',
@@ -23649,7 +23795,11 @@ config["a" /* Config */].prototype.link = {
     processPastedLink: true,
     removeLinkAfterFormat: true,
     noFollowCheckbox: true,
-    openInNewTabCheckbox: true
+    openInNewTabCheckbox: true,
+    modeClassName: 'input',
+    selectMultipleClassName: true,
+    selectSizeClassName: 3,
+    selectOptionsClassName: []
 };
 config["a" /* Config */].prototype.controls.unlink = {
     exec: (editor, current) => {
@@ -23668,7 +23818,7 @@ config["a" /* Config */].prototype.controls.link = {
         return Boolean(current && dom["a" /* Dom */].closest(current, 'a', editor.editor));
     },
     popup: (editor, current, self, close) => {
-        const i18n = editor.i18n.bind(editor), { openInNewTabCheckbox, noFollowCheckbox, formTemplate, formClassName } = editor.o.link;
+        const i18n = editor.i18n.bind(editor), { openInNewTabCheckbox, noFollowCheckbox, formTemplate, formClassName, modeClassName } = editor.o.link;
         const html = formTemplate(editor), form = Object(helpers["isString"])(html)
             ? editor.c.fromHTML(html, {
                 target_checkbox_box: openInNewTabCheckbox,
@@ -23677,6 +23827,8 @@ config["a" /* Config */].prototype.controls.link = {
             : html, htmlForm = dom["a" /* Dom */].isElement(form) ? form : form.container;
         const elements = Object(helpers["refs"])(htmlForm), { insert, unlink, content_input_box } = elements, { target_checkbox, nofollow_checkbox, url_input } = elements, currentElement = current, isImageContent = dom["a" /* Dom */].isImage(currentElement, editor.ew);
         let { content_input } = elements;
+        let { className_input } = elements;
+        let { className_select } = elements;
         if (!content_input) {
             content_input = editor.c.element('input', {
                 type: 'hidden',
@@ -23704,6 +23856,36 @@ config["a" /* Config */].prototype.controls.link = {
         }
         if (link) {
             url_input.value = Object(helpers["attr"])(link, 'href') || '';
+            if (modeClassName) {
+                switch (modeClassName) {
+                    case 'input':
+                        if (className_input) {
+                            className_input.value = Object(helpers["attr"])(link, 'class') || '';
+                        }
+                        break;
+                    case 'select':
+                        if (className_select) {
+                            for (let i = 0; i < className_select.selectedOptions.length; i++) {
+                                let option = className_select.options.item(i);
+                                if (option) {
+                                    option.selected = false;
+                                }
+                            }
+                            let classNames = Object(helpers["attr"])(link, 'class') || '';
+                            classNames.split(' ').forEach(className => {
+                                if (className) {
+                                    for (let i = 0; i < className_select.options.length; i++) {
+                                        let option = className_select.options.item(i);
+                                        if ((option === null || option === void 0 ? void 0 : option.value) && option.value == className) {
+                                            option.selected = true;
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                        break;
+                }
+            }
             if (openInNewTabCheckbox && target_checkbox) {
                 target_checkbox.checked = Object(helpers["attr"])(link, 'target') === '_blank';
             }
@@ -23750,7 +23932,29 @@ config["a" /* Config */].prototype.controls.link = {
                 links = [link];
             }
             links.forEach(a => {
+                var _a;
                 a.setAttribute('href', url_input.value);
+                if (modeClassName) {
+                    if (modeClassName == 'input') {
+                        if (className_input.value == "" && a.hasAttribute('class')) {
+                            a.removeAttribute('class');
+                        }
+                        if (className_input.value != "") {
+                            a.setAttribute('class', className_input.value);
+                        }
+                    }
+                    else if (modeClassName == 'select') {
+                        if (a.hasAttribute('class')) {
+                            a.removeAttribute('class');
+                        }
+                        for (let i = 0; i < className_select.selectedOptions.length; i++) {
+                            let className = (_a = className_select.selectedOptions.item(i)) === null || _a === void 0 ? void 0 : _a.value;
+                            if (className) {
+                                a.classList.add(className);
+                            }
+                        }
+                    }
+                }
                 if (!isImageContent) {
                     if (content_input.value.trim().length) {
                         if (textWasChanged) {
@@ -24119,7 +24323,7 @@ function orderedList(editor) {
 }
 
 // EXTERNAL MODULE: ./src/plugins/placeholder/placeholder.less
-var placeholder_placeholder = __webpack_require__(163);
+var placeholder_placeholder = __webpack_require__(164);
 
 // CONCATENATED MODULE: ./src/plugins/placeholder/placeholder.ts
 /*!
@@ -24304,7 +24508,7 @@ class redo_undo_redoUndo extends plugin_Plugin {
 }
 
 // EXTERNAL MODULE: ./src/plugins/resizer/resizer.less
-var resizer_resizer = __webpack_require__(164);
+var resizer_resizer = __webpack_require__(165);
 
 // CONCATENATED MODULE: ./src/plugins/resizer/resizer.ts
 /*!
@@ -24651,7 +24855,7 @@ Object(tslib_es6["a" /* __decorate */])([
 ], resizer_resizer_resizer.prototype, "hide", null);
 
 // EXTERNAL MODULE: ./src/plugins/search/search.less
-var search_search = __webpack_require__(165);
+var search_search = __webpack_require__(166);
 
 // CONCATENATED MODULE: ./src/plugins/search/search.ts
 /*!
@@ -25179,7 +25383,7 @@ resize_handler_resizeHandler = Object(tslib_es6["a" /* __decorate */])([
 
 
 // EXTERNAL MODULE: ./src/plugins/size/size.less
-var size_size = __webpack_require__(166);
+var size_size = __webpack_require__(167);
 
 // CONCATENATED MODULE: ./src/plugins/size/size.ts
 /*!
@@ -25353,7 +25557,7 @@ config["a" /* Config */].prototype.controls.source = {
 };
 
 // EXTERNAL MODULE: ./src/plugins/source/source.less
-var source_source = __webpack_require__(167);
+var source_source = __webpack_require__(168);
 
 // CONCATENATED MODULE: ./src/plugins/source/editor/sourceEditor.ts
 /*!
@@ -26059,7 +26263,7 @@ class stat_stat extends plugin_Plugin {
 }
 
 // EXTERNAL MODULE: ./src/plugins/sticky/sticky.less
-var sticky_sticky = __webpack_require__(168);
+var sticky_sticky = __webpack_require__(169);
 
 // CONCATENATED MODULE: ./src/plugins/sticky/sticky.ts
 /*!
@@ -26147,7 +26351,7 @@ class sticky_sticky_sticky extends plugin_Plugin {
 }
 
 // EXTERNAL MODULE: ./src/plugins/symbols/symbols.less
-var symbols_symbols = __webpack_require__(169);
+var symbols_symbols = __webpack_require__(170);
 
 // CONCATENATED MODULE: ./src/plugins/symbols/config.ts
 /*!
@@ -26657,7 +26861,7 @@ config["a" /* Config */].prototype.controls.table = {
 };
 
 // EXTERNAL MODULE: ./src/plugins/table/table.less
-var table_table = __webpack_require__(170);
+var table_table = __webpack_require__(171);
 
 // CONCATENATED MODULE: ./src/plugins/table/resize-cells.ts
 /*!
@@ -27279,7 +27483,7 @@ function tableKeyboardNavigation(editor) {
 
 
 // EXTERNAL MODULE: ./src/plugins/tooltip/tooltip.less
-var tooltip_tooltip = __webpack_require__(171);
+var tooltip_tooltip = __webpack_require__(172);
 
 // CONCATENATED MODULE: ./src/plugins/tooltip/tooltip.ts
 /*!
@@ -27389,7 +27593,7 @@ config["a" /* Config */].prototype.controls.video = {
             ])
         ]), bycode = new ui_form["c" /* UIForm */](editor, [
             new ui_form["a" /* UIBlock */](editor, [
-                new ui_form["e" /* UITextArea */](editor, {
+                new ui_form["f" /* UITextArea */](editor, {
                     name: 'code',
                     required: true,
                     label: 'Embed code'
@@ -27529,7 +27733,7 @@ config["a" /* Config */].prototype.controls.preview = {
 
 
 // EXTERNAL MODULE: ./src/plugins/xpath/xpath.less
-var xpath_xpath = __webpack_require__(172);
+var xpath_xpath = __webpack_require__(173);
 
 // CONCATENATED MODULE: ./src/plugins/xpath/xpath.ts
 /*!
