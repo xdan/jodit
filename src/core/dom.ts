@@ -5,6 +5,7 @@
  */
 
 import type {
+	CanUndef,
 	HTMLTagNames,
 	ICreate,
 	IJodit,
@@ -18,10 +19,11 @@ import {
 	dataBind,
 	isArray,
 	isFunction,
-	isString, isVoid,
+	isString,
+	isVoid,
 	toArray,
 	trim
-} from "./helpers";
+} from './helpers';
 
 /**
  * Module for working with DOM
@@ -191,6 +193,40 @@ export class Dom {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Call function for all nodes between `start` and `end`
+	 *
+	 * @param start
+	 * @param end
+	 */
+	static between(
+		start: Node,
+		end: Node,
+		callback: (node: Node) => void | boolean
+	): void {
+		let next: CanUndef<Nullable<Node>> = start;
+
+		while (next && next !== end) {
+			if (start !== next && callback(next)) {
+				break;
+			}
+
+			let step: Nullable<Node> =
+				next.firstChild ||
+				next.nextSibling;
+
+			if (!step) {
+				while (next && !next.nextSibling) {
+					next = next.parentNode;
+				}
+
+				step = next?.nextSibling as Nullable<Node>;
+			}
+
+			next = step;
+		}
 	}
 
 	/**
@@ -504,15 +540,15 @@ export class Dom {
 			next: Nullable<Node>;
 
 		do {
-			next = (start as any)[sibling];
+			next = start[sibling] as Node;
 
 			if (condition(next)) {
 				return next ? next : null;
 			}
 
-			if (child && next && (next as any)[child]) {
+			if (child && next && next[child]) {
 				const nextOne = Dom.find(
-					(next as any)[child],
+					next[child] as Node,
 					condition,
 					next,
 					true,
@@ -642,11 +678,11 @@ export class Dom {
 	static findSibling(
 		node: Node,
 		left: boolean = true,
-		cond:  (n: Node) => boolean = (n: Node) => !Dom.isEmptyTextNode(n)
+		cond: (n: Node) => boolean = (n: Node) => !Dom.isEmptyTextNode(n)
 	): Nullable<Node> {
 		const getSibling = (node: Node): Nullable<Node> => {
 			return left ? node.previousSibling : node.nextSibling;
-		}
+		};
 
 		let start = getSibling(node);
 
@@ -748,6 +784,29 @@ export class Dom {
 	}
 
 	/**
+	 * Furthest parent node matching condition
+	 *
+	 * @param node
+	 * @param condition
+	 * @param root
+	 */
+	static furthest<T extends HTMLElement>(
+		node: Nullable<Node>,
+		condition: NodeCondition,
+		root: HTMLElement
+	): Nullable<T> {
+		let matchedParent: Nullable<T> = null,
+			current: Nullable<T> = node?.parentElement as Nullable<T>;
+
+		while (current && current !== root && condition(current)) {
+			matchedParent = current;
+			current = current?.parentElement as Nullable<T>;
+		}
+
+		return matchedParent;
+	}
+
+	/**
 	 * Append new element in the start of root
 	 * @param root
 	 * @param newElement
@@ -824,10 +883,7 @@ export class Dom {
 		newElements: Array<Node | DocumentFragment>
 	): void;
 
-	static append(
-		root: Node,
-		newElement: Node | DocumentFragment
-	): void;
+	static append(root: Node, newElement: Node | DocumentFragment): void;
 
 	static append(
 		root: Node,

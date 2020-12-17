@@ -15,8 +15,8 @@ import { Component, STATUSES } from '../component';
  * @param firstCallImmediately
  * @param method
  */
-export function debounce(
-	timeout?: number | ((ctx: IViewComponent | IViewBased) => number),
+export function debounce<V = IViewComponent | IViewBased>(
+	timeout?: number | ((ctx: V) => number),
 	firstCallImmediately: boolean = false,
 	method: 'debounce' | 'throttle' = 'debounce'
 ) {
@@ -28,21 +28,21 @@ export function debounce(
 			throw error('Handler must be a Function');
 		}
 
-		target.hookStatus(
-			STATUSES.ready,
-			(component: IViewComponent | IViewBased) => {
-				const view = isViewObject(component) ? component : component.j;
-				const realTimeout = isFunction(timeout)
-					? timeout(component)
-					: timeout;
+		target.hookStatus(STATUSES.ready, (component: V) => {
+			const view = isViewObject(component)
+				? component
+				: ((component as unknown) as IViewComponent).jodit;
 
-				(component as any)[propertyKey] = view.async[method](
-					(component as any)[propertyKey].bind(component),
-					isNumber(realTimeout) ? realTimeout : view.defaultTimeout,
-					firstCallImmediately
-				);
-			}
-		);
+			const realTimeout = isFunction(timeout)
+				? timeout(component)
+				: timeout;
+
+			(component as any)[propertyKey] = view.async[method](
+				(component as any)[propertyKey].bind(component),
+				isNumber(realTimeout) ? realTimeout : view.defaultTimeout,
+				firstCallImmediately
+			);
+		});
 	};
 }
 

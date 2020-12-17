@@ -39,13 +39,14 @@ console.log(item.options); // {some: false}
 
 #### :bug: Bug Fix
 
-* [#568 Reset in size change not rescaling image](https://github.com/xdan/jodit/issues/568)
-* [#567 Backspace in beginning of a *styled* line does not affect the line positioning](https://github.com/xdan/jodit/issues/567)
-* [#550 Table cell elements are always left-aligned](https://github.com/xdan/jodit/issues/550)
-* [#543 editor.destruct throws error](https://github.com/xdan/jodit/issues/543)
-* [#540 How i can get Iframe without parent element <jodit>...</jodit>](https://github.com/xdan/jodit/issues/540)
-* [#536 Layout bug and drag&drop image loading](https://github.com/xdan/jodit/issues/536)
-* [#531 Popups are not showing at all on Legacy Edge](https://github.com/xdan/jodit/issues/531)
+* [Clear formatting control does not clear all styles (keeps underline and strikethrough) #575](https://github.com/xdan/jodit/issues/575)
+* [Reset in size change not rescaling image #568](https://github.com/xdan/jodit/issues/568)
+* [Backspace in beginning of a *styled* line does not affect the line positioning #567](https://github.com/xdan/jodit/issues/567)
+* [Table cell elements are always left-aligned #550](https://github.com/xdan/jodit/issues/550)
+* [editor.destruct throws error #543](https://github.com/xdan/jodit/issues/543)
+* [How i can get Iframe without parent element <jodit>...</jodit> #540](https://github.com/xdan/jodit/issues/540)
+* [Layout bug and drag&drop image loading #536](https://github.com/xdan/jodit/issues/536)
+* [Popups are not showing at all on Legacy Edge #531](https://github.com/xdan/jodit/issues/531)
 * Fixed a bug when the search bar was shown in the scrolling editor, the editor was scrolled up. And the search box was not in sticky mode.
 
 #### :rocket: New Feature

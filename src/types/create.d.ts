@@ -71,6 +71,13 @@ interface ICreate {
 	text(value: string): Text;
 
 	/**
+	 * Create invisible text node
+	 *
+	 * @param value
+	 */
+	fake(): Text;
+
+	/**
 	 * Create HTML Document fragment element
 	 */
 	fragment(): DocumentFragment;

@@ -7,15 +7,15 @@
 import type { HTMLTagNames, IDictionary, IJodit, Nullable } from '../../types';
 import { Config } from '../../config';
 import {
-	INVISIBLE_SPACE,
-	INVISIBLE_SPACE_REG_EXP,
 	INVISIBLE_SPACE_REG_EXP as INV_REG,
-	SPACE_REG_EXP,
-	IS_INLINE
+	IS_INLINE,
+	INSEPARABLE_TAGS
 } from '../../core/constants';
 import { Dom } from '../../modules';
-import { isString, normalizeNode, toArray, trim } from '../../core/helpers';
+import { isString, trim } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
+import { autobind, debounce } from '../../core/decorators';
+import { IPlugin } from '../../types';
 
 /**
  * @property {object} cleanHTML {@link cleanHtml|cleanHtml}'s options
@@ -108,18 +108,23 @@ export class cleanHtml extends Plugin {
 		}
 	];
 
+	/** @override */
 	protected afterInit(jodit: IJodit): void {
 		jodit.e
 			.off('.cleanHtml')
 			.on(
 				'change.cleanHtml afterSetMode.cleanHtml afterInit.cleanHtml mousedown.cleanHtml keydown.cleanHtml',
-				jodit.async.debounce(this.onChange, jodit.o.cleanHTML.timeout)
+				this.onChangeCleanHTML
 			)
 			.on('keyup.cleanHtml', this.onKeyUpCleanUp)
 			.on('beforeCommand.cleanHtml', this.beforeCommand);
 	}
 
-	private onChange = () => {
+	/**
+	 * Clean HTML code on every change
+	 */
+	@debounce<IPlugin>(ctx => ctx.jodit.o.cleanHTML.timeout)
+	private onChangeCleanHTML(): void {
 		if (!this.allowEdit()) {
 			return;
 		}
@@ -162,14 +167,14 @@ export class cleanHtml extends Plugin {
 		}
 
 		const remove: Node[] = [];
-		const work = this.checkNode(node, current, remove);
+		const work = this.visitNode(node, current, remove);
 
 		remove.forEach(Dom.safeRemove);
 
 		if (remove.length || work) {
-			editor.events && editor.e.fire('syncho');
+			editor.events && editor.e.fire('synchro');
 		}
-	};
+	}
 
 	private allowEdit(): boolean {
 		return !(
@@ -179,7 +184,7 @@ export class cleanHtml extends Plugin {
 		);
 	}
 
-	private checkNode = (
+	private visitNode = (
 		nodeElm: Nullable<Element | Node>,
 		current: Nullable<Node>,
 		remove: Node[]
@@ -192,7 +197,7 @@ export class cleanHtml extends Plugin {
 
 		if (this.isRemovableNode(nodeElm, current)) {
 			remove.push(nodeElm);
-			return this.checkNode(nodeElm.nextSibling, current, remove);
+			return this.visitNode(nodeElm.nextSibling, current, remove);
 		}
 
 		if (
@@ -232,8 +237,8 @@ export class cleanHtml extends Plugin {
 			}
 		}
 
-		work = this.checkNode(nodeElm.firstChild, current, remove) || work;
-		work = this.checkNode(nodeElm.nextSibling, current, remove) || work;
+		work = this.visitNode(nodeElm.firstChild, current, remove) || work;
+		work = this.visitNode(nodeElm.nextSibling, current, remove) || work;
 
 		return work;
 	};
@@ -296,7 +301,9 @@ export class cleanHtml extends Plugin {
 		this.j.o.cleanHTML.denyTags
 	);
 
-	// remove invisible chars if node has another chars
+	/**
+	 * Remove invisible chars if node has another chars
+	 */
 	private onKeyUpCleanUp = () => {
 		const editor = this.j;
 
@@ -346,131 +353,109 @@ export class cleanHtml extends Plugin {
 		}
 	};
 
-	private onRemoveFormat() {
-		const sel = this.j.selection;
-		const current = sel.current();
-
-		if (!current) {
-			return;
+	/**
+	 * Command: removeFormat
+	 */
+	private onRemoveFormat(): void {
+		if (this.j.s.isCollapsed()) {
+			this.removeFormatForCollapsedSelection();
+		} else {
+			this.removeFormatForSelection();
 		}
-
-		const up = (node: Node | null) =>
-			node && Dom.up(node, Dom.isInlineBlock, this.j.editor);
-
-		let parentNode = up(current),
-			anotherParent = parentNode;
-
-		while (anotherParent) {
-			anotherParent = up(anotherParent.parentNode);
-
-			if (anotherParent) {
-				parentNode = anotherParent;
-			}
-		}
-
-		const collapsed = sel.isCollapsed();
-
-		const range = sel.range;
-
-		let fragment: DocumentFragment | null = null;
-
-		if (!collapsed) {
-			fragment = range.extractContents();
-		}
-
-		if (parentNode) {
-			const tmp = this.j.createInside.text(INVISIBLE_SPACE);
-			range.insertNode(tmp);
-			const insideParent = Dom.isOrContains(parentNode, tmp, true);
-			Dom.safeRemove(tmp);
-			range.collapse(true);
-
-			if (
-				insideParent &&
-				parentNode.parentNode &&
-				parentNode.parentNode !== fragment
-			) {
-				const second = this.j.s.splitSelection(
-					parentNode as HTMLElement
-				);
-				this.j.s.setCursorAfter(second || parentNode);
-
-				if (Dom.isEmpty(parentNode)) {
-					Dom.safeRemove(parentNode);
-				}
-			}
-		}
-
-		if (fragment) {
-			sel.insertNode(this.cleanFragment(fragment));
-		}
-	}
-
-	private cleanFragment(fragment: Node): Node {
-		Dom.each(fragment, node => {
-			if (Dom.isElement(node) && IS_INLINE.test(node.nodeName)) {
-				this.cleanFragment(node);
-				Dom.unwrap(node);
-			}
-		});
-
-		return fragment;
 	}
 
 	/**
-	 * @deprecated
-	 * @param elm
-	 * @param onlyRemoveFont
+	 * For collapsed selection move cursor outside or split inline block
 	 */
-	private cleanNode = (
-		elm: Node,
-		onlyRemoveFont: boolean = false
-	): false | void => {
-		switch (elm.nodeType) {
-			case Node.ELEMENT_NODE:
-				Dom.each(elm, child => {
-					this.cleanNode(child, onlyRemoveFont);
-				});
+	private removeFormatForCollapsedSelection(
+		fake?: Node
+	): Nullable<Text> | void {
+		const { s } = this.j;
 
-				if (Dom.isTag(elm, 'font')) {
-					Dom.unwrap(elm);
-				} else if (!onlyRemoveFont) {
-					// clean some "style" attributes in selected range
-					toArray((elm as Element).attributes).forEach(
-						(attr: Attr) => {
-							if (
-								['src', 'href', 'rel', 'content'].indexOf(
-									attr.name.toLowerCase()
-								) === -1
-							) {
-								(elm as Element).removeAttribute(attr.name);
-							}
-						}
-					);
+		let fakeNode = fake;
 
-					normalizeNode(elm);
-				}
-				break;
-
-			case Node.TEXT_NODE:
-				if (
-					!onlyRemoveFont &&
-					this.j.o.cleanHTML.replaceNBSP &&
-					Dom.isText(elm) &&
-					elm.nodeValue !== null &&
-					elm.nodeValue.match(SPACE_REG_EXP())
-				) {
-					elm.nodeValue = elm.nodeValue
-						.replace(INVISIBLE_SPACE_REG_EXP(), '')
-						.replace(SPACE_REG_EXP(), ' ');
-				}
-
-				break;
-
-			default:
-				Dom.safeRemove(elm);
+		if (!fakeNode) {
+			fakeNode = this.j.createInside.fake();
+			s.range.insertNode(fakeNode);
+			s.range.collapse();
 		}
-	};
+
+		const mainInline = Dom.furthest(
+			fakeNode,
+			this.isInlineBlock,
+			this.j.editor
+		);
+
+		if (mainInline) {
+			if (s.cursorOnTheLeft(mainInline)) {
+				Dom.before(mainInline, fakeNode);
+			} else if (s.cursorOnTheRight(mainInline)) {
+				Dom.after(mainInline, fakeNode);
+			} else {
+				const leftHand = s.splitSelection(mainInline);
+				leftHand && Dom.after(leftHand, fakeNode);
+			}
+		}
+
+		if (!fake) {
+			s.setCursorBefore(fakeNode);
+			Dom.safeRemove(fakeNode);
+		}
+	}
+
+	/**
+	 * Element has inline display mode
+	 * @param node
+	 */
+	@autobind
+	private isInlineBlock(node: Nullable<Node>): node is Node {
+		return Dom.isInlineBlock(node) && !Dom.isTag(node, INSEPARABLE_TAGS);
+	}
+
+	/**
+	 * Remove formatting for all selected elements
+	 */
+	private removeFormatForSelection(): void {
+		const { s } = this.j,
+			{ range } = s,
+			left = range.cloneRange(),
+			right = range.cloneRange(),
+			fakeLeft = this.j.createInside.fake(),
+			fakeRight = this.j.createInside.fake();
+
+		left.collapse(true);
+		right.collapse(false);
+
+		left.insertNode(fakeLeft);
+		right.insertNode(fakeRight);
+
+		range.setStartBefore(fakeLeft);
+		range.collapse(true);
+		s.selectRange(range);
+		this.removeFormatForCollapsedSelection(fakeLeft);
+
+		range.setEndAfter(fakeRight);
+		range.collapse(false);
+		s.selectRange(range);
+		this.removeFormatForCollapsedSelection(fakeRight);
+
+		const shouldUnwrap: Node[] = [];
+
+		Dom.between(fakeLeft, fakeRight, node => {
+			if (this.isInlineBlock(node)) {
+				shouldUnwrap.push(node);
+			}
+		});
+
+		shouldUnwrap.forEach(node => Dom.unwrap(node));
+
+		range.setStartAfter(fakeLeft);
+		range.setEndBefore(fakeRight);
+		s.selectRange(range);
+
+		Dom.safeRemove(fakeLeft);
+		Dom.safeRemove(fakeRight);
+	}
 
 	private isRemovableNode(node: Node, current: Nullable<Node>): boolean {
 		const allow = this.allowTagsHash;
@@ -528,6 +513,7 @@ export class cleanHtml extends Plugin {
 		return false;
 	}
 
+	/** @override */
 	protected beforeDestruct(): void {
 		this.j.e.off('.cleanHtml');
 	}

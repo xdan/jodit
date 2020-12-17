@@ -24,6 +24,7 @@ import {
 } from './helpers/';
 
 import { Dom } from './dom';
+import { INVISIBLE_SPACE } from "./constants";
 
 export class Create implements ICreate {
 	private get doc(): Document {
@@ -160,11 +161,18 @@ export class Create implements ICreate {
 
 	/**
 	 * Create text node
-	 *
 	 * @param value
 	 */
 	text(value: string): Text {
 		return this.doc.createTextNode(value);
+	}
+
+	/**
+	 * Create invisible text node
+	 * @param value
+	 */
+	fake(): Text {
+		return this.text(INVISIBLE_SPACE);
 	}
 
 	/**

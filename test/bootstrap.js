@@ -476,11 +476,12 @@ function sortStyles(matches) {
 			}
 
 			if (/rgb\(/.test(keyValue[1])) {
-				keyValue[1] = keyValue[1].replace(/rgb\([^)]+\)/, function (
-					match
-				) {
-					return Jodit.modules.Helpers.normalizeColor(match);
-				});
+				keyValue[1] = keyValue[1].replace(
+					/rgb\([^)]+\)/,
+					function (match) {
+						return Jodit.modules.Helpers.normalizeColor(match);
+					}
+				);
 			}
 
 			if (keyValue[0].match(/^border$/)) {
@@ -862,23 +863,43 @@ function setCursor(elm, inEnd) {
  *
  * @param {Jodit} editor
  * @param {string} [char]
+ * @return boolean
  */
 function setCursorToChar(editor, char = '|') {
 	const r = editor.s.createRange();
+	let foundEdges = [];
 
-	Jodit.modules.Dom.each(editor.editor, function(node) {
+	Jodit.modules.Dom.each(editor.editor, function (node) {
 		if (node.nodeType === Node.TEXT_NODE && node.nodeValue.includes(char)) {
-			const index = node.nodeValue.indexOf(char);
-			node.nodeValue = node.nodeValue.replace(char, '');
-			r.setStart(node, index);
-			return false;
+			let index = -1;
+			do {
+				index = node.nodeValue.indexOf(char, index + 1);
+
+				if (index !== -1) {
+					node.nodeValue = node.nodeValue.replace(char, '');
+					foundEdges.push([node, index]);
+				}
+			} while (index !== -1);
 		}
 
 		return true;
 	});
 
-	r.collapse(true);
-	editor.s.selectRange(r);
+	if (foundEdges.length) {
+		if (foundEdges[0]) {
+			r.setStart(foundEdges[0][0], foundEdges[0][1]);
+		}
+
+		if (foundEdges[1]) {
+			r.setEnd(foundEdges[1][0], foundEdges[1][1]);
+		}
+
+		editor.s.selectRange(r);
+
+		return true;
+	}
+
+	return false;
 }
 
 function createPoint(x, y, color, fixed = false) {
