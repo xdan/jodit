@@ -8,6 +8,12 @@
 > - :house:      [Internal]
 > - :nail_care:  [Polish]
 
+## 3.5.2
+
+#### :bug: Bug Fix
+
+* [When editor is disabled/readonly (both), list controls are still available by using the arrow bug #572](https://github.com/xdan/jodit/issues/572)
+
 ## 3.5.1
 
 #### :house: Internal
