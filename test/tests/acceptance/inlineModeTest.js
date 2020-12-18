@@ -3,10 +3,11 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Test Inline mode', function() {
-	describe('init with inline option', function() {
-		describe('For TEXTAREA', function() {
-			it('Should hide textarea like standart mode', function() {
+
+describe('Test Inline mode', function () {
+	describe('init with inline option', function () {
+		describe('For TEXTAREA', function () {
+			it('Should hide textarea like standart mode', function () {
 				const area = appendTestArea(),
 					editor = new Jodit(area, {
 						inline: true
@@ -21,8 +22,8 @@ describe('Test Inline mode', function() {
 			});
 		});
 
-		describe('For DIV', function() {
-			it('Should use this element like container', function() {
+		describe('For DIV', function () {
+			it('Should use this element like container', function () {
 				const div = appendTestDiv(),
 					value = '<p>HTML</p>';
 
@@ -49,8 +50,8 @@ describe('Test Inline mode', function() {
 			});
 		});
 
-		describe('For H1', function() {
-			it('Should use this element like container', function() {
+		describe('For H1', function () {
+			it('Should use this element like container', function () {
 				const div = document.createElement('h1'),
 					value = 'HTML';
 
@@ -83,9 +84,9 @@ describe('Test Inline mode', function() {
 		});
 	});
 
-	describe('Destruct Jodit', function() {
-		describe('For TEXTAREA', function() {
-			it('Should show textarea like standart mode', function() {
+	describe('Destruct Jodit', function () {
+		describe('For TEXTAREA', function () {
+			it('Should show textarea like standart mode', function () {
 				const area = appendTestArea(),
 					editor = new Jodit(area, {
 						inline: true
@@ -95,8 +96,8 @@ describe('Test Inline mode', function() {
 				expect(area.style.display).does.not.equal('none');
 			});
 		});
-		describe('For DIV', function() {
-			it('Should remove all extra classes and remove all extra elements', function() {
+		describe('For DIV', function () {
+			it('Should remove all extra classes and remove all extra elements', function () {
 				const div = appendTestDiv(),
 					value = '<p>HTML</p>';
 
@@ -122,9 +123,9 @@ describe('Test Inline mode', function() {
 		});
 	});
 
-	describe('Inline popups', function() {
-		describe('Click on Image', function() {
-			it('Should show inline popup', function() {
+	describe('Inline popups', function () {
+		describe('Click on Image', function () {
+			it('Should show inline popup', function () {
 				const editor = getJodit();
 
 				editor.value = '<p>test <img/> test</p>';
@@ -135,8 +136,8 @@ describe('Test Inline mode', function() {
 				expect(popup).is.not.null;
 			});
 
-			describe('Disable toolbarInline = false', function() {
-				it('Should show inline popup', function() {
+			describe('Disable toolbarInline = false', function () {
+				it('Should show inline popup', function () {
 					const editor = getJodit({
 						toolbarInline: false
 					});
@@ -150,8 +151,8 @@ describe('Test Inline mode', function() {
 				});
 			});
 
-			describe('Click in the right side of editor', function() {
-				it('Should open inline-popup with float by right editor side', function() {
+			describe('Click in the right side of editor', function () {
+				it('Should open inline-popup with float by right editor side', function () {
 					getBox().style.width = 'auto';
 
 					const editor = getJodit({
@@ -185,8 +186,8 @@ describe('Test Inline mode', function() {
 					).is.true;
 				});
 
-				describe('Click in the right side of editor in window with scroll', function() {
-					it('Should open inline-popup with float by right editor side', function() {
+				describe('Click in the right side of editor in window with scroll', function () {
+					it('Should open inline-popup with float by right editor side', function () {
 						getBox().style.width = 'auto';
 						const brs = [];
 
@@ -226,15 +227,15 @@ describe('Test Inline mode', function() {
 							) < 20
 						).to.true;
 
-						brs.forEach(function(br) {
+						brs.forEach(function (br) {
 							br.parentNode && br.parentNode.removeChild(br);
 						});
 					});
 				});
 			});
 
-			describe('Recalk position after Scroll', function() {
-				it('Should reacalc inline popup position', function() {
+			describe('Recalculate position after Scroll', function () {
+				it('Should reacalc inline popup position', function () {
 					const editor = getJodit({
 						height: 500
 					});
@@ -280,8 +281,8 @@ describe('Test Inline mode', function() {
 				});
 			});
 
-			describe('Popup position ouside of editor', function() {
-				it('Should hide inline popup', function() {
+			describe('Popup position outside of editor', function () {
+				it('Should hide inline popup', function () {
 					const editor = getJodit({
 						height: 500
 					});
@@ -322,8 +323,8 @@ describe('Test Inline mode', function() {
 			});
 		});
 
-		describe('Click on link', function() {
-			it('Should show inline popup', function() {
+		describe('Click on link', function () {
+			it('Should show inline popup', function () {
 				const editor = new Jodit(appendTestDiv());
 				editor.value = '<p>test <a href="#test">test</a> test</p>';
 				const a = editor.editor.querySelector('a');
@@ -332,9 +333,9 @@ describe('Test Inline mode', function() {
 				expect(popup).is.not.null;
 			});
 
-			describe('Disable with toolbarInlineDisableFor', function() {
-				describe('Option like string', function() {
-					it('Should now show inline popup for link', function() {
+			describe('Disable with toolbarInlineDisableFor', function () {
+				describe('Option like string', function () {
+					it('Should now show inline popup for link', function () {
 						const editor = new Jodit(appendTestDiv(), {
 							toolbarInline: true,
 							toolbarInlineDisableFor: 'a,IMG'
@@ -362,8 +363,8 @@ describe('Test Inline mode', function() {
 					});
 				});
 
-				describe('Option like srray', function() {
-					it('Should now show inline popup for link', function() {
+				describe('Option like srray', function () {
+					it('Should now show inline popup for link', function () {
 						const editor = new Jodit(appendTestDiv(), {
 							toolbarInline: true,
 							toolbarInlineDisableFor: ['A', 'cells']
@@ -396,8 +397,8 @@ describe('Test Inline mode', function() {
 			});
 		});
 
-		describe('Click on table cell', function() {
-			it('Should show inline popup', function() {
+		describe('Click on table cell', function () {
+			it('Should show inline popup', function () {
 				const editor = getJodit();
 				editor.value =
 					'<table><tr><td>test test</a> test</td></tr></table>';
@@ -410,8 +411,8 @@ describe('Test Inline mode', function() {
 			});
 		});
 
-		describe('Selection some text inside the editor', function() {
-			it('Should show inline popup', function() {
+		describe('Selection some text inside the editor', function () {
+			it('Should show inline popup', function () {
 				const editor = new Jodit(appendTestDiv(), {
 					preset: 'inline'
 				});
@@ -426,8 +427,8 @@ describe('Test Inline mode', function() {
 				expect(popup).is.not.null;
 			});
 
-			describe('In readonly mode', function() {
-				it('Should not show inline popup', function() {
+			describe('In readonly mode', function () {
+				it('Should not show inline popup', function () {
 					const editor = new Jodit(appendTestDiv(), {
 						preset: 'inline',
 						readonly: true
@@ -440,8 +441,8 @@ describe('Test Inline mode', function() {
 					expect(popup).is.null;
 				});
 
-				describe('After disable readonly mode', function() {
-					it('Should show inline popup', function() {
+				describe('After disable readonly mode', function () {
+					it('Should show inline popup', function () {
 						const editor = new Jodit(appendTestDiv(), {
 							preset: 'inline',
 							readonly: true
@@ -469,8 +470,8 @@ describe('Test Inline mode', function() {
 				});
 			});
 
-			describe('After then selection was collapsed', function() {
-				it('Should hide inline popup', function() {
+			describe('After then selection was collapsed', function () {
+				it('Should hide inline popup', function () {
 					const editor = new Jodit(appendTestDiv(), {
 						preset: 'inline'
 					});
@@ -491,8 +492,8 @@ describe('Test Inline mode', function() {
 				});
 			});
 
-			describe('Select some text in one editor and after this select focus in another', function() {
-				it('Should hide inline popup in first', function() {
+			describe('Select some text in one editor and after this select focus in another', function () {
+				it('Should hide inline popup in first', function () {
 					const editor = new Jodit(appendTestDiv(), {
 							preset: 'inline',
 							observer: {
@@ -528,19 +529,76 @@ describe('Test Inline mode', function() {
 					expect(popup.parentNode).is.null;
 				});
 			});
+
+			describe('Click on `link` button in this popup', function () {
+				it('Should show second popup', function (done) {
+					const editor = getJodit(
+						{
+							preset: 'inline'
+						},
+						appendTestDiv()
+					);
+
+					editor.value = '<p>|test <img/> test|</p>';
+					setCursorToChar(editor);
+
+					simulateEvent('mousedown', editor.ed);
+					editor.s.select(editor.editor.firstChild);
+					simulateEvent('mouseup', editor.ed);
+
+					const popup = getOpenedPopup(editor);
+					expect(popup).is.not.null;
+
+					clickButton('link', popup);
+					const linkPopup = getOpenedPopup(editor);
+					expect(linkPopup).is.not.null;
+					expect(linkPopup).does.not.eq(popup);
+
+					const input = linkPopup.querySelector(
+							'[data-ref="url_input"]'
+						),
+						button = linkPopup.querySelector('[data-ref="insert"]');
+
+					simulateEvent(
+						['mousedown', 'mouseup', 'click', 'focus'],
+						input
+					);
+
+					input.focus();
+
+					simulateEvent(
+						['selectionchange', 'mouseup'],
+						editor.editor
+					);
+
+					setTimeout(function () {
+						expect(getOpenedPopup(editor)).eq(linkPopup);
+
+						input.value = 'https://xdsoft.net/jodit/';
+						simulateEvent('click', button);
+						expect(Boolean(getOpenedPopup(editor))).is.false;
+
+						expect(sortAttributes(editor.value)).eq(
+							'<p><a href="https://xdsoft.net/jodit/">test <img> test</a>></p>'
+						);
+
+						done();
+					}, 1000);
+				});
+			});
 		});
 	});
 
-	describe('In iframe mode', function() {
-		describe('Inline popups', function() {
-			describe('Click on Image', function() {
-				it('Should show inline popup', function(done) {
+	describe('In iframe mode', function () {
+		describe('Inline popups', function () {
+			describe('Click on Image', function () {
+				it('Should show inline popup', function (done) {
 					unmockPromise();
 
 					const editor = new Jodit(appendTestDiv(), {
 						iframe: true,
 						events: {
-							afterConstructor: function(editor) {
+							afterConstructor: function (editor) {
 								editor.value = '<p>test <img/> test</p>';
 								const img = editor.editor.querySelector('img');
 
@@ -553,14 +611,14 @@ describe('Test Inline mode', function() {
 					});
 				});
 
-				describe('Disable toolbarInline = false', function() {
-					it('Should show inline popup', function(done) {
+				describe('Disable toolbarInline = false', function () {
+					it('Should show inline popup', function (done) {
 						unmockPromise();
 						const editor = new Jodit(appendTestDiv(), {
 							toolbarInline: false,
 							iframe: true,
 							events: {
-								afterConstructor: function(editor) {
+								afterConstructor: function (editor) {
 									editor.value = '<p>test <img/> test</p>';
 									const img = editor.editor.querySelector(
 										'img'
@@ -576,14 +634,14 @@ describe('Test Inline mode', function() {
 				});
 			});
 
-			describe('Click on Image', function() {
-				describe('On mobile', function() {
-					it('Should show inline popup', function(done) {
+			describe('Click on Image', function () {
+				describe('On mobile', function () {
+					it('Should show inline popup', function (done) {
 						unmockPromise();
 						const editor = new Jodit(appendTestDiv(), {
 							iframe: true,
 							events: {
-								afterConstructor: function(editor) {
+								afterConstructor: function (editor) {
 									editor.value = '<p>test <img/> test</p>';
 									const img = editor.editor.querySelector(
 										'img'
@@ -599,13 +657,13 @@ describe('Test Inline mode', function() {
 				});
 			});
 
-			describe('Click on link', function() {
-				it('Should show inline popup', function(done) {
+			describe('Click on link', function () {
+				it('Should show inline popup', function (done) {
 					unmockPromise();
 					const editor = new Jodit(appendTestDiv(), {
 						iframe: true,
 						events: {
-							afterConstructor: function(editor) {
+							afterConstructor: function (editor) {
 								editor.value =
 									'<p>test <a href="#test">test</a> test</p>';
 								const a = editor.editor.querySelector('a');
@@ -618,16 +676,16 @@ describe('Test Inline mode', function() {
 					});
 				});
 
-				describe('Disable with toolbarInlineDisableFor', function() {
-					describe('Option like string', function() {
-						it('Should now show inline popup for link', function(done) {
+				describe('Disable with toolbarInlineDisableFor', function () {
+					describe('Option like string', function () {
+						it('Should now show inline popup for link', function (done) {
 							unmockPromise();
 							const editor = new Jodit(appendTestDiv(), {
 								iframe: true,
 								toolbarInline: true,
 								toolbarInlineDisableFor: 'a,IMG',
 								events: {
-									afterConstructor: function(editor) {
+									afterConstructor: function (editor) {
 										editor.value =
 											'<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="tests/artio.jpg">> test</p>';
 
@@ -662,15 +720,15 @@ describe('Test Inline mode', function() {
 						});
 					});
 
-					describe('Option like srray', function() {
-						it('Should now show inline popup for link', function(done) {
+					describe('Option like srray', function () {
+						it('Should now show inline popup for link', function (done) {
 							unmockPromise();
 							const editor = new Jodit(appendTestDiv(), {
 								iframe: true,
 								toolbarInline: true,
 								toolbarInlineDisableFor: ['A', 'cells'],
 								events: {
-									afterConstructor: function(editor) {
+									afterConstructor: function (editor) {
 										editor.value =
 											'<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="tests/artio.jpg">> test</p>';
 										const a = editor.editor.querySelector(
@@ -692,7 +750,11 @@ describe('Test Inline mode', function() {
 
 										expect(popup).is.not.null;
 
-										simulateEvent(['mousedown', 'mouseup', 'click'], 0, td);
+										simulateEvent(
+											['mousedown', 'mouseup', 'click'],
+											0,
+											td
+										);
 										popup = getOpenedPopup(editor);
 
 										expect(popup).is.null;
@@ -705,23 +767,27 @@ describe('Test Inline mode', function() {
 				});
 			});
 
-			describe('Click on table cell', function() {
-				it('Should show inline popup', function(done) {
+			describe('Click on table cell', function () {
+				it('Should show inline popup', function (done) {
 					unmockPromise();
 					const editor = new Jodit(appendTestDiv(), {
 						iframe: true,
 						events: {
-							afterConstructor: function(editor) {
+							afterConstructor: function (editor) {
 								editor.value =
 									'<table><tr><td>test test</a> test</td></tr></table>';
 
 								const td = editor.editor.querySelector('td'),
 									pos = Jodit.modules.Helpers.position(td);
 
-								simulateEvent(['mousedown', 'mouseup', 'click'], td, function (o) {
-									o.clientX = pos.left + 5;
-									o.clientY = pos.top + 5;
-								});
+								simulateEvent(
+									['mousedown', 'mouseup', 'click'],
+									td,
+									function (o) {
+										o.clientX = pos.left + 5;
+										o.clientY = pos.top + 5;
+									}
+								);
 
 								const popup = getOpenedPopup(editor);
 								expect(popup).is.not.null;
@@ -733,14 +799,14 @@ describe('Test Inline mode', function() {
 				});
 			});
 
-			describe('Selection some text inside the editor', function() {
-				it('Should show inline popup', function(done) {
+			describe('Selection some text inside the editor', function () {
+				it('Should show inline popup', function (done) {
 					unmockPromise();
 					const editor = new Jodit(appendTestDiv(), {
 						preset: 'inline',
 						iframe: true,
 						events: {
-							afterConstructor: function(editor) {
+							afterConstructor: function (editor) {
 								editor.value = 'test<br>test';
 
 								simulateEvent('mousedown', editor.ed);

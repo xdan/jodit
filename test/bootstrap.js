@@ -645,7 +645,7 @@ const keyCode = Object.keys(codeKey).reduce((res, code) => {
 
 /**
  *
- * @param {string} type
+ * @param {string|string[]} type
  * @param {string|number|HTMLElement} keyCodeOrElement
  * @param {HTMLElement} [element]
  * @param {Function} [applyOpt]
