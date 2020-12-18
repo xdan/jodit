@@ -76,7 +76,7 @@ module.exports = {
 	file: 'fichier',
 	Advanced: 'Avancé',
 	'Image properties': "Propriétés de l'image",
-	Cancel: 'Effacer',
+	Cancel: 'Annuler',
 	Ok: 'OK',
 	'Your code is similar to HTML. Keep as HTML?':
 		'Votre texte que vous essayez de coller est similaire au HTML. Collez-le en HTML?',
