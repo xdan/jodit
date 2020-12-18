@@ -84,7 +84,8 @@ declare module '../../config' {
 			 * Show `Open in new tab` checkbox in link dialog.
 			 */
 			openInNewTabCheckbox: boolean;
-			modeClassName: string;
+
+			modeClassName: 'input' | 'select';
 			selectMultipleClassName: boolean;
 			selectSizeClassName?: number;
 			selectOptionsClassName: IUIOption[];
@@ -160,8 +161,9 @@ Config.prototype.controls.link = {
 			isImageContent = Dom.isImage(currentElement, editor.ew);
 
 		let { content_input } = elements as IDictionary<HTMLInputElement>;
-		const { className_input } = elements as IDictionary<HTMLInputElement>;
-		const { className_select } = elements as IDictionary<HTMLSelectElement>;
+
+		const { className_input } = elements as IDictionary<HTMLInputElement>,
+			{ className_select } = elements as IDictionary<HTMLSelectElement>;
 
 		if (!content_input) {
 			content_input = editor.c.element('input', {
@@ -211,8 +213,12 @@ Config.prototype.controls.link = {
 						break;
 					case 'select':
 						if (className_select) {
-							for (let i = 0; i < className_select.selectedOptions.length; i++) {
-								const option = className_select.options.item (i);
+							for (
+								let i = 0;
+								i < className_select.selectedOptions.length;
+								i++
+							) {
+								const option = className_select.options.item(i);
 
 								if (option) {
 									option.selected = false;
@@ -220,13 +226,22 @@ Config.prototype.controls.link = {
 							}
 
 							const classNames = attr(link, 'class') || '';
-							classNames.split(' ').forEach (className => {
+
+							classNames.split(' ').forEach(className => {
 								if (className) {
-									for (let i = 0; i < className_select.options.length; i++) {
-										const option = className_select.options.item (i);
+									for (
+										let i = 0;
+										i < className_select.options.length;
+										i++
+									) {
+										const option = className_select.options.item(
+											i
+										);
 
-
-										if (option?.value && option.value == className) {
+										if (
+											option?.value &&
+											option.value == className
+										) {
 											option.selected = true;
 										}
 									}
@@ -294,28 +309,36 @@ Config.prototype.controls.link = {
 			}
 
 			links.forEach(a => {
-				a.setAttribute('href', url_input.value);
+				attr(a, 'href', url_input.value);
 
-				if (modeClassName) {
-					if (modeClassName == 'input') {
-						if (className_input.value == "" && a.hasAttribute('class')) {
-							a.removeAttribute ('class');
+				if (modeClassName && (className_input ?? className_select)) {
+					if (modeClassName === 'input') {
+						if (
+							className_input.value == '' &&
+							a.hasAttribute('class')
+						) {
+							attr(a, 'class', null);
 						}
 
-						if (className_input.value != "") {
-							a.setAttribute('class', className_input.value);
+						if (className_input.value != '') {
+							attr(a, 'class', className_input.value);
 						}
-					}
-					else if (modeClassName == 'select') {
+					} else if (modeClassName === 'select') {
 						if (a.hasAttribute('class')) {
-							a.removeAttribute ('class');
+							attr(a, 'class', null);
 						}
 
-						for (let i = 0; i < className_select.selectedOptions.length; i++) {
-							const className = className_select.selectedOptions.item (i)?.value;
+						for (
+							let i = 0;
+							i < className_select.selectedOptions.length;
+							i++
+						) {
+							const className = className_select.selectedOptions.item(
+								i
+							)?.value;
 
 							if (className) {
-								a.classList.add (className);
+								a.classList.add(className);
 							}
 						}
 					}
@@ -332,19 +355,19 @@ Config.prototype.controls.link = {
 				}
 
 				if (openInNewTabCheckbox && target_checkbox) {
-					if (target_checkbox.checked) {
-						a.setAttribute('target', '_blank');
-					} else {
-						a.removeAttribute('target');
-					}
+					attr(
+						a,
+						'target',
+						target_checkbox.checked ? '_blank' : null
+					);
 				}
 
 				if (noFollowCheckbox && nofollow_checkbox) {
-					if (nofollow_checkbox.checked) {
-						a.setAttribute('rel', 'nofollow');
-					} else {
-						a.removeAttribute('rel');
-					}
+					attr(
+						a,
+						'rel',
+						nofollow_checkbox.checked ? 'nofollow' : null
+					);
 				}
 			});
 

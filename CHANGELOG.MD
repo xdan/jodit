@@ -8,7 +8,7 @@
 > - :house:      [Internal]
 > - :nail_care:  [Polish]
 
-## 3.4.29
+## 3.5.1
 
 #### :house: Internal
 
@@ -67,6 +67,19 @@ const editor = Jodit.make('#editor', {
 
 ##### New option `observer.maxHistoryLength: number = Infinity`
 Related with https://github.com/xdan/jodit/issues/574. In some cases need to limit size of undo history.
+
+##### New options in `link.plugin`
+* @property {"input"|"select"|""} link.modeClassName="input" Use an input text to ask the classname or a select or not ask
+* @property {boolean} link.selectMultipleClassName=true Allow multiple choises (to use with modeClassName="select")
+* @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
+* @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
+* ex: [
+*			{ value: "", text: "" },
+*			{ value: "val1", text: "text1" },
+*			{ value: "val2", text: "text2" },
+*			{ value: "val3", text: "text3" }
+*		]
+PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
 Issue https://github.com/xdan/jodit/issues/535
