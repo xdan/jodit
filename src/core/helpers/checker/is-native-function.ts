@@ -10,8 +10,8 @@
  */
 export function isNativeFunction(f: Function): boolean {
 	return (
-		!!f &&
-		(typeof f).toLowerCase() == 'function' &&
+		Boolean(f) &&
+		(typeof f).toLowerCase() === 'function' &&
 		(f === Function.prototype ||
 			/^\s*function\s*(\b[a-z$_][a-z0-9$_]*\b)*\s*\((|([a-z$_][a-z0-9$_]*)(\s*,[a-z$_][a-z0-9$_]*)*)\)\s*{\s*\[native code]\s*}\s*$/i.test(
 				String(f)

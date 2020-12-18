@@ -37,7 +37,7 @@ const translate = async (text, lang) => {
 	return new Promise((resolve, reject) => {
 		https
 			.get(
-				`https://translate.yandex.net/api/v1.5/tr.json/translate?` +
+				'https://translate.yandex.net/api/v1.5/tr.json/translate?' +
 					`key=${argv.ytak}&text=${text}&lang=en-${lang}&format=plain`,
 				res => {
 					res.on('data', d => {

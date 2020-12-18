@@ -306,7 +306,7 @@ export class Dom {
 		}
 
 		if (Dom.isText(node)) {
-			return node.nodeValue === null || trim(node.nodeValue).length === 0;
+			return node.nodeValue == null || trim(node.nodeValue).length === 0;
 		}
 
 		return (
@@ -314,7 +314,7 @@ export class Dom {
 			Dom.each(node as HTMLElement, (elm: Node | null): false | void => {
 				if (
 					(Dom.isText(elm) &&
-						elm.nodeValue !== null &&
+						elm.nodeValue != null &&
 						trim(elm.nodeValue).length !== 0) ||
 					(Dom.isElement(elm) &&
 						condNoEmptyElement.test(elm.nodeName.toLowerCase()))
@@ -570,54 +570,6 @@ export class Dom {
 
 		return null;
 	}
-
-	/**
-	 * Find next/previous inline element
-	 *
-	 * @param node
-	 * @param toLeft
-	 * @param root
-	 */
-	static findInline = (
-		node: Nullable<Node>,
-		toLeft: boolean,
-		root: Node
-	): Nullable<Node> => {
-		let prevElement: Nullable<Node> = node,
-			nextElement: Nullable<Node> = null;
-
-		do {
-			if (prevElement) {
-				nextElement = toLeft
-					? prevElement.previousSibling
-					: prevElement.nextSibling;
-				if (
-					!nextElement &&
-					prevElement.parentNode &&
-					prevElement.parentNode !== root &&
-					Dom.isInlineBlock(prevElement.parentNode)
-				) {
-					prevElement = prevElement.parentNode;
-				} else {
-					break;
-				}
-			} else {
-				break;
-			}
-		} while (!nextElement);
-
-		while (
-			nextElement &&
-			Dom.isInlineBlock(nextElement) &&
-			(!toLeft ? nextElement.firstChild : nextElement.lastChild)
-		) {
-			nextElement = !toLeft
-				? nextElement.firstChild
-				: nextElement.lastChild;
-		}
-
-		return nextElement; // (nextElement !== root && Dom.isInlineBlock(nextElement)) ? nextElement : null;
-	};
 
 	/**
 	 * Find next/prev node what `condition(next) === true`

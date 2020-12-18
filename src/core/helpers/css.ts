@@ -42,7 +42,7 @@ export const css = (
 
 			if (
 				_value !== undefined &&
-				(_value === null ||
+				(_value == null ||
 					css(elm, _key, undefined, true) !==
 						normalizeCssValue(_key, _value))
 			) {

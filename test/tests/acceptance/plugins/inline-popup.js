@@ -17,7 +17,7 @@ describe('Text Inline Popup plugin', function () {
 
 				const popup = getOpenedPopup(editor);
 
-				expect(popup && popup.parentNode.parentNode !== null).equals(
+				expect(popup && popup.parentNode.parentNode != null).equals(
 					true
 				);
 			});
@@ -37,7 +37,7 @@ describe('Text Inline Popup plugin', function () {
 
 					const popup = getOpenedPopup(editor);
 
-					expect(popup && popup.parentNode.parentNode !== null).is
+					expect(popup && popup.parentNode.parentNode != null).is
 						.true;
 
 					clickButton('pencil', popup);
@@ -65,7 +65,7 @@ describe('Text Inline Popup plugin', function () {
 
 				const popup = getOpenedPopup(editor);
 
-				expect(popup && popup.parentNode.parentNode !== null).equals(
+				expect(popup && popup.parentNode.parentNode != null).equals(
 					true
 				);
 			});
@@ -79,7 +79,7 @@ describe('Text Inline Popup plugin', function () {
 
 					const popup = getOpenedPopup(editor);
 
-					expect(popup && popup.parentNode.parentNode !== null).is
+					expect(popup && popup.parentNode.parentNode != null).is
 						.true;
 
 					clickButton('link', popup);
@@ -189,7 +189,7 @@ describe('Text Inline Popup plugin', function () {
 
 						const popup = getOpenedPopup(editor);
 
-						expect(popup && popup.parentNode.parentNode !== null).is
+						expect(popup && popup.parentNode.parentNode != null).is
 							.true;
 
 						clickTrigger('brush', popup);
@@ -255,7 +255,7 @@ describe('Text Inline Popup plugin', function () {
 			});
 
 			const popup = getOpenedPopup(editor);
-			expect(popup && popup.parentNode.parentNode !== null).is.true;
+			expect(popup && popup.parentNode.parentNode != null).is.true;
 
 			clickTrigger('valign', popup);
 
@@ -367,7 +367,7 @@ describe('Text Inline Popup plugin', function () {
 
 			const popup = getOpenedPopup(editor);
 
-			expect(popup && popup.parentNode.parentNode !== null).is.true;
+			expect(popup && popup.parentNode.parentNode != null).is.true;
 
 			clickTrigger('addcolumn', popup);
 
@@ -400,7 +400,7 @@ describe('Text Inline Popup plugin', function () {
 
 			const popup = getOpenedPopup(editor);
 
-			expect(popup && popup.parentNode.parentNode !== null).is.true;
+			expect(popup && popup.parentNode.parentNode != null).is.true;
 
 			clickTrigger('addrow', popup);
 
@@ -438,7 +438,7 @@ describe('Text Inline Popup plugin', function () {
 
 			const popup = getOpenedPopup(editor);
 
-			expect(popup && popup.parentNode.parentNode !== null).is.true;
+			expect(popup && popup.parentNode.parentNode != null).is.true;
 
 			clickTrigger('delete', popup);
 
@@ -477,7 +477,7 @@ describe('Text Inline Popup plugin', function () {
 
 			const popup = getOpenedPopup(editor);
 
-			expect(popup && popup.parentNode.parentNode !== null).is.true;
+			expect(popup && popup.parentNode.parentNode != null).is.true;
 
 			clickTrigger('delete', popup);
 
@@ -515,7 +515,7 @@ describe('Text Inline Popup plugin', function () {
 
 					const popup = getOpenedPopup(editor);
 
-					expect(popup && popup.parentNode.parentNode !== null).equals(
+					expect(popup && popup.parentNode.parentNode != null).equals(
 						true
 					);
 
@@ -538,7 +538,7 @@ describe('Text Inline Popup plugin', function () {
 
 					input.focus();
 
-					expect(popup && popup.parentNode.parentNode !== null).equals(
+					expect(popup && popup.parentNode.parentNode != null).equals(
 						true
 					);
 

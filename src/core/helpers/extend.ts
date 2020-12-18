@@ -96,7 +96,7 @@ export function extend<T>(this: T, ...args: any[]): any {
 	for (i; i < length; i += 1) {
 		options = args[i];
 
-		if (options !== null && options !== undefined) {
+		if (options != null) {
 			keys = Object.keys(options);
 
 			for (j = 0; j < keys.length; j += 1) {

@@ -115,7 +115,7 @@ export class addNewLine extends Plugin {
 
 	private canGetFocus = (elm: Node | null): boolean => {
 		return (
-			elm !== null &&
+			elm != null &&
 			Dom.isBlock(elm, this.j.ew) &&
 			!/^(img|table|iframe|hr)$/i.test(elm.nodeName)
 		);
@@ -152,7 +152,7 @@ export class addNewLine extends Plugin {
 			.off(editor.container, '.' + ns)
 			.on(
 				[editor.ow, editor.ew, editor.editor],
-				`scroll` + '.' + ns,
+				'scroll' + '.' + ns,
 				this.hideForce
 			)
 			.on(editor.editor, 'dblclick' + '.' + ns, this.onDblClickEditor)

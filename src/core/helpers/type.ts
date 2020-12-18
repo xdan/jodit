@@ -38,6 +38,7 @@ export const hasOwn = class2type.hasOwnProperty;
  * @param obj
  */
 export const type = (obj: any): string => {
+	// eslint-disable-next-line eqeqeq
 	if (obj === null) {
 		return 'null';
 	}

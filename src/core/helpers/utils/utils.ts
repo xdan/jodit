@@ -61,7 +61,7 @@ export function attr(
 	}
 
 	if (value !== undefined) {
-		if (value === null) {
+		if (value == null) {
 			elm.hasAttribute(key) && elm.removeAttribute(key);
 		} else {
 			elm.setAttribute(key, value.toString());

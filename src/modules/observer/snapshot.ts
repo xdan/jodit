@@ -77,7 +77,7 @@ export class Snapshot extends ViewComponent<IJodit> {
 		while (Dom.isText(elm)) {
 			elm = elm.previousSibling;
 
-			if (Dom.isText(elm) && elm.textContent !== null) {
+			if (Dom.isText(elm) && elm.textContent != null) {
 				offset += elm.textContent.length;
 			}
 		}

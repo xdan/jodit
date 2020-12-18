@@ -7,7 +7,7 @@
 import { IContainer, IDestructible, IInitable } from '../../../types';
 import { isFunction } from './is-function';
 import { Dom } from '../../dom';
-import { isVoid } from "./is-void";
+import { isVoid } from './is-void';
 
 /**
  * Check value has method init

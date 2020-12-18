@@ -68,7 +68,7 @@ export class LocalStorageProvider<T = StorageValueType> implements IStorage<T> {
 	}
 
 	exists(key: string): boolean {
-		return this.get(key) !== null;
+		return this.get(key) != null;
 	}
 
 	constructor(readonly rootKey: string) {}

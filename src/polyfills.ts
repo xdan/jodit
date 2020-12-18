@@ -10,8 +10,6 @@ import 'es6-promise/auto';
 
 if (!Array.from) {
 	Array.from = <T>(object: T[]): T[] => {
-		'use strict';
-
 		if (object instanceof Set) {
 			const res: T[] = [];
 			object.forEach(a => res.push(a));
@@ -35,8 +33,7 @@ if (typeof Object.assign !== 'function') {
 	Object.defineProperty(Object, 'assign', {
 		value: function assign(target: IDictionary, varArgs: IDictionary) {
 			// .length of function is 2
-			'use strict';
-			if (target === null || target === undefined) {
+			if (target == null) {
 				throw new TypeError(
 					'Cannot convert undefined or null to object'
 				);
@@ -48,7 +45,7 @@ if (typeof Object.assign !== 'function') {
 				// eslint-disable-next-line prefer-rest-params
 				const nextSource = arguments[index];
 
-				if (nextSource !== null && nextSource !== undefined) {
+				if (nextSource != null) {
 					for (const nextKey in nextSource) {
 						// Avoid bugs when hasOwnProperty is shadowed
 						if (

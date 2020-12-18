@@ -553,7 +553,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			'items',
 			'permissions'
 		].forEach(key => {
-			if (this.options[key] !== null) {
+			if (this.options[key] != null) {
 				(this.options as IDictionary)[key] = extend(
 					true,
 					{},
@@ -565,7 +565,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 		const view = this.storage.get(F_CLASS + '_view');
 
-		if (view && this.o.view === null) {
+		if (view && this.o.view == null) {
 			self.state.view = view === 'list' ? 'list' : 'tiles';
 		} else {
 			self.state.view = self.o.view === 'list' ? 'list' : 'tiles';

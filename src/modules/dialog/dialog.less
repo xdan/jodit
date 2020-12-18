@@ -66,9 +66,10 @@
 		left: 0;
 		top: 0;
 		background-color: #fff;
-		box-shadow: 0 var(--padding-default) calc(var(--padding-default) * 2)
-				rgba(0, 0, 0, 0.19),
-			0 6px 6px rgba(0, 0, 0, 0.23);
+		--box-shadow-blur: calc(var(--padding-default) * 2);
+		--box-shadow-1: 0 var(--padding-default) var(--box-shadow-blur)
+			rgba(0, 0, 0, 0.19);
+		box-shadow: var(--box-shadow-1), 0 6px 6px rgba(0, 0, 0, 0.23);
 		min-width: 200px;
 		max-width: 100%;
 		min-height: 100px;

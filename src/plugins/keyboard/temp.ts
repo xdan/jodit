@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Nullable } from "../../types";
-import { Dom } from "../../core/dom";
-import { INSEPARABLE_TAGS } from "../../core/constants";
-import { findNotEmptySibling } from "./helpers";
+import { Nullable } from '../../types';
+import { Dom } from '../../core/dom';
+import { INSEPARABLE_TAGS } from '../../core/constants';
+import { findNotEmptySibling } from './helpers';
 
 export function getSiblingBox(
 	node: HTMLElement,

@@ -125,10 +125,10 @@ export class search extends Plugin {
 			const some: boolean = needle[needleStart] === haystack[i];
 			if (
 				some ||
-				(startAtIndex !== null &&
+				(startAtIndex != null &&
 					consts.SPACE_REG_EXP().test(haystack[i]))
 			) {
-				if (startAtIndex === null || !start) {
+				if (startAtIndex == null || !start) {
 					startAtIndex = i;
 				}
 
@@ -204,7 +204,7 @@ export class search extends Plugin {
 		Dom.findWithCurrent(
 			node,
 			(child: Node | null): boolean => {
-				return !!child && callback(child);
+				return Boolean(child && callback(child));
 			},
 			this.j.editor,
 			next ? 'nextSibling' : 'previousSibling',
@@ -409,7 +409,7 @@ export class search extends Plugin {
 				(elm: Node): boolean => {
 					if (
 						Dom.isText(elm) &&
-						elm.nodeValue !== null &&
+						elm.nodeValue != null &&
 						elm.nodeValue.length
 					) {
 						let value: string = elm.nodeValue;
@@ -473,7 +473,7 @@ export class search extends Plugin {
 									elm.nodeValue.length - value.length;
 							}
 
-							if (bound.startContainer === null) {
+							if (bound.startContainer == null) {
 								bound.startContainer = elm;
 								bound.startOffset = currentPartIndex;
 							}

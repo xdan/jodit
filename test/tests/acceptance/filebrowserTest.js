@@ -1177,7 +1177,7 @@ describe('Jodit FileBrowser Tests', function() {
 							const dialog = getOpenedDialog(editor);
 
 							expect(dialog).is.not.null;
-							dialog.querySelector('input').value = "free";
+							dialog.querySelector('input').value = 'free';
 							clickButton('ok', dialog);
 
 							const tree = filebrowser.browser.querySelector(

@@ -18,7 +18,7 @@ import { Dom } from '../../dom';
 import { attr, isString, isFunction } from '../../helpers';
 import { Icon } from '../icon';
 import { UIList } from '../list/list';
-import { autobind, component } from "../../decorators";
+import { autobind, component } from '../../decorators';
 import { STATUSES } from '../../component';
 
 export const UIButtonState = (): IUIButtonState => ({
@@ -198,7 +198,7 @@ export class UIButton extends UIElement implements IUIButton {
 		button.appendChild(this.icon);
 		button.appendChild(this.text);
 
-		this.j.e.on(button, `click`, this.onActionFire);
+		this.j.e.on(button, 'click', this.onActionFire);
 
 		return button;
 	}

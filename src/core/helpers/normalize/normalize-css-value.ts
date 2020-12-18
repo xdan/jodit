@@ -28,7 +28,7 @@ export function normalizeCssValue(
 					return 900;
 			}
 
-			return isNumeric(value) ? +value : value;
+			return isNumeric(value) ? Number(value) : value;
 	}
 
 	if (/color/i.test(key) && /^rgb/i.test(value.toString())) {

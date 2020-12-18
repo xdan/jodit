@@ -324,7 +324,7 @@ export class cleanHtml extends Plugin {
 				Dom.all(currentParagraph, node => {
 					if (node && Dom.isText(node)) {
 						if (
-							node.nodeValue !== null &&
+							node.nodeValue != null &&
 							INV_REG().test(node.nodeValue) &&
 							node.nodeValue.replace(INV_REG(), '').length !== 0
 						) {
@@ -490,9 +490,9 @@ export class cleanHtml extends Plugin {
 
 		return (
 			this.j.o.cleanHTML.removeEmptyElements &&
-			current !== null &&
+			current != null &&
 			Dom.isElement(node) &&
-			node.nodeName.match(IS_INLINE) !== null &&
+			node.nodeName.match(IS_INLINE) != null &&
 			!this.j.s.isMarker(node) &&
 			trim((node as Element).innerHTML).length === 0 &&
 			!Dom.isOrContains(node, current)

@@ -234,9 +234,9 @@ export class Select {
 		marker.id =
 			consts.MARKER_CLASS +
 			'_' +
-			+new Date() +
+			Number(new Date()) +
 			'_' +
-			('' + Math.random()).slice(2);
+			(String(Math.random())).slice(2);
 
 		marker.style.lineHeight = '0';
 		marker.style.display = 'none';
@@ -674,7 +674,7 @@ export class Select {
 			image.setAttribute('src', url);
 		}
 
-		if (defaultWidth !== null) {
+		if (defaultWidth != null) {
 			let dw: string = defaultWidth.toString();
 
 			if (

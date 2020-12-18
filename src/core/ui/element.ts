@@ -110,7 +110,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 			}
 		});
 
-		value !== null &&
+		value != null &&
 			value !== '' &&
 			cl.add(`${mod}_${value.toString().toLowerCase()}`);
 

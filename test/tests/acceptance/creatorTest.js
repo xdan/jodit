@@ -82,7 +82,7 @@ describe('Test Creator module', function() {
 				const ol = editor.createInside.element('ol');
 				expect(ol.className).equals('indent_small ollist list_offset_left');
 
-				editor.value = "one"
+				editor.value = 'one'
 				editor.execCommand('selectall');
 				editor.execCommand('insertUnorderedList');
 

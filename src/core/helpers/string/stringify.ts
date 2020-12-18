@@ -31,7 +31,7 @@ export function stringify(
 			return;
 		}
 
-		if (typeof v === 'object' && v !== null) {
+		if (typeof v === 'object' && v != null) {
 			if (map.get(v)) {
 				return '[refObject]';
 			}

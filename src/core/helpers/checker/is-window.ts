@@ -5,5 +5,5 @@
  */
 
 export function isWindow(obj: object): boolean {
-	return obj !== null && obj === (obj as Window).window;
+	return obj != null && obj === (obj as Window).window;
 }

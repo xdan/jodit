@@ -109,8 +109,8 @@
 
 	--button-icon-size: @icon-middle-size;
 	--margin-v: 2px;
+	--button-df-size: ((var(--button-icon-size) - 4px) * 2);
 	--button-size: calc(
-		var(--button-icon-size) + (var(--button-icon-size) - 4px) * 2 +
-			var(--margin-v) * 2
+		var(--button-icon-size) + var(--button-df-size) + var(--margin-v) * 2
 	);
 }

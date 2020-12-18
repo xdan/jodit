@@ -60,7 +60,7 @@ export function $$<T extends HTMLElement>(
 		const id: string = (root as HTMLElement).id,
 			temp_id: string =
 				id ||
-				'_selector_id_' + ('' + Math.random()).slice(2) + $$temp();
+				'_selector_id_' + (String(Math.random())).slice(2) + $$temp();
 
 		selector = selector.replace(/:scope/g, '#' + temp_id);
 

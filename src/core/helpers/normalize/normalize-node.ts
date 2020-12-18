@@ -12,9 +12,9 @@ export const normalizeNode = (node: Node | null): void => {
 		return;
 	}
 
-	if (Dom.isText(node) && node.nodeValue !== null && node.parentNode) {
+	if (Dom.isText(node) && node.nodeValue != null && node.parentNode) {
 		while (Dom.isText(node.nextSibling)) {
-			if (node.nextSibling.nodeValue !== null) {
+			if (node.nextSibling.nodeValue != null) {
 				node.nodeValue += node.nextSibling.nodeValue;
 			}
 

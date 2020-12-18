@@ -1318,7 +1318,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			if (this.element !== this.container) {
 				this.setElementValue();
 			} else {
-				buffer !== null && this.setEditorValue(buffer); // inline mode
+				buffer != null && this.setEditorValue(buffer); // inline mode
 			}
 
 			let mode = this.o.defaultMode;

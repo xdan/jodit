@@ -490,7 +490,7 @@ function sortStyles(matches) {
 			}
 
 			if (keyValue[0].match(/^border-(style|width|color)/)) {
-				if (border === null) {
+				if (border == null) {
 					border = keyValue;
 					keyValue[0] = 'border';
 					keyValue[1] = [keyValue[1]];
@@ -521,7 +521,7 @@ function sortStyles(matches) {
 			return keyValue;
 		})
 		.filter(function (a) {
-			return a !== null;
+			return a != null;
 		})
 		.map(function (a) {
 			return a

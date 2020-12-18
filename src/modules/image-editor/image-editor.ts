@@ -303,7 +303,7 @@ export class ImageEditor extends ViewComponent {
 				'click',
 				this.onTitleModeClick
 			)
-			.on([widthInput, heightInput], `input`, this.onChangeSizeInput);
+			.on([widthInput, heightInput], 'input', this.onChangeSizeInput);
 
 		const {
 			keepAspectRatioResize,
@@ -540,8 +540,8 @@ export class ImageEditor extends ViewComponent {
 		}
 
 		self.j.e
-			.on(this.j.ow, `mousemove`, this.onGlobalMouseMove)
-			.one(this.j.ow, `mouseup`, this.onGlobalMouseUp);
+			.on(this.j.ow, 'mousemove', this.onGlobalMouseMove)
+			.one(this.j.ow, 'mouseup', this.onGlobalMouseUp);
 	}
 
 	@autobind
@@ -550,7 +550,7 @@ export class ImageEditor extends ViewComponent {
 			this.clicked = false;
 			e.stopImmediatePropagation();
 
-			this.j.e.off(this.j.ow, `mousemove`, this.onGlobalMouseMove);
+			this.j.e.off(this.j.ow, 'mousemove', this.onGlobalMouseMove);
 		}
 	}
 
@@ -851,8 +851,8 @@ export class ImageEditor extends ViewComponent {
 
 		if (this.j.e) {
 			this.j.e
-				.off(this.j.ow, `mousemove`, this.onGlobalMouseMove)
-				.off(this.j.ow, `mouseup`, this.onGlobalMouseUp)
+				.off(this.j.ow, 'mousemove', this.onGlobalMouseMove)
+				.off(this.j.ow, 'mouseup', this.onGlobalMouseUp)
 				.off(this.ow, `.${jie}`)
 				.off(`.${jie}`);
 		}

@@ -24,7 +24,7 @@ import {
 } from './helpers/';
 
 import { Dom } from './dom';
-import { INVISIBLE_SPACE } from "./constants";
+import { INVISIBLE_SPACE } from './constants';
 
 export class Create implements ICreate {
 	private get doc(): Document {

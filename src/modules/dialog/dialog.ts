@@ -466,7 +466,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 */
 	setFooter(content: Content): this {
 		this.setElements(this.dialogbox_footer, content);
-		this.dialog.classList.toggle('jodit-dialog_footer_true', !!content);
+		this.dialog.classList.toggle('jodit-dialog_footer_true', Boolean(content));
 		return this;
 	}
 

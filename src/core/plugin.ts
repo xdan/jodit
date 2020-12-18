@@ -14,7 +14,7 @@ export abstract class Plugin extends ViewComponent<IJodit> implements IPlugin {
 
 	/** @override */
 	className(): string {
-		return "";
+		return '';
 	}
 
 	protected abstract afterInit(jodit: IJodit): void;

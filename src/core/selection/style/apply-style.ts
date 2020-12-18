@@ -298,7 +298,7 @@ export class ApplyStyle {
 	@autobind
 	private isNormalNode(elm: Nullable<Node>): boolean {
 		return Boolean(
-			elm !== null &&
+			elm != null &&
 				!Dom.isEmptyTextNode(elm) &&
 				!this.jodit.s.isMarker(elm as HTMLElement)
 		);

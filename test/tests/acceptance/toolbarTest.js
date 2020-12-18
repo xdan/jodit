@@ -9,7 +9,10 @@ describe('Toolbar', function () {
 			toolbarAdaptive: true
 		});
 
-		expect(editor.toolbar.container.querySelectorAll('.jodit-toolbar-button').length).equals(36);
+		expect(
+			editor.toolbar.container.querySelectorAll('.jodit-toolbar-button')
+				.length
+		).equals(36);
 	});
 
 	describe('Custom buttons', function () {
@@ -432,7 +435,7 @@ describe('Toolbar', function () {
 
 			simulateEvent('mousedown', 0, window);
 
-			expect(popup && popup.parentNode === null).is.true;
+			expect(popup && popup.parentNode == null).is.true;
 		});
 
 		describe('Open list', function () {
@@ -448,7 +451,7 @@ describe('Toolbar', function () {
 				expect(
 					list &&
 						window.getComputedStyle(list).display === 'block' &&
-						list.parentNode !== null
+						list.parentNode != null
 				).is.true;
 			});
 
@@ -481,7 +484,7 @@ describe('Toolbar', function () {
 					expect(
 						list &&
 							window.getComputedStyle(list).display === 'block' &&
-							list.parentNode !== null
+							list.parentNode != null
 					).is.true;
 
 					expect(list.textContent.match('Custom')).is.not.null;
@@ -520,7 +523,7 @@ describe('Toolbar', function () {
 
 			simulateEvent('mousedown', 0, window);
 
-			expect(list && list.parentNode === null).is.true;
+			expect(list && list.parentNode == null).is.true;
 		});
 
 		it('Open format list set H1 for current cursor position. Restore selection after that', function () {

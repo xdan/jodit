@@ -4,22 +4,26 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Link plugin', function() {
-	describe('Insert link', function() {
-		describe('Insert simple link', function() {
-			it('Should insert as simple link', function() {
+describe('Link plugin', function () {
+	describe('Insert link', function () {
+		describe('Insert simple link', function () {
+			it('Should insert as simple link', function () {
 				const editor = getJodit();
 
-				simulatePaste(editor.editor, 'https://www.youtube.com', 'text/plain');
+				simulatePaste(
+					editor.editor,
+					'https://www.youtube.com',
+					'text/plain'
+				);
 
 				expect(editor.value).equal(
 					'<p><a href="https://www.youtube.com">https://www.youtube.com</a></p>'
 				);
 			});
 
-			describe('Disable', function() {
-				describe('Disable any convert', function() {
-					it('Should not change source link', function() {
+			describe('Disable', function () {
+				describe('Disable any convert', function () {
+					it('Should not change source link', function () {
 						const editor = getJodit({
 							link: {
 								processPastedLink: false
@@ -27,14 +31,16 @@ describe('Link plugin', function() {
 						});
 
 						simulatePaste(editor.editor, 'https://www.youtube.com');
-						expect(editor.value).equal('<p>https://www.youtube.com</p>');
+						expect(editor.value).equal(
+							'<p>https://www.youtube.com</p>'
+						);
 					});
 				});
 			});
 		});
 
-		describe('Insert youtube link', function() {
-			it('Should insert iframe with video', function() {
+		describe('Insert youtube link', function () {
+			it('Should insert iframe with video', function () {
 				const editor = getJodit();
 				simulatePaste(
 					editor.editor,
@@ -47,9 +53,9 @@ describe('Link plugin', function() {
 				);
 			});
 
-			describe('Disable', function() {
-				describe('Disable any convert', function() {
-					it('Should not change source link', function() {
+			describe('Disable', function () {
+				describe('Disable any convert', function () {
+					it('Should not change source link', function () {
 						const editor = getJodit({
 							link: {
 								processPastedLink: false,
@@ -67,8 +73,8 @@ describe('Link plugin', function() {
 					});
 				});
 
-				describe('Disable video convert', function() {
-					it('Should insert video link as simple link', function() {
+				describe('Disable video convert', function () {
+					it('Should insert video link as simple link', function () {
 						const editor = getJodit({
 							link: {
 								processVideoLink: false
@@ -88,11 +94,11 @@ describe('Link plugin', function() {
 		});
 	});
 
-	describe('Toolbar link', function() {
-		describe('Click link button', function() {
-			describe('Edit exists link', function() {
-				describe('Content input was not changed', function() {
-					it('Should save link content', function() {
+	describe('Toolbar link', function () {
+		describe('Click link button', function () {
+			describe('Edit exists link', function () {
+				describe('Content input was not changed', function () {
+					it('Should save link content', function () {
 						const editor = getJodit();
 
 						editor.value =
@@ -140,8 +146,8 @@ describe('Link plugin', function() {
 					});
 				});
 
-				describe('Content input was changed', function() {
-					it('Should replace link content', function() {
+				describe('Content input was changed', function () {
+					it('Should replace link content', function () {
 						const editor = getJodit();
 
 						editor.value =
@@ -180,8 +186,8 @@ describe('Link plugin', function() {
 						);
 					});
 
-					describe('Content stay clear', function() {
-						it('Should replace link content to url', function() {
+					describe('Content stay clear', function () {
+						it('Should replace link content to url', function () {
 							const editor = getJodit();
 
 							editor.value =
@@ -226,9 +232,9 @@ describe('Link plugin', function() {
 					});
 				});
 
-				describe('Select some text inside link', function() {
-					describe('Content input was not changed', function() {
-						it("Should open edit popup with full link's content", function() {
+				describe('Select some text inside link', function () {
+					describe('Content input was not changed', function () {
+						it("Should open edit popup with full link's content", function () {
 							const editor = getJodit();
 
 							editor.value =
@@ -281,8 +287,8 @@ describe('Link plugin', function() {
 						});
 					});
 
-					describe('Content input was changed', function() {
-						it("Should open edit popup with full link's content and after submit should replace full link's content", function() {
+					describe('Content input was changed', function () {
+						it("Should open edit popup with full link's content and after submit should replace full link's content", function () {
 							const editor = getJodit();
 
 							editor.value =
@@ -333,20 +339,20 @@ describe('Link plugin', function() {
 				});
 			});
 
-			describe('Open LINK insert dialog and insert new link', function() {
-				it('Should insert new link', function() {
+			describe('Open LINK insert dialog and insert new link', function () {
+				it('Should insert new link', function () {
 					let popup_opened = 0;
 
 					const editor = getJodit({
 						events: {
-							beforeLinkOpenPopup: function() {
+							beforeLinkOpenPopup: function () {
 								popup_opened += 1;
 							},
 							/**
 							 *
 							 * @param {HTMLElement} popup_container
 							 */
-							afterLinkOpenPopup: function(popup_container) {
+							afterLinkOpenPopup: function (popup_container) {
 								popup_opened += 1;
 							}
 						},
@@ -379,7 +385,9 @@ describe('Link plugin', function() {
 
 					simulateEvent('submit', list.querySelector('form'));
 
-					expect(Boolean(url.closest('.jodit-ui-input_has-error_true'))).is.true;
+					expect(
+						Boolean(url.closest('.jodit-ui-input_has-error_true'))
+					).is.true;
 
 					url.focus();
 					url.value = 'tests/artio.jpg';
@@ -394,12 +402,12 @@ describe('Link plugin', function() {
 					expect(list.parentNode).is.null;
 				});
 
-				it('Should fire change event', function() {
+				it('Should fire change event', function () {
 					let change = 0;
 
 					const editor = getJodit({
 						events: {
-							change: function() {
+							change: function () {
 								change += 1;
 							}
 						}
@@ -421,14 +429,14 @@ describe('Link plugin', function() {
 					expect(change).equals(2);
 				});
 
-				describe('Set custom popup template', function() {
-					it('Should show this template inside popup', function() {
+				describe('Set custom popup template', function () {
+					it('Should show this template inside popup', function () {
 						const tpl =
 							'<form class="form_url"><input ref="url_input" type="url"><button>save</button></form>';
 
 						const editor = getJodit({
 							link: {
-								formTemplate: function() {
+								formTemplate: function () {
 									return tpl;
 								}
 							}
@@ -460,14 +468,14 @@ describe('Link plugin', function() {
 						);
 					});
 
-					describe('Use data-ref instead ref', function() {
-						it('Should show this template inside popup', function() {
+					describe('Use data-ref instead ref', function () {
+						it('Should show this template inside popup', function () {
 							const tpl =
 								'<form class="form_url"><input data-ref="url_input" type="url"><button>save</button></form>';
 
 							const editor = getJodit({
 								link: {
-									formTemplate: function() {
+									formTemplate: function () {
 										return tpl;
 									}
 								}
@@ -506,8 +514,8 @@ describe('Link plugin', function() {
 						});
 					});
 
-					describe('Add class name in form', function() {
-						it('Should show form with this class', function() {
+					describe('Add class name in form', function () {
+						it('Should show form with this class', function () {
 							const editor = getJodit({
 								link: {
 									formClassName: 'bootstrap_form'
@@ -527,9 +535,9 @@ describe('Link plugin', function() {
 					});
 				});
 
-				describe('On selected content', function() {
-					describe('Selected text', function() {
-						it('Should wrap selected text in link', function() {
+				describe('On selected content', function () {
+					describe('Selected text', function () {
+						it('Should wrap selected text in link', function () {
 							const editor = getJodit({
 								toolbarAdaptive: false
 							});
@@ -593,9 +601,9 @@ describe('Link plugin', function() {
 						});
 					});
 
-					describe('Selected image', function() {
-						describe('On open popup', function() {
-							it('Should hide text input', function() {
+					describe('Selected image', function () {
+						describe('On open popup', function () {
+							it('Should hide text input', function () {
 								const editor = getJodit({
 									toolbarAdaptive: false,
 									observer: {
@@ -625,7 +633,7 @@ describe('Link plugin', function() {
 							});
 						});
 
-						it('Should wrap selected image in link', function() {
+						it('Should wrap selected image in link', function () {
 							const editor = getJodit({
 								toolbarAdaptive: false,
 								observer: {
@@ -636,9 +644,7 @@ describe('Link plugin', function() {
 							editor.value =
 								'test <img style="width: 100px;height: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""> stop';
 
-							editor.s.select(
-								editor.editor.querySelector('img')
-							);
+							editor.s.select(editor.editor.querySelector('img'));
 
 							clickButton('link', editor);
 
@@ -676,7 +682,7 @@ describe('Link plugin', function() {
 					});
 				});
 
-				it('Should restore source text after user clicked on Unlink button', function() {
+				it('Should restore source text after user clicked on Unlink button', function () {
 					const editor = getJodit({
 						observer: {
 							timeout: 0
@@ -725,8 +731,8 @@ describe('Link plugin', function() {
 				});
 			});
 
-			describe('Was selected part of text', function() {
-				it('Should show dialog form with this text', function() {
+			describe('Was selected part of text', function () {
+				it('Should show dialog form with this text', function () {
 					const editor = getJodit();
 
 					editor.value = '<p>one green bottle hanging under wall</p>';
@@ -748,8 +754,8 @@ describe('Link plugin', function() {
 				});
 			});
 
-			describe('Was selected part of html', function() {
-				it('Should show dialog form with selection text content from this HTML', function() {
+			describe('Was selected part of html', function () {
+				it('Should show dialog form with selection text content from this HTML', function () {
 					const editor = getJodit();
 
 					editor.value =
@@ -775,17 +781,15 @@ describe('Link plugin', function() {
 					);
 				});
 
-				describe('Was selected image', function() {
-					describe('Image had not anchor parent', function() {
-						it('Should show dialog without content input and after submit wrap this image', function() {
+				describe('Was selected image', function () {
+					describe('Image had not anchor parent', function () {
+						it('Should show dialog without content input and after submit wrap this image', function () {
 							const editor = getJodit();
 
 							editor.value =
 								'<p>one green <img src="https://xdsoft.net/jodit/build/images/artio.jpg" alt="test"> under wall</p>';
 
-							editor.s.select(
-								editor.editor.querySelector('img')
-							);
+							editor.s.select(editor.editor.querySelector('img'));
 
 							clickButton('link', editor);
 
@@ -796,7 +800,8 @@ describe('Link plugin', function() {
 							);
 
 							expect(
-								textInput.closest('.jodit-ui-block').style.display
+								textInput.closest('.jodit-ui-block').style
+									.display
 							).equals('none');
 
 							expect(textInput.value).equals('');
@@ -823,8 +828,8 @@ describe('Link plugin', function() {
 					});
 				});
 
-				describe('After submit this part', function() {
-					it('should be wrapped inside anchor', function() {
+				describe('After submit this part', function () {
+					it('should be wrapped inside anchor', function () {
 						const editor = getJodit();
 
 						editor.value =
@@ -862,10 +867,10 @@ describe('Link plugin', function() {
 			});
 		});
 	});
-	
-	describe('Link with class name (modeClassName=input/default)', function() {
-		describe('Add class name on link', function() {
-			it('Should insert new link with a class name', function() {
+
+	describe('Link with class name (modeClassName=input/default)', function () {
+		describe('Add class name on link', function () {
+			it('Should insert new link with a class name', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -884,9 +889,7 @@ describe('Link plugin', function() {
 				const form = popup.querySelector('.jodit-ui-form');
 				expect(form).is.not.null;
 
-				const input = form.querySelector(
-					'input[ref=url_input]'
-				);
+				const input = form.querySelector('input[ref=url_input]');
 
 				expect(input).is.not.null;
 
@@ -909,8 +912,8 @@ describe('Link plugin', function() {
 			});
 		});
 
-		describe('Vérify class name on link', function() {
-			it('Should have link with a class name', function() {
+		describe('Vérify class name on link', function () {
+			it('Should have link with a class name', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -918,10 +921,7 @@ describe('Link plugin', function() {
 					'<p><a href="https://xdsoft.net/jodit/" class="test">two green <em>bottles hanging</em> under</a> wall</p>';
 
 				const range = editor.s.createRange();
-				range.setStart(
-					editor.editor.querySelector('a').firstChild,
-					4
-				);
+				range.setStart(editor.editor.querySelector('a').firstChild, 4);
 				range.collapse(true);
 				editor.s.selectRange(range);
 
@@ -941,8 +941,8 @@ describe('Link plugin', function() {
 			});
 		});
 
-		describe('Modify class name on link', function() {
-			it('Should modify link with a new class name', function() {
+		describe('Modify class name on link', function () {
+			it('Should modify link with a new class name', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -950,10 +950,7 @@ describe('Link plugin', function() {
 					'<p><a href="https://xdsoft.net/jodit/" class="test">two green <em>bottles hanging</em> under</a> wall</p>';
 
 				const range = editor.s.createRange();
-				range.setStart(
-					editor.editor.querySelector('a').firstChild,
-					4
-				);
+				range.setStart(editor.editor.querySelector('a').firstChild, 4);
 				range.collapse(true);
 				editor.s.selectRange(range);
 
@@ -981,8 +978,8 @@ describe('Link plugin', function() {
 			});
 		});
 
-		describe('Delete class name on link', function() {
-			it('Should modify link witout class name', function() {
+		describe('Delete class name on link', function () {
+			it('Should modify link witout class name', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -990,10 +987,7 @@ describe('Link plugin', function() {
 					'<p><a href="https://xdsoft.net/jodit/" class="test">two green <em>bottles hanging</em> under</a> wall</p>';
 
 				const range = editor.s.createRange();
-				range.setStart(
-					editor.editor.querySelector('a').firstChild,
-					4
-				);
+				range.setStart(editor.editor.querySelector('a').firstChild, 4);
 				range.collapse(true);
 				editor.s.selectRange(range);
 
@@ -1016,23 +1010,23 @@ describe('Link plugin', function() {
 
 				expect(editor.value).equals(
 					'<p>one <a href="https://xdsoft.net/jodit/">green <strong>bottle hanging</strong> under wall</a></p>' +
-					'<p><a href="https://xdsoft.net/jodit/" class="test">two green <em>bottles hanging</em> under</a> wall</p>'
+						'<p><a href="https://xdsoft.net/jodit/" class="test">two green <em>bottles hanging</em> under</a> wall</p>'
 				);
 			});
 		});
 	});
 
-	describe('Link with class name (modeClassName=select)', function() {
-		describe('Add class name on link', function() {
-			it('Should insert new link with a class name', function() {
+	describe('Link with class name (modeClassName=select)', function () {
+		describe('Add class name on link', function () {
+			it('Should insert new link with a class name', function () {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
 						selectOptionsClassName: [
-							{ value: "", text: "" },
-							{ value: "val1", text: "text1" },
-							{ value: "val2", text: "text2" },
-							{ value: "val3", text: "text3" }
+							{ value: '', text: '' },
+							{ value: 'val1', text: 'text1' },
+							{ value: 'val2', text: 'text2' },
+							{ value: 'val3', text: 'text3' }
 						]
 					}
 				});
@@ -1053,9 +1047,7 @@ describe('Link plugin', function() {
 				const form = popup.querySelector('.jodit-ui-form');
 				expect(form).is.not.null;
 
-				const input = form.querySelector(
-					'input[ref=url_input]'
-				);
+				const input = form.querySelector('input[ref=url_input]');
 
 				expect(input).is.not.null;
 
@@ -1068,29 +1060,29 @@ describe('Link plugin', function() {
 				expect(className_select).is.not.null;
 
 				for (let i = 0; i < className_select.options.length; i++) {
-					let option = className_select.options.item (i);
-					option.selected = (option.value == 'val1') ? true : false;
+					let option = className_select.options.item(i);
+					option.selected = option.value === 'val1';
 				}
 
 				simulateEvent('submit', 0, form);
 
 				expect(editor.value).equals(
 					'<p>one <a href="https://xdsoft.net/jodit/" class="val1">green <strong>bottle hanging</strong> under wall</a></p>' +
-					'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>'
+						'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>'
 				);
 			});
 		});
 
-		describe('Vérify class name on link', function() {
-			it('Should have link with a class name', function() {
+		describe('Vérify class name on link', function () {
+			it('Should have link with a class name', function () {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
 						selectOptionsClassName: [
-							{ value: "", text: "" },
-							{ value: "val1", text: "text1" },
-							{ value: "val2", text: "text2" },
-							{ value: "val3", text: "text3" }
+							{ value: '', text: '' },
+							{ value: 'val1', text: 'text1' },
+							{ value: 'val2', text: 'text2' },
+							{ value: 'val3', text: 'text3' }
 						]
 					}
 				});
@@ -1100,10 +1092,7 @@ describe('Link plugin', function() {
 					'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>';
 
 				const range = editor.s.createRange();
-				range.setStart(
-					editor.editor.querySelector('a').firstChild,
-					4
-				);
+				range.setStart(editor.editor.querySelector('a').firstChild, 4);
 				range.collapse(true);
 				editor.s.selectRange(range);
 
@@ -1121,22 +1110,22 @@ describe('Link plugin', function() {
 				expect(className_select).is.not.null;
 
 				for (let i = 0; i < className_select.options.length; i++) {
-					let option = className_select.options.item (i);
-					expect(option.selected).equals(option.value == "val1");
+					let option = className_select.options.item(i);
+					expect(option.selected).equals(option.value === 'val1');
 				}
 			});
 		});
 
-		describe('Modify class name on link', function() {
-			it('Should modify link with a new class name', function() {
+		describe('Modify class name on link', function () {
+			it('Should modify link with a new class name', function () {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
 						selectOptionsClassName: [
-							{ value: "", text: "" },
-							{ value: "val1", text: "text1" },
-							{ value: "val2", text: "text2" },
-							{ value: "val3", text: "text3" }
+							{ value: '', text: '' },
+							{ value: 'val1', text: 'text1' },
+							{ value: 'val2', text: 'text2' },
+							{ value: 'val3', text: 'text3' }
 						]
 					}
 				});
@@ -1146,10 +1135,7 @@ describe('Link plugin', function() {
 					'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>';
 
 				const range = editor.s.createRange();
-				range.setStart(
-					editor.editor.querySelector('a').firstChild,
-					4
-				);
+				range.setStart(editor.editor.querySelector('a').firstChild, 4);
 				range.collapse(true);
 				editor.s.selectRange(range);
 
@@ -1167,29 +1153,29 @@ describe('Link plugin', function() {
 				expect(className_select).is.not.null;
 
 				for (let i = 0; i < className_select.options.length; i++) {
-					let option = className_select.options.item (i);
-					option.selected = (option.value == 'val2') ? true : false;
+					let option = className_select.options.item(i);
+					option.selected = option.value === 'val2' ? true : false;
 				}
 
 				simulateEvent('submit', 0, form);
 
 				expect(editor.value).equals(
 					'<p>one <a href="https://xdsoft.net/jodit/" class="val2">green <strong>bottle hanging</strong> under wall</a></p>' +
-					'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>'
+						'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>'
 				);
 			});
 		});
 
-		describe('Delete class name on link', function() {
-			it('Should modify link witout class name', function() {
+		describe('Delete class name on link', function () {
+			it('Should modify link witout class name', function () {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
 						selectOptionsClassName: [
-							{ value: "", text: "" },
-							{ value: "val1", text: "text1" },
-							{ value: "val2", text: "text2" },
-							{ value: "val3", text: "text3" }
+							{ value: '', text: '' },
+							{ value: 'val1', text: 'text1' },
+							{ value: 'val2', text: 'text2' },
+							{ value: 'val3', text: 'text3' }
 						]
 					}
 				});
@@ -1199,10 +1185,7 @@ describe('Link plugin', function() {
 					'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>';
 
 				const range = editor.s.createRange();
-				range.setStart(
-					editor.editor.querySelector('a').firstChild,
-					4
-				);
+				range.setStart(editor.editor.querySelector('a').firstChild, 4);
 				range.collapse(true);
 				editor.s.selectRange(range);
 
@@ -1220,7 +1203,7 @@ describe('Link plugin', function() {
 				expect(className_select).is.not.null;
 
 				for (let i = 0; i < className_select.options.length; i++) {
-					let option = className_select.options.item (i);
+					let option = className_select.options.item(i);
 					option.selected = false;
 				}
 
@@ -1228,24 +1211,24 @@ describe('Link plugin', function() {
 
 				expect(editor.value).equals(
 					'<p>one <a href="https://xdsoft.net/jodit/">green <strong>bottle hanging</strong> under wall</a></p>' +
-					'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>'
+						'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>'
 				);
 			});
 		});
 	});
 
-	describe('Link with class name (modeClassName="select", selectMultipleClassName=true)', function() {
-		describe('Add class name on link', function() {
-			it('Should insert new link with a class name', function() {
+	describe('Link with class name (modeClassName="select", selectMultipleClassName=true)', function () {
+		describe('Add class name on link', function () {
+			it('Should insert new link with a class name', function () {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
 						selectMultipleClassName: true,
 						selectOptionsClassName: [
-							{ value: "", text: "" },
-							{ value: "val1", text: "text1" },
-							{ value: "val2", text: "text2" },
-							{ value: "val3", text: "text3" }
+							{ value: '', text: '' },
+							{ value: 'val1', text: 'text1' },
+							{ value: 'val2', text: 'text2' },
+							{ value: 'val3', text: 'text3' }
 						]
 					}
 				});
@@ -1266,9 +1249,7 @@ describe('Link plugin', function() {
 				const form = popup.querySelector('.jodit-ui-form');
 				expect(form).is.not.null;
 
-				const input = form.querySelector(
-					'input[ref=url_input]'
-				);
+				const input = form.querySelector('input[ref=url_input]');
 
 				expect(input).is.not.null;
 
@@ -1281,30 +1262,31 @@ describe('Link plugin', function() {
 				expect(className_select).is.not.null;
 
 				for (let i = 0; i < className_select.options.length; i++) {
-					let option = className_select.options.item (i);
-					option.selected = ((option.value == 'val1') || (option.value == 'val3')) ? true : false;
+					let option = className_select.options.item(i);
+					option.selected =
+						option.value === 'val1' || option.value === 'val3';
 				}
 
 				simulateEvent('submit', 0, form);
 
 				expect(editor.value).equals(
 					'<p>one <a href="https://xdsoft.net/jodit/" class="val1 val3">green <strong>bottle hanging</strong> under wall</a></p>' +
-					'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>'
+						'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>'
 				);
 			});
 		});
 
-		describe('Vérify class name on link', function() {
-			it('Should have link with a class name', function() {
+		describe('Vérify class name on link', function () {
+			it('Should have link with a class name', function () {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
 						selectMultipleClassName: true,
 						selectOptionsClassName: [
-							{ value: "", text: "" },
-							{ value: "val1", text: "text1" },
-							{ value: "val2", text: "text2" },
-							{ value: "val3", text: "text3" }
+							{ value: '', text: '' },
+							{ value: 'val1', text: 'text1' },
+							{ value: 'val2', text: 'text2' },
+							{ value: 'val3', text: 'text3' }
 						]
 					}
 				});
@@ -1314,10 +1296,7 @@ describe('Link plugin', function() {
 					'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>';
 
 				const range = editor.s.createRange();
-				range.setStart(
-					editor.editor.querySelector('a').firstChild,
-					4
-				);
+				range.setStart(editor.editor.querySelector('a').firstChild, 4);
 				range.collapse(true);
 				editor.s.selectRange(range);
 
@@ -1335,23 +1314,25 @@ describe('Link plugin', function() {
 				expect(className_select).is.not.null;
 
 				for (let i = 0; i < className_select.options.length; i++) {
-					let option = className_select.options.item (i);
-					expect(option.selected).equals((option.value == "val1") || (option.value == "val3"));
+					let option = className_select.options.item(i);
+					expect(option.selected).equals(
+						option.value === 'val1' || option.value === 'val3'
+					);
 				}
 			});
 		});
 
-		describe('Modify class name on link', function() {
-			it('Should modify link with a new class name', function() {
+		describe('Modify class name on link', function () {
+			it('Should modify link with a new class name', function () {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
 						selectMultipleClassName: true,
 						selectOptionsClassName: [
-							{ value: "", text: "" },
-							{ value: "val1", text: "text1" },
-							{ value: "val2", text: "text2" },
-							{ value: "val3", text: "text3" }
+							{ value: '', text: '' },
+							{ value: 'val1', text: 'text1' },
+							{ value: 'val2', text: 'text2' },
+							{ value: 'val3', text: 'text3' }
 						]
 					}
 				});
@@ -1361,10 +1342,7 @@ describe('Link plugin', function() {
 					'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>';
 
 				const range = editor.s.createRange();
-				range.setStart(
-					editor.editor.querySelector('a').firstChild,
-					4
-				);
+				range.setStart(editor.editor.querySelector('a').firstChild, 4);
 				range.collapse(true);
 				editor.s.selectRange(range);
 
@@ -1382,30 +1360,33 @@ describe('Link plugin', function() {
 				expect(className_select).is.not.null;
 
 				for (let i = 0; i < className_select.options.length; i++) {
-					let option = className_select.options.item (i);
-					option.selected = ((option.value == 'val1') || (option.value == "val2")) ? true : false;
+					let option = className_select.options.item(i);
+					option.selected =
+						option.value === 'val1' || option.value === 'val2'
+							? true
+							: false;
 				}
 
 				simulateEvent('submit', 0, form);
 
 				expect(editor.value).equals(
 					'<p>one <a href="https://xdsoft.net/jodit/" class="val1 val2">green <strong>bottle hanging</strong> under wall</a></p>' +
-					'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>'
+						'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>'
 				);
 			});
 		});
 
-		describe('Delete class name on link', function() {
-			it('Should modify link witout class name', function() {
+		describe('Delete class name on link', function () {
+			it('Should modify link witout class name', function () {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
 						selectMultipleClassName: true,
 						selectOptionsClassName: [
-							{ value: "", text: "" },
-							{ value: "val1", text: "text1" },
-							{ value: "val2", text: "text2" },
-							{ value: "val3", text: "text3" }
+							{ value: '', text: '' },
+							{ value: 'val1', text: 'text1' },
+							{ value: 'val2', text: 'text2' },
+							{ value: 'val3', text: 'text3' }
 						]
 					}
 				});
@@ -1415,10 +1396,7 @@ describe('Link plugin', function() {
 					'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>';
 
 				const range = editor.s.createRange();
-				range.setStart(
-					editor.editor.querySelector('a').firstChild,
-					4
-				);
+				range.setStart(editor.editor.querySelector('a').firstChild, 4);
 				range.collapse(true);
 				editor.s.selectRange(range);
 
@@ -1436,7 +1414,7 @@ describe('Link plugin', function() {
 				expect(className_select).is.not.null;
 
 				for (let i = 0; i < className_select.options.length; i++) {
-					let option = className_select.options.item (i);
+					let option = className_select.options.item(i);
 					option.selected = false;
 				}
 
@@ -1444,7 +1422,7 @@ describe('Link plugin', function() {
 
 				expect(editor.value).equals(
 					'<p>one <a href="https://xdsoft.net/jodit/">green <strong>bottle hanging</strong> under wall</a></p>' +
-					'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>'
+						'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>'
 				);
 			});
 		});

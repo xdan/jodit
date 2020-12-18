@@ -43,14 +43,14 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	canI(action: string): boolean {
 		const rule = 'allow' + action;
 
-		if (process.env.NODE_ENV !== 'production') {
+		if (!isProd) {
 			if (!possibleRules.includes(rule)) {
 				throw error('Wrong action ' + action);
 			}
 		}
 
 		return (
-			this.__currentPermissions === null ||
+			this.__currentPermissions == null ||
 			this.__currentPermissions[rule] === undefined ||
 			this.__currentPermissions[rule]
 		);

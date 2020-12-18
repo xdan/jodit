@@ -28,7 +28,7 @@ export class UISelect extends UIElement implements IUISelect {
 	private __errorBox = this.j.c.span(this.getFullElName('error'));
 
 	set error(value: string) {
-		this.setMod('has-error', !!value);
+		this.setMod('has-error', Boolean(value));
 
 		if (!value) {
 			Dom.safeRemove(this.__errorBox);

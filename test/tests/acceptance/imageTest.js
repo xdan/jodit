@@ -1474,7 +1474,7 @@ describe('Test image', function () {
 
 				const popup = getOpenedPopup(editor);
 
-				expect(popup.parentNode.parentNode !== null).is.true;
+				expect(popup.parentNode.parentNode != null).is.true;
 
 				const positionPopup = Jodit.modules.Helpers.position(popup);
 				const positionImg = Jodit.modules.Helpers.position(

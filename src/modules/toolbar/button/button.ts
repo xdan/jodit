@@ -136,7 +136,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			)}</span>`
 		);
 
-		this.j.e.on(this.trigger, `click`, this.onTriggerClick.bind(this));
+		this.j.e.on(this.trigger, 'click', this.onTriggerClick.bind(this));
 
 		return container;
 	}

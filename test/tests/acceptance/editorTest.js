@@ -28,43 +28,53 @@ describe('Jodit Editor Tests', function () {
 			describe('Undefined,null,false,bad seelctor,function,number, text node', function () {
 				it('Should be not valid selector', function () {
 					expect(function () {
+						// eslint-disable-next-line no-new
 						new Jodit(0);
 					}).to.throw(Error);
 
 					expect(function () {
+						// eslint-disable-next-line no-new
 						new Jodit();
 					}).to.throw(Error);
 
 					expect(function () {
+						// eslint-disable-next-line no-new
 						new Jodit(null);
 					}).to.throw(Error);
 
 					expect(function () {
+						// eslint-disable-next-line no-new
 						new Jodit(false);
 					}).to.throw(Error);
 
 					expect(function () {
+						// eslint-disable-next-line no-new
 						new Jodit('.salomon');
 					}).to.throw(Error);
 
 					expect(function () {
+						// eslint-disable-next-line no-new
 						new Jodit('>asdsad.salomon');
 					}).to.throw(Error);
 
 					expect(function () {
+						// eslint-disable-next-line no-new
 						new Jodit(function () {});
 					}).to.throw(Error);
 
 					expect(function () {
+						// eslint-disable-next-line no-new
 						new Jodit(233);
 					}).to.throw(Error);
 
 					const elm = document.createTextNode('stop');
 					expect(function () {
+						// eslint-disable-next-line no-new
 						new Jodit(elm);
 					}).to.throw(Error);
 				});
 			});
+
 			describe('HTMLTextAreaElement', function () {
 				it('Should be instance of HTMLElement', function () {
 					const area = appendTestArea('editor2');

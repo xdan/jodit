@@ -99,7 +99,7 @@ describe('Clipboard text', function() {
 
 			const emulatePasteEvent = function(data) {
 				data.clipboardData = {
-					types: ["text/plain", "text/html"],
+					types: ['text/plain', 'text/html'],
 					getData: function(type) {
 						return type === 'text/plain' ? pastedText : pastedHTML;
 					}
@@ -902,7 +902,7 @@ describe('Clipboard text', function() {
 
 			const emulatePasteEvent = function(data) {
 				data.clipboardData = {
-					types: ["text/plain", "text/html"],
+					types: ['text/plain', 'text/html'],
 					getData: function(type) {
 						return type === 'text/plain' ? pastedText : pastedHTML;
 					}
@@ -923,7 +923,7 @@ describe('Clipboard text', function() {
 
 					simulateEvent('click', getButton('keep', dialog));
 
-					expect(sortAttributes(editor.value)).equals(`<h1 align="center" style="break-after:avoid;color:#2E74B5;font-family:Calibri Light,sans-serif;font-size:21px;font-weight:normal;line-height:normal;margin:0px;text-align:center"><span style="color:#C45911;font-family:Arial,sans-serif;font-size:16px">LOREM IPSUM DOLOR SIT AMET</span></h1>`);
+					expect(sortAttributes(editor.value)).equals('<h1 align="center" style="break-after:avoid;color:#2E74B5;font-family:Calibri Light,sans-serif;font-size:21px;font-weight:normal;line-height:normal;margin:0px;text-align:center"><span style="color:#C45911;font-family:Arial,sans-serif;font-size:16px">LOREM IPSUM DOLOR SIT AMET</span></h1>');
 				});
 			});
 		});

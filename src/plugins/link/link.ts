@@ -240,7 +240,7 @@ Config.prototype.controls.link = {
 
 										if (
 											option?.value &&
-											option.value == className
+											option.value === className
 										) {
 											option.selected = true;
 										}
@@ -314,13 +314,13 @@ Config.prototype.controls.link = {
 				if (modeClassName && (className_input ?? className_select)) {
 					if (modeClassName === 'input') {
 						if (
-							className_input.value == '' &&
+							className_input.value === '' &&
 							a.hasAttribute('class')
 						) {
 							attr(a, 'class', null);
 						}
 
-						if (className_input.value != '') {
+						if (className_input.value !== '') {
 							attr(a, 'class', className_input.value);
 						}
 					} else if (modeClassName === 'select') {

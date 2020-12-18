@@ -806,7 +806,7 @@ export const OptionsDefault: any = function (
 
 			const defValue = (def as any)[key],
 				optValue = (opt as any)[key],
-				isObject = typeof defValue === 'object' && defValue !== null;
+				isObject = typeof defValue === 'object' && defValue != null;
 
 			if (isAtom(optValue)) {
 				self[key] = optValue;
