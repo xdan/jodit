@@ -4,46 +4,70 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IViewComponent, Nullable } from '../../types';
 import { css, ctrlKey, dataBind, splitArray } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { Dom } from '../../core/dom';
 import { getContainer } from '../../core/global';
+import { autobind, throttle } from '../../core/decorators';
 
 /**
  * Process drag and drop image or another element inside the editor
  */
 export class DragAndDropElement extends Plugin {
 	private dragList: string[] = [];
-	private isCopyMode: boolean = false;
-	private draggable: HTMLElement | null = null;
-	private wasMoved: boolean = false;
 
+	private draggable: Nullable<HTMLElement> = null;
+	private wasMoved: boolean = false;
+	private isCopyMode: boolean = false;
+
+	/**
+	 * Shift in pixels after which we consider that the transfer of the element has begun
+	 */
 	private diffStep = 10;
+
 	private startX = 0;
 	private startY = 0;
 
-	private onDragStart = (event: DragEvent) => {
-		let target: Node | null = event.target as Node,
-			last: HTMLElement | null = null;
+	/** @override */
+	protected afterInit(): void {
+		this.dragList = this.j.o.draggableTags
+			? splitArray(this.j.o.draggableTags)
+					.filter(Boolean)
+					.map(item => item.toLowerCase())
+			: [];
 
 		if (!this.dragList.length) {
 			return;
 		}
 
-		do {
-			if (this.dragList.includes(target.nodeName.toLowerCase())) {
-				if (
-					!last ||
-					(target.firstChild === last && target.lastChild === last)
-				) {
-					last = target as HTMLElement;
-				}
-			}
+		this.j.e.on('mousedown touchstart dragstart', this.onDragStart);
+	}
 
-			target = target.parentNode;
-		} while (target && target !== this.j.editor);
+	/**
+	 * Drag start handler
+	 * @param event
+	 */
+	@autobind
+	private onDragStart(event: DragEvent): void | false {
+		if (event.type === 'dragstart' && this.draggable) {
+			return false;
+		}
 
-		if (!last) {
+		const target: Nullable<Node> = event.target as Nullable<Node>;
+
+		if (!this.dragList.length || !target) {
+			return;
+		}
+
+		const matched = (node: Nullable<Node>) =>
+			node && this.dragList.includes(node.nodeName.toLowerCase());
+
+		const lastTarget: Nullable<HTMLElement> =
+			(Dom.furthest(target, matched, this.j.editor) as HTMLElement) ||
+			(matched(target) ? target : null);
+
+		if (!lastTarget) {
 			return;
 		}
 
@@ -53,13 +77,18 @@ export class DragAndDropElement extends Plugin {
 		this.isCopyMode = ctrlKey(event); // we can move only element from editor
 		this.onDragEnd();
 
-		this.draggable = last.cloneNode(true) as HTMLElement;
-		dataBind(this.draggable, 'target', last);
+		this.draggable = lastTarget.cloneNode(true) as HTMLElement;
+		dataBind(this.draggable, 'target', lastTarget);
 
-		this.j.e.on(this.j.editor, 'mousemove touchmove', this.onDrag);
-	};
+		this.addDragListeners();
+	}
 
-	private onDrag = this.j.async.throttle((event: DragEvent) => {
+	/**
+	 * Mouse move handler handler
+	 * @param event
+	 */
+	@throttle<IViewComponent>(ctx => ctx.j.defaultTimeout / 10)
+	private onDrag(event: DragEvent): void {
 		if (!this.draggable) {
 			return;
 		}
@@ -79,15 +108,18 @@ export class DragAndDropElement extends Plugin {
 		this.j.e.fire('hidePopup hideResizer');
 
 		if (!this.draggable.parentNode) {
+			const target = dataBind(this.draggable, 'target');
+
 			css(this.draggable, {
 				zIndex: 10000000000000,
 				pointerEvents: 'none',
+				pointer: 'drag',
 				position: 'fixed',
 				display: 'inline-block',
 				left: event.clientX,
 				top: event.clientY,
-				width: this.draggable.offsetWidth,
-				height: this.draggable.offsetHeight
+				width: target?.offsetWidth ?? 100,
+				height: target?.offsetHeight ?? 100
 			});
 
 			getContainer(this.j, DragAndDropElement).appendChild(
@@ -101,23 +133,32 @@ export class DragAndDropElement extends Plugin {
 		});
 
 		this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
-	}, this.j.defaultTimeout);
+	}
 
-	private onDragEnd = () => {
+	/**
+	 * Mouseup handler in any place
+	 */
+	@autobind
+	private onDragEnd(): void {
 		if (this.isInDestruct) {
 			return;
 		}
 
 		if (this.draggable) {
 			Dom.safeRemove(this.draggable);
+
 			this.draggable = null;
 			this.wasMoved = false;
 
-			this.j.e.off(this.j.editor, 'mousemove touchmove', this.onDrag);
+			this.removeDragListeners();
 		}
-	};
+	}
 
-	private onDrop = () => {
+	/**
+	 * Mouseup handler inside editor
+	 */
+	@autobind
+	private onDrop(): void {
 		if (!this.draggable || !this.wasMoved) {
 			this.onDragEnd();
 			return;
@@ -144,42 +185,34 @@ export class DragAndDropElement extends Plugin {
 		}
 
 		this.j.e.fire('synchro');
-	};
+	}
 
-	/** @override */
-	protected afterInit(): void {
-		this.dragList = this.j.o.draggableTags
-			? splitArray(this.j.o.draggableTags)
-					.filter(item => item)
-					.map((item: string) => item.toLowerCase())
-			: [];
-
-		if (!this.dragList.length) {
-			return;
-		}
-
+	/**
+	 * Add global event listener after drag start
+	 */
+	private addDragListeners(): void {
 		this.j.e
-			.on(
-				this.j.editor,
-				'mousedown touchstart dragstart',
-				this.onDragStart
-			)
+			.on(this.j.editor, 'mousemove touchmove', this.onDrag)
 			.on('mouseup touchend', this.onDrop)
 			.on([this.j.ew, this.ow], 'mouseup touchend', this.onDragEnd);
+	}
+
+	/**
+	 * Remove global event listener after drag start
+	 */
+	private removeDragListeners(): void {
+		this.j.e
+			.off(this.j.editor, 'mousemove touchmove', this.onDrag)
+			.off('mouseup touchend', this.onDrop)
+			.off([this.j.ew, this.ow], 'mouseup touchend', this.onDragEnd);
 	}
 
 	/** @override */
 	protected beforeDestruct(): void {
 		this.onDragEnd();
 
-		this.j.e
-			.off(this.j.editor, 'mousemove touchmove', this.onDrag)
-			.off(
-				this.j.editor,
-				'mousedown touchstart dragstart',
-				this.onDragStart
-			)
-			.off('mouseup touchend', this.onDrop)
-			.off(window, 'mouseup touchend', this.onDragEnd);
+		this.j.e.off('mousedown touchstart dragstart', this.onDragStart);
+
+		this.removeDragListeners();
 	}
 }

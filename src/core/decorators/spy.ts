@@ -33,29 +33,25 @@ export const spy = function spy(target: Function) {
 
 		// Only methods need binding
 		if (descriptor && isFunction(descriptor.value)) {
-			const fn = descriptor.value;
+			target.prototype[key] = function (
+				this: typeof target,
+				...args: any[]
+			) {
+				console.log(
+					`Class: ${getClassName(target.prototype)} call: ${String(
+						key
+					)}(${args.map(a =>
+						isPlainObject(a) ||
+						isString(a) ||
+						isBoolean(a) ||
+						isNumber(a)
+							? JSON.stringify(a)
+							: `[${type(a)}]`
+					)})`
+				);
 
-			Object.defineProperty(target.prototype, key, {
-				configurable: true,
-				get() {
-					return function (this: typeof target, ...args: any[]) {
-						console.log(
-							`Class: ${getClassName(
-								target.prototype
-							)} call: ${String(key)}(${args.map(a =>
-								isPlainObject(a) ||
-								isString(a) ||
-								isBoolean(a) ||
-								isNumber(a)
-									? JSON.stringify(a)
-									: `[${type(a)}]`
-							)})`
-						);
-
-						return fn.apply(this, args);
-					};
-				}
-			});
+				return descriptor.value.apply(this, args);
+			};
 		}
 	});
 };

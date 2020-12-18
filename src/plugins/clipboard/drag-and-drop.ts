@@ -4,13 +4,17 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * TODO: need remove `drag-and-drop-element` plugin and use full custom moving inside this plugin.
+ */
+
 import { TEXT_HTML, TEXT_PLAIN } from '../../core/constants';
 import { Dom } from '../../core/dom';
-import { attr, css, ctrlKey, dataBind } from '../../core/helpers';
+import { attr, ctrlKey, dataBind } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
-import { IPoint } from '../../types';
+import { IPoint, IViewComponent } from '../../types';
 import { getDataTransfer } from './paste/helpers';
-import { getContainer } from '../../core/global';
+import { autobind, throttle } from '../../core/decorators';
 
 /**
  * Process drag and drop image from FileBrowser and movev image inside the editor
@@ -24,27 +28,86 @@ export class DragAndDrop extends Plugin {
 
 	private bufferRange: Range | null = null;
 
-	private onDragEnd = () => {
-		if (this.draggable) {
-			Dom.safeRemove(this.draggable);
-			this.draggable = null;
+	/** @override */
+	afterInit(): void {
+		this.j.e
+			.on(
+				[window, this.j.ed, this.j.editor],
+				'dragstart.DragAndDrop',
+				this.onDragStart
+			);
+	}
+
+	@autobind
+	private onDragStart(event: DragEvent): void {
+		let target: HTMLElement = event.target as HTMLElement;
+
+		this.onDragEnd(); // remove old draggable
+
+		this.isFragmentFromEditor = Dom.isOrContains(
+			this.j.editor,
+			target,
+			true
+		);
+
+		this.isCopyMode = this.isFragmentFromEditor ? ctrlKey(event) : true; // we can move only element from editor
+
+		if (this.isFragmentFromEditor) {
+			const sel = this.j.s.sel;
+			const range: Range | null =
+				sel && sel.rangeCount ? sel.getRangeAt(0) : null;
+
+			if (range) {
+				this.bufferRange = range.cloneRange();
+			}
+		} else {
+			this.bufferRange = null;
 		}
 
-		this.isCopyMode = false;
+		this.startDragPoint.x = event.clientX;
+		this.startDragPoint.y = event.clientY;
+
+		if (
+			Dom.isElement(target) &&
+			target.classList.contains('jodit-filebrowser__files-item')
+		) {
+			target = target.querySelector('img') as HTMLElement;
+		}
+
+		if (Dom.isTag(target, 'img')) {
+			this.draggable = target.cloneNode(true) as HTMLElement;
+			dataBind(this.draggable, 'target', target);
+		}
+
+		this.addDragListeners();
 	};
 
-	private onDrag = (event: DragEvent) => {
+	private addDragListeners(): void {
+		this.j.e
+			.on( 'dragover', this.onDrag)
+			.on('drop.DragAndDrop', this.onDrop)
+			.on(
+				window,
+				'dragend.DragAndDrop drop.DragAndDrop mouseup.DragAndDrop',
+				this.onDragEnd
+			);
+	}
+
+	private removeDragListeners(): void {
+		this.j.e
+			.off('dragover', this.onDrag)
+			.off('drop.DragAndDrop', this.onDrop)
+			.off(
+				window,
+				'dragend.DragAndDrop drop.DragAndDrop mouseup.DragAndDrop',
+				this.onDragEnd
+			);
+	}
+
+	@throttle<IViewComponent>(ctx => ctx.j.defaultTimeout / 10)
+	private onDrag(event: DragEvent): void {
 		if (this.draggable) {
-			if (!this.draggable.parentNode) {
-				getContainer(this.j, DragAndDrop).appendChild(this.draggable);
-			}
-
 			this.j.e.fire('hidePopup');
-
-			css(this.draggable, {
-				left: event.clientX + 20,
-				top: event.clientY + 20
-			});
 
 			this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
 
@@ -53,7 +116,19 @@ export class DragAndDrop extends Plugin {
 		}
 	};
 
-	private onDrop = (event: DragEvent): false | void => {
+	@autobind
+	private onDragEnd(): void {
+		if (this.draggable) {
+			Dom.safeRemove(this.draggable);
+			this.draggable = null;
+		}
+
+		this.isCopyMode = false;
+		this.removeDragListeners();
+	};
+
+	@autobind
+	private onDrop(event: DragEvent): false | void {
 		if (
 			!event.dataTransfer ||
 			!event.dataTransfer.files ||
@@ -128,56 +203,7 @@ export class DragAndDrop extends Plugin {
 		}
 
 		this.isFragmentFromEditor = false;
-	};
-
-	private onDragStart = (event: DragEvent) => {
-		let target: HTMLElement = event.target as HTMLElement;
-		this.onDragEnd(); // remove olddraggable
-
-		this.isFragmentFromEditor = Dom.isOrContains(
-			this.j.editor,
-			target,
-			true
-		);
-		this.isCopyMode = this.isFragmentFromEditor ? ctrlKey(event) : true; // we can move only element from editor
-
-		if (this.isFragmentFromEditor) {
-			const sel = this.j.s.sel;
-			const range: Range | null =
-				sel && sel.rangeCount ? sel.getRangeAt(0) : null;
-			if (range) {
-				this.bufferRange = range.cloneRange();
-			}
-		} else {
-			this.bufferRange = null;
-		}
-
-		this.startDragPoint.x = event.clientX;
-		this.startDragPoint.y = event.clientY;
-
-		if (
-			Dom.isElement(target) &&
-			target.classList.contains('jodit-filebrowser__files-item')
-		) {
-			target = target.querySelector('img') as HTMLElement;
-		}
-
-		if (Dom.isTag(target, 'img')) {
-			this.draggable = target.cloneNode(true) as HTMLElement;
-
-			dataBind(this.draggable, 'target', target);
-
-			css(this.draggable, {
-				'z-index': 100000000000000,
-				'pointer-events': 'none',
-				position: 'fixed',
-				display: 'inlin-block',
-				left: this.startDragPoint.x,
-				top: this.startDragPoint.y,
-				width: target.offsetWidth,
-				height: target.offsetHeight
-			});
-		}
+		this.removeDragListeners();
 	};
 
 	private getText = (event: DragEvent): string | null => {
@@ -185,29 +211,7 @@ export class DragAndDrop extends Plugin {
 		return dt ? dt.getData(TEXT_HTML) || dt.getData(TEXT_PLAIN) : null;
 	};
 
-	afterInit(): void {
-		this.j.e
-			.off(window, '.DragAndDrop')
-			.off('.DragAndDrop')
-			.off(
-				[window, this.j.ed, this.j.editor],
-				'dragstart.DragAndDrop',
-				this.onDragStart
-			)
-			.on(window, 'dragover.DragAndDrop', this.onDrag)
-			.on(
-				[window, this.j.ed, this.j.editor],
-				'dragstart.DragAndDrop',
-				this.onDragStart
-			)
-			.on('drop.DragAndDrop', this.onDrop)
-			.on(
-				window,
-				'dragend.DragAndDrop drop.DragAndDrop mouseup.DragAndDrop',
-				this.onDragEnd
-			);
-	}
-
+	/** @override */
 	beforeDestruct(): void {
 		this.onDragEnd();
 

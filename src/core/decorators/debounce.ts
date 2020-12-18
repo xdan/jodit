@@ -53,9 +53,9 @@ export function debounce<V = IViewComponent | IViewBased>(
  * @param firstCallImmediately
  * @param method
  */
-export function throttle(
-	timeout?: number | ((ctx: IViewComponent | IViewBased) => number),
+export function throttle<V = IViewComponent | IViewBased>(
+	timeout?: number | ((ctx: V) => number),
 	firstCallImmediately: boolean = false
 ) {
-	return debounce(timeout, firstCallImmediately, 'throttle');
+	return debounce<V>(timeout, firstCallImmediately, 'throttle');
 }
