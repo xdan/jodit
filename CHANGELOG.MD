@@ -10,6 +10,11 @@
 
 ## 3.5.2
 
+#### :house: Internal
+
+* Added `async.requestIdleCallback` method https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback.
+* Focused inputs have box shadow.
+
 #### :bug: Bug Fix
 
 * [The link and image popup closes automatically on the inline preset. #582](https://github.com/xdan/jodit/issues/582)
@@ -17,6 +22,12 @@
 * [Missing autobind-decorator types on the latest release #583](https://github.com/xdan/jodit/issues/583)
 * [link does not carry when dragging/dropping #581](https://github.com/xdan/jodit/issues/581)
 * [When editor is disabled/readonly (both), list controls are still available by using the arrow bug #572](https://github.com/xdan/jodit/issues/572)
+
+#### :rocket: New Feature
+
+##### New option `link.hotkeys: string[] = ['ctrl+k', 'cmd+k']`
+
+Execute new command `openLinkDialog`. Related: https://github.com/xdan/jodit/issues/576
 
 ## 3.5.1
 

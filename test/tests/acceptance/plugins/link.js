@@ -339,6 +339,55 @@ describe('Link plugin', function () {
 				});
 			});
 
+			describe('In dialog', function () {
+				describe('Edit exists link', function () {
+					describe('Content input was not changed', function () {
+						it('Should save link content', function () {
+							const editor = getJodit();
+
+							editor.value =
+								'<p>test <a href="#somelink">link| <strong>strong</strong></a> open</p>';
+
+							setCursorToChar(editor);
+
+							simulateEvent(
+								'keydown',
+								'k',
+								editor.editor,
+								function (opt) {
+									opt.ctrlKey = true;
+								}
+							);
+
+							const dialog = getOpenedDialog(editor);
+							expect(dialog).is.not.null;
+
+							const content = dialog.querySelector(
+								'[ref=content_input]'
+							);
+							expect(content).is.not.null;
+							expect(content.value).equals('link strong');
+
+							const url = dialog.querySelector('[ref=url_input]');
+							expect(url).is.not.null;
+							expect(url.value).equals('#somelink');
+
+							url.value = 'https://xdan.ru';
+
+							simulateEvent(
+								'submit',
+								0,
+								dialog.querySelector('form')
+							);
+
+							expect(editor.value).equals(
+								'<p>test <a href="https://xdan.ru">link <strong>strong</strong></a> open</p>'
+							);
+						});
+					});
+				});
+			});
+
 			describe('Open LINK insert dialog and insert new link', function () {
 				it('Should insert new link', function () {
 					let popup_opened = 0;

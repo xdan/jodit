@@ -220,6 +220,23 @@ export class Async implements IAsync {
 		);
 	}
 
+	private requestIdleCallbackNative =
+		(window as any)['requestIdleCallback']?.bind(window) ??
+		((callback: CallbackFunction): number => {
+			const start = Date.now();
+
+			return this.setTimeout(() => {
+				callback({
+					didTimeout: false,
+					timeRemaining: () => Math.max(0, 50 - (Date.now() - start))
+				});
+			}, 1);
+		});
+
+	requestIdleCallback(callback: CallbackFunction): void {
+		return this.requestIdleCallbackNative(callback);
+	}
+
 	clear(): void {
 		this.timers.forEach(key => {
 			clearTimeout(this.timers.get(key) as number);

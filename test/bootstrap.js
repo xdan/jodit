@@ -633,6 +633,7 @@ const codeKey = {
 	73: 'i',
 	70: 'f',
 	72: 'h',
+	75: 'k',
 	86: 'v',
 	89: 'y',
 	114: 'F3'
@@ -686,7 +687,7 @@ function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
 			evt.key = codeKey[keyCodeOrElement];
 		} else if (typeof keyCodeOrElement !== 'object') {
 			evt.key = keyCodeOrElement;
-			evt.which = keyCodeOrElement[keyCodeOrElement];
+			evt.which = keyCode[keyCodeOrElement];
 		}
 	}
 

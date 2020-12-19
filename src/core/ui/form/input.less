@@ -9,6 +9,11 @@
 	&__input {
 		.jodit-input-mx();
 		border: 0;
+
+		&:focus {
+			outline: 0;
+			box-shadow: var(--focus-input-box-shadow);
+		}
 	}
 
 	&_has-error_true &__input {

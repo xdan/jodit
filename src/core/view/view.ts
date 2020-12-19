@@ -266,7 +266,7 @@ export abstract class View
 	 */
 	@hook(STATUSES.beforeDestruct)
 	protected beforeDestruct(): void {
-		this.e.fire(STATUSES.beforeDestruct);
+		this.e.fire(STATUSES.beforeDestruct, this);
 
 		this.components.forEach(component => {
 			if (isDestructable(component) && !component.isInDestruct) {
