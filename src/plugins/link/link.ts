@@ -9,7 +9,8 @@ import type {
 	IJodit,
 	IControlType,
 	IUIForm,
-	IUIOption
+	IUIOption,
+	Nullable
 } from '../../types';
 import { Config } from '../../config';
 import { Dom } from '../../core/dom';
@@ -164,13 +165,9 @@ export class link extends Plugin {
 					resizable: false
 				});
 
-				const htmlForm: UIForm = jodit.e.fire(
-					'generateLinkForm.link',
-					jodit.s.current(),
-					() => {
-						dialog.close();
-					}
-				);
+				const htmlForm = this.generateForm(jodit.s.current(), () => {
+					dialog.close();
+				}) as UIForm;
 
 				htmlForm.container.classList.add('jodit-dialog_alert');
 				dialog.setContent(htmlForm);
@@ -201,7 +198,7 @@ export class link extends Plugin {
 
 	@autobind
 	private onProcessPasteLink(
-		event: ClipboardEvent,
+		ignore: ClipboardEvent,
 		html: string
 	): HTMLAnchorElement | void {
 		const { jodit } = this;
@@ -229,7 +226,10 @@ export class link extends Plugin {
 	}
 
 	@autobind
-	private generateForm(current: Node, close: Function): HTMLElement | IUIForm {
+	private generateForm(
+		current: Nullable<Node>,
+		close: Function
+	): HTMLElement | IUIForm {
 		const { jodit } = this;
 
 		const i18n = jodit.i18n.bind(jodit),
