@@ -122,6 +122,7 @@ interface IViewWithToolbar<T = IViewOptions> extends IViewBased<T> {
 	toolbar: IToolbarCollection;
 	toolbarContainer: HTMLElement;
 
+	registeredButtons: Set<IPluginButton>;
 	registerButton(btn: IPluginButton): this;
 	unregisterButton(btn: IPluginButton): this;
 

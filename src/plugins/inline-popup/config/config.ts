@@ -17,6 +17,10 @@ declare module '../../../config' {
 					close: () => void
 			  ) => Array<IControlType | string> | HTMLElement | string)
 		>;
+
+
+
+		toolbarInlineDisabledButtons: string[];
 		toolbarInline: boolean;
 		toolbarInlineForSelection: boolean;
 		toolbarInlineDisableFor: string | string[];
@@ -26,6 +30,7 @@ declare module '../../../config' {
 Config.prototype.toolbarInline = true;
 Config.prototype.toolbarInlineForSelection = false;
 Config.prototype.toolbarInlineDisableFor = [];
+Config.prototype.toolbarInlineDisabledButtons = ['source'];
 
 Config.prototype.popup = {
 	a: require('./items/a').default,

@@ -363,7 +363,7 @@ describe('Test Inline mode', function () {
 					});
 				});
 
-				describe('Option like srray', function () {
+				describe('Option like array', function () {
 					it('Should now show inline popup for link', function () {
 						const editor = new Jodit(appendTestDiv(), {
 							toolbarInline: true,
@@ -566,20 +566,20 @@ describe('Test Inline mode', function () {
 
 					input.focus();
 
-					simulateEvent(
-						['selectionchange', 'mouseup'],
-						editor.editor
-					);
+					simulateEvent('selectionchange', editor.editor);
+
+					simulateEvent('mouseup', input);
 
 					setTimeout(function () {
 						expect(getOpenedPopup(editor)).eq(linkPopup);
 
 						input.value = 'https://xdsoft.net/jodit/';
-						simulateEvent('click', button);
-						expect(Boolean(getOpenedPopup(editor))).is.false;
+
+						button.click();
+						expect(getOpenedPopup(editor)).eq(popup);
 
 						expect(sortAttributes(editor.value)).eq(
-							'<p><a href="https://xdsoft.net/jodit/">test <img> test</a>></p>'
+							'<p><a href="https://xdsoft.net/jodit/">test <img> test</a></p>'
 						);
 
 						done();

@@ -8,6 +8,7 @@ import './inline-popup.less';
 import './config/config';
 
 import type {
+	Buttons,
 	HTMLTagNames,
 	IBound,
 	IJodit,
@@ -24,9 +25,10 @@ import {
 	isString,
 	position,
 	isArray,
-	isFunction
+	isFunction,
+	toArray
 } from '../../core/helpers';
-import { Dom, Table } from '../../modules';
+import { Dom, Table, ToolbarCollection, UIElement } from '../../modules';
 import { debounce, wait, autobind } from '../../core/decorators';
 
 /**
@@ -114,6 +116,7 @@ export class inlinePopup extends Plugin {
 	@autobind
 	private hidePopup(type?: string): void {
 		if (!type || type === this.type) {
+			console.log('hidePopup', new Error());
 			this.popup.close();
 		}
 	}
@@ -145,25 +148,32 @@ export class inlinePopup extends Plugin {
 	/** @override **/
 	protected afterInit(jodit: IJodit): void {
 		this.j.e
-			// .on(
-			// 	'getDiffButtons.mobile',
-			// 	(toolbar: ToolbarCollection): void | Buttons => {
-			// 		if (this.toolbar === toolbar) {
-			// 			const names = this.toolbar.getButtonsNames();
-			//
-			// 			return splitArray(jodit.o.buttons).filter(item => {
-			// 				const name = isString(item) ? item : item.name;
-			//
-			// 				return (
-			// 					name &&
-			// 					name !== '|' &&
-			// 					name !== '\n' &&
-			// 					!names.includes(name)
-			// 				);
-			// 			});
-			// 		}
-			// 	}
-			// )
+			.on(
+				'getDiffButtons.mobile',
+				(toolbar: ToolbarCollection): void | Buttons => {
+					if (this.toolbar === toolbar) {
+						const names = this.toolbar.getButtonsNames();
+
+						return toArray(jodit.registeredButtons)
+							.filter(
+								btn =>
+									!this.j.o.toolbarInlineDisabledButtons.includes(
+										btn.name
+									)
+							)
+							.filter(item => {
+								const name = isString(item) ? item : item.name;
+
+								return (
+									name &&
+									name !== '|' &&
+									name !== '\n' &&
+									!names.includes(name)
+								);
+							});
+					}
+				}
+			)
 			.on('hidePopup', this.hidePopup)
 			.on(
 				'showPopup',
@@ -192,7 +202,15 @@ export class inlinePopup extends Plugin {
 	}
 
 	@autobind
-	private onSelectionEnd() {
+	private onSelectionEnd(e: MouseEvent) {
+		if (
+			e &&
+			e.target &&
+			UIElement.closestElement(e.target as Node, Popup)
+		) {
+			return;
+		}
+
 		const { snapRange } = this,
 			{ range } = this.j.s;
 
@@ -272,6 +290,6 @@ export class inlinePopup extends Plugin {
 		jodit.e
 			.off('showPopup')
 			.off('click', this.onClick)
-			.off([this.j.ew, this.j.ow], 'mouseup', this.onSelectionEnd);
+			.off([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
 	}
 }

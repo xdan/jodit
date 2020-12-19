@@ -12,6 +12,8 @@
 
 #### :bug: Bug Fix
 
+* [The link and image popup closes automatically on the inline preset. #582](https://github.com/xdan/jodit/issues/582)
+* [Preset:inline / Link Popup Closes #515](https://github.com/xdan/jodit/issues/515)
 * [Missing autobind-decorator types on the latest release #583](https://github.com/xdan/jodit/issues/583)
 * [link does not carry when dragging/dropping #581](https://github.com/xdan/jodit/issues/581)
 * [When editor is disabled/readonly (both), list controls are still available by using the arrow bug #572](https://github.com/xdan/jodit/issues/572)

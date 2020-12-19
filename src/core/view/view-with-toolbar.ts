@@ -75,6 +75,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 			.appendTo(this.toolbarContainer);
 	}
 
+	registeredButtons: Set<IPluginButton> = new Set();
 	private groupToButtons: IDictionary<string[]> = {};
 
 	/**
@@ -82,6 +83,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	 * @param btn
 	 */
 	registerButton(btn: IPluginButton): this {
+		this.registeredButtons.add(btn);
 		const group = btn.group ?? 'other';
 
 		if (!this.groupToButtons[group]) {
@@ -102,6 +104,8 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	 * @param btn
 	 */
 	unregisterButton(btn: IPluginButton): this {
+		this.registeredButtons.delete(btn);
+
 		const groupName = btn.group ?? 'other',
 			group = this.groupToButtons[groupName];
 
