@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.5.1
+ * Version: v3.5.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -104,7 +104,6 @@ __webpack_require__(3);
 __webpack_require__(4);
 if (!Array.from) {
     Array.from = function (object) {
-        'use strict';
         if (object instanceof Set) {
             var res_1 = [];
             object.forEach(function (a) { return res_1.push(a); });
@@ -121,14 +120,13 @@ if (!Array.prototype.includes) {
 if (typeof Object.assign !== 'function') {
     Object.defineProperty(Object, 'assign', {
         value: function assign(target, varArgs) {
-            'use strict';
-            if (target === null || target === undefined) {
+            if (target == null) {
                 throw new TypeError('Cannot convert undefined or null to object');
             }
             var to = Object(target);
             for (var index = 1; index < arguments.length; index++) {
                 var nextSource = arguments[index];
-                if (nextSource !== null && nextSource !== undefined) {
+                if (nextSource != null) {
                     for (var nextKey in nextSource) {
                         if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
                             to[nextKey] = nextSource[nextKey];
@@ -1591,7 +1589,7 @@ var Jodit = (function (_super) {
                 _this.setElementValue();
             }
             else {
-                buffer !== null && _this.setEditorValue(buffer);
+                buffer != null && _this.setEditorValue(buffer);
             }
             var mode = _this.o.defaultMode;
             if (_this.o.saveModeInStorage) {
@@ -2460,7 +2458,7 @@ var OptionsDefault = function (options, def) {
                     Object.keys(preset).forEach(extendKey_1.bind(_this, preset));
                 }
             }
-            var defValue = def[key], optValue = opt[key], isObject = typeof defValue === 'object' && defValue !== null;
+            var defValue = def[key], optValue = opt[key], isObject = typeof defValue === 'object' && defValue != null;
             if (helpers_1.isAtom(optValue)) {
                 self[key] = optValue;
             }
@@ -2740,7 +2738,7 @@ function attr(elm, key, value) {
         key = key.substr(1);
     }
     if (value !== undefined) {
-        if (value === null) {
+        if (value == null) {
             elm.hasAttribute(key) && elm.removeAttribute(key);
         }
         else {
@@ -2941,7 +2939,7 @@ function extend() {
     }
     for (i; i < length; i += 1) {
         options = args[i];
-        if (options !== null && options !== undefined) {
+        if (options != null) {
             keys = Object.keys(options);
             for (j = 0; j < keys.length; j += 1) {
                 name = keys[j];
@@ -3183,7 +3181,7 @@ function stringify(value, options) {
         if (excludeKeys.has(k)) {
             return;
         }
-        if (typeof v === 'object' && v !== null) {
+        if (typeof v === 'object' && v != null) {
             if (map.get(v)) {
                 return '[refObject]';
             }
@@ -3757,12 +3755,12 @@ var Dom = (function () {
             return true;
         }
         if (Dom.isText(node)) {
-            return node.nodeValue === null || helpers_1.trim(node.nodeValue).length === 0;
+            return node.nodeValue == null || helpers_1.trim(node.nodeValue).length === 0;
         }
         return (!condNoEmptyElement.test(node.nodeName.toLowerCase()) &&
             Dom.each(node, function (elm) {
                 if ((Dom.isText(elm) &&
-                    elm.nodeValue !== null &&
+                    elm.nodeValue != null &&
                     helpers_1.trim(elm.nodeValue).length !== 0) ||
                     (Dom.isElement(elm) &&
                         condNoEmptyElement.test(elm.nodeName.toLowerCase()))) {
@@ -4046,36 +4044,6 @@ var Dom = (function () {
             }
         }
         return false;
-    };
-    Dom.findInline = function (node, toLeft, root) {
-        var prevElement = node, nextElement = null;
-        do {
-            if (prevElement) {
-                nextElement = toLeft
-                    ? prevElement.previousSibling
-                    : prevElement.nextSibling;
-                if (!nextElement &&
-                    prevElement.parentNode &&
-                    prevElement.parentNode !== root &&
-                    Dom.isInlineBlock(prevElement.parentNode)) {
-                    prevElement = prevElement.parentNode;
-                }
-                else {
-                    break;
-                }
-            }
-            else {
-                break;
-            }
-        } while (!nextElement);
-        while (nextElement &&
-            Dom.isInlineBlock(nextElement) &&
-            (!toLeft ? nextElement.firstChild : nextElement.lastChild)) {
-            nextElement = !toLeft
-                ? nextElement.firstChild
-                : nextElement.lastChild;
-        }
-        return nextElement;
     };
     return Dom;
 }());
@@ -5607,8 +5575,8 @@ exports.isLicense = isLicense;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isNativeFunction = void 0;
 function isNativeFunction(f) {
-    return (!!f &&
-        (typeof f).toLowerCase() == 'function' &&
+    return (Boolean(f) &&
+        (typeof f).toLowerCase() === 'function' &&
         (f === Function.prototype ||
             /^\s*function\s*(\b[a-z$_][a-z0-9$_]*\b)*\s*\((|([a-z$_][a-z0-9$_]*)(\s*,[a-z$_][a-z0-9$_]*)*)\)\s*{\s*\[native code]\s*}\s*$/i.test(String(f))));
 }
@@ -5673,7 +5641,7 @@ exports.isPlainObject = isPlainObject;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isWindow = void 0;
 function isWindow(obj) {
-    return obj !== null && obj === obj.window;
+    return obj != null && obj === obj.window;
 }
 exports.isWindow = isWindow;
 
@@ -6184,7 +6152,7 @@ function $$(selector, root) {
         constants_1.IS_IE &&
         !(root && root.nodeType === Node.DOCUMENT_NODE)) {
         var id = root.id, temp_id = id ||
-            '_selector_id_' + ('' + Math.random()).slice(2) + $$temp();
+            '_selector_id_' + (String(Math.random())).slice(2) + $$temp();
         selector = selector.replace(/:scope/g, '#' + temp_id);
         !id && root.setAttribute('id', temp_id);
         result = root.parentNode.querySelectorAll(selector);
@@ -6540,9 +6508,9 @@ var normalizeNode = function (node) {
     if (!node) {
         return;
     }
-    if (dom_1.Dom.isText(node) && node.nodeValue !== null && node.parentNode) {
+    if (dom_1.Dom.isText(node) && node.nodeValue != null && node.parentNode) {
         while (dom_1.Dom.isText(node.nextSibling)) {
-            if (node.nextSibling.nodeValue !== null) {
+            if (node.nextSibling.nodeValue != null) {
                 node.nodeValue += node.nextSibling.nodeValue;
             }
             node.nodeValue = node.nodeValue.replace(constants_1.INVISIBLE_SPACE_REG_EXP(), '');
@@ -6710,7 +6678,7 @@ function normalizeCssValue(key, value) {
                 case 'heavy':
                     return 900;
             }
-            return checker_1.isNumeric(value) ? +value : value;
+            return checker_1.isNumeric(value) ? Number(value) : value;
     }
     if (/color/i.test(key) && /^rgb/i.test(value.toString())) {
         return color_1.colorToHex(value.toString()) || value;
@@ -7171,7 +7139,7 @@ var css = function (element, key, value, onlyStyleMode) {
                 _value = parseInt(_value.toString(), 10) + 'px';
             }
             if (_value !== undefined &&
-                (_value === null ||
+                (_value == null ||
                     exports.css(elm, _key, undefined, true) !==
                         normalize_1.normalizeCssValue(_key, _value))) {
                 elm.style[_key] = _value;
@@ -7548,8 +7516,23 @@ var tslib_1 = __webpack_require__(7);
 var helpers_1 = __webpack_require__(10);
 var Async = (function () {
     function Async() {
+        var _this = this;
+        var _a, _b, _c, _d;
         this.timers = new Map();
         this.promisesRejections = new Set();
+        this.requestsIdle = new Set();
+        this.requestIdleCallbackNative = (_b = (_a = window['requestIdleCallback']) === null || _a === void 0 ? void 0 : _a.bind(window)) !== null && _b !== void 0 ? _b : (function (callback) {
+            var start = Date.now();
+            return _this.setTimeout(function () {
+                callback({
+                    didTimeout: false,
+                    timeRemaining: function () { return Math.max(0, 50 - (Date.now() - start)); }
+                });
+            }, 1);
+        });
+        this.cancelIdleCallbackNative = (_d = (_c = window['cancelIdleCallback']) === null || _c === void 0 ? void 0 : _c.bind(window)) !== null && _d !== void 0 ? _d : (function (request) {
+            _this.clearTimeout(request);
+        });
         this.isDestructed = false;
     }
     Async.prototype.setTimeout = function (callback, timeout) {
@@ -7676,8 +7659,20 @@ var Async = (function () {
         var t = {};
         return Promise.race([p, t]).then(function (v) { return (v === t ? 'pending' : 'fulfilled'); }, function () { return 'rejected'; });
     };
+    Async.prototype.requestIdleCallback = function (callback) {
+        var request = this.requestIdleCallbackNative(callback);
+        this.requestsIdle.add(request);
+        return request;
+    };
+    Async.prototype.cancelIdleCallback = function (request) {
+        this.requestsIdle.delete(request);
+        return this.cancelIdleCallbackNative(request);
+    };
     Async.prototype.clear = function () {
         var _this = this;
+        this.requestsIdle.forEach(function (key) {
+            _this.cancelIdleCallback(key);
+        });
         this.timers.forEach(function (key) {
             helpers_1.clearTimeout(_this.timers.get(key));
         });
@@ -8293,7 +8288,7 @@ var UIElement = (function (_super) {
                 cl.remove(className);
             }
         });
-        value !== null &&
+        value != null &&
             value !== '' &&
             cl.add(mod + "_" + value.toString().toLowerCase());
         this.mods[name] = value;
@@ -8484,7 +8479,7 @@ var UIButton = (function (_super) {
         this.text = this.j.c.span(cn + '__text');
         button.appendChild(this.icon);
         button.appendChild(this.text);
-        this.j.e.on(button, "click", this.onActionFire);
+        this.j.e.on(button, 'click', this.onActionFire);
         return button;
     };
     UIButton.prototype.destruct = function () {
@@ -9328,7 +9323,7 @@ var Dialog = (function (_super) {
     };
     Dialog.prototype.setFooter = function (content) {
         this.setElements(this.dialogbox_footer, content);
-        this.dialog.classList.toggle('jodit-dialog_footer_true', !!content);
+        this.dialog.classList.toggle('jodit-dialog_footer_true', Boolean(content));
         return this;
     };
     Dialog.prototype.getZIndex = function () {
@@ -9515,6 +9510,7 @@ var ViewWithToolbar = (function (_super) {
         _this.isJodit = isJodit;
         _this.toolbar = factory_1.makeCollection(_this);
         _this.defaultToolbarContainer = _this.c.div('jodit-toolbar__box');
+        _this.registeredButtons = new Set();
         _this.groupToButtons = {};
         _this.e.on('beforeToolbarBuild', _this.beforeToolbarBuild);
         return _this;
@@ -9551,6 +9547,7 @@ var ViewWithToolbar = (function (_super) {
     };
     ViewWithToolbar.prototype.registerButton = function (btn) {
         var _a;
+        this.registeredButtons.add(btn);
         var group = (_a = btn.group) !== null && _a !== void 0 ? _a : 'other';
         if (!this.groupToButtons[group]) {
             this.groupToButtons[group] = [];
@@ -9565,6 +9562,7 @@ var ViewWithToolbar = (function (_super) {
     };
     ViewWithToolbar.prototype.unregisterButton = function (btn) {
         var _a;
+        this.registeredButtons.delete(btn);
         var groupName = (_a = btn.group) !== null && _a !== void 0 ? _a : 'other', group = this.groupToButtons[groupName];
         if (group) {
             var index = group.indexOf(btn.name);
@@ -9648,7 +9646,7 @@ var View = (function (_super) {
         _this.isJodit = isJodit;
         _this.isView = true;
         _this.components = new Set();
-        _this.version = "3.5.1";
+        _this.version = "3.5.2";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.OPTIONS = View.defaultOptions;
@@ -9797,7 +9795,7 @@ var View = (function (_super) {
         return mi.get(moduleName);
     };
     View.prototype.beforeDestruct = function () {
-        this.e.fire(modules_1.STATUSES.beforeDestruct);
+        this.e.fire(modules_1.STATUSES.beforeDestruct, this);
         this.components.forEach(function (component) {
             if (helpers_1.isDestructable(component) && !component.isInDestruct) {
                 component.destruct();
@@ -9957,7 +9955,7 @@ var LocalStorageProvider = (function () {
         catch (_a) { }
     };
     LocalStorageProvider.prototype.exists = function (key) {
-        return this.get(key) !== null;
+        return this.get(key) != null;
     };
     LocalStorageProvider.prototype.clear = function () {
         try {
@@ -10416,7 +10414,7 @@ var UIInput = (function (_super) {
     };
     Object.defineProperty(UIInput.prototype, "error", {
         set: function (value) {
-            this.setMod('has-error', !!value);
+            this.setMod('has-error', Boolean(value));
             if (!value) {
                 dom_1.Dom.safeRemove(this.__errorBox);
             }
@@ -10613,7 +10611,7 @@ var UISelect = (function (_super) {
     };
     Object.defineProperty(UISelect.prototype, "error", {
         set: function (value) {
-            this.setMod('has-error', !!value);
+            this.setMod('has-error', Boolean(value));
             if (!value) {
                 dom_1.Dom.safeRemove(this.__errorBox);
             }
@@ -11045,7 +11043,7 @@ var ToolbarButton = (function (_super) {
         });
         container.appendChild(button);
         this.trigger = this.j.c.fromHTML("<span role=\"trigger\" class=\"" + cn + "__trigger\">" + ui_1.Icon.get('chevron') + "</span>");
-        this.j.e.on(this.trigger, "click", this.onTriggerClick.bind(this));
+        this.j.e.on(this.trigger, 'click', this.onTriggerClick.bind(this));
         return container;
     };
     ToolbarButton.prototype.focus = function () {
@@ -11488,7 +11486,7 @@ var Plugin = (function (_super) {
         return _this;
     }
     Plugin.prototype.className = function () {
-        return "";
+        return '';
     };
     Plugin.prototype.init = function (jodit) {
     };
@@ -11777,12 +11775,12 @@ var FileBrowser = (function (_super) {
             'items',
             'permissions'
         ].forEach(function (key) {
-            if (_this.options[key] !== null) {
+            if (_this.options[key] != null) {
                 _this.options[key] = helpers_1.extend(true, {}, _this.o.ajax, _this.options[key]);
             }
         });
         var view = _this.storage.get(consts_1.F_CLASS + '_view');
-        if (view && _this.o.view === null) {
+        if (view && _this.o.view == null) {
             self.state.view = view === 'list' ? 'list' : 'tiles';
         }
         else {
@@ -12532,7 +12530,7 @@ var DataProvider = (function () {
     DataProvider.prototype.canI = function (action) {
         var rule = 'allow' + action;
         if (false) {}
-        return (this.__currentPermissions === null ||
+        return (this.__currentPermissions == null ||
             this.__currentPermissions[rule] === undefined ||
             this.__currentPermissions[rule]);
     };
@@ -13492,7 +13490,7 @@ var ImageEditor = (function (_super) {
             });
             self.j.e
                 .on(helpers_1.toArray(_this.editor.querySelectorAll("." + jie + "__slider-title")), 'click', _this.onTitleModeClick)
-                .on([widthInput, heightInput], "input", _this.onChangeSizeInput);
+                .on([widthInput, heightInput], 'input', _this.onChangeSizeInput);
             var _b = helpers_1.refs(_this.editor), keepAspectRatioResize = _b.keepAspectRatioResize, keepAspectRatioCrop = _b.keepAspectRatioCrop;
             if (keepAspectRatioResize) {
                 keepAspectRatioResize.addEventListener('change', function () {
@@ -13693,14 +13691,14 @@ var ImageEditor = (function (_super) {
             self.height = self.image.offsetHeight;
         }
         self.j.e
-            .on(this.j.ow, "mousemove", this.onGlobalMouseMove)
-            .one(this.j.ow, "mouseup", this.onGlobalMouseUp);
+            .on(this.j.ow, 'mousemove', this.onGlobalMouseMove)
+            .one(this.j.ow, 'mouseup', this.onGlobalMouseUp);
     };
     ImageEditor.prototype.onGlobalMouseUp = function (e) {
         if (this.clicked) {
             this.clicked = false;
             e.stopImmediatePropagation();
-            this.j.e.off(this.j.ow, "mousemove", this.onGlobalMouseMove);
+            this.j.e.off(this.j.ow, 'mousemove', this.onGlobalMouseMove);
         }
     };
     ImageEditor.prototype.onGlobalMouseMove = function (e) {
@@ -13840,8 +13838,8 @@ var ImageEditor = (function (_super) {
         dom_1.Dom.safeRemove(this.editor);
         if (this.j.e) {
             this.j.e
-                .off(this.j.ow, "mousemove", this.onGlobalMouseMove)
-                .off(this.j.ow, "mouseup", this.onGlobalMouseUp)
+                .off(this.j.ow, 'mousemove', this.onGlobalMouseMove)
+                .off(this.j.ow, 'mouseup', this.onGlobalMouseUp)
                 .off(this.ow, "." + jie)
                 .off("." + jie);
         }
@@ -14130,7 +14128,7 @@ var Snapshot = (function (_super) {
     Snapshot.strokeOffset = function (elm, offset) {
         while (dom_1.Dom.isText(elm)) {
             elm = elm.previousSibling;
-            if (dom_1.Dom.isText(elm) && elm.textContent !== null) {
+            if (dom_1.Dom.isText(elm) && elm.textContent != null) {
                 offset += elm.textContent.length;
             }
         }
@@ -14649,7 +14647,7 @@ var ApplyStyle = (function () {
             (elmHasSameStyle && this.isNormalNode(elm)));
     };
     ApplyStyle.prototype.isNormalNode = function (elm) {
-        return Boolean(elm !== null &&
+        return Boolean(elm != null &&
             !dom_1.Dom.isEmptyTextNode(elm) &&
             !this.jodit.s.isMarker(elm));
     };
@@ -14974,9 +14972,9 @@ var Select = (function () {
         marker.id =
             consts.MARKER_CLASS +
                 '_' +
-                +new Date() +
+                Number(new Date()) +
                 '_' +
-                ('' + Math.random()).slice(2);
+                (String(Math.random())).slice(2);
         marker.style.lineHeight = '0';
         marker.style.display = 'none';
         marker.setAttribute('data-' + consts.MARKER_CLASS, atStart ? 'start' : 'end');
@@ -15263,7 +15261,7 @@ var Select = (function () {
         if (helpers_1.isString(url)) {
             image.setAttribute('src', url);
         }
-        if (defaultWidth !== null) {
+        if (defaultWidth != null) {
             var dw = defaultWidth.toString();
             if (dw &&
                 'auto' !== dw &&
@@ -17862,7 +17860,7 @@ module.exports = {
 	file: 'fichier',
 	Advanced: 'Avancé',
 	'Image properties': "Propriétés de l'image",
-	Cancel: 'Effacer',
+	Cancel: 'Annuler',
 	Ok: 'OK',
 	'Your code is similar to HTML. Keep as HTML?':
 		'Votre texte que vous essayez de coller est similaire au HTML. Collez-le en HTML?',
@@ -21177,7 +21175,7 @@ var addNewLine = (function (_super) {
             });
         };
         _this.canGetFocus = function (elm) {
-            return (elm !== null &&
+            return (elm != null &&
                 modules_1.Dom.isBlock(elm, _this.j.ew) &&
                 !/^(img|table|iframe|hr)$/i.test(elm.nodeName));
         };
@@ -21307,7 +21305,7 @@ var addNewLine = (function (_super) {
         editor.e
             .off(editor.editor, '.' + ns)
             .off(editor.container, '.' + ns)
-            .on([editor.ow, editor.ew, editor.editor], "scroll" + '.' + ns, this.hideForce)
+            .on([editor.ow, editor.ew, editor.editor], 'scroll' + '.' + ns, this.hideForce)
             .on(editor.editor, 'dblclick' + '.' + ns, this.onDblClickEditor)
             .on(editor.editor, 'click' + '.' + ns, this.hide)
             .on(editor.container, 'mouseleave' + '.' + ns, this.hide)
@@ -22214,7 +22212,7 @@ var cleanHtml = (function (_super) {
                 if (currentParagraph) {
                     modules_1.Dom.all(currentParagraph, function (node) {
                         if (node && modules_1.Dom.isText(node)) {
-                            if (node.nodeValue !== null &&
+                            if (node.nodeValue != null &&
                                 constants_1.INVISIBLE_SPACE_REG_EXP().test(node.nodeValue) &&
                                 node.nodeValue.replace(constants_1.INVISIBLE_SPACE_REG_EXP(), '').length !== 0) {
                                 node.nodeValue = node.nodeValue.replace(constants_1.INVISIBLE_SPACE_REG_EXP(), '');
@@ -22398,9 +22396,9 @@ var cleanHtml = (function (_super) {
             return true;
         }
         return (this.j.o.cleanHTML.removeEmptyElements &&
-            current !== null &&
+            current != null &&
             modules_1.Dom.isElement(node) &&
-            node.nodeName.match(constants_1.IS_INLINE) !== null &&
+            node.nodeName.match(constants_1.IS_INLINE) != null &&
             !this.j.s.isMarker(node) &&
             helpers_1.trim(node.innerHTML).length === 0 &&
             !modules_1.Dom.isOrContains(node, current));
@@ -23882,7 +23880,7 @@ var dom_1 = __webpack_require__(33);
 var helpers_1 = __webpack_require__(10);
 var plugin_1 = __webpack_require__(174);
 var helpers_2 = __webpack_require__(240);
-var global_1 = __webpack_require__(31);
+var decorators_1 = __webpack_require__(38);
 var DragAndDrop = (function (_super) {
     tslib_1.__extends(DragAndDrop, _super);
     function DragAndDrop() {
@@ -23892,122 +23890,6 @@ var DragAndDrop = (function (_super) {
         _this.startDragPoint = { x: 0, y: 0 };
         _this.draggable = null;
         _this.bufferRange = null;
-        _this.onDragEnd = function () {
-            if (_this.draggable) {
-                dom_1.Dom.safeRemove(_this.draggable);
-                _this.draggable = null;
-            }
-            _this.isCopyMode = false;
-        };
-        _this.onDrag = function (event) {
-            if (_this.draggable) {
-                if (!_this.draggable.parentNode) {
-                    global_1.getContainer(_this.j, DragAndDrop).appendChild(_this.draggable);
-                }
-                _this.j.e.fire('hidePopup');
-                helpers_1.css(_this.draggable, {
-                    left: event.clientX + 20,
-                    top: event.clientY + 20
-                });
-                _this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
-                event.preventDefault();
-                event.stopPropagation();
-            }
-        };
-        _this.onDrop = function (event) {
-            if (!event.dataTransfer ||
-                !event.dataTransfer.files ||
-                !event.dataTransfer.files.length) {
-                if (!_this.isFragmentFromEditor && !_this.draggable) {
-                    _this.j.e.fire('paste', event);
-                    event.preventDefault();
-                    event.stopPropagation();
-                    return false;
-                }
-                var sel = _this.j.s.sel;
-                var range = _this.bufferRange ||
-                    (sel && sel.rangeCount ? sel.getRangeAt(0) : null);
-                var fragment = null;
-                if (!_this.draggable && range) {
-                    fragment = _this.isCopyMode
-                        ? range.cloneContents()
-                        : range.extractContents();
-                }
-                else if (_this.draggable) {
-                    if (_this.isCopyMode) {
-                        var _a = helpers_1.attr(_this.draggable, '-is-file') === '1'
-                            ? ['a', 'href']
-                            : ['img', 'src'], tagName = _a[0], field = _a[1];
-                        fragment = _this.j.createInside.element(tagName);
-                        fragment.setAttribute(field, helpers_1.attr(_this.draggable, 'data-src') ||
-                            helpers_1.attr(_this.draggable, 'src') ||
-                            '');
-                        if (tagName === 'a') {
-                            fragment.textContent = helpers_1.attr(fragment, field) || '';
-                        }
-                    }
-                    else {
-                        fragment = helpers_1.dataBind(_this.draggable, 'target');
-                    }
-                }
-                else if (_this.getText(event)) {
-                    fragment = _this.j.createInside.fromHTML(_this.getText(event));
-                }
-                sel && sel.removeAllRanges();
-                _this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
-                if (fragment) {
-                    _this.j.s.insertNode(fragment, false, false);
-                    if (range && fragment.firstChild && fragment.lastChild) {
-                        range.setStartBefore(fragment.firstChild);
-                        range.setEndAfter(fragment.lastChild);
-                        _this.j.s.selectRange(range);
-                        _this.j.e.fire('synchro');
-                    }
-                    if (dom_1.Dom.isTag(fragment, 'img') && _this.j.events) {
-                        _this.j.e.fire('afterInsertImage', fragment);
-                    }
-                }
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            _this.isFragmentFromEditor = false;
-        };
-        _this.onDragStart = function (event) {
-            var target = event.target;
-            _this.onDragEnd();
-            _this.isFragmentFromEditor = dom_1.Dom.isOrContains(_this.j.editor, target, true);
-            _this.isCopyMode = _this.isFragmentFromEditor ? helpers_1.ctrlKey(event) : true;
-            if (_this.isFragmentFromEditor) {
-                var sel = _this.j.s.sel;
-                var range = sel && sel.rangeCount ? sel.getRangeAt(0) : null;
-                if (range) {
-                    _this.bufferRange = range.cloneRange();
-                }
-            }
-            else {
-                _this.bufferRange = null;
-            }
-            _this.startDragPoint.x = event.clientX;
-            _this.startDragPoint.y = event.clientY;
-            if (dom_1.Dom.isElement(target) &&
-                target.classList.contains('jodit-filebrowser__files-item')) {
-                target = target.querySelector('img');
-            }
-            if (dom_1.Dom.isTag(target, 'img')) {
-                _this.draggable = target.cloneNode(true);
-                helpers_1.dataBind(_this.draggable, 'target', target);
-                helpers_1.css(_this.draggable, {
-                    'z-index': 100000000000000,
-                    'pointer-events': 'none',
-                    position: 'fixed',
-                    display: 'inlin-block',
-                    left: _this.startDragPoint.x,
-                    top: _this.startDragPoint.y,
-                    width: target.offsetWidth,
-                    height: target.offsetHeight
-                });
-            }
-        };
         _this.getText = function (event) {
             var dt = helpers_2.getDataTransfer(event);
             return dt ? dt.getData(constants_1.TEXT_HTML) || dt.getData(constants_1.TEXT_PLAIN) : null;
@@ -24016,14 +23898,126 @@ var DragAndDrop = (function (_super) {
     }
     DragAndDrop.prototype.afterInit = function () {
         this.j.e
-            .off(window, '.DragAndDrop')
-            .off('.DragAndDrop')
-            .off([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart)
-            .on(window, 'dragover.DragAndDrop', this.onDrag)
-            .on([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart)
+            .on([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart);
+    };
+    DragAndDrop.prototype.onDragStart = function (event) {
+        var target = event.target;
+        this.onDragEnd();
+        this.isFragmentFromEditor = dom_1.Dom.isOrContains(this.j.editor, target, true);
+        this.isCopyMode = this.isFragmentFromEditor ? helpers_1.ctrlKey(event) : true;
+        if (this.isFragmentFromEditor) {
+            var sel = this.j.s.sel;
+            var range = sel && sel.rangeCount ? sel.getRangeAt(0) : null;
+            if (range) {
+                this.bufferRange = range.cloneRange();
+            }
+        }
+        else {
+            this.bufferRange = null;
+        }
+        this.startDragPoint.x = event.clientX;
+        this.startDragPoint.y = event.clientY;
+        if (dom_1.Dom.isElement(target) &&
+            target.classList.contains('jodit-filebrowser__files-item')) {
+            target = target.querySelector('img');
+        }
+        if (dom_1.Dom.isTag(target, 'img')) {
+            this.draggable = target.cloneNode(true);
+            helpers_1.dataBind(this.draggable, 'target', target);
+        }
+        this.addDragListeners();
+    };
+    ;
+    DragAndDrop.prototype.addDragListeners = function () {
+        this.j.e
+            .on('dragover', this.onDrag)
             .on('drop.DragAndDrop', this.onDrop)
             .on(window, 'dragend.DragAndDrop drop.DragAndDrop mouseup.DragAndDrop', this.onDragEnd);
     };
+    DragAndDrop.prototype.removeDragListeners = function () {
+        this.j.e
+            .off('dragover', this.onDrag)
+            .off('drop.DragAndDrop', this.onDrop)
+            .off(window, 'dragend.DragAndDrop drop.DragAndDrop mouseup.DragAndDrop', this.onDragEnd);
+    };
+    DragAndDrop.prototype.onDrag = function (event) {
+        if (this.draggable) {
+            this.j.e.fire('hidePopup');
+            this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    };
+    ;
+    DragAndDrop.prototype.onDragEnd = function () {
+        if (this.draggable) {
+            dom_1.Dom.safeRemove(this.draggable);
+            this.draggable = null;
+        }
+        this.isCopyMode = false;
+        this.removeDragListeners();
+    };
+    ;
+    DragAndDrop.prototype.onDrop = function (event) {
+        if (!event.dataTransfer ||
+            !event.dataTransfer.files ||
+            !event.dataTransfer.files.length) {
+            if (!this.isFragmentFromEditor && !this.draggable) {
+                this.j.e.fire('paste', event);
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+            }
+            var sel = this.j.s.sel;
+            var range = this.bufferRange ||
+                (sel && sel.rangeCount ? sel.getRangeAt(0) : null);
+            var fragment = null;
+            if (!this.draggable && range) {
+                fragment = this.isCopyMode
+                    ? range.cloneContents()
+                    : range.extractContents();
+            }
+            else if (this.draggable) {
+                if (this.isCopyMode) {
+                    var _a = helpers_1.attr(this.draggable, '-is-file') === '1'
+                        ? ['a', 'href']
+                        : ['img', 'src'], tagName = _a[0], field = _a[1];
+                    fragment = this.j.createInside.element(tagName);
+                    fragment.setAttribute(field, helpers_1.attr(this.draggable, 'data-src') ||
+                        helpers_1.attr(this.draggable, 'src') ||
+                        '');
+                    if (tagName === 'a') {
+                        fragment.textContent = helpers_1.attr(fragment, field) || '';
+                    }
+                }
+                else {
+                    fragment = helpers_1.dataBind(this.draggable, 'target');
+                }
+            }
+            else if (this.getText(event)) {
+                fragment = this.j.createInside.fromHTML(this.getText(event));
+            }
+            sel && sel.removeAllRanges();
+            this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
+            if (fragment) {
+                this.j.s.insertNode(fragment, false, false);
+                if (range && fragment.firstChild && fragment.lastChild) {
+                    range.setStartBefore(fragment.firstChild);
+                    range.setEndAfter(fragment.lastChild);
+                    this.j.s.selectRange(range);
+                    this.j.e.fire('synchro');
+                }
+                if (dom_1.Dom.isTag(fragment, 'img') && this.j.events) {
+                    this.j.e.fire('afterInsertImage', fragment);
+                }
+            }
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        this.isFragmentFromEditor = false;
+        this.removeDragListeners();
+    };
+    ;
     DragAndDrop.prototype.beforeDestruct = function () {
         this.onDragEnd();
         this.j.e
@@ -24031,6 +24025,18 @@ var DragAndDrop = (function (_super) {
             .off('.DragAndDrop')
             .off([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart);
     };
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], DragAndDrop.prototype, "onDragStart", null);
+    tslib_1.__decorate([
+        decorators_1.throttle(function (ctx) { return ctx.j.defaultTimeout / 10; })
+    ], DragAndDrop.prototype, "onDrag", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], DragAndDrop.prototype, "onDragEnd", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], DragAndDrop.prototype, "onDrop", null);
     return DragAndDrop;
 }(plugin_1.Plugin));
 exports.DragAndDrop = DragAndDrop;
@@ -24054,126 +24060,148 @@ var helpers_1 = __webpack_require__(10);
 var plugin_1 = __webpack_require__(174);
 var dom_1 = __webpack_require__(33);
 var global_1 = __webpack_require__(31);
+var decorators_1 = __webpack_require__(38);
 var DragAndDropElement = (function (_super) {
     tslib_1.__extends(DragAndDropElement, _super);
     function DragAndDropElement() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.dragList = [];
-        _this.isCopyMode = false;
         _this.draggable = null;
         _this.wasMoved = false;
+        _this.isCopyMode = false;
         _this.diffStep = 10;
         _this.startX = 0;
         _this.startY = 0;
-        _this.onDragStart = function (event) {
-            var target = event.target, last = null;
-            if (!_this.dragList.length) {
-                return;
-            }
-            do {
-                if (_this.dragList.includes(target.nodeName.toLowerCase())) {
-                    if (!last ||
-                        (target.firstChild === last && target.lastChild === last)) {
-                        last = target;
-                    }
-                }
-                target = target.parentNode;
-            } while (target && target !== _this.j.editor);
-            if (!last) {
-                return;
-            }
-            _this.startX = event.clientX;
-            _this.startY = event.clientY;
-            _this.isCopyMode = helpers_1.ctrlKey(event);
-            _this.onDragEnd();
-            _this.draggable = last.cloneNode(true);
-            helpers_1.dataBind(_this.draggable, 'target', last);
-            _this.j.e.on(_this.j.editor, 'mousemove touchmove', _this.onDrag);
-        };
-        _this.onDrag = _this.j.async.throttle(function (event) {
-            if (!_this.draggable) {
-                return;
-            }
-            var x = event.clientX, y = event.clientY;
-            if (Math.sqrt(Math.pow(x - _this.startX, 2) + Math.pow(y - _this.startY, 2)) < _this.diffStep) {
-                return;
-            }
-            _this.wasMoved = true;
-            _this.j.e.fire('hidePopup hideResizer');
-            if (!_this.draggable.parentNode) {
-                helpers_1.css(_this.draggable, {
-                    zIndex: 10000000000000,
-                    pointerEvents: 'none',
-                    position: 'fixed',
-                    display: 'inline-block',
-                    left: event.clientX,
-                    top: event.clientY,
-                    width: _this.draggable.offsetWidth,
-                    height: _this.draggable.offsetHeight
-                });
-                global_1.getContainer(_this.j, DragAndDropElement).appendChild(_this.draggable);
-            }
-            helpers_1.css(_this.draggable, {
-                left: event.clientX,
-                top: event.clientY
-            });
-            _this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
-        }, _this.j.defaultTimeout);
-        _this.onDragEnd = function () {
-            if (_this.isInDestruct) {
-                return;
-            }
-            if (_this.draggable) {
-                dom_1.Dom.safeRemove(_this.draggable);
-                _this.draggable = null;
-                _this.wasMoved = false;
-                _this.j.e.off(_this.j.editor, 'mousemove touchmove', _this.onDrag);
-            }
-        };
-        _this.onDrop = function () {
-            if (!_this.draggable || !_this.wasMoved) {
-                _this.onDragEnd();
-                return;
-            }
-            var fragment = helpers_1.dataBind(_this.draggable, 'target');
-            _this.onDragEnd();
-            if (_this.isCopyMode) {
-                fragment = fragment.cloneNode(true);
-            }
-            var parentElement = fragment.parentElement;
-            _this.j.s.insertNode(fragment, true, false);
-            if (parentElement && dom_1.Dom.isEmpty(parentElement)) {
-                dom_1.Dom.safeRemove(parentElement);
-            }
-            if (dom_1.Dom.isTag(fragment, 'img') && _this.j.e) {
-                _this.j.e.fire('afterInsertImage', fragment);
-            }
-            _this.j.e.fire('synchro');
-        };
         return _this;
     }
     DragAndDropElement.prototype.afterInit = function () {
         this.dragList = this.j.o.draggableTags
             ? helpers_1.splitArray(this.j.o.draggableTags)
-                .filter(function (item) { return item; })
+                .filter(Boolean)
                 .map(function (item) { return item.toLowerCase(); })
             : [];
         if (!this.dragList.length) {
             return;
         }
+        this.j.e.on('mousedown touchstart dragstart', this.onDragStart);
+    };
+    DragAndDropElement.prototype.onDragStart = function (event) {
+        var _this = this;
+        if (event.type === 'dragstart' && this.draggable) {
+            return false;
+        }
+        var target = event.target;
+        if (!this.dragList.length || !target) {
+            return;
+        }
+        var matched = function (node) {
+            return node && _this.dragList.includes(node.nodeName.toLowerCase());
+        };
+        var lastTarget = dom_1.Dom.furthest(target, matched, this.j.editor) ||
+            (matched(target) ? target : null);
+        if (!lastTarget) {
+            return;
+        }
+        this.startX = event.clientX;
+        this.startY = event.clientY;
+        this.isCopyMode = helpers_1.ctrlKey(event);
+        this.onDragEnd();
+        this.draggable = lastTarget.cloneNode(true);
+        helpers_1.dataBind(this.draggable, 'target', lastTarget);
+        this.addDragListeners();
+    };
+    DragAndDropElement.prototype.onDrag = function (event) {
+        var _a, _b;
+        if (!this.draggable) {
+            return;
+        }
+        var x = event.clientX, y = event.clientY;
+        if (Math.sqrt(Math.pow(x - this.startX, 2) + Math.pow(y - this.startY, 2)) < this.diffStep) {
+            return;
+        }
+        this.wasMoved = true;
+        this.j.e.fire('hidePopup hideResizer');
+        if (!this.draggable.parentNode) {
+            var target = helpers_1.dataBind(this.draggable, 'target');
+            helpers_1.css(this.draggable, {
+                zIndex: 10000000000000,
+                pointerEvents: 'none',
+                pointer: 'drag',
+                position: 'fixed',
+                display: 'inline-block',
+                left: event.clientX,
+                top: event.clientY,
+                width: (_a = target === null || target === void 0 ? void 0 : target.offsetWidth) !== null && _a !== void 0 ? _a : 100,
+                height: (_b = target === null || target === void 0 ? void 0 : target.offsetHeight) !== null && _b !== void 0 ? _b : 100
+            });
+            global_1.getContainer(this.j, DragAndDropElement).appendChild(this.draggable);
+        }
+        helpers_1.css(this.draggable, {
+            left: event.clientX,
+            top: event.clientY
+        });
+        this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
+    };
+    DragAndDropElement.prototype.onDragEnd = function () {
+        if (this.isInDestruct) {
+            return;
+        }
+        if (this.draggable) {
+            dom_1.Dom.safeRemove(this.draggable);
+            this.draggable = null;
+            this.wasMoved = false;
+            this.removeDragListeners();
+        }
+    };
+    DragAndDropElement.prototype.onDrop = function () {
+        if (!this.draggable || !this.wasMoved) {
+            this.onDragEnd();
+            return;
+        }
+        var fragment = helpers_1.dataBind(this.draggable, 'target');
+        this.onDragEnd();
+        if (this.isCopyMode) {
+            fragment = fragment.cloneNode(true);
+        }
+        var parentElement = fragment.parentElement;
+        this.j.s.insertNode(fragment, true, false);
+        if (parentElement && dom_1.Dom.isEmpty(parentElement)) {
+            dom_1.Dom.safeRemove(parentElement);
+        }
+        if (dom_1.Dom.isTag(fragment, 'img') && this.j.e) {
+            this.j.e.fire('afterInsertImage', fragment);
+        }
+        this.j.e.fire('synchro');
+    };
+    DragAndDropElement.prototype.addDragListeners = function () {
         this.j.e
-            .on(this.j.editor, 'mousedown touchstart dragstart', this.onDragStart)
+            .on(this.j.editor, 'mousemove touchmove', this.onDrag)
             .on('mouseup touchend', this.onDrop)
             .on([this.j.ew, this.ow], 'mouseup touchend', this.onDragEnd);
     };
-    DragAndDropElement.prototype.beforeDestruct = function () {
-        this.onDragEnd();
+    DragAndDropElement.prototype.removeDragListeners = function () {
         this.j.e
             .off(this.j.editor, 'mousemove touchmove', this.onDrag)
-            .off(this.j.editor, 'mousedown touchstart dragstart', this.onDragStart)
             .off('mouseup touchend', this.onDrop)
-            .off(window, 'mouseup touchend', this.onDragEnd);
+            .off([this.j.ew, this.ow], 'mouseup touchend', this.onDragEnd);
     };
+    DragAndDropElement.prototype.beforeDestruct = function () {
+        this.onDragEnd();
+        this.j.e.off('mousedown touchstart dragstart', this.onDragStart);
+        this.removeDragListeners();
+    };
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], DragAndDropElement.prototype, "onDragStart", null);
+    tslib_1.__decorate([
+        decorators_1.throttle(function (ctx) { return ctx.j.defaultTimeout / 10; })
+    ], DragAndDropElement.prototype, "onDrag", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], DragAndDropElement.prototype, "onDragEnd", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], DragAndDropElement.prototype, "onDrop", null);
     return DragAndDropElement;
 }(plugin_1.Plugin));
 exports.DragAndDropElement = DragAndDropElement;
@@ -26148,6 +26176,7 @@ var inlinePopup = (function (_super) {
     };
     inlinePopup.prototype.hidePopup = function (type) {
         if (!type || type === this.type) {
+            console.log('hidePopup', new Error());
             this.popup.close();
         }
     };
@@ -26166,6 +26195,22 @@ var inlinePopup = (function (_super) {
     inlinePopup.prototype.afterInit = function (jodit) {
         var _this = this;
         this.j.e
+            .on('getDiffButtons.mobile', function (toolbar) {
+            if (_this.toolbar === toolbar) {
+                var names_1 = _this.toolbar.getButtonsNames();
+                return helpers_1.toArray(jodit.registeredButtons)
+                    .filter(function (btn) {
+                    return !_this.j.o.toolbarInlineDisabledButtons.includes(btn.name);
+                })
+                    .filter(function (item) {
+                    var name = helpers_1.isString(item) ? item : item.name;
+                    return (name &&
+                        name !== '|' &&
+                        name !== '\n' &&
+                        !names_1.includes(name));
+                });
+            }
+        })
             .on('hidePopup', this.hidePopup)
             .on('showPopup', function (elm, rect, type) {
             _this.showPopup(rect, type || (helpers_1.isString(elm) ? elm : elm.nodeName), helpers_1.isString(elm) ? undefined : elm);
@@ -26177,7 +26222,12 @@ var inlinePopup = (function (_super) {
     inlinePopup.prototype.onSelectionStart = function () {
         this.snapRange = this.j.s.range.cloneRange();
     };
-    inlinePopup.prototype.onSelectionEnd = function () {
+    inlinePopup.prototype.onSelectionEnd = function (e) {
+        if (e &&
+            e.target &&
+            modules_1.UIElement.closestElement(e.target, popup_1.Popup)) {
+            return;
+        }
         var snapRange = this.snapRange, range = this.j.s.range;
         if (!snapRange ||
             range.collapsed ||
@@ -26225,7 +26275,7 @@ var inlinePopup = (function (_super) {
         jodit.e
             .off('showPopup')
             .off('click', this.onClick)
-            .off([this.j.ew, this.j.ow], 'mouseup', this.onSelectionEnd);
+            .off([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
     };
     tslib_1.__decorate([
         decorators_1.autobind
@@ -26275,6 +26325,7 @@ var config_1 = __webpack_require__(8);
 config_1.Config.prototype.toolbarInline = true;
 config_1.Config.prototype.toolbarInlineForSelection = false;
 config_1.Config.prototype.toolbarInlineDisableFor = [];
+config_1.Config.prototype.toolbarInlineDisabledButtons = ['source'];
 config_1.Config.prototype.popup = {
     a: __webpack_require__(279)/* .default */ .Z,
     img: __webpack_require__(280)/* .default */ .Z,
@@ -26853,22 +26904,26 @@ exports.limit = limit;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.link = void 0;
+var tslib_1 = __webpack_require__(7);
 var config_1 = __webpack_require__(8);
 var dom_1 = __webpack_require__(33);
 var helpers_1 = __webpack_require__(10);
 var template_1 = __webpack_require__(285);
+var plugin_1 = __webpack_require__(174);
+var decorators_1 = __webpack_require__(38);
+var modules_1 = __webpack_require__(115);
 config_1.Config.prototype.link = {
     formTemplate: template_1.formTemplate,
     followOnDblClick: false,
     processVideoLink: true,
     processPastedLink: true,
-    removeLinkAfterFormat: true,
     noFollowCheckbox: true,
     openInNewTabCheckbox: true,
     modeClassName: 'input',
     selectMultipleClassName: true,
     selectSizeClassName: 3,
-    selectOptionsClassName: []
+    selectOptionsClassName: [],
+    hotkeys: ['ctrl+k', 'cmd+k']
 };
 config_1.Config.prototype.controls.unlink = {
     exec: function (editor, current) {
@@ -26887,18 +26942,91 @@ config_1.Config.prototype.controls.link = {
         return Boolean(current && dom_1.Dom.closest(current, 'a', editor.editor));
     },
     popup: function (editor, current, self, close) {
-        var i18n = editor.i18n.bind(editor), _a = editor.o.link, openInNewTabCheckbox = _a.openInNewTabCheckbox, noFollowCheckbox = _a.noFollowCheckbox, formTemplate = _a.formTemplate, formClassName = _a.formClassName, modeClassName = _a.modeClassName;
-        var html = formTemplate(editor), form = helpers_1.isString(html)
-            ? editor.c.fromHTML(html, {
+        return editor.e.fire('generateLinkForm.link', current, close);
+    },
+    tags: ['a'],
+    tooltip: 'Insert link'
+};
+var link = (function (_super) {
+    tslib_1.__extends(link, _super);
+    function link() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.buttons = [
+            {
+                name: 'link',
+                group: 'insert'
+            }
+        ];
+        return _this;
+    }
+    link.prototype.afterInit = function (jodit) {
+        var _this = this;
+        if (jodit.o.link.followOnDblClick) {
+            jodit.e.on('dblclick.link', this.onDblClickOnLink);
+        }
+        if (jodit.o.link.processPastedLink) {
+            jodit.e.on('processPaste.link', this.onProcessPasteLink);
+        }
+        jodit.e.on('generateLinkForm.link', this.generateForm);
+        jodit.registerCommand('openLinkDialog', {
+            exec: function () {
+                var dialog = new modules_1.Dialog({
+                    resizable: false
+                });
+                var htmlForm = _this.generateForm(jodit.s.current(), function () {
+                    dialog.close();
+                });
+                htmlForm.container.classList.add('jodit-dialog_alert');
+                dialog.setContent(htmlForm);
+                dialog.open();
+                jodit.async.requestIdleCallback(function () {
+                    var url_input = helpers_1.refs(htmlForm.container).url_input;
+                    url_input === null || url_input === void 0 ? void 0 : url_input.focus();
+                });
+            },
+            hotkeys: jodit.o.link.hotkeys
+        });
+    };
+    link.prototype.onDblClickOnLink = function (e) {
+        if (!dom_1.Dom.isTag(e.target, 'a')) {
+            return;
+        }
+        var href = helpers_1.attr(e.target, 'href');
+        if (href) {
+            location.href = href;
+            e.preventDefault();
+        }
+    };
+    link.prototype.onProcessPasteLink = function (ignore, html) {
+        var jodit = this.jodit;
+        if (helpers_1.isURL(html)) {
+            if (jodit.o.link.processVideoLink) {
+                var embed = helpers_1.convertMediaUrlToVideoEmbed(html);
+                if (embed !== html) {
+                    return jodit.createInside.fromHTML(embed);
+                }
+            }
+            var a = jodit.createInside.element('a');
+            a.setAttribute('href', html);
+            a.textContent = html;
+            jodit.e.stopPropagation('processPaste');
+            return a;
+        }
+    };
+    link.prototype.generateForm = function (current, close) {
+        var jodit = this.jodit;
+        var i18n = jodit.i18n.bind(jodit), _a = jodit.o.link, openInNewTabCheckbox = _a.openInNewTabCheckbox, noFollowCheckbox = _a.noFollowCheckbox, formTemplate = _a.formTemplate, formClassName = _a.formClassName, modeClassName = _a.modeClassName;
+        var html = formTemplate(jodit), form = helpers_1.isString(html)
+            ? jodit.c.fromHTML(html, {
                 target_checkbox_box: openInNewTabCheckbox,
                 nofollow_checkbox_box: noFollowCheckbox
             })
             : html, htmlForm = dom_1.Dom.isElement(form) ? form : form.container;
-        var elements = helpers_1.refs(htmlForm), insert = elements.insert, unlink = elements.unlink, content_input_box = elements.content_input_box, _b = elements, target_checkbox = _b.target_checkbox, nofollow_checkbox = _b.nofollow_checkbox, url_input = _b.url_input, currentElement = current, isImageContent = dom_1.Dom.isImage(currentElement, editor.ew);
+        var elements = helpers_1.refs(htmlForm), insert = elements.insert, unlink = elements.unlink, content_input_box = elements.content_input_box, _b = elements, target_checkbox = _b.target_checkbox, nofollow_checkbox = _b.nofollow_checkbox, url_input = _b.url_input, currentElement = current, isImageContent = dom_1.Dom.isImage(currentElement, jodit.ew);
         var content_input = elements.content_input;
         var className_input = elements.className_input, className_select = elements.className_select;
         if (!content_input) {
-            content_input = editor.c.element('input', {
+            content_input = jodit.c.element('input', {
                 type: 'hidden',
                 ref: 'content_input'
             });
@@ -26913,10 +27041,10 @@ config_1.Config.prototype.controls.link = {
         var getSelectionText = function () {
             return link
                 ? link.innerText
-                : helpers_1.stripTags(editor.s.range.cloneContents(), editor.ed);
+                : helpers_1.stripTags(jodit.s.range.cloneContents(), jodit.ed);
         };
-        if (current && dom_1.Dom.closest(current, 'a', editor.editor)) {
-            link = dom_1.Dom.closest(current, 'a', editor.editor);
+        if (current && dom_1.Dom.closest(current, 'a', jodit.editor)) {
+            link = dom_1.Dom.closest(current, 'a', jodit.editor);
         }
         else {
             link = false;
@@ -26947,7 +27075,7 @@ config_1.Config.prototype.controls.link = {
                                     for (var i = 0; i < className_select.options.length; i++) {
                                         var option = className_select.options.item(i);
                                         if ((option === null || option === void 0 ? void 0 : option.value) &&
-                                            option.value == className) {
+                                            option.value === className) {
                                             option.selected = true;
                                         }
                                     }
@@ -26968,14 +27096,14 @@ config_1.Config.prototype.controls.link = {
         else {
             dom_1.Dom.hide(unlink);
         }
-        var snapshot = editor.observer.snapshot.make();
+        var snapshot = jodit.observer.snapshot.make();
         if (unlink) {
-            editor.e.on(unlink, 'click', function (e) {
-                editor.observer.snapshot.restore(snapshot);
+            jodit.e.on(unlink, 'click', function (e) {
+                jodit.observer.snapshot.restore(snapshot);
                 if (link) {
                     dom_1.Dom.unwrap(link);
                 }
-                editor.setEditorValue();
+                jodit.setEditorValue();
                 close();
                 e.preventDefault();
             });
@@ -26987,15 +27115,15 @@ config_1.Config.prototype.controls.link = {
                 return false;
             }
             var links;
-            editor.observer.snapshot.restore(snapshot);
+            jodit.observer.snapshot.restore(snapshot);
             var textWasChanged = getSelectionText() !== content_input.value.trim();
             if (!link) {
-                if (!editor.s.isCollapsed()) {
-                    links = editor.s.wrapInTag('a');
+                if (!jodit.s.isCollapsed()) {
+                    links = jodit.s.wrapInTag('a');
                 }
                 else {
-                    var a = editor.createInside.element('a');
-                    editor.s.insertNode(a);
+                    var a = jodit.createInside.element('a');
+                    jodit.s.insertNode(a);
                     links = [a];
                 }
             }
@@ -27007,11 +27135,11 @@ config_1.Config.prototype.controls.link = {
                 helpers_1.attr(a, 'href', url_input.value);
                 if (modeClassName && (className_input !== null && className_input !== void 0 ? className_input : className_select)) {
                     if (modeClassName === 'input') {
-                        if (className_input.value == '' &&
+                        if (className_input.value === '' &&
                             a.hasAttribute('class')) {
                             helpers_1.attr(a, 'class', null);
                         }
-                        if (className_input.value != '') {
+                        if (className_input.value !== '') {
                             helpers_1.attr(a, 'class', className_input.value);
                         }
                     }
@@ -27044,12 +27172,12 @@ config_1.Config.prototype.controls.link = {
                     helpers_1.attr(a, 'rel', nofollow_checkbox.checked ? 'nofollow' : null);
                 }
             });
-            editor.setEditorValue();
+            jodit.setEditorValue();
             close();
             return false;
         };
         if (dom_1.Dom.isElement(form)) {
-            editor.e.on(form, 'submit', function (event) {
+            jodit.e.on(form, 'submit', function (event) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
                 onSubmit();
@@ -27060,74 +27188,24 @@ config_1.Config.prototype.controls.link = {
             form.onSubmit(onSubmit);
         }
         return form;
-    },
-    tags: ['a'],
-    tooltip: 'Insert link'
-};
-function link(jodit) {
-    jodit.registerButton({
-        name: 'link',
-        group: 'insert'
-    });
-    if (jodit.o.link.followOnDblClick) {
-        jodit.e.on('afterInit changePlace', function () {
-            jodit.e
-                .off('dblclick.link')
-                .on(jodit.editor, 'dblclick.link', function (e) {
-                if (!dom_1.Dom.isTag(e.target, 'a')) {
-                    return;
-                }
-                var href = helpers_1.attr(e.target, 'href');
-                if (href) {
-                    location.href = href;
-                    e.preventDefault();
-                }
-            });
-        });
-    }
-    if (jodit.o.link.processPastedLink) {
-        jodit.e.on('processPaste.link', function (event, html) {
-            if (helpers_1.isURL(html)) {
-                if (jodit.o.link.processVideoLink) {
-                    var embed = helpers_1.convertMediaUrlToVideoEmbed(html);
-                    if (embed !== html) {
-                        return jodit.createInside.fromHTML(embed);
-                    }
-                }
-                var a = jodit.createInside.element('a');
-                a.setAttribute('href', html);
-                a.textContent = html;
-                jodit.e.stopPropagation('processPaste');
-                return a;
-            }
-        });
-    }
-    if (jodit.o.link.removeLinkAfterFormat) {
-        jodit.e.on('afterCommand.link', function (command) {
-            var sel = jodit.selection;
-            var newtag, node;
-            if (command === 'removeFormat') {
-                node = sel.current();
-                if (node && !dom_1.Dom.isTag(node, 'a')) {
-                    node = dom_1.Dom.closest(node, 'a', jodit.editor);
-                }
-                if (dom_1.Dom.isTag(node, 'a')) {
-                    if (node.innerHTML === node.textContent) {
-                        newtag = jodit.createInside.text(node.innerHTML);
-                    }
-                    else {
-                        newtag = jodit.createInside.element('span');
-                        newtag.innerHTML = node.innerHTML;
-                    }
-                    if (node.parentNode) {
-                        node.parentNode.replaceChild(newtag, node);
-                        jodit.s.setCursorIn(newtag, true);
-                    }
-                }
-            }
-        });
-    }
-}
+    };
+    link.prototype.beforeDestruct = function (jodit) {
+        jodit.e
+            .off('generateLinkForm.link', this.generateForm)
+            .off('dblclick.link', this.onDblClickOnLink)
+            .off('processPaste.link', this.onProcessPasteLink);
+    };
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], link.prototype, "onDblClickOnLink", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], link.prototype, "onProcessPasteLink", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], link.prototype, "generateForm", null);
+    return link;
+}(plugin_1.Plugin));
 exports.link = link;
 
 
@@ -28369,7 +28447,7 @@ var search = (function (_super) {
         _this.current = null;
         _this.eachMap = function (node, callback, next) {
             dom_1.Dom.findWithCurrent(node, function (child) {
-                return !!child && callback(child);
+                return Boolean(child && callback(child));
             }, _this.j.editor, next ? 'nextSibling' : 'previousSibling', next ? 'firstChild' : 'lastChild');
         };
         _this.updateCounters = function () {
@@ -28452,7 +28530,7 @@ var search = (function (_super) {
                 };
                 _this.eachMap(start, function (elm) {
                     if (dom_1.Dom.isText(elm) &&
-                        elm.nodeValue !== null &&
+                        elm.nodeValue != null &&
                         elm.nodeValue.length) {
                         var value = elm.nodeValue;
                         if (!next && elm === range.startContainer) {
@@ -28486,7 +28564,7 @@ var search = (function (_super) {
                                 currentPartIndex +=
                                     elm.nodeValue.length - value.length;
                             }
-                            if (bound_1.startContainer === null) {
+                            if (bound_1.startContainer == null) {
                                 bound_1.startContainer = elm;
                                 bound_1.startOffset = currentPartIndex;
                             }
@@ -28577,9 +28655,9 @@ var search = (function (_super) {
         for (; haystack[i] !== undefined; i += inc) {
             var some = needle[needleStart] === haystack[i];
             if (some ||
-                (startAtIndex !== null &&
+                (startAtIndex != null &&
                     consts.SPACE_REG_EXP().test(haystack[i]))) {
-                if (startAtIndex === null || !start) {
+                if (startAtIndex == null || !start) {
                     startAtIndex = i;
                 }
                 tmp.push(haystack[i]);
@@ -30684,7 +30762,7 @@ var resizeCells = (function (_super) {
         var box, tableBox = this.workTable.getBoundingClientRect();
         this.minX = 0;
         this.maxX = 1000000;
-        if (this.wholeTable !== null) {
+        if (this.wholeTable != null) {
             tableBox = this.workTable
                 .parentNode.getBoundingClientRect();
             this.minX = tableBox.left;
@@ -30741,7 +30819,7 @@ var resizeCells = (function (_super) {
         this.j.e.off(this.j.ew, 'mousemove.table touchmove.table', this.onMouseMove);
         this.resizeHandler.classList.remove('jodit-table-resizer_moved');
         if (this.startX !== e.clientX) {
-            if (this.wholeTable === null) {
+            if (this.wholeTable == null) {
                 this.resizeColumns();
             }
             else {
@@ -31194,7 +31272,7 @@ function tableKeyboardNavigation(editor) {
                     (dom_1.Dom.prev(current, function (elm) {
                         return event.key === consts.KEY_UP
                             ? dom_1.Dom.isTag(elm, 'br')
-                            : !!elm;
+                            : Boolean(elm);
                     }, block) ||
                         (event.key !== consts.KEY_UP &&
                             dom_1.Dom.isText(current) &&
@@ -31204,7 +31282,7 @@ function tableKeyboardNavigation(editor) {
                         (dom_1.Dom.next(current, function (elm) {
                             return event.key === consts.KEY_DOWN
                                 ? dom_1.Dom.isTag(elm, 'br')
-                                : !!elm;
+                                : Boolean(elm);
                         }, block) ||
                             (event.key !== consts.KEY_DOWN &&
                                 dom_1.Dom.isText(current) &&

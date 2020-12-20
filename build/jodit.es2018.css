@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.5.1
+ * Version: v3.5.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -84,7 +84,9 @@
   --jd-width-input-min: var(--jd-width-default);
   --jd-button-icon-size: 14px;
   --jd-margin-v: 2px;
-  --jd-button-size: calc(var(--jd-button-icon-size) + (var(--jd-button-icon-size) - 4px) * 2 + var(--jd-margin-v) * 2);
+  --jd-button-df-size: ((var(--jd-button-icon-size) - 4px) * 2);
+  --jd-button-size: calc(var(--jd-button-icon-size) + var(--jd-button-df-size) + var(--jd-margin-v) * 2);
+  --jd-focus-input-box-shadow: 0 0 0 0.15rem rgba(0, 123, 255, 0.25);
 }
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1111,6 +1113,7 @@ svg.jodit-icon {
 }
 .jodit-ui-button[disabled] {
   opacity: 0.3;
+  pointer-events: none;
 }
 .jodit-ui-button .jodit-icon {
   width: 14px;
@@ -1482,7 +1485,9 @@ svg.jodit-icon {
   left: 0;
   top: 0;
   background-color: #fff;
-  box-shadow: 0 var(--jd-padding-default) calc(var(--jd-padding-default) * 2) rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --jd-box-shadow-blur: calc(var(--jd-padding-default) * 2);
+  --jd-box-shadow-1: 0 var(--jd-padding-default) var(--jd-box-shadow-blur) rgba(0, 0, 0, 0.19);
+  box-shadow: var(--jd-box-shadow-1), 0 6px 6px rgba(0, 0, 0, 0.23);
   min-width: 200px;
   max-width: 100%;
   min-height: 100px;
@@ -1814,6 +1819,10 @@ svg.jodit-icon {
 .jodit-ui-input__input_has-error_true {
   border-color: var(--jd-color-red);
 }
+.jodit-ui-input__input:focus {
+  outline: 0;
+  box-shadow: var(--jd-focus-input-box-shadow);
+}
 .jodit-ui-input_has-error_true .jodit-ui-input__input {
   border-color: var(--jd-color-red);
 }
@@ -1920,6 +1929,10 @@ svg.jodit-icon {
 }
 .jodit-ui-text-area__input_has-error_true {
   border-color: var(--jd-color-red);
+}
+.jodit-ui-text-area__input:focus {
+  outline: 0;
+  box-shadow: var(--jd-focus-input-box-shadow);
 }
 .jodit-ui-text-area_has-error_true .jodit-ui-text-area__input {
   border-color: var(--jd-color-red);
@@ -2154,6 +2167,7 @@ svg.jodit-icon {
 }
 .jodit-toolbar-button__button[disabled] {
   opacity: 0.3;
+  pointer-events: none;
 }
 .jodit-toolbar-button__trigger {
   display: flex;
@@ -2179,6 +2193,7 @@ svg.jodit-icon {
 }
 .jodit-toolbar-button__trigger[disabled] {
   opacity: 0.3;
+  pointer-events: none;
 }
 .jodit-toolbar-button__trigger svg {
   width: 10px;
@@ -2210,7 +2225,7 @@ svg.jodit-icon {
 .jodit-toolbar-button_with-trigger_true .jodit-toolbar-button__button {
   border-radius: var(--jd-border-radius-default) 0 0 var(--jd-border-radius-default);
 }
-.jodit-toolbar-button_with-trigger_true:hover {
+.jodit-toolbar-button_with-trigger_true:hover:not([disabled]) {
   border-color: var(--jd-color-border);
 }
 
@@ -2258,6 +2273,7 @@ svg.jodit-icon {
 }
 .jodit-toolbar-content[disabled] {
   opacity: 0.3;
+  pointer-events: none;
 }
 .jodit-toolbar-content .jodit-icon {
   width: 14px;

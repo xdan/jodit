@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.5.1
+ * Version: v3.5.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -247,8 +247,22 @@ var helpers = __webpack_require__(3);
 
 class Async {
     constructor() {
+        var _a, _b, _c, _d;
         this.timers = new Map();
         this.promisesRejections = new Set();
+        this.requestsIdle = new Set();
+        this.requestIdleCallbackNative = (_b = (_a = window['requestIdleCallback']) === null || _a === void 0 ? void 0 : _a.bind(window)) !== null && _b !== void 0 ? _b : ((callback) => {
+            const start = Date.now();
+            return this.setTimeout(() => {
+                callback({
+                    didTimeout: false,
+                    timeRemaining: () => Math.max(0, 50 - (Date.now() - start))
+                });
+            }, 1);
+        });
+        this.cancelIdleCallbackNative = (_d = (_c = window['cancelIdleCallback']) === null || _c === void 0 ? void 0 : _c.bind(window)) !== null && _d !== void 0 ? _d : ((request) => {
+            this.clearTimeout(request);
+        });
         this.isDestructed = false;
     }
     setTimeout(callback, timeout, ...args) {
@@ -354,7 +368,19 @@ class Async {
         const t = {};
         return Promise.race([p, t]).then(v => (v === t ? 'pending' : 'fulfilled'), () => 'rejected');
     }
+    requestIdleCallback(callback) {
+        const request = this.requestIdleCallbackNative(callback);
+        this.requestsIdle.add(request);
+        return request;
+    }
+    cancelIdleCallback(request) {
+        this.requestsIdle.delete(request);
+        return this.cancelIdleCallbackNative(request);
+    }
     clear() {
+        this.requestsIdle.forEach(key => {
+            this.cancelIdleCallback(key);
+        });
         this.timers.forEach(key => {
             (0,helpers.clearTimeout)(this.timers.get(key));
         });
@@ -631,7 +657,7 @@ class LocalStorageProvider {
         catch (_a) { }
     }
     exists(key) {
-        return this.get(key) !== null;
+        return this.get(key) != null;
     }
     clear() {
         try {
@@ -747,7 +773,7 @@ class View extends component/* Component */.wA {
         this.isJodit = isJodit;
         this.isView = true;
         this.components = new Set();
-        this.version = "3.5.1";
+        this.version = "3.5.2";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.OPTIONS = View.defaultOptions;
@@ -856,7 +882,7 @@ class View extends component/* Component */.wA {
         return mi.get(moduleName);
     }
     beforeDestruct() {
-        this.e.fire(component/* STATUSES.beforeDestruct */.n$.beforeDestruct);
+        this.e.fire(component/* STATUSES.beforeDestruct */.n$.beforeDestruct, this);
         this.components.forEach(component => {
             if ((0,helpers.isDestructable)(component) && !component.isInDestruct) {
                 component.destruct();
@@ -1177,7 +1203,7 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
         });
         container.appendChild(button);
         this.trigger = this.j.c.fromHTML(`<span role="trigger" class="${cn}__trigger">${ui/* Icon.get */.JO.get('chevron')}</span>`);
-        this.j.e.on(this.trigger, `click`, this.onTriggerClick.bind(this));
+        this.j.e.on(this.trigger, 'click', this.onTriggerClick.bind(this));
         return container;
     }
     focus() {
@@ -1461,6 +1487,7 @@ class ViewWithToolbar extends View {
         this.isJodit = isJodit;
         this.toolbar = makeCollection(this);
         this.defaultToolbarContainer = this.c.div('jodit-toolbar__box');
+        this.registeredButtons = new Set();
         this.groupToButtons = {};
         this.e.on('beforeToolbarBuild', this.beforeToolbarBuild);
     }
@@ -1492,6 +1519,7 @@ class ViewWithToolbar extends View {
     }
     registerButton(btn) {
         var _a;
+        this.registeredButtons.add(btn);
         const group = (_a = btn.group) !== null && _a !== void 0 ? _a : 'other';
         if (!this.groupToButtons[group]) {
             this.groupToButtons[group] = [];
@@ -1506,6 +1534,7 @@ class ViewWithToolbar extends View {
     }
     unregisterButton(btn) {
         var _a;
+        this.registeredButtons.delete(btn);
         const groupName = (_a = btn.group) !== null && _a !== void 0 ? _a : 'other', group = this.groupToButtons[groupName];
         if (group) {
             const index = group.indexOf(btn.name);
@@ -1824,7 +1853,7 @@ let Dialog = class Dialog extends ViewWithToolbar {
     }
     setFooter(content) {
         this.setElements(this.dialogbox_footer, content);
-        this.dialog.classList.toggle('jodit-dialog_footer_true', !!content);
+        this.dialog.classList.toggle('jodit-dialog_footer_true', Boolean(content));
         return this;
     }
     getZIndex() {
@@ -2131,7 +2160,7 @@ class Plugin extends component/* ViewComponent */.Hr {
             .on('beforeDestruct', this.destruct);
     }
     className() {
-        return "";
+        return '';
     }
     init(jodit) {
     }
@@ -2689,7 +2718,7 @@ class DataProvider {
     canI(action) {
         const rule = 'allow' + action;
         if (false) {}
-        return (this.__currentPermissions === null ||
+        return (this.__currentPermissions == null ||
             this.__currentPermissions[rule] === undefined ||
             this.__currentPermissions[rule]);
     }
@@ -3548,12 +3577,12 @@ class FileBrowser extends ViewWithToolbar {
             'items',
             'permissions'
         ].forEach(key => {
-            if (this.options[key] !== null) {
+            if (this.options[key] != null) {
                 this.options[key] = (0,helpers.extend)(true, {}, this.o.ajax, this.options[key]);
             }
         });
         const view = this.storage.get(F_CLASS + '_view');
-        if (view && this.o.view === null) {
+        if (view && this.o.view == null) {
             self.state.view = view === 'list' ? 'list' : 'tiles';
         }
         else {
@@ -4020,7 +4049,7 @@ let ImageEditor = ImageEditor_1 = class ImageEditor extends component/* ViewComp
             });
             self.j.e
                 .on((0,helpers.toArray)(this.editor.querySelectorAll(`.${image_editor_jie}__slider-title`)), 'click', this.onTitleModeClick)
-                .on([widthInput, heightInput], `input`, this.onChangeSizeInput);
+                .on([widthInput, heightInput], 'input', this.onChangeSizeInput);
             const { keepAspectRatioResize, keepAspectRatioCrop } = (0,helpers.refs)(this.editor);
             if (keepAspectRatioResize) {
                 keepAspectRatioResize.addEventListener('change', () => {
@@ -4217,14 +4246,14 @@ let ImageEditor = ImageEditor_1 = class ImageEditor extends component/* ViewComp
             self.height = self.image.offsetHeight;
         }
         self.j.e
-            .on(this.j.ow, `mousemove`, this.onGlobalMouseMove)
-            .one(this.j.ow, `mouseup`, this.onGlobalMouseUp);
+            .on(this.j.ow, 'mousemove', this.onGlobalMouseMove)
+            .one(this.j.ow, 'mouseup', this.onGlobalMouseUp);
     }
     onGlobalMouseUp(e) {
         if (this.clicked) {
             this.clicked = false;
             e.stopImmediatePropagation();
-            this.j.e.off(this.j.ow, `mousemove`, this.onGlobalMouseMove);
+            this.j.e.off(this.j.ow, 'mousemove', this.onGlobalMouseMove);
         }
     }
     onGlobalMouseMove(e) {
@@ -4359,8 +4388,8 @@ let ImageEditor = ImageEditor_1 = class ImageEditor extends component/* ViewComp
         dom/* Dom.safeRemove */.i.safeRemove(this.editor);
         if (this.j.e) {
             this.j.e
-                .off(this.j.ow, `mousemove`, this.onGlobalMouseMove)
-                .off(this.j.ow, `mouseup`, this.onGlobalMouseUp)
+                .off(this.j.ow, 'mousemove', this.onGlobalMouseMove)
+                .off(this.j.ow, 'mouseup', this.onGlobalMouseUp)
                 .off(this.ow, `.${image_editor_jie}`)
                 .off(`.${image_editor_jie}`);
         }
@@ -4449,7 +4478,7 @@ class Snapshot extends component/* ViewComponent */.Hr {
     static strokeOffset(elm, offset) {
         while (dom/* Dom.isText */.i.isText(elm)) {
             elm = elm.previousSibling;
-            if (dom/* Dom.isText */.i.isText(elm) && elm.textContent !== null) {
+            if (dom/* Dom.isText */.i.isText(elm) && elm.textContent != null) {
                 offset += elm.textContent.length;
             }
         }
@@ -4956,7 +4985,7 @@ class ApplyStyle {
             (elmHasSameStyle && this.isNormalNode(elm)));
     }
     isNormalNode(elm) {
-        return Boolean(elm !== null &&
+        return Boolean(elm != null &&
             !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm) &&
             !this.jodit.s.isMarker(elm));
     }
@@ -5271,9 +5300,9 @@ class Select {
         marker.id =
             constants.MARKER_CLASS +
                 '_' +
-                +new Date() +
+                Number(new Date()) +
                 '_' +
-                ('' + Math.random()).slice(2);
+                (String(Math.random())).slice(2);
         marker.style.lineHeight = '0';
         marker.style.display = 'none';
         marker.setAttribute('data-' + constants.MARKER_CLASS, atStart ? 'start' : 'end');
@@ -5551,7 +5580,7 @@ class Select {
         if ((0,helpers.isString)(url)) {
             image.setAttribute('src', url);
         }
-        if (defaultWidth !== null) {
+        if (defaultWidth != null) {
             let dw = defaultWidth.toString();
             if (dw &&
                 'auto' !== dw &&
@@ -7602,7 +7631,7 @@ class Jodit extends ViewWithToolbar {
                 this.setElementValue();
             }
             else {
-                buffer !== null && this.setEditorValue(buffer);
+                buffer != null && this.setEditorValue(buffer);
             }
             let mode = this.o.defaultMode;
             if (this.o.saveModeInStorage) {
@@ -7903,7 +7932,7 @@ class addNewLine extends Plugin {
             });
         };
         this.canGetFocus = (elm) => {
-            return (elm !== null &&
+            return (elm != null &&
                 dom/* Dom.isBlock */.i.isBlock(elm, this.j.ew) &&
                 !/^(img|table|iframe|hr)$/i.test(elm.nodeName));
         };
@@ -8031,7 +8060,7 @@ class addNewLine extends Plugin {
         editor.e
             .off(editor.editor, '.' + ns)
             .off(editor.container, '.' + ns)
-            .on([editor.ow, editor.ew, editor.editor], `scroll` + '.' + ns, this.hideForce)
+            .on([editor.ow, editor.ew, editor.editor], 'scroll' + '.' + ns, this.hideForce)
             .on(editor.editor, 'dblclick' + '.' + ns, this.onDblClickEditor)
             .on(editor.editor, 'click' + '.' + ns, this.hide)
             .on(editor.container, 'mouseleave' + '.' + ns, this.hide)
@@ -8844,7 +8873,7 @@ class cleanHtml extends Plugin {
                 if (currentParagraph) {
                     dom/* Dom.all */.i.all(currentParagraph, node => {
                         if (node && dom/* Dom.isText */.i.isText(node)) {
-                            if (node.nodeValue !== null &&
+                            if (node.nodeValue != null &&
                                 (0,constants.INVISIBLE_SPACE_REG_EXP)().test(node.nodeValue) &&
                                 node.nodeValue.replace((0,constants.INVISIBLE_SPACE_REG_EXP)(), '').length !== 0) {
                                 node.nodeValue = node.nodeValue.replace((0,constants.INVISIBLE_SPACE_REG_EXP)(), '');
@@ -9025,9 +9054,9 @@ class cleanHtml extends Plugin {
             return true;
         }
         return (this.j.o.cleanHTML.removeEmptyElements &&
-            current !== null &&
+            current != null &&
             dom/* Dom.isElement */.i.isElement(node) &&
-            node.nodeName.match(constants.IS_INLINE) !== null &&
+            node.nodeName.match(constants.IS_INLINE) != null &&
             !this.j.s.isMarker(node) &&
             (0,helpers.trim)(node.innerHTML).length === 0 &&
             !dom/* Dom.isOrContains */.i.isOrContains(node, current));
@@ -10033,6 +10062,7 @@ function color(editor) {
 
 
 
+
 class DragAndDrop extends Plugin {
     constructor() {
         super(...arguments);
@@ -10041,122 +10071,6 @@ class DragAndDrop extends Plugin {
         this.startDragPoint = { x: 0, y: 0 };
         this.draggable = null;
         this.bufferRange = null;
-        this.onDragEnd = () => {
-            if (this.draggable) {
-                dom/* Dom.safeRemove */.i.safeRemove(this.draggable);
-                this.draggable = null;
-            }
-            this.isCopyMode = false;
-        };
-        this.onDrag = (event) => {
-            if (this.draggable) {
-                if (!this.draggable.parentNode) {
-                    (0,global/* getContainer */.ZO)(this.j, DragAndDrop).appendChild(this.draggable);
-                }
-                this.j.e.fire('hidePopup');
-                (0,helpers.css)(this.draggable, {
-                    left: event.clientX + 20,
-                    top: event.clientY + 20
-                });
-                this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
-                event.preventDefault();
-                event.stopPropagation();
-            }
-        };
-        this.onDrop = (event) => {
-            if (!event.dataTransfer ||
-                !event.dataTransfer.files ||
-                !event.dataTransfer.files.length) {
-                if (!this.isFragmentFromEditor && !this.draggable) {
-                    this.j.e.fire('paste', event);
-                    event.preventDefault();
-                    event.stopPropagation();
-                    return false;
-                }
-                const sel = this.j.s.sel;
-                const range = this.bufferRange ||
-                    (sel && sel.rangeCount ? sel.getRangeAt(0) : null);
-                let fragment = null;
-                if (!this.draggable && range) {
-                    fragment = this.isCopyMode
-                        ? range.cloneContents()
-                        : range.extractContents();
-                }
-                else if (this.draggable) {
-                    if (this.isCopyMode) {
-                        const [tagName, field] = (0,helpers.attr)(this.draggable, '-is-file') === '1'
-                            ? ['a', 'href']
-                            : ['img', 'src'];
-                        fragment = this.j.createInside.element(tagName);
-                        fragment.setAttribute(field, (0,helpers.attr)(this.draggable, 'data-src') ||
-                            (0,helpers.attr)(this.draggable, 'src') ||
-                            '');
-                        if (tagName === 'a') {
-                            fragment.textContent = (0,helpers.attr)(fragment, field) || '';
-                        }
-                    }
-                    else {
-                        fragment = (0,helpers.dataBind)(this.draggable, 'target');
-                    }
-                }
-                else if (this.getText(event)) {
-                    fragment = this.j.createInside.fromHTML(this.getText(event));
-                }
-                sel && sel.removeAllRanges();
-                this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
-                if (fragment) {
-                    this.j.s.insertNode(fragment, false, false);
-                    if (range && fragment.firstChild && fragment.lastChild) {
-                        range.setStartBefore(fragment.firstChild);
-                        range.setEndAfter(fragment.lastChild);
-                        this.j.s.selectRange(range);
-                        this.j.e.fire('synchro');
-                    }
-                    if (dom/* Dom.isTag */.i.isTag(fragment, 'img') && this.j.events) {
-                        this.j.e.fire('afterInsertImage', fragment);
-                    }
-                }
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            this.isFragmentFromEditor = false;
-        };
-        this.onDragStart = (event) => {
-            let target = event.target;
-            this.onDragEnd();
-            this.isFragmentFromEditor = dom/* Dom.isOrContains */.i.isOrContains(this.j.editor, target, true);
-            this.isCopyMode = this.isFragmentFromEditor ? (0,helpers.ctrlKey)(event) : true;
-            if (this.isFragmentFromEditor) {
-                const sel = this.j.s.sel;
-                const range = sel && sel.rangeCount ? sel.getRangeAt(0) : null;
-                if (range) {
-                    this.bufferRange = range.cloneRange();
-                }
-            }
-            else {
-                this.bufferRange = null;
-            }
-            this.startDragPoint.x = event.clientX;
-            this.startDragPoint.y = event.clientY;
-            if (dom/* Dom.isElement */.i.isElement(target) &&
-                target.classList.contains('jodit-filebrowser__files-item')) {
-                target = target.querySelector('img');
-            }
-            if (dom/* Dom.isTag */.i.isTag(target, 'img')) {
-                this.draggable = target.cloneNode(true);
-                (0,helpers.dataBind)(this.draggable, 'target', target);
-                (0,helpers.css)(this.draggable, {
-                    'z-index': 100000000000000,
-                    'pointer-events': 'none',
-                    position: 'fixed',
-                    display: 'inlin-block',
-                    left: this.startDragPoint.x,
-                    top: this.startDragPoint.y,
-                    width: target.offsetWidth,
-                    height: target.offsetHeight
-                });
-            }
-        };
         this.getText = (event) => {
             const dt = getDataTransfer(event);
             return dt ? dt.getData(constants.TEXT_HTML) || dt.getData(constants.TEXT_PLAIN) : null;
@@ -10164,14 +10078,126 @@ class DragAndDrop extends Plugin {
     }
     afterInit() {
         this.j.e
-            .off(window, '.DragAndDrop')
-            .off('.DragAndDrop')
-            .off([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart)
-            .on(window, 'dragover.DragAndDrop', this.onDrag)
-            .on([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart)
+            .on([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart);
+    }
+    onDragStart(event) {
+        let target = event.target;
+        this.onDragEnd();
+        this.isFragmentFromEditor = dom/* Dom.isOrContains */.i.isOrContains(this.j.editor, target, true);
+        this.isCopyMode = this.isFragmentFromEditor ? (0,helpers.ctrlKey)(event) : true;
+        if (this.isFragmentFromEditor) {
+            const sel = this.j.s.sel;
+            const range = sel && sel.rangeCount ? sel.getRangeAt(0) : null;
+            if (range) {
+                this.bufferRange = range.cloneRange();
+            }
+        }
+        else {
+            this.bufferRange = null;
+        }
+        this.startDragPoint.x = event.clientX;
+        this.startDragPoint.y = event.clientY;
+        if (dom/* Dom.isElement */.i.isElement(target) &&
+            target.classList.contains('jodit-filebrowser__files-item')) {
+            target = target.querySelector('img');
+        }
+        if (dom/* Dom.isTag */.i.isTag(target, 'img')) {
+            this.draggable = target.cloneNode(true);
+            (0,helpers.dataBind)(this.draggable, 'target', target);
+        }
+        this.addDragListeners();
+    }
+    ;
+    addDragListeners() {
+        this.j.e
+            .on('dragover', this.onDrag)
             .on('drop.DragAndDrop', this.onDrop)
             .on(window, 'dragend.DragAndDrop drop.DragAndDrop mouseup.DragAndDrop', this.onDragEnd);
     }
+    removeDragListeners() {
+        this.j.e
+            .off('dragover', this.onDrag)
+            .off('drop.DragAndDrop', this.onDrop)
+            .off(window, 'dragend.DragAndDrop drop.DragAndDrop mouseup.DragAndDrop', this.onDragEnd);
+    }
+    onDrag(event) {
+        if (this.draggable) {
+            this.j.e.fire('hidePopup');
+            this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    }
+    ;
+    onDragEnd() {
+        if (this.draggable) {
+            dom/* Dom.safeRemove */.i.safeRemove(this.draggable);
+            this.draggable = null;
+        }
+        this.isCopyMode = false;
+        this.removeDragListeners();
+    }
+    ;
+    onDrop(event) {
+        if (!event.dataTransfer ||
+            !event.dataTransfer.files ||
+            !event.dataTransfer.files.length) {
+            if (!this.isFragmentFromEditor && !this.draggable) {
+                this.j.e.fire('paste', event);
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+            }
+            const sel = this.j.s.sel;
+            const range = this.bufferRange ||
+                (sel && sel.rangeCount ? sel.getRangeAt(0) : null);
+            let fragment = null;
+            if (!this.draggable && range) {
+                fragment = this.isCopyMode
+                    ? range.cloneContents()
+                    : range.extractContents();
+            }
+            else if (this.draggable) {
+                if (this.isCopyMode) {
+                    const [tagName, field] = (0,helpers.attr)(this.draggable, '-is-file') === '1'
+                        ? ['a', 'href']
+                        : ['img', 'src'];
+                    fragment = this.j.createInside.element(tagName);
+                    fragment.setAttribute(field, (0,helpers.attr)(this.draggable, 'data-src') ||
+                        (0,helpers.attr)(this.draggable, 'src') ||
+                        '');
+                    if (tagName === 'a') {
+                        fragment.textContent = (0,helpers.attr)(fragment, field) || '';
+                    }
+                }
+                else {
+                    fragment = (0,helpers.dataBind)(this.draggable, 'target');
+                }
+            }
+            else if (this.getText(event)) {
+                fragment = this.j.createInside.fromHTML(this.getText(event));
+            }
+            sel && sel.removeAllRanges();
+            this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
+            if (fragment) {
+                this.j.s.insertNode(fragment, false, false);
+                if (range && fragment.firstChild && fragment.lastChild) {
+                    range.setStartBefore(fragment.firstChild);
+                    range.setEndAfter(fragment.lastChild);
+                    this.j.s.selectRange(range);
+                    this.j.e.fire('synchro');
+                }
+                if (dom/* Dom.isTag */.i.isTag(fragment, 'img') && this.j.events) {
+                    this.j.e.fire('afterInsertImage', fragment);
+                }
+            }
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        this.isFragmentFromEditor = false;
+        this.removeDragListeners();
+    }
+    ;
     beforeDestruct() {
         this.onDragEnd();
         this.j.e
@@ -10180,6 +10206,18 @@ class DragAndDrop extends Plugin {
             .off([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart);
     }
 }
+(0,tslib_es6.__decorate)([
+    decorators.autobind
+], DragAndDrop.prototype, "onDragStart", null);
+(0,tslib_es6.__decorate)([
+    (0,decorators.throttle)(ctx => ctx.j.defaultTimeout / 10)
+], DragAndDrop.prototype, "onDrag", null);
+(0,tslib_es6.__decorate)([
+    decorators.autobind
+], DragAndDrop.prototype, "onDragEnd", null);
+(0,tslib_es6.__decorate)([
+    decorators.autobind
+], DragAndDrop.prototype, "onDrop", null);
 
 ;// CONCATENATED MODULE: ./src/plugins/clipboard/drag-and-drop-element.ts
 /*!
@@ -10191,125 +10229,145 @@ class DragAndDrop extends Plugin {
 
 
 
+
+
 class DragAndDropElement extends Plugin {
     constructor() {
         super(...arguments);
         this.dragList = [];
-        this.isCopyMode = false;
         this.draggable = null;
         this.wasMoved = false;
+        this.isCopyMode = false;
         this.diffStep = 10;
         this.startX = 0;
         this.startY = 0;
-        this.onDragStart = (event) => {
-            let target = event.target, last = null;
-            if (!this.dragList.length) {
-                return;
-            }
-            do {
-                if (this.dragList.includes(target.nodeName.toLowerCase())) {
-                    if (!last ||
-                        (target.firstChild === last && target.lastChild === last)) {
-                        last = target;
-                    }
-                }
-                target = target.parentNode;
-            } while (target && target !== this.j.editor);
-            if (!last) {
-                return;
-            }
-            this.startX = event.clientX;
-            this.startY = event.clientY;
-            this.isCopyMode = (0,helpers.ctrlKey)(event);
-            this.onDragEnd();
-            this.draggable = last.cloneNode(true);
-            (0,helpers.dataBind)(this.draggable, 'target', last);
-            this.j.e.on(this.j.editor, 'mousemove touchmove', this.onDrag);
-        };
-        this.onDrag = this.j.async.throttle((event) => {
-            if (!this.draggable) {
-                return;
-            }
-            const x = event.clientX, y = event.clientY;
-            if (Math.sqrt(Math.pow(x - this.startX, 2) + Math.pow(y - this.startY, 2)) < this.diffStep) {
-                return;
-            }
-            this.wasMoved = true;
-            this.j.e.fire('hidePopup hideResizer');
-            if (!this.draggable.parentNode) {
-                (0,helpers.css)(this.draggable, {
-                    zIndex: 10000000000000,
-                    pointerEvents: 'none',
-                    position: 'fixed',
-                    display: 'inline-block',
-                    left: event.clientX,
-                    top: event.clientY,
-                    width: this.draggable.offsetWidth,
-                    height: this.draggable.offsetHeight
-                });
-                (0,global/* getContainer */.ZO)(this.j, DragAndDropElement).appendChild(this.draggable);
-            }
-            (0,helpers.css)(this.draggable, {
-                left: event.clientX,
-                top: event.clientY
-            });
-            this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
-        }, this.j.defaultTimeout);
-        this.onDragEnd = () => {
-            if (this.isInDestruct) {
-                return;
-            }
-            if (this.draggable) {
-                dom/* Dom.safeRemove */.i.safeRemove(this.draggable);
-                this.draggable = null;
-                this.wasMoved = false;
-                this.j.e.off(this.j.editor, 'mousemove touchmove', this.onDrag);
-            }
-        };
-        this.onDrop = () => {
-            if (!this.draggable || !this.wasMoved) {
-                this.onDragEnd();
-                return;
-            }
-            let fragment = (0,helpers.dataBind)(this.draggable, 'target');
-            this.onDragEnd();
-            if (this.isCopyMode) {
-                fragment = fragment.cloneNode(true);
-            }
-            const { parentElement } = fragment;
-            this.j.s.insertNode(fragment, true, false);
-            if (parentElement && dom/* Dom.isEmpty */.i.isEmpty(parentElement)) {
-                dom/* Dom.safeRemove */.i.safeRemove(parentElement);
-            }
-            if (dom/* Dom.isTag */.i.isTag(fragment, 'img') && this.j.e) {
-                this.j.e.fire('afterInsertImage', fragment);
-            }
-            this.j.e.fire('synchro');
-        };
     }
     afterInit() {
         this.dragList = this.j.o.draggableTags
             ? (0,helpers.splitArray)(this.j.o.draggableTags)
-                .filter(item => item)
-                .map((item) => item.toLowerCase())
+                .filter(Boolean)
+                .map(item => item.toLowerCase())
             : [];
         if (!this.dragList.length) {
             return;
         }
+        this.j.e.on('mousedown touchstart dragstart', this.onDragStart);
+    }
+    onDragStart(event) {
+        if (event.type === 'dragstart' && this.draggable) {
+            return false;
+        }
+        const target = event.target;
+        if (!this.dragList.length || !target) {
+            return;
+        }
+        const matched = (node) => node && this.dragList.includes(node.nodeName.toLowerCase());
+        const lastTarget = dom/* Dom.furthest */.i.furthest(target, matched, this.j.editor) ||
+            (matched(target) ? target : null);
+        if (!lastTarget) {
+            return;
+        }
+        this.startX = event.clientX;
+        this.startY = event.clientY;
+        this.isCopyMode = (0,helpers.ctrlKey)(event);
+        this.onDragEnd();
+        this.draggable = lastTarget.cloneNode(true);
+        (0,helpers.dataBind)(this.draggable, 'target', lastTarget);
+        this.addDragListeners();
+    }
+    onDrag(event) {
+        var _a, _b;
+        if (!this.draggable) {
+            return;
+        }
+        const x = event.clientX, y = event.clientY;
+        if (Math.sqrt(Math.pow(x - this.startX, 2) + Math.pow(y - this.startY, 2)) < this.diffStep) {
+            return;
+        }
+        this.wasMoved = true;
+        this.j.e.fire('hidePopup hideResizer');
+        if (!this.draggable.parentNode) {
+            const target = (0,helpers.dataBind)(this.draggable, 'target');
+            (0,helpers.css)(this.draggable, {
+                zIndex: 10000000000000,
+                pointerEvents: 'none',
+                pointer: 'drag',
+                position: 'fixed',
+                display: 'inline-block',
+                left: event.clientX,
+                top: event.clientY,
+                width: (_a = target === null || target === void 0 ? void 0 : target.offsetWidth) !== null && _a !== void 0 ? _a : 100,
+                height: (_b = target === null || target === void 0 ? void 0 : target.offsetHeight) !== null && _b !== void 0 ? _b : 100
+            });
+            (0,global/* getContainer */.ZO)(this.j, DragAndDropElement).appendChild(this.draggable);
+        }
+        (0,helpers.css)(this.draggable, {
+            left: event.clientX,
+            top: event.clientY
+        });
+        this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
+    }
+    onDragEnd() {
+        if (this.isInDestruct) {
+            return;
+        }
+        if (this.draggable) {
+            dom/* Dom.safeRemove */.i.safeRemove(this.draggable);
+            this.draggable = null;
+            this.wasMoved = false;
+            this.removeDragListeners();
+        }
+    }
+    onDrop() {
+        if (!this.draggable || !this.wasMoved) {
+            this.onDragEnd();
+            return;
+        }
+        let fragment = (0,helpers.dataBind)(this.draggable, 'target');
+        this.onDragEnd();
+        if (this.isCopyMode) {
+            fragment = fragment.cloneNode(true);
+        }
+        const { parentElement } = fragment;
+        this.j.s.insertNode(fragment, true, false);
+        if (parentElement && dom/* Dom.isEmpty */.i.isEmpty(parentElement)) {
+            dom/* Dom.safeRemove */.i.safeRemove(parentElement);
+        }
+        if (dom/* Dom.isTag */.i.isTag(fragment, 'img') && this.j.e) {
+            this.j.e.fire('afterInsertImage', fragment);
+        }
+        this.j.e.fire('synchro');
+    }
+    addDragListeners() {
         this.j.e
-            .on(this.j.editor, 'mousedown touchstart dragstart', this.onDragStart)
+            .on(this.j.editor, 'mousemove touchmove', this.onDrag)
             .on('mouseup touchend', this.onDrop)
             .on([this.j.ew, this.ow], 'mouseup touchend', this.onDragEnd);
     }
-    beforeDestruct() {
-        this.onDragEnd();
+    removeDragListeners() {
         this.j.e
             .off(this.j.editor, 'mousemove touchmove', this.onDrag)
-            .off(this.j.editor, 'mousedown touchstart dragstart', this.onDragStart)
             .off('mouseup touchend', this.onDrop)
-            .off(window, 'mouseup touchend', this.onDragEnd);
+            .off([this.j.ew, this.ow], 'mouseup touchend', this.onDragEnd);
+    }
+    beforeDestruct() {
+        this.onDragEnd();
+        this.j.e.off('mousedown touchstart dragstart', this.onDragStart);
+        this.removeDragListeners();
     }
 }
+(0,tslib_es6.__decorate)([
+    decorators.autobind
+], DragAndDropElement.prototype, "onDragStart", null);
+(0,tslib_es6.__decorate)([
+    (0,decorators.throttle)(ctx => ctx.j.defaultTimeout / 10)
+], DragAndDropElement.prototype, "onDrag", null);
+(0,tslib_es6.__decorate)([
+    decorators.autobind
+], DragAndDropElement.prototype, "onDragEnd", null);
+(0,tslib_es6.__decorate)([
+    decorators.autobind
+], DragAndDropElement.prototype, "onDrop", null);
 
 ;// CONCATENATED MODULE: ./src/plugins/keyboard/enter.ts
 /*!
@@ -12089,6 +12147,7 @@ function hr(editor) {
 config/* Config.prototype.toolbarInline */.De.prototype.toolbarInline = true;
 config/* Config.prototype.toolbarInlineForSelection */.De.prototype.toolbarInlineForSelection = false;
 config/* Config.prototype.toolbarInlineDisableFor */.De.prototype.toolbarInlineDisableFor = [];
+config/* Config.prototype.toolbarInlineDisabledButtons */.De.prototype.toolbarInlineDisabledButtons = ['source'];
 config/* Config.prototype.popup */.De.prototype.popup = {
     a: __webpack_require__(56)/* .default */ .Z,
     img: __webpack_require__(57)/* .default */ .Z,
@@ -12190,6 +12249,7 @@ class inlinePopup extends Plugin {
     }
     hidePopup(type) {
         if (!type || type === this.type) {
+            console.log('hidePopup', new Error());
             this.popup.close();
         }
     }
@@ -12207,6 +12267,20 @@ class inlinePopup extends Plugin {
     }
     afterInit(jodit) {
         this.j.e
+            .on('getDiffButtons.mobile', (toolbar) => {
+            if (this.toolbar === toolbar) {
+                const names = this.toolbar.getButtonsNames();
+                return (0,helpers.toArray)(jodit.registeredButtons)
+                    .filter(btn => !this.j.o.toolbarInlineDisabledButtons.includes(btn.name))
+                    .filter(item => {
+                    const name = (0,helpers.isString)(item) ? item : item.name;
+                    return (name &&
+                        name !== '|' &&
+                        name !== '\n' &&
+                        !names.includes(name));
+                });
+            }
+        })
             .on('hidePopup', this.hidePopup)
             .on('showPopup', (elm, rect, type) => {
             this.showPopup(rect, type || ((0,helpers.isString)(elm) ? elm : elm.nodeName), (0,helpers.isString)(elm) ? undefined : elm);
@@ -12218,7 +12292,12 @@ class inlinePopup extends Plugin {
     onSelectionStart() {
         this.snapRange = this.j.s.range.cloneRange();
     }
-    onSelectionEnd() {
+    onSelectionEnd(e) {
+        if (e &&
+            e.target &&
+            ui/* UIElement.closestElement */.u1.closestElement(e.target, ui_popup/* Popup */.G)) {
+            return;
+        }
         const { snapRange } = this, { range } = this.j.s;
         if (!snapRange ||
             range.collapsed ||
@@ -12262,7 +12341,7 @@ class inlinePopup extends Plugin {
         jodit.e
             .off('showPopup')
             .off('click', this.onClick)
-            .off([this.j.ew, this.j.ow], 'mouseup', this.onSelectionEnd);
+            .off([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
     }
 }
 (0,tslib_es6.__decorate)([
@@ -12594,18 +12673,22 @@ const formTemplate = (editor) => {
 
 
 
+
+
+
+
 config/* Config.prototype.link */.De.prototype.link = {
     formTemplate: formTemplate,
     followOnDblClick: false,
     processVideoLink: true,
     processPastedLink: true,
-    removeLinkAfterFormat: true,
     noFollowCheckbox: true,
     openInNewTabCheckbox: true,
     modeClassName: 'input',
     selectMultipleClassName: true,
     selectSizeClassName: 3,
-    selectOptionsClassName: []
+    selectOptionsClassName: [],
+    hotkeys: ['ctrl+k', 'cmd+k']
 };
 config/* Config.prototype.controls.unlink */.De.prototype.controls.unlink = {
     exec: (editor, current) => {
@@ -12624,18 +12707,88 @@ config/* Config.prototype.controls.link */.De.prototype.controls.link = {
         return Boolean(current && dom/* Dom.closest */.i.closest(current, 'a', editor.editor));
     },
     popup: (editor, current, self, close) => {
-        const i18n = editor.i18n.bind(editor), { openInNewTabCheckbox, noFollowCheckbox, formTemplate, formClassName, modeClassName } = editor.o.link;
-        const html = formTemplate(editor), form = (0,helpers.isString)(html)
-            ? editor.c.fromHTML(html, {
+        return editor.e.fire('generateLinkForm.link', current, close);
+    },
+    tags: ['a'],
+    tooltip: 'Insert link'
+};
+class link_link extends Plugin {
+    constructor() {
+        super(...arguments);
+        this.buttons = [
+            {
+                name: 'link',
+                group: 'insert'
+            }
+        ];
+    }
+    afterInit(jodit) {
+        if (jodit.o.link.followOnDblClick) {
+            jodit.e.on('dblclick.link', this.onDblClickOnLink);
+        }
+        if (jodit.o.link.processPastedLink) {
+            jodit.e.on('processPaste.link', this.onProcessPasteLink);
+        }
+        jodit.e.on('generateLinkForm.link', this.generateForm);
+        jodit.registerCommand('openLinkDialog', {
+            exec: () => {
+                const dialog = new Dialog({
+                    resizable: false
+                });
+                const htmlForm = this.generateForm(jodit.s.current(), () => {
+                    dialog.close();
+                });
+                htmlForm.container.classList.add('jodit-dialog_alert');
+                dialog.setContent(htmlForm);
+                dialog.open();
+                jodit.async.requestIdleCallback(() => {
+                    const { url_input } = (0,helpers.refs)(htmlForm.container);
+                    url_input === null || url_input === void 0 ? void 0 : url_input.focus();
+                });
+            },
+            hotkeys: jodit.o.link.hotkeys
+        });
+    }
+    onDblClickOnLink(e) {
+        if (!dom/* Dom.isTag */.i.isTag(e.target, 'a')) {
+            return;
+        }
+        const href = (0,helpers.attr)(e.target, 'href');
+        if (href) {
+            location.href = href;
+            e.preventDefault();
+        }
+    }
+    onProcessPasteLink(ignore, html) {
+        const { jodit } = this;
+        if ((0,helpers.isURL)(html)) {
+            if (jodit.o.link.processVideoLink) {
+                const embed = (0,helpers.convertMediaUrlToVideoEmbed)(html);
+                if (embed !== html) {
+                    return jodit.createInside.fromHTML(embed);
+                }
+            }
+            const a = jodit.createInside.element('a');
+            a.setAttribute('href', html);
+            a.textContent = html;
+            jodit.e.stopPropagation('processPaste');
+            return a;
+        }
+    }
+    generateForm(current, close) {
+        const { jodit } = this;
+        const i18n = jodit.i18n.bind(jodit), { openInNewTabCheckbox, noFollowCheckbox, formTemplate, formClassName, modeClassName } = jodit.o.link;
+        const html = formTemplate(jodit), form = (0,helpers.isString)(html)
+            ? jodit.c.fromHTML(html, {
                 target_checkbox_box: openInNewTabCheckbox,
                 nofollow_checkbox_box: noFollowCheckbox
             })
             : html, htmlForm = dom/* Dom.isElement */.i.isElement(form) ? form : form.container;
-        const elements = (0,helpers.refs)(htmlForm), { insert, unlink, content_input_box } = elements, { target_checkbox, nofollow_checkbox, url_input } = elements, currentElement = current, isImageContent = dom/* Dom.isImage */.i.isImage(currentElement, editor.ew);
+        const elements = (0,helpers.refs)(htmlForm), { insert, unlink, content_input_box } = elements, { target_checkbox, nofollow_checkbox, url_input } = elements, currentElement = current, isImageContent = dom/* Dom.isImage */.i.isImage(currentElement, jodit.ew);
         let { content_input } = elements;
         const { className_input } = elements, { className_select } = elements;
         if (!content_input) {
-            content_input = editor.c.element('input', {
+            content_input = jodit.c.element('input', {
                 type: 'hidden',
                 ref: 'content_input'
             });
@@ -12649,9 +12802,9 @@ config/* Config.prototype.controls.link */.De.prototype.controls.link = {
         let link;
         const getSelectionText = () => link
             ? link.innerText
-            : (0,helpers.stripTags)(editor.s.range.cloneContents(), editor.ed);
-        if (current && dom/* Dom.closest */.i.closest(current, 'a', editor.editor)) {
-            link = dom/* Dom.closest */.i.closest(current, 'a', editor.editor);
+            : (0,helpers.stripTags)(jodit.s.range.cloneContents(), jodit.ed);
+        if (current && dom/* Dom.closest */.i.closest(current, 'a', jodit.editor)) {
+            link = dom/* Dom.closest */.i.closest(current, 'a', jodit.editor);
         }
         else {
             link = false;
@@ -12682,7 +12835,7 @@ config/* Config.prototype.controls.link */.De.prototype.controls.link = {
                                     for (let i = 0; i < className_select.options.length; i++) {
                                         const option = className_select.options.item(i);
                                         if ((option === null || option === void 0 ? void 0 : option.value) &&
-                                            option.value == className) {
+                                            option.value === className) {
                                             option.selected = true;
                                         }
                                     }
@@ -12703,14 +12856,14 @@ config/* Config.prototype.controls.link */.De.prototype.controls.link = {
         else {
             dom/* Dom.hide */.i.hide(unlink);
         }
-        const snapshot = editor.observer.snapshot.make();
+        const snapshot = jodit.observer.snapshot.make();
         if (unlink) {
-            editor.e.on(unlink, 'click', (e) => {
-                editor.observer.snapshot.restore(snapshot);
+            jodit.e.on(unlink, 'click', (e) => {
+                jodit.observer.snapshot.restore(snapshot);
                 if (link) {
                     dom/* Dom.unwrap */.i.unwrap(link);
                 }
-                editor.setEditorValue();
+                jodit.setEditorValue();
                 close();
                 e.preventDefault();
             });
@@ -12722,15 +12875,15 @@ config/* Config.prototype.controls.link */.De.prototype.controls.link = {
                 return false;
             }
             let links;
-            editor.observer.snapshot.restore(snapshot);
+            jodit.observer.snapshot.restore(snapshot);
             const textWasChanged = getSelectionText() !== content_input.value.trim();
             if (!link) {
-                if (!editor.s.isCollapsed()) {
-                    links = editor.s.wrapInTag('a');
+                if (!jodit.s.isCollapsed()) {
+                    links = jodit.s.wrapInTag('a');
                 }
                 else {
-                    const a = editor.createInside.element('a');
-                    editor.s.insertNode(a);
+                    const a = jodit.createInside.element('a');
+                    jodit.s.insertNode(a);
                     links = [a];
                 }
             }
@@ -12742,11 +12895,11 @@ config/* Config.prototype.controls.link */.De.prototype.controls.link = {
                 (0,helpers.attr)(a, 'href', url_input.value);
                 if (modeClassName && (className_input !== null && className_input !== void 0 ? className_input : className_select)) {
                     if (modeClassName === 'input') {
-                        if (className_input.value == '' &&
+                        if (className_input.value === '' &&
                             a.hasAttribute('class')) {
                             (0,helpers.attr)(a, 'class', null);
                         }
-                        if (className_input.value != '') {
+                        if (className_input.value !== '') {
                             (0,helpers.attr)(a, 'class', className_input.value);
                         }
                     }
@@ -12779,12 +12932,12 @@ config/* Config.prototype.controls.link */.De.prototype.controls.link = {
                     (0,helpers.attr)(a, 'rel', nofollow_checkbox.checked ? 'nofollow' : null);
                 }
             });
-            editor.setEditorValue();
+            jodit.setEditorValue();
             close();
             return false;
         };
         if (dom/* Dom.isElement */.i.isElement(form)) {
-            editor.e.on(form, 'submit', (event) => {
+            jodit.e.on(form, 'submit', (event) => {
                 event.preventDefault();
                 event.stopImmediatePropagation();
                 onSubmit();
@@ -12795,74 +12948,23 @@ config/* Config.prototype.controls.link */.De.prototype.controls.link = {
             form.onSubmit(onSubmit);
         }
         return form;
-    },
-    tags: ['a'],
-    tooltip: 'Insert link'
-};
-function link_link(jodit) {
-    jodit.registerButton({
-        name: 'link',
-        group: 'insert'
-    });
-    if (jodit.o.link.followOnDblClick) {
-        jodit.e.on('afterInit changePlace', () => {
-            jodit.e
-                .off('dblclick.link')
-                .on(jodit.editor, 'dblclick.link', (e) => {
-                if (!dom/* Dom.isTag */.i.isTag(e.target, 'a')) {
-                    return;
-                }
-                const href = (0,helpers.attr)(e.target, 'href');
-                if (href) {
-                    location.href = href;
-                    e.preventDefault();
-                }
-            });
-        });
     }
-    if (jodit.o.link.processPastedLink) {
-        jodit.e.on('processPaste.link', (event, html) => {
-            if ((0,helpers.isURL)(html)) {
-                if (jodit.o.link.processVideoLink) {
-                    const embed = (0,helpers.convertMediaUrlToVideoEmbed)(html);
-                    if (embed !== html) {
-                        return jodit.createInside.fromHTML(embed);
-                    }
-                }
-                const a = jodit.createInside.element('a');
-                a.setAttribute('href', html);
-                a.textContent = html;
-                jodit.e.stopPropagation('processPaste');
-                return a;
-            }
-        });
-    }
-    if (jodit.o.link.removeLinkAfterFormat) {
-        jodit.e.on('afterCommand.link', (command) => {
-            const sel = jodit.selection;
-            let newtag, node;
-            if (command === 'removeFormat') {
-                node = sel.current();
-                if (node && !dom/* Dom.isTag */.i.isTag(node, 'a')) {
-                    node = dom/* Dom.closest */.i.closest(node, 'a', jodit.editor);
-                }
-                if (dom/* Dom.isTag */.i.isTag(node, 'a')) {
-                    if (node.innerHTML === node.textContent) {
-                        newtag = jodit.createInside.text(node.innerHTML);
-                    }
-                    else {
-                        newtag = jodit.createInside.element('span');
-                        newtag.innerHTML = node.innerHTML;
-                    }
-                    if (node.parentNode) {
-                        node.parentNode.replaceChild(newtag, node);
-                        jodit.s.setCursorIn(newtag, true);
-                    }
-                }
-            }
-        });
+    beforeDestruct(jodit) {
+        jodit.e
+            .off('generateLinkForm.link', this.generateForm)
+            .off('dblclick.link', this.onDblClickOnLink)
+            .off('processPaste.link', this.onProcessPasteLink);
     }
 }
+(0,tslib_es6.__decorate)([
+    decorators.autobind
+], link_link.prototype, "onDblClickOnLink", null);
+(0,tslib_es6.__decorate)([
+    decorators.autobind
+], link_link.prototype, "onProcessPasteLink", null);
+(0,tslib_es6.__decorate)([
+    decorators.autobind
+], link_link.prototype, "generateForm", null);
 
 ;// CONCATENATED MODULE: ./src/plugins/media/media.ts
 /*!
@@ -13888,7 +13990,7 @@ class search extends Plugin {
         this.current = null;
         this.eachMap = (node, callback, next) => {
             dom/* Dom.findWithCurrent */.i.findWithCurrent(node, (child) => {
-                return !!child && callback(child);
+                return Boolean(child && callback(child));
             }, this.j.editor, next ? 'nextSibling' : 'previousSibling', next ? 'firstChild' : 'lastChild');
         };
         this.updateCounters = () => {
@@ -13970,7 +14072,7 @@ class search extends Plugin {
                 };
                 this.eachMap(start, (elm) => {
                     if (dom/* Dom.isText */.i.isText(elm) &&
-                        elm.nodeValue !== null &&
+                        elm.nodeValue != null &&
                         elm.nodeValue.length) {
                         let value = elm.nodeValue;
                         if (!next && elm === range.startContainer) {
@@ -14004,7 +14106,7 @@ class search extends Plugin {
                                 currentPartIndex +=
                                     elm.nodeValue.length - value.length;
                             }
-                            if (bound.startContainer === null) {
+                            if (bound.startContainer == null) {
                                 bound.startContainer = elm;
                                 bound.startOffset = currentPartIndex;
                             }
@@ -14090,9 +14192,9 @@ class search extends Plugin {
         for (; haystack[i] !== undefined; i += inc) {
             const some = needle[needleStart] === haystack[i];
             if (some ||
-                (startAtIndex !== null &&
+                (startAtIndex != null &&
                     constants.SPACE_REG_EXP().test(haystack[i]))) {
-                if (startAtIndex === null || !start) {
+                if (startAtIndex == null || !start) {
                     startAtIndex = i;
                 }
                 tmp.push(haystack[i]);
@@ -15927,7 +16029,7 @@ class resizeCells extends Plugin {
         let box, tableBox = this.workTable.getBoundingClientRect();
         this.minX = 0;
         this.maxX = 1000000;
-        if (this.wholeTable !== null) {
+        if (this.wholeTable != null) {
             tableBox = this.workTable
                 .parentNode.getBoundingClientRect();
             this.minX = tableBox.left;
@@ -15984,7 +16086,7 @@ class resizeCells extends Plugin {
         this.j.e.off(this.j.ew, 'mousemove.table touchmove.table', this.onMouseMove);
         this.resizeHandler.classList.remove('jodit-table-resizer_moved');
         if (this.startX !== e.clientX) {
-            if (this.wholeTable === null) {
+            if (this.wholeTable == null) {
                 this.resizeColumns();
             }
             else {
@@ -16387,7 +16489,7 @@ function tableKeyboardNavigation(editor) {
                     event.key === constants.KEY_UP) &&
                     (dom/* Dom.prev */.i.prev(current, (elm) => event.key === constants.KEY_UP
                         ? dom/* Dom.isTag */.i.isTag(elm, 'br')
-                        : !!elm, block) ||
+                        : Boolean(elm), block) ||
                         (event.key !== constants.KEY_UP &&
                             dom/* Dom.isText */.i.isText(current) &&
                             range.startOffset !== 0))) ||
@@ -16395,7 +16497,7 @@ function tableKeyboardNavigation(editor) {
                         event.key === constants.KEY_DOWN) &&
                         (dom/* Dom.next */.i.next(current, (elm) => event.key === constants.KEY_DOWN
                             ? dom/* Dom.isTag */.i.isTag(elm, 'br')
-                            : !!elm, block) ||
+                            : Boolean(elm), block) ||
                             (event.key !== constants.KEY_DOWN &&
                                 dom/* Dom.isText */.i.isText(current) &&
                                 current.nodeValue &&
@@ -17528,7 +17630,7 @@ const OptionsDefault = function (options, def = Config.defaultOptions) {
                     Object.keys(preset).forEach(extendKey.bind(this, preset));
                 }
             }
-            const defValue = def[key], optValue = opt[key], isObject = typeof defValue === 'object' && defValue !== null;
+            const defValue = def[key], optValue = opt[key], isObject = typeof defValue === 'object' && defValue != null;
             if ((0,_core_helpers___WEBPACK_IMPORTED_MODULE_1__.isAtom)(optValue)) {
                 self[key] = optValue;
             }
@@ -17903,7 +18005,7 @@ function $$(selector, root) {
         constants.IS_IE &&
         !(root && root.nodeType === Node.DOCUMENT_NODE)) {
         const id = root.id, temp_id = id ||
-            '_selector_id_' + ('' + Math.random()).slice(2) + $$temp();
+            '_selector_id_' + (String(Math.random())).slice(2) + $$temp();
         selector = selector.replace(/:scope/g, '#' + temp_id);
         !id && root.setAttribute('id', temp_id);
         result = root.parentNode.querySelectorAll(selector);
@@ -18798,7 +18900,7 @@ function attr(elm, key, value) {
         key = key.substr(1);
     }
     if (value !== undefined) {
-        if (value === null) {
+        if (value == null) {
             elm.hasAttribute(key) && elm.removeAttribute(key);
         }
         else {
@@ -19150,8 +19252,8 @@ const isLicense = (license) => {
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function isNativeFunction(f) {
-    return (!!f &&
-        (typeof f).toLowerCase() == 'function' &&
+    return (Boolean(f) &&
+        (typeof f).toLowerCase() === 'function' &&
         (f === Function.prototype ||
             /^\s*function\s*(\b[a-z$_][a-z0-9$_]*\b)*\s*\((|([a-z$_][a-z0-9$_]*)(\s*,[a-z$_][a-z0-9$_]*)*)\)\s*{\s*\[native code]\s*}\s*$/i.test(String(f))));
 }
@@ -19173,7 +19275,7 @@ function isNumber(value) {
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function isWindow(obj) {
-    return obj !== null && obj === obj.window;
+    return obj != null && obj === obj.window;
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/type.ts
@@ -19327,7 +19429,7 @@ function extend(...args) {
     }
     for (i; i < length; i += 1) {
         options = args[i];
-        if (options !== null && options !== undefined) {
+        if (options != null) {
             keys = Object.keys(options);
             for (j = 0; j < keys.length; j += 1) {
                 name = keys[j];
@@ -19504,7 +19606,7 @@ function stringify(value, options = {}) {
         if (excludeKeys.has(k)) {
             return;
         }
-        if (typeof v === 'object' && v !== null) {
+        if (typeof v === 'object' && v != null) {
             if (map.get(v)) {
                 return '[refObject]';
             }
@@ -20053,12 +20155,12 @@ class Dom {
             return true;
         }
         if (Dom.isText(node)) {
-            return node.nodeValue === null || (0,_helpers__WEBPACK_IMPORTED_MODULE_1__.trim)(node.nodeValue).length === 0;
+            return node.nodeValue == null || (0,_helpers__WEBPACK_IMPORTED_MODULE_1__.trim)(node.nodeValue).length === 0;
         }
         return (!condNoEmptyElement.test(node.nodeName.toLowerCase()) &&
             Dom.each(node, (elm) => {
                 if ((Dom.isText(elm) &&
-                    elm.nodeValue !== null &&
+                    elm.nodeValue != null &&
                     (0,_helpers__WEBPACK_IMPORTED_MODULE_1__.trim)(elm.nodeValue).length !== 0) ||
                     (Dom.isElement(elm) &&
                         condNoEmptyElement.test(elm.nodeName.toLowerCase()))) {
@@ -20326,36 +20428,6 @@ class Dom {
         return false;
     }
 }
-Dom.findInline = (node, toLeft, root) => {
-    let prevElement = node, nextElement = null;
-    do {
-        if (prevElement) {
-            nextElement = toLeft
-                ? prevElement.previousSibling
-                : prevElement.nextSibling;
-            if (!nextElement &&
-                prevElement.parentNode &&
-                prevElement.parentNode !== root &&
-                Dom.isInlineBlock(prevElement.parentNode)) {
-                prevElement = prevElement.parentNode;
-            }
-            else {
-                break;
-            }
-        }
-        else {
-            break;
-        }
-    } while (!nextElement);
-    while (nextElement &&
-        Dom.isInlineBlock(nextElement) &&
-        (!toLeft ? nextElement.firstChild : nextElement.lastChild)) {
-        nextElement = !toLeft
-            ? nextElement.firstChild
-            : nextElement.lastChild;
-    }
-    return nextElement;
-};
 
 
 /***/ }),
@@ -21976,9 +22048,9 @@ const normalizeNode = (node) => {
     if (!node) {
         return;
     }
-    if (dom/* Dom.isText */.i.isText(node) && node.nodeValue !== null && node.parentNode) {
+    if (dom/* Dom.isText */.i.isText(node) && node.nodeValue != null && node.parentNode) {
         while (dom/* Dom.isText */.i.isText(node.nextSibling)) {
-            if (node.nextSibling.nodeValue !== null) {
+            if (node.nextSibling.nodeValue != null) {
                 node.nodeValue += node.nextSibling.nodeValue;
             }
             node.nodeValue = node.nodeValue.replace((0,constants.INVISIBLE_SPACE_REG_EXP)(), '');
@@ -22097,7 +22169,7 @@ function normalizeCssValue(key, value) {
                 case 'heavy':
                     return 900;
             }
-            return (0,checker/* isNumeric */.kE)(value) ? +value : value;
+            return (0,checker/* isNumeric */.kE)(value) ? Number(value) : value;
     }
     if (/color/i.test(key) && /^rgb/i.test(value.toString())) {
         return (0,color_to_hex/* colorToHex */.h)(value.toString()) || value;
@@ -22181,7 +22253,7 @@ const css = (element, key, value, onlyStyleMode = false) => {
                 _value = parseInt(_value.toString(), 10) + 'px';
             }
             if (_value !== undefined &&
-                (_value === null ||
+                (_value == null ||
                     css(elm, _key, undefined, true) !==
                         (0,_normalize___WEBPACK_IMPORTED_MODULE_1__/* .normalizeCssValue */ .Zh)(_key, _value))) {
                 elm.style[_key] = _value;
@@ -22565,7 +22637,7 @@ class UIElement extends _component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent
                 cl.remove(className);
             }
         });
-        value !== null &&
+        value != null &&
             value !== '' &&
             cl.add(`${mod}_${value.toString().toLowerCase()}`);
         this.mods[name] = value;
@@ -22759,7 +22831,7 @@ let UIButton = class UIButton extends ui_element/* UIElement */.u {
         this.text = this.j.c.span(cn + '__text');
         button.appendChild(this.icon);
         button.appendChild(this.text);
-        this.j.e.on(button, `click`, this.onActionFire);
+        this.j.e.on(button, 'click', this.onActionFire);
         return button;
     }
     destruct() {
@@ -23499,7 +23571,7 @@ let UIInput = UIInput_1 = class UIInput extends ui_element/* UIElement */.u {
         });
     }
     set error(value) {
-        this.setMod('has-error', !!value);
+        this.setMod('has-error', Boolean(value));
         if (!value) {
             dom/* Dom.safeRemove */.i.safeRemove(this.__errorBox);
         }
@@ -23595,7 +23667,7 @@ class UISelect extends ui_element/* UIElement */.u {
         return 'UISelect';
     }
     set error(value) {
-        this.setMod('has-error', !!value);
+        this.setMod('has-error', Boolean(value));
         if (!value) {
             dom/* Dom.safeRemove */.i.safeRemove(this.__errorBox);
         }
@@ -24838,7 +24910,7 @@ module.exports = {
 	file: 'fichier',
 	Advanced: 'Avancé',
 	'Image properties': "Propriétés de l'image",
-	Cancel: 'Effacer',
+	Cancel: 'Annuler',
 	Ok: 'OK',
 	'Your code is similar to HTML. Keep as HTML?':
 		'Votre texte que vous essayez de coller est similaire au HTML. Collez-le en HTML?',
