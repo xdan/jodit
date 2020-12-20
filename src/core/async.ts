@@ -220,6 +220,8 @@ export class Async implements IAsync {
 		);
 	}
 
+	private requestsIdle: Set<number> = new Set();
+
 	private requestIdleCallbackNative =
 		(window as any)['requestIdleCallback']?.bind(window) ??
 		((callback: CallbackFunction): number => {
@@ -233,11 +235,28 @@ export class Async implements IAsync {
 			}, 1);
 		});
 
-	requestIdleCallback(callback: CallbackFunction): void {
-		return this.requestIdleCallbackNative(callback);
+	private cancelIdleCallbackNative =
+		(window as any)['cancelIdleCallback']?.bind(window) ??
+		((request: number): void => {
+			this.clearTimeout(request);
+		});
+
+	requestIdleCallback(callback: CallbackFunction): number {
+		const request = this.requestIdleCallbackNative(callback);
+		this.requestsIdle.add(request);
+		return request;
+	}
+
+	cancelIdleCallback(request: number): void  {
+		this.requestsIdle.delete(request);
+		return this.cancelIdleCallbackNative(request);
 	}
 
 	clear(): void {
+		this.requestsIdle.forEach(key => {
+			this.cancelIdleCallback(key);
+		});
+
 		this.timers.forEach(key => {
 			clearTimeout(this.timers.get(key) as number);
 		});

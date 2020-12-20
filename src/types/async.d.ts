@@ -42,6 +42,7 @@ export interface IAsync extends IDestructible {
 
 	throttle(fn: CallbackFunction, timeout: ITimeout): CallbackFunction;
 
-	requestIdleCallback(fn: CallbackFunction): void;
+	requestIdleCallback(fn: CallbackFunction): number;
+	cancelIdleCallback(request: number): void;
 }
 
