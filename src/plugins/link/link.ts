@@ -175,7 +175,7 @@ export class link extends Plugin {
 
 				jodit.async.requestIdleCallback(() => {
 					const { url_input } = refs(htmlForm.container);
-					url_input.focus();
+					url_input?.focus();
 				});
 			},
 			hotkeys: jodit.o.link.hotkeys

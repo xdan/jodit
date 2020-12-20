@@ -723,25 +723,17 @@ describe('Jodit FileBrowser Tests', function() {
 
 						simulateEvent(
 							'dragstart',
-							0,
 							files.querySelector(
 								'.jodit-filebrowser__files-item img[data-src="https://xdsoft.net/jodit/files/images.jpg"]'
 							)
 						);
 
-						simulateEvent('dragover', 0, window, function(data) {
+						simulateEvent('dragover', window, function(data) {
 							data.clientX = 50;
 							data.clientY = 20 + offset(editor.editor).top;
 						});
 
-						const image = editor.ownerDocument.querySelector(
-							'img[data-src="https://xdsoft.net/jodit/files/images.jpg"][alt="images.jpg"][style*="fixed"]'
-						);
-
-						expect(image).is.not.null;
-						expect(image.style.position).equals('fixed');
-
-						simulateEvent('drop', 0, editor.editor, function(data) {
+						simulateEvent('drop', editor.editor, function(data) {
 							Object.defineProperty(data, 'dataTransfer', {
 								value: {
 									files: []
@@ -753,9 +745,7 @@ describe('Jodit FileBrowser Tests', function() {
 							'<p><img src="https://xdsoft.net/jodit/files/images.jpg"></p>'
 						);
 
-						expect(image.parentNode).is.not.null;
-						simulateEvent('drop', 0, window);
-						expect(image.parentNode).is.null;
+						simulateEvent('drop', window);
 
 						filebrowser.destruct();
 
@@ -790,24 +780,17 @@ describe('Jodit FileBrowser Tests', function() {
 
 						simulateEvent(
 							'dragstart',
-							0,
 							files.querySelector(
 								'.jodit-filebrowser__files-item[data-is-file="1"] img'
 							)
 						);
 
-						simulateEvent('dragover', 0, window, function(data) {
+						simulateEvent('dragover', window, function(data) {
 							data.clientX = 50;
 							data.clientY = 20 + offset(editor.editor).top;
 						});
 
-						const image = editor.ownerDocument.querySelector(
-							'img[data-src="https://xdsoft.net/jodit/files/test.txt"][alt="test.txt"][style*="fixed"]'
-						);
-						expect(image).is.not.null;
-						expect(image.style.position).equals('fixed');
-
-						simulateEvent('drop', 0, editor.editor, function(data) {
+						simulateEvent('drop', editor.editor, function(data) {
 							Object.defineProperty(data, 'dataTransfer', {
 								value: {
 									files: []
@@ -818,9 +801,7 @@ describe('Jodit FileBrowser Tests', function() {
 						expect(editor.value).equals(
 							'<p><a href="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a></p>'
 						);
-						expect(image.parentNode).is.not.null;
-						simulateEvent('drop', 0, window);
-						expect(image.parentNode).is.null;
+						simulateEvent('drop', window);
 
 						filebrowser.destruct();
 						done();
