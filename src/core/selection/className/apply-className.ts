@@ -6,18 +6,15 @@
 
 import autobind from 'autobind-decorator';
 
-import { CanUndef, IJodit, IStyle, markerInfo, Nullable } from '../../../types';
-import { isPlainObject, isVoid } from '../../helpers/checker';
+import { CanUndef, IJodit, ClassNameValue, markerInfo, Nullable } from '../../../types';
 import { Dom } from '../../dom';
 import {
 	attr,
-	css,
-	each,
-	normalizeCssValue,
+	classlist,
 	normalizeNode,
 	trim
 } from '../../helpers';
-import { Style } from './style';
+import { ClassName } from './className';
 
 enum mode {
 	UNWRAP = 'UNWRAP',
@@ -25,10 +22,10 @@ enum mode {
 }
 
 /**
- * @see [[Select.prototype.applyStyle]]
+ * @see [[Select.prototype.applyClassName]]
  */
-export class ApplyStyle {
-	constructor(readonly jodit: IJodit, readonly style: Style) {}
+export class ApplyClassName {
+	constructor(readonly jodit: IJodit, readonly className: ClassName) {}
 
 	/**
 	 * Apply options to selection
@@ -90,7 +87,7 @@ export class ApplyStyle {
 
 		let wrapper = font;
 
-		if (this.style.elementIsBlock) {
+		if (this.className.elementIsBlock) {
 			const ulReg = /^(ul|ol|li|td|th|tr|tbody|table)$/i;
 
 			const box = Dom.up(
@@ -98,7 +95,7 @@ export class ApplyStyle {
 				node => {
 					if (node && Dom.isBlock(node, this.jodit.s.win)) {
 						if (
-							ulReg.test(this.style.element) ||
+							ulReg.test(this.className.element) ||
 							!ulReg.test(node.nodeName)
 						) {
 							return true;
@@ -119,16 +116,16 @@ export class ApplyStyle {
 
 		const newWrapper = Dom.replace(
 			wrapper,
-			this.style.element,
+			this.className.element,
 			this.jodit.createInside
 		);
 
-		if (this.style.elementIsBlock) {
+		if (this.className.elementIsBlock) {
 			this.postProcessListElement(newWrapper);
 		}
 
-		if (this.style.options.style && this.style.elementIsDefault) {
-			css(newWrapper, this.style.options.style);
+		if (this.className.options.className && this.className.elementIsDefault) {
+			classlist(newWrapper, this.className.options.className);
 		}
 	}
 
@@ -142,9 +139,9 @@ export class ApplyStyle {
 			this.isSuitableElement(parentNode, false) &&
 			parentNode !== this.jodit.s.area &&
 			(!Dom.isBlock(parentNode, this.jodit.ew) ||
-				this.style.elementIsBlock)
+				this.className.elementIsBlock)
 		) {
-			this.toggleStyles(parentNode);
+			this.toggleClassNames(parentNode);
 			return true;
 		}
 
@@ -171,7 +168,7 @@ export class ApplyStyle {
 			!Dom.prev(firstChild, this.isNormalNode, font) &&
 			this.isSuitableElement(firstChild, false)
 		) {
-			this.toggleStyles(firstChild);
+			this.toggleClassNames(firstChild);
 			return true;
 		}
 
@@ -193,8 +190,8 @@ export class ApplyStyle {
 		);
 
 		if (wrapper) {
-			if (this.style.elementIsBlock) {
-				this.toggleStyles(wrapper);
+			if (this.className.elementIsBlock) {
+				this.toggleClassNames(wrapper);
 				return true;
 			}
 
@@ -233,7 +230,7 @@ export class ApplyStyle {
 
 			Dom.after(wrapper, rightFragment);
 
-			this.toggleStyles(wrapper);
+			this.toggleClassNames(wrapper);
 
 			return true;
 		}
@@ -242,27 +239,15 @@ export class ApplyStyle {
 	}
 
 	/**
-	 * Element has all rules
+	 * Element has all classNames
 	 * @param elm
-	 * @param [rules]
+	 * @param [classNames]
 	 */
-	private elementHasSameStyle(elm: Node, rules: CanUndef<IStyle>): boolean {
+	private elementHasSameClassName(elm: Node, classNames: CanUndef<ClassNameValue>): boolean {
 		return Boolean(
-			isPlainObject(rules) &&
-				!Dom.isTag(elm, 'font') &&
+			!Dom.isTag(elm, 'font') &&
 				Dom.isHTMLElement(elm, this.jodit.ew) &&
-				each(rules, (property, checkValue) => {
-					const value = css(elm, property, undefined, true);
-
-					return (
-						!isVoid(value) &&
-						value !== '' &&
-						!isVoid(checkValue) &&
-						normalizeCssValue(property, checkValue)
-							.toString()
-							.toLowerCase() === value.toString().toLowerCase()
-					);
-				})
+				elm.classList.contains (classNames as string)
 		);
 	}
 
@@ -281,14 +266,14 @@ export class ApplyStyle {
 			return false;
 		}
 
-		const { element, elementIsDefault, options } = this.style;
+		const { element, elementIsDefault, options } = this.className;
 
-		const elmHasSameStyle = this.elementHasSameStyle(elm, options.style);
+		const elmHasSameClassName = this.elementHasSameClassName(elm, options.className);
 		const elmIsSame = elm.nodeName.toLowerCase() === element;
 
 		return (
 			((!elementIsDefault || !strict) && elmIsSame) ||
-			(elmHasSameStyle && this.isNormalNode(elm))
+			(elmHasSameClassName && this.isNormalNode(elm))
 		);
 	}
 
@@ -306,46 +291,43 @@ export class ApplyStyle {
 	}
 
 	/**
-	 * Add or remove styles to element
+	 * Add or remove className to element
 	 * @param elm
 	 */
-	private toggleStyles(elm: HTMLElement): void {
-		const { style } = this.style.options;
+	private toggleClassNames(elm: HTMLElement): void {
+		const { className } = this.className.options;
 
-		// toggle CSS rules
-		if (style && elm.nodeName.toLowerCase() === this.style.defaultTag) {
-			Object.keys(style).forEach(rule => {
-				if (
-					this.mode === mode.UNWRAP ||
-					css(elm, rule) ===
-						normalizeCssValue(rule, style[rule] as string)
-				) {
-					css(elm, rule, '');
+		// toggle classNames
+		if (className && elm.nodeName.toLowerCase() === this.className.defaultTag) {
+			if (
+				this.mode === mode.UNWRAP ||
+				elm.classList.contains(className)
+			) {
+				elm.classList.remove(className)
 
-					if (this.mode === undefined) {
-						this.mode = mode.UNWRAP;
-					}
-				} else {
-					css(elm, rule, style[rule]);
-
-					if (this.mode === undefined) {
-						this.mode = mode.WRAP;
-					}
+				if (this.mode === undefined) {
+					this.mode = mode.UNWRAP;
 				}
-			});
+			} else {
+				elm.classList.add(className)
+
+				if (this.mode === undefined) {
+					this.mode = mode.WRAP;
+				}
+			}
 		}
 
 		const isBlock = Dom.isBlock(elm, this.jodit.ew);
 
 		const isSuitableInline =
 			!isBlock &&
-			(!attr(elm, 'style') ||
-				elm.nodeName.toLowerCase() !== this.style.defaultTag);
+			(!attr(elm, 'class') ||
+				elm.nodeName.toLowerCase() !== this.className.defaultTag);
 
 		const isSuitableBlock =
 			!isSuitableInline &&
 			isBlock &&
-			elm.nodeName.toLowerCase() === this.style.element;
+			elm.nodeName.toLowerCase() === this.className.element;
 
 		if (isSuitableInline || isSuitableBlock) {
 			// toggle `<strong>test</strong>` toWYSIWYG `test`, and
@@ -435,11 +417,11 @@ export class ApplyStyle {
 		range.setEndAfter(end);
 		const fragment = range.extractContents();
 
-		const wrapper = this.jodit.createInside.element(this.style.element);
+		const wrapper = this.jodit.createInside.element(this.className.element);
 		wrapper.appendChild(fragment);
 		range.insertNode(wrapper);
 
-		if (this.style.elementIsBlock) {
+		if (this.className.elementIsBlock) {
 			this.postProcessListElement(wrapper);
 
 			if (
@@ -460,11 +442,11 @@ export class ApplyStyle {
 	private postProcessListElement(wrapper: HTMLElement): void {
 		// Add extra LI inside UL/OL
 		if (
-			/^(OL|UL)$/i.test(this.style.element) &&
+			/^(OL|UL)$/i.test(this.className.element) &&
 			!Dom.isTag(wrapper.firstElementChild, 'li')
 		) {
 			const li = Dom.replace(wrapper, 'li', this.jodit.createInside);
-			const ul = Dom.wrap(li, this.style.element, this.jodit);
+			const ul = Dom.wrap(li, this.className.element, this.jodit);
 
 			if (ul) {
 				wrapper = ul;

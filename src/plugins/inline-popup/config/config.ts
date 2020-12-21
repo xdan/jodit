@@ -68,6 +68,7 @@ Config.prototype.popup = {
 		'cut',
 		'\n',
 		'paragraph',
+		'classSpan',
 		'link',
 		'align',
 		'dots'

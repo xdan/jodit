@@ -11,6 +11,7 @@ export { Delete } from './keyboard/delete';
 export { bold } from './bold';
 export { cleanHtml } from './fix/clean-html';
 export { WrapTextNodes } from './fix/wrap-text-nodes';
+export { classSpan } from './classSpan';
 export { copyFormat, clipboard, paste, pasteStorage } from './clipboard';
 export { color } from './color';
 export { DragAndDrop } from './clipboard/drag-and-drop';

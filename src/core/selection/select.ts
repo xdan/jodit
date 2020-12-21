@@ -18,6 +18,7 @@ import type {
 	IDictionary,
 	IJodit,
 	IStyle,
+	ClassNameValue,
 	markerInfo,
 	Nullable
 } from '../../types';
@@ -36,6 +37,7 @@ import {
 } from '../helpers';
 import { Style } from './style/style';
 import { autobind } from '../decorators';
+import { ClassName } from './className/className';
 
 type WindowSelection = Selection | null;
 
@@ -1187,6 +1189,39 @@ export class Select {
 		});
 
 		styleElm.apply(this.j);
+	}
+
+	/**
+	 * Add a className for all selections. It method wraps selections in nodeName tag.
+	 *
+	 * @param className
+	 * @param options
+	 * @param options.element - tag
+	 * @param options.defaultTag - tag for wrapping and add className
+	 * @example
+	 * ```js
+	 * const editor = Jodit.make('#editor');
+	 * editor.value = 'test';
+	 * editor.execCommand('selectall');
+	 *
+	 * editor.s.applyClassName({className: 'foobar'}) // will wrap `text` in `<span class="foobar">`
+	 * editor.s.applyClassName({className: 'foobar'}) // will remove `foobar` from `span class list`
+	 * ```
+	 */
+	applyClassName(
+		className: CanUndef<ClassNameValue>,
+		options: {
+			element?: HTMLTagNames;
+			defaultTag?: HTMLTagNames;
+		} = {}
+	): void {
+		const classeNameElm = new ClassName({
+			className,
+			element: options.element,
+			defaultTag: options.defaultTag
+		});
+
+		classeNameElm.apply(this.j);
 	}
 
 	/**

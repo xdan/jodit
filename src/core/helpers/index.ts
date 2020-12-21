@@ -18,6 +18,7 @@ export * from './string';
 export * from './append-script';
 export * from './browser';
 export * from './convert-media-url-to-video-embed';
+export * from './classlist';
 export * from './css';
 export * from './ctrl-key';
 export * from './data-bind';

@@ -6,6 +6,7 @@
 
 export * from './ajax';
 export * from './async';
+export * from './className';
 export * from './context';
 export * from './create';
 export * from './dialog';

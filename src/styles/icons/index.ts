@@ -36,6 +36,7 @@ import * as file from './file.svg';
 import * as folder from './folder.svg';
 import * as font from './font.svg';
 import * as fontsize from './fontsize.svg';
+import * as classSpan from './classSpan.svg';
 import * as fullsize from './fullsize.svg';
 import * as hr from './hr.svg';
 import * as image from './image.svg';
@@ -104,6 +105,7 @@ export {
 	chain_broken,
 	check,
 	check_square,
+	classSpan,
 	copyformat,
 	copy,
 	crop,
