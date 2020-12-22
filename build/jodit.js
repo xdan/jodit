@@ -2370,7 +2370,6 @@ var Config = (function () {
             'fontsize',
             'brush',
             'paragraph',
-            'classSpan',
             '|',
             'image',
             'table',
@@ -2399,7 +2398,6 @@ var Config = (function () {
             'fontsize',
             'brush',
             'paragraph',
-            'classSpan',
             '|',
             'image',
             'table',
@@ -2421,7 +2419,6 @@ var Config = (function () {
             '|',
             'brush',
             'paragraph',
-            'classSpan',
             'eraser',
             '\n',
             'align',
@@ -17437,7 +17434,8 @@ module.exports = {
 	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
 		'للصق المحتوى قادم من Microsoft Word/Excel الوثيقة. هل تريد أن تبقي شكل أو تنظيفه ؟ ',
 	'Word Paste Detected': 'كلمة لصق الكشف عن',
-	Clean: 'نظيفة'
+	Clean: 'نظيفة',
+	'Insert className': 'أدخل اسم الفصل'
 };
 
 
@@ -17669,7 +17667,8 @@ module.exports = {
 	Quadrate: 'Quadrate',
 	Find: 'Najít',
 	'Find Previous': 'Najít Předchozí',
-	'Find Next': 'Najít Další'
+	'Find Next': 'Najít Další',
+	'Insert className': 'Vložte název třídy'
 };
 
 
@@ -17901,7 +17900,8 @@ module.exports = {
 	Quadrate: 'Quadrate',
 	Find: 'Finden',
 	'Find Previous': 'Finden Frühere',
-	'Find Next': 'Weitersuchen'
+	'Find Next': 'Weitersuchen',
+	'Insert className': 'Klassennamen einfügen'
 };
 
 
@@ -18155,7 +18155,8 @@ module.exports = {
 	'Upper Roman': 'Romano Mayúscula',
 	Find: 'Encontrar',
 	'Find Previous': 'Buscar Anterior',
-	'Find Next': 'Buscar Siguiente'
+	'Find Next': 'Buscar Siguiente',
+	'Insert className': 'Insertar nombre de clase'
 };
 
 
@@ -18382,7 +18383,8 @@ module.exports = {
 	Quadrate: 'Quadrate',
 	Find: 'Trouver',
 	'Find Previous': 'Trouvez Précédente',
-	'Find Next': 'Suivant'
+	'Find Next': 'Suivant',
+	'Insert className': 'Insérer un nom de classe'
 };
 
 
@@ -18613,7 +18615,8 @@ module.exports = {
 	Quadrate: 'הריבוע הזה',
 	Find: 'למצוא',
 	'Find Previous': 'מצא את הקודם',
-	'Find Next': 'חפש את הבא'
+	'Find Next': 'חפש את הבא',
+	'Insert className': 'הכנס את שם הכיתה'
 };
 
 
@@ -18846,7 +18849,8 @@ module.exports = {
 	Quadrate: 'Quadrate',
 	Find: 'Találni',
 	'Find Previous': 'Megtalálja Előző',
-	'Find Next': 'Következő Keresése'
+	'Find Next': 'Következő Keresése',
+	'Insert className': 'Helyezze be az osztály nevét'
 };
 
 
@@ -19078,7 +19082,8 @@ module.exports = {
 	Quadrate: 'Kuadrat',
 	Find: 'Menemukan',
 	'Find Previous': 'Menemukan Sebelumnya',
-	'Find Next': 'Menemukan Berikutnya'
+	'Find Next': 'Menemukan Berikutnya',
+	'Insert className': 'Masukkan nama kelas'
 };
 
 
@@ -19310,7 +19315,8 @@ module.exports = {
 	Quadrate: 'Quadrate',
 	Find: 'Trovare',
 	'Find Previous': 'Trova Precedente',
-	'Find Next': 'Trova Successivo'
+	'Find Next': 'Trova Successivo',
+	'Insert className': 'Inserisci il nome della classe'
 };
 
 
@@ -19540,7 +19546,8 @@ module.exports = {
 	Quadrate: 'Quadrate',
 	Find: '見',
 	'Find Previous': '探前',
-	'Find Next': '由来'
+	'Find Next': '由来',
+	'Insert className': 'クラス名を挿入'
 };
 
 
@@ -19770,7 +19777,8 @@ module.exports = {
 	Quadrate: '정방형',
 	Find: '찾기',
 	'Find Previous': '이전 찾기',
-	'Find Next': '다음 찾기'
+	'Find Next': '다음 찾기',
+	'Insert className': '수업 이름 삽입'
 };
 
 
@@ -20003,7 +20011,8 @@ module.exports = {
 	Quadrate: 'Quadrate',
 	Find: 'Zoeken',
 	'Find Previous': 'Vorige Zoeken',
-	'Find Next': 'Volgende Zoeken'
+	'Find Next': 'Volgende Zoeken',
+	'Insert className': 'Voeg de klassenaam in'
 };
 
 
@@ -20236,7 +20245,8 @@ module.exports = {
 	Quadrate: 'Kwadrat',
 	Find: 'Znaleźć',
 	'Find Previous': 'Znaleźć Poprzednie',
-	'Find Next': 'Znajdź Dalej'
+	'Find Next': 'Znajdź Dalej',
+	'Insert className': 'Wstaw nazwę zajęć'
 };
 
 
@@ -20473,7 +20483,8 @@ module.exports = {
 	'Upper Roman': 'Romano Maiúscula',
 	Find: 'Encontrar',
 	'Find Previous': 'Encontrar Anteriores',
-	'Find Next': 'Localizar Próxima'
+	'Find Next': 'Localizar Próxima',
+	'Insert className': 'Insira o nome da classe'
 };
 
 
@@ -20704,7 +20715,8 @@ module.exports = {
 	Quadrate: 'Квадрат',
 	Find: 'Найти',
 	'Find Previous': 'Найти Предыдущие',
-	'Find Next': 'Найти Далее'
+	'Find Next': 'Найти Далее',
+	'Insert className': 'Вставить название класса'
 };
 
 
@@ -20935,7 +20947,8 @@ module.exports = {
 	Quadrate: 'Kare',
 	Find: 'Bul',
 	'Find Previous': 'Öncekini Bul',
-	'Find Next': 'Sonrakini Bul'
+	'Find Next': 'Sonrakini Bul',
+	'Insert className': 'Sınıf adı girin'
 };
 
 
@@ -21165,7 +21178,8 @@ module.exports = {
 	Quadrate: '方形',
 	Find: '找到',
 	'Find Previous': '找到以前的',
-	'Find Next': '找到下一个'
+	'Find Next': '找到下一个',
+	'Insert className': '插入班级名称'
 };
 
 
@@ -21394,7 +21408,8 @@ module.exports = {
 	Quadrate: 'Quadrate',
 	Find: 'ค้นหา',
 	'Find Previous': 'ค้นหาก่อนหน้านี้',
-	'Find Next': 'ค้นหาถัดไป'
+	'Find Next': 'ค้นหาถัดไป',
+	'Insert className': 'ใส่ชื่อคลาส'
 };
 
 
@@ -22923,11 +22938,7 @@ config_1.Config.prototype.controls.classSpan = {
         editor.execCommand(control.command, false, value || undefined);
     },
     list: {
-        class1: 'Classe 1',
-        class2: 'Classe 2',
-        class3: 'Classe 3',
-        class4: 'Classe 4',
-        class5: 'Classe 5'
+        'N/C': "No classname configured"
     },
     isChildActive: function (editor, control) {
         var current = editor.s.current();
@@ -26830,7 +26841,6 @@ config_1.Config.prototype.popup = {
         'cut',
         '\n',
         'paragraph',
-        'classSpan',
         'link',
         'align',
         'dots'
