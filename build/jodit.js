@@ -22937,9 +22937,7 @@ config_1.Config.prototype.controls.classSpan = {
         helpers_1.dataBind(editor, key, value);
         editor.execCommand(control.command, false, value || undefined);
     },
-    list: {
-        'N/C': "No classname configured"
-    },
+    list: {},
     isChildActive: function (editor, control) {
         var current = editor.s.current();
         if (current) {

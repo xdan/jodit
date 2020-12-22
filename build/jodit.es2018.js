@@ -9488,9 +9488,7 @@ config/* Config.prototype.controls.classSpan */.De.prototype.controls.classSpan 
         (0,helpers.dataBind)(editor, key, value);
         editor.execCommand(control.command, false, value || undefined);
     },
-    list: {
-        'N/C': "No classname configured"
-    },
+    list: {},
     isChildActive: (editor, control) => {
         const current = editor.s.current();
         if (current) {
