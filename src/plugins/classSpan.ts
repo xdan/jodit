@@ -30,16 +30,14 @@ Config.prototype.controls.classSpan = {
 		);
 	},
 
-	list: {
-		// TODO BB : à voir comment rendre ça personalisable
-		class1: 'Classe 1',
-		class2: 'Classe 2',
-		class3: 'Classe 3',
-		class4: 'Classe 4',
-		class5: 'Classe 5'
+	list: {/*
+		'class1': 'Classe 1',
+		'class2': 'Classe 2',
+		'class3': 'Classe 3',
+		'class4': 'Classe 4',
+		'class5': 'Classe 5'*/
 	},
 
-	// TODO BB : à ajouter pour améiorer l'interface en s'inspirant de font.ts fontsize
 	isChildActive: (editor: IJodit, control: IControlType): boolean => {
 		const current = editor.s.current();
 
