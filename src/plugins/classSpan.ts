@@ -106,7 +106,7 @@ Config.prototype.controls.classSpan = {
 			value
 		)}</span>`,
 
-	tooltip: 'Insert format span'
+	tooltip: 'Insert className'
 } as IControlType;
 
 /**
