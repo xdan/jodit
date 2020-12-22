@@ -222,5 +222,6 @@ module.exports = {
 	Quadrate: 'Quadrate',
 	Find: 'Najít',
 	'Find Previous': 'Najít Předchozí',
-	'Find Next': 'Najít Další'
+	'Find Next': 'Najít Další',
+	'Insert className': 'Vložte název třídy'
 };

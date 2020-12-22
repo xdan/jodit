@@ -220,5 +220,6 @@ module.exports = {
 	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
 		'للصق المحتوى قادم من Microsoft Word/Excel الوثيقة. هل تريد أن تبقي شكل أو تنظيفه ؟ ',
 	'Word Paste Detected': 'كلمة لصق الكشف عن',
-	Clean: 'نظيفة'
+	Clean: 'نظيفة',
+	'Insert className': 'أدخل اسم الفصل'
 };

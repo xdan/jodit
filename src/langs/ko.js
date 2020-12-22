@@ -220,5 +220,6 @@ module.exports = {
 	Quadrate: '정방형',
 	Find: '찾기',
 	'Find Previous': '이전 찾기',
-	'Find Next': '다음 찾기'
+	'Find Next': '다음 찾기',
+	'Insert className': '수업 이름 삽입'
 };

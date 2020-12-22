@@ -222,5 +222,6 @@ module.exports = {
 	Quadrate: 'Kuadrat',
 	Find: 'Menemukan',
 	'Find Previous': 'Menemukan Sebelumnya',
-	'Find Next': 'Menemukan Berikutnya'
+	'Find Next': 'Menemukan Berikutnya',
+	'Insert className': 'Masukkan nama kelas'
 };

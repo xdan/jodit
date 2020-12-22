@@ -220,5 +220,6 @@ module.exports = {
 	Quadrate: 'Quadrate',
 	Find: '見',
 	'Find Previous': '探前',
-	'Find Next': '由来'
+	'Find Next': '由来',
+	'Insert className': 'クラス名を挿入'
 };

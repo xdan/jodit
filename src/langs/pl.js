@@ -223,5 +223,6 @@ module.exports = {
 	Quadrate: 'Kwadrat',
 	Find: 'Znaleźć',
 	'Find Previous': 'Znaleźć Poprzednie',
-	'Find Next': 'Znajdź Dalej'
+	'Find Next': 'Znajdź Dalej',
+	'Insert className': 'Wstaw nazwę zajęć'
 };

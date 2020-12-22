@@ -221,5 +221,6 @@ module.exports = {
 	Quadrate: 'Kare',
 	Find: 'Bul',
 	'Find Previous': 'Öncekini Bul',
-	'Find Next': 'Sonrakini Bul'
+	'Find Next': 'Sonrakini Bul',
+	'Insert className': 'Sınıf adı girin'
 };

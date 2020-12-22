@@ -221,5 +221,6 @@ module.exports = {
 	Quadrate: 'הריבוע הזה',
 	Find: 'למצוא',
 	'Find Previous': 'מצא את הקודם',
-	'Find Next': 'חפש את הבא'
+	'Find Next': 'חפש את הבא',
+	'Insert className': 'הכנס את שם הכיתה'
 };

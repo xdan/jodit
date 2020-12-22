@@ -219,5 +219,6 @@ module.exports = {
 	Quadrate: 'Quadrate',
 	Find: 'ค้นหา',
 	'Find Previous': 'ค้นหาก่อนหน้านี้',
-	'Find Next': 'ค้นหาถัดไป'
+	'Find Next': 'ค้นหาถัดไป',
+	'Insert className': 'ใส่ชื่อคลาส'
 };

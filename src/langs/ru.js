@@ -221,5 +221,6 @@ module.exports = {
 	Quadrate: 'Квадрат',
 	Find: 'Найти',
 	'Find Previous': 'Найти Предыдущие',
-	'Find Next': 'Найти Далее'
+	'Find Next': 'Найти Далее',
+	'Insert className': 'Вставить название класса'
 };

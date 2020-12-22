@@ -227,5 +227,6 @@ module.exports = {
 	'Upper Roman': 'Romano Mayúscula',
 	Find: 'Encontrar',
 	'Find Previous': 'Buscar Anterior',
-	'Find Next': 'Buscar Siguiente'
+	'Find Next': 'Buscar Siguiente',
+	'Insert className': 'Insertar nombre de clase'
 };

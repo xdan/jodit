@@ -220,5 +220,6 @@ module.exports = {
 	Quadrate: '方形',
 	Find: '找到',
 	'Find Previous': '找到以前的',
-	'Find Next': '找到下一个'
+	'Find Next': '找到下一个',
+	'Insert className': '插入班级名称'
 };
