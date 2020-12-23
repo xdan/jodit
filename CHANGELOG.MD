@@ -8,6 +8,10 @@
 > - :house:      [Internal]
 > - :nail_care:  [Polish]
 
+## 3.5.3
+
+* Fixed ES2018 version https://github.com/xdan/jodit/issues/585
+
 ## 3.5.2
 
 #### :house: Internal

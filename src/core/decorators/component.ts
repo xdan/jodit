@@ -11,36 +11,17 @@
 export function component<T extends { new (...constructorArgs: any[]): any }>(
 	constructorFunction: T
 ) {
-	const newConstructorFunction: any = function (this: any, ...args: any[]) {
-		if (Object.getPrototypeOf(this) === newConstructorFunction.prototype) {
-			const result = new constructorFunction(...args);
-			result.setStatus('ready');
-			return result;
+	class newConstructorFunction extends constructorFunction {
+		constructor(...args: any[]) {
+			super(...args);
+
+			if (Object.getPrototypeOf(this) === newConstructorFunction.prototype) {
+				this.setStatus('ready');
+			}
 		}
+	}
 
-		return constructorFunction.call(this, ...args);
-	};
-
-	// copy static properties
-	Object.keys(constructorFunction).forEach(key => {
-		const descriptor = Object.getOwnPropertyDescriptor(
-			constructorFunction,
-			key
-		);
-
-		if (descriptor) {
-			Object.defineProperty(newConstructorFunction, key, descriptor);
-		}
-	});
-
-	[newConstructorFunction, constructorFunction].forEach((constructor) => {
-		Object.defineProperty(constructor, 'originalConstructor', {
-			value: constructorFunction,
-			enumerable: false
-		});
-	})
-
-	newConstructorFunction.prototype = constructorFunction.prototype;
+	newConstructorFunction.prototype.constructor = constructorFunction;
 
 	return newConstructorFunction;
 }
