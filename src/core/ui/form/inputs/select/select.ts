@@ -6,17 +6,19 @@
 
 import './select.less';
 
-import { UIElement } from '../element';
 import type {
 	IDictionary,
 	IUISelect,
 	IUISelectValidator,
 	IViewBased
-} from '../../../types';
-import { attr } from '../../helpers';
-import { Dom } from '../../dom';
-import { selectValidators } from './validators';
+} from '../../../../../types';
+import { UIElement } from '../../../element';
+import { attr } from '../../../../helpers';
+import { Dom } from '../../../../dom';
+import { selectValidators } from '../../validators';
+import { component } from '../../../../decorators';
 
+@component
 export class UISelect extends UIElement implements IUISelect {
 	/** @override */
 	className(): string {

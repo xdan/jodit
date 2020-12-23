@@ -523,8 +523,9 @@ describe('Jodit FileBrowser Tests', function() {
 						const count = files.querySelectorAll(
 							'.jodit-filebrowser__files-item'
 						).length;
+
 						input.value = 'i';
-						simulateEvent('keydown', 0, input);
+						simulateEvent('keydown', input);
 
 						expect(
 							files.querySelectorAll(
@@ -533,7 +534,7 @@ describe('Jodit FileBrowser Tests', function() {
 						).does.not.equal(count);
 
 						input.value = '';
-						simulateEvent('keydown', 0, input);
+						simulateEvent('keydown', input);
 						expect(
 							files.querySelectorAll(
 								'.jodit-filebrowser__files-item'

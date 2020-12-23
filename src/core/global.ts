@@ -57,9 +57,10 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 ): HTMLElementTagNameMap[T] {
 	const name = getClassName(classFunc.prototype);
 
-	const data = boxes.get(jodit) || {};
+	const data = boxes.get(jodit) || {},
+		key = name + tag;
 
-	if (!data[name]) {
+	if (!data[key]) {
 		const view = isViewObject(jodit) ? jodit : jodit.j;
 
 		let c = view.c,
@@ -78,11 +79,11 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 
 		body.appendChild(box);
 
-		data[name] = box;
+		data[key] = box;
 
 		jodit.hookStatus('beforeDestruct', () => {
 			Dom.safeRemove(box);
-			delete data[name];
+			delete data[key];
 
 			if (Object.keys(data).length) {
 				boxes.delete(jodit);
@@ -92,7 +93,7 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 		boxes.set(jodit, data);
 	}
 
-	return data[name] as HTMLElementTagNameMap[T];
+	return data[key] as HTMLElementTagNameMap[T];
 }
 
 /**
