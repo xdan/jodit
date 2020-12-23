@@ -125,7 +125,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 						ecma: ESNext ? 8 : 5,
 
 						mangle: {
-							reserved: ['Jodit'],
+							reserved: ['Jodit']
 						},
 
 						compress: {
@@ -155,7 +155,8 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 						preset: [
 							'advanced',
 							{
-								discardComments: { removeAll: true }
+								discardComments: { removeAll: true },
+								zindex: false
 							}
 						]
 					}

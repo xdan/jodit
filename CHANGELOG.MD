@@ -8,7 +8,15 @@
 > - :house:      [Internal]
 > - :nail_care:  [Polish]
 
+## 3.5.4
+
+#### :bug: Bug Fix
+
+* [From Jodit 3.5.1 on, popup z-index is lower than the modal (Ant Design) z-index #587](https://github.com/xdan/jodit/issues/587)
+
 ## 3.5.3
+
+#### :bug: Bug Fix
 
 * Fixed ES2018 version https://github.com/xdan/jodit/issues/585
 
