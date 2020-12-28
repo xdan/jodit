@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.5.2
+ * Version: v3.5.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -82,6 +82,7 @@
   --jd-dark_color-border-selected: #152f5f;
   --jd-width-default: 180px;
   --jd-width-input-min: var(--jd-width-default);
+  --jd-input-height: 32px;
   --jd-button-icon-size: 14px;
   --jd-margin-v: 2px;
   --jd-button-df-size: ((var(--jd-button-icon-size) - 4px) * 2);
@@ -189,8 +190,8 @@
   font-family: var(--jd-font-default);
   font-size: var(--jd-font-size-default);
   width: 100%;
-  height: 32px;
-  line-height: 32px;
+  height: var(--jd-input-height);
+  line-height: var(--jd-input-height);
   padding: 0 var(--jd-padding-default);
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -748,6 +749,9 @@ svg.jodit-icon {
 .jodit-context-menu_padding_false .jodit-context-menu__content {
   padding: 0;
 }
+.jodit-context-menu_max-height_false .jodit-context-menu__content {
+  max-height: fit-content;
+}
 .jodit-context-menu .jodit-ui-button {
   display: flex;
 }
@@ -794,6 +798,9 @@ svg.jodit-icon {
 }
 .jodit-popup_padding_false .jodit-popup__content {
   padding: 0;
+}
+.jodit-popup_max-height_false .jodit-popup__content {
+  max-height: fit-content;
 }
 
 /*!
@@ -1799,8 +1806,8 @@ svg.jodit-icon {
   font-family: var(--jd-font-default);
   font-size: var(--jd-font-size-default);
   width: 100%;
-  height: 32px;
-  line-height: 32px;
+  height: var(--jd-input-height);
+  line-height: var(--jd-input-height);
   padding: 0 var(--jd-padding-default);
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1876,31 +1883,6 @@ svg.jodit-icon {
   margin-bottom: 0;
 }
 
-.jodit-ui-select {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: var(--jd-padding-default);
-}
-.jodit-ui-select__select {
-  min-width: 200px;
-}
-.jodit-ui-select_has-error_true .jodit-ui-select__select {
-  border-color: var(--jd-color-red);
-}
-.jodit-ui-select__error,
-.jodit-ui-select__label {
-  display: block;
-  color: var(--jd-color-label);
-  font-size: 0.8em;
-}
-.jodit-ui-select_has-error_true .jodit-ui-select__label,
-.jodit-ui-select__error {
-  color: var(--jd-color-error);
-}
-.jodit-ui-block .jodit-ui-select {
-  margin-bottom: 0;
-}
-
 .jodit-ui-text-area {
   display: flex;
   flex-direction: column;
@@ -1910,8 +1892,8 @@ svg.jodit-icon {
   font-family: var(--jd-font-default);
   font-size: var(--jd-font-size-default);
   width: 100%;
-  height: 32px;
-  line-height: 32px;
+  height: var(--jd-input-height);
+  line-height: var(--jd-input-height);
   padding: 0 var(--jd-padding-default);
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1998,6 +1980,31 @@ svg.jodit-icon {
   margin-right: var(--jd-padding-default);
 }
 .jodit-ui-block .jodit-ui-checkbox {
+  margin-bottom: 0;
+}
+
+.jodit-ui-select {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--jd-padding-default);
+}
+.jodit-ui-select__select {
+  min-width: 200px;
+}
+.jodit-ui-select_has-error_true .jodit-ui-select__select {
+  border-color: var(--jd-color-red);
+}
+.jodit-ui-select__error,
+.jodit-ui-select__label {
+  display: block;
+  color: var(--jd-color-label);
+  font-size: 0.8em;
+}
+.jodit-ui-select_has-error_true .jodit-ui-select__label,
+.jodit-ui-select__error {
+  color: var(--jd-color-error);
+}
+.jodit-ui-block .jodit-ui-select {
   margin-bottom: 0;
 }
 

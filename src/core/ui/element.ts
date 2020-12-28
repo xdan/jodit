@@ -58,7 +58,11 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 				return pe as T;
 			}
 
-			pe = pe.parentElement;
+			if (!pe.parentElement && pe.container.parentElement) {
+				pe = UIElement.closestElement(pe.container.parentElement, UIElement);
+			} else {
+				pe = pe.parentElement;
+			}
 		}
 
 		return null;

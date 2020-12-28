@@ -7,17 +7,17 @@
 import './input.less';
 
 import type {
-	IDictionary,
+	IDictionary, IKeyValidator,
 	IUIInput,
 	IUIInputValidator,
 	IViewBased
-} from '../../../types';
-import { UIElement } from '../element';
-import { attr, toArray } from '../../helpers';
-import { Dom } from '../../dom';
-import { component, debounce, watch } from '../../decorators';
-import { Icon } from '../icon';
-import { inputValidators } from './validators';
+} from '../../../../../types';
+import { UIElement } from '../../../element';
+import { attr, toArray } from '../../../../helpers';
+import { Dom } from '../../../../dom';
+import { component, debounce, watch } from '../../../../decorators';
+import { Icon } from '../../../icon';
+import { inputValidators, KeyValidator } from '../../validators';
 
 @component
 export class UIInput extends UIElement implements IUIInput {
@@ -26,6 +26,7 @@ export class UIInput extends UIElement implements IUIInput {
 		return 'UIInput';
 	}
 
+	validator: IKeyValidator = new KeyValidator();
 	nativeInput!: IUIInput['nativeInput'];
 
 	private label = this.j.c.span(this.getFullElName('label'));
@@ -148,6 +149,11 @@ export class UIInput extends UIElement implements IUIInput {
 		return this.nativeInput.value;
 	}
 
+	set value(value) {
+		this.nativeInput.value = value;
+		this.j.e.fire(this, 'change', value);
+	}
+
 	private validators: Set<IUIInputValidator> = new Set([]);
 
 	validate(): boolean {
@@ -197,11 +203,23 @@ export class UIInput extends UIElement implements IUIInput {
 			this.state.clearButton = Boolean(this.value.length);
 		}
 
+		this.j.e
+			.on(this.nativeInput, 'input change', () => {
+				this.j.e.fire(this, 'change', this.value)
+			})
+			.on(this.nativeInput, 'keydown', (e: KeyboardEvent) => {
+				return this.validator.validateInput(e, this.nativeInput);
+			});
+
 		this.onChangeState();
 		this.onChangeClassName();
 	}
 
 	focus() {
 		this.nativeInput.focus();
+	}
+
+	get isFocused(): boolean {
+		return this.nativeInput === this.j.od.activeElement;
 	}
 }

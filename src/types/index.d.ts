@@ -12,6 +12,7 @@ export * from './create';
 export * from './dialog';
 export * from './events';
 export * from './file-browser';
+export * from './input';
 export * from './jodit';
 export * from './observe';
 export * from './plugin';

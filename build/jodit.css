@@ -1,14 +1,14 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.5.2
+ * Version: v3.5.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
 	/*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.5.2
+ * Version: v3.5.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -851,6 +851,11 @@ svg.jodit-icon {
 .jodit-context-menu_padding_false .jodit-context-menu__content {
   padding: 0;
 }
+.jodit-context-menu_max-height_false .jodit-context-menu__content {
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+}
 .jodit-context-menu .jodit-ui-button {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -903,6 +908,11 @@ svg.jodit-icon {
 }
 .jodit-popup_padding_false .jodit-popup__content {
   padding: 0;
+}
+.jodit-popup_max-height_false .jodit-popup__content {
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
 }
 
 /*!
@@ -2229,42 +2239,6 @@ svg.jodit-icon {
   margin-bottom: 0;
 }
 
-.jodit-ui-select {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  margin-bottom: 8px;
-}
-.jodit-ui-select__select {
-  min-width: 200px;
-}
-.jodit-ui-select_has-error_true .jodit-ui-select__select {
-  border-color: #ff3b3b;
-}
-.jodit-ui-select__error {
-  display: block;
-  color: #a5a5a5;
-  font-size: 0.8em;
-}
-.jodit-ui-select__label {
-  display: block;
-  color: #a5a5a5;
-  font-size: 0.8em;
-}
-.jodit-ui-select_has-error_true .jodit-ui-select__label {
-  color: #ff3b3b;
-}
-.jodit-ui-select__error {
-  color: #ff3b3b;
-}
-.jodit-ui-block .jodit-ui-select {
-  margin-bottom: 0;
-}
-
 .jodit-ui-text-area {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2401,6 +2375,42 @@ svg.jodit-icon {
   margin-right: 8px;
 }
 .jodit-ui-block .jodit-ui-checkbox {
+  margin-bottom: 0;
+}
+
+.jodit-ui-select {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 8px;
+}
+.jodit-ui-select__select {
+  min-width: 200px;
+}
+.jodit-ui-select_has-error_true .jodit-ui-select__select {
+  border-color: #ff3b3b;
+}
+.jodit-ui-select__error {
+  display: block;
+  color: #a5a5a5;
+  font-size: 0.8em;
+}
+.jodit-ui-select__label {
+  display: block;
+  color: #a5a5a5;
+  font-size: 0.8em;
+}
+.jodit-ui-select_has-error_true .jodit-ui-select__label {
+  color: #ff3b3b;
+}
+.jodit-ui-select__error {
+  color: #ff3b3b;
+}
+.jodit-ui-block .jodit-ui-select {
   margin-bottom: 0;
 }
 

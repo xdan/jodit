@@ -29,7 +29,7 @@ process.argv
 const config = require(path.resolve(cwd, './webpack.config'))(
 	[],
 	{
-		es: 'es5',
+		es: args['es'] || 'es5',
 		isTest: true
 	},
 	cwd

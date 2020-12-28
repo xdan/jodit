@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { CanUndef, IDictionary } from '../../types';
-import { error, isFunction, isPlainObject, splitArray } from '../helpers';
+import { CanUndef, IDictionary, IViewComponent } from '../../types';
+import { error, isFunction, isPlainObject, isViewObject, splitArray } from '../helpers';
 import { ObserveObject } from '../events';
 import { Component, STATUSES } from '../component';
 
@@ -44,6 +44,15 @@ export function watch(observeFields: string[] | string) {
 			};
 
 			splitArray(observeFields).forEach(field => {
+				if (/^:/.test(field)) {
+					const view = isViewObject(component)
+						? component
+						: ((component as unknown) as IViewComponent).jodit;
+
+					view.events.on(component, field.substr(1), callback);
+					return;
+				}
+
 				const parts = field.split('.'),
 					[key] = parts;
 

@@ -157,7 +157,7 @@ export const ColorPickerWidget = (
 		e.preventDefault();
 	});
 
-	editor.e.fire('afterGenerateColorPicker', form, extra);
+	editor.e.fire('afterGenerateColorPicker', form, extra, callback, valueHex);
 
 	return form;
 };

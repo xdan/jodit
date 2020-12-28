@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.5.2
+ * Version: v3.5.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -773,7 +773,7 @@ class View extends component/* Component */.wA {
         this.isJodit = isJodit;
         this.isView = true;
         this.components = new Set();
-        this.version = "3.5.2";
+        this.version = "3.5.4";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.OPTIONS = View.defaultOptions;
@@ -12575,7 +12575,7 @@ class limit extends Plugin {
     decorators.autobind
 ], limit.prototype, "checkPreventChanging", null);
 
-// EXTERNAL MODULE: ./src/core/ui/form/index.ts + 10 modules
+// EXTERNAL MODULE: ./src/core/ui/form/index.ts + 11 modules
 var ui_form = __webpack_require__(35);
 ;// CONCATENATED MODULE: ./src/plugins/link/template.ts
 /*!
@@ -19836,8 +19836,8 @@ const lang = {};
 const boxes = new WeakMap();
 function getContainer(jodit, classFunc, tag = 'div', inside = false) {
     const name = (0,_helpers___WEBPACK_IMPORTED_MODULE_2__.getClassName)(classFunc.prototype);
-    const data = boxes.get(jodit) || {};
-    if (!data[name]) {
+    const data = boxes.get(jodit) || {}, key = name + tag;
+    if (!data[key]) {
         const view = (0,_helpers___WEBPACK_IMPORTED_MODULE_2__.isViewObject)(jodit) ? jodit : jodit.j;
         let c = view.c, body = jodit.od.body;
         if (inside && (0,_helpers___WEBPACK_IMPORTED_MODULE_2__.isJoditObject)(jodit) && jodit.od !== jodit.ed) {
@@ -19849,17 +19849,17 @@ function getContainer(jodit, classFunc, tag = 'div', inside = false) {
         });
         box.classList.add(`jodit_theme_${view.o.theme || 'default'}`);
         body.appendChild(box);
-        data[name] = box;
+        data[key] = box;
         jodit.hookStatus('beforeDestruct', () => {
             _dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove(box);
-            delete data[name];
+            delete data[key];
             if (Object.keys(data).length) {
                 boxes.delete(jodit);
             }
         });
         boxes.set(jodit, data);
     }
-    return data[name];
+    return data[key];
 }
 const eventEmitter = new _events__WEBPACK_IMPORTED_MODULE_3__/* .EventsNative */ .ng();
 
@@ -21038,27 +21038,15 @@ function cache(target, name, descriptor) {
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function component(constructorFunction) {
-    const newConstructorFunction = function (...args) {
-        if (Object.getPrototypeOf(this) === newConstructorFunction.prototype) {
-            const result = new constructorFunction(...args);
-            result.setStatus('ready');
-            return result;
+    class newConstructorFunction extends constructorFunction {
+        constructor(...args) {
+            super(...args);
+            if (Object.getPrototypeOf(this) === newConstructorFunction.prototype) {
+                this.setStatus('ready');
+            }
         }
-        return constructorFunction.call(this, ...args);
-    };
-    Object.keys(constructorFunction).forEach(key => {
-        const descriptor = Object.getOwnPropertyDescriptor(constructorFunction, key);
-        if (descriptor) {
-            Object.defineProperty(newConstructorFunction, key, descriptor);
-        }
-    });
-    [newConstructorFunction, constructorFunction].forEach((constructor) => {
-        Object.defineProperty(constructor, 'originalConstructor', {
-            value: constructorFunction,
-            enumerable: false
-        });
-    });
-    newConstructorFunction.prototype = constructorFunction.prototype;
+    }
+    newConstructorFunction.prototype.constructor = constructorFunction;
     return newConstructorFunction;
 }
 
@@ -21413,6 +21401,13 @@ function watch(observeFields) {
                 }
             };
             (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.splitArray)(observeFields).forEach(field => {
+                if (/^:/.test(field)) {
+                    const view = (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.isViewObject)(component)
+                        ? component
+                        : component.jodit;
+                    view.events.on(component, field.substr(1), callback);
+                    return;
+                }
                 const parts = field.split('.'), [key] = parts;
                 let value = component[key];
                 if (value instanceof _events__WEBPACK_IMPORTED_MODULE_1__/* .ObserveObject */ .P5) {
@@ -22612,7 +22607,12 @@ class UIElement extends _component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent
             if (c(pe)) {
                 return pe;
             }
-            pe = pe.parentElement;
+            if (!pe.parentElement && pe.container.parentElement) {
+                pe = UIElement.closestElement(pe.container.parentElement, UIElement);
+            }
+            else {
+                pe = pe.parentElement;
+            }
         }
         return null;
     }
@@ -23470,6 +23470,56 @@ const required = function (select) {
     return true;
 };
 
+// EXTERNAL MODULE: ./src/core/constants.ts
+var constants = __webpack_require__(2);
+;// CONCATENATED MODULE: ./src/core/ui/form/validators/key-validator.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+class KeyValidator {
+    constructor() {
+        this.enterValidators = [];
+    }
+    addInputValidator(fn) {
+        this.enterValidators.push(fn);
+        return this;
+    }
+    validateInput(e, input) {
+        var _a, _b;
+        if (!this.enterValidators.length ||
+            [constants.KEY_UP, constants.KEY_DOWN, constants.KEY_LEFT, constants.KEY_RIGHT].includes(e.key)) {
+            return true;
+        }
+        const { value } = input;
+        const { key } = e, start = (_a = input.selectionStart) !== null && _a !== void 0 ? _a : 0, end = (_b = input.selectionEnd) !== null && _b !== void 0 ? _b : 0, validate = (v) => this.enterValidators.every(fn => fn(v, start, end));
+        if (validate(this.calculateValue(key, value, start, end))) {
+            return true;
+        }
+        if (start === end &&
+            validate(this.calculateValue(key, value, start, end + 1))) {
+            input.selectionEnd = end + 1;
+            return true;
+        }
+        return false;
+    }
+    calculateValue(key, value, start, end) {
+        const diff = start === end ? 1 : 0;
+        if (key.length === 1) {
+            return value.substr(0, start) + key + value.substr(end);
+        }
+        switch (key) {
+            case constants.KEY_BACKSPACE:
+                return value.substr(0, start - diff) + value.substr(end);
+            case constants.KEY_DELETE:
+                return value.substr(0, start) + value.substr(end + diff);
+        }
+        return value;
+    }
+}
+
 ;// CONCATENATED MODULE: ./src/core/ui/form/validators/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -23481,7 +23531,8 @@ const required = function (select) {
 
 
 
-;// CONCATENATED MODULE: ./src/core/ui/form/input.ts
+
+;// CONCATENATED MODULE: ./src/core/ui/form/inputs/input/input.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -23499,6 +23550,7 @@ var UIInput_1;
 let UIInput = UIInput_1 = class UIInput extends ui_element/* UIElement */.u {
     constructor(jodit, options) {
         super(jodit, options);
+        this.validator = new KeyValidator();
         this.label = this.j.c.span(this.getFullElName('label'));
         this.icon = this.j.c.span(this.getFullElName('icon'));
         this.clearButton = this.j.c.span(this.getFullElName('clear'), ui_icon/* Icon.get */.J.get('cancel'));
@@ -23519,6 +23571,13 @@ let UIInput = UIInput_1 = class UIInput extends ui_element/* UIElement */.u {
             });
             this.state.clearButton = Boolean(this.value.length);
         }
+        this.j.e
+            .on(this.nativeInput, 'input change', () => {
+            this.j.e.fire(this, 'change', this.value);
+        })
+            .on(this.nativeInput, 'keydown', (e) => {
+            return this.validator.validateInput(e, this.nativeInput);
+        });
         this.onChangeState();
         this.onChangeClassName();
     }
@@ -23583,6 +23642,10 @@ let UIInput = UIInput_1 = class UIInput extends ui_element/* UIElement */.u {
     get value() {
         return this.nativeInput.value;
     }
+    set value(value) {
+        this.nativeInput.value = value;
+        this.j.e.fire(this, 'change', value);
+    }
     validate() {
         this.error = '';
         return (0,helpers.toArray)(this.validators).every(validator => validator(this));
@@ -23601,6 +23664,9 @@ let UIInput = UIInput_1 = class UIInput extends ui_element/* UIElement */.u {
     }
     focus() {
         this.nativeInput.focus();
+    }
+    get isFocused() {
+        return this.nativeInput === this.j.od.activeElement;
     }
 };
 UIInput.defaultState = {
@@ -23637,7 +23703,59 @@ UIInput = UIInput_1 = (0,tslib_es6.__decorate)([
 ], UIInput);
 
 
-;// CONCATENATED MODULE: ./src/core/ui/form/select.ts
+;// CONCATENATED MODULE: ./src/core/ui/form/inputs/area/area.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+let UITextArea = class UITextArea extends UIInput {
+    className() {
+        return 'UITextArea';
+    }
+    createContainer(options) {
+        this.nativeInput = this.j.create.element('textarea');
+        return super.createContainer(options);
+    }
+};
+UITextArea = (0,tslib_es6.__decorate)([
+    decorators.component
+], UITextArea);
+
+
+;// CONCATENATED MODULE: ./src/core/ui/form/inputs/checkbox/checkbox.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+let UICheckbox = class UICheckbox extends UIInput {
+    className() {
+        return 'UICheckbox';
+    }
+    makeContainer(options) {
+        return this.j.c.element('label', {
+            className: this.componentName
+        });
+    }
+    constructor(jodit, options) {
+        super(jodit, { ...options, type: 'checkbox' });
+    }
+};
+UICheckbox = (0,tslib_es6.__decorate)([
+    decorators.component
+], UICheckbox);
+
+
+;// CONCATENATED MODULE: ./src/core/ui/form/inputs/select/select.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -23648,7 +23766,9 @@ UIInput = UIInput_1 = (0,tslib_es6.__decorate)([
 
 
 
-class UISelect extends ui_element/* UIElement */.u {
+
+
+let UISelect = class UISelect extends ui_element/* UIElement */.u {
     constructor(jodit, options) {
         var _a;
         super(jodit, options);
@@ -23722,7 +23842,22 @@ class UISelect extends ui_element/* UIElement */.u {
     focus() {
         this.nativeInput.focus();
     }
-}
+};
+UISelect = (0,tslib_es6.__decorate)([
+    decorators.component
+], UISelect);
+
+
+;// CONCATENATED MODULE: ./src/core/ui/form/inputs/index.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 5 modules
 var utils = __webpack_require__(4);
@@ -23732,7 +23867,6 @@ var utils = __webpack_require__(4);
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
 
 
 
@@ -23785,58 +23919,7 @@ UIForm = (0,tslib_es6.__decorate)([
 ], UIForm);
 
 
-;// CONCATENATED MODULE: ./src/core/ui/form/inputs/area.ts
-
-
-
-
-let UITextArea = class UITextArea extends UIInput {
-    className() {
-        return 'UITextArea';
-    }
-    createContainer(options) {
-        this.nativeInput = this.j.create.element('textarea');
-        return super.createContainer(options);
-    }
-};
-UITextArea = (0,tslib_es6.__decorate)([
-    decorators.component
-], UITextArea);
-
-
-;// CONCATENATED MODULE: ./src/core/ui/form/inputs/checkbox.ts
-
-
-
-
-let UICheckbox = class UICheckbox extends UIInput {
-    className() {
-        return 'UICheckbox';
-    }
-    makeContainer(options) {
-        return this.j.c.element('label', {
-            className: this.componentName
-        });
-    }
-    constructor(jodit, options) {
-        super(jodit, { ...options, type: 'checkbox' });
-    }
-};
-UICheckbox = (0,tslib_es6.__decorate)([
-    decorators.component
-], UICheckbox);
-
-
-;// CONCATENATED MODULE: ./src/core/ui/form/inputs/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-;// CONCATENATED MODULE: ./src/core/ui/form/block.ts
+;// CONCATENATED MODULE: ./src/core/ui/form/block/block.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -23873,8 +23956,6 @@ UIBlock = (0,tslib_es6.__decorate)([
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
-
 
 
 
@@ -28169,7 +28250,7 @@ const ColorPickerWidget = (editor, callback, coldColor) => {
         }
         e.preventDefault();
     });
-    editor.e.fire('afterGenerateColorPicker', form, extra);
+    editor.e.fire('afterGenerateColorPicker', form, extra, callback, valueHex);
     return form;
 };
 

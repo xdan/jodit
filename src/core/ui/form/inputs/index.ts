@@ -4,5 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from './area';
-export * from './checkbox';
+export * from './input/input';
+export * from './area/area';
+export * from './checkbox/checkbox';
+export * from './select/select';

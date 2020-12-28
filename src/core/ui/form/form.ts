@@ -6,8 +6,7 @@
 
 import type { IDictionary, IUIForm, IUIInput, IUISelect } from '../../../types';
 import { UIGroup } from '../list/group';
-import { UIInput } from './input';
-import { UISelect } from './select';
+import { UIInput, UISelect } from './inputs';
 import { attr } from '../../helpers/utils';
 import { component } from '../../decorators';
 

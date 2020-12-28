@@ -11,7 +11,6 @@ import { isVoid } from './is-void';
 
 /**
  * Check value has method init
- *
  * @param value
  */
 export function isInitable(value: unknown): value is IInitable {

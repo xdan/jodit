@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IFocusable } from './form';
-import {
+import type { IFocusable } from './form';
+import type {
 	CanUndef,
 	IContainer,
 	IDestructible,
@@ -13,8 +13,9 @@ import {
 	IViewComponent,
 	Nullable
 } from './types';
-import { Buttons, ButtonsGroups } from './toolbar';
-import { IViewBased } from './view';
+import type { ButtonsGroups } from './toolbar';
+import type { IViewBased } from './view';
+import type { IKeyValidator } from './input';
 
 export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 	parentElement: Nullable<IUIElement>;
@@ -119,6 +120,7 @@ export interface IUIForm extends IUIGroup {
 }
 
 export interface IUIInput extends IUIElement {
+	validator: IKeyValidator;
 	nativeInput: HTMLInputElement | HTMLTextAreaElement;
 
 	state: {
@@ -139,6 +141,8 @@ export interface IUIInput extends IUIElement {
 	error: string;
 	validate(): boolean;
 	focus(): void;
+
+	readonly isFocused: boolean;
 }
 
 export type IUIInputValidator = (input: IUIInput) => boolean;
