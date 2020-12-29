@@ -12,6 +12,7 @@ import { error } from './type';
 import { Dom } from '../dom';
 import { camelCase } from './string';
 import { toArray } from './array';
+import { UIElement } from '../ui';
 
 let temp = 1;
 
@@ -120,8 +121,12 @@ export const getXPathByElement = (
  * @param root
  */
 export const refs = <T extends HTMLElement>(
-	root: HTMLElement
+	root: HTMLElement | UIElement
 ): IDictionary<T> => {
+	if (root instanceof UIElement) {
+		root = root.container;
+	}
+
 	return $$('[ref],[data-ref]', root).reduce((def, child) => {
 		const key = attr(child, '-ref');
 

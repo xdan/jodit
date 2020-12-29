@@ -141,7 +141,7 @@ Config.prototype.controls.link = {
  */
 export class link extends Plugin {
 	/** @override */
-	buttons = [
+	buttons: Plugin['buttons'] = [
 		{
 			name: 'link',
 			group: 'insert'

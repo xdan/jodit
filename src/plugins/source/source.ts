@@ -21,7 +21,7 @@ import { createSourceEditor } from './editor/factory';
  */
 export class source extends Plugin {
 	/** @override */
-	buttons = [
+	buttons: Plugin['buttons'] = [
 		{
 			name: 'source',
 			group: 'source'

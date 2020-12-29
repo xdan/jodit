@@ -7,5 +7,6 @@
 export * from './mark-deprecated';
 export * from './utils';
 export * from './get';
+export * from './set';
 export * from './get-class-name';
 export * from './stack';

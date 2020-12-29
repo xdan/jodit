@@ -4,16 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type {
-	HTMLTagNames,
-	IFileBrowser,
-	IFileBrowserItem,
-	Nullable
-} from '../../../types';
+import type { HTMLTagNames, IFileBrowserItem, Nullable } from '../../../types';
 import { ctrlKey, attr } from '../../../core/helpers';
 import { F_CLASS, ITEM_CLASS } from '../consts';
 import contextMenu from '../builders/context-menu';
 import { Dom } from '../../../core/dom';
+import { FileBrowser } from '../file-browser';
 
 export const getItem = (
 	node: Nullable<EventTarget>,
@@ -26,7 +22,7 @@ export const getItem = (
 		root
 	);
 
-export function nativeListeners(this: IFileBrowser): void {
+export function nativeListeners(this: FileBrowser): void {
 	let dragElement: false | HTMLElement = false;
 
 	const self = this;
@@ -84,12 +80,8 @@ export function nativeListeners(this: IFileBrowser): void {
 						attr(a, '-source') || '',
 						dragElement.classList.contains(ITEM_CLASS)
 					)
-					.then(resp => {
-						if (self.o.isSuccess(resp)) {
-							self.loadTree();
-						} else {
-							self.status(self.o.getMessage(resp));
-						}
+					.then(() => {
+						self.loadTree();
 					}, self.status);
 
 				dragElement = false;

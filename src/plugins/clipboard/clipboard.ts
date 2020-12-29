@@ -8,6 +8,7 @@ import type { IJodit, IPlugin } from '../../types';
 import { TEXT_HTML, TEXT_PLAIN } from '../../core/constants';
 import { stripTags } from '../../core/helpers';
 import { getDataTransfer } from './paste/helpers';
+import { Plugin } from '../../core/plugin';
 
 export const pluginKey = 'clipboard';
 
@@ -17,7 +18,8 @@ export const pluginKey = 'clipboard';
 export class clipboard implements IPlugin {
 	jodit!: IJodit;
 
-	buttons = [
+	/** @override */
+	buttons: Plugin['buttons'] = [
 		{
 			name: 'cut',
 			group: 'clipboard'
@@ -37,7 +39,7 @@ export class clipboard implements IPlugin {
 	];
 
 	init(editor: IJodit): void {
-		this.buttons.forEach(btn => editor.registerButton(btn));
+		this.buttons!.forEach(btn => editor.registerButton(btn));
 
 		editor.e
 			.off(`copy.${pluginKey} cut.${pluginKey}`)

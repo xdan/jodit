@@ -23,6 +23,7 @@ import { Dom } from '../../core/dom';
 import { Button } from '../../core/ui/button';
 import { form } from './templates/form';
 import { component, debounce, throttle, autobind } from '../../core/decorators';
+import { IFileBrowserDataProvider } from '../../types';
 
 declare module '../../config' {
 	interface Config {
@@ -859,4 +860,65 @@ export class ImageEditor extends ViewComponent {
 
 		super.destruct();
 	}
+}
+
+/**
+ * Open Image Editor
+ */
+export function openImageEditor(
+	this: IViewBased & { dataProvider: IFileBrowserDataProvider },
+	href: string,
+	name: string,
+	path: string,
+	source: string,
+	onSuccess?: () => void,
+	onFailed?: (error: Error) => void
+): Promise<Dialog> {
+	return this.getInstance<ImageEditor>('ImageEditor', this.o).open(
+		href,
+		(
+			newname: string | void,
+			box: ImageEditorActionBox,
+			success: () => void,
+			failed: (error: Error) => void
+		) => {
+			let promise: Promise<boolean>;
+
+			if (box.action === 'resize') {
+				promise = this.dataProvider.resize(
+					path,
+					source,
+					name,
+					newname,
+					box.box
+				);
+			} else {
+				promise = this.dataProvider.crop(
+					path,
+					source,
+					name,
+					newname,
+					box.box
+				);
+			}
+
+			promise
+				.then(ok => {
+					if (ok) {
+						success();
+
+						if (onSuccess) {
+							onSuccess();
+						}
+					}
+				})
+				.catch(error => {
+					failed(error);
+
+					if (onFailed) {
+						onFailed(error);
+					}
+				});
+		}
+	);
 }

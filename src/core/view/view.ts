@@ -11,10 +11,18 @@ import type {
 	IProgressBar,
 	IStorage,
 	IViewBased,
-	IViewOptions
+	IViewOptions,
+	Nullable
 } from '../../types';
 import { Storage } from '../storage';
-import { error, i18n, isDestructable, isFunction, isVoid } from '../helpers';
+import {
+	camelCase,
+	error,
+	i18n,
+	isDestructable,
+	isFunction,
+	isVoid
+} from '../helpers';
 import { BASE_PATH } from '../constants';
 import {
 	Component,
@@ -240,6 +248,15 @@ export abstract class View
 	 * @param options
 	 */
 	getInstance<T extends IComponent>(moduleName: string, options?: object): T {
+		const instance: Nullable<T> = this.e.fire(
+			camelCase('getInstance_' + moduleName),
+			options
+		);
+
+		if (instance) {
+			return instance;
+		}
+
 		const module = modules[moduleName] as any,
 			mi = this.__modulesInstances;
 

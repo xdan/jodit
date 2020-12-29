@@ -101,7 +101,7 @@ Config.prototype.controls.eraser = {
  */
 export class cleanHtml extends Plugin {
 	/** @override */
-	buttons = [
+	buttons: Plugin['buttons'] = [
 		{
 			name: 'eraser',
 			group: 'font-style'

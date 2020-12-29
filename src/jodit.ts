@@ -32,7 +32,6 @@ import * as consts from './core/constants';
 import {
 	Create,
 	Dom,
-	FileBrowser,
 	Observer,
 	Plugin,
 	Select,
@@ -376,7 +375,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			...this.o.filebrowser
 		};
 
-		return jodit.getInstance<FileBrowser>('FileBrowser', options);
+		return jodit.getInstance<IFileBrowser>('FileBrowser', options);
 	}
 
 	private __mode: Modes = consts.MODE_WYSIWYG;
@@ -639,7 +638,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		commandNameOriginal: string,
 		command: CustomCommand<IJodit>,
 		options?: {
-			stopPropagation: boolean
+			stopPropagation: boolean;
 		}
 	): IJodit {
 		const commandName: string = commandNameOriginal.toLowerCase();
@@ -657,7 +656,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				command.hotkeys;
 
 			if (hotkeys) {
-				this.registerHotkeyToCommand(hotkeys, commandName, options?.stopPropagation);
+				this.registerHotkeyToCommand(
+					hotkeys,
+					commandName,
+					options?.stopPropagation
+				);
 			}
 		}
 
@@ -681,10 +684,12 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			.map(hotkey => hotkey + '.hotkey')
 			.join(' ');
 
-		this.e.off(shortcuts).on(shortcuts, (type: string, stop: {shouldStop: boolean}) => {
-			stop.shouldStop = shouldStop ?? true;
-			return this.execCommand(commandName); // because need `beforeCommand`
-		});
+		this.e
+			.off(shortcuts)
+			.on(shortcuts, (type: string, stop: { shouldStop: boolean }) => {
+				stop.shouldStop = shouldStop ?? true;
+				return this.execCommand(commandName); // because need `beforeCommand`
+			});
 	}
 
 	/**

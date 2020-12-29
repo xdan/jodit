@@ -4,11 +4,12 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IFileBrowser, IFileBrowserItem } from '../../../types';
+import type { IFileBrowserItem } from '../../../types';
 import { F_CLASS, ITEM_CLASS } from '../consts';
 import { Dom } from '../../../core/dom';
 import { normalizePath } from '../../../core/helpers/normalize';
 import { Button } from '../../../core/ui';
+import { FileBrowser } from '../file-browser';
 
 const DEFAULT_SOURCE_NAME = 'default',
 	ITEM_ACTIVE_CLASS = ITEM_CLASS + '_active_true';
@@ -16,13 +17,13 @@ const DEFAULT_SOURCE_NAME = 'default',
 /**
  * Convert state to view
  */
-export function stateListeners(this: IFileBrowser): void {
-	const { state, files, create, options } = this,
+export function stateListeners(this: FileBrowser): void {
+	const { state, files, create, options, elementsMap } = this,
 		getDomElement = (item: IFileBrowserItem): HTMLElement => {
 			const key = item.uniqueHashKey;
 
-			if (this.elementsMap[key]) {
-				return this.elementsMap[key].elm;
+			if (elementsMap[key]) {
+				return elementsMap[key].elm;
 			}
 
 			const elm = create.fromHTML(
@@ -36,12 +37,12 @@ export function stateListeners(this: IFileBrowser): void {
 
 			elm.dataset.key = key;
 
-			this.elementsMap[key] = {
+			elementsMap[key] = {
 				item,
 				elm
 			};
 
-			return this.elementsMap[key].elm;
+			return elementsMap[key].elm;
 		};
 
 	state
@@ -54,7 +55,7 @@ export function stateListeners(this: IFileBrowser): void {
 		.on('beforeChange.activeElements', () => {
 			state.activeElements.forEach(item => {
 				const key = item.uniqueHashKey,
-					{ elm } = this.elementsMap[key];
+					{ elm } = elementsMap[key];
 
 				elm && elm.classList.remove(ITEM_ACTIVE_CLASS);
 			});
@@ -65,7 +66,7 @@ export function stateListeners(this: IFileBrowser): void {
 
 			state.activeElements.forEach(item => {
 				const key = item.uniqueHashKey,
-					{ elm } = this.elementsMap[key];
+					{ elm } = elementsMap[key];
 
 				elm && elm.classList.add(ITEM_ACTIVE_CLASS);
 			});

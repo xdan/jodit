@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IControlType, IJodit } from '../types/';
+import type { IControlType, IJodit, IPlugin } from '../types/';
 import { Config } from '../config';
 import * as consts from '../core/constants';
 import { Plugin } from '../core/plugin';
@@ -26,7 +26,7 @@ Config.prototype.controls.undo = {
  */
 export class redoUndo extends Plugin {
 	/** @override */
-	buttons = [
+	buttons: IPlugin['buttons'] = [
 		{
 			name: 'undo',
 			group: 'history'

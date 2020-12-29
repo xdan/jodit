@@ -6,13 +6,14 @@
 
 import { Dialog } from '../../dialog';
 import { Dom } from '../../../core/dom';
-import { F_CLASS, ICON_LOADER, ITEM_CLASS } from '../consts';
 
+import { F_CLASS, ICON_LOADER, ITEM_CLASS } from '../consts';
 import { attr, error } from '../../../core/helpers';
 import { makeContextMenu } from '../factories';
 import { Icon } from '../../../core/ui';
-import type { IFileBrowser } from '../../../types';
 import { getItem } from '../listeners/native-listeners';
+import { openImageEditor } from '../../image-editor/image-editor';
+import { FileBrowser } from '../file-browser';
 
 const CLASS_PREVIEW = F_CLASS + '_preview_',
 	preview_tpl_next = (next = 'next', right = 'right') =>
@@ -21,7 +22,7 @@ const CLASS_PREVIEW = F_CLASS + '_preview_',
 		Icon.get('angle-' + right) +
 		'</a>';
 
-export default (self: IFileBrowser) => {
+export default (self: FileBrowser) => {
 	if (!self.o.contextMenu) {
 		return () => {};
 	}
@@ -50,7 +51,7 @@ export default (self: IFileBrowser) => {
 							icon: 'pencil',
 							title: 'Edit',
 							exec: () => {
-								return self.openImageEditor(
+								return openImageEditor.call(self,
 									ga('href'),
 									ga('data-name'),
 									ga('data-path'),
@@ -86,8 +87,6 @@ export default (self: IFileBrowser) => {
 								);
 
 								self.state.activeElements = [];
-
-								await self.loadTree();
 							}
 					  }
 					: false,

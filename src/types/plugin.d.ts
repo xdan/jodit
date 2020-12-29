@@ -4,13 +4,14 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IJodit } from './jodit';
-import { CanPromise, IDestructible, IInitable } from './types';
-import { IViewBased } from './view';
+import type { IJodit } from './jodit';
+import type { CanPromise, IDestructible, IInitable } from './types';
+import type { IViewBased } from './view';
+import type { ButtonGroup } from './toolbar';
 
 export interface IPluginButton {
 	name: string;
-	group?: string;
+	group?: ButtonGroup;
 	position?: number;
 }
 

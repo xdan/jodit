@@ -22,8 +22,8 @@ import { isString, isVoid } from '../checker';
  *   }
  * };
  *
- * console.log(Jodit.modules.Helpers.get('a.b.c.d.e') === false);
- * console.log(Jodit.modules.Helpers.get('a.b.a.d.e') === null);
+ * console.log(Jodit.modules.Helpers.get('a.b.c.d.e', obj) === false); // true
+ * console.log(Jodit.modules.Helpers.get('a.b.a.d.e', obj) === null); // false
  * ```
  * @param chain
  * @param obj

@@ -23,7 +23,8 @@ import { attr } from '../../core/helpers/utils';
  * The plugin inserts characters that are not part of the standard keyboard.
  */
 export class symbols extends Plugin {
-	buttons = [
+	/** @override */
+	buttons: Plugin['buttons'] = [
 		{
 			name: 'symbol',
 			group: 'insert'
@@ -32,7 +33,7 @@ export class symbols extends Plugin {
 
 	private countInRow: number = 17;
 
-	/** @overdide */
+	/** @override */
 	afterInit(jodit: IJodit): void {
 		jodit.e.on('generateSpecialCharactersTable.symbols', () => {
 			const container = jodit.c.fromHTML(
@@ -167,6 +168,7 @@ export class symbols extends Plugin {
 		});
 	}
 
+	/** @override */
 	protected beforeDestruct(jodit: IJodit) {
 		jodit.e.off('generateSpecialCharactersTable.symbols');
 	}

@@ -15,6 +15,7 @@ import type {
 import { UIElement } from '../element';
 import { component, watch } from '../../decorators';
 import { isArray } from '../../helpers';
+import { Dom } from '../../dom';
 
 @component
 export class UIGroup<T extends IViewBased = IViewBased>
@@ -71,6 +72,20 @@ export class UIGroup<T extends IViewBased = IViewBased>
 		this.container.appendChild(elm.container);
 		elm.parentElement = this;
 		elm.update();
+	}
+
+	/**
+	 * Remove element from group
+	 * @param elm
+	 */
+	remove(elm: IUIElement): void {
+		const index = this.elements.indexOf(elm);
+
+		if (index !== -1) {
+			this.elements.splice(index, 1);
+			Dom.safeRemove(elm.container);
+			elm.parentElement = null;
+		}
 	}
 
 	/**

@@ -25,6 +25,7 @@ export class UIBlock extends UIGroup {
 			align?: 'center' | 'left' | 'right' | 'full';
 			width?: 'full';
 			ref?: string;
+			mod?: string;
 		} = {
 			align: 'left'
 		}
@@ -33,6 +34,7 @@ export class UIBlock extends UIGroup {
 
 		this.setMod('align', this.options.align || 'left');
 		this.setMod('width', this.options.width || '');
+		this.options.mod && this.setMod(this.options.mod, true);
 
 		attr(this.container, 'data-ref', options.ref);
 		attr(this.container, 'ref', options.ref);

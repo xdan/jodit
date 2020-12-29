@@ -27,7 +27,7 @@ import { Button } from '../../core/ui';
 export const Confirm = (
 	msg: string,
 	title: string | ((yes: boolean) => void) | undefined,
-	callback?: (yes: boolean) => void
+	callback?: (yes: boolean) => void | false
 ): Dialog => {
 	const dialog = new Dialog(),
 		$div: HTMLDivElement = dialog.c.fromHTML(
@@ -43,30 +43,21 @@ export const Confirm = (
 	$label.appendChild(dialog.c.fromHTML(msg));
 	$div.appendChild($label);
 
-	const $cancel = Button(dialog, 'cancel', 'Cancel');
-
-	$cancel.onAction(() => {
-		if (callback) {
-			callback(false);
+	const action = (yes: boolean) => () => {
+		if (!callback || callback(yes) !== false) {
+			dialog.close();
 		}
-
-		dialog.close();
-	});
-
-	const onok = () => {
-		if (callback) {
-			callback(true);
-		}
-
-		dialog.close();
 	};
 
+	const $cancel = Button(dialog, 'cancel', 'Cancel');
 	const $ok = Button(dialog, 'ok', 'Yes');
 
-	$ok.onAction(onok);
+	$cancel.onAction(action(false));
+
+	$ok.onAction(action(true));
 
 	dialog.e.on($div, 'submit', () => {
-		onok();
+		action(true)();
 		return false;
 	});
 

@@ -8,39 +8,33 @@ import './styles';
 
 import { Config, OptionsDefault } from '../../config';
 import * as consts from '../../core/constants';
-import { Dialog, Alert } from '../dialog/';
+import { Dialog } from '../dialog/';
 
 import type {
 	IFileBrowser,
 	IFileBrowserAnswer,
 	IFileBrowserCallBackData,
 	IFileBrowserOptions,
-	ISource,
-	ISourceFile,
-	ISourcesFiles,
 	IFileBrowserState,
 	IFileBrowserItem,
 	IFileBrowserDataProvider,
 	IJodit,
 	IStorage,
 	IDictionary,
-	ImageEditorActionBox,
 	IUploader,
 	IUploaderOptions,
 	IDialog,
 	CanUndef
 } from '../../types/';
 
-import { ImageEditor } from '..';
 import { Storage } from '../../core/storage/';
-import { each, extend, error, isFunction, isString } from '../../core/helpers/';
+import { extend, error, isFunction, isString } from '../../core/helpers/';
 import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 
 import './config';
 
 import { Dom } from '../../core/dom';
 import { ObserveObject } from '../../core/events/';
-import { FileBrowserItem } from './builders/item';
 import { F_CLASS, ICON_LOADER } from './consts';
 import { makeDataProvider } from './factories';
 import { stateListeners } from './listeners/state-listeners';
@@ -69,6 +63,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 		activeElements: [],
 		elements: [],
+		messages: [],
 		sources: {},
 		view: 'tiles',
 		sortBy: 'changed-desc',
@@ -83,31 +78,16 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		this.files.appendChild(this.loader.cloneNode(true));
 
 		return this.dataProvider
-			.items(this.state.currentPath, this.state.currentSource)
-			.then(resp => {
-				let process:
-					| ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)
-					| undefined = (this.o.items as any).process;
-
-				if (!process) {
-					process = this.o.ajax.process;
-				}
-
-				if (process) {
-					const respData: IFileBrowserAnswer = process.call(
-						self,
-						resp
-					) as IFileBrowserAnswer;
-
-					this.generateItemsList(respData.data.sources);
-
-					this.state.activeElements = [];
-				}
+			.items(this.state.currentPath, this.state.currentSource, {
+				sortBy: this.state.sortBy,
+				onlyImages: this.state.onlyImages,
+				filterWord: this.state.filterWord
 			})
-			.catch((error: Error) => {
-				Alert(error.message).bindDestruct(this);
-				this.errorHandler(error);
-			});
+			.then(resp => {
+				this.state.elements = resp;
+				this.state.activeElements = [];
+			})
+			.catch(this.status);
 	}
 
 	async loadTree(): Promise<any> {
@@ -129,22 +109,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			const tree = this.dataProvider
 				.tree(this.state.currentPath, this.state.currentSource)
 				.then(resp => {
-					let process:
-						| ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)
-						| undefined = (this.o.folder as any).process;
-
-					if (!process) {
-						process = this.o.ajax.process;
-					}
-
-					if (process) {
-						const respData = process.call(
-							self,
-							resp
-						) as IFileBrowserAnswer;
-
-						this.state.sources = respData.data.sources;
-					}
+					this.state.sources = resp;
 				})
 				.catch(e => {
 					this.errorHandler(
@@ -162,63 +127,16 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		return items.catch(error);
 	}
 
-	async deleteFile(name: string, source: string): Promise<any> {
+	deleteFile(name: string, source: string): Promise<void> {
 		return this.dataProvider
 			.fileRemove(this.state.currentPath, name, source)
-			.then(resp => {
-				if (this.o.remove && this.o.remove.process) {
-					resp = this.o.remove.process.call(this, resp);
-				}
-
-				if (!this.o.isSuccess(resp)) {
-					throw error(this.o.getMessage(resp));
-				} else {
-					this.status(
-						this.o.getMessage(resp) ||
-							this.i18n('File "%s" was deleted', name),
-						true
-					);
-				}
+			.then(message => {
+				this.status(
+					message || this.i18n('File "%s" was deleted', name),
+					true
+				);
 			})
 			.catch(this.status);
-	}
-
-	private generateItemsList(sources: ISourcesFiles) {
-		const elements: IFileBrowserItem[] = [];
-
-		const state = this.state,
-			canBeFile = (item: ISourceFile): boolean =>
-				!this.state.onlyImages ||
-				item.isImage === undefined ||
-				item.isImage,
-			inFilter = (item: ISourceFile): boolean =>
-				!state.filterWord.length ||
-				this.o.filter === undefined ||
-				this.o.filter(item, state.filterWord);
-
-		each<ISource>(sources, (source_name, source) => {
-			if (source.files && source.files.length) {
-				if (typeof this.o.sort === 'function') {
-					source.files.sort((a, b) =>
-						this.o.sort(a, b, state.sortBy)
-					);
-				}
-
-				source.files.forEach((item: ISourceFile) => {
-					if (inFilter(item) && canBeFile(item)) {
-						elements.push(
-							FileBrowserItem.create({
-								...item,
-								sourceName: source_name,
-								source
-							})
-						);
-					}
-				});
-			}
-		});
-
-		this.state.elements = elements;
 	}
 
 	private onSelect(callback?: (data: IFileBrowserCallBackData) => void) {
@@ -259,7 +177,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		if (resp instanceof Error) {
 			this.status(this.i18n(resp.message));
 		} else {
-			this.status(this.o.getMessage(resp));
+			this.status(this.dataProvider.getMessage(resp));
 		}
 	};
 
@@ -391,76 +309,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		});
 	}
 
-	/**
-	 * Open Image Editor
-	 *
-	 * @method openImageEditor
-	 */
-	openImageEditor = (
-		href: string,
-		name: string,
-		path: string,
-		source: string,
-		onSuccess?: () => void,
-		onFailed?: (error: Error) => void
-	): Promise<Dialog> => {
-		return this.getInstance<ImageEditor>('ImageEditor', this.o).open(
-			href,
-			(
-				newname: string | void,
-				box: ImageEditorActionBox,
-				success: () => void,
-				failed: (error: Error) => void
-			) => {
-				let promise: Promise<any>;
-
-				if (box.action === 'resize') {
-					promise = this.dataProvider.resize(
-						path,
-						source,
-						name,
-						newname,
-						box.box
-					);
-				} else {
-					promise = this.dataProvider.crop(
-						path,
-						source,
-						name,
-						newname,
-						box.box
-					);
-				}
-
-				promise
-					.then(resp => {
-						if (this.o.isSuccess(resp)) {
-							this.loadTree().then(() => {
-								success();
-
-								if (onSuccess) {
-									onSuccess();
-								}
-							});
-						} else {
-							failed(error(this.o.getMessage(resp)));
-
-							if (onFailed) {
-								onFailed(error(this.o.getMessage(resp)));
-							}
-						}
-					})
-					.catch(error => {
-						failed(error);
-
-						if (onFailed) {
-							onFailed(error);
-						}
-					});
-			}
-		);
-	};
-
 	elementsMap: IDictionary<{
 		elm: HTMLElement;
 		item: IFileBrowserItem;
@@ -474,9 +322,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				Config.defaultOptions.uploader,
 				self.o.uploader,
 				{
-					...(editor?.options?.uploader as IUploaderOptions<
-						IUploader
-					>)
+					...(editor?.options
+						?.uploader as IUploaderOptions<IUploader>)
 				}
 			) as IUploaderOptions<IUploader>;
 
@@ -509,9 +356,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			)
 		) as IFileBrowserOptions;
 
-		self.storage = Storage.makeStorage(
-			this.o.filebrowser.saveStateInStorage
-		);
+		self.storage = Storage.makeStorage(this.o.saveStateInStorage);
 
 		self.dataProvider = makeDataProvider(self, self.options);
 
@@ -538,7 +383,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 		self.dialog.setSize(self.o.width, self.o.height);
 
-		[
+		const keys: Array<keyof IFileBrowserOptions> = [
 			'getLocalFileByUrl',
 			'crop',
 			'resize',
@@ -552,7 +397,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			'folder',
 			'items',
 			'permissions'
-		].forEach(key => {
+		];
+
+		keys.forEach(key => {
 			if (this.options[key] != null) {
 				(this.options as IDictionary)[key] = extend(
 					true,

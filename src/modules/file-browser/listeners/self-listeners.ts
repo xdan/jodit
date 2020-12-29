@@ -4,14 +4,17 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IDictionary, IFileBrowser } from '../../../types';
+import type { IDictionary } from '../../../types';
 import { Confirm, Prompt } from '../../dialog';
 import { isValidName } from '../../../core/helpers/checker';
-import { error, normalizePath } from '../../../core/helpers';
+import { normalizePath } from '../../../core/helpers';
 import { DEFAULT_SOURCE_NAME } from '../data-provider';
+import { FileBrowser } from '../file-browser';
+import { openImageEditor } from '../../image-editor/image-editor';
 
-export function selfListeners(this: IFileBrowser): void {
+export function selfListeners(this: FileBrowser): void {
 	const state = this.state,
+		dp = this.dataProvider,
 		self = this;
 
 	self.e
@@ -55,23 +58,9 @@ export function selfListeners(this: IFileBrowser): void {
 				self.i18n('Delete'),
 				(yes: boolean) => {
 					if (yes) {
-						self.dataProvider
-							.folderRemove(data.path, data.name, data.source)
-							.then(resp => {
-								if (self.o.folderRemove?.process) {
-									resp = self.o.folderRemove.process.call(
-										self,
-										resp
-									);
-								}
-
-								if (!self.o.isSuccess(resp)) {
-									throw error(self.o.getMessage(resp));
-								} else {
-									self.state.activeElements = [];
-									self.status(self.o.getMessage(resp), true);
-								}
-
+						dp.folderRemove(data.path, data.name, data.source)
+							.then(message => {
+								self.status(message, true);
 								self.loadTree();
 							})
 							.catch(self.status);
@@ -89,31 +78,10 @@ export function selfListeners(this: IFileBrowser): void {
 						return false;
 					}
 
-					self.dataProvider
-						.folderRename(
-							data.path,
-							data.name,
-							newName,
-							data.source
-						)
-						.then(resp => {
-							if (
-								self.o.folderRename &&
-								self.o.folderRename.process
-							) {
-								resp = self.o.folderRename.process.call(
-									self,
-									resp
-								);
-							}
-
-							if (!self.o.isSuccess(resp)) {
-								throw error(self.o.getMessage(resp));
-							} else {
-								self.state.activeElements = [];
-								self.status(self.o.getMessage(resp), true);
-							}
-
+					dp.folderRename(data.path, data.name, newName, data.source)
+						.then(message => {
+							self.state.activeElements = [];
+							self.status(message, true);
 							self.loadTree();
 						})
 						.catch(self.status);
@@ -129,17 +97,9 @@ export function selfListeners(this: IFileBrowser): void {
 				self.i18n('Enter Directory name'),
 				self.i18n('Create directory'),
 				(name: string) => {
-					self.dataProvider
-						.createFolder(name, data.path, data.source)
-						.then(resp => {
-							if (self.o.isSuccess(resp)) {
-								self.loadTree();
-							} else {
-								self.status(self.o.getMessage(resp));
-							}
-
-							return resp;
-						}, self.status);
+					dp.createFolder(name, data.path, data.source).then(() => {
+						self.loadTree();
+					}, self.status);
 				},
 				self.i18n('type name')
 			).bindDestruct(self);
@@ -172,7 +132,8 @@ export function selfListeners(this: IFileBrowser): void {
 			if (self.state.activeElements.length === 1) {
 				const [file] = this.state.activeElements;
 
-				self.openImageEditor(
+				openImageEditor.call(
+					self,
 					file.fileURL,
 					file.file || '',
 					file.path,
@@ -193,28 +154,10 @@ export function selfListeners(this: IFileBrowser): void {
 								return false;
 							}
 
-							self.dataProvider
-								.fileRename(path, name, newName, source)
-								.then(resp => {
-									if (
-										self.o.fileRename &&
-										self.o.fileRename.process
-									) {
-										resp = self.o.fileRename.process.call(
-											self,
-											resp
-										);
-									}
-
-									if (!self.o.isSuccess(resp)) {
-										throw error(self.o.getMessage(resp));
-									} else {
-										self.state.activeElements = [];
-										self.status(
-											self.o.getMessage(resp),
-											true
-										);
-									}
+							dp.fileRename(path, name, newName, source)
+								.then(message => {
+									self.state.activeElements = [];
+									self.status(message, true);
 
 									self.loadItems();
 								})

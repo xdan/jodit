@@ -4,18 +4,17 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import {
-	CanPromise,
+import type {
 	HTMLTagNames,
 	IComponent,
 	IDestructible,
 	IDictionary,
 	Modes,
-	Nullable
-} from './types';
-import { IViewBased } from './view';
-import { IJodit } from './jodit';
-import { IFileBrowser } from './file-browser';
+	Nullable,
+	IViewBased,
+	IJodit
+} from './';
+import type { IFileBrowser } from './file-browser';
 
 interface IControlType<
 	T = IJodit | IViewBased | IFileBrowser,
@@ -260,8 +259,25 @@ export type Controls = IDictionary<IControlType>;
 
 export type Buttons = Array<string | IControlType>;
 
+export type ButtonGroup =
+	| 'source'
+	| 'font-style'
+	| 'script'
+	| 'list'
+	| 'indent'
+	| 'font'
+	| 'color'
+	| 'media'
+	| 'state'
+	| 'clipboard'
+	| 'insert'
+	| 'history'
+	| 'search'
+	| 'other'
+	| 'info';
+
 export interface ButtonsGroup {
-	group: string;
+	group: ButtonGroup;
 	buttons: Buttons;
 }
 

@@ -95,6 +95,7 @@ export interface IUIGroup extends IUIElement {
 	elements: IUIElement[];
 	allChildren: IUIElement[];
 	append(elm: IUIElement): void;
+	remove(elm: IUIElement): void;
 	clear(): void;
 }
 

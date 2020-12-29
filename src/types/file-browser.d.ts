@@ -5,10 +5,15 @@
  */
 
 import { Buttons } from './toolbar';
-import { IDestructible, IDictionary, ImageBox, IPermissions } from './types';
+import {
+	IDestructible,
+	IDictionary,
+	ImageBox,
+	IPermissions,
+	Nullable
+} from './types';
 import { IUploader, IUploaderOptions } from './uploader';
-import { IViewOptions, IViewWithToolbar } from './view';
-import { IDialog, IStorage, ObservableObject } from '../types';
+import { IViewBased, IViewOptions, IViewWithToolbar } from './view';
 
 /**
  * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new
@@ -16,7 +21,6 @@ import { IDialog, IStorage, ObservableObject } from '../types';
  * @module FileBrowser
  * @params {Object} parent Jodit main object
  */
-
 export interface ISourceFile {
 	file?: string;
 	fileIsAbsolute?: boolean;
@@ -42,6 +46,7 @@ export interface ISourcesFiles {
 export interface IFileBrowserAnswer {
 	success: boolean;
 	time: string;
+
 	data: {
 		messages?: string[];
 		sources: ISourcesFiles;
@@ -53,6 +58,9 @@ export interface IFileBrowserAnswer {
 	};
 }
 
+export interface IFileBrowserProcessor {
+	(resp: IFileBrowserAnswer): IFileBrowserAnswer;
+}
 export interface IFileBrowserAjaxOptions {
 	url?: string;
 	async?: boolean;
@@ -68,8 +76,7 @@ export interface IFileBrowserAjaxOptions {
 	headers?: IDictionary<string>;
 
 	prepareData?: (data: IDictionary<string>) => IDictionary<string>;
-
-	process?: (resp: IFileBrowserAnswer) => IFileBrowserAnswer;
+	process?: IFileBrowserProcessor;
 }
 
 export interface IFileBrowserOptions extends IViewOptions {
@@ -143,7 +150,6 @@ export interface IFileBrowserOptions extends IViewOptions {
 	uploader?: IUploaderOptions<IUploader>; // use default Uploader's settings
 
 	defaultCallback?(data: IFileBrowserCallBackData): void;
-	[key: string]: any;
 }
 
 export interface IFileBrowserCallBackData {
@@ -152,57 +158,53 @@ export interface IFileBrowserCallBackData {
 	isImages?: boolean[];
 }
 
+interface IFileBrowserDataProviderItemsMods {
+	onlyImages?: boolean;
+	filterWord?: string;
+	sortBy?: string;
+}
+
 export interface IFileBrowserDataProvider extends IDestructible {
+	permissions(path: string, source: string): Promise<Nullable<IPermissions>>;
+
 	getPathByUrl(
-		url: string,
-		success: (path: string, name: string, source: string) => void,
-		onFailed: (error: Error) => void
-	): Promise<IFileBrowserAnswer>;
+		url: string
+	): Promise<{ path: string; name: string; source: string }>;
 
-	tree(path: string, source: string): Promise<IFileBrowserAnswer>;
+	tree(path: string, source: string): Promise<ISourcesFiles>;
 
-	items(path: string, source: string): Promise<IFileBrowserAnswer>;
-
-	permissions(path: string, source: string): Promise<any>;
-
-	createFolder(
-		name: string,
+	items(
 		path: string,
-		source: string
-	): Promise<IFileBrowserAnswer>;
+		source: string,
+		mods?: IFileBrowserDataProviderItemsMods
+	): Promise<IFileBrowserItem[]>;
+
+	createFolder(name: string, path: string, source: string): Promise<boolean>;
 
 	move(
 		filepath: string,
 		path: string,
 		source: string,
 		isFile: boolean
-	): Promise<IFileBrowserAnswer>;
+	): Promise<boolean>;
 
-	fileRemove(
-		path: string,
-		file: string,
-		source: string
-	): Promise<IFileBrowserAnswer>;
+	fileRemove(path: string, file: string, source: string): Promise<string>;
 
-	folderRemove(
-		path: string,
-		file: string,
-		source: string
-	): Promise<IFileBrowserAnswer>;
+	folderRemove(path: string, file: string, source: string): Promise<string>;
 
 	folderRename(
 		path: string,
 		name: string,
 		newname: string,
 		source: string
-	): Promise<IFileBrowserAnswer>;
+	): Promise<string>;
 
 	fileRename(
 		path: string,
 		name: string,
 		newname: string,
 		source: string
-	): Promise<IFileBrowserAnswer>;
+	): Promise<string>;
 
 	resize(
 		path: string,
@@ -210,7 +212,7 @@ export interface IFileBrowserDataProvider extends IDestructible {
 		name: string,
 		newname: string | void,
 		box: ImageBox | void
-	): Promise<IFileBrowserAnswer>;
+	): Promise<boolean>;
 
 	crop(
 		path: string,
@@ -218,50 +220,33 @@ export interface IFileBrowserDataProvider extends IDestructible {
 		name: string,
 		newname: string | void,
 		box: ImageBox | void
-	): Promise<IFileBrowserAnswer>;
+	): Promise<boolean>;
 
 	canI(action: string): boolean;
+
+	isSuccess: (resp: IFileBrowserAnswer) => boolean;
+	getMessage: (resp: IFileBrowserAnswer) => string;
 }
 
-export interface IFileBrowser extends IViewWithToolbar<IFileBrowserOptions> {
-	uploader: IUploader;
-	dataProvider: IFileBrowserDataProvider;
-
-	state: ObservableObject<IFileBrowserState>;
-
-	tree: HTMLElement;
-	files: HTMLElement;
-	elementsMap: IDictionary<{
-		elm: HTMLElement;
-		item: IFileBrowserItem;
-	}>;
-
-	storage: IStorage;
-	dialog: IDialog;
+export interface IFileBrowser extends IViewBased<IFileBrowserOptions> {
+	readonly dataProvider: IFileBrowserDataProvider;
+	readonly state: IFileBrowserState;
 
 	isOpened(): boolean;
-
-	close: () => void;
-
-	openImageEditor(
-		href: string,
-		name: string,
-		path: string,
-		source: string,
-		onSuccess?: () => void,
-		onFailed?: (error: Error) => void
-	): Promise<IDialog>;
 
 	open(
 		callback?: (data: IFileBrowserCallBackData) => void,
 		onlyImages?: boolean
 	): Promise<void>;
 
-	status(message: string | Error, success?: boolean): void;
+	close(): void;
 
-	loadTree(): Promise<any>;
-	loadItems(path?: string, source?: string): Promise<any>;
-	deleteFile(name: string, source: string): Promise<any>;
+	status(message: string | Error, success?: boolean): void;
+}
+
+export interface IFileBrowserMessage {
+	message: string;
+	type: 'success' | 'error';
 }
 
 export interface IFileBrowserState {
@@ -277,12 +262,15 @@ export interface IFileBrowserState {
 	elements: IFileBrowserItem[];
 	activeElements: IFileBrowserItem[];
 	sources: ISourcesFiles;
+
+	messages: IFileBrowserMessage[];
 }
 
 export interface IFileBrowserFolder {
 	name: string;
 	source: ISource;
 	sourceName: string;
+	children: IFileBrowserFolder[];
 }
 
 export interface IFileBrowserItemElement extends ISourceFile {

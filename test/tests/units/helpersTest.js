@@ -412,6 +412,80 @@ describe('Test helpers', function () {
 			});
 		});
 
+		describe('set', function () {
+			it('Should set value by keyChain', function () {
+				let obj = {};
+
+				const values = [
+					['', null, {}],
+					[undefined, null, {}],
+					[null, null, {}],
+					['a1', 2, { a1: 2 }],
+					['a', 1, { a1: 2, a: 1 }],
+					['a2', null, { a1: 2, a: 1, a2: null }],
+					[
+						'a.b.c.d.e',
+						1,
+						{
+							a1: 2,
+							a: {
+								b: {
+									c: {
+										d: {
+											e: 1
+										}
+									}
+								}
+							},
+							a2: null
+						}
+					],
+					[
+						'a.b.c.e',
+						false,
+						{
+							a1: 2,
+							a: {
+								b: {
+									c: {
+										e: false,
+										d: {
+											e: 1
+										}
+									}
+								}
+							},
+							a2: null
+						}
+					],
+					[
+						'a.b1.0.key',
+						5,
+						{
+							a1: 2,
+							a: {
+								b1: [{ key: 5 }],
+								b: {
+									c: {
+										e: false,
+										d: {
+											e: 1
+										}
+									}
+								}
+							},
+							a2: null
+						}
+					]
+				];
+
+				for (let i = 0, value = values[i]; i < values.length; i += 1) {
+					Jodit.modules.Helpers.set(value[0], value[1], obj);
+					expect(obj).deep.eq(value[2]);
+				}
+			});
+		});
+
 		describe('extend', function () {
 			const extend = Jodit.modules.Helpers.extend;
 

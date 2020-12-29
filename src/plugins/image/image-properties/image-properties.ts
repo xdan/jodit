@@ -41,6 +41,7 @@ import { FileSelectorWidget, TabsWidget } from '../../../modules/widget';
 import { Button } from '../../../core/ui/button';
 import { form, mainTab, positionTab } from './templates/';
 import { watch, autobind } from '../../../core/decorators';
+import { openImageEditor } from '../../../modules/image-editor/image-editor';
 
 /**
  * Plug-in for image editing window
@@ -150,9 +151,12 @@ export class imageProperties extends Plugin {
 			return;
 		}
 
-		const { marginRight, marginBottom, marginLeft, lockMargin } = refs<
-			HTMLInputElement
-		>(this.form);
+		const {
+			marginRight,
+			marginBottom,
+			marginLeft,
+			lockMargin
+		} = refs<HTMLInputElement>(this.form);
 
 		[marginRight, marginBottom, marginLeft].forEach(elm => {
 			attr(elm, 'disabled', this.state.marginIsLocked || null);
@@ -294,9 +298,12 @@ export class imageProperties extends Plugin {
 			editor.e.on(editImage, 'click', this.openImageEditor);
 		}
 
-		const { lockSize, lockMargin, imageWidth, imageHeight } = refs<
-			HTMLInputElement
-		>(mainForm);
+		const {
+			lockSize,
+			lockMargin,
+			imageWidth,
+			imageHeight
+		} = refs<HTMLInputElement>(mainForm);
 
 		if (lockSize) {
 			editor.e.on(lockSize, 'click', () => {
@@ -729,14 +736,15 @@ export class imageProperties extends Plugin {
 
 		a.href = url;
 
-		this.j.filebrowser.dataProvider.getPathByUrl(
-			a.href.toString(),
-			(path: string, name: string, source: string) => {
-				this.j.filebrowser.openImageEditor(
+		this.j.filebrowser.dataProvider
+			.getPathByUrl(a.href.toString())
+			.then(resp => {
+				openImageEditor.call(
+					this.j.filebrowser,
 					a.href,
-					name,
-					path,
-					source,
+					resp.name,
+					resp.path,
+					resp.source,
 					() => {
 						const timestamp: number = new Date().getTime();
 
@@ -751,15 +759,14 @@ export class imageProperties extends Plugin {
 
 						this.updateValues();
 					},
-					(error: Error) => {
+					(error) => {
 						Alert(error.message).bindDestruct(this.j);
 					}
 				);
-			},
-			(error: Error) => {
+			})
+			.catch((error) => {
 				Alert(error.message, loadExternal).bindDestruct(this.j);
-			}
-		);
+			});
 	}
 
 	/**

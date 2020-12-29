@@ -326,13 +326,13 @@ Config.prototype.controls.filebrowser = {
 				!browser.dataProvider.canI('FileRemove')
 			);
 		},
-		exec: (editor: IViewBased) => {
+		exec: (editor: IFileBrowser) => {
 			editor.e.fire('fileRemove.filebrowser');
 		}
 	} as IControlType,
 
 	update: {
-		exec: (editor: IViewBased) => {
+		exec: (editor: IFileBrowser) => {
 			editor.e.fire('update.filebrowser');
 		}
 	} as IControlType,

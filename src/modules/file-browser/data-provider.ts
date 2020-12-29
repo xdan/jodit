@@ -13,11 +13,28 @@ import type {
 	IFileBrowserDataProvider,
 	ImageBox,
 	IDictionary,
-	IAjax
+	IAjax,
+	Nullable,
+	IFileBrowserProcessor, IFileBrowserDataProviderItemsMods
 } from '../../types';
 
-import { error, extend, normalizeRelativePath } from '../../core/helpers';
+import {
+	each,
+	error,
+	extend,
+	isFunction,
+	normalizeRelativePath,
+	set
+} from '../../core/helpers';
 import { Ajax } from '../../core/ajax';
+import { autobind } from '../../core/decorators';
+import {
+	IFileBrowserItem,
+	ISource,
+	ISourceFile,
+	ISourcesFiles
+} from '../../types';
+import { FileBrowserItem } from './builders/item';
 
 export const DEFAULT_SOURCE_NAME = 'default';
 
@@ -38,23 +55,7 @@ const possibleRules = [
 ];
 
 export default class DataProvider implements IFileBrowserDataProvider {
-	private __currentPermissions: IPermissions | null = null;
-
-	canI(action: string): boolean {
-		const rule = 'allow' + action;
-
-		if (!isProd) {
-			if (!possibleRules.includes(rule)) {
-				throw error('Wrong action ' + action);
-			}
-		}
-
-		return (
-			this.__currentPermissions == null ||
-			this.__currentPermissions[rule] === undefined ||
-			this.__currentPermissions[rule]
-		);
-	}
+	private __currentPermissions: Nullable<IPermissions> = null;
 
 	constructor(
 		readonly parent: IViewBased,
@@ -68,7 +69,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		return this.options;
 	}
 
-	private ajaxInstances: IAjax[] = [];
+	private ajaxInstances: Set<IAjax> = new Set();
 
 	/**
 	 *
@@ -78,7 +79,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @return {Promise}
 	 */
 	private get(
-		name: string,
+		name: keyof IFileBrowserOptions,
 		success?: (resp: IFileBrowserAnswer) => void,
 		error?: (error: Error) => void
 	): Promise<IFileBrowserAnswer> {
@@ -97,7 +98,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 		const promise = ajax.send();
 
-		this.ajaxInstances.push(ajax);
+		this.ajaxInstances.add(ajax);
 
 		if (success) {
 			promise.then(success);
@@ -106,6 +107,11 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		if (error) {
 			promise.catch(error);
 		}
+
+		promise.finally(() => {
+			ajax.destruct();
+			this.ajaxInstances.delete(ajax);
+		});
 
 		return promise;
 	}
@@ -116,9 +122,12 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param path
 	 * @param source
 	 */
-	async permissions(path: string, source: string): Promise<void> {
+	async permissions(
+		path: string,
+		source: string
+	): Promise<Nullable<IPermissions>> {
 		if (!this.o.permissions) {
-			return Promise.resolve();
+			return null;
 		}
 
 		this.o.permissions.data.path = path;
@@ -144,10 +153,28 @@ export default class DataProvider implements IFileBrowserDataProvider {
 						this.__currentPermissions = respData.data.permissions;
 					}
 				}
+
+				return this.__currentPermissions;
 			});
 		}
 
-		return Promise.resolve();
+		return null;
+	}
+
+	canI(action: string): boolean {
+		const rule = 'allow' + action;
+
+		if (!isProd) {
+			if (!possibleRules.includes(rule)) {
+				throw error('Wrong action ' + action);
+			}
+		}
+
+		return (
+			this.__currentPermissions == null ||
+			this.__currentPermissions[rule] === undefined ||
+			this.__currentPermissions[rule]
+		);
 	}
 
 	/**
@@ -155,8 +182,13 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 *
 	 * @param path
 	 * @param source
+	 * @param mods
 	 */
-	async items(path: string, source: string): Promise<IFileBrowserAnswer> {
+	async items(
+		path: string,
+		source: string,
+		mods: IFileBrowserDataProviderItemsMods = {}
+	): Promise<IFileBrowserItem[]> {
 		const opt = this.options;
 
 		if (!opt.items) {
@@ -165,11 +197,61 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 		opt.items.data.path = path;
 		opt.items.data.source = source;
+		opt.items.data.mods = mods;
 
-		return this.get('items');
+		return this.get('items').then(resp => {
+			let process: IFileBrowserProcessor | undefined = this.o.items
+				.process;
+
+			if (!process) {
+				process = this.o.ajax.process;
+			}
+
+			if (process) {
+				resp = process.call(self, resp);
+			}
+
+			return this.generateItemsList(resp.data.sources, mods);
+		});
 	}
 
-	async tree(path: string, source: string): Promise<IFileBrowserAnswer> {
+	private generateItemsList(
+		sources: ISourcesFiles,
+		mods: IFileBrowserDataProviderItemsMods = {}
+	): IFileBrowserItem[] {
+		const elements: IFileBrowserItem[] = [];
+
+		const canBeFile = (item: ISourceFile): boolean =>
+				!mods.onlyImages || item.isImage === undefined || item.isImage,
+			inFilter = (item: ISourceFile): boolean =>
+				!mods.filterWord?.length ||
+				this.o.filter === undefined ||
+				this.o.filter(item, mods.filterWord);
+
+		each<ISource>(sources, (source_name, source) => {
+			if (source.files && source.files.length) {
+				if (isFunction(this.o.sort) && mods.sortBy) {
+					source.files.sort((a, b) => this.o.sort(a, b, mods.sortBy));
+				}
+
+				source.files.forEach((item: ISourceFile) => {
+					if (inFilter(item) && canBeFile(item)) {
+						elements.push(
+							FileBrowserItem.create({
+								...item,
+								sourceName: source_name,
+								source
+							})
+						);
+					}
+				});
+			}
+		});
+
+		return elements;
+	}
+
+	async tree(path: string, source: string): Promise<ISourcesFiles> {
 		path = normalizeRelativePath(path);
 
 		await this.permissions(path, source);
@@ -181,7 +263,21 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		this.o.folder.data.path = path;
 		this.o.folder.data.source = source;
 
-		return this.get('folder');
+		return this.get('folder').then(resp => {
+			let process:
+				| ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)
+				| undefined = (this.o.folder as any).process;
+
+			if (!process) {
+				process = this.o.ajax.process;
+			}
+
+			if (process) {
+				resp = process.call(self, resp) as IFileBrowserAnswer;
+			}
+
+			return resp.data.sources;
+		});
 	}
 
 	/**
@@ -195,27 +291,17 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param {function} onFailed filename
 	 * @param {string} onFailed.message
 	 */
-	getPathByUrl = (
-		url: string,
-		success: (path: string, name: string, source: string) => void,
-		onFailed: (error: Error) => void
-	): Promise<any> => {
-		const action: string = 'getLocalFileByUrl';
+	getPathByUrl(url: string): Promise<any> {
+		set('options.getLocalFileByUrl.data.url', url, this);
 
-		this.options[action].data.url = url;
+		return this.get('getLocalFileByUrl', resp => {
+			if (this.isSuccess(resp)) {
+				return resp.data;
+			}
 
-		return this.get(
-			action,
-			(resp: IFileBrowserAnswer) => {
-				if (this.o.isSuccess(resp)) {
-					success(resp.data.path, resp.data.name, resp.data.source);
-				} else {
-					onFailed(error(this.o.getMessage(resp)));
-				}
-			},
-			onFailed
-		);
-	};
+			throw error(this.getMessage(resp));
+		});
+	}
 
 	/**
 	 * Create a directory on the server
@@ -225,22 +311,24 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param {string} path Relative toWYSIWYG the directory in which you want toWYSIWYG create a folder
 	 * @param {string} source Server source key
 	 */
-	createFolder(
-		name: string,
-		path: string,
-		source: string
-	): Promise<IFileBrowserAnswer> {
+	createFolder(name: string, path: string, source: string): Promise<boolean> {
 		const { create } = this.o;
 
 		if (!create) {
-			return Promise.reject('Set Create api options');
+			throw error('Set Create api options');
 		}
 
 		create.data.source = source;
 		create.data.path = path;
 		create.data.name = name;
 
-		return this.get('create');
+		return this.get('create').then(resp => {
+			if (this.isSuccess(resp)) {
+				return true;
+			}
+
+			throw error(this.getMessage(resp));
+		});
 	}
 
 	/**
@@ -257,7 +345,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		path: string,
 		source: string,
 		isFile: boolean
-	): Promise<IFileBrowserAnswer> {
+	): Promise<boolean> {
 		const mode: 'fileMove' | 'folderMove' = isFile
 			? 'fileMove'
 			: 'folderMove';
@@ -265,14 +353,57 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		const option = this.options[mode];
 
 		if (!option) {
-			return Promise.reject('Set Move api options');
+			throw error('Set Move api options');
 		}
 
 		option.data.from = filepath;
 		option.data.path = path;
 		option.data.source = source;
 
-		return this.get(mode);
+		return this.get(mode).then(resp => {
+			if (this.isSuccess(resp)) {
+				return true;
+			}
+
+			throw error(this.getMessage(resp));
+		});
+	}
+
+	/**
+	 * Deleting item
+	 *
+	 * @param action
+	 * @param path Relative path
+	 * @param file The filename
+	 * @param source Source
+	 */
+	private remove(
+		action: 'fileRemove' | 'folderRemove',
+		path: string,
+		file: string,
+		source: string
+	): Promise<string> {
+		const fr = this.o[action];
+
+		if (!fr) {
+			throw error(`Set "${action}" api options`);
+		}
+
+		fr.data.path = path;
+		fr.data.name = file;
+		fr.data.source = source;
+
+		return this.get(action).then(resp => {
+			if (fr.process) {
+				resp = fr.process.call(this, resp);
+			}
+
+			if (!this.isSuccess(resp)) {
+				throw error(this.getMessage(resp));
+			}
+
+			return this.getMessage(resp);
+		});
 	}
 
 	/**
@@ -282,20 +413,8 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param file The filename
 	 * @param source Source
 	 */
-	fileRemove(
-		path: string,
-		file: string,
-		source: string
-	): Promise<IFileBrowserAnswer> {
-		if (!this.o.fileRemove) {
-			return Promise.reject('Set fileRemove api options');
-		}
-
-		this.o.fileRemove.data.path = path;
-		this.o.fileRemove.data.name = file;
-		this.o.fileRemove.data.source = source;
-
-		return this.get('fileRemove');
+	fileRemove(path: string, file: string, source: string): Promise<string> {
+		return this.remove('fileRemove', path, file, source);
 	}
 
 	/**
@@ -305,72 +424,71 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param file The filename
 	 * @param source Source
 	 */
-	folderRemove(
+	folderRemove(path: string, file: string, source: string): Promise<string> {
+		return this.remove('folderRemove', path, file, source);
+	}
+
+	/**
+	 * Rename action
+	 *
+	 * @param path Relative path
+	 * @param name Old name
+	 * @param newname New name
+	 * @param source Source
+	 */
+	private rename(
+		action: 'fileRename' | 'folderRename',
 		path: string,
-		file: string,
+		name: string,
+		newname: string,
 		source: string
-	): Promise<IFileBrowserAnswer> {
-		if (!this.o.folderRemove) {
-			return Promise.reject('Set folderRemove api options');
+	): Promise<string> {
+		const fr = this.o[action];
+
+		if (!fr) {
+			throw error(`Set "${action}" api options`);
 		}
 
-		this.o.folderRemove.data.path = path;
-		this.o.folderRemove.data.name = file;
-		this.o.folderRemove.data.source = source;
+		fr.data.path = path;
+		fr.data.name = name;
+		fr.data.newname = newname;
+		fr.data.source = source;
 
-		return this.get('folderRemove');
+		return this.get(action).then(resp => {
+			if (fr.process) {
+				resp = fr.process.call(self, resp);
+			}
+
+			if (!this.isSuccess(resp)) {
+				throw error(this.getMessage(resp));
+			}
+
+			return this.getMessage(resp);
+		});
 	}
 
 	/**
 	 * Rename folder
-	 *
-	 * @param path Relative path
-	 * @param name Old filename
-	 * @param newname New filename
-	 * @param source Source
 	 */
 	folderRename(
 		path: string,
 		name: string,
 		newname: string,
 		source: string
-	): Promise<IFileBrowserAnswer> {
-		if (!this.o.folderRename) {
-			return Promise.reject('Set folderRename api options');
-		}
-
-		this.o.folderRename.data.path = path;
-		this.o.folderRename.data.name = name;
-		this.o.folderRename.data.newname = newname;
-		this.o.folderRename.data.source = source;
-
-		return this.get('folderRename');
+	): Promise<string> {
+		return this.rename('folderRename', path, name, newname, source);
 	}
 
 	/**
 	 * Rename file
-	 *
-	 * @param path Relative path
-	 * @param name Old filename
-	 * @param newname New filename
-	 * @param source Source
 	 */
 	fileRename(
 		path: string,
 		name: string,
 		newname: string,
 		source: string
-	): Promise<IFileBrowserAnswer> {
-		if (!this.o.fileRename) {
-			return Promise.reject('Set fileRename api options');
-		}
-
-		this.o.fileRename.data.path = path;
-		this.o.fileRename.data.name = name;
-		this.o.fileRename.data.newname = newname;
-		this.o.fileRename.data.source = source;
-
-		return this.get('fileRename');
+	): Promise<string> {
+		return this.rename('fileRename', path, name, newname, source);
 	}
 
 	/**
@@ -387,29 +505,38 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		name: string,
 		newname: string | void,
 		box: ImageBox | void
-	): Promise<IFileBrowserAnswer> {
+	): Promise<boolean> {
 		if (!this.o.crop) {
 			this.o.crop = {
 				data: {}
 			};
 		}
-		if (this.o.crop.data === undefined) {
-			this.o.crop.data = {
+
+		const query = this.o.crop;
+
+		if (query.data === undefined) {
+			query.data = {
 				action: 'crop'
 			};
 		}
 
-		this.o.crop.data.newname = newname || name;
+		query.data.newname = newname || name;
 
 		if (box) {
-			this.o.crop.data.box = box;
+			query.data.box = box;
 		}
 
-		this.o.crop.data.path = path;
-		this.o.crop.data.name = name;
-		this.o.crop.data.source = source;
+		query.data.path = path;
+		query.data.name = name;
+		query.data.source = source;
 
-		return this.get('crop');
+		return this.get('crop').then(resp => {
+			if (this.isSuccess(resp)) {
+				return true;
+			}
+
+			throw error(this.getMessage(resp));
+		});
 	}
 
 	/**
@@ -427,33 +554,51 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		name: string,
 		newname: string | void,
 		box: ImageBox | void
-	): Promise<IFileBrowserAnswer> {
+	): Promise<boolean> {
 		if (!this.o.resize) {
 			this.o.resize = {
 				data: {}
 			};
 		}
-		if (this.o.resize.data === undefined) {
-			this.o.resize.data = {
+
+		const query = this.o.resize;
+
+		if (query.data === undefined) {
+			query.data = {
 				action: 'resize'
 			};
 		}
 
-		this.o.resize.data.newname = newname || name;
+		query.data.newname = newname || name;
 
 		if (box) {
-			this.o.resize.data.box = box;
+			query.data.box = box;
 		}
 
-		this.o.resize.data.path = path;
-		this.o.resize.data.name = name;
-		this.o.resize.data.source = source;
+		query.data.path = path;
+		query.data.name = name;
+		query.data.source = source;
 
-		return this.get('resize');
+		return this.get('resize').then(resp => {
+			if (this.isSuccess(resp)) {
+				return true;
+			}
+
+			throw error(this.getMessage(resp));
+		});
+	}
+
+	getMessage(resp: IFileBrowserAnswer): string {
+		return this.options.getMessage(resp);
+	}
+
+	@autobind
+	isSuccess(resp: IFileBrowserAnswer): boolean {
+		return this.options.isSuccess(resp);
 	}
 
 	destruct(): any {
 		this.ajaxInstances.forEach(a => a.destruct());
-		this.ajaxInstances.length = 0;
+		this.ajaxInstances.clear();
 	}
 }

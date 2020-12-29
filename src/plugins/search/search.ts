@@ -11,7 +11,8 @@ import type {
 	markerInfo,
 	IJodit,
 	Nullable,
-	IControlType
+	IControlType,
+	IPlugin
 } from '../../types';
 import { Config } from '../../config';
 import * as consts from '../../core/constants';
@@ -85,7 +86,7 @@ Config.prototype.controls.find = {
  * ```
  */
 export class search extends Plugin {
-	buttons = [
+	buttons: IPlugin['buttons'] = [
 		{
 			name: 'find',
 			group: 'search'
