@@ -692,14 +692,16 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			this.e.fire('beforeClose', this);
 		}
 
-		Dom.safeRemove(this.container);
 		this.setMod('active', false);
 
 		this.isOpened = false;
 
+		this.e.fire('toggleFullSize', false);
 		if (this.iSetMaximization) {
 			this.maximization(false);
 		}
+
+		Dom.safeRemove(this.container);
 
 		this.removeGlobalResizeListeners();
 
@@ -782,9 +784,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 				.build(splitArray(self.o.buttons))
 				.appendTo(self.dialogbox_toolbar);
 
-		const headerBox: HTMLDivElement | null = self.container.querySelector(
-			'.jodit-dialog__header'
-		);
+		const headerBox = self.getElm('header');
 
 		headerBox && self.e.on(headerBox, 'mousedown', self.onHeaderMouseDown);
 
