@@ -39,7 +39,7 @@ export function watch(observeFields: string[] | string) {
 		const process = (component: IDictionary) => {
 			const callback = (key: string, ...args: any[]) => {
 				if (!component.isInDestruct) {
-					component[propertyKey](key, ...args);
+					return component[propertyKey](key, ...args);
 				}
 			};
 
@@ -49,7 +49,10 @@ export function watch(observeFields: string[] | string) {
 						? component
 						: ((component as unknown) as IViewComponent).jodit;
 
-					view.events.on(component, field.substr(1), callback);
+					view.events
+						.on(component, field.substr(1), callback)
+						.on(field.substr(1), callback);
+
 					return;
 				}
 

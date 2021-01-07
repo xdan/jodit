@@ -204,6 +204,9 @@ export class UIInput extends UIElement implements IUIInput {
 		}
 
 		this.j.e
+			.on(this.nativeInput, 'focus blur', () => {
+				this.onChangeFocus();
+			})
 			.on(this.nativeInput, 'input change', () => {
 				this.j.e.fire(this, 'change', this.value)
 			})
@@ -221,5 +224,12 @@ export class UIInput extends UIElement implements IUIInput {
 
 	get isFocused(): boolean {
 		return this.nativeInput === this.j.od.activeElement;
+	}
+
+	/**
+	 * Set `focused` mod on change focus
+	 */
+	private onChangeFocus() {
+		this.setMod('focused', this.isFocused);
 	}
 }

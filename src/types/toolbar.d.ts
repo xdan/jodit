@@ -255,7 +255,7 @@ interface IControlTypeContent extends IControlTypeStrong {
 	getContent: NonNullable<IControlTypeStrong['getContent']>;
 }
 
-export type Controls = IDictionary<IControlType>;
+export type Controls = IDictionary<IControlType | Controls>;
 
 export type Buttons = Array<string | IControlType>;
 

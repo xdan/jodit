@@ -4,16 +4,16 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Buttons } from './toolbar';
-import {
+import type { Buttons } from './toolbar';
+import type {
 	IDestructible,
 	IDictionary,
 	ImageBox,
 	IPermissions,
 	Nullable
 } from './types';
-import { IUploader, IUploaderOptions } from './uploader';
-import { IViewBased, IViewOptions, IViewWithToolbar } from './view';
+import type { IUploader, IUploaderOptions } from './uploader';
+import type { IViewBased, IViewOptions } from './view';
 
 /**
  * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new
@@ -232,7 +232,7 @@ export interface IFileBrowser extends IViewBased<IFileBrowserOptions> {
 	readonly dataProvider: IFileBrowserDataProvider;
 	readonly state: IFileBrowserState;
 
-	isOpened(): boolean;
+	isOpened: boolean;
 
 	open(
 		callback?: (data: IFileBrowserCallBackData) => void,
@@ -278,7 +278,7 @@ export interface IFileBrowserItemElement extends ISourceFile {
 	sourceName: string;
 }
 
-export interface IFileBrowserItemWrapper {
+export interface IFileBrowserItemWrapper extends IFileBrowserItemElement {
 	path: string;
 	fileURL: string;
 	imageURL: string;

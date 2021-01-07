@@ -36,11 +36,36 @@ import {
 import { Async } from '../async';
 import { modules } from '../global';
 import { hook } from '../decorators';
+import { Elms, Mods } from '../traits';
+import { IDictionary } from '../../types';
 
 export abstract class View
 	extends Component
-	implements IViewBased<IViewOptions> {
+	implements IViewBased<IViewOptions>, Mods, Elms {
 	readonly isView: true = true;
+
+	readonly mods: IDictionary<string | boolean | null> = {};
+
+	/** @see [[Mods.setMod]] */
+	setMod(name: string, value: string | boolean | null): this {
+		Mods.setMod.call(this, name, value);
+		return this;
+	}
+
+	/** @see [[Mods.getMod]] */
+	getMod(name: string): string | boolean | null {
+		return Mods.getMod.call(this, name);
+	}
+
+	/** @see [[Elms.getElm]]*/
+	getElm(elementName: string): HTMLElement {
+		return Elms.getElm.call(this, elementName);
+	}
+
+	/** @see [[Elms.getElms]]*/
+	getElms(elementName: string): HTMLElement[] {
+		return Elms.getElms.call(this, elementName);
+	}
 
 	/**
 	 * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
@@ -84,6 +109,12 @@ export abstract class View
 	 * @see copyformat plugin
 	 */
 	buffer: IStorage = Storage.makeStorage();
+
+	/**
+	 * Container for persistent set/get value
+	 * @type {Storage}
+	 */
+	readonly storage = Storage.makeStorage(true, this.componentName);
 
 	create!: ICreate;
 	get c(): this['create'] {

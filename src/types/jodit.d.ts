@@ -117,7 +117,6 @@ interface IJodit extends IViewWithToolbar {
 
 	uploader: IUploader;
 	filebrowser: IFileBrowser;
-	storage: IStorage;
 
 	iframe?: HTMLIFrameElement | void;
 }

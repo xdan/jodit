@@ -4,19 +4,19 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { ViewComponent } from '../component';
 import type {
 	IDictionary,
 	IUIElement,
 	IViewBased,
 	Nullable
 } from '../../types';
+import { ViewComponent } from '../component';
 import { Dom } from '../dom';
-import { toArray } from '../helpers/array';
+import { Elms, Mods } from '../traits';
 
 export abstract class UIElement<T extends IViewBased = IViewBased>
 	extends ViewComponent<T>
-	implements IUIElement {
+	implements IUIElement, Mods, Elms {
 	container!: HTMLElement;
 
 	private __parentElement: Nullable<IUIElement> = null;
@@ -33,6 +33,16 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		}
 
 		this.updateParentElement(this);
+	}
+
+	bubble(callback: (parent: IUIElement) => void): this {
+		let parent = this.parentElement;
+
+		while(parent) {
+			callback(parent);
+			parent = parent.parentElement;
+		}
+		return this;
 	}
 
 	updateParentElement(target: IUIElement): this {
@@ -59,7 +69,10 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 			}
 
 			if (!pe.parentElement && pe.container.parentElement) {
-				pe = UIElement.closestElement(pe.container.parentElement, UIElement);
+				pe = UIElement.closestElement(
+					pe.container.parentElement,
+					UIElement
+				);
 			} else {
 				pe = pe.parentElement;
 			}
@@ -88,70 +101,29 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 
 	readonly mods: IDictionary<string | boolean | null> = {};
 
-	/**
-	 * Set/remove BEM class modification
-	 *
-	 * @param name
-	 * @param value if null, mod will be removed
-	 */
+	/** @see [[Mods.setMod]] */
 	setMod(
 		name: string,
 		value: string | boolean | null,
 		container: HTMLElement = this.container
 	): this {
-		name = name.toLowerCase();
-
-		if (this.mods[name] === value) {
-			return this;
-		}
-
-		const mod = `${this.componentName}_${name}`,
-			cl = container.classList;
-
-		toArray(cl).forEach(className => {
-			if (className.indexOf(mod) === 0) {
-				cl.remove(className);
-			}
-		});
-
-		value != null &&
-			value !== '' &&
-			cl.add(`${mod}_${value.toString().toLowerCase()}`);
-
-		this.mods[name] = value;
-
+		Mods.setMod.call(this, name, value);
 		return this;
 	}
 
-	/**
-	 * Calc BEM element class name
-	 * @param elementName
-	 */
-	getFullElName(elementName: string): string {
-		return `${this.componentName}__${elementName}`;
+	/** @see [[Mods.getMod]] */
+	getMod(name: string): string | boolean | null {
+		return Mods.getMod.call(this, name);
 	}
 
-	/**
-	 * Return element with BEM class name
-	 * @param elementName
-	 */
+	/** @see [[Elms.getElm]]*/
 	getElm(elementName: string): HTMLElement {
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		return this.container.querySelector<HTMLElement>(
-			`.${this.getFullElName(elementName)}`
-		)!;
+		return Elms.getElm.call(this, elementName);
 	}
 
-	/**
-	 * Return elements with BEM class name
-	 * @param elementName
-	 */
+	/** @see [[Elms.getElms]]*/
 	getElms(elementName: string): HTMLElement[] {
-		return toArray(
-			this.container.querySelectorAll(
-				`.${this.getFullElName(elementName)}`
-			)
-		);
+		return Elms.getElms.call(this, elementName);
 	}
 
 	/**

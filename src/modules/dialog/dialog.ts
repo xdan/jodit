@@ -29,6 +29,7 @@ import {
 	isBoolean,
 	isFunction,
 	isString,
+	isVoid,
 	splitArray,
 	toArray
 } from '../../core/helpers/';
@@ -87,7 +88,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	/**
 	 * @property {HTMLDivElement} resizer
 	 */
-	private resizer!: HTMLDivElement;
+	private resizer!: HTMLElement;
 	toolbar!: IToolbarCollection;
 
 	private offsetX?: number;
@@ -107,23 +108,20 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	private startPoint = { x: 0, y: 0, w: 0, h: 0 };
 
 	private lockSelect = () => {
-		this.container.classList.add('jodit-dialog__box-moved');
+		this.setMod('moved', true);
 	};
 
 	private unlockSelect = () => {
-		this.container.classList.remove('jodit-dialog__box-moved');
+		this.setMod('moved', false);
 	};
 
-	private setElements(
-		root: HTMLDivElement | HTMLHeadingElement,
-		elements: Content
-	) {
+	private setElements(root: HTMLElement, elements: Content) {
 		const elements_list: HTMLElement[] = [];
 
 		asArray<ContentItem | ContentItem[] | IContainer>(elements).forEach(
 			(elm: ContentItem | ContentItem[] | IContainer): any => {
 				if (isArray(elm)) {
-					const div = this.c.div('jodit-dialog__column');
+					const div = this.c.div(this.getFullElName('column'));
 
 					elements_list.push(div);
 					root.appendChild(div);
@@ -236,7 +234,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			}
 
 			e.stopImmediatePropagation();
-			e.preventDefault();
 		}
 
 		if (this.resizable && this.o.resizable) {
@@ -333,14 +330,14 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	/**
 	 * @property {HTMLDivElement} dialog
 	 */
-	dialog!: HTMLDivElement;
+	dialog!: HTMLElement;
 
 	workplace!: HTMLDivElement;
 
-	private dialogbox_header!: HTMLHeadingElement;
-	private dialogbox_content!: HTMLDivElement;
-	private dialogbox_footer!: HTMLDivElement;
-	private dialogbox_toolbar!: HTMLDivElement;
+	private dialogbox_header!: HTMLElement;
+	private dialogbox_content!: HTMLElement;
+	private dialogbox_footer!: HTMLElement;
+	private dialogbox_toolbar!: HTMLElement;
 
 	/**
 	 * Specifies the size of the window
@@ -466,7 +463,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 */
 	setFooter(content: Content): this {
 		this.setElements(this.dialogbox_footer, content);
-		this.dialog.classList.toggle('jodit-dialog_footer_true', Boolean(content));
+		this.setMod('footer', Boolean(content));
 		return this;
 	}
 
@@ -488,7 +485,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			zIndex: number,
 			res: IDialog = this;
 
-		$$('.jodit-dialog__box', this.destination).forEach(
+		$$('.' + this.componentName, this.destination).forEach(
 			(dialog: HTMLElement) => {
 				dlg = (dialog as any).component as Dialog;
 				zIndex = parseInt(css(dialog, 'zIndex') as string, 10);
@@ -510,7 +507,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		let maxZIndex: number = 20000004,
 			zIndex: number = 0;
 
-		$$('.jodit-dialog__box', this.destination).forEach(dialog => {
+		$$('.' + this.componentName, this.destination).forEach(dialog => {
 			zIndex = parseInt(css(dialog, 'zIndex') as string, 10);
 			maxZIndex = Math.max(isNaN(zIndex) ? 0 : zIndex, maxZIndex);
 		});
@@ -525,35 +522,27 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 * @return {boolean} true - fullsize
 	 */
 	maximization(condition?: boolean): boolean {
-		if (typeof condition !== 'boolean') {
-			condition = !this.container.classList.contains(
-				'jodit-dialog__box_fullsize'
-			);
+		if (isVoid(condition)) {
+			condition = !this.getMod('fullsize');
 		}
 
-		this.container.classList.toggle(
-			'jodit-dialog__box_fullsize',
-			condition
-		);
+		this.setMod('fullsize', condition);
 
 		this.toggleFullSizeBox(condition);
-
 		this.iSetMaximization = condition;
 
 		return condition;
 	}
 
 	toggleFullSizeBox(condition: boolean): void {
-		[this.destination, this.destination.parentNode].forEach(
-			(box: Node | null) => {
-				box &&
-					(box as HTMLElement).classList &&
-					(box as HTMLElement).classList.toggle(
-						'jodit_fullsize-box_true',
-						condition
-					);
-			}
-		);
+		[this.destination, this.destination.parentNode].forEach(box => {
+			box &&
+				(box as HTMLElement).classList &&
+				(box as HTMLElement).classList.toggle(
+					'jodit_fullsize-box_true',
+					condition
+				);
+		});
 	}
 
 	open(destroyAfterClose: boolean): this;
@@ -617,7 +606,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			this.setContent(content);
 		}
 
-		this.container.classList.add('jodit-dialog_active');
+		this.setMod('active', true);
 		this.isOpened = true;
 
 		this.setModal(modal);
@@ -649,7 +638,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 */
 	setModal(modal: undefined | boolean): this {
 		this.isModal = Boolean(modal);
-		this.container.classList.toggle('jodit-modal', this.isModal);
+		this.setMod('modal', this.isModal);
 
 		return this;
 	}
@@ -704,7 +693,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		}
 
 		Dom.safeRemove(this.container);
-		this?.container?.classList.remove('jodit-dialog_active');
+		this.setMod('active', false);
 
 		this.isOpened = false;
 
@@ -748,23 +737,23 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		Dom.safeRemove(self.container);
 
+		const n = this.getFullElName.bind(this);
+
 		self.container = this.c.fromHTML(
-			'<div style="z-index:' +
-				self.o.zIndex +
-				'" class="jodit jodit-dialog__box">' +
-				'<div class="jodit-dialog__overlay"></div>' +
-				'<div class="jodit-dialog">' +
-				'<div class="jodit-dialog__header non-selected">' +
-				'<div class="jodit-dialog__header-title"></div>' +
-				'<div class="jodit-dialog__header-toolbar"></div>' +
-				'</div>' +
-				'<div class="jodit-dialog__content"></div>' +
-				'<div class="jodit-dialog__footer"></div>' +
-				(self.o.resizable
-					? '<div class="jodit-dialog__resizer"></div>'
-					: '') +
-				'</div>' +
-				'</div>'
+			`<div style="z-index:${self.o.zIndex}" class="jodit ${
+				this.componentName
+			}">
+				<div class="${n('overlay')}"></div>
+				<div class="${this.getFullElName('panel')}">
+					<div class="${n('header')}">
+						<div class="${n('header-title')}"></div>
+						<div class="${n('header-toolbar')}"></div>
+					</div>
+					<div class="${n('content')}"></div>
+					<div class="${n('footer')}"></div>
+					${self.o.resizable ? `<div class="${n('resizer')}"></div>` : ''}
+				</div>
+			</div>`
 		) as HTMLDivElement;
 
 		attr(self.container, 'role', 'dialog');
@@ -773,13 +762,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			value: this
 		});
 
-		self.container.classList.add(
-			`jodit_theme_${this.o.theme || 'default'}`
-		);
-
-		self.dialog = self.container.querySelector(
-			'.jodit-dialog'
-		) as HTMLDivElement;
+		self.setMod('theme', self.o.theme || 'default');
+		self.dialog = self.getElm('panel');
 
 		css(self.dialog, {
 			maxWidth: self.options.maxWidth,
@@ -787,25 +771,11 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			minWidth: self.options.minWidth
 		});
 
-		self.resizer = self.container.querySelector(
-			'.jodit-dialog__resizer'
-		) as HTMLDivElement;
-
-		self.dialogbox_header = self.container.querySelector(
-			'.jodit-dialog__header>.jodit-dialog__header-title'
-		) as HTMLHeadingElement;
-
-		self.dialogbox_content = self.container.querySelector(
-			'.jodit-dialog__content'
-		) as HTMLDivElement;
-
-		self.dialogbox_footer = self.container.querySelector(
-			'.jodit-dialog__footer'
-		) as HTMLDivElement;
-
-		self.dialogbox_toolbar = self.container.querySelector(
-			'.jodit-dialog__header>.jodit-dialog__header-toolbar'
-		) as HTMLDivElement;
+		self.resizer = self.getElm('resizer');
+		self.dialogbox_header = self.getElm('header-title');
+		self.dialogbox_content = self.getElm('content');
+		self.dialogbox_footer = self.getElm('footer');
+		self.dialogbox_toolbar = self.getElm('header-toolbar');
 
 		self.o.buttons &&
 			self.toolbar

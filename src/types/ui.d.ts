@@ -21,6 +21,12 @@ export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 	parentElement: Nullable<IUIElement>;
 	container: HTMLElement;
 
+	/**
+	 * Apply callback for all parents
+	 * @param callback
+	 */
+	bubble(callback: (parent: IUIElement) => void): this;
+
 	closest<T extends Function>(type: T | IUIElement): Nullable<IUIElement>;
 
 	update(): void;
@@ -35,7 +41,6 @@ export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 		container?: HTMLElement
 	): this;
 
-	getFullElName(elementName: string): string;
 	getElm(elementName: string): HTMLElement;
 	getElms(elementName: string): HTMLElement[];
 }
@@ -94,7 +99,7 @@ export interface IUIButton extends IViewComponent, IUIElement, IFocusable {
 export interface IUIGroup extends IUIElement {
 	elements: IUIElement[];
 	allChildren: IUIElement[];
-	append(elm: IUIElement): void;
+	append(elm: IUIElement | IUIElement[]): void;
 	remove(elm: IUIElement): void;
 	clear(): void;
 }

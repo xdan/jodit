@@ -6,11 +6,14 @@
 
 import type {
 	IFileBrowserItemElement,
-	IFileBrowserItemWrapper
+	IFileBrowserItemWrapper, ISource
 } from '../../../types';
 import { extend, normalizePath, normalizeUrl } from '../../../core/helpers/';
 
 export class FileBrowserItem implements IFileBrowserItemWrapper {
+	source!: ISource;
+	sourceName!: string;
+
 	private constructor(readonly data: IFileBrowserItemElement) {
 		extend(this, data);
 	}

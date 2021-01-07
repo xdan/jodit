@@ -4,8 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IComponent, IDictionary, IViewComponent } from '../../types';
 import { STATUSES } from '../component';
-import { IDictionary, IJodit, IViewComponent } from '../../types';
+import { isViewObject } from '../helpers';
 
 /**
  * Allow save value inside persistent storage as set/get to property
@@ -13,9 +14,11 @@ import { IDictionary, IJodit, IViewComponent } from '../../types';
  * @param target
  * @param propertyKey
  */
-export function persistent(target: IViewComponent, propertyKey: string): void {
-	target.hookStatus(STATUSES.ready, (component: IViewComponent) => {
-		const jodit = component.jodit as IJodit,
+export function persistent<T extends IComponent>(target: T, propertyKey: string): void {
+	target.hookStatus(STATUSES.ready, (component: T) => {
+		const jodit = isViewObject(component)
+			? component
+			: ((component as unknown) as IViewComponent).jodit,
 			storageKey = `${component.componentName}_prop_${propertyKey}`,
 			initialValue = (component as IDictionary)[propertyKey];
 

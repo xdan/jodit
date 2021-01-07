@@ -12,7 +12,7 @@ import {
 	Nullable
 } from '../../types';
 
-import { kebabCase, get, getClassName, isFunction } from '../helpers';
+import { kebabCase, get, getClassName, isFunction, isVoid } from '../helpers';
 import { uniqueUid } from '../global';
 import { STATUSES } from './statuses';
 
@@ -26,6 +26,36 @@ export abstract class Component implements IComponent {
 
 	componentName!: string;
 	uid!: string;
+
+	/**
+	 * Calc BEM element class name
+	 * @param elementName
+	 */
+	getFullElName(elementName: string): string;
+	getFullElName(elementName: string, mod: string): string;
+	getFullElName(
+		elementName: string,
+		mod: string,
+		modValue: boolean | string
+	): string;
+	getFullElName(
+		elementName: string,
+		mod?: string,
+		modValue?: boolean | string
+	): string {
+		const result = [this.componentName];
+
+		if (elementName) {
+			result.push(`__${elementName}`)
+		}
+
+		if (mod) {
+			result.push('_', mod);
+			result.push('_', isVoid(modValue) ? 'true' : modValue.toString());
+		}
+
+		return result.join('');
+	}
 
 	/**
 	 * The document in which jodit was created
@@ -122,7 +152,9 @@ export abstract class Component implements IComponent {
 	abstract className(): string;
 
 	protected constructor() {
-		this.componentName = 'jodit-' + kebabCase(this.className() || getClassName(this));
+		this.componentName =
+			'jodit-' + kebabCase(this.className() || getClassName(this));
+
 		this.uid = 'jodit-uid-' + uniqueUid();
 	}
 
@@ -168,7 +200,10 @@ export abstract class Component implements IComponent {
 	 * @param component
 	 * @private
 	 */
-	private setStatusComponent(componentStatus: ComponentStatus, component: this): void {
+	private setStatusComponent(
+		componentStatus: ComponentStatus,
+		component: this
+	): void {
 		if (componentStatus === this.__componentStatus) {
 			return;
 		}
@@ -178,7 +213,6 @@ export abstract class Component implements IComponent {
 		if (proto && isFunction(proto.setStatusComponent)) {
 			proto.setStatusComponent(componentStatus, component);
 		}
-
 
 		const statuses = StatusListHandlers.get(this),
 			list = statuses?.[componentStatus];

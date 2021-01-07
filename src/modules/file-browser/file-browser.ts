@@ -196,7 +196,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	 *
 	 * @return {boolean}
 	 */
-	isOpened(): boolean {
+	get isOpened(): boolean {
 		return this.dialog.isOpened && this.browser.style.display !== 'none';
 	}
 

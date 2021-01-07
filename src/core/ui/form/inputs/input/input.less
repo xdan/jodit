@@ -12,7 +12,6 @@
 
 		&:focus {
 			outline: 0;
-			box-shadow: var(--focus-input-box-shadow);
 		}
 	}
 
@@ -40,6 +39,10 @@
 		background-color: var(--color-white);
 		border: 1px solid var(--color-border);
 		min-width: 200px;
+	}
+
+	&_focused_true &__wrapper {
+		box-shadow: var(--focus-input-box-shadow);
 	}
 
 	&__icon:not(:empty) {

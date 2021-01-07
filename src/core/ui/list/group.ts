@@ -16,6 +16,7 @@ import { UIElement } from '../element';
 import { component, watch } from '../../decorators';
 import { isArray } from '../../helpers';
 import { Dom } from '../../dom';
+import { IDictionary } from '../../../types';
 
 @component
 export class UIGroup<T extends IViewBased = IViewBased>
@@ -67,11 +68,24 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	 * Append new element into group
 	 * @param elm
 	 */
-	append(elm: IUIElement): void {
+	append(elm: IUIElement | IUIElement[]): void {
+		if (isArray(elm)) {
+			elm.forEach((item) => this.append(item));
+			return;
+		}
+
 		this.elements.push(elm);
-		this.container.appendChild(elm.container);
+		this.appendChildToContainer(elm.container);
 		elm.parentElement = this;
 		elm.update();
+	}
+
+	/**
+	 * Allow set another container for the box of all children
+	 * @param childContainer
+	 */
+	protected appendChildToContainer(childContainer: HTMLElement): void {
+		this.container.appendChild(childContainer);
 	}
 
 	/**
@@ -101,8 +115,8 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	 * @param jodit
 	 * @param elements Items of group
 	 */
-	constructor(jodit: T, elements?: Array<IUIElement | void | null | false>) {
-		super(jodit);
+	constructor(jodit: T, elements?: Array<IUIElement | void | null | false>, options?: IDictionary) {
+		super(jodit, options);
 		elements?.forEach(elm => elm && this.append(elm));
 	}
 

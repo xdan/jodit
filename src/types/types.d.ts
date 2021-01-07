@@ -41,11 +41,15 @@ interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 	get<T>(chain: string, obj?: IDictionary): Nullable<T>;
 
 	componentName: string;
-	uid: string;
+	getFullElName(elementName: string): string;
+	getFullElName(elementName: string, mod: string): string;
+	getFullElName(elementName: string, mod?: string, modValue?: boolean | string): string;
 
+	uid: string;
 	isDestructed: boolean;
 	isInDestruct: boolean;
 	isReady: boolean;
+
 	componentStatus: ComponentStatus;
 	setStatus(componentStatus: ComponentStatus): void;
 

@@ -23,7 +23,7 @@ export type Content =
 
 export interface IDialog extends IComponent, IContainer {
 	isOpened: boolean;
-	dialog: HTMLDivElement;
+	dialog: HTMLElement;
 
 	open(destroyAfter: boolean): this;
 	open(destroyAfter: boolean, modal: boolean): this;

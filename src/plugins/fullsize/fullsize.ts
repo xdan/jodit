@@ -120,6 +120,8 @@ export function fullsize(editor: IViewWithToolbar): void {
 				enable = !editor.container.classList.contains('jodit_fullsize');
 			}
 
+			editor.setMod('fullsize', enable);
+
 			editor.o.fullsize = enable;
 
 			isEnabled = enable;

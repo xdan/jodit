@@ -61,6 +61,43 @@ Config.prototype.useInputsPlaceholder = true;
 Config.prototype.placeholder = 'Type something';
 
 /**
+ * Check if root node is empty
+ * @param root
+ */
+export function isEditorEmpty(root: HTMLElement): boolean {
+	if (!root.firstChild) {
+		return true;
+	}
+
+	const first = root.firstChild;
+
+	if (
+		MAY_BE_REMOVED_WITH_KEY.test(first.nodeName) ||
+		/^(TABLE)$/i.test(first.nodeName)
+	) {
+		return false;
+	}
+
+	const next = Dom.next(
+		first,
+		node => node && !Dom.isEmptyTextNode(node),
+		root
+	);
+
+	if (Dom.isText(first) && !next) {
+		return Dom.isEmptyTextNode(first);
+	}
+
+	return !next &&
+		Dom.each(
+			first,
+			elm =>
+				!Dom.isTag(elm, ['ul', 'li', 'ol']) &&
+				(Dom.isEmpty(elm) || Dom.isTag(elm, 'br'))
+		);
+}
+
+/**
  * Show placeholder inside empty editor
  *
  * @param {Jodit} editor
@@ -214,50 +251,11 @@ export class placeholder extends Plugin {
 			return;
 		}
 
-		if (!this.isEmpty(editor.editor)) {
+		if (!isEditorEmpty(editor.editor)) {
 			this.hide();
 		} else {
 			this.show();
 		}
-	}
-
-	private isEmpty(root: HTMLElement): boolean {
-		if (!root.firstChild) {
-			return true;
-		}
-
-		const first = root.firstChild;
-
-		if (
-			MAY_BE_REMOVED_WITH_KEY.test(first.nodeName) ||
-			/^(TABLE)$/i.test(first.nodeName)
-		) {
-			return false;
-		}
-
-		const next = Dom.next(
-			first,
-			node => node && !Dom.isEmptyTextNode(node),
-			root
-		);
-
-		if (Dom.isText(first) && !next) {
-			return Dom.isEmptyTextNode(first);
-		}
-
-		if (
-			!next &&
-			Dom.each(
-				first,
-				elm =>
-					!Dom.isTag(elm, ['ul', 'li', 'ol']) &&
-					(Dom.isEmpty(elm) || Dom.isTag(elm, 'br'))
-			)
-		) {
-			return true;
-		}
-
-		return false;
 	}
 
 	protected beforeDestruct(jodit: IJodit): void {
