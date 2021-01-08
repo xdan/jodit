@@ -7,7 +7,7 @@
 import './input.less';
 
 import type {
-	IDictionary, IKeyValidator,
+	IDictionary,
 	IUIInput,
 	IUIInputValidator,
 	IViewBased
@@ -15,9 +15,9 @@ import type {
 import { UIElement } from '../../../element';
 import { attr, toArray } from '../../../../helpers';
 import { Dom } from '../../../../dom';
-import { component, debounce, watch } from '../../../../decorators';
+import { autobind, component, debounce, watch } from '../../../../decorators';
 import { Icon } from '../../../icon';
-import { inputValidators, KeyValidator } from '../../validators';
+import { inputValidators } from '../../validators';
 
 @component
 export class UIInput extends UIElement implements IUIInput {
@@ -26,7 +26,6 @@ export class UIInput extends UIElement implements IUIInput {
 		return 'UIInput';
 	}
 
-	validator: IKeyValidator = new KeyValidator();
 	nativeInput!: IUIInput['nativeInput'];
 
 	private label = this.j.c.span(this.getFullElName('label'));
@@ -42,6 +41,7 @@ export class UIInput extends UIElement implements IUIInput {
 		className: '',
 		autocomplete: true,
 		name: '',
+		value: '',
 		icon: '',
 		label: '',
 		ref: '',
@@ -54,7 +54,7 @@ export class UIInput extends UIElement implements IUIInput {
 	state: IUIInput['state'] = { ...UIInput.defaultState };
 
 	@watch('state.clearButton')
-	onChangeClear(): void {
+	protected onChangeClear(): void {
 		if (this.state.clearButton) {
 			Dom.after(this.nativeInput, this.clearButton);
 		} else {
@@ -63,7 +63,7 @@ export class UIInput extends UIElement implements IUIInput {
 	}
 
 	@watch('state.className')
-	onChangeClassName(ignore?: unknown, oldClassName?: string): void {
+	protected onChangeClassName(ignore?: unknown, oldClassName?: string): void {
 		oldClassName && this.container.classList.remove(oldClassName);
 		this.state.className &&
 			this.container.classList.add(this.state.className);
@@ -78,7 +78,7 @@ export class UIInput extends UIElement implements IUIInput {
 		'state.icon'
 	])
 	@debounce()
-	onChangeState(): void {
+	protected onChangeState(): void {
 		const input = this.nativeInput,
 			{
 				name,
@@ -87,7 +87,6 @@ export class UIInput extends UIElement implements IUIInput {
 				ref,
 				required,
 				placeholder,
-				validators,
 				autocomplete,
 				label
 			} = this.state;
@@ -114,13 +113,17 @@ export class UIInput extends UIElement implements IUIInput {
 			Dom.safeRemove(this.label);
 		}
 
+		this.updateValidators();
+	}
+
+	protected updateValidators(): void {
 		this.validators.clear();
 
-		if (required) {
+		if (this.state.required) {
 			this.validators.add(inputValidators.required);
 		}
 
-		validators?.forEach(name => {
+		this.state.validators?.forEach(name => {
 			const validator = (inputValidators as IDictionary<IUIInputValidator>)[
 				name
 			];
@@ -150,11 +153,33 @@ export class UIInput extends UIElement implements IUIInput {
 	}
 
 	set value(value) {
-		this.nativeInput.value = value;
-		this.j.e.fire(this, 'change', value);
+		if (this.value !== value) {
+			this.nativeInput.value = value;
+			this.onChangeValue();
+		}
 	}
 
-	private validators: Set<IUIInputValidator> = new Set([]);
+	/**
+	 * Call on every state value changed
+	 */
+	@watch('state.value')
+	protected onChangeStateValue() {
+		this.value = this.state.value;
+	}
+
+	/**
+	 * Call on every native value changed
+	 */
+	@autobind
+	protected onChangeValue() {
+		const {value} = this;
+
+		this.state.value = value;
+		this.j.e.fire(this, 'change', value);
+		this.state.onChange?.(value);
+	}
+
+	protected validators: Set<IUIInputValidator> = new Set([]);
 
 	validate(): boolean {
 		this.error = '';
@@ -169,17 +194,26 @@ export class UIInput extends UIElement implements IUIInput {
 		this.wrapper = this.j.c.div(this.getFullElName('wrapper'));
 
 		if (!this.nativeInput) {
-			this.nativeInput = this.j.create.element('input');
+			this.nativeInput = this.createNativeInput();
 		}
 
-		this.nativeInput.classList.add(this.getFullElName('input'));
+		const { nativeInput } = this;
 
-		this.wrapper.appendChild(this.nativeInput);
+		nativeInput.classList.add(this.getFullElName('input'));
+
+		this.wrapper.appendChild(nativeInput);
 		container.appendChild(this.wrapper);
 
-		attr(this.nativeInput, 'dir', this.j.o.direction || 'auto');
+		attr(nativeInput, 'dir', this.j.o.direction || 'auto');
 
 		return container;
+	}
+
+	/**
+	 * Create native input element
+	 */
+	protected createNativeInput(): IUIInput['nativeInput'] {
+		return this.j.create.element('input');
 	}
 
 	/** @override **/
@@ -207,15 +241,11 @@ export class UIInput extends UIElement implements IUIInput {
 			.on(this.nativeInput, 'focus blur', () => {
 				this.onChangeFocus();
 			})
-			.on(this.nativeInput, 'input change', () => {
-				this.j.e.fire(this, 'change', this.value)
-			})
-			.on(this.nativeInput, 'keydown', (e: KeyboardEvent) => {
-				return this.validator.validateInput(e, this.nativeInput);
-			});
+			.on(this.nativeInput, 'input change', this.onChangeValue);
 
 		this.onChangeState();
 		this.onChangeClassName();
+		this.onChangeStateValue();
 	}
 
 	focus() {

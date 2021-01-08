@@ -15,7 +15,6 @@ import type {
 } from './types';
 import type { ButtonsGroups } from './toolbar';
 import type { IViewBased } from './view';
-import type { IKeyValidator } from './input';
 
 export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 	parentElement: Nullable<IUIElement>;
@@ -126,13 +125,13 @@ export interface IUIForm extends IUIGroup {
 }
 
 export interface IUIInput extends IUIElement {
-	validator: IKeyValidator;
-	nativeInput: HTMLInputElement | HTMLTextAreaElement;
+	readonly nativeInput: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
-	state: {
+	readonly state: {
 		className: string;
 		autocomplete: boolean;
 		name: string;
+		value: string;
 		icon: string;
 		label: string;
 		ref: string;
@@ -141,6 +140,7 @@ export interface IUIInput extends IUIElement {
 		required: boolean;
 		validators: string[];
 		clearButton?: boolean;
+		onChange?: (value: string) => void;
 	};
 
 	value: string;
@@ -151,30 +151,21 @@ export interface IUIInput extends IUIElement {
 	readonly isFocused: boolean;
 }
 
-export type IUIInputValidator = (input: IUIInput) => boolean;
+export interface IUIInputValidator<T extends IUIInput = IUIInput> {
+	(input: T): boolean;
+}
 
 export interface IUIOption {
 	value: string,
 	text: string
 }
 
-export interface IUISelect extends IUIElement {
-	nativeInput: HTMLSelectElement;
-	options: {
-		name: string;
-		label?: string;
-		ref?: string;
+export interface IUISelect extends IUIInput {
+	readonly nativeInput: HTMLSelectElement;
+
+	readonly state: IUIInput['state'] & {
 		options: IUIOption[];
-		required?: boolean;
-		placeholder?: string;
-		validators?: string[];
 		size?: number;
 		multiple?: boolean;
 	};
-	value: string;
-	error: string;
-	validate(): boolean;
-	focus(): void;
 }
-
-export type IUISelectValidator = (select: IUISelect) => boolean;

@@ -6,4 +6,3 @@
 
 export * as inputValidators from './input';
 export * as selectValidators from './select';
-export * from './key-validator';

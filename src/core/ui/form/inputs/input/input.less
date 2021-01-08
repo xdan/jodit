@@ -1,6 +1,13 @@
 @import (reference) '../../../../../styles/form';
 @import (reference) '../../../../../styles/mixins';
 
+.jodit-ui-label {
+	display: block;
+	color: var(--color-label);
+	font-size: 0.8em;
+	margin-bottom: calc(var(--padding-default) / 4);
+}
+
 .jodit-ui-input {
 	display: flex;
 	flex-direction: column;
@@ -21,9 +28,7 @@
 
 	&__error,
 	&__label {
-		display: block;
-		color: var(--color-label);
-		font-size: 0.8em;
+		.jodit-ui-label();
 	}
 
 	&_has-error_true &__label,

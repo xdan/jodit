@@ -6,118 +6,84 @@
 
 import './select.less';
 
-import type {
-	IDictionary,
-	IUISelect,
-	IUISelectValidator,
-	IViewBased
-} from '../../../../../types';
-import { UIElement } from '../../../element';
+import type { IUISelect, IViewBased } from '../../../../../types';
 import { attr } from '../../../../helpers';
-import { Dom } from '../../../../dom';
-import { selectValidators } from '../../validators';
 import { component } from '../../../../decorators';
+import { UIInput } from '../input/input';
+import { inputValidators, selectValidators } from '../../validators';
 
 @component
-export class UISelect extends UIElement implements IUISelect {
+export class UISelect extends UIInput implements IUISelect {
 	/** @override */
 	className(): string {
 		return 'UISelect';
 	}
 
+	/** @override */
 	nativeInput!: IUISelect['nativeInput'];
 
-	private __errorBox = this.j.c.span(this.getFullElName('error'));
+	/** @override */
+	static defaultState: IUISelect['state'] = {
+		...UIInput.defaultState,
+		options: [],
+		size: 1,
+		multiple: false
+	};
 
-	set error(value: string) {
-		this.setMod('has-error', Boolean(value));
-
-		if (!value) {
-			Dom.safeRemove(this.__errorBox);
-		} else {
-			this.__errorBox.innerText = this.j.i18n(
-				value,
-				this.j.i18n(this.options.label || '')
-			);
-			this.container.appendChild(this.__errorBox);
-		}
-	}
-
-	get value(): string {
-		return this.nativeInput.value;
-	}
-
-	private validators: IUISelectValidator[] = [];
-
-	validate(): boolean {
-		this.error = '';
-
-		return this.validators.every(validator => validator(this));
-	}
+	/** @override */
+	state: IUISelect['state'] = { ...UISelect.defaultState };
 
 	/** @override **/
-	protected createContainer(options: this['options']): HTMLElement {
-		const container = super.createContainer();
+	protected createContainer(state: Partial<IUISelect['state']>): HTMLElement {
+		const container = super.createContainer(state);
 
-		if (!this.nativeInput) {
-			this.nativeInput = this.j.create.element('select');
-		}
+		const { j } = this,
+			{ nativeInput } = this;
 
-		this.nativeInput.classList.add(this.getFullElName('select'));
+		const opt = () => j.create.element('option');
 
-		if (options.label) {
-			const label = this.j.c.span(this.getFullElName('label'));
-			container.appendChild(label);
-			label.innerText = this.j.i18n(options.label);
-		}
-
-		if (options.placeholder !== undefined) {
-			const option = this.j.create.element('option');
+		if (state.placeholder !== undefined) {
+			const option = opt();
 			option.value = '';
-			option.text = options.placeholder;
-			this.nativeInput.add(option);
+			option.text = j.i18n(state.placeholder);
+			nativeInput.add(option);
 		}
 
-		options.options.forEach(element => {
-			const option = this.j.create.element('option');
+		state.options?.forEach(element => {
+			const option = opt();
 			option.value = element.value;
-			option.text = element.text;
-			this.nativeInput.add(option);
+			option.text = j.i18n(element.text);
+			nativeInput.add(option);
 		});
 
-		container.appendChild(this.nativeInput);
-
-		attr(this.nativeInput, 'name', options.name);
-		attr(this.nativeInput, 'dir', this.j.o.direction || 'auto');
-		attr(this.nativeInput, 'data-ref', options.ref || options.name);
-		attr(this.nativeInput, 'ref', options.ref || options.name);
-		if (options.size && options.size > 0) {
-			attr(this.nativeInput, 'size', options.size);
+		if (state.size && state.size > 0) {
+			attr(nativeInput, 'size', state.size);
 		}
-		if (options.multiple) {
-			attr(this.nativeInput, 'multiple', '');
+
+		if (state.multiple) {
+			attr(nativeInput, 'multiple', '');
 		}
 
 		return container;
 	}
 
 	/** @override **/
-	constructor(jodit: IViewBased, readonly options: IUISelect['options']) {
-		super(jodit, options);
-
-		if (this.options.required) {
-			this.validators.push(selectValidators.required);
-		}
-
-		options.validators?.forEach(name => {
-			const validator = (selectValidators as IDictionary<IUISelectValidator>)[
-				name
-			];
-			validator && this.validators.push(validator);
-		});
+	protected createNativeInput(): IUISelect['nativeInput'] {
+		return this.j.create.element('select');
 	}
 
-	focus() {
-		this.nativeInput.focus();
+	/** @override **/
+	protected updateValidators() {
+		super.updateValidators();
+
+		if (this.state.required) {
+			this.validators.delete(inputValidators.required);
+			this.validators.add(selectValidators.required);
+		}
+	}
+
+	constructor(jodit: IViewBased, state: Partial<IUISelect['state']>) {
+		super(jodit, state);
+		Object.assign(this.state, state);
 	}
 }

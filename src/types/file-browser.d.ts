@@ -254,7 +254,7 @@ export interface IFileBrowserState {
 	currentSource: string;
 	currentBaseUrl: string;
 
-	view: 'tiles' | 'list';
+	view: 'tiles' | 'list' | 'compact';
 	sortBy: string;
 	filterWord: string;
 	onlyImages: boolean;

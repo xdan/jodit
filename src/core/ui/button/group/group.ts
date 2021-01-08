@@ -29,8 +29,8 @@ export class UIButtonGroup extends UIGroup {
 	protected createContainer(options: IDictionary): HTMLElement {
 		const container = super.createContainer(options);
 		container.innerHTML = `<div class="${this.getFullElName(
-			'title'
-		)}">${this.j.i18n(options.title)}</div>
+			'label'
+		)}">${this.j.i18n(options.label)}</div>
 			<div class="${this.getFullElName('options')}"></div>`;
 
 		return container;
@@ -48,7 +48,7 @@ export class UIButtonGroup extends UIGroup {
 		items: IUIOption[],
 		readonly options: {
 			value?: string;
-			title?: string;
+			label?: string;
 			onChange?: (values: IUIOption[]) => void;
 			radio: boolean;
 		} = {
