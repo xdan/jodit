@@ -58,4 +58,6 @@ export interface AjaxOptions {
 	) => string | FormData;
 
 	xhr?: () => XMLHttpRequest;
+
+	onProgress?: (percentage: number) => void;
 }

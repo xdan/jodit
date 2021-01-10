@@ -7,7 +7,6 @@
 import './list.less';
 
 import type {
-	ButtonsGroups,
 	IControlTypeStrong,
 	IUIButton,
 	IUIElement,
@@ -24,6 +23,8 @@ import { UIGroup } from './group';
 import { UISeparator } from '../separator';
 import { isButtonGroup } from '../helpers/buttons';
 import { getControlType } from '../helpers/get-control-type';
+import { ButtonsOption } from '../../../types';
+import { splitArray } from '../../helpers';
 
 @component
 export class UIList<T extends IViewBased = IViewBased>
@@ -80,7 +81,9 @@ export class UIList<T extends IViewBased = IViewBased>
 		return this;
 	}
 
-	build(items: ButtonsGroups, target: Nullable<HTMLElement> = null): IUIList {
+	build(items: ButtonsOption, target: Nullable<HTMLElement> = null): IUIList {
+		items = splitArray(items);
+
 		this.clear();
 
 		let lastBtnSeparator: boolean = false;

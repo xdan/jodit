@@ -80,8 +80,6 @@ export interface IFileBrowserAjaxOptions {
 }
 
 export interface IFileBrowserOptions extends IViewOptions {
-	removeButtons: string[];
-	buttons: Buttons;
 	zIndex?: number;
 	fullsize?: boolean;
 	showTooltip?: boolean;
@@ -226,9 +224,13 @@ export interface IFileBrowserDataProvider extends IDestructible {
 
 	isSuccess: (resp: IFileBrowserAnswer) => boolean;
 	getMessage: (resp: IFileBrowserAnswer) => string;
+
+	onProgress(callback: (percentage: number) => void): void;
 }
 
-export interface IFileBrowser extends IViewBased<IFileBrowserOptions> {
+export interface IFileBrowser<
+	T extends IFileBrowserOptions = IFileBrowserOptions
+> extends IViewBased<T> {
 	readonly dataProvider: IFileBrowserDataProvider;
 	readonly state: IFileBrowserState;
 

@@ -35,7 +35,7 @@ export const inView = (
 	);
 };
 
-export const scrollIntoView = (
+export const scrollIntoViewIfNeeded = (
 	elm: HTMLElement,
 	root: HTMLElement,
 	doc: Document

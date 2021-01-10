@@ -85,7 +85,9 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	): Promise<IFileBrowserAnswer> {
 		const opts: IFileBrowserAjaxOptions = extend(
 			true,
-			{},
+			{
+				onProgress: this.progressHandler
+			},
 			this.o.ajax,
 			this.options[name] !== undefined ? this.options[name] : this.o.ajax
 		);
@@ -111,9 +113,16 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		promise.finally(() => {
 			ajax.destruct();
 			this.ajaxInstances.delete(ajax);
+			this.progressHandler(100);
 		});
 
 		return promise;
+	}
+
+	private progressHandler = (percentage: number): void => {}
+
+	onProgress(callback: (percentage: number) => void) {
+		this.progressHandler = callback;
 	}
 
 	/**

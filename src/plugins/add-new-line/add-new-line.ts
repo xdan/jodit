@@ -9,7 +9,12 @@ import './add-new-line.less';
 import type { IBound, IJodit, HTMLTagNames, Nullable } from '../../types';
 import { Config } from '../../config';
 import { Dom, Icon, Plugin } from '../../modules';
-import { offset, position, call, scrollIntoView } from '../../core/helpers';
+import {
+	offset,
+	position,
+	call,
+	scrollIntoViewIfNeeded
+} from '../../core/helpers';
 
 declare module '../../config' {
 	interface Config {
@@ -179,7 +184,7 @@ export class addNewLine extends Plugin {
 		}
 
 		editor.s.setCursorIn(p);
-		scrollIntoView(p, editor.editor, editor.ed);
+		scrollIntoViewIfNeeded(p, editor.editor, editor.ed);
 
 		editor.e.fire('synchro');
 		this.hideForce();

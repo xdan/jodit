@@ -65,6 +65,7 @@ interface IViewComponent<T extends IViewBased = IViewBased> extends IComponent {
 	jodit: T;
 	j: this['jodit'];
 	setParentView(jodit: T): this;
+	i18n: T['i18n'];
 	defaultTimeout: number;
 }
 

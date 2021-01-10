@@ -485,7 +485,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			zIndex: number,
 			res: IDialog = this;
 
-		$$('.' + this.componentName, this.destination).forEach(
+		$$('.jodit-dialog', this.destination).forEach(
 			(dialog: HTMLElement) => {
 				dlg = (dialog as any).component as Dialog;
 				zIndex = parseInt(css(dialog, 'zIndex') as string, 10);
@@ -507,7 +507,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		let maxZIndex: number = 20000004,
 			zIndex: number = 0;
 
-		$$('.' + this.componentName, this.destination).forEach(dialog => {
+		$$('.jodit-dialog', this.destination).forEach(dialog => {
 			zIndex = parseInt(css(dialog, 'zIndex') as string, 10);
 			maxZIndex = Math.max(isNaN(zIndex) ? 0 : zIndex, maxZIndex);
 		});
@@ -742,7 +742,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		const n = this.getFullElName.bind(this);
 
 		self.container = this.c.fromHTML(
-			`<div style="z-index:${self.o.zIndex}" class="jodit ${
+			`<div style="z-index:${self.o.zIndex}" class="jodit jodit-dialog ${
 				this.componentName
 			}">
 				<div class="${n('overlay')}"></div>

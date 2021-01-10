@@ -19,24 +19,24 @@ export class ProgressBar extends ViewComponent implements IProgressBar {
 	/**
 	 * progress_bar Progress bar
 	 */
-	private progressBar = this.j.c.div('jodit-progressbar', this.j.c.div());
+	container = this.j.c.div('jodit-progressbar', this.j.c.div());
 
 	/**
 	 * Show progress bar
 	 */
 	show(): IProgressBar {
 		const container = (this.j as IJodit).workplace || this.j.container;
-		container.appendChild(this.progressBar);
+		container.appendChild(this.container);
 		return this;
 	}
 
 	hide(): IProgressBar {
-		Dom.safeRemove(this.progressBar);
+		Dom.safeRemove(this.container);
 		return this;
 	}
 
 	progress(percentage: number): IProgressBar {
-		this.progressBar.style.width = percentage.toFixed(2) + '%';
+		this.container.style.width = percentage.toFixed(2) + '%';
 		return this;
 	}
 

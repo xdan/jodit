@@ -22,6 +22,10 @@
 		}
 	}
 
+	&_theme_dark &__input {
+		background-color: var(--color-gray);
+	}
+
 	&_has-error_true &__input {
 		border-color: var(--color-red);
 	}
@@ -44,6 +48,11 @@
 		background-color: var(--color-white);
 		border: 1px solid var(--color-border);
 		min-width: 200px;
+	}
+
+	&_theme_dark &__wrapper {
+		background-color: var(--color-gray);
+		border-color: var(--color-border);
 	}
 
 	&_focused_true &__wrapper {
@@ -80,6 +89,11 @@
 			.size(12px, 12px);
 			fill: var(--color-border);
 		}
+	}
+
+	&_theme_dark &__icon svg,
+	&_theme_dark &__clear svg {
+		fill: var(--color-dark);
 	}
 }
 

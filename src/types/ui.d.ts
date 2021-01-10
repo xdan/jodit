@@ -15,6 +15,7 @@ import type {
 } from './types';
 import type { ButtonsGroups } from './toolbar';
 import type { IViewBased } from './view';
+import { ButtonsOption } from './toolbar';
 
 export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 	parentElement: Nullable<IUIElement>;
@@ -114,7 +115,7 @@ export interface IUIList extends IUIGroup {
 
 	setRemoveButtons(removeButtons?: string[]): this;
 
-	build(items: ButtonsGroups, target?: Nullable<HTMLElement>): IUIList;
+	build(items: ButtonsOption, target?: Nullable<HTMLElement>): IUIList;
 }
 
 export interface IUIForm extends IUIGroup {
@@ -135,7 +136,7 @@ export interface IUIInput extends IUIElement {
 		icon: string;
 		label: string;
 		ref: string;
-		type: 'text' | 'checkbox' | 'url';
+		type: 'text' | 'checkbox' | 'url' | 'file';
 		placeholder: string;
 		required: boolean;
 		validators: string[];

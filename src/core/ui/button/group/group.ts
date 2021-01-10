@@ -45,11 +45,11 @@ export class UIButtonGroup extends UIGroup {
 
 	constructor(
 		jodit: IViewBased,
-		items: IUIOption[],
 		readonly options: {
 			value?: string;
 			label?: string;
 			onChange?: (values: IUIOption[]) => void;
+			options?: IUIOption[],
 			radio: boolean;
 		} = {
 			radio: true
@@ -57,7 +57,7 @@ export class UIButtonGroup extends UIGroup {
 	) {
 		super(
 			jodit,
-			items.map(opt => {
+			options.options?.map(opt => {
 				const btn = new UIButton(jodit, {
 					text: opt.text,
 					name: opt.value,

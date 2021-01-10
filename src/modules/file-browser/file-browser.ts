@@ -299,7 +299,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 			const header = this.c.div();
 
-			this.toolbar.build(this.o.buttons).appendTo(header);
+			this.toolbar.build(this.o.buttons ?? []).appendTo(header);
 
 			this.dialog.open(this.browser, header);
 

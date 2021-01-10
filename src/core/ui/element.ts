@@ -171,7 +171,8 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		this.container = this.createContainer(options);
 
 		Object.defineProperty(this.container, 'component', {
-			value: this
+			value: this,
+			configurable: true
 		});
 	}
 

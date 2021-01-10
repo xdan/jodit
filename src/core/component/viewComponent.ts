@@ -26,6 +26,10 @@ export abstract class ViewComponent<T extends IViewBased = IViewBased>
 		return this.jodit;
 	}
 
+	i18n(text: string, ...params: Array<string | number>): string {
+		return this.j.i18n(text, ...params);
+	}
+
 	/**
 	 * Attach component to View
 	 * @param jodit

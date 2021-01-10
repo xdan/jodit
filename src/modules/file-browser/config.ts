@@ -21,7 +21,7 @@ import type {
 
 import { humanSizeToBytes, isArray, isString } from '../../core/helpers';
 import { ITEM_CLASS as IC } from './consts';
-import { Icon } from '../../core/ui';
+import { UIFileInput } from '../../core/ui';
 
 declare module '../../config' {
 	interface Config {
@@ -294,27 +294,13 @@ Config.prototype.controls.filebrowser = {
 			filebrowser: IFileBrowser,
 			control: IControlType
 		): HTMLElement => {
-			const btn = filebrowser.c
-				.fromHTML(`<span class="jodit-ui-button jodit__upload-button">
-						${Icon.get('plus')}
-						<input
-							type="file"
-							accept="${filebrowser.state.onlyImages ? 'image/*' : '*'}"
-							tabindex="-1"
-							dir="auto"
-							multiple=""
-							${
-								control.isDisabled &&
-								control.isDisabled(filebrowser, control)
-									? 'disabled="disabled"'
-									: ''
-							}
-						/>
-						</span>`);
+			const btn = new UIFileInput(filebrowser, {
+				onlyImages: filebrowser.state.onlyImages
+			});
 
-			filebrowser.e.fire('bindUploader.filebrowser', btn);
+			filebrowser.e.fire('bindUploader.filebrowser', btn.container);
 
-			return btn;
+			return btn.container;
 		}
 	} as IControlType,
 

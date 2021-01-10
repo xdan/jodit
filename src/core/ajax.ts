@@ -172,6 +172,16 @@ export class Ajax implements IAjax {
 					resolve.call(this.xhr, __parse(this.response) || {});
 				};
 
+				this.xhr.onprogress = (e): void => {
+					let percentComplete = 0;
+
+					if (e.lengthComputable) {
+						percentComplete = e.loaded / e.total * 100;
+					}
+
+					this.options.onProgress?.(percentComplete);
+				};
+
 				this.xhr.onreadystatechange = () => {
 					if (this.xhr.readyState === XMLHttpRequest.DONE) {
 						const resp = this.xhr.responseText;

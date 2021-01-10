@@ -27,6 +27,11 @@ export class UIGroup<T extends IViewBased = IViewBased>
 		return 'UIGroup';
 	}
 
+	/**
+	 * Synchronize mods to all children
+	 */
+	syncMod: boolean = false;
+
 	elements: IUIElement[] = [];
 
 	/**
@@ -78,6 +83,15 @@ export class UIGroup<T extends IViewBased = IViewBased>
 		this.appendChildToContainer(elm.container);
 		elm.parentElement = this;
 		elm.update();
+	}
+
+	/** @override */
+	setMod(name: string, value: string | boolean | null): this {
+		if (this.syncMod) {
+			this.elements.forEach(elm => elm.setMod(name, value));
+		}
+
+		return super.setMod(name, value);
 	}
 
 	/**
