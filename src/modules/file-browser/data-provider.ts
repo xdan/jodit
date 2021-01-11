@@ -15,11 +15,14 @@ import type {
 	IDictionary,
 	IAjax,
 	Nullable,
-	IFileBrowserProcessor, IFileBrowserDataProviderItemsMods
+	IFileBrowserProcessor,
+	IFileBrowserDataProviderItemsMods,
+	IFileBrowserItem,
+	ISourceFile,
+	ISourcesFiles
 } from '../../types';
 
 import {
-	each,
 	error,
 	extend,
 	isFunction,
@@ -28,12 +31,6 @@ import {
 } from '../../core/helpers';
 import { Ajax } from '../../core/ajax';
 import { autobind } from '../../core/decorators';
-import {
-	IFileBrowserItem,
-	ISource,
-	ISourceFile,
-	ISourcesFiles
-} from '../../types';
 import { FileBrowserItem } from './builders/item';
 
 export const DEFAULT_SOURCE_NAME = 'default';
@@ -119,7 +116,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		return promise;
 	}
 
-	private progressHandler = (percentage: number): void => {}
+	private progressHandler = (percentage: number): void => {};
 
 	onProgress(callback: (percentage: number) => void) {
 		this.progressHandler = callback;
@@ -237,7 +234,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 				this.o.filter === undefined ||
 				this.o.filter(item, mods.filterWord);
 
-		each<ISource>(sources, (source_name, source) => {
+		sources.forEach(source => {
 			if (source.files && source.files.length) {
 				if (isFunction(this.o.sort) && mods.sortBy) {
 					source.files.sort((a, b) => this.o.sort(a, b, mods.sortBy));
@@ -248,7 +245,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 						elements.push(
 							FileBrowserItem.create({
 								...item,
-								sourceName: source_name,
+								sourceName: source.name,
 								source
 							})
 						);

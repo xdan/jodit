@@ -33,15 +33,14 @@ export interface ISourceFile {
 }
 
 export interface ISource {
+	name: string,
 	path: string;
 	baseurl: string;
 	files: ISourceFile[];
 	folders: string[];
 }
 
-export interface ISourcesFiles {
-	[key: string]: ISource;
-}
+export type ISourcesFiles = ISource[];
 
 export interface IFileBrowserAnswer {
 	success: boolean;

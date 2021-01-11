@@ -109,8 +109,8 @@ export function stateListeners(this: FileBrowser): void {
 			this.async.debounce(() => {
 				Dom.detach(this.tree);
 
-				Object.keys(state.sources).forEach((sourceName: string) => {
-					const source = state.sources[sourceName];
+				state.sources.forEach((source) => {
+					const sourceName = source.name;
 
 					if (sourceName && sourceName !== DEFAULT_SOURCE_NAME) {
 						this.tree.appendChild(
@@ -118,7 +118,7 @@ export function stateListeners(this: FileBrowser): void {
 						);
 					}
 
-					source.folders.forEach(name => {
+					source.folders.forEach((name: string) => {
 						const folderElm = create.a(
 							F_CLASS + '__tree-item',
 							{
