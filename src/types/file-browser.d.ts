@@ -270,7 +270,6 @@ export interface IFileBrowserState {
 export interface IFileBrowserFolder {
 	name: string;
 	source: ISource;
-	sourceName: string;
 	children: IFileBrowserFolder[];
 }
 

@@ -13,6 +13,7 @@ import type {
 import { ViewComponent } from '../component';
 import { Dom } from '../dom';
 import { Elms, Mods } from '../traits';
+import { isString } from '../helpers';
 
 export abstract class UIElement<T extends IViewBased = IViewBased>
 	extends ViewComponent<T>
@@ -153,7 +154,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	 * Method create only box
 	 * @param options
 	 */
-	protected makeContainer(options?: IDictionary): HTMLElement {
+	protected render(options?: IDictionary): HTMLElement | string {
 		return this.j.c.div(this.componentName);
 	}
 
@@ -161,7 +162,15 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	 * Create main HTML container
 	 */
 	protected createContainer(options?: IDictionary): HTMLElement {
-		return this.makeContainer(options);
+		const result = this.render(options);
+
+		if (isString(result)) {
+			const elm = this.j.c.fromHTML(result.replace(/&__/g, this.componentName + '__'));
+			elm.classList.add(this.componentName);
+			return elm;
+		}
+
+		return result;
 	}
 
 	/** @override */

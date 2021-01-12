@@ -1,5 +1,6 @@
 @import (reference) '../../../../../styles/form';
 @import (reference) '../../../../../styles/mixins';
+@import (reference) '../../../../../styles/variables';
 
 .jodit-ui-label {
 	display: block;
@@ -48,6 +49,10 @@
 		background-color: var(--color-white);
 		border: 1px solid var(--color-border);
 		min-width: 200px;
+
+		@media (max-width: @screen-xs) {
+			min-width: 140px;
+		}
 	}
 
 	&_theme_dark &__wrapper {
