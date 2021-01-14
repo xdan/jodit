@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary, Nullable } from '../../../types';
+import type { IDictionary, Nullable } from '../../../types';
 import { isString, isVoid } from '../checker';
 
 /**

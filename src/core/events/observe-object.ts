@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { CallbackFunction, IDictionary } from '../../types';
+import type { CallbackFunction, IDictionary } from '../../types';
 import { isPlainObject, isFastEqual, isArray } from '../helpers';
 import { nonenumerable } from '../decorators';
 

@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IStorage, StorageValueType } from '../../../types';
+import type { IStorage, StorageValueType } from '../../../types';
 
 export class MemoryStorageProvider<T = StorageValueType>
 	implements IStorage<T> {

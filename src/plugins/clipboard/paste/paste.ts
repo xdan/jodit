@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { InsertMode, PasteEvent } from '../config';
 import type { IJodit } from '../../../types';
 import { Plugin } from '../../../core/plugin';
-import { InsertMode, PasteEvent } from '../config';
 import { getAllTypes, getDataTransfer, pasteInsertHtml } from './helpers';
 
 import {

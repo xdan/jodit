@@ -4,7 +4,14 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { CanUndef, IJodit, IStyle, markerInfo, Nullable } from '../../../types';
+import type {
+	CanUndef,
+	IJodit,
+	IStyle,
+	markerInfo,
+	Nullable
+} from '../../../types';
+import type { Style } from './style';
 import { isPlainObject, isVoid } from '../../helpers/checker';
 import { Dom } from '../../dom';
 import {
@@ -15,7 +22,6 @@ import {
 	normalizeNode,
 	trim
 } from '../../helpers';
-import { Style } from './style';
 import { autobind } from '../../decorators';
 
 enum mode {

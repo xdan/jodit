@@ -6,4 +6,4 @@
 
 export * from './statuses';
 export * from './component';
-export * from './viewComponent';
+export * from './view-component';

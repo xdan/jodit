@@ -13,7 +13,8 @@ import type {
 	IUIGroup,
 	IUIList,
 	IViewBased,
-	Nullable
+	Nullable,
+	ButtonsOption
 } from '../../../types';
 
 import { UIButton } from '../button';
@@ -23,7 +24,6 @@ import { UIGroup } from './group';
 import { UISeparator } from '../separator';
 import { isButtonGroup } from '../helpers/buttons';
 import { getControlType } from '../helpers/get-control-type';
-import { ButtonsOption } from '../../../types';
 import { splitArray } from '../../helpers';
 
 @component

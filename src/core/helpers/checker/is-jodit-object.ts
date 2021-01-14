@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IJodit, IViewBased } from '../../../types';
+import type { IJodit, IViewBased } from '../../../types';
 import { isFunction } from './is-function';
 import { modules } from '../../global';
 

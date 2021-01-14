@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IDictionary } from '../../../types';
 import { isWindow } from './is-window';
 import { hasOwn } from '../type';
-import { IDictionary } from '../../../types';
 
 /**
  * Check if element is simple plaint object

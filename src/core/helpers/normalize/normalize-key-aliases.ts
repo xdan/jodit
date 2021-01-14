@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary } from '../../../types';
+import type { IDictionary } from '../../../types';
 import { trim } from '../string';
 import { KEY_ALIASES } from '../../constants';
 

@@ -6,7 +6,14 @@
 
 import './image-properties.less';
 
+import type {
+	IDialog,
+	IFileBrowserCallBackData,
+	IJodit,
+	IUploaderData
+} from '../../../types';
 import { Config } from '../../../config';
+
 import {
 	Alert,
 	Confirm,
@@ -30,13 +37,6 @@ import {
 	kebabCase,
 	isNumeric
 } from '../../../core/helpers';
-
-import {
-	IDialog,
-	IFileBrowserCallBackData,
-	IJodit,
-	IUploaderData
-} from '../../../types';
 import { FileSelectorWidget, TabsWidget } from '../../../modules/widget';
 import { Button } from '../../../core/ui/button';
 import { form, mainTab, positionTab } from './templates/';

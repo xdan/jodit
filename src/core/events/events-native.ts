@@ -8,7 +8,7 @@
  * The module editor's event manager
  */
 
-import {
+import type {
 	CallbackFunction,
 	EventHandlerBlock,
 	IEventsNative

@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IEventsNative, IViewComponent, Nullable } from '../../types';
 import { ViewComponent } from '../component';
 import { isViewObject } from './checker';
-import { IEventsNative, IViewComponent, Nullable } from '../../types';
 
 const store = new WeakMap();
 

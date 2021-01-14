@@ -5,11 +5,11 @@
  */
 
 import type { HTMLTagNames, IFileBrowserItem, Nullable } from '../../../types';
+import type { FileBrowser } from '../file-browser';
 import { ctrlKey, attr } from '../../../core/helpers';
 import { F_CLASS, ITEM_CLASS } from '../consts';
 import contextMenu from '../builders/context-menu';
 import { Dom } from '../../../core/dom';
-import { FileBrowser } from '../file-browser';
 
 export const getItem = (
 	node: Nullable<EventTarget>,

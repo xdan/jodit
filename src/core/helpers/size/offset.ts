@@ -15,7 +15,7 @@
  * @return {{top: number, left: number}} returns an object containing the properties top and left.
  */
 
-import { IBound, IHasScroll, IJodit, IViewBased } from '../../../types';
+import type { IBound, IHasScroll, IJodit, IViewBased } from '../../../types';
 
 export const offset = (
 	elm: HTMLElement | Range,

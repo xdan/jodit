@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IViewBased, IViewComponent } from '../../types';
+import type { IViewBased, IViewComponent } from '../../types';
 import { Component } from './component';
 
 export abstract class ViewComponent<T extends IViewBased = IViewBased>

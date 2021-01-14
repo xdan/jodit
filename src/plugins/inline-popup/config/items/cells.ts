@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { Table } from '../../../../modules';
+import type { IControlType } from '../../../../types';
 import { isJoditObject, isString } from '../../../../core/helpers/checker';
-import { Table } from '../../../../modules';
 import { css } from '../../../../core/helpers';
 import { ColorPickerWidget, TabsWidget } from '../../../../modules/widget';
-import { IControlType } from '../../../../types';
 
 const cmd = (control: IControlType): string =>
 	control.args && isString(control.args[0])

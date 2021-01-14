@@ -12,7 +12,8 @@ import type {
 	IStorage,
 	IViewBased,
 	IViewOptions,
-	Nullable
+	Nullable,
+	IDictionary
 } from '../../types';
 import { Storage } from '../storage';
 import {
@@ -37,11 +38,8 @@ import { Async } from '../async';
 import { modules } from '../global';
 import { hook } from '../decorators';
 import { Elms, Mods } from '../traits';
-import { IDictionary } from '../../types';
 
-export abstract class View
-	extends Component
-	implements IViewBased<IViewOptions>, Mods, Elms {
+export abstract class View extends Component implements IViewBased, Mods, Elms {
 	readonly isView: true = true;
 
 	readonly mods: IDictionary<string | boolean | null> = {};
@@ -253,7 +251,7 @@ export abstract class View
 	 */
 	protected initOwners(): void {}
 
-	constructor(options?: IViewOptions, readonly isJodit: boolean = false) {
+	protected constructor(options?: IViewOptions, readonly isJodit: boolean = false) {
 		super();
 
 		this.id = new Date().getTime().toString();

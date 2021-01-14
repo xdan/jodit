@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IControlType, IDictionary, IJodit } from '../../../types';
+import type { IControlType, IDictionary, IJodit } from '../../../types';
 import { Config } from '../../../config';
 
 declare module '../../../config' {

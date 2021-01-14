@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { HTMLTagNames, IDictionary, Nullable } from '../../types/';
 import { IS_IE } from '../constants';
-import { HTMLTagNames, IDictionary, Nullable } from '../../types/';
 import { isString } from './checker';
 import { attr } from './utils';
 import { error } from './type';

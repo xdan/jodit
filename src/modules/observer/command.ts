@@ -5,7 +5,7 @@
  */
 
 import type { SnapshotType } from '../../types';
-import { Observer } from './observer';
+import type { Observer } from './observer';
 
 export class Command {
 	undo(): void {

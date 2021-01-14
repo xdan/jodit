@@ -5,10 +5,10 @@
  */
 
 import type { IJodit, IPlugin } from '../../types';
+import type { Plugin } from '../../core/plugin';
 import { TEXT_HTML, TEXT_PLAIN } from '../../core/constants';
 import { stripTags } from '../../core/helpers';
 import { getDataTransfer } from './paste/helpers';
-import { Plugin } from '../../core/plugin';
 
 export const pluginKey = 'clipboard';
 

@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { CanUndef, IDictionary, IViewComponent } from '../../types';
+import type { CanUndef, IDictionary, IViewComponent } from '../../types';
 import { error, isFunction, isPlainObject, isViewObject, splitArray } from '../helpers';
 import { ObserveObject } from '../events';
 import { Component, STATUSES } from '../component';

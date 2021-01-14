@@ -4,16 +4,16 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { FileBrowser } from '../file-browser';
 import { Dialog } from '../../dialog';
-import { Dom } from '../../../core/dom';
 
+import { Dom } from '../../../core/dom';
 import { F_CLASS, ICON_LOADER, ITEM_CLASS } from '../consts';
 import { attr, error } from '../../../core/helpers';
 import { makeContextMenu } from '../factories';
 import { Icon } from '../../../core/ui';
 import { getItem } from '../listeners/native-listeners';
 import { openImageEditor } from '../../image-editor/image-editor';
-import { FileBrowser } from '../file-browser';
 
 const CLASS_PREVIEW = F_CLASS + '_preview_',
 	preview_tpl_next = (next = 'next', right = 'right') =>

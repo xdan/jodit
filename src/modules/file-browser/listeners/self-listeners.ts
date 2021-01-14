@@ -5,11 +5,11 @@
  */
 
 import type { IDictionary } from '../../../types';
+import type { FileBrowser } from '../file-browser';
 import { Confirm, Prompt } from '../../dialog';
 import { isValidName } from '../../../core/helpers/checker';
 import { normalizePath } from '../../../core/helpers';
 import { DEFAULT_SOURCE_NAME } from '../data-provider';
-import { FileBrowser } from '../file-browser';
 import { openImageEditor } from '../../image-editor/image-editor';
 
 export function selfListeners(this: FileBrowser): void {

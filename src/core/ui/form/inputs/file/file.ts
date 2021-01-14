@@ -6,9 +6,9 @@
 
 import './file.less';
 
+import type { IUIButton, IUIInput, IViewBased } from '../../../../../types';
 import { UIInput } from '../input/input';
 import { component } from '../../../../decorators';
-import { IUIButton, IUIInput, IViewBased } from '../../../../../types';
 import { UIButton } from '../../../button';
 
 @component

@@ -8,11 +8,11 @@
  * TODO: need remove `drag-and-drop-element` plugin and use full custom moving inside this plugin.
  */
 
+import type { IPoint, IViewComponent } from '../../types';
 import { TEXT_HTML, TEXT_PLAIN } from '../../core/constants';
 import { Dom } from '../../core/dom';
 import { attr, ctrlKey, dataBind } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
-import { IPoint, IViewComponent } from '../../types';
 import { getDataTransfer } from './paste/helpers';
 import { autobind, throttle } from '../../core/decorators';
 

@@ -5,7 +5,7 @@
  */
 
 import type { CanUndef } from '../../types';
-import { Command } from './command';
+import type { Command } from './command';
 
 export class Stack {
 	private commands: Command[] = [];

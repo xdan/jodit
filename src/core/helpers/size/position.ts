@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IBound, IViewBased } from '../../../types';
+import type { IBound, IViewBased } from '../../../types';
 import { isJoditObject } from '../checker';
 
 export function position(elm: HTMLElement): IBound;

@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary } from '../../types';
+import type { IDictionary } from '../../types';
 
 const class2type: IDictionary<string> = {};
 const toString = class2type.toString;

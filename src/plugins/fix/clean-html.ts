@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { HTMLTagNames, IDictionary, IJodit, Nullable } from '../../types';
+import type { HTMLTagNames, IDictionary, IJodit, Nullable, IPlugin } from '../../types';
 import { Config } from '../../config';
 import {
 	INVISIBLE_SPACE_REG_EXP as INV_REG,
@@ -15,7 +15,6 @@ import { Dom } from '../../modules';
 import { isString, trim } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { autobind, debounce } from '../../core/decorators';
-import { IPlugin } from '../../types';
 
 /**
  * @property {object} cleanHTML {@link cleanHtml|cleanHtml}'s options

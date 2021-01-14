@@ -13,7 +13,8 @@ import type {
 	ImageAction,
 	IViewBased,
 	IUIButton,
-	IDictionary
+	IDictionary,
+	IFileBrowserDataProvider
 } from '../../types';
 import { Config } from '../../config';
 import { ViewComponent } from '../../core/component';
@@ -23,7 +24,6 @@ import { Dom } from '../../core/dom';
 import { Button } from '../../core/ui/button';
 import { form } from './templates/form';
 import { component, debounce, throttle, autobind } from '../../core/decorators';
-import { IFileBrowserDataProvider } from '../../types';
 
 declare module '../../config' {
 	interface Config {

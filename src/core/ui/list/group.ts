@@ -12,11 +12,11 @@ import type {
 	IUIGroup,
 	IViewBased
 } from '../../../types';
+import type { IDictionary } from '../../../types';
 import { UIElement } from '../element';
 import { component, watch } from '../../decorators';
 import { isArray } from '../../helpers';
 import { Dom } from '../../dom';
-import { IDictionary } from '../../../types';
 
 @component
 export class UIGroup<T extends IViewBased = IViewBased>
@@ -73,16 +73,24 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	 * Append new element into group
 	 * @param elm
 	 */
-	append(elm: IUIElement | IUIElement[]): void {
+	append(elm: IUIElement | IUIElement[], distElement?: string): this {
 		if (isArray(elm)) {
 			elm.forEach((item) => this.append(item));
-			return;
+			return this;
 		}
 
 		this.elements.push(elm);
-		this.appendChildToContainer(elm.container);
+
+		if (distElement) {
+			this.getElm(distElement).appendChild(elm.container)
+		} else {
+			this.appendChildToContainer(elm.container);
+		}
+
 		elm.parentElement = this;
 		elm.update();
+
+		return this;
 	}
 
 	/** @override */
@@ -106,7 +114,7 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	 * Remove element from group
 	 * @param elm
 	 */
-	remove(elm: IUIElement): void {
+	remove(elm: IUIElement): this {
 		const index = this.elements.indexOf(elm);
 
 		if (index !== -1) {
@@ -114,14 +122,18 @@ export class UIGroup<T extends IViewBased = IViewBased>
 			Dom.safeRemove(elm.container);
 			elm.parentElement = null;
 		}
+
+		return this;
 	}
 
 	/**
 	 * Clear group
 	 */
-	clear(): void {
+	clear(): this {
 		this.elements.forEach(elm => elm.destruct());
 		this.elements.length = 0;
+
+		return this;
 	}
 
 	/**

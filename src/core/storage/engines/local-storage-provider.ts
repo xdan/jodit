@@ -4,7 +4,11 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { BooleanFunction, IStorage, StorageValueType } from '../../../types';
+import type {
+	BooleanFunction,
+	IStorage,
+	StorageValueType
+} from '../../../types';
 
 /**
  * Check if user disable local storages/cookie etc.

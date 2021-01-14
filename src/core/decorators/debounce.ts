@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary, IViewBased, IViewComponent } from '../../types';
+import type { IDictionary, IViewBased, IViewComponent } from '../../types';
 import { error, isFunction, isNumber, isViewObject } from '../helpers';
 import { Component, STATUSES } from '../component';
 

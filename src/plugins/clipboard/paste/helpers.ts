@@ -5,6 +5,7 @@
  */
 
 import type { IJodit, Nullable } from '../../../types';
+import type { PasteEvent } from '../config';
 import {
 	isArray,
 	isNumber,
@@ -14,7 +15,6 @@ import {
 } from '../../../core/helpers';
 import { Dom } from '../../../core/dom';
 import { TEXT_PLAIN } from '../../../core/constants';
-import { PasteEvent } from '../config';
 
 /**
  * Get DataTransfer from different event types

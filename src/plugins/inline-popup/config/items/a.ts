@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IControlType, IJodit } from '../../../../types';
+import type { IControlType, IJodit } from '../../../../types';
 import { attr } from '../../../../core/helpers/utils';
 
 export default [

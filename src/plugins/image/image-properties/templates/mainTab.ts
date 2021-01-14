@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IJodit } from '../../../../types';
+import type { IJodit } from '../../../../types';
 import { Icon } from '../../../../core/ui';
 
 export function mainTab(editor: IJodit): HTMLElement {

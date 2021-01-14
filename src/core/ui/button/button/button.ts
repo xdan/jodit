@@ -6,19 +6,18 @@
 
 import './button.less';
 
-import { UIElement } from '../../element';
-import {
+import type {
 	IUIButton,
 	IUIButtonState,
 	IUIButtonStatePartial,
 	IViewBased
 } from '../../../../types';
-import watch from '../../../../core/decorators/watch';
+import { UIElement } from '../../element';
 import { Dom } from '../../../dom';
 import { attr, isString, isFunction } from '../../../helpers';
 import { Icon } from '../../icon';
 import { UIList } from '../../list/list';
-import { autobind, component } from '../../../decorators';
+import { autobind, component, watch } from '../../../decorators';
 import { STATUSES } from '../../../component';
 
 export const UIButtonState = (): IUIButtonState => ({

@@ -5,11 +5,11 @@
  */
 
 import type { IFileBrowserItem } from '../../../types';
+import type { FileBrowser } from '../file-browser';
 import { F_CLASS, ITEM_CLASS } from '../consts';
 import { Dom } from '../../../core/dom';
 import { normalizePath } from '../../../core/helpers/normalize';
 import { Button } from '../../../core/ui';
-import { FileBrowser } from '../file-browser';
 
 const DEFAULT_SOURCE_NAME = 'default',
 	ITEM_ACTIVE_CLASS = ITEM_CLASS + '_active_true';

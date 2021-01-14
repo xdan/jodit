@@ -95,25 +95,31 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 		const ajax = new Ajax(this.parent, opts);
 
-		const promise = ajax.send();
+		let promise = ajax.send();
 
 		this.ajaxInstances.add(ajax);
 
+		promise = promise.then(resp => {
+			if (!this.isSuccess(resp)) {
+				throw new Error(this.getMessage(resp));
+			}
+
+			return resp;
+		});
+
 		if (success) {
-			promise.then(success);
+			promise = promise.then(success);
 		}
 
 		if (error) {
-			promise.catch(error);
+			promise = promise.catch(error);
 		}
 
-		promise.finally(() => {
+		return promise.finally(() => {
 			ajax.destruct();
 			this.ajaxInstances.delete(ajax);
 			this.progressHandler(100);
 		});
-
-		return promise;
 	}
 
 	private progressHandler = (percentage: number): void => {};

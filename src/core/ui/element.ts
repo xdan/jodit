@@ -39,7 +39,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	bubble(callback: (parent: IUIElement) => void): this {
 		let parent = this.parentElement;
 
-		while(parent) {
+		while (parent) {
 			callback(parent);
 			parent = parent.parentElement;
 		}
@@ -165,7 +165,11 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		const result = this.render(options);
 
 		if (isString(result)) {
-			const elm = this.j.c.fromHTML(result.replace(/&__/g, this.componentName + '__'));
+			const elm = this.j.c.fromHTML(
+				result
+					.replace(/&__/g, this.componentName + '__')
+					.replace(/~([^~]+?)~/g, (_, s) => this.i18n(s))
+			);
 			elm.classList.add(this.componentName);
 			return elm;
 		}

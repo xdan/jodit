@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IDictionary } from '../../../types';
 import { isFunction } from '../checker';
-import { IDictionary } from '../../../types';
 
 export const keepNames = new Map<Function, string>();
 

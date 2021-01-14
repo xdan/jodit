@@ -99,9 +99,9 @@ export interface IUIButton extends IViewComponent, IUIElement, IFocusable {
 export interface IUIGroup extends IUIElement {
 	elements: IUIElement[];
 	allChildren: IUIElement[];
-	append(elm: IUIElement | IUIElement[]): void;
-	remove(elm: IUIElement): void;
-	clear(): void;
+	append(elm: IUIElement | IUIElement[], distElement?: string): this;
+	remove(elm: IUIElement): this;
+	clear(): this;
 }
 
 export interface IUIList extends IUIGroup {

@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { CanUndef } from '../../../types';
+import type { CanUndef } from '../../../types';
 
 /**
  * Safe stringify circular object

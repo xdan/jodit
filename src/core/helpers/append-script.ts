@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IViewBased } from '../../types';
 import { completeUrl } from './complete-url';
-import { IViewBased } from '../../types';
 import { isFunction, isString } from './checker';
 
 export type Loader = (jodit: IViewBased, url: string) => Promise<any>;

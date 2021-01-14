@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IContainer, IDestructible, IInitable } from '../../../types';
+import type { IContainer, IDestructible, IInitable } from '../../../types';
 import { isFunction } from './is-function';
 import { Dom } from '../../dom';
 import { isVoid } from './is-void';

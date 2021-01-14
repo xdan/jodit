@@ -26,21 +26,16 @@ export class UIButtonGroup extends UIGroup {
 	}
 
 	/** @override */
-	protected createContainer(options: IDictionary): HTMLElement {
-		const container = super.createContainer(options);
-		container.innerHTML = `<div class="${this.getFullElName(
-			'label'
-		)}">${this.j.i18n(options.label)}</div>
-			<div class="${this.getFullElName('options')}"></div>`;
-
-		return container;
+	protected render(options: IDictionary): string {
+		return `<div>
+			<div class="&__label">~${options.label}~</div>
+			<div class="&__options"></div>
+		</div>`;
 	}
 
 	/** @override */
 	protected appendChildToContainer(childContainer: HTMLElement) {
-		this.container
-			.querySelector('.' + this.getFullElName('options'))
-			?.appendChild(childContainer);
+		this.getElm('options').appendChild(childContainer);
 	}
 
 	constructor(

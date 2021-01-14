@@ -3,8 +3,8 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+import type { IDictionary } from '../types';
 import { isArray } from '../core/helpers/checker';
-import { IDictionary } from '../types';
 
 const ar = require('./ar');
 const cs_cz = require('./cs_cz');
