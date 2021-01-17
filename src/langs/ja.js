@@ -215,10 +215,15 @@ module.exports = {
 	'Please fill out this field': 'まだこの分野',
 	'Please enter a web address': 'を入力してくださいウェブアドレス',
 	Default: 'デフォルト',
-	Circle: '円',
-	Dot: '恐竜',
-	Quadrate: 'Quadrate',
+	Circle: '白丸',
+	Dot: '黒丸',
+	Quadrate: '四角',
 	Find: '見',
 	'Find Previous': '探前',
-	'Find Next': '由来'
+	'Find Next': '由来',
+	'Lower Alpha': '英小文字',
+	'Lower Greek': 'ギリシャ文字',
+	'Lower Roman': 'ローマ数字小文字',
+	'Upper Alpha': '英大文字',
+	'Upper Roman': 'ローマ数字大文字'
 };
