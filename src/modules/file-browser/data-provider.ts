@@ -75,11 +75,11 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param {Function} error
 	 * @return {Promise}
 	 */
-	private get(
+	protected get<T = IFileBrowserAnswer>(
 		name: keyof IFileBrowserOptions,
 		success?: (resp: IFileBrowserAnswer) => void,
 		error?: (error: Error) => void
-	): Promise<IFileBrowserAnswer> {
+	): Promise<T> {
 		const opts: IFileBrowserAjaxOptions = extend(
 			true,
 			{
@@ -122,7 +122,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		});
 	}
 
-	private progressHandler = (percentage: number): void => {};
+	private progressHandler = (ignore: number): void => {};
 
 	onProgress(callback: (percentage: number) => void) {
 		this.progressHandler = callback;
@@ -503,6 +503,47 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		return this.rename('fileRename', path, name, newname, source);
 	}
 
+	private changeImage(
+		type: 'resize' | 'crop',
+		path: string,
+		source: string,
+		name: string,
+		newname: string | void,
+		box: ImageBox | void
+	): Promise<boolean> {
+		if (!this.o[type]) {
+			this.o[type] = {
+				data: {}
+			};
+		}
+
+		const query = this.o[type]!;
+
+		if (query.data === undefined) {
+			query.data = {
+				action: type
+			};
+		}
+
+		query.data.newname = newname || name;
+
+		if (box) {
+			query.data.box = box;
+		}
+
+		query.data.path = path;
+		query.data.name = name;
+		query.data.source = source;
+
+		return this.get(type).then(resp => {
+			if (this.isSuccess(resp)) {
+				return true;
+			}
+
+			throw error(this.getMessage(resp));
+		});
+	}
+
 	/**
 	 * Send command to server to crop image
 	 * @param path
@@ -518,37 +559,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		newname: string | void,
 		box: ImageBox | void
 	): Promise<boolean> {
-		if (!this.o.crop) {
-			this.o.crop = {
-				data: {}
-			};
-		}
-
-		const query = this.o.crop;
-
-		if (query.data === undefined) {
-			query.data = {
-				action: 'crop'
-			};
-		}
-
-		query.data.newname = newname || name;
-
-		if (box) {
-			query.data.box = box;
-		}
-
-		query.data.path = path;
-		query.data.name = name;
-		query.data.source = source;
-
-		return this.get('crop').then(resp => {
-			if (this.isSuccess(resp)) {
-				return true;
-			}
-
-			throw error(this.getMessage(resp));
-		});
+		return this.changeImage('crop', path, source, name, newname, box);
 	}
 
 	/**
@@ -567,37 +578,8 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		newname: string | void,
 		box: ImageBox | void
 	): Promise<boolean> {
-		if (!this.o.resize) {
-			this.o.resize = {
-				data: {}
-			};
-		}
+		return this.changeImage('resize', path, source, name, newname, box)
 
-		const query = this.o.resize;
-
-		if (query.data === undefined) {
-			query.data = {
-				action: 'resize'
-			};
-		}
-
-		query.data.newname = newname || name;
-
-		if (box) {
-			query.data.box = box;
-		}
-
-		query.data.path = path;
-		query.data.name = name;
-		query.data.source = source;
-
-		return this.get('resize').then(resp => {
-			if (this.isSuccess(resp)) {
-				return true;
-			}
-
-			throw error(this.getMessage(resp));
-		});
 	}
 
 	getMessage(resp: IFileBrowserAnswer): string {

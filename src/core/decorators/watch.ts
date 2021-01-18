@@ -5,7 +5,7 @@
  */
 
 import type { CanUndef, IDictionary, IViewComponent } from '../../types';
-import { error, isFunction, isPlainObject, isViewObject, splitArray } from '../helpers';
+import { error, get, isFunction, isPlainObject, isViewObject, splitArray } from '../helpers';
 import { ObserveObject } from '../events';
 import { Component, STATUSES } from '../component';
 
@@ -44,14 +44,19 @@ export function watch(observeFields: string[] | string, context?: object) {
 			};
 
 			splitArray(observeFields).forEach(field => {
-				if (/^:/.test(field)) {
+				if (/:/.test(field)) {
+					const [objectPath, eventName] = field.split(':');
 					const view = isViewObject(component)
 						? component
 						: ((component as unknown) as IViewComponent).jodit;
 
+					if (objectPath.length) {
+						context = get<CanUndef<object>>(objectPath, component)!;
+					}
+
 					view.events
-						.on(context || component, field.substr(1), callback)
-						.on(field.substr(1), callback);
+						.on(context || component, eventName, callback)
+						.on(eventName, callback);
 
 					return;
 				}

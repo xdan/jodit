@@ -168,13 +168,13 @@ export interface IFileBrowserDataProvider extends IDestructible {
 		url: string
 	): Promise<{ path: string; name: string; source: string }>;
 
-	tree(path: string, source: string): Promise<ISourcesFiles>;
-
 	items(
 		path: string,
 		source: string,
 		mods?: IFileBrowserDataProviderItemsMods
 	): Promise<IFileBrowserItem[]>;
+
+	tree(path: string, source: string): Promise<ISourcesFiles>;
 
 	createFolder(name: string, path: string, source: string): Promise<boolean>;
 
