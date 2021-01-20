@@ -1,13 +1,13 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 import { Dialog } from './dialog';
-import { ToolbarIcon } from '../toolbar/icon';
+import { asArray, isFunction } from '../../core/helpers/';
+import { Dom } from '../../core/dom';
+import { Button } from '../../core/ui';
 
 /**
  * Show `alert` dialog. Work without Jodit object
@@ -33,38 +33,27 @@ export const Alert = (
 	msg: string | HTMLElement,
 	title?: string | (() => void | false),
 	callback?: string | ((dialog: Dialog) => void | false),
-	className: string = 'jodit_alert'
+	className: string = 'jodit-dialog_alert'
 ): Dialog => {
-	if (typeof title === 'function') {
+	if (isFunction(title)) {
 		callback = title;
 		title = undefined;
 	}
 
-	const
-		dialog: Dialog = new Dialog(),
-		container: HTMLDivElement = dialog.create.div(className),
-		okButton: HTMLAnchorElement = dialog.create.fromHTML(
-			'<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-			ToolbarIcon.getIcon('cancel') +
-			'<span>' +
-			Jodit.prototype.i18n('Ok') +
-			'</span></a>'
-		) as HTMLAnchorElement;
+	const dialog = new Dialog(),
+		container = dialog.c.div(className),
+		okButton = Button(dialog, 'ok', 'Ok');
 
 	asArray(msg).forEach(oneMessage => {
 		container.appendChild(
-			Dom.isNode(oneMessage, dialog.window)
+			Dom.isNode(oneMessage, dialog.ow)
 				? oneMessage
-				: dialog.create.fromHTML(oneMessage)
+				: dialog.c.fromHTML(oneMessage)
 		);
 	});
 
-	okButton.addEventListener('click', () => {
-		if (
-			!callback ||
-			typeof callback !== 'function' ||
-			callback(dialog) !== false
-		) {
+	okButton.onAction(() => {
+		if (!callback || !isFunction(callback) || callback(dialog) !== false) {
 			dialog.close();
 		}
 	});
@@ -76,7 +65,3 @@ export const Alert = (
 
 	return dialog;
 };
-
-import { Jodit } from '../../Jodit';
-import { asArray } from '../helpers/array';
-import { Dom } from '../Dom';

@@ -1,10 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 import { IViewBased } from './view';
@@ -13,14 +10,62 @@ export interface IDictionary<T = any> {
 	[key: string]: T;
 }
 
-interface IComponent<T extends IViewBased = IViewBased> {
-	jodit: T;
-	isDestructed: boolean;
-	destruct(): any;
+export type CanPromise<T> = T | Promise<T>;
+export type CanUndef<T> = T | undefined;
+export type Nullable<T> = T | null;
+
+export interface IInitable {
+	init(jodit: IViewBased): any;
 }
 
-export type NodeCondition = (
-	node: Node | null
+export interface IDestructible {
+	destruct(jodit?: IViewBased): any;
+}
+
+export type ComponentStatus =
+	| 'beforeInit'
+	| 'ready'
+	| 'beforeDestruct'
+	| 'destructed';
+
+export interface IContainer {
+	container: HTMLElement;
+}
+
+interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
+	ownerDocument: Document;
+	od: this['ownerDocument'];
+	ownerWindow: Window;
+	ow: this['ownerWindow'];
+
+	get<T>(chain: string, obj?: IDictionary): Nullable<T>;
+
+	componentName: string;
+	uid: string;
+
+	isDestructed: boolean;
+	isInDestruct: boolean;
+	isReady: boolean;
+	componentStatus: ComponentStatus;
+	setStatus(componentStatus: ComponentStatus): void;
+
+	hookStatus(
+		status: ComponentStatus,
+		callback: (component: this) => void
+	): void;
+
+	bindDestruct(jodit: T): this;
+}
+
+interface IViewComponent<T extends IViewBased = IViewBased> extends IComponent {
+	jodit: T;
+	j: this['jodit'];
+	setParentView(jodit: T): this;
+	defaultTimeout: number;
+}
+
+export type NodeCondition<T extends Node = Node> = (
+	node: Nullable<T>
 ) => boolean | null | false | void | '';
 
 /**
@@ -33,12 +78,19 @@ export interface IBound {
 	height: number;
 }
 
+export interface IBoundP {
+	top: number;
+	left: number;
+	width?: number;
+	height?: number;
+}
+
 export interface IPoint {
 	x: number;
 	y: number;
 }
 
-export interface IPointBound extends IPoint{
+export interface IPointBound extends IPoint {
 	w: number;
 	h: number;
 }
@@ -74,6 +126,7 @@ export interface IPermissions {
 }
 
 export type CallbackFunction<T = any> = (this: T, ...args: any[]) => any | void;
+export type BooleanFunction<T = any> = (this: T, ...args: any[]) => boolean;
 
 export type ExecCommandCallback<T> =
 	| ((
@@ -103,11 +156,6 @@ export interface IHasScroll {
 	scrollLeft: number;
 }
 
-export interface IStorage {
-	set(key: string, value: string | number): void;
-	get(key: string): string | null;
-}
-
 export interface RangeType {
 	startContainer: number[];
 	startOffset: number;
@@ -126,13 +174,6 @@ export interface markerInfo {
 	collapsed: boolean;
 	startMarker: string;
 	endMarker?: string;
-}
-
-export interface IPlugin {
-	jodit: IViewBased;
-	destruct(): void;
-	afterInit(jodit?: IViewBased): void;
-	beforeDestruct(jodit?: IViewBased): void;
 }
 
 /**
@@ -175,8 +216,21 @@ export interface EventHandlerBlock {
 	syntheticCallback: CallbackFunction;
 }
 
+declare global {
+	interface HTMLElementTagNameMap {
+		jodit: HTMLDivElement;
+		svg: HTMLElement;
+		path: HTMLElement;
+		'jodit-media': HTMLElement;
+	}
+}
+
 export type HTMLTagNames = keyof HTMLElementTagNameMap;
 
 export type Modes = 1 | 2 | 3;
 
-export type TagNames = keyof HTMLElementTagNameMap;
+declare global {
+	interface MouseEvent {
+		buffer?: IDictionary;
+	}
+}

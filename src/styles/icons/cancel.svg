@@ -1,8 +1,5 @@
-<svg viewBox="0 0 16 16" style="stroke: #000000;">
-    <g transform="translate(0,-1036.3622)">
-        <path d="m 2,1050.3622 12,-12"
-              style="fill:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"/>
-        <path d="m 2,1038.3622 12,12"
-              style="fill:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"/>
-    </g>
+<svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+	<g stroke="none" stroke-width="1">
+		<path d="M14,1.4 L12.6,0 L7,5.6 L1.4,0 L0,1.4 L5.6,7 L0,12.6 L1.4,14 L7,8.4 L12.6,14 L14,12.6 L8.4,7 L14,1.4 Z"/>
+	</g>
 </svg>

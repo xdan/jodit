@@ -1,35 +1,35 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+import { isArray } from '../core/helpers/checker';
+import { IDictionary } from '../types';
 
-import { default as ar } from './ar';
-import { default as cs_cz } from './cs_cz';
-import { default as de } from './de';
-import { default as es } from './es';
-import { default as fr } from './fr';
-import { default as he } from './he';
-import { default as hu } from './hu';
-import { default as id } from './id';
-import { default as it } from './it';
-import { default as nl } from './nl';
-import { default as pt_br } from './pt_br';
-import { default as ru } from './ru';
-import { default as tr } from './tr';
-import { default as zh_cn } from './zh_cn';
-import { default as zh_tw } from './zh_tw';
+const ar = require('./ar');
+const cs_cz = require('./cs_cz');
+const de = require('./de');
+const en = require('./en');
+const es = require('./es');
+const fr = require('./fr');
+const he = require('./he');
+const hu = require('./hu');
+const id = require('./id');
+const it = require('./it');
+const ja = require('./ja');
+const ko = require('./ko');
+const nl = require('./nl');
+const pl = require('./pl');
+const pt_br = require('./pt_br');
+const ru = require('./ru');
+const tr = require('./tr');
+const zh_cn = require('./zh_cn');
+const zh_tw = require('./zh_tw');
 
-import { default as en } from './en';
-
-
-const exp: any = {
+const exp: IDictionary<IDictionary<string>> = {
 	ar,
-	de,
 	cs_cz,
+	de,
 	en,
 	es,
 	fr,
@@ -37,7 +37,10 @@ const exp: any = {
 	hu,
 	id,
 	it,
+	ja,
+	ko,
 	nl,
+	pl,
 	pt_br,
 	ru,
 	tr,
@@ -46,23 +49,25 @@ const exp: any = {
 };
 
 /* Unpack array to hash */
-const hashLang: any = {};
+const get = (value: IDictionary) => value.default || value,
+	hashLang: IDictionary = {};
 
-if (Array.isArray(en)) {
-	en.forEach((key: string, index: number) => {
+if (isArray(get(en))) {
+	get(en).forEach((key: string, index: number) => {
 		hashLang[index] = key;
 	});
 }
 
 Object.keys(exp).forEach((lang: string) => {
-	const list: unknown = exp[lang];
+	const list: unknown = get(exp[lang]);
 
-	if (Array.isArray(list)) {
+	if (isArray(list)) {
 		exp[lang] = {};
+
 		list.forEach((value: string, index: number) => {
 			exp[lang][hashLang[index]] = value;
 		});
 	}
 });
 
-export = exp;
+export default exp;

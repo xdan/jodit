@@ -1,31 +1,28 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import './styles/bundle.less';
+import './styles';
 
 declare function require(moduleName: string): any;
 
-// for SSR
-if (typeof window !== 'undefined') {
+if (process.env.TARGET_ES !== 'es2018' && typeof window !== 'undefined') {
 	require('./polyfills');
 }
 
-import { Jodit as DefaultJodit } from './Jodit';
+import { Jodit as DefaultJodit } from './jodit';
 
-import * as consts from './constants';
-import * as Languages from './langs/index';
-import * as Modules from './modules/index';
-import * as Plugins from './plugins/index';
-import * as Icons from './styles/icons/index';
+import Languages from './langs/';
 
-import { Config, OptionsDefault } from './Config';
-import { ToolbarIcon } from './modules/toolbar/icon';
+import * as decorators from './core/decorators';
+import * as consts from './core/constants';
+import * as Modules from './modules/';
+import * as Plugins from './plugins/';
+import * as Icons from './styles/icons/';
+
+import { Config, OptionsDefault } from './config';
 
 // copy constants in Jodit
 Object.keys(consts).forEach((key: string) => {
@@ -38,7 +35,7 @@ const esFilter = (key: string): boolean => key !== '__esModule';
 Object.keys(Icons)
 	.filter(esFilter)
 	.forEach((key: string) => {
-		ToolbarIcon.icons[key.replace('_', '-')] = (Icons as any)[key];
+		Modules.Icon.set(key.replace('_', '-'), (Icons as any)[key]);
 	});
 
 // Modules
@@ -48,7 +45,14 @@ Object.keys(Modules)
 		DefaultJodit.modules[key] = (Modules as any)[key];
 	});
 
-['Confirm', 'Alert', 'Promt'].forEach((key: string) => {
+// Decorators
+Object.keys(decorators)
+	.filter(esFilter)
+	.forEach((key: string) => {
+		DefaultJodit.decorators[key] = (decorators as any)[key];
+	});
+
+['Confirm', 'Alert', 'Prompt'].forEach((key: string) => {
 	(DefaultJodit as any)[key] = (Modules as any)[key];
 });
 
@@ -56,7 +60,7 @@ Object.keys(Modules)
 Object.keys(Plugins)
 	.filter(esFilter)
 	.forEach((key: string) => {
-		DefaultJodit.plugins[key] = (Plugins as any)[key];
+		DefaultJodit.plugins.add(key, (Plugins as any)[key]);
 	});
 
 // Languages
@@ -70,4 +74,3 @@ DefaultJodit.defaultOptions = Config.defaultOptions;
 OptionsDefault.prototype = DefaultJodit.defaultOptions;
 
 export const Jodit = DefaultJodit;
-export default DefaultJodit;

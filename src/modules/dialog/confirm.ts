@@ -1,14 +1,12 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 import { Dialog } from './dialog';
-import { ToolbarIcon } from '../toolbar/icon';
+import { isFunction } from '../../core/helpers';
+import { Button } from '../../core/ui';
 
 /**
  * Show `confirm` dialog. Work without Jodit object
@@ -32,32 +30,26 @@ export const Confirm = (
 	callback?: (yes: boolean) => void
 ): Dialog => {
 	const dialog = new Dialog(),
-		$div: HTMLDivElement = dialog.create.fromHTML(
-			'<form class="jodit_promt"></form>'
+		$div: HTMLDivElement = dialog.c.fromHTML(
+			'<form class="jodit-dialog_prompt"></form>'
 		) as HTMLDivElement,
-		$label: HTMLLabelElement = dialog.create.element('label');
+		$label: HTMLLabelElement = dialog.c.element('label');
 
-	if (typeof title === 'function') {
+	if (isFunction(title)) {
 		callback = title;
 		title = undefined;
 	}
 
-	$label.appendChild(dialog.create.fromHTML(msg));
+	$label.appendChild(dialog.c.fromHTML(msg));
 	$div.appendChild($label);
 
-	const $cancel: HTMLAnchorElement = dialog.create.fromHTML(
-		'<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-			ToolbarIcon.getIcon('cancel') +
-			'<span>' +
-			Jodit.prototype.i18n('Cancel') +
-			'</span>' +
-			'</a>'
-	) as HTMLAnchorElement;
+	const $cancel = Button(dialog, 'cancel', 'Cancel');
 
-	$cancel.addEventListener('click', () => {
+	$cancel.onAction(() => {
 		if (callback) {
 			callback(false);
 		}
+
 		dialog.close();
 	});
 
@@ -65,21 +57,15 @@ export const Confirm = (
 		if (callback) {
 			callback(true);
 		}
+
 		dialog.close();
 	};
 
-	const $ok: HTMLAnchorElement = dialog.create.fromHTML(
-		'<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
-			ToolbarIcon.getIcon('check') +
-			'<span>' +
-			Jodit.prototype.i18n('Yes') +
-			'</span>' +
-			'</a>'
-	) as HTMLAnchorElement;
+	const $ok = Button(dialog, 'ok', 'Yes');
 
-	$ok.addEventListener('click', onok);
+	$ok.onAction(onok);
 
-	$div.addEventListener('submit', () => {
+	dialog.e.on($div, 'submit', () => {
 		onok();
 		return false;
 	});
@@ -91,5 +77,3 @@ export const Confirm = (
 
 	return dialog;
 };
-
-import { Jodit } from '../../Jodit';

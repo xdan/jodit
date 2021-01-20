@@ -1,0 +1,224 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) '../../styles/variables';
+
+:root {
+	--image_editor_resizer_border_color: #05ff00;
+	--image_editor_resizer_target_size: padding-default;
+	--image_editor_resizer_target_border_color: #383838;
+	--image_editor_resizer_target_bg_color: #8c7878;
+}
+
+.jodit-image-editor {
+	width: 100%;
+	height: 100%;
+
+	@media (max-width: @screen-sm) {
+		height: auto;
+	}
+
+	> div,
+	> div > div {
+		height: 100%;
+
+		@media (max-width: @screen-sm) {
+			height: auto;
+			min-height: 200px;
+		}
+	}
+
+	padding: var(--padding-default);
+	overflow: hidden;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	.jodit-image-editor__slider {
+		&-title {
+			text-shadow: rgb(243, 243, 243) 0 1px 0;
+			color: rgb(51, 51, 51);
+			border-bottom: 1px solid rgba(158, 158, 158, 0.31);
+			background-color: #f9f9f9;
+			padding: 0.8em 1em;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			cursor: pointer;
+			user-select: none;
+			font-weight: bold;
+			line-height: 1em;
+
+			svg {
+				margin-right: var(--padding-default);
+				width: 16px;
+				display: inline-block;
+				vertical-align: middle;
+			}
+		}
+
+		&-content {
+			display: none;
+		}
+
+		&.jodit-image-editor_active .jodit-image-editor__slider-title {
+			background-color: rgb(93, 93, 93);
+			color: #fff;
+			text-shadow: #000 0 1px 0;
+
+			svg {
+				fill: white;
+			}
+		}
+
+		&.jodit-image-editor_active .jodit-image-editor__slider-content {
+			display: block;
+		}
+	}
+
+	&__area {
+		width: 100%;
+		background-color: #eee;
+		background-image: linear-gradient(
+				45deg,
+				var(--color-border) 25%,
+				transparent 25%,
+				transparent 75%,
+				var(--color-border) 75%,
+				var(--color-border)
+			),
+			linear-gradient(
+				45deg,
+				var(--color-border) 25%,
+				transparent 25%,
+				transparent 75%,
+				var(--color-border) 75%,
+				var(--color-border)
+			);
+		background-size: 30px 30px;
+		background-position: 0 0, 15px 15px;
+		height: 100%;
+		overflow: hidden;
+		user-select: none;
+		position: relative;
+		display: none;
+
+		&.jodit-image-editor_active {
+			display: block;
+		}
+
+		.jodit-image-editor__box {
+			overflow: hidden;
+			position: relative;
+			z-index: 1;
+			pointer-events: none;
+			height: 100%;
+
+			img {
+				user-select: none;
+				max-width: 100%;
+				max-height: 100%;
+			}
+		}
+
+		.jodit-image-editor__croper,
+		.jodit-image-editor__resizer {
+			z-index: 2;
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			box-shadow: 0 0 11px #000;
+			border: 1px solid #fff;
+			background-repeat: no-repeat;
+			top: var(--padding-default);
+			left: 20px;
+			pointer-events: none;
+
+			i.jodit_bottomright {
+				position: absolute;
+				display: inline-block;
+				border: 1px solid
+					var(--image_editor_resizer_target_border_color);
+				z-index: 4;
+				background-color: var(--image_editor_resizer_target_bg_color);
+				cursor: se-resize;
+				border-radius: 50%;
+				height: 20px;
+				width: 20px;
+				right: calc(var(--padding-default) * -1);
+				bottom: calc(var(--padding-default) * -1);
+				box-shadow: 0 0 11px #000;
+				pointer-events: all;
+
+				&:active {
+					border: 1px solid yellow;
+				}
+			}
+		}
+	}
+
+	&__area.jodit-image-editor__area_crop {
+		height: 100%;
+		background: #eee;
+		text-align: center;
+		line-height: 100%;
+		position: relative;
+
+		.jodit-image-editor__box {
+			height: 100%;
+			overflow: visible;
+			pointer-events: all;
+
+			img {
+				max-width: 100%;
+				max-height: 100%;
+				width: 100%;
+				height: 100%;
+			}
+
+			text-align: left;
+			line-height: 100%;
+
+			&::after {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				margin: auto;
+				background: rgba(255, 255, 255, 0.3);
+				z-index: 1;
+			}
+
+			.jodit-image-editor__croper {
+				pointer-events: all;
+				cursor: move;
+
+				i.jodit-image-editor__sizes {
+					font-size: 12px;
+					white-space: pre;
+					position: absolute;
+					bottom: -30px;
+					left: 100%;
+					text-align: center;
+					color: rgb(255, 255, 255);
+					text-shadow: none;
+					background: rgba(0, 0, 0, 0.2);
+					border-radius: 0.4em;
+					padding: 9px 6px;
+					display: block;
+				}
+			}
+		}
+
+		&.jodit-image-editor_active {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+}

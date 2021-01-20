@@ -1,10 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 import { IDictionary } from './types';
@@ -15,17 +12,13 @@ export type Attributes = IDictionary<
 export type Children = string | Array<string | Node> | Node;
 
 interface ICreate {
-	inside: ICreate;
-
-	setDocument(doc: Document): void;
-
 	element<K extends keyof HTMLElementTagNameMap>(
 		tagName: K,
-		childrenOrAttributes?: Children
+		children?: Children
 	): HTMLElementTagNameMap[K];
 	element<K extends keyof HTMLElementTagNameMap>(
 		tagName: K,
-		childrenOrAttributes?: Attributes,
+		attributes?: Attributes,
 		children?: Children
 	): HTMLElementTagNameMap[K];
 	element(
@@ -34,10 +27,10 @@ interface ICreate {
 		children?: Children
 	): HTMLElement;
 
-	div(className?: string, childrenOrAttributes?: Children): HTMLDivElement;
+	div(className?: string, children?: Children): HTMLDivElement;
 	div(
 		className?: string,
-		childrenOrAttributes?: Attributes,
+		attributes?: Attributes,
 		children?: Children
 	): HTMLDivElement;
 	div(
@@ -46,10 +39,10 @@ interface ICreate {
 		children?: Children
 	): HTMLDivElement;
 
-	span(className?: string, childrenOrAttributes?: Children): HTMLSpanElement;
+	span(className?: string, children?: Children): HTMLSpanElement;
 	span(
 		className?: string,
-		childrenOrAttributes?: Attributes,
+		attributes?: Attributes,
 		children?: Children
 	): HTMLSpanElement;
 	span(
@@ -57,6 +50,18 @@ interface ICreate {
 		childrenOrAttributes?: Attributes | Children,
 		children?: Children
 	): HTMLSpanElement;
+
+	a(className?: string, children?: Children): HTMLAnchorElement;
+	a(
+		className?: string,
+		attributes?: Attributes,
+		children?: Children
+	): HTMLAnchorElement;
+	a(
+		className?: string,
+		childrenOrAttributes?: Attributes | Children,
+		children?: Children
+	): HTMLAnchorElement;
 
 	/**
 	 * Create text node
@@ -64,6 +69,13 @@ interface ICreate {
 	 * @param value
 	 */
 	text(value: string): Text;
+
+	/**
+	 * Create invisible text node
+	 *
+	 * @param value
+	 */
+	fake(): Text;
 
 	/**
 	 * Create HTML Document fragment element
@@ -74,8 +86,15 @@ interface ICreate {
 	 * Create DOM element from HTML text
 	 *
 	 * @param {string} html
+	 * @param {Object} refs
 	 *
 	 * @return HTMLElement
 	 */
-	fromHTML(html: string): HTMLElement;
+	fromHTML(html: string, refs?: IDictionary<boolean>): HTMLElement;
+
+	/**
+	 * Apply to element `createAttributes` options
+	 * @param elm
+	 */
+	applyCreateAttributes(elm: HTMLElement): void;
 }

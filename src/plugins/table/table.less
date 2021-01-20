@@ -1,0 +1,115 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) '../../styles/mixins';
+@import (reference) '../../styles/variables';
+
+.jodit-table-resizer {
+	cursor: col-resize;
+	position: absolute;
+	z-index: 3;
+	padding-left: calc(var(--padding-default) / 2);
+	padding-right: calc(var(--padding-default) / 2);
+	margin-left: calc(var(--padding-default) / -2);
+
+	&::after {
+		content: '';
+		display: block;
+		height: 100%;
+		width: 0;
+		border: 0;
+	}
+
+	&_moved {
+		background-color: var(--color-background-selection);
+		z-index: 2;
+
+		&::after {
+			border-right: 1px solid var(--color-border)-moved;
+		}
+	}
+}
+
+.jodit-wysiwyg {
+	table {
+		border: none;
+		border-collapse: collapse;
+		table-layout: fixed;
+		empty-cells: show;
+		max-width: 100%;
+
+		tr {
+			user-select: none;
+
+			th,
+			td {
+				border: 1px solid #ddd;
+				vertical-align: middle;
+				user-select: text;
+			}
+		}
+	}
+}
+
+.jodit-form__inserter {
+	.jodit-form__table-creator-box {
+		display: flex;
+
+		@media (max-width: @screen-sm) {
+			flex-direction: column;
+		}
+
+		.jodit-form__container {
+			padding: 0;
+			margin: 0;
+			min-width: 180px;
+			font-size: 0;
+
+			& > div {
+				& > span {
+					width: var(--width_element_default);
+					height: var(--height_element_default);
+
+					display: inline-block;
+					vertical-align: top;
+					box-sizing: border-box;
+					border: 1px solid var(--color-border);
+					margin-left: 2px;
+					margin-bottom: 2px;
+
+					&:first-child {
+						margin-left: 0;
+					}
+
+					&.jodit_hovered {
+						background: var(--color-background-hover);
+						border-color: var(--color-background-hover);
+					}
+				}
+			}
+		}
+
+		.jodit-form__options {
+			font-size: var(--font-size-default);
+
+			label {
+				text-align: left;
+				padding-top: 0;
+
+				input {
+					margin-right: var(--padding-default);
+				}
+			}
+		}
+	}
+
+	label {
+		text-align: center;
+		font-size: 14px;
+		padding: 8px;
+		margin: 0;
+	}
+}

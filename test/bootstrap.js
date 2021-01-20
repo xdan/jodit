@@ -1,4 +1,15 @@
-typeof window.chai !== 'undefined' && (chai.config.includeStack = true);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+typeof window.chai !== 'undefined' &&
+	(function () {
+		chai.config.includeStack = true;
+		chai.config.showDiff = true;
+	})();
+
+typeof window.mocha !== 'undefined' && mocha.timeout(15000);
 
 const oldI18n = Jodit.prototype.i18n,
 	oldAjaxSender = Jodit.modules.Ajax.prototype.send,
@@ -32,7 +43,8 @@ const defaultPermissions = {
 
 function mockAjax() {
 	if (typeof window.chai !== 'undefined') {
-		Jodit.modules.Ajax.prototype.send = function() {
+		let temp = {};
+		Jodit.modules.Ajax.prototype.send = function () {
 			const ajax = this;
 
 			const request = this.prepareRequest();
@@ -52,9 +64,29 @@ function mockAjax() {
 				action = actioExec[1];
 			}
 
-			return new Promise(function(resolve) {
+			return new Promise(function (resolve) {
 				switch (action) {
-					case 'fileUpload':
+					case 'folderCreate': {
+						temp.folderName = ajax.options.data.name;
+						resolve({
+							success: true,
+							time: '2020-08-04 19:03:23',
+							data: { code: 220 }
+						});
+						break;
+					}
+
+					case 'folderRemove':
+					case 'folderRename': {
+						temp.folderName = ajax.options.data.newname;
+						resolve({
+							success: true,
+							time: '2020-08-04 19:03:23',
+							data: { code: 220 }
+						});
+						break;
+					}
+					case 'fileUpload': {
 						const file = ajax.options.data.get('files[0]');
 						resolve({
 							success: true,
@@ -68,6 +100,7 @@ function mockAjax() {
 							}
 						});
 						break;
+					}
 					case 'files':
 						resolve({
 							success: true,
@@ -117,7 +150,10 @@ function mockAjax() {
 							}
 						});
 						break;
-					case 'folders':
+					case 'folders': {
+						const folderName = temp.folderName || 'ceicom';
+						delete temp.folderName;
+
 						resolve({
 							success: true,
 							time: '2018-03-15 12:49:49',
@@ -127,13 +163,14 @@ function mockAjax() {
 										baseurl:
 											'https://xdsoft.net/jodit/files/',
 										path: '',
-										folders: ['.', 'ceicom', 'test']
+										folders: ['.', folderName, 'test']
 									}
 								},
 								code: 220
 							}
 						});
 						break;
+					}
 					case 'permissions':
 						resolve({
 							success: true,
@@ -155,6 +192,10 @@ function mockAjax() {
 						break;
 					case 'getLocalFileByUrl':
 						switch (ajax.options.data.url) {
+							case location.protocol +
+								'//' +
+								location.host +
+								'/artio.jpg':
 							case location.protocol +
 								'//' +
 								location.host +
@@ -208,37 +249,76 @@ function unmockAjax() {
 if (typeof window.chai !== 'undefined') {
 	mockPromise();
 	mockAjax();
-	window.FormData = function() {
+	window.FormData = function () {
 		this.data = {};
-		this.append = function(key, value) {
+		this.append = function (key, value) {
 			this.data[key] = value;
 		};
-		this.get = function(key) {
+		this.get = function (key) {
 			return this.data[key];
 		};
 	};
 }
 
 const i18nkeys = [];
+const excludeI18nKeys = [
+	'Class name',
+	'https://',
+	'http://',
+	'rect',
+	'empty',
+	'adddate',
+	'URL',
+	'Custom',
+	'list_test',
+	'OS System Font',
+	'insert Header 1',
+	'insert Header 2',
+	'Empty editor',
+	'Helvetica,sans-serif',
+	'Helvetica',
+	'Arial,Helvetica,sans-serif',
+	'Arial',
+	'Georgia,serif',
+	'Georgia',
+	'Impact,Charcoal,sans-serif',
+	'Impact',
+	'Tahoma,Geneva,sans-serif',
+	'Tahoma',
+	"'Times New Roman',Times,serif",
+	'Times New Roman',
+	'Verdana,Geneva,sans-serif',
+	'Verdana',
+	'Lower Alpha',
+	'Lower Greek',
+	'Lower Roman',
+	'Upper Alpha',
+	'Upper Roman'
+];
 
-Jodit.prototype.i18n = function(key) {
-	i18nkeys.indexOf(key) === -1 &&
-		key.indexOf('<svg') === -1 &&
+Jodit.prototype.i18n = function (key) {
+	!excludeI18nKeys.includes(key) &&
+		!i18nkeys.includes(key) &&
+		!key.includes('<svg') &&
 		i18nkeys.push(key);
+
 	return oldI18n.apply(this, arguments);
 };
 
+Jodit.defaultOptions.events.afterInit = function (editor) {
+	editor &&
+		editor.container.setAttribute('data-test-case', window.mochaTestName);
+};
 Jodit.defaultOptions.filebrowser.saveStateInStorage = false;
-
-// Jodit.defaultOptions.disablePlugins = ['source'];
-
 Jodit.defaultOptions.observer.timeout = 0;
+Jodit.modules.View.defaultOptions.defaultTimeout = 0;
+
 if (Jodit.defaultOptions.cleanHTML) {
 	Jodit.defaultOptions.cleanHTML.timeout = 0;
 	Jodit.defaultOptions.cleanHTML.fillEmptyParagraph = false;
 }
 
-Jodit.defaultOptions.useAceEditor = false;
+Jodit.defaultOptions.sourceEditor = 'area';
 Jodit.defaultOptions.language = 'en';
 Jodit.defaultOptions.iframeCSSLinks.push('/app.css');
 Jodit.defaultOptions.iframeStyle +=
@@ -253,7 +333,7 @@ td,th {\
 }';
 
 if (String.prototype.repeat === undefined) {
-	String.prototype.repeat = function(count) {
+	String.prototype.repeat = function (count) {
 		const result = [];
 
 		for (let i = 0; i < count; i++) {
@@ -264,25 +344,10 @@ if (String.prototype.repeat === undefined) {
 	};
 }
 
-(function(e) {
-	e.matches ||
-		(e.matches =
-			e['matchesSelector'] !== undefined
-				? e['matchesSelector']
-				: function(selector) {
-						const matches = this.ownerDocument.querySelectorAll(
-								selector
-							),
-							th = this;
-						return Array.prototype.some.call(matches, function(e) {
-							return e === th;
-						});
-				  });
-})(Element.prototype);
-
-const expect = typeof chai !== 'undefined' ? chai.expect : function() {},
+const expect = typeof chai !== 'undefined' ? chai.expect : function () {},
 	stuff = [];
 
+const stringify = Jodit.ns.Helpers.stringify;
 const box = document.createElement('div');
 
 document.body.appendChild(box);
@@ -292,25 +357,25 @@ function getBox() {
 }
 
 function removeStuff() {
-	Object.keys(Jodit.instances).forEach(function(key) {
+	Object.keys(Jodit.instances).forEach(function (key) {
 		Jodit.instances[key].destruct();
 	});
 
-	stuff.forEach(function(elm) {
+	stuff.forEach(function (elm) {
 		elm && elm.parentNode && elm.parentNode.removeChild(elm);
-
-		delete elm;
 	});
 
 	stuff.length = 0;
 
 	Array.from(
-		document.querySelectorAll('.jodit.jodit_dialog_box.active')
-	).forEach(function(dialog) {
+		document.querySelectorAll('.jodit.jodit-dialog__box.active')
+	).forEach(function (dialog) {
 		simulateEvent('close_dialog', 0, dialog);
 	});
 
 	Jodit.modules.Ajax.log.length = 0;
+
+	getBox().removeAttribute('style');
 
 	mockPromise();
 }
@@ -319,14 +384,56 @@ if (typeof afterEach === 'function') {
 	afterEach(removeStuff);
 }
 
+if (typeof beforeEach === 'function') {
+	beforeEach(function () {
+		window.mochaTestName = this.test.ctx.currentTest.fullTitle();
+	});
+}
+
+/**
+ * Create and insert into DOM test textarea
+ *
+ * @param [id]
+ * @param [noput]
+ * @returns {HTMLTextAreaElement}
+ */
 function appendTestArea(id, noput) {
 	const textarea = document.createElement('textarea');
 	textarea.setAttribute('id', id || 'editor_' + new Date().getTime());
 	box.appendChild(textarea);
+
 	!noput && stuff.push(textarea);
 	return textarea;
 }
 
+/**
+ * Jodit Factory
+ *
+ * @param {object} [options]
+ * @param {HTMLElement|undefined} [element]
+ * @return {Jodit}
+ */
+function getJodit(options, element) {
+	const editor = new Jodit(element || appendTestArea(), options);
+
+	window.scrollTo(
+		0,
+		Jodit.modules.Helpers.offset(editor.container, editor, editor.od).top
+	);
+
+	editor.container &&
+		editor.container.setAttribute('data-test-case', window.mochaTestName);
+
+	return editor;
+}
+
+/**
+ * Create empty DIV block and but it inside Box
+ *
+ * @param [id]
+ * @param [noput]
+ * @returns {HTMLDivElement}
+ */
 function appendTestDiv(id, noput) {
 	const textarea = document.createElement('div');
 	textarea.setAttribute('id', id || 'editor_' + new Date().getTime());
@@ -355,14 +462,14 @@ function sortStyles(matches) {
 		.replace(/"/g, "'")
 		.split(';');
 
-	styles = styles.map(trim).filter(function(elm) {
+	styles = styles.map(trim).filter(function (elm) {
 		return elm.length;
 	});
 
 	let border = null;
 
 	styles = styles
-		.map(function(elm) {
+		.map(function (elm) {
 			const keyValue = elm.split(':').map(trim);
 
 			if (keyValue[0] === 'border-image') {
@@ -370,11 +477,12 @@ function sortStyles(matches) {
 			}
 
 			if (/rgb\(/.test(keyValue[1])) {
-				keyValue[1] = keyValue[1].replace(/rgb\([^\)]+\)/, function(
-					match
-				) {
-					return Jodit.modules.Helpers.normalizeColor(match);
-				});
+				keyValue[1] = keyValue[1].replace(
+					/rgb\([^)]+\)/,
+					function (match) {
+						return Jodit.modules.Helpers.normalizeColor(match);
+					}
+				);
 			}
 
 			if (keyValue[0].match(/^border$/)) {
@@ -382,7 +490,7 @@ function sortStyles(matches) {
 			}
 
 			if (keyValue[0].match(/^border-(style|width|color)/)) {
-				if (border === null) {
+				if (border == null) {
 					border = keyValue;
 					keyValue[0] = 'border';
 					keyValue[1] = [keyValue[1]];
@@ -396,6 +504,9 @@ function sortStyles(matches) {
 				keyValue[1] = keyValue[1]
 					.split(',')
 					.map(Jodit.modules.Helpers.trim)
+					.map(function (value) {
+						return value.replace(/['"]/g, '');
+					})
 					.join(',');
 			}
 
@@ -409,20 +520,24 @@ function sortStyles(matches) {
 
 			return keyValue;
 		})
-		.filter(function(a) {
-			return a !== null;
+		.filter(function (a) {
+			return a != null;
 		})
-		.map(function(a) {
+		.map(function (a) {
 			return a
-				.map(function(item) {
+				.map(function (item) {
 					return typeof item === 'string'
 						? item
 						: item.sort().join(' ');
 				})
 				.join(':');
 		})
-		.sort(function(a, b) {
-			return a < b ? -1 : a > b ? 1 : 0;
+		.sort(function (a, b) {
+			if (a < b) {
+				return -1;
+			}
+
+			return a > b ? 1 : 0;
 		});
 
 	return styles.join(';');
@@ -430,7 +545,7 @@ function sortStyles(matches) {
 
 function sortAttributes(html) {
 	const tag = /<([^>]+)>/g;
-	const reg = /([a-z_\-]+)[\s]*=[\s]*"([^"]*)"/i,
+	const reg = /([a-z_-]+)[\s]*=[\s]*"([^"]*)"/i,
 		tags = [];
 
 	let matches, tagMatch;
@@ -466,11 +581,15 @@ function sortAttributes(html) {
 			}
 		} while (matches);
 
-		attrs.sort(function(a, b) {
-			return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+		attrs.sort(function (a, b) {
+			if (a.name < b.name) {
+				return -1;
+			}
+
+			return a.name > b.name ? 1 : 0;
 		});
 
-		attrs.forEach(function(elm, i) {
+		attrs.forEach(function (elm, i) {
 			newTag = newTag.replace(
 				'attribute:' + (i + 1),
 				elm.name + '="' + elm.value + '"'
@@ -483,32 +602,105 @@ function sortAttributes(html) {
 		});
 	}
 
-	tags.forEach(function(elm, i) {
+	tags.forEach(function (elm) {
 		html = html.replace(elm.name, elm.value);
 	});
 
-	return html.replace(/&nbsp;/g, ' ');
+	return html
+		.replace(/&nbsp;/g, ' ')
+		.replace(Jodit.INVISIBLE_SPACE_REG_EXP(), '');
 }
 
 /**
- *
- * @param type
- * @param keyCodeArg
- * @param element
- * @param options
+ * Fill the box some elements for space
+ * @param count
  */
-function simulateEvent(type, keyCodeArg, element, options) {
-	const evt = (element.ownerDocument || document).createEvent('HTMLEvents');
-	evt.initEvent(type, true, true);
-	evt.keyCode = keyCodeArg;
-	evt.which = keyCodeArg;
+function fillBoxBr(count) {
+	for (let i = 0; i < 100; i += 1) {
+		const br = document.createElement('br');
+		getBox().appendChild(br);
+		stuff.push(br);
+	}
+}
 
-	if (options) {
-		options(evt);
+const codeKey = {
+	8: 'Backspace',
+	13: 'Enter',
+	38: 'ArrowUp',
+	40: 'ArrowDown',
+	55: '7',
+	56: '8',
+	73: 'i',
+	70: 'f',
+	72: 'h',
+	75: 'k',
+	86: 'v',
+	89: 'y',
+	114: 'F3'
+};
+
+const keyCode = Object.keys(codeKey).reduce((res, code) => {
+	res[codeKey[code]] = code;
+	return res;
+}, {});
+
+/**
+ *
+ * @param {string|string[]} type
+ * @param {string|number|HTMLElement} keyCodeOrElement
+ * @param {HTMLElement} [element]
+ * @param {Function} [applyOpt]
+ *
+ * @returns boolean
+ */
+function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
+	if (Array.isArray(type)) {
+		return type.forEach(function (event) {
+			simulateEvent(event, keyCodeOrElement, elementOrApplyOpt, applyOpt);
+		});
+	}
+
+	let element = elementOrApplyOpt;
+	if (typeof keyCodeOrElement === 'object') {
+		element = keyCodeOrElement;
+		keyCodeOrElement = null;
+
+		if (typeof elementOrApplyOpt === 'function') {
+			applyOpt = elementOrApplyOpt;
+		}
+	}
+
+	if (Array.isArray(element)) {
+		return element.forEach(function (elm) {
+			simulateEvent(type, keyCodeOrElement, elm, applyOpt);
+		});
+	}
+
+	const evt = (element.ownerDocument || document).createEvent('HTMLEvents');
+
+	evt.initEvent(type, true, true);
+
+	if (keyCodeOrElement) {
+		if (typeof keyCodeOrElement === 'number') {
+			evt.keyCode = keyCodeOrElement;
+			evt.which = keyCodeOrElement;
+			evt.key = codeKey[keyCodeOrElement];
+		} else if (typeof keyCodeOrElement !== 'object') {
+			evt.key = keyCodeOrElement;
+			evt.which = keyCode[keyCodeOrElement];
+		}
+	}
+
+	if (applyOpt) {
+		applyOpt(evt);
+	} else if (element.getBoundingClientRect) {
+		const pos = Jodit.modules.Helpers.position(element);
+		evt.clientX = pos.left + 5;
+		evt.clientY = pos.top + 5;
 	}
 
 	if (type.match(/^mouse/)) {
-		['pageX', 'pageY', 'clientX', 'clientY'].forEach(function(key) {
+		['pageX', 'pageY', 'clientX', 'clientY'].forEach(function (key) {
 			if (evt[key] === undefined) {
 				evt[key] = 0;
 			}
@@ -518,14 +710,146 @@ function simulateEvent(type, keyCodeArg, element, options) {
 	if (type.match(/^touch/) && !evt.changedTouches) {
 		const changedTouches = {};
 
-		['pageX', 'pageY', 'clientX', 'clientY'].forEach(function(key) {
+		['pageX', 'pageY', 'clientX', 'clientY'].forEach(function (key) {
 			changedTouches[key] = evt[key];
 		});
 
 		evt.changedTouches = changedTouches;
 	}
 
-	element.dispatchEvent(evt);
+	return element.dispatchEvent(evt);
+}
+
+/**
+ * @param {Jodit} editor
+ * @return {HTMLElement|null}
+ */
+function getOpenedPopup(editor) {
+	const popups = editor.ownerDocument.querySelectorAll(
+		'[role="popup"][data-editor_id="' + editor.id + '"]:last-child'
+	);
+	return popups.length ? popups[popups.length - 1] : null;
+}
+
+/**
+ * @param {Jodit} editor
+ * @return {HTMLElement|null}
+ */
+function getOpenedDialog(editor) {
+	const dlgs = editor.ownerDocument.querySelectorAll('.jodit-dialog__box');
+
+	return dlgs.length ? dlgs[dlgs.length - 1] : null;
+}
+
+/**
+ * Find button inside element
+ *
+ * @param {string} buttonName
+ * @param {Jodit|Element} joditOrElement
+ * @param {string} [role]
+ * @param {boolean} [last]
+ * @returns {HTMLElement|null}
+ */
+function getButton(buttonName, joditOrElement, role, last) {
+	const elm = joditOrElement.container || joditOrElement;
+
+	return (
+		elm.querySelector(
+			'.jodit-toolbar-button.jodit-toolbar-button_' +
+				buttonName +
+				(last ? ':last-child' : '') +
+				' [role="' +
+				(role || 'button') +
+				'"]'
+		) ||
+		elm.querySelector(
+			'.jodit-ui-button.jodit-ui-button_' +
+				buttonName +
+				(last ? ':last-child' : '') +
+				'[role="' +
+				(role || 'button') +
+				'"]'
+		)
+	);
+}
+
+/**
+ * Click and trigger some button event
+ *
+ * @param {string} buttonName
+ * @param {Jodit|HTMLElement} joditOrElement
+ * @param {string} [role]
+ * @param {boolean} [last]
+ */
+function clickButton(buttonName, joditOrElement, role, last) {
+	simulateEvent(
+		'click',
+		0,
+		getButton(buttonName, joditOrElement, role, last)
+	);
+}
+
+function clickTrigger(buttonName, joditOrElement) {
+	clickButton(buttonName, joditOrElement, 'trigger');
+}
+
+/**
+ * Select table cells
+ * @param {Jodit} editor
+ * @param {number[]} indexes
+ */
+function selectCells(editor, indexes) {
+	const cells = editor.editor.querySelectorAll('td,th');
+	indexes.forEach(index => {
+		editor.getInstance('Table', editor.options).addSelection(cells[index]);
+	});
+}
+
+/**
+ * Set listener and remove it after first call
+ *
+ * @param {string} event
+ * @param {HTMLElement} element
+ * @param {Function} callback
+ */
+function one(event, element, callback) {
+	const on = function () {
+		element.removeEventListener(event, on);
+		callback.apply(element, arguments);
+	};
+
+	element.addEventListener(event, on);
+}
+
+/**
+ * Set one handler for load image
+ *
+ * @param {HTMLImageElement} image
+ * @param {Function} callback
+ */
+function onLoadImage(image, callback) {
+	if (!image.complete) {
+		one('load', image, callback);
+	} else {
+		callback.apply(image);
+	}
+}
+
+/**
+ *
+ * @param {HTMLElement} element
+ * @param {string} pastedText
+ * @param {string} type
+ */
+function simulatePaste(element, pastedText, type) {
+	simulateEvent('paste', element, function (data) {
+		data.clipboardData = {
+			types: [type || 'text/html'],
+			getData: function () {
+				return pastedText;
+			}
+		};
+	});
 }
 
 function setCursor(elm, inEnd) {
@@ -536,24 +860,74 @@ function setCursor(elm, inEnd) {
 	window.getSelection().addRange(range);
 }
 
-function createPoint(x, y, color) {
+/**
+ * Set cursor inside editor by some char
+ *
+ * @param {Jodit} editor
+ * @param {string} [char]
+ * @return boolean
+ */
+function setCursorToChar(editor, char = '|') {
+	const r = editor.s.createRange();
+	let foundEdges = [];
+
+	Jodit.modules.Dom.each(editor.editor, function (node) {
+		if (node.nodeType === Node.TEXT_NODE && node.nodeValue.includes(char)) {
+			let index = -1;
+			do {
+				index = node.nodeValue.indexOf(char, index + 1);
+
+				if (index !== -1) {
+					node.nodeValue = node.nodeValue.replace(char, '');
+					foundEdges.push([node, index]);
+				}
+			} while (index !== -1);
+		}
+
+		return true;
+	});
+
+	if (foundEdges.length) {
+		if (foundEdges[0]) {
+			r.setStart(foundEdges[0][0], foundEdges[0][1]);
+		}
+
+		if (foundEdges[1]) {
+			r.setEnd(foundEdges[1][0], foundEdges[1][1]);
+		}
+
+		editor.s.selectRange(r);
+
+		return true;
+	}
+
+	return false;
+}
+
+function createPoint(x, y, color, fixed = false) {
 	const div = document.createElement('div');
+
 	div.setAttribute(
 		'style',
-		'position: absolute; z-index: 1000000000;width: 5px; height: 5px; background: ' +
+		'position: ' +
+			(fixed ? 'fixed' : 'absolute') +
+			'; z-index: 1000000000;width: 5px; height: 5px; background: ' +
 			(color || 'red') +
 			';'
 	);
+
 	div.style.left = parseInt(x, 10) + 'px';
 	div.style.top = parseInt(y, 10) + 'px';
 
 	document.body.appendChild(div);
+	stuff.push(div);
 }
 
 function offset(el) {
 	const rect = el.getBoundingClientRect(),
 		scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
 		scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
 	return {
 		top: rect.top + scrollTop,
 		left: rect.left + scrollLeft,
@@ -575,8 +949,8 @@ function offset(el) {
  * I haven't decided on the best name for this property - thus the duplication.
  */
 
-(function() {
-	const serializeXML = function(node, output) {
+(function () {
+	const serializeXML = function (node, output) {
 		const nodeType = node.nodeType;
 
 		if (nodeType === 3) {
@@ -607,24 +981,23 @@ function offset(el) {
 				}
 
 				output.push('</', node.tagName, '>');
-
 			} else {
 				output.push('/>');
 			}
-
 		} else if (nodeType === 8) {
 			output.push('<!--', node.nodeValue, '-->');
-
 		} else {
-			throw 'Error serializing XML. Unhandled node of type: ' + nodeType;
+			throw new Error(
+				'Error serializing XML. Unhandled node of type: ' + nodeType
+			);
 		}
 	};
 
 	// The innerHTML DOM property for SVGElement.
 	Object.defineProperty(SVGElement.prototype, 'innerHTML', {
-		get: function() {
+		get: function () {
 			const output = [];
-			let  childNode = this.firstChild;
+			let childNode = this.firstChild;
 
 			while (childNode) {
 				serializeXML(childNode, output);
@@ -633,7 +1006,7 @@ function offset(el) {
 
 			return output.join('');
 		},
-		set: function(markupText) {
+		set: function (markupText) {
 			// Wipe out the current contents of the element.
 			while (this.firstChild) {
 				this.removeChild(this.firstChild);
@@ -645,9 +1018,9 @@ function offset(el) {
 
 				dXML.async = false;
 				// Wrap the markup into a SVG node to ensure parsing works.
-				sXML =
+				const sXML =
 					"<svg xmlns='http://www.w3.org/2000/svg'>" +
-						markupText +
+					markupText +
 					'</svg>';
 				const svgDocElement = dXML.parseFromString(sXML, 'text/xml')
 					.documentElement;
@@ -663,17 +1036,17 @@ function offset(el) {
 					childNode = childNode.nextSibling;
 				}
 			} catch (e) {
-				throw new Error('Error parsing XML string');
+				throw new Error('Error parsing XML string' + e.toString());
 			}
 		}
 	});
 
 	// The innerSVG DOM property for SVGElement.
 	Object.defineProperty(SVGElement.prototype, 'innerSVG', {
-		get: function() {
+		get: function () {
 			return this.innerHTML;
 		},
-		set: function(markupText) {
+		set: function (markupText) {
 			this.innerHTML = markupText;
 		}
 	});
@@ -698,14 +1071,14 @@ function FileXLS() {
 }
 
 if (typeof window.chai !== 'undefined') {
-	window.FileReader = function() {
+	window.FileReader = function () {
 		const self = this;
 		self.result = null;
 		/**
 		 *
 		 * @param {FileImage} file
 		 */
-		self.readAsDataURL = function(file) {
+		self.readAsDataURL = function (file) {
 			self.result = file.dataURI;
 			self.onloadend && self.onloadend();
 		};

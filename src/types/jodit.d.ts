@@ -1,22 +1,32 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IViewWithToolbar } from './view';
-import { Config } from '../Config';
-import { Observer } from '../modules/observer/observer';
-import { Select } from '../modules/Selection';
-import { CustomCommand, IComponent, IStorage, Modes } from './types';
-import { StatusBar } from '../modules/StatusBar';
+import { IViewOptions, IViewWithToolbar } from './view';
+import type { Config } from '../config';
+import type { Select } from '../core/selection/select';
+import { CustomCommand, ICreate, IStatusBar, IStorage, Modes } from './';
 import { IUploader } from './uploader';
-import { IFileBrowser } from './fileBrowser';
+import { IFileBrowser } from './file-browser';
+import type { Observer } from '../modules';
+
+interface IWorkPlace {
+	editor: HTMLDivElement | HTMLBodyElement;
+	element: HTMLElement;
+	container: HTMLDivElement;
+	workplace: HTMLDivElement;
+	statusbar: IStatusBar;
+	iframe?: HTMLIFrameElement | void;
+	editorWindow: Window;
+	observer: Observer;
+	options: IViewOptions;
+}
 
 interface IJodit extends IViewWithToolbar {
+	isJodit: true;
+
 	options: Config;
 	observer: Observer;
 	editor: HTMLElement;
@@ -24,23 +34,44 @@ interface IJodit extends IViewWithToolbar {
 
 	getNativeEditorValue(): string;
 	getEditorValue(removeSelectionMarkers?: boolean): string;
-	setEditorValue(value?: string): void;
-	value: string;
+	setEditorValue(value?: string, notChangeStack?: boolean): void;
 
-	/**
-	 * @property {HTMLDocument} editorDocument
-	 */
+	getReadOnly(): boolean;
+	setReadOnly(enable: boolean): void;
+
+	places: IWorkPlace[];
+	currentPlace: IWorkPlace;
+	addPlace(source: HTMLElement | string, options?: IViewOptions): void;
+	setCurrentPlace(place: IWorkPlace): void;
+
+	value: string;
+	text: string;
+
 	editorDocument: HTMLDocument;
 
 	/**
-	 * @property {Window} editorWindow
+	 * Alias for this.ed
 	 */
+	ed: this['editorDocument'];
+
 	editorWindow: Window;
+
+	/**
+	 * Alias for this.ed
+	 */
+	ew: this['editorWindow'];
+
+	createInside: ICreate;
 
 	/**
 	 * @property {Select} selection
 	 */
 	selection: Select;
+
+	/**
+	 * Alias for this.selection
+	 */
+	s: this['selection'];
 
 	/**
 	 * Return current real work mode. When editor in MODE_SOURCE or MODE_WYSIWYG it will
@@ -55,33 +86,38 @@ interface IJodit extends IViewWithToolbar {
 	 */
 	getRealMode(): Modes;
 	getMode(): Modes;
+	mode: Modes;
 	isEditorMode(): boolean;
 	toggleMode(): void;
 
-	isInited: boolean;
+	editorIsActive: boolean;
 
 	execCommand(command: string, showUI?: any, value?: null | any): any;
 
 	registerCommand(
 		commandNameOriginal: string,
-		command: CustomCommand<IJodit>
+		command: CustomCommand<IJodit>,
+		options?: {
+			stopPropagation: boolean
+		}
 	): IJodit;
 
 	registerHotkeyToCommand(
 		hotkeys: string | string[],
-		commandName: string
+		commandName: string,
+		shouldStop?: boolean
 	): void;
-
-	getEditorText(): string;
 
 	/**
 	 * workplace It contains source and wysiwyg editors
 	 */
 	workplace: HTMLDivElement;
 
-	statusbar: StatusBar;
+	statusbar: IStatusBar;
 
 	uploader: IUploader;
 	filebrowser: IFileBrowser;
 	storage: IStorage;
+
+	iframe?: HTMLIFrameElement | void;
 }

@@ -1,34 +1,33 @@
 {
 	"compilerOptions": {
+		"target": "es5",
+		"moduleResolution": "node",
+
+		"removeComments": true,
+
 		"strict": true,
-		"forceConsistentCasingInFileNames": true,
-		"experimentalDecorators": false,
-		"strictPropertyInitialization": false,
-		"sourceMap": true,
-		"noImplicitAny": true,
+		"alwaysStrict": true,
+
 		"strictNullChecks": true,
 		"strictFunctionTypes": true,
-		"noImplicitReturns": true,
 		"strictBindCallApply": true,
+		"strictPropertyInitialization": true,
+		"experimentalDecorators": true,
+
+		"allowJs": true,
+
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
 		"noUnusedLocals": true,
 		"noImplicitThis": true,
+		"resolveJsonModule": true,
+
+		"forceConsistentCasingInFileNames": true,
+
+		"sourceMap": true,
+
 		"importHelpers": true,
-		"target": "es5",
 
-		"lib": [
-			"es5",
-			"es2018",
-			"es2015",
-			"es2017",
-			"es2016",
-			"dom",
-			"scripthost"
-		]
-	},
-
-	"module": "umd",
-	"moduleResolution": "node",
-	"typeRoots": ["./node_modules/@types/"],
-	"allowSyntheticDefaultImports": true,
-	"exclude": ["node_modules", "dist"]
+		"lib": ["es5", "esnext", "dom", "scripthost"]
+	}
 }

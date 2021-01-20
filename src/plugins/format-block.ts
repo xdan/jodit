@@ -1,64 +1,74 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import * as consts from '../constants';
-import { Dom } from '../modules/Dom';
-import { HTMLTagNames, IJodit, markerInfo } from '../types';
-import { IControlType } from '../types/toolbar';
+import { Config } from '../config';
+import { Dom } from '../modules/';
+import type { HTMLTagNames, IJodit, IControlType, IDictionary } from '../types';
+import { dataBind, isVoid } from '../core/helpers';
 
 Config.prototype.controls.paragraph = {
 	command: 'formatBlock',
-	getLabel: (editor: IJodit, btn, button): boolean => {
-		const current: Node | false = editor.selection.current();
+	update(button): boolean {
+		const editor = button.j as IJodit,
+			control = button.control,
+			current = editor.s.current();
 
-		if (current && editor.options.textIcons) {
-			const currentBox: HTMLElement =
-					(Dom.closest(
+		if (current && editor.o.textIcons) {
+			const currentBox =
+					Dom.closest(
 						current,
-						node => Dom.isBlock(node, editor.editorWindow),
+						node => Dom.isBlock(node, editor.ew),
 						editor.editor
-					) as HTMLElement) || editor.editor,
-				currentValue: string = currentBox.nodeName.toLowerCase(),
-				list = (btn.list as any);
+					) || editor.editor,
+				currentValue = currentBox.nodeName.toLowerCase(),
+				list = control.list as IDictionary;
 
 			if (
 				button &&
-				btn.data &&
-				btn.data.currentValue !== currentValue &&
-				btn.list &&
+				control.data &&
+				control.data.currentValue !== currentValue &&
+				list &&
 				list[currentValue]
 			) {
-				button.textBox.innerHTML = `<span>${
-					editor.i18n(list[currentValue])
-				}</span>`;
+				if (editor.o.textIcons) {
+					button.state.text = currentValue;
+				} else {
+					button.state.icon.name = currentValue;
+				}
 
-				(button.textBox.firstChild as HTMLElement).classList.add(
-					'jodit_icon'
-				);
-
-				btn.data.currentValue = currentValue;
+				control.data.currentValue = currentValue;
 			}
 		}
 
 		return false;
 	},
-	exec: (editor: IJodit, event, control: IControlType) => {
+
+	exec: (editor: IJodit, event, { control }): void | false => {
+		const key = `button${control.command}`;
+
+		const value =
+			(control.args && control.args[0]) || dataBind(editor, key);
+
+		if (isVoid(value)) {
+			return false;
+		}
+
+		dataBind(editor, key, value);
+
 		editor.execCommand(
 			control.command as string,
 			false,
-			control.args ? control.args[0] : undefined
+			value || undefined
 		);
 	},
+
 	data: {
 		currentValue: 'left'
 	},
+
 	list: {
 		p: 'Normal',
 		h1: 'Heading 1',
@@ -67,60 +77,57 @@ Config.prototype.controls.paragraph = {
 		h4: 'Heading 4',
 		blockquote: 'Quote'
 	},
-	isActiveChild: (editor: IJodit, control: IControlType): boolean => {
-		const current: Node | false = editor.selection.current();
+
+	isChildActive: (editor: IJodit, control: IControlType): boolean => {
+		const current = editor.s.current();
 
 		if (current) {
-			const currentBox: HTMLElement = Dom.closest(
+			const currentBox = Dom.closest(
 				current,
-				node => Dom.isBlock(node, editor.editorWindow),
+				node => Dom.isBlock(node, editor.ew),
 				editor.editor
-			) as HTMLElement;
+			);
 
-			return (
+			return Boolean(
 				currentBox &&
-				currentBox !== editor.editor &&
-				control.args !== undefined &&
-				currentBox.nodeName.toLowerCase() === control.args[0]
+					currentBox !== editor.editor &&
+					control.args !== undefined &&
+					currentBox.nodeName.toLowerCase() === control.args[0]
 			);
 		}
 
 		return false;
 	},
+
 	isActive: (editor: IJodit, control: IControlType): boolean => {
-		const current: Node | false = editor.selection.current();
+		const current = editor.s.current();
 
 		if (current) {
-			const currentBpx: HTMLElement = Dom.closest(
+			const currentBpx = Dom.closest(
 				current,
-				node => Dom.isBlock(node, editor.editorWindow),
+				node => Dom.isBlock(node, editor.ew),
 				editor.editor
-			) as HTMLElement;
+			);
 
-			return (
+			return Boolean(
 				currentBpx &&
-				currentBpx !== editor.editor &&
-				control.list !== undefined &&
-				currentBpx.nodeName.toLowerCase() !== 'p' &&
-				((control.list as any)[
-					currentBpx.nodeName.toLowerCase()
-				] as any) !== undefined
+					currentBpx !== editor.editor &&
+					control.list !== undefined &&
+					!Dom.isTag(currentBpx, 'p') &&
+					((control.list as any)[
+						currentBpx.nodeName.toLowerCase()
+					] as any) !== undefined
 			);
 		}
 
 		return false;
 	},
-	template: (editor: IJodit, key: string, value: string) => {
-		return (
-			'<' +
-			key +
-			' class="jodit_list_element"><span>' +
-			editor.i18n(value) +
-			'</span></' +
-			key +
-			'></li>'
-		);
-	},
+
+	childTemplate: (e: IJodit, key: string, value: string) =>
+		`<${key} style="margin:0;padding:0"><span>${e.i18n(
+			value
+		)}</span></${key}>`,
+
 	tooltip: 'Insert format block'
 } as IControlType;
 
@@ -129,72 +136,18 @@ Config.prototype.controls.paragraph = {
  *
  * @param {Jodit} editor
  */
-export function formatBlock(editor: IJodit) {
+export function formatBlock(editor: IJodit): void {
+	editor.registerButton({
+		name: 'paragraph',
+		group: 'font'
+	});
+
 	editor.registerCommand(
 		'formatblock',
 		(command: string, second: string, third: string): false | void => {
-			editor.selection.focus();
-			let work: boolean = false;
-
-			editor.selection.eachSelection((current: Node) => {
-				const selectionInfo: markerInfo[] = editor.selection.save();
-				let currentBox: HTMLElement | false = current
-					? (Dom.up(
-							current,
-							node => Dom.isBlock(node, editor.editorWindow),
-							editor.editor
-					  ) as HTMLElement)
-					: false;
-
-				if ((!currentBox || currentBox.nodeName === 'LI') && current) {
-					currentBox = Dom.wrapInline(
-						current,
-						editor.options.enter,
-						editor
-					);
-				}
-
-				if (!currentBox) {
-					editor.selection.restore(selectionInfo);
-					return;
-				}
-
-				if (!currentBox.tagName.match(/TD|TH|TBODY|TABLE|THEAD/i)) {
-					if (
-						third === editor.options.enterBlock.toLowerCase() &&
-						currentBox.parentNode &&
-						currentBox.parentNode.nodeName === 'LI'
-					) {
-						Dom.unwrap(currentBox);
-					} else {
-						Dom.replace(
-							currentBox,
-							third,
-							true,
-							false,
-							editor.editorDocument
-						);
-					}
-				} else {
-					if (!editor.selection.isCollapsed()) {
-						editor.selection.applyCSS({}, <HTMLTagNames>third);
-					} else {
-						Dom.wrapInline(current, <HTMLTagNames>third, editor);
-					}
-				}
-
-				work = true;
-				editor.selection.restore(selectionInfo);
+			editor.s.applyStyle(undefined, {
+				element: third as HTMLTagNames
 			});
-
-			if (!work) {
-				const currentBox: HTMLElement = editor.editorDocument.createElement(
-					third
-				);
-				currentBox.innerHTML = consts.INVISIBLE_SPACE;
-				editor.selection.insertNode(currentBox, false);
-				editor.selection.setCursorIn(currentBox);
-			}
 
 			editor.setEditorValue();
 

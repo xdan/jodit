@@ -1,0 +1,84 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) '../../../styles/variables';
+@import (reference) '../../../core/ui/list/list';
+
+.gradient(@icon-size) {
+	--button-icon-size: @icon-size;
+	@button-size: @icon-size + (@icon-size - 4px) * 2 + 4px;
+
+	&.jodit-toolbar-collection_mode_horizontal,
+	&.jodit-toolbar-editor-collection_mode_horizontal {
+		background-image: repeating-linear-gradient(
+			transparent 0,
+			transparent @button-size - 1px,
+			var(--color-border) @button-size
+		);
+	}
+}
+
+.jodit-toolbar-collection,
+.jodit-toolbar-editor-collection {
+	&_mode_horizontal {
+		position: relative;
+		background-image: repeating-linear-gradient(
+			transparent 0,
+			transparent calc(var(--button-size) - 1px),
+			var(--color-border) var(--button-size)
+		);
+
+		&:after {
+			content: '';
+			display: block;
+			width: 100%;
+			height: 1px;
+			background-color: var(--color-background-default);
+			position: absolute;
+			left: 0;
+			bottom: 0;
+		}
+	}
+
+	&_size {
+		&_tiny {
+			.gradient(@icon-tiny-size);
+		}
+
+		&_xsmall {
+			.gradient(@icon-xsmall-size);
+		}
+
+		&_small {
+			.gradient(@icon-small-size);
+		}
+
+		&_middle {
+			.gradient(@icon-middle-size);
+		}
+
+		&_large {
+			.gradient(@icon-large-size);
+		}
+	}
+
+	.jodit-ui-list();
+
+	.jodit-toolbar-content,
+	.jodit-toolbar-button {
+		margin: var(--margin-v) 1px;
+		padding: 0;
+	}
+}
+
+.jodit-dialog__box {
+	.jodit-toolbar-collection,
+	.jodit-toolbar-editor-collection {
+		&_mode_horizontal {
+			background-image: none;
+		}
+	}
+}

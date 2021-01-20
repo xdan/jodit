@@ -1,0 +1,82 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) '../../styles/variables';
+
+.fontSource() {
+	font: 12px / normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas',
+		'source-code-pro', monospace;
+}
+
+.jodit-source {
+	display: none;
+	position: relative;
+	background-color: var(--color-source-area);
+	min-height: 100%;
+	flex: auto;
+	overflow: auto;
+
+	.jodit-source__mirror-fake {
+		min-height: 100%;
+	}
+
+	* {
+		.fontSource();
+	}
+}
+
+.jodit-container.jodit-source__mode {
+	.jodit-wysiwyg,
+	.jodit-wysiwyg_iframe {
+		display: none !important;
+	}
+
+	.jodit-source {
+		display: block !important;
+	}
+}
+
+.jodit-container.jodit_split_mode {
+	.jodit-workplace {
+		flex-wrap: nowrap;
+		flex-direction: row;
+	}
+
+	.jodit-wysiwyg,
+	.jodit-wysiwyg_iframe,
+	.jodit-source {
+		display: block !important;
+		width: 50%;
+		flex: 1;
+	}
+}
+
+.jodit-source__mirror {
+	border: 0;
+	width: 100%;
+	height: 100%;
+	background: var(--color-source-area);
+	margin: 0;
+	resize: none;
+	box-sizing: border-box;
+	color: #f0f0f0;
+	outline: none;
+
+	.fontSource();
+
+	line-height: 1.5;
+	box-shadow: none;
+	overflow: auto;
+	z-index: 2;
+	padding: var(--padding-default);
+	white-space: pre-wrap;
+	tab-size: 2em;
+	min-height: 100%;
+
+	&::selection {
+		background: var(--color-selection-area);
+	}
+}

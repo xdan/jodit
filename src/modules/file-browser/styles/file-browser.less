@@ -1,0 +1,395 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) '../../../styles/variables';
+
+:root {
+	--first_column: 31%;
+	--cols: 4;
+	--info-background: rgb(233, 233, 233);
+	--icon-size: @icon-small-size;
+	--col_size: 150px;
+}
+
+.jodit-filebrowser {
+	font-family: var(--font-default);
+	height: 100%;
+	display: flex;
+
+	&_no_files {
+		padding: var(--padding-default);
+	}
+
+	@media (max-width: @screen-xs) {
+		flex-flow: column-reverse;
+	}
+
+	&__loader {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		i {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: calc(var(--icon-loader-size) / -2);
+			margin-left: calc(var(--icon-loader-size) / -2);
+			font-style: normal;
+			opacity: 0.7;
+		}
+	}
+
+	&__status {
+		position: absolute;
+		font-size: 12px;
+		padding: 6px;
+		text-align: right;
+		border-top: 1px solid rgba(127, 127, 127, 0.4);
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #4a4a4a;
+		visibility: hidden;
+		opacity: 0;
+		transition: opacity 0.3s linear;
+		color: #b38888;
+		word-break: break-all;
+
+		&.jodit-filebrowser_success {
+			color: #c5c5c5;
+		}
+
+		&.jodit-filebrowser_active {
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+
+	&__tree,
+	&__files {
+		display: none;
+		vertical-align: top;
+		height: 100%;
+		position: relative;
+
+		.jodit-button {
+			border-radius: 0;
+		}
+
+		&.jodit-filebrowser_active {
+			display: flex;
+		}
+
+		&::-webkit-scrollbar {
+			width: calc(var(--padding-default) / 2);
+		}
+
+		&::-webkit-scrollbar-track {
+			-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: darkgrey;
+			outline: 1px solid slategrey;
+		}
+	}
+
+	&__tree.jodit-filebrowser_active {
+		flex-direction: column;
+		width: var(--first_column);
+		min-width: 200px;
+		max-width: 290px;
+		z-index: 2;
+
+		@media (max-width: @screen-xs) {
+			max-width: 100%;
+			width: auto;
+			height: 100px;
+		}
+
+		background-color: var(--color-background-filebrowser-folders);
+		overflow-y: auto;
+
+		&::-webkit-scrollbar {
+			width: calc(var(--padding-default) / 2);
+		}
+
+		&::-webkit-scrollbar-track {
+			-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: rgba(127, 127, 127, 0.5);
+			outline: 1px solid slategrey;
+		}
+
+		.jodit-filebrowser__source-title {
+			user-select: none;
+			display: block;
+			padding: 2px 4px;
+			color: #969696;
+			border-bottom: 1px solid #484848;
+			position: relative;
+			word-break: break-all;
+			background: #5a5a5a;
+			font-size: 12px;
+		}
+
+		--text-color: #b1b1b1;
+
+		.jodit-filebrowser__tree-item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			min-height: 38px;
+			padding: calc(var(--padding-default) / 2) var(--padding-default);
+			text-decoration: none;
+			color: var(--text-color);
+			transition: background-color 0.2s ease 0s;
+			border-bottom: 1px solid #474747;
+			position: relative;
+			word-break: break-all;
+
+			&-title {
+				flex: 1;
+			}
+
+			.jodit-icon_folder {
+				margin-left: calc(var(--padding-default) / 2);
+				width: calc(var(--icon-size) + 4px);
+				height: calc(var(--icon-size) + 4px);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				opacity: 0.3;
+
+				& svg {
+					width: var(--icon-size);
+					height: var(--icon-size);
+					stroke: var(--text-color) !important;
+					fill: var(--text-color) !important;
+				}
+
+				&:hover {
+					background: #696969;
+				}
+			}
+
+			&:hover {
+				color: #222;
+				background-color: var(--color-background-button-hover);
+
+				i.jodit-icon_folder {
+					opacity: 0.6;
+				}
+			}
+		}
+	}
+
+	&__files.jodit-filebrowser_active {
+		width: 100%;
+		overflow-y: auto;
+		padding: calc(var(--padding-default) / 2);
+		flex-wrap: wrap;
+		align-content: flex-start;
+
+		.jodit-filebrowser__source-title {
+			user-select: none;
+			margin: calc(var(--padding-default) * -1);
+			margin-bottom: 0;
+			display: block;
+			padding: var(--padding-default);
+			position: relative;
+			word-break: break-all;
+			background: #5a5a5a;
+			font-size: 16px;
+			color: #969696;
+		}
+
+		a + .jodit-filebrowser__source-title {
+			margin-top: var(--padding-default);
+		}
+
+		.jodit-filebrowser__files-item {
+			width: var(--col_size);
+			height: var(--col_size);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			@media (max-width: @screen-xs) {
+				width: calc(50% - var(--padding-default));
+			}
+
+			text-align: center;
+			border: 1px solid var(--color-border);
+			margin: calc(var(--padding-default) / 2);
+			font-size: 0;
+			overflow: hidden;
+			transition: border 0.1s linear, bottom 0.1s linear;
+			position: relative;
+
+			img {
+				max-width: 100%;
+			}
+
+			&:hover {
+				border-color: #433b5c;
+			}
+
+			&_active_true {
+				border-color: var(--color-border-selected);
+				background-color: var(--color-border-active);
+
+				.jodit-filebrowser__files-item-info {
+					background-color: var(--color-border-active);
+					color: white;
+					text-shadow: none;
+				}
+			}
+
+			&-info {
+				position: absolute;
+				right: 0;
+				left: 0;
+				bottom: 0;
+				white-space: normal;
+				opacity: 0.85;
+				overflow: visible;
+				padding: 0.3em 0.6em;
+				transition: opacity 400ms ease;
+				background-color: var(--info-background);
+				color: rgb(51, 51, 51);
+				text-shadow: rgb(238, 238, 238) 0 1px 0;
+				font-size: 14px;
+				line-height: 16px;
+				text-align: left;
+
+				> span {
+					display: block;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
+					font-size: 0.75em;
+
+					&.jodit-filebrowser__files-item-info-filename {
+						font-weight: bold;
+						font-size: 0.9em;
+					}
+				}
+			}
+
+			&:hover:not(.jodit-filebrowser__files-item_active_true) {
+				.jodit-filebrowser__files-item-info {
+					bottom: -100px;
+				}
+			}
+		}
+
+		&.jodit-filebrowser__files_view_list {
+			scroll-behavior: smooth;
+
+			a {
+				display: block;
+				width: 100%;
+				height: 26px;
+				line-height: 26px;
+				margin: 0;
+				border-width: 0 0 1px 0;
+				text-align: left;
+				white-space: nowrap;
+
+				img {
+					min-width: 16px;
+					max-width: 16px;
+					vertical-align: middle;
+					display: inline-block;
+					margin-left: 4px;
+				}
+
+				.jodit-filebrowser__files-item-info {
+					padding: 0;
+					position: static;
+					display: inline-block;
+					width: ~'calc(100% - 20px)';
+					margin-left: 4px;
+					background-color: transparent;
+					height: 100%;
+					line-height: inherit;
+					vertical-align: middle;
+					font-size: 0;
+
+					> span {
+						display: inline-block;
+						height: 100%;
+						font-size: 12px;
+
+						&.jodit-filebrowser__files-item-info-filename {
+							width: 50%;
+						}
+
+						&.jodit-filebrowser__files-item-info-filesize {
+							width: 25%;
+						}
+
+						&.jodit-filebrowser__files-item-info-filechanged {
+							width: 25%;
+						}
+					}
+				}
+
+				&:hover {
+					background-color: #433b5c;
+
+					.jodit-filebrowser__files-item-info {
+						color: #fff;
+						text-shadow: none;
+					}
+				}
+
+				&::before {
+					height: 100%;
+					content: '';
+					vertical-align: middle;
+					display: inline-block;
+				}
+			}
+		}
+	}
+}
+
+.jodit_draghover {
+	background-color: var(--color-background-button-hover);
+}
+
+.jodit-dialog__box .jodit-dialog__header-title {
+	.jodit__upload-button {
+		position: relative;
+		border: 0;
+		overflow: hidden;
+
+		input {
+			cursor: pointer;
+			position: absolute;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: 0 calc(var(--padding-default) * -1) 0 0;
+			padding: 0;
+			opacity: 0;
+			font-size: 400px;
+		}
+	}
+
+	&.jodit-filebrowser__title-box {
+		display: flex;
+		align-items: center;
+		padding-left: var(--padding-default);
+	}
+}

@@ -1,123 +1,49 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport"
-				content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Jodit Test Document</title>
-	<link rel="stylesheet" href="./build/jodit.min.css">
-</head>
-<body>
-<div id="box">
-	<div id="editor">
-		<p>
-			<img style="float:right; margin: 10px;" src="https://xdsoft.net/jodit/files/download.jpg"
-					 alt="Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus."></p>
-		<h1>Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus.</h1>
-
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <i>Quonam, inquit, modo?</i>
-			<mark>Illum mallem levares, quo optimum atque humanissimum virum, Cn.</mark>
-			Quae quidem vel cum periculo est quaerenda vobis; Amicitiam autem adhibendam esse censent,
-			quia sit ex eo genere, quae prosunt. <a href="http://loripsum.net/" target="_blank">Duo Reges: constructio
-				interrete.</a> Illud quaero, quid ei, qui in voluptate summum bonum ponat, consentaneum sit dicere. At vero
-			illa, quae Peripatetici, quae Stoici
-			dicunt, semper tibi in ore sunt in iudiciis, in senatu. Dic in quovis conventu te omnia facere, ne doleas. Nummus
-			in Croesi divitiis obscuratur, pars est tamen divitiarum. Isto modo ne improbos quidem, si essent boni viri.
-			Luxuriam non reprehendit,
-			modo sit vacua infinita cupiditate et timore. Sit ista in Graecorum levitate perversitas, qui maledictis
-			insectantur eos, a quibus de veritate dissentiunt.
-		</p>
-
-		<blockquote cite="http://loripsum.net">
-			Nec enim absolvi beata vita sapientis neque ad exitum perduci poterit, si prima quaeque bene ab eo consulta atque
-			facta ipsius oblivione obruentur.
-		</blockquote>
-
-
-		<pre>Tum ille: Tu autem cum ipse tantum librorum habeas, quos hic
-tandem requiris?
-
-Possumusne ergo in vita summum bonum dicere, cum id ne in
-cena quidem posse videamur?
-</pre>
-
-
-		<ul>
-			<li>Possumusne ergo in vita summum bonum dicere, cum id ne in cena quidem posse videamur?</li>
-			<li>Quodsi vultum tibi, si incessum fingeres, quo gravior viderere, non esses tui similis;</li>
-		</ul>
-
-
-		<ol>
-			<li>Qui autem diffidet perpetuitati bonorum suorum, timeat necesse est, ne aliquando amissis illis sit miser.</li>
-			<li>Nulla profecto est, quin suam vim retineat a primo ad extremum.</li>
-		</ol>
-
-
-		<dl id="section1">
-			<dt><dfn>Falli igitur possumus.</dfn></dt>
-			<dd>Quid enim ab antiquis ex eo genere, quod ad disserendum valet, praetermissum est?</dd>
-			<dt><dfn>Scrupulum, inquam, abeunti;</dfn></dt>
-			<dd>Scio enim esse quosdam, qui quavis lingua philosophari possint;</dd>
-			<dt><dfn>Poterat autem inpune;</dfn></dt>
-			<dd>Tum ille: Tu autem cum ipse tantum librorum habeas, quos hic tandem requiris?</dd>
-			<dt><dfn>Beatum, inquit.</dfn></dt>
-			<dd>Respondeat totidem verbis.</dd>
-		</dl>
-	</div>
-</div>
-<a href="#section1">Click Me</a>
-<script src="./build/jodit.min.js"></script>
-<script>
-	const editor = new Jodit('#editor', {
-		// iframe: true,
-		// theme: 'dark',
-		toolbarButtonSize: 'large',
-		height: 100,
-		tabIndex: 0,
-		language: 'ru',
-		// textIcons: true,
-		uploader: {
-			url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
-		},
-		filebrowser: {
-			ajax: {
-				url: 'https://xdsoft.net/jodit/connector/index.php'
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+		/>
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Jodit Test Document</title>
+		<link rel="stylesheet" href="./app.css" />
+		<link rel="stylesheet" href="./build/jodit.min.css" />
+		<script src="./build/jodit.js"></script>
+	</head>
+	<body>
+		<style>
+			#box {
+				padding: 100px;
+				margin: 20px;
+				position: relative;
+				height: 500px;
 			}
-		}
-	});
 
-	// editor.events.on('beforeSetValueToEditor', function(old_value) {
-	// 	if (old_value) {
-	// 		return old_value.replace('user&nbsp;', '<span style="color:blue;">test</span>');
-	// 	}
-	// });
-	//
-	// editor.value = 'test user&nbsp;';
-	// console.log(editor.value); // test <span style="color:blue;">test</span>
-	//
-	// editor.events.on('change', Jodit.modules.Helpers.throttle(function() {
-	// 	var
-	// 		sel = editor.selection.save(),
-	// 		value = editor.getNativeEditorValue();
-	//
-	// 	editor.value = value.replace(/user/, '<span style="color:blue;">test</span>');
-	// 	console.log(value);
-	// 	editor.selection.restore(sel);
-	// }, 300));
-
-	// setTimeout(() => {
-	// 	destruct.addEventListener('click', () => editor.destruct())
-	// }, 100)
-</script>
-<style>
-	#box {
-		padding: 100px;
-		margin: 20px;
-		position: relative;
-	}
-</style>
-	<button id="destruct" type="button">destruct</button>
-</body>
+			@media (max-width: 480px) {
+				#box {
+					padding: 0;
+				}
+			}
+		</style>
+		<div id="box">
+			<h1>Jodit Test Document</h1>
+			<textarea id="editor">
+				&lt;img src="https://xdsoft.net/jodit/build/images/artio.jpg"/&gt;
+			</textarea>
+		</div>
+		<script>
+			const editor = Jodit.make('#editor' ,{
+				uploader: {
+					url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+				},
+				filebrowser: {
+					ajax: {
+						url: 'https://xdsoft.net/jodit/connector/index.php'
+					}
+				}
+			});
+		</script>
+	</body>
 </html>

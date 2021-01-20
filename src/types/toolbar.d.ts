@@ -1,25 +1,34 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { HTMLTagNames, IComponent, IDictionary, Modes } from './types';
+import {
+	CanPromise,
+	HTMLTagNames,
+	IComponent,
+	IDestructible,
+	IDictionary,
+	Modes,
+	Nullable
+} from './types';
 import { IViewBased } from './view';
 import { IJodit } from './jodit';
-import { IFileBrowser } from './fileBrowser';
+import { IFileBrowser } from './file-browser';
+
 interface IControlType<
 	T = IJodit | IViewBased | IFileBrowser,
-	Button = IToolbarButton
+	B = IToolbarButton
 > {
-	controlName?: string;
 	name?: string;
+	text?: string;
+
 	mode?: Modes;
 	hotkeys?: string | string[];
 	data?: IDictionary;
+
+	update?: (button: B) => void;
 	isInput?: boolean;
 
 	/**
@@ -48,22 +57,18 @@ interface IControlType<
 	 * })
 	 * ```
 	 */
-	isActive?: (
-		editor: T,
-		control: IControlType<T, Button>,
-		button?: Button
-	) => boolean;
+	isActive?: (editor: T, control: IControlType<T, B>, button?: B) => boolean;
 
-	isActiveChild?: (
+	isChildActive?: (
 		editor: T,
-		control: IControlType<T, Button>,
-		button?: Button
+		control: IControlType<T, B>,
+		button?: B
 	) => boolean; // for list
 
 	getContent?: (
 		editor: T,
-		control: IControlType<T, Button>,
-		button?: Button
+		control: IControlType<T, B>,
+		button: B
 	) => string | HTMLElement;
 
 	/**
@@ -85,7 +90,7 @@ interface IControlType<
 	 *              exec: function (a, b, btn) {
 	 *                  btn.data.active = !btn.data.active;
 	 *              },
-	 *              isDisable: function (editor, btn) {
+	 *              isDisabled: function (editor, btn) {
 	 *                  return !!btn.data.enable;
 	 *              }
 	 *          }
@@ -93,23 +98,17 @@ interface IControlType<
 	 * })
 	 * ```
 	 */
-	isDisable?: (
+	isDisabled?: (
 		editor: T,
-		control: IControlType<T, Button>,
-		button?: Button
+		control: IControlType<T, B>,
+		button?: B
 	) => boolean;
 
-	isDisableChild?: (
+	isChildDisabled?: (
 		editor: T,
-		control: IControlType<T, Button>,
-		button?: Button
+		control: IControlType<T, B>,
+		button?: B
 	) => boolean;
-
-	getLabel?: (
-		editor: T,
-		control: IControlType<T, Button>,
-		button?: Button
-	) => boolean | void;
 
 	/**
 	 * Drop-down list. A hash or array. You must specify the command which will be submitted for the hash key
@@ -133,8 +132,8 @@ interface IControlType<
 	 *                 this.setEditorValue('');
 	 *                 return;
 	 *             }
-	 *             this.selection.insertNode(this.create.element(key, ''));
-	 *             this.events.fire('errorMessage', 'Was inserted ' + value);
+	 *             this.s.insertNode(this.c.element(key, ''));
+	 *             this.e.fire('errorMessage', 'Was inserted ' + value);
 	 *        },
 	 *        template: function (key, value) {
 	 *            return '<div>' + value + '</div>';
@@ -142,7 +141,7 @@ interface IControlType<
 	 *  });
 	 *  ```
 	 */
-	list?: IDictionary<string> | string[] | string;
+	list?: IDictionary<string> | string[] | IControlType[];
 
 	/**
 	 * The command executes when the button is pressed. Allowed all
@@ -156,10 +155,8 @@ interface IControlType<
 	 * Tag list:  when cursor inward tag from this list, button will be highlighted
 	 */
 	tags?: HTMLTagNames[];
-	options?: any;
-	css?:
-		| IDictionary<string | string[]>
-		| IDictionary<(editor: T, value: string) => boolean>;
+
+	css?: IDictionary<string | string[]>;
 
 	/**
 	 * String name for existing icons.
@@ -178,6 +175,7 @@ interface IControlType<
 	 * ```
 	 */
 	icon?: string;
+
 	/**
 	 * Use this property if you want set background image for the button. This icon can be 16 * 16 px in SVG or
 	 * another image formats
@@ -193,19 +191,22 @@ interface IControlType<
 	 * This function will be executed when the button is pressed.
 	 */
 	exec?: (
-		editor: T,
-		current: Node | false,
-		control: IControlType<T, Button>,
-		originalEvent: Event,
-		btn: HTMLLIElement
-	) => void;
+		jodit: T,
+		current: Nullable<Node>,
+		options: {
+			control: IControlType<T, B>;
+			originalEvent: Event;
+			button: IToolbarButton;
+		}
+	) => any;
 
 	args?: any[];
 
 	/**
 	 * The method which will be called for each element of button.list
 	 */
-	template?: (editor: T, key: string, value: string) => string;
+	template?: (jodit: T, key: string, value: string) => string;
+	childTemplate?: (jodit: T, key: string, value: string) => string;
 
 	/**
 	 * After click on the button it will show popup element which consist value that this function returned
@@ -216,14 +217,14 @@ interface IControlType<
 	 *      {
 	 *          icon: "insertCode",
 	 *          popup: function (editor) {
-	 *              var div = dccument.createElement('div'), button = dccument.createElement('button');
+	 *              var div = document.createElement('div'), button = dccument.createElement('button');
 	 *              div.innerHTML = 'Hi! Click button and enter your code';
 	 *              button.innerHTML = 'Click me';
 	 *
 	 *              div.appendChild(button);
 	 *
 	 *              button.addEventListener('click', function (e) {
-	 *                  editor.selection.insertHTML(prompt("Enter your code"));
+	 *                  editor.s.insertHTML(prompt("Enter your code"));
 	 *                  return false;
 	 *              });
 	 *              return div;
@@ -234,77 +235,76 @@ interface IControlType<
 	 * ```
 	 */
 	popup?: (
-		editor: T,
-		current: Node | false,
-		control: IControlType<T, Button>,
+		jodit: T,
+		current: Nullable<Node>,
+		control: IControlType<T, B>,
 		close: () => void,
-		button: Button
-	) => string | HTMLElement | false;
+		button: B
+	) => string | HTMLElement | IUIElement | false;
 
 	defaultValue?: string | string[];
 }
 
+import { IUIButton, IUIElement, IUIList } from './ui';
+import { IPluginButton } from './plugin';
+
 interface IControlTypeStrong extends IControlType {
-	name: string;
+	name: NonNullable<IControlType['name']>;
+}
+
+interface IControlTypeContent extends IControlTypeStrong {
+	getContent: NonNullable<IControlTypeStrong['getContent']>;
 }
 
 export type Controls = IDictionary<IControlType>;
-export type Buttons = Array<string | IControlType> | string;
 
-interface IToolbarElement extends IComponent {
-	container: HTMLElement;
-	parentToolbar?: IToolbarCollection;
+export type Buttons = Array<string | IControlType>;
 
-	createIcon(clearName: string, control?: IControlTypeStrong): HTMLElement;
-
-	focus(): void;
+export interface ButtonsGroup {
+	group: string;
+	buttons: Buttons;
 }
 
-interface IToolbarButton extends IToolbarElement {
-	disable: boolean;
-	active: boolean;
+export type ButtonsGroups = Array<IControlType | string | ButtonsGroup>;
+export type ButtonsOption = string | ButtonsGroups;
+
+interface IControlTypeStrongList extends IControlTypeStrong {
+	list: IDictionary<string> | string[];
+}
+
+interface IToolbarButton extends IUIButton {
 	control: IControlTypeStrong;
-	target: HTMLElement | undefined;
-	textBox: HTMLSpanElement;
-	anchor: HTMLAnchorElement;
-
-	tooltipText: string;
-
-	isDisable(): boolean;
-	isActive(): boolean;
+	target: Nullable<HTMLElement>;
 }
 
-interface IToolbarCollection extends IComponent {
-	readonly listenEvents: string;
-
-	getButtonsList(): string[];
-	firstButton: IToolbarElement;
-
-	appendChild(button: IToolbarElement): void;
-
-	removeChild(button: IToolbarElement): void;
-
-	build(buttons: Buttons, container: HTMLElement, target?: HTMLElement): void;
-
-	clear(): void;
-
-	immedateCheckActiveButtons: () => void;
-
-	buttonIsActive(button: IToolbarButton): boolean | void;
-
-	buttonIsDisabled(button: IToolbarButton): boolean | void;
-	/**
-	 * Target for button element
-	 *
-	 * @param button
-	 */
-	getTarget(button: IToolbarButton): Node | void;
-
-	checkActiveButtons: () => void;
-
-	container: HTMLElement;
+interface IToolbarCollection extends IUIList {
+	jodit: IViewBased;
 
 	setDirection(direction: 'rtl' | 'ltr'): void;
 
-	destruct(): void;
+	firstButton: Nullable<IToolbarButton>;
+
+	shouldBeDisabled(button: IToolbarButton): boolean | void;
+	shouldBeActive(button: IToolbarButton): boolean | void;
+	getTarget(button: IToolbarButton): Node | null;
+}
+
+export interface IStatusBar extends IComponent {
+	jodit: IViewBased;
+
+	show(): void;
+	hide(): void;
+	isShown: boolean;
+
+	getHeight(): number;
+	append(el: HTMLElement, inTheRight?: boolean): void;
+}
+
+export interface IProgressBar extends IDestructible {
+	jodit: IViewBased;
+
+	show(): IProgressBar;
+	hide(): IProgressBar;
+
+	progress(percentage: number): IProgressBar;
 }

@@ -1,71 +1,68 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { Dom } from '../modules/Dom';
-import { $$, css } from '../modules/helpers/';
-import { ToolbarIcon } from '../modules/toolbar/icon';
-import { IControlType } from '../types/toolbar';
-import { IJodit } from '../types';
+import type { IJodit, IControlType } from '../types';
+import { Config } from '../config';
+import { Dom } from '../modules/';
+import { css } from '../core/helpers/';
 
 Config.prototype.controls.align = {
 	name: 'left',
 	tooltip: 'Align',
-	getLabel: (editor: IJodit, btn, button): boolean => {
-		const current: Node | false = editor.selection.current();
+
+	update(button): void {
+		const editor = button.j as IJodit,
+			control = button.control,
+			current = editor.s.current();
 
 		if (current) {
-			const currentBox: HTMLElement =
-				(Dom.closest(
+			const currentBox =
+				Dom.closest(
 					current,
-					node => Dom.isBlock(node, editor.editorWindow),
+					node => Dom.isBlock(node, editor.ew),
 					editor.editor
-				) as HTMLElement) || editor.editor;
+				) || editor.editor;
 
-			let currentValue: string = css(currentBox, 'text-align').toString();
+			let currentValue = css(currentBox, 'text-align').toString();
 
 			if (
-				btn.defaultValue &&
-				btn.defaultValue.indexOf(currentValue) !== -1
+				control.defaultValue &&
+				control.defaultValue.indexOf(currentValue) !== -1
 			) {
 				currentValue = 'left';
 			}
 
 			if (
-				button &&
-				btn.data &&
-				btn.data.currentValue !== currentValue &&
-				btn.list &&
-				(btn.list as string[]).indexOf(currentValue) !== -1
+				control.data &&
+				control.data.currentValue !== currentValue &&
+				control.list &&
+				(control.list as string[]).indexOf(currentValue) !== -1
 			) {
-				button.textBox.innerHTML = !editor.options.textIcons
-					? ToolbarIcon.getIcon(currentValue, '')
-					: `<span>${currentValue}</span>`;
-				(button.textBox.firstChild as HTMLElement).classList.add(
-					'jodit_icon'
-				);
-				btn.data.currentValue = currentValue;
+				if (editor.o.textIcons) {
+					button.state.text = currentValue;
+				} else {
+					button.state.icon.name = currentValue;
+				}
+
+				control.data.currentValue = currentValue;
 			}
 		}
-
-		return false;
 	},
+
 	isActive: (editor: IJodit, btn): boolean => {
-		const current: Node | false = editor.selection.current();
+		const current = editor.s.current();
 
 		if (current && btn.defaultValue) {
 			const currentBox: HTMLElement =
 				(Dom.closest(
 					current,
-					node => Dom.isBlock(node, editor.editorWindow),
+					node => Dom.isBlock(node, editor.ew),
 					editor.editor
 				) as HTMLElement) || editor.editor;
+
 			return (
 				btn.defaultValue.indexOf(
 					css(currentBox, 'text-align').toString()
@@ -75,10 +72,12 @@ Config.prototype.controls.align = {
 
 		return false;
 	},
+
 	defaultValue: ['left', 'start', 'inherit'],
 	data: {
 		currentValue: 'left'
 	},
+
 	list: ['center', 'left', 'right', 'justify']
 } as IControlType;
 
@@ -89,6 +88,7 @@ Config.prototype.controls.center = {
 	},
 	tooltip: 'Align Center'
 };
+
 Config.prototype.controls.justify = {
 	command: 'justifyFull',
 	css: {
@@ -96,6 +96,7 @@ Config.prototype.controls.justify = {
 	},
 	tooltip: 'Align Justify'
 };
+
 Config.prototype.controls.left = {
 	command: 'justifyLeft',
 	css: {
@@ -103,6 +104,7 @@ Config.prototype.controls.left = {
 	},
 	tooltip: 'Align Left'
 };
+
 Config.prototype.controls.right = {
 	command: 'justifyRight',
 	css: {
@@ -112,67 +114,91 @@ Config.prototype.controls.right = {
 };
 
 /**
- * Process commands: `justifyfull`, `justifyleft`, `justifyright`, `justifycenter`
+ * Remove text-align style for all selected children
  *
+ * @param node
+ * @param editor
+ */
+export const clearAlign = (node: Node, editor: IJodit): void => {
+	Dom.each(node, elm => {
+		if (Dom.isHTMLElement(elm, editor.ew)) {
+			if (elm.style.textAlign) {
+				elm.style.textAlign = '';
+
+				if (!elm.style.cssText.trim().length) {
+					elm.removeAttribute('style');
+				}
+			}
+		}
+	});
+};
+
+/**
+ * Apply align for element
+ *
+ * @param command
+ * @param box
+ * @param editor
+ */
+export const alignElement = (
+	command: string,
+	box: HTMLElement,
+	editor: IJodit
+): void => {
+	if (Dom.isNode(box, editor.ew) && Dom.isElement(box)) {
+		clearAlign(box, editor);
+
+		switch (command.toLowerCase()) {
+			case 'justifyfull':
+				box.style.textAlign = 'justify';
+				break;
+			case 'justifyright':
+				box.style.textAlign = 'right';
+				break;
+			case 'justifyleft':
+				box.style.textAlign = 'left';
+				break;
+			case 'justifycenter':
+				box.style.textAlign = 'center';
+				break;
+		}
+	}
+};
+
+/**
+ * Process commands: `justifyfull`, `justifyleft`, `justifyright`, `justifycenter`
  * @param {Jodit} editor
  */
-export function justify(editor: IJodit) {
+export function justify(editor: IJodit): void {
+	editor.registerButton({
+		name: 'align',
+		group: 'indent'
+	});
+
 	const callback = (command: string): false | void => {
-		const justifyElm = (box: HTMLElement) => {
-			if (box instanceof (editor.editorWindow as any).HTMLElement) {
-				switch (command.toLowerCase()) {
-					case 'justifyfull':
-						box.style.textAlign = 'justify';
-						break;
-					case 'justifyright':
-						box.style.textAlign = 'right';
-						break;
-					case 'justifyleft':
-						box.style.textAlign = 'left';
-						break;
-					case 'justifycenter':
-						box.style.textAlign = 'center';
-						break;
-				}
+		editor.s.focus();
+
+		editor.s.eachSelection((current: Node): false | void => {
+			if (!current) {
+				return;
 			}
-		};
 
-		editor.selection.focus();
+			let currentBox = Dom.up(
+				current,
+				node => Dom.isBlock(node, editor.ew),
+				editor.editor
+			) as HTMLElement;
 
-		editor.selection.eachSelection(
-			(current: Node): false | void => {
-				if (!current) {
-					if (editor.editor.querySelector('.jodit_selected_cell')) {
-						$$('.jodit_selected_cell', editor.editor).forEach(
-							justifyElm
-						);
-						return false;
-					}
-				}
-
-				if (!(current instanceof (editor.editorWindow as any).Node)) {
-					return;
-				}
-
-				let currentBox: HTMLElement | false | null = current
-					? (Dom.up(
-							current,
-							node => Dom.isBlock(node, editor.editorWindow),
-							editor.editor
-					  ) as HTMLElement)
-					: false;
-
-				if (!currentBox && current) {
-					currentBox = Dom.wrapInline(
-						current,
-						editor.options.enterBlock,
-						editor
-					);
-				}
-
-				justifyElm(currentBox as HTMLElement);
+			if (!currentBox) {
+				currentBox = Dom.wrapInline(
+					current,
+					editor.o.enterBlock,
+					editor
+				) as HTMLElement;
 			}
-		);
+
+			alignElement(command, currentBox, editor);
+		});
 
 		return false;
 	};

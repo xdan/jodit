@@ -1,0 +1,31 @@
+@import (reference) '../../../../../styles/form';
+
+.jodit-ui-select {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: var(--padding-default);
+
+	&__select {
+		min-width: 200px;
+	}
+
+	&_has-error_true &__select {
+		border-color: var(--color-red);
+	}
+
+	&__error,
+	&__label {
+		display: block;
+		color: var(--color-label);
+		font-size: 0.8em;
+	}
+
+	&_has-error_true &__label,
+	&__error {
+		color: var(--color-error);
+	}
+}
+
+.jodit-ui-block .jodit-ui-select {
+	margin-bottom: 0;
+}

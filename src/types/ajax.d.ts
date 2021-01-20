@@ -1,13 +1,18 @@
-import { IDictionary } from './types';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+import { IDestructible, IDictionary } from './types';
 import { IViewBased } from './view';
 
-export declare const XDomainRequest: any;
-
-export type DataVariant = | IDictionary<string>
+export type DataVariant =
+	| IDictionary<string>
 	| null
 	| FormData
 	| string
-	| IDictionary<string | IDictionary<any>>;
+	| IDictionary<string | IDictionary>;
 
 export interface IRequest {
 	url: string;
@@ -15,12 +20,13 @@ export interface IRequest {
 	data: DataVariant;
 }
 
-export interface IAjax {
+export interface IAjax extends IDestructible {
 	status: number;
 
 	response: string;
 
 	options: AjaxOptions;
+	o: this['options'];
 
 	jodit: IViewBased;
 
@@ -38,7 +44,6 @@ export interface AjaxOptions {
 	url?: string;
 
 	data: DataVariant;
-
 
 	contentType?: string | false;
 

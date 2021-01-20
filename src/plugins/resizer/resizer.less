@@ -1,0 +1,112 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) '../../styles/variables';
+
+:root {
+	--viewer_width: 70px;
+	--viewer_height: 24px;
+	--resizer-handle-size: var(--padding-default);
+}
+
+[data-jodit_iframe_wrapper] {
+	display: block;
+	user-select: none;
+	position: relative;
+
+	&::after {
+		position: absolute;
+		content: '';
+		z-index: 1;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		cursor: pointer;
+		display: block;
+		background: rgba(0, 0, 0, 0);
+	}
+}
+
+.jodit-resizer {
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	border: 1px solid var(--color-border-dark);
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	font-size: 0;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	> span {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		display: inline-block;
+		width: var(--viewer_width);
+		height: var(--viewer_height);
+		margin-left: calc(var(--viewer_width) / -2);
+		margin-top: calc(var(--viewer_height) / -2);
+		line-height: var(--viewer_height);
+		font-size: 12px;
+		text-align: center;
+		color: var(--color-white);
+		background-color: var(--color-placeholder);
+		opacity: 0;
+		transition: opacity 0.2s linear;
+		overflow: visible;
+	}
+
+	> i {
+		position: absolute;
+		display: inline-block;
+		z-index: 4;
+		pointer-events: all;
+		border: 1px solid var(--color-border-dark);
+		background-color: var(--color-background-gray);
+
+		&:hover {
+			background-color: var(--color-background-gray-hover);
+		}
+
+		width: var(--resizer-handle-size);
+		height: var(--resizer-handle-size);
+
+		&:nth-child(1) {
+			left: calc(var(--resizer-handle-size) / -2);
+			top: calc(var(--resizer-handle-size) / -2);
+			cursor: nw-resize;
+		}
+
+		&:nth-child(2) {
+			right: calc(var(--resizer-handle-size) / -2);
+			top: calc(var(--resizer-handle-size) / -2);
+			cursor: ne-resize;
+		}
+
+		&:nth-child(3) {
+			right: calc(var(--resizer-handle-size) / -2);
+			bottom: calc(var(--resizer-handle-size) / -2);
+			cursor: se-resize;
+		}
+
+		&:nth-child(4) {
+			left: calc(var(--resizer-handle-size) / -2);
+			bottom: calc(var(--resizer-handle-size) / -2);
+			cursor: sw-resize;
+		}
+
+		@media (max-width: @screen-sm) {
+			:root {
+				--resizer-handle-size: calc(var(--padding-default) * 2);
+			}
+		}
+	}
+}

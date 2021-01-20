@@ -1,0 +1,195 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) './variables';
+@import (reference) './mixins';
+
+.jodit-form {
+	.font();
+
+	color: var(--color-default);
+
+	&.jodit_error {
+		border-color: var(--color-error);
+		box-shadow: inset 0 0 3px 0 rgba(189, 189, 189, 0.3);
+	}
+
+	@media (max-width: @screen-sm) {
+		min-width: 150px;
+	}
+
+	button {
+		height: 36px;
+		line-height: 1;
+		color: var(--color-dark);
+		padding: var(--padding-default);
+		cursor: pointer;
+		text-decoration: none;
+		border: none;
+		background: #d6d6d6;
+		font-size: 16px;
+		outline: none;
+		transition: background 0.2s ease 0s;
+		margin-top: var(--padding-default);
+		margin-bottom: var(--padding-default);
+
+		&:hover {
+			background-color: var(--color-background-button-hover);
+			color: var(--color-dark);
+		}
+
+		&:active {
+			background: var(--color-background-button-hover);
+			color: var(--color-dark);
+		}
+	}
+
+	label {
+		margin-bottom: var(--padding-default);
+		text-align: left;
+		white-space: nowrap;
+		display: flex;
+		align-items: center;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.jodit-form__center {
+		justify-content: center;
+	}
+}
+
+.jodit-input-mx() {
+	.font();
+
+	width: 100%;
+	height: var(--input-height);
+	line-height: var(--input-height);
+	padding: 0 var(--padding-default);
+
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+
+	outline: none;
+	box-sizing: border-box;
+	border: 1px solid var(--color-border);
+	border-radius: 0;
+	background-color: var(--color-white);
+
+	&[disabled] {
+		background-color: #f0f0f0;
+		color: var(--color-border);
+	}
+
+	&_has-error_true {
+		border-color: var(--color-red);
+	}
+}
+
+.jodit {
+	.jodit-textarea,
+	.jodit-select,
+	.jodit-input {
+		.jodit-input-mx();
+	}
+
+	.jodit-input:focus {
+		border-color: #66afe9;
+		outline: 0;
+	}
+}
+
+.jodit-checkbox {
+	z-index: 2;
+	border: 0 none;
+	cursor: pointer;
+	height: 16px;
+	padding: 0;
+	margin: 0 calc(var(--padding-default) / 2) 0 0;
+	width: 16px;
+	position: relative;
+	outline: none;
+}
+
+.jodit-select {
+	padding-right: calc(var(--padding-default) * 2);
+	background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+);
+	background-repeat: no-repeat;
+	background-position: 98% 50%;
+}
+
+.jodit-textarea {
+	height: auto;
+	min-width: var(--width-input-min);
+}
+
+.jodit-form__group {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: var(--padding-default);
+	min-width: var(--width-input-min);
+}
+
+.jodit-button {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	user-select: none;
+	width: auto;
+	padding: 0 var(--padding-default);
+	height: calc(var(--padding-default) * 4);
+	line-height: 1;
+	margin: 0;
+	background-color: var(--color-background-gray);
+	color: var(--color-default);
+	cursor: pointer;
+	border: 0;
+	border-radius: 0.25rem;
+	text-decoration: none;
+
+	svg {
+		display: inline-block;
+		width: 24px;
+		height: 24px;
+	}
+
+	svg + span {
+		margin-left: calc(var(--padding-default) / 2);
+	}
+
+	&:active {
+		outline: 0;
+	}
+
+	&:focus {
+		outline: 0;
+	}
+
+	&.disabled {
+		opacity: 0.7;
+	}
+}
+
+.jodit-buttons {
+	margin-bottom: var(--padding-default);
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+}
+
+.jodit-button .jodit_icon,
+.jodit-dialog__header .jodit_icon,
+.jodit-button svg,
+.jodit-dialog__header svg {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	vertical-align: middle;
+}

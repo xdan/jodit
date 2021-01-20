@@ -1,20 +1,17 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IComponent, IDictionary } from './types';
+import { IDictionary, IViewComponent } from './types';
 
 interface IUploaderData {
 	messages?: string[];
-	files?: string[];
+	files: string[];
 	isImages?: boolean[];
 	path?: string;
-	baseurl?: string;
+	baseurl: string;
 	newfilename?: string;
 }
 
@@ -107,12 +104,12 @@ export type BuildDataResult =
  *            var i, field = 'files';
  *            if (data[field] && data[field].length) {
  *                for (i = 0; i < data[field].length; i += 1) {
- *                    this.selection.insertImage(data.baseurl + data[field][i]);
+ *                    this.s.insertImage(data.baseurl + data[field][i]);
  *                }
  *            }
  *         },
  *         error: function (e) {
- *             this.events.fire('errorMessage', [e.getMessage(), 'error', 4000])
+ *             this.e.fire('errorMessage', [e.getMessage(), 'error', 4000])
  *         }
  *     }
  * })
@@ -172,7 +169,7 @@ export interface IUploaderOptions<T> {
 	format: string;
 	method: string;
 
-  filesVariableName: (i: number) => string;
+	filesVariableName: (i: number) => string;
 	pathVariableName: string;
 	withCredentials: boolean;
 
@@ -197,7 +194,7 @@ export interface IUploaderOptions<T> {
 	contentType: (this: T, requestData: any) => string | false;
 }
 
-export interface IUploader extends IComponent {
+export interface IUploader extends IViewComponent {
 	buildData(data: FormData | IDictionary<string> | string): BuildDataResult;
 
 	send(

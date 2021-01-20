@@ -1,0 +1,80 @@
+@import (reference) '../../../../../styles/form';
+@import (reference) '../../../../../styles/mixins';
+
+.jodit-ui-input {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: var(--padding-default);
+
+	&__input {
+		.jodit-input-mx();
+		border: 0;
+
+		&:focus {
+			outline: 0;
+			box-shadow: var(--focus-input-box-shadow);
+		}
+	}
+
+	&_has-error_true &__input {
+		border-color: var(--color-red);
+	}
+
+	&__error,
+	&__label {
+		display: block;
+		color: var(--color-label);
+		font-size: 0.8em;
+	}
+
+	&_has-error_true &__label,
+	&__error {
+		color: var(--color-error);
+	}
+
+	&__wrapper {
+		display: flex;
+		justify-content: stretch;
+		align-items: center;
+
+		background-color: var(--color-white);
+		border: 1px solid var(--color-border);
+		min-width: 200px;
+	}
+
+	&__icon:not(:empty) {
+		padding: 0 var(--padding-default);
+		display: flex;
+		align-items: center;
+
+		svg {
+			.size(16px, 16px);
+			fill: var(--color-border);
+		}
+	}
+
+	&__icon:not(:empty) + &__input {
+		padding-left: 0;
+	}
+
+	&__clear {
+		padding: 0 var(--padding-default) 0 0;
+		display: flex;
+		align-items: center;
+		opacity: 0.8;
+
+		&:active {
+			transform: scale(1.1, 1.1);
+			opacity: 1;
+		}
+
+		svg {
+			.size(12px, 12px);
+			fill: var(--color-border);
+		}
+	}
+}
+
+.jodit-ui-block .jodit-ui-input {
+	margin-bottom: 0;
+}

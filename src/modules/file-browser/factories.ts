@@ -1,0 +1,25 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+import type {
+	IContextMenu,
+	IFileBrowserDataProvider,
+	IFileBrowserOptions,
+	IViewBased
+} from '../../types';
+import DataProvider from './data-provider';
+import { ContextMenu } from '../context-menu/context-menu';
+
+export function makeDataProvider(
+	parent: IViewBased,
+	options: IFileBrowserOptions
+): IFileBrowserDataProvider {
+	return new DataProvider(parent, options);
+}
+
+export function makeContextMenu(parent: IViewBased): IContextMenu {
+	return new ContextMenu(parent);
+}

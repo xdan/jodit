@@ -1,0 +1,64 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) '../../styles/variables';
+@import (reference) '../../styles/mixins';
+
+.jodit-status-bar {
+	font-size: var(--font-size-small);
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: var(--color-panel);
+	padding: 0 calc(var(--padding-default) / 2);
+	overflow: hidden;
+	border-radius: 0 0 var(--border-radius-default) var(--border-radius-default);
+
+	&::before {
+		content: '';
+		flex: auto;
+		order: 1;
+	}
+
+	.jodit-status-bar__item {
+		&,
+		& > span {
+			.font();
+
+			font-size: var(--font-size-small);
+		}
+
+		line-height: 1.57142857em;
+		margin: 0 var(--padding-default) 0 0;
+		padding: 0;
+		order: 0;
+
+		&.jodit-status-bar__item-right {
+			margin: 0 0 0 var(--padding-default);
+			order: 2;
+		}
+
+		a {
+			text-decoration: none;
+			cursor: default;
+			border-radius: 3px;
+
+			&:hover {
+				background-color: var(--color-background-gray);
+				text-decoration: none;
+				color: var(--color-text);
+			}
+		}
+	}
+}
+
+.jodit-workplace + .jodit-status-bar:not(:empty) {
+	border-top: 1px solid var(--color-border);
+}
+
+.jodit_disabled .jodit-status-bar {
+	opacity: 0.4;
+}

@@ -1,0 +1,15 @@
+{
+	"plugins": ["stylelint-prettier"],
+	"rules": {
+		"prettier/prettier": true,
+		"selector-type-no-unknown": null,
+		"no-descending-specificity": null,
+		"property-no-unknown": [
+			true,
+			{
+				"ignoreProperties": ["overflow-scrolling"],
+				"checkPrefixed": true
+			}
+		]
+	}
+}

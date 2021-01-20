@@ -1,0 +1,139 @@
+<!doctype html>
+<!--
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License GNU General Public License version 2 or later;
+ * Copyright 2013-2020 Valeriy Chupurnov https://xdsoft.net
+-->
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Jodit Example - Color picker</title>
+	<link rel="icon" type="image/png" href="assets/icon.png" />
+</head>
+<body>
+<header>
+	<nav>
+		<ul class="container">
+			<li><a href="https://xdsoft.net/jodit/">Jodit homepage</a></li>
+			<li><a href="https://xdsoft.net/jodit/play.html">Playground</a></li>
+			<li><a href="https://xdsoft.net/jodit/doc/">Documentation</a></li>
+			<li><a href="https://github.com/xdan/jodit/">Github</a></li>
+			<li><a href="https://github.com/xdan/jodit/blob/master/CHANGELOG.MD">Changelog</a></li>
+			<li>
+				<a href="javascript:void(0)">Examples</a>
+				<ul id="examples"><!-- see app.js--></ul>
+			</li>
+			<li style="float:right"><a href="https://github.com/xdan/jodit/releases/latest">Download</a></li>
+		</ul>
+	</nav>
+</header>
+<div id="main_container" class="container">
+	<div id="introduction">
+		<h3>HTML</h3>
+		<pre><code class="language-markup">
+&lt;script src="https://cdn.jsdelivr.net/npm/a-color-picker@1.2.1/dist/acolorpicker.min.js">&lt;/script>
+&lt;textarea id="editor">&lt;/textarea>
+        </code></pre>
+		<h3>JavaScript</h3>
+		<pre><code class="language-javascript">
+const editor = new Jodit('#area_editor', {
+  buttons: 'brush'
+});
+
+// After open will add custom buttn in default color-picker
+editor.e.on('afterGenerateColorPicker', (form, extra) => {
+  // Make button
+  const elm = editor.create.fromHTML('&lt;button class="jodit-ui-button">Custom&lt;/button>');
+  Jodit.ns.Dom.detach(extra);<br><br>
+  extra.appendChild(elm);<br><br>
+  //
+  let selectedColor = null;
+  //
+  elm.addEventListener('click', () => {
+    // On Click - show dialog witch color-pciker
+    const dialog = Jodit.Alert('', 'Select custom color', () => {
+      // On Ok apply this color
+      if (!selectedColor) {
+        return;
+      }
+      //
+      const style = new Jodit.ns.Style({
+        style: {
+          color: Jodit.ns.Helpers.colorToHex(selectedColor)
+        }
+      });
+      //
+      style.apply(editor);
+    });
+    // Init custom color picker for dialog's content element
+    AColorPicker
+      .from(dialog.dialogbox_content.firstChild)
+      .on('change', (picker, color) => {
+        selectedColor = color;
+      });
+  });
+});
+        </code></pre>
+	</div>
+	<div class="result">
+		<textarea id="area_editor"></textarea>
+	</div>
+</div>
+<footer>
+	<nav>
+		<ul class="container">
+			<li><a href="https://xdsoft.net/jodit/">Jodit homepage</a></li>
+			<li><a href="https://xdsoft.net/jodit/play.html">Playground</a></li>
+			<li><a href="https://xdsoft.net/jodit/doc/">Documentation</a></li>
+			<li><a href="https://github.com/xdan/jodit/">Github</a></li>
+			<li><a href="https://github.com/xdan/jodit/blob/master/CHANGELOG.MD">Changelog</a></li>
+			<li style="float:right"><a href="https://github.com/xdan/jodit/releases/latest">Download</a></li>
+		</ul>
+	</nav>
+</footer>
+</body>
+<link rel="stylesheet" href="../build/jodit.min.css"/>
+<link rel="stylesheet" href="assets/app.css"/>
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,700,700i" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/a-color-picker@1.2.1/dist/acolorpicker.min.js"></script>
+<script src="../build/jodit.min.js"></script>
+<script src="assets/prism.js"></script>
+<script src="assets/app.js"></script>
+<script>
+	const editor = new Jodit('#area_editor', {
+		buttons: 'brush'
+	});
+	editor.e.on('afterGenerateColorPicker', (form, extra) => {
+		const elm = editor.create.fromHTML('<button class="jodit-ui-button">Custom</button>');
+
+		Jodit.ns.Dom.detach(extra);
+		extra.appendChild(elm);
+
+		let selectedColor = null;
+
+		elm.addEventListener('click', () => {
+				const dialog = Jodit.Alert('', 'Select custom color', () => {
+					if (!selectedColor) {
+						return;
+					}
+
+					const style = new Jodit.ns.Style({
+						style: {
+							color: Jodit.ns.Helpers.colorToHex(selectedColor)
+						}
+					});
+
+					style.apply(editor);
+				});
+
+				AColorPicker
+					.from(dialog.dialogbox_content.firstChild)
+					.on('change', (picker, color) => {
+						selectedColor = color;
+					});
+		});
+	});
+</script>
+</html>

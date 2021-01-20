@@ -1,15 +1,24 @@
-.jodit_wysiwyg {
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) './variables';
+
+.jodit-wysiwyg {
 	outline: 0;
+
 	&::selection,
 	*::selection {
 		background: @color-background-selection;
-		color: @color-selection;
+		color: @color-dark;
 	}
 }
-.jodit_container:not(.jodit_inline) .jodit_wysiwyg {
-	margin: 0;
-	padding: @padding-default;
 
+.jodit-container:not(.jodit_inline) .jodit-wysiwyg {
+	margin: 0;
+	padding: 8px;
 	outline: 0;
 	overflow-x: auto;
 	position: relative;
@@ -19,26 +28,7 @@
 		max-width: 100%;
 	}
 
-	p,
-	pre {
-		margin: 0 0 10px;
-	}
-
-	h1,
-	h2,
-	h3,
-	h4,
-	h5 {
-		margin-top: 0;
-	}
-
-	blockquote {
-		border-left: solid 2px @color-text;
-		margin-left: 0;
-		padding-left: 5px;
-		color: @color-text;
-	}
-
+	// It is custom tag
 	jodit-media {
 		position: relative;
 
@@ -47,7 +37,7 @@
 			z-index: 0;
 		}
 
-		&:before {
+		&::before {
 			z-index: 1;
 			content: '';
 			position: absolute;

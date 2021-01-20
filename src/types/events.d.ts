@@ -1,19 +1,19 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * License GNU General License version 2 or later;
- * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { CallbackFunction } from './types';
+import { CallbackFunction, IDestructible } from './types';
 
-interface IEventsNative {
+interface IEventsNative extends IDestructible {
 	/**
 	 * Get current event name
 	 *
 	 * @example
 	 * ```javascript
-	 * parent.events.on('openDialog closeDialog', function () {
-	 *     if (parent.events.current === 'closeDialog') {
+	 * parent.e.on('openDialog closeDialog', function () {
+	 *     if (parent.e.current === 'closeDialog') {
 	 *         alert('Dialog was closed');
 	 *     } else {
 	 *         alert('Dialog was opened');
@@ -21,7 +21,8 @@ interface IEventsNative {
 	 * });
 	 * ```
 	 */
-	current: string[];
+	current: string;
+	currents: string[];
 
 	/**
 	 * Sets the handler for the specified event ( Event List ) for a given element .
@@ -48,18 +49,23 @@ interface IEventsNative {
 	 * ```
 	 */
 	on(
-		subjectOrEvents: string,
-		eventsOrCallback: CallbackFunction,
+		events: string,
+		handler: CallbackFunction,
 		handlerOrSelector?: void,
-		selector?: string,
 		onTop?: boolean
 	): IEventsNative;
 
 	on(
-		subjectOrEvents: object,
-		eventsOrCallback: string,
-		handlerOrSelector: CallbackFunction,
-		selector?: string,
+		subject: HTMLElement,
+		events: string,
+		handler: CallbackFunction,
+		onTop?: boolean
+	): IEventsNative;
+
+	on(
+		subject: object,
+		events: string,
+		handler: CallbackFunction,
 		onTop?: boolean
 	): IEventsNative;
 
@@ -67,9 +73,10 @@ interface IEventsNative {
 		subjectOrEvents: object | string,
 		eventsOrCallback: string | CallbackFunction,
 		handlerOrSelector?: CallbackFunction | void,
-		selector?: string,
 		onTop?: boolean
 	): IEventsNative;
+
+	one(...args: Parameters<IEventsNative['on']>): IEventsNative;
 
 	/**
 	 * Disable all handlers specified event ( Event List ) for a given element. Either a specific event handler.
@@ -82,24 +89,24 @@ interface IEventsNative {
 	 * @example
 	 * ```javascript
 	 * var a = {name: "Anton"};
-	 * parent.events.on(a, 'open', function () {
+	 * parent.e.on(a, 'open', function () {
 	 *     alert(this.name);
 	 * });
 	 *
-	 * parent.events.fire(a, 'open');
-	 * parent.events.off(a, 'open');
+	 * parent.e.fire(a, 'open');
+	 * parent.e.off(a, 'open');
 	 * var b = {name: "Ivan"}, hndlr = function () {
 	 *  alert(this.name);
 	 * };
-	 * parent.events.on(b, 'open close', hndlr);
-	 * parent.events.fire(a, 'open');
-	 * parent.events.off(a, 'open', hndlr);
-	 * parent.events.fire(a, 'close');
-	 * parent.events.on('someGlobalEvents', function () {
+	 * parent.e.on(b, 'open close', hndlr);
+	 * parent.e.fire(a, 'open');
+	 * parent.e.off(a, 'open', hndlr);
+	 * parent.e.fire(a, 'close');
+	 * parent.e.on('someGlobalEvents', function () {
 	 *   console.log(this); // parent
 	 * });
-	 * parent.events.fire('someGlobalEvents');
-	 * parent.events.off('someGlobalEvents');
+	 * parent.e.fire('someGlobalEvents');
+	 * parent.e.off('someGlobalEvents');
 	 * ```
 	 */
 	off(
@@ -132,7 +139,7 @@ interface IEventsNative {
 	 * @example
 	 * ```javascript
 	 * var dialog = new Jodit.modules.Dialog();
-	 * parent.events.on('afterClose', function () {
+	 * parent.e.on('afterClose', function () {
 	 *     dialog.destruct(); // will be removed from DOM
 	 * });
 	 * dialog.open('Hello world!!!');
@@ -147,7 +154,7 @@ interface IEventsNative {
 	 *  ```
 	 *
 	 */
-	fire(subjectOrEvents: string, eventsList?: any, ...args: any[]): any;
+	fire(subjectOrEvents: string, ...args: any[]): any;
 	fire(
 		subjectOrEvents: object,
 		eventsList: string | Event,
@@ -158,6 +165,4 @@ interface IEventsNative {
 		eventsList?: string | any | Event,
 		...args: any[]
 	): any;
-
-	destruct(): void;
 }

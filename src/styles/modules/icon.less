@@ -1,59 +1,50 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 @import (reference) '../variables';
 @import (reference) '../mixins';
+
 @keyframes rotate {
 	to {
 		transform: rotate(360deg);
 	}
 }
 
-.jodit_icon-loader {
-	background: data-uri('../modules/loader.png') no-repeat center;
+.jodit-icon_loader {
+	background: data-uri('../icons/loader.png') no-repeat center;
 	background-size: 100% 100%;
-	width: @icon_loader_size;
-	height: @icon_loader_size;
+	width: var(--icon-loader-size);
+	height: var(--icon-loader-size);
 	display: inline-block;
 	vertical-align: middle;
 	will-change: transform;
 	animation: rotate 2s ease-out 0s infinite;
 }
 
-.jodit_icon {
-	font-style: normal;
-	display: inline-block;
-	width: @icon_middle_size;
-	height: @icon_middle_size;
-	font-size: 8px;
-	vertical-align: middle;
-	fill: @color-icon;
+.jodit-icon {
+	.size(@icon-middle-size, @icon-middle-size);
+
+	fill: var(--color-icon);
+	stroke: var(--color-icon);
+
 	transform-origin: 0 0 !important;
 	overflow: visible;
 	background: center no-repeat;
 	background-size: contain;
 }
 
-svg.jodit_icon {
+.jodit-icon_close {
+	stroke: var(--color-icon);
+}
+
+svg.jodit-icon {
 	isolation: isolate;
 	height: auto;
 }
 
-.jodit_text_icon {
+.jodit-icon_text {
 	font-size: 14px;
-}
-
-.jodit_toolbar_size {
-	&-small .jodit_icon {
-		.size(@icon_small_size);
-	}
-	&-large .jodit_icon {
-		.size(@icon_large_size);
-	}
 }

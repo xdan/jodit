@@ -1,11 +1,12 @@
+.awcache/
 .idea/
 node_modules/
 yarn-error.log
 /test.html
-/index.html
 
 /vendor/
 /fake.html
+/test.html
 
 .DS_Store
 .vs

@@ -1,0 +1,22 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) '../../../styles/variables';
+@import (reference) '../../../styles/mixins';
+@import (reference) '../../../core/ui/button/button';
+
+.jodit-toolbar-content {
+	.jodit-ui-button();
+
+	border: 1px solid transparent;
+	padding: 0;
+
+	&:hover:not([disabled]) {
+		background-color: transparent;
+		outline: 0;
+		opacity: 1;
+	}
+}

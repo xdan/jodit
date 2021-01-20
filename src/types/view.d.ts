@@ -1,18 +1,57 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Buttons, Controls, IToolbarCollection } from './toolbar';
-import { IComponent, IDictionary } from './types';
-import { ICreate } from './create';
+import {
+	Buttons,
+	ButtonsOption,
+	Controls,
+	IProgressBar,
+	IToolbarCollection
+} from './toolbar';
+import { IComponent, IContainer, IDictionary, Nullable } from './types';
+import { Attributes, ICreate } from './create';
+import { IStorage } from './storage';
+import { IAsync } from './async';
+import { IUIButtonState } from './ui';
 import { IEventsNative } from './events';
+import { IPluginButton } from './plugin';
 
-interface IViewOptions {
+interface ILanguageOptions {
+	language?: string;
+	debugLanguage?: boolean;
+	i18n?: IDictionary<IDictionary<string>> | false;
+}
+
+interface IToolbarOptions {
+	theme?: string;
+	toolbar?: boolean | string | HTMLElement;
+	toolbarButtonSize?: IUIButtonState['size'];
+	textIcons?: boolean | ((key: string) => boolean);
+
+	extraButtons?: Buttons;
+	removeButtons?: string[];
+	extraIcons?: IDictionary<string>;
+
+	buttons?: ButtonsOption;
+
+	showTooltip?: boolean;
+	showTooltipDelay?: number;
+	useNativeTooltip?: boolean;
+
+	direction?: string;
+}
+
+type NodeFunction = (elm: HTMLElement) => void;
+
+interface IViewOptions extends ILanguageOptions, IToolbarOptions {
+	basePath?: string;
+	theme?: string;
+
+	defaultTimeout?: number;
+
 	disabled?: boolean;
 	readonly?: boolean;
 	iframe?: boolean;
@@ -21,64 +60,71 @@ interface IViewOptions {
 
 	allowTabNavigation?: boolean;
 
-	removeButtons: string[];
-	buttons: Buttons;
 	zIndex?: number;
 	fullsize?: boolean;
-	globalFullsize?: boolean;
-	showTooltip?: boolean;
-	showTooltipDelay?: number;
-	useNativeTooltip?: boolean;
-	textIcons?: boolean;
-	direction?: string;
+	globalFullSize?: boolean;
+
 	controls?: Controls;
+
+	createAttributes?: IDictionary<Attributes | NodeFunction>;
+
+	events?: IDictionary<(...args: any[]) => any>;
+
+	shadowRoot?: Nullable<ShadowRoot>;
 }
 
-interface IPanel extends IComponent {
-	container: HTMLElement;
-	create: ICreate;
+interface IViewBased<T = IViewOptions> extends IContainer, IComponent {
+	isView: true;
 
-	ownerDocument: Document;
-	ownerWindow: Window;
-
-	isLockedNotBy(name: string): boolean;
-	isLocked(): boolean;
-
-	lock(name?: string): boolean;
-	unlock(): boolean;
-
-	isFullSize: () => boolean;
-	toggleFullSize(isFullSize?: boolean): void;
-}
-
-interface IViewBased<T = IViewOptions> extends IPanel {
 	/**
-	 * @property {string} ID attribute for source element, id add {id}_editor it's editor's id
+	 * ID attribute for source element, id add {id}_editor it's editor's id
 	 */
 	id: string;
 
-	buffer: IDictionary;
+	basePath: string;
 
-	progress_bar: HTMLElement;
+	isLocked: boolean;
+	isLockedNotBy(name: string): boolean;
+	lock(name?: string): boolean;
+	unlock(): boolean;
 
-	options: T;
+	isFullSize: boolean;
+	toggleFullSize(isFullSize?: boolean): void;
+
+	buffer: IStorage;
+
+	progressbar: IProgressBar;
 
 	events: IEventsNative;
+	e: this['events'];
+
+	async: IAsync;
+
 	create: ICreate;
+	c: this['create'];
+
+	OPTIONS: T;
+	options: this['OPTIONS'];
+	// alias
+	o: this['options'];
 
 	i18n: (text: string, ...params: Array<string | number>) => string;
 
 	defaultTimeout: number;
 
-	iframe?: HTMLIFrameElement | null;
-
-	getInstance<T = IComponent>(moduleName: string, options?: object): T;
-
 	getVersion: () => string;
 
-	components: IComponent[];
+	components: Set<IComponent>;
+	getInstance<T extends IComponent>(moduleName: string, options?: object): T;
 }
 
 interface IViewWithToolbar<T = IViewOptions> extends IViewBased<T> {
 	toolbar: IToolbarCollection;
+	toolbarContainer: HTMLElement;
+
+	registeredButtons: Set<IPluginButton>;
+	registerButton(btn: IPluginButton): this;
+	unregisterButton(btn: IPluginButton): this;
+
+	setPanel(element: HTMLElement | string): void;
 }

@@ -1,0 +1,64 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) '../../styles/variables';
+
+@keyframes pulse {
+	30% {
+		opacity: 0.6;
+	}
+
+	60% {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 0.6;
+	}
+}
+
+.jodit-progressbar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 2px;
+	z-index: 2147483647;
+	border-radius: 1px;
+	opacity: 0.7;
+
+	div {
+		position: relative;
+		background: var(--color-background-progress);
+		height: 2px;
+		transition: width 500ms ease-out, opacity 500ms linear;
+		will-change: width, opacity;
+
+		&::before,
+		&::after {
+			animation: pulse 2s ease-out 0s infinite;
+			content: '';
+			display: inline-block;
+			position: absolute;
+			top: 0;
+			height: 2px;
+			box-shadow: var(--color-background-progress) 1px 0 6px 1px;
+			border-radius: 100%;
+			opacity: 0.6;
+		}
+
+		&::before {
+			width: 180px;
+			right: -80px;
+			clip: rect(-6px, 90px, 14px, -6px);
+		}
+
+		&::after {
+			width: 20px;
+			right: 0;
+			clip: rect(-6px, 22px, 14px, var(--padding-default));
+		}
+	}
+}

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+docker build -t jodit .
+
+docker run --rm -v $PWD/..:/app jodit bash -c "\
+    npm install \
+    && npm audit fix --force"

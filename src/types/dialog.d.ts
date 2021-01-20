@@ -1,15 +1,48 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 import { IViewOptions } from './view';
+import { IComponent, IContainer } from './types';
 
 export interface IDialogOptions extends IViewOptions {
 	resizable?: boolean;
 	draggable?: boolean;
+	maxWidth?: string | number;
+	minWidth?: string | number;
+	minHeight?: string | number;
+}
+
+export type ContentItem = string | HTMLElement | IContainer;
+export type Content =
+	| ContentItem
+	| ContentItem[]
+	| Array<ContentItem | ContentItem[]>;
+
+export interface IDialog extends IComponent, IContainer {
+	isOpened: boolean;
+	dialog: HTMLDivElement;
+
+	open(destroyAfter: boolean): this;
+	open(destroyAfter: boolean, modal: boolean): this;
+	open(
+		content?: Content,
+		title?: Content,
+		destroyAfter?: boolean,
+		modal?: boolean
+	): this;
+
+	close(): this;
+
+	setSize(w?: number | string, h?: number | string): this;
+	calcAutoSize(): this;
+
+	setPosition(x?: number, y?: number): this;
+	setHeader(content: Content): this;
+	setContent(content: Content): this;
+	setFooter(content: Content): this;
+	setModal(modal: undefined | boolean): this;
+	getZIndex(): number;
 }

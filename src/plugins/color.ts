@@ -1,91 +1,109 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { Widget } from '../modules/Widget';
-import TabsWidget = Widget.TabsWidget;
-import ColorPickerWidget = Widget.ColorPickerWidget;
-import { Dom } from '../modules/Dom';
-import { css, normalizeColor } from '../modules/helpers/';
-import { IDictionary, IJodit } from '../types';
-import { IControlType } from '../types/toolbar';
+import type { IJodit, IControlType } from '../types';
+import { Config } from '../config';
+import { Dom } from '../modules/';
+import { css, dataBind, normalizeColor } from '../core/helpers/';
+import { ColorPickerWidget, TabOption, TabsWidget } from '../modules/widget';
 
 Config.prototype.controls.brush = {
-	isActive: (editor: IJodit, control: IControlType, button): boolean => {
-		if (!button) {
-			return true;
+	update(button): void {
+		const color = dataBind(button, 'color');
+		const editor = button.j as IJodit;
+
+		const update = (key: string, value: string) => {
+			if (value && value !== css(editor.editor, key).toString()) {
+				button.state.icon.fill = value;
+				return;
+			}
+		};
+
+		if (color) {
+			const mode = dataBind(button, 'color');
+			update(mode === 'color' ? mode : 'background-color', color);
+			return;
 		}
 
-		const
-			current: Node | false = editor.selection.current(),
-			icon: SVGSVGElement | null = button.container.querySelector('svg');
+		const current = editor.s.current();
 
-		if (icon && icon.style.fill) {
-			icon.style.removeProperty('fill');
-		}
-
-		if (current && !button.isDisable()) {
+		if (current && !button.state.disabled) {
 			const currentBpx: HTMLElement =
 				(Dom.closest(
 					current,
 					elm => {
 						return (
-							Dom.isBlock(elm, editor.editorWindow) ||
-							(elm &&
-								Dom.isNode(elm, editor.editorWindow) &&
-								elm.nodeType === Node.ELEMENT_NODE)
+							Dom.isBlock(elm, editor.ew) ||
+							(elm && Dom.isElement(elm))
 						);
 					},
 					editor.editor
 				) as HTMLElement) || editor.editor;
 
-			const
-				colorHEX: string = css(currentBpx, 'color').toString(),
-				bgHEX: string = css(currentBpx, 'background-color').toString();
-
-			if (colorHEX !== css(editor.editor, 'color').toString()) {
-				icon && (icon.style.fill = colorHEX);
-				return true;
-			}
-
-			if (bgHEX !== css(editor.editor, 'background-color').toString()) {
-				icon && (icon.style.fill = bgHEX);
-				return true;
-			}
+			update('color', css(currentBpx, 'color').toString());
+			update(
+				'background-color',
+				css(currentBpx, 'background-color').toString()
+			);
 		}
 
-		return false;
+		button.state.icon.fill = '';
+		button.state.activated = false;
 	},
 
 	popup: (
 		editor: IJodit,
 		current: Node | false,
 		self: IControlType,
-		close: () => void
+		close: () => void,
+		button
 	) => {
 		let colorHEX: string = '',
 			bg_color: string = '',
-			tabs: IDictionary<HTMLElement>,
+			tabs: TabOption[] = [],
 			currentElement: HTMLElement | null = null;
 
 		if (
 			current &&
 			current !== editor.editor &&
-			Dom.isNode(current, editor.editorWindow) &&
-			current.nodeType === Node.ELEMENT_NODE
+			Dom.isNode(current, editor.ew)
 		) {
-			colorHEX = css(current as HTMLElement, 'color').toString();
-			bg_color = css(
-				current as HTMLElement,
-				'background-color'
-			).toString();
-			currentElement = current as HTMLElement;
+			if (
+				Dom.isElement(current) &&
+				editor.s.isCollapsed() &&
+				!Dom.isTag(current, ['br', 'hr'])
+			) {
+				currentElement = current as HTMLElement;
+			}
+
+			Dom.up(
+				current,
+				(node): true | void => {
+					if (Dom.isHTMLElement(node, editor.ew)) {
+						const color = css(node, 'color', undefined, true),
+							background = css(
+								node,
+								'background-color',
+								undefined,
+								true
+							);
+
+						if (color) {
+							colorHEX = color.toString();
+							return true;
+						}
+
+						if (background) {
+							bg_color = background.toString();
+							return true;
+						}
+					}
+				},
+				editor.editor
+			);
 		}
 
 		const backgroundTag: HTMLElement = ColorPickerWidget(
@@ -96,6 +114,10 @@ Config.prototype.controls.brush = {
 				} else {
 					currentElement.style.backgroundColor = value;
 				}
+
+				dataBind(button, 'color', value);
+				dataBind(button, 'color-mode', 'background');
+
 				close();
 			},
 			bg_color
@@ -109,24 +131,61 @@ Config.prototype.controls.brush = {
 				} else {
 					currentElement.style.color = value;
 				}
+
+				dataBind(button, 'color', value);
+				dataBind(button, 'color-mode', 'color');
+
 				close();
 			},
 			colorHEX
 		);
 
-		if (editor.options.colorPickerDefaultTab === 'background') {
-			tabs = {
-				Background: backgroundTag,
-				Text: colorTab
-			};
-		} else {
-			tabs = {
-				Text: colorTab,
-				Background: backgroundTag
-			};
+		tabs = [
+			{
+				name: 'Background',
+				content: backgroundTag
+			},
+			{
+				name: 'Text',
+				content: colorTab
+			}
+		];
+
+		if (editor.o.colorPickerDefaultTab !== 'background') {
+			tabs = tabs.reverse();
 		}
 
 		return TabsWidget(editor, tabs, currentElement as any);
+	},
+	exec(jodit: IJodit, current, { button }): void | false {
+		const mode = dataBind(button, 'color-mode'),
+			color = dataBind(button, 'color');
+
+		if (!mode) {
+			return false;
+		}
+
+		if (
+			current &&
+			current !== jodit.editor &&
+			Dom.isNode(current, jodit.ew) &&
+			Dom.isElement(current)
+		) {
+			switch (mode) {
+				case 'color':
+					(current as HTMLElement).style.color = color;
+					break;
+				case 'background':
+					(current as HTMLElement).style.backgroundColor = color;
+					break;
+			}
+		} else {
+			jodit.execCommand(
+				mode === 'background' ? mode : 'forecolor',
+				false,
+				color
+			);
+		}
 	},
 	tooltip: 'Fill color or set the text color'
 } as IControlType;
@@ -135,7 +194,12 @@ Config.prototype.controls.brush = {
  * Process commands `background` and `forecolor`
  * @param {Jodit} editor
  */
-export function color(editor: IJodit) {
+export function color(editor: IJodit): void {
+	editor.registerButton({
+		name: 'brush',
+		group: 'color'
+	});
+
 	const callback = (
 		command: string,
 		second: string,
@@ -145,12 +209,12 @@ export function color(editor: IJodit) {
 
 		switch (command) {
 			case 'background':
-				editor.selection.applyCSS({
+				editor.s.applyStyle({
 					backgroundColor: !colorHEX ? '' : (colorHEX as string)
 				});
 				break;
 			case 'forecolor':
-				editor.selection.applyCSS({
+				editor.s.applyStyle({
 					color: !colorHEX ? '' : (colorHEX as string)
 				});
 				break;

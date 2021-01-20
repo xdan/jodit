@@ -1,108 +1,167 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 const path = require('path');
+const fs = require('fs');
 
 const webpack = require('webpack');
+
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MinimizeJSPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const PostBuild = require('./src/utils/post-build');
 
-const pkg = require('./package.json');
+/**
+ * @param {array} end
+ * @param {object} argv
+ * @param {string} dir
+ */
+module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
+	const pkg = require(path.resolve(dir, './package.json'));
 
-const banner = `/*!
- ${pkg.name} - ${pkg.description}
- Author: ${pkg.author}
- Version: v${pkg.version}
- Url: ${pkg.homepage}
- License(s): ${pkg.license}
-*/
-`;
+	const banner = `/*!
+ * ${pkg.name} - ${pkg.description}
+ * Author: ${pkg.author}
+ * Version: v${pkg.version}
+ * Url: ${pkg.homepage}
+ * License(s): ${pkg.license}
+ */
+	`;
 
-module.exports = (env, argv) => {
 	const debug = !argv || !argv.mode || !argv.mode.match(/production/);
+	const isTest = argv && Boolean(argv.isTest);
+
 	const mode = debug ? 'development' : argv.mode;
-	const uglify = !debug && process.env.NODE_ENV !== 'production-no-uflify';
+	const isProd = mode === 'production';
+	const uglify = !debug && argv && Boolean(argv.uglify);
+
+	const ES = argv && ['es5', 'es2018'].includes(argv.es) ? argv.es : 'es2018';
+	const ESNext = ES === 'es2018';
+
+	console.warn('ES mode: ' + ES);
+
+	const filename = name =>
+		name +
+		(ES === 'es5' || isTest ? '' : '.' + ES) +
+		(uglify ? '.min' : '');
 
 	const css_loaders = [
-		debug ? 'style-loader' : MiniCssExtractPlugin.loader,
+		debug || isTest ? 'style-loader' : MiniCssExtractPlugin.loader,
 		{
 			loader: 'css-loader',
 			options: {
 				sourceMap: debug,
-				importLoaders: 1,
-				minimize: !debug
+				importLoaders: 1
 			}
 		},
 		{
-			loader: 'postcss-loader',
-			options: {
-				sourceMap: debug,
-				plugins: () => {
-					return [require('precss'), require('autoprefixer')];
-				}
-			}
+			loader: path.resolve(
+				__dirname,
+				'./src/utils/css-variables-prefixes'
+			)
 		},
 		{
 			loader: 'less-loader',
 			options: {
 				sourceMap: debug,
-				noIeCompat: true
+				lessOptions: {}
 			}
 		}
 	];
 
+	const plugins = [
+		new webpack.ProgressPlugin(),
+		new webpack.DefinePlugin({
+			appVersion: JSON.stringify(pkg.version),
+			isProd: isProd,
+			'process.env': {
+				TARGET_ES: JSON.stringify(ES),
+				NODE_ENV: JSON.stringify(mode)
+			}
+		})
+	];
+
 	const config = {
-		cache: true,
+		cache: !isProd,
 		mode,
-		context: __dirname,
-		devtool: debug ? 'inline-sourcemap' : false,
-		entry: debug
-			? ['webpack-hot-middleware/client', './src/index']
-			: './src/index',
+		context: dir,
+
+		stats: {
+			colors: true
+		},
+
+		devtool: debug ? 'inline-source-map' : false,
+
+		entry: {
+			jodit: debug
+				? ['webpack-hot-middleware/client.js', './src/index']
+				: ['./src/index']
+		},
+
+		output: {
+			path: path.join(dir, 'build'),
+			filename: filename('[name]') + '.js',
+			publicPath: '/build/',
+			libraryTarget: 'umd'
+		},
+
 		resolve: {
-			extensions: ['.ts', '.d.ts', '.js', '.json', '.less', '.svg']
+			extensions: ['.js', '.ts', '.d.ts', '.json', '.less', '.svg']
 		},
 
 		optimization: {
 			minimize: !debug && uglify,
+			moduleIds: debug ? 'named' : 'natural',
 			minimizer: [
-				new UglifyJsPlugin({
-					cache: true,
+				new MinimizeJSPlugin({
 					parallel: true,
 					extractComments: false,
-					uglifyOptions: {
-						ie8: false,
+
+					exclude: './src/langs',
+					terserOptions: {
+						ecma: ESNext ? 8 : 5,
+
 						mangle: {
 							reserved: ['Jodit']
 						},
+
 						compress: {
-							if_return: true,
-							unused: true,
-							booleans: true,
-							properties: true,
-							dead_code: true,
+							unsafe_arrows: ESNext,
+							unsafe_methods: ESNext,
+							unsafe: ESNext,
+
+							drop_console: !isTest,
+							drop_debugger: !isTest,
+
 							pure_getters: true,
-							unsafe: true,
 							unsafe_comps: true,
-							drop_console: true,
-							passes: 2
+							passes: 7
 						},
+
 						output: {
 							comments: false,
 							beautify: false,
 							preamble: banner
-						},
-						minimize: true
+						}
+					}
+				}),
+				new CssMinimizerPlugin({
+					cache: true,
+					parallel: true,
+					minimizerOptions: {
+						preset: [
+							'advanced',
+							{
+								discardComments: { removeAll: true },
+								zindex: false
+							}
+						]
 					}
 				})
 			]
-		},
-
-		output: {
-			path: path.join(__dirname, 'build'),
-			filename:
-				uglify || mode === 'development' ? 'jodit.min.js' : 'jodit.js',
-			publicPath: '/build/',
-			libraryTarget: 'umd'
 		},
 
 		module: {
@@ -111,66 +170,71 @@ module.exports = (env, argv) => {
 					test: /\.less$/,
 					use: css_loaders
 				},
+
+				{
+					test: /\.(js|ts)$/,
+					loader: 'ts-loader',
+					options: {
+						transpileOnly: true,
+						allowTsInNodeModules: true
+					},
+					include: [path.resolve(__dirname, './node_modules')]
+				},
+
 				{
 					test: /\.(ts)$/,
 					use: [
 						{
-							loader: path.resolve('src/utils/lang-loader.js')
-						},
-						'awesome-typescript-loader'
+							loader: path.resolve(
+								__dirname,
+								'./src/utils/lang-loader.js'
+							)
+						}
 					],
-					include: path.resolve('src/langs'),
-					exclude: path.resolve('src/langs/index.ts')
+					include: path.resolve(__dirname, './src/langs'),
+					exclude: path.resolve(__dirname, './src/langs/index.ts')
 				},
+
 				{
-					test: /\.(ts)$/,
-					loader: 'awesome-typescript-loader',
-					options: uglify
-						? {
-								//getCustomTransformers: () => privateTransformer
-						  }
-						: {},
+					test: /\.ts$/,
+					loader: 'ts-loader',
+					options: {
+						transpileOnly: uglify,
+						allowTsInNodeModules: true,
+						compilerOptions: {
+							target: ES
+						}
+					},
+					include: [path.resolve(__dirname, './src/')],
 					exclude: [
-						/(node_modules|bower_components)/,
-						/langs[\/\\][a-z]{2}\.ts/,
-						/langs[\/\\][a-z]{2}_[a-z]{2}\.ts/
+						/langs\/[a-z]{2}\.ts/,
+						/langs\/[a-z]{2}_[a-z]{2}\.ts/
 					]
 				},
+
 				{
 					test: /\.svg$/i,
-					use: 'raw-loader'
+					use: {
+						loader: path.resolve(
+							__dirname,
+							'src/utils/svg-loader.js'
+						)
+					}
 				}
 			]
 		},
 
 		plugins: debug
-			? [
-					new webpack.DefinePlugin({
-						appVersion: JSON.stringify(pkg.version),
-						'process.env': {
-							NODE_ENV: JSON.stringify(mode)
-						}
-					}),
-					new webpack.NamedModulesPlugin(),
-					new webpack.HotModuleReplacementPlugin()
-			  ]
-			: [
-					new webpack.optimize.OccurrenceOrderPlugin(),
-					new webpack.DefinePlugin({
-						appVersion: JSON.stringify(pkg.version),
-						'process.env': {
-							NODE_ENV: JSON.stringify(mode)
-						}
-					})
-			  ]
+			? [...plugins, new webpack.HotModuleReplacementPlugin()]
+			: plugins
 	};
 
-	if (!debug) {
+	if (!debug && !isTest) {
 		switch (mode) {
 			case 'production':
 				config.plugins.push(
 					new MiniCssExtractPlugin({
-						filename: uglify ? 'jodit.min.css' : 'jodit.css'
+						filename: filename('[name]') + '.css'
 					})
 				);
 
@@ -178,28 +242,60 @@ module.exports = (env, argv) => {
 		}
 
 		config.plugins.push(
-			new OptimizeCssAssetsPlugin({
-				assetNameRegExp: /\.css$/,
-				cssProcessorPluginOptions: {
-					preset: [
-						'default',
-						{
-							discardComments: {
-								removeAll: true
-							},
-							normalizeWhitespace: uglify
-						}
-					]
-				}
-			}),
-
 			new webpack.BannerPlugin({
 				banner,
 				raw: true,
 				entryOnly: true
 			})
 		);
+
+		if (isProd && !ESNext && !onlyTS) {
+			config.plugins.push(
+				new PostBuild(() => {
+					const postcss = require('postcss');
+
+					const plugins = postcss([
+						require('autoprefixer')({
+							overrideBrowserslist: [
+								'>1%',
+								'last 4 versions',
+								'Firefox ESR',
+								'ie >= 11'
+							]
+						}),
+						require('postcss-css-variables')
+					]);
+
+					const file = path.resolve(
+						config.output.path,
+						filename('jodit') + '.css'
+					);
+
+					fs.readFile(file, (err, css) => {
+						if (err) {
+							console.log(err);
+							return;
+						}
+
+						plugins
+							.process(css, { from: file, to: file })
+							.then(result => {
+								fs.writeFile(
+									file,
+									banner + result.css,
+									() => true
+								);
+							});
+					});
+				})
+			);
+		}
 	}
+
+	Object.defineProperty(config, 'css_loaders', {
+		enumerable: false,
+		value: css_loaders
+	});
 
 	return config;
 };

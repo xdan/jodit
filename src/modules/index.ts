@@ -1,34 +1,46 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export { Ajax } from './Ajax';
-export { EventsNative } from './events/eventsNative';
-export { Component } from './Component';
-export { ContextMenu } from './ContextMenu';
-export { Cookie } from './Cookie';
-export { Alert, Confirm, Promt, Dialog } from './dialog/';
-export { Dom } from './Dom';
-export { Plugin } from './Plugin';
-export { Create } from './Create';
-export { FileBrowser } from './filebrowser/fileBrowser';
-import * as Helpers from './helpers/';
+export * from '../core/events';
+export { Async } from '../core/async';
+export { Ajax } from '../core/ajax';
+export { Component, ViewComponent, STATUSES } from '../core/component';
+export { ContextMenu } from './context-menu/context-menu';
+export { Alert, Confirm, Prompt, Dialog } from './dialog/';
+export { Dom } from '../core/dom';
+export { Plugin } from '../core/plugin';
+export { Create } from '../core/create';
+export {
+	UIElement,
+	UIButton,
+	Popup,
+	UISeparator,
+	UIGroup,
+	UIList,
+	UIForm,
+	UIInput,
+	UITextArea,
+	UICheckbox,
+	UIBlock,
+	Icon
+} from '../core/ui';
+export { View } from '../core/view/view';
+export { ViewWithToolbar } from '../core/view/view-with-toolbar';
+export { FileBrowser } from './file-browser/file-browser';
+import * as Helpers from '../core/helpers/';
 export { Helpers };
-export { ImageEditor } from './ImageEditor';
+export { ImageEditor } from './image-editor/image-editor';
 export { Observer } from './observer/observer';
-export { Select } from './Selection';
-export { Storage } from './storage/storage';
-export { Snapshot } from './Snapshot';
-export { Table } from './Table';
-export { ToolbarIcon } from './toolbar/icon';
-export { JoditToolbarCollection } from './toolbar/joditToolbarCollection';
-export { ToolbarCollection } from './toolbar/collection';
-export { ToolbarButton } from './toolbar/button';
-export { Stack } from './Stack';
-export { Widget } from './Widget';
-export { Uploader } from './Uploader';
+export { ProgressBar } from './progress-bar/progress-bar';
+export { Select, Style } from '../core/selection';
+export { Snapshot } from './observer/snapshot';
+export { StatusBar } from './status-bar/status-bar';
+export { Table } from './table';
+export { ToolbarEditorCollection } from './toolbar/collection/editor-collection';
+export { ToolbarCollection } from './toolbar/collection/collection';
+export * from './toolbar/button';
+export { Uploader } from './uploader/uploader';
+export { PluginSystem } from '../core/plugin-system';

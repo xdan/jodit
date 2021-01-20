@@ -1,15 +1,12 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { IDictionary, IJodit } from '../types';
-import { IControlType } from '../types/toolbar';
+import type { IDictionary, IJodit, IControlType } from '../types';
+import { Config } from '../config';
+import { isArray } from '../core/helpers';
 
 Config.prototype.controls.subscript = {
 	tags: ['sub'],
@@ -47,6 +44,7 @@ Config.prototype.controls.underline = {
 	},
 	tooltip: 'Underline'
 } as IControlType;
+
 Config.prototype.controls.strikethrough = {
 	tagRegExp: /^(s)$/i,
 	tags: ['s'],
@@ -59,7 +57,7 @@ Config.prototype.controls.strikethrough = {
 /**
  * Bold plugin - change B to Strong, i to Em
  */
-export function bold(editor: IJodit) {
+export function bold(editor: IJodit): void {
 	const callBack = (command: string): false => {
 		const control: IControlType = Config.defaultOptions.controls[
 				command
@@ -72,21 +70,33 @@ export function bold(editor: IJodit) {
 			cssRules: IDictionary<string> = {};
 
 		Object.keys(cssOptions).forEach((key: string) => {
-			cssRules[key] = Array.isArray(cssOptions[key])
+			cssRules[key] = isArray(cssOptions[key])
 				? (cssOptions[key] as any)[0]
 				: cssOptions[key];
 		});
 
-		editor.selection.applyCSS(
-			cssRules,
-			control.tags ? control.tags[0] : undefined,
-			control.css as any
-		);
+		editor.s.applyStyle(cssRules, {
+			element: control.tags ? control.tags[0] : undefined
+		});
 
-		editor.events.fire('synchro');
+		editor.e.fire('synchro');
 
 		return false;
 	};
+
+	['bold', 'italic', 'underline', 'strikethrough'].forEach(name => {
+		editor.registerButton({
+			name,
+			group: 'font-style'
+		});
+	});
+
+	['superscript', 'subscript'].forEach(name => {
+		editor.registerButton({
+			name,
+			group: 'script'
+		});
+	});
 
 	editor
 		.registerCommand('bold', {
