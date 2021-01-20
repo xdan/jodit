@@ -41,6 +41,7 @@ export class UIButtonGroup extends UIGroup {
 	constructor(
 		jodit: IViewBased,
 		readonly options: {
+			name?: string;
 			value?: string;
 			label?: string;
 			onChange?: (values: IUIOption[]) => void;

@@ -12,3 +12,4 @@ export * from './list/group';
 export * from './list/list';
 export * from './form';
 export * from './icon';
+export * from './progress-bar/progress-bar';

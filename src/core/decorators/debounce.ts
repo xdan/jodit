@@ -4,8 +4,19 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IDictionary, IViewBased, IViewComponent } from '../../types';
-import { error, isFunction, isNumber, isViewObject } from '../helpers';
+import type {
+	IDictionary,
+	IViewBased,
+	IViewComponent,
+	IAsyncParams
+} from '../../types';
+import {
+	error,
+	isFunction,
+	isNumber,
+	isPlainObject,
+	isViewObject
+} from '../helpers';
 import { Component, STATUSES } from '../component';
 
 /**
@@ -16,7 +27,7 @@ import { Component, STATUSES } from '../component';
  * @param method
  */
 export function debounce<V = IViewComponent | IViewBased>(
-	timeout?: number | ((ctx: V) => number),
+	timeout?: number | ((ctx: V) => number | IAsyncParams) | IAsyncParams,
 	firstCallImmediately: boolean = false,
 	method: 'debounce' | 'throttle' = 'debounce'
 ) {
@@ -39,7 +50,9 @@ export function debounce<V = IViewComponent | IViewBased>(
 
 			(component as any)[propertyKey] = view.async[method](
 				(component as any)[propertyKey].bind(component),
-				isNumber(realTimeout) ? realTimeout : view.defaultTimeout,
+				isNumber(realTimeout) || isPlainObject(realTimeout)
+					? realTimeout
+					: view.defaultTimeout,
 				firstCallImmediately
 			);
 		});

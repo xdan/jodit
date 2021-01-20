@@ -14,11 +14,13 @@ import { ViewComponent } from '../component';
 import { Dom } from '../dom';
 import { Elms, Mods } from '../traits';
 import { isString } from '../helpers';
+import { Icon } from './icon';
 
 export abstract class UIElement<T extends IViewBased = IViewBased>
 	extends ViewComponent<T>
 	implements IUIElement, Mods, Elms {
 	container!: HTMLElement;
+	name: string = '';
 
 	private __parentElement: Nullable<IUIElement> = null;
 
@@ -167,6 +169,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		if (isString(result)) {
 			const elm = this.j.c.fromHTML(
 				result
+					.replace(/\*([^*]+?)\*/g, (_, name) => Icon.get(name) || '')
 					.replace(/&__/g, this.componentName + '__')
 					.replace(/~([^~]+?)~/g, (_, s) => this.i18n(s))
 			);

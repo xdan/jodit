@@ -316,9 +316,7 @@ export interface IStatusBar extends IComponent {
 	append(el: HTMLElement, inTheRight?: boolean): void;
 }
 
-export interface IProgressBar extends IDestructible {
-	jodit: IViewBased;
-
+export interface IProgressBar extends IUIElement {
 	show(): IProgressBar;
 	hide(): IProgressBar;
 

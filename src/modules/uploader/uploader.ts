@@ -233,6 +233,10 @@ export class Uploader extends ViewComponent implements IUploader {
 							(this.j.ow as any).FormData !== undefined &&
 							xhr.upload
 						) {
+							this.j.progressbar
+								.show()
+								.progress(10);
+
 							xhr.upload.addEventListener(
 								'progress',
 								evt => {
@@ -241,6 +245,8 @@ export class Uploader extends ViewComponent implements IUploader {
 											evt.loaded / evt.total;
 
 										percentComplete *= 100;
+
+										console.log('progress', percentComplete);
 
 										this.j.progressbar
 											.show()

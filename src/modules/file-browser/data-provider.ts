@@ -66,7 +66,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		return this.options;
 	}
 
-	private ajaxInstances: Set<IAjax> = new Set();
+	private ajaxInstances: Map<string, IAjax> = new Map();
 
 	/**
 	 *
@@ -80,6 +80,14 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		success?: (resp: IFileBrowserAnswer) => void,
 		error?: (error: Error) => void
 	): Promise<T> {
+		const ai = this.ajaxInstances;
+
+		if (ai.has(name)) {
+			const ajax = ai.get(name);
+			ajax?.abort();
+			ai.delete(name);
+		}
+
 		const opts: IFileBrowserAjaxOptions = extend(
 			true,
 			{
@@ -97,7 +105,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 		let promise = ajax.send();
 
-		this.ajaxInstances.add(ajax);
+		ai.set(name, ajax);
 
 		promise = promise.then(resp => {
 			if (!this.isSuccess(resp)) {
@@ -117,7 +125,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 		return promise.finally(() => {
 			ajax.destruct();
-			this.ajaxInstances.delete(ajax);
+			ai.delete(name);
 			this.progressHandler(100);
 		});
 	}

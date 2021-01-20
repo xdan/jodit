@@ -24,13 +24,15 @@ describe('Test object observer', function () {
 
 	const A = function (result, keyA, keyB) {
 		function A() {
+			this.jodit = getJodit();
 			this.setStatus('ready');
 		}
 
 		function __() {
 			this.constructor = A;
 		}
-		__.prototype = Jodit.modules.Component.prototype;
+
+		__.prototype = Jodit.modules.ViewComponent.prototype;
 		A.prototype = new __();
 
 		A.prototype.methodA = function () {
@@ -41,6 +43,25 @@ describe('Test object observer', function () {
 			result.push(['B', get(keyB || keyA, this)]);
 		};
 
+		A.prototype.countCall = 0;
+		A.prototype.countPromiseCall = 0;
+
+		A.prototype.callTime = function () {
+			this.countCall++;
+		};
+
+		A.prototype.callPromiseTime = function () {
+			const that = this;
+			this.countCall++;
+
+			return new Promise(function (res) {
+				setTimeout(function () {
+					that.countPromiseCall++;
+					res();
+				}, 100);
+			});
+		};
+
 		A.prototype.methodC = function (key, oldValue, newValue) {
 			result.push(['C', oldValue, newValue]);
 		};
@@ -49,6 +70,94 @@ describe('Test object observer', function () {
 
 		return A;
 	};
+
+	describe('Test debounce decorator', function () {
+		it('Should call method only once in time', function (done) {
+			const result = [],
+				AClass = A(result, 'state.editable');
+
+			Jodit.decorators.debounce(100)(AClass.prototype, 'callTime');
+
+			const a = new AClass();
+
+			a.callTime();
+			expect(a.countCall).eq(0);
+			a.callTime();
+			expect(a.countCall).eq(0);
+			a.callTime();
+			expect(a.countCall).eq(0);
+
+			setTimeout(() => {
+				expect(a.countCall).eq(1);
+				done();
+			}, 500);
+		});
+
+		describe('Options', function () {
+			it('Should call method only once in time', function (done) {
+				const result = [],
+					AClass = A(result, 'state.editable');
+
+				Jodit.decorators.debounce({
+					timeout: 100
+				})(AClass.prototype, 'callTime');
+
+				const a = new AClass();
+
+				a.callTime();
+				expect(a.countCall).eq(0);
+				a.callTime();
+				expect(a.countCall).eq(0);
+				a.callTime();
+				expect(a.countCall).eq(0);
+
+				setTimeout(() => {
+					expect(a.countCall).eq(1);
+					done();
+				}, 500);
+			});
+		});
+
+		describe('Promisify debounce decorator', function () {
+			it('Should call method only once in time', function (done) {
+				unmockPromise();
+
+				const result = [],
+					AClass = A(result, 'state.editable');
+
+				Jodit.decorators.debounce({
+					timeout: 100,
+					promisify: true
+				})(AClass.prototype, 'callPromiseTime');
+
+				const a = new AClass();
+
+				let counter = 0;
+
+				a.callPromiseTime().then(function () {
+					counter++;
+					expect(a.countPromiseCall).eq(1);
+				});
+
+				a.callPromiseTime().then(function () {
+					counter++;
+					expect(a.countPromiseCall).eq(1);
+				});
+
+				a.callPromiseTime().then(function () {
+					counter++;
+					expect(a.countPromiseCall).eq(1);
+				});
+
+				setTimeout(() => {
+					expect(counter).eq(3);
+					expect(a.countCall).eq(1);
+					expect(a.countPromiseCall).eq(1);
+					done();
+				}, 500);
+			});
+		});
+	});
 
 	describe('Test watch decorator', function () {
 		it('Should add watcher to whole field object', function () {
@@ -346,13 +455,12 @@ describe('Test object observer', function () {
 					getTestObject()
 				);
 
-				data.on('change.some.element.one', function (
-					key,
-					oldValue,
-					newValue
-				) {
-					counter.push(key, oldValue, newValue);
-				});
+				data.on(
+					'change.some.element.one',
+					function (key, oldValue, newValue) {
+						counter.push(key, oldValue, newValue);
+					}
+				);
 
 				data.some.element.one = 2;
 				data.some.element.one = 3;
@@ -399,11 +507,12 @@ describe('Test object observer', function () {
 					getTestObject()
 				);
 
-				data.on(['change.some.element.test', 'change.some'], function (
-					key
-				) {
-					counter.push(key);
-				});
+				data.on(
+					['change.some.element.test', 'change.some'],
+					function (key) {
+						counter.push(key);
+					}
+				);
 
 				data.some = {
 					element: {

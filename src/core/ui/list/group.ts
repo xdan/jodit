@@ -81,6 +81,10 @@ export class UIGroup<T extends IViewBased = IViewBased>
 
 		this.elements.push(elm);
 
+		if (elm.name) {
+			elm.container.classList.add(this.getFullElName(elm.name));
+		}
+
 		if (distElement) {
 			this.getElm(distElement).appendChild(elm.container)
 		} else {
@@ -144,6 +148,10 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	constructor(jodit: T, elements?: Array<IUIElement | void | null | false>, options?: IDictionary) {
 		super(jodit, options);
 		elements?.forEach(elm => elm && this.append(elm));
+
+		if (options?.name) {
+			this.name = options.name;
+		}
 	}
 
 	/** @override */

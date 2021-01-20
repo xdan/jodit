@@ -127,6 +127,8 @@ export class UIButton extends UIElement implements IUIButton {
 			`${this.componentName}_${this.clearName(this.state.name)}`
 		);
 
+		this.name = this.state.name;
+
 		attr(this.container, 'data-ref', this.state.name);
 		attr(this.container, 'ref', this.state.name);
 	}

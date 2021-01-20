@@ -20,6 +20,7 @@ import { ButtonsOption } from './toolbar';
 export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 	parentElement: Nullable<IUIElement>;
 	container: HTMLElement;
+	name: string;
 
 	/**
 	 * Apply callback for all parents

@@ -6,20 +6,20 @@
 
 import './progress-bar.less';
 
-import type { IJodit, IProgressBar } from '../../types';
-import { ViewComponent } from '../../core/component';
-import { Dom } from '../../core/dom';
+import type { IJodit, IProgressBar } from '../../../types';
+import { Dom } from '../../dom';
+import { UIElement } from '../element';
 
-export class ProgressBar extends ViewComponent implements IProgressBar {
+export class ProgressBar extends UIElement implements IProgressBar {
 	/** @override */
 	className(): string {
 		return 'ProgressBar';
 	}
 
-	/**
-	 * progress_bar Progress bar
-	 */
-	container = this.j.c.div('jodit-progressbar', this.j.c.div());
+	/** @override */
+	protected render(): string {
+		return '<div><div></div></div>';
+	}
 
 	/**
 	 * Show progress bar

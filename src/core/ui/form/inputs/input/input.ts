@@ -79,6 +79,8 @@ export class UIInput extends UIElement implements IUIInput {
 	])
 	@debounce()
 	protected onChangeState(): void {
+		this.name = this.state.name;
+
 		const input = this.nativeInput,
 			{
 				name,

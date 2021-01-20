@@ -183,6 +183,8 @@ export class Ajax implements IAjax {
 				};
 
 				this.xhr.onreadystatechange = () => {
+					this.options.onProgress?.(10);
+
 					if (this.xhr.readyState === XMLHttpRequest.DONE) {
 						const resp = this.xhr.responseText;
 

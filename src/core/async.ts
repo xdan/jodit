@@ -10,7 +10,12 @@ import type {
 	IAsyncParams,
 	ITimeout
 } from '../types';
-import { setTimeout, clearTimeout, isFunction } from './helpers/';
+import {
+	setTimeout,
+	clearTimeout,
+	isFunction,
+	isPlainObject, isPromise
+} from './helpers/';
 
 export class Async implements IAsync {
 	private timers: Map<number | string | Function, number> = new Map();
@@ -72,21 +77,32 @@ export class Async implements IAsync {
 	 */
 	debounce(
 		fn: CallbackFunction,
-		timeout: ITimeout,
+		timeout: ITimeout | IAsyncParams,
 		firstCallImmediately: boolean = false
 	): CallbackFunction {
 		let timer: number = 0,
 			fired: boolean = false;
 
+		const promises: Function[] = [];
+
 		const callFn = (...args: any[]) => {
 			if (!fired) {
 				timer = 0;
-				fn(...args);
+				const res = fn(...args);
 				fired = true;
+
+				if (promises.length) {
+					const runPromises = () => {
+						promises.forEach(res => res());
+						promises.length = 0;
+					};
+
+					isPromise(res) ? res.finally(runPromises) : runPromises();
+				}
 			}
 		};
 
-		return (...args: any[]) => {
+		const onFire = (...args: any[]) => {
 			fired = false;
 
 			if (!timeout) {
@@ -101,9 +117,22 @@ export class Async implements IAsync {
 					() => callFn(...args),
 					isFunction(timeout) ? timeout() : timeout
 				);
+
 				this.timers.set(fn, timer);
 			}
 		};
+
+		return isPlainObject(timeout) && timeout.promisify
+			? (...args: any[]) => {
+					const promise = this.promise(res => {
+						promises.push(res);
+					});
+
+					onFire(...args);
+
+					return promise;
+			  }
+			: onFire;
 	}
 
 	/**
@@ -123,7 +152,11 @@ export class Async implements IAsync {
 	 * }, 100));
 	 * ```
 	 */
-	throttle(fn: CallbackFunction, timeout: ITimeout): CallbackFunction {
+	throttle(
+		fn: CallbackFunction,
+		timeout: ITimeout | IAsyncParams,
+		ignore: boolean = false
+	): CallbackFunction {
 		let timer: number | null = null,
 			needInvoke: boolean,
 			callee: () => void,
@@ -147,6 +180,7 @@ export class Async implements IAsync {
 							callee,
 							isFunction(timeout) ? timeout() : timeout
 						);
+
 						this.timers.set(callee, timer);
 					} else {
 						timer = null;
@@ -247,7 +281,7 @@ export class Async implements IAsync {
 		return request;
 	}
 
-	cancelIdleCallback(request: number): void  {
+	cancelIdleCallback(request: number): void {
 		this.requestsIdle.delete(request);
 		return this.cancelIdleCallbackNative(request);
 	}
