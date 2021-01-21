@@ -219,7 +219,7 @@ module.exports = {
 	Circle: '圆圈',
 	Dot: '点',
 	Quadrate: '方形',
-	'Insert className': '插入班级名称'
+       'Insert className': '插入班级名称',
 	Find: '搜索',
 	'Find Previous': '查找上一个',
 	'Find Next': '查找下一个'
