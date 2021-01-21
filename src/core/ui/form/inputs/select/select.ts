@@ -51,7 +51,7 @@ export class UISelect extends UIInput implements IUISelect {
 
 		state.options?.forEach(element => {
 			const option = opt();
-			option.value = element.value;
+			option.value = element.value.toString();
 			option.text = j.i18n(element.text);
 			nativeInput.add(option);
 		});

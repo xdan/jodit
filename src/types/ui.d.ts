@@ -55,6 +55,7 @@ export interface IUIIconState {
 export interface IUIButtonState {
 	size: 'tiny' | 'xsmall' | 'small' | 'middle' | 'large';
 	name: string;
+	value: string | number | boolean;
 	status: string;
 	type: 'button' | 'submit';
 	disabled: boolean;
@@ -68,20 +69,8 @@ export interface IUIButtonState {
 	tabIndex: CanUndef<number>;
 }
 
-export interface IUIButtonStatePartial {
-	name?: IUIButtonState['name'];
-	size?: IUIButtonState['size'];
-	status?: IUIButtonState['status'];
-	type?: IUIButtonState['type'];
-	disabled?: boolean;
-	activated?: boolean;
-	icon?: {
-		name: string;
-		fill?: string;
-	};
-	text?: string;
-	tooltip?: string;
-	tabIndex?: IUIButtonState['tabIndex'];
+export type IUIButtonStatePartial = Omit<Partial<IUIButtonState>, 'icon'> & {
+	icon?: Partial<IUIButtonState['icon']>
 }
 
 export interface IUIButton extends IViewComponent, IUIElement, IFocusable {
@@ -158,7 +147,7 @@ export interface IUIInputValidator<T extends IUIInput = IUIInput> {
 }
 
 export interface IUIOption {
-	value: string,
+	value: string | boolean | number,
 	text: string
 }
 

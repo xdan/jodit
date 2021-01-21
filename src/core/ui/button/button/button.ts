@@ -24,6 +24,7 @@ export const UIButtonState = (): IUIButtonState => ({
 	size: 'middle',
 	type: 'button',
 	name: '',
+	value: '',
 
 	status: '',
 	disabled: false,

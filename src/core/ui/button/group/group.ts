@@ -42,7 +42,7 @@ export class UIButtonGroup extends UIGroup {
 		jodit: IViewBased,
 		readonly options: {
 			name?: string;
-			value?: string;
+			value?: string | boolean | number;
 			label?: string;
 			onChange?: (values: IUIOption[]) => void;
 			options?: IUIOption[],
@@ -56,7 +56,7 @@ export class UIButtonGroup extends UIGroup {
 			options.options?.map(opt => {
 				const btn = new UIButton(jodit, {
 					text: opt.text,
-					name: opt.value,
+					value: opt.value,
 					status: 'primary'
 				});
 
@@ -72,9 +72,9 @@ export class UIButtonGroup extends UIGroup {
 		this.select(options.value ?? 0);
 	}
 
-	protected select(indexOrValue: number | string): void {
+	protected select(indexOrValue: IUIOption['value'] | number): void {
 		this.elements.forEach((elm, index) => {
-			if (index === indexOrValue || elm.state.name === indexOrValue) {
+			if (index === indexOrValue || elm.state.value === indexOrValue) {
 				elm.state.activated = true;
 			} else if (this.options.radio) {
 				elm.state.activated = false;
@@ -85,7 +85,7 @@ export class UIButtonGroup extends UIGroup {
 			.filter(elm => elm.state.activated)
 			.map(elm => ({
 				text: elm.state.text,
-				value: elm.state.name
+				value: elm.state.value
 			}));
 
 		this.jodit.e.fire(
