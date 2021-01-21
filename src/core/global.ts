@@ -60,9 +60,9 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 	const data = boxes.get(jodit) || {},
 		key = name + tag;
 
-	if (!data[key]) {
-		const view = isViewObject(jodit) ? jodit : jodit.j;
+	const view = isViewObject(jodit) ? jodit : jodit.j;
 
+	if (!data[key]) {
 		let c = view.c,
 			body = jodit.od.body;
 
@@ -92,6 +92,9 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 
 		boxes.set(jodit, data);
 	}
+
+	data[key].classList.remove(`jodit_theme_default`, 'jodit_theme_dark');
+	data[key].classList.add(`jodit_theme_${view.o.theme || 'default'}`);
 
 	return data[key] as HTMLElementTagNameMap[T];
 }

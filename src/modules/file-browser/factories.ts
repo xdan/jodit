@@ -7,7 +7,7 @@
 import type {
 	IContextMenu,
 	IFileBrowserDataProvider,
-	IFileBrowserOptions,
+	IFileBrowserOptions, IUIElement,
 	IViewBased
 } from '../../types';
 import DataProvider from './data-provider';
@@ -20,6 +20,6 @@ export function makeDataProvider(
 	return new DataProvider(parent, options);
 }
 
-export function makeContextMenu(parent: IViewBased): IContextMenu {
+export function makeContextMenu(parent: IViewBased): IContextMenu & IUIElement {
 	return new ContextMenu(parent);
 }

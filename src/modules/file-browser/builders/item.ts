@@ -82,4 +82,8 @@ export class FileBrowserItem implements IFileBrowserItemWrapper {
 
 		return key;
 	}
+
+	toJSON(): object {
+		return this.data;
+	}
 }

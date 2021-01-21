@@ -7,6 +7,7 @@
 import { JoditObject } from './jodit-object';
 import { JoditArray } from './jodit-array';
 import { isArray, isFunction, isPlainObject } from './checker/';
+import { stringify } from './string/';
 
 /**
  * Copy the values of all of the enumerable own properties from one or more source objects to a
@@ -155,4 +156,8 @@ export function markAsAtomic<T>(obj: T): T {
 	});
 
 	return obj;
+}
+
+export function fastClone<T>(object: T): T {
+	return JSON.parse(stringify(object));
 }

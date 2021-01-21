@@ -27,7 +27,7 @@ export function getPropertyDescriptor(
  * Watch decorator. Added observer for some change in field value
  * @param observeFields
  */
-export function watch(observeFields: string[] | string, context?: object) {
+export function watch(observeFields: string[] | string, context?: object | ((c: IDictionary) => object)) {
 	return <T extends Component & IDictionary>(
 		target: T,
 		propertyKey: string
@@ -52,6 +52,10 @@ export function watch(observeFields: string[] | string, context?: object) {
 
 					if (objectPath.length) {
 						context = get<CanUndef<object>>(objectPath, component)!;
+					}
+
+					if (isFunction(context)) {
+						context = context(component);
 					}
 
 					view.events

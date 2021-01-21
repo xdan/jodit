@@ -44,6 +44,7 @@ export class UIFileInput extends UIInput {
 		const { nativeInput } = this;
 
 		nativeInput.classList.add(this.getFullElName('input'));
+		container.classList.add(this.componentName);
 		container.appendChild(nativeInput);
 
 		return container;

@@ -19,6 +19,7 @@ Config.prototype.controls.about = {
 			}),
 			i18n = editor.i18n.bind(editor);
 
+		dialog.setMod('theme', editor.o.theme);
 		dialog.setHeader(i18n('About Jodit'));
 
 		dialog.setContent(

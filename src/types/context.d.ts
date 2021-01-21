@@ -10,6 +10,7 @@ export interface IContextMenuAction {
 	icon?: string;
 	title?: string;
 	exec?: (this: IContextMenu, e: MouseEvent) => false | void;
+	enabled?: boolean;
 }
 
 export interface IContextMenu extends IDestructible {

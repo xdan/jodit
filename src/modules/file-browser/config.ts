@@ -291,8 +291,7 @@ Config.prototype.controls.filebrowser = {
 			!browser.dataProvider.canI('FileUpload'),
 
 		getContent: (
-			filebrowser: IFileBrowser,
-			control: IControlType
+			filebrowser: IFileBrowser
 		): HTMLElement => {
 			const btn = new UIFileInput(filebrowser, {
 				onlyImages: filebrowser.state.onlyImages

@@ -138,3 +138,34 @@ export const reset = function <T extends Function>(key: string): Nullable<T> {
 
 	return map[key] ?? null;
 };
+
+/**
+ * Allow load image in promise
+ * @param src
+ * @param jodit
+ */
+export const loadImage = (src: string, jodit: IViewBased): Promise<HTMLImageElement> =>
+	jodit.async.promise<HTMLImageElement>((res, rej) => {
+		const image = new Image(),
+			onError = () => {
+				jodit.e
+					.off(image);
+				rej?.();
+			},
+			onSuccess = () => {
+				jodit.e
+					.off(image);
+				res(image);
+			};
+
+		jodit.e
+			.one(image, 'load', onSuccess)
+			.one(image, 'error', onError)
+			.one(image, 'abort', onError);
+
+		image.src = src;
+
+		if (image.complete) {
+			onSuccess();
+		}
+	});
