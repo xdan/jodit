@@ -18,6 +18,7 @@ import type {
 import { Storage } from '../storage';
 import {
 	camelCase,
+	ConfigProto,
 	error,
 	i18n,
 	isDestructable,
@@ -239,11 +240,10 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 	/** @override */
 	protected initOptions(options?: IViewOptions): void {
-		this.options = {
-			...(this.options || {}),
-			...View.defaultOptions,
-			...options
-		};
+		this.options = ConfigProto(
+			options || {},
+			ConfigProto(this.options || {}, View.defaultOptions)
+		);
 	}
 
 	/**
@@ -251,7 +251,10 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	 */
 	protected initOwners(): void {}
 
-	protected constructor(options?: IViewOptions, readonly isJodit: boolean = false) {
+	protected constructor(
+		options?: IViewOptions,
+		readonly isJodit: boolean = false
+	) {
 		super();
 
 		this.id = new Date().getTime().toString();

@@ -194,9 +194,11 @@ describe('Test helpers', function () {
 						'About Jodit',
 						'حول جوديت',
 						'ar',
+
 						'about Jodit',
 						'حول جوديت',
 						'ar',
+
 						'British people',
 						'British people',
 						'ar'
@@ -485,221 +487,6 @@ describe('Test helpers', function () {
 				}
 			});
 		});
-
-		describe('extend', function () {
-			const extend = Jodit.modules.Helpers.extend;
-
-			it('should override part of first array', function () {
-				const a = [1, 2, 3];
-				const b = [4, 5, 6, 7];
-
-				expect(extend(true, a, b)).deep.equals([4, 5, 6, 7]);
-			});
-
-			describe('No deep', function () {
-				it('should merge two objects only in first level', function () {
-					const a = {
-						a: 1,
-						b: 2,
-						e: {
-							a: 6
-						}
-					};
-					const b = {
-						c: 3,
-						e: {
-							b: 8
-						}
-					};
-
-					expect(extend(a, b)).deep.equals({
-						a: 1,
-						b: 2,
-						e: { b: 8 },
-						c: 3
-					});
-				});
-			});
-
-			describe('Deep', function () {
-				it('should merge two objects', function () {
-					const a = {
-						a: 1,
-						b: 2,
-						e: {
-							g: [1, 2, 3, 7],
-							a: 6
-						}
-					};
-					const b = {
-						c: 3,
-						e: {
-							g: [4, 5, 6],
-							b: 8
-						}
-					};
-
-					expect(extend(true, a, b)).deep.equals({
-						a: 1,
-						b: 2,
-						e: { a: 6, b: 8, g: [4, 5, 6, 7] },
-						c: 3
-					});
-				});
-
-				describe('Atom marker', function () {
-					it('should work as no deep', function () {
-						const a = {
-							a: 1,
-							b: 2,
-							e: {
-								a: 6,
-								f: {
-									y: 1
-								}
-							}
-						};
-
-						const b = {
-							c: 3,
-							e: {
-								b: 8,
-								f: Jodit.atom({
-									q: 3
-								})
-							}
-						};
-
-						expect(extend(true, a, b)).deep.equals({
-							a: 1,
-							b: 2,
-							e: {
-								a: 6,
-								b: 8,
-								f: {
-									q: 3
-								}
-							},
-							c: 3
-						});
-					});
-
-					describe('Save marker after merge', function () {
-						it('should work save this marker for sequence merge', function () {
-							const a = {
-								a: {
-									b: 1
-								}
-							};
-
-							const b = {
-								a: Jodit.atom({
-									q: 3
-								})
-							};
-
-							const merged = extend(true, a, b);
-
-							const c = {
-								a: {
-									c: 5
-								}
-							};
-
-							expect(extend(true, c, merged)).deep.equals({
-								a: {
-									q: 3
-								}
-							});
-						});
-
-						describe('Override marker', function () {
-							it('should not be possible', function () {
-								const a = {
-									a: {
-										b: 1
-									}
-								};
-
-								const b = {
-									a: Jodit.atom({
-										q: 3
-									})
-								};
-
-								const merged = extend(true, a, b);
-
-								const c = {
-									a: {
-										c: 5
-									}
-								};
-
-								expect(extend(true, merged, c)).deep.equals({
-									a: {
-										q: 3
-									}
-								});
-							});
-						});
-					});
-
-					describe('Use Jodit.atom', function () {
-						it('should work same', function () {
-							const a = {
-								a: 1,
-								b: 2,
-								e: {
-									a: 6,
-									f: {
-										y: 1
-									}
-								}
-							};
-
-							const b = {
-								c: 3,
-								e: {
-									b: 8,
-									f: Jodit.atom({
-										q: 3
-									})
-								}
-							};
-
-							expect(extend(true, a, b)).deep.equals({
-								a: 1,
-								b: 2,
-								e: {
-									a: 6,
-									b: 8,
-									f: {
-										q: 3
-									}
-								},
-								c: 3
-							});
-						});
-
-						describe('For Array', function () {
-							it('should override first array', function () {
-								const a = {
-									e: [1, 2, 3]
-								};
-
-								const b = {
-									e: Jodit.atom([6, 7])
-								};
-
-								expect(extend(true, a, b)).deep.equals({
-									e: [6, 7]
-								});
-							});
-						});
-					});
-				});
-			});
-		});
 	});
 
 	describe('Utils', function () {
@@ -747,6 +534,166 @@ describe('Test helpers', function () {
 				expect(
 					getClassName(Jodit.modules.ToolbarButton.prototype)
 				).equals('ToolbarButton');
+			});
+		});
+	});
+
+	describe('Config prototype', function () {
+		const ConfigProto = Jodit.modules.Helpers.ConfigProto;
+
+		it('Should use object B as prototype for A', function () {
+			const A = {
+				a: 1,
+
+				e: {
+					f: {
+						g: 5
+					}
+				}
+			};
+			const B = {
+				a: 2,
+				b: 3,
+				e: {
+					f: {
+						g: 6,
+						h: 7
+					}
+				}
+			};
+
+			const C = ConfigProto(A, B);
+
+			expect(C).does.not.eq(A);
+			expect(C.a).eq(1);
+			expect(C.b).eq(3);
+			expect(C.e.f.g).eq(5);
+			expect(C.e.f.h).eq(7);
+
+			B.e.f.h = 9;
+			expect(C.e.f.h).eq(9);
+		});
+
+		describe('Several prototypes', function () {
+			it('Should use all objects as prototype for A', function () {
+				const A = {
+					a: 1,
+
+					e: {
+						f: {
+							g: 5
+						}
+					}
+				};
+
+				const B = {
+					a: 2,
+					b: 3,
+					e: {
+						f: {
+							g: 6,
+							k: 90
+						}
+					}
+				};
+
+				const C = {
+					e: {
+						f: {
+							h: 7
+						}
+					}
+				};
+
+				const D = ConfigProto(A, ConfigProto(B, C));
+
+				expect(D).does.not.eq(A);
+				expect(D.a).eq(1);
+				expect(D.b).eq(3);
+				expect(D.e.f.g).eq(5);
+				expect(D.e.f.h).eq(7);
+				expect(D.e.f.k).eq(90);
+
+				C.e.f.h = 9;
+				expect(D.e.f.h).eq(9);
+			});
+		});
+
+		describe('Atom values', function () {
+			it('Should not merge', function () {
+				const A = {
+					a: Jodit.atom({
+						b: {
+							c: 1
+						}
+					})
+				};
+
+				const B = {
+					a: {
+						b: {
+							c: 1,
+							e: 5
+						}
+					}
+				};
+
+				const res = ConfigProto(A, B);
+
+				expect(res.a.b.c).eq(1);
+				expect(res.a.b.e).eq(undefined);
+			});
+		});
+
+		describe('Arrays', function () {
+			it('Should merge - not concat', function () {
+				const A = {
+					a: {
+						b: [1, 2, 3, 4]
+					}
+				};
+
+				const B = {
+					a: {
+						b: [5, 6, 7, 8, 9]
+					}
+				};
+
+				const res = ConfigProto(A, B);
+
+				expect(res.a.b).deep.eq([1, 2, 3, 4, 9]);
+			});
+
+			describe('Atom array', function () {
+				it('Should be not merged', function () {
+					const A = {
+						a: { b: Jodit.atom([1, 2, 3, 4]) }
+					};
+
+					const B = {
+						a: { b: [5, 6, 7, 8, 9] }
+					};
+
+					const res = ConfigProto(A, B);
+
+					expect(res.a.b).deep.eq([1, 2, 3, 4]);
+				});
+
+				describe('On first level all arrays', function () {
+					it('Should work as atomic', function () {
+						const A = {
+							a: [1, 2, 3, 4]
+						};
+
+						const B = {
+							a: [5, 6, 7, 8, 9]
+						};
+
+						const res = ConfigProto(A, B);
+
+						expect(res.a).deep.eq([1, 2, 3, 4]);
+					});
+				});
 			});
 		});
 	});

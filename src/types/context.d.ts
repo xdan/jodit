@@ -5,6 +5,7 @@
  */
 
 import { IDestructible } from './types';
+import type { IPopup } from './popup';
 
 export interface IContextMenuAction {
 	icon?: string;
@@ -13,7 +14,7 @@ export interface IContextMenuAction {
 	enabled?: boolean;
 }
 
-export interface IContextMenu extends IDestructible {
+export interface IContextMenu extends IDestructible, IPopup {
 	show(
 		x: number,
 		y: number,

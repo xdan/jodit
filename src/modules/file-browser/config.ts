@@ -155,6 +155,7 @@ Config.prototype.filebrowser = {
 	showFileSize: true,
 	showFileChangeTime: true,
 	saveStateInStorage: true,
+	pixelOffsetLoadNewChunk: 200,
 
 	getThumbTemplate(
 		this: IFileBrowser,
@@ -208,6 +209,8 @@ Config.prototype.filebrowser = {
 	},
 
 	ajax: {
+		...Config.prototype.defaultAjaxOptions,
+
 		url: '',
 		async: true,
 

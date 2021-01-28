@@ -22,8 +22,6 @@ import * as Modules from './modules/';
 import * as Plugins from './plugins/';
 import * as Icons from './styles/icons/';
 
-import { Config, OptionsDefault } from './config';
-
 // copy constants in Jodit
 Object.keys(consts).forEach((key: string) => {
 	(DefaultJodit as any)[key] = (consts as any)[key];
@@ -69,8 +67,5 @@ Object.keys(Languages)
 	.forEach((key: string) => {
 		DefaultJodit.lang[key] = (Languages as any)[key];
 	});
-
-DefaultJodit.defaultOptions = Config.defaultOptions;
-OptionsDefault.prototype = DefaultJodit.defaultOptions;
 
 export const Jodit = DefaultJodit;

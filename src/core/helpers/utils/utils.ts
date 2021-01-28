@@ -3,14 +3,14 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
-import { isFunction, isPromise } from '../checker';
 import type {
 	CanPromise,
 	IDictionary,
 	IViewBased,
 	Nullable
 } from '../../../types';
+import { isFunction } from '../checker/is-function';
+import { isPromise } from '../checker/is-promise';
 import { get } from './get';
 
 /**

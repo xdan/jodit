@@ -292,12 +292,16 @@ export class PluginSystem implements IPluginSystem {
 	): string {
 		name = kebabCase(name);
 
+		const esSuffix =
+			process.env.TARGET_ES !== 'es5' ? `.${process.env.TARGET_ES}` : '';
+
 		return (
 			jodit.basePath +
 			'plugins/' +
 			name +
 			'/' +
 			name +
+			esSuffix +
 			'.' +
 			(js ? 'js' : 'css')
 		);

@@ -352,6 +352,14 @@ const box = document.createElement('div');
 
 document.body.appendChild(box);
 
+function flatten(obj) {
+	var result = Object.create(obj);
+	for(var key in result) {
+		result[key] = result[key];
+	}
+	return result;
+}
+
 function getBox() {
 	return box;
 }

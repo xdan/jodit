@@ -12,14 +12,18 @@ import type {
 	IViewBased,
 	IViewComponent
 } from '../types';
+
 import { PluginSystem } from './plugin-system';
+
 import { Dom } from './dom';
+
 import {
 	getClassName,
 	isJoditObject,
 	isViewObject,
 	kebabCase
 } from './helpers/';
+
 import { EventsNative } from './events';
 
 export const instances: IDictionary<IJodit> = {};
@@ -39,6 +43,11 @@ export const pluginSystem = new PluginSystem();
 export const modules: IDictionary<Function> = {};
 
 export const lang: IDictionary<IDictionary<string>> = {};
+export const extendLang = (langs: IDictionary) => {
+	Object.keys(langs).forEach(key => {
+		Object.assign(lang[key], langs[key]);
+	});
+};
 
 const boxes = new WeakMap<IComponent, IDictionary<HTMLElement>>();
 
@@ -93,7 +102,7 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 		boxes.set(jodit, data);
 	}
 
-	data[key].classList.remove(`jodit_theme_default`, 'jodit_theme_dark');
+	data[key].classList.remove('jodit_theme_default', 'jodit_theme_dark');
 	data[key].classList.add(`jodit_theme_${view.o.theme || 'default'}`);
 
 	return data[key] as HTMLElementTagNameMap[T];

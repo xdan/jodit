@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { isString } from '../checker';
+import { isString } from '../checker/is-string';
 
 /**
  * Split separated elements

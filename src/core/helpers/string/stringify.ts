@@ -22,6 +22,7 @@ export function stringify(
 	if (typeof value !== 'object') {
 		return value.toString ? value.toString() : value;
 	}
+
 	const excludeKeys = new Set(options.excludeKeys);
 
 	const map = new WeakMap();

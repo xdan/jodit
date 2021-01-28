@@ -5,22 +5,30 @@
  */
 
 import type {
+	IDictionary,
 	IFileBrowserItemElement,
 	IFileBrowserItemWrapper, ISource
 } from '../../../types';
-import { extend, normalizePath, normalizeUrl } from '../../../core/helpers/';
+import { normalizePath, normalizeUrl } from '../../../core/helpers/';
 
 export class FileBrowserItem implements IFileBrowserItemWrapper {
 	source!: ISource;
 	sourceName!: string;
+	type!: IFileBrowserItemWrapper['type'];
 
 	private constructor(readonly data: IFileBrowserItemElement) {
-		extend(this, data);
+		Object.keys(data).forEach((key) => {
+			(this as IDictionary)[key] = (data as IDictionary)[key];
+		})
 	}
 
 	static create(
 		data: IFileBrowserItemElement
 	): FileBrowserItem & IFileBrowserItemElement {
+		if (data instanceof FileBrowserItem) {
+			return data;
+		}
+
 		return new FileBrowserItem(data) as any;
 	}
 

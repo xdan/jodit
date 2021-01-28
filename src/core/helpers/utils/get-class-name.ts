@@ -5,7 +5,7 @@
  */
 
 import type { IDictionary } from '../../../types';
-import { isFunction } from '../checker';
+import { isFunction } from '../checker/is-function';
 
 export const keepNames = new Map<Function, string>();
 

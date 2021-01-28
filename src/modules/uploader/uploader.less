@@ -9,35 +9,35 @@
 .jodit-drag-and-drop__file-box,
 .jodit_uploadfile_button {
 	position: relative;
+	overflow: hidden;
 	width: 100%;
-	border: dashed 1px var(--color-gray);
 	padding: 25px 0;
+	border: dashed 1px var(--color-gray);
 	margin: var(--padding-default) 0;
 	text-align: center;
-	overflow: hidden;
 
 	&:hover {
 		background-color: var(--color-background-button-hover);
 	}
 
 	input {
-		cursor: pointer;
 		position: absolute;
-		right: 0;
 		top: 0;
+		right: 0;
 		bottom: 0;
 		left: 0;
-		margin: 0;
 		padding: 0;
-		opacity: 0;
+		margin: 0;
+		cursor: pointer;
 		font-size: 400px;
+		opacity: 0;
 	}
 }
 
 @media (max-width: @screen-sm) {
 	.jodit-drag-and-drop__file-box {
 		width: auto;
-		max-width: 100%;
 		min-width: var(--width-input-min);
+		max-width: 100%;
 	}
 }

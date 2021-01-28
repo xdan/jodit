@@ -15,12 +15,12 @@ import { Config } from '../config';
 import {
 	each,
 	error,
-	extend,
 	isPlainObject,
 	parseQuery,
 	buildQuery,
 	isString,
-	isFunction
+	isFunction,
+	ConfigProto
 } from './helpers';
 
 /**
@@ -131,6 +131,7 @@ export class Ajax implements IAjax {
 	private activated = false;
 
 	send(): Promise<any> {
+		debugger;
 		this.activated = true;
 
 		return new Promise(
@@ -176,7 +177,7 @@ export class Ajax implements IAjax {
 					let percentComplete = 0;
 
 					if (e.lengthComputable) {
-						percentComplete = e.loaded / e.total * 100;
+						percentComplete = (e.loaded / e.total) * 100;
 					}
 
 					this.options.onProgress?.(percentComplete);
@@ -273,16 +274,12 @@ export class Ajax implements IAjax {
 	}
 
 	constructor(readonly jodit: IViewBased, options: AjaxOptions) {
-		this.options = extend(
-			true,
-			{},
-			Config.prototype.defaultAjaxOptions,
-			options
+		this.options = ConfigProto(
+			options || {},
+			Config.prototype.defaultAjaxOptions
 		) as AjaxOptions;
 
-		if (this.o.xhr) {
-			this.xhr = this.o.xhr();
-		}
+		this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
 
 		jodit &&
 			jodit.events &&

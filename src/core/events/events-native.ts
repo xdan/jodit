@@ -14,7 +14,10 @@ import type {
 	IEventsNative
 } from '../../types';
 import { defaultNameSpace, EventHandlersStore } from './store';
-import { error, isArray, isFunction, isString } from '../helpers';
+import { isString } from '../helpers/checker/is-string';
+import { isFunction } from '../helpers/checker/is-function';
+import { isArray } from '../helpers/checker/is-array';
+import { error } from '../helpers/type';
 
 export class EventsNative implements IEventsNative {
 	readonly __key: string = '__JoditEventsNativeNamespaces';

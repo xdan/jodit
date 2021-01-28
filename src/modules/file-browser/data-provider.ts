@@ -23,8 +23,8 @@ import type {
 } from '../../types';
 
 import {
+	ConfigProto,
 	error,
-	extend,
 	isFunction,
 	normalizeRelativePath,
 	set
@@ -88,13 +88,17 @@ export default class DataProvider implements IFileBrowserDataProvider {
 			ai.delete(name);
 		}
 
-		const opts: IFileBrowserAjaxOptions = extend(
-			true,
-			{
-				onProgress: this.progressHandler
-			},
-			this.o.ajax,
-			this.options[name] !== undefined ? this.options[name] : this.o.ajax
+		const opts = <IFileBrowserAjaxOptions>ConfigProto(
+			this.options[name] !== undefined
+				? (this.options[name] as IDictionary)
+				: {},
+
+			ConfigProto(
+				{
+					onProgress: this.progressHandler
+				},
+				this.o.ajax
+			)
 		);
 
 		if (opts.prepareData) {
@@ -250,8 +254,9 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 		sources.forEach(source => {
 			if (source.files && source.files.length) {
-				if (isFunction(this.o.sort) && mods.sortBy) {
-					source.files.sort((a, b) => this.o.sort(a, b, mods.sortBy));
+				const { sort } = this.o;
+				if (isFunction(sort) && mods.sortBy) {
+					source.files.sort((a, b) => sort(a, b, mods.sortBy));
 				}
 
 				source.files.forEach((item: ISourceFile) => {
@@ -586,8 +591,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		newname: string | void,
 		box: ImageBox | void
 	): Promise<boolean> {
-		return this.changeImage('resize', path, source, name, newname, box)
-
+		return this.changeImage('resize', path, source, name, newname, box);
 	}
 
 	getMessage(resp: IFileBrowserAnswer): string {

@@ -199,8 +199,8 @@ describe('Jodit Editor Tests', function () {
 					});
 
 					expect(
-						JSON.stringify(editor.options.someObject.data)
-					).equals('{"left":10,"right":10,"top":10}');
+						JSON.stringify(flatten(editor.options.someObject.data))
+					).equals('{"top":10,"right":10,"left":10}');
 				});
 
 				describe('Set nested object like Jodit.atom', function () {

@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { stringify } from '../string/';
+import { stringify } from '../string/stringify';
 
 /**
  * Check two element are equal

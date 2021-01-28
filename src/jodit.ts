@@ -20,13 +20,10 @@ import type {
 	ICreate,
 	IFileBrowserCallBackData,
 	IStorage,
-	CanPromise,
-	HTMLTagNames,
-	IViewBased,
-	IViewComponent
+	CanPromise
 } from './types';
 
-import { Config, configFactory } from './config';
+import { Config } from './config';
 import * as consts from './core/constants';
 
 import {
@@ -54,20 +51,15 @@ import {
 	JoditObject,
 	callPromise,
 	toArray,
-	markAsAtomic
+	markAsAtomic,
+	ConfigProto
 } from './core/helpers/';
 
 import { Storage } from './core/storage/';
 
 import { ViewWithToolbar } from './core/view/view-with-toolbar';
 
-import {
-	instances,
-	pluginSystem,
-	modules,
-	lang,
-	getContainer
-} from './core/global';
+import { instances, pluginSystem, modules, lang } from './core/global';
 import { autobind, cache } from './core/decorators';
 
 /**
@@ -152,7 +144,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	/**
-	 * Fabric for creating Jodit instance
+	 * Factory for creating Jodit instance
 	 *
 	 * @param element
 	 * @param options
@@ -161,7 +153,12 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		return new Jodit(element, options);
 	}
 
-	static defaultOptions: Config;
+	/**
+	 * Default settings
+	 */
+	static get defaultOptions(): Config {
+		return Config.defaultOptions;
+	}
 
 	static plugins: IPluginSystem = pluginSystem;
 
@@ -170,12 +167,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	static decorators: IDictionary<Function> = {};
 	static instances: IDictionary<IJodit> = instances;
-	static getContainer: <T extends HTMLTagNames = HTMLTagNames>(
-		jodit: IViewBased | IViewComponent,
-		classFunc: Function,
-		tag: T,
-		inside: boolean
-	) => HTMLElementTagNameMap[T] = getContainer;
+
 	static lang: any = lang;
 	static core = {
 		Plugin
@@ -343,37 +335,39 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	get filebrowser(): IFileBrowser {
 		const jodit = this;
 
-		const options = {
-			defaultTimeout: jodit.defaultTimeout,
-			uploader: jodit.o.uploader,
-			language: jodit.o.language,
-			theme: jodit.o.theme,
-			defaultCallback(data: IFileBrowserCallBackData): void {
-				if (data.files && data.files.length) {
-					data.files.forEach((file, i) => {
-						const url = data.baseurl + file;
-						const isImage = data.isImages
-							? data.isImages[i]
-							: false;
+		const options = ConfigProto(
+			{
+				defaultTimeout: jodit.defaultTimeout,
+				uploader: jodit.o.uploader,
+				language: jodit.o.language,
+				theme: jodit.o.theme,
+				defaultCallback(data: IFileBrowserCallBackData): void {
+					if (data.files && data.files.length) {
+						data.files.forEach((file, i) => {
+							const url = data.baseurl + file;
+							const isImage = data.isImages
+								? data.isImages[i]
+								: false;
 
-						if (isImage) {
-							jodit.s.insertImage(
-								url,
-								null,
-								jodit.o.imageDefaultWidth
-							);
-						} else {
-							jodit.s.insertNode(
-								jodit.createInside.fromHTML(
-									`<a href="${url}" title="${url}">${url}</a>`
-								)
-							);
-						}
-					});
+							if (isImage) {
+								jodit.s.insertImage(
+									url,
+									null,
+									jodit.o.imageDefaultWidth
+								);
+							} else {
+								jodit.s.insertNode(
+									jodit.createInside.fromHTML(
+										`<a href='${url}' title='${url}'>${url}</a>`
+									)
+								);
+							}
+						});
+					}
 				}
 			},
-			...this.o.filebrowser
-		};
+			this.o.filebrowser
+		);
 
 		return jodit.getInstance<IFileBrowser>('FileBrowser', options);
 	}
@@ -1062,7 +1056,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/** @override **/
 	protected initOptions(options?: object): void {
-		this.options = configFactory(options);
+		this.options = <Config>(
+			ConfigProto(options || {}, Config.defaultOptions)
+		);
 	}
 
 	/** @override **/
@@ -1171,7 +1167,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				let value: string | boolean | number = attr.value;
 
 				if (
-					(Jodit.defaultOptions as any)[name] !== undefined &&
+					(Config.defaultOptions as any)[name] !== undefined &&
 					(!options || (options as any)[name] === undefined)
 				) {
 					if (['readonly', 'disabled'].indexOf(name) !== -1) {
@@ -1253,7 +1249,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			container,
 			workplace,
 			statusbar,
-			options: this.isReady ? configFactory(options) : this.options,
+			options: this.isReady
+				? ConfigProto(options || {}, Config.defaultOptions)
+				: this.options,
 			observer: new Observer(this),
 			editorWindow: this.ow
 		};

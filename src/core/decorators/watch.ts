@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { CanUndef, IDictionary, IViewComponent } from '../../types';
-import { error, get, isFunction, isPlainObject, isViewObject, splitArray } from '../helpers';
+import type { CanUndef, IComponent, IDictionary, IViewComponent } from '../../types';
+import { error, isFunction, isPlainObject, isViewObject, splitArray } from '../helpers';
 import { ObserveObject } from '../events';
 import { Component, STATUSES } from '../component';
 
@@ -36,10 +36,10 @@ export function watch(observeFields: string[] | string, context?: object | ((c: 
 			throw error('Handler must be a Function');
 		}
 
-		const process = (component: IDictionary) => {
-			const callback = (key: string, ...args: any[]) => {
+		const process = (component: IComponent) => {
+			const callback = (key: string, ...args: any[]): void | any => {
 				if (!component.isInDestruct) {
-					return component[propertyKey](key, ...args);
+					return (component as any)[propertyKey](key, ...args);
 				}
 			};
 
@@ -51,7 +51,8 @@ export function watch(observeFields: string[] | string, context?: object | ((c: 
 						: ((component as unknown) as IViewComponent).jodit;
 
 					if (objectPath.length) {
-						context = get<CanUndef<object>>(objectPath, component)!;
+						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+						context = component.get<CanUndef<object>>(objectPath)!;
 					}
 
 					if (isFunction(context)) {
@@ -66,15 +67,16 @@ export function watch(observeFields: string[] | string, context?: object | ((c: 
 				}
 
 				const parts = field.split('.'),
-					[key] = parts;
+					[key] = parts as unknown as Array<(keyof IComponent)>;
 
 				let value: any = component[key];
 
 				if (value instanceof ObserveObject) {
 					value.on(`change.${field}`, callback);
 				} else if (isPlainObject(value) && parts.length > 1) {
-					component[key] = ObserveObject.create(value, [key]);
-					component[key].on(`change.${field}`, callback);
+					const observe = ObserveObject.create(value, [key]);
+					observe.on(`change.${field}`, callback);
+					(component as any)[key] = observe;
 				} else {
 					const descriptor = getPropertyDescriptor(target, key);
 

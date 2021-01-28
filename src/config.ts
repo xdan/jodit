@@ -17,7 +17,6 @@ import type {
 	Nullable
 } from './types';
 import * as consts from './core/constants';
-import { extend, isArray, isAtom } from './core/helpers/';
 
 /**
  * Default Editor's Configuration
@@ -776,6 +775,7 @@ export class Config implements IViewOptions {
 	showBrowserColorPicker: boolean = true;
 
 	private static __defaultOptions: Config;
+
 	static get defaultOptions(): Config {
 		if (!Config.__defaultOptions) {
 			Config.__defaultOptions = new Config();
@@ -785,50 +785,4 @@ export class Config implements IViewOptions {
 	}
 }
 
-export const OptionsDefault: any = function (
-	this: any,
-	options: any,
-	def: any = Config.defaultOptions
-) {
-	const self: any = this;
-
-	self.plainOptions = options;
-
-	if (options !== undefined && typeof options === 'object') {
-		const extendKey = (opt: object, key: string) => {
-			if (key === 'preset') {
-				if (def.presets[(opt as any).preset] !== undefined) {
-					const preset = def.presets[(opt as any).preset];
-
-					Object.keys(preset).forEach(extendKey.bind(this, preset));
-				}
-			}
-
-			const defValue = (def as any)[key],
-				optValue = (opt as any)[key],
-				isObject = typeof defValue === 'object' && defValue != null;
-
-			if (isAtom(optValue)) {
-				self[key] = optValue;
-			} else {
-				if (
-					isObject &&
-					!['ownerWindow', 'ownerDocument'].includes(key) &&
-					!isArray(defValue)
-				) {
-					self[key] = extend(true, {}, defValue, optValue);
-				} else {
-					self[key] = optValue;
-				}
-			}
-		};
-
-		Object.keys(options).forEach(extendKey.bind(this, options));
-	}
-};
-
 Config.prototype.controls = {};
-
-export function configFactory(options?: object): Config {
-	return new OptionsDefault(options) as Config;
-}

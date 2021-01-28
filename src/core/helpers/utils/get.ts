@@ -5,7 +5,8 @@
  */
 
 import type { IDictionary, Nullable } from '../../../types';
-import { isString, isVoid } from '../checker';
+import { isString } from '../checker/is-string';
+import { isVoid } from '../checker/is-void';
 
 /**
  * Safe access in tree object

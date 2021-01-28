@@ -10,6 +10,7 @@ export * from './async';
 export * from './extend';
 export * from './checker';
 export * from './color';
+export * from './config-proto';
 export * from './html';
 export * from './normalize';
 export * from './size';

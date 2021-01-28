@@ -6,7 +6,7 @@
 
 import './styles';
 
-import { Config, OptionsDefault } from '../../config';
+import { Config } from '../../config';
 import * as consts from '../../core/constants';
 import { Dialog } from '../dialog/';
 
@@ -28,7 +28,12 @@ import type {
 } from '../../types/';
 
 import { Storage } from '../../core/storage/';
-import { extend, error, isFunction, isString } from '../../core/helpers/';
+import {
+	error,
+	isFunction,
+	isString,
+	ConfigProto
+} from '../../core/helpers/';
 import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 
 import './config';
@@ -316,15 +321,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 	private initUploader(editor?: IFileBrowser | IJodit) {
 		const self = this,
-			uploaderOptions: IUploaderOptions<IUploader> = extend(
-				true,
-				{},
-				Config.defaultOptions.uploader,
-				self.o.uploader,
-				{
-					...(editor?.options
-						?.uploader as IUploaderOptions<IUploader>)
-				}
+			options = editor?.options?.uploader,
+			uploaderOptions: IUploaderOptions<IUploader> = ConfigProto(
+				options || {},
+				Config.defaultOptions.uploader
 			) as IUploaderOptions<IUploader>;
 
 		const uploadHandler = () => {
@@ -346,14 +346,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 		const self: FileBrowser = this;
 
-		self.options = new OptionsDefault(
-			extend(
-				true,
-				{},
-				self.options,
-				Config.defaultOptions.filebrowser,
-				options
-			)
+		self.options = ConfigProto(
+			options || {},
+			Config.defaultOptions.filebrowser
 		) as IFileBrowserOptions;
 
 		self.storage = Storage.makeStorage(this.o.saveStateInStorage);
@@ -401,11 +396,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 		keys.forEach(key => {
 			if (this.options[key] != null) {
-				(this.options as IDictionary)[key] = extend(
-					true,
-					{},
-					this.o.ajax,
-					this.options[key]
+				(this.options as IDictionary)[key] = ConfigProto(
+					this.options[key] as IDictionary,
+					this.o.ajax
 				);
 			}
 		});

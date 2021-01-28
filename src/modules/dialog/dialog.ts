@@ -16,14 +16,14 @@ import type {
 	Content,
 	IDialogOptions
 } from '../../types/';
-import { Config, OptionsDefault } from '../../config';
+import { Config } from '../../config';
 import { KEY_ESC } from '../../core/constants';
 import {
 	$$,
 	asArray,
 	attr,
+	ConfigProto,
 	css,
-	extend,
 	hasContainer,
 	isArray,
 	isBoolean,
@@ -485,17 +485,15 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			zIndex: number,
 			res: IDialog = this;
 
-		$$('.jodit-dialog', this.destination).forEach(
-			(dialog: HTMLElement) => {
-				dlg = (dialog as any).component as Dialog;
-				zIndex = parseInt(css(dialog, 'zIndex') as string, 10);
+		$$('.jodit-dialog', this.destination).forEach((dialog: HTMLElement) => {
+			dlg = (dialog as any).component as Dialog;
+			zIndex = parseInt(css(dialog, 'zIndex') as string, 10);
 
-				if (dlg.isOpened && !isNaN(zIndex) && zIndex > maxZi) {
-					res = dlg;
-					maxZi = zIndex;
-				}
+			if (dlg.isOpened && !isNaN(zIndex) && zIndex > maxZi) {
+				res = dlg;
+				maxZi = zIndex;
 			}
-		);
+		});
 
 		return res;
 	}
@@ -726,14 +724,14 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		const self: Dialog = this;
 
-		self.options = new OptionsDefault(
-			extend(
-				true,
+		self.options = ConfigProto(
+			options ?? {},
+
+			ConfigProto(
 				{
 					toolbarButtonSize: 'middle'
 				},
-				Config.prototype.dialog,
-				options
+				Config.prototype.dialog
 			)
 		) as IDialogOptions;
 

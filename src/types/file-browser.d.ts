@@ -22,6 +22,7 @@ import type { IViewBased, IViewOptions } from './view';
  * @params {Object} parent Jodit main object
  */
 export interface ISourceFile {
+	type: 'folder' | 'image' | 'file';
 	file?: string;
 	fileIsAbsolute?: boolean;
 	name?: string;
@@ -34,6 +35,7 @@ export interface ISourceFile {
 
 export interface ISource {
 	name: string,
+	title?: string,
 	path: string;
 	baseurl: string;
 	files: ISourceFile[];
@@ -52,6 +54,7 @@ export interface IFileBrowserAnswer {
 		code: number;
 		path: string;
 		name: string;
+		title?: string;
 		source: string;
 		permissions?: IPermissions | null;
 	};
@@ -87,7 +90,7 @@ export interface IFileBrowserOptions extends IViewOptions {
 
 	sortBy: string;
 
-	sort: (a: any, b: any, sortBy?: string) => number;
+	sort: false | ((a: any, b: any, sortBy?: string) => number);
 
 	editImage: boolean;
 	preview: boolean;
@@ -98,6 +101,7 @@ export interface IFileBrowserOptions extends IViewOptions {
 	contextMenu: boolean;
 
 	howLongShowMsg: number;
+	pixelOffsetLoadNewChunk: number;
 
 	createNewFolder: boolean;
 	deleteFolder: boolean;
@@ -157,8 +161,12 @@ export interface IFileBrowserCallBackData {
 
 interface IFileBrowserDataProviderItemsMods {
 	onlyImages?: boolean;
+	withFolders?: boolean;
+	foldersPosition?: 'top' | 'bottom' | 'default';
 	filterWord?: string;
 	sortBy?: string;
+	offset?: number;
+	limit?: number;
 }
 
 export interface IFileBrowserDataProvider extends IDestructible {

@@ -197,17 +197,17 @@ export interface IUploaderOptions<T> {
 export interface IUploader extends IViewComponent {
 	buildData(data: FormData | IDictionary<string> | string): BuildDataResult;
 
-	send(
-		data: FormData | IDictionary<string>,
-		success: (resp: IUploaderAnswer) => void
-	): Promise<any>;
+	// send(
+	// 	data: FormData | IDictionary<string>,
+	// 	success: (resp: IUploaderAnswer) => void
+	// ): Promise<any>;
 
-	sendFiles(
-		files: FileList | File[] | null,
-		handlerSuccess?: HandlerSuccess,
-		handlerError?: HandlerError,
-		process?: (form: FormData) => void
-	): Promise<any>;
+	// sendFiles(
+	// 	files: FileList | File[] | null,
+	// 	handlerSuccess?: HandlerSuccess,
+	// 	handlerError?: HandlerError,
+	// 	process?: (form: FormData) => void
+	// ): Promise<any>;
 
 	bind(
 		form: HTMLElement,

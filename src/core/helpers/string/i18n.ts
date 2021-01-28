@@ -7,7 +7,7 @@
 import type { IDictionary, ILanguageOptions } from '../../../types';
 import { Config } from '../../../config';
 import { defaultLanguage as defineLanguage } from '../default-language';
-import { ucfirst, isString, error } from '../index';
+import { ucfirst, isString, error } from '../';
 import { lang } from '../../global';
 
 /**

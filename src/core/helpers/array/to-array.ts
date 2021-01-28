@@ -5,7 +5,7 @@
  */
 
 import { reset } from '../utils';
-import { isNativeFunction } from '../checker';
+import { isNativeFunction } from '../checker/is-native-function';
 
 /**
  * Always return Array. In some cases(Joomla Mootools)

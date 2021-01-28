@@ -46,7 +46,8 @@ export abstract class Component implements IComponent {
 		const result = [this.componentName];
 
 		if (elementName) {
-			result.push(`__${elementName}`)
+			elementName = elementName.replace(/[^a-z0-9-]/gi, '-');
+			result.push(`__${elementName}`);
 		}
 
 		if (mod) {

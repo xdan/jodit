@@ -25,12 +25,13 @@ import { Ajax } from '../../core/ajax';
 import {
 	attr,
 	error,
-	extend,
 	isPlainObject,
 	isJoditObject,
 	isArray,
 	isFunction,
-	toArray
+	toArray,
+	isString,
+	ConfigProto
 } from '../../core/helpers';
 import { Dom } from '../../core/dom';
 import { ViewComponent, STATUSES } from '../../core/component/';
@@ -199,7 +200,7 @@ export class Uploader extends ViewComponent implements IUploader {
 				return data;
 			}
 
-			if (typeof data === 'string') {
+			if (isString(data)) {
 				return data;
 			}
 
@@ -217,7 +218,7 @@ export class Uploader extends ViewComponent implements IUploader {
 
 	private ajaxInstances: IAjax[] = [];
 
-	send(
+	private send(
 		data: FormData | IDictionary<string>,
 		success: (resp: IUploaderAnswer) => void
 	): Promise<any> {
@@ -233,9 +234,7 @@ export class Uploader extends ViewComponent implements IUploader {
 							(this.j.ow as any).FormData !== undefined &&
 							xhr.upload
 						) {
-							this.j.progressbar
-								.show()
-								.progress(10);
+							this.j.progressbar.show().progress(10);
 
 							xhr.upload.addEventListener(
 								'progress',
@@ -246,7 +245,10 @@ export class Uploader extends ViewComponent implements IUploader {
 
 										percentComplete *= 100;
 
-										console.log('progress', percentComplete);
+										console.log(
+											'progress',
+											percentComplete
+										);
 
 										this.j.progressbar
 											.show()
@@ -314,7 +316,7 @@ export class Uploader extends ViewComponent implements IUploader {
 	 * @param handlerError
 	 * @param process
 	 */
-	sendFiles(
+	private sendFiles(
 		files: FileList | File[] | null,
 		handlerSuccess?: HandlerSuccess,
 		handlerError?: HandlerError,
@@ -762,12 +764,12 @@ export class Uploader extends ViewComponent implements IUploader {
 	constructor(editor: IViewBased, options?: IUploaderOptions<Uploader>) {
 		super(editor);
 
-		this.options = extend(
-			true,
-			{},
-			Config.defaultOptions.uploader,
-			isJoditObject(editor) ? editor.o.uploader : null,
-			options
+		this.options = ConfigProto(
+			options || {},
+			ConfigProto(
+				Config.defaultOptions.uploader,
+				isJoditObject(editor) ? editor.o.uploader : null
+			)
 		) as IUploaderOptions<Uploader>;
 	}
 
