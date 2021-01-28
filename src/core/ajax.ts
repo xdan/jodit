@@ -131,7 +131,6 @@ export class Ajax implements IAjax {
 	private activated = false;
 
 	send(): Promise<any> {
-		debugger;
 		this.activated = true;
 
 		return new Promise(
@@ -273,7 +272,7 @@ export class Ajax implements IAjax {
 		return request;
 	}
 
-	constructor(readonly jodit: IViewBased, options: AjaxOptions) {
+	constructor(readonly jodit: IViewBased, options: Partial<AjaxOptions>) {
 		this.options = ConfigProto(
 			options || {},
 			Config.prototype.defaultAjaxOptions
