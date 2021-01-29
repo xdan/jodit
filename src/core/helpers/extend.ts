@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import {stringify} from './string/stringify'
+import { stringify } from './string/stringify';
 
 export function isAtom(obj: unknown): boolean {
 	return obj && (obj as any).isAtom;

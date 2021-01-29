@@ -1621,8 +1621,7 @@ describe('Toolbar', function () {
 
 				expect(popup).is.not.null;
 
-				simulateEvent('click', 0, popup.querySelector('button'));
-
+				simulateEvent('click', popup.querySelector('button'));
 				const dialog = getOpenedDialog(editor);
 
 				expect(dialog).is.not.null;

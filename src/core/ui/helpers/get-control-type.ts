@@ -11,7 +11,7 @@ import type {
 	IControlTypeStrong,
 	IDictionary
 } from '../../../types';
-import { isString } from '../../helpers';
+import { ConfigFlatten, isString } from '../../helpers';
 import { Config } from '../../../config';
 
 /**
@@ -28,12 +28,12 @@ export function getControlType(
 	controls ||= Config.defaultOptions.controls;
 
 	if (!isString(button)) {
-		buttonControl = { name: 'empty', ...button };
+		buttonControl = { name: 'empty', ...ConfigFlatten(button) };
 
 		if (controls[buttonControl.name] !== undefined) {
 			buttonControl = {
-				...controls[buttonControl.name],
-				...buttonControl
+				...ConfigFlatten(controls[buttonControl.name]),
+				...ConfigFlatten(buttonControl)
 			} as IControlTypeStrong;
 		}
 	} else {
@@ -67,7 +67,7 @@ export function findControlType(
 	return store[key]
 		? {
 				name: key,
-				...store[key]
+				...ConfigFlatten(store[key])
 		  }
 		: undefined;
 }

@@ -39,7 +39,6 @@ export const Alert = (
 		callback = title;
 		title = undefined;
 	}
-
 	const dialog = new Dialog(),
 		container = dialog.c.div(className),
 		okButton = Button(dialog, 'ok', 'Ok');

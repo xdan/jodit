@@ -190,13 +190,11 @@ describe('Clean html plugin', function () {
 						timeout: 0
 					}
 				});
-				editor.value = '<p>test <b>old</b> test</p>';
+				editor.s.focus();
+				editor.value = '<p>test <b>ol|d</b> test</p>';
+				setCursorToChar(editor);
 
-				const range = editor.s.createRange(true);
-				range.setStart(editor.editor.querySelector('b').firstChild, 2);
-				range.collapse(true);
-
-				simulateEvent('mousedown', 0, editor.editor);
+				simulateEvent('mousedown', editor.editor);
 
 				editor.s.insertHTML(' some ');
 

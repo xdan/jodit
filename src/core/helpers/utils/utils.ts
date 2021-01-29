@@ -169,3 +169,18 @@ export const loadImage = (src: string, jodit: IViewBased): Promise<HTMLImageElem
 			onSuccess();
 		}
 	});
+
+
+export const keys = (obj: object, own: boolean = true): string[] => {
+	if (own) {
+		return Object.keys(obj);
+	}
+
+	const props = [];
+
+	for (const key in obj) {
+		props.push(key);
+	}
+
+	return props;
+}

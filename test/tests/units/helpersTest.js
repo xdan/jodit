@@ -68,7 +68,8 @@ describe('Test helpers', function () {
 					[false, false]
 				];
 
-				for (let i = 0, value = values[i]; i < values.length; i += 1) {
+				for (let i = 0; i < values.length; i += 1) {
+					const value = values[i];
 					expect(value[1]).equals(
 						Jodit.modules.Helpers.isVoid(value[0])
 					);
@@ -406,9 +407,10 @@ describe('Test helpers', function () {
 					['a.b1.0.key1', null]
 				];
 
-				for (let i = 0, value = values[i]; i < values.length; i += 1) {
+				for (let i = 0; i < values.length; i += 1) {
+					const value = values[i];
 					expect(value[1]).equals(
-						Jodit.modules.Helpers.get(value[0])
+						Jodit.modules.Helpers.get(value[0], obj)
 					);
 				}
 			});
@@ -425,6 +427,23 @@ describe('Test helpers', function () {
 					['a1', 2, { a1: 2 }],
 					['a', 1, { a1: 2, a: 1 }],
 					['a2', null, { a1: 2, a: 1, a2: null }],
+					[
+						'a.b.c.d.e',
+						1,
+						{
+							a1: 2,
+							a: {
+								b: {
+									c: {
+										d: {
+											e: 1
+										}
+									}
+								}
+							},
+							a2: null
+						}
+					],
 					[
 						'a.b.c.d.e',
 						1,
@@ -481,7 +500,8 @@ describe('Test helpers', function () {
 					]
 				];
 
-				for (let i = 0, value = values[i]; i < values.length; i += 1) {
+				for (let i = 0; i < values.length; i += 1) {
+					const value = values[i];
 					Jodit.modules.Helpers.set(value[0], value[1], obj);
 					expect(obj).deep.eq(value[2]);
 				}

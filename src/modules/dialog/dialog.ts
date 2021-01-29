@@ -37,7 +37,8 @@ import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 import { Dom } from '../../core/dom';
 import { STATUSES } from '../../core/component';
 import { eventEmitter, pluginSystem } from '../../core/global';
-import { component, autobind } from '../../core/decorators';
+import { component, autobind, hook } from '../../core/decorators';
+import { View } from '../../core/view/view';
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}
@@ -731,7 +732,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 				{
 					toolbarButtonSize: 'middle'
 				},
-				Config.prototype.dialog
+				ConfigProto(Config.prototype.dialog, View.defaultOptions)
 			)
 		) as IDialogOptions;
 
@@ -777,11 +778,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		self.dialogbox_footer = self.getElm('footer');
 		self.dialogbox_toolbar = self.getElm('header-toolbar');
 
-		self.o.buttons &&
-			self.toolbar
-				.build(splitArray(self.o.buttons))
-				.appendTo(self.dialogbox_toolbar);
-
 		const headerBox = self.getElm('header');
 
 		headerBox && self.e.on(headerBox, 'mousedown', self.onHeaderMouseDown);
@@ -797,6 +793,18 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			.on(self.container, 'close_dialog', self.close)
 			.on(this.ow, 'keydown', this.onEsc)
 			.on(this.ow, 'resize', this.onResize);
+	}
+
+	/**
+	 * Build toolbar after ready
+	 */
+	@hook('ready')
+	protected buildToolbar(): void {
+		this.o.buttons &&
+		this.toolbar
+			.build(splitArray(this.o.buttons))
+			.setMod('mode', 'header')
+			.appendTo(this.dialogbox_toolbar);
 	}
 
 	/**

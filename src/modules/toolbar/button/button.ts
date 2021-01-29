@@ -29,7 +29,8 @@ import {
 	attr,
 	isJoditObject,
 	call,
-	isArray
+	isArray,
+	keys
 } from '../../../core/helpers/';
 import { Icon } from '../../../core/ui';
 import { ToolbarCollection } from '../../../modules/toolbar/collection/collection';
@@ -378,7 +379,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		toolbar.build(
 			isArray(list)
 				? list.map(getButton)
-				: Object.keys(list).map(key => getButton(key, list[key])),
+				: keys(list, false).map(key => getButton(key, list[key])),
 			this.target
 		);
 

@@ -17,13 +17,13 @@ describe('Jodit FileBrowser Tests', function() {
 				filebrowser.open(function() {});
 
 				expect(
-					document.querySelectorAll('.jodit-dialog__box').length
+					document.querySelectorAll('.jodit-dialog').length
 				).equals(1);
 
 				filebrowser.close();
 
 				expect(
-					document.querySelectorAll('.jodit-dialog__box').length
+					document.querySelectorAll('.jodit-dialog').length
 				).equals(0);
 
 				filebrowser.destruct();
@@ -45,7 +45,7 @@ describe('Jodit FileBrowser Tests', function() {
 			filebrowser.open(function() {});
 
 			expect(
-				editor.ownerDocument.querySelectorAll('.jodit-dialog__box')
+				editor.ownerDocument.querySelectorAll('.jodit-dialog')
 					.length
 			).equals(1);
 
@@ -230,7 +230,6 @@ describe('Jodit FileBrowser Tests', function() {
 
 							simulateEvent(
 								'click',
-								0,
 								filebrowser.browser.querySelector(
 									'.jodit-filebrowser__files-item[data-is-file="0"]'
 								)

@@ -26,7 +26,8 @@ import {
 	position,
 	isArray,
 	isFunction,
-	toArray
+	toArray,
+	keys
 } from '../../core/helpers';
 import { Dom, Table, ToolbarCollection, UIElement } from '../../modules';
 import { debounce, wait, autobind } from '../../core/decorators';
@@ -47,7 +48,7 @@ export class inlinePopup extends Plugin {
 	@autobind
 	private onClick(e: MouseEvent): void {
 		const node = e.target as Node,
-			elements = Object.keys(this.j.o.popup) as HTMLTagNames[],
+			elements = keys(this.j.o.popup, false) as HTMLTagNames[],
 			target = Dom.isTag(node, 'img')
 				? node
 				: Dom.closest(node, elements, this.j.editor);
@@ -116,7 +117,6 @@ export class inlinePopup extends Plugin {
 	@autobind
 	private hidePopup(type?: string): void {
 		if (!type || type === this.type) {
-			console.log('hidePopup', new Error());
 			this.popup.close();
 		}
 	}
@@ -272,7 +272,7 @@ export class inlinePopup extends Plugin {
 			sc === r.endContainer &&
 			Dom.isTag(
 				sc.childNodes[r.startOffset],
-				Object.keys(this.j.o.popup) as any
+				keys(this.j.o.popup, false) as any
 			) &&
 			r.startOffset === r.endOffset - 1
 		);

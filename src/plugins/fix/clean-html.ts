@@ -12,7 +12,7 @@ import {
 	INSEPARABLE_TAGS
 } from '../../core/constants';
 import { Dom } from '../../modules';
-import { isString, trim } from '../../core/helpers';
+import { isString, keys, trim } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { autobind, debounce } from '../../core/decorators';
 
@@ -135,7 +135,7 @@ export class cleanHtml extends Plugin {
 		const replaceOldTags = editor.o.cleanHTML.replaceOldTags;
 
 		if (replaceOldTags && current) {
-			const tags = Object.keys(replaceOldTags) as HTMLTagNames[];
+			const tags = keys(replaceOldTags, false) as HTMLTagNames[];
 
 			if (editor.s.isCollapsed()) {
 				const oldParent = Dom.closest(current, tags, editor.editor);

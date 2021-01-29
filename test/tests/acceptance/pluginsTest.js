@@ -480,7 +480,6 @@ describe('Test plugins', function() {
 
 						simulateEvent(
 							'dblclick',
-							0,
 							editor.editor.querySelector('img')
 						);
 
@@ -1476,12 +1475,8 @@ describe('Test plugins', function() {
 							}
 						});
 
-					editor.value = 'test test test';
-
-					const range = editor.s.createRange(true);
-					range.setStart(editor.editor.firstChild.firstChild, 4);
-					range.setEnd(editor.editor.firstChild.firstChild, 8);
-					editor.s.selectRange(range);
+					editor.value = '<p>test| tes|t test</p>';
+					setCursorToChar(editor);
 
 					// standart ctrl+i
 					simulateEvent('keydown', 'i', editor.editor, function(
@@ -1495,11 +1490,8 @@ describe('Test plugins', function() {
 						'<p>test<em> tes</em>t test</p>'
 					);
 
-					editor.value = 'test test test';
-
-					const range2 = editor.s.createRange(true);
-					range2.setStart(editor.editor.firstChild.firstChild, 4);
-					range2.setEnd(editor.editor.firstChild.firstChild, 8);
+					editor.value = '<p>test| tes|t test</p>';
+					setCursorToChar(editor);
 
 					// standart ctrl+shift+i
 					simulateEvent('keydown', 'i', editor.editor, function(

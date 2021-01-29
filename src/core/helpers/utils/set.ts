@@ -6,8 +6,9 @@
 
 import type { IDictionary } from '../../../types';
 import { isString } from '../checker/is-string';
-import { isVoid } from '../checker/is-void';
 import { isNumeric } from '../checker/is-numeric';
+import { isArray } from '../checker/is-array';
+import { isPlainObject } from '../checker';
 
 /**
  * Safe access in tree object
@@ -34,15 +35,17 @@ export function set<T>(chain: string, value: unknown, obj: IDictionary): void {
 	let result = obj,
 		key = parts[0];
 
-	for (let i = 0; i < parts.length; i += 1) {
+	for (let i = 0; i < parts.length - 1; i += 1) {
 		key = parts[i];
 
-		if (isVoid(result[key])) {
+		if (!isArray(result[key]) && !isPlainObject(result[key])) {
 			result[key] = isNumeric(parts[i + 1]) ? [] : {};
 		}
 
 		result = result[key];
 	}
 
-	result[key] = value;
+	if (result) {
+		result[parts[parts.length - 1]] = value;
+	}
 }

@@ -137,6 +137,7 @@ export class UIList<T extends IViewBased = IViewBased>
 					group = this.makeGroup();
 					line.append(group);
 					group.setMod('separated', true).setMod('group', item.group);
+
 					getStrongControlTypes(buttons, this.j.o.controls)
 						.filter(isNotRemoved)
 						.forEach(addButton);

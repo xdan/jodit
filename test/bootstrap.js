@@ -60,8 +60,8 @@ function mockAjax() {
 				request.url &&
 				request.url.match(/action=/)
 			) {
-				const actioExec = /action=([\w]+)/.exec(request.url);
-				action = actioExec[1];
+				const actionExec = /action=([\w]+)/.exec(request.url);
+				action = actionExec[1];
 			}
 
 			return new Promise(function (resolve) {
@@ -106,8 +106,9 @@ function mockAjax() {
 							success: true,
 							time: '2018-03-15 12:49:49',
 							data: {
-								sources: {
-									default: {
+								sources: [
+									{
+										name: 'default',
 										baseurl:
 											'https://xdsoft.net/jodit/files/',
 										path: '',
@@ -145,7 +146,7 @@ function mockAjax() {
 											}
 										]
 									}
-								},
+								],
 								code: 220
 							}
 						});
@@ -158,14 +159,16 @@ function mockAjax() {
 							success: true,
 							time: '2018-03-15 12:49:49',
 							data: {
-								sources: {
-									default: {
+								sources: [
+									{
+										name: 'default',
+										title: 'Some files',
 										baseurl:
 											'https://xdsoft.net/jodit/files/',
 										path: '',
 										folders: ['.', folderName, 'test']
 									}
-								},
+								],
 								code: 220
 							}
 						});
@@ -262,6 +265,9 @@ if (typeof window.chai !== 'undefined') {
 
 const i18nkeys = [];
 const excludeI18nKeys = [
+	'text3',
+	'text2',
+	'text1',
 	'Class name',
 	'https://',
 	'http://',
@@ -311,6 +317,7 @@ Jodit.defaultOptions.events.afterInit = function (editor) {
 };
 Jodit.defaultOptions.filebrowser.saveStateInStorage = false;
 Jodit.defaultOptions.observer.timeout = 0;
+Jodit.defaultOptions.filebrowser.defaultTimeout = 0;
 Jodit.modules.View.defaultOptions.defaultTimeout = 0;
 
 if (Jodit.defaultOptions.cleanHTML) {
@@ -354,7 +361,8 @@ document.body.appendChild(box);
 
 function flatten(obj) {
 	var result = Object.create(obj);
-	for(var key in result) {
+	for (var key in result) {
+		// eslint-disable-next-line no-self-assign
 		result[key] = result[key];
 	}
 	return result;
@@ -376,7 +384,7 @@ function removeStuff() {
 	stuff.length = 0;
 
 	Array.from(
-		document.querySelectorAll('.jodit.jodit-dialog__box.active')
+		document.querySelectorAll('.jodit.jodit-dialog.jodit-dialog_active_true')
 	).forEach(function (dialog) {
 		simulateEvent('close_dialog', 0, dialog);
 	});
@@ -744,7 +752,7 @@ function getOpenedPopup(editor) {
  * @return {HTMLElement|null}
  */
 function getOpenedDialog(editor) {
-	const dlgs = editor.ownerDocument.querySelectorAll('.jodit-dialog__box');
+	const dlgs = editor.ownerDocument.querySelectorAll('.jodit-dialog');
 
 	return dlgs.length ? dlgs[dlgs.length - 1] : null;
 }
@@ -956,7 +964,6 @@ function offset(el) {
  *
  * I haven't decided on the best name for this property - thus the duplication.
  */
-
 (function () {
 	const serializeXML = function (node, output) {
 		const nodeType = node.nodeType;

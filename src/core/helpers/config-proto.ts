@@ -8,6 +8,7 @@ import type { IDictionary } from '../../types';
 import { isAtom } from './extend';
 import { isArray, isPlainObject, isString, isVoid } from './checker';
 import { Config } from '../../config';
+import { keys } from './utils';
 /**
  * @example
  * ```js
@@ -90,4 +91,11 @@ export function ConfigProto(
 	Object.setPrototypeOf(newOpt, proto);
 
 	return newOpt;
+}
+
+export function ConfigFlatten(obj: IDictionary): IDictionary {
+	return keys(obj, false).reduce((app, key) => {
+		app[key] = obj[key];
+		return app;
+	}, {} as IDictionary)
 }

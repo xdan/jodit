@@ -7,7 +7,12 @@
 import type { IDictionary, IJodit } from '../../types';
 import { Config } from '../../config';
 import { Plugin } from '../../core/plugin';
-import { normalizeKeyAliases } from '../../core/helpers';
+import {
+	isArray,
+	isString,
+	keys,
+	normalizeKeyAliases
+} from '../../core/helpers';
 import { KEY_ESC } from '../../core/constants';
 
 declare module '../../config' {
@@ -125,13 +130,10 @@ export class hotkeys extends Plugin {
 
 	/** @override */
 	afterInit(editor: IJodit): void {
-		const commands: string[] = Object.keys(editor.o.commandToHotkeys);
+		keys(editor.o.commandToHotkeys, false).forEach((commandName: string) => {
+			const shortcuts = editor.o.commandToHotkeys[commandName];
 
-		commands.forEach((commandName: string) => {
-			const shortcuts: string | string[] | void =
-				editor.o.commandToHotkeys[commandName];
-
-			if (shortcuts) {
+			if (shortcuts && (isArray(shortcuts) || isString(shortcuts))) {
 				editor.registerHotkeyToCommand(shortcuts, commandName);
 			}
 		});

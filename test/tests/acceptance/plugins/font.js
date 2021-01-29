@@ -66,8 +66,9 @@ describe('Font test', function () {
 					expect(list).is.not.null;
 
 					const buttons = list.querySelectorAll('button'),
-						font = buttons[buttons.length - 1];
-					simulateEvent('click', 0, font);
+						font = buttons[0];
+
+					simulateEvent('click', font);
 
 					expect(sortAttributes(editor.value)).equals(
 						sortAttributes(

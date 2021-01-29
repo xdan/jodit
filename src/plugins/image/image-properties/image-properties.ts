@@ -240,6 +240,7 @@ export class imageProperties extends Plugin {
 		this.dialog = new Dialog({
 			fullsize: this.j.o.fullsize,
 			globalFullSize: this.j.o.globalFullSize,
+			theme: this.j.o.theme,
 			language: this.j.o.language,
 			minWidth: Math.min(400, screen.width),
 			minHeight: 400,

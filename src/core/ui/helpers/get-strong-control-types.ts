@@ -13,6 +13,7 @@ import type {
 import { getControlType } from './get-control-type';
 import { Config } from '../../../config';
 import { isArray } from '../../helpers/checker';
+import { ConfigProto, keys } from '../../helpers';
 
 export function getStrongControlTypes(
 	items: Buttons | IDictionary<string>,
@@ -20,13 +21,9 @@ export function getStrongControlTypes(
 ): IControlTypeStrong[] {
 	const elements = isArray(items)
 		? items
-		: Object.keys(items).map(key => {
+		: keys(items, false).map(key => {
 				const value = items[key] || {};
-
-				return {
-					name: key,
-					...value
-				} as IControlTypeStrong;
+				return ConfigProto({ name: key }, value) as IControlTypeStrong;
 		  });
 
 	return elements.map(item =>

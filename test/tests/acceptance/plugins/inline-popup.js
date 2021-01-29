@@ -43,7 +43,7 @@ describe('Text Inline Popup plugin', function () {
 					clickButton('pencil', popup);
 
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit-dialog__box[data-editor_id=' +
+						'.jodit.jodit-dialog[data-editor_id=' +
 							editor.id +
 							']'
 					);

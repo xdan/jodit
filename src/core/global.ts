@@ -45,7 +45,11 @@ export const modules: IDictionary<Function> = {};
 export const lang: IDictionary<IDictionary<string>> = {};
 export const extendLang = (langs: IDictionary) => {
 	Object.keys(langs).forEach(key => {
-		Object.assign(lang[key], langs[key]);
+		if (lang[key]) {
+			Object.assign(lang[key], langs[key]);
+		} else {
+			lang[key] = langs[key];
+		}
 	});
 };
 
