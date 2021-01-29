@@ -17,11 +17,11 @@
 }
 
 .jodit-container:not(.jodit_inline) .jodit-wysiwyg {
-	margin: 0;
+	position: relative;
 	padding: 8px;
+	margin: 0;
 	outline: 0;
 	overflow-x: auto;
-	position: relative;
 
 	img {
 		position: relative;
@@ -38,13 +38,13 @@
 		}
 
 		&::before {
-			z-index: 1;
-			content: '';
 			position: absolute;
+			z-index: 1;
 			top: 0;
-			left: 0;
 			right: 0;
 			bottom: 0;
+			left: 0;
+			content: '';
 		}
 	}
 }
