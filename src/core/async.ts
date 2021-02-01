@@ -281,6 +281,12 @@ export class Async implements IAsync {
 		return request;
 	}
 
+	requestIdlePromise(): Promise<number> {
+		return new Promise<number>((res) => {
+			const request = this.requestIdleCallback(() => res(request));
+		});
+	}
+
 	cancelIdleCallback(request: number): void {
 		this.requestsIdle.delete(request);
 		return this.cancelIdleCallbackNative(request);

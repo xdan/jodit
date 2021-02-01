@@ -10,7 +10,7 @@ Jodit.defaultOptions.controls.example = {
 	iconURL: '{basePath}plugins/example/icon.svg',
 	tooltip: 'Example',
 	popup: (): string => {
-		return `<div class="jodit_example">Example plugin</div>`;
+		return '<div class="jodit_example">Example plugin</div>';
 	}
 } as IControlType;
 
@@ -30,7 +30,7 @@ Jodit.defaultOptions.controls.example2 = {
  *   extraPlugins: ['example']
  * });
  */
-class example implements IPlugin {
+class example implements IPlugin<IJodit> {
 	hasStyle = true;
 	jodit!: IJodit;
 

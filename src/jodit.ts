@@ -340,6 +340,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				defaultTimeout: jodit.defaultTimeout,
 				uploader: jodit.o.uploader,
 				language: jodit.o.language,
+				license: jodit.o.license,
 				theme: jodit.o.theme,
 				defaultCallback(data: IFileBrowserCallBackData): void {
 					if (data.files && data.files.length) {
@@ -1113,9 +1114,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 			const initPluginsResult = pluginSystem.init(this);
 
-			this.e.fire('afterPluginSystemInit', this);
-
 			callPromise(initPluginsResult, () => {
+				this.e.fire('afterPluginSystemInit', this);
+
 				this.e.on('changePlace', () => {
 					this.setReadOnly(this.o.readonly);
 					this.setDisabled(this.o.disabled);
@@ -1285,6 +1286,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		};
 
 		return callPromise(initResult, init);
+	}
+
+	/** @override */
+	protected addDisclaimer(elm: HTMLElement) {
+		this.workplace.appendChild(elm);
 	}
 
 	/**

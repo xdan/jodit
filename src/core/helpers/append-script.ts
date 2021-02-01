@@ -47,6 +47,7 @@ export const appendScript = (
 	const script = jodit.c.element('script');
 
 	script.type = 'text/javascript';
+	script.async = true;
 
 	if (isFunction(callback) && !jodit.isInDestruct) {
 		jodit.e.on(script, 'load', callback);

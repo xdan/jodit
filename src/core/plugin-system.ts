@@ -178,10 +178,6 @@ export class PluginSystem implements IPluginSystem {
 		promiseList: IDictionary<PluginInstance | undefined>
 	) {
 		const initPlugin = (name: string, plugin: PluginInstance): boolean => {
-			if ((plugin as IPlugin).hasStyle) {
-				PluginSystem.loadStyle(jodit, name);
-			}
-
 			if (isInitable(plugin)) {
 				const req = (plugin as IPlugin).requires;
 
@@ -199,6 +195,10 @@ export class PluginSystem implements IPluginSystem {
 				doneList.push(name);
 			}
 
+			if ((plugin as IPlugin).hasStyle) {
+				PluginSystem.loadStyle(jodit, name);
+			}
+
 			return true;
 		};
 
@@ -211,7 +211,7 @@ export class PluginSystem implements IPluginSystem {
 				return;
 			}
 
-			if (initPlugin(name, instance)) {
+			if (initPlugin(name, plugin)) {
 				promiseList[name] = undefined;
 				delete promiseList[name];
 			}
@@ -266,17 +266,21 @@ export class PluginSystem implements IPluginSystem {
 	}
 
 	/**
-	 *
-	 *
 	 * @param jodit
 	 * @param pluginName
 	 */
-	private static loadStyle(jodit: IJodit, pluginName: string): Promise<void> {
-		return appendStyleAsync(
-			jodit,
-			PluginSystem.getFullUrl(jodit, pluginName, false)
-		);
+	private static async loadStyle(jodit: IJodit, pluginName: string): Promise<void> {
+		const url = PluginSystem.getFullUrl(jodit, pluginName, false);
+
+		if (this.styles.has(url)) {
+			return;
+		}
+
+		this.styles.add(url);
+
+		return appendStyleAsync(jodit, url);
 	}
+	private static styles: Set<string> = new Set();
 
 	/**
 	 * Call full url to the script or style file
@@ -292,16 +296,12 @@ export class PluginSystem implements IPluginSystem {
 	): string {
 		name = kebabCase(name);
 
-		const esSuffix =
-			process.env.TARGET_ES !== 'es5' ? `.${process.env.TARGET_ES}` : '';
-
 		return (
 			jodit.basePath +
 			'plugins/' +
 			name +
 			'/' +
 			name +
-			esSuffix +
 			'.' +
 			(js ? 'js' : 'css')
 		);

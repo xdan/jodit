@@ -32,7 +32,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 	`;
 
 	const debug = !argv || !argv.mode || !argv.mode.match(/production/);
-	const isTest = argv && Boolean(argv.isTest);
+	const isTest = Boolean(argv && argv.isTest);
 
 	const mode = debug ? 'development' : argv.mode;
 	const isProd = mode === 'production';
@@ -41,12 +41,14 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 	const ES = argv && ['es5', 'es2018'].includes(argv.es) ? argv.es : 'es2018';
 	const ESNext = ES === 'es2018';
 
-	console.warn('ES mode: ' + ES);
+	console.warn(`ES:${ES} Mode:${mode} Test:${isTest}`);
 
-	const filename = name =>
-		name +
-		(ES === 'es5' || isTest ? '' : '.' + ES) +
-		(uglify ? '.min' : '');
+	const filename =
+		argv.filename ||
+		(name =>
+			name +
+			(ES === 'es5' || isTest ? '' : '.' + ES) +
+			(uglify ? '.min' : ''));
 
 	const css_loaders = [
 		debug || isTest ? 'style-loader' : MiniCssExtractPlugin.loader,
@@ -77,6 +79,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 		new webpack.DefinePlugin({
 			appVersion: JSON.stringify(pkg.version),
 			isProd: isProd,
+			isTest: isTest,
 			'process.env': {
 				TARGET_ES: JSON.stringify(ES),
 				NODE_ENV: JSON.stringify(mode)

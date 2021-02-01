@@ -4,8 +4,6 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-// FIXME Need check https://github.com/ryanclark/karma-webpack/issues/452 status and restore karma-webpack
-
 const path = require('path');
 const webpackConfFunc = require(path.resolve(process.cwd(), './webpack.config'));
 const webpackConfig = (() => {

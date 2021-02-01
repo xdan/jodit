@@ -15,8 +15,8 @@ export interface IPluginButton {
 	position?: number;
 }
 
-export class IPlugin implements IDestructible, IInitable {
-	jodit: IJodit;
+export class IPlugin<T extends IViewBased = IViewBased> implements IDestructible, IInitable {
+	jodit: T;
 
 	static requires?: string[];
 	requires?: string[];
@@ -28,10 +28,10 @@ export class IPlugin implements IDestructible, IInitable {
 	 */
 	buttons?: IPluginButton[];
 
-	init(jodit: IJodit): void;
-	destruct(jodit?: IJodit): void;
+	init(jodit: T): void;
+	destruct(jodit?: T): void;
 
-	constructor(jodit?: IJodit);
+	constructor(jodit?: T);
 }
 
 interface PluginFunction {
@@ -48,7 +48,7 @@ export interface IExtraPlugin {
 }
 
 export interface IPluginSystem {
-	add(name: string, plugin: PluginType): void;
+	add(name: string, plugin: any): void;
 	get(name: string): PluginType | void;
 	remove(name: string): void;
 	init(jodit: IJodit): CanPromise<void>;

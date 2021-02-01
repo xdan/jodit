@@ -98,7 +98,7 @@ Config.prototype.controls.eraser = {
 /**
  * Clean HTML after removeFormat and insertHorizontalRule command
  */
-export class cleanHtml extends Plugin {
+export class cleanHtml extends Plugin<IJodit> {
 	/** @override */
 	buttons: Plugin['buttons'] = [
 		{
@@ -122,7 +122,7 @@ export class cleanHtml extends Plugin {
 	/**
 	 * Clean HTML code on every change
 	 */
-	@debounce<IPlugin>(ctx => ctx.jodit.o.cleanHTML.timeout)
+	@debounce<IPlugin<IJodit>>(ctx => ctx.jodit.o.cleanHTML.timeout)
 	private onChangeCleanHTML(): void {
 		if (!this.allowEdit()) {
 			return;

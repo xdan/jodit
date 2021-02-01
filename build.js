@@ -11,7 +11,8 @@ const path = require('path');
 const rootPath = path.resolve(process.cwd()) + path.sep;
 const config = require(path.resolve(rootPath, './webpack.config.js'));
 
-const argv = yargs(hideBin(process.argv)).option('uglify', { type: 'boolean' })
+const argv = yargs(hideBin(process.argv))
+	.option('uglify', { type: 'boolean' })
 	.argv;
 
 const opt = config(
@@ -25,10 +26,14 @@ const opt = config(
 	rootPath
 );
 
-webpack(opt, (err, stats) => {
-	if (err) {
-		console.log(err);
-	} else {
-		console.log(stats.toString({ colors: true }));
-	}
+module.exports = new Promise((resolve, reject) => {
+	webpack(opt, (err, stats) => {
+		if (err) {
+			console.log(err);
+			reject(err);
+		} else {
+			console.log(stats.toString({ colors: true }));
+			resolve(stats.toString({ colors: true }));
+		}
+	});
 });
