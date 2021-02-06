@@ -47,6 +47,10 @@
 		white-space: nowrap;
 	}
 
+	&_static_true &__overlay {
+		display: none;
+	}
+
 	&_modal_true &__overlay {
 		display: block;
 	}
@@ -86,6 +90,21 @@
 			max-width: 100%;
 			height: 100% !important;
 		}
+	}
+
+	&_static_true {
+		position: static;
+		display: block;
+		width: auto;
+		height: auto;
+		box-sizing: border-box;
+	}
+
+	&_static_true &__panel {
+		position: relative;
+		top: auto !important;
+		left: auto !important;
+		width: 100% !important;
 	}
 
 	&_theme_dark,

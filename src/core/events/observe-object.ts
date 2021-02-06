@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { CallbackFunction, IDictionary } from '../../types';
+import type { CallbackFunction, CanUndef, IDictionary } from '../../types';
 import { isPlainObject, isFastEqual, isArray } from '../helpers';
 import { nonenumerable } from '../decorators';
 
@@ -31,7 +31,7 @@ export class ObserveObject {
 			const prefix = this.__prefix.concat(key).filter(a => a.length);
 
 			Object.defineProperty(this, key, {
-				set: value => {
+				set: (value: CanUndef<unknown>) => {
 					const oldValue = data[key];
 
 					if (!isFastEqual(oldValue, value)) {
@@ -67,7 +67,7 @@ export class ObserveObject {
 							],
 							prefix.join('.'),
 							oldValue,
-							value.valueOf ? value.valueOf() : value
+							(value as any)?.valueOf ? (value as any).valueOf() : value
 						);
 					}
 				},

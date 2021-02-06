@@ -26,11 +26,13 @@ export abstract class Mods {
 	 *
 	 * @param name
 	 * @param value if null, mod will be removed
+	 * @param [container]
 	 */
 	static setMod(
 		this: IComponent & IContainer & Mods,
 		name: string,
 		value: string | boolean | null,
+		container?: HTMLElement
 	): void {
 		name = name.toLowerCase();
 
@@ -39,7 +41,7 @@ export abstract class Mods {
 		}
 
 		const mod = `${this.componentName}_${name}`,
-			cl = this.container.classList;
+			cl = (container || this.container).classList;
 
 		toArray(cl).forEach(className => {
 			if (className.indexOf(mod) === 0) {
