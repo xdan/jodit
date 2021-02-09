@@ -262,7 +262,11 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 	@autobind
 	private onEsc(e: KeyboardEvent): void {
-		if (this.isOpened && e.key === KEY_ESC) {
+		if (
+			this.isOpened &&
+			e.key === KEY_ESC &&
+			this.getMod('static') !== true
+		) {
 			const me = this.getMaxZIndexDialog();
 
 			if (me) {
@@ -672,7 +676,11 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 */
 	@autobind
 	close(e?: MouseEvent): this {
-		if (this.isDestructed || !this.isOpened) {
+		if (
+			this.isDestructed ||
+			!this.isOpened ||
+			this.getMod('static') === true
+		) {
 			return this;
 		}
 
@@ -801,10 +809,10 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	@hook('ready')
 	protected buildToolbar(): void {
 		this.o.buttons &&
-		this.toolbar
-			.build(splitArray(this.o.buttons))
-			.setMod('mode', 'header')
-			.appendTo(this.dialogbox_toolbar);
+			this.toolbar
+				.build(splitArray(this.o.buttons))
+				.setMod('mode', 'header')
+				.appendTo(this.dialogbox_toolbar);
 	}
 
 	/**
