@@ -6,47 +6,54 @@
 import { isArray } from '../core/helpers/checker';
 import { IDictionary } from '../types';
 
-const ar = require('./ar');
-const cs_cz = require('./cs_cz');
-const de = require('./de');
 const en = require('./en');
-const es = require('./es');
-const fr = require('./fr');
-const he = require('./he');
-const hu = require('./hu');
-const id = require('./id');
-const it = require('./it');
-const ja = require('./ja');
-const ko = require('./ko');
-const nl = require('./nl');
-const pl = require('./pl');
-const pt_br = require('./pt_br');
-const ru = require('./ru');
-const tr = require('./tr');
-const zh_cn = require('./zh_cn');
-const zh_tw = require('./zh_tw');
 
-const exp: IDictionary<IDictionary<string>> = {
-	ar,
-	cs_cz,
-	de,
+let exp: IDictionary<IDictionary<string>> = {
 	en,
-	es,
-	fr,
-	he,
-	hu,
-	id,
-	it,
-	ja,
-	ko,
-	nl,
-	pl,
-	pt_br,
-	ru,
-	tr,
-	zh_cn,
-	zh_tw
 };
+
+if (!process.env.EXCLUDE_LANGS) {
+	const ar = require('./ar');
+	const cs_cz = require('./cs_cz');
+	const de = require('./de');
+	const es = require('./es');
+	const fr = require('./fr');
+	const he = require('./he');
+	const hu = require('./hu');
+	const id = require('./id');
+	const it = require('./it');
+	const ja = require('./ja');
+	const ko = require('./ko');
+	const nl = require('./nl');
+	const pl = require('./pl');
+	const pt_br = require('./pt_br');
+	const ru = require('./ru');
+	const tr = require('./tr');
+	const zh_cn = require('./zh_cn');
+	const zh_tw = require('./zh_tw');
+
+	exp = {
+		ar,
+		cs_cz,
+		de,
+		en,
+		es,
+		fr,
+		he,
+		hu,
+		id,
+		it,
+		ja,
+		ko,
+		nl,
+		pl,
+		pt_br,
+		ru,
+		tr,
+		zh_cn,
+		zh_tw
+	};
+}
 
 /* Unpack array to hash */
 const get = (value: IDictionary) => value.default || value,

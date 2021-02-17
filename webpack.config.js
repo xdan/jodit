@@ -37,6 +37,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 	const mode = debug ? 'development' : argv.mode;
 	const isProd = mode === 'production';
 	const uglify = !debug && argv && Boolean(argv.uglify);
+	const excludeLangs = Boolean(argv.excludeLangs) || false;
 
 	const ES = argv && ['es5', 'es2018'].includes(argv.es) ? argv.es : 'es2018';
 	const ESNext = ES === 'es2018';
@@ -46,6 +47,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 	const filename = name =>
 		name +
 		(ES === 'es5' || isTest ? '' : '.' + ES) +
+		(excludeLangs ? '.en' : '') +
 		(uglify ? '.min' : '');
 
 	const css_loaders = [
@@ -79,7 +81,8 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 			isProd: isProd,
 			'process.env': {
 				TARGET_ES: JSON.stringify(ES),
-				NODE_ENV: JSON.stringify(mode)
+				NODE_ENV: JSON.stringify(mode),
+				EXCLUDE_LANGS: JSON.stringify(excludeLangs),
 			}
 		})
 	];
