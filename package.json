@@ -10,15 +10,17 @@
 		"newversiongit": "git add --all  && git commit -m \"New version $npm_package_version. Read more https://github.com/xdan/jodit/blob/master/CHANGELOG.MD \" && git tag $npm_package_version && git push --tags origin HEAD:master",
 		"start": "node server.js --port=2000",
 		"clean": "rm -rf build/*",
-		"build": "npm run clean && npm run build-es5 && npm run build-es2018 && npm run build-no-uglify-es5 && npm run build-no-uglify-es2018",
+		"build": "npm run clean && npm run build-es5 && npm run build-es2018 && npm run build-es2018-en && npm run build-no-uglify-es5 && npm run build-no-uglify-es2018 && npm run build-no-uglify-es2018-en",
 		"build-es5": "node ./build.js --progress --mode production --es es5 --uglify true",
 		"build-es2018": "node ./build.js --progress --mode production --es es2018 --uglify true",
+		"build-es2018-en": "node ./build.js --progress --mode production --es es2018 --excludeLangs true --uglify true",
 		"build-no-uglify-es5": "node ./build.js --progress --mode production --es es5 --uglify false",
 		"build-no-uglify-es2018": "node ./build.js --progress --mode production --es es2018 --uglify false",
+		"build-no-uglify-es2018-en": "node ./build.js --progress --mode production --es es2018 --excludeLangs true --uglify false",
 		"test": "npm run build-no-uglify-es5 && karma start --browsers FirefoxHeadless karma.conf.js",
 		"test-debug": "karma start --browsers Chrome karma.conf.js  --single-run false",
 		"test-chrome": "karma start --browsers Chrome karma.conf.js",
-		"jodit": "cd ../jodit-react/ && npm update && npm run newversion && cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion && cd ../jodit-docs && npm run newversion && cd ../jodit-master && npm run newversion",
+		"jodit": "cd ../jodit-react/ && npm update && npm run newversion && cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion && cd ../jodit-docs && npm run newversion && cd ../jodit-master && npm run newversion && cd ../jodit-pro && yarn newversion",
 		"types": "rm -rf types/* && tsc --project . --declaration --outDir types --emitDeclarationOnly",
 		"pretty": "npx prettier --write ./src/*.{ts,less} ./src/**/*.{ts,less} ./src/**/**/*.{ts,less} ./src/**/**/**/*.{ts,less} ./src/**/**/**/**/*.{ts,less}",
 		"fix": "npx eslint ./src/* ./test/ --fix && npm run pretty",
@@ -104,7 +106,6 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "lint-staged",
 			"pre-push": "npm run lint"
 		}
 	},
