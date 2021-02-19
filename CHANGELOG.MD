@@ -8,6 +8,10 @@
 > - :house:      [Internal]
 > - :nail_care:  [Polish]
 
+## 3.6.1
+
+* [Disable Link Checking #618](https://github.com/xdan/jodit/issues/618)
+
 ## 3.5.4
 
 #### :bug: Bug Fix

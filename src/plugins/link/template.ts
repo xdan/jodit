@@ -28,7 +28,7 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 		new UIBlock(editor, [
 			new UIInput(editor, {
 				name: 'url',
-				type: 'url',
+				type: 'text',
 				ref: 'url_input',
 				label: 'URL',
 				placeholder: 'http://',
