@@ -197,10 +197,6 @@ export class resizeCells extends Plugin {
 		const sel = this.j.s.sel;
 
 		sel && sel.removeAllRanges();
-
-		if (event.preventDefault) {
-			event.preventDefault();
-		}
 	}
 
 	/**

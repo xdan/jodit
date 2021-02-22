@@ -14,6 +14,7 @@
 * [Disable Link Checking #618](https://github.com/xdan/jodit/issues/618)
 * [Changing text style undoes text alignment #614](https://github.com/xdan/jodit/issues/614)
 * [<section> tag is always wraped <p></p> once when toggle the wysiwyg/source mode #612](https://github.com/xdan/jodit/issues/612)
+* [Error when resizing tables and tables cells. #611](https://github.com/xdan/jodit/issues/611)
 
 ## 3.5.4
 
