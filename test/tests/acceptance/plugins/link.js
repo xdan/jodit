@@ -144,6 +144,44 @@ describe('Link plugin', function () {
 							'<p>test <a href="https://xdan.ru">link <strong>strong</strong></a> open</p>'
 						);
 					});
+
+					describe('For relative link', function () {
+						it('Should work same way', function () {
+							const editor = getJodit();
+
+							editor.value =
+								'<p>test <a href="#somelink">|link <strong>strong</strong></a> open</p>';
+
+							setCursorToChar(editor);
+
+							simulateEvent(
+								'click',
+								editor.editor.querySelector('a')
+							);
+
+							const inlinePopup = getOpenedPopup(editor);
+							clickButton('link', inlinePopup);
+
+							const popup = getOpenedPopup(editor);
+							const content = popup.querySelector(
+								'[ref=content_input]'
+							);
+
+							const url = popup.querySelector('[ref=url_input]');
+							expect(url.value).equals('#somelink');
+
+							url.value = '/jodit/docs/';
+
+							simulateEvent(
+								'submit',
+								popup.querySelector('form')
+							);
+
+							expect(editor.value).equals(
+								'<p>test <a href="/jodit/docs/">link <strong>strong</strong></a> open</p>'
+							);
+						});
+					});
 				});
 
 				describe('Content input was changed', function () {
