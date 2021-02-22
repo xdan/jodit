@@ -12,6 +12,7 @@
 
 * [<style> tag wrapping problem #620](https://github.com/xdan/jodit/issues/620)
 * [Disable Link Checking #618](https://github.com/xdan/jodit/issues/618)
+* [Changing text style undoes text alignment #614](https://github.com/xdan/jodit/issues/614)
 
 ## 3.5.4
 

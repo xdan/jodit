@@ -51,7 +51,9 @@ export class ApplyStyle {
 			sel.setCursorIn(font);
 			selInfo = sel.save();
 
-			this.applyToElement(font);
+			if (!this.checkSpecialElements(font)) {
+				this.applyToElement(font);
+			}
 
 			Dom.unwrap(font);
 		} else {
@@ -131,7 +133,8 @@ export class ApplyStyle {
 		const newWrapper = Dom.replace(
 			wrapper,
 			this.style.element,
-			this.jodit.createInside
+			this.jodit.createInside,
+			true
 		);
 
 		if (this.style.elementIsBlock) {

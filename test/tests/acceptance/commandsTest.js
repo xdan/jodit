@@ -23,7 +23,7 @@ describe('Commands Jodit Editor Tests', function () {
 		});
 
 		describe('Exec formatBlock for one inline element', function () {
-			it('Should wrap this element and all nearest inine element in block', function () {
+			it('Should wrap this element and all nearest inline element in block', function () {
 				const jodit = getJodit();
 				jodit.value = 'stop <span>post</span> ice';
 				const range = jodit.ed.createRange();
@@ -35,6 +35,20 @@ describe('Commands Jodit Editor Tests', function () {
 
 				expect(jodit.value).equals(
 					'<h1>stop <span>post</span> ice</h1>'
+				);
+			});
+		});
+
+		describe('Exec formatBlock for STYLED block', function () {
+			it('Should wrap this element and save previous styles', function () {
+				const jodit = getJodit();
+				jodit.value = '<p style="text-align: right">|stop <span>post</span> ice</p>';
+				setCursorToChar(jodit);
+
+				jodit.execCommand('formatBlock', false, 'h1');
+
+				expect(jodit.value).equals(
+					'<h1 style="text-align: right">stop <span>post</span> ice</h1>'
 				);
 			});
 		});
