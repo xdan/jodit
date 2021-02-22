@@ -12,6 +12,22 @@ describe('WrapTextNodes plugin test', function () {
 			expect(editor.value).equals('<p>test</p>');
 		});
 
+		describe('For STYLE/SCRIPT elements', function () {
+			it('Should not wrap it', function () {
+				const editor = getJodit();
+				editor.value =
+					'test' +
+					'<style>.a{color: red;}</style>' +
+					'<script>console.log(111);</script>' +
+					'sdsdsd';
+
+				editor.selection.setCursorAfter(editor.editor.firstChild);
+				editor.setEditorValue();
+
+				expect(editor.value).equals('<p>test</p><style>.a{color: red;}</style><script>console.log(111);</script><p>sdsdsd</p>');
+			});
+		});
+
 		describe('Change selection marker', function () {
 			it('Should not wrap it', function () {
 				const editor = getJodit();

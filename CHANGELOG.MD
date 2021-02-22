@@ -10,6 +10,7 @@
 
 ## 3.6.1
 
+* [<style> tag wrapping problem #620](https://github.com/xdan/jodit/issues/620)
 * [Disable Link Checking #618](https://github.com/xdan/jodit/issues/618)
 
 ## 3.5.4

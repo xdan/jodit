@@ -105,9 +105,7 @@
 		"yargs": "^16.2.0"
 	},
 	"husky": {
-		"hooks": {
-
-		}
+		"hooks": {}
 	},
 	"lint-staged": {
 		"./test/**/*.{js}": [

@@ -50,7 +50,9 @@ export class ApplyStyle {
 			sel.insertNode(font, false, false);
 			sel.setCursorIn(font);
 			selInfo = sel.save();
+
 			this.applyToElement(font);
+
 			Dom.unwrap(font);
 		} else {
 			selInfo = sel.save();
@@ -75,6 +77,10 @@ export class ApplyStyle {
 	@autobind
 	private applyToElement(font: HTMLElement): void {
 		const { area } = this.jodit.selection;
+
+		if (this.checkSpecialElements(font)) {
+			return;
+		}
 
 		if (
 			this.checkSuitableParent(font) ||
@@ -135,6 +141,21 @@ export class ApplyStyle {
 		if (this.style.options.style && this.style.elementIsDefault) {
 			css(newWrapper, this.style.options.style);
 		}
+	}
+
+	/**
+	 * Check if FONT inside STYLE or SCRIPT element
+	 * @param font
+	 * @private
+	 */
+	private checkSpecialElements(font: HTMLElement): boolean {
+		const {editor} = this.jodit;
+
+		if (Dom.closest(font, ['style', 'script'], editor)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private checkSuitableParent(font: HTMLElement): boolean {

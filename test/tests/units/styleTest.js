@@ -30,6 +30,28 @@ describe('Test Style module', function () {
 			);
 		});
 
+		describe('For STYLE element', function () {
+			it('Should not apply styles to STYLE element', function () {
+				editor.value =
+					'<p>test</p><style>.a {color: red}</style><p>stop</p>';
+				editor.execCommand('selectall');
+
+				const style = new Style({
+					style: {
+						fontFamily: 'Helvetica,sans-serif'
+					}
+				});
+
+				style.apply(editor);
+
+				expect(sortAttributes(editor.value)).equals(
+					'<p><span style="font-family:Helvetica,sans-serif">test</span></p>' +
+						'<style>.a {color: red}</style>' +
+						'<p><span style="font-family:Helvetica,sans-serif">stop</span></p>'
+				);
+			});
+		});
+
 		describe('For all content', function () {
 			it('Should apply style to all elements', function () {
 				editor.value = '<p><br></p><p>test</p>';
@@ -45,7 +67,7 @@ describe('Test Style module', function () {
 
 				expect(sortAttributes(editor.value)).equals(
 					'<p><span style="color:yellow"><br></span></p>' +
-					'<p><span style="color:yellow">test</span></p>'
+						'<p><span style="color:yellow">test</span></p>'
 				);
 			});
 
@@ -68,7 +90,7 @@ describe('Test Style module', function () {
 
 					expect(sortAttributes(editor.value)).equals(
 						'<p><span style="color:yellow"><br></span></p>' +
-						'<p><span style="color:yellow">test</span></p>'
+							'<p><span style="color:yellow">test</span></p>'
 					);
 				});
 			});
