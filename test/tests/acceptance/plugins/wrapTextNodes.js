@@ -28,6 +28,19 @@ describe('WrapTextNodes plugin test', function () {
 			});
 		});
 
+		describe('Block elements', function () {
+			it('Should not wrap it', function () {
+				const editor = getJodit();
+				editor.value = '<section>test</section>stop<p>post</p><article>yes</article>';
+				editor.selection.setCursorAfter(editor.editor.firstChild);
+
+				const selInfo = editor.selection.save();
+				editor.setEditorValue();
+
+				expect(editor.value).equals('<section>test</section><p>stop</p><p>post</p><article>yes</article>');
+			});
+		});
+
 		describe('Change selection marker', function () {
 			it('Should not wrap it', function () {
 				const editor = getJodit();
