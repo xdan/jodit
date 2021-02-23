@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -221,5 +221,6 @@ module.exports = {
 	Quadrate: '方形',
 	Find: '搜索',
 	'Find Previous': '查找上一个',
-	'Find Next': '查找下一个'
+	'Find Next': '查找下一个',
+	'Insert className': '插入班级名称'
 };

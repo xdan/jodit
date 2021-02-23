@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -227,5 +227,6 @@ module.exports = {
 	'Upper Roman': 'Romano Maiúscula',
 	Find: 'Encontrar',
 	'Find Previous': 'Encontrar Anteriores',
-	'Find Next': 'Localizar Próxima'
+	'Find Next': 'Localizar Próxima',
+	'Insert className': 'Insira o nome da classe'
 };

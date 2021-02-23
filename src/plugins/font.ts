@@ -1,13 +1,13 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 import type { IControlType, IJodit } from '../types/';
 import { Config } from '../config';
 import { Dom } from '../core/dom';
-import { css, dataBind, isVoid, normalizeSize } from '../core/helpers/';
+import { css, memorizeExec, normalizeSize } from '../core/helpers/';
 
 declare module '../config' {
 	interface Config {
@@ -45,27 +45,14 @@ Config.prototype.controls.fontsize = ({
 		'96'
 	],
 
-	exec: (editor, event, { control }): void | false => {
-		const key = `button${control.command}`;
+	exec: (editor, event, { control }): void | false =>
+		memorizeExec(editor, event, { control }, (value: string) => {
+			if (control.command?.toLowerCase() === 'fontsize') {
+				return `${value}${editor.o.defaultFontSizePoints}`;
+			}
 
-		let value = (control.args && control.args[0]) || dataBind(editor, key);
-
-		if (isVoid(value)) {
-			return false;
-		}
-
-		dataBind(editor, key, value);
-
-		if (control.command?.toLowerCase() === 'fontsize') {
-			value = `${value}${editor.o.defaultFontSizePoints}`;
-		}
-
-		editor.execCommand(
-			control.command as string,
-			false,
-			value || undefined
-		);
-	},
+			return value;
+		}),
 
 	childTemplate: (editor, key: string, value: string) => {
 		return `${value}${editor.o.defaultFontSizePoints}`;

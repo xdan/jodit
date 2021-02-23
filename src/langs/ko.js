@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -220,5 +220,6 @@ module.exports = {
 	Quadrate: '정방형',
 	Find: '찾기',
 	'Find Previous': '이전 찾기',
-	'Find Next': '다음 찾기'
+	'Find Next': '다음 찾기',
+	'Insert className': '수업 이름 삽입'
 };

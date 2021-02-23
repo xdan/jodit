@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -223,5 +223,6 @@ module.exports = {
 	Quadrate: 'Kwadrat',
 	Find: 'Znaleźć',
 	'Find Previous': 'Znaleźć Poprzednie',
-	'Find Next': 'Znajdź Dalej'
+	'Find Next': 'Znajdź Dalej',
+	'Insert className': 'Wstaw nazwę zajęć'
 };

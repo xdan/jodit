@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 import type {
@@ -145,6 +145,10 @@ export class ApplyStyle {
 
 		if (this.style.options.style && this.style.elementIsDefault) {
 			css(newWrapper, this.style.options.style);
+		}
+
+		if (this.style.options.className) {
+			newWrapper.classList.toggle(this.style.options.className);
 		}
 	}
 

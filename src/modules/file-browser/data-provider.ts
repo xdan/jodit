@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 import type {
@@ -530,6 +530,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 			};
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const query = this.o[type]!;
 
 		if (query.data === undefined) {

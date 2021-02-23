@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 describe('Toolbar', function () {
 	it('Should have buttons', function () {
@@ -12,7 +12,7 @@ describe('Toolbar', function () {
 		expect(
 			editor.toolbar.container.querySelectorAll('.jodit-toolbar-button')
 				.length
-		).equals(36);
+		).equals(37);
 	});
 
 	describe('Custom buttons', function () {

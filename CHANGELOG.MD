@@ -20,9 +20,48 @@
 -   [Error when resizing tables and tables cells. #611](https://github.com/xdan/jodit/issues/611)
 -   [Backspace and Delete have an errant character #597](https://github.com/xdan/jodit/issues/597)
 
+#### :rocket: New Feature
+
+* Added `classSpan` plugin. Applying some className to selected text. Thanks https://github.com/s-renier-taonix-fr
+```js
+const editor = new Jodit('#editor', {
+ 	controls: {
+ 		classSpan: {
+ 			list: {
+ 				class1: 'Classe 1',
+ 				class2: 'Classe 2',
+ 				class3: 'Classe 3',
+ 				class4: 'Classe 4',
+ 				class5: 'Classe 5'
+ 			}
+ 		}
+ 	}
+});
+```
+
+* Added `UIFileInput` element.
+* Added `UIButtonGroup` element.
+```ts
+const group = new UIButtonGroup(jodit, {
+	label: 'Theme',
+	name: 'theme',
+	value: this.state.theme,
+	radio: true,
+	options: [
+		{ value: 'default', text: 'Light' },
+		{ value: 'dark', text: 'Dark' }
+	],
+	onChange: (values) => {
+		this.state.theme = values[0].value as string;
+	}
+}),
+```
+
 #### :house: Internal
 
--   Refactoring Filebrowser module
+-   Enabled `"importsNotUsedAsValues": "error"` in `tsconfig`
+-   Refactoring `Filebrowser` module
+-   Refactoring `Dialog` module
 -   Added "stylelint-config-idiomatic-order" in style linter
 -   Added "en" bundle without another languages.
 -   Replaced `Config` system. You can change default setting in you extensions.
@@ -42,6 +81,7 @@ a.options.allowResizeY; // false
 ```
 
 -   Added `promisify` mode in `debounce` and `throttle` decorators.
+-   Removed `src/core/ui/form/validators/key-validator.ts`.
 -   Added `Async`.`requestIdlePromise` method.
 -   Removed `Helpers`.`extend` method.
 -   Added `Helpers`.`loadImage` method.

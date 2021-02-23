@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -221,5 +221,6 @@ module.exports = {
 	Quadrate: 'הריבוע הזה',
 	Find: 'למצוא',
 	'Find Previous': 'מצא את הקודם',
-	'Find Next': 'חפש את הבא'
+	'Find Next': 'חפש את הבא',
+	'Insert className': 'הכנס את שם הכיתה'
 };

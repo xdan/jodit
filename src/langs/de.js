@@ -6,7 +6,7 @@
 
 module.exports = {
 	'Type something': 'Bitte geben Sie einen Text ein',
-	'Advanced': 'Fortgeschritten',
+	Advanced: 'Fortgeschritten',
 	'About Jodit': 'Über Jodit',
 	'Jodit Editor': 'Jodit Editor',
 	"Jodit User's Guide": 'Das Jodit Benutzerhandbuch',
@@ -17,15 +17,15 @@ module.exports = {
 	'Buy full version': 'Vollversion kaufen',
 	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
 		'Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.',
-	'Anchor': 'Anker',
+	Anchor: 'Anker',
 	'Open in new tab': 'In neuer Registerkarte öffnen',
 	'Open editor in fullsize': 'Editor in voller Größe öffnen',
 	'Clear Formatting': 'Formatierung löschen',
 	'Fill color or set the text color': 'Füllfarbe oder Textfarbe ändern',
-	'Redo': 'Wiederholen',
-	'Undo': 'Rückgängig machen',
-	'Bold': 'Fett',
-	'Italic': 'Kursiv',
+	Redo: 'Wiederholen',
+	Undo: 'Rückgängig machen',
+	Bold: 'Fett',
+	Italic: 'Kursiv',
 	'Insert Unordered List': 'Unsortierte Liste einfügen',
 	'Insert Ordered List': 'Nummerierte Liste einfügen',
 	'Align Center': 'Mittig ausrichten',
@@ -222,5 +222,6 @@ module.exports = {
 	Quadrate: 'Quadrate',
 	Find: 'Suchen',
 	'Find Previous': 'Suche vorherige',
-	'Find Next': 'Weitersuchen'
+	'Find Next': 'Weitersuchen',
+	'Insert className': 'Vložte název třídy'
 };

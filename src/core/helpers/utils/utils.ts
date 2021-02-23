@@ -1,17 +1,21 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 import type {
 	CanPromise,
+	IControlType,
 	IDictionary,
 	IViewBased,
-	Nullable
+	Nullable,
+	IJodit
 } from '../../../types';
 import { isFunction } from '../checker/is-function';
 import { isPromise } from '../checker/is-promise';
 import { get } from './get';
+import { dataBind } from '../data-bind';
+import { isVoid } from '../checker';
 
 /**
  * Call function with parameters
@@ -144,17 +148,18 @@ export const reset = function <T extends Function>(key: string): Nullable<T> {
  * @param src
  * @param jodit
  */
-export const loadImage = (src: string, jodit: IViewBased): Promise<HTMLImageElement> =>
+export const loadImage = (
+	src: string,
+	jodit: IViewBased
+): Promise<HTMLImageElement> =>
 	jodit.async.promise<HTMLImageElement>((res, rej) => {
 		const image = new Image(),
 			onError = () => {
-				jodit.e
-					.off(image);
+				jodit.e.off(image);
 				rej?.();
 			},
 			onSuccess = () => {
-				jodit.e
-					.off(image);
+				jodit.e.off(image);
 				res(image);
 			};
 
@@ -170,7 +175,6 @@ export const loadImage = (src: string, jodit: IViewBased): Promise<HTMLImageElem
 		}
 	});
 
-
 export const keys = (obj: object, own: boolean = true): string[] => {
 	if (own) {
 		return Object.keys(obj);
@@ -183,4 +187,33 @@ export const keys = (obj: object, own: boolean = true): string[] => {
 	}
 
 	return props;
-}
+};
+
+/**
+ * Memorize last user chose
+ * @param editor
+ * @param _
+ * @param control
+ */
+export const memorizeExec = <T extends IJodit = IJodit>(
+	editor: T,
+	_: unknown,
+	{ control }: { control: IControlType<T> },
+	preProcessValue?: (value: string) => string
+): void | false => {
+	const key = `button${control.command}`;
+
+	let value = (control.args && control.args[0]) || dataBind(editor, key);
+
+	if (isVoid(value)) {
+		return false;
+	}
+
+	dataBind(editor, key, value);
+
+	if (preProcessValue) {
+		value = preProcessValue(value);
+	}
+
+	editor.execCommand(control.command as string, false, value || undefined);
+};

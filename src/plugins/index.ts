@@ -1,12 +1,13 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 export { addNewLine } from './add-new-line/add-new-line';
 export { about } from './about/about';
 export { autofocus } from './autofocus';
+export { classSpan } from './class-span/class-span';
 export { Delete } from './keyboard/delete';
 export { bold } from './bold';
 export { cleanHtml } from './fix/clean-html';

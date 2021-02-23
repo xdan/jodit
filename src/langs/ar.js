@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -220,5 +220,6 @@ module.exports = {
 	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
 		'للصق المحتوى قادم من Microsoft Word/Excel الوثيقة. هل تريد أن تبقي شكل أو تنظيفه ؟ ',
 	'Word Paste Detected': 'كلمة لصق الكشف عن',
-	Clean: 'نظيفة'
+	Clean: 'نظيفة',
+	'Insert className': 'أدخل اسم الفصل'
 };
