@@ -12,7 +12,7 @@ import {
 	INVISIBLE_SPACE,
 	NBSP_SPACE
 } from '../../core/constants';
-import { isVoid, call, trim, attr, trimInv } from '../../core/helpers';
+import { isVoid, call, trim, attr, trimInv, toArray } from '../../core/helpers';
 import {
 	findMostNestedNeighbor,
 	findNotEmptyNeighbor,
@@ -243,7 +243,8 @@ export class Delete extends Plugin {
 			}
 
 			if (sibling.nodeValue?.length) {
-				let value = sibling.nodeValue;
+				// For Unicode escapes
+				let value = toArray(sibling.nodeValue);
 
 				const length = value.length;
 
@@ -267,10 +268,14 @@ export class Delete extends Plugin {
 					index += backspace ? 1 : -1;
 				}
 
-				value = value.substr(
-					backspace ? 0 : index + 1,
-					backspace ? index : length
-				);
+				if (backspace && index < 0) {
+					value = [];
+				} else {
+					value = value.slice(
+						backspace ? 0 : index + 1,
+						backspace ? index : length
+					);
+				}
 
 				if (
 					!anotherSibling ||
@@ -280,13 +285,20 @@ export class Delete extends Plugin {
 					) ||
 					!trimInv(anotherSibling.nodeValue || '').length
 				) {
-					value = value.replace(
-						backspace ? / +$/ : /^ +/,
-						NBSP_SPACE
-					);
+					for (
+						let i = backspace ? value.length - 1 : 0;
+						backspace ? (i >= 0) : (i < value.length);
+						i += backspace ? -1 : 1
+					) {
+						if (value[i] === ' ') {
+							value[i] = NBSP_SPACE;
+						} else {
+							break;
+						}
+					}
 				}
 
-				sibling.nodeValue = value;
+				sibling.nodeValue = value.join('');
 			}
 
 			if (!sibling.nodeValue?.length) {

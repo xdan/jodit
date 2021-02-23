@@ -64,6 +64,45 @@ describe('Backspace/Delete key', function () {
 		});
 	});
 
+	describe('Unicode sequences', function () {
+		describe('BackSpace', function () {
+			it('Should remove previous unicode sequence before cursor', function () {
+				editor.value = '<p>a阪😄👌|test</p>';
+				setCursorToChar(editor);
+
+				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+				expect(editor.value).equals('<p>a阪😄test</p>');
+
+				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+				expect(editor.value).equals('<p>a阪test</p>');
+
+				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+				expect(editor.value).equals('<p>atest</p>');
+
+				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+				expect(editor.value).equals('<p>test</p>');
+			});
+		});
+
+		describe('Delete', function () {
+			it('Should remove previous unicode sequence before cursor', function () {
+				editor.value = '<p>stop👌|😄阪test</p>';
+				setCursorToChar(editor);
+
+				simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
+				expect(editor.value).equals('<p>stop👌阪test</p>');
+
+
+				simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
+				expect(editor.value).equals('<p>stop👌test</p>');
+
+
+				simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
+				expect(editor.value).equals('<p>stop👌est</p>');
+			});
+		});
+	});
+
 	describe('Edit simple text', function () {
 		describe('BackSpace', function () {
 			it('Should remove previous char before cursor', function () {
@@ -862,18 +901,22 @@ describe('Backspace/Delete key', function () {
 			'<ol><li>ab</li><li>|cd</li></ol> => <ol><li>ab|cd</li></ol>',
 			'<ol><li>ab</li></ol><ul><li>|cd</li><li>e</li></ul> => <ol><li>ab</li></ol><p>|cd</p><ul><li>e</li></ul>'
 		].forEach(function (pars) {
-			const [key, value] = pars.split( ' => ');
+			const [key, value] = pars.split(' => ');
 
-			describe(`For key "${key}"`, function() {
+			describe(`For key "${key}"`, function () {
 				it(`Should be ${value}`, function () {
 					editor.value = key;
 					setCursorToChar(editor);
-					simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+					simulateEvent(
+						'keydown',
+						Jodit.KEY_BACKSPACE,
+						editor.editor
+					);
 					editor.s.insertHTML('|');
 					expect(sortAttributes(editor.value)).equals(value);
 				});
 			});
-		})
+		});
 	});
 
 	describe('On the edge of two tag', function () {
@@ -894,43 +937,69 @@ describe('Backspace/Delete key', function () {
 
 			describe('inline elements', function () {
 				it('Should move cursor inside first element', function () {
-					editor.value = '<div><span style="color: rgb(0, 0, 255);">This is</span></div>\n' +
+					editor.value =
+						'<div><span style="color: rgb(0, 0, 255);">This is</span></div>\n' +
 						'<div><span style="color: rgb(0, 0, 255);">my line</span></div>';
 
-					range.setStart(editor.editor.querySelectorAll('span')[1].firstChild, 0);
+					range.setStart(
+						editor.editor.querySelectorAll('span')[1].firstChild,
+						0
+					);
 					editor.s.selectRange(range);
 
-					simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+					simulateEvent(
+						'keydown',
+						Jodit.KEY_BACKSPACE,
+						editor.editor
+					);
 
-					expect(sortAttributes(editor.value)).equals('<div><span style="color:#0000FF">This is</span><span style="color:#0000FF">my line</span></div>\n');
+					expect(sortAttributes(editor.value)).equals(
+						'<div><span style="color:#0000FF">This is</span><span style="color:#0000FF">my line</span></div>\n'
+					);
 
 					editor.s.insertHTML(' a ');
-					expect(sortAttributes(editor.value)).equals('<div><span style="color:#0000FF">This is</span><span style="color:#0000FF"> a my line</span></div>\n');
+					expect(sortAttributes(editor.value)).equals(
+						'<div><span style="color:#0000FF">This is</span><span style="color:#0000FF"> a my line</span></div>\n'
+					);
 				});
 			});
 
 			describe('Several elements', function () {
 				it('Should connect both elements in one element and move all children in previous element', function () {
-					editor.value = '<div><span>This is</span></div>\n' +
+					editor.value =
+						'<div><span>This is</span></div>\n' +
 						'<div><span>|my line</span><strong>test</strong></div>';
 
 					setCursorToChar(editor);
 
-					simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+					simulateEvent(
+						'keydown',
+						Jodit.KEY_BACKSPACE,
+						editor.editor
+					);
 
-					expect(sortAttributes(editor.value)).equals('<div><span>This is</span><span>my line</span><strong>test</strong></div>\n');
+					expect(sortAttributes(editor.value)).equals(
+						'<div><span>This is</span><span>my line</span><strong>test</strong></div>\n'
+					);
 				});
 
 				describe('Different elements', function () {
 					it('Should move content', function () {
-						editor.value = '<div><span>This is</span></div>\n' +
+						editor.value =
+							'<div><span>This is</span></div>\n' +
 							'<div><strong>|my line</strong><strong>test</strong></div>';
 
 						setCursorToChar(editor);
 
-						simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_BACKSPACE,
+							editor.editor
+						);
 
-						expect(sortAttributes(editor.value)).equals('<div><span>This is</span><strong>my line</strong><strong>test</strong></div>\n');
+						expect(sortAttributes(editor.value)).equals(
+							'<div><span>This is</span><strong>my line</strong><strong>test</strong></div>\n'
+						);
 					});
 				});
 			});

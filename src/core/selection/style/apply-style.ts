@@ -137,6 +137,8 @@ export class ApplyStyle {
 			true
 		);
 
+		attr(newWrapper, 'size', null);
+
 		if (this.style.elementIsBlock) {
 			this.postProcessListElement(newWrapper);
 		}
@@ -149,16 +151,11 @@ export class ApplyStyle {
 	/**
 	 * Check if FONT inside STYLE or SCRIPT element
 	 * @param font
-	 * @private
 	 */
 	private checkSpecialElements(font: HTMLElement): boolean {
-		const {editor} = this.jodit;
+		const { editor } = this.jodit;
 
-		if (Dom.closest(font, ['style', 'script'], editor)) {
-			return true;
-		}
-
-		return false;
+		return Boolean(Dom.closest(font, ['style', 'script'], editor));
 	}
 
 	private checkSuitableParent(font: HTMLElement): boolean {
