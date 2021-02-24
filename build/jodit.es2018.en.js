@@ -14954,7 +14954,9 @@ class Uploader extends component/* ViewComponent */.Hr {
                 },
                 method: this.o.method || 'POST',
                 data: request,
-                url: this.o.url,
+                url: typeof this.o.url === 'function'
+                    ? this.o.url(request)
+                    : this.o.url,
                 headers: this.o.headers,
                 queryBuild: this.o.queryBuild,
                 contentType: this.o.contentType.call(this, request),
