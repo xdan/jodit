@@ -16928,7 +16928,9 @@ var Uploader = (function (_super) {
                 },
                 method: _this.o.method || 'POST',
                 data: request,
-                url: _this.o.url,
+                url: typeof _this.o.url === 'function'
+                    ? _this.o.url(request)
+                    : _this.o.url,
                 headers: _this.o.headers,
                 queryBuild: _this.o.queryBuild,
                 contentType: _this.o.contentType.call(_this, request),
