@@ -269,10 +269,9 @@ export class Uploader extends ViewComponent implements IUploader {
 					},
 					method: this.o.method || 'POST',
 					data: request,
-					url:
-						typeof this.o.url === 'function'
-							? this.o.url(request)
-							: this.o.url,
+					url: isFunction(this.o.url)
+						? this.o.url(request)
+						: this.o.url,
 					headers: this.o.headers,
 					queryBuild: this.o.queryBuild,
 					contentType: this.o.contentType.call(this, request),
