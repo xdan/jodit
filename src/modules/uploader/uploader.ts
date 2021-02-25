@@ -768,7 +768,7 @@ export class Uploader extends ViewComponent implements IUploader {
 			options || {},
 			ConfigProto(
 				Config.defaultOptions.uploader,
-				isJoditObject(editor) ? editor.o.uploader : null
+				isJoditObject(editor) ? editor.o.uploader : {}
 			)
 		) as IUploaderOptions<Uploader>;
 	}
