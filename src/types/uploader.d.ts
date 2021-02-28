@@ -161,7 +161,9 @@ export type BuildDataResult =
  *  });
  */
 export interface IUploaderOptions<T> {
-	url: string;
+	url:
+		| string
+		| ((request: FormData | IDictionary<string> | string) => string);
 	insertImageAsBase64URI: boolean;
 	imagesExtensions: string[];
 	headers?: IDictionary<string> | null;
