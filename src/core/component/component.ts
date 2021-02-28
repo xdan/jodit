@@ -24,8 +24,8 @@ const StatusListHandlers: Map<
 export abstract class Component implements IComponent {
 	static STATUSES = STATUSES;
 
-	componentName!: string;
-	uid!: string;
+	readonly componentName: string;
+	readonly uid: string;
 
 	/**
 	 * Calc BEM element class name

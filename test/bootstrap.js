@@ -50,6 +50,7 @@ function mockAjax() {
 			const request = this.prepareRequest();
 
 			let action = request.data.action;
+			let path = request.data.path;
 
 			if (!action && request.data.get) {
 				action = request.data.get('action');
@@ -63,6 +64,52 @@ function mockAjax() {
 				const actionExec = /action=([\w]+)/.exec(request.url);
 				action = actionExec[1];
 			}
+
+			const files = path => {
+				const list = [
+					{
+						file:
+							'1966051_524428741092238_1051008806888563137_o.jpg',
+						thumb:
+							'_thumbs/1966051_524428741092238_1051008806888563137_o.jpg',
+						changed: '03/15/2018 12:40 PM',
+						size: '126.59kB',
+						isImage: true
+					},
+					{
+						file: 'images.jpg',
+						thumb: '_thumbs/images.jpg',
+						changed: '01/15/2018 12:40 PM',
+						size: '6.84kB',
+						isImage: true
+					},
+					{
+						file: 'ibanez-s520-443140.jpg',
+						thumb: '_thumbs/ibanez-s520-443140.jpg',
+						changed: '04/15/2018 12:40 PM',
+						size: '18.73kB',
+						isImage: true
+					},
+					{
+						file: 'test.txt',
+						thumb: '_thumbs/test.txt.png',
+						changed: '05/15/2018 12:40 PM',
+						size: '18.72kB',
+						isImage: false
+					}
+				];
+
+				switch (path) {
+					case 'test':
+						return [list[1], list[2]];
+
+					case 'ceicom':
+						return [list[0], list[3]];
+
+					default:
+						return list;
+				}
+			};
 
 			return new Promise(function (resolve) {
 				switch (action) {
@@ -112,39 +159,7 @@ function mockAjax() {
 										baseurl:
 											'https://xdsoft.net/jodit/files/',
 										path: '',
-										files: [
-											{
-												file:
-													'1966051_524428741092238_1051008806888563137_o.jpg',
-												thumb:
-													'_thumbs/1966051_524428741092238_1051008806888563137_o.jpg',
-												changed: '03/15/2018 12:40 PM',
-												size: '126.59kB',
-												isImage: true
-											},
-											{
-												file: 'images.jpg',
-												thumb: '_thumbs/images.jpg',
-												changed: '01/15/2018 12:40 PM',
-												size: '6.84kB',
-												isImage: true
-											},
-											{
-												file: 'ibanez-s520-443140.jpg',
-												thumb:
-													'_thumbs/ibanez-s520-443140.jpg',
-												changed: '04/15/2018 12:40 PM',
-												size: '18.73kB',
-												isImage: true
-											},
-											{
-												file: 'test.txt',
-												thumb: '_thumbs/test.txt.png',
-												changed: '05/15/2018 12:40 PM',
-												size: '18.72kB',
-												isImage: false
-											}
-										]
+										files: files(path)
 									}
 								],
 								code: 220
@@ -166,7 +181,7 @@ function mockAjax() {
 										baseurl:
 											'https://xdsoft.net/jodit/files/',
 										path: '',
-										folders: ['.', folderName, 'test']
+										folders: path === '' ? ['.', folderName, 'test'] : []
 									}
 								],
 								code: 220
@@ -384,7 +399,9 @@ function removeStuff() {
 	stuff.length = 0;
 
 	Array.from(
-		document.querySelectorAll('.jodit.jodit-dialog.jodit-dialog_active_true')
+		document.querySelectorAll(
+			'.jodit.jodit-dialog.jodit-dialog_active_true'
+		)
 	).forEach(function (dialog) {
 		simulateEvent('close_dialog', 0, dialog);
 	});

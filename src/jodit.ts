@@ -47,8 +47,6 @@ import {
 	isFunction,
 	resolveElement,
 	isVoid,
-	JoditArray,
-	JoditObject,
 	callPromise,
 	toArray,
 	markAsAtomic,
@@ -74,7 +72,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Define if object is Jodit
 	 */
-	isJodit: true = true;
+	readonly isJodit: true = true;
 
 	/**
 	 * Plain text editor's value
@@ -114,28 +112,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	/**
-	 * Method wrap usual Array in Object helper for prevent deep array merging in options
-	 *
-	 * @deprecated Use Jodit.atom instead
-	 * @param array
-	 * @constructor
-	 */
-	static Array<T>(array: T[]): T[] {
-		return JoditArray(array);
-	}
-
-	/**
-	 * Method wrap usual Has Object in Object helper for prevent deep object merging in options*
-	 *
-	 * @deprecated Use Jodit.atom instead
-	 * @param object
-	 * @constructor
-	 */
-	static Object<T>(object: T): T {
-		return JoditObject(object);
-	}
-
-	/**
 	 * Method wrap usual Has Object in Object helper for prevent deep object merging in options*
 	 * @param object
 	 */
@@ -169,6 +145,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	static instances: IDictionary<IJodit> = instances;
 
 	static lang: any = lang;
+
 	static core = {
 		Plugin
 	};
@@ -311,7 +288,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * @property {Select} selection
 	 */
-	selection: Select;
+	readonly selection: Select;
 
 	/**
 	 * Alias for this.selection

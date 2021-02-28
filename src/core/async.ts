@@ -8,7 +8,7 @@ import type {
 	CallbackFunction,
 	IAsync,
 	IAsyncParams,
-	ITimeout
+	ITimeout, RejectablePromise
 } from '../types';
 import {
 	setTimeout,
@@ -199,8 +199,8 @@ export class Async implements IAsync {
 			resolve: (value: T | PromiseLike<T>) => void,
 			reject?: (reason?: any) => void
 		) => void
-	): Promise<T> {
-		let rejectCallback: Function = () => {};
+	): RejectablePromise<T> {
+		let rejectCallback: RejectablePromise<T>['rejectCallback'] = () => {};
 
 		const promise = new Promise<T>((resolve, reject) => {
 			this.promisesRejections.add(reject);
@@ -208,11 +208,20 @@ export class Async implements IAsync {
 			return executor(resolve, reject);
 		});
 
+		if (!promise.finally && process.env.TARGET_ES !== 'es2018') {
+			promise.finally = (onfinally?: (() => void) | undefined | null) => {
+				promise.then(onfinally).catch(onfinally)
+				return promise;
+			};
+		}
+
 		promise.finally(() => {
 			this.promisesRejections.delete(rejectCallback);
 		});
 
-		return promise;
+		(promise as RejectablePromise<T>).rejectCallback = rejectCallback;
+
+		return promise as RejectablePromise<T>;
 	}
 
 	/**

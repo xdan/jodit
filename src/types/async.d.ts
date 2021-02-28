@@ -13,6 +13,11 @@ export interface IAsyncParams {
 	promisify?: boolean;
 }
 
+interface RejectablePromise<T> extends Promise<T> {
+	rejectCallback: (reason?: any) => void;
+	finally(onfinally?: (() => void) | undefined | null): Promise<T>
+}
+
 export interface IAsync extends IDestructible {
 	setTimeout<T = any>(
 		callback: (...args: T[]) => void,
@@ -29,7 +34,7 @@ export interface IAsync extends IDestructible {
 			resolve: (value: T | PromiseLike<T>) => void,
 			reject?: (reason?: any) => void
 		) => void
-	): Promise<T>;
+	): RejectablePromise<T>;
 
 	promiseState(
 		p: Promise<any>

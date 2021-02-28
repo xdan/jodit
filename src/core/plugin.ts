@@ -54,6 +54,7 @@ export abstract class Plugin<T extends IViewBased = IJodit>
 	destruct(): void {
 		if (!this.isInDestruct) {
 			this.setStatus(STATUSES.beforeDestruct);
+
 			const {j} = this;
 
 			if (isJoditObject(j)) {

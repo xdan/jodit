@@ -27,9 +27,6 @@ export * from './each';
 export * from './complete-url';
 export * from './human-size-to-bytes';
 
-export * from './jodit-array';
-export * from './jodit-object';
-
 export * from './parse-query';
 export * from './build-query';
 

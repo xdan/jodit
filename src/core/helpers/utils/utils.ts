@@ -9,7 +9,7 @@ import type {
 	IDictionary,
 	IViewBased,
 	Nullable,
-	IJodit
+	IJodit, RejectablePromise
 } from '../../../types';
 import { isFunction } from '../checker/is-function';
 import { isPromise } from '../checker/is-promise';
@@ -151,7 +151,7 @@ export const reset = function <T extends Function>(key: string): Nullable<T> {
 export const loadImage = (
 	src: string,
 	jodit: IViewBased
-): Promise<HTMLImageElement> =>
+): RejectablePromise<HTMLImageElement> =>
 	jodit.async.promise<HTMLImageElement>((res, rej) => {
 		const image = new Image(),
 			onError = () => {
