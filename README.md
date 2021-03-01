@@ -16,9 +16,6 @@ An excellent WYSIWYG editor written in pure TypeScript without the use of additi
  * [Changelog](https://github.com/xdan/jodit/blob/master/CHANGELOG.MD)
  * [Examples](https://xdan.github.io/jodit/examples/)
 
-> For old version, please follow here [https://github.com/xdan/jodit2](https://github.com/xdan/jodit2)
-
-
 ## Get Started
 ## How use
 Download latest [release](https://github.com/xdan/jodit/releases/latest) or
