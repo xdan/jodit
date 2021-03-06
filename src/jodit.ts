@@ -136,6 +136,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		return Config.defaultOptions;
 	}
 
+	static fatMode: boolean = false;
+
 	static plugins: IPluginSystem = pluginSystem;
 
 	static modules: IDictionary<Function> = modules;
@@ -1221,14 +1223,17 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		workplace.appendChild(editor);
 
-		const currentPlace = {
+		const currentPlace: IWorkPlace = {
 			editor,
 			element,
 			container,
 			workplace,
 			statusbar,
 			options: this.isReady
-				? ConfigProto(options || {}, Config.defaultOptions)
+				? (ConfigProto(
+						options || {},
+						Config.defaultOptions
+				  ) as IWorkPlace['options'])
 				: this.options,
 			observer: new Observer(this),
 			editorWindow: this.ow

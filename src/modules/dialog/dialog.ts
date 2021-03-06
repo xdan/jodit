@@ -56,6 +56,7 @@ declare module '../../config' {
 }
 
 Config.prototype.dialog = {
+	namespace: '',
 	extraButtons: [],
 	resizable: true,
 	draggable: true,
@@ -728,7 +729,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		return this;
 	}
 
-	constructor(options?: IDialogOptions) {
+	constructor(options?: Partial<IDialogOptions>) {
 		super(options);
 
 		const self: Dialog = this;

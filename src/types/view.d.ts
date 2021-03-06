@@ -57,6 +57,8 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 	readonly?: boolean;
 	iframe?: boolean;
 
+	namespace: string;
+
 	activeButtonsInReadOnly?: string[];
 
 	allowTabNavigation?: boolean;

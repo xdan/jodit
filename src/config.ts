@@ -22,6 +22,8 @@ import * as consts from './core/constants';
  * Default Editor's Configuration
  */
 export class Config implements IViewOptions {
+	namespace: string = '';
+
 	/**
 	 * When this option is enabled, the editor's content will be placed in an iframe and isolated from the rest of the page.
 	 *

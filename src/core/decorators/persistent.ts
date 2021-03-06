@@ -19,7 +19,7 @@ export function persistent<T extends IComponent>(target: T, propertyKey: string)
 		const jodit = isViewObject(component)
 			? component
 			: ((component as unknown) as IViewComponent).jodit,
-			storageKey = `${component.componentName}_prop_${propertyKey}`,
+			storageKey = `${jodit.options.namespace}${component.componentName}_prop_${propertyKey}`,
 			initialValue = (component as IDictionary)[propertyKey];
 
 		Object.defineProperty(component, propertyKey, {

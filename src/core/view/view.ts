@@ -235,15 +235,19 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	 * Return current version
 	 */
 	getVersion(): string {
-		return this.version;
+		return appVersion;
+	}
+
+	static getVersion(): string {
+		return appVersion;
 	}
 
 	/** @override */
-	protected initOptions(options?: IViewOptions): void {
+	protected initOptions(options?: Partial<IViewOptions>): void {
 		this.options = ConfigProto(
 			options || {},
 			ConfigProto(this.options || {}, View.defaultOptions)
-		);
+		) as IViewOptions;
 	}
 
 	/**
@@ -252,7 +256,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	protected initOwners(): void {}
 
 	protected constructor(
-		options?: IViewOptions,
+		options?: Partial<IViewOptions>,
 		readonly isJodit: boolean = false
 	) {
 		super();
@@ -360,6 +364,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 View.defaultOptions = {
 	extraButtons: [],
 	textIcons: false,
+	namespace: '',
 	removeButtons: [],
 	zIndex: 100002,
 	defaultTimeout: 100,

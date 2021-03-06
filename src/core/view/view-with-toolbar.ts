@@ -154,7 +154,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 
 	/** @override **/
 	protected constructor(
-		options?: IViewOptions,
+		options?: Partial<IViewOptions>,
 		readonly isJodit: boolean = false
 	) {
 		super(options, isJodit);

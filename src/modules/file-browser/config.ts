@@ -30,6 +30,8 @@ declare module '../../config' {
 }
 
 Config.prototype.filebrowser = {
+	namespace: '',
+
 	extraButtons: [],
 
 	filter(item: string | ISourceFile, search: string) {
