@@ -303,7 +303,7 @@ export class Popup extends UIElement implements IPopup {
 		this.childrenPopups.forEach(popup => popup.close());
 
 		this.j.e.fire(this, 'beforeClose');
-		this.j.e.fire( 'beforePopupClose', this);
+		this.j.e.fire('beforePopupClose', this);
 
 		this.removeGlobalListeners();
 
@@ -342,13 +342,17 @@ export class Popup extends UIElement implements IPopup {
 
 		eventEmitter.on('closeAllPopups', this.close);
 
+		if (this.smart) {
+			this.j.e
+				.on('escape', this.close)
+				.on('mousedown touchstart', this.closeOnOutsideClick)
+				.on(ow, 'mousedown touchstart', this.closeOnOutsideClick);
+		}
+
 		this.j.e
 			.on('closeAllPopups', this.close)
-			.on('escape', this.close)
 			.on('resize', up)
 			.on(this.container, 'scroll mousewheel', up)
-			.on('mousedown touchstart', this.closeOnOutsideClick)
-			.on(ow, 'mousedown touchstart', this.closeOnOutsideClick)
 			.on(ow, 'scroll', up)
 			.on(ow, 'resize', up);
 	}
@@ -359,13 +363,18 @@ export class Popup extends UIElement implements IPopup {
 
 		eventEmitter.off('closeAllPopups', this.close);
 
+		if (this.smart) {
+			this.j.e
+				.off('escape', this.close)
+				.off('mousedown touchstart', this.closeOnOutsideClick)
+				.off(ow, 'mousedown touchstart', this.closeOnOutsideClick);
+		}
+
 		this.j.e
 			.off('closeAllPopups', this.close)
-			.off('escape', this.close)
+
 			.off('resize', up)
 			.off(this.container, 'scroll mousewheel', up)
-			.off('mousedown touchstart', this.closeOnOutsideClick)
-			.off(ow, 'mousedown touchstart', this.closeOnOutsideClick)
 			.off(ow, 'scroll', up)
 			.off(ow, 'resize', up);
 	}
@@ -378,7 +387,7 @@ export class Popup extends UIElement implements IPopup {
 		this.container.style.zIndex = index.toString();
 	}
 
-	constructor(jodit: IViewBased) {
+	constructor(jodit: IViewBased, readonly smart: boolean = true) {
 		super(jodit);
 		attr(this.container, 'role', 'popup');
 	}

@@ -14,6 +14,7 @@ const cmd = (control: IControlType): string =>
 	control.args && isString(control.args[0])
 		? control.args[0].toLowerCase()
 		: '';
+
 export default [
 	{
 		name: 'brush',

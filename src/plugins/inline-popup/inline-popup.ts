@@ -27,7 +27,8 @@ import {
 	isArray,
 	isFunction,
 	toArray,
-	keys
+	keys,
+	camelCase
 } from '../../core/helpers';
 import { Dom, Table, ToolbarCollection, UIElement } from '../../modules';
 import { debounce, wait, autobind } from '../../core/decorators';
@@ -36,9 +37,11 @@ import { debounce, wait, autobind } from '../../core/decorators';
  * Plugin for show inline popup dialog
  */
 export class inlinePopup extends Plugin {
+	requires = ['select'];
+
 	private type: Nullable<string> = null;
 
-	private popup: IPopup = new Popup(this.jodit);
+	private popup: IPopup = new Popup(this.jodit, false);
 
 	private toolbar: IToolbarCollection = makeCollection(
 		this.jodit,
@@ -46,9 +49,8 @@ export class inlinePopup extends Plugin {
 	);
 
 	@autobind
-	private onClick(e: MouseEvent): void {
-		const node = e.target as Node,
-			elements = keys(this.j.o.popup, false) as HTMLTagNames[],
+	private onClick(node: Node): void | false {
+		const elements = this.elmsList as HTMLTagNames[],
 			target = Dom.isTag(node, 'img')
 				? node
 				: Dom.closest(node, elements, this.j.editor);
@@ -59,6 +61,8 @@ export class inlinePopup extends Plugin {
 				target.nodeName.toLowerCase(),
 				target
 			);
+
+			return false;
 		}
 	}
 
@@ -189,9 +193,10 @@ export class inlinePopup extends Plugin {
 					);
 				}
 			)
-			.on('click', this.onClick)
 			.on('mousedown keydown', this.onSelectionStart)
 			.on([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
+
+		this.addListenersForElements();
 	}
 
 	private snapRange: Nullable<Range> = null;
@@ -289,7 +294,24 @@ export class inlinePopup extends Plugin {
 	protected beforeDestruct(jodit: IJodit): void {
 		jodit.e
 			.off('showPopup')
-			.off('click', this.onClick)
 			.off([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
+
+		this.removeListenersForElements();
+	}
+
+	private elmsList: string[] = keys(this.j.o.popup, false);
+
+	private addListenersForElements() {
+		this.j.e.on(
+			this.elmsList.map(e => camelCase(`clickElement_${e}`)).join(' '),
+			this.onClick
+		);
+	}
+
+	private removeListenersForElements() {
+		this.j.e.off(
+			this.elmsList.map(e => camelCase(`clickElement_${e}`)).join(' '),
+			this.onClick
+		);
 	}
 }

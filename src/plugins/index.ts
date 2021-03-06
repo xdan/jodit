@@ -37,6 +37,7 @@ export { placeholder } from './placeholder/placeholder';
 export { redoUndo } from './redo-undo';
 export { resizer } from './resizer/resizer';
 export { search } from './search/search';
+export { select } from './select';
 export { size, resizeHandler } from './size';
 export { source } from './source';
 export { stat } from './stat';

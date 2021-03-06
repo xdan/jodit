@@ -7,7 +7,7 @@
 import type { IBound, IJodit, Nullable } from '../../types';
 import { Plugin } from '../../core/plugin';
 import { Dom, Table } from '../../modules';
-import { $$, dataBind, position } from '../../core/helpers';
+import { $$, position } from '../../core/helpers';
 import { alignElement } from '../justify';
 import { KEY_TAB } from '../../core/constants';
 import { autobind } from '../../core/decorators';
@@ -15,6 +15,9 @@ import { autobind } from '../../core/decorators';
 const key = 'table_processor_observer';
 
 export class selectCells extends Plugin {
+	/** @override */
+	requires = ['select'];
+
 	/**
 	 * Shortcut for Table module
 	 */
@@ -22,6 +25,7 @@ export class selectCells extends Plugin {
 		return this.j.getInstance<Table>('Table', this.j.o);
 	}
 
+	/** @override */
 	protected afterInit(jodit: IJodit): void {
 		if (!jodit.o.table.allowCellSelection) {
 			return;
@@ -39,13 +43,8 @@ export class selectCells extends Plugin {
 			.on('afterCommand.select-cells', this.onAfterCommand)
 
 			.on(
-				'change afterCommand afterSetMode click afterInit'
-					.split(' ')
-					.map(e => e + '.select-cells')
-					.join(' '),
-				() => {
-					$$('table', jodit.editor).forEach(this.observe);
-				}
+				'clickElementTd.select-cells clickElementTh.select-cells',
+				this.onStartSelection
 			);
 	}
 
@@ -54,41 +53,23 @@ export class selectCells extends Plugin {
 	 */
 	private selectedCell: Nullable<HTMLTableCellElement> = null;
 
-	/***
-	 * Add listeners for table
-	 * @param table
-	 */
-	@autobind
-	private observe(table: HTMLTableElement): void {
-		if (dataBind(table, key)) {
-			return;
-		}
-
-		this.onRemoveSelection();
-
-		dataBind(table, key, true);
-
-		this.j.e.on(
-			table,
-			'mousedown.select-cells touchstart.select-cells',
-			this.onStartSelection.bind(this, table)
-		);
-	}
-
 	/**
 	 * Mouse click inside the table
-	 *
-	 * @param table
-	 * @param e
+	 * @param cell
 	 */
-	private onStartSelection(table: HTMLTableElement, e: MouseEvent): void {
+	@autobind
+	private onStartSelection(cell: HTMLTableCellElement): void {
 		if (this.j.o.readonly) {
 			return;
 		}
 
 		this.unselectCells();
 
-		const cell = Dom.closest(e.target as HTMLElement, ['td', 'th'], table);
+		const table = Dom.closest(
+			cell,
+			'table',
+			this.j.editor
+		) as HTMLTableElement;
 
 		if (!cell) {
 			return;

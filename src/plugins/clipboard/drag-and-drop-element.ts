@@ -115,6 +115,7 @@ export class DragAndDropElement extends Plugin {
 				pointerEvents: 'none',
 				pointer: 'drag',
 				position: 'fixed',
+				opacity: 0.7,
 				display: 'inline-block',
 				left: event.clientX,
 				top: event.clientY,

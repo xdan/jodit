@@ -280,6 +280,7 @@ export class PluginSystem implements IPluginSystem {
 
 		return appendStyleAsync(jodit, url);
 	}
+
 	private static styles: Set<string> = new Set();
 
 	/**

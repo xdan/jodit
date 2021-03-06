@@ -400,10 +400,10 @@ export class resizer extends Plugin {
 					event.preventDefault();
 				}
 			})
-			.on(element, 'click', () => this.onClickElement(element));
+			.on(element, 'click', (e: MouseEvent) => this.onClickElement(element, e));
 	}
 
-	private onClickElement = (element: HTMLElement) => {
+	private onClickElement = (element: HTMLElement, e: MouseEvent) => {
 		if (this.element !== element || !this.isShown) {
 			this.element = element;
 
@@ -412,6 +412,8 @@ export class resizer extends Plugin {
 			if (Dom.isTag(this.element, 'img') && !this.element.complete) {
 				this.j.e.on(this.element, 'load', this.updateSize);
 			}
+
+			e.stopImmediatePropagation();
 		}
 	};
 
