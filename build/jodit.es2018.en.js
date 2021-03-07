@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.2
+ * Version: v3.6.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -35,6 +35,7 @@ return /******/ (() => { // webpackBootstrap
 
 class Config {
     constructor() {
+        this.namespace = '';
         this.iframe = false;
         this.license = '';
         this.preset = 'custom';
@@ -5461,7 +5462,7 @@ function persistent(target, propertyKey) {
     target.hookStatus(core_component/* STATUSES.ready */.n$.ready, (component) => {
         const jodit = (0,helpers.isViewObject)(component)
             ? component
-            : component.jodit, storageKey = `${component.componentName}_prop_${propertyKey}`, initialValue = component[propertyKey];
+            : component.jodit, storageKey = `${jodit.options.namespace}${component.componentName}_prop_${propertyKey}`, initialValue = component[propertyKey];
         Object.defineProperty(component, propertyKey, {
             get() {
                 var _a;
@@ -5551,6 +5552,11 @@ function watch(observeFields, context) {
                     view.events
                         .on(context || component, eventName, callback)
                         .on(eventName, callback);
+                    view.hookStatus('beforeDestruct', () => {
+                        view.events
+                            .off(context || component, eventName, callback)
+                            .off(eventName, callback);
+                    });
                     return;
                 }
                 const parts = field.split('.'), [key] = parts;
@@ -6254,8 +6260,9 @@ var decorators = __webpack_require__(33);
 
 
 class Popup extends ui_element/* UIElement */.u {
-    constructor(jodit) {
+    constructor(jodit, smart = true) {
         super(jodit);
+        this.smart = smart;
         this.isOpened = false;
         this.strategy = 'leftBottom';
         this.viewBound = () => ({
@@ -6429,26 +6436,32 @@ class Popup extends ui_element/* UIElement */.u {
     addGlobalListeners() {
         const up = this.updatePosition, ow = this.ow;
         global/* eventEmitter.on */.TB.on('closeAllPopups', this.close);
+        if (this.smart) {
+            this.j.e
+                .on('escape', this.close)
+                .on('mousedown touchstart', this.closeOnOutsideClick)
+                .on(ow, 'mousedown touchstart', this.closeOnOutsideClick);
+        }
         this.j.e
             .on('closeAllPopups', this.close)
-            .on('escape', this.close)
             .on('resize', up)
             .on(this.container, 'scroll mousewheel', up)
-            .on('mousedown touchstart', this.closeOnOutsideClick)
-            .on(ow, 'mousedown touchstart', this.closeOnOutsideClick)
             .on(ow, 'scroll', up)
             .on(ow, 'resize', up);
     }
     removeGlobalListeners() {
         const up = this.updatePosition, ow = this.ow;
         global/* eventEmitter.off */.TB.off('closeAllPopups', this.close);
+        if (this.smart) {
+            this.j.e
+                .off('escape', this.close)
+                .off('mousedown touchstart', this.closeOnOutsideClick)
+                .off(ow, 'mousedown touchstart', this.closeOnOutsideClick);
+        }
         this.j.e
             .off('closeAllPopups', this.close)
-            .off('escape', this.close)
             .off('resize', up)
             .off(this.container, 'scroll mousewheel', up)
-            .off('mousedown touchstart', this.closeOnOutsideClick)
-            .off(ow, 'mousedown touchstart', this.closeOnOutsideClick)
             .off(ow, 'scroll', up)
             .off(ow, 'resize', up);
     }
@@ -8302,6 +8315,7 @@ __webpack_require__.d(plugins_namespaceObject, {
   "resizeHandler": () => (resizeHandler),
   "resizer": () => (resizer),
   "search": () => (search),
+  "select": () => (select_select),
   "selectCells": () => (selectCells),
   "size": () => (size),
   "source": () => (source),
@@ -8988,7 +9002,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.6.2";
+        this.version = "3.6.3";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -9086,7 +9100,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return this.version;
+        return "3.6.3";
+    }
+    static getVersion() {
+        return "3.6.3";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -9145,6 +9162,7 @@ class View extends component/* Component */.wA {
 View.defaultOptions = {
     extraButtons: [],
     textIcons: false,
+    namespace: '',
     removeButtons: [],
     zIndex: 100002,
     defaultTimeout: 100,
@@ -9829,6 +9847,7 @@ class ViewWithToolbar extends View {
 
 
 config/* Config.prototype.dialog */.D.prototype.dialog = {
+    namespace: '',
     extraButtons: [],
     resizable: true,
     draggable: true,
@@ -10553,6 +10572,7 @@ const ICON_LOADER = '<i class="jodit-icon_loader"></i>';
 
 
 config/* Config.prototype.filebrowser */.D.prototype.filebrowser = {
+    namespace: '',
     extraButtons: [],
     filter(item, search) {
         search = search.toLowerCase();
@@ -16023,6 +16043,7 @@ class Jodit extends ViewWithToolbar {
         super.destruct();
     }
 }
+Jodit.fatMode = false;
 Jodit.plugins = global/* pluginSystem */.pw;
 Jodit.modules = global/* modules */.qz;
 Jodit.ns = global/* modules */.qz;
@@ -18561,6 +18582,7 @@ class DragAndDropElement extends Plugin {
                 pointerEvents: 'none',
                 pointer: 'drag',
                 position: 'fixed',
+                opacity: 0.7,
                 display: 'inline-block',
                 left: event.clientX,
                 top: event.clientY,
@@ -20468,17 +20490,20 @@ config/* Config.prototype.popup */.D.prototype.popup = {
 class inlinePopup extends Plugin {
     constructor() {
         super(...arguments);
+        this.requires = ['select'];
         this.type = null;
-        this.popup = new ui_popup/* Popup */.G(this.jodit);
+        this.popup = new ui_popup/* Popup */.G(this.jodit, false);
         this.toolbar = makeCollection(this.jodit, this.popup);
         this.snapRange = null;
+        this.elmsList = (0,helpers.keys)(this.j.o.popup, false).filter(s => !this.isExcludedTarget(s));
     }
-    onClick(e) {
-        const node = e.target, elements = (0,helpers.keys)(this.j.o.popup, false), target = dom/* Dom.isTag */.i.isTag(node, 'img')
+    onClick(node) {
+        const elements = this.elmsList, target = dom/* Dom.isTag */.i.isTag(node, 'img')
             ? node
             : dom/* Dom.closest */.i.closest(node, elements, this.j.editor);
         if (target && this.canShowPopupForType(target.nodeName.toLowerCase())) {
             this.showPopup(() => (0,helpers.position)(target, this.j), target.nodeName.toLowerCase(), target);
+            return false;
         }
     }
     showPopup(rect, type, target) {
@@ -20508,9 +20533,12 @@ class inlinePopup extends Plugin {
         return true;
     }
     hidePopup(type) {
-        if (!type || type === this.type) {
+        if (!(0,helpers.isString)(type) || type === this.type) {
             this.popup.close();
         }
+    }
+    onOutsideClick(e) {
+        this.popup.close();
     }
     canShowPopupForType(type) {
         const data = this.j.o.popup[type.toLowerCase()];
@@ -20544,9 +20572,9 @@ class inlinePopup extends Plugin {
             .on('showPopup', (elm, rect, type) => {
             this.showPopup(rect, type || ((0,helpers.isString)(elm) ? elm : elm.nodeName), (0,helpers.isString)(elm) ? undefined : elm);
         })
-            .on('click', this.onClick)
             .on('mousedown keydown', this.onSelectionStart)
             .on([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
+        this.addListenersForElements();
     }
     onSelectionStart() {
         this.snapRange = this.j.s.range.cloneRange();
@@ -20599,8 +20627,14 @@ class inlinePopup extends Plugin {
     beforeDestruct(jodit) {
         jodit.e
             .off('showPopup')
-            .off('click', this.onClick)
             .off([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
+        this.removeListenersForElements();
+    }
+    addListenersForElements() {
+        this.j.e.on(this.elmsList.map(e => (0,helpers.camelCase)(`click_${e}`)).join(' '), this.onClick);
+    }
+    removeListenersForElements() {
+        this.j.e.off(this.elmsList.map(e => (0,helpers.camelCase)(`click_${e}`)).join(' '), this.onClick);
     }
 }
 (0,tslib_es6.__decorate)([
@@ -20610,8 +20644,12 @@ class inlinePopup extends Plugin {
     (0,decorators.wait)((ctx) => !ctx.j.isLocked)
 ], inlinePopup.prototype, "showPopup", null);
 (0,tslib_es6.__decorate)([
+    (0,decorators.watch)(':clickEditor'),
     decorators.autobind
 ], inlinePopup.prototype, "hidePopup", null);
+(0,tslib_es6.__decorate)([
+    (0,decorators.watch)(':outsideClick')
+], inlinePopup.prototype, "onOutsideClick", null);
 (0,tslib_es6.__decorate)([
     decorators.autobind
 ], inlinePopup.prototype, "onSelectionStart", null);
@@ -21138,7 +21176,13 @@ class link_link extends Plugin {
             const textWasChanged = getSelectionText() !== content_input.value.trim();
             if (!link) {
                 if (!jodit.s.isCollapsed()) {
-                    links = jodit.s.wrapInTag('a');
+                    const node = jodit.s.current();
+                    if (dom/* Dom.isTag */.i.isTag(node, ['img'])) {
+                        links = [dom/* Dom.wrap */.i.wrap(node, 'a', jodit)];
+                    }
+                    else {
+                        links = jodit.s.wrapInTag('a');
+                    }
                 }
                 else {
                     const a = jodit.createInside.element('a');
@@ -21935,7 +21979,7 @@ class resizer extends Plugin {
                 }
             }
         };
-        this.onClickElement = (element) => {
+        this.onClickElement = (element, e) => {
             if (this.element !== element || !this.isShown) {
                 this.element = element;
                 this.show();
@@ -21994,7 +22038,7 @@ class resizer extends Plugin {
             }
         })
             .on('hideResizer', this.hide)
-            .on('change afterInit afterSetMode', editor.async.debounce(this.onChangeEditor.bind(this), editor.defaultTimeout));
+            .on('change afterInit afterSetMode', this.onChangeEditor);
         this.addEventListeners();
         this.onChangeEditor();
     }
@@ -22123,7 +22167,7 @@ class resizer extends Plugin {
                 event.preventDefault();
             }
         })
-            .on(element, 'click', () => this.onClickElement(element));
+            .on(element, 'click', (e) => this.onClickElement(element, e));
     }
     showSizeViewer(w, h) {
         if (!this.j.o.resizer.showSize) {
@@ -22167,6 +22211,9 @@ class resizer extends Plugin {
         jodit.e.off(this.j.ow, '.resizer').off('.resizer');
     }
 }
+(0,tslib_es6.__decorate)([
+    (0,decorators.debounce)()
+], resizer.prototype, "onChangeEditor", null);
 (0,tslib_es6.__decorate)([
     decorators.autobind
 ], resizer.prototype, "hide", null);
@@ -22639,6 +22686,62 @@ class search extends Plugin {
 (0,tslib_es6.__decorate)([
     decorators.autobind
 ], search.prototype, "calcSticky", null);
+
+;// CONCATENATED MODULE: ./src/plugins/select.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+class select_select extends Plugin {
+    constructor() {
+        super(...arguments);
+        this.proxyEventsList = ['click', 'mousedown', 'touchstart', 'mouseup', 'touchend'];
+    }
+    afterInit(jodit) {
+        this.proxyEventsList.forEach((eventName) => {
+            jodit.e.on(eventName + '.inline-popup', this.onStartSelection);
+        });
+    }
+    beforeDestruct(jodit) {
+        this.proxyEventsList.forEach((eventName) => {
+            jodit.e.on(eventName + '.inline-popup', this.onStartSelection);
+        });
+    }
+    onStartSelection(e) {
+        const { j } = this;
+        let result, target = e.target;
+        while (result === undefined && target && target !== j.editor) {
+            result = j.e.fire((0,helpers.camelCase)(e.type + '_' + target.nodeName.toLowerCase()), target, e);
+            target = target.parentElement;
+        }
+        if (e.type === 'click' && result === undefined && target === j.editor) {
+            j.e.fire(e.type + 'Editor', target, e);
+        }
+    }
+    onOutsideClick(e) {
+        const node = e.target;
+        if (dom/* Dom.up */.i.up(node, (elm) => elm === this.j.editor)) {
+            return;
+        }
+        const box = ui/* UIElement.closestElement */.u1.closestElement(node, ui/* Popup */.GI);
+        if (!box) {
+            this.j.e.fire('outsideClick', e);
+        }
+    }
+}
+(0,tslib_es6.__decorate)([
+    decorators.autobind
+], select_select.prototype, "onStartSelection", null);
+(0,tslib_es6.__decorate)([
+    (0,decorators.watch)('ow:click')
+], select_select.prototype, "onOutsideClick", null);
 
 ;// CONCATENATED MODULE: ./src/plugins/size/config.ts
 
@@ -24493,6 +24596,7 @@ const select_cells_key = 'table_processor_observer';
 class selectCells extends Plugin {
     constructor() {
         super(...arguments);
+        this.requires = ['select'];
         this.selectedCell = null;
     }
     get module() {
@@ -24503,7 +24607,6 @@ class selectCells extends Plugin {
             return;
         }
         jodit.e
-            .on(this.j.ow, 'click.select-cells', this.onRemoveSelection)
             .on('keydown.select-cells', (event) => {
             if (event.key === constants.KEY_TAB) {
                 this.unselectCells();
@@ -24511,28 +24614,31 @@ class selectCells extends Plugin {
         })
             .on('beforeCommand.select-cells', this.onExecCommand)
             .on('afterCommand.select-cells', this.onAfterCommand)
-            .on('change afterCommand afterSetMode click afterInit'
-            .split(' ')
+            .on([
+            'clickEditor',
+            'mousedownTd',
+            'mousedownTh',
+            'touchstartTd',
+            'touchstartTh'
+        ]
             .map(e => e + '.select-cells')
-            .join(' '), () => {
-            (0,helpers.$$)('table', jodit.editor).forEach(this.observe);
+            .join(' '), this.onStartSelection)
+            .on('clickTr', () => {
+            if (this.module.getAllSelectedCells().length) {
+                return false;
+            }
         });
     }
-    observe(table) {
-        if ((0,helpers.dataBind)(table, select_cells_key)) {
-            return;
-        }
-        this.onRemoveSelection();
-        (0,helpers.dataBind)(table, select_cells_key, true);
-        this.j.e.on(table, 'mousedown.select-cells touchstart.select-cells', this.onStartSelection.bind(this, table));
-    }
-    onStartSelection(table, e) {
+    onStartSelection(cell) {
         if (this.j.o.readonly) {
             return;
         }
         this.unselectCells();
-        const cell = dom/* Dom.closest */.i.closest(e.target, ['td', 'th'], table);
-        if (!cell) {
+        if (cell === this.j.editor) {
+            return;
+        }
+        const table = dom/* Dom.closest */.i.closest(cell, 'table', this.j.editor);
+        if (!cell || !table) {
             return;
         }
         if (!cell.firstChild) {
@@ -24543,7 +24649,10 @@ class selectCells extends Plugin {
         this.j.e
             .on(table, 'mousemove.select-cells touchmove.select-cells', this.onMove.bind(this, table))
             .on(table, 'mouseup.select-cells touchend.select-cells', this.onStopSelection.bind(this, table));
-        this.j.e.fire('showPopup', table, () => (0,helpers.position)(cell, this.j), 'cells');
+        return false;
+    }
+    onOutsideClick(e) {
+        this.unselectCells();
     }
     onMove(table, e) {
         if (this.j.o.readonly) {
@@ -24641,7 +24750,7 @@ class selectCells extends Plugin {
             command = command.replace('table', '');
             const cells = this.module.getAllSelectedCells();
             if (cells.length) {
-                const cell = cells.shift();
+                const [cell] = cells;
                 if (!cell) {
                     return;
                 }
@@ -24660,7 +24769,7 @@ class selectCells extends Plugin {
                         Table.mergeSelected(table, this.j);
                         break;
                     case 'empty':
-                        cells.forEach(td => (td.innerHTML = ''));
+                        cells.forEach(td => dom/* Dom.detach */.i.detach(td));
                         break;
                     case 'bin':
                         dom/* Dom.safeRemove */.i.safeRemove(table);
@@ -24698,7 +24807,10 @@ class selectCells extends Plugin {
 }
 (0,tslib_es6.__decorate)([
     decorators.autobind
-], selectCells.prototype, "observe", null);
+], selectCells.prototype, "onStartSelection", null);
+(0,tslib_es6.__decorate)([
+    (0,decorators.watch)(':outsideClick')
+], selectCells.prototype, "onOutsideClick", null);
 (0,tslib_es6.__decorate)([
     decorators.autobind
 ], selectCells.prototype, "onRemoveSelection", null);
@@ -25207,6 +25319,7 @@ class xpath extends Plugin {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 
 
 
