@@ -581,7 +581,6 @@ describe('Commands Jodit Editor Tests', function () {
 
 						simulateEvent(
 							'mousedown',
-							0,
 							editor.editor.querySelector('td')
 						);
 
@@ -591,7 +590,7 @@ describe('Commands Jodit Editor Tests', function () {
 
 						editor.execCommand('justifyright');
 
-						simulateEvent('mousedown', 0, editor.editor.firstChild);
+						simulateEvent('click', editor.editor);
 
 						editor.execCommand('selectall');
 						editor.execCommand('justifyfull');

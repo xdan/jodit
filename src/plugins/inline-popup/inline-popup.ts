@@ -31,7 +31,7 @@ import {
 	camelCase
 } from '../../core/helpers';
 import { Dom, Table, ToolbarCollection, UIElement } from '../../modules';
-import { debounce, wait, autobind } from '../../core/decorators';
+import { debounce, wait, autobind, watch } from '../../core/decorators';
 
 /**
  * Plugin for show inline popup dialog
@@ -118,11 +118,17 @@ export class inlinePopup extends Plugin {
 	/**
 	 * Hide opened popup
 	 */
+	@watch(':clickEditor')
 	@autobind
 	private hidePopup(type?: string): void {
-		if (!type || type === this.type) {
+		if (!isString(type) || type === this.type) {
 			this.popup.close();
 		}
+	}
+
+	@watch(':outsideClick')
+	protected onOutsideClick(e: MouseEvent): void {
+		this.popup.close();
 	}
 
 	/**
@@ -299,18 +305,20 @@ export class inlinePopup extends Plugin {
 		this.removeListenersForElements();
 	}
 
-	private elmsList: string[] = keys(this.j.o.popup, false);
+	private elmsList: string[] = keys(this.j.o.popup, false).filter(
+		s => !this.isExcludedTarget(s)
+	);
 
 	private addListenersForElements() {
 		this.j.e.on(
-			this.elmsList.map(e => camelCase(`clickElement_${e}`)).join(' '),
+			this.elmsList.map(e => camelCase(`click_${e}`)).join(' '),
 			this.onClick
 		);
 	}
 
 	private removeListenersForElements() {
 		this.j.e.off(
-			this.elmsList.map(e => camelCase(`clickElement_${e}`)).join(' '),
+			this.elmsList.map(e => camelCase(`click_${e}`)).join(' '),
 			this.onClick
 		);
 	}

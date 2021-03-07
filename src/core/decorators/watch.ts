@@ -63,6 +63,12 @@ export function watch(observeFields: string[] | string, context?: object | ((c: 
 						.on(context || component, eventName, callback)
 						.on(eventName, callback);
 
+					view.hookStatus('beforeDestruct', () => {
+						view.events
+							.off(context || component, eventName, callback)
+							.off(eventName, callback);
+					});
+
 					return;
 				}
 

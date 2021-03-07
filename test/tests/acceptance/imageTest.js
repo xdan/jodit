@@ -1470,7 +1470,7 @@ describe('Test image', function () {
 					}
 				});
 				window.scrollTo(0, offset(div).top);
-				simulateEvent('click', 0, editor.editor.querySelector('img'));
+				simulateEvent('click', editor.editor.querySelector('img'));
 
 				const popup = getOpenedPopup(editor);
 

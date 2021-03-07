@@ -152,12 +152,15 @@ export const alignElement = (
 			case 'justifyfull':
 				box.style.textAlign = 'justify';
 				break;
+
 			case 'justifyright':
 				box.style.textAlign = 'right';
 				break;
+
 			case 'justifyleft':
 				box.style.textAlign = 'left';
 				break;
+
 			case 'justifycenter':
 				box.style.textAlign = 'center';
 				break;

@@ -31,7 +31,6 @@ describe('Text Inline Popup plugin', function () {
 
 					simulateEvent(
 						'click',
-						0,
 						editor.editor.querySelector('img')
 					);
 
@@ -247,7 +246,7 @@ describe('Text Inline Popup plugin', function () {
 			const td = editor.editor.querySelector('td'),
 				pos = Jodit.modules.Helpers.position(td);
 
-			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
+			simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
 				Object.assign(e, {
 					clientX: pos.left,
 					clientY: pos.top

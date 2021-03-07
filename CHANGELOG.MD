@@ -9,6 +9,16 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.6.2
+
+#### :bug: Bug Fix
+
+- [Error when resizing tables and tables cells](https://github.com/xdan/jodit/issues/611)
+- [Image and video resizing in the table does not work correctly](https://github.com/xdan/jodit/issues/528)
+- [The link popup closes when trying to add it to an image inside a table. #524](https://github.com/xdan/jodit/issues/524)
+- Fixed a bug when command `emptyTable` didn't work.
+
+
 ## 3.6.1
 
 #### :bug: Bug Fix

@@ -346,17 +346,17 @@ describe('Test Inline mode', function () {
 						const a = editor.editor.querySelector('a');
 						const img = editor.editor.querySelector('img');
 						const td = editor.editor.querySelector('td');
-						simulateEvent('click', 0, a);
+						simulateEvent('click', a);
 
 						let popup = getOpenedPopup(editor);
 						expect(popup).is.null;
 
-						simulateEvent('click', 0, img);
+						simulateEvent('click', img);
 						popup = getOpenedPopup(editor);
 
 						expect(popup).is.null;
 
-						simulateEvent('click', 0, td);
+						simulateEvent('click', td);
 						popup = getOpenedPopup(editor);
 
 						expect(popup).is.null;
@@ -377,17 +377,19 @@ describe('Test Inline mode', function () {
 						const img = editor.editor.querySelector('img');
 						const td = editor.editor.querySelector('td');
 
-						simulateEvent('click', 0, a);
+						simulateEvent('click', a);
 
 						let popup = getOpenedPopup(editor);
 						expect(popup).is.null;
 
-						simulateEvent('click', 0, img);
+						simulateEvent('click', img);
 						popup = getOpenedPopup(editor);
 
 						expect(popup).is.not.null;
 
-						simulateEvent(['mousedown', 'mouseup', 'click'], 0, td);
+						simulateEvent('click', editor.editor);
+
+						simulateEvent(['mousedown', 'mouseup', 'click'], td);
 
 						popup = getOpenedPopup(editor);
 
@@ -487,7 +489,7 @@ describe('Test Inline mode', function () {
 					range.setStart(editor.editor.firstChild, 0);
 					range.collapse(true);
 					editor.s.selectRange(range);
-					simulateEvent('mousedown', editor.editor);
+					simulateEvent('click', editor.editor);
 					expect(popup.parentNode).is.null;
 				});
 			});
@@ -524,7 +526,7 @@ describe('Test Inline mode', function () {
 					range.setStart(editor2.editor.firstChild, 0);
 					range.collapse(true);
 					editor2.s.selectRange(range);
-					simulateEvent('mousedown', 0, editor2.ownerWindow);
+					simulateEvent('click', editor2.ownerWindow);
 
 					expect(popup.parentNode).is.null;
 				});
@@ -678,7 +680,7 @@ describe('Test Inline mode', function () {
 
 				describe('Disable with toolbarInlineDisableFor', function () {
 					describe('Option like string', function () {
-						it('Should now show inline popup for link', function (done) {
+						it('Should not show inline popup for link', function (done) {
 							unmockPromise();
 							const editor = new Jodit(appendTestDiv(), {
 								iframe: true,
@@ -709,10 +711,11 @@ describe('Test Inline mode', function () {
 
 										expect(popup).is.null;
 
-										simulateEvent('click', 0, td);
+										simulateEvent('click', editor.editor); // hide previous popup
+										simulateEvent(['mousedown', 'mouseup', 'click'], td);
 										popup = getOpenedPopup(editor);
 
-										expect(popup).is.null;
+										expect(popup).is.not.null;
 										done();
 									}
 								}
@@ -720,8 +723,8 @@ describe('Test Inline mode', function () {
 						});
 					});
 
-					describe('Option like srray', function () {
-						it('Should now show inline popup for link', function (done) {
+					describe('Option like array', function () {
+						it('Should not show inline popup for link', function (done) {
 							unmockPromise();
 							const editor = new Jodit(appendTestDiv(), {
 								iframe: true,
@@ -740,24 +743,26 @@ describe('Test Inline mode', function () {
 										const td = editor.editor.querySelector(
 											'td'
 										);
-										simulateEvent('click', 0, a);
+										simulateEvent('click', a);
 
 										let popup = getOpenedPopup(editor);
 										expect(popup).is.null;
 
-										simulateEvent('click', 0, img);
+										simulateEvent('click', img);
 										popup = getOpenedPopup(editor);
 
 										expect(popup).is.not.null;
 
+										simulateEvent('click', editor.editor); // hide previous popup
+
 										simulateEvent(
 											['mousedown', 'mouseup', 'click'],
-											0,
 											td
 										);
 										popup = getOpenedPopup(editor);
 
 										expect(popup).is.null;
+
 										done();
 									}
 								}

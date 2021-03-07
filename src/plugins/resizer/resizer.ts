@@ -22,7 +22,7 @@ import {
 } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { eventEmitter } from '../../core/global';
-import { autobind } from '../../core/decorators';
+import { autobind, debounce } from '../../core/decorators';
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table
@@ -134,13 +134,7 @@ export class resizer extends Plugin {
 				}
 			)
 			.on('hideResizer', this.hide)
-			.on(
-				'change afterInit afterSetMode',
-				editor.async.debounce(
-					this.onChangeEditor.bind(this),
-					editor.defaultTimeout
-				)
-			);
+			.on('change afterInit afterSetMode', this.onChangeEditor);
 
 		this.addEventListeners();
 		this.onChangeEditor();
@@ -303,6 +297,7 @@ export class resizer extends Plugin {
 		}
 	}
 
+	@debounce()
 	private onChangeEditor() {
 		const editor = this.j;
 
@@ -400,7 +395,9 @@ export class resizer extends Plugin {
 					event.preventDefault();
 				}
 			})
-			.on(element, 'click', (e: MouseEvent) => this.onClickElement(element, e));
+			.on(element, 'click', (e: MouseEvent) =>
+				this.onClickElement(element, e)
+			);
 	}
 
 	private onClickElement = (element: HTMLElement, e: MouseEvent) => {
@@ -412,8 +409,6 @@ export class resizer extends Plugin {
 			if (Dom.isTag(this.element, 'img') && !this.element.complete) {
 				this.j.e.on(this.element, 'load', this.updateSize);
 			}
-
-			e.stopImmediatePropagation();
 		}
 	};
 

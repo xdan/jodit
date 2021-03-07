@@ -330,7 +330,7 @@ describe('Toolbar', function () {
 
 					editor.value = 'asas <a href="#">test</a>';
 
-					simulateEvent('click', 0, editor.editor.querySelector('a'));
+					simulateEvent('click', editor.editor.querySelector('a'));
 
 					const popup = getOpenedPopup(editor);
 
@@ -641,7 +641,7 @@ describe('Toolbar', function () {
 
 					editor.value = 'test test <a href="#">test</a>';
 
-					simulateEvent('click', 0, editor.editor.querySelector('a'));
+					simulateEvent('click', editor.editor.querySelector('a'));
 
 					const popup = getOpenedPopup(editor);
 
@@ -676,7 +676,6 @@ describe('Toolbar', function () {
 
 					simulateEvent(
 						'mousemove',
-						0,
 						list.querySelectorAll('.jodit-form__container span')[14]
 					);
 

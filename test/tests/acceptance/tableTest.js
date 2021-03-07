@@ -3,9 +3,9 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Tables Jodit Editor Tests', function() {
-	describe('Methods', function() {
-		it('After init container must has one element .jodit-table-resizer', function() {
+describe('Tables Jodit Editor Tests', function () {
+	describe('Methods', function () {
+		it('After init container must has one element .jodit-table-resizer', function () {
 			const editor = getJodit();
 			expect(editor.editor.querySelector('.jodit-table-resizer')).equals(
 				null
@@ -15,28 +15,34 @@ describe('Tables Jodit Editor Tests', function() {
 				'<table><tr><td>1</td></tr></table>'
 			);
 			editor.s.insertNode(table1);
-			simulateEvent('mousemove', 0, table1.querySelector('td'), function(
-				opt
-			) {
-				opt.offsetX = 3;
-			});
+			simulateEvent(
+				'mousemove',
+				0,
+				table1.querySelector('td'),
+				function (opt) {
+					opt.offsetX = 3;
+				}
+			);
 
 			const table2 = editor.createInside.fromHTML(
 				'<table><tr><td>2</td></tr></table>'
 			);
 			editor.s.insertNode(table2);
-			simulateEvent('mousemove', 0, table2.querySelector('td'), function(
-				opt
-			) {
-				opt.offsetX = 3;
-			});
+			simulateEvent(
+				'mousemove',
+				0,
+				table2.querySelector('td'),
+				function (opt) {
+					opt.offsetX = 3;
+				}
+			);
 
 			expect(
 				editor.container.querySelectorAll('.jodit-table-resizer').length
 			).equals(1);
 		});
 
-		it('Process wrong table', function() {
+		it('Process wrong table', function () {
 			const editor = getJodit();
 			editor.value =
 				'<table>' +
@@ -56,7 +62,7 @@ describe('Tables Jodit Editor Tests', function() {
 				'mousemove',
 				0,
 				editor.editor.querySelector('td'),
-				function(opt) {
+				function (opt) {
 					opt.offsetX = 3;
 				}
 			);
@@ -66,13 +72,13 @@ describe('Tables Jodit Editor Tests', function() {
 			).equals(1);
 		});
 
-		it('Method getRowsCount should return TR count', function() {
+		it('Method getRowsCount should return TR count', function () {
 			const editor = getJodit();
 
 			editor.value =
 				'<table>' +
 				[1, 2, 3, 4]
-					.map(function() {
+					.map(function () {
 						return '<tr>' + '<td>1</td>' + '<td>2</td>' + '</tr>';
 					})
 					.join('') +
@@ -84,7 +90,7 @@ describe('Tables Jodit Editor Tests', function() {
 			).equals(4);
 		});
 
-		it('Method getColumnsCount should return maximum of TH or TD in one row in table', function() {
+		it('Method getColumnsCount should return maximum of TH or TD in one row in table', function () {
 			const editor = getJodit();
 
 			editor.value =
@@ -101,8 +107,8 @@ describe('Tables Jodit Editor Tests', function() {
 			).equals(4);
 		});
 
-		describe('appendRow', function() {
-			it('should append one row in the end of table', function() {
+		describe('appendRow', function () {
+			it('should append one row in the end of table', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -122,8 +128,8 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 			});
 
-			describe('with second argument', function() {
-				it('should append one row after row', function() {
+			describe('with second argument', function () {
+				it('should append one row after row', function () {
 					const editor = getJodit();
 
 					editor.value =
@@ -148,8 +154,8 @@ describe('Tables Jodit Editor Tests', function() {
 					);
 				});
 
-				describe('Set rowspan', function() {
-					it('should append one row after row and recalculate all rowspan', function() {
+				describe('Set rowspan', function () {
+					it('should append one row after row and recalculate all rowspan', function () {
 						const editor = getJodit();
 
 						editor.value =
@@ -175,8 +181,8 @@ describe('Tables Jodit Editor Tests', function() {
 					});
 				});
 
-				describe('with styled row', function() {
-					it('should append one row after this row and copy matching styles', function() {
+				describe('with styled row', function () {
+					it('should append one row after this row and copy matching styles', function () {
 						const editor = getJodit();
 
 						editor.value =
@@ -202,8 +208,8 @@ describe('Tables Jodit Editor Tests', function() {
 				});
 			});
 
-			describe('with second=TR  and third=false arguments ', function() {
-				it('should append and one row before row', function() {
+			describe('with second=TR  and third=false arguments ', function () {
+				it('should append and one row before row', function () {
 					const editor = getJodit();
 
 					editor.value =
@@ -226,7 +232,7 @@ describe('Tables Jodit Editor Tests', function() {
 			});
 		});
 
-		it('Method appendColumn should append column in the end', function() {
+		it('Method appendColumn should append column in the end', function () {
 			const editor = getJodit();
 
 			editor.value =
@@ -252,7 +258,7 @@ describe('Tables Jodit Editor Tests', function() {
 			);
 		});
 
-		it('Method appendColumn with second argument should append column after that column', function() {
+		it('Method appendColumn with second argument should append column after that column', function () {
 			const editor = getJodit();
 
 			editor.value =
@@ -278,7 +284,7 @@ describe('Tables Jodit Editor Tests', function() {
 			);
 		});
 
-		it('Method appendColumn with second argument and third = false should append column before that column', function() {
+		it('Method appendColumn with second argument and third = false should append column before that column', function () {
 			const editor = getJodit();
 
 			editor.value =
@@ -304,7 +310,7 @@ describe('Tables Jodit Editor Tests', function() {
 			);
 		});
 
-		it('Remove row should delete TR from table', function() {
+		it('Remove row should delete TR from table', function () {
 			const editor = getJodit();
 
 			editor.value =
@@ -332,8 +338,8 @@ describe('Tables Jodit Editor Tests', function() {
 			);
 		});
 
-		describe('Method merge selected cells', function() {
-			it('Simple should merge all selected cells into one ', function() {
+		describe('Method merge selected cells', function () {
+			it('Simple should merge all selected cells into one ', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -369,7 +375,7 @@ describe('Tables Jodit Editor Tests', function() {
 				).equals(1);
 			});
 
-			it('With colspan and rowspan into one ', function() {
+			it('With colspan and rowspan into one ', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -408,7 +414,7 @@ describe('Tables Jodit Editor Tests', function() {
 				).equals(1);
 			});
 
-			it('A few cells with colspan and rowspan', function() {
+			it('A few cells with colspan and rowspan', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -457,7 +463,7 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 			});
 
-			it('Merge cells in center', function() {
+			it('Merge cells in center', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -512,7 +518,7 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 			});
 
-			it('Normalize merged cells', function() {
+			it('Normalize merged cells', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -547,8 +553,8 @@ describe('Tables Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Split selected cells', function() {
-			it('Split cell by Horizontal', function() {
+		describe('Split selected cells', function () {
+			it('Split cell by Horizontal', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -577,7 +583,7 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 			});
 
-			it('Split cell with rowspan by horizontal', function() {
+			it('Split cell with rowspan by horizontal', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -618,7 +624,7 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 			});
 
-			it('Split cell with rowspan by horizontal 2', function() {
+			it('Split cell with rowspan by horizontal 2', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -658,7 +664,7 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 			});
 
-			it('Split cell by vertical', function() {
+			it('Split cell by vertical', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -688,8 +694,8 @@ describe('Tables Jodit Editor Tests', function() {
 		});
 	});
 
-	describe('Work with tables', function() {
-		it('Create table and insert into cell some text', function() {
+	describe('Work with tables', function () {
+		it('Create table and insert into cell some text', function () {
 			const editor = getJodit();
 			editor.ownerWindow.focus();
 			editor.value = '';
@@ -713,7 +719,7 @@ describe('Tables Jodit Editor Tests', function() {
 			);
 		});
 
-		it('After insert table like html without tbody, it should be appear', function() {
+		it('After insert table like html without tbody, it should be appear', function () {
 			const editor = getJodit();
 
 			editor.value =
@@ -729,7 +735,7 @@ describe('Tables Jodit Editor Tests', function() {
 			);
 		});
 
-		it('After press Tab button cursor should be in next cell in table', function() {
+		it('After press Tab button cursor should be in next cell in table', function () {
 			const editor = getJodit();
 
 			editor.value =
@@ -744,17 +750,14 @@ describe('Tables Jodit Editor Tests', function() {
 
 			simulateEvent('keydown', Jodit.KEY_TAB, editor.editor);
 
-			editor.s.insertNode(
-				editor.createInside.text('test'),
-				false
-			);
+			editor.s.insertNode(editor.createInside.text('test'), false);
 
 			expect(editor.value.replace('<br>', '')).equals(
 				'<table><tbody><tr><td>1</td><td>test</td></tr></tbody></table>'
 			);
 		});
 
-		it('After press Tab + Shift buttons cursor should be in next cell in table', function() {
+		it('After press Tab + Shift buttons cursor should be in next cell in table', function () {
 			const editor = getJodit();
 
 			editor.value =
@@ -765,27 +768,25 @@ describe('Tables Jodit Editor Tests', function() {
 				'</tr>' +
 				'</table>';
 
-			editor.s.setCursorIn(
-				editor.editor.querySelector('td').nextSibling
+			editor.s.setCursorIn(editor.editor.querySelector('td').nextSibling);
+
+			simulateEvent(
+				'keydown',
+				Jodit.KEY_TAB,
+				editor.editor,
+				function (evnt) {
+					evnt.shiftKey = true;
+				}
 			);
 
-			simulateEvent('keydown', Jodit.KEY_TAB, editor.editor, function(
-				evnt
-			) {
-				evnt.shiftKey = true;
-			});
-
-			editor.s.insertNode(
-				editor.createInside.text('test'),
-				false
-			);
+			editor.s.insertNode(editor.createInside.text('test'), false);
 
 			expect(editor.value.replace('<br>', '')).equals(
 				'<table><tbody><tr><td>test</td><td>2</td></tr></tbody></table>'
 			);
 		});
 
-		it('After press Right arrow not in the end of cell it should do nothing', function() {
+		it('After press Right arrow not in the end of cell it should do nothing', function () {
 			const editor = getJodit();
 
 			editor.value =
@@ -796,24 +797,18 @@ describe('Tables Jodit Editor Tests', function() {
 				'</tr>' +
 				'</table>';
 
-			editor.s.setCursorIn(
-				editor.editor.querySelector('td'),
-				true
-			); // set cursor before 1
+			editor.s.setCursorIn(editor.editor.querySelector('td'), true); // set cursor before 1
 
 			simulateEvent('keydown', Jodit.KEY_RIGHT, editor.editor); // not work but in real cursor move after 1
 
-			editor.s.insertNode(
-				editor.createInside.text('test'),
-				false
-			);
+			editor.s.insertNode(editor.createInside.text('test'), false);
 
 			expect(editor.value).equals(
 				'<table><tbody><tr><td>test1</td><td>2</td></tr></tbody></table>'
 			);
 		});
 
-		it('After press Left arrow in the start of cell it should work like tab + shift', function() {
+		it('After press Left arrow in the start of cell it should work like tab + shift', function () {
 			const editor = getJodit();
 
 			editor.value =
@@ -831,10 +826,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 			simulateEvent('keydown', Jodit.KEY_LEFT, editor.editor); // not work but in real cursor move after 1
 
-			editor.s.insertNode(
-				editor.createInside.text('test'),
-				false
-			);
+			editor.s.insertNode(editor.createInside.text('test'), false);
 
 			expect(editor.value).equals(
 				'<table><tbody>' +
@@ -846,7 +838,7 @@ describe('Tables Jodit Editor Tests', function() {
 			);
 		});
 
-		it("After press Top arrow in the first cell's line cursor should move into top cell", function() {
+		it("After press Top arrow in the first cell's line cursor should move into top cell", function () {
 			const editor = getJodit();
 
 			editor.value =
@@ -867,10 +859,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 			simulateEvent('keydown', Jodit.KEY_UP, editor.editor);
 
-			editor.s.insertNode(
-				editor.createInside.text('test'),
-				false
-			);
+			editor.s.insertNode(editor.createInside.text('test'), false);
 
 			expect(editor.value).equals(
 				'<table><tbody>' +
@@ -889,7 +878,7 @@ describe('Tables Jodit Editor Tests', function() {
 			);
 		});
 
-		it("After press Bottom arrow in the first cell's line cursor should move into bottom cell", function() {
+		it("After press Bottom arrow in the first cell's line cursor should move into bottom cell", function () {
 			const editor = getJodit();
 
 			editor.value =
@@ -910,10 +899,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 			simulateEvent('keydown', Jodit.KEY_DOWN, editor.editor);
 
-			editor.s.insertNode(
-				editor.createInside.text('test'),
-				false
-			);
+			editor.s.insertNode(editor.createInside.text('test'), false);
 
 			expect(editor.value).equals(
 				'<table><tbody>' +
@@ -929,7 +915,7 @@ describe('Tables Jodit Editor Tests', function() {
 			);
 		});
 
-		it("After press Tab in last table's cell in table should add new row and move into first cell form it", function() {
+		it("After press Tab in last table's cell in table should add new row and move into first cell form it", function () {
 			const editor = getJodit();
 
 			editor.value =
@@ -946,10 +932,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 			simulateEvent('keydown', Jodit.KEY_TAB, editor.editor);
 
-			editor.s.insertNode(
-				editor.createInside.text('test'),
-				false
-			);
+			editor.s.insertNode(editor.createInside.text('test'), false);
 
 			expect(editor.value).equals(
 				'<table><tbody>' +
@@ -965,8 +948,8 @@ describe('Tables Jodit Editor Tests', function() {
 			);
 		});
 
-		describe('Remove row', function() {
-			it('Remove simple row without rowspan should simple remove row', function() {
+		describe('Remove row', function () {
+			it('Remove simple row without rowspan should simple remove row', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -985,7 +968,7 @@ describe('Tables Jodit Editor Tests', function() {
 						'</table>'
 				);
 			});
-			it('Remove row which not consists td, because of in previous row was cell with rowspan should simple remove row and decrement rowspan', function() {
+			it('Remove row which not consists td, because of in previous row was cell with rowspan should simple remove row and decrement rowspan', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -1005,7 +988,7 @@ describe('Tables Jodit Editor Tests', function() {
 						'</table>'
 				);
 			});
-			it('Remove row which not consists td, because of in previous row was cell with rowspan and colspan should simple remove row and decrement rowspan once time', function() {
+			it('Remove row which not consists td, because of in previous row was cell with rowspan and colspan should simple remove row and decrement rowspan once time', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -1029,7 +1012,7 @@ describe('Tables Jodit Editor Tests', function() {
 						'</table>'
 				);
 			});
-			it('Remove row which consists td with rowspan should simple remove row and decrement rowspan and move that cell into next row', function() {
+			it('Remove row which consists td with rowspan should simple remove row and decrement rowspan and move that cell into next row', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -1049,7 +1032,7 @@ describe('Tables Jodit Editor Tests', function() {
 						'</table>'
 				);
 			});
-			it('Remove row which consists td with rowspan and colspan should simple remove row and decrement rowspan and move that cell into next row', function() {
+			it('Remove row which consists td with rowspan and colspan should simple remove row and decrement rowspan and move that cell into next row', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -1071,7 +1054,7 @@ describe('Tables Jodit Editor Tests', function() {
 						'</table>'
 				);
 			});
-			it('Remove row which consists last td with rowspan and colspan should simple remove row and decrement rowspan and move that cell into next row in last position', function() {
+			it('Remove row which consists last td with rowspan and colspan should simple remove row and decrement rowspan and move that cell into next row in last position', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -1095,8 +1078,8 @@ describe('Tables Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Remove column', function() {
-			it('Remove simple column without colspan should simple remove all cells in column', function() {
+		describe('Remove column', function () {
+			it('Remove simple column without colspan should simple remove all cells in column', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -1119,7 +1102,7 @@ describe('Tables Jodit Editor Tests', function() {
 						'</table>'
 				);
 			});
-			it('Remove column which consists td with colspan should remove all cells in column but that td should decrement colspan', function() {
+			it('Remove column which consists td with colspan should remove all cells in column but that td should decrement colspan', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -1142,7 +1125,7 @@ describe('Tables Jodit Editor Tests', function() {
 						'</table>'
 				);
 			});
-			it('Remove column which not consists td with colspan should remove all cells in column but that td should decrement colspan too', function() {
+			it('Remove column which not consists td with colspan should remove all cells in column but that td should decrement colspan too', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -1166,7 +1149,7 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 			});
 
-			it('Remove column part of that td (colspan and rowspan) in another column should remove all cells in column but that td should decrement colspan once time', function() {
+			it('Remove column part of that td (colspan and rowspan) in another column should remove all cells in column but that td should decrement colspan once time', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -1196,8 +1179,8 @@ describe('Tables Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Select cells', function() {
-			it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound', function() {
+		describe('Select cells', function () {
+			it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -1213,15 +1196,15 @@ describe('Tables Jodit Editor Tests', function() {
 
 				td = editor.editor.querySelectorAll('td')[3];
 
-				simulateEvent(['mousemove', 'mouseup', 'click'], 0, td);
+				simulateEvent(['mousemove', 'mouseup'], td);
 
 				expect(
 					editor.getInstance('Table', editor.o).selected.size
 				).equals(4);
 			});
 
-			describe('Set custom selected border color', function() {
-				it('Should add css rule in document for selected css', function() {
+			describe('Set custom selected border color', function () {
+				it('Should add css rule in document for selected css', function () {
 					const editor = getJodit({
 						table: {
 							selectionCellStyle:
@@ -1251,8 +1234,8 @@ describe('Tables Jodit Editor Tests', function() {
 					).equals('#FF0000');
 				});
 
-				describe('For iframe mode', function() {
-					it('Should add css rule in editor document for selected css', function() {
+				describe('For iframe mode', function () {
+					it('Should add css rule in editor document for selected css', function () {
 						const editor = getJodit({
 							iframe: true,
 							table: {
@@ -1278,16 +1261,15 @@ describe('Tables Jodit Editor Tests', function() {
 
 						expect(
 							Jodit.modules.Helpers.normalizeColor(
-								editor.ew.getComputedStyle(td)
-									.borderBottomColor
+								editor.ew.getComputedStyle(td).borderBottomColor
 							)
 						).equals('#FF0000');
 					});
 				});
 			});
 
-			describe('When we press mouse button over cell in subtable and move mouse to another cell', function() {
-				it('should select all cells in bound in that table', function() {
+			describe('When we press mouse button over cell in subtable and move mouse to another cell', function () {
+				it('should select all cells in bound in that table', function () {
 					const editor = getJodit();
 
 					editor.value =
@@ -1330,7 +1312,7 @@ describe('Tables Jodit Editor Tests', function() {
 				});
 			});
 
-			it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound even if between be colspan and rowspan', function() {
+			it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound even if between be colspan and rowspan', function () {
 				const editor = getJodit();
 
 				editor.value =
@@ -1356,9 +1338,9 @@ describe('Tables Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Resize column', function() {
-			describe('Move mouse over edge of cell', function() {
-				before(function() {
+		describe('Resize column', function () {
+			describe('Move mouse over edge of cell', function () {
+				before(function () {
 					const brs = [];
 					for (let i = 0; i < 100; i += 1) {
 						brs.push(document.createElement('br'));
@@ -1367,8 +1349,8 @@ describe('Tables Jodit Editor Tests', function() {
 					}
 				});
 
-				describe('Normal scroll', function() {
-					it("should show element's resizer", function(done) {
+				describe('Normal scroll', function () {
+					it("should show element's resizer", function (done) {
 						const editor = getJodit();
 						window.scrollTo(
 							0,
@@ -1400,7 +1382,7 @@ describe('Tables Jodit Editor Tests', function() {
 							'mousemove',
 							1,
 							editor.editor.getElementsByTagName('td')[1],
-							function(options) {
+							function (options) {
 								options.offsetX = 3;
 							}
 						);
@@ -1426,7 +1408,7 @@ describe('Tables Jodit Editor Tests', function() {
 							'mouseleave',
 							1,
 							editor.editor.querySelector('table'),
-							function(options) {
+							function (options) {
 								options.relatedTarget = editor.editor.querySelector(
 									'p'
 								);
@@ -1444,16 +1426,16 @@ describe('Tables Jodit Editor Tests', function() {
 					});
 				});
 
-				after(function() {
+				after(function () {
 					[].slice
 						.call(document.querySelectorAll('br.test'))
-						.forEach(function(br) {
+						.forEach(function (br) {
 							br.parentNode && br.parentNode.removeChild(br);
 						});
 				});
 			});
 
-			it('When move mouse over left edge of cell and press mouse button and move cursor to right in 500 pixels - resizer should be nearby next edge', function(done) {
+			it('When move mouse over left edge of cell and press mouse button and move cursor to right in 500 pixels - resizer should be nearby next edge', function (done) {
 				const editor = getJodit();
 
 				editor.value =
@@ -1464,7 +1446,7 @@ describe('Tables Jodit Editor Tests', function() {
 				const td = editor.editor.querySelectorAll('td')[1],
 					box = td.getBoundingClientRect();
 
-				simulateEvent('mousemove', 1, td, function(options) {
+				simulateEvent('mousemove', 1, td, function (options) {
 					options.clientX = box.left;
 					options.offsetX = 0;
 					options.pageX = 0;
@@ -1475,16 +1457,14 @@ describe('Tables Jodit Editor Tests', function() {
 					'mousedown',
 					1,
 					editor.container.querySelector('.jodit-table-resizer'),
-					function(options) {
+					function (options) {
 						options.clientX = box.left;
 						options.pageX = 0;
 						options.pageY = 0;
 					}
 				);
 
-				simulateEvent('mousemove', 1, editor.ew, function(
-					options
-				) {
+				simulateEvent('mousemove', 1, editor.ew, function (options) {
 					options.clientX = box.left + 500; // can move only on 5 pixels
 					options.pageX = 0;
 					options.pageY = 0;
@@ -1500,8 +1480,8 @@ describe('Tables Jodit Editor Tests', function() {
 				done();
 			});
 
-			describe('When move mouse over left edge of cell and press mouse button and move cursor to right in 5 pixels', function() {
-				it('should decrease the width of the right column and the width of the left column should increase', function(done) {
+			describe('When move mouse over left edge of cell and press mouse button and move cursor to right in 5 pixels', function () {
+				it('should decrease the width of the right column and the width of the left column should increase', function (done) {
 					const editor = getJodit();
 
 					editor.value =
@@ -1512,7 +1492,7 @@ describe('Tables Jodit Editor Tests', function() {
 					const td = editor.editor.querySelectorAll('td')[1],
 						box = td.getBoundingClientRect();
 
-					simulateEvent('mousemove', 1, td, function(options) {
+					simulateEvent('mousemove', 1, td, function (options) {
 						options.clientX = box.left;
 						options.offsetX = 0;
 						options.pageX = 0;
@@ -1523,21 +1503,24 @@ describe('Tables Jodit Editor Tests', function() {
 						'mousedown',
 						1,
 						editor.container.querySelector('.jodit-table-resizer'),
-						function(options) {
+						function (options) {
 							options.clientX = box.left;
 							options.pageX = 0;
 							options.pageY = 0;
 						}
 					);
 
-					simulateEvent('mousemove', 1, editor.ew, function(
-						options
-					) {
-						options.clientX = box.left + 5; // move on 5 pixels
-						options.pageX = 0;
-						options.pageY = 0;
-					});
-					simulateEvent('mouseup', 1, window, function(options) {
+					simulateEvent(
+						'mousemove',
+						1,
+						editor.ew,
+						function (options) {
+							options.clientX = box.left + 5; // move on 5 pixels
+							options.pageX = 0;
+							options.pageY = 0;
+						}
+					);
+					simulateEvent('mouseup', 1, window, function (options) {
 						options.clientX = box.left + 5; // move on 5 pixels
 						options.pageX = 0;
 						options.pageY = 0;
@@ -1556,8 +1539,8 @@ describe('Tables Jodit Editor Tests', function() {
 					done();
 				});
 
-				describe('After resize', function() {
-					it('it should restore selection', function(done) {
+				describe('After resize', function () {
+					it('it should restore selection', function (done) {
 						const editor = getJodit();
 
 						editor.value =
@@ -1570,7 +1553,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 						editor.s.setCursorIn(editor.editor.firstChild);
 
-						simulateEvent('mousemove', 1, td, function(options) {
+						simulateEvent('mousemove', 1, td, function (options) {
 							options.clientX = box.left;
 							options.offsetX = 0;
 							options.pageX = 0;
@@ -1583,7 +1566,7 @@ describe('Tables Jodit Editor Tests', function() {
 							editor.container.querySelector(
 								'.jodit-table-resizer'
 							),
-							function(options) {
+							function (options) {
 								options.clientX = box.left;
 								options.pageX = 0;
 								options.pageY = 0;
@@ -1594,7 +1577,7 @@ describe('Tables Jodit Editor Tests', function() {
 							'mousemove',
 							1,
 							editor.ew,
-							function(options) {
+							function (options) {
 								options.clientX = box.left + 5; // move on 5 pixels
 								options.pageX = 0;
 								options.pageY = 0;
@@ -1604,7 +1587,7 @@ describe('Tables Jodit Editor Tests', function() {
 							'mouseup',
 							1,
 							editor.ownerWindow,
-							function(options) {
+							function (options) {
 								options.clientX = box.left + 5; // move on 5 pixels
 								options.pageX = 0;
 								options.pageY = 0;
@@ -1631,8 +1614,8 @@ describe('Tables Jodit Editor Tests', function() {
 					});
 				});
 
-				describe('For RTL direction', function() {
-					it('should decrease the width of the left column and the width of the right column should increase', function(done) {
+				describe('For RTL direction', function () {
+					it('should decrease the width of the left column and the width of the right column should increase', function (done) {
 						const editor = getJodit({
 							direction: 'rtl'
 						});
@@ -1645,7 +1628,7 @@ describe('Tables Jodit Editor Tests', function() {
 						const td = editor.editor.querySelectorAll('td')[1],
 							box = td.getBoundingClientRect();
 
-						simulateEvent('mousemove', 1, td, function(options) {
+						simulateEvent('mousemove', 1, td, function (options) {
 							options.clientX = box.left;
 							options.offsetX = 0;
 							options.pageX = 0;
@@ -1658,7 +1641,7 @@ describe('Tables Jodit Editor Tests', function() {
 							editor.container.querySelector(
 								'.jodit-table-resizer'
 							),
-							function(options) {
+							function (options) {
 								options.clientX = box.left;
 								options.pageX = 0;
 								options.pageY = 0;
@@ -1669,7 +1652,7 @@ describe('Tables Jodit Editor Tests', function() {
 							'mousemove',
 							1,
 							editor.ew,
-							function(options) {
+							function (options) {
 								options.clientX = box.left + 5; // move on 5 pixels
 								options.pageX = 0;
 								options.pageY = 0;
@@ -1680,7 +1663,7 @@ describe('Tables Jodit Editor Tests', function() {
 							'mouseup',
 							1,
 							editor.ownerWindow,
-							function(options) {
+							function (options) {
 								options.clientX = box.left + 5; // move on 5 pixels
 								options.pageX = 0;
 								options.pageY = 0;
@@ -1701,8 +1684,8 @@ describe('Tables Jodit Editor Tests', function() {
 						done();
 					});
 
-					describe('After resize', function() {
-						it('it should restore selection', function(done) {
+					describe('After resize', function () {
+						it('it should restore selection', function (done) {
 							const editor = getJodit({
 								direction: 'rtl'
 							});
@@ -1715,18 +1698,19 @@ describe('Tables Jodit Editor Tests', function() {
 							const td = editor.editor.querySelectorAll('td')[1],
 								box = td.getBoundingClientRect();
 
-							editor.s.setCursorIn(
-								editor.editor.firstChild
-							);
+							editor.s.setCursorIn(editor.editor.firstChild);
 
-							simulateEvent('mousemove', 1, td, function(
-								options
-							) {
-								options.clientX = box.left;
-								options.offsetX = 0;
-								options.pageX = 0;
-								options.pageY = 0;
-							});
+							simulateEvent(
+								'mousemove',
+								1,
+								td,
+								function (options) {
+									options.clientX = box.left;
+									options.offsetX = 0;
+									options.pageX = 0;
+									options.pageY = 0;
+								}
+							);
 
 							simulateEvent(
 								'mousedown',
@@ -1734,7 +1718,7 @@ describe('Tables Jodit Editor Tests', function() {
 								editor.container.querySelector(
 									'.jodit-table-resizer'
 								),
-								function(options) {
+								function (options) {
 									options.clientX = box.left;
 									options.pageX = 0;
 									options.pageY = 0;
@@ -1745,7 +1729,7 @@ describe('Tables Jodit Editor Tests', function() {
 								'mousemove',
 								1,
 								editor.ew,
-								function(options) {
+								function (options) {
 									options.clientX = box.left + 5; // move on 5 pixels
 									options.pageX = 0;
 									options.pageY = 0;
@@ -1756,7 +1740,7 @@ describe('Tables Jodit Editor Tests', function() {
 								'mouseup',
 								1,
 								editor.ownerWindow,
-								function(options) {
+								function (options) {
 									options.clientX = box.left + 5; // move on 5 pixels
 									options.pageX = 0;
 									options.pageY = 0;
@@ -1785,7 +1769,7 @@ describe('Tables Jodit Editor Tests', function() {
 				});
 			});
 
-			it('When move mouse over right edge of last cell and press mouse button and move cursor to right in 50 pixels - the width of the whole table should increase', function() {
+			it('When move mouse over right edge of last cell and press mouse button and move cursor to right in 50 pixels - the width of the whole table should increase', function () {
 				const editor = getJodit();
 
 				getBox().style.width = '202px';
@@ -1797,7 +1781,7 @@ describe('Tables Jodit Editor Tests', function() {
 				const td = editor.editor.querySelectorAll('td')[3],
 					box = td.getBoundingClientRect();
 
-				simulateEvent('mousemove', 1, td, function(options) {
+				simulateEvent('mousemove', 1, td, function (options) {
 					options.clientX = box.left + box.width;
 					options.offsetX = box.width;
 				});
@@ -1806,15 +1790,15 @@ describe('Tables Jodit Editor Tests', function() {
 					'mousedown',
 					1,
 					editor.container.querySelector('.jodit-table-resizer'),
-					function(options) {
+					function (options) {
 						options.clientX = box.left + box.width;
 					}
 				);
 
-				simulateEvent('mousemove', 1, window, function(options) {
+				simulateEvent('mousemove', 1, window, function (options) {
 					options.clientX = box.left + box.width + 50;
 				});
-				simulateEvent('mouseup', 1, window, function(options) {
+				simulateEvent('mouseup', 1, window, function (options) {
 					options.clientX = box.left + box.width + 50;
 				});
 
@@ -1832,9 +1816,9 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 			});
 
-			describe('When move mouse over left edge of first cell', function() {
-				describe('press mouse button and move cursor to left in 50 pixels', function() {
-					it('should increase the width of the whole table', function() {
+			describe('When move mouse over left edge of first cell', function () {
+				describe('press mouse button and move cursor to left in 50 pixels', function () {
+					it('should increase the width of the whole table', function () {
 						const editor = getJodit();
 
 						getBox().style.width = '202px';
@@ -1847,7 +1831,7 @@ describe('Tables Jodit Editor Tests', function() {
 						const td = editor.editor.querySelectorAll('td')[0],
 							box = td.getBoundingClientRect();
 
-						simulateEvent('mousemove', 1, td, function(options) {
+						simulateEvent('mousemove', 1, td, function (options) {
 							options.clientX = box.left;
 							options.offsetX = 0;
 						});
@@ -1858,17 +1842,20 @@ describe('Tables Jodit Editor Tests', function() {
 							editor.container.querySelector(
 								'.jodit-table-resizer'
 							),
-							function(options) {
+							function (options) {
 								options.clientX = box.left;
 							}
 						);
 
-						simulateEvent('mousemove', 1, window, function(
-							options
-						) {
-							options.clientX = box.left + 50;
-						});
-						simulateEvent('mouseup', 1, window, function(options) {
+						simulateEvent(
+							'mousemove',
+							1,
+							window,
+							function (options) {
+								options.clientX = box.left + 50;
+							}
+						);
+						simulateEvent('mouseup', 1, window, function (options) {
 							options.clientX = box.left + 50;
 						});
 
@@ -1891,8 +1878,8 @@ describe('Tables Jodit Editor Tests', function() {
 					});
 				});
 
-				describe('press mouse button and do not move cursor after', function() {
-					it('should not change any cell\'s width', function() {
+				describe('press mouse button and do not move cursor after', function () {
+					it("should not change any cell's width", function () {
 						const editor = getJodit();
 
 						getBox().style.width = '202px';
@@ -1907,7 +1894,7 @@ describe('Tables Jodit Editor Tests', function() {
 						const td = editor.editor.querySelectorAll('td')[0],
 							box = td.getBoundingClientRect();
 
-						simulateEvent('mousemove', td, function(options) {
+						simulateEvent('mousemove', td, function (options) {
 							options.clientX = box.left;
 							options.offsetX = 0;
 						});
@@ -1917,12 +1904,12 @@ describe('Tables Jodit Editor Tests', function() {
 							editor.container.querySelector(
 								'.jodit-table-resizer'
 							),
-							function(options) {
+							function (options) {
 								options.clientX = box.left;
 							}
 						);
 
-						simulateEvent('mouseup', window, function(options) {
+						simulateEvent('mouseup', window, function (options) {
 							options.clientX = box.left;
 						});
 
@@ -1932,10 +1919,10 @@ describe('Tables Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Resize table', function() {
-			describe('Image in cell', function() {
-				describe('Mouse down on the Image', function() {
-					it('should show resizer for this image', function() {
+		describe('Resize table', function () {
+			describe('Image in cell', function () {
+				describe('Mouse down on the Image', function () {
+					it('should show resizer for this image', function () {
 						const area = document.createElement('textarea');
 						area.setAttribute(
 							'id',

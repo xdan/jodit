@@ -307,6 +307,7 @@ export class link extends Plugin {
 							className_input.value = attr(link, 'class') || '';
 						}
 						break;
+
 					case 'select':
 						if (className_select) {
 							for (
@@ -394,7 +395,13 @@ export class link extends Plugin {
 
 			if (!link) {
 				if (!jodit.s.isCollapsed()) {
-					links = jodit.s.wrapInTag('a') as HTMLAnchorElement[];
+					const node = jodit.s.current();
+
+					if (Dom.isTag(node, ['img'])) {
+						links = [Dom.wrap(node, 'a', jodit) as HTMLAnchorElement];
+					} else {
+						links = jodit.s.wrapInTag('a') as HTMLAnchorElement[];
+					}
 				} else {
 					const a = jodit.createInside.element('a');
 					jodit.s.insertNode(a);

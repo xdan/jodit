@@ -280,6 +280,13 @@ if (typeof window.chai !== 'undefined') {
 
 const i18nkeys = [];
 const excludeI18nKeys = [
+	'bar',
+	'Classe 1',
+	'Classe 2',
+	'Classe 3',
+	'Classe 4',
+	'Classe 5',
+	'classSpan',
 	'text3',
 	'text2',
 	'text1',

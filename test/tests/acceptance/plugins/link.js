@@ -114,7 +114,6 @@ describe('Link plugin', function () {
 
 						simulateEvent(
 							'click',
-							0,
 							editor.editor.querySelector('a')
 						);
 
@@ -201,7 +200,6 @@ describe('Link plugin', function () {
 
 						simulateEvent(
 							'click',
-							0,
 							editor.editor.querySelector('a')
 						);
 
@@ -241,7 +239,6 @@ describe('Link plugin', function () {
 
 							simulateEvent(
 								'click',
-								0,
 								editor.editor.querySelector('a')
 							);
 
@@ -291,7 +288,6 @@ describe('Link plugin', function () {
 
 							simulateEvent(
 								'click',
-								0,
 								editor.editor.querySelector('a')
 							);
 
@@ -345,7 +341,6 @@ describe('Link plugin', function () {
 
 							simulateEvent(
 								'click',
-								0,
 								editor.editor.querySelector('a')
 							);
 
@@ -869,6 +864,74 @@ describe('Link plugin', function () {
 				});
 
 				describe('Was selected image', function () {
+					describe('Image was inside the Table', function () {
+						describe('Edit with contect menu', function () {
+							it('Should wrap selected image inside the link', function () {
+								const editor = getJodit({
+									popup: {
+										img: ['link', 'unlink']
+									}
+								});
+
+								editor.value =
+									'<p>test</p>' +
+									'<table>' +
+									'<tbody>' +
+									'<tr>' +
+									'<td><img src="https://xdsoft.net/jodit/build/images/artio.jpg" alt="test"></td>' +
+									'</tr>' +
+									'</tbody>' +
+									'</table>';
+
+								editor.s.select(editor.editor.querySelector('img'));
+
+								simulateEvent('click', editor.editor.querySelector('img'));
+
+								const inline = getOpenedPopup(editor);
+
+								clickButton('link', inline);
+
+								const popup = getOpenedPopup(editor);
+
+								const textInput = popup.querySelector(
+									'input[ref=content_input]'
+								);
+
+								expect(
+									textInput.closest('.jodit-ui-block').style
+										.display
+								).equals('none');
+
+								expect(textInput.value).equals('');
+
+								const urlInput = popup.querySelector(
+									'input[ref=url_input]'
+								);
+
+								expect(urlInput).is.not.null;
+								urlInput.focus();
+								urlInput.value = './shapiro';
+								urlInput.select();
+
+								simulateEvent(
+									'submit',
+									popup.querySelector('form')
+								);
+
+								expect(sortAttributes(editor.value)).equals(
+									'<p>test</p>' +
+									'<table>' +
+									'<tbody>' +
+									'<tr>' +
+									'<td><a href="./shapiro"><img alt="test" src="https://xdsoft.net/jodit/build/images/artio.jpg"></a></td>' +
+									'</tr>' +
+									'</tbody>' +
+									'</table>'
+								);
+							});
+						});
+					});
+
 					describe('Image had not anchor parent', function () {
 						it('Should show dialog without content input and after submit wrap this image', function () {
 							const editor = getJodit();
@@ -904,7 +967,52 @@ describe('Link plugin', function () {
 
 							simulateEvent(
 								'submit',
-								0,
+								popup.querySelector('form')
+							);
+
+							expect(sortAttributes(editor.value)).equals(
+								'<p>one green <a href="https://xdsoft.net"><img alt="test" src="https://xdsoft.net/jodit/build/images/artio.jpg"></a> under wall</p>'
+							);
+						});
+					});
+
+					describe('Image had anchor parent', function () {
+						it('Should show dialog without content input and after submit wrap this image', function () {
+							const editor = getJodit();
+
+							editor.value =
+								'<p>one green <a href="https://xdan.ru"><img src="https://xdsoft.net/jodit/build/images/artio.jpg" alt="test"></a> under wall</p>';
+
+							editor.s.select(editor.editor.querySelector('img'));
+
+							clickButton('link', editor);
+
+							const popup = getOpenedPopup(editor);
+
+							const textInput = popup.querySelector(
+								'input[ref=content_input]'
+							);
+
+							expect(
+								textInput.closest('.jodit-ui-block').style
+									.display
+							).equals('none');
+
+							expect(textInput.value).equals('');
+
+							const urlInput = popup.querySelector(
+								'input[ref=url_input]'
+							);
+
+							expect(urlInput).is.not.null;
+							expect(urlInput.value).equals('https://xdan.ru');
+
+							urlInput.focus();
+							urlInput.value = 'https://xdsoft.net';
+							urlInput.select();
+
+							simulateEvent(
+								'submit',
 								popup.querySelector('form')
 							);
 
