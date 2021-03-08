@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.4
+ * Version: v3.6.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -5032,9 +5032,9 @@ function isURL(str) {
     var pattern = new RegExp('^(https?:\\/\\/)' +
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' +
         '((\\d{1,3}\\.){3}\\d{1,3}))' +
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
-        '(\\?[;&a-z\\d%_.~+=-]*)?' +
-        '(\\#[-a-z\\d_]*)?$', 'i');
+        '(\\:\\d+)?(\\/[-a-zа-яё\\d%_.~+]*)*' +
+        '(\\?[;&a-zа-яё\\d%_.~+=-]*)?' +
+        '(\\#[-a-zа-яё\\d_]*)?$', 'i');
     return pattern.test(str);
 }
 exports.isURL = isURL;
@@ -10760,7 +10760,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.6.4";
+        _this.version = "3.6.5";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -10902,10 +10902,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.6.4";
+        return "3.6.5";
     };
     View.getVersion = function () {
-        return "3.6.4";
+        return "3.6.5";
     };
     View.prototype.initOptions = function (options) {
         this.options = helpers_1.ConfigProto(options || {}, helpers_1.ConfigProto(this.options || {}, View.defaultOptions));
@@ -28633,9 +28633,7 @@ var helpers_1 = __webpack_require__(19);
 var plugin_1 = __webpack_require__(183);
 var global_1 = __webpack_require__(30);
 var decorators_1 = __webpack_require__(99);
-config_1.Config.prototype.useIframeResizer = true;
-config_1.Config.prototype.useTableResizer = true;
-config_1.Config.prototype.useImageResizer = true;
+config_1.Config.prototype.allowResizeTags = ['img', 'iframe', 'table', 'jodit'];
 config_1.Config.prototype.resizer = {
     showSize: true,
     hideSizeTimeout: 1000,
@@ -28721,6 +28719,9 @@ var resizer = (function (_super) {
             }
         };
         _this.onClickElement = function (element, e) {
+            if (_this.isResized) {
+                return;
+            }
             if (_this.element !== element || !_this.isShown) {
                 _this.element = element;
                 _this.show();
@@ -28785,6 +28786,18 @@ var resizer = (function (_super) {
         this.addEventListeners();
         this.onChangeEditor();
     };
+    resizer.prototype.onEditorClick = function (e) {
+        var node = e.target;
+        var _a = this.j, editor = _a.editor, allowResizeTags = _a.options.allowResizeTags;
+        while (node && node !== editor) {
+            if (dom_1.Dom.isTag(node, allowResizeTags)) {
+                this.bind(node);
+                this.onClickElement(node, e);
+                return;
+            }
+            node = node.parentNode;
+        }
+    };
     resizer.prototype.addEventListeners = function () {
         var _this = this;
         var editor = this.j;
@@ -28839,8 +28852,6 @@ var resizer = (function (_super) {
         }
     };
     resizer.prototype.onChangeEditor = function () {
-        var _this = this;
-        var editor = this.j;
         if (this.isShown) {
             if (!this.element || !this.element.parentNode) {
                 this.hide();
@@ -28849,26 +28860,14 @@ var resizer = (function (_super) {
                 this.updateSize();
             }
         }
-        if (!editor.isDestructed) {
-            helpers_1.$$('img, table, iframe', editor.editor).forEach(function (elm) {
-                if (editor.getMode() === consts.MODE_SOURCE) {
-                    return;
-                }
-                if (!elm[keyBInd] &&
-                    ((dom_1.Dom.isTag(elm, 'iframe') &&
-                        editor.o.useIframeResizer) ||
-                        (dom_1.Dom.isTag(elm, 'img') &&
-                            editor.o.useImageResizer) ||
-                        (dom_1.Dom.isTag(elm, 'table') &&
-                            editor.o.useTableResizer))) {
-                    elm[keyBInd] = true;
-                    _this.bind(elm);
-                }
-            });
-        }
+        helpers_1.$$('iframe', this.j.editor).forEach(this.bind);
     };
     resizer.prototype.bind = function (element) {
         var _this = this;
+        if (element[keyBInd]) {
+            return;
+        }
+        element[keyBInd] = true;
         var wrapper;
         if (dom_1.Dom.isTag(element, 'iframe')) {
             var iframe_1 = element;
@@ -28912,9 +28911,6 @@ var resizer = (function (_super) {
             if (constants_1.IS_IE && dom_1.Dom.isTag(element, 'img')) {
                 event.preventDefault();
             }
-        })
-            .on(element, 'click', function (e) {
-            return _this.onClickElement(element, e);
         });
     };
     resizer.prototype.showSizeViewer = function (w, h) {
@@ -28948,10 +28944,12 @@ var resizer = (function (_super) {
         this.updateSize();
     };
     resizer.prototype.hide = function () {
-        this.isResized = false;
-        this.isShown = false;
-        this.element = null;
-        dom_1.Dom.safeRemove(this.rect);
+        if (!this.isResized) {
+            this.isResized = false;
+            this.isShown = false;
+            this.element = null;
+            dom_1.Dom.safeRemove(this.rect);
+        }
     };
     resizer.prototype.beforeDestruct = function (jodit) {
         this.hide();
@@ -28959,8 +28957,14 @@ var resizer = (function (_super) {
         jodit.e.off(this.j.ow, '.resizer').off('.resizer');
     };
     tslib_1.__decorate([
+        decorators_1.watch(':click')
+    ], resizer.prototype, "onEditorClick", null);
+    tslib_1.__decorate([
         decorators_1.debounce()
     ], resizer.prototype, "onChangeEditor", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizer.prototype, "bind", null);
     tslib_1.__decorate([
         decorators_1.autobind
     ], resizer.prototype, "hide", null);

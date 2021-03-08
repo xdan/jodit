@@ -1,14 +1,14 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.4
+ * Version: v3.6.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
 	/*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.4
+ * Version: v3.6.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -259,7 +259,7 @@
   padding: 0 8px;
   border: 0;
   margin: 0;
-  background-color: rvar(--jd-color-gray);
+  background-color: #dadada;
   border-radius: 0.25rem;
   color: #4c4c4c;
   cursor: pointer;
@@ -623,7 +623,7 @@ svg.jodit-icon {
   border: 0 solid #dadada;
 }
 .jodit-container:not(.jodit_inline).jodit_disabled {
-  background: rvar(--jd-color-gray);
+  background: #dadada;
 }
 .jodit-container:not(.jodit_inline).jodit_disabled .jodit-workplace {
   opacity: 0.4;
@@ -4252,7 +4252,7 @@ svg.jodit-icon {
   border-radius: 3px;
 }
 .jodit-status-bar .jodit-status-bar__item a:hover {
-  background-color: rvar(--jd-color-gray);
+  background-color: #dadada;
   text-decoration: none;
   color: #222222;
 }
@@ -4807,7 +4807,7 @@ html.jodit_fullsize-box_true {
   z-index: 4;
   pointer-events: all;
   border: 1px solid #4c4c4c;
-  background-color: rvar(--jd-color-gray);
+  background-color: #dadada;
   width: 8px;
   height: 8px;
 }

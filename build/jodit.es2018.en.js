@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.4
+ * Version: v3.6.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -3663,9 +3663,9 @@ function isURL(str) {
     const pattern = new RegExp('^(https?:\\/\\/)' +
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' +
         '((\\d{1,3}\\.){3}\\d{1,3}))' +
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
-        '(\\?[;&a-z\\d%_.~+=-]*)?' +
-        '(\\#[-a-z\\d_]*)?$', 'i');
+        '(\\:\\d+)?(\\/[-a-zа-яё\\d%_.~+]*)*' +
+        '(\\?[;&a-zа-яё\\d%_.~+=-]*)?' +
+        '(\\#[-a-zа-яё\\d_]*)?$', 'i');
     return pattern.test(str);
 }
 
@@ -9002,7 +9002,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.6.4";
+        this.version = "3.6.5";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -9100,10 +9100,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.6.4";
+        return "3.6.5";
     }
     static getVersion() {
-        return "3.6.4";
+        return "3.6.5";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -21887,9 +21887,7 @@ class redoUndo extends Plugin {
 
 
 
-config/* Config.prototype.useIframeResizer */.D.prototype.useIframeResizer = true;
-config/* Config.prototype.useTableResizer */.D.prototype.useTableResizer = true;
-config/* Config.prototype.useImageResizer */.D.prototype.useImageResizer = true;
+config/* Config.prototype.allowResizeTags */.D.prototype.allowResizeTags = ['img', 'iframe', 'table', 'jodit'];
 config/* Config.prototype.resizer */.D.prototype.resizer = {
     showSize: true,
     hideSizeTimeout: 1000,
@@ -21980,6 +21978,9 @@ class resizer extends Plugin {
             }
         };
         this.onClickElement = (element, e) => {
+            if (this.isResized) {
+                return;
+            }
             if (this.element !== element || !this.isShown) {
                 this.element = element;
                 this.show();
@@ -22042,6 +22043,18 @@ class resizer extends Plugin {
         this.addEventListeners();
         this.onChangeEditor();
     }
+    onEditorClick(e) {
+        let node = e.target;
+        const { editor, options: { allowResizeTags } } = this.j;
+        while (node && node !== editor) {
+            if (dom/* Dom.isTag */.i.isTag(node, allowResizeTags)) {
+                this.bind(node);
+                this.onClickElement(node, e);
+                return;
+            }
+            node = node.parentNode;
+        }
+    }
     addEventListeners() {
         const editor = this.j;
         editor.e
@@ -22095,7 +22108,6 @@ class resizer extends Plugin {
         }
     }
     onChangeEditor() {
-        const editor = this.j;
         if (this.isShown) {
             if (!this.element || !this.element.parentNode) {
                 this.hide();
@@ -22104,25 +22116,13 @@ class resizer extends Plugin {
                 this.updateSize();
             }
         }
-        if (!editor.isDestructed) {
-            (0,helpers.$$)('img, table, iframe', editor.editor).forEach((elm) => {
-                if (editor.getMode() === constants.MODE_SOURCE) {
-                    return;
-                }
-                if (!elm[keyBInd] &&
-                    ((dom/* Dom.isTag */.i.isTag(elm, 'iframe') &&
-                        editor.o.useIframeResizer) ||
-                        (dom/* Dom.isTag */.i.isTag(elm, 'img') &&
-                            editor.o.useImageResizer) ||
-                        (dom/* Dom.isTag */.i.isTag(elm, 'table') &&
-                            editor.o.useTableResizer))) {
-                    elm[keyBInd] = true;
-                    this.bind(elm);
-                }
-            });
-        }
+        (0,helpers.$$)('iframe', this.j.editor).forEach(this.bind);
     }
     bind(element) {
+        if (element[keyBInd]) {
+            return;
+        }
+        element[keyBInd] = true;
         let wrapper;
         if (dom/* Dom.isTag */.i.isTag(element, 'iframe')) {
             const iframe = element;
@@ -22166,8 +22166,7 @@ class resizer extends Plugin {
             if (constants.IS_IE && dom/* Dom.isTag */.i.isTag(element, 'img')) {
                 event.preventDefault();
             }
-        })
-            .on(element, 'click', (e) => this.onClickElement(element, e));
+        });
     }
     showSizeViewer(w, h) {
         if (!this.j.o.resizer.showSize) {
@@ -22200,10 +22199,12 @@ class resizer extends Plugin {
         this.updateSize();
     }
     hide() {
-        this.isResized = false;
-        this.isShown = false;
-        this.element = null;
-        dom/* Dom.safeRemove */.i.safeRemove(this.rect);
+        if (!this.isResized) {
+            this.isResized = false;
+            this.isShown = false;
+            this.element = null;
+            dom/* Dom.safeRemove */.i.safeRemove(this.rect);
+        }
     }
     beforeDestruct(jodit) {
         this.hide();
@@ -22212,8 +22213,14 @@ class resizer extends Plugin {
     }
 }
 (0,tslib_es6.__decorate)([
+    (0,decorators.watch)(':click')
+], resizer.prototype, "onEditorClick", null);
+(0,tslib_es6.__decorate)([
     (0,decorators.debounce)()
 ], resizer.prototype, "onChangeEditor", null);
+(0,tslib_es6.__decorate)([
+    decorators.autobind
+], resizer.prototype, "bind", null);
 (0,tslib_es6.__decorate)([
     decorators.autobind
 ], resizer.prototype, "hide", null);
