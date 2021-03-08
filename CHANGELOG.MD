@@ -9,6 +9,17 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.6.5
+
+#### :boom: Breaking Change
+
+- Removed options: `useIframeResizer`, `useImgResizer`, `useTableResizer` from `resizer` plugin.
+	Instead, added `allowResizeTags`.
+
+```js
+Config.prototype.allowResizeTags = ['img', 'iframe', 'table', 'jodit'];
+```
+
 ## 3.6.2
 
 #### :bug: Bug Fix

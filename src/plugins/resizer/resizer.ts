@@ -6,7 +6,7 @@
 
 import './resizer.less';
 
-import type { IBound } from '../../types';
+import type { HTMLTagNames, IBound, Nullable } from '../../types';
 import type { IJodit } from '../../types';
 import { Config } from '../../config';
 import * as consts from '../../core/constants';
@@ -22,7 +22,7 @@ import {
 } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { eventEmitter } from '../../core/global';
-import { autobind, debounce } from '../../core/decorators';
+import { autobind, debounce, watch } from '../../core/decorators';
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table
@@ -34,9 +34,7 @@ import { autobind, debounce } from '../../core/decorators';
  */
 declare module '../../config' {
 	interface Config {
-		useIframeResizer: boolean;
-		useTableResizer: boolean;
-		useImageResizer: boolean;
+		allowResizeTags: HTMLTagNames[];
 
 		resizer: {
 			showSize: boolean;
@@ -46,17 +44,8 @@ declare module '../../config' {
 		};
 	}
 }
-Config.prototype.useIframeResizer = true;
 
-/**
- * @property{boolean} useTableResizer=true Use true frame for editing table size
- */
-Config.prototype.useTableResizer = true;
-
-/**
- * @property{boolean} useImageResizer=true Use true image editing frame size
- */
-Config.prototype.useImageResizer = true;
+Config.prototype.allowResizeTags = ['img', 'iframe', 'table', 'jodit'];
 
 /**
  * @property {object} resizer
@@ -105,6 +94,7 @@ export class resizer extends Plugin {
 		'span'
 	)[0];
 
+	/** @override */
 	protected afterInit(editor: IJodit): void {
 		$$('i', this.rect).forEach((resizeHandle: HTMLElement) => {
 			editor.e.on(
@@ -138,6 +128,31 @@ export class resizer extends Plugin {
 
 		this.addEventListeners();
 		this.onChangeEditor();
+	}
+
+	/**
+	 * Click in the editor area
+	 * @param e
+	 * @protected
+	 */
+	@watch(':click')
+	protected onEditorClick(e: MouseEvent): void {
+		let node = e.target as Nullable<Node>;
+
+		const {
+			editor,
+			options: { allowResizeTags }
+		} = this.j;
+
+		while (node && node !== editor) {
+			if (Dom.isTag(node, allowResizeTags)) {
+				this.bind(node);
+				this.onClickElement(node, e);
+				return;
+			}
+
+			node = node.parentNode;
+		}
 	}
 
 	private addEventListeners() {
@@ -299,8 +314,6 @@ export class resizer extends Plugin {
 
 	@debounce()
 	private onChangeEditor() {
-		const editor = this.j;
-
 		if (this.isShown) {
 			if (!this.element || !this.element.parentNode) {
 				this.hide();
@@ -309,35 +322,20 @@ export class resizer extends Plugin {
 			}
 		}
 
-		if (!editor.isDestructed) {
-			$$('img, table, iframe', editor.editor).forEach(
-				(elm: HTMLElement) => {
-					if (editor.getMode() === consts.MODE_SOURCE) {
-						return;
-					}
-
-					if (
-						!(elm as any)[keyBInd] &&
-						((Dom.isTag(elm, 'iframe') &&
-							editor.o.useIframeResizer) ||
-							(Dom.isTag(elm, 'img') &&
-								editor.o.useImageResizer) ||
-							(Dom.isTag(elm, 'table') &&
-								editor.o.useTableResizer))
-					) {
-						(elm as any)[keyBInd] = true;
-						this.bind(elm);
-					}
-				}
-			);
-		}
+		$$('iframe', this.j.editor).forEach(this.bind)
 	}
 
 	/**
 	 * Bind an edit element toWYSIWYG element
 	 * @param {HTMLElement} element The element that you want toWYSIWYG add a function toWYSIWYG resize
 	 */
-	private bind(element: HTMLElement) {
+	@autobind
+	private bind(element: HTMLElement): void {
+		if ((element as any)[keyBInd]) {
+			return;
+		}
+
+		(element as any)[keyBInd] = true;
 		let wrapper: HTMLElement;
 
 		if (Dom.isTag(element, 'iframe')) {
@@ -394,13 +392,14 @@ export class resizer extends Plugin {
 				if (IS_IE && Dom.isTag(element, 'img')) {
 					event.preventDefault();
 				}
-			})
-			.on(element, 'click', (e: MouseEvent) =>
-				this.onClickElement(element, e)
-			);
+			});
 	}
 
 	private onClickElement = (element: HTMLElement, e: MouseEvent) => {
+		if (this.isResized) {
+			return;
+		}
+
 		if (this.element !== element || !this.isShown) {
 			this.element = element;
 
@@ -511,11 +510,12 @@ export class resizer extends Plugin {
 	 */
 	@autobind
 	private hide(): void {
-		this.isResized = false;
-		this.isShown = false;
-		this.element = null;
-
-		Dom.safeRemove(this.rect);
+		if (!this.isResized) {
+			this.isResized = false;
+			this.isShown = false;
+			this.element = null;
+			Dom.safeRemove(this.rect);
+		}
 	}
 
 	private hideSizeViewer = () => {

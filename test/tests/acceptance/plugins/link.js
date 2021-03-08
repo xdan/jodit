@@ -40,17 +40,32 @@ describe('Link plugin', function () {
 		});
 
 		describe('Insert youtube link', function () {
-			it('Should insert iframe with video', function () {
-				const editor = getJodit();
-				simulatePaste(
-					editor.editor,
-					'https://www.youtube.com/watch?v=8Qn_spdM5Zg'
-				);
-				expect(sortAttributes(editor.value)).equal(
-					sortAttributes(
-						'<iframe width="400" height="345" src="https://www.youtube.com/embed/8Qn_spdM5Zg" frameborder="0" allowfullscreen=""></iframe>'
-					)
-				);
+			[
+				[
+					'https://www.youtube.com/watch?v=Cy1qd16VDhM&ab_channel=КонстантинСёмин',
+					'https://www.youtube.com/embed/Cy1qd16VDhM'
+				],
+				[
+					'https://www.youtube.com/watch?v=8Qn_spdM5Zg',
+					'https://www.youtube.com/embed/8Qn_spdM5Zg'
+				]
+			].forEach(function (lnk) {
+				describe('Insert link ' + lnk[0], function () {
+					it('Should insert iframe with video ' + lnk[1], function () {
+						const editor = getJodit();
+
+						simulatePaste(
+							editor.editor,
+							lnk[0]
+						);
+
+						expect(sortAttributes(editor.value)).equal(
+							sortAttributes(
+								'<iframe width="400" height="345" src="' + lnk[1] + '" frameborder="0" allowfullscreen=""></iframe>'
+							)
+						);
+					});
+				})
 			});
 
 			describe('Disable', function () {
@@ -883,9 +898,14 @@ describe('Link plugin', function () {
 									'</tbody>' +
 									'</table>';
 
-								editor.s.select(editor.editor.querySelector('img'));
+								editor.s.select(
+									editor.editor.querySelector('img')
+								);
 
-								simulateEvent('click', editor.editor.querySelector('img'));
+								simulateEvent(
+									'click',
+									editor.editor.querySelector('img')
+								);
 
 								const inline = getOpenedPopup(editor);
 
@@ -920,13 +940,13 @@ describe('Link plugin', function () {
 
 								expect(sortAttributes(editor.value)).equals(
 									'<p>test</p>' +
-									'<table>' +
-									'<tbody>' +
-									'<tr>' +
-									'<td><a href="./shapiro"><img alt="test" src="https://xdsoft.net/jodit/build/images/artio.jpg"></a></td>' +
-									'</tr>' +
-									'</tbody>' +
-									'</table>'
+										'<table>' +
+										'<tbody>' +
+										'<tr>' +
+										'<td><a href="./shapiro"><img alt="test" src="https://xdsoft.net/jodit/build/images/artio.jpg"></a></td>' +
+										'</tr>' +
+										'</tbody>' +
+										'</table>'
 								);
 							});
 						});

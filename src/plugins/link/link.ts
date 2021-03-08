@@ -202,7 +202,6 @@ export class link extends Plugin {
 		html: string
 	): HTMLAnchorElement | void {
 		const { jodit } = this;
-
 		if (isURL(html)) {
 			if (jodit.o.link.processVideoLink) {
 				const embed = convertMediaUrlToVideoEmbed(html);
