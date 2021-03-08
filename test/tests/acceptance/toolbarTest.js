@@ -720,6 +720,38 @@ describe('Toolbar', function () {
 	});
 
 	describe('Buttons', function () {
+		describe('Buttons list', function () {
+			it('Should allow get flat buttons list', function () {
+				const editor = getJodit({
+					buttons: [
+						{
+							group: 'source1',
+							buttons: ['source', 'selectall']
+						},
+						{
+							group: 'font-style1',
+							buttons: ['bold', 'italic']
+						},
+						'\n',
+						{
+							group: 'history1',
+							buttons: ['redo', 'undo']
+						}
+					]
+				});
+				console.log(editor.toolbar.getButtonsNames());
+
+				expect(editor.toolbar.getButtonsNames()).deep.eq([
+					'source',
+					'selectall',
+					'bold',
+					'italic',
+					'redo',
+					'undo'
+				]);
+			});
+		});
+
 		describe('Text mode', function () {
 			it('Should work i18n', function () {
 				const editor = getJodit({

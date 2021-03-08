@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.3
+ * Version: v3.6.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -5752,12 +5752,12 @@ let UIGroup = UIGroup_1 = class UIGroup extends _element__WEBPACK_IMPORTED_MODUL
             ...this.elements
         ];
         while (stack.length) {
-            const elm = stack.pop();
+            const elm = stack.shift();
             if ((0,_helpers__WEBPACK_IMPORTED_MODULE_2__.isArray)(elm)) {
                 stack.push(...elm);
             }
             else if (elm instanceof UIGroup_1) {
-                stack.push(...elm.elements.reverse());
+                stack.push(...elm.elements);
             }
             else {
                 elm && result.push(elm);
@@ -9002,7 +9002,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.6.3";
+        this.version = "3.6.4";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -9100,10 +9100,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.6.3";
+        return "3.6.4";
     }
     static getVersion() {
-        return "3.6.3";
+        return "3.6.4";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));

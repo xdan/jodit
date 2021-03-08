@@ -39,17 +39,18 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	 */
 	get allChildren(): IUIElement[] {
 		const result: IUIElement[] = [];
+
 		const stack: Array<IUIElement | IUIElement[] | IUIGroup> = [
 			...this.elements
 		];
 
 		while (stack.length) {
-			const elm = stack.pop();
+			const elm = stack.shift();
 
 			if (isArray(elm)) {
 				stack.push(...elm);
 			} else if (elm instanceof UIGroup) {
-				stack.push(...elm.elements.reverse());
+				stack.push(...elm.elements);
 			} else {
 				elm && result.push(elm);
 			}
