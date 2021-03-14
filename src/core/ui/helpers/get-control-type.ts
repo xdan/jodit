@@ -25,7 +25,8 @@ export function getControlType(
 ): IControlTypeStrong {
 	let buttonControl: IControlTypeStrong;
 
-	controls ||= Config.defaultOptions.controls;
+	if (!controls)
+		controls = Config.defaultOptions.controls;
 
 	if (!isString(button)) {
 		buttonControl = { name: 'empty', ...ConfigFlatten(button) };
