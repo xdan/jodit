@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.5
+ * Version: v3.6.6
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -7082,7 +7082,8 @@ var helpers_1 = __webpack_require__(19);
 var config_1 = __webpack_require__(8);
 function getControlType(button, controls) {
     var buttonControl;
-    controls || (controls = config_1.Config.defaultOptions.controls);
+    if (!controls)
+        controls = config_1.Config.defaultOptions.controls;
     if (!helpers_1.isString(button)) {
         buttonControl = tslib_1.__assign({ name: 'empty' }, helpers_1.ConfigFlatten(button));
         if (controls[buttonControl.name] !== undefined) {
@@ -10760,7 +10761,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.6.5";
+        _this.version = "3.6.6";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -10902,10 +10903,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.6.5";
+        return "3.6.6";
     };
     View.getVersion = function () {
-        return "3.6.5";
+        return "3.6.6";
     };
     View.prototype.initOptions = function (options) {
         this.options = helpers_1.ConfigProto(options || {}, helpers_1.ConfigProto(this.options || {}, View.defaultOptions));

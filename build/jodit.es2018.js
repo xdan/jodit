@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.5
+ * Version: v3.6.6
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -5271,7 +5271,8 @@ UIList = (0,tslib_es6.__decorate)([
 
 function getControlType(button, controls) {
     let buttonControl;
-    controls || (controls = _config__WEBPACK_IMPORTED_MODULE_1__/* .Config.defaultOptions.controls */ .D.defaultOptions.controls);
+    if (!controls)
+        controls = _config__WEBPACK_IMPORTED_MODULE_1__/* .Config.defaultOptions.controls */ .D.defaultOptions.controls;
     if (!(0,_helpers__WEBPACK_IMPORTED_MODULE_0__.isString)(button)) {
         buttonControl = { name: 'empty', ...(0,_helpers__WEBPACK_IMPORTED_MODULE_0__.ConfigFlatten)(button) };
         if (controls[buttonControl.name] !== undefined) {
@@ -13196,7 +13197,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.6.5";
+        this.version = "3.6.6";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -13294,10 +13295,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.6.5";
+        return "3.6.6";
     }
     static getVersion() {
-        return "3.6.5";
+        return "3.6.6";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
