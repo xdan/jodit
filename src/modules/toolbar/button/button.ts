@@ -257,7 +257,11 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		}
 
 		if (ctr.tooltip) {
-			state.tooltip = this.j.i18n(ctr.tooltip);
+			state.tooltip = this.j.i18n(
+				isFunction(ctr.tooltip)
+					? ctr.tooltip(this.j, ctr, this)
+					: ctr.tooltip
+			);
 		}
 
 		state.hasTrigger = Boolean(ctr.list || (ctr.popup && ctr.exec));

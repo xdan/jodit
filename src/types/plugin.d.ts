@@ -7,12 +7,13 @@
 import type { IJodit } from './jodit';
 import type { CanPromise, IDestructible, IInitable } from './types';
 import type { IViewBased } from './view';
-import type { ButtonGroup } from './toolbar';
+import type { ButtonGroup, IControlType } from './toolbar';
 
 export interface IPluginButton {
 	name: string;
 	group?: ButtonGroup;
 	position?: number;
+	options?: IControlType;
 }
 
 export class IPlugin<T extends IViewBased = IViewBased> implements IDestructible, IInitable {

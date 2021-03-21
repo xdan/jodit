@@ -184,7 +184,7 @@ interface IControlType<
 	/**
 	 * Buttons hint
 	 */
-	tooltip?: string;
+	tooltip?: string | ((editor: T, control: IControlType<T, B>, button?: B) => string);
 
 	/**
 	 * This function will be executed when the button is pressed.
@@ -260,6 +260,7 @@ export type Controls = IDictionary<IControlType | Controls>;
 export type Buttons = Array<string | IControlType>;
 
 export type ButtonGroup =
+	| string
 	| 'source'
 	| 'font-style'
 	| 'script'
