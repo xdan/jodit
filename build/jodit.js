@@ -2301,6 +2301,10 @@ var Config = (function () {
                 buttons: []
             },
             {
+                group: 'form',
+                buttons: []
+            },
+            {
                 group: 'history',
                 buttons: []
             },
@@ -4227,7 +4231,7 @@ var Dom = (function () {
     Dom.replace = function (elm, newTagName, create, withAttributes, notMoveContent) {
         if (withAttributes === void 0) { withAttributes = false; }
         if (notMoveContent === void 0) { notMoveContent = false; }
-        var tag = helpers_1.isString(newTagName)
+        var tag = (helpers_1.isString(newTagName))
             ? create.element(newTagName)
             : newTagName;
         if (!notMoveContent) {
@@ -11609,7 +11613,9 @@ var ToolbarButton = (function (_super) {
             }
         }
         if (ctr.tooltip) {
-            state.tooltip = this.j.i18n(ctr.tooltip);
+            state.tooltip = this.j.i18n(helpers_1.isFunction(ctr.tooltip)
+                ? ctr.tooltip(this.j, ctr, this)
+                : ctr.tooltip);
         }
         state.hasTrigger = Boolean(ctr.list || (ctr.popup && ctr.exec));
     };
@@ -13564,7 +13570,7 @@ exports.default = (function (self) {
                                     case 1:
                                         _a.sent();
                                         self.state.activeElements = [];
-                                        return [2];
+                                        return [2, self.loadTree()];
                                 }
                             });
                         }); }
@@ -32680,7 +32686,7 @@ module.exports = "<svg viewBox=\"0 0 18.151 18.151\" xmlns=\"http://www.w3.org/2
 /* 346 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <rect x=\"252\" y=\"96\"/> <rect/> <rect x=\"252\" y=\"288\"/> <rect y=\"384\"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176 \"/> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176\"/> </g> </svg>"
 
 /***/ }),
 /* 347 */
@@ -33159,8 +33165,9 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {

@@ -87,6 +87,8 @@ export default (self: FileBrowser) => {
 								);
 
 								self.state.activeElements = [];
+
+								return self.loadTree();
 							}
 					  }
 					: false,

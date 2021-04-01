@@ -656,6 +656,10 @@ export class Config implements IViewOptions {
 			buttons: []
 		},
 		{
+			group: 'form',
+			buttons: []
+		},
+		{
 			group: 'history',
 			buttons: []
 		},

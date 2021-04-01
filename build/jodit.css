@@ -1038,11 +1038,15 @@ svg.jodit-icon {
   height: 14px;
 }
 .jodit-ui-button-sizes button {
+  min-width: 34px;
+  height: 34px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 34px;
-  height: 34px;
+}
+.jodit-ui-button-sizes_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-ui-button-sizes_size_tiny {
   min-width: 16px;
@@ -1053,11 +1057,15 @@ svg.jodit-icon {
   height: 8px;
 }
 .jodit-ui-button-sizes_size_tiny button {
+  min-width: 16px;
+  height: 16px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 16px;
-  height: 16px;
+}
+.jodit-ui-button-sizes_size_tiny_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-ui-button-sizes_size_xsmall {
   min-width: 22px;
@@ -1068,11 +1076,15 @@ svg.jodit-icon {
   height: 10px;
 }
 .jodit-ui-button-sizes_size_xsmall button {
+  min-width: 22px;
+  height: 22px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 22px;
-  height: 22px;
+}
+.jodit-ui-button-sizes_size_xsmall_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-ui-button-sizes_size_small {
   min-width: 28px;
@@ -1083,11 +1095,15 @@ svg.jodit-icon {
   height: 12px;
 }
 .jodit-ui-button-sizes_size_small button {
+  min-width: 28px;
+  height: 28px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 28px;
-  height: 28px;
+}
+.jodit-ui-button-sizes_size_small_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-ui-button-sizes_size_large {
   min-width: 40px;
@@ -1098,11 +1114,15 @@ svg.jodit-icon {
   height: 16px;
 }
 .jodit-ui-button-sizes_size_large button {
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 40px;
-  height: 40px;
+}
+.jodit-ui-button-sizes_size_large_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-ui-button-statuses_status_default {
   background-color: #d8d8d8;
@@ -1328,11 +1348,15 @@ svg.jodit-icon {
   height: 14px;
 }
 .jodit-ui-button button {
+  min-width: 34px;
+  height: 34px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 34px;
-  height: 34px;
+}
+.jodit-ui-button_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-ui-button_size_tiny {
   min-width: 16px;
@@ -1343,11 +1367,15 @@ svg.jodit-icon {
   height: 8px;
 }
 .jodit-ui-button_size_tiny button {
+  min-width: 16px;
+  height: 16px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 16px;
-  height: 16px;
+}
+.jodit-ui-button_size_tiny_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-ui-button_size_xsmall {
   min-width: 22px;
@@ -1358,11 +1386,15 @@ svg.jodit-icon {
   height: 10px;
 }
 .jodit-ui-button_size_xsmall button {
+  min-width: 22px;
+  height: 22px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 22px;
-  height: 22px;
+}
+.jodit-ui-button_size_xsmall_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-ui-button_size_small {
   min-width: 28px;
@@ -1373,11 +1405,15 @@ svg.jodit-icon {
   height: 12px;
 }
 .jodit-ui-button_size_small button {
+  min-width: 28px;
+  height: 28px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 28px;
-  height: 28px;
+}
+.jodit-ui-button_size_small_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-ui-button_size_large {
   min-width: 40px;
@@ -1388,11 +1424,15 @@ svg.jodit-icon {
   height: 16px;
 }
 .jodit-ui-button_size_large button {
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 40px;
-  height: 40px;
+}
+.jodit-ui-button_size_large_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-ui-button__icon {
   display: none;
@@ -1681,9 +1721,9 @@ svg.jodit-icon {
 }
 .jodit-ui-button-group__label {
   display: block;
+  margin-bottom: calc(8px / 4);
   color: #a5a5a5;
   font-size: 0.8em;
-  margin-bottom: calc(8px / 4);
 }
 .jodit-ui-button-group__options {
   display: -webkit-box;
@@ -1761,9 +1801,9 @@ svg.jodit-icon {
 
 .jodit-ui-label {
   display: block;
+  margin-bottom: calc(8px / 4);
   color: #a5a5a5;
   font-size: 0.8em;
-  margin-bottom: calc(8px / 4);
 }
 .jodit-ui-input {
   display: -webkit-box;
@@ -1812,15 +1852,15 @@ svg.jodit-icon {
 }
 .jodit-ui-input__error {
   display: block;
+  margin-bottom: calc(8px / 4);
   color: #a5a5a5;
   font-size: 0.8em;
-  margin-bottom: calc(8px / 4);
 }
 .jodit-ui-input__label {
   display: block;
+  margin-bottom: calc(8px / 4);
   color: #a5a5a5;
   font-size: 0.8em;
-  margin-bottom: calc(8px / 4);
 }
 .jodit-ui-input_has-error_true .jodit-ui-input__label {
   color: #ff3b3b;
@@ -1832,15 +1872,15 @@ svg.jodit-icon {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: stretch;
-      -ms-flex-pack: stretch;
-          justify-content: stretch;
+  min-width: 200px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-color: #fff;
+  -webkit-box-pack: stretch;
+      -ms-flex-pack: stretch;
+          justify-content: stretch;
   border: 1px solid #dadada;
-  min-width: 200px;
+  background-color: #fff;
 }
 @media (max-width: 480px) {
   .jodit-ui-input__wrapper {
@@ -1848,21 +1888,21 @@ svg.jodit-icon {
   }
 }
 .jodit-ui-input_theme_dark .jodit-ui-input__wrapper {
-  background-color: #dadada;
   border-color: #dadada;
+  background-color: #dadada;
 }
 .jodit-ui-input_focused_true .jodit-ui-input__wrapper {
   -webkit-box-shadow: 0 0 0 0.05rem rgba(0, 123, 255, 0.25);
           box-shadow: 0 0 0 0.05rem rgba(0, 123, 255, 0.25);
 }
 .jodit-ui-input__icon:not(:empty) {
-  padding: 0 8px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 0 8px;
 }
 .jodit-ui-input__icon:not(:empty) svg {
   width: 16px;
@@ -1873,20 +1913,20 @@ svg.jodit-icon {
   padding-left: 0;
 }
 .jodit-ui-input__clear {
-  padding: 0 8px 0 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 0 8px 0 0;
   opacity: 0.8;
 }
 .jodit-ui-input__clear:active {
+  opacity: 1;
   -webkit-transform: scale(1.1, 1.1);
       -ms-transform: scale(1.1, 1.1);
           transform: scale(1.1, 1.1);
-  opacity: 1;
 }
 .jodit-ui-input__clear svg {
   width: 12px;
@@ -1951,15 +1991,15 @@ svg.jodit-icon {
 }
 .jodit-ui-text-area__error {
   display: block;
+  margin-bottom: calc(8px / 4);
   color: #a5a5a5;
   font-size: 0.8em;
-  margin-bottom: calc(8px / 4);
 }
 .jodit-ui-text-area__label {
   display: block;
+  margin-bottom: calc(8px / 4);
   color: #a5a5a5;
   font-size: 0.8em;
-  margin-bottom: calc(8px / 4);
 }
 .jodit-ui-text-area_has-error_true .jodit-ui-text-area__label {
   color: #ff3b3b;
@@ -1971,15 +2011,15 @@ svg.jodit-icon {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: stretch;
-      -ms-flex-pack: stretch;
-          justify-content: stretch;
+  min-width: 200px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-color: #fff;
+  -webkit-box-pack: stretch;
+      -ms-flex-pack: stretch;
+          justify-content: stretch;
   border: 1px solid #dadada;
-  min-width: 200px;
+  background-color: #fff;
 }
 @media (max-width: 480px) {
   .jodit-ui-text-area__wrapper {
@@ -1987,21 +2027,21 @@ svg.jodit-icon {
   }
 }
 .jodit-ui-text-area_theme_dark .jodit-ui-text-area__wrapper {
-  background-color: #dadada;
   border-color: #dadada;
+  background-color: #dadada;
 }
 .jodit-ui-text-area_focused_true .jodit-ui-text-area__wrapper {
   -webkit-box-shadow: 0 0 0 0.05rem rgba(0, 123, 255, 0.25);
           box-shadow: 0 0 0 0.05rem rgba(0, 123, 255, 0.25);
 }
 .jodit-ui-text-area__icon:not(:empty) {
-  padding: 0 8px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 0 8px;
 }
 .jodit-ui-text-area__icon:not(:empty) svg {
   width: 16px;
@@ -2012,20 +2052,20 @@ svg.jodit-icon {
   padding-left: 0;
 }
 .jodit-ui-text-area__clear {
-  padding: 0 8px 0 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 0 8px 0 0;
   opacity: 0.8;
 }
 .jodit-ui-text-area__clear:active {
+  opacity: 1;
   -webkit-transform: scale(1.1, 1.1);
       -ms-transform: scale(1.1, 1.1);
           transform: scale(1.1, 1.1);
-  opacity: 1;
 }
 .jodit-ui-text-area__clear svg {
   width: 12px;
@@ -2112,15 +2152,15 @@ svg.jodit-icon {
 }
 .jodit-ui-select__error {
   display: block;
+  margin-bottom: calc(8px / 4);
   color: #a5a5a5;
   font-size: 0.8em;
-  margin-bottom: calc(8px / 4);
 }
 .jodit-ui-select__label {
   display: block;
+  margin-bottom: calc(8px / 4);
   color: #a5a5a5;
   font-size: 0.8em;
-  margin-bottom: calc(8px / 4);
 }
 .jodit-ui-select_has-error_true .jodit-ui-select__label {
   color: #ff3b3b;
@@ -2132,15 +2172,15 @@ svg.jodit-icon {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: stretch;
-      -ms-flex-pack: stretch;
-          justify-content: stretch;
+  min-width: 200px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-color: #fff;
+  -webkit-box-pack: stretch;
+      -ms-flex-pack: stretch;
+          justify-content: stretch;
   border: 1px solid #dadada;
-  min-width: 200px;
+  background-color: #fff;
 }
 @media (max-width: 480px) {
   .jodit-ui-select__wrapper {
@@ -2148,21 +2188,21 @@ svg.jodit-icon {
   }
 }
 .jodit-ui-select_theme_dark .jodit-ui-select__wrapper {
-  background-color: #dadada;
   border-color: #dadada;
+  background-color: #dadada;
 }
 .jodit-ui-select_focused_true .jodit-ui-select__wrapper {
   -webkit-box-shadow: 0 0 0 0.05rem rgba(0, 123, 255, 0.25);
           box-shadow: 0 0 0 0.05rem rgba(0, 123, 255, 0.25);
 }
 .jodit-ui-select__icon:not(:empty) {
-  padding: 0 8px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 0 8px;
 }
 .jodit-ui-select__icon:not(:empty) svg {
   width: 16px;
@@ -2173,20 +2213,20 @@ svg.jodit-icon {
   padding-left: 0;
 }
 .jodit-ui-select__clear {
-  padding: 0 8px 0 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 0 8px 0 0;
   opacity: 0.8;
 }
 .jodit-ui-select__clear:active {
+  opacity: 1;
   -webkit-transform: scale(1.1, 1.1);
       -ms-transform: scale(1.1, 1.1);
           transform: scale(1.1, 1.1);
-  opacity: 1;
 }
 .jodit-ui-select__clear svg {
   width: 12px;
@@ -2202,8 +2242,27 @@ svg.jodit-icon {
 .jodit-ui-select__input {
   padding-right: calc(8px * 2);
   background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+);
-  background-repeat: no-repeat;
   background-position: 98% 50%;
+  background-repeat: no-repeat;
+}
+.jodit-ui-select_size_tiny {
+  margin-bottom: 0;
+}
+.jodit-ui-select_size_tiny .jodit-ui-select__input {
+  height: calc(32px / 1.8);
+  line-height: calc(32px / 1.8);
+}
+.jodit-ui-select_variant_outline .jodit-ui-select__wrapper {
+  border: 0;
+}
+.jodit-ui-select_variant_outline .jodit-ui-select__wrapper select {
+  outline: 0;
+}
+.jodit-ui-select_width_auto {
+  width: auto;
+}
+.jodit-ui-select_width_auto .jodit-ui-select__wrapper {
+  min-width: auto;
 }
 
 .jodit-ui-file-input {
@@ -2586,6 +2645,15 @@ svg.jodit-icon {
 .jodit-dialog__header .jodit_toolbar > li.jodit-toolbar-button .jodit-input {
   width: auto;
   padding-left: 8px;
+}
+.jodit-dialog_slim_true .jodit-dialog__header {
+  min-height: 10px;
+}
+.jodit-dialog_slim_true .jodit-dialog__header-toolbar {
+  padding: 0 calc(8px / 4);
+}
+.jodit-dialog_slim_true .jodit-dialog__header-title {
+  padding: 0 calc(8px / 4);
 }
 .jodit-dialog_theme_dark .jodit-dialog__header {
   border-color: #4c4c4c;
@@ -2988,11 +3056,15 @@ svg.jodit-icon {
   height: 14px;
 }
 .jodit-toolbar-button button {
+  min-width: 34px;
+  height: 34px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 34px;
-  height: 34px;
+}
+.jodit-toolbar-button_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-toolbar-button_size_tiny {
   min-width: 16px;
@@ -3003,11 +3075,15 @@ svg.jodit-icon {
   height: 8px;
 }
 .jodit-toolbar-button_size_tiny button {
+  min-width: 16px;
+  height: 16px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 16px;
-  height: 16px;
+}
+.jodit-toolbar-button_size_tiny_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-toolbar-button_size_xsmall {
   min-width: 22px;
@@ -3018,11 +3094,15 @@ svg.jodit-icon {
   height: 10px;
 }
 .jodit-toolbar-button_size_xsmall button {
+  min-width: 22px;
+  height: 22px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 22px;
-  height: 22px;
+}
+.jodit-toolbar-button_size_xsmall_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-toolbar-button_size_small {
   min-width: 28px;
@@ -3033,11 +3113,15 @@ svg.jodit-icon {
   height: 12px;
 }
 .jodit-toolbar-button_size_small button {
+  min-width: 28px;
+  height: 28px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 28px;
-  height: 28px;
+}
+.jodit-toolbar-button_size_small_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-toolbar-button_size_large {
   min-width: 40px;
@@ -3048,11 +3132,15 @@ svg.jodit-icon {
   height: 16px;
 }
 .jodit-toolbar-button_size_large button {
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 40px;
-  height: 40px;
+}
+.jodit-toolbar-button_size_large_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-toolbar-button__button {
   -webkit-appearance: none;
@@ -3242,11 +3330,15 @@ svg.jodit-icon {
   height: 14px;
 }
 .jodit-toolbar-content button {
+  min-width: 34px;
+  height: 34px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 34px;
-  height: 34px;
+}
+.jodit-toolbar-content_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-toolbar-content_size_tiny {
   min-width: 16px;
@@ -3257,11 +3349,15 @@ svg.jodit-icon {
   height: 8px;
 }
 .jodit-toolbar-content_size_tiny button {
+  min-width: 16px;
+  height: 16px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 16px;
-  height: 16px;
+}
+.jodit-toolbar-content_size_tiny_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-toolbar-content_size_xsmall {
   min-width: 22px;
@@ -3272,11 +3368,15 @@ svg.jodit-icon {
   height: 10px;
 }
 .jodit-toolbar-content_size_xsmall button {
+  min-width: 22px;
+  height: 22px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 22px;
-  height: 22px;
+}
+.jodit-toolbar-content_size_xsmall_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-toolbar-content_size_small {
   min-width: 28px;
@@ -3287,11 +3387,15 @@ svg.jodit-icon {
   height: 12px;
 }
 .jodit-toolbar-content_size_small button {
+  min-width: 28px;
+  height: 28px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 28px;
-  height: 28px;
+}
+.jodit-toolbar-content_size_small_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-toolbar-content_size_large {
   min-width: 40px;
@@ -3302,11 +3406,15 @@ svg.jodit-icon {
   height: 16px;
 }
 .jodit-toolbar-content_size_large button {
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  min-width: 40px;
-  height: 40px;
+}
+.jodit-toolbar-content_size_large_text-icons_true button {
+  padding: 0 8px;
 }
 .jodit-toolbar-content__icon {
   display: none;

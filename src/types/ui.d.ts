@@ -126,7 +126,7 @@ export interface IUIInput extends IUIElement {
 		icon: string;
 		label: string;
 		ref: string;
-		type: 'text' | 'checkbox' | 'url' | 'file';
+		type: 'text' | 'checkbox' | 'url' | 'file' | 'hidden';
 		placeholder: string;
 		required: boolean;
 		validators: string[];
@@ -158,5 +158,12 @@ export interface IUISelect extends IUIInput {
 		options: IUIOption[];
 		size?: number;
 		multiple?: boolean;
+	};
+}
+
+export interface IUIRange extends IUIInput {
+	readonly state: IUIInput['state'] & {
+		min: number;
+		max: number;
 	};
 }

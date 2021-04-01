@@ -251,7 +251,7 @@ export class Dom {
 		withAttributes = false,
 		notMoveContent = false
 	): HTMLElement {
-		const tag = isString(newTagName)
+		const tag = (isString(newTagName))
 			? create.element(newTagName)
 			: newTagName;
 
