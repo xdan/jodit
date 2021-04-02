@@ -1434,6 +1434,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		if (this.o.spellcheck) {
 			this.editor.setAttribute('spellcheck', 'true');
+		} else {
+			this.editor.setAttribute('spellcheck', 'false');
 		}
 
 		// direction
