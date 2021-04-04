@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.7
+ * Version: v3.6.8
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -1618,6 +1618,9 @@ var Jodit = (function (_super) {
         var editor = this.editor;
         if (this.o.spellcheck) {
             this.editor.setAttribute('spellcheck', 'true');
+        }
+        else {
+            this.editor.setAttribute('spellcheck', 'false');
         }
         if (this.o.direction) {
             var direction = this.o.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
@@ -10769,7 +10772,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.6.7";
+        _this.version = "3.6.8";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -10911,10 +10914,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.6.7";
+        return "3.6.8";
     };
     View.getVersion = function () {
-        return "3.6.7";
+        return "3.6.8";
     };
     View.prototype.initOptions = function (options) {
         this.options = helpers_1.ConfigProto(options || {}, helpers_1.ConfigProto(this.options || {}, View.defaultOptions));

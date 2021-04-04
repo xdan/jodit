@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.7
+ * Version: v3.6.8
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -9011,7 +9011,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.6.7";
+        this.version = "3.6.8";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -9109,10 +9109,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.6.7";
+        return "3.6.8";
     }
     static getVersion() {
-        return "3.6.7";
+        return "3.6.8";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -15975,6 +15975,9 @@ class Jodit extends ViewWithToolbar {
         const { editor } = this;
         if (this.o.spellcheck) {
             this.editor.setAttribute('spellcheck', 'true');
+        }
+        else {
+            this.editor.setAttribute('spellcheck', 'false');
         }
         if (this.o.direction) {
             const direction = this.o.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
