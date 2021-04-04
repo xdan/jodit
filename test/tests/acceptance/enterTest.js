@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Enter behavior Jodit Editor Tests', function() {
-	describe('Enter key', function() {
-		describe('Enter BR', function() {
-			it('Should simple insert BR element', function() {
+describe('Enter behavior Jodit Editor Tests', function () {
+	describe('Enter key', function () {
+		describe('Enter BR', function () {
+			it('Should simple insert BR element', function () {
 				const editor = getJodit({
 					enter: 'br'
 				});
@@ -21,8 +21,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('If Enter was pressed in not wrapped text in the end, it text ', function() {
-			it('should be wrap in paragraph and cursor should be in next new paragraph', function() {
+		describe('If Enter was pressed in not wrapped text in the end, it text ', function () {
+			it('should be wrap in paragraph and cursor should be in next new paragraph', function () {
 				const editor = getJodit();
 				editor.value = 'Some text';
 
@@ -41,8 +41,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				expect(editor.value).equals('<p>Some text</p><p> a <br></p>');
 			});
 
-			describe('Inside BODY for iframe and editHTMLDocumentMode', function() {
-				it('should work like in usual case', function() {
+			describe('Inside BODY for iframe and editHTMLDocumentMode', function () {
+				it('should work like in usual case', function () {
 					const editor = getJodit({
 						editHTMLDocumentMode: true,
 						iframe: true,
@@ -74,8 +74,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('If Enter was pressed in the end of SPAN inside P', function() {
-			it('should simple create P>SPAN and move cursor inside this', function() {
+		describe('If Enter was pressed in the end of SPAN inside P', function () {
+			it('should simple create P>SPAN and move cursor inside this', function () {
 				const editor = getJodit();
 				editor.value =
 					'<p>Some <span style="color: red">text</span></p>';
@@ -98,8 +98,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('If Enter was pressed in the end of STRONG inside P', function() {
-			it('should simple create P>STRONG and move cursor inside this', function() {
+		describe('If Enter was pressed in the end of STRONG inside P', function () {
+			it('should simple create P>STRONG and move cursor inside this', function () {
 				const editor = getJodit();
 				editor.value = '<p>Some <strong>text</strong></p>';
 
@@ -121,8 +121,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('If Enter was pressed inside text without wrapper and near were some another elements', function() {
-			it('should split that wrapper', function() {
+		describe('If Enter was pressed inside text without wrapper and near were some another elements', function () {
+			it('should split that wrapper', function () {
 				const editor = getJodit();
 				editor.value =
 					'as<span style="color: rgb(147, 101, 184);">da</span>s';
@@ -147,8 +147,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('If Enter was pressed inside H1-6 that', function() {
-			it('should be spliced on two', function() {
+		describe('If Enter was pressed inside H1-6 that', function () {
+			it('should be spliced on two', function () {
 				const editor = getJodit();
 				editor.value = '<h1>Some text</h1>';
 
@@ -168,8 +168,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('If Enter was pressed inside H1-6 cursor ', function() {
-			it('should be move in new paragraph below', function() {
+		describe('If Enter was pressed inside H1-6 cursor ', function () {
+			it('should be move in new paragraph below', function () {
 				const editor = getJodit();
 				editor.value = '<h1>Some text</h1>';
 
@@ -189,13 +189,13 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('If Enter was pressed', function() {
-			describe('Prevent plugin work', function() {
-				it('Should prevent plugin work', function() {
+		describe('If Enter was pressed', function () {
+			describe('Prevent plugin work', function () {
+				it('Should prevent plugin work', function () {
 					const editor = getJodit({
 						enter: 'BR',
 						events: {
-							beforeEnter: function() {
+							beforeEnter: function () {
 								return false;
 							}
 						}
@@ -209,8 +209,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				});
 			});
 
-			describe('in not wrapped text in the start', function() {
-				it('should wrap this text in paragraph and cursor should be in that, and before should be empty new paragraph', function() {
+			describe('in not wrapped text in the start', function () {
+				it('should wrap this text in paragraph and cursor should be in that, and before should be empty new paragraph', function () {
 					const editor = getJodit();
 					editor.value = 'Some text';
 
@@ -233,8 +233,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('If Enter was pressed inside empty editor', function() {
-			it('should be added 2 paragraph and cursor must be in second', function() {
+		describe('If Enter was pressed inside empty editor', function () {
+			it('should be added 2 paragraph and cursor must be in second', function () {
 				const editor = getJodit();
 
 				editor.value = ''; // empty
@@ -248,8 +248,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('If Enter was pressed in no wrapped text, it text ', function() {
-			it('should be wrap in paragraph and spliced on two parts', function() {
+		describe('If Enter was pressed in no wrapped text, it text ', function () {
+			it('should be wrap in paragraph and spliced on two parts', function () {
 				const editor = getJodit();
 				editor.value = 'Some text';
 
@@ -269,8 +269,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Content editor after pressing the Enter key', function() {
-			it('Should contain the specified tag settings', function() {
+		describe('Content editor after pressing the Enter key', function () {
+			it('Should contain the specified tag settings', function () {
 				const editor = getJodit();
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
@@ -280,8 +280,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				);
 			});
 
-			describe('after this', function() {
-				it('Should contain the specified tag settings and after this cursor must be inside that tag', function() {
+			describe('after this', function () {
+				it('Should contain the specified tag settings and after this cursor must be inside that tag', function () {
 					const editor = getJodit();
 					editor.value = '';
 					editor.s.focus();
@@ -302,9 +302,9 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Enter pressed inside P element', function() {
-			describe('In the middle of element', function() {
-				it('Should split paragraph', function() {
+		describe('Enter pressed inside P element', function () {
+			describe('In the middle of element', function () {
+				it('Should split paragraph', function () {
 					const editor = getJodit();
 
 					const p = editor.ed.createElement('p'),
@@ -328,7 +328,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 						'<p>Split </p><p>a paragraph</p>'
 					);
 				});
-				it('Should create new paragraph with same styles like as original', function() {
+				it('Should create new paragraph with same styles like as original', function () {
 					const editor = getJodit();
 
 					const p = editor.ed.createElement('p'),
@@ -355,9 +355,9 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					);
 				});
 			});
-			describe('Enter pressed inside P element in the edge', function() {
-				describe('If cursor in the right edge of paragraph after enter', function() {
-					it('should move  cursor in another new paragraph', function() {
+			describe('Enter pressed inside P element in the edge', function () {
+				describe('If cursor in the right edge of paragraph after enter', function () {
+					it('should move  cursor in another new paragraph', function () {
 						const editor = getJodit();
 
 						const p = editor.ed.createElement('p'),
@@ -384,8 +384,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 						);
 					});
 				});
-				describe('If cursor in the left edge of paragraph after enter', function() {
-					it('should move cursor in another new paragraph before old place', function() {
+				describe('If cursor in the left edge of paragraph after enter', function () {
+					it('should move cursor in another new paragraph before old place', function () {
 						const editor = getJodit();
 
 						const p = editor.ed.createElement('p'),
@@ -417,8 +417,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 						);
 					});
 				});
-				describe('Copys styles', function() {
-					it('should move  cursor in new paragraph an copy all styles from old', function() {
+				describe('Copys styles', function () {
+					it('should move  cursor in new paragraph an copy all styles from old', function () {
 						const editor = getJodit();
 
 						const p = editor.ed.createElement('p'),
@@ -451,8 +451,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('with table', function() {
-			it('If cursor in TD tag', function() {
+		describe('with table', function () {
+			it('If cursor in TD tag', function () {
 				const editor = getJodit();
 
 				editor.value = '<table><tr><td>text</td></tr></table>';
@@ -495,7 +495,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				);
 			});
 
-			it('If cursor in right side of table', function() {
+			it('If cursor in right side of table', function () {
 				const editor = getJodit();
 
 				editor.value = '<table><tr><td>test</td></tr></table>';
@@ -517,8 +517,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('with SHIFT button', function() {
-			it('should insert <br> tag and move cursor after it.', function() {
+		describe('with SHIFT button', function () {
+			it('should insert <br> tag and move cursor after it.', function () {
 				const editor = getJodit();
 
 				editor.value = 'test';
@@ -535,7 +535,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					'keydown',
 					Jodit.KEY_ENTER,
 					editor.editor,
-					function(options) {
+					function (options) {
 						options.shiftKey = true;
 					}
 				);
@@ -548,7 +548,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					'keydown',
 					Jodit.KEY_ENTER,
 					editor.editor,
-					function(options) {
+					function (options) {
 						options.shiftKey = true;
 					}
 				);
@@ -557,8 +557,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('In PRE or BLOCKQUOTE tag', function() {
-			it('Should add <br> element', function() {
+		describe('In PRE or BLOCKQUOTE tag', function () {
+			it('Should add <br> element', function () {
 				const editor = getJodit();
 
 				editor.value = '<pre>test</pre>';
@@ -572,9 +572,9 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				);
 			});
 
-			describe('with SHIFT button', function() {
-				describe('In the end', function() {
-					it('should add new P element after PRE', function() {
+			describe('with SHIFT button', function () {
+				describe('In the end', function () {
+					it('should add new P element after PRE', function () {
 						const editor = getJodit();
 
 						editor.value = '<pre>test</pre>';
@@ -587,7 +587,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							'keydown',
 							Jodit.KEY_ENTER,
 							editor.editor,
-							function(options) {
+							function (options) {
 								options.shiftKey = true;
 							}
 						);
@@ -600,8 +600,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					});
 				});
 
-				describe('In the start', function() {
-					it('should add new P element before blockquote', function() {
+				describe('In the start', function () {
+					it('should add new P element before blockquote', function () {
 						const editor = getJodit();
 
 						editor.value = '<blockquote>test</blockquote>';
@@ -614,7 +614,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							'keydown',
 							Jodit.KEY_ENTER,
 							editor.editor,
-							function(options) {
+							function (options) {
 								options.shiftKey = true;
 							}
 						);
@@ -627,8 +627,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					});
 				});
 
-				describe('In the middle', function() {
-					it('should split PRE element', function() {
+				describe('In the middle', function () {
+					it('should split PRE element', function () {
 						const editor = getJodit();
 
 						editor.value = '<pre>test</pre>';
@@ -641,7 +641,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 							'keydown',
 							Jodit.KEY_ENTER,
 							editor.editor,
-							function(options) {
+							function (options) {
 								options.shiftKey = true;
 							}
 						);
@@ -656,10 +656,10 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Inside UL tag', function() {
-			describe('enter mode = br', function() {
-				describe('Inside LI tag in the end', function() {
-					it('Should work like usual and add new LI element', function() {
+		describe('Inside UL tag', function () {
+			describe('enter mode = br', function () {
+				describe('Inside LI tag in the end', function () {
+					it('Should work like usual and add new LI element', function () {
 						const editor = getJodit({
 							enter: 'BR'
 						});
@@ -685,8 +685,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					});
 				});
 
-				describe('Inside empty LI tag', function() {
-					it('Should work like usual and add insert new br after UL', function() {
+				describe('Inside empty LI tag', function () {
+					it('Should work like usual and add insert new br after UL', function () {
 						const editor = getJodit({
 							enter: 'BR'
 						});
@@ -711,8 +711,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				});
 			});
 
-			describe('In LI tag inside table cell', function() {
-				it('Should work like usual', function() {
+			describe('In LI tag inside table cell', function () {
+				it('Should work like usual', function () {
 					const editor = getJodit();
 
 					editor.value =
@@ -750,9 +750,9 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				});
 			});
 
-			describe('In last LI tag', function() {
-				describe('In tag was only one Image element but cursor was before it', function() {
-					it('Should not add new P element and move image there', function() {
+			describe('In last LI tag', function () {
+				describe('In tag was only one Image element but cursor was before it', function () {
+					it('Should not add new P element and move image there', function () {
 						const editor = getJodit();
 
 						editor.value =
@@ -784,8 +784,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				});
 			});
 
-			describe('If Enter was pressed inside first empty LI and it was alone LI in UL', function() {
-				it('should be remove LI and UL and cursor must b inside new P', function() {
+			describe('If Enter was pressed inside first empty LI and it was alone LI in UL', function () {
+				it('should be remove LI and UL and cursor must b inside new P', function () {
 					const editor = getJodit();
 					editor.value = '<ul><li> </li></ul>';
 
@@ -805,13 +805,12 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				});
 			});
 
-			describe('If Enter was pressed inside empty LI', function() {
-				it('should be removed and cursor must be after UL|OL', function() {
+			describe('If Enter was pressed inside empty LI', function () {
+				it('should be removed and cursor must be after UL|OL', function () {
 					const editor = getJodit();
 					editor.value = '<ul><li>Some text</li><li> </li></ul>';
 
-					const
-						range = editor.s.createRange(true);
+					const range = editor.s.createRange(true);
 
 					range.setStart(
 						editor.editor.firstChild.lastChild.firstChild,
@@ -829,8 +828,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				});
 			});
 
-			describe('If Enter was pressed inside empty middle LI', function() {
-				it('should split parent UL, remove LI, insert new P in the middle of two new Ul and insert cursor inside this', function() {
+			describe('If Enter was pressed inside empty middle LI', function () {
+				it('should split parent UL, remove LI, insert new P in the middle of two new Ul and insert cursor inside this', function () {
 					const editor = getJodit();
 					editor.value =
 						'<ul><li>Test</li><li> </li><li>Some text</li></ul>';
@@ -853,38 +852,45 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				});
 			});
 
-			describe('Inside not empty LI', function() {
-				describe('In the middle of LI', function() {
-					it('should split LI on two parts', function() {
+			describe('Inside not empty LI', function () {
+				describe('In the middle of LI', function () {
+					it('should split LI on two parts', function () {
 						const editor = getJodit();
 						editor.value =
 							'<ul>\n' +
-								'\t<li>first</li>\n' +
-								'\t<li>second</li>\n' +
-								'\t<li>third</li>\n' +
+							'\t<li>first</li>\n' +
+							'\t<li>second</li>\n' +
+							'\t<li>third</li>\n' +
 							'</ul>';
 
 						const range = editor.s.createRange(true);
 
-						range.setStart(editor.editor.querySelectorAll('li')[1].firstChild, 3);
+						range.setStart(
+							editor.editor.querySelectorAll('li')[1].firstChild,
+							3
+						);
 						range.collapse(true);
 
-						simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_ENTER,
+							editor.editor
+						);
 
 						editor.s.insertNode(editor.createInside.text(' a '));
 
 						expect(editor.value).equals(
 							'<ul>\n' +
-							'\t<li>first</li>\n' +
-							'\t<li>sec</li>' +
-							'<li> a ond</li>\n' +
-							'\t<li>third</li>\n' +
-							'</ul>'
+								'\t<li>first</li>\n' +
+								'\t<li>sec</li>' +
+								'<li> a ond</li>\n' +
+								'\t<li>third</li>\n' +
+								'</ul>'
 						);
 					});
 
 					describe('With Shift', function () {
-						it('should only add new BR', function() {
+						it('should only add new BR', function () {
 							const editor = getJodit();
 							editor.value =
 								'<ul>\n' +
@@ -895,29 +901,40 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 							const range = editor.s.createRange(true);
 
-							range.setStart(editor.editor.querySelectorAll('li')[1].firstChild, 3);
+							range.setStart(
+								editor.editor.querySelectorAll('li')[1]
+									.firstChild,
+								3
+							);
 							range.collapse(true);
 
-							simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor, function (options) {
-								options.shiftKey = true;
-							});
+							simulateEvent(
+								'keydown',
+								Jodit.KEY_ENTER,
+								editor.editor,
+								function (options) {
+									options.shiftKey = true;
+								}
+							);
 
-							editor.s.insertNode(editor.createInside.text(' a '));
+							editor.s.insertNode(
+								editor.createInside.text(' a ')
+							);
 
 							expect(editor.value).equals(
 								'<ul>\n' +
-								'\t<li>first</li>\n' +
-								'\t<li>sec<br> a ond</li>\n' +
-								'\t<li>third</li>\n' +
-								'</ul>'
+									'\t<li>first</li>\n' +
+									'\t<li>sec<br> a ond</li>\n' +
+									'\t<li>third</li>\n' +
+									'</ul>'
 							);
 						});
 					});
 				});
 			});
 
-			describe('If Enter was pressed inside start of first(not empty) LI', function() {
-				it('should add empty LI and cursor should not move', function() {
+			describe('If Enter was pressed inside start of first(not empty) LI', function () {
+				it('should add empty LI and cursor should not move', function () {
 					const editor = getJodit();
 					editor.value = '<ul><li>Some text</li></ul>';
 
@@ -942,8 +959,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				});
 			});
 
-			describe('If Enter was pressed inside start of first empty LI', function() {
-				it('should remove this LI, and insert new P element before parent UL, cursor should move to inside it', function() {
+			describe('If Enter was pressed inside start of first empty LI', function () {
+				it('should remove this LI, and insert new P element before parent UL, cursor should move to inside it', function () {
 					const editor = getJodit();
 					editor.value = '<ul><li> </li><li>Some text</li></ul>';
 
@@ -965,8 +982,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				});
 			});
 
-			describe('Enter was pressed inside P inside LI', function() {
-				it('should add new LI with P and set cursor inside it', function() {
+			describe('Enter was pressed inside P inside LI', function () {
+				it('should add new LI with P and set cursor inside it', function () {
 					const editor = getJodit();
 					editor.value =
 						'<ul>' +
@@ -997,9 +1014,9 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Use BR instead P', function() {
-			describe('Enter 3 times', function() {
-				it('should create 3 BR elements and set cursor after these', function() {
+		describe('Use BR instead P', function () {
+			describe('Enter 3 times', function () {
+				it('should create 3 BR elements and set cursor after these', function () {
 					const editor = getJodit({
 						enter: Jodit.BR
 					});
@@ -1024,8 +1041,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 			});
 		});
 
-		describe('Press Enter inside SPAN with some color', function() {
-			it('Should add new P(with SPAN with same style) element after this span and this SPAN should wrap in P', function() {
+		describe('Press Enter inside SPAN with some color', function () {
+			it('Should add new P(with SPAN with same style) element after this span and this SPAN should wrap in P', function () {
 				const editor = getJodit();
 
 				editor.value = '<span style="color:red">test</span>';
@@ -1043,8 +1060,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				);
 			});
 
-			describe('Enter two times', function() {
-				it('Should add 2 P', function() {
+			describe('Enter two times', function () {
+				it('Should add 2 P', function () {
 					const editor = getJodit();
 
 					editor.value = '<p><span style="color:red">test</span></p>';
@@ -1061,8 +1078,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					expect(sortAttributes(editor.value)).equals(
 						'<p><span style="color:red">test</span></p>' +
-						'<p><span style="color:red"><br></span></p>' +
-						'<p><span style="color:red">test<br></span></p>'
+							'<p><span style="color:red"><br></span></p>' +
+							'<p><span style="color:red">test<br></span></p>'
 					);
 				});
 			});

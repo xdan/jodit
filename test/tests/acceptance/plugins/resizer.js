@@ -78,21 +78,27 @@ describe('Resize plugin', function () {
 					0,
 					resizer.getElementsByTagName('i')[0]
 				);
-				simulateEvent('mousemove', 0, editor.ownerWindow, function (
-					data
-				) {
-					data.clientX = positionResizer.left - 10;
-					data.clientY = positionResizer.top - 10;
-				});
+				simulateEvent(
+					'mousemove',
+					0,
+					editor.ownerWindow,
+					function (data) {
+						data.clientX = positionResizer.left - 10;
+						data.clientY = positionResizer.top - 10;
+					}
+				);
 				//
 				expect(popup.parentNode).is.null;
 
-				simulateEvent('mouseup', 0, editor.ownerWindow, function (
-					data
-				) {
-					data.clientX = positionResizer.left - 10;
-					data.clientY = positionResizer.top - 10;
-				});
+				simulateEvent(
+					'mouseup',
+					0,
+					editor.ownerWindow,
+					function (data) {
+						data.clientX = positionResizer.left - 10;
+						data.clientY = positionResizer.top - 10;
+					}
+				);
 
 				expect(popup.parentNode).is.null;
 				//
@@ -141,19 +147,25 @@ describe('Resize plugin', function () {
 						resizer.getElementsByTagName('i')[1]
 					);
 
-					simulateEvent('mousemove', 0, editor.ownerWindow, function (
-						data
-					) {
-						data.clientX = positionResizer.left + 10;
-						data.clientY = positionResizer.top + 10;
-					});
+					simulateEvent(
+						'mousemove',
+						0,
+						editor.ownerWindow,
+						function (data) {
+							data.clientX = positionResizer.left + 10;
+							data.clientY = positionResizer.top + 10;
+						}
+					);
 
-					simulateEvent('mouseup', 0, editor.ownerWindow, function (
-						data
-					) {
-						data.clientX = positionResizer.left + 10;
-						data.clientY = positionResizer.top + 10;
-					});
+					simulateEvent(
+						'mouseup',
+						0,
+						editor.ownerWindow,
+						function (data) {
+							data.clientX = positionResizer.left + 10;
+							data.clientY = positionResizer.top + 10;
+						}
+					);
 
 					expect(sizer.style.opacity).equals('1');
 
@@ -211,12 +223,14 @@ describe('Resize plugin', function () {
 							}
 						);
 
-						simulateEvent('mouseup', editor.ownerWindow, function (
-							data
-						) {
-							data.clientX = positionResizer.left - 480;
-							data.clientY = positionResizer.top - 200;
-						});
+						simulateEvent(
+							'mouseup',
+							editor.ownerWindow,
+							function (data) {
+								data.clientX = positionResizer.left - 480;
+								data.clientY = positionResizer.top - 200;
+							}
+						);
 
 						expect(sizer.style.opacity).equals('0');
 					});
@@ -249,19 +263,25 @@ describe('Resize plugin', function () {
 						0,
 						resizer.getElementsByTagName('i')[1]
 					);
-					simulateEvent('mousemove', 0, editor.ownerWindow, function (
-						data
-					) {
-						data.clientX = positionResizer.left + 1000;
-						data.clientY = positionResizer.top + 1000;
-					});
+					simulateEvent(
+						'mousemove',
+						0,
+						editor.ownerWindow,
+						function (data) {
+							data.clientX = positionResizer.left + 1000;
+							data.clientY = positionResizer.top + 1000;
+						}
+					);
 
-					simulateEvent('mouseup', 0, editor.ownerWindow, function (
-						data
-					) {
-						data.clientX = positionResizer.left + 1000;
-						data.clientY = positionResizer.top + 1000;
-					});
+					simulateEvent(
+						'mouseup',
+						0,
+						editor.ownerWindow,
+						function (data) {
+							data.clientX = positionResizer.left + 1000;
+							data.clientY = positionResizer.top + 1000;
+						}
+					);
 					const newratio = img.offsetWidth / img.offsetHeight;
 
 					expect(img.offsetWidth).equals(
@@ -300,7 +320,9 @@ describe('Resize plugin', function () {
 				expect(editor.editor.querySelectorAll('jodit').length).equals(
 					2
 				);
-				expect(sortAttributes(editor.value)).equals('<iframe frameborder="0" height="500" src="https://www.google.com/maps/embed" style="border:0px currentColor" width="100%"></iframe><iframe frameborder="0" height="500" src="https://www.google.com/maps/embed" style="border:0px currentColor" width="100%"></iframe>');
+				expect(sortAttributes(editor.value)).equals(
+					'<iframe frameborder="0" height="500" src="https://www.google.com/maps/embed" style="border:0px currentColor" width="100%"></iframe><iframe frameborder="0" height="500" src="https://www.google.com/maps/embed" style="border:0px currentColor" width="100%"></iframe>'
+				);
 			});
 		});
 	});

@@ -3,8 +3,8 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Test editor size plugin', function() {
-	it('should show resize handler in right-bottom corner and allow resize editor by vertical', function() {
+describe('Test editor size plugin', function () {
+	it('should show resize handler in right-bottom corner and allow resize editor by vertical', function () {
 		const editor = getJodit({
 			height: 300,
 			iframe: true
@@ -15,9 +15,9 @@ describe('Test editor size plugin', function() {
 		).equals(1);
 	});
 
-	describe('Sizes', function() {
-		describe('Set calc expression as height', function() {
-			it('Should set editor height by option', function() {
+	describe('Sizes', function () {
+		describe('Set calc expression as height', function () {
+			it('Should set editor height by option', function () {
 				getBox().style.height = '400px';
 
 				const editor = getJodit({
@@ -29,8 +29,8 @@ describe('Test editor size plugin', function() {
 			});
 		});
 
-		describe('Set fixed height', function() {
-			it('Should set editor height by option', function() {
+		describe('Set fixed height', function () {
+			it('Should set editor height by option', function () {
 				const area = appendTestArea();
 				const editor = new Jodit(area, {
 					height: 300
@@ -41,7 +41,7 @@ describe('Test editor size plugin', function() {
 				expect(editor.container.offsetHeight).equals(300);
 			});
 
-			it('Should set editor height by option for iframe', function() {
+			it('Should set editor height by option for iframe', function () {
 				const editor = getJodit({
 					height: 300,
 					iframe: true
@@ -51,7 +51,7 @@ describe('Test editor size plugin', function() {
 				expect(editor.container.offsetHeight).equals(300);
 			});
 
-			it('Should not change size by content after window was resized', function() {
+			it('Should not change size by content after window was resized', function () {
 				const editor = getJodit({
 					height: 300
 				});
@@ -63,8 +63,8 @@ describe('Test editor size plugin', function() {
 				expect(editor.container.offsetHeight).equals(300);
 			});
 
-			describe('Fullsize mode', function() {
-				it("Should set heights of workplace to 100% - toolbar's height", function() {
+			describe('Fullsize mode', function () {
+				it("Should set heights of workplace to 100% - toolbar's height", function () {
 					const editor = getJodit({
 						fullsize: true
 					});
@@ -72,7 +72,7 @@ describe('Test editor size plugin', function() {
 					expect(editor.workplace.offsetHeight).to.be.above(300);
 				});
 
-				it('Should restore size after fullsized mode', function() {
+				it('Should restore size after fullsized mode', function () {
 					const editor = getJodit({
 						height: 300
 					});
@@ -88,7 +88,7 @@ describe('Test editor size plugin', function() {
 					expect(editor.container.offsetWidth).to.be.above(300);
 				});
 
-				it('Should hide resizer', function() {
+				it('Should hide resizer', function () {
 					const editor = getJodit({
 						height: 300,
 						iframe: true
@@ -105,7 +105,7 @@ describe('Test editor size plugin', function() {
 					).equals('none');
 				});
 
-				it('Should change the icon in toolbar', function() {
+				it('Should change the icon in toolbar', function () {
 					const editor = getJodit();
 					const button = getButton('fullsize', editor);
 					expect(button).is.not.null;
@@ -125,8 +125,8 @@ describe('Test editor size plugin', function() {
 					);
 				});
 
-				describe('For text icons', function() {
-					it('Should change the text in toolbar', function() {
+				describe('For text icons', function () {
+					it('Should change the text in toolbar', function () {
 						const editor = getJodit({
 							textIcons: true
 						});
@@ -147,7 +147,7 @@ describe('Test editor size plugin', function() {
 				});
 			});
 
-			it('Should not change size by content after window was resized', function() {
+			it('Should not change size by content after window was resized', function () {
 				const editor = getJodit({
 					height: 300
 				});
@@ -160,15 +160,15 @@ describe('Test editor size plugin', function() {
 			});
 		});
 
-		describe('Autosize', function() {
-			it('Should set editor height by content', function() {
+		describe('Autosize', function () {
+			it('Should set editor height by content', function () {
 				const editor = getJodit();
 				editor.value = '<p>test</p>'.repeat(100);
 				expect(editor.container.offsetHeight).to.be.above(1000);
 			});
 
-			describe('Max height', function() {
-				it('Should set limited height', function() {
+			describe('Max height', function () {
+				it('Should set limited height', function () {
 					const editor = getJodit({
 						maxHeight: 500
 					});
@@ -176,13 +176,12 @@ describe('Test editor size plugin', function() {
 					editor.value = '<p>test</p>'.repeat(1);
 					expect(editor.container.offsetHeight).equals(200);
 
-
 					editor.value = '<p>test</p>'.repeat(100);
 					expect(editor.container.offsetHeight).equals(500);
 				});
 			});
 
-			it('Should set editor height by content in iframe mode', function() {
+			it('Should set editor height by content in iframe mode', function () {
 				const editor = getJodit({
 					iframe: true
 				});
@@ -192,9 +191,9 @@ describe('Test editor size plugin', function() {
 		});
 	});
 
-	describe('Disable auto-height', function() {
-		describe('Resize handle', function() {
-			it('Should resize editor', function() {
+	describe('Disable auto-height', function () {
+		describe('Resize handle', function () {
+			it('Should resize editor', function () {
 				const box = getBox();
 				box.style.width = 'auto';
 				box.style.height = 'auto';
@@ -211,11 +210,11 @@ describe('Test editor size plugin', function() {
 					'.jodit-editor__resize'
 				);
 
-				simulateEvent('mousedown', 0, handle, function(options) {
+				simulateEvent('mousedown', 0, handle, function (options) {
 					options.clientX = 100;
 					options.clientY = 100;
 				});
-				simulateEvent('mousemove', 0, window, function(options) {
+				simulateEvent('mousemove', 0, window, function (options) {
 					options.clientX = 200;
 					options.clientY = 200;
 				});
@@ -225,8 +224,8 @@ describe('Test editor size plugin', function() {
 				expect(editor.container.offsetWidth).equals(500);
 			});
 
-			describe('Disable X resizing', function() {
-				it('Should resize editor only by vertical', function() {
+			describe('Disable X resizing', function () {
+				it('Should resize editor only by vertical', function () {
 					getBox().style.width = 'auto';
 					getBox().style.height = 'auto';
 
@@ -244,12 +243,12 @@ describe('Test editor size plugin', function() {
 					expect(editor.container.offsetHeight).equals(300);
 					expect(editor.container.offsetWidth).equals(400);
 
-					simulateEvent('mousedown', 0, handle, function(options) {
+					simulateEvent('mousedown', 0, handle, function (options) {
 						options.clientX = 100;
 						options.clientY = 100;
 					});
 
-					simulateEvent('mousemove', 0, window, function(options) {
+					simulateEvent('mousemove', 0, window, function (options) {
 						options.clientX = 200;
 						options.clientY = 200;
 					});
@@ -261,10 +260,10 @@ describe('Test editor size plugin', function() {
 			});
 		});
 
-		describe('Change box size', function() {
-			describe('Auto width mode', function() {
-				describe('Change box width', function() {
-					it('should set fixed height but width must be auto', function() {
+		describe('Change box size', function () {
+			describe('Auto width mode', function () {
+				describe('Change box width', function () {
+					it('should set fixed height but width must be auto', function () {
 						const box = getBox();
 						const editor = getJodit({
 							height: 300
@@ -278,19 +277,25 @@ describe('Test editor size plugin', function() {
 
 						expect(editor.container.offsetHeight).equals(300);
 
-						simulateEvent('mousedown', 0, handle, function(
-							options
-						) {
-							options.clientX = 100;
-							options.clientY = 100;
-						});
+						simulateEvent(
+							'mousedown',
+							0,
+							handle,
+							function (options) {
+								options.clientX = 100;
+								options.clientY = 100;
+							}
+						);
 
-						simulateEvent('mousemove', 0, window, function(
-							options
-						) {
-							options.clientX = 200;
-							options.clientY = 200;
-						});
+						simulateEvent(
+							'mousemove',
+							0,
+							window,
+							function (options) {
+								options.clientX = 200;
+								options.clientY = 200;
+							}
+						);
 
 						simulateEvent('mouseup', 0, window);
 

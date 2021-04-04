@@ -447,10 +447,6 @@ describe('Test image', function () {
 						)[1]
 					);
 
-					const tab = dialog.querySelector(
-						'.jodit-tab.jodit-tab_active'
-					);
-
 					const {
 						marginBottom,
 						marginTop,
@@ -464,30 +460,15 @@ describe('Test image', function () {
 					simulateEvent('click', lockMargin);
 					expect(lockMargin.innerHTML).does.not.equal(lockerimg);
 
-					expect(
-						marginTop
-							.value.toString()
-					).equals('10');
+					expect(marginTop.value.toString()).equals('10');
 
-					expect(
-						marginBottom
-							.value.toString()
-					).equals('10');
+					expect(marginBottom.value.toString()).equals('10');
 
-					expect(
-						marginLeft
-							.value.toString()
-					).equals('10');
+					expect(marginLeft.value.toString()).equals('10');
 
-					expect(
-						marginRight
-							.value.toString()
-					).equals('10');
+					expect(marginRight.value.toString()).equals('10');
 
-					expect(
-						marginBottom
-							.hasAttribute('disabled')
-					).is.false;
+					expect(marginBottom.hasAttribute('disabled')).is.false;
 
 					marginTop.value = 100;
 					marginBottom.value = 10;

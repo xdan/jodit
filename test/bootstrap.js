@@ -3,6 +3,9 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
+/* eslint no-unused-vars: 0 */
+
 typeof window.chai !== 'undefined' &&
 	(function () {
 		chai.config.includeStack = true;
@@ -181,7 +184,10 @@ function mockAjax() {
 										baseurl:
 											'https://xdsoft.net/jodit/files/',
 										path: '',
-										folders: path === '' ? ['.', folderName, 'test'] : []
+										folders:
+											path === ''
+												? ['.', folderName, 'test']
+												: []
 									}
 								],
 								code: 220

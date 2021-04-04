@@ -3,13 +3,13 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Test popup', function() {
+describe('Test popup', function () {
 	const position = Jodit.modules.Helpers.position;
 
 	let textBox;
 	const elms = [];
 
-	beforeEach(function() {
+	beforeEach(function () {
 		textBox = document.createElement('div');
 		Object.assign(textBox.style, {
 			position: 'fixed',
@@ -46,20 +46,30 @@ describe('Test popup', function() {
 		}
 	});
 
-	afterEach(function() {
+	afterEach(function () {
 		textBox && textBox.remove();
 		elms.length = 0;
 	});
 
 	const aliases = {
-		leftTop: function ()  { return elms[0]},
-		rightTop: function ()  { return elms[3]},
-		leftBottom: function ()  { return elms[12]},
-		rightBottom: function ()  { return elms[15]},
-		center: function ()  { return elms[5]},
-	}
+		leftTop: function () {
+			return elms[0];
+		},
+		rightTop: function () {
+			return elms[3];
+		},
+		leftBottom: function () {
+			return elms[12];
+		},
+		rightBottom: function () {
+			return elms[15];
+		},
+		center: function () {
+			return elms[5];
+		}
+	};
 
-	const openPopup = function(getBound, content, strategy) {
+	const openPopup = function (getBound, content, strategy) {
 		const editor = getJodit();
 
 		const popup = new Jodit.modules.Popup(editor);
@@ -78,13 +88,13 @@ describe('Test popup', function() {
 		};
 	};
 
-	describe('Open popup on some target', function() {
-		describe('Usual case - there is enough space under element', function() {
-			it('should show popup under element', function() {
+	describe('Open popup on some target', function () {
+		describe('Usual case - there is enough space under element', function () {
+			it('should show popup under element', function () {
 				const div = appendTestDiv();
 				div.innerText = 'test';
 
-				const gb = function() {
+				const gb = function () {
 					return position(div);
 				};
 
@@ -95,10 +105,10 @@ describe('Test popup', function() {
 			});
 		});
 
-		describe('Corners', function() {
-			describe('Change default strategy', function() {
-				it('should show popup to match the strategy', function() {
-					const gb = function() {
+		describe('Corners', function () {
+			describe('Change default strategy', function () {
+				it('should show popup to match the strategy', function () {
+					const gb = function () {
 						return position(aliases.center());
 					};
 
@@ -109,9 +119,9 @@ describe('Test popup', function() {
 				});
 			});
 
-			describe('Left-Top', function() {
-				it('should show popup under element', function() {
-					const gb = function() {
+			describe('Left-Top', function () {
+				it('should show popup under element', function () {
+					const gb = function () {
 						return position(aliases.leftTop());
 					};
 
@@ -122,25 +132,23 @@ describe('Test popup', function() {
 				});
 			});
 
-			describe('Right-Top', function() {
-				describe('Small popup', function() {
-					it('should show popup under element', function() {
-						const gb = function() {
+			describe('Right-Top', function () {
+				describe('Small popup', function () {
+					it('should show popup under element', function () {
+						const gb = function () {
 							return position(aliases.rightTop());
 						};
 
 						const pos = openPopup(gb);
 
 						expect(pos.left).equals(gb().left);
-						expect(pos.top).equals(
-							gb().top + gb().height
-						);
+						expect(pos.top).equals(gb().top + gb().height);
 					});
 				});
 
-				describe('Big popup', function() {
-					it("should show popup under element but right corner should be under target's right-bottom corner", function() {
-						const gb = function() {
+				describe('Big popup', function () {
+					it("should show popup under element but right corner should be under target's right-bottom corner", function () {
+						const gb = function () {
 							return position(aliases.rightTop());
 						};
 
@@ -154,10 +162,10 @@ describe('Test popup', function() {
 				});
 			});
 
-			describe('Left-Bottom', function() {
-				describe('Small popup', function() {
-					it('should show popup above element', function() {
-						const gb = function() {
+			describe('Left-Bottom', function () {
+				describe('Small popup', function () {
+					it('should show popup above element', function () {
+						const gb = function () {
 							return position(aliases.leftBottom());
 						};
 
@@ -169,10 +177,10 @@ describe('Test popup', function() {
 				});
 			});
 
-			describe('Right-Bottom', function() {
-				describe('Small popup', function() {
-					it('should show popup above element', function() {
-						const gb = function() {
+			describe('Right-Bottom', function () {
+				describe('Small popup', function () {
+					it('should show popup above element', function () {
+						const gb = function () {
 							return position(aliases.rightBottom());
 						};
 
@@ -183,9 +191,9 @@ describe('Test popup', function() {
 					});
 				});
 
-				describe('Big popup', function() {
-					it("should show popup above the element but right corner should be above target's right-top corner", function() {
-						const gb = function() {
+				describe('Big popup', function () {
+					it("should show popup above the element but right corner should be above target's right-top corner", function () {
+						const gb = function () {
 							return position(aliases.rightBottom());
 						};
 

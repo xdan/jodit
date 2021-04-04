@@ -3,16 +3,15 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Process Images plugins', function() {
-	describe('Toolbar', function() {
-		describe('Click on Image button', function() {
-			it('Should open image dialog and insert image by url.', function() {
+describe('Process Images plugins', function () {
+	describe('Toolbar', function () {
+		describe('Click on Image button', function () {
+			it('Should open image dialog and insert image by url.', function () {
 				const editor = getJodit();
 
 				editor.value = Jodit.INVISIBLE_SPACE; // IE in iframe mode can loose focus and we can not check where it paste image in start or in finish. It is only in IE
 
-				const
-					range = editor.s.createRange(true);
+				const range = editor.s.createRange(true);
 
 				range.selectNodeContents(editor.editor);
 				range.collapse(false);
@@ -30,7 +29,8 @@ describe('Process Images plugins', function() {
 				simulateEvent('submit', 0, list.querySelector('form'));
 
 				expect(
-					list.querySelectorAll('.jodit-ui-input_has-error_true').length
+					list.querySelectorAll('.jodit-ui-input_has-error_true')
+						.length
 				).equals(1);
 
 				list.querySelector('input[name=url]').value =
@@ -47,8 +47,8 @@ describe('Process Images plugins', function() {
 				expect(list.parentNode).is.null;
 			});
 
-			describe('When the cursor in the middle of some text', function() {
-				it('Should insert image in this position after submit', function() {
+			describe('When the cursor in the middle of some text', function () {
+				it('Should insert image in this position after submit', function () {
 					const editor = getJodit();
 
 					editor.value = 'hello world!';

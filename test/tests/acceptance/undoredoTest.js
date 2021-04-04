@@ -202,9 +202,7 @@ describe('Undo/Redo behaviors', function () {
 			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
-			expect(editor.value).equals(
-				'<p>123</p>'
-			);
+			expect(editor.value).equals('<p>123</p>');
 
 			editor.execCommand('undo');
 			editor.execCommand('undo');
@@ -213,9 +211,7 @@ describe('Undo/Redo behaviors', function () {
 			editor.execCommand('undo');
 			editor.execCommand('undo');
 
-			expect(editor.value).equals(
-				'<p>123456</p>'
-			);
+			expect(editor.value).equals('<p>123456</p>');
 		});
 	});
 });

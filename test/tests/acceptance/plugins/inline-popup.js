@@ -29,10 +29,7 @@ describe('Text Inline Popup plugin', function () {
 					editor.value = '<img alt="" src="../artio.jpg"/>';
 					editor.s.focus();
 
-					simulateEvent(
-						'click',
-						editor.editor.querySelector('img')
-					);
+					simulateEvent('click', editor.editor.querySelector('img'));
 
 					const popup = getOpenedPopup(editor);
 
@@ -42,9 +39,7 @@ describe('Text Inline Popup plugin', function () {
 					clickButton('pencil', popup);
 
 					const dialog = editor.ownerDocument.querySelector(
-						'.jodit.jodit-dialog[data-editor_id=' +
-							editor.id +
-							']'
+						'.jodit.jodit-dialog[data-editor_id=' + editor.id + ']'
 					);
 
 					expect(dialog).is.not.null;
@@ -112,7 +107,8 @@ describe('Text Inline Popup plugin', function () {
 						const linkEditor = getOpenedPopup(editor);
 
 						expect(
-							linkEditor.querySelector('[data-ref="url_input"]').value
+							linkEditor.querySelector('[data-ref="url_input"]')
+								.value
 						).equals('#test1');
 
 						simulateEvent(
@@ -127,7 +123,8 @@ describe('Text Inline Popup plugin', function () {
 						const linkEditor2 = getOpenedPopup(editor);
 
 						expect(
-							linkEditor2.querySelector('[data-ref="url_input"]').value
+							linkEditor2.querySelector('[data-ref="url_input"]')
+								.value
 						).equals('#test2');
 					});
 				});
@@ -497,18 +494,22 @@ describe('Text Inline Popup plugin', function () {
 				it('Should Open inline popup', function () {
 					const editor = getJodit();
 
-					editor.value = '<table style="width: 100%;">' +
+					editor.value =
+						'<table style="width: 100%;">' +
 						'<tbody>' +
-							'<tr>' +
-								'<td><a href="http://localhost:8000/">href</a></td>' +
-								'<td><br></td>' +
-							'</tr>' +
-					'</tbody>' +
-				'</table>';
+						'<tr>' +
+						'<td><a href="http://localhost:8000/">href</a></td>' +
+						'<td><br></td>' +
+						'</tr>' +
+						'</tbody>' +
+						'</table>';
 
 					simulateEvent('click', editor.editor.querySelector('a'));
 
-					simulateEvent('mousedown', editor.editor.querySelector('a'));
+					simulateEvent(
+						'mousedown',
+						editor.editor.querySelector('a')
+					);
 					simulateEvent('mouseup', editor.editor.querySelector('a'));
 					simulateEvent('click', editor.editor.querySelector('a'));
 
@@ -524,12 +525,11 @@ describe('Text Inline Popup plugin', function () {
 
 					expect(linkEditor).is.not.null;
 
-					const input = linkEditor.querySelector('[data-ref="url_input"]');
+					const input = linkEditor.querySelector(
+						'[data-ref="url_input"]'
+					);
 
-					expect(
-						input.value
-					).equals('http://localhost:8000/');
-
+					expect(input.value).equals('http://localhost:8000/');
 
 					simulateEvent('mousedown', input);
 					simulateEvent('mouseup', input);
@@ -541,7 +541,8 @@ describe('Text Inline Popup plugin', function () {
 						true
 					);
 
-					linkEditor.querySelector('[data-ref="url_input"]').value = 'https://xdsoft.net';
+					linkEditor.querySelector('[data-ref="url_input"]').value =
+						'https://xdsoft.net';
 				});
 			});
 		});

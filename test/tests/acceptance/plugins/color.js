@@ -3,8 +3,8 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Color plugin', function() {
-	it('Open colorpicker set background and color. After this click in another any place. White when popap will be closed. Open again and remove all styles.', function() {
+describe('Color plugin', function () {
+	it('Open colorpicker set background and color. After this click in another any place. White when popap will be closed. Open again and remove all styles.', function () {
 		const editor = getJodit();
 
 		editor.value = 'text2text';
@@ -44,8 +44,8 @@ describe('Color plugin', function() {
 		expect(popup2).is.null;
 	});
 
-	describe('Show native color picker', function() {
-		describe('Enable', function() {
+	describe('Show native color picker', function () {
+		describe('Enable', function () {
 			describe('Select all content by edges', function () {
 				it('Should apply style to all elements', function () {
 					const editor = getJodit();
@@ -70,12 +70,12 @@ describe('Color plugin', function() {
 
 					expect(sortAttributes(editor.value)).equals(
 						'<p><span style="background-color:#F9CB9C"><br></span></p>' +
-						'<p><span style="background-color:#F9CB9C">test</span></p>'
+							'<p><span style="background-color:#F9CB9C">test</span></p>'
 					);
 				});
 			});
 
-			it('should open color picker with button - native color picker', function() {
+			it('should open color picker with button - native color picker', function () {
 				const editor = getJodit({
 					showBrowserColorPicker: true
 				});
@@ -93,8 +93,8 @@ describe('Color plugin', function() {
 			});
 		});
 
-		describe('Disable', function() {
-			it('should open color picker without button - native color picker', function() {
+		describe('Disable', function () {
+			it('should open color picker without button - native color picker', function () {
 				const editor = getJodit({
 					showBrowserColorPicker: false
 				});
@@ -112,9 +112,9 @@ describe('Color plugin', function() {
 		});
 	});
 
-	describe('Buttons', function() {
-		describe('In brush popup', function() {
-			it('Should be also only text', function() {
+	describe('Buttons', function () {
+		describe('In brush popup', function () {
+			it('Should be also only text', function () {
 				const editor = getJodit({
 					textIcons: true
 				});
@@ -130,9 +130,9 @@ describe('Color plugin', function() {
 		});
 	});
 
-	describe('State', function() {
-		describe('First click on the button', function() {
-			it('Should open popup', function() {
+	describe('State', function () {
+		describe('First click on the button', function () {
+			it('Should open popup', function () {
 				const editor = getJodit();
 
 				clickButton('brush', editor);
@@ -142,8 +142,8 @@ describe('Color plugin', function() {
 				expect(popup).is.not.null;
 			});
 
-			describe('Second click on the button', function() {
-				it('Should apply previous choice', function() {
+			describe('Second click on the button', function () {
+				it('Should apply previous choice', function () {
 					const editor = getJodit();
 
 					editor.value = 'text2text';

@@ -24,20 +24,25 @@ describe('WrapTextNodes plugin test', function () {
 				editor.selection.setCursorAfter(editor.editor.firstChild);
 				editor.setEditorValue();
 
-				expect(editor.value).equals('<p>test</p><style>.a{color: red;}</style><script>console.log(111);</script><p>sdsdsd</p>');
+				expect(editor.value).equals(
+					'<p>test</p><style>.a{color: red;}</style><script>console.log(111);</script><p>sdsdsd</p>'
+				);
 			});
 		});
 
 		describe('Block elements', function () {
 			it('Should not wrap it', function () {
 				const editor = getJodit();
-				editor.value = '<section>test</section>stop<p>post</p><article>yes</article>';
+				editor.value =
+					'<section>test</section>stop<p>post</p><article>yes</article>';
 				editor.selection.setCursorAfter(editor.editor.firstChild);
 
-				const selInfo = editor.selection.save();
+				editor.selection.save();
 				editor.setEditorValue();
 
-				expect(editor.value).equals('<section>test</section><p>stop</p><p>post</p><article>yes</article>');
+				expect(editor.value).equals(
+					'<section>test</section><p>stop</p><p>post</p><article>yes</article>'
+				);
 			});
 		});
 
@@ -47,7 +52,7 @@ describe('WrapTextNodes plugin test', function () {
 				editor.value = 'test';
 				editor.selection.setCursorAfter(editor.editor.firstChild);
 
-				const selInfo = editor.selection.save();
+				editor.selection.save();
 				editor.setEditorValue();
 
 				expect(editor.value).equals('<p>test</p>');

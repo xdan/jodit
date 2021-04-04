@@ -42,7 +42,8 @@ describe('Commands Jodit Editor Tests', function () {
 		describe('Exec formatBlock for STYLED block', function () {
 			it('Should wrap this element and save previous styles', function () {
 				const jodit = getJodit();
-				jodit.value = '<p style="text-align: right">|stop <span>post</span> ice</p>';
+				jodit.value =
+					'<p style="text-align: right">|stop <span>post</span> ice</p>';
 				setCursorToChar(jodit);
 
 				jodit.execCommand('formatBlock', false, 'h1');

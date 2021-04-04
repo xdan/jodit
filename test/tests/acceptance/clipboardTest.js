@@ -4,19 +4,21 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Clipboard text', function() {
-	describe('Paste HTML', function() {
-		it('Should show paste html dialog', function() {
+// eslint
+
+describe('Clipboard text', function () {
+	describe('Paste HTML', function () {
+		it('Should show paste html dialog', function () {
 			const editor = getJodit({
 				defaultActionOnPaste: Jodit.INSERT_AS_HTML
 			});
 
 			const pastedText = '<p>test</p>';
 
-			const emulatePasteEvent = function(data) {
+			const emulatePasteEvent = function (data) {
 				data.clipboardData = {
 					types: ['text/html'],
-					getData: function() {
+					getData: function () {
 						return pastedText;
 					}
 				};
@@ -30,18 +32,18 @@ describe('Clipboard text', function() {
 			expect(dialog).is.not.null;
 		});
 
-		describe('Two times times', function() {
-			it('Should not show dialog', function() {
+		describe('Two times times', function () {
+			it('Should not show dialog', function () {
 				const editor = getJodit({
 					defaultActionOnPaste: Jodit.INSERT_AS_HTML
 				});
 
 				const pastedText = '<p>test</p>';
 
-				const emulatePasteEvent = function(data) {
+				const emulatePasteEvent = function (data) {
 					data.clipboardData = {
 						types: ['text/html'],
-						getData: function() {
+						getData: function () {
 							return pastedText;
 						}
 					};
@@ -61,7 +63,7 @@ describe('Clipboard text', function() {
 				expect(getOpenedDialog(editor)).is.null;
 			});
 
-			it('Should fire afterPaste two times', function() {
+			it('Should fire afterPaste two times', function () {
 				const editor = getJodit({
 					defaultActionOnPaste: Jodit.INSERT_AS_HTML
 				});
@@ -73,10 +75,10 @@ describe('Clipboard text', function() {
 
 				const pastedText = '<p>test</p>';
 
-				const emulatePasteEvent = function(data) {
+				const emulatePasteEvent = function (data) {
 					data.clipboardData = {
 						types: ['text/html'],
-						getData: function() {
+						getData: function () {
 							return pastedText;
 						}
 					};
@@ -92,15 +94,17 @@ describe('Clipboard text', function() {
 			});
 		});
 
-		describe('Paste HTML from Twitter', function() {
-			const
-				pastedText = '<blockquote class="twitter-tweet"><p lang="ru" dir="ltr">Нет слов, конечно <a href="https://t.co/VEAi634acb">https://t.co/VEAi634acb</a></p>— Vasily Oblomov (@VS_Oblomov) <a href="https://twitter.com/VS_Oblomov/status/1279467342213324801?ref_src=twsrc%5Etfw">July 4, 2020</a></blockquote> <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
-				pastedHTML = '<meta charset=\'utf-8\'><span style="color: rgb(136, 153, 166); font-family: &quot;Helvetica Neue&quot;, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: nowrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">&lt;blockquote class="twitter-tweet"&gt;&lt;p lang="ru" dir="ltr"&gt;Нет слов, конечно &lt;a href="https://t.co/VEAi634acb"&gt;https://t.co/VEAi634acb&lt;/a&gt;&lt;/p&gt;&amp;mdash; Vasily Oblomov (@VS_Oblomov) &lt;a href="https://twitter.com/VS_Oblomov/status/1279467342213324801?ref_src=twsrc%5Etfw"&gt;July 4, 2020&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;</span>';
+		describe('Paste HTML from Twitter', function () {
+			const pastedText =
+					'<blockquote class="twitter-tweet"><p lang="ru" dir="ltr">Нет слов, конечно <a href="https://t.co/VEAi634acb">https://t.co/VEAi634acb</a></p>— Vasily Oblomov (@VS_Oblomov) <a href="https://twitter.com/VS_Oblomov/status/1279467342213324801?ref_src=twsrc%5Etfw">July 4, 2020</a></blockquote> <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
+				pastedHTML =
+					'<meta charset=\'utf-8\'><span style="color: rgb(136, 153, 166); font-family: &quot;Helvetica Neue&quot;, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: nowrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">&lt;blockquote class="twitter-tweet"&gt;&lt;p lang="ru" dir="ltr"&gt;Нет слов, конечно &lt;a href="https://t.co/VEAi634acb"&gt;https://t.co/VEAi634acb&lt;/a&gt;&lt;/p&gt;&amp;mdash; Vasily Oblomov (@VS_Oblomov) &lt;a href="https://twitter.com/VS_Oblomov/status/1279467342213324801?ref_src=twsrc%5Etfw"&gt;July 4, 2020&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;</span>';
 
-			const emulatePasteEvent = function(data) {
+			// eslint-disable-next-line no-unused-vars
+			const emulatePasteEvent = function (data) {
 				data.clipboardData = {
 					types: ['text/plain', 'text/html'],
-					getData: function(type) {
+					getData: function (type) {
 						return type === 'text/plain' ? pastedText : pastedHTML;
 					}
 				};
@@ -123,13 +127,14 @@ describe('Clipboard text', function() {
 			// });
 		});
 
-		describe('Paste HTML from Word', function() {
-			const
-				pastedText = 'LOREM IPSUM DOLOR SIT AMET\n' +
+		describe('Paste HTML from Word', function () {
+			const pastedText =
+					'LOREM IPSUM DOLOR SIT AMET\n' +
 					'\n' +
 					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ___________________________________________________\n' +
 					'"',
-				pastedHTML = ('<html xmlns:o="urn:schemas-microsoft-com:office:office"\n' +
+				pastedHTML =
+					'<html xmlns:o="urn:schemas-microsoft-com:office:office"\n' +
 					'xmlns:w="urn:schemas-microsoft-com:office:word"\n' +
 					'xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"\n' +
 					'xmlns="http://www.w3.org/TR/REC-html40">\n' +
@@ -888,29 +893,29 @@ describe('Clipboard text', function() {
 					'<![endif]-->\n' +
 					'</head>\n' +
 					'\n' +
-					'<body lang=en-RU style=\'tab-interval:36.0pt\'>\n' +
+					"<body lang=en-RU style='tab-interval:36.0pt'>\n" +
 					'<!--StartFragment-->\n' +
 					'\n' +
-					'<h1 align=center style=\'margin-top:0cm;text-align:center;line-height:normal\'><span\n' +
+					"<h1 align=center style='margin-top:0cm;text-align:center;line-height:normal'><span\n" +
 					'lang=EN-US style=\'font-size:12.0pt;mso-bidi-font-size:10.0pt;font-family:"Arial",sans-serif;\n' +
-					'color:#C45911;mso-ansi-language:EN-US\'>LOREM IPSUM DOLOR SIT AMET<o:p></o:p></span></h1>\n' +
+					"color:#C45911;mso-ansi-language:EN-US'>LOREM IPSUM DOLOR SIT AMET<o:p></o:p></span></h1>\n" +
 					'\n' +
 					'<!--EndFragment-->\n' +
 					'</body>\n' +
 					'\n' +
-					'</html>\n');
+					'</html>\n';
 
-			const emulatePasteEvent = function(data) {
+			const emulatePasteEvent = function (data) {
 				data.clipboardData = {
 					types: ['text/plain', 'text/html'],
-					getData: function(type) {
+					getData: function (type) {
 						return type === 'text/plain' ? pastedText : pastedHTML;
 					}
 				};
 			};
 
-			describe('Keep format', function() {
-				it('Should paste as is', function() {
+			describe('Keep format', function () {
+				it('Should paste as is', function () {
 					const editor = getJodit({
 						disablePlugins: ['WrapTextNodes']
 					});
@@ -923,22 +928,23 @@ describe('Clipboard text', function() {
 
 					simulateEvent('click', getButton('keep', dialog));
 
-					expect(sortAttributes(editor.value)).equals('<h1 align="center" style="break-after:avoid;color:#2E74B5;font-family:Calibri Light,sans-serif;font-size:21px;font-weight:normal;line-height:normal;margin:0px;text-align:center"><span style="color:#C45911;font-family:Arial,sans-serif;font-size:16px">LOREM IPSUM DOLOR SIT AMET</span></h1>');
+					expect(sortAttributes(editor.value)).equals(
+						'<h1 align="center" style="break-after:avoid;color:#2E74B5;font-family:Calibri Light,sans-serif;font-size:21px;font-weight:normal;line-height:normal;margin:0px;text-align:center"><span style="color:#C45911;font-family:Arial,sans-serif;font-size:16px">LOREM IPSUM DOLOR SIT AMET</span></h1>'
+					);
 				});
 			});
 		});
 
-		describe('Prevent show dialog', function() {
-			it('Should not show paste html dialog if beforeOpenPasteDialog returned false', function() {
+		describe('Prevent show dialog', function () {
+			it('Should not show paste html dialog if beforeOpenPasteDialog returned false', function () {
 				const editor = getJodit({
 					events: {
-						beforeOpenPasteDialog: function(
-							msg,
-							title,
-							callback,
-							clearButton,
-							clear2Button
-						) {
+						beforeOpenPasteDialog: function () // msg,
+						// title,
+						// callback,
+						// clearButton,
+						// clear2Button
+						{
 							return false;
 						}
 					}
@@ -946,10 +952,10 @@ describe('Clipboard text', function() {
 
 				const pastedText = '<p>test</p>';
 
-				const emulatePasteEvent = function(data) {
+				const emulatePasteEvent = function (data) {
 					data.clipboardData = {
 						types: ['text/html'],
-						getData: function(type) {
+						getData: function () {
 							return pastedText;
 						}
 					};
@@ -962,17 +968,17 @@ describe('Clipboard text', function() {
 				expect(dialog).is.null;
 			});
 
-			describe('Change dialog in afterOpenPasteDialog', function() {
-				it('Should change dialog', function() {
+			describe('Change dialog in afterOpenPasteDialog', function () {
+				it('Should change dialog', function () {
 					const editor = getJodit({
 						events: {
-							afterOpenPasteDialog: function(
-								dialog,
-								msg,
-								title,
-								callback,
-								clearButton,
-								clear2Button
+							afterOpenPasteDialog: function (
+								dialog
+								// msg,
+								// title,
+								// callback,
+								// clearButton,
+								// clear2Button
 							) {
 								dialog.container.style.left = '10px';
 							}
@@ -981,10 +987,10 @@ describe('Clipboard text', function() {
 
 					const pastedText = '<p>test</p>';
 
-					const emulatePasteEvent = function(data) {
+					const emulatePasteEvent = function (data) {
 						data.clipboardData = {
 							types: ['text/html'],
-							getData: function(type) {
+							getData: function () {
 								return pastedText;
 							}
 						};
@@ -1002,18 +1008,18 @@ describe('Clipboard text', function() {
 		});
 	});
 
-	describe('Paste simple text', function() {
-		it('Should not show paste html dialog', function() {
+	describe('Paste simple text', function () {
+		it('Should not show paste html dialog', function () {
 			const editor = getJodit({
 				defaultActionOnPaste: Jodit.INSERT_AS_HTML
 			});
 
 			const pastedText = 'test';
 
-			const emulatePasteEvent = function(data) {
+			const emulatePasteEvent = function (data) {
 				data.clipboardData = {
 					types: ['text/html'],
-					getData: function(type) {
+					getData: function () {
 						return pastedText;
 					}
 				};
@@ -1027,40 +1033,42 @@ describe('Clipboard text', function() {
 			expect(dialog).is.null;
 		});
 
-		describe('nl2brInPlainText enable', function() {
-			describe('Enable', function() {
-				it('Should add BR element before \n', function() {
+		describe('nl2brInPlainText enable', function () {
+			describe('Enable', function () {
+				it('Should add BR element before \n', function () {
 					const editor = getJodit({
 						nl2brInPlainText: true
 					});
 
 					const pastedText = 'test\ntest\ntest';
 
-					simulateEvent('paste', editor.editor, function(data) {
+					simulateEvent('paste', editor.editor, function (data) {
 						data.clipboardData = {
 							types: ['text/plain'],
-							getData: function(type) {
+							getData: function () {
 								return pastedText;
 							}
 						};
 					});
 
-					expect(editor.value).equals('<p>test<br>\ntest<br>\ntest</p>');
+					expect(editor.value).equals(
+						'<p>test<br>\ntest<br>\ntest</p>'
+					);
 				});
 			});
 
-			describe('Disable', function() {
-				it('Should not replace all \n to <BR>', function() {
+			describe('Disable', function () {
+				it('Should not replace all \n to <BR>', function () {
 					const editor = getJodit({
 						nl2brInPlainText: false
 					});
 
 					const pastedText = 'test\ntest\ntest';
 
-					simulateEvent('paste', editor.editor, function(data) {
+					simulateEvent('paste', editor.editor, function (data) {
 						data.clipboardData = {
 							types: ['text/plain'],
-							getData: function(type) {
+							getData: function () {
 								return pastedText;
 							}
 						};
@@ -1072,23 +1080,20 @@ describe('Clipboard text', function() {
 		});
 	});
 
-	describe('Paste', function() {
+	describe('Paste', function () {
 		describe('HTML text', function () {
-			describe('Insert only text', function() {
-				it('Should insert only text from pasted html', function() {
-					const
-						editor = getJodit({
+			describe('Insert only text', function () {
+				it('Should insert only text from pasted html', function () {
+					const editor = getJodit({
 							askBeforePasteHTML: false,
 							askBeforePasteFromWord: false,
 							defaultActionOnPaste: Jodit.INSERT_ONLY_TEXT
 						}),
-
 						pastedText = '<p>test</p>',
-
-						emulatePasteEvent = function(data) {
+						emulatePasteEvent = function (data) {
 							data.clipboardData = {
 								types: ['text/html'],
-								getData: function(type) {
+								getData: function () {
 									return pastedText;
 								}
 							};
@@ -1100,8 +1105,8 @@ describe('Clipboard text', function() {
 				});
 			});
 
-			describe('Insert as text', function() {
-				it('Should insert only text from pasted html', function() {
+			describe('Insert as text', function () {
+				it('Should insert only text from pasted html', function () {
 					const editor = getJodit({
 						askBeforePasteHTML: false,
 						askBeforePasteFromWord: false,
@@ -1109,22 +1114,24 @@ describe('Clipboard text', function() {
 					});
 					const pastedText = '<p>test</p>';
 
-					const emulatePasteEvent = function(data) {
+					const emulatePasteEvent = function (data) {
 						data.clipboardData = {
 							types: ['text/html'],
-							getData: function(type) {
+							getData: function () {
 								return pastedText;
 							}
 						};
 					};
 
 					simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
-					expect(editor.value).equals('<p>&lt;p&gt;test&lt;/p&gt;</p>');
+					expect(editor.value).equals(
+						'<p>&lt;p&gt;test&lt;/p&gt;</p>'
+					);
 				});
 			});
 
-			describe('Insert as html', function() {
-				it('Should insert pasted html like html', function() {
+			describe('Insert as html', function () {
+				it('Should insert pasted html like html', function () {
 					const editor = getJodit({
 						askBeforePasteHTML: false,
 						askBeforePasteFromWord: false,
@@ -1133,10 +1140,10 @@ describe('Clipboard text', function() {
 
 					const pastedText = '<p>test</p>';
 
-					const emulatePasteEvent = function(data) {
+					const emulatePasteEvent = function (data) {
 						data.clipboardData = {
 							types: ['text/html'],
-							getData: function(type) {
+							getData: function () {
 								return pastedText;
 							}
 						};
@@ -1147,20 +1154,21 @@ describe('Clipboard text', function() {
 				});
 			});
 
-			describe('Insert clear html', function() {
-				it('Should insert pasted and cleared html', function() {
+			describe('Insert clear html', function () {
+				it('Should insert pasted and cleared html', function () {
 					const editor = getJodit({
 						askBeforePasteHTML: false,
 						askBeforePasteFromWord: false,
 						defaultActionOnPaste: Jodit.INSERT_CLEAR_HTML
 					});
 
-					const pastedText = '<p style="color:red;" data-text="1">test</p>';
+					const pastedText =
+						'<p style="color:red;" data-text="1">test</p>';
 
-					const emulatePasteEvent = function(data) {
+					const emulatePasteEvent = function (data) {
 						data.clipboardData = {
 							types: ['text/html'],
-							getData: function(type) {
+							getData: function () {
 								return pastedText;
 							}
 						};
@@ -1173,15 +1181,13 @@ describe('Clipboard text', function() {
 		});
 
 		describe('plain text', function () {
-			it('Should Insert text with <br> instead of \\n', function() {
-				const
-					editor = getJodit(),
+			it('Should Insert text with <br> instead of \\n', function () {
+				const editor = getJodit(),
 					pastedText = 'test\ntest\ntest\ntest\ntest\n',
-
-					emulatePasteEvent = function(data) {
+					emulatePasteEvent = function (data) {
 						data.clipboardData = {
 							types: ['text/plain'],
-							getData: function(type) {
+							getData: function () {
 								return pastedText;
 							}
 						};
@@ -1189,47 +1195,55 @@ describe('Clipboard text', function() {
 
 				simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
 
-				expect(editor.value).equals('<p>test<br>\ntest<br>\ntest<br>\ntest<br>\ntest<br>\n</p>');
+				expect(editor.value).equals(
+					'<p>test<br>\ntest<br>\ntest<br>\ntest<br>\ntest<br>\n</p>'
+				);
 			});
 		});
 	});
 
-	describe('Cut and Copy', function() {
-		describe('After cut or copy commands', function() {
+	describe('Cut and Copy', function () {
+		describe('After cut or copy commands', function () {
 			['copy', 'cut'].forEach(function (command) {
-				describe('For ' + command + ' command. In Jodit.buffer', function() {
-					it('should be selected text', () => {
-						const editor = getJodit({
-							toolbarAdaptive: false,
-							observer: {
-								timeout: 0
+				describe(
+					'For ' + command + ' command. In Jodit.buffer',
+					function () {
+						it('should be selected text', () => {
+							const editor = getJodit({
+								toolbarAdaptive: false,
+								observer: {
+									timeout: 0
+								}
+							});
+
+							const html = '<p>test<strong>bold</strong></p>';
+
+							editor.value = html;
+
+							editor.s.focus();
+							editor.execCommand('selectall');
+							simulateEvent(command, editor.editor);
+
+							expect(editor.buffer.get('clipboard')).equals(html);
+
+							editor.value = html;
+							editor.s.focus();
+
+							editor.s.select(
+								editor.editor.querySelector('strong')
+							);
+							simulateEvent(command, editor.editor);
+
+							expect(editor.buffer.get('clipboard')).equals(
+								'<strong>bold</strong>'
+							);
+
+							if (command === 'cut') {
+								expect(editor.value).equals('<p>test</p>');
 							}
 						});
-
-						const html = '<p>test<strong>bold</strong></p>';
-
-						editor.value = html;
-
-						editor.s.focus();
-						editor.execCommand('selectall');
-						simulateEvent(command, editor.editor);
-
-						expect(editor.buffer.get('clipboard')).equals(html);
-
-						editor.value = html;
-						editor.s.focus();
-
-						editor.s.select(editor.editor.querySelector('strong'));
-						simulateEvent(command, editor.editor);
-
-						expect(editor.buffer.get('clipboard')).equals('<strong>bold</strong>');
-
-						if (command === 'cut') {
-							expect(editor.value).equals('<p>test</p>');
-						}
-
-					});
-				});
+					}
+				);
 			});
 		});
 	});

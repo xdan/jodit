@@ -3,9 +3,9 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Placeholder plugin', function() {
-	describe('After init on empty textarea', function() {
-		it('Should show placeholder', function() {
+describe('Placeholder plugin', function () {
+	describe('After init on empty textarea', function () {
+		it('Should show placeholder', function () {
 			const area = appendTestArea();
 
 			area.value = '';
@@ -21,8 +21,8 @@ describe('Placeholder plugin', function() {
 		});
 	});
 
-	describe('After init on not empty textarea', function() {
-		it('Should hide placeholder', function() {
+	describe('After init on not empty textarea', function () {
+		it('Should hide placeholder', function () {
 			const area = appendTestArea();
 			area.value = '111';
 			const editor = new Jodit(area);
@@ -31,8 +31,8 @@ describe('Placeholder plugin', function() {
 			).is.true;
 		});
 
-		describe('Empty P', function() {
-			it('Should show placeholder', function() {
+		describe('Empty P', function () {
+			it('Should show placeholder', function () {
 				const area = appendTestArea();
 				area.value = '<p><br></p>';
 				const editor = new Jodit(area);
@@ -42,8 +42,8 @@ describe('Placeholder plugin', function() {
 			});
 		});
 
-		describe('Empty UL/LI', function() {
-			it('Should not show placeholder', function() {
+		describe('Empty UL/LI', function () {
+			it('Should not show placeholder', function () {
 				const area = appendTestArea();
 				area.value = '<ul><li><br></li></ul>';
 				const editor = new Jodit(area);
@@ -54,8 +54,8 @@ describe('Placeholder plugin', function() {
 		});
 	});
 
-	describe('Add text inside editor', function() {
-		it('should show placeholder', function() {
+	describe('Add text inside editor', function () {
+		it('should show placeholder', function () {
 			const area = appendTestArea();
 			const editor = new Jodit(area);
 
@@ -76,8 +76,8 @@ describe('Placeholder plugin', function() {
 		});
 	});
 
-	describe('For element with fontsize 12px', function() {
-		it("Should set Placeholder's fontsize", function() {
+	describe('For element with fontsize 12px', function () {
+		it("Should set Placeholder's fontsize", function () {
 			const area = appendTestArea();
 			const editor = new Jodit(area);
 
@@ -92,11 +92,11 @@ describe('Placeholder plugin', function() {
 		});
 	});
 
-	describe('For different align', function() {
-		it("Should set Placeholder's text-align", function() {
+	describe('For different align', function () {
+		it("Should set Placeholder's text-align", function () {
 			const editor = getJodit();
 
-			editor.value = '<p><br></p>'
+			editor.value = '<p><br></p>';
 			editor.s.setCursorIn(editor.editor.firstChild);
 
 			clickTrigger('left', editor);
@@ -117,8 +117,8 @@ describe('Placeholder plugin', function() {
 		});
 	});
 
-	describe('ReadOnly', function() {
-		it('Should hide placeholder', function() {
+	describe('ReadOnly', function () {
+		it('Should hide placeholder', function () {
 			const table_editor_interface = appendTestArea();
 			table_editor_interface.value = '';
 

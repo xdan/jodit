@@ -597,7 +597,7 @@ describe('Test Inline mode', function () {
 				it('Should show inline popup', function (done) {
 					unmockPromise();
 
-					const editor = new Jodit(appendTestDiv(), {
+					Jodit.make(appendTestDiv(), {
 						iframe: true,
 						events: {
 							afterConstructor: function (editor) {
@@ -616,7 +616,7 @@ describe('Test Inline mode', function () {
 				describe('Disable toolbarInline = false', function () {
 					it('Should show inline popup', function (done) {
 						unmockPromise();
-						const editor = new Jodit(appendTestDiv(), {
+						Jodit.make(appendTestDiv(), {
 							toolbarInline: false,
 							iframe: true,
 							events: {
@@ -640,7 +640,7 @@ describe('Test Inline mode', function () {
 				describe('On mobile', function () {
 					it('Should show inline popup', function (done) {
 						unmockPromise();
-						const editor = new Jodit(appendTestDiv(), {
+						Jodit.make(appendTestDiv(), {
 							iframe: true,
 							events: {
 								afterConstructor: function (editor) {
@@ -662,7 +662,7 @@ describe('Test Inline mode', function () {
 			describe('Click on link', function () {
 				it('Should show inline popup', function (done) {
 					unmockPromise();
-					const editor = new Jodit(appendTestDiv(), {
+					Jodit.make(appendTestDiv(), {
 						iframe: true,
 						events: {
 							afterConstructor: function (editor) {
@@ -682,7 +682,7 @@ describe('Test Inline mode', function () {
 					describe('Option like string', function () {
 						it('Should not show inline popup for link', function (done) {
 							unmockPromise();
-							const editor = new Jodit(appendTestDiv(), {
+							Jodit.make(appendTestDiv(), {
 								iframe: true,
 								toolbarInline: true,
 								toolbarInlineDisableFor: 'a,IMG',
@@ -712,7 +712,10 @@ describe('Test Inline mode', function () {
 										expect(popup).is.null;
 
 										simulateEvent('click', editor.editor); // hide previous popup
-										simulateEvent(['mousedown', 'mouseup', 'click'], td);
+										simulateEvent(
+											['mousedown', 'mouseup', 'click'],
+											td
+										);
 										popup = getOpenedPopup(editor);
 
 										expect(popup).is.not.null;
@@ -726,7 +729,7 @@ describe('Test Inline mode', function () {
 					describe('Option like array', function () {
 						it('Should not show inline popup for link', function (done) {
 							unmockPromise();
-							const editor = new Jodit(appendTestDiv(), {
+							Jodit.make(appendTestDiv(), {
 								iframe: true,
 								toolbarInline: true,
 								toolbarInlineDisableFor: ['A', 'cells'],
@@ -775,7 +778,7 @@ describe('Test Inline mode', function () {
 			describe('Click on table cell', function () {
 				it('Should show inline popup', function (done) {
 					unmockPromise();
-					const editor = new Jodit(appendTestDiv(), {
+					Jodit.make(appendTestDiv(), {
 						iframe: true,
 						events: {
 							afterConstructor: function (editor) {
@@ -807,7 +810,7 @@ describe('Test Inline mode', function () {
 			describe('Selection some text inside the editor', function () {
 				it('Should show inline popup', function (done) {
 					unmockPromise();
-					const editor = new Jodit(appendTestDiv(), {
+					Jodit.make(appendTestDiv(), {
 						preset: 'inline',
 						iframe: true,
 						events: {

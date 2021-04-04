@@ -11,7 +11,7 @@ describe('Test insert plugins', function () {
 			editor.execCommand('insertHorizontalRule');
 			editor.execCommand('insertHorizontalRule');
 			editor.execCommand('insertHorizontalRule');
-			expect(editor.value).equals('<hr><hr><hr><p></p>')
+			expect(editor.value).equals('<hr><hr><hr><p></p>');
 		});
 	});
 });

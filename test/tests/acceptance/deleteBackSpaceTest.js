@@ -92,10 +92,8 @@ describe('Backspace/Delete key', function () {
 				simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
 				expect(editor.value).equals('<p>stop👌阪test</p>');
 
-
 				simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
 				expect(editor.value).equals('<p>stop👌test</p>');
-
 
 				simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
 				expect(editor.value).equals('<p>stop👌est</p>');

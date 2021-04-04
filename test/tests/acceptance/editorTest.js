@@ -526,19 +526,18 @@ describe('Jodit Editor Tests', function () {
 					editor.value = 'test';
 					expect(editor.value).equals('<p>test</p>');
 
-					editor.events.on('beforeSetValueToEditor', function (
-						old_value
-					) {
-						return old_value + ' stop';
-					});
+					editor.events.on(
+						'beforeSetValueToEditor',
+						function (old_value) {
+							return old_value + ' stop';
+						}
+					);
 
 					editor.value = 'test';
 
 					expect(editor.value).equals('<p>test stop</p>');
 
-					editor.events.on('beforeSetValueToEditor', function (
-						old_value
-					) {
+					editor.events.on('beforeSetValueToEditor', function () {
 						return false;
 					});
 

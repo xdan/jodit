@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const ts = require('typescript');
+// const ts = require('typescript');
 
 module.exports = function () {
 	this.cacheable && this.cacheable(true);

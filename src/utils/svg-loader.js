@@ -8,7 +8,12 @@ module.exports = function (content) {
 	this.value = content;
 	return (
 		'module.exports = ' +
-		JSON.stringify(content.replace(/[\n\t]+/g, ' ').replace(/[\s]+/g, ' ').trim())
+		JSON.stringify(
+			content
+				.replace(/[\n\t]+/g, ' ')
+				.replace(/[\s]+/g, ' ')
+				.trim()
+		)
 	);
 };
 

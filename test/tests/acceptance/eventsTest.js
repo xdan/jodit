@@ -213,7 +213,7 @@ describe('Jodit Events system Tests', function () {
 			let enable = false;
 			const editor = getJodit();
 
-			editor.events.on('keydown', function (event) {
+			editor.events.on('keydown', function () {
 				enable = true;
 			});
 
@@ -226,7 +226,7 @@ describe('Jodit Events system Tests', function () {
 				let count = 0;
 				const editor = getJodit();
 
-				editor.events.one('keydown', function (event) {
+				editor.events.one('keydown', function () {
 					count++;
 				});
 
@@ -259,7 +259,7 @@ describe('Jodit Events system Tests', function () {
 
 			let work = false;
 
-			editor.events.on('keydown', function (event) {
+			editor.events.on('keydown', function () {
 				work = true;
 			});
 
@@ -1223,11 +1223,13 @@ describe('Jodit Events system Tests', function () {
 								counter.push('onSome.place');
 							}
 						}
-					})
+					});
 
 					editor.e.fire('onSome');
 
-					expect(counter.join('|')).equals('afterInit|afterAddPlace|onSome|onSome.place');
+					expect(counter.join('|')).equals(
+						'afterInit|afterAddPlace|onSome|onSome.place'
+					);
 				});
 			});
 		});

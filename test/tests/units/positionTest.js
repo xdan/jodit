@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Test position/offset helpers', function() {
+describe('Test position/offset helpers', function () {
 	let box,
 		mainBox = getBox(),
 		iframe = document.createElement('iframe');
@@ -15,13 +15,13 @@ describe('Test position/offset helpers', function() {
 
 	let mainDoc;
 
-	beforeEach(function() {
+	beforeEach(function () {
 		mainBox.appendChild(iframe);
 		mainDoc = iframe.contentWindow.document;
 
 		const lines = [];
 
-		Jodit.modules.Helpers.$$('style, link', document).forEach(function(
+		Jodit.modules.Helpers.$$('style, link', document).forEach(function (
 			elm
 		) {
 			const t = elm.tagName.toLowerCase();
@@ -30,7 +30,7 @@ describe('Test position/offset helpers', function() {
 
 			if (t === 'link' && elm.sheet) {
 				content = Array.from(elm.sheet.cssRules)
-					.map(function(f) {
+					.map(function (f) {
 						return f.cssText;
 					})
 					.join('\n');
@@ -120,8 +120,8 @@ describe('Test position/offset helpers', function() {
 		}
 	}
 
-	describe('Test position helper', function() {
-		it('Should calculate correct screen position of element', function() {
+	describe('Test position helper', function () {
+		it('Should calculate correct screen position of element', function () {
 			const span = makeBox();
 
 			const pos = Jodit.modules.Helpers.position(span);
@@ -132,8 +132,8 @@ describe('Test position/offset helpers', function() {
 			expect(pos.left).equals(240);
 		});
 
-		describe('In the out of the screen', function() {
-			it('Should show negative screen coordinates', function() {
+		describe('In the out of the screen', function () {
+			it('Should show negative screen coordinates', function () {
 				const span = makeBox();
 
 				iframe.contentWindow.scrollTo(0, box.offsetTop + 1500);
@@ -146,8 +146,8 @@ describe('Test position/offset helpers', function() {
 			});
 		});
 
-		describe('In iframe', function() {
-			it('Should calculate correct screen position of element', function() {
+		describe('In iframe', function () {
+			it('Should calculate correct screen position of element', function () {
 				fillBox(100, mainDoc.querySelector('div'));
 
 				const jodit = Jodit.make('textarea', {
@@ -165,14 +165,16 @@ describe('Test position/offset helpers', function() {
 
 				createPoint(pos.left, pos.top, '#cdf', true);
 
-				expect(pos.top - jodit.toolbar.container.offsetHeight).equals(386	);
+				expect(pos.top - jodit.toolbar.container.offsetHeight).equals(
+					386
+				);
 				expect(pos.left).equals(251);
 			});
 		});
 	});
 
-	describe('Test offset helper', function() {
-		it('Should calculate correct absolute position of element from top of document', function() {
+	describe('Test offset helper', function () {
+		it('Should calculate correct absolute position of element from top of document', function () {
 			const span = makeBox(),
 				jodit = Jodit.make('textarea', {
 					ownerWindow: iframe.contentWindow,
@@ -185,22 +187,21 @@ describe('Test position/offset helpers', function() {
 			iframe.contentWindow.scrollTo(0, jodit.container.offsetTop);
 			jodit.editor.scrollTo(0, span.offsetTop);
 
-			const pos = Jodit.modules.Helpers.offset(
-				span,
-				jodit,
-				jodit.ed
-			);
+			const pos = Jodit.modules.Helpers.offset(span, jodit, jodit.ed);
 
 			createPoint(pos.left, pos.top, '#cdf');
 
 			expect(
-				pos.top - box.offsetTop - iframe.contentWindow.scrollY - jodit.toolbar.container.offsetHeight
+				pos.top -
+					box.offsetTop -
+					iframe.contentWindow.scrollY -
+					jodit.toolbar.container.offsetHeight
 			).equals(816);
 			expect(pos.left).equals(249);
 		});
 
-		describe('In iframe', function() {
-			it('Should calculate correct absolute position of element from top of document', function() {
+		describe('In iframe', function () {
+			it('Should calculate correct absolute position of element from top of document', function () {
 				const jodit = Jodit.make('textarea', {
 					ownerWindow: iframe.contentWindow,
 					ownerDocument: mainDoc,
@@ -214,11 +215,7 @@ describe('Test position/offset helpers', function() {
 				iframe.contentWindow.scrollTo(0, jodit.container.offsetTop);
 				jodit.editor.scrollTo(0, span.offsetTop);
 
-				const pos = Jodit.modules.Helpers.offset(
-					span,
-					jodit,
-					jodit.ed
-				);
+				const pos = Jodit.modules.Helpers.offset(span, jodit, jodit.ed);
 
 				expect(
 					pos.top -
@@ -234,7 +231,7 @@ describe('Test position/offset helpers', function() {
 		});
 	});
 
-	afterEach(function() {
+	afterEach(function () {
 		Jodit.modules.Dom.safeRemove(box);
 		Jodit.modules.Dom.safeRemove(iframe);
 	});

@@ -121,13 +121,14 @@ const translateAll = text => {
 		const folder = path.dirname(indexFile);
 
 		if (!fs.existsSync(folder)) {
-			fs.mkdirSync(folder, {recursive: true});
+			fs.mkdirSync(folder, { recursive: true });
 		}
 
 		fs.writeFileSync(
 			indexFile,
 			`${header}\n${langs
 				.map(
+					// eslint-disable-next-line no-unused-vars
 					([lang, file, realLang]) =>
 						`const ${realLang} = require('./${file}');\n`
 				)

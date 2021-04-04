@@ -3,11 +3,11 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Search plugin', function() {
+describe('Search plugin', function () {
 	const search = Jodit.plugins.get('search');
 
-	describe('Disable option', function() {
-		it('Should not init plugin', function() {
+	describe('Disable option', function () {
+		it('Should not init plugin', function () {
 			const editor = getJodit({
 				useSearch: false,
 				observer: {
@@ -17,7 +17,7 @@ describe('Search plugin', function() {
 
 			expect(editor.container.querySelector('.jodit-search')).is.null;
 
-			simulateEvent('keydown', 'f', editor.editor, function(options) {
+			simulateEvent('keydown', 'f', editor.editor, function (options) {
 				options.ctrlKey = true;
 			});
 
@@ -25,8 +25,8 @@ describe('Search plugin', function() {
 		});
 	});
 
-	describe('CTRL + F', function() {
-		it('Should show search form and query field must have focus', function() {
+	describe('CTRL + F', function () {
+		it('Should show search form and query field must have focus', function () {
 			const editor = getJodit({
 				observer: {
 					timeout: 0
@@ -39,7 +39,7 @@ describe('Search plugin', function() {
 				search.classList.contains('jodit-search_active')
 			);
 
-			simulateEvent('keydown', 'f', editor.editor, function(options) {
+			simulateEvent('keydown', 'f', editor.editor, function (options) {
 				options.ctrlKey = true;
 			});
 
@@ -54,8 +54,8 @@ describe('Search plugin', function() {
 		});
 	});
 
-	describe('CTRL + H', function() {
-		it('Should show search and replace form and query field must have focus', function() {
+	describe('CTRL + H', function () {
+		it('Should show search and replace form and query field must have focus', function () {
 			const editor = getJodit({
 				observer: {
 					timeout: 0
@@ -67,7 +67,7 @@ describe('Search plugin', function() {
 				search.classList.contains('jodit-search_active')
 			);
 
-			simulateEvent('keydown', 'h', editor.editor, function(options) {
+			simulateEvent('keydown', 'h', editor.editor, function (options) {
 				options.ctrlKey = true;
 			});
 
@@ -85,8 +85,8 @@ describe('Search plugin', function() {
 			);
 		});
 
-		describe('Press Replace button', function() {
-			it('Should replace value form query field to value from replace field in editor', function() {
+		describe('Press Replace button', function () {
+			it('Should replace value form query field to value from replace field in editor', function () {
 				const editor = getJodit({
 					observer: {
 						timeout: 0
@@ -99,9 +99,14 @@ describe('Search plugin', function() {
 				expect(false).equals(
 					search.classList.contains('jodit-search_active')
 				);
-				simulateEvent('keydown', 'h', editor.editor, function(options) {
-					options.ctrlKey = true;
-				});
+				simulateEvent(
+					'keydown',
+					'h',
+					editor.editor,
+					function (options) {
+						options.ctrlKey = true;
+					}
+				);
 
 				expect(true).equals(
 					search.classList.contains('jodit-search_active')
@@ -135,8 +140,8 @@ describe('Search plugin', function() {
 		});
 	});
 
-	describe('F3 after search', function() {
-		it('Should find a next match', function() {
+	describe('F3 after search', function () {
+		it('Should find a next match', function () {
 			const editor = getJodit({
 				observer: {
 					timeout: 0
@@ -153,7 +158,7 @@ describe('Search plugin', function() {
 			expect(search.classList.contains('jodit-search_active')).is.false;
 
 			// press ctrl(cmd) + f
-			simulateEvent('keydown', 'f', editor.editor, function(options) {
+			simulateEvent('keydown', 'f', editor.editor, function (options) {
 				options.ctrlKey = true;
 			});
 
@@ -169,7 +174,7 @@ describe('Search plugin', function() {
 
 			editor.events.fire('searchNext');
 
-			simulateEvent('keydown', 'F3', editor.editor, function(options) {
+			simulateEvent('keydown', 'F3', editor.editor, function (options) {
 				options.shiftKey = false;
 			}); //
 
@@ -189,7 +194,7 @@ describe('Search plugin', function() {
 			expect(9).equals(range.endOffset);
 		});
 
-		it('Should find the next match in a circle', function() {
+		it('Should find the next match in a circle', function () {
 			const editor = getJodit({
 				disablePlugins: ['WrapTextNodes'],
 
@@ -209,13 +214,11 @@ describe('Search plugin', function() {
 			expect(search.classList.contains('jodit-search_active')).is.false;
 
 			// press ctrl(cmd) + f
-			simulateEvent('keydown', 'f', editor.editor, function(options) {
+			simulateEvent('keydown', 'f', editor.editor, function (options) {
 				options.ctrlKey = true;
 			});
 
-			expect(
-				search.classList.contains('jodit-search_active')
-			).is.true;
+			expect(search.classList.contains('jodit-search_active')).is.true;
 			expect(
 				editor.ownerDocument.activeElement ===
 					search.querySelector('[data-ref="query"]')
@@ -235,12 +238,15 @@ describe('Search plugin', function() {
 				[13, 14],
 				[0, 1],
 				[3, 4]
-			].forEach(function(pars) {
-				simulateEvent('keydown', 'F3', editor.editor, function(
-					options
-				) {
-					options.shiftKey = false;
-				}); //
+			].forEach(function (pars) {
+				simulateEvent(
+					'keydown',
+					'F3',
+					editor.editor,
+					function (options) {
+						options.shiftKey = false;
+					}
+				); //
 
 				expect(1).equals(sel.rangeCount);
 				range = sel.getRangeAt(0);
@@ -250,8 +256,8 @@ describe('Search plugin', function() {
 			});
 		});
 
-		describe('with SHIFT key', function() {
-			it('Should find a previous match', function() {
+		describe('with SHIFT key', function () {
+			it('Should find a previous match', function () {
 				const editor = getJodit({
 					observer: {
 						timeout: 0
@@ -271,9 +277,14 @@ describe('Search plugin', function() {
 				);
 
 				// press ctrl(cmd) + f
-				simulateEvent('keydown', 'f', editor.editor, function(options) {
-					options.ctrlKey = true;
-				});
+				simulateEvent(
+					'keydown',
+					'f',
+					editor.editor,
+					function (options) {
+						options.ctrlKey = true;
+					}
+				);
 
 				expect(true).equals(
 					search.classList.contains('jodit-search_active')
@@ -288,28 +299,35 @@ describe('Search plugin', function() {
 
 				editor.events.fire('searchNext');
 
-				simulateEvent('keydown', 'F3', editor.editor, function(
-					options
-				) {
-					options.shiftKey = true;
-				}); //
+				simulateEvent(
+					'keydown',
+					'F3',
+					editor.editor,
+					function (options) {
+						options.shiftKey = true;
+					}
+				); //
 
 				const sel = editor.s.sel;
 
 				expect(1).equals(sel.rangeCount);
 				range = sel.getRangeAt(0);
 
-				expect(editor.editor.firstChild.firstChild).equals(range.startContainer);
+				expect(editor.editor.firstChild.firstChild).equals(
+					range.startContainer
+				);
 				expect(10).equals(range.startOffset);
 
-				expect(editor.editor.firstChild.firstChild).equals(range.endContainer);
+				expect(editor.editor.firstChild.firstChild).equals(
+					range.endContainer
+				);
 				expect(14).equals(range.endOffset);
 			});
 		});
 	});
 
-	describe('Esc in query field', function() {
-		it('Should hide search form and restore selection', function() {
+	describe('Esc in query field', function () {
+		it('Should hide search form and restore selection', function () {
 			const editor = getJodit();
 			editor.value = '<p>text</p>';
 
@@ -324,7 +342,7 @@ describe('Search plugin', function() {
 			expect(false).equals(
 				search.classList.contains('jodit-search_active')
 			);
-			simulateEvent('keydown', 'f', editor.editor, function(options) {
+			simulateEvent('keydown', 'f', editor.editor, function (options) {
 				options.ctrlKey = true;
 			});
 
@@ -348,9 +366,9 @@ describe('Search plugin', function() {
 		});
 	});
 
-	describe('Unit test compare string', function() {
-		describe('Get index of found string', function() {
-			it('Should find needle in haystack', function() {
+	describe('Unit test compare string', function () {
+		describe('Get index of found string', function () {
+			it('Should find needle in haystack', function () {
 				const str = 'Mr John Smith washed window';
 
 				expect(11).equals(
@@ -366,7 +384,7 @@ describe('Search plugin', function() {
 				);
 			});
 
-			it('Should find needle in haystack steb by step', function() {
+			it('Should find needle in haystack steb by step', function () {
 				expect(false).equals(
 					search.getSomePartOfStringIndex('th was', 'Mr')
 				);
@@ -401,8 +419,8 @@ describe('Search plugin', function() {
 				);
 			});
 
-			it('Should find needle in haystack steb by step in back direction', function() {
-				const str = 'Mr John Smith washed window';
+			it('Should find needle in haystack steb by step in back direction', function () {
+				// const str = 'Mr John Smith washed window';
 				expect(false).equals(
 					search.getSomePartOfStringIndex('th was', 'window', false)
 				);
@@ -430,8 +448,8 @@ describe('Search plugin', function() {
 			});
 		});
 
-		describe('Compare strings and return boolean', function() {
-			it('Should find needle in haystack', function() {
+		describe('Compare strings and return boolean', function () {
+			it('Should find needle in haystack', function () {
 				const str = 'Mr John Smith washed window';
 				expect(true).equals(search.findSomePartOfString('th was', str));
 				expect(true).equals(search.findSomePartOfString('TH WAS', str));
@@ -443,8 +461,8 @@ describe('Search plugin', function() {
 				);
 			});
 
-			it('Should find needle in haystack steb by step', function() {
-				const str = 'Mr John Smith washed window';
+			it('Should find needle in haystack steb by step', function () {
+				//const str = 'Mr John Smith washed window';
 				expect(false).equals(
 					search.findSomePartOfString('th was', 'Mr')
 				);
@@ -493,8 +511,8 @@ describe('Search plugin', function() {
 					)
 				);
 			});
-			it('Should find needle in haystack steb by step in back direction', function() {
-				const str = 'Mr John Smith washed window';
+			it('Should find needle in haystack steb by step in back direction', function () {
+				// const str = 'Mr John Smith washed window';
 				expect(false).equals(
 					search.findSomePartOfString('th was', 'window', false)
 				);
@@ -522,8 +540,8 @@ describe('Search plugin', function() {
 			});
 		});
 
-		describe('Haystack less needle', function() {
-			it('Should return false', function() {
+		describe('Haystack less needle', function () {
+			it('Should return false', function () {
 				expect(false).equals(
 					search.findSomePartOfString('th was', ' ', true)
 				);
@@ -538,8 +556,8 @@ describe('Search plugin', function() {
 		});
 	});
 
-	describe('Fire search event', function() {
-		it('Should select some elements which consists query string', function() {
+	describe('Fire search event', function () {
+		it('Should select some elements which consists query string', function () {
 			const editor = getJodit({
 				observer: {
 					timeout: 0
@@ -566,9 +584,9 @@ describe('Search plugin', function() {
 		});
 	});
 
-	describe('Find by toolbar button event', function() {
-		describe('Press Search button', function() {
-			it('Should open search dialog', function() {
+	describe('Find by toolbar button event', function () {
+		describe('Press Search button', function () {
+			it('Should open search dialog', function () {
 				const editor = getJodit({
 					observer: {
 						timeout: 0
@@ -577,12 +595,16 @@ describe('Search plugin', function() {
 
 				clickButton('find', editor);
 
-				expect(editor.container.querySelector('.jodit-search.jodit-search_active')).is.not.null;
+				expect(
+					editor.container.querySelector(
+						'.jodit-search.jodit-search_active'
+					)
+				).is.not.null;
 			});
 		});
 
-		describe('Press Replace button', function() {
-			it('Should open search dialog', function() {
+		describe('Press Replace button', function () {
+			it('Should open search dialog', function () {
 				const editor = getJodit({
 					observer: {
 						timeout: 0
@@ -592,7 +614,11 @@ describe('Search plugin', function() {
 				clickTrigger('find', editor);
 				clickButton('replace', getOpenedPopup(editor));
 
-				expect(editor.container.querySelector('.jodit-search.jodit-search_active.jodit-search_replace')).is.not.null;
+				expect(
+					editor.container.querySelector(
+						'.jodit-search.jodit-search_active.jodit-search_replace'
+					)
+				).is.not.null;
 			});
 		});
 	});

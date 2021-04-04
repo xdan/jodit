@@ -3,11 +3,11 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Test Creator module', function() {
-	describe('Create inside element', function() {
-		it('Should be different in iframe mode', function() {
+describe('Test Creator module', function () {
+	describe('Create inside element', function () {
+		it('Should be different in iframe mode', function () {
 			const editor1 = getJodit();
-			const editor2 = Jodit.make(appendTestArea(), {iframe: true});
+			const editor2 = Jodit.make(appendTestArea(), { iframe: true });
 
 			const div1 = editor1.createInside.div();
 			expect(div1.ownerDocument).equals(document);
@@ -21,8 +21,8 @@ describe('Test Creator module', function() {
 		});
 	});
 
-	describe('createAttributes', function() {
-		it('Should add to every nodes some attributes', function() {
+	describe('createAttributes', function () {
+		it('Should add to every nodes some attributes', function () {
 			const editor = getJodit();
 			const div = editor.createInside.div();
 			expect(div.className).equals('');
@@ -54,39 +54,49 @@ describe('Test Creator module', function() {
 			editor2.s.setCursorAfter(editor2.editor.firstChild);
 			simulateEvent('keydown', 13, editor2.editor);
 
-			expect(editor2.value).equals('<p data-attr="stop">test</p><p data-attr="stop"><br></p>');
+			expect(editor2.value).equals(
+				'<p data-attr="stop">test</p><p data-attr="stop"><br></p>'
+			);
 
 			editor2.value = 'test';
 			editor2.s.select(editor2.editor.firstChild);
 			editor2.execCommand('bold');
 
-			expect(editor2.value).equals('<p data-attr="stop"><strong test="true">test</strong></p>');
+			expect(editor2.value).equals(
+				'<p data-attr="stop"><strong test="true">test</strong></p>'
+			);
 		});
 
 		describe('For UL and LI', function () {
-			it('Should add to every nodes some attributes', function() {
-				const editor = getJodit( {
+			it('Should add to every nodes some attributes', function () {
+				const editor = getJodit({
 					createAttributes: {
-						ul: {class: 'indent_small list list_offset_left'},
-						li: {class: 'some_li'},
-						ol: {class: 'indent_small ollist list_offset_left'}
+						ul: { class: 'indent_small list list_offset_left' },
+						li: { class: 'some_li' },
+						ol: { class: 'indent_small ollist list_offset_left' }
 					}
 				});
 
 				const ul = editor.createInside.element('ul');
-				expect(ul.className).equals('indent_small list list_offset_left');
+				expect(ul.className).equals(
+					'indent_small list list_offset_left'
+				);
 
 				const li = editor.createInside.element('li');
 				expect(li.className).equals('some_li');
 
 				const ol = editor.createInside.element('ol');
-				expect(ol.className).equals('indent_small ollist list_offset_left');
+				expect(ol.className).equals(
+					'indent_small ollist list_offset_left'
+				);
 
-				editor.value = 'one'
+				editor.value = 'one';
 				editor.execCommand('selectall');
 				editor.execCommand('insertUnorderedList');
 
-				expect(editor.value).equals('<ul class="indent_small list list_offset_left"><li class="some_li">one</li></ul>');
+				expect(editor.value).equals(
+					'<ul class="indent_small list list_offset_left"><li class="some_li">one</li></ul>'
+				);
 			});
 		});
 	});

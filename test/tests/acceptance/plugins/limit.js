@@ -3,10 +3,10 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Limit plugin', function() {
-	describe('Keydown', function() {
-		describe('On keydown when editor already full', function() {
-			it('should deny insert any chars', function(done) {
+describe('Limit plugin', function () {
+	describe('Keydown', function () {
+		describe('On keydown when editor already full', function () {
+			it('should deny insert any chars', function (done) {
 				const editor = getJodit({
 					limitChars: 5,
 					observer: {
@@ -23,8 +23,8 @@ describe('Limit plugin', function() {
 				}, 200);
 			});
 
-			describe('Stat plugin', function() {
-				it('should show chars count', function(done) {
+			describe('Stat plugin', function () {
+				it('should show chars count', function (done) {
 					const editor = getJodit({
 						limitChars: 5,
 						observer: {
@@ -47,8 +47,8 @@ describe('Limit plugin', function() {
 					}, 200);
 				});
 
-				describe('Prevent keypress', function() {
-					it('should show chars count', function(done) {
+				describe('Prevent keypress', function () {
+					it('should show chars count', function (done) {
 						const editor = getJodit({
 							limitChars: 5,
 							observer: {
@@ -58,16 +58,17 @@ describe('Limit plugin', function() {
 
 						editor.value = '<p>1111</p>';
 
-						const
-							range = editor.s.createRange(true);
+						const range = editor.s.createRange(true);
 
 						range.setEndAfter(editor.editor.firstChild.firstChild);
 						range.collapse(false);
 
-						expect(simulateEvent('keydown', 'v', editor.editor)).is.true;
+						expect(simulateEvent('keydown', 'v', editor.editor)).is
+							.true;
 
 						editor.value = '<p>11111</p>';
-						expect(simulateEvent('keydown', 'v', editor.editor)).is.false;
+						expect(simulateEvent('keydown', 'v', editor.editor)).is
+							.false;
 
 						setTimeout(() => {
 							expect(editor.value).equals('<p>11111</p>');
@@ -83,9 +84,9 @@ describe('Limit plugin', function() {
 		});
 	});
 
-	describe('Paste', function() {
-		describe('When editor already full', function() {
-			it('should deny insert any chars', function(done) {
+	describe('Paste', function () {
+		describe('When editor already full', function () {
+			it('should deny insert any chars', function (done) {
 				const editor = getJodit({
 					limitChars: 5,
 					observer: {
@@ -95,10 +96,10 @@ describe('Limit plugin', function() {
 
 				editor.value = '11111';
 
-				simulateEvent('paste', editor.editor, function(data) {
+				simulateEvent('paste', editor.editor, function (data) {
 					data.clipboardData = {
 						types: ['text/html'],
-						getData: function() {
+						getData: function () {
 							return 'a';
 						}
 					};
@@ -112,10 +113,10 @@ describe('Limit plugin', function() {
 		});
 	});
 
-	describe('Limit words', function() {
-		describe('Paste', function() {
-			describe('When editor already full', function() {
-				it('should deny insert any chars', function(done) {
+	describe('Limit words', function () {
+		describe('Paste', function () {
+			describe('When editor already full', function () {
+				it('should deny insert any chars', function (done) {
 					const editor = getJodit({
 						limitWords: 3,
 						observer: {
@@ -130,12 +131,10 @@ describe('Limit plugin', function() {
 					);
 
 					const paste = function () {
-						simulateEvent('paste', editor.editor, function(
-							data
-						) {
+						simulateEvent('paste', editor.editor, function (data) {
 							data.clipboardData = {
 								types: ['text/html'],
-								getData: function() {
+								getData: function () {
 									return ' aaa';
 								}
 							};

@@ -51,21 +51,23 @@ describe('Link plugin', function () {
 				]
 			].forEach(function (lnk) {
 				describe('Insert link ' + lnk[0], function () {
-					it('Should insert iframe with video ' + lnk[1], function () {
-						const editor = getJodit();
+					it(
+						'Should insert iframe with video ' + lnk[1],
+						function () {
+							const editor = getJodit();
 
-						simulatePaste(
-							editor.editor,
-							lnk[0]
-						);
+							simulatePaste(editor.editor, lnk[0]);
 
-						expect(sortAttributes(editor.value)).equal(
-							sortAttributes(
-								'<iframe width="400" height="345" src="' + lnk[1] + '" frameborder="0" allowfullscreen=""></iframe>'
-							)
-						);
-					});
-				})
+							expect(sortAttributes(editor.value)).equal(
+								sortAttributes(
+									'<iframe width="400" height="345" src="' +
+										lnk[1] +
+										'" frameborder="0" allowfullscreen=""></iframe>'
+								)
+							);
+						}
+					);
+				});
 			});
 
 			describe('Disable', function () {
@@ -177,9 +179,6 @@ describe('Link plugin', function () {
 							clickButton('link', inlinePopup);
 
 							const popup = getOpenedPopup(editor);
-							const content = popup.querySelector(
-								'[ref=content_input]'
-							);
 
 							const url = popup.querySelector('[ref=url_input]');
 							expect(url.value).equals('#somelink');
@@ -449,7 +448,7 @@ describe('Link plugin', function () {
 							 *
 							 * @param {HTMLElement} popup_container
 							 */
-							afterLinkOpenPopup: function (popup_container) {
+							afterLinkOpenPopup: function () {
 								popup_opened += 1;
 							}
 						},

@@ -3,10 +3,10 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Selection Module Tests', function() {
-	describe('Current method', function() {
-		describe('Cursor outside the editor', function() {
-			it('Should return false', function() {
+describe('Selection Module Tests', function () {
+	describe('Current method', function () {
+		describe('Cursor outside the editor', function () {
+			it('Should return false', function () {
 				const editor = getJodit(),
 					div = document.createElement('div');
 
@@ -25,8 +25,8 @@ describe('Selection Module Tests', function() {
 			});
 		});
 
-		describe('Cursor in the left of some SPAN', function() {
-			it('Should return text before this span', function() {
+		describe('Cursor in the left of some SPAN', function () {
+			it('Should return text before this span', function () {
 				const editor = getJodit();
 				editor.value = '<h1>one<span>two</span>tree</h1>';
 				const range = editor.s.createRange();
@@ -40,8 +40,8 @@ describe('Selection Module Tests', function() {
 				); //one
 			});
 		});
-		describe('Cursor inside the text node ', function() {
-			it('Should return text', function() {
+		describe('Cursor inside the text node ', function () {
+			it('Should return text', function () {
 				const editor = getJodit();
 				editor.value = '<h1>test</h1>';
 				const range = editor.s.createRange();
@@ -54,8 +54,8 @@ describe('Selection Module Tests', function() {
 				); // test
 			});
 		});
-		describe('Cursor after h1', function() {
-			it('Should return text inside h1', function() {
+		describe('Cursor after h1', function () {
+			it('Should return text inside h1', function () {
 				const editor = getJodit();
 				editor.value = '<h1>test</h1>';
 				const range = editor.s.createRange();
@@ -68,8 +68,8 @@ describe('Selection Module Tests', function() {
 				); // test
 			});
 
-			describe('With false argument', function() {
-				it('Should return h1', function() {
+			describe('With false argument', function () {
+				it('Should return h1', function () {
 					const editor = getJodit();
 					editor.value = '<h1>test</h1>';
 					const range = editor.s.createRange();
@@ -84,8 +84,8 @@ describe('Selection Module Tests', function() {
 				});
 			});
 		});
-		describe('Select img', function() {
-			it('Should return this image', function() {
+		describe('Select img', function () {
+			it('Should return this image', function () {
 				const editor = getJodit();
 				editor.value = '<h1>test <img src="#" alt=""> sdfsdfs</h1>';
 				const range = editor.s.createRange();
@@ -99,12 +99,12 @@ describe('Selection Module Tests', function() {
 		});
 	});
 
-	describe('cursorInTheEdge', function() {
-		describe('Cursor in the text', function() {
-			describe('cursorOnTheLeft and cursorOnTheRight', function() {
-				describe('Cursor inside P but inside Li', function() {
-					describe('Cursor in the end of text node', function() {
-						it('Should work correct', function() {
+	describe('cursorInTheEdge', function () {
+		describe('Cursor in the text', function () {
+			describe('cursorOnTheLeft and cursorOnTheRight', function () {
+				describe('Cursor inside P but inside Li', function () {
+					describe('Cursor in the end of text node', function () {
+						it('Should work correct', function () {
 							const editor = getJodit();
 							editor.value = '<ul><li><p>test</p></li></ul>';
 
@@ -116,7 +116,7 @@ describe('Selection Module Tests', function() {
 							range.collapse(true);
 							editor.s.selectRange(range);
 
-							['li', 'p'].forEach(function(tag) {
+							['li', 'p'].forEach(function (tag) {
 								expect(
 									editor.s.cursorOnTheLeft(
 										editor.editor.querySelector(tag)
@@ -132,8 +132,8 @@ describe('Selection Module Tests', function() {
 						});
 					});
 
-					describe('Cursor in the start of text node', function() {
-						it('Should work correct', function() {
+					describe('Cursor in the start of text node', function () {
+						it('Should work correct', function () {
 							const editor = getJodit();
 							editor.value = '<ul><li><p>test</p></li></ul>';
 
@@ -145,7 +145,7 @@ describe('Selection Module Tests', function() {
 							range.collapse(true);
 							editor.s.selectRange(range);
 
-							['li', 'p'].forEach(function(tag) {
+							['li', 'p'].forEach(function (tag) {
 								expect(
 									editor.s.cursorOnTheLeft(
 										editor.editor.querySelector(tag)
@@ -163,8 +163,8 @@ describe('Selection Module Tests', function() {
 				});
 			});
 
-			describe('Cursor in the end of text node but after this has BR', function() {
-				it('Should return true', function() {
+			describe('Cursor in the end of text node but after this has BR', function () {
+				it('Should return true', function () {
 					const editor = getJodit();
 					editor.value = '<p>test<br></p>';
 
@@ -179,8 +179,8 @@ describe('Selection Module Tests', function() {
 				});
 			});
 
-			describe('Cursor in the end of text node but after this has image', function() {
-				it('Should return false', function() {
+			describe('Cursor in the end of text node but after this has image', function () {
+				it('Should return false', function () {
 					const editor = getJodit();
 					editor.value = '<p>test<img/></p>';
 
@@ -195,8 +195,8 @@ describe('Selection Module Tests', function() {
 				});
 			});
 
-			describe('Cursor in the middle of text node', function() {
-				it('Should return false', function() {
+			describe('Cursor in the middle of text node', function () {
+				it('Should return false', function () {
 					const editor = getJodit();
 					editor.value = '<p>test</p>';
 
@@ -210,8 +210,8 @@ describe('Selection Module Tests', function() {
 						.is.false;
 				});
 
-				describe('Cursor in the middle of text node but after cursor only invisible spaces', function() {
-					it('Should return true', function() {
+				describe('Cursor in the middle of text node but after cursor only invisible spaces', function () {
+					it('Should return true', function () {
 						const editor = getJodit();
 						editor.value =
 							'<p>test' +
@@ -231,8 +231,8 @@ describe('Selection Module Tests', function() {
 						).is.true;
 					});
 				});
-				describe('Cursor in the middle of text node but before cursor only invisible spaces', function() {
-					it('Should return true', function() {
+				describe('Cursor in the middle of text node but before cursor only invisible spaces', function () {
+					it('Should return true', function () {
 						const editor = getJodit();
 						editor.value =
 							'<p>' +
@@ -253,8 +253,8 @@ describe('Selection Module Tests', function() {
 					});
 				});
 
-				describe('Cursor in the end of text node but after this has several not empty text nodes', function() {
-					it('Should return false', function() {
+				describe('Cursor in the end of text node but after this has several not empty text nodes', function () {
+					it('Should return false', function () {
 						const editor = getJodit();
 						editor.value = '<p>test</p>';
 
@@ -274,8 +274,8 @@ describe('Selection Module Tests', function() {
 						).is.false;
 					});
 
-					describe('Cursor in the end of text node and after are only text nodes with invisible spaces', function() {
-						it('Should return true', function() {
+					describe('Cursor in the end of text node and after are only text nodes with invisible spaces', function () {
+						it('Should return true', function () {
 							const editor = getJodit();
 							editor.value = '<p>test</p>';
 
@@ -313,9 +313,9 @@ describe('Selection Module Tests', function() {
 						});
 					});
 
-					describe('Inverse', function() {
-						describe('Cursor in the start of text node but before this has several not empty text nodes', function() {
-							it('Should return false', function() {
+					describe('Inverse', function () {
+						describe('Cursor in the start of text node but before this has several not empty text nodes', function () {
+							it('Should return false', function () {
 								const editor = getJodit();
 								editor.value = '<p>test</p>';
 
@@ -344,8 +344,8 @@ describe('Selection Module Tests', function() {
 									)
 								).is.false;
 							});
-							describe('Cursor in the start of text node and before are only text nodes with invisible spaces', function() {
-								it('Should return true', function() {
+							describe('Cursor in the start of text node and before are only text nodes with invisible spaces', function () {
+								it('Should return true', function () {
 									const editor = getJodit();
 									editor.value = '<p>test</p>';
 
@@ -394,8 +394,8 @@ describe('Selection Module Tests', function() {
 			});
 		});
 
-		describe('Cursor after element', function() {
-			it('Should return null', function() {
+		describe('Cursor after element', function () {
+			it('Should return null', function () {
 				const editor = getJodit();
 				editor.value = '<p>test</p>';
 
@@ -410,8 +410,8 @@ describe('Selection Module Tests', function() {
 			});
 		});
 
-		describe('Cursor before element', function() {
-			it('Should return null', function() {
+		describe('Cursor before element', function () {
+			it('Should return null', function () {
 				const editor = getJodit();
 				editor.value = '<p>test</p>';
 
@@ -426,8 +426,8 @@ describe('Selection Module Tests', function() {
 			});
 		});
 
-		describe('Cursor in the start of element ', function() {
-			it('Should return true', function() {
+		describe('Cursor in the start of element ', function () {
+			it('Should return true', function () {
 				const editor = getJodit();
 				editor.value = '<p><span>test</span></p>';
 
@@ -442,8 +442,8 @@ describe('Selection Module Tests', function() {
 			});
 		});
 
-		describe('Cursor in the end of element ', function() {
-			it('Should return true', function() {
+		describe('Cursor in the end of element ', function () {
+			it('Should return true', function () {
 				const editor = getJodit();
 				editor.value = '<p><span>test</span></p>';
 
@@ -458,8 +458,8 @@ describe('Selection Module Tests', function() {
 			});
 		});
 
-		describe('Cursor not in the end of element ', function() {
-			it('Should return false', function() {
+		describe('Cursor not in the end of element ', function () {
+			it('Should return false', function () {
 				const editor = getJodit();
 				editor.value = '<p><span>test</span><span>stop</span></p>';
 
@@ -474,8 +474,8 @@ describe('Selection Module Tests', function() {
 			});
 		});
 
-		describe('Cursor not in the start of element ', function() {
-			it('Should return false', function() {
+		describe('Cursor not in the start of element ', function () {
+			it('Should return false', function () {
 				const editor = getJodit();
 				editor.value = '<p><span>test</span><span>stop</span></p>';
 
@@ -490,8 +490,8 @@ describe('Selection Module Tests', function() {
 			});
 		});
 
-		describe('If cursor in the end of P', function() {
-			it('Should return true', function() {
+		describe('If cursor in the end of P', function () {
+			it('Should return true', function () {
 				const editor = getJodit();
 				editor.value = '<p>test</p>';
 
@@ -516,8 +516,8 @@ describe('Selection Module Tests', function() {
 			});
 		});
 
-		describe('If cursor in the end of SPAN in the end of P', function() {
-			it('Should return true', function() {
+		describe('If cursor in the end of SPAN in the end of P', function () {
+			it('Should return true', function () {
 				const editor = getJodit();
 				editor.value = '<p>test<span>1</span></p>';
 
@@ -535,8 +535,8 @@ describe('Selection Module Tests', function() {
 			});
 		});
 
-		describe('Curson in the end of span inside P and check cursorInTheEdge(true)', function() {
-			it('Should return false', function() {
+		describe('Curson in the end of span inside P and check cursorInTheEdge(true)', function () {
+			it('Should return false', function () {
 				const editor = getJodit();
 				editor.value = '<p>Some <span>text</span></p>';
 
@@ -554,8 +554,8 @@ describe('Selection Module Tests', function() {
 		});
 	});
 
-	describe('Change mode', function() {
-		it('Should restore collapsed selection when user change mode - from WYSIWYG to TEXTAREA', function() {
+	describe('Change mode', function () {
+		it('Should restore collapsed selection when user change mode - from WYSIWYG to TEXTAREA', function () {
 			const editor = getJodit();
 
 			editor.value = '<p>test</p>';
@@ -579,16 +579,16 @@ describe('Selection Module Tests', function() {
 			expect(mirror.selectionEnd).equals(5);
 		}).timeout(6000);
 
-		it('Should restore collapsed selection when user change mode - from WYSIWYG to TEXTAREA for long string', function(done) {
+		it('Should restore collapsed selection when user change mode - from WYSIWYG to TEXTAREA for long string', function (done) {
 			unmockPromise();
 
 			let timeout;
-			const __done = function() {
+			const __done = function () {
 				clearTimeout(timeout);
 				done();
 			};
 
-			timeout = setTimeout(function() {
+			timeout = setTimeout(function () {
 				expect(false).is.true;
 				__done();
 			}, 140100);
@@ -601,7 +601,7 @@ describe('Selection Module Tests', function() {
 					/**
 					 * @this Events
 					 */
-					sourceEditorReady: function(jodit) {
+					sourceEditorReady: function (jodit) {
 						jodit.setMode(Jodit.MODE_WYSIWYG);
 						jodit.setEditorValue(
 							('<p>' + 'test '.repeat(50) + '</p>').repeat(1)
@@ -648,7 +648,7 @@ describe('Selection Module Tests', function() {
 			});
 		}).timeout(116000);
 
-		it('Should restore collapsed selection when user change mode - from TEXTAREA to WYSIWYG', function() {
+		it('Should restore collapsed selection when user change mode - from TEXTAREA to WYSIWYG', function () {
 			const editor = getJodit({
 				useAceEditor: false,
 				defaultMode: Jodit.MODE_SOURCE
@@ -666,7 +666,7 @@ describe('Selection Module Tests', function() {
 			expect(editor.value).equals('<p>te a st</p>');
 		});
 
-		it('Should restore non collapsed selection when user change mode - from WYSIWYG to TEXTAREA', function() {
+		it('Should restore non collapsed selection when user change mode - from WYSIWYG to TEXTAREA', function () {
 			const editor = getJodit({
 				useAceEditor: false
 			});
@@ -691,8 +691,8 @@ describe('Selection Module Tests', function() {
 			expect(mirror.selectionEnd).equals(6);
 		});
 
-		describe('Problem', function() {
-			it('Should restore non collapsed selection when user change mode - from TEXTAREA to WYSIWYG', function() {
+		describe('Problem', function () {
+			it('Should restore non collapsed selection when user change mode - from TEXTAREA to WYSIWYG', function () {
 				const editor = getJodit({
 					useAceEditor: false,
 					defaultMode: Jodit.MODE_SOURCE
@@ -714,7 +714,7 @@ describe('Selection Module Tests', function() {
 			});
 		});
 
-		it('Should restore collapsed selection inside empty element - from TEXTAREA to WYSIWYG', function() {
+		it('Should restore collapsed selection inside empty element - from TEXTAREA to WYSIWYG', function () {
 			const editor = getJodit({
 				useAceEditor: false,
 				defaultMode: Jodit.MODE_SOURCE
@@ -733,8 +733,8 @@ describe('Selection Module Tests', function() {
 		});
 	});
 
-	describe('Click on empty tag', function() {
-		it('Should move cursore inside that', function() {
+	describe('Click on empty tag', function () {
+		it('Should move cursore inside that', function () {
 			const editor = getJodit();
 			editor.value = '<p></p><p></p><p></p>';
 			simulateEvent(
@@ -747,18 +747,18 @@ describe('Selection Module Tests', function() {
 		});
 	});
 
-	describe('Method setCursorIn', function() {
-		describe('Call for not Node element', function() {
-			it('Should throw exception', function() {
+	describe('Method setCursorIn', function () {
+		describe('Call for not Node element', function () {
+			it('Should throw exception', function () {
 				const editor = getJodit();
 				editor.value = '<p>1</p><p>2</p>';
-				expect(function() {
+				expect(function () {
 					editor.s.setCursorIn(editor.editor.querySelector('strong'));
 				}).to.throw();
 			});
 
-			describe('Call for inserted fragment', function() {
-				it('Should not throw exception', function() {
+			describe('Call for inserted fragment', function () {
+				it('Should not throw exception', function () {
 					const editor = getJodit();
 					editor.value = '<p>1<span>3</span>2</p>';
 					editor.s.select(editor.editor.querySelector('span'));
@@ -768,16 +768,16 @@ describe('Selection Module Tests', function() {
 			});
 		});
 
-		describe('Call for element what is not inside the current editor', function() {
-			it('Should throw exception', function() {
+		describe('Call for element what is not inside the current editor', function () {
+			it('Should throw exception', function () {
 				const editor = getJodit();
-				expect(function() {
+				expect(function () {
 					editor.s.setCursorIn(document.body);
 				}).to.throw();
 			});
 		});
 
-		it('Should move cursor inside node in the end', function() {
+		it('Should move cursor inside node in the end', function () {
 			const editor = getJodit();
 			editor.value = '<p>1</p><p>2</p>';
 
@@ -787,8 +787,8 @@ describe('Selection Module Tests', function() {
 			expect(editor.value).equals('<p>1</p><p>2test</p>');
 		});
 
-		describe('With inStart = true', function() {
-			it('Should move cursor inside node in the start', function() {
+		describe('With inStart = true', function () {
+			it('Should move cursor inside node in the start', function () {
 				const editor = getJodit();
 				editor.value = '<p>1</p><p>2</p>';
 
@@ -800,8 +800,8 @@ describe('Selection Module Tests', function() {
 		});
 	});
 
-	describe('Method eachSelection', function() {
-		it('Should call callback for each node in selection', function() {
+	describe('Method eachSelection', function () {
+		it('Should call callback for each node in selection', function () {
 			const editor = getJodit({
 				disablePlugins: ['WrapTextNodes']
 			});
@@ -813,7 +813,7 @@ describe('Selection Module Tests', function() {
 			editor.s.selectRange(range);
 
 			const nodesNames = [];
-			editor.s.eachSelection(function(node) {
+			editor.s.eachSelection(function (node) {
 				nodesNames.push(node.nodeName);
 			});
 
@@ -822,7 +822,7 @@ describe('Selection Module Tests', function() {
 			).equals(nodesNames.toString().toLowerCase());
 		});
 
-		it('Should call callback for each node in selection range', function() {
+		it('Should call callback for each node in selection range', function () {
 			const editor = getJodit({ disablePlugins: ['WrapTextNodes'] });
 			editor.value =
 				'<p>1</p><p>2</p><strong><span>22</span></strong><p>4</p>stop';
@@ -832,7 +832,7 @@ describe('Selection Module Tests', function() {
 			editor.s.selectRange(range);
 
 			const nodesNames = [];
-			editor.s.eachSelection(function(node) {
+			editor.s.eachSelection(function (node) {
 				nodesNames.push(node.nodeName);
 			});
 
@@ -841,14 +841,14 @@ describe('Selection Module Tests', function() {
 			);
 		});
 
-		it('Should not call callback for editor', function() {
+		it('Should not call callback for editor', function () {
 			const editor = getJodit();
 			editor.value = '';
 
 			editor.s.setCursorIn(editor.editor);
 
 			const nodesNames = [];
-			editor.s.eachSelection(function(node) {
+			editor.s.eachSelection(function (node) {
 				nodesNames.push(node.nodeName);
 			});
 
@@ -857,14 +857,14 @@ describe('Selection Module Tests', function() {
 			);
 		});
 
-		it('Should call callback for current node if selection is collapsed', function() {
+		it('Should call callback for current node if selection is collapsed', function () {
 			const editor = getJodit();
 			editor.value = '<p>1</p><p>2</p>';
 
 			editor.s.setCursorIn(editor.editor.firstChild);
 
 			const nodesNames = [];
-			editor.s.eachSelection(function(node) {
+			editor.s.eachSelection(function (node) {
 				nodesNames.push(node.nodeName);
 			});
 
@@ -873,6 +873,6 @@ describe('Selection Module Tests', function() {
 			);
 		});
 
-		describe('If selected element is UL or LI or content in LI', function() {});
+		describe('If selected element is UL or LI or content in LI', function () {});
 	});
 });

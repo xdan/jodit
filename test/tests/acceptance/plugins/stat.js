@@ -3,9 +3,9 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Stat plugin', function() {
-	describe('After init and change', function() {
-		it('Should show chars count and words count', function() {
+describe('Stat plugin', function () {
+	describe('After init and change', function () {
+		it('Should show chars count and words count', function () {
 			const editor = getJodit({
 				language: 'en',
 				showCharsCounter: true,
@@ -23,17 +23,15 @@ describe('Stat plugin', function() {
 
 			expect(statusbar).is.not.null;
 
-			expect(
-				statusbar.textContent.match(/Chars: 20/)
-			).is.not.null;
+			expect(statusbar.textContent.match(/Chars: 20/)).is.not.null;
 
 			expect(statusbar.textContent.match(/Words: 4/)).does.not.equal(
 				null
 			);
 		});
 
-		describe('Count HTML Chars', function() {
-			it('Should show real HTML chars count', function() {
+		describe('Count HTML Chars', function () {
+			it('Should show real HTML chars count', function () {
 				const editor = getJodit({
 					language: 'en',
 					showCharsCounter: true,
@@ -49,14 +47,12 @@ describe('Stat plugin', function() {
 					'.jodit-status-bar'
 				);
 
-				expect(
-					statusbar.textContent.match(/Chars: 36/)
-				).is.not.null;
+				expect(statusbar.textContent.match(/Chars: 36/)).is.not.null;
 			});
 		});
 
-		describe('Hide chars count', function() {
-			it('Should show only words count', function() {
+		describe('Hide chars count', function () {
+			it('Should show only words count', function () {
 				const editor = getJodit({
 					language: 'en',
 					showCharsCounter: false,
@@ -73,17 +69,13 @@ describe('Stat plugin', function() {
 
 				expect(statusbar).is.not.null;
 
-				expect(
-					statusbar.textContent.match(/Chars: 10/)
-				).is.null;
-				expect(
-					statusbar.textContent.match(/Words: 2/)
-				).is.not.null;
+				expect(statusbar.textContent.match(/Chars: 10/)).is.null;
+				expect(statusbar.textContent.match(/Words: 2/)).is.not.null;
 			});
 		});
 
-		describe('Hide words count', function() {
-			it('Should show only chars count', function() {
+		describe('Hide words count', function () {
+			it('Should show only chars count', function () {
 				const editor = getJodit({
 					language: 'en',
 					showCharsCounter: true,
@@ -100,17 +92,13 @@ describe('Stat plugin', function() {
 
 				expect(statusbar).is.not.null;
 
-				expect(
-					statusbar.textContent.match(/Chars: 10/)
-				).is.not.null;
-				expect(statusbar.textContent.match(/Words: 2/)).equals(
-					null
-				);
+				expect(statusbar.textContent.match(/Chars: 10/)).is.not.null;
+				expect(statusbar.textContent.match(/Words: 2/)).equals(null);
 			});
 		});
 
-		describe('Hide words and chars count', function() {
-			it('Should hide status bar', function() {
+		describe('Hide words and chars count', function () {
+			it('Should hide status bar', function () {
 				const editor = getJodit({
 					language: 'en',
 					showCharsCounter: false,
@@ -128,12 +116,8 @@ describe('Stat plugin', function() {
 
 				expect(statusbar).is.not.null;
 
-				expect(
-					statusbar.textContent.match(/Chars: 10/)
-				).is.null;
-				expect(statusbar.textContent.match(/Words: 2/)).equals(
-					null
-				);
+				expect(statusbar.textContent.match(/Chars: 10/)).is.null;
+				expect(statusbar.textContent.match(/Words: 2/)).equals(null);
 				expect(statusbar.offsetHeight).equals(0);
 			});
 		});
