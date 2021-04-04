@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.6
+ * Version: v3.6.7
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -235,6 +235,10 @@ class Config {
             },
             {
                 group: 'insert',
+                buttons: []
+            },
+            {
+                group: 'form',
                 buttons: []
             },
             {
@@ -3122,7 +3126,7 @@ class Dom {
         }
     }
     static replace(elm, newTagName, create, withAttributes = false, notMoveContent = false) {
-        const tag = (0,_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(newTagName)
+        const tag = ((0,_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(newTagName))
             ? create.element(newTagName)
             : newTagName;
         if (!notMoveContent) {
@@ -5350,6 +5354,9 @@ function cache(target, name, descriptor) {
     }
     descriptor.get = function () {
         const value = getter.call(this);
+        if (value && value.noCache === true) {
+            return value;
+        }
         Object.defineProperty(this, name, {
             configurable: descriptor.configurable,
             enumerable: descriptor.enumerable,
@@ -7678,7 +7685,7 @@ module.exports = "<svg viewBox=\"0 0 18.151 18.151\" xmlns=\"http://www.w3.org/2
 /* 49 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <rect x=\"252\" y=\"96\"/> <rect/> <rect x=\"252\" y=\"288\"/> <rect y=\"384\"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176 \"/> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176\"/> </g> </svg>"
 
 /***/ }),
 /* 50 */
@@ -8157,8 +8164,9 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
@@ -9003,7 +9011,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.6.6";
+        this.version = "3.6.7";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -9101,15 +9109,25 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.6.6";
+        return "3.6.7";
     }
     static getVersion() {
-        return "3.6.6";
+        return "3.6.7";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
     }
-    initOwners() { }
+    initOwners() {
+        var _a;
+        this.ownerWindow = (_a = this.o.ownerWindow) !== null && _a !== void 0 ? _a : window;
+    }
+    attachEvents(options) {
+        if (!options) {
+            return;
+        }
+        const e = options === null || options === void 0 ? void 0 : options.events;
+        e && Object.keys(e).forEach((key) => this.e.on(key, e[key]));
+    }
     getInstance(moduleName, options) {
         const instance = this.e.fire((0,helpers.camelCase)('getInstance_' + moduleName), options);
         if (instance) {
@@ -9525,7 +9543,9 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
             }
         }
         if (ctr.tooltip) {
-            state.tooltip = this.j.i18n(ctr.tooltip);
+            state.tooltip = this.j.i18n((0,helpers.isFunction)(ctr.tooltip)
+                ? ctr.tooltip(this.j, ctr, this)
+                : ctr.tooltip);
         }
         state.hasTrigger = Boolean(ctr.list || (ctr.popup && ctr.exec));
     }
@@ -9867,7 +9887,6 @@ config/* Config.prototype.controls.dialog */.D.prototype.controls.dialog = {
 let Dialog = class Dialog extends ViewWithToolbar {
     constructor(options) {
         super(options);
-        this.destination = document.body;
         this.destroyAfterClose = false;
         this.moved = false;
         this.iSetMaximization = false;
@@ -9942,6 +9961,9 @@ let Dialog = class Dialog extends ViewWithToolbar {
     }
     className() {
         return 'Dialog';
+    }
+    get destination() {
+        return this.od.body;
     }
     setElements(root, elements) {
         const elements_list = [];
@@ -12098,6 +12120,7 @@ const CLASS_PREVIEW = F_CLASS + '_preview_', preview_tpl_next = (next = 'next', 
                         exec: async () => {
                             await self.deleteFile(ga('data-name'), ga('data-source'));
                             self.state.activeElements = [];
+                            return self.loadTree();
                         }
                     }
                     : false,
@@ -12435,6 +12458,7 @@ function selfListeners() {
 
 class FileBrowser extends ViewWithToolbar {
     constructor(options) {
+        var _a;
         super(options);
         this.loader = this.c.div(F_CLASS + '__loader', ICON_LOADER);
         this.browser = this.c.div(F_CLASS + ' non-selected');
@@ -12466,18 +12490,25 @@ class FileBrowser extends ViewWithToolbar {
             this.dialog.close();
         };
         this.elementsMap = {};
+        this.attachEvents(options);
         const self = this;
         self.options = (0,helpers.ConfigProto)(options || {}, config/* Config.defaultOptions.filebrowser */.D.defaultOptions.filebrowser);
         self.storage = Storage.makeStorage(this.o.saveStateInStorage);
         self.dataProvider = makeDataProvider(self, self.options);
         self.dialog = new Dialog({
             fullsize: self.o.fullsize,
+            ownerWindow: self.ownerWindow,
             theme: self.o.theme,
             globalFullSize: self.o.globalFullSize,
             language: this.o.language,
             minWidth: Math.min(700, screen.width),
             minHeight: 300,
-            buttons: ['fullsize', 'dialog.close']
+            buttons: (_a = this.o.headerButtons) !== null && _a !== void 0 ? _a : ['fullsize', 'dialog.close']
+        });
+        ['afterClose', 'beforeOpen'].forEach(proxyEvent => {
+            self.dialog.events.on(self.dialog, proxyEvent, () => {
+                this.e.fire(proxyEvent);
+            });
         });
         if (self.o.showFoldersPanel) {
             self.browser.appendChild(self.tree);
@@ -15296,7 +15327,7 @@ class Jodit extends ViewWithToolbar {
                 new Date().getTime().toString();
         global/* instances */.as[this.id] = this;
         this.storage = Storage.makeStorage(true, this.id);
-        this.attachEvents(this.o);
+        this.attachEvents(options);
         this.e.on(this.ow, 'resize', () => {
             if (this.e) {
                 this.e.fire('resize');
@@ -15939,10 +15970,6 @@ class Jodit extends ViewWithToolbar {
                 }, this.defaultTimeout));
             }
         });
-    }
-    attachEvents(options) {
-        const e = options === null || options === void 0 ? void 0 : options.events;
-        e && Object.keys(e).forEach((key) => this.e.on(key, e[key]));
     }
     prepareWYSIWYGEditor() {
         const { editor } = this;
