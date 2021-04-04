@@ -1074,7 +1074,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		this.storage = Storage.makeStorage(true, this.id);
 
-		this.attachEvents(this.o);
+		this.attachEvents(options as IViewOptions);
 
 		this.e.on(this.ow, 'resize', () => {
 			if (this.e) {
@@ -1414,15 +1414,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				);
 			}
 		});
-	}
-
-	/**
-	 * Add option's event handlers in emitter
-	 * @param options
-	 */
-	private attachEvents(options: IViewOptions) {
-		const e = options?.events;
-		e && Object.keys(e).forEach((key: string) => this.e.on(key, e[key]));
 	}
 
 	/**

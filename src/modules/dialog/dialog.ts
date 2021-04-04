@@ -96,7 +96,10 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	private offsetX?: number;
 	private offsetY?: number;
 
-	private destination: HTMLElement = document.body;
+	private get destination(): HTMLElement {
+		return this.od.body;
+	}
+
 	private destroyAfterClose: boolean = false;
 
 	private moved: boolean = false;

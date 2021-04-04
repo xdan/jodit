@@ -97,5 +97,5 @@ export function ConfigFlatten(obj: IDictionary): IDictionary {
 	return keys(obj, false).reduce((app, key) => {
 		app[key] = obj[key];
 		return app;
-	}, {} as IDictionary)
+	}, {} as IDictionary);
 }

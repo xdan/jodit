@@ -6,8 +6,10 @@
 
 import type {
 	Buttons,
+	ButtonsGroup,
 	ButtonsOption,
 	Controls,
+	IControlType,
 	IProgressBar,
 	IToolbarCollection
 } from './toolbar';
@@ -48,6 +50,7 @@ interface IToolbarOptions {
 type NodeFunction = (elm: HTMLElement) => void;
 
 interface IViewOptions extends ILanguageOptions, IToolbarOptions {
+	headerButtons?: string | Array<IControlType | string | ButtonsGroup>;
 	basePath?: string;
 	theme?: string;
 
@@ -74,9 +77,15 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 	events?: IDictionary<(...args: any[]) => any>;
 
 	shadowRoot?: Nullable<ShadowRoot>;
+
+	ownerWindow?: Window;
 }
 
-interface IViewBased<T = IViewOptions> extends IContainer, IComponent, Mods, Elms {
+interface IViewBased<T = IViewOptions>
+	extends IContainer,
+		IComponent,
+		Mods,
+		Elms {
 	isView: true;
 
 	/**

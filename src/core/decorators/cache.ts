@@ -5,6 +5,7 @@
  */
 
 import { error } from '../helpers';
+import type { IDictionary } from '../../types';
 
 export interface CachePropertyDescriptor<T, R> extends PropertyDescriptor {
 	get?: (this: T) => R;
@@ -23,6 +24,10 @@ export function cache<T, R>(
 
 	descriptor.get = function (this: T) {
 		const value = getter.call(this);
+
+		if (value && (value as IDictionary).noCache === true) {
+			return value;
+		}
 
 		Object.defineProperty(this, name, {
 			configurable: descriptor.configurable,

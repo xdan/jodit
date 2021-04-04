@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IViewOptions } from './view';
+import { IViewBased, IViewOptions } from './view';
 import { IComponent, IContainer } from './types';
 import type { Mods } from '../core/traits';
 
@@ -22,7 +22,7 @@ export type Content =
 	| ContentItem[]
 	| Array<ContentItem | ContentItem[]>;
 
-export interface IDialog extends IComponent, IContainer, Mods {
+export interface IDialog extends IComponent, IContainer, Mods, IViewBased {
 	isOpened: boolean;
 	dialog: HTMLElement;
 

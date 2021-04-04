@@ -205,12 +205,18 @@ describe('Iframe mode', function () {
 						editor.toggleMode();
 						expect(changeCounter).equals(3);
 
-						editor.__plugins.source.sourceEditor.instance.value = 'Some text3';
-						editor.e.fire('change', editor.__plugins.source.sourceEditor.instance);
+						editor.__plugins.source.sourceEditor.instance.value =
+							'Some text3';
+						editor.e.fire(
+							'change',
+							editor.__plugins.source.sourceEditor.instance
+						);
 						expect(changeCounter).equals(4);
 
 						editor.toggleMode();
-						editor.editor.appendChild(editor.createInside.text('x'));
+						editor.editor.appendChild(
+							editor.createInside.text('x')
+						);
 						simulateEvent('keydown', 'x', editor.editor);
 
 						expect(changeCounter).above(5);

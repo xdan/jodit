@@ -9,6 +9,60 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.6.7
+
+#### :bug: Bug Fix
+
+* When deleting a file via the context menu - the list of files was not updated.
+
+#### :rocket: New Feature
+
+* Added the ability to open a file browser and any dialog in a new window.
+	To do this, you need to define the `ownerWindow` field.
+	For example, this can be done so that the file browser opens in a separate popup window.
+
+```js
+const editor = Jodit.make('#editor' ,{
+	uploader: {
+		url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+	},
+	filebrowser: {
+		ajax: {
+			url: 'https://xdsoft.net/jodit/connector/index.php'
+		}
+	}
+});
+
+// Rewrite default filebrowser instance
+editor.e.on('getInstanceFileBrowser', (options) => {
+	const win = window.open("about:blank", "File Browser", "location=0,menubar=0,status=0,toolbar=0,titlebar=0,width=700,height=500");
+
+	win.document.open();
+	// Need append css for Jodit
+	win.document.write('<html><head><title>File Browser!</title><link rel="stylesheet" type="text/css" href="./build/jodit.min.css"></head><body></body></html>');
+	win.document.close();
+
+	const browser = new Jodit.modules.FileBrowser({
+		ownerWindow: win, // set window which will be used for opening
+		headerButtons: [], // disable buttns - close and fullscreen
+		fullsize: true,
+		events: {
+			beforeOpen: () => {
+				win.focus();
+			},
+			afterClose: () => {
+				win.close();
+			}
+		},
+		ajax: options.ajax
+	});
+
+	browser.noCache = true; // Becouse window can be closed - create instance on every getInstanceFileBrowser
+
+	return browser;
+});
+```
+
 ## 3.6.5
 
 #### :boom: Breaking Change

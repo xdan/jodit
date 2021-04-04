@@ -24,16 +24,12 @@ import type {
 	IUploader,
 	IUploaderOptions,
 	IDialog,
-	CanUndef
+	CanUndef,
+	IViewOptions
 } from '../../types/';
 
 import { Storage } from '../../core/storage/';
-import {
-	error,
-	isFunction,
-	isString,
-	ConfigProto
-} from '../../core/helpers/';
+import { error, isFunction, isString, ConfigProto } from '../../core/helpers/';
 import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 
 import './config';
@@ -144,7 +140,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			.catch(this.status);
 	}
 
-	private onSelect(callback?: (data: IFileBrowserCallBackData) => void) {
+	// eslint-disable-next-line no-unused-vars
+	private onSelect(callback?: (_: IFileBrowserCallBackData) => void) {
 		return () => {
 			if (this.state.activeElements.length) {
 				const files: string[] = [];
@@ -274,7 +271,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	 */
 	@autobind
 	open(
-		callback: CanUndef<(data: IFileBrowserCallBackData) => void> = this.o
+		// eslint-disable-next-line no-unused-vars
+		callback: CanUndef<(_: IFileBrowserCallBackData) => void> = this.o
 			.defaultCallback,
 		onlyImages: boolean = false
 	): Promise<void> {
@@ -344,6 +342,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	constructor(options?: IFileBrowserOptions) {
 		super(options);
 
+		this.attachEvents(options as IViewOptions);
+
 		const self: FileBrowser = this;
 
 		self.options = ConfigProto(
@@ -357,12 +357,19 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 		self.dialog = new Dialog({
 			fullsize: self.o.fullsize,
+			ownerWindow: self.ownerWindow,
 			theme: self.o.theme,
 			globalFullSize: self.o.globalFullSize,
 			language: this.o.language,
 			minWidth: Math.min(700, screen.width),
 			minHeight: 300,
-			buttons: ['fullsize', 'dialog.close']
+			buttons: this.o.headerButtons ?? ['fullsize', 'dialog.close']
+		});
+
+		['afterClose', 'beforeOpen'].forEach(proxyEvent => {
+			self.dialog.events.on(self.dialog, proxyEvent, () => {
+				this.e.fire(proxyEvent);
+			});
 		});
 
 		if (self.o.showFoldersPanel) {

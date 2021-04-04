@@ -253,7 +253,22 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	/**
 	 * Can change ownerWindow here
 	 */
-	protected initOwners(): void {}
+	protected initOwners(): void {
+		this.ownerWindow = this.o.ownerWindow ?? window;
+	}
+
+	/**
+	 * Add option's event handlers in emitter
+	 * @param options
+	 */
+	protected attachEvents(options?: IViewOptions): void {
+		if (!options) {
+			return;
+		}
+
+		const e = options?.events;
+		e && Object.keys(e).forEach((key: string) => this.e.on(key, e[key]));
+	}
 
 	protected constructor(
 		options?: Partial<IViewOptions>,
@@ -269,6 +284,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 		this.events = new EventsNative(this.od);
 		this.create = new Create(this.od);
+
 		this.container = this.c.div();
 		this.container.classList.add('jodit');
 
