@@ -4,28 +4,25 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+// eslint-disable-next-line strict
 module.exports = {
 	root: true,
 	parser: '@typescript-eslint/parser',
 	plugins: ['@typescript-eslint', 'header'],
-	extends: [
-		'eslint:recommended',
-		'plugin:@typescript-eslint/recommended',
-		'prettier/@typescript-eslint'
-	],
+	extends: ['eslint:recommended', 'plugin:prettier/recommended'],
 	env: {
 		browser: true,
 		node: true
 	},
 	rules: {
-		strict: ['error', 'global'],
+		strict: ['error', 'never'],
 		'no-with': 'error',
 		'no-caller': 'error',
 		'no-delete-var': 'error',
 		'no-proto': 'off',
 		'valid-typeof': 'error',
 		'no-undef': 'off',
-		eqeqeq: ['error', 'always', {null: 'never'}],
+		eqeqeq: ['error', 'always', { null: 'never' }],
 
 		'no-new': 'error',
 		'no-new-func': 'error',
@@ -40,8 +37,12 @@ module.exports = {
 		'no-implicit-globals': 'error',
 		'no-implicit-coercion': 'error',
 		camelcase: 'off',
-		quotes: ['error', 'single', {avoidEscape:  true}],
-		'quote-props': ['error', 'as-needed', {keywords: false, numbers: false}],
+		quotes: ['error', 'single', { avoidEscape: true }],
+		'quote-props': [
+			'error',
+			'as-needed',
+			{ keywords: false, numbers: false }
+		],
 		'jsx-quotes': 'error',
 
 		'header/header': [2, 'src/header.js'],

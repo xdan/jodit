@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+// eslint-disable-next-line strict
 const path = require('path');
 const fs = require('fs');
 
@@ -50,7 +51,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 			name +
 			(ES === 'es5' || isTest ? '' : '.' + ES) +
 			(excludeLangs ? '.en' : '') +
-		(uglify ? '.min' : ''));
+			(uglify ? '.min' : ''));
 
 	const css_loaders = [
 		debug || isTest ? 'style-loader' : MiniCssExtractPlugin.loader,
@@ -85,7 +86,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 			'process.env': {
 				TARGET_ES: JSON.stringify(ES),
 				NODE_ENV: JSON.stringify(mode),
-				EXCLUDE_LANGS: JSON.stringify(excludeLangs),
+				EXCLUDE_LANGS: JSON.stringify(excludeLangs)
 			}
 		})
 	];

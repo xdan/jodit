@@ -3,9 +3,14 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+'use strict';
 
 const path = require('path');
-const webpackConfFunc = require(path.resolve(process.cwd(), './webpack.config'));
+const webpackConfFunc = require(path.resolve(
+	process.cwd(),
+	'./webpack.config'
+));
+
 const webpackConfig = (() => {
 	const config = webpackConfFunc(
 		[],
@@ -26,13 +31,35 @@ const webpackConfig = (() => {
 	delete config.output.publicPath;
 	// delete config.output;
 
+	config.stats = {
+		modules: false,
+		colors: true
+	};
+
+	config.watch = false;
+
+	config.optimization = {
+		runtimeChunk: 'single',
+		splitChunks: {
+			chunks: 'all',
+			minSize: 0,
+			cacheGroups: {
+				commons: {
+					name: 'commons',
+					chunks: 'initial',
+					minChunks: 1
+				}
+			}
+		}
+	};
+
 	return config;
 })();
 
 module.exports = function (config) {
 	config.set({
 		basePath: '',
-		frameworks: ['mocha', 'chai', "webpack"],
+		frameworks: ['mocha', 'chai', 'webpack'],
 
 		mime: {
 			'text/css': ['css'],
@@ -55,7 +82,8 @@ module.exports = function (config) {
 			},
 
 			'app.css',
-			'src/index.ts',
+			'build/jodit.js',
+			'build/jodit.css',
 			'node_modules/synchronous-promise/dist/synchronous-promise.js',
 			'test/bootstrap.js',
 			'config.js',
