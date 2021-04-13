@@ -4,8 +4,19 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { CanUndef, IComponent, IDictionary, IViewComponent } from '../../types';
-import { error, isFunction, isPlainObject, isViewObject, splitArray } from '../helpers';
+import type {
+	CanUndef,
+	IComponent,
+	IDictionary,
+	IViewComponent
+} from '../../types';
+import {
+	error,
+	isFunction,
+	isPlainObject,
+	isViewObject,
+	splitArray
+} from '../helpers';
 import { ObserveObject } from '../events';
 import { Component, STATUSES } from '../component';
 
@@ -27,7 +38,10 @@ export function getPropertyDescriptor(
  * Watch decorator. Added observer for some change in field value
  * @param observeFields
  */
-export function watch(observeFields: string[] | string, context?: object | ((c: IDictionary) => object)) {
+export function watch(
+	observeFields: string[] | string,
+	context?: object | ((c: IDictionary) => object)
+) {
 	return <T extends Component & IDictionary>(
 		target: T,
 		propertyKey: string
@@ -73,7 +87,7 @@ export function watch(observeFields: string[] | string, context?: object | ((c: 
 				}
 
 				const parts = field.split('.'),
-					[key] = parts as unknown as Array<(keyof IComponent)>;
+					[key] = (parts as unknown) as Array<keyof IComponent>;
 
 				let value: any = component[key];
 

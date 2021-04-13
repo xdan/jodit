@@ -109,7 +109,7 @@ export function stateListeners(this: FileBrowser): void {
 			this.async.debounce(() => {
 				Dom.detach(this.tree);
 
-				state.sources.forEach((source) => {
+				state.sources.forEach(source => {
 					const sourceName = source.name;
 
 					if (sourceName && sourceName !== DEFAULT_SOURCE_NAME) {

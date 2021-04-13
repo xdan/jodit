@@ -8,13 +8,15 @@ import type {
 	CallbackFunction,
 	IAsync,
 	IAsyncParams,
-	ITimeout, RejectablePromise
+	ITimeout,
+	RejectablePromise
 } from '../types';
 import {
 	setTimeout,
 	clearTimeout,
 	isFunction,
-	isPlainObject, isPromise
+	isPlainObject,
+	isPromise
 } from './helpers/';
 
 export class Async implements IAsync {
@@ -210,7 +212,7 @@ export class Async implements IAsync {
 
 		if (!promise.finally && process.env.TARGET_ES !== 'es2018') {
 			promise.finally = (onfinally?: (() => void) | undefined | null) => {
-				promise.then(onfinally).catch(onfinally)
+				promise.then(onfinally).catch(onfinally);
 				return promise;
 			};
 		}
@@ -291,7 +293,7 @@ export class Async implements IAsync {
 	}
 
 	requestIdlePromise(): Promise<number> {
-		return new Promise<number>((res) => {
+		return new Promise<number>(res => {
 			const request = this.requestIdleCallback(() => res(request));
 		});
 	}

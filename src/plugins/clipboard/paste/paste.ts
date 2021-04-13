@@ -171,7 +171,9 @@ export class paste extends Plugin {
 	 */
 	private processHTML(e: PasteEvent, html: string): boolean {
 		if (this.j.o.askBeforePasteHTML) {
-			const cached = this.pasteStack.find((cachedItem) => cachedItem.html === html);
+			const cached = this.pasteStack.find(
+				cachedItem => cachedItem.html === html
+			);
 
 			if (cached) {
 				this.insertByType(

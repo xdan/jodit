@@ -16,7 +16,7 @@ export class UIFileInput extends UIInput {
 	private button!: IUIButton;
 
 	state: UIInput['state'] & {
-		onlyImages: boolean
+		onlyImages: boolean;
 	} = {
 		...UIInput.defaultState,
 		type: 'file',
@@ -35,7 +35,7 @@ export class UIFileInput extends UIInput {
 			}
 		});
 
-		const {container} = this.button;
+		const { container } = this.button;
 
 		if (!this.nativeInput) {
 			this.nativeInput = this.createNativeInput(options);
@@ -50,7 +50,9 @@ export class UIFileInput extends UIInput {
 		return container;
 	}
 
-	protected createNativeInput(options: Partial<this['state']>): IUIInput['nativeInput'] {
+	protected createNativeInput(
+		options: Partial<this['state']>
+	): IUIInput['nativeInput'] {
 		return this.j.create.fromHTML(`<input
 			type="file"
 			accept="${options.onlyImages ? 'image/*' : '*'}"

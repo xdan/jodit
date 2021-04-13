@@ -15,7 +15,7 @@ export interface IAsyncParams {
 
 interface RejectablePromise<T> extends Promise<T> {
 	rejectCallback: (reason?: any) => void;
-	finally(onfinally?: (() => void) | undefined | null): Promise<T>
+	finally(onfinally?: (() => void) | undefined | null): Promise<T>;
 }
 
 export interface IAsync extends IDestructible {

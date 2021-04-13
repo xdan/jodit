@@ -18,8 +18,6 @@ declare module '../../../config' {
 			  ) => Array<IControlType | string> | HTMLElement | string)
 		>;
 
-
-
 		toolbarInlineDisabledButtons: string[];
 		toolbarInline: boolean;
 		toolbarInlineForSelection: boolean;

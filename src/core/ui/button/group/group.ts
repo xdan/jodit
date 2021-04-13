@@ -45,7 +45,7 @@ export class UIButtonGroup extends UIGroup {
 			value?: string | boolean | number;
 			label?: string;
 			onChange?: (values: IUIOption[]) => void;
-			options?: IUIOption[],
+			options?: IUIOption[];
 			radio: boolean;
 		} = {
 			radio: true
@@ -88,11 +88,7 @@ export class UIButtonGroup extends UIGroup {
 				value: elm.state.value
 			}));
 
-		this.jodit.e.fire(
-			this,
-			'select',
-			result
-		);
+		this.jodit.e.fire(this, 'select', result);
 
 		this.options.onChange?.(result);
 	}

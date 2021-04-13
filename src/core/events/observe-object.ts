@@ -67,7 +67,9 @@ export class ObserveObject {
 							],
 							prefix.join('.'),
 							oldValue,
-							(value as any)?.valueOf ? (value as any).valueOf() : value
+							(value as any)?.valueOf
+								? (value as any).valueOf()
+								: value
 						);
 					}
 				},

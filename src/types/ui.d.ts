@@ -70,8 +70,8 @@ export interface IUIButtonState {
 }
 
 export type IUIButtonStatePartial = Omit<Partial<IUIButtonState>, 'icon'> & {
-	icon?: Partial<IUIButtonState['icon']>
-}
+	icon?: Partial<IUIButtonState['icon']>;
+};
 
 export interface IUIButton extends IViewComponent, IUIElement, IFocusable {
 	state: IUIButtonState;
@@ -116,7 +116,10 @@ export interface IUIForm extends IUIGroup {
 }
 
 export interface IUIInput extends IUIElement {
-	readonly nativeInput: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+	readonly nativeInput:
+		| HTMLInputElement
+		| HTMLSelectElement
+		| HTMLTextAreaElement;
 
 	readonly state: {
 		className: string;
@@ -147,8 +150,8 @@ export interface IUIInputValidator<T extends IUIInput = IUIInput> {
 }
 
 export interface IUIOption {
-	value: string | boolean | number,
-	text: string
+	value: string | boolean | number;
+	text: string;
 }
 
 export interface IUISelect extends IUIInput {

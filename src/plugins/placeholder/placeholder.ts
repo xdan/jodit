@@ -88,13 +88,15 @@ export function isEditorEmpty(root: HTMLElement): boolean {
 		return Dom.isEmptyTextNode(first);
 	}
 
-	return !next &&
+	return (
+		!next &&
 		Dom.each(
 			first,
 			elm =>
 				!Dom.isTag(elm, ['ul', 'li', 'ol']) &&
 				(Dom.isEmpty(elm) || Dom.isTag(elm, 'br'))
-		);
+		)
+	);
 }
 
 /**

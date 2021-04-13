@@ -287,7 +287,7 @@ export class Delete extends Plugin {
 				) {
 					for (
 						let i = backspace ? value.length - 1 : 0;
-						backspace ? (i >= 0) : (i < value.length);
+						backspace ? i >= 0 : i < value.length;
 						i += backspace ? -1 : 1
 					) {
 						if (value[i] === ' ') {

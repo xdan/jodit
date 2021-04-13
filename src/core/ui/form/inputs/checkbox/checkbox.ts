@@ -26,6 +26,6 @@ export class UICheckbox extends UIInput {
 
 	/** @override **/
 	constructor(jodit: IViewBased, options: Partial<IUIInput['state']>) {
-		super(jodit, {...options, type: 'checkbox'});
+		super(jodit, { ...options, type: 'checkbox' });
 	}
 }

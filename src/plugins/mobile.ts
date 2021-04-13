@@ -58,9 +58,9 @@ Config.prototype.controls.dots = {
 				toolbar: makeCollection(editor),
 				rebuild: () => {
 					if (button) {
-						const buttons: CanUndef<Array<
-							string | IControlType
-						>> = editor.e.fire(
+						const buttons: CanUndef<
+							Array<string | IControlType>
+						> = editor.e.fire(
 							'getDiffButtons.mobile',
 							button.closest(UIList)
 						);

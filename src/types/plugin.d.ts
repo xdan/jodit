@@ -16,7 +16,8 @@ export interface IPluginButton {
 	options?: IControlType;
 }
 
-export class IPlugin<T extends IViewBased = IViewBased> implements IDestructible, IInitable {
+export class IPlugin<T extends IViewBased = IViewBased>
+	implements IDestructible, IInitable {
 	jodit: T;
 
 	static requires?: string[];

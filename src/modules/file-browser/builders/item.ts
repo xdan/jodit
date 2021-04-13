@@ -7,7 +7,8 @@
 import type {
 	IDictionary,
 	IFileBrowserItemElement,
-	IFileBrowserItemWrapper, ISource
+	IFileBrowserItemWrapper,
+	ISource
 } from '../../../types';
 import { normalizePath, normalizeUrl } from '../../../core/helpers/';
 
@@ -17,9 +18,9 @@ export class FileBrowserItem implements IFileBrowserItemWrapper {
 	type!: IFileBrowserItemWrapper['type'];
 
 	private constructor(readonly data: IFileBrowserItemElement) {
-		Object.keys(data).forEach((key) => {
+		Object.keys(data).forEach(key => {
 			(this as IDictionary)[key] = (data as IDictionary)[key];
-		})
+		});
 	}
 
 	static create(

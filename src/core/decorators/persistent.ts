@@ -14,11 +14,14 @@ import { isViewObject } from '../helpers';
  * @param target
  * @param propertyKey
  */
-export function persistent<T extends IComponent>(target: T, propertyKey: string): void {
+export function persistent<T extends IComponent>(
+	target: T,
+	propertyKey: string
+): void {
 	target.hookStatus(STATUSES.ready, (component: T) => {
 		const jodit = isViewObject(component)
-			? component
-			: ((component as unknown) as IViewComponent).jodit,
+				? component
+				: ((component as unknown) as IViewComponent).jodit,
 			storageKey = `${jodit.options.namespace}${component.componentName}_prop_${propertyKey}`,
 			initialValue = (component as IDictionary)[propertyKey];
 

@@ -397,7 +397,9 @@ export class link extends Plugin {
 					const node = jodit.s.current();
 
 					if (Dom.isTag(node, ['img'])) {
-						links = [Dom.wrap(node, 'a', jodit) as HTMLAnchorElement];
+						links = [
+							Dom.wrap(node, 'a', jodit) as HTMLAnchorElement
+						];
 					} else {
 						links = jodit.s.wrapInTag('a') as HTMLAnchorElement[];
 					}

@@ -51,7 +51,8 @@ export default (self: FileBrowser) => {
 							icon: 'pencil',
 							title: 'Edit',
 							exec: () => {
-								return openImageEditor.call(self,
+								return openImageEditor.call(
+									self,
 									ga('href'),
 									ga('data-name'),
 									ga('data-path'),
@@ -172,36 +173,39 @@ export default (self: FileBrowser) => {
 										}
 									};
 
-								self.e.on([next, prev], 'click', function (
-									this: HTMLElement
-								) {
-									if (
-										this.classList.contains(
-											CLASS_PREVIEW + 'navigation-next'
-										)
-									) {
-										item = Dom.nextWithClass(
-											item,
-											ITEM_CLASS
-										) as HTMLElement;
-									} else {
-										item = Dom.prevWithClass(
-											item,
-											ITEM_CLASS
-										) as HTMLElement;
+								self.e.on(
+									[next, prev],
+									'click',
+									function (this: HTMLElement) {
+										if (
+											this.classList.contains(
+												CLASS_PREVIEW +
+													'navigation-next'
+											)
+										) {
+											item = Dom.nextWithClass(
+												item,
+												ITEM_CLASS
+											) as HTMLElement;
+										} else {
+											item = Dom.prevWithClass(
+												item,
+												ITEM_CLASS
+											) as HTMLElement;
+										}
+
+										if (!item) {
+											throw error('Need element');
+										}
+
+										Dom.detach(temp_content);
+										Dom.detach(preview_box);
+
+										temp_content.innerHTML = ICON_LOADER;
+
+										addLoadHandler(ga('href'));
 									}
-
-									if (!item) {
-										throw error('Need element');
-									}
-
-									Dom.detach(temp_content);
-									Dom.detach(preview_box);
-
-									temp_content.innerHTML = ICON_LOADER;
-
-									addLoadHandler(ga('href'));
-								});
+								);
 
 								self.e.on('beforeDestruct', () => {
 									preview.destruct();

@@ -43,7 +43,11 @@ interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 	componentName: string;
 	getFullElName(elementName: string): string;
 	getFullElName(elementName: string, mod: string): string;
-	getFullElName(elementName: string, mod?: string, modValue?: boolean | string): string;
+	getFullElName(
+		elementName: string,
+		mod?: string,
+		modValue?: boolean | string
+	): string;
 
 	uid: string;
 	isDestructed: boolean;

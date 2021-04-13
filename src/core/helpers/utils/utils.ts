@@ -9,7 +9,8 @@ import type {
 	IDictionary,
 	IViewBased,
 	Nullable,
-	IJodit, RejectablePromise
+	IJodit,
+	RejectablePromise
 } from '../../../types';
 import { isFunction } from '../checker/is-function';
 import { isPromise } from '../checker/is-promise';

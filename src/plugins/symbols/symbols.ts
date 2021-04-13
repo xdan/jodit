@@ -82,18 +82,19 @@ export class symbols extends Plugin {
 				.on(chars, 'focus', function (this: HTMLAnchorElement) {
 					preview.innerHTML = this.innerHTML;
 				})
-				.on(chars, 'mousedown', function (
-					this: HTMLAnchorElement,
-					e?: MouseEvent
-				) {
-					if (Dom.isTag(this, 'a')) {
-						jodit.s.focus();
-						jodit.s.insertHTML(this.innerHTML);
-						jodit.e.fire(this, 'close_dialog');
-						e && e.preventDefault();
-						e && e.stopImmediatePropagation();
+				.on(
+					chars,
+					'mousedown',
+					function (this: HTMLAnchorElement, e?: MouseEvent) {
+						if (Dom.isTag(this, 'a')) {
+							jodit.s.focus();
+							jodit.s.insertHTML(this.innerHTML);
+							jodit.e.fire(this, 'close_dialog');
+							e && e.preventDefault();
+							e && e.stopImmediatePropagation();
+						}
 					}
-				})
+				)
 				.on(chars, 'mouseenter', function (this: HTMLAnchorElement) {
 					if (Dom.isTag(this, 'a')) {
 						this.focus();

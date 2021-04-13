@@ -12,14 +12,9 @@ export abstract class Mods {
 	abstract componentName: string;
 	abstract container: HTMLElement;
 
-	abstract setMod(
-		name: string,
-		value: string | boolean | null
-	): this;
+	abstract setMod(name: string, value: string | boolean | null): this;
 
-	abstract getMod(
-		name: string
-	): string | boolean | null;
+	abstract getMod(name: string): string | boolean | null;
 
 	/**
 	 * Set/remove BEM class modification
@@ -50,8 +45,8 @@ export abstract class Mods {
 		});
 
 		value != null &&
-		value !== '' &&
-		cl.add(`${mod}_${value.toString().toLowerCase()}`);
+			value !== '' &&
+			cl.add(`${mod}_${value.toString().toLowerCase()}`);
 
 		this.mods[name] = value;
 	}
@@ -65,5 +60,5 @@ export abstract class Mods {
 		name: string
 	): string | boolean | null {
 		return this.mods[name] ?? null;
-	};
+	}
 }

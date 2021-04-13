@@ -9,7 +9,7 @@ import { isArray } from '../core/helpers/checker';
 const en = require('./en');
 
 let exp: IDictionary<IDictionary<string>> = {
-	en,
+	en
 };
 
 if (!process.env.EXCLUDE_LANGS) {

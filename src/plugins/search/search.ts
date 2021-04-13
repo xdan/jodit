@@ -653,18 +653,19 @@ export class search extends Plugin {
 					e.preventDefault();
 					e.stopImmediatePropagation();
 				})
-				.on([self.nextButton, self.prevButton], 'click', function (
-					this: HTMLButtonElement,
-					e: MouseEvent
-				) {
-					editor.e.fire(
-						self.nextButton === this
-							? 'searchNext'
-							: 'searchPrevious'
-					);
-					e.preventDefault();
-					e.stopImmediatePropagation();
-				})
+				.on(
+					[self.nextButton, self.prevButton],
+					'click',
+					function (this: HTMLButtonElement, e: MouseEvent) {
+						editor.e.fire(
+							self.nextButton === this
+								? 'searchNext'
+								: 'searchPrevious'
+						);
+						e.preventDefault();
+						e.stopImmediatePropagation();
+					}
+				)
 				.on(
 					this.queryInput,
 					'keydown',

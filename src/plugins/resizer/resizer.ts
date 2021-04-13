@@ -322,7 +322,7 @@ export class resizer extends Plugin {
 			}
 		}
 
-		$$('iframe', this.j.editor).forEach(this.bind)
+		$$('iframe', this.j.editor).forEach(this.bind);
 	}
 
 	/**

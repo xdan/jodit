@@ -34,8 +34,8 @@ export interface ISourceFile {
 }
 
 export interface ISource {
-	name: string,
-	title?: string,
+	name: string;
+	title?: string;
 	path: string;
 	baseurl: string;
 	files: ISourceFile[];

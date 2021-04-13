@@ -30,12 +30,11 @@ export class DragAndDrop extends Plugin {
 
 	/** @override */
 	afterInit(): void {
-		this.j.e
-			.on(
-				[window, this.j.ed, this.j.editor],
-				'dragstart.DragAndDrop',
-				this.onDragStart
-			);
+		this.j.e.on(
+			[window, this.j.ed, this.j.editor],
+			'dragstart.DragAndDrop',
+			this.onDragStart
+		);
 	}
 
 	@autobind
@@ -80,11 +79,11 @@ export class DragAndDrop extends Plugin {
 		}
 
 		this.addDragListeners();
-	};
+	}
 
 	private addDragListeners(): void {
 		this.j.e
-			.on( 'dragover', this.onDrag)
+			.on('dragover', this.onDrag)
 			.on('drop.DragAndDrop', this.onDrop)
 			.on(
 				window,
@@ -114,7 +113,7 @@ export class DragAndDrop extends Plugin {
 			event.preventDefault();
 			event.stopPropagation();
 		}
-	};
+	}
 
 	@autobind
 	private onDragEnd(): void {
@@ -125,7 +124,7 @@ export class DragAndDrop extends Plugin {
 
 		this.isCopyMode = false;
 		this.removeDragListeners();
-	};
+	}
 
 	@autobind
 	private onDrop(event: DragEvent): false | void {
@@ -204,7 +203,7 @@ export class DragAndDrop extends Plugin {
 
 		this.isFragmentFromEditor = false;
 		this.removeDragListeners();
-	};
+	}
 
 	private getText = (event: DragEvent): string | null => {
 		const dt = getDataTransfer(event);

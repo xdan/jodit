@@ -55,7 +55,7 @@ export abstract class Plugin<T extends IViewBased = IJodit>
 		if (!this.isInDestruct) {
 			this.setStatus(STATUSES.beforeDestruct);
 
-			const {j} = this;
+			const { j } = this;
 
 			if (isJoditObject(j)) {
 				this.buttons?.forEach(btn => {

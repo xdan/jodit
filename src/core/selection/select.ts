@@ -236,7 +236,7 @@ export class Select {
 			'_' +
 			Number(new Date()) +
 			'_' +
-			(String(Math.random())).slice(2);
+			String(Math.random()).slice(2);
 
 		marker.style.lineHeight = '0';
 		marker.style.display = 'none';

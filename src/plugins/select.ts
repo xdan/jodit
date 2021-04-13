@@ -23,25 +23,25 @@ import { Popup, UIElement } from '../core/ui';
  * ```
  */
 export class select extends Plugin {
-	private proxyEventsList = ['click', 'mousedown', 'touchstart', 'mouseup', 'touchend'];
+	private proxyEventsList = [
+		'click',
+		'mousedown',
+		'touchstart',
+		'mouseup',
+		'touchend'
+	];
 
 	protected afterInit(jodit: IJodit): void {
-		this.proxyEventsList.forEach((eventName) => {
-			jodit.e.on(
-				eventName + '.inline-popup',
-				this.onStartSelection
-			);
-		})
+		this.proxyEventsList.forEach(eventName => {
+			jodit.e.on(eventName + '.inline-popup', this.onStartSelection);
+		});
 	}
 
 	/** @override */
 	protected beforeDestruct(jodit: IJodit): void {
-		this.proxyEventsList.forEach((eventName) => {
-			jodit.e.on(
-				eventName + '.inline-popup',
-				this.onStartSelection
-			);
-		})
+		this.proxyEventsList.forEach(eventName => {
+			jodit.e.on(eventName + '.inline-popup', this.onStartSelection);
+		});
 	}
 
 	@autobind
@@ -75,7 +75,7 @@ export class select extends Plugin {
 	protected onOutsideClick(e: MouseEvent): void {
 		const node = e.target as Node;
 
-		if (Dom.up(node, (elm) => elm === this.j.editor)) {
+		if (Dom.up(node, elm => elm === this.j.editor)) {
 			return;
 		}
 

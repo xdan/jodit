@@ -7,7 +7,8 @@
 import type {
 	IContextMenu,
 	IFileBrowserDataProvider,
-	IFileBrowserOptions, IUIElement,
+	IFileBrowserOptions,
+	IUIElement,
 	IViewBased
 } from '../../types';
 import DataProvider from './data-provider';

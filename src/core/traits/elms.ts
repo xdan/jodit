@@ -15,7 +15,10 @@ export abstract class Elms {
 	 * Return element with BEM class name
 	 * @param elementName
 	 */
-	static getElm(this: IComponent & IContainer, elementName: string): HTMLElement {
+	static getElm(
+		this: IComponent & IContainer,
+		elementName: string
+	): HTMLElement {
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		return this.container.querySelector<HTMLElement>(
 			`.${this.getFullElName(elementName)}`
@@ -26,7 +29,10 @@ export abstract class Elms {
 	 * Return elements with BEM class name
 	 * @param elementName
 	 */
-	static getElms(this: IComponent & IContainer, elementName: string): HTMLElement[] {
+	static getElms(
+		this: IComponent & IContainer,
+		elementName: string
+	): HTMLElement[] {
 		return toArray(
 			this.container.querySelectorAll(
 				`.${this.getFullElName(elementName)}`

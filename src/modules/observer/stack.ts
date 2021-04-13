@@ -11,8 +11,7 @@ export class Stack {
 	private commands: Command[] = [];
 	private stackPosition: number = -1;
 
-	constructor(private size: number) {
-	}
+	constructor(private size: number) {}
 
 	get length(): number {
 		return this.commands.length;

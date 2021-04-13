@@ -149,4 +149,3 @@ export function getSiblingBox(
 
 	return null;
 }
-

@@ -130,13 +130,15 @@ export class hotkeys extends Plugin {
 
 	/** @override */
 	afterInit(editor: IJodit): void {
-		keys(editor.o.commandToHotkeys, false).forEach((commandName: string) => {
-			const shortcuts = editor.o.commandToHotkeys[commandName];
+		keys(editor.o.commandToHotkeys, false).forEach(
+			(commandName: string) => {
+				const shortcuts = editor.o.commandToHotkeys[commandName];
 
-			if (shortcuts && (isArray(shortcuts) || isString(shortcuts))) {
-				editor.registerHotkeyToCommand(shortcuts, commandName);
+				if (shortcuts && (isArray(shortcuts) || isString(shortcuts))) {
+					editor.registerHotkeyToCommand(shortcuts, commandName);
+				}
 			}
-		});
+		);
 
 		let itIsHotkey: boolean = false;
 

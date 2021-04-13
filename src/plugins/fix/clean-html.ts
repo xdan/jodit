@@ -4,7 +4,13 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { HTMLTagNames, IDictionary, IJodit, Nullable, IPlugin } from '../../types';
+import type {
+	HTMLTagNames,
+	IDictionary,
+	IJodit,
+	Nullable,
+	IPlugin
+} from '../../types';
 import { Config } from '../../config';
 import {
 	INVISIBLE_SPACE_REG_EXP as INV_REG,

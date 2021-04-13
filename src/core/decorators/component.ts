@@ -15,7 +15,9 @@ export function component<T extends { new (...constructorArgs: any[]): any }>(
 		constructor(...args: any[]) {
 			super(...args);
 
-			if (Object.getPrototypeOf(this) === newConstructorFunction.prototype) {
+			if (
+				Object.getPrototypeOf(this) === newConstructorFunction.prototype
+			) {
 				this.setStatus('ready');
 			}
 		}

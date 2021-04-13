@@ -213,9 +213,7 @@ export class Dom {
 				break;
 			}
 
-			let step: Nullable<Node> =
-				next.firstChild ||
-				next.nextSibling;
+			let step: Nullable<Node> = next.firstChild || next.nextSibling;
 
 			if (!step) {
 				while (next && !next.nextSibling) {
@@ -251,7 +249,7 @@ export class Dom {
 		withAttributes = false,
 		notMoveContent = false
 	): HTMLElement {
-		const tag = (isString(newTagName))
+		const tag = isString(newTagName)
 			? create.element(newTagName)
 			: newTagName;
 

@@ -760,12 +760,12 @@ export class imageProperties extends Plugin {
 
 						this.updateValues();
 					},
-					(error) => {
+					error => {
 						Alert(error.message).bindDestruct(this.j);
 					}
 				);
 			})
-			.catch((error) => {
+			.catch(error => {
 				Alert(error.message, loadExternal).bindDestruct(this.j);
 			});
 	}

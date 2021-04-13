@@ -269,7 +269,10 @@ export class PluginSystem implements IPluginSystem {
 	 * @param jodit
 	 * @param pluginName
 	 */
-	private static async loadStyle(jodit: IJodit, pluginName: string): Promise<void> {
+	private static async loadStyle(
+		jodit: IJodit,
+		pluginName: string
+	): Promise<void> {
 		const url = PluginSystem.getFullUrl(jodit, pluginName, false);
 
 		if (this.styles.has(url)) {

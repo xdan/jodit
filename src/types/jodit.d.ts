@@ -98,7 +98,7 @@ interface IJodit extends IViewWithToolbar {
 		commandNameOriginal: string,
 		command: CustomCommand<IJodit>,
 		options?: {
-			stopPropagation: boolean
+			stopPropagation: boolean;
 		}
 	): IJodit;
 
