@@ -71,8 +71,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 		{
 			loader: 'less-loader',
 			options: {
-				sourceMap: debug,
-				lessOptions: {}
+				sourceMap: debug
 			}
 		}
 	];
@@ -156,7 +155,6 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 					}
 				}),
 				new CssMinimizerPlugin({
-					cache: true,
 					parallel: true,
 					minimizerOptions: {
 						preset: [
