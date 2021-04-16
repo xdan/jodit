@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.8
+ * Version: v3.6.9
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -995,7 +995,9 @@ class ObserveObject {
                                 rs.push(`change.${sum.join('.')}`);
                                 return rs;
                             }, [])
-                        ], prefix.join('.'), oldValue, ((_a = value) === null || _a === void 0 ? void 0 : _a.valueOf) ? value.valueOf() : value);
+                        ], prefix.join('.'), oldValue, ((_a = value) === null || _a === void 0 ? void 0 : _a.valueOf)
+                            ? value.valueOf()
+                            : value);
                     }
                 },
                 get: () => {
@@ -1498,7 +1500,7 @@ function $$(selector, root) {
         constants.IS_IE &&
         !(root && root.nodeType === Node.DOCUMENT_NODE)) {
         const id = root.id, temp_id = id ||
-            '_selector_id_' + (String(Math.random())).slice(2) + $$temp();
+            '_selector_id_' + String(Math.random()).slice(2) + $$temp();
         selector = selector.replace(/:scope/g, '#' + temp_id);
         !id && root.setAttribute('id', temp_id);
         result = root.parentNode.querySelectorAll(selector);
@@ -3114,8 +3116,7 @@ class Dom {
             if (start !== next && callback(next)) {
                 break;
             }
-            let step = next.firstChild ||
-                next.nextSibling;
+            let step = next.firstChild || next.nextSibling;
             if (!step) {
                 while (next && !next.nextSibling) {
                     next = next.parentNode;
@@ -3126,7 +3127,7 @@ class Dom {
         }
     }
     static replace(elm, newTagName, create, withAttributes = false, notMoveContent = false) {
-        const tag = ((0,_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(newTagName))
+        const tag = (0,_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(newTagName)
             ? create.element(newTagName)
             : newTagName;
         if (!notMoveContent) {
@@ -4374,7 +4375,6 @@ class Mods {
         var _a;
         return (_a = this.mods[name]) !== null && _a !== void 0 ? _a : null;
     }
-    ;
 }
 
 ;// CONCATENATED MODULE: ./src/core/traits/index.ts
@@ -5373,11 +5373,20 @@ function cache(target, name, descriptor) {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
+const cn = (elm) => {
+    return (0,helpers.isFunction)(elm.className) ? elm.className() : NaN;
+};
 function component(constructorFunction) {
     class newConstructorFunction extends constructorFunction {
         constructor(...args) {
             super(...args);
-            if (Object.getPrototypeOf(this) === newConstructorFunction.prototype) {
+            const isSamePrototype = Object.getPrototypeOf(this) ===
+                newConstructorFunction.prototype;
+            const isSameClassName = cn(this) ===
+                cn(newConstructorFunction.prototype);
+            if (false) {}
+            if (isSamePrototype || isSameClassName) {
                 this.setStatus('ready');
             }
         }
@@ -5779,7 +5788,7 @@ let UIGroup = UIGroup_1 = class UIGroup extends _element__WEBPACK_IMPORTED_MODUL
     }
     append(elm, distElement) {
         if ((0,_helpers__WEBPACK_IMPORTED_MODULE_2__.isArray)(elm)) {
-            elm.forEach((item) => this.append(item));
+            elm.forEach(item => this.append(item));
             return this;
         }
         this.elements.push(elm);
@@ -6154,19 +6163,22 @@ function __importDefault(mod) {
     return (mod && mod.__esModule) ? mod : { default: mod };
 }
 exports.__importDefault = __importDefault;
-function __classPrivateFieldGet(receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
+function __classPrivateFieldGet(receiver, state, kind, f) {
+    if (kind === "a" && !f)
+        throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+        throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 }
 exports.__classPrivateFieldGet = __classPrivateFieldGet;
-function __classPrivateFieldSet(receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+    if (kind === "m")
+        throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f)
+        throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+        throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 }
 exports.__classPrivateFieldSet = __classPrivateFieldSet;
 
@@ -12789,7 +12801,7 @@ class Async {
         return request;
     }
     requestIdlePromise() {
-        return new Promise((res) => {
+        return new Promise(res => {
             const request = this.requestIdleCallback(() => res(request));
         });
     }
@@ -13205,7 +13217,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.6.8";
+        this.version = "3.6.9";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -13303,10 +13315,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.6.8";
+        return "3.6.9";
     }
     static getVersion() {
-        return "3.6.8";
+        return "3.6.9";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -15091,7 +15103,7 @@ config/* Config.prototype.controls.filebrowser */.D.prototype.controls.filebrows
 class FileBrowserItem {
     constructor(data) {
         this.data = data;
-        Object.keys(data).forEach((key) => {
+        Object.keys(data).forEach(key => {
             this[key] = data[key];
         });
     }
@@ -15539,7 +15551,7 @@ function stateListeners() {
     }, this.defaultTimeout))
         .on('change.sources', this.async.debounce(() => {
         dom/* Dom.detach */.i.detach(this.tree);
-        state.sources.forEach((source) => {
+        state.sources.forEach(source => {
             const sourceName = source.name;
             if (sourceName && sourceName !== state_listeners_DEFAULT_SOURCE_NAME) {
                 this.tree.appendChild(create.div(F_CLASS + '__source-title', sourceName));
@@ -16356,7 +16368,8 @@ const CLASS_PREVIEW = F_CLASS + '_preview_', preview_tpl_next = (next = 'next', 
                                 }
                             };
                             self.e.on([next, prev], 'click', function () {
-                                if (this.classList.contains(CLASS_PREVIEW + 'navigation-next')) {
+                                if (this.classList.contains(CLASS_PREVIEW +
+                                    'navigation-next')) {
                                     item = dom/* Dom.nextWithClass */.i.nextWithClass(item, ITEM_CLASS);
                                 }
                                 else {
@@ -17759,7 +17772,7 @@ class Select {
                 '_' +
                 Number(new Date()) +
                 '_' +
-                (String(Math.random())).slice(2);
+                String(Math.random()).slice(2);
         marker.style.lineHeight = '0';
         marker.style.display = 'none';
         marker.setAttribute('data-' + constants.MARKER_CLASS, atStart ? 'start' : 'end');
@@ -20292,7 +20305,7 @@ Jodit.core = {
 
 const en = __webpack_require__(41);
 let exp = {
-    en,
+    en
 };
 if (true) {
     const ar = __webpack_require__(42);
@@ -20956,7 +20969,7 @@ class Delete extends Plugin {
                     !dom/* Dom.isText */.i.isText(anotherSibling) ||
                     (!backspace ? / $/ : /^ /).test((_b = anotherSibling.nodeValue) !== null && _b !== void 0 ? _b : '') ||
                     !(0,helpers.trimInv)(anotherSibling.nodeValue || '').length) {
-                    for (let i = backspace ? value.length - 1 : 0; backspace ? (i >= 0) : (i < value.length); i += backspace ? -1 : 1) {
+                    for (let i = backspace ? value.length - 1 : 0; backspace ? i >= 0 : i < value.length; i += backspace ? -1 : 1) {
                         if (value[i] === ' ') {
                             value[i] = constants.NBSP_SPACE;
                         }
@@ -22012,7 +22025,7 @@ class paste extends Plugin {
     }
     processHTML(e, html) {
         if (this.j.o.askBeforePasteHTML) {
-            const cached = this.pasteStack.find((cachedItem) => cachedItem.html === html);
+            const cached = this.pasteStack.find(cachedItem => cachedItem.html === html);
             if (cached) {
                 this.insertByType(e, html, cached.action || this.j.o.defaultActionOnPaste);
                 return true;
@@ -22631,8 +22644,7 @@ class DragAndDrop extends Plugin {
         };
     }
     afterInit() {
-        this.j.e
-            .on([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart);
+        this.j.e.on([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart);
     }
     onDragStart(event) {
         let target = event.target;
@@ -22661,7 +22673,6 @@ class DragAndDrop extends Plugin {
         }
         this.addDragListeners();
     }
-    ;
     addDragListeners() {
         this.j.e
             .on('dragover', this.onDrag)
@@ -22682,7 +22693,6 @@ class DragAndDrop extends Plugin {
             event.stopPropagation();
         }
     }
-    ;
     onDragEnd() {
         if (this.draggable) {
             dom/* Dom.safeRemove */.i.safeRemove(this.draggable);
@@ -22691,7 +22701,6 @@ class DragAndDrop extends Plugin {
         this.isCopyMode = false;
         this.removeDragListeners();
     }
-    ;
     onDrop(event) {
         if (!event.dataTransfer ||
             !event.dataTransfer.files ||
@@ -22751,7 +22760,6 @@ class DragAndDrop extends Plugin {
         this.isFragmentFromEditor = false;
         this.removeDragListeners();
     }
-    ;
     beforeDestruct() {
         this.onDragEnd();
         this.j.e
@@ -24380,11 +24388,11 @@ class imageProperties extends Plugin {
                     '&_tmp=' +
                     timestamp.toString());
                 this.updateValues();
-            }, (error) => {
+            }, error => {
                 Alert(error.message).bindDestruct(this.j);
             });
         })
-            .catch((error) => {
+            .catch(error => {
             Alert(error.message, loadExternal).bindDestruct(this.j);
         });
     }
@@ -25443,7 +25451,9 @@ class link_link extends Plugin {
                 if (!jodit.s.isCollapsed()) {
                     const node = jodit.s.current();
                     if (dom/* Dom.isTag */.i.isTag(node, ['img'])) {
-                        links = [dom/* Dom.wrap */.i.wrap(node, 'a', jodit)];
+                        links = [
+                            dom/* Dom.wrap */.i.wrap(node, 'a', jodit)
+                        ];
                     }
                     else {
                         links = jodit.s.wrapInTag('a');
@@ -25975,9 +25985,9 @@ function isEditorEmpty(root) {
     if (dom/* Dom.isText */.i.isText(first) && !next) {
         return dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(first);
     }
-    return !next &&
+    return (!next &&
         dom/* Dom.each */.i.each(first, elm => !dom/* Dom.isTag */.i.isTag(elm, ['ul', 'li', 'ol']) &&
-            (dom/* Dom.isEmpty */.i.isEmpty(elm) || dom/* Dom.isTag */.i.isTag(elm, 'br')));
+            (dom/* Dom.isEmpty */.i.isEmpty(elm) || dom/* Dom.isTag */.i.isTag(elm, 'br'))));
 }
 class placeholder extends Plugin {
     constructor() {
@@ -26974,15 +26984,21 @@ class search extends Plugin {
 class select_select extends Plugin {
     constructor() {
         super(...arguments);
-        this.proxyEventsList = ['click', 'mousedown', 'touchstart', 'mouseup', 'touchend'];
+        this.proxyEventsList = [
+            'click',
+            'mousedown',
+            'touchstart',
+            'mouseup',
+            'touchend'
+        ];
     }
     afterInit(jodit) {
-        this.proxyEventsList.forEach((eventName) => {
+        this.proxyEventsList.forEach(eventName => {
             jodit.e.on(eventName + '.inline-popup', this.onStartSelection);
         });
     }
     beforeDestruct(jodit) {
-        this.proxyEventsList.forEach((eventName) => {
+        this.proxyEventsList.forEach(eventName => {
             jodit.e.on(eventName + '.inline-popup', this.onStartSelection);
         });
     }
@@ -26999,7 +27015,7 @@ class select_select extends Plugin {
     }
     onOutsideClick(e) {
         const node = e.target;
-        if (dom/* Dom.up */.i.up(node, (elm) => elm === this.j.editor)) {
+        if (dom/* Dom.up */.i.up(node, elm => elm === this.j.editor)) {
             return;
         }
         const box = ui/* UIElement.closestElement */.u1.closestElement(node, ui/* Popup */.GI);

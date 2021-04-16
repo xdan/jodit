@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.8
+ * Version: v3.6.9
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -2063,19 +2063,22 @@ function __importDefault(mod) {
     return (mod && mod.__esModule) ? mod : { default: mod };
 }
 exports.__importDefault = __importDefault;
-function __classPrivateFieldGet(receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
+function __classPrivateFieldGet(receiver, state, kind, f) {
+    if (kind === "a" && !f)
+        throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+        throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 }
 exports.__classPrivateFieldGet = __classPrivateFieldGet;
-function __classPrivateFieldSet(receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+    if (kind === "m")
+        throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f)
+        throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+        throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 }
 exports.__classPrivateFieldSet = __classPrivateFieldSet;
 
@@ -3263,7 +3266,9 @@ var ObserveObject = (function () {
                             sum_1.push(p);
                             rs.push("change." + sum_1.join('.'));
                             return rs;
-                        }, [])), prefix.join('.'), oldValue, ((_a = value) === null || _a === void 0 ? void 0 : _a.valueOf) ? value.valueOf() : value);
+                        }, [])), prefix.join('.'), oldValue, ((_a = value) === null || _a === void 0 ? void 0 : _a.valueOf)
+                            ? value.valueOf()
+                            : value);
                     }
                 },
                 get: function () {
@@ -4215,8 +4220,7 @@ var Dom = (function () {
             if (start !== next && callback(next)) {
                 break;
             }
-            var step = next.firstChild ||
-                next.nextSibling;
+            var step = next.firstChild || next.nextSibling;
             if (!step) {
                 while (next && !next.nextSibling) {
                     next = next.parentNode;
@@ -4229,7 +4233,7 @@ var Dom = (function () {
     Dom.replace = function (elm, newTagName, create, withAttributes, notMoveContent) {
         if (withAttributes === void 0) { withAttributes = false; }
         if (notMoveContent === void 0) { notMoveContent = false; }
-        var tag = (helpers_1.isString(newTagName))
+        var tag = helpers_1.isString(newTagName)
             ? create.element(newTagName)
             : newTagName;
         if (!notMoveContent) {
@@ -5601,7 +5605,7 @@ function $$(selector, root) {
         constants_1.IS_IE &&
         !(root && root.nodeType === Node.DOCUMENT_NODE)) {
         var id = root.id, temp_id = id ||
-            '_selector_id_' + (String(Math.random())).slice(2) + $$temp();
+            '_selector_id_' + String(Math.random()).slice(2) + $$temp();
         selector = selector.replace(/:scope/g, '#' + temp_id);
         !id && root.setAttribute('id', temp_id);
         result = root.parentNode.querySelectorAll(selector);
@@ -6184,7 +6188,6 @@ var Mods = (function () {
         var _a;
         return (_a = this.mods[name]) !== null && _a !== void 0 ? _a : null;
     };
-    ;
     return Mods;
 }());
 exports.Mods = Mods;
@@ -7195,6 +7198,10 @@ exports.cache = cache;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.component = void 0;
 var tslib_1 = __webpack_require__(7);
+var helpers_1 = __webpack_require__(19);
+var cn = function (elm) {
+    return helpers_1.isFunction(elm.className) ? elm.className() : NaN;
+};
 function component(constructorFunction) {
     var newConstructorFunction = (function (_super) {
         tslib_1.__extends(newConstructorFunction, _super);
@@ -7204,7 +7211,12 @@ function component(constructorFunction) {
                 args[_i] = arguments[_i];
             }
             var _this = _super.apply(this, args) || this;
-            if (Object.getPrototypeOf(_this) === newConstructorFunction.prototype) {
+            var isSamePrototype = Object.getPrototypeOf(_this) ===
+                newConstructorFunction.prototype;
+            var isSameClassName = cn(_this) ===
+                cn(newConstructorFunction.prototype);
+            if (false) {}
+            if (isSamePrototype || isSameClassName) {
                 _this.setStatus('ready');
             }
             return _this;
@@ -10772,7 +10784,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.6.8";
+        _this.version = "3.6.9";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -10914,10 +10926,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.6.8";
+        return "3.6.9";
     };
     View.getVersion = function () {
-        return "3.6.8";
+        return "3.6.9";
     };
     View.prototype.initOptions = function (options) {
         this.options = helpers_1.ConfigProto(options || {}, helpers_1.ConfigProto(this.options || {}, View.defaultOptions));
@@ -13640,7 +13652,8 @@ exports.default = (function (self) {
                                 }
                             };
                             self.e.on([next, prev], 'click', function () {
-                                if (this.classList.contains(CLASS_PREVIEW + 'navigation-next')) {
+                                if (this.classList.contains(CLASS_PREVIEW +
+                                    'navigation-next')) {
                                     item = dom_1.Dom.nextWithClass(item, consts_1.ITEM_CLASS);
                                 }
                                 else {
@@ -15456,7 +15469,7 @@ var Select = (function () {
                 '_' +
                 Number(new Date()) +
                 '_' +
-                (String(Math.random())).slice(2);
+                String(Math.random()).slice(2);
         marker.style.lineHeight = '0';
         marker.style.display = 'none';
         marker.setAttribute('data-' + consts.MARKER_CLASS, atStart ? 'start' : 'end');
@@ -17261,7 +17274,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 var checker_1 = __webpack_require__(34);
 var en = __webpack_require__(214);
 var exp = {
-    en: en,
+    en: en
 };
 if (true) {
     var ar = __webpack_require__(215);
@@ -22236,7 +22249,7 @@ var Delete = (function (_super) {
                     !dom_1.Dom.isText(anotherSibling) ||
                     (!backspace ? / $/ : /^ /).test((_b = anotherSibling.nodeValue) !== null && _b !== void 0 ? _b : '') ||
                     !helpers_1.trimInv(anotherSibling.nodeValue || '').length) {
-                    for (var i = backspace ? value.length - 1 : 0; backspace ? (i >= 0) : (i < value.length); i += backspace ? -1 : 1) {
+                    for (var i = backspace ? value.length - 1 : 0; backspace ? i >= 0 : i < value.length; i += backspace ? -1 : 1) {
                         if (value[i] === ' ') {
                             value[i] = constants_1.NBSP_SPACE;
                         }
@@ -24511,8 +24524,7 @@ var DragAndDrop = (function (_super) {
         return _this;
     }
     DragAndDrop.prototype.afterInit = function () {
-        this.j.e
-            .on([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart);
+        this.j.e.on([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart);
     };
     DragAndDrop.prototype.onDragStart = function (event) {
         var target = event.target;
@@ -24541,7 +24553,6 @@ var DragAndDrop = (function (_super) {
         }
         this.addDragListeners();
     };
-    ;
     DragAndDrop.prototype.addDragListeners = function () {
         this.j.e
             .on('dragover', this.onDrag)
@@ -24562,7 +24573,6 @@ var DragAndDrop = (function (_super) {
             event.stopPropagation();
         }
     };
-    ;
     DragAndDrop.prototype.onDragEnd = function () {
         if (this.draggable) {
             dom_1.Dom.safeRemove(this.draggable);
@@ -24571,7 +24581,6 @@ var DragAndDrop = (function (_super) {
         this.isCopyMode = false;
         this.removeDragListeners();
     };
-    ;
     DragAndDrop.prototype.onDrop = function (event) {
         if (!event.dataTransfer ||
             !event.dataTransfer.files ||
@@ -24631,7 +24640,6 @@ var DragAndDrop = (function (_super) {
         this.isFragmentFromEditor = false;
         this.removeDragListeners();
     };
-    ;
     DragAndDrop.prototype.beforeDestruct = function () {
         this.onDragEnd();
         this.j.e
@@ -27744,7 +27752,9 @@ var link = (function (_super) {
                 if (!jodit.s.isCollapsed()) {
                     var node = jodit.s.current();
                     if (dom_1.Dom.isTag(node, ['img'])) {
-                        links = [dom_1.Dom.wrap(node, 'a', jodit)];
+                        links = [
+                            dom_1.Dom.wrap(node, 'a', jodit)
+                        ];
                     }
                     else {
                         links = jodit.s.wrapInTag('a');
@@ -28451,11 +28461,11 @@ function isEditorEmpty(root) {
     if (dom_1.Dom.isText(first) && !next) {
         return dom_1.Dom.isEmptyTextNode(first);
     }
-    return !next &&
+    return (!next &&
         dom_1.Dom.each(first, function (elm) {
             return !dom_1.Dom.isTag(elm, ['ul', 'li', 'ol']) &&
                 (dom_1.Dom.isEmpty(elm) || dom_1.Dom.isTag(elm, 'br'));
-        });
+        }));
 }
 exports.isEditorEmpty = isEditorEmpty;
 var placeholder = (function (_super) {
@@ -29521,7 +29531,13 @@ var select = (function (_super) {
     tslib_1.__extends(select, _super);
     function select() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.proxyEventsList = ['click', 'mousedown', 'touchstart', 'mouseup', 'touchend'];
+        _this.proxyEventsList = [
+            'click',
+            'mousedown',
+            'touchstart',
+            'mouseup',
+            'touchend'
+        ];
         return _this;
     }
     select.prototype.afterInit = function (jodit) {
