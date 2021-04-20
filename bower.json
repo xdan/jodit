@@ -12,7 +12,7 @@
       "homepage": "http://xdsoft.net/contacts.html"
     }
   ],
-  "license": "GPL-2.0-or-later",
+  "license": "MIT",
   "keywords": [
     "wysiwyg",
     "jquery",
