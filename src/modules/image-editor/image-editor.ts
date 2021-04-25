@@ -482,6 +482,7 @@ export class ImageEditor extends ViewComponent {
 	}
 
 	@debounce()
+	@autobind
 	private onChangeSizeInput(e: MouseEvent) {
 		const self = this,
 			input = e.target as HTMLInputElement,

@@ -26,6 +26,7 @@
 #### :bug: Bug Fix
 
 * Hide popup after deleting target node with key press.
+* [image-editor : onChangeSizeInput #663](https://github.com/xdan/jodit/issues/663)
 
 
 ## 3.6.7
