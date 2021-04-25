@@ -1459,7 +1459,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			})
 			.on(
 				editor,
-				'selectionchange selectionstart keydown keyup keypress dblclick mousedown mouseup ' +
+				'selectionchange selectionstart keydown keyup input keypress dblclick mousedown mouseup ' +
 					'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
 				(event: Event): false | void => {
 					if (this.o.readonly) {
