@@ -21,6 +21,7 @@ import { Dom } from '../../modules';
 import { isString, keys, trim } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { autobind, debounce } from '../../core/decorators';
+import { findNotEmptySibling } from '../keyboard/helpers';
 
 /**
  * @property {object} cleanHTML {@link cleanHtml|cleanHtml}'s options
@@ -453,6 +454,21 @@ export class cleanHtml extends Plugin<IJodit> {
 		});
 
 		shouldUnwrap.forEach(node => Dom.unwrap(node));
+
+		const clearParent = (node: Node, left: boolean): true | void => {
+			if (!findNotEmptySibling(node, left)) {
+				const pn = node.parentNode as Element;
+
+				if (pn && pn !== s.area && pn.getAttribute('style')) {
+					pn.removeAttribute('style');
+					clearParent(pn, left);
+
+					return true;
+				}
+			}
+		};
+
+		clearParent(fakeLeft, true) && clearParent(fakeRight, false);
 
 		range.setStartAfter(fakeLeft);
 		range.setEndBefore(fakeRight);

@@ -30,6 +30,7 @@
 * [image-editor : switcher #662](https://github.com/xdan/jodit/issues/662) Replace buttons to switcher
 * [Error from ESlint, please fix it #658](https://github.com/xdan/jodit/issues/658)
 * [Support Mobile platform’s slide to type feature. #654](https://github.com/xdan/jodit/issues/654)
+* [The Jodit eraser tool doesn't work for <p> tags #652](https://github.com/xdan/jodit/issues/652)
 
 
 ## 3.6.7

@@ -87,6 +87,14 @@ describe('Clean html plugin', function () {
 					'one test test test elm'
 				],
 				[
+					'<p style="color: red">|one <span style="background-color: red; color: blue;">test test test</span> elm|</p>',
+					'<p>one test test test elm</p>'
+				],
+				[
+					'<p style="color: red">one |<span style="background-color: red; color: blue;">test test test</span> elm|</p>',
+					'<p style="color:red">one test test test elm</p>'
+				],
+				[
 					'two |<strong style="background-color: red; color: blue;">test test test</strong>| elm',
 					'two test test test elm'
 				],
