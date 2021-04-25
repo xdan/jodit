@@ -226,7 +226,7 @@ export class Uploader extends ViewComponent implements IUploader {
 			sendData = (
 				request: FormData | IDictionary<string> | string
 			): Promise<any> => {
-				const ajax = new Ajax(this.j || this, {
+				const ajax = new Ajax(this.j, {
 					xhr: () => {
 						const xhr = new XMLHttpRequest();
 

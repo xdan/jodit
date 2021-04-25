@@ -56,7 +56,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	/**
 	 * Button should be active
 	 */
-	shouldBeActive(button: IToolbarButton): boolean | void {
+	shouldBeActive(button: IToolbarButton): boolean | undefined {
 		if (isJoditObject(this.j) && !this.j.editorIsActive) {
 			return false;
 		}
@@ -71,7 +71,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	/**
 	 * Button should be disabled
 	 */
-	shouldBeDisabled(button: IToolbarButton): boolean | void {
+	shouldBeDisabled(button: IToolbarButton): boolean | undefined {
 		if (this.j.o.disabled) {
 			return true;
 		}
@@ -84,7 +84,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 			return true;
 		}
 
-		let isDisabled: boolean | void;
+		let isDisabled: boolean | undefined;
 
 		if (isFunction(button.control.isDisabled)) {
 			isDisabled = button.control.isDisabled(

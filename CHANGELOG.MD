@@ -27,6 +27,8 @@
 
 * Hide popup after deleting target node with key press.
 * [image-editor : onChangeSizeInput #663](https://github.com/xdan/jodit/issues/663)
+* [image-editor : switcher #662](https://github.com/xdan/jodit/issues/662) Replace buttons to switcher
+* [Error from ESlint, please fix it #658](https://github.com/xdan/jodit/issues/658)
 
 
 ## 3.6.7
