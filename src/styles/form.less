@@ -136,6 +136,10 @@
 	min-width: var(--width-input-min);
 	flex-direction: column;
 	margin-bottom: var(--padding-default);
+
+	> label {
+		margin-bottom: var(--padding-default);
+	}
 }
 
 .jodit-button {
@@ -194,4 +198,60 @@
 	width: 16px;
 	height: 16px;
 	vertical-align: middle;
+}
+
+.jodi-switcher {
+	--width: 60px;
+	--height: 32px;
+	--slider-margin: 4px;
+	--slider-size: calc(var(--height) - var(--slider-margin) * 2);
+
+	position: relative;
+	display: inline-block;
+	width: var(--width);
+	height: var(--height);
+
+	input {
+		width: 0;
+		height: 0;
+		opacity: 0;
+	}
+
+	&__slider {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background-color: var(--color-gray);
+		border-radius: var(--height);
+		cursor: pointer;
+		transition: 0.4s;
+
+		&:before {
+			position: absolute;
+			bottom: var(--slider-margin);
+			left: var(--slider-margin);
+			width: var(--slider-size);
+			height: var(--slider-size);
+			background-color: white;
+			border-radius: 50%;
+			content: '';
+			transition: 0.4s;
+		}
+	}
+
+	input:checked + &__slider {
+		background-color: var(--color-background-active);
+
+		&:before {
+			transform: translateX(
+				calc(var(--width) - var(--slider-margin) * 2 - var(--slider-size))
+			);
+		}
+	}
+
+	input:focus + &__slider {
+		box-shadow: 0 0 1px var(--color-background-active);
+	}
 }

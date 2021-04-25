@@ -288,16 +288,6 @@ export class ImageEditor extends ViewComponent {
 				this.j.e.fire(self.cropHandler, 'updatesize');
 			});
 
-		// btn group
-		$$('.jodit-button-group', self.editor).forEach(group => {
-			const input = group.querySelector('input') as HTMLInputElement;
-
-			self.j.e.on(group, 'click', (): void => {
-				input.checked = !input.checked;
-				self.j.e.fire(input, 'change');
-			});
-		});
-
 		self.j.e
 			.on(
 				toArray(this.editor.querySelectorAll(`.${jie}__slider-title`)),
