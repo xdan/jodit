@@ -202,6 +202,7 @@ export class link extends Plugin {
 		html: string
 	): HTMLAnchorElement | void {
 		const { jodit } = this;
+
 		if (isURL(html)) {
 			if (jodit.o.link.processVideoLink) {
 				const embed = convertMediaUrlToVideoEmbed(html);
@@ -361,6 +362,7 @@ export class link extends Plugin {
 			Dom.hide(unlink);
 		}
 
+		jodit.editor.normalize();
 		const snapshot = jodit.observer.snapshot.make();
 
 		if (unlink) {
@@ -387,6 +389,7 @@ export class link extends Plugin {
 
 			let links: HTMLAnchorElement[];
 
+			jodit.editor.normalize();
 			jodit.observer.snapshot.restore(snapshot);
 
 			const textWasChanged =

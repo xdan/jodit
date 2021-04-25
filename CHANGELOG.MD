@@ -31,6 +31,7 @@
 * [Error from ESlint, please fix it #658](https://github.com/xdan/jodit/issues/658)
 * [Support Mobile platform’s slide to type feature. #654](https://github.com/xdan/jodit/issues/654)
 * [The Jodit eraser tool doesn't work for <p> tags #652](https://github.com/xdan/jodit/issues/652)
+* [Links at the end of editor after unlink #648](https://github.com/xdan/jodit/issues/648)
 
 
 ## 3.6.7
