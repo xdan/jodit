@@ -1147,8 +1147,14 @@ export class Select {
 					);
 				}
 			} finally {
-				if (font.parentNode) {
+				const pn = font.parentNode;
+
+				if (pn) {
 					Dom.unwrap(font);
+
+					if (Dom.isEmpty(pn)) {
+						Dom.unwrap(pn);
+					}
 				}
 			}
 		});

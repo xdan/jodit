@@ -1,14 +1,14 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.9
+ * Version: v3.6.11
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
 	/*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.9
+ * Version: v3.6.11
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -243,6 +243,9 @@
           flex-direction: column;
   margin-bottom: 8px;
 }
+.jodit-form__group > label {
+  margin-bottom: 8px;
+}
 .jodit-button {
   position: relative;
   display: -webkit-inline-box;
@@ -306,6 +309,55 @@
   width: 16px;
   height: 16px;
   vertical-align: middle;
+}
+.jodi-switcher {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 32px;
+}
+.jodi-switcher input {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+.jodi-switcher__slider {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #dadada;
+  border-radius: undefined;
+  cursor: pointer;
+  -webkit-transition: 0.4s;
+  -o-transition: 0.4s;
+  transition: 0.4s;
+}
+.jodi-switcher__slider:before {
+  position: absolute;
+  bottom: undefined;
+  left: undefined;
+  width: undefined;
+  height: undefined;
+  background-color: white;
+  border-radius: 50%;
+  content: '';
+  -webkit-transition: 0.4s;
+  -o-transition: 0.4s;
+  transition: 0.4s;
+}
+input:checked + .jodi-switcher__slider {
+  background-color: #2196f3;
+}
+input:checked + .jodi-switcher__slider:before {
+  -webkit-transform: undefined;
+      -ms-transform: undefined;
+          transform: undefined;
+}
+input:focus + .jodi-switcher__slider {
+  -webkit-box-shadow: 0 0 1px #2196f3;
+          box-shadow: 0 0 1px #2196f3;
 }
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)

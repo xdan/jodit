@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.9
+ * Version: v3.6.11
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -44,6 +44,7 @@
   --jd-color-background-button-hover-opacity30: rgba(236, 235, 233, 0.3);
   --jd-color-background-progress: #b91f1f;
   --jd-color-background-filebrowser-folders: #3f3f3f;
+  --jd-color-background-active: #2196f3;
   --jd-color-background-selection: #b5d6fd;
   --jd-color-background-selection_opacity50: rgba(181, 214, 253, 0.5);
   --jd-color-source-area: #323232;
@@ -246,6 +247,9 @@
   flex-direction: column;
   margin-bottom: var(--jd-padding-default);
 }
+.jodit-form__group > label {
+  margin-bottom: var(--jd-padding-default);
+}
 .jodit-button {
   position: relative;
   display: inline-flex;
@@ -295,6 +299,52 @@
   width: 16px;
   height: 16px;
   vertical-align: middle;
+}
+.jodi-switcher {
+  --jd-width: 60px;
+  --jd-height: 32px;
+  --jd-slider-margin: 4px;
+  --jd-slider-size: calc(var(--jd-height) - var(--jd-slider-margin) * 2);
+  position: relative;
+  display: inline-block;
+  width: var(--jd-width);
+  height: var(--jd-height);
+}
+.jodi-switcher input {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+.jodi-switcher__slider {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--jd-color-gray);
+  border-radius: var(--jd-height);
+  cursor: pointer;
+  transition: 0.4s;
+}
+.jodi-switcher__slider:before {
+  position: absolute;
+  bottom: var(--jd-slider-margin);
+  left: var(--jd-slider-margin);
+  width: var(--jd-slider-size);
+  height: var(--jd-slider-size);
+  background-color: white;
+  border-radius: 50%;
+  content: '';
+  transition: 0.4s;
+}
+input:checked + .jodi-switcher__slider {
+  background-color: var(--jd-color-background-active);
+}
+input:checked + .jodi-switcher__slider:before {
+  transform: translateX(calc(var(--jd-width) - var(--jd-slider-margin) * 2 - var(--jd-slider-size)));
+}
+input:focus + .jodi-switcher__slider {
+  box-shadow: 0 0 1px var(--jd-color-background-active);
 }
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)

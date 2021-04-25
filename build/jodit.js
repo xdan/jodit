@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.9
+ * Version: v3.6.11
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -1479,6 +1479,11 @@ var Jodit = (function (_super) {
         if (element.parentNode && element !== container) {
             element.parentNode.insertBefore(container, element);
         }
+        Object.defineProperty(element, 'component', {
+            enumerable: false,
+            configurable: true,
+            value: this
+        });
         var editor = this.c.div('jodit-wysiwyg', {
             contenteditable: true,
             'aria-disabled': false,
@@ -1637,7 +1642,7 @@ var Jodit = (function (_super) {
             .on(editor, 'compositionend', function () {
             _this.setEditorValue();
         })
-            .on(editor, 'selectionchange selectionstart keydown keyup keypress dblclick mousedown mouseup ' +
+            .on(editor, 'selectionchange selectionstart keydown keyup input keypress dblclick mousedown mouseup ' +
             'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur', function (event) {
             if (_this.o.readonly) {
                 return;
@@ -1707,6 +1712,11 @@ var Jodit = (function (_super) {
             if (container !== element) {
                 modules_1.Dom.safeRemove(container);
             }
+            Object.defineProperty(element, 'component', {
+                enumerable: false,
+                configurable: true,
+                value: null
+            });
             modules_1.Dom.safeRemove(iframe);
             if (container === element) {
                 element.innerHTML = buffer;
@@ -10784,7 +10794,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.6.9";
+        _this.version = "3.6.11";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -10926,10 +10936,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.6.9";
+        return "3.6.11";
     };
     View.getVersion = function () {
-        return "3.6.9";
+        return "3.6.11";
     };
     View.prototype.initOptions = function (options) {
         this.options = helpers_1.ConfigProto(options || {}, helpers_1.ConfigProto(this.options || {}, View.defaultOptions));
@@ -13856,13 +13866,6 @@ var ImageEditor = (function (_super) {
                 self.showCrop();
                 _this.j.e.fire(self.cropHandler, 'updatesize');
             });
-            helpers_1.$$('.jodit-button-group', self.editor).forEach(function (group) {
-                var input = group.querySelector('input');
-                self.j.e.on(group, 'click', function () {
-                    input.checked = !input.checked;
-                    self.j.e.fire(input, 'change');
-                });
-            });
             self.j.e
                 .on(helpers_1.toArray(_this.editor.querySelectorAll("." + jie + "__slider-title")), 'click', _this.onTitleModeClick)
                 .on([widthInput, heightInput], 'input', _this.onChangeSizeInput);
@@ -14239,7 +14242,8 @@ var ImageEditor = (function (_super) {
         decorators_1.autobind
     ], ImageEditor.prototype, "onTitleModeClick", null);
     tslib_1.__decorate([
-        decorators_1.debounce()
+        decorators_1.debounce(),
+        decorators_1.autobind
     ], ImageEditor.prototype, "onChangeSizeInput", null);
     tslib_1.__decorate([
         decorators_1.autobind
@@ -14325,7 +14329,7 @@ var form = function (editor, o) {
     var i = editor.i18n.bind(editor);
     var switcher = function (label, ref, active) {
         if (active === void 0) { active = true; }
-        return "<div class=\"jodit-form__group\">\n\t\t<label>" + i(label) + "</label>\n\t\t<div class=\"jodit-button-group jodit-button_radio_group\">\n\t\t\t<input " + act(active, 'checked') + " data-ref=\"" + ref + "\" type=\"checkbox\" class=\"jodit-input\"/>\n\n\t\t\t<button type=\"button\" data-yes=\"1\" class=\"jodit-ui-button jodit-ui-button_status_success\">" + i('Yes') + "</button>\n\n\t\t\t<button type=\"button\" class=\"jodit-ui-button jodit-ui-button_status_danger\">" + i('No') + "</button>\n\t\t</div>\n\t</div>";
+        return "<div class=\"jodit-form__group\">\n\t\t\t<label>" + i(label) + "</label>\n\n\t\t\t<label class='jodi-switcher'>\n\t\t\t\t<input " + act(active, 'checked') + " data-ref=\"" + ref + "\" type=\"checkbox\"/>\n\t\t\t\t<span class=\"jodi-switcher__slider\"></span>\n\t\t\t</label>\n\t</div>";
     };
     return editor.create.fromHTML("<form class=\"" + jie + " jodit-properties\">\n\t\t<div class=\"jodit-grid jodit-grid_xs-column\">\n\t\t\t<div class=\"jodit_col-lg-3-4 jodit_col-sm-5-5\">\n\t\t\t" + (o.resize
         ? "<div class=\"" + jie + "__area " + jie + "__area_resize " + jie + "_active\">\n\t\t\t\t\t\t\t<div data-ref=\"resizeBox\" class=\"" + jie + "__box\"></div>\n\t\t\t\t\t\t\t<div class=\"" + jie + "__resizer\">\n\t\t\t\t\t\t\t\t<i class=\"jodit_bottomright\"></i>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>"
@@ -15977,8 +15981,12 @@ var Select = (function () {
                 }
             }
             finally {
-                if (font.parentNode) {
+                var pn = font.parentNode;
+                if (pn) {
                     dom_1.Dom.unwrap(font);
+                    if (dom_1.Dom.isEmpty(pn)) {
+                        dom_1.Dom.unwrap(pn);
+                    }
                 }
             }
         });
@@ -16921,7 +16929,7 @@ var Uploader = (function (_super) {
     Uploader.prototype.send = function (data, success) {
         var _this = this;
         var requestData = this.buildData(data), sendData = function (request) {
-            var ajax = new ajax_1.Ajax(_this.j || _this, {
+            var ajax = new ajax_1.Ajax(_this.j, {
                 xhr: function () {
                     var xhr = new XMLHttpRequest();
                     if (_this.j.ow.FormData !== undefined &&
@@ -22763,6 +22771,7 @@ var modules_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(19);
 var plugin_1 = __webpack_require__(183);
 var decorators_1 = __webpack_require__(99);
+var helpers_2 = __webpack_require__(242);
 config_1.Config.prototype.cleanHTML = {
     timeout: 300,
     removeEmptyElements: true,
@@ -23002,6 +23011,17 @@ var cleanHtml = (function (_super) {
             }
         });
         shouldUnwrap.forEach(function (node) { return modules_1.Dom.unwrap(node); });
+        var clearParent = function (node, left) {
+            if (!helpers_2.findNotEmptySibling(node, left)) {
+                var pn = node.parentNode;
+                if (pn && pn !== s.area && pn.getAttribute('style')) {
+                    pn.removeAttribute('style');
+                    clearParent(pn, left);
+                    return true;
+                }
+            }
+        };
+        clearParent(fakeLeft, true) && clearParent(fakeRight, false);
         range.setStartAfter(fakeLeft);
         range.setEndBefore(fakeRight);
         s.selectRange(range);
@@ -26837,6 +26857,14 @@ var inlinePopup = (function (_super) {
             _this.showPopup(rect, type || (helpers_1.isString(elm) ? elm : elm.nodeName), helpers_1.isString(elm) ? undefined : elm);
         })
             .on('mousedown keydown', this.onSelectionStart)
+            .on('change', function () {
+            if (_this.popup.isOpened &&
+                _this.previousTarget &&
+                !_this.previousTarget.parentNode) {
+                _this.hidePopup();
+                _this.previousTarget = undefined;
+            }
+        })
             .on([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
         this.addListenersForElements();
     };
@@ -27727,6 +27755,7 @@ var link = (function (_super) {
         else {
             dom_1.Dom.hide(unlink);
         }
+        jodit.editor.normalize();
         var snapshot = jodit.observer.snapshot.make();
         if (unlink) {
             jodit.e.on(unlink, 'click', function (e) {
@@ -27746,6 +27775,7 @@ var link = (function (_super) {
                 return false;
             }
             var links;
+            jodit.editor.normalize();
             jodit.observer.snapshot.restore(snapshot);
             var textWasChanged = getSelectionText() !== content_input.value.trim();
             if (!link) {

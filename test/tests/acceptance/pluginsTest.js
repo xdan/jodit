@@ -621,7 +621,6 @@ describe('Test plugins', function () {
 
 						simulateEvent(
 							'dblclick',
-							0,
 							editor.editor.querySelector('img')
 						);
 
@@ -654,7 +653,6 @@ describe('Test plugins', function () {
 
 								simulateEvent(
 									'click',
-									0,
 									imageEditor.querySelector(
 										'[data-area=crop] > div'
 									)
@@ -679,16 +677,14 @@ describe('Test plugins', function () {
 									.querySelector(
 										'[data-area=crop].jodit-image-editor_active'
 									)
-									.querySelector(
-										'.jodit-button_radio_group button:last-child'
-									);
+									.querySelector('.jodi-switcher input');
 
 								expect(disableRatioBtn).not.is.null;
-								simulateEvent('click', 0, disableRatioBtn);
+								disableRatioBtn.checked = false;
+								simulateEvent('change', disableRatioBtn);
 
 								simulateEvent(
 									'mousedown',
-									0,
 									cropper.querySelector('.jodit_bottomright'),
 									function (e) {
 										const pos = Jodit.modules.Helpers.offset(
@@ -703,7 +699,6 @@ describe('Test plugins', function () {
 
 								simulateEvent(
 									'mousemove',
-									0,
 									editor.ownerWindow,
 									function (e) {
 										const pos = Jodit.modules.Helpers.offset(
@@ -718,7 +713,6 @@ describe('Test plugins', function () {
 
 								simulateEvent(
 									'mouseup',
-									0,
 									editor.ownerWindow,
 									function (e) {
 										const pos = Jodit.modules.Helpers.offset(
@@ -909,7 +903,6 @@ describe('Test plugins', function () {
 
 						simulateEvent(
 							'dblclick',
-							0,
 							editor.editor.querySelector('img')
 						);
 
@@ -950,12 +943,11 @@ describe('Test plugins', function () {
 									.querySelector(
 										'[data-area=resize].jodit-image-editor_active'
 									)
-									.querySelector(
-										'.jodit-button_radio_group button:last-child'
-									);
+									.querySelector('.jodi-switcher input');
 
 								expect(disableRatioBtn).not.is.null;
-								simulateEvent('click', 0, disableRatioBtn);
+								disableRatioBtn.checked = false;
+								simulateEvent('change', disableRatioBtn);
 
 								const resizer = imageEditor.querySelector(
 									'.jodit-image-editor__resizer'
@@ -968,7 +960,6 @@ describe('Test plugins', function () {
 
 								simulateEvent(
 									'mousedown',
-									0,
 									resizer.querySelector('.jodit_bottomright'),
 									function (e) {
 										const pos = Jodit.modules.Helpers.offset(
@@ -983,7 +974,6 @@ describe('Test plugins', function () {
 
 								simulateEvent(
 									'mousemove',
-									0,
 									editor.ownerWindow,
 									function (e) {
 										const pos = Jodit.modules.Helpers.offset(
@@ -998,7 +988,6 @@ describe('Test plugins', function () {
 
 								simulateEvent(
 									'mouseup',
-									0,
 									editor.ownerWindow,
 									function (e) {
 										const pos = Jodit.modules.Helpers.offset(

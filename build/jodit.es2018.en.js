@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.9
+ * Version: v3.6.11
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -9023,7 +9023,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.6.9";
+        this.version = "3.6.11";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -9121,10 +9121,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.6.9";
+        return "3.6.11";
     }
     static getVersion() {
-        return "3.6.9";
+        return "3.6.11";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -11435,14 +11435,12 @@ const act = (el, className = 'jodti-image-editor_active') => el ? className : ''
 const form_form = (editor, o) => {
     const i = editor.i18n.bind(editor);
     const switcher = (label, ref, active = true) => `<div class="jodit-form__group">
-		<label>${i(label)}</label>
-		<div class="jodit-button-group jodit-button_radio_group">
-			<input ${act(active, 'checked')} data-ref="${ref}" type="checkbox" class="jodit-input"/>
+			<label>${i(label)}</label>
 
-			<button type="button" data-yes="1" class="jodit-ui-button jodit-ui-button_status_success">${i('Yes')}</button>
-
-			<button type="button" class="jodit-ui-button jodit-ui-button_status_danger">${i('No')}</button>
-		</div>
+			<label class='jodi-switcher'>
+				<input ${act(active, 'checked')} data-ref="${ref}" type="checkbox"/>
+				<span class="jodi-switcher__slider"></span>
+			</label>
 	</div>`;
     return editor.create.fromHTML(`<form class="${jie} jodit-properties">
 		<div class="jodit-grid jodit-grid_xs-column">
@@ -11649,13 +11647,6 @@ let ImageEditor = ImageEditor_1 = class ImageEditor extends component/* ViewComp
                 this.j.e.fire(self.resizeHandler, 'updatesize');
                 self.showCrop();
                 this.j.e.fire(self.cropHandler, 'updatesize');
-            });
-            (0,helpers.$$)('.jodit-button-group', self.editor).forEach(group => {
-                const input = group.querySelector('input');
-                self.j.e.on(group, 'click', () => {
-                    input.checked = !input.checked;
-                    self.j.e.fire(input, 'change');
-                });
             });
             self.j.e
                 .on((0,helpers.toArray)(this.editor.querySelectorAll(`.${image_editor_jie}__slider-title`)), 'click', this.onTitleModeClick)
@@ -12024,7 +12015,8 @@ ImageEditor.calcValueByPercent = (value, percent) => {
     decorators.autobind
 ], ImageEditor.prototype, "onTitleModeClick", null);
 (0,tslib_es6.__decorate)([
-    (0,decorators.debounce)()
+    (0,decorators.debounce)(),
+    decorators.autobind
 ], ImageEditor.prototype, "onChangeSizeInput", null);
 (0,tslib_es6.__decorate)([
     decorators.autobind
@@ -14058,8 +14050,12 @@ class Select {
                 }
             }
             finally {
-                if (font.parentNode) {
+                const pn = font.parentNode;
+                if (pn) {
                     dom/* Dom.unwrap */.i.unwrap(font);
+                    if (dom/* Dom.isEmpty */.i.isEmpty(pn)) {
+                        dom/* Dom.unwrap */.i.unwrap(pn);
+                    }
                 }
             }
         });
@@ -14943,7 +14939,7 @@ class Uploader extends component/* ViewComponent */.Hr {
     }
     send(data, success) {
         const requestData = this.buildData(data), sendData = (request) => {
-            const ajax = new Ajax(this.j || this, {
+            const ajax = new Ajax(this.j, {
                 xhr: () => {
                     const xhr = new XMLHttpRequest();
                     if (this.j.ow.FormData !== undefined &&
@@ -15852,6 +15848,11 @@ class Jodit extends ViewWithToolbar {
         if (element.parentNode && element !== container) {
             element.parentNode.insertBefore(container, element);
         }
+        Object.defineProperty(element, 'component', {
+            enumerable: false,
+            configurable: true,
+            value: this
+        });
         const editor = this.c.div('jodit-wysiwyg', {
             contenteditable: true,
             'aria-disabled': false,
@@ -16007,7 +16008,7 @@ class Jodit extends ViewWithToolbar {
             .on(editor, 'compositionend', () => {
             this.setEditorValue();
         })
-            .on(editor, 'selectionchange selectionstart keydown keyup keypress dblclick mousedown mouseup ' +
+            .on(editor, 'selectionchange selectionstart keydown keyup input keypress dblclick mousedown mouseup ' +
             'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur', (event) => {
             if (this.o.readonly) {
                 return;
@@ -16075,6 +16076,11 @@ class Jodit extends ViewWithToolbar {
             if (container !== element) {
                 dom/* Dom.safeRemove */.i.safeRemove(container);
             }
+            Object.defineProperty(element, 'component', {
+                enumerable: false,
+                configurable: true,
+                value: null
+            });
             dom/* Dom.safeRemove */.i.safeRemove(iframe);
             if (container === element) {
                 element.innerHTML = buffer;
@@ -17128,6 +17134,7 @@ function bold(editor) {
 
 
 
+
 config/* Config.prototype.cleanHTML */.D.prototype.cleanHTML = {
     timeout: 300,
     removeEmptyElements: true,
@@ -17364,6 +17371,17 @@ class cleanHtml extends Plugin {
             }
         });
         shouldUnwrap.forEach(node => dom/* Dom.unwrap */.i.unwrap(node));
+        const clearParent = (node, left) => {
+            if (!findNotEmptySibling(node, left)) {
+                const pn = node.parentNode;
+                if (pn && pn !== s.area && pn.getAttribute('style')) {
+                    pn.removeAttribute('style');
+                    clearParent(pn, left);
+                    return true;
+                }
+            }
+        };
+        clearParent(fakeLeft, true) && clearParent(fakeRight, false);
         range.setStartAfter(fakeLeft);
         range.setEndBefore(fakeRight);
         s.selectRange(range);
@@ -20612,6 +20630,14 @@ class inlinePopup extends Plugin {
             this.showPopup(rect, type || ((0,helpers.isString)(elm) ? elm : elm.nodeName), (0,helpers.isString)(elm) ? undefined : elm);
         })
             .on('mousedown keydown', this.onSelectionStart)
+            .on('change', () => {
+            if (this.popup.isOpened &&
+                this.previousTarget &&
+                !this.previousTarget.parentNode) {
+                this.hidePopup();
+                this.previousTarget = undefined;
+            }
+        })
             .on([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
         this.addListenersForElements();
     }
@@ -21192,6 +21218,7 @@ class link_link extends Plugin {
         else {
             dom/* Dom.hide */.i.hide(unlink);
         }
+        jodit.editor.normalize();
         const snapshot = jodit.observer.snapshot.make();
         if (unlink) {
             jodit.e.on(unlink, 'click', (e) => {
@@ -21211,6 +21238,7 @@ class link_link extends Plugin {
                 return false;
             }
             let links;
+            jodit.editor.normalize();
             jodit.observer.snapshot.restore(snapshot);
             const textWasChanged = getSelectionText() !== content_input.value.trim();
             if (!link) {
