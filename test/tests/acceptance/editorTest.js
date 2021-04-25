@@ -135,6 +135,25 @@ describe('Jodit Editor Tests', function () {
 			}
 		});
 
+		describe('Source textarea', () => {
+			it('should have component properties with Jodit instance', function () {
+				const area = appendTestArea();
+
+				const editor = getJodit(undefined, area);
+				expect(area.component).equals(editor);
+			});
+
+			describe('After destruct', () => {
+				it('should not have component properties with Jodit instance', function () {
+					const area = appendTestArea();
+
+					const editor = getJodit(undefined, area);
+					editor.destruct();
+					expect(area.component).is.null;
+				});
+			});
+		});
+
 		describe('Options', function () {
 			it('Options should be inherited from the default values', function () {
 				const editor = getJodit({

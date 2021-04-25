@@ -1070,6 +1070,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.id =
 			attr(resolveElement(element, this.o.shadowRoot || this.od), 'id') ||
 			new Date().getTime().toString();
+
 		instances[this.id] = this;
 
 		this.storage = Storage.makeStorage(true, this.id);
@@ -1214,6 +1215,12 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		if (element.parentNode && element !== container) {
 			element.parentNode.insertBefore(container, element);
 		}
+
+		Object.defineProperty(element, 'component', {
+			enumerable: false,
+			configurable: true,
+			value: this
+		});
 
 		const editor = this.c.div('jodit-wysiwyg', {
 			contenteditable: true,
@@ -1559,6 +1566,12 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				if (container !== element) {
 					Dom.safeRemove(container);
 				}
+
+				Object.defineProperty(element, 'component', {
+					enumerable: false,
+					configurable: true,
+					value: null
+				});
 
 				Dom.safeRemove(iframe);
 

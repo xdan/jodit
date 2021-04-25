@@ -200,6 +200,16 @@ export class inlinePopup extends Plugin {
 				}
 			)
 			.on('mousedown keydown', this.onSelectionStart)
+			.on('change', () => {
+				if (
+					this.popup.isOpened &&
+					this.previousTarget &&
+					!this.previousTarget.parentNode
+				) {
+					this.hidePopup();
+					this.previousTarget = undefined;
+				}
+			})
 			.on([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
 
 		this.addListenersForElements();

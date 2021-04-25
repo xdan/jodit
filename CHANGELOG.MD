@@ -9,6 +9,25 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.6.10
+
+#### :rocket: New Feature
+
+* Set `component` property for source textarea with Jodit instance.
+```html
+<textarea id='editor' cols='30' rows='10'></textarea>
+<script>
+	Jodit.make('#editor');
+	console.log(document.getElementById('editor').component.value);
+	document.getElementById('editor').component.filebrowser.open();
+</script>
+```
+
+#### :bug: Bug Fix
+
+* Hide popup after deleting target node with key press.
+
+
 ## 3.6.7
 
 #### :bug: Bug Fix

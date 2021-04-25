@@ -271,7 +271,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	 */
 	@autobind
 	open(
-		// eslint-disable-next-line no-unused-vars
 		callback: CanUndef<(_: IFileBrowserCallBackData) => void> = this.o
 			.defaultCallback,
 		onlyImages: boolean = false
