@@ -16,9 +16,9 @@
 }
 
 .jodit-filebrowser {
-	font-family: var(--font-default);
-	height: 100%;
 	display: flex;
+	height: 100%;
+	font-family: var(--font-default);
 
 	&_no_files {
 		padding: var(--padding-default);
@@ -29,11 +29,11 @@
 	}
 
 	&__loader {
-		height: 100%;
-		width: 100%;
 		position: absolute;
 		top: 0;
 		left: 0;
+		width: 100%;
+		height: 100%;
 
 		i {
 			position: absolute;
@@ -48,18 +48,18 @@
 
 	&__status {
 		position: absolute;
-		font-size: 12px;
-		padding: 6px;
-		text-align: right;
-		border-top: 1px solid rgba(127, 127, 127, 0.4);
-		left: 0;
 		right: 0;
 		bottom: 0;
+		left: 0;
+		padding: 6px;
+		border-top: 1px solid rgba(127, 127, 127, 0.4);
 		background-color: #4a4a4a;
-		visibility: hidden;
-		opacity: 0;
-		transition: opacity 0.3s linear;
 		color: #b38888;
+		font-size: 12px;
+		opacity: 0;
+		text-align: right;
+		transition: opacity 0.3s linear;
+		visibility: hidden;
 		word-break: break-all;
 
 		&.jodit-filebrowser_success {
@@ -67,17 +67,17 @@
 		}
 
 		&.jodit-filebrowser_active {
-			visibility: visible;
 			opacity: 1;
+			visibility: visible;
 		}
 	}
 
 	&__tree,
 	&__files {
-		display: none;
-		vertical-align: top;
-		height: 100%;
 		position: relative;
+		display: none;
+		height: 100%;
+		vertical-align: top;
 
 		.jodit-button {
 			border-radius: 0;
@@ -91,15 +91,15 @@
 	}
 
 	&__tree.jodit-filebrowser_active {
-		flex-direction: column;
+		z-index: 2;
 		width: var(--first_column);
 		min-width: 200px;
 		max-width: 290px;
-		z-index: 2;
+		flex-direction: column;
 
 		@media (max-width: @screen-xs) {
-			max-width: 100%;
 			width: auto;
+			max-width: 100%;
 			height: 100px;
 		}
 
@@ -120,30 +120,30 @@
 		}
 
 		.jodit-filebrowser__source-title {
-			user-select: none;
+			position: relative;
 			display: block;
 			padding: 2px 4px;
-			color: #969696;
 			border-bottom: 1px solid #484848;
-			position: relative;
-			word-break: break-all;
 			background: #5a5a5a;
+			color: #969696;
 			font-size: 12px;
+			user-select: none;
+			word-break: break-all;
 		}
 
 		--text-color: #b1b1b1;
 
 		.jodit-filebrowser__tree-item {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			min-height: 38px;
-			padding: calc(var(--padding-default) / 2) var(--padding-default);
-			text-decoration: none;
-			color: var(--text-color);
-			transition: background-color 0.2s ease 0s;
-			border-bottom: 1px solid #474747;
 			position: relative;
+			display: flex;
+			min-height: 38px;
+			align-items: center;
+			justify-content: space-between;
+			padding: calc(var(--padding-default) / 2) var(--padding-default);
+			border-bottom: 1px solid #474747;
+			color: var(--text-color);
+			text-decoration: none;
+			transition: background-color 0.2s ease 0s;
 			word-break: break-all;
 
 			&-title {
@@ -151,19 +151,22 @@
 			}
 
 			.jodit-icon_folder {
-				margin-left: calc(var(--padding-default) / 2);
+				display: flex;
 				width: calc(var(--icon-size) + 4px);
 				height: calc(var(--icon-size) + 4px);
-				display: flex;
-				justify-content: center;
+
 				align-items: center;
+				justify-content: center;
+
+				margin-left: calc(var(--padding-default) / 2);
+
 				opacity: 0.3;
 
 				& svg {
 					width: var(--icon-size);
 					height: var(--icon-size);
-					stroke: var(--text-color) !important;
 					fill: var(--text-color) !important;
+					stroke: var(--text-color) !important;
 				}
 
 				&:hover {
@@ -172,8 +175,8 @@
 			}
 
 			&:hover {
-				color: #222;
 				background-color: var(--color-background-button-hover);
+				color: #222;
 
 				i.jodit-icon_folder {
 					opacity: 0.6;
@@ -184,22 +187,22 @@
 
 	&__files.jodit-filebrowser_active {
 		width: 100%;
-		overflow-y: auto;
-		padding: calc(var(--padding-default) / 2);
 		flex-wrap: wrap;
 		align-content: flex-start;
+		padding: calc(var(--padding-default) / 2);
+		overflow-y: auto;
 
 		.jodit-filebrowser__source-title {
-			user-select: none;
-			margin: calc(var(--padding-default) * -1);
-			margin-bottom: 0;
+			position: relative;
 			display: block;
 			padding: var(--padding-default);
-			position: relative;
-			word-break: break-all;
+			margin: calc(var(--padding-default) * -1);
+			margin-bottom: 0;
 			background: #5a5a5a;
-			font-size: 16px;
 			color: #969696;
+			font-size: 16px;
+			user-select: none;
+			word-break: break-all;
 		}
 
 		a + .jodit-filebrowser__source-title {
@@ -207,23 +210,26 @@
 		}
 
 		.jodit-filebrowser__files-item {
+			position: relative;
+
+			display: flex;
+			overflow: hidden;
 			width: var(--col_size);
 			height: var(--col_size);
-			display: flex;
-			justify-content: center;
+
 			align-items: center;
+			justify-content: center;
+
+			border: 1px solid var(--color-border);
+			margin: calc(var(--padding-default) / 2);
+			font-size: 0;
 
 			@media (max-width: @screen-xs) {
 				width: calc(50% - var(--padding-default));
 			}
 
 			text-align: center;
-			border: 1px solid var(--color-border);
-			margin: calc(var(--padding-default) / 2);
-			font-size: 0;
-			overflow: hidden;
 			transition: border 0.1s linear, bottom 0.1s linear;
-			position: relative;
 
 			img {
 				max-width: 100%;
@@ -247,30 +253,30 @@
 			&-info {
 				position: absolute;
 				right: 0;
-				left: 0;
 				bottom: 0;
-				white-space: normal;
-				opacity: 0.85;
+				left: 0;
 				overflow: visible;
 				padding: 0.3em 0.6em;
-				transition: opacity 400ms ease;
 				background-color: var(--info-background);
 				color: rgb(51, 51, 51);
-				text-shadow: rgb(238, 238, 238) 0 1px 0;
 				font-size: 14px;
 				line-height: 16px;
+				opacity: 0.85;
 				text-align: left;
+				text-shadow: rgb(238, 238, 238) 0 1px 0;
+				transition: opacity 400ms ease;
+				white-space: normal;
 
 				> span {
 					display: block;
-					text-overflow: ellipsis;
-					white-space: nowrap;
 					overflow: hidden;
 					font-size: 0.75em;
+					text-overflow: ellipsis;
+					white-space: nowrap;
 
 					&.jodit-filebrowser__files-item-info-filename {
-						font-weight: bold;
 						font-size: 0.9em;
+						font-weight: bold;
 					}
 				}
 			}
@@ -289,31 +295,31 @@
 				display: block;
 				width: 100%;
 				height: 26px;
-				line-height: 26px;
-				margin: 0;
 				border-width: 0 0 1px 0;
+				margin: 0;
+				line-height: 26px;
 				text-align: left;
 				white-space: nowrap;
 
 				img {
+					display: inline-block;
 					min-width: 16px;
 					max-width: 16px;
-					vertical-align: middle;
-					display: inline-block;
 					margin-left: 4px;
+					vertical-align: middle;
 				}
 
 				.jodit-filebrowser__files-item-info {
-					padding: 0;
 					position: static;
 					display: inline-block;
 					width: ~'calc(100% - 20px)';
+					height: 100%;
+					padding: 0;
 					margin-left: 4px;
 					background-color: transparent;
-					height: 100%;
+					font-size: 0;
 					line-height: inherit;
 					vertical-align: middle;
-					font-size: 0;
 
 					> span {
 						display: inline-block;
@@ -344,10 +350,10 @@
 				}
 
 				&::before {
+					display: inline-block;
 					height: 100%;
 					content: '';
 					vertical-align: middle;
-					display: inline-block;
 				}
 			}
 		}
