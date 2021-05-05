@@ -50,7 +50,7 @@ export class sticky extends Plugin {
 	private dummyBox?: HTMLElement;
 
 	private createDummy = (toolbar: HTMLElement) => {
-		if (IS_IE && !this.dummyBox) {
+		if (!isESNext && IS_IE && !this.dummyBox) {
 			this.dummyBox = this.j.c.div();
 			this.dummyBox.classList.add('jodit_sticky-dummy_toolbar');
 			this.j.container.insertBefore(this.dummyBox, toolbar);
@@ -75,7 +75,7 @@ export class sticky extends Plugin {
 			width: this.j.container.offsetWidth - 2
 		});
 
-		if (IS_IE && this.dummyBox) {
+		if (!isESNext && IS_IE && this.dummyBox) {
 			css(this.dummyBox, {
 				height: toolbar.offsetHeight
 			});

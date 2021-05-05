@@ -385,14 +385,16 @@ export class resizer extends Plugin {
 				});
 		}
 
-		this.j.e
-			.on(element, 'dragstart', this.hide)
-			.on(element, 'mousedown', (event: MouseEvent) => {
-				// for IE don't show native resizer
-				if (IS_IE && Dom.isTag(element, 'img')) {
+		this.j.e.on(element, 'dragstart', this.hide);
+
+		if (!isESNext && IS_IE) {
+			// for IE don't show native resizer
+			this.j.e.on(element, 'mousedown', (event: MouseEvent) => {
+				if (Dom.isTag(element, 'img')) {
 					event.preventDefault();
 				}
 			});
+		}
 	}
 
 	private onClickElement = (element: HTMLElement, e: MouseEvent) => {

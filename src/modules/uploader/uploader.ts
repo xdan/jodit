@@ -17,7 +17,8 @@ import type {
 	IUploaderAnswer,
 	IUploaderData,
 	IUploaderOptions,
-	IViewBased
+	IViewBased,
+	Nullable
 } from '../../types';
 import { Config } from '../../config';
 import { IS_IE, TEXT_PLAIN } from '../../core/constants';
@@ -558,13 +559,13 @@ export class Uploader extends ViewComponent implements IUploader {
 				};
 
 				// send data on server
-				if (cData && cData.files && cData.files.length) {
+				if (!IS_IE && hasFiles(cData)) {
 					this.sendFiles(cData.files, handlerSuccess, handlerError);
 
 					return false;
 				}
 
-				if (IS_IE) {
+				if (IS_IE && !isESNext) {
 					if (
 						cData &&
 						(!cData.types.length || cData.types[0] !== TEXT_PLAIN)
@@ -648,12 +649,8 @@ export class Uploader extends ViewComponent implements IUploader {
 			self.j.e.on('beforePaste', onPaste);
 		}
 
-		const hasFiles = (event: DragEvent): boolean =>
-			Boolean(
-				event.dataTransfer &&
-					event.dataTransfer.files &&
-					event.dataTransfer.files.length !== 0
-			);
+		const hasFiles = (data: Nullable<DataTransfer>): data is DataTransfer =>
+			Boolean(data && data.files && data.files.length !== 0);
 
 		self.j.e
 			.on(
@@ -664,14 +661,14 @@ export class Uploader extends ViewComponent implements IUploader {
 				}
 			)
 			.on(form, 'dragover', (event: DragEvent) => {
-				if (hasFiles(event)) {
+				if (hasFiles(event.dataTransfer)) {
 					form.classList.contains('jodit_draghover') ||
 						form.classList.add('jodit_draghover');
 					event.preventDefault();
 				}
 			})
 			.on(form, 'dragend', (event: DragEvent) => {
-				if (hasFiles(event)) {
+				if (hasFiles(event.dataTransfer)) {
 					form.classList.contains('jodit_draghover') &&
 						form.classList.remove('jodit_draghover');
 					event.preventDefault();
@@ -680,13 +677,10 @@ export class Uploader extends ViewComponent implements IUploader {
 			.on(form, 'drop', (event: DragEvent): false | void => {
 				form.classList.remove('jodit_draghover');
 
-				if (
-					hasFiles(event) &&
-					event.dataTransfer &&
-					event.dataTransfer.files
-				) {
+				if (hasFiles(event.dataTransfer)) {
 					event.preventDefault();
 					event.stopImmediatePropagation();
+
 					this.sendFiles(
 						event.dataTransfer.files,
 						handlerSuccess,

@@ -54,6 +54,7 @@ export function $$<T extends HTMLElement>(
 	let result: NodeList;
 
 	if (
+		!isESNext &&
 		/:scope/.test(selector) &&
 		IS_IE &&
 		!(root && root.nodeType === Node.DOCUMENT_NODE)

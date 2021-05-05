@@ -12,6 +12,7 @@ export * from './src/types';
 declare global {
 	const Jodit: typeof Super;
 	const isProd: boolean;
+	const isESNext: boolean;
 	const appVersion: string;
 
 	interface HTMLElement {

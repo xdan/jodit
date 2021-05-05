@@ -81,6 +81,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 		new webpack.DefinePlugin({
 			appVersion: JSON.stringify(pkg.version),
 			isProd: isProd,
+			isESNext: ESNext,
 			isTest: isTest,
 			'process.env': {
 				TARGET_ES: JSON.stringify(ES),
