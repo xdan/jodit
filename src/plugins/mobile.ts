@@ -96,45 +96,50 @@ export function mobile(editor: IJodit): void {
 	let timeout: number = 0,
 		store: ButtonsGroups = splitArray(editor.o.buttons);
 
-	editor.e
-		.on('touchend', (e: TouchEvent) => {
+	if (editor.o.mobileTapTimeout) {
+		editor.e.on('touchend', (e: TouchEvent) => {
 			if (e.changedTouches && e.changedTouches.length) {
-				const now = new Date().getTime();
+				const now = new Date().getTime(),
+					diff = now - timeout;
 
-				if (now - timeout > editor.o.mobileTapTimeout) {
+				if (diff > editor.o.mobileTapTimeout) {
 					timeout = now;
-					editor.s.insertCursorAtPoint(
-						e.changedTouches[0].clientX,
-						e.changedTouches[0].clientY
-					);
+
+					if (diff < editor.o.mobileTapTimeout * 1.5) {
+						editor.s.insertCursorAtPoint(
+							e.changedTouches[0].clientX,
+							e.changedTouches[0].clientY
+						);
+					}
 				}
 			}
-		})
+		});
+	}
 
-		.on(
-			'getDiffButtons.mobile',
-			(toolbar: IToolbarCollection): void | ButtonsGroups => {
-				if (toolbar === editor.toolbar) {
-					const buttons: ButtonsGroups = splitArray(editor.o.buttons),
-						flatStore = flatButtonsSet(store);
+	editor.e.on(
+		'getDiffButtons.mobile',
+		(toolbar: IToolbarCollection): void | ButtonsGroups => {
+			if (toolbar === editor.toolbar) {
+				const buttons: ButtonsGroups = splitArray(editor.o.buttons),
+					flatStore = flatButtonsSet(store);
 
-					return buttons.reduce((acc, item) => {
-						if (isButtonGroup(item)) {
-							acc.push({
-								...item,
-								buttons: item.buttons.filter(
-									btn => !flatStore.has(btn)
-								)
-							});
-						} else if (!flatStore.has(item)) {
-							acc.push(item);
-						}
+				return buttons.reduce((acc, item) => {
+					if (isButtonGroup(item)) {
+						acc.push({
+							...item,
+							buttons: item.buttons.filter(
+								btn => !flatStore.has(btn)
+							)
+						});
+					} else if (!flatStore.has(item)) {
+						acc.push(item);
+					}
 
-						return acc;
-					}, [] as ButtonsGroups);
-				}
+					return acc;
+				}, [] as ButtonsGroups);
 			}
-		);
+		}
+	);
 
 	if (editor.o.toolbarAdaptive) {
 		editor.e
