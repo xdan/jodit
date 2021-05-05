@@ -65,4 +65,51 @@ describe('Focus test', () => {
 			});
 		});
 	});
+
+	describe('Save cursor position after blur', () => {
+		describe('Enable', () => {
+			it('Should append special markers on selection range', () => {
+				const editor = getJodit();
+				editor.value = '<p>t|es|t</p>';
+				setCursorToChar(editor);
+				simulateEvent('blur', editor);
+
+				expect(
+					editor.editor.querySelectorAll(
+						'span[data-jodit-selection_marker]'
+					).length
+				).eq(2);
+
+				expect(
+					sortAttributes(editor.getNativeEditorValue()).replace(
+						/[0-9]+_[0-9]+/g,
+						''
+					)
+				).eq(
+					'<p>t' +
+						'<span data-jodit-selection_marker="start" id="jodit-selection_marker_" style="display:none;line-height:0"></span>' +
+						'es' +
+						'<span data-jodit-selection_marker="end" id="jodit-selection_marker_" style="display:none;line-height:0"></span>' +
+						't</p>'
+				);
+			});
+		});
+
+		describe('Disable', () => {
+			it('Should not append special markers on selection range', () => {
+				const editor = getJodit({
+					saveSelectionOnBlur: false
+				});
+				editor.value = '<p>t|es|t</p>';
+				setCursorToChar(editor);
+				simulateEvent('blur', editor);
+
+				expect(
+					editor.editor.querySelectorAll(
+						'span[data-jodit-selection_marker]'
+					).length
+				).eq(0);
+			});
+		});
+	});
 });

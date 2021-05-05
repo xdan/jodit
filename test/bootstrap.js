@@ -693,8 +693,8 @@ const keyCode = Object.keys(codeKey).reduce((res, code) => {
 /**
  *
  * @param {string|string[]} type
- * @param {string|number|HTMLElement} keyCodeOrElement
- * @param {HTMLElement} [element]
+ * @param {string|number|HTMLElement|Jodit} keyCodeOrElement
+ * @param {HTMLElement|Jodit} [element]
  * @param {Function} [applyOpt]
  *
  * @returns boolean
@@ -720,6 +720,10 @@ function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
 		return element.forEach(function (elm) {
 			simulateEvent(type, keyCodeOrElement, elm, applyOpt);
 		});
+	}
+
+	if (element instanceof Jodit) {
+		element = element.editor;
 	}
 
 	const evt = (element.ownerDocument || document).createEvent('HTMLEvents');
