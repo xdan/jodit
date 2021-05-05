@@ -408,7 +408,7 @@ export class link extends Plugin {
 					}
 				} else {
 					const a = jodit.createInside.element('a');
-					jodit.s.insertNode(a);
+					jodit.s.insertNode(a, false, false);
 					links = [a];
 				}
 			} else {

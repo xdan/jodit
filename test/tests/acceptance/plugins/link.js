@@ -522,7 +522,7 @@ describe('Link plugin', function () {
 						'<p><a href="tests/artio.jpg">tests/artio.jpg</a></p>'
 					);
 
-					expect(change).equals(2);
+					expect(change).equals(1);
 				});
 
 				describe('Set custom popup template', function () {
