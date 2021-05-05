@@ -384,9 +384,14 @@ export class Select {
 
 	/**
 	 * Set focus in editor
+	 * @param options
 	 */
 	@autobind
-	focus(): boolean {
+	focus(
+		options: FocusOptions = {
+			preventScroll: true
+		}
+	): boolean {
 		if (!this.isFocused()) {
 			if (this.j.iframe) {
 				if (this.doc.readyState === 'complete') {
@@ -395,9 +400,7 @@ export class Select {
 			}
 
 			this.win.focus();
-			this.area.focus({
-				preventScroll: true
-			});
+			this.area.focus(options);
 
 			const sel = this.sel,
 				range = sel?.rangeCount ? sel?.getRangeAt(0) : null;

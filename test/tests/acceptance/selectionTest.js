@@ -538,15 +538,8 @@ describe('Selection Module Tests', function () {
 		describe('Curson in the end of span inside P and check cursorInTheEdge(true)', function () {
 			it('Should return false', function () {
 				const editor = getJodit();
-				editor.value = '<p>Some <span>text</span></p>';
-
-				const sel = editor.s.sel,
-					range = editor.s.createRange();
-
-				range.selectNodeContents(editor.editor.firstChild.lastChild);
-				range.collapse(false);
-				sel.removeAllRanges();
-				sel.addRange(range);
+				editor.value = '<p>Some <span>|text|</span></p>';
+				setCursorToChar(editor);
 
 				expect(editor.s.cursorInTheEdge(true, editor.editor.firstChild))
 					.is.false;
@@ -558,15 +551,9 @@ describe('Selection Module Tests', function () {
 		it('Should restore collapsed selection when user change mode - from WYSIWYG to TEXTAREA', function () {
 			const editor = getJodit();
 
-			editor.value = '<p>test</p>';
+			editor.value = '<p>te|st</p>';
 
-			const sel = editor.s.sel,
-				range = editor.s.createRange();
-
-			range.setStart(editor.editor.firstChild.firstChild, 2);
-			range.collapse(true);
-			sel.removeAllRanges();
-			sel.addRange(range);
+			setCursorToChar(editor);
 
 			editor.setMode(Jodit.MODE_SOURCE);
 
@@ -577,7 +564,7 @@ describe('Selection Module Tests', function () {
 			expect(mirror.value).equals('<p>test</p>');
 			expect(mirror.selectionStart).equals(5);
 			expect(mirror.selectionEnd).equals(5);
-		}).timeout(6000);
+		});
 
 		it('Should restore collapsed selection when user change mode - from WYSIWYG to TEXTAREA for long string', function (done) {
 			unmockPromise();

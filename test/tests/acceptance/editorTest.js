@@ -740,6 +740,10 @@ describe('Jodit Editor Tests', function () {
 					p = document.createElement('p'),
 					editor = getJodit();
 
+				editor.s.focus({
+					preventScroll: false
+				});
+
 				input.type = 'input';
 				document.body.appendChild(input);
 
@@ -753,11 +757,12 @@ describe('Jodit Editor Tests', function () {
 				expect(editor.editorIsActive).is.true;
 
 				input.focus();
-				simulateEvent('blur', 0, editor.editor);
+				simulateEvent('blur', editor.editor);
 				expect(editor.editorIsActive).is.false;
 				document.body.removeChild(input);
 
 				editor.s.focus();
+				simulateEvent('focus', editor.editor);
 				editor.s.setCursorAfter(editor.editor.firstChild);
 				expect(editor.editorIsActive).is.true;
 
@@ -765,7 +770,7 @@ describe('Jodit Editor Tests', function () {
 
 				range.selectNodeContents(p);
 
-				simulateEvent('blur', 0, editor.editor);
+				simulateEvent('blur', editor.editor);
 				expect(editor.editorIsActive).is.false;
 				document.body.removeChild(p);
 			});

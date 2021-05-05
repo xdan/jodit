@@ -40,7 +40,9 @@ export function focus(editor: IJodit): void {
 	if (editor.o.saveSelectionOnBlur) {
 		editor.e
 			.on('blur', () => {
-				editor.s.save(true);
+				if (editor.isEditorMode()) {
+					editor.s.save(true);
+				}
 			})
 			.on('focus', () => {
 				editor.s.restore();
