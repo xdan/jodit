@@ -622,9 +622,10 @@ export class Uploader extends ViewComponent implements IUploader {
 							file = items[i].getAsFile();
 
 							if (file) {
-								const mime: string[] = file.type.match(
+								const mime = file.type.match(
 									/\/([a-z0-9]+)/i
 								) as string[];
+
 								extension = mime[1]
 									? mime[1].toLowerCase()
 									: '';
@@ -636,6 +637,7 @@ export class Uploader extends ViewComponent implements IUploader {
 									process
 								);
 							}
+
 							e.preventDefault();
 							break;
 						}

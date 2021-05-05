@@ -109,22 +109,6 @@ describe('Clipboard text', function () {
 					}
 				};
 			};
-
-			// it('Should paste as is', function() {
-			// 	const editor = getJodit({
-			// 		disablePlugins: ['WrapTextNodes']
-			// 	});
-			//
-			// 	simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
-			//
-			// 	expect(editor.value).equals('');
-			//
-			// 	const dialog = getOpenedDialog(editor);
-			//
-			// 	simulateEvent('click', dialog.querySelectorAll('button.jodit-ui-button')[1]);
-			//
-			// 	expect(sortAttributes(editor.value).replace(/<br>$/, '')).equals(pastedText);
-			// });
 		});
 
 		describe('Paste HTML from Word', function () {

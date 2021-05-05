@@ -70,8 +70,8 @@ export class paste extends Plugin {
 	private onPaste(e: PasteEvent): void | false {
 		try {
 			if (
-				this.j.e.fire('beforePaste', e) === false ||
-				this.customPasteProcess(e) === false
+				this.customPasteProcess(e) === false ||
+				this.j.e.fire('beforePaste', e) === false
 			) {
 				e.preventDefault();
 				return false;
