@@ -16,9 +16,11 @@ export class resizeHandler extends Plugin {
 
 	/** @override **/
 	protected afterInit(editor: IJodit) {
+		const { height, width, allowResizeX, allowResizeY } = editor.o;
+
 		if (
-			editor.o.height !== 'auto' &&
-			(editor.o.allowResizeX || editor.o.allowResizeY)
+			(height !== 'auto' || width !== 'auto') &&
+			(allowResizeX || allowResizeY)
 		) {
 			editor.e
 				.on('toggleFullSize.resizeHandler', () => {
@@ -31,7 +33,7 @@ export class resizeHandler extends Plugin {
 					'mousedown touchstart',
 					this.onHandleResizeStart
 				)
-				.on(editor.ow, 'mouseup touchsend', this.onHandleResizeEnd);
+				.on(editor.ow, 'mouseup touchend', this.onHandleResizeEnd);
 
 			editor.container.appendChild(this.handle);
 		}

@@ -93,6 +93,7 @@ describe('Test editor size plugin', function () {
 						height: 300,
 						iframe: true
 					});
+
 					const handle = editor.container.querySelector(
 						'.jodit-editor__resize'
 					);
@@ -187,6 +188,38 @@ describe('Test editor size plugin', function () {
 				});
 				editor.value = '<p>test</p>'.repeat(100);
 				expect(editor.container.offsetHeight).to.be.above(1000);
+			});
+		});
+	});
+
+	describe('Set width', function () {
+		describe('Resize handle', function () {
+			describe('Allow X resizing', function () {
+				it('Should show resize handle', function () {
+					const editor = getJodit({
+						width: 400,
+						allowResizeX: true
+					});
+
+					const handle = editor.container.querySelector(
+						'.jodit-editor__resize'
+					);
+
+					expect(editor.container.offsetWidth).equals(400);
+
+					simulateEvent('mousedown', handle, function (options) {
+						options.clientX = 100;
+						options.clientY = 100;
+					});
+
+					simulateEvent('mousemove', window, function (options) {
+						options.clientX = 200;
+						options.clientY = 200;
+					});
+					simulateEvent('mouseup', window);
+
+					expect(editor.container.offsetWidth).equals(500);
+				});
 			});
 		});
 	});

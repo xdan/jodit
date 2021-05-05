@@ -42,7 +42,7 @@ import { findNotEmptySibling } from '../keyboard/helpers';
  * var editor = Jodit('#editor', {
  *     cleanHTML: {
  *         allowTags: 'p,a[href],table,tr,td, img[src=1.png]' // allow only <p>,<a>,<table>,<tr>,<td>,<img> tags and
- *         for <a> allow only `href` attribute and <img> allow only `src` atrribute == '1.png'
+ *         for <a> allow only `href` attribute and <img> allow only `src` attribute == '1.png'
  *     }
  * });
  * editor.value = 'Sorry! <strong>Goodby</strong>\

@@ -9,6 +9,10 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.6.12
+
+* ['allowResizeX' option does not work without 'height' option #668](https://github.com/xdan/jodit/issues/668)
+
 ## 3.6.10
 
 #### :rocket: New Feature
