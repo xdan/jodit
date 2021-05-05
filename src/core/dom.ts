@@ -439,6 +439,39 @@ export class Dom {
 	}
 
 	/**
+	 * Get last matched node inside root
+	 *
+	 * @param root
+	 * @param condition
+	 */
+	static last(
+		root: Nullable<Node>,
+		condition: NodeCondition
+	): Nullable<Node> {
+		if (!root) {
+			return null;
+		}
+
+		let last = root.lastChild;
+
+		do {
+			if (condition(last)) {
+				return last;
+			}
+
+			const result = this.last(last, condition);
+
+			if (result) {
+				return last;
+			}
+
+			last = root.previousSibling;
+		} while (last);
+
+		return null;
+	}
+
+	/**
 	 * Find previous node
 	 *
 	 * @param node

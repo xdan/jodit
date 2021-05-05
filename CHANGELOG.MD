@@ -11,11 +11,26 @@
 
 ## 3.6.12
 
+#### :rocket: New Feature
+
+-   Added `cursorAfterAutofocus=end` option inside `autofocus` plugin.
+    Allow change default autofocus position. Possible values `start`, `end`.
+		[autofocus plugin should focus on the end of the text #649](https://github.com/xdan/jodit/issues/649)
+
+-   Added `saveSelectionOnBlur=true` option inside `autofocus` plugin.
+    Allow restore position after editor has focus after blur.
+
+#### :house: Internal
+
+-   Renamed `autofocus` > `focus` plugin.
+
 #### :boom: Breaking Change
 
-The `Select`.`restore` method is called with no arguments. It finds the range using the data attribute selector.
+-   The `Select`.`restore` method is called with no arguments. It finds the range using the data attribute selector.
+    In the `Select`.`save` method added `silent=false` argument.
 
 Earlier
+
 ```js
 const editor = Jodit.make('#editor');
 const info = editor.s.save();
@@ -24,29 +39,30 @@ editor.s.restore(info);
 ```
 
 Now
+
 ```js
 const editor = Jodit.make('#editor');
 
-editor.s.save();
+editor.s.save(true); // Do not change current range
 // Change code
 editor.s.restore();
 ```
 
-
 #### :bug: Bug Fix
 
-* ['allowResizeX' option does not work without 'height' option #668](https://github.com/xdan/jodit/issues/668)
-* [Pasting link with an colon (:) crashes the browser/makes it unresponsive #667](https://github.com/xdan/jodit/issues/667)
-* [Pasting an MS Excel cell inserts the cell as image #474](https://github.com/xdan/jodit/issues/474)
-* Fixed a bug when FONT was inserted into the change history
+-   ['allowResizeX' option does not work without 'height' option #668](https://github.com/xdan/jodit/issues/668)
+-   [Pasting link with an colon (:) crashes the browser/makes it unresponsive #667](https://github.com/xdan/jodit/issues/667)
+-   [Pasting an MS Excel cell inserts the cell as image #474](https://github.com/xdan/jodit/issues/474)
+-   Fixed a bug when FONT was inserted into the change history
 
 ## 3.6.10
 
 #### :rocket: New Feature
 
-* Set `component` property for source textarea with Jodit instance.
+-   Set `component` property for source textarea with Jodit instance.
+
 ```html
-<textarea id='editor' cols='30' rows='10'></textarea>
+<textarea id="editor" cols="30" rows="10"></textarea>
 <script>
 	Jodit.make('#editor');
 	console.log(document.getElementById('editor').component.value);
@@ -56,29 +72,28 @@ editor.s.restore();
 
 #### :bug: Bug Fix
 
-* Hide popup after deleting target node with key press.
-* [image-editor : onChangeSizeInput #663](https://github.com/xdan/jodit/issues/663)
-* [image-editor : switcher #662](https://github.com/xdan/jodit/issues/662) Replace buttons to switcher
-* [Error from ESlint, please fix it #658](https://github.com/xdan/jodit/issues/658)
-* [Support Mobile platform’s slide to type feature. #654](https://github.com/xdan/jodit/issues/654)
-* [The Jodit eraser tool doesn't work for <p> tags #652](https://github.com/xdan/jodit/issues/652)
-* [Links at the end of editor after unlink #648](https://github.com/xdan/jodit/issues/648)
-
+-   Hide popup after deleting target node with key press.
+-   [image-editor : onChangeSizeInput #663](https://github.com/xdan/jodit/issues/663)
+-   [image-editor : switcher #662](https://github.com/xdan/jodit/issues/662) Replace buttons to switcher
+-   [Error from ESlint, please fix it #658](https://github.com/xdan/jodit/issues/658)
+-   [Support Mobile platform’s slide to type feature. #654](https://github.com/xdan/jodit/issues/654)
+-   [The Jodit eraser tool doesn't work for <p> tags #652](https://github.com/xdan/jodit/issues/652)
+-   [Links at the end of editor after unlink #648](https://github.com/xdan/jodit/issues/648)
 
 ## 3.6.7
 
 #### :bug: Bug Fix
 
-* When deleting a file via the context menu - the list of files was not updated.
+-   When deleting a file via the context menu - the list of files was not updated.
 
 #### :rocket: New Feature
 
-* Added the ability to open a file browser and any dialog in a new window.
-	To do this, you need to define the `ownerWindow` field.
-	For example, this can be done so that the file browser opens in a separate popup window.
+-   Added the ability to open a file browser and any dialog in a new window.
+    To do this, you need to define the `ownerWindow` field.
+    For example, this can be done so that the file browser opens in a separate popup window.
 
 ```js
-const editor = Jodit.make('#editor' ,{
+const editor = Jodit.make('#editor', {
 	uploader: {
 		url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 	},
@@ -90,12 +105,18 @@ const editor = Jodit.make('#editor' ,{
 });
 
 // Rewrite default filebrowser instance
-editor.e.on('getInstanceFileBrowser', (options) => {
-	const win = window.open("about:blank", "File Browser", "location=0,menubar=0,status=0,toolbar=0,titlebar=0,width=700,height=500");
+editor.e.on('getInstanceFileBrowser', options => {
+	const win = window.open(
+		'about:blank',
+		'File Browser',
+		'location=0,menubar=0,status=0,toolbar=0,titlebar=0,width=700,height=500'
+	);
 
 	win.document.open();
 	// Need append css for Jodit
-	win.document.write('<html><head><title>File Browser!</title><link rel="stylesheet" type="text/css" href="./build/jodit.min.css"></head><body></body></html>');
+	win.document.write(
+		'<html><head><title>File Browser!</title><link rel="stylesheet" type="text/css" href="./build/jodit.min.css"></head><body></body></html>'
+	);
 	win.document.close();
 
 	const browser = new Jodit.modules.FileBrowser({
@@ -123,8 +144,8 @@ editor.e.on('getInstanceFileBrowser', (options) => {
 
 #### :boom: Breaking Change
 
-- Removed options: `useIframeResizer`, `useImgResizer`, `useTableResizer` from `resizer` plugin.
-	Instead, added `allowResizeTags`.
+-   Removed options: `useIframeResizer`, `useImgResizer`, `useTableResizer` from `resizer` plugin.
+    Instead, added `allowResizeTags`.
 
 ```js
 Config.prototype.allowResizeTags = ['img', 'iframe', 'table', 'jodit'];
@@ -134,11 +155,10 @@ Config.prototype.allowResizeTags = ['img', 'iframe', 'table', 'jodit'];
 
 #### :bug: Bug Fix
 
-- [Error when resizing tables and tables cells](https://github.com/xdan/jodit/issues/611)
-- [Image and video resizing in the table does not work correctly](https://github.com/xdan/jodit/issues/528)
-- [The link popup closes when trying to add it to an image inside a table. #524](https://github.com/xdan/jodit/issues/524)
-- Fixed a bug when command `emptyTable` didn't work.
-
+-   [Error when resizing tables and tables cells](https://github.com/xdan/jodit/issues/611)
+-   [Image and video resizing in the table does not work correctly](https://github.com/xdan/jodit/issues/528)
+-   [The link popup closes when trying to add it to an image inside a table. #524](https://github.com/xdan/jodit/issues/524)
+-   Fixed a bug when command `emptyTable` didn't work.
 
 ## 3.6.1
 
@@ -153,25 +173,27 @@ Config.prototype.allowResizeTags = ['img', 'iframe', 'table', 'jodit'];
 
 #### :rocket: New Feature
 
-* Added `classSpan` plugin. Applying some className to selected text. Thanks https://github.com/s-renier-taonix-fr
+-   Added `classSpan` plugin. Applying some className to selected text. Thanks https://github.com/s-renier-taonix-fr
+
 ```js
 const editor = new Jodit('#editor', {
- 	controls: {
- 		classSpan: {
- 			list: {
- 				class1: 'Classe 1',
- 				class2: 'Classe 2',
- 				class3: 'Classe 3',
- 				class4: 'Classe 4',
- 				class5: 'Classe 5'
- 			}
- 		}
- 	}
+	controls: {
+		classSpan: {
+			list: {
+				class1: 'Classe 1',
+				class2: 'Classe 2',
+				class3: 'Classe 3',
+				class4: 'Classe 4',
+				class5: 'Classe 5'
+			}
+		}
+	}
 });
 ```
 
-* Added `UIFileInput` element.
-* Added `UIButtonGroup` element.
+-   Added `UIFileInput` element.
+-   Added `UIButtonGroup` element.
+
 ```ts
 const group = new UIButtonGroup(jodit, {
 	label: 'Theme',
@@ -182,10 +204,10 @@ const group = new UIButtonGroup(jodit, {
 		{ value: 'default', text: 'Light' },
 		{ value: 'dark', text: 'Dark' }
 	],
-	onChange: (values) => {
+	onChange: values => {
 		this.state.theme = values[0].value as string;
 	}
-}),
+});
 ```
 
 #### :house: Internal
@@ -230,7 +252,7 @@ class UIBtn extends UIElement {
 		const button = this.j.c.element('button');
 		button.style.color = 'red';
 
-		button.classList.add(this.getFullElName('button'))
+		button.classList.add(this.getFullElName('button'));
 
 		this.j.e.on('click', button, this.onClick);
 		return button;
@@ -259,7 +281,9 @@ class UIBtn extends UIElement {
 	}
 }
 ```
+
 and styles
+
 ```css
 .jodit-ui-btn__button {
 	border: 1px solid #ccc;
@@ -370,11 +394,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
 -   ex: [
--       	{ value: "", text: "" },
--       	{ value: "val1", text: "text1" },
--       	{ value: "val2", text: "text2" },
--       	{ value: "val3", text: "text3" }
--       ]
+-               	{ value: "", text: "" },
+-               	{ value: "val1", text: "text1" },
+-               	{ value: "val2", text: "text2" },
+-               	{ value: "val3", text: "text3" }
+-               ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

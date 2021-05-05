@@ -227,7 +227,7 @@ export class Select {
 			newRange.collapse(atStart);
 		}
 
-		const marker: HTMLSpanElement = this.j.createInside.span();
+		const marker = this.j.createInside.span();
 
 		marker.id =
 			consts.MARKER_CLASS +
@@ -308,8 +308,9 @@ export class Select {
 
 	/**
 	 * Saves selections using marker invisible elements in the DOM.
+	 * @param [silent] Do not change current range
 	 */
-	save(): markerInfo[] {
+	save(silent: boolean = false): markerInfo[] {
 		const sel = this.sel;
 
 		if (!sel || !sel.rangeCount) {
@@ -320,13 +321,11 @@ export class Select {
 			length: number = sel.rangeCount,
 			ranges: Range[] = [];
 
-		let i: number, start: HTMLSpanElement, end: HTMLSpanElement;
-
-		for (i = 0; i < length; i += 1) {
+		for (let i = 0; i < length; i += 1) {
 			ranges[i] = sel.getRangeAt(i);
 
 			if (ranges[i].collapsed) {
-				start = this.marker(true, ranges[i]);
+				const start = this.marker(true, ranges[i]);
 
 				info[i] = {
 					startId: start.id,
@@ -334,8 +333,8 @@ export class Select {
 					startMarker: start.outerHTML
 				};
 			} else {
-				start = this.marker(true, ranges[i]);
-				end = this.marker(false, ranges[i]);
+				const start = this.marker(true, ranges[i]);
+				const end = this.marker(false, ranges[i]);
 
 				info[i] = {
 					startId: start.id,
@@ -349,31 +348,33 @@ export class Select {
 
 		sel.removeAllRanges();
 
-		for (i = length - 1; i >= 0; --i) {
-			const startElm = this.doc.getElementById(info[i].startId);
+		if (!silent) {
+			for (let i = length - 1; i >= 0; --i) {
+				const startElm = this.doc.getElementById(info[i].startId);
 
-			if (startElm) {
-				if (info[i].collapsed) {
-					ranges[i].setStartAfter(startElm);
-					ranges[i].collapse(true);
-				} else {
-					ranges[i].setStartBefore(startElm);
+				if (startElm) {
+					if (info[i].collapsed) {
+						ranges[i].setStartAfter(startElm);
+						ranges[i].collapse(true);
+					} else {
+						ranges[i].setStartBefore(startElm);
 
-					if (info[i].endId) {
-						const endElm = this.doc.getElementById(
-							info[i].endId as string
-						);
+						if (info[i].endId) {
+							const endElm = this.doc.getElementById(
+								info[i].endId as string
+							);
 
-						if (endElm) {
-							ranges[i].setEndAfter(endElm);
+							if (endElm) {
+								ranges[i].setEndAfter(endElm);
+							}
 						}
 					}
 				}
-			}
 
-			try {
-				sel.addRange(ranges[i].cloneRange());
-			} catch {}
+				try {
+					sel.addRange(ranges[i].cloneRange());
+				} catch {}
+			}
 		}
 
 		return info;

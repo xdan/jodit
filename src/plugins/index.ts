@@ -6,7 +6,7 @@
 
 export { addNewLine } from './add-new-line/add-new-line';
 export { about } from './about/about';
-export { autofocus } from './autofocus';
+export { focus } from './focus';
 export { classSpan } from './class-span/class-span';
 export { Delete } from './keyboard/delete';
 export { bold } from './bold';

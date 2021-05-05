@@ -11,26 +11,62 @@ import { Dom } from '../core/dom';
 declare module '../config' {
 	interface Config {
 		autofocus: boolean;
+		cursorAfterAutofocus: 'start' | 'end';
+		saveSelectionOnBlur: boolean;
 	}
 }
 
 /**
- * @property{boolean} autofocus=false true After loading the page into the editor once the focus is set
+ * After loading the page into the editor once the focus is set
  */
 Config.prototype.autofocus = false;
+
+/**
+ * Cursor position after autofocus
+ */
+Config.prototype.cursorAfterAutofocus = 'end';
+
+/**
+ * Save current selection on blur event
+ */
+Config.prototype.saveSelectionOnBlur = true;
 
 /**
  * Autofocus plugin - set focus inside the editor after reload
  *
  * @param {Jodit} editor
  */
-export function autofocus(editor: IJodit): void {
+export function focus(editor: IJodit): void {
+	if (editor.o.saveSelectionOnBlur) {
+		editor.e
+			.on('blur', () => {
+				editor.s.save(true);
+			})
+			.on('focus', () => {
+				editor.s.restore();
+			});
+	}
+
+	const focus = () => {
+		editor.s.focus();
+
+		if (editor.o.cursorAfterAutofocus === 'end') {
+			const lastTextNode = Dom.last(editor.editor, node =>
+				Dom.isText(node)
+			);
+
+			if (lastTextNode) {
+				editor.s.setCursorIn(lastTextNode, false);
+			}
+		}
+	};
+
 	editor.e.on('afterInit', () => {
 		if (editor.o.autofocus) {
 			if (editor.defaultTimeout) {
-				editor.async.setTimeout(editor.s.focus, 300);
+				editor.async.setTimeout(focus, 300);
 			} else {
-				editor.s.focus();
+				focus();
 			}
 		}
 	});
