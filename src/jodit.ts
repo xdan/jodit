@@ -522,6 +522,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			new_value = this.getEditorValue();
 
 		if (
+			!this.isSilentChange &&
 			old_value !== new_value &&
 			this.__callChangeCount < consts.SAFE_COUNT_CHANGE_CALL
 		) {
@@ -728,7 +729,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				this.s.select(this.editor, true);
 			} else {
 				try {
-					result = this.ed.execCommand(command, showUI, value);
+					result = this.nativeExecCommand(command, showUI, value);
 				} catch (e) {
 					if (!isProd) {
 						throw e;
@@ -749,6 +750,32 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.setEditorValue(); // synchrony
 
 		return result;
+	}
+
+	/**
+	 * Don't raise a change event
+	 */
+	private isSilentChange: boolean = false;
+
+	/**
+	 * Exec native command
+	 *
+	 * @param command
+	 * @param showUI
+	 * @param value
+	 */
+	nativeExecCommand(
+		command: string,
+		showUI: boolean = false,
+		value: null | any = null
+	): boolean {
+		this.isSilentChange = true;
+
+		try {
+			return this.ed.execCommand(command, showUI, value);
+		} finally {
+			this.isSilentChange = false;
+		}
 	}
 
 	private execCustomCommands(
@@ -813,7 +840,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.editor.classList.remove('jodit_disabled');
 
 			if (this.__selectionLocked) {
-				this.s.restore(this.__selectionLocked);
+				this.s.restore();
 			}
 
 			this.e.fire('lock', false);

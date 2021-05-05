@@ -30,7 +30,6 @@ import {
 	isString,
 	$$,
 	css,
-	isArray,
 	call,
 	toArray
 } from '../helpers';
@@ -202,7 +201,6 @@ export class Select {
 	 */
 	isMarker = (elm: Node): boolean =>
 		Dom.isNode(elm, this.win) &&
-		Dom.isElement(elm) &&
 		Dom.isTag(elm, 'span') &&
 		elm.hasAttribute('data-' + consts.MARKER_CLASS);
 
@@ -264,63 +262,52 @@ export class Select {
 
 	/**
 	 * Restores user selections using marker invisible elements in the DOM.
-	 *
-	 * @param {markerInfo[]|null} selectionInfo
 	 */
-	restore(selectionInfo: markerInfo[] | null = []): void {
-		if (isArray(selectionInfo)) {
-			let range: Range | false = false;
+	restore(): void {
+		let range: Range | false = false;
 
-			selectionInfo.forEach((selection: markerInfo) => {
-				const end = this.area.querySelector(
-						'#' + selection.endId
-					) as HTMLElement,
-					start = this.area.querySelector(
-						'#' + selection.startId
-					) as HTMLElement;
+		const markAttr = (start: boolean) =>
+			`span[data-${consts.MARKER_CLASS}=${start ? 'start' : 'end'}]`;
 
-				if (!start) {
-					return;
-				}
+		const start = this.area.querySelector(markAttr(true)),
+			end = this.area.querySelector(markAttr(false));
 
-				range = this.createRange();
+		if (!start) {
+			return;
+		}
 
-				if (selection.collapsed || !end) {
-					const previousNode: Node | null = start.previousSibling;
+		range = this.createRange();
 
-					if (Dom.isText(previousNode)) {
-						range.setStart(
-							previousNode,
-							previousNode.nodeValue
-								? previousNode.nodeValue.length
-								: 0
-						);
-					} else {
-						range.setStartBefore(start);
-					}
+		if (!end) {
+			const previousNode: Node | null = start.previousSibling;
 
-					Dom.safeRemove(start);
-
-					range.collapse(true);
-				} else {
-					range.setStartAfter(start);
-					Dom.safeRemove(start);
-
-					range.setEndBefore(end);
-					Dom.safeRemove(end);
-				}
-			});
-
-			if (range) {
-				this.selectRange(range);
+			if (Dom.isText(previousNode)) {
+				range.setStart(
+					previousNode,
+					previousNode.nodeValue ? previousNode.nodeValue.length : 0
+				);
+			} else {
+				range.setStartBefore(start);
 			}
+
+			Dom.safeRemove(start);
+
+			range.collapse(true);
+		} else {
+			range.setStartAfter(start);
+			Dom.safeRemove(start);
+
+			range.setEndBefore(end);
+			Dom.safeRemove(end);
+		}
+
+		if (range) {
+			this.selectRange(range);
 		}
 	}
 
 	/**
 	 * Saves selections using marker invisible elements in the DOM.
-	 *
-	 * @return markerInfo[]
 	 */
 	save(): markerInfo[] {
 		const sel = this.sel;
@@ -371,10 +358,12 @@ export class Select {
 					ranges[i].collapse(true);
 				} else {
 					ranges[i].setStartBefore(startElm);
+
 					if (info[i].endId) {
 						const endElm = this.doc.getElementById(
 							info[i].endId as string
 						);
+
 						if (endElm) {
 							ranges[i].setEndAfter(endElm);
 						}
@@ -711,7 +700,7 @@ export class Select {
 			onload();
 		}
 
-		const result = this.insertNode(image);
+		this.insertNode(image);
 
 		/**
 		 * Triggered after image was inserted {@link Selection~insertImage|insertImage}. This method can executed from
@@ -727,8 +716,6 @@ export class Select {
 		 * ```
 		 */
 		this.j.e.fire('afterInsertImage', image);
-
-		return result;
 	}
 
 	/**
@@ -1111,7 +1098,7 @@ export class Select {
 		});
 
 		if (!this.isCollapsed()) {
-			this.doc.execCommand('fontsize', false, '7');
+			this.j.nativeExecCommand('fontsize', false, '7');
 		} else {
 			const font = this.j.createInside.element('font');
 			attr(font, 'size', 7);

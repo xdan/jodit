@@ -414,14 +414,14 @@ export class paste extends Plugin {
 
 		this.j.container.appendChild(div);
 
-		const selData = this.j.s.save();
+		this.j.s.save();
 
 		div.focus();
 		let tick: number = 0;
 
 		const removeFakeFocus = () => {
 			Dom.safeRemove(div);
-			this.j.selection && this.j.s.restore(selData);
+			this.j.selection && this.j.s.restore();
 		};
 
 		const waitData = () => {

@@ -135,7 +135,7 @@ export function orderedList(editor: IJodit): void {
 					);
 
 					if (unwrapList.length) {
-						const selection = editor.s.save();
+						editor.s.save();
 
 						toArray(ul.childNodes).forEach(li => {
 							if (Dom.isTag(li.lastChild, 'br')) {
@@ -145,7 +145,7 @@ export function orderedList(editor: IJodit): void {
 
 						unwrapList.forEach(elm => Dom.unwrap(elm));
 
-						editor.s.restore(selection);
+						editor.s.restore();
 					}
 				}
 

@@ -11,9 +11,34 @@
 
 ## 3.6.12
 
+#### :boom: Breaking Change
+
+The `Select`.`restore` method is called with no arguments. It finds the range using the data attribute selector.
+
+Earlier
+```js
+const editor = Jodit.make('#editor');
+const info = editor.s.save();
+// Change code
+editor.s.restore(info);
+```
+
+Now
+```js
+const editor = Jodit.make('#editor');
+
+editor.s.save();
+// Change code
+editor.s.restore();
+```
+
+
+#### :bug: Bug Fix
+
 * ['allowResizeX' option does not work without 'height' option #668](https://github.com/xdan/jodit/issues/668)
 * [Pasting link with an colon (:) crashes the browser/makes it unresponsive #667](https://github.com/xdan/jodit/issues/667)
 * [Pasting an MS Excel cell inserts the cell as image #474](https://github.com/xdan/jodit/issues/474)
+* Fixed a bug when FONT was inserted into the change history
 
 ## 3.6.10
 

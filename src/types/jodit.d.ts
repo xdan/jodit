@@ -93,6 +93,11 @@ interface IJodit extends IViewWithToolbar {
 	editorIsActive: boolean;
 
 	execCommand(command: string, showUI?: any, value?: null | any): any;
+	nativeExecCommand(
+		command: string,
+		showUI?: any,
+		value?: null | any
+	): boolean;
 
 	registerCommand(
 		commandNameOriginal: string,

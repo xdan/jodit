@@ -77,7 +77,7 @@ export function indent(editor: IJodit): void {
 		const indentedBoxes: HTMLElement[] = [];
 
 		editor.s.eachSelection((current: Node): false | void => {
-			const selectionInfo = editor.s.save();
+			editor.s.save();
 
 			let currentBox = current
 				? (Dom.up(
@@ -98,7 +98,7 @@ export function indent(editor: IJodit): void {
 			}
 
 			if (!currentBox) {
-				editor.s.restore(selectionInfo);
+				editor.s.restore();
 				return false;
 			}
 
@@ -121,7 +121,7 @@ export function indent(editor: IJodit): void {
 				}
 			}
 
-			editor.s.restore(selectionInfo);
+			editor.s.restore();
 		});
 
 		editor.setEditorValue();

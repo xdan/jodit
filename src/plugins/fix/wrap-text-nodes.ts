@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, markerInfo, Nullable } from '../../types';
+import type { IJodit, Nullable } from '../../types';
 import { Plugin } from '../../core/plugin';
 import { Dom } from '../../core/dom';
 import { isString } from '../../core/helpers/checker';
@@ -46,12 +46,10 @@ export class WrapTextNodes extends Plugin {
 		let child: Nullable<Node> = jodit.editor.firstChild,
 			isChanged: boolean = false;
 
-		let selInfo: Nullable<markerInfo[]> = null;
-
 		while (child) {
 			if (this.isSuitableStart(child)) {
 				if (!isChanged) {
-					selInfo = jodit.s.save();
+					jodit.s.save();
 				}
 
 				isChanged = true;
@@ -72,7 +70,7 @@ export class WrapTextNodes extends Plugin {
 		}
 
 		if (isChanged) {
-			jodit.s.restore(selInfo);
+			jodit.s.restore();
 
 			if (jodit.e.current === 'afterInit') {
 				jodit.e.fire('internalChange');

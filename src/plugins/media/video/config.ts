@@ -44,12 +44,13 @@ Config.prototype.controls.video = {
 				])
 			]),
 			tabs: TabOption[] = [],
-			selinfo = editor.s.save(),
 			insertCode = (code: string) => {
-				editor.s.restore(selinfo);
+				editor.s.restore();
 				editor.s.insertHTML(code);
 				close();
 			};
+
+		editor.s.save();
 
 		tabs.push(
 			{

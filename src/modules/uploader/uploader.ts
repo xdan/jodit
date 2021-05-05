@@ -586,7 +586,7 @@ export class Uploader extends ViewComponent implements IUploader {
 							restore = () =>
 								selection &&
 								isJoditObject(this.j) &&
-								this.j.s.restore(selection);
+								this.j.s.restore();
 
 						div.focus();
 

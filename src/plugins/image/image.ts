@@ -29,13 +29,13 @@ Config.prototype.controls.image = {
 				: $$('img', current)[0];
 		}
 
-		const selInfo = editor.s.save();
+		editor.s.save();
 
 		return FileSelectorWidget(
 			editor,
 			{
 				filebrowser: (data: IFileBrowserCallBackData) => {
-					editor.s.restore(selInfo);
+					editor.s.restore();
 
 					data.files &&
 						data.files.forEach(file =>
@@ -50,7 +50,7 @@ Config.prototype.controls.image = {
 				},
 				upload: true,
 				url: async (url: string, text: string) => {
-					editor.s.restore(selInfo);
+					editor.s.restore();
 
 					const image: HTMLImageElement =
 						sourceImage || editor.createInside.element('img');

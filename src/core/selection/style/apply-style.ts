@@ -8,7 +8,6 @@ import type {
 	CanUndef,
 	IJodit,
 	IStyle,
-	markerInfo,
 	Nullable
 } from '../../../types';
 import type { Style } from './style';
@@ -41,15 +40,13 @@ export class ApplyStyle {
 	apply(): void {
 		const sel = this.jodit.selection;
 
-		let selInfo: markerInfo[] = [];
-
 		const isCollapsed = sel.isCollapsed();
 
 		if (isCollapsed) {
 			const font = this.jodit.createInside.element('font');
 			sel.insertNode(font, false, false);
 			sel.setCursorIn(font);
-			selInfo = sel.save();
+			sel.save();
 
 			if (!this.checkSpecialElements(font)) {
 				this.applyToElement(font);
@@ -57,14 +54,14 @@ export class ApplyStyle {
 
 			Dom.unwrap(font);
 		} else {
-			selInfo = sel.save();
+			sel.save();
 			normalizeNode(sel.area.firstChild); // FF fix for test "commandsTest - Exec command "bold"
 
 			// for some text that contains a few STRONG elements, should unwrap all of these"
 			sel.wrapInTag(this.applyToElement);
 		}
 
-		sel.restore(selInfo);
+		sel.restore();
 	}
 
 	/**

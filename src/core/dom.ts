@@ -55,7 +55,7 @@ export class Dom {
 			first: Node = current,
 			last: Node = current;
 
-		const selInfo = editor.s.save();
+		editor.s.save();
 
 		let needFindNext: boolean = false;
 
@@ -98,7 +98,7 @@ export class Dom {
 			first = next;
 		}
 
-		editor.s.restore(selInfo);
+		editor.s.restore();
 
 		return wrapper as HTMLElement;
 	}
@@ -121,7 +121,7 @@ export class Dom {
 		tag: HTMLElement | HTMLTagNames,
 		editor: IJodit
 	): Nullable<HTMLElement> {
-		const selInfo = editor.s.save();
+		editor.s.save();
 
 		const wrapper = isString(tag) ? editor.createInside.element(tag) : tag;
 
@@ -133,7 +133,7 @@ export class Dom {
 
 		wrapper.appendChild(current);
 
-		editor.s.restore(selInfo);
+		editor.s.restore();
 
 		return wrapper;
 	}

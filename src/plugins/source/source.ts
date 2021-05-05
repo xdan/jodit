@@ -215,7 +215,7 @@ export class source extends Plugin {
 
 		if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
 			this.__lock = true;
-			this.j.s.restore(this.selInfo);
+			this.j.s.restore();
 			this.__lock = false;
 			return;
 		}

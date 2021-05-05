@@ -148,10 +148,11 @@ export class cleanHtml extends Plugin<IJodit> {
 				const oldParent = Dom.closest(current, tags, editor.editor);
 
 				if (oldParent) {
-					const selInfo = editor.s.save(),
-						tagName: string =
-							replaceOldTags[oldParent.nodeName.toLowerCase()] ||
-							replaceOldTags[oldParent.nodeName];
+					editor.s.save();
+
+					const tagName: string =
+						replaceOldTags[oldParent.nodeName.toLowerCase()] ||
+						replaceOldTags[oldParent.nodeName];
 
 					Dom.replace(
 						oldParent as HTMLElement,
@@ -161,7 +162,7 @@ export class cleanHtml extends Plugin<IJodit> {
 						false
 					);
 
-					editor.s.restore(selInfo);
+					editor.s.restore();
 				}
 			}
 		}

@@ -559,7 +559,7 @@ export class search extends Plugin {
 		}
 
 		if (this.selInfo) {
-			this.j.s.restore(this.selInfo);
+			this.j.s.restore();
 			this.selInfo = null;
 		}
 
