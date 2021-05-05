@@ -34,24 +34,8 @@ Config.prototype.popup = {
 	a: require('./items/a').default,
 	img: require('./items/img').default,
 	cells: require('./items/cells').default,
-	jodit: [
-		{
-			name: 'bin',
-			tooltip: 'Delete',
-			exec: (editor: IJodit, image) => {
-				image && editor.s.removeNode(image);
-			}
-		}
-	],
-	'jodit-media': [
-		{
-			name: 'bin',
-			tooltip: 'Delete',
-			exec: (editor: IJodit, image) => {
-				image && editor.s.removeNode(image);
-			}
-		}
-	],
+	jodit: require('./items/iframe').default,
+	'jodit-media': require('./items/iframe').default,
 	selection: [
 		'bold',
 		'underline',

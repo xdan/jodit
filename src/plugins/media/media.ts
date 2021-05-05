@@ -52,6 +52,8 @@ export function media(editor: IJodit): void {
 				`<${mediaFakeTag} data-jodit-temp="1" contenteditable="false" draggable="true" data-${keyFake}="1"></${mediaFakeTag}>`
 			);
 
+			attr(wrapper, 'style', attr(element, 'style'));
+
 			wrapper.style.display =
 				element.style.display === 'inline-block'
 					? 'inline-block'

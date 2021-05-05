@@ -61,6 +61,7 @@ editor.s.restore();
 
 #### :rocket: New Feature
 
+-   [Video alignment request #646](https://github.com/xdan/jodit/issues/646)
 -   Set `component` property for source textarea with Jodit instance.
 
 ```html

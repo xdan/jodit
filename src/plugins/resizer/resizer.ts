@@ -355,6 +355,8 @@ export class resizer extends Plugin {
 						'></jodit>'
 				);
 
+				attr(wrapper, 'style', attr(element, 'style'));
+
 				css(wrapper, {
 					display:
 						element.style.display === 'inline-block'

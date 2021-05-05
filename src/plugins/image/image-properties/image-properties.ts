@@ -27,7 +27,6 @@ import {
 import {
 	css,
 	trim,
-	clearCenterAlign,
 	attr,
 	position,
 	isArray,
@@ -42,6 +41,7 @@ import { Button } from '../../../core/ui/button';
 import { form, mainTab, positionTab } from './templates/';
 import { watch, autobind } from '../../../core/decorators';
 import { openImageEditor } from '../../../modules/image-editor/image-editor';
+import { hAlignElement } from '../helpers';
 
 /**
  * Plug-in for image editing window
@@ -650,30 +650,7 @@ export class imageProperties extends Plugin {
 		}
 
 		if (opt.image.editAlign) {
-			if (align.value) {
-				if (['right', 'left'].includes(align.value.toLowerCase())) {
-					css(image, 'float', align.value);
-					clearCenterAlign(image);
-				} else {
-					css(image, {
-						float: '',
-						display: 'block',
-						marginLeft: 'auto',
-						marginRight: 'auto'
-					});
-				}
-			} else {
-				if (
-					css(image, 'float') &&
-					['right', 'left'].indexOf(
-						css(image, 'float').toString().toLowerCase()
-					) !== -1
-				) {
-					css(image, 'float', '');
-				}
-
-				clearCenterAlign(image);
-			}
+			hAlignElement(image, align.value);
 		}
 
 		this.j.setEditorValue();

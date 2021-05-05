@@ -349,7 +349,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			if (isString(value) && getControl(value)) {
 				return {
 					name: value.toString(),
-					...getControl(value)
+					...getControl(value),
+					exec: control.exec
 				};
 			}
 
@@ -357,7 +358,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 				return {
 					name: key.toString(),
 					...getControl(key),
-					...(typeof value === 'object' ? value : {})
+					...(typeof value === 'object' ? value : {}),
+					exec: control.exec
 				};
 			}
 

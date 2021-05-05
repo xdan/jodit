@@ -7,7 +7,38 @@
 import type { IControlType, IJodit } from '../../../../types';
 import { Dom } from '../../../../core/dom';
 import { isString } from '../../../../core/helpers/checker';
-import { clearCenterAlign, css } from '../../../../core/helpers';
+import { css } from '../../../../core/helpers';
+import { hAlignElement } from '../../../image/helpers';
+
+export const align: IControlType<IJodit> = {
+	name: 'left',
+	childTemplate: (_, __, value: string) => value,
+	list: ['Left', 'Right', 'Center', 'Normal'],
+	exec: (editor: IJodit, elm, { control }): void | false => {
+		if (!Dom.isTag(elm, ['img', 'jodit', 'jodit-media'])) {
+			return;
+		}
+
+		const command: string =
+			control.args && isString(control.args[0])
+				? control.args[0].toLowerCase()
+				: '';
+
+		if (!command) {
+			return false;
+		}
+
+		hAlignElement(elm, command);
+		if (Dom.isTag(elm, ['jodit', 'jodit-media']) && elm.firstElementChild) {
+			hAlignElement(elm.firstElementChild as HTMLElement, command);
+		}
+
+		editor.setEditorValue();
+
+		editor.e.fire('recalcPositionPopup');
+	},
+	tooltip: 'Horizontal align'
+};
 
 export default [
 	{
@@ -52,53 +83,5 @@ export default [
 			editor.e.fire('recalcPositionPopup');
 		}
 	},
-	{
-		name: 'left',
-		childTemplate: (_, __, value: string) => value,
-		list: ['Left', 'Right', 'Center', 'Normal'],
-		exec: (editor: IJodit, image, { control }): void | false => {
-			if (!Dom.isTag(image, 'img')) {
-				return;
-			}
-
-			const command: string =
-				control.args && isString(control.args[0])
-					? control.args[0].toLowerCase()
-					: '';
-
-			if (!command) {
-				return false;
-			}
-
-			if (command !== 'normal') {
-				if (['right', 'left'].indexOf(command) !== -1) {
-					css(image, 'float', command);
-					clearCenterAlign(image);
-				} else {
-					css(image, 'float', '');
-					css(image, {
-						display: 'block',
-						'margin-left': 'auto',
-						'margin-right': 'auto'
-					});
-				}
-			} else {
-				if (
-					css(image, 'float') &&
-					['right', 'left'].indexOf(
-						(css(image, 'float') as string).toLowerCase()
-					) !== -1
-				) {
-					css(image, 'float', '');
-				}
-
-				clearCenterAlign(image);
-			}
-
-			editor.setEditorValue();
-
-			editor.e.fire('recalcPositionPopup');
-		},
-		tooltip: 'Horizontal align'
-	}
+	align
 ] as Array<IControlType | string>;
