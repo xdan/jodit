@@ -77,6 +77,57 @@ describe('Test helpers', function () {
 			});
 		});
 
+		describe('isURL', function () {
+			it('Should check value is URL', function () {
+				const variants = {
+					'12345678901234567890123': 0,
+					'http://j.mp': 1,
+					'http://xdan.ru': 1,
+					' http://xdan.ru ': 0,
+					'https://xdan.ru test': 0,
+					'https://xdan.ru?query=1': 1,
+					'https://xdan.ru?query': 1,
+					'https://xdan.ru:2333?query': 1,
+					'http://www.example.com/wpstyle/?p=364': 1,
+					'http://userid:password@example.com/': 1,
+					'http://userid@example.com:8080/': 1,
+					'http://⌘.ws': 1,
+					'https://томаты.рф': 1,
+					'http://foo.com/blah_(wikipedia)#cite-1': 1,
+					'http://foo.bar/?q=Test%20URL-encoded%20stuff': 1,
+					'http://a.b-c.de': 1,
+					'http://': 0,
+					'http://..': 1,
+					'http://../': 1,
+					'http://##/': 0,
+					'http:///a': 1,
+					'//xdan.ru?query': 0,
+					'//xdan.ru': 0,
+					'ftp://xdan.ru': 1,
+					'file://xdan.ru': 1,
+					'http://142.42.1.1/': 1,
+					'http://142.42.1.1:8080/': 1,
+					'httpss://xdan.ru': 0,
+					'http://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&docid=nIv5rk2GyP3hXM&tbnid=isiOkMe3nCtexM:&ved=0CAUQjRw&url=http%3A%2F%2Fanimalcrossing.wikia.com%2Fwiki%2FLion&ei=ygZXU_2fGKbMsQTf4YLgAQ&bvm=bv.65177938,d.aWc&psig=AFQjCNEpBfKnal9kU7Zu4n7RnEt2nerN4g&ust=1398298682009707': 1,
+					'https://demosite.sharepoint.com/:v:/s/PCGKR005/ESMdCz-_rXtIrwSlDVW2mw0BQ8p9J1qtraaCe4VkVPsn_w?e=gEQORV': 1,
+					'https://demo.sharepoint.com/:v:/s/PCGKR005/ESMdCz-_rXtIrwSlDVW2mw0BQ8p9J1qtraaCe4VkVPsn_w?e=gEQORV': 1,
+					'/index.php': 0
+				};
+
+				const values = Object.keys(variants);
+
+				for (let i = 0; i < values.length; i += 1) {
+					const key = values[i],
+						result = Boolean(variants[key]);
+
+					expect(result).equals(
+						Jodit.modules.Helpers.isURL(key),
+						`Is domain "${key}"`
+					);
+				}
+			});
+		});
+
 		describe('isInt', function () {
 			it('Should check value is int or not', function () {
 				const values = [

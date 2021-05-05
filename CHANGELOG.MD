@@ -12,6 +12,7 @@
 ## 3.6.12
 
 * ['allowResizeX' option does not work without 'height' option #668](https://github.com/xdan/jodit/issues/668)
+* [Pasting link with an colon (:) crashes the browser/makes it unresponsive #667](https://github.com/xdan/jodit/issues/667)
 
 ## 3.6.10
 
