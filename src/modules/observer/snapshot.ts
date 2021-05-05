@@ -205,12 +205,15 @@ export class Snapshot extends ViewComponent<IJodit> {
 	}
 
 	private storeScrollState(): [number, number] {
-		return [window.scrollY, this.j.editor.scrollTop];
+		return [this.j.ow.scrollY, this.j.editor.scrollTop];
 	}
 
 	private restoreScrollState(scrolls: [number, number]): void {
-		window.scrollTo(window.scrollX, scrolls[0]);
-		this.j.editor.scrollTop = scrolls[1];
+		const { j } = this,
+			{ ow } = j;
+
+		ow.scrollTo(ow.scrollX, scrolls[0]);
+		j.editor.scrollTop = scrolls[1];
 	}
 
 	/**

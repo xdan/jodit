@@ -313,6 +313,8 @@ export class Select {
 	save(silent: boolean = false): markerInfo[] {
 		const sel = this.sel;
 
+		this.restore();
+
 		if (!sel || !sel.rangeCount) {
 			return [];
 		}
@@ -393,7 +395,9 @@ export class Select {
 			}
 
 			this.win.focus();
-			this.area.focus();
+			this.area.focus({
+				preventScroll: true
+			});
 
 			const sel = this.sel,
 				range = sel?.rangeCount ? sel?.getRangeAt(0) : null;

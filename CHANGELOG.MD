@@ -52,6 +52,7 @@ editor.s.restore();
 
 -   ['allowResizeX' option does not work without 'height' option #668](https://github.com/xdan/jodit/issues/668)
 -   [Pasting link with an colon (:) crashes the browser/makes it unresponsive #667](https://github.com/xdan/jodit/issues/667)
+-   [Inserting images/videos scrolls user to top of text area #644](https://github.com/xdan/jodit/issues/644)
 -   [Pasting an MS Excel cell inserts the cell as image #474](https://github.com/xdan/jodit/issues/474)
 -   Fixed a bug when FONT was inserted into the change history
 
