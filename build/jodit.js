@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.13
+ * Version: v3.6.14
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -10840,7 +10840,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.6.13";
+        _this.version = "3.6.14";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -10982,10 +10982,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.6.13";
+        return "3.6.14";
     };
     View.getVersion = function () {
-        return "3.6.13";
+        return "3.6.14";
     };
     View.prototype.initOptions = function (options) {
         this.options = helpers_1.ConfigProto(options || {}, helpers_1.ConfigProto(this.options || {}, View.defaultOptions));
@@ -15502,6 +15502,13 @@ var Select = (function () {
         catch (_a) { }
         return false;
     };
+    Object.defineProperty(Select.prototype, "hasMarkers", {
+        get: function () {
+            return Boolean(helpers_1.$$('span[data-' + consts.MARKER_CLASS + ']', this.area).length);
+        },
+        enumerable: false,
+        configurable: true
+    });
     Select.prototype.removeMarkers = function () {
         helpers_1.$$('span[data-' + consts.MARKER_CLASS + ']', this.area).forEach(dom_1.Dom.safeRemove);
     };
@@ -15563,8 +15570,10 @@ var Select = (function () {
     };
     Select.prototype.save = function (silent) {
         if (silent === void 0) { silent = false; }
+        if (this.hasMarkers) {
+            return [];
+        }
         var sel = this.sel;
-        this.restore();
         if (!sel || !sel.rangeCount) {
             return [];
         }
