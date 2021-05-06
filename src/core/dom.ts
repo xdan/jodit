@@ -121,8 +121,6 @@ export class Dom {
 		tag: HTMLElement | HTMLTagNames,
 		editor: IJodit
 	): Nullable<HTMLElement> {
-		editor.s.save();
-
 		const wrapper = isString(tag) ? editor.createInside.element(tag) : tag;
 
 		if (!current.parentNode) {
@@ -132,8 +130,6 @@ export class Dom {
 		current.parentNode.insertBefore(wrapper, current);
 
 		wrapper.appendChild(current);
-
-		editor.s.restore();
 
 		return wrapper;
 	}

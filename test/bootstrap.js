@@ -7,10 +7,10 @@
 /* eslint no-unused-vars: 0 */
 
 typeof window.chai !== 'undefined' &&
-(function () {
-	chai.config.includeStack = true;
-	chai.config.showDiff = true;
-})();
+	(function () {
+		chai.config.includeStack = true;
+		chai.config.showDiff = true;
+	})();
 
 typeof window.mocha !== 'undefined' && mocha.timeout(15000);
 
@@ -228,21 +228,21 @@ function mockAjax() {
 					case 'getLocalFileByUrl':
 						switch (ajax.options.data.url) {
 							case location.protocol +
-							'//' +
-							location.host +
-							'/artio.jpg':
+								'//' +
+								location.host +
+								'/artio.jpg':
 							case location.protocol +
-							'//' +
-							location.host +
-							'/tests/artio.jpg':
+								'//' +
+								location.host +
+								'/tests/artio.jpg':
 							case location.protocol +
-							'//' +
-							location.host +
-							'/test/tests/artio.jpg':
+								'//' +
+								location.host +
+								'/test/tests/artio.jpg':
 							case location.protocol +
-							'//' +
-							location.host +
-							'/jodit/test/tests/artio.jpg':
+								'//' +
+								location.host +
+								'/jodit/test/tests/artio.jpg':
 							case 'https://xdsoft.net/jodit/files/th.jpg':
 								resolve({
 									success: true,
@@ -343,16 +343,16 @@ const excludeI18nKeys = [
 
 Jodit.prototype.i18n = function (key) {
 	!excludeI18nKeys.includes(key) &&
-	!i18nkeys.includes(key) &&
-	!key.includes('<svg') &&
-	i18nkeys.push(key);
+		!i18nkeys.includes(key) &&
+		!key.includes('<svg') &&
+		i18nkeys.push(key);
 
 	return oldI18n.apply(this, arguments);
 };
 
 Jodit.defaultOptions.events.afterInit = function (editor) {
 	editor &&
-	editor.container.setAttribute('data-test-case', window.mochaTestName);
+		editor.container.setAttribute('data-test-case', window.mochaTestName);
 };
 Jodit.defaultOptions.filebrowser.saveStateInStorage = false;
 Jodit.defaultOptions.observer.timeout = 0;
@@ -479,7 +479,7 @@ function getJodit(options, element) {
 	);
 
 	editor.container &&
-	editor.container.setAttribute('data-test-case', window.mochaTestName);
+		editor.container.setAttribute('data-test-case', window.mochaTestName);
 
 	return editor;
 }
@@ -817,19 +817,19 @@ function getButton(buttonName, joditOrElement, role, last) {
 	return (
 		elm.querySelector(
 			'.jodit-toolbar-button.jodit-toolbar-button_' +
-			buttonName +
-			(last ? ':last-child' : '') +
-			' [role="' +
-			(role || 'button') +
-			'"]'
+				buttonName +
+				(last ? ':last-child' : '') +
+				' [role="' +
+				(role || 'button') +
+				'"]'
 		) ||
 		elm.querySelector(
 			'.jodit-ui-button.jodit-ui-button_' +
-			buttonName +
-			(last ? ':last-child' : '') +
-			'[role="' +
-			(role || 'button') +
-			'"]'
+				buttonName +
+				(last ? ':last-child' : '') +
+				'[role="' +
+				(role || 'button') +
+				'"]'
 		)
 	);
 }
@@ -971,10 +971,10 @@ function createPoint(x, y, color, fixed = false) {
 	div.setAttribute(
 		'style',
 		'position: ' +
-		(fixed ? 'fixed' : 'absolute') +
-		'; z-index: 1000000000;width: 5px; height: 5px; background: ' +
-		(color || 'red') +
-		';'
+			(fixed ? 'fixed' : 'absolute') +
+			'; z-index: 1000000000;width: 5px; height: 5px; background: ' +
+			(color || 'red') +
+			';'
 	);
 
 	div.style.left = parseInt(x, 10) + 'px';

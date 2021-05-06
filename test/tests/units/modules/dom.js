@@ -139,6 +139,7 @@ describe('Test Dom module', function () {
 
 	describe('Method up', function () {
 		it('Should return node if element inside root', function () {
+			const node0 = document.createElement('div');
 			const node = document.createElement('div');
 			const node2 = document.createElement('div');
 			const node3 = document.createElement('div');
@@ -146,6 +147,7 @@ describe('Test Dom module', function () {
 			const text = document.createTextNode('div');
 			const text2 = document.createTextNode('div');
 
+			node0.appendChild(node);
 			node.appendChild(node2);
 			node2.appendChild(node3);
 			node3.appendChild(node4);

@@ -4,12 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type {
-	CanUndef,
-	IJodit,
-	IStyle,
-	Nullable
-} from '../../../types';
+import type { CanUndef, IJodit, IStyle, Nullable } from '../../../types';
 import type { Style } from './style';
 import { isPlainObject, isVoid } from '../../helpers/checker';
 import { Dom } from '../../dom';

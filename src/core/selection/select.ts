@@ -348,9 +348,9 @@ export class Select {
 			}
 		}
 
-		sel.removeAllRanges();
-
 		if (!silent) {
+			sel.removeAllRanges();
+
 			for (let i = length - 1; i >= 0; --i) {
 				const startElm = this.doc.getElementById(info[i].startId);
 
