@@ -396,19 +396,19 @@ export class link extends Plugin {
 			const textWasChanged =
 				getSelectionText() !== content_input.value.trim();
 
+			const ci = jodit.createInside;
+
 			if (!link) {
 				if (!jodit.s.isCollapsed()) {
 					const node = jodit.s.current();
 
 					if (Dom.isTag(node, ['img'])) {
-						links = [
-							Dom.wrap(node, 'a', jodit) as HTMLAnchorElement
-						];
+						links = [Dom.wrap(node, 'a', ci) as HTMLAnchorElement];
 					} else {
 						links = jodit.s.wrapInTag('a') as HTMLAnchorElement[];
 					}
 				} else {
-					const a = jodit.createInside.element('a');
+					const a = ci.element('a');
 					jodit.s.insertNode(a, false, false);
 					links = [a];
 				}

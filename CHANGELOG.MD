@@ -26,6 +26,7 @@
 
 #### :boom: Breaking Change
 
+-   The `Dom`.`wrap` method changed signature - instead IJodit call with ICreate.
 -   The `Select`.`restore` method is called with no arguments. It finds the range using the data attribute selector.
     In the `Select`.`save` method added `silent=false` argument.
 

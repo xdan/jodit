@@ -113,15 +113,15 @@ export class Dom {
 	static wrap<K extends HTMLTagNames>(
 		current: Node,
 		tag: K,
-		editor: IJodit
+		create: ICreate
 	): Nullable<HTMLElementTagNameMap[K]>;
 
 	static wrap(
 		current: Node,
 		tag: HTMLElement | HTMLTagNames,
-		editor: IJodit
+		create: ICreate
 	): Nullable<HTMLElement> {
-		const wrapper = isString(tag) ? editor.createInside.element(tag) : tag;
+		const wrapper = isString(tag) ? create.element(tag) : tag;
 
 		if (!current.parentNode) {
 			return null;

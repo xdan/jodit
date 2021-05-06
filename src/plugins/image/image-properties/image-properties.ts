@@ -594,7 +594,7 @@ export class imageProperties extends Plugin {
 
 		if (imageLink.value) {
 			if (!link) {
-				link = Dom.wrap(image, 'a', this.j);
+				link = Dom.wrap(image, 'a', this.j.createInside);
 			}
 
 			attr(link, 'href', imageLink.value);

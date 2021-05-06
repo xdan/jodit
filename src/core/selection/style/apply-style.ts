@@ -485,8 +485,10 @@ export class ApplyStyle {
 			/^(OL|UL)$/i.test(this.style.element) &&
 			!Dom.isTag(wrapper.firstElementChild, 'li')
 		) {
-			const li = Dom.replace(wrapper, 'li', this.jodit.createInside);
-			const ul = Dom.wrap(li, this.style.element, this.jodit);
+			const ci = this.jodit.createInside;
+
+			const li = Dom.replace(wrapper, 'li', ci),
+				ul = Dom.wrap(li, this.style.element, ci);
 
 			if (ul) {
 				wrapper = ul;

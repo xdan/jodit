@@ -227,7 +227,7 @@ export class enter extends Plugin {
 		return true;
 	}
 
-	private wrapText(current: Node) {
+	private wrapText(current: Node): HTMLElement {
 		let needWrap: Node = current;
 
 		Dom.up(
