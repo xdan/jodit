@@ -205,6 +205,15 @@ export class Select {
 		elm.hasAttribute('data-' + consts.MARKER_CLASS);
 
 	/**
+	 * Check if editor has selection markers
+	 */
+	get hasMarkers(): boolean {
+		return Boolean(
+			$$('span[data-' + consts.MARKER_CLASS + ']', this.area).length
+		);
+	}
+
+	/**
 	 * Remove all markers
 	 */
 	removeMarkers(): void {
@@ -311,9 +320,11 @@ export class Select {
 	 * @param [silent] Do not change current range
 	 */
 	save(silent: boolean = false): markerInfo[] {
-		const sel = this.sel;
+		if (this.hasMarkers) {
+			return [];
+		}
 
-		this.restore();
+		const sel = this.sel;
 
 		if (!sel || !sel.rangeCount) {
 			return [];

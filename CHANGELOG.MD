@@ -9,13 +9,23 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.6.13
+
+#### :bug: Bug Fix
+
+-   Hot fix `focus` plugin + `Select`.`save` deny set focus in another place.
+
+#### :rocket: New Feature
+
+-   Added `Select`.`hasMarkers` method.
+
 ## 3.6.12
 
 #### :rocket: New Feature
 
 -   Added `cursorAfterAutofocus=end` option inside `autofocus` plugin.
     Allow change default autofocus position. Possible values `start`, `end`.
-		[autofocus plugin should focus on the end of the text #649](https://github.com/xdan/jodit/issues/649)
+    [autofocus plugin should focus on the end of the text #649](https://github.com/xdan/jodit/issues/649)
 
 -   Added `saveSelectionOnBlur=true` option inside `autofocus` plugin.
     Allow restore position after editor has focus after blur.
@@ -399,11 +409,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
 -   ex: [
--               	{ value: "", text: "" },
--               	{ value: "val1", text: "text1" },
--               	{ value: "val2", text: "text2" },
--               	{ value: "val3", text: "text3" }
--               ]
+-                 	{ value: "", text: "" },
+-                 	{ value: "val1", text: "text1" },
+-                 	{ value: "val2", text: "text2" },
+-                 	{ value: "val3", text: "text3" }
+-                 ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
