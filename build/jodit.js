@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.12
+ * Version: v3.6.13
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -10840,7 +10840,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.6.12";
+        _this.version = "3.6.13";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -10982,10 +10982,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.6.12";
+        return "3.6.13";
     };
     View.getVersion = function () {
-        return "3.6.12";
+        return "3.6.13";
     };
     View.prototype.initOptions = function (options) {
         this.options = helpers_1.ConfigProto(options || {}, helpers_1.ConfigProto(this.options || {}, View.defaultOptions));
@@ -11742,10 +11742,10 @@ var ToolbarButton = (function (_super) {
         toolbar.mode = 'vertical';
         var getButton = function (key, value) {
             if (helpers_1.isString(value) && getControl(value)) {
-                return tslib_1.__assign(tslib_1.__assign({ name: value.toString() }, getControl(value)), { exec: control.exec });
+                return tslib_1.__assign({ name: value.toString() }, getControl(value));
             }
             if (helpers_1.isString(key) && getControl(key)) {
-                return tslib_1.__assign(tslib_1.__assign(tslib_1.__assign({ name: key.toString() }, getControl(key)), (typeof value === 'object' ? value : {})), { exec: control.exec });
+                return tslib_1.__assign(tslib_1.__assign({ name: key.toString() }, getControl(key)), (typeof value === 'object' ? value : {}));
             }
             var childControl = {
                 name: key.toString(),

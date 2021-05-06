@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.12
+ * Version: v3.6.13
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -9098,7 +9098,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.6.12";
+        this.version = "3.6.13";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -9196,10 +9196,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.6.12";
+        return "3.6.13";
     }
     static getVersion() {
-        return "3.6.12";
+        return "3.6.13";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -9671,16 +9671,14 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
             if ((0,helpers.isString)(value) && getControl(value)) {
                 return {
                     name: value.toString(),
-                    ...getControl(value),
-                    exec: control.exec
+                    ...getControl(value)
                 };
             }
             if ((0,helpers.isString)(key) && getControl(key)) {
                 return {
                     name: key.toString(),
                     ...getControl(key),
-                    ...(typeof value === 'object' ? value : {}),
-                    exec: control.exec
+                    ...(typeof value === 'object' ? value : {})
                 };
             }
             const childControl = {
