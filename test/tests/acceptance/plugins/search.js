@@ -148,11 +148,8 @@ describe('Search plugin', function () {
 				}
 			});
 
-			editor.value = 'test test test';
-
-			let range = editor.s.createRange(true);
-			range.setStart(editor.editor.firstChild.firstChild, 0);
-			range.setEnd(editor.editor.firstChild.firstChild, 4);
+			editor.value = '<p>|test| test test</p>';
+			setCursorToChar(editor);
 
 			const search = editor.container.querySelector('.jodit-search');
 			expect(search.classList.contains('jodit-search_active')).is.false;
@@ -164,6 +161,7 @@ describe('Search plugin', function () {
 
 			expect(search.classList.contains('jodit-search_active')).is.true;
 
+			console.log(editor.ownerDocument.activeElement);
 			expect(
 				editor.ownerDocument.activeElement ===
 					search.querySelector('[data-ref="query"]')

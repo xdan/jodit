@@ -10,12 +10,15 @@ import { clearCenterAlign, css } from '../../core/helpers';
  * Align image
  *
  * @param image
- * @param value
+ * @param align
  */
-export const hAlignElement = (image: HTMLElement, value: string) => {
-	if (value) {
-		if (['right', 'left'].includes(value.toLowerCase())) {
-			css(image, 'float', value);
+export const hAlignElement = (
+	image: HTMLElement,
+	align: 'normal' | 'left' | 'right' | 'center' | ''
+) => {
+	if (align && align !== 'normal') {
+		if (align !== 'center') {
+			css(image, 'float', align);
 			clearCenterAlign(image);
 		} else {
 			css(image, {

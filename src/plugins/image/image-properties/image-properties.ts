@@ -650,7 +650,10 @@ export class imageProperties extends Plugin {
 		}
 
 		if (opt.image.editAlign) {
-			hAlignElement(image, align.value);
+			hAlignElement(
+				image,
+				align.value as Parameters<typeof hAlignElement>[1]
+			);
 		}
 
 		this.j.setEditorValue();

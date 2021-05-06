@@ -683,12 +683,8 @@ describe('Backspace/Delete key', function () {
 					it('Should simple remove this H1', function () {
 						const editor = getJodit();
 
-						editor.value = '<h1><br></h1><p>test</p>';
-
-						range.selectNodeContents(editor.editor.lastChild);
-						range.collapse(true);
-						editor.s.sel.removeAllRanges();
-						editor.s.sel.addRange(range);
+						editor.value = '<h1><br></h1><p>|test</p>';
+						setCursorToChar(editor);
 
 						simulateEvent(
 							'keydown',
@@ -705,16 +701,8 @@ describe('Backspace/Delete key', function () {
 				it('Should simple remove this H1', function () {
 					const editor = getJodit();
 
-					editor.value = '<p>test</p><h1></h1>';
-
-					const range = editor.s.createRange();
-
-					// set cursor in start of element
-
-					range.selectNodeContents(editor.editor.firstChild);
-					range.collapse(false);
-					editor.s.sel.removeAllRanges();
-					editor.s.sel.addRange(range);
+					editor.value = '<p>test|</p><h1></h1>';
+					setCursorToChar(editor);
 
 					simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
 
@@ -725,16 +713,8 @@ describe('Backspace/Delete key', function () {
 					it('Should simple remove this H1', function () {
 						const editor = getJodit();
 
-						editor.value = '<p>test</p><h1><br></h1>';
-
-						const range = editor.s.createRange();
-
-						// set cursor in start of element
-
-						range.selectNodeContents(editor.editor.firstChild);
-						range.collapse(false);
-						editor.s.selectRange(range);
-
+						editor.value = '<p>test|</p><h1><br></h1>';
+						setCursorToChar(editor);
 						simulateEvent(
 							'keydown',
 							Jodit.KEY_DELETE,
@@ -804,15 +784,8 @@ describe('Backspace/Delete key', function () {
 		describe('Backspace key', function () {
 			it('Should remove that element', function () {
 				const editor = getJodit();
-				editor.value = '<p><img src="tests/artio.jpg"/>test</p>';
-
-				const sel = editor.s.sel,
-					range = editor.s.createRange();
-
-				range.setStartAfter(editor.editor.firstChild.firstChild);
-				range.collapse(true);
-				sel.removeAllRanges();
-				sel.addRange(range);
+				editor.value = '<p><img src="tests/artio.jpg"/>|test</p>';
+				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
@@ -855,15 +828,8 @@ describe('Backspace/Delete key', function () {
 		describe('Delete key', function () {
 			it('Should remove that element', function () {
 				const editor = getJodit();
-				editor.value = '<p>test<img src="tests/artio.jpg"/></p>';
-
-				const sel = editor.s.sel,
-					range = editor.s.createRange();
-
-				range.setStartBefore(editor.editor.querySelector('img'));
-				range.collapse(true);
-				sel.removeAllRanges();
-				sel.addRange(range);
+				editor.value = '<p>test|<img src="tests/artio.jpg"/></p>';
+				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
 

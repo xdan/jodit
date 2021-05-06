@@ -1002,6 +1002,7 @@ describe('Link plugin', function () {
 							editor.value =
 								'<p>one green <a href="https://xdan.ru"><img src="https://xdsoft.net/jodit/build/images/artio.jpg" alt="test"></a> under wall</p>';
 
+							editor.s.focus({ preventScroll: false });
 							editor.s.select(editor.editor.querySelector('img'));
 
 							clickButton('link', editor);

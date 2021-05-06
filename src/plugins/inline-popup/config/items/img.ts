@@ -19,10 +19,9 @@ export const align: IControlType<IJodit> = {
 			return;
 		}
 
-		const command: string =
-			control.args && isString(control.args[0])
-				? control.args[0].toLowerCase()
-				: '';
+		const command = (control.args && isString(control.args[0])
+			? control.args[0].toLowerCase()
+			: '') as Parameters<typeof hAlignElement>[1];
 
 		if (!command) {
 			return false;

@@ -97,11 +97,11 @@ export const clearCenterAlign = (image: HTMLElement): void => {
 	if (css(image, 'display') === 'block') {
 		css(image, 'display', '');
 	}
-	if (
-		image.style.marginLeft === 'auto' &&
-		image.style.marginRight === 'auto'
-	) {
-		image.style.marginLeft = '';
-		image.style.marginRight = '';
+
+	const { style } = image;
+
+	if (style.marginLeft === 'auto' && style.marginRight === 'auto') {
+		style.marginLeft = '';
+		style.marginRight = '';
 	}
 };

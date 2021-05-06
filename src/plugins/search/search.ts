@@ -536,7 +536,6 @@ export class search extends Plugin {
 		);
 
 		this.current = this.j.s.current();
-		this.selInfo = this.j.s.save();
 
 		const selStr: string = (this.j.s.sel || '').toString();
 
@@ -558,10 +557,7 @@ export class search extends Plugin {
 			return;
 		}
 
-		if (this.selInfo) {
-			this.j.s.restore();
-			this.selInfo = null;
-		}
+		this.j.s.restore();
 
 		this.searchBox.classList.remove('jodit-search_active');
 		this.isOpened = false;

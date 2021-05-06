@@ -389,6 +389,7 @@ export class link extends Plugin {
 
 			let links: HTMLAnchorElement[];
 
+			jodit.s.removeMarkers();
 			jodit.editor.normalize();
 			jodit.observer.snapshot.restore(snapshot);
 
