@@ -448,24 +448,36 @@ export class Dom {
 		root: Nullable<Node>,
 		condition: NodeCondition
 	): Nullable<Node> {
-		if (!root) {
+		let last = root?.lastChild as Nullable<Node>;
+
+		if (!last) {
 			return null;
 		}
-
-		let last = root.lastChild;
 
 		do {
 			if (condition(last)) {
 				return last;
 			}
 
-			const result = this.last(last, condition);
+			let next: Nullable<Node> = last.lastChild;
 
-			if (result) {
-				return last;
+			if (!next) {
+				next = last.previousSibling;
 			}
 
-			last = root.previousSibling;
+			if (!next && last.parentNode !== root) {
+				do {
+					last = last.parentNode;
+				} while (
+					last &&
+					!last?.previousSibling &&
+					last.parentNode !== root
+				);
+
+				next = last?.previousSibling as Nullable<Node>;
+			}
+
+			last = next;
 		} while (last);
 
 		return null;

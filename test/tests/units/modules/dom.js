@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Check Dom module', function () {
+describe('Test Dom module', function () {
 	const Dom = Jodit.modules.Dom;
 
 	describe('Method each', function () {
@@ -205,6 +205,53 @@ describe('Check Dom module', function () {
 			);
 
 			document.body.removeChild(text2);
+		});
+	});
+
+	describe('last', () => {
+		it('should return last matched element', () => {
+			const editor = getJodit();
+
+			const variants = {
+					'<p>test <em><i>t</i></em>one <span><strong>strong</strong></span></p>': [
+						node => node && node.nodeValue === 't',
+						elm => elm.firstChild.nextSibling.firstChild.firstChild
+					],
+					'<p><em><i>t</i></em>one <span><strong>strong</strong></span></p>': [
+						node => node && node.nodeValue === 't',
+						elm => elm.firstChild.firstChild.firstChild
+					],
+					'<p>test<span><strong>strong</strong></span></p>': [
+						node => node && node.nodeType === Node.TEXT_NODE,
+						elm => elm.lastChild.lastChild.firstChild
+					],
+					'<p>1test<span><strong>strong</strong></span></p>': [
+						node => node && node.nodeName === 'STRONG',
+						elm => elm.lastChild.lastChild
+					],
+					'<p>one <span><strong>strong</strong></span></p>': [
+						node => node && node.nodeValue === 'one ',
+						elm => elm.firstChild
+					],
+					'<p><em>t</em>one <span><strong>strong</strong></span></p>': [
+						node => node && node.nodeValue === 't',
+						elm => elm.firstChild.firstChild
+					],
+					'<p>two <span><strong>strong</strong></span></p>': [
+						node => node && node.nodeValue === 'one ',
+						() => null
+					]
+				},
+				keys = Object.keys(variants);
+
+			keys.forEach(str => {
+				const html = editor.createInside.fromHTML(str);
+				editor.s.insertNode(html);
+
+				expect(Dom.last(html, variants[str][0])).eq(
+					variants[str][1](html)
+				);
+			});
 		});
 	});
 });
