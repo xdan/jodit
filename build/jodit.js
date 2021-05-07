@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.14
+ * Version: v3.6.15
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -10840,7 +10840,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.6.14";
+        _this.version = "3.6.15";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -10982,10 +10982,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.6.14";
+        return "3.6.15";
     };
     View.getVersion = function () {
-        return "3.6.14";
+        return "3.6.15";
     };
     View.prototype.initOptions = function (options) {
         this.options = helpers_1.ConfigProto(options || {}, helpers_1.ConfigProto(this.options || {}, View.defaultOptions));
@@ -29778,7 +29778,11 @@ var resizeHandler = (function (_super) {
     }
     resizeHandler.prototype.afterInit = function (editor) {
         var _this = this;
-        var _a = editor.o, height = _a.height, width = _a.width, allowResizeX = _a.allowResizeX, allowResizeY = _a.allowResizeY;
+        var _a = editor.o, height = _a.height, width = _a.width, allowResizeX = _a.allowResizeX;
+        var allowResizeY = editor.o.allowResizeY;
+        if (height === 'auto' && width !== 'auto') {
+            allowResizeY = false;
+        }
         if ((height !== 'auto' || width !== 'auto') &&
             (allowResizeX || allowResizeY)) {
             editor.e
