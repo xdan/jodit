@@ -16,7 +16,12 @@ export class resizeHandler extends Plugin {
 
 	/** @override **/
 	protected afterInit(editor: IJodit) {
-		const { height, width, allowResizeX, allowResizeY } = editor.o;
+		const { height, width, allowResizeX } = editor.o;
+		let { allowResizeY } = editor.o;
+
+		if (height === 'auto' && width !== 'auto') {
+			allowResizeY = false;
+		}
 
 		if (
 			(height !== 'auto' || width !== 'auto') &&
