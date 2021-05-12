@@ -624,6 +624,7 @@ export class Select {
 
 		if (!this.isFocused() && this.j.isEditorMode()) {
 			this.focus();
+			this.restore();
 		}
 
 		if (!Dom.isNode(html, this.win)) {
