@@ -554,6 +554,7 @@ export class Select {
 
 		if (!this.isFocused() && this.j.isEditorMode()) {
 			this.focus();
+			this.restore();
 		}
 
 		const sel = this.sel;
