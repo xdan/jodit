@@ -36,11 +36,13 @@ module.exports = {
 		'no-new-wrappers': 'error',
 		'no-array-constructor': 'error',
 		'new-parens': 'error',
+		'max-classes-per-file': ['error', 1],
 
 		'no-extend-native': 'off',
 		'no-global-assign': 'error',
 		'no-implicit-globals': 'error',
 		'no-implicit-coercion': 'error',
+		'one-var-declaration-per-line': ['error', 'always'],
 		camelcase: 'off',
 		quotes: ['error', 'single', { avoidEscape: true }],
 		'quote-props': [

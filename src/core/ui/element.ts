@@ -93,7 +93,6 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	 * Find closest UIElement in DOM
 	 * @param node
 	 */
-	// tslint:disable-next-line:ban-types
 	static closestElement(node: Node, type: Function): Nullable<IUIElement> {
 		const elm = Dom.up(node, node => {
 			if (node) {
