@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.15
+ * Version: v3.6.16
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -3020,7 +3020,8 @@ var EventsNative = (function () {
                                     return false;
                                 }
                                 _this.currents.push(event);
-                                result_value = block.syntheticCallback.apply(subject, argumentsList);
+                                result_value =
+                                    block.syntheticCallback.apply(subject, argumentsList);
                                 _this.currents.pop();
                                 if (result_value !== undefined) {
                                     result = result_value;
@@ -10840,7 +10841,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.6.15";
+        _this.version = "3.6.16";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -10982,10 +10983,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.6.15";
+        return "3.6.16";
     };
     View.getVersion = function () {
-        return "3.6.15";
+        return "3.6.16";
     };
     View.prototype.initOptions = function (options) {
         this.options = helpers_1.ConfigProto(options || {}, helpers_1.ConfigProto(this.options || {}, View.defaultOptions));
@@ -13026,8 +13027,7 @@ var DataProvider = (function () {
                 opt.items.data.source = source;
                 opt.items.data.mods = mods;
                 return [2, this.get('items').then(function (resp) {
-                        var process = _this.o.items
-                            .process;
+                        var process = _this.o.items.process;
                         if (!process) {
                             process = _this.o.ajax.process;
                         }
@@ -15731,6 +15731,7 @@ var Select = (function () {
         this.errorNode(node);
         if (!this.isFocused() && this.j.isEditorMode()) {
             this.focus();
+            this.restore();
         }
         var sel = this.sel;
         if (!this.isCollapsed()) {
@@ -15778,6 +15779,7 @@ var Select = (function () {
         var lastChild;
         if (!this.isFocused() && this.j.isEditorMode()) {
             this.focus();
+            this.restore();
         }
         if (!dom_1.Dom.isNode(html, this.win)) {
             node.innerHTML = html.toString();
@@ -22297,9 +22299,7 @@ var Delete = (function (_super) {
         var charRemoved = false, removed;
         while (sibling && (dom_1.Dom.isText(sibling) || dom_1.Dom.isInlineBlock(sibling))) {
             while (dom_1.Dom.isInlineBlock(sibling)) {
-                sibling = (backspace
-                    ? sibling === null || sibling === void 0 ? void 0 : sibling.lastChild
-                    : sibling === null || sibling === void 0 ? void 0 : sibling.firstChild);
+                sibling = (backspace ? sibling === null || sibling === void 0 ? void 0 : sibling.lastChild : sibling === null || sibling === void 0 ? void 0 : sibling.firstChild);
             }
             if (!sibling) {
                 break;
@@ -28660,12 +28660,14 @@ var placeholder = (function (_super) {
             marginLeft = parseInt(style2.getPropertyValue('margin-left'), 10);
             this.placeholderElm.style.fontSize =
                 parseInt(style2.getPropertyValue('font-size'), 10) + 'px';
-            this.placeholderElm.style.lineHeight = style2.getPropertyValue('line-height');
+            this.placeholderElm.style.lineHeight =
+                style2.getPropertyValue('line-height');
         }
         else {
             this.placeholderElm.style.fontSize =
                 parseInt(style.getPropertyValue('font-size'), 10) + 'px';
-            this.placeholderElm.style.lineHeight = style.getPropertyValue('line-height');
+            this.placeholderElm.style.lineHeight =
+                style.getPropertyValue('line-height');
         }
         helpers_1.css(this.placeholderElm, {
             display: 'block',
@@ -30063,6 +30065,7 @@ var plugin_1 = __webpack_require__(183);
 var dom_1 = __webpack_require__(32);
 var helpers_1 = __webpack_require__(19);
 var factory_1 = __webpack_require__(320);
+var decorators_1 = __webpack_require__(99);
 var source = (function (_super) {
     tslib_1.__extends(source, _super);
     function source() {
@@ -30079,65 +30082,6 @@ var source = (function (_super) {
         _this.tempMarkerStartReg = /{start-jodit-selection}/g;
         _this.tempMarkerEnd = '{end-jodit-selection}';
         _this.tempMarkerEndReg = /{end-jodit-selection}/g;
-        _this.selInfo = [];
-        _this.insertHTML = function (html) {
-            var _a;
-            (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.insertRaw(html);
-            _this.toWYSIWYG();
-        };
-        _this.fromWYSIWYG = function (force) {
-            if (force === void 0) { force = false; }
-            if (!_this.__lock || force === true) {
-                _this.__lock = true;
-                var new_value = _this.j.getEditorValue(false);
-                if (new_value !== _this.getMirrorValue()) {
-                    _this.setMirrorValue(new_value);
-                }
-                _this.__lock = false;
-            }
-        };
-        _this.toWYSIWYG = function () {
-            if (_this.__lock) {
-                return;
-            }
-            var value = _this.getMirrorValue();
-            if (value === _this.__oldMirrorValue) {
-                return;
-            }
-            _this.__lock = true;
-            _this.j.setEditorValue(value);
-            _this.__lock = false;
-            _this.__oldMirrorValue = value;
-        };
-        _this.getNormalPosition = function (pos, str) {
-            var start = pos;
-            while (start > 0) {
-                start--;
-                if (str[start] === '<' &&
-                    str[start + 1] !== undefined &&
-                    str[start + 1].match(/[\w/]+/i)) {
-                    return start;
-                }
-                if (str[start] === '>') {
-                    return pos;
-                }
-            }
-            return pos;
-        };
-        _this.__clear = function (str) {
-            return str.replace(consts.INVISIBLE_SPACE_REG_EXP(), '');
-        };
-        _this.selectAll = function () {
-            var _a;
-            (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.selectAll();
-        };
-        _this.onSelectAll = function (command) {
-            if (command.toLowerCase() === 'selectall' &&
-                _this.j.getRealMode() === constants_1.MODE_SOURCE) {
-                _this.selectAll();
-                return false;
-            }
-        };
         _this.getSelectionStart = function () {
             var _a, _b;
             return (_b = (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.getSelectionStart()) !== null && _b !== void 0 ? _b : 0;
@@ -30146,107 +30090,66 @@ var source = (function (_super) {
             var _a, _b;
             return (_b = (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.getSelectionEnd()) !== null && _b !== void 0 ? _b : 0;
         };
-        _this.saveSelection = function () {
-            if (_this.j.getRealMode() === consts.MODE_WYSIWYG) {
-                _this.selInfo = _this.j.s.save() || [];
-                _this.j.setEditorValue();
-                _this.fromWYSIWYG(true);
-            }
-            else {
-                _this.selInfo.length = 0;
-                if (_this.j.o.editHTMLDocumentMode) {
-                    return;
-                }
-                var value = _this.getMirrorValue();
-                if (_this.getSelectionStart() === _this.getSelectionEnd()) {
-                    var marker = _this.j.s.marker(true);
-                    _this.selInfo[0] = {
-                        startId: marker.id,
-                        collapsed: true,
-                        startMarker: marker.outerHTML
-                    };
-                    var selectionStart = _this.getNormalPosition(_this.getSelectionStart(), _this.getMirrorValue());
-                    _this.setMirrorValue(value.substr(0, selectionStart) +
-                        _this.__clear(_this.selInfo[0].startMarker) +
-                        value.substr(selectionStart));
-                }
-                else {
-                    var markerStart = _this.j.s.marker(true);
-                    var markerEnd = _this.j.s.marker(false);
-                    _this.selInfo[0] = {
-                        startId: markerStart.id,
-                        endId: markerEnd.id,
-                        collapsed: false,
-                        startMarker: _this.__clear(markerStart.outerHTML),
-                        endMarker: _this.__clear(markerEnd.outerHTML)
-                    };
-                    var selectionStart = _this.getNormalPosition(_this.getSelectionStart(), value);
-                    var selectionEnd = _this.getNormalPosition(_this.getSelectionEnd(), value);
-                    _this.setMirrorValue(value.substr(0, selectionStart) +
-                        _this.selInfo[0].startMarker +
-                        value.substr(selectionStart, selectionEnd - selectionStart) +
-                        _this.selInfo[0].endMarker +
-                        value.substr(selectionEnd));
-                }
-                _this.toWYSIWYG();
-            }
-        };
-        _this.removeSelection = function () {
-            if (!_this.selInfo.length) {
-                return;
-            }
-            if (_this.j.getRealMode() === consts.MODE_WYSIWYG) {
-                _this.__lock = true;
-                _this.j.s.restore();
-                _this.__lock = false;
-                return;
-            }
-            var value = _this.getMirrorValue();
-            var selectionStart = 0, selectionEnd = 0;
-            try {
-                if (_this.selInfo[0].startMarker) {
-                    value = value.replace(/<span[^>]+data-jodit-selection_marker="start"[^>]*>[<>]*?<\/span>/gim, _this.tempMarkerStart);
-                }
-                if (_this.selInfo[0].endMarker) {
-                    value = value.replace(/<span[^>]+data-jodit-selection_marker="end"[^>]*>[<>]*?<\/span>/gim, _this.tempMarkerEnd);
-                }
-                if (!_this.j.o.editHTMLDocumentMode && _this.j.o.beautifyHTML) {
-                    var html = _this.j.e.fire('beautifyHTML', value);
-                    if (helpers_1.isString(html)) {
-                        value = html;
-                    }
-                }
-                selectionStart = value.indexOf(_this.tempMarkerStart);
-                selectionEnd = selectionStart;
-                value = value.replace(_this.tempMarkerStartReg, '');
-                if (!_this.selInfo[0].collapsed || selectionStart === -1) {
-                    selectionEnd = value.indexOf(_this.tempMarkerEnd);
-                    if (selectionStart === -1) {
-                        selectionStart = selectionEnd;
-                    }
-                }
-                value = value.replace(_this.tempMarkerEndReg, '');
-            }
-            finally {
-                value = value
-                    .replace(_this.tempMarkerEndReg, '')
-                    .replace(_this.tempMarkerStartReg, '');
-            }
-            _this.setMirrorValue(value);
-            _this.setMirrorSelectionRange(selectionStart, selectionEnd);
-            _this.toWYSIWYG();
-            _this.setFocusToMirror();
-        };
-        _this.setMirrorSelectionRange = function (start, end) {
-            var _a;
-            (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.setSelectionRange(start, end);
-        };
-        _this.onReadonlyReact = function () {
-            var _a;
-            (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.setReadOnly(_this.j.o.readonly);
-        };
         return _this;
     }
+    source.prototype.onInsertHTML = function (html) {
+        var _a;
+        if (!this.j.o.readonly && !this.j.isEditorMode()) {
+            (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.insertRaw(html);
+            this.toWYSIWYG();
+            return false;
+        }
+    };
+    source.prototype.fromWYSIWYG = function (force) {
+        if (force === void 0) { force = false; }
+        if (!this.__lock || force === true) {
+            this.__lock = true;
+            var new_value = this.j.getEditorValue(false);
+            if (new_value !== this.getMirrorValue()) {
+                this.setMirrorValue(new_value);
+            }
+            this.__lock = false;
+        }
+    };
+    source.prototype.toWYSIWYG = function () {
+        if (this.__lock) {
+            return;
+        }
+        var value = this.getMirrorValue();
+        if (value === this.__oldMirrorValue) {
+            return;
+        }
+        this.__lock = true;
+        this.j.setEditorValue(value);
+        this.__lock = false;
+        this.__oldMirrorValue = value;
+    };
+    source.prototype.getNormalPosition = function (pos, str) {
+        var start = pos;
+        while (start > 0) {
+            start--;
+            if (str[start] === '<' &&
+                str[start + 1] !== undefined &&
+                str[start + 1].match(/[\w/]+/i)) {
+                return start;
+            }
+            if (str[start] === '>') {
+                return pos;
+            }
+        }
+        return pos;
+    };
+    source.prototype.clnInv = function (str) {
+        return str.replace(consts.INVISIBLE_SPACE_REG_EXP(), '');
+    };
+    source.prototype.onSelectAll = function (command) {
+        var _a;
+        if (command.toLowerCase() === 'selectall' &&
+            this.j.getRealMode() === constants_1.MODE_SOURCE) {
+            (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.selectAll();
+            return false;
+        }
+    };
     source.prototype.getMirrorValue = function () {
         var _a;
         return ((_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.getValue()) || '';
@@ -30258,6 +30161,119 @@ var source = (function (_super) {
     source.prototype.setFocusToMirror = function () {
         var _a;
         (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.focus();
+    };
+    source.prototype.saveSelection = function () {
+        if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
+            this.j.s.save();
+            this.j.setEditorValue();
+            this.fromWYSIWYG(true);
+        }
+        else {
+            if (this.j.o.editHTMLDocumentMode) {
+                return;
+            }
+            var value = this.getMirrorValue();
+            if (this.getSelectionStart() === this.getSelectionEnd()) {
+                var marker = this.j.s.marker(true);
+                var selectionStart = this.getNormalPosition(this.getSelectionStart(), this.getMirrorValue());
+                this.setMirrorValue(value.substr(0, selectionStart) +
+                    this.clnInv(marker.outerHTML) +
+                    value.substr(selectionStart));
+            }
+            else {
+                var markerStart = this.j.s.marker(true);
+                var markerEnd = this.j.s.marker(false);
+                var selectionStart = this.getNormalPosition(this.getSelectionStart(), value);
+                var selectionEnd = this.getNormalPosition(this.getSelectionEnd(), value);
+                this.setMirrorValue(value.substr(0, selectionStart) +
+                    this.clnInv(markerStart.outerHTML) +
+                    value.substr(selectionStart, selectionEnd - selectionStart) +
+                    this.clnInv(markerEnd.outerHTML) +
+                    value.substr(selectionEnd));
+            }
+            this.toWYSIWYG();
+        }
+    };
+    source.prototype.removeSelection = function () {
+        if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
+            this.__lock = true;
+            this.j.s.restore();
+            this.__lock = false;
+            return;
+        }
+        var value = this.getMirrorValue();
+        var selectionStart = 0, selectionEnd = 0;
+        try {
+            value = value
+                .replace(/<span[^>]+data-jodit-selection_marker=(["'])start\1[^>]*>[<>]*?<\/span>/gim, this.tempMarkerStart)
+                .replace(/<span[^>]+data-jodit-selection_marker=(["'])end\1[^>]*>[<>]*?<\/span>/gim, this.tempMarkerEnd);
+            if (!this.j.o.editHTMLDocumentMode && this.j.o.beautifyHTML) {
+                var html = this.j.e.fire('beautifyHTML', value);
+                if (helpers_1.isString(html)) {
+                    value = html;
+                }
+            }
+            selectionStart = value.indexOf(this.tempMarkerStart);
+            selectionEnd = selectionStart;
+            value = value.replace(this.tempMarkerStartReg, '');
+            if (selectionStart !== -1) {
+                var selectionEndCursor = value.indexOf(this.tempMarkerEnd);
+                if (selectionEndCursor !== -1) {
+                    selectionEnd = selectionEndCursor;
+                }
+            }
+            value = value.replace(this.tempMarkerEndReg, '');
+        }
+        finally {
+            value = value
+                .replace(this.tempMarkerEndReg, '')
+                .replace(this.tempMarkerStartReg, '');
+        }
+        this.setMirrorValue(value);
+        this.setMirrorSelectionRange(selectionStart, selectionEnd);
+        this.toWYSIWYG();
+        this.setFocusToMirror();
+    };
+    source.prototype.setMirrorSelectionRange = function (start, end) {
+        var _a;
+        (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.setSelectionRange(start, end);
+    };
+    source.prototype.onReadonlyReact = function () {
+        var _a;
+        (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.setReadOnly(this.j.o.readonly);
+    };
+    source.prototype.afterInit = function (editor) {
+        var _this = this;
+        this.mirrorContainer = editor.c.div('jodit-source');
+        editor.workplace.appendChild(this.mirrorContainer);
+        editor.e.on('afterAddPlace changePlace afterInit', function () {
+            editor.workplace.appendChild(_this.mirrorContainer);
+        });
+        this.sourceEditor = factory_1.createSourceEditor('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
+        this.onReadonlyReact();
+        editor.e
+            .on('placeholder.source', function (text) {
+            var _a;
+            (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.setPlaceHolder(text);
+        })
+            .on('change.source', this.fromWYSIWYG)
+            .on('beautifyHTML', function (html) { return html; });
+        if (editor.o.beautifyHTML) {
+            var addEventListener_1 = function () {
+                var _a;
+                var html_beautify = editor.ow.html_beautify;
+                if (html_beautify && !editor.isInDestruct) {
+                    (_a = editor.events) === null || _a === void 0 ? void 0 : _a.off('beautifyHTML').on('beautifyHTML', function (html) { return html_beautify(html); });
+                    return true;
+                }
+                return false;
+            };
+            if (!addEventListener_1()) {
+                helpers_1.loadNext(editor, editor.o.beautifyHTMLCDNUrlsJS).then(addEventListener_1);
+            }
+        }
+        this.fromWYSIWYG();
+        this.initSourceEditor(editor);
     };
     source.prototype.initSourceEditor = function (editor) {
         var _this = this;
@@ -30280,54 +30296,6 @@ var source = (function (_super) {
             });
         }
     };
-    source.prototype.afterInit = function (editor) {
-        var _this = this;
-        this.mirrorContainer = editor.c.div('jodit-source');
-        editor.workplace.appendChild(this.mirrorContainer);
-        editor.e.on('afterAddPlace changePlace afterInit', function () {
-            editor.workplace.appendChild(_this.mirrorContainer);
-        });
-        this.sourceEditor = factory_1.createSourceEditor('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
-        var addListeners = function () {
-            editor.e
-                .off('beforeSetMode.source afterSetMode.source')
-                .on('beforeSetMode.source', _this.saveSelection)
-                .on('afterSetMode.source', _this.removeSelection);
-        };
-        addListeners();
-        this.onReadonlyReact();
-        editor.e
-            .on('insertHTML.source', function (html) {
-            if (!editor.o.readonly && !_this.j.isEditorMode()) {
-                _this.insertHTML(html);
-                return false;
-            }
-        })
-            .on('readonly.source', this.onReadonlyReact)
-            .on('placeholder.source', function (text) {
-            var _a;
-            (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.setPlaceHolder(text);
-        })
-            .on('beforeCommand.source', this.onSelectAll)
-            .on('change.source', this.fromWYSIWYG);
-        editor.e.on('beautifyHTML', function (html) { return html; });
-        if (editor.o.beautifyHTML) {
-            var addEventListener_1 = function () {
-                var _a, _b;
-                var html_beautify = editor.ow.html_beautify;
-                if (html_beautify && !editor.isInDestruct) {
-                    (_b = (_a = editor.events) === null || _a === void 0 ? void 0 : _a.off('beautifyHTML')) === null || _b === void 0 ? void 0 : _b.on('beautifyHTML', function (html) { return html_beautify(html); });
-                    return true;
-                }
-                return false;
-            };
-            if (!addEventListener_1()) {
-                helpers_1.loadNext(editor, editor.o.beautifyHTMLCDNUrlsJS).then(addEventListener_1);
-            }
-        }
-        this.fromWYSIWYG();
-        this.initSourceEditor(editor);
-    };
     source.prototype.beforeDestruct = function (jodit) {
         if (this.sourceEditor) {
             this.sourceEditor.destruct();
@@ -30335,6 +30303,33 @@ var source = (function (_super) {
         }
         dom_1.Dom.safeRemove(this.mirrorContainer);
     };
+    tslib_1.__decorate([
+        decorators_1.watch(':insertHTML.source')
+    ], source.prototype, "onInsertHTML", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], source.prototype, "fromWYSIWYG", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], source.prototype, "toWYSIWYG", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], source.prototype, "getNormalPosition", null);
+    tslib_1.__decorate([
+        decorators_1.watch(':beforeCommand.source')
+    ], source.prototype, "onSelectAll", null);
+    tslib_1.__decorate([
+        decorators_1.watch(':beforeSetMode.source')
+    ], source.prototype, "saveSelection", null);
+    tslib_1.__decorate([
+        decorators_1.watch(':afterSetMode.source')
+    ], source.prototype, "removeSelection", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], source.prototype, "setMirrorSelectionRange", null);
+    tslib_1.__decorate([
+        decorators_1.watch(':readonly.source')
+    ], source.prototype, "onReadonlyReact", null);
     return source;
 }(plugin_1.Plugin));
 exports.source = source;
@@ -31614,8 +31609,7 @@ var resizeCells = (function (_super) {
         this.minX = 0;
         this.maxX = 1000000;
         if (this.wholeTable != null) {
-            tableBox = this.workTable
-                .parentNode.getBoundingClientRect();
+            tableBox = this.workTable.parentNode.getBoundingClientRect();
             this.minX = tableBox.left;
             this.maxX = this.minX + tableBox.width;
         }
