@@ -121,8 +121,9 @@ export class resizeCells extends Plugin {
 		this.maxX = 1000000;
 
 		if (this.wholeTable != null) {
-			tableBox = (this.workTable
-				.parentNode as HTMLElement).getBoundingClientRect();
+			tableBox = (
+				this.workTable.parentNode as HTMLElement
+			).getBoundingClientRect();
 
 			this.minX = tableBox.left;
 			this.maxX = this.minX + tableBox.width;

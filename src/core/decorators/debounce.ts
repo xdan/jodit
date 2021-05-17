@@ -42,7 +42,7 @@ export function debounce<V = IViewComponent | IViewBased>(
 		target.hookStatus(STATUSES.ready, (component: V) => {
 			const view = isViewObject(component)
 				? component
-				: ((component as unknown) as IViewComponent).jodit;
+				: (component as unknown as IViewComponent).jodit;
 
 			const realTimeout = isFunction(timeout)
 				? timeout(component)

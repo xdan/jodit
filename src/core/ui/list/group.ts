@@ -21,7 +21,8 @@ import { Dom } from '../../dom';
 @component
 export class UIGroup<T extends IViewBased = IViewBased>
 	extends UIElement<T>
-	implements IUIGroup {
+	implements IUIGroup
+{
 	/** @override */
 	className(): string {
 		return 'UIGroup';

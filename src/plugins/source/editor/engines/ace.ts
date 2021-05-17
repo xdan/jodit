@@ -11,7 +11,8 @@ import { SourceEditor } from '../sourceEditor';
 
 export class AceEditor
 	extends SourceEditor<AceAjax.Editor>
-	implements ISourceEditor {
+	implements ISourceEditor
+{
 	className = 'jodit_ace_editor';
 
 	private aceExists() {
@@ -54,9 +55,10 @@ export class AceEditor
 		return lastColumnIndices;
 	}
 
-	private getRowColumnIndices(
-		characterIndex: number
-	): { row: number; column: number } {
+	private getRowColumnIndices(characterIndex: number): {
+		row: number;
+		column: number;
+	} {
 		const lastColumnIndices: number[] = this.getLastColumnIndices();
 
 		if (characterIndex <= lastColumnIndices[0]) {

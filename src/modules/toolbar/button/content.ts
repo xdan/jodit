@@ -20,7 +20,8 @@ import { component } from '../../../core/decorators';
 @component
 export class ToolbarContent<T extends IViewBased = IViewBased>
 	extends UIButton
-	implements IToolbarButton {
+	implements IToolbarButton
+{
 	/** @override */
 	className(): string {
 		return 'ToolbarContent';

@@ -151,12 +151,8 @@ export class imageProperties extends Plugin {
 			return;
 		}
 
-		const {
-			marginRight,
-			marginBottom,
-			marginLeft,
-			lockMargin
-		} = refs<HTMLInputElement>(this.form);
+		const { marginRight, marginBottom, marginLeft, lockMargin } =
+			refs<HTMLInputElement>(this.form);
 
 		[marginRight, marginBottom, marginLeft].forEach(elm => {
 			attr(elm, 'disabled', this.state.marginIsLocked || null);
@@ -299,12 +295,8 @@ export class imageProperties extends Plugin {
 			editor.e.on(editImage, 'click', this.openImageEditor);
 		}
 
-		const {
-			lockSize,
-			lockMargin,
-			imageWidth,
-			imageHeight
-		} = refs<HTMLInputElement>(mainForm);
+		const { lockSize, lockMargin, imageWidth, imageHeight } =
+			refs<HTMLInputElement>(mainForm);
 
 		if (lockSize) {
 			editor.e.on(lockSize, 'click', () => {
@@ -433,11 +425,8 @@ export class imageProperties extends Plugin {
 					elm => {
 						const id = attr(elm, 'data-ref') || '';
 
-						let value:
-							| number
-							| string = image.style.getPropertyValue(
-							kebabCase(id)
-						);
+						let value: number | string =
+							image.style.getPropertyValue(kebabCase(id));
 
 						if (!value) {
 							wasEmptyField = true;

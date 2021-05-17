@@ -210,16 +210,14 @@ export class placeholder extends Plugin {
 			this.placeholderElm.style.fontSize =
 				parseInt(style2.getPropertyValue('font-size'), 10) + 'px';
 
-			this.placeholderElm.style.lineHeight = style2.getPropertyValue(
-				'line-height'
-			);
+			this.placeholderElm.style.lineHeight =
+				style2.getPropertyValue('line-height');
 		} else {
 			this.placeholderElm.style.fontSize =
 				parseInt(style.getPropertyValue('font-size'), 10) + 'px';
 
-			this.placeholderElm.style.lineHeight = style.getPropertyValue(
-				'line-height'
-			);
+			this.placeholderElm.style.lineHeight =
+				style.getPropertyValue('line-height');
 		}
 
 		css(this.placeholderElm, {

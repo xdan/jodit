@@ -799,9 +799,8 @@ export class Select {
 					if (current.firstChild) {
 						current = current.firstChild;
 					} else {
-						const currentB = this.j.createInside.text(
-							INVISIBLE_SPACE
-						);
+						const currentB =
+							this.j.createInside.text(INVISIBLE_SPACE);
 
 						current.appendChild(currentB);
 						current = currentB;

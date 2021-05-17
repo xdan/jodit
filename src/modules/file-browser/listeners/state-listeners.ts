@@ -135,17 +135,16 @@ export function stateListeners(this: FileBrowser): void {
 							create.span(F_CLASS + '__tree-item-title', name)
 						);
 
-						const action = (actionName: string) => (
-							e: MouseEvent
-						) => {
-							this.e.fire(`${actionName}.filebrowser`, {
-								name,
-								path: normalizePath(source.path + '/'),
-								source: sourceName
-							});
+						const action =
+							(actionName: string) => (e: MouseEvent) => {
+								this.e.fire(`${actionName}.filebrowser`, {
+									name,
+									path: normalizePath(source.path + '/'),
+									source: sourceName
+								});
 
-							e.stopPropagation();
-						};
+								e.stopPropagation();
+							};
 
 						this.e.on(folderElm, 'click', action('openFolder'));
 

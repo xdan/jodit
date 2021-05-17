@@ -252,11 +252,8 @@ export class link extends Plugin {
 
 		const elements = refs(htmlForm),
 			{ insert, unlink, content_input_box } = elements,
-			{
-				target_checkbox,
-				nofollow_checkbox,
-				url_input
-			} = elements as IDictionary<HTMLInputElement>,
+			{ target_checkbox, nofollow_checkbox, url_input } =
+				elements as IDictionary<HTMLInputElement>,
 			currentElement = current,
 			isImageContent = Dom.isImage(currentElement, jodit.ew);
 
@@ -331,9 +328,8 @@ export class link extends Plugin {
 										i < className_select.options.length;
 										i++
 									) {
-										const option = className_select.options.item(
-											i
-										);
+										const option =
+											className_select.options.item(i);
 
 										if (
 											option?.value &&
@@ -441,9 +437,8 @@ export class link extends Plugin {
 							i < className_select.selectedOptions.length;
 							i++
 						) {
-							const className = className_select.selectedOptions.item(
-								i
-							)?.value;
+							const className =
+								className_select.selectedOptions.item(i)?.value;
 
 							if (className) {
 								a.classList.add(className);

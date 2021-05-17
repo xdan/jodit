@@ -26,7 +26,8 @@ import { component, autobind } from '../../../core/decorators';
 @component
 export class ToolbarCollection<T extends IViewBased = IViewBased>
 	extends UIList<T>
-	implements IToolbarCollection {
+	implements IToolbarCollection
+{
 	/** @override */
 	className(): string {
 		return 'ToolbarCollection';

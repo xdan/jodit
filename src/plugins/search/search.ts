@@ -429,22 +429,20 @@ export class search extends Plugin {
 							? sentence + value
 							: value + sentence;
 
-						const part:
-							| boolean
-							| string = search.findSomePartOfString(
-							query,
-							tmpSentence,
-							next
-						) as boolean | string;
+						const part: boolean | string =
+							search.findSomePartOfString(
+								query,
+								tmpSentence,
+								next
+							) as boolean | string;
 
 						if (part !== false) {
-							let currentPart:
-								| string
-								| boolean = search.findSomePartOfString(
-								query,
-								value,
-								next
-							) as string | boolean;
+							let currentPart: string | boolean =
+								search.findSomePartOfString(
+									query,
+									value,
+									next
+								) as string | boolean;
 
 							if (currentPart === true) {
 								currentPart = trim(query);
@@ -483,7 +481,9 @@ export class search extends Plugin {
 							} else {
 								bound.endContainer = elm;
 								bound.endOffset = currentPartIndex;
-								bound.endOffset += (currentPart as string).length;
+								bound.endOffset += (
+									currentPart as string
+								).length;
 
 								return true;
 							}

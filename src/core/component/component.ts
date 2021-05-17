@@ -16,10 +16,8 @@ import { kebabCase, get, getClassName, isFunction, isVoid } from '../helpers';
 import { uniqueUid } from '../global';
 import { STATUSES } from './statuses';
 
-const StatusListHandlers: Map<
-	Component,
-	IDictionary<CallableFunction[]>
-> = new Map();
+const StatusListHandlers: Map<Component, IDictionary<CallableFunction[]>> =
+	new Map();
 
 export abstract class Component implements IComponent {
 	static STATUSES = STATUSES;

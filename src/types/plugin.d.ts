@@ -17,7 +17,8 @@ export interface IPluginButton {
 }
 
 export class IPlugin<T extends IViewBased = IViewBased>
-	implements IDestructible, IInitable {
+	implements IDestructible, IInitable
+{
 	jodit: T;
 
 	static requires?: string[];

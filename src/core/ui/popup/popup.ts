@@ -244,17 +244,13 @@ export class Popup extends UIElement implements IPopup {
 				strategy = defaultStrategy;
 			} else {
 				strategy =
-					list.find(
-						(key): CanUndef<string> => {
-							if (
-								Popup.boxInView(getPointByStrategy(key), inBox)
-							) {
-								return key;
-							}
-
-							return;
+					list.find((key): CanUndef<string> => {
+						if (Popup.boxInView(getPointByStrategy(key), inBox)) {
+							return key;
 						}
-					) || null;
+
+						return;
+					}) || null;
 			}
 
 			return strategy;

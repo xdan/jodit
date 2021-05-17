@@ -126,9 +126,9 @@ export class UIInput extends UIElement implements IUIInput {
 		}
 
 		this.state.validators?.forEach(name => {
-			const validator = (inputValidators as IDictionary<IUIInputValidator>)[
-				name
-			];
+			const validator = (
+				inputValidators as IDictionary<IUIInputValidator>
+			)[name];
 
 			validator && this.validators.add(validator);
 		});

@@ -58,12 +58,11 @@ Config.prototype.controls.dots = {
 				toolbar: makeCollection(editor),
 				rebuild: () => {
 					if (button) {
-						const buttons: CanUndef<
-							Array<string | IControlType>
-						> = editor.e.fire(
-							'getDiffButtons.mobile',
-							button.closest(UIList)
-						);
+						const buttons: CanUndef<Array<string | IControlType>> =
+							editor.e.fire(
+								'getDiffButtons.mobile',
+								button.closest(UIList)
+							);
 
 						if (buttons && store) {
 							store.toolbar.build(splitArray(buttons));

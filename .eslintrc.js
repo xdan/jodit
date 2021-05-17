@@ -42,7 +42,6 @@ module.exports = {
 		'no-global-assign': 'error',
 		'no-implicit-globals': 'error',
 		'no-implicit-coercion': 'error',
-		'one-var-declaration-per-line': ['error', 'always'],
 		camelcase: 'off',
 		quotes: ['error', 'single', { avoidEscape: true }],
 		'quote-props': [

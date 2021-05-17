@@ -173,8 +173,10 @@ export function iframe(editor: IJodit): void {
 			(__doc: Document | undefined, jodit: IJodit) => {
 				const doc =
 					__doc ||
-					((jodit.iframe as HTMLIFrameElement)
-						.contentWindow as Window).document;
+					(
+						(jodit.iframe as HTMLIFrameElement)
+							.contentWindow as Window
+					).document;
 
 				doc.open();
 

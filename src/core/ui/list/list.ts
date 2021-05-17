@@ -29,7 +29,8 @@ import { splitArray } from '../../helpers';
 @component
 export class UIList<T extends IViewBased = IViewBased>
 	extends UIGroup<T>
-	implements IUIList {
+	implements IUIList
+{
 	/** @override */
 	className(): string {
 		return 'UIList';

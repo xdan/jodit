@@ -24,7 +24,8 @@ export const css = (
 	value?: StyleValue,
 	onlyStyleMode: boolean = false
 ): string | number => {
-	const numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size/i;
+	const numberFieldsReg =
+		/^left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size/i;
 
 	if (isPlainObject(key) || value !== undefined) {
 		const setValue = (

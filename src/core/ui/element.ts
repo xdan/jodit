@@ -18,7 +18,8 @@ import { Icon } from './icon';
 
 export abstract class UIElement<T extends IViewBased = IViewBased>
 	extends ViewComponent<T>
-	implements IUIElement, Mods, Elms {
+	implements IUIElement, Mods, Elms
+{
 	container!: HTMLElement;
 	name: string = '';
 
@@ -55,7 +56,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 
 	/** @override */
 	get<T>(chain: string, obj?: IDictionary): Nullable<T> {
-		return super.get(chain, obj) || ((this.getElm(chain) as unknown) as T);
+		return super.get(chain, obj) || (this.getElm(chain) as unknown as T);
 	}
 
 	/**

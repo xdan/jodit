@@ -36,7 +36,7 @@ export function component<T extends ComponentCompatible>(
 
 			/** For strange minimizer */
 			const isSameClassName =
-				cn((this as unknown) as ComponentCompatible) ===
+				cn(this as unknown as ComponentCompatible) ===
 				cn(newConstructorFunction.prototype);
 
 			if (!isProd && isSamePrototype && !isSameClassName) {

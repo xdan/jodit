@@ -296,10 +296,8 @@ export class ImageEditor extends ViewComponent {
 			)
 			.on([widthInput, heightInput], 'input', this.onChangeSizeInput);
 
-		const {
-			keepAspectRatioResize,
-			keepAspectRatioCrop
-		} = refs<HTMLInputElement>(this.editor);
+		const { keepAspectRatioResize, keepAspectRatioCrop } =
+			refs<HTMLInputElement>(this.editor);
 
 		if (keepAspectRatioResize) {
 			keepAspectRatioResize.addEventListener('change', () => {

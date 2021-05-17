@@ -11,7 +11,8 @@ import { isJoditObject } from './helpers';
 
 export abstract class Plugin<T extends IViewBased = IJodit>
 	extends ViewComponent<T>
-	implements IPlugin<T> {
+	implements IPlugin<T>
+{
 	/** @override */
 	buttons: IPlugin['buttons'] = [];
 

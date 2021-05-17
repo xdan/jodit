@@ -54,9 +54,11 @@ export function applyStyles(html: string): string {
 			iframeDoc.close();
 
 			if (iframeDoc.styleSheets.length) {
-				rules = (iframeDoc.styleSheets[
-					iframeDoc.styleSheets.length - 1
-				] as any).cssRules;
+				rules = (
+					iframeDoc.styleSheets[
+						iframeDoc.styleSheets.length - 1
+					] as any
+				).cssRules;
 			}
 
 			for (let idx = 0; idx < rules.length; idx += 1) {

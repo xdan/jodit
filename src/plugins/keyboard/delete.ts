@@ -233,9 +233,9 @@ export class Delete extends Plugin {
 
 		while (sibling && (Dom.isText(sibling) || Dom.isInlineBlock(sibling))) {
 			while (Dom.isInlineBlock(sibling)) {
-				sibling = (backspace
-					? sibling?.lastChild
-					: sibling?.firstChild) as Nullable<Node>;
+				sibling = (
+					backspace ? sibling?.lastChild : sibling?.firstChild
+				) as Nullable<Node>;
 			}
 
 			if (!sibling) {

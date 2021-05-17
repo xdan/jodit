@@ -224,8 +224,8 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		opt.items.data.mods = mods;
 
 		return this.get('items').then(resp => {
-			let process: IFileBrowserProcessor | undefined = this.o.items
-				.process;
+			let process: IFileBrowserProcessor | undefined =
+				this.o.items.process;
 
 			if (!process) {
 				process = this.o.ajax.process;

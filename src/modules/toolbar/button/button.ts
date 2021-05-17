@@ -40,7 +40,8 @@ import { findControlType } from '../../../core/ui/helpers/get-control-type';
 @component
 export class ToolbarButton<T extends IViewBased = IViewBased>
 	extends UIButton
-	implements IToolbarButton {
+	implements IToolbarButton
+{
 	/** @override */
 	className(): string {
 		return 'ToolbarButton';

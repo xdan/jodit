@@ -20,7 +20,7 @@ declare module '../config' {
  */
 Config.prototype.defaultFontSizePoints = 'px';
 
-Config.prototype.controls.fontsize = ({
+Config.prototype.controls.fontsize = {
 	command: 'fontSize',
 
 	data: {
@@ -101,9 +101,9 @@ Config.prototype.controls.fontsize = ({
 
 		return false;
 	}
-} as IControlType<IJodit>) as IControlType;
+} as IControlType<IJodit> as IControlType;
 
-Config.prototype.controls.font = ({
+Config.prototype.controls.font = {
 	...Config.prototype.controls.fontsize,
 	command: 'fontname',
 
@@ -133,7 +133,7 @@ Config.prototype.controls.font = ({
 	},
 
 	tooltip: 'Font family'
-} as IControlType<IJodit>) as IControlType;
+} as IControlType<IJodit> as IControlType;
 
 /**
  * Process commands `fontsize` and `fontname`

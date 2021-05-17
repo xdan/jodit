@@ -603,10 +603,11 @@ export class EventsNative implements IEventsNative {
 
 									this.currents.push(event);
 
-									result_value = block.syntheticCallback.apply(
-										subject,
-										argumentsList
-									);
+									result_value =
+										block.syntheticCallback.apply(
+											subject,
+											argumentsList
+										);
 
 									this.currents.pop();
 

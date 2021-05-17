@@ -371,12 +371,11 @@ export class Uploader extends ViewComponent implements IUploader {
 												.defaultHandlerSuccess
 										) === 'function'
 									) {
-										((handlerSuccess ||
-											uploader.options
-												.defaultHandlerSuccess) as HandlerSuccess).call(
-											uploader,
-											resp
-										);
+										(
+											(handlerSuccess ||
+												uploader.options
+													.defaultHandlerSuccess) as HandlerSuccess
+										).call(uploader, resp);
 									}
 
 									resolve(resp);
@@ -457,9 +456,11 @@ export class Uploader extends ViewComponent implements IUploader {
 									uploader.o.defaultHandlerSuccess
 								) === 'function'
 							) {
-								((handlerSuccess ||
-									uploader.options
-										.defaultHandlerSuccess) as HandlerSuccess).call(
+								(
+									(handlerSuccess ||
+										uploader.options
+											.defaultHandlerSuccess) as HandlerSuccess
+								).call(
 									uploader,
 									uploader.o.process.call(
 										uploader,
@@ -474,9 +475,11 @@ export class Uploader extends ViewComponent implements IUploader {
 										uploader.o.defaultHandlerError
 								)
 							) {
-								((handlerError ||
-									uploader.options
-										.defaultHandlerError) as HandlerError).call(
+								(
+									(handlerError ||
+										uploader.options
+											.defaultHandlerError) as HandlerError
+								).call(
 									uploader,
 									error(
 										uploader.o.getMessage.call(
@@ -591,7 +594,8 @@ export class Uploader extends ViewComponent implements IUploader {
 						div.focus();
 
 						this.j.async.setTimeout(() => {
-							const child: HTMLDivElement | null = div.firstChild as HTMLDivElement;
+							const child: HTMLDivElement | null =
+								div.firstChild as HTMLDivElement;
 
 							Dom.safeRemove(div);
 
@@ -691,9 +695,8 @@ export class Uploader extends ViewComponent implements IUploader {
 				}
 			});
 
-		const inputFile: HTMLInputElement | null = form.querySelector(
-			'input[type=file]'
-		);
+		const inputFile: HTMLInputElement | null =
+			form.querySelector('input[type=file]');
 
 		if (inputFile) {
 			self.j.e.on(inputFile, 'change', function (this: HTMLInputElement) {

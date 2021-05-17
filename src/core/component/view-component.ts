@@ -9,7 +9,8 @@ import { Component } from './component';
 
 export abstract class ViewComponent<T extends IViewBased = IViewBased>
 	extends Component
-	implements IViewComponent<T> {
+	implements IViewComponent<T>
+{
 	/**
 	 * Parent View element
 	 */

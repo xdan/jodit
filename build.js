@@ -11,8 +11,9 @@ const path = require('path');
 const rootPath = path.resolve(process.cwd()) + path.sep;
 const config = require(path.resolve(rootPath, './webpack.config.js'));
 
-const argv = yargs(hideBin(process.argv)).option('uglify', { type: 'boolean' })
-	.argv;
+const argv = yargs(hideBin(process.argv)).option('uglify', {
+	type: 'boolean'
+}).argv;
 
 const opt = config(
 	[],

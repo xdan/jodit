@@ -90,9 +90,8 @@ export class resizer extends Plugin {
 			</div>`
 	);
 
-	private sizeViewer: HTMLSpanElement = this.rect.getElementsByTagName(
-		'span'
-	)[0];
+	private sizeViewer: HTMLSpanElement =
+		this.rect.getElementsByTagName('span')[0];
 
 	/** @override */
 	protected afterInit(editor: IJodit): void {
@@ -116,7 +115,8 @@ export class resizer extends Plugin {
 			.on(
 				'afterGetValueFromEditor.resizer',
 				(data: { value: string }) => {
-					const rgx = /<jodit[^>]+data-jodit_iframe_wrapper[^>]+>(.*?<iframe[^>]+>.*?<\/iframe>.*?)<\/jodit>/gi;
+					const rgx =
+						/<jodit[^>]+data-jodit_iframe_wrapper[^>]+>(.*?<iframe[^>]+>.*?<\/iframe>.*?)<\/jodit>/gi;
 
 					if (rgx.test(data.value)) {
 						data.value = data.value.replace(rgx, '$1');

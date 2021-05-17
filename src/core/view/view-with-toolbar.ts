@@ -26,9 +26,8 @@ import { autobind } from '../decorators';
 export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	toolbar: IToolbarCollection = makeCollection(this);
 
-	private defaultToolbarContainer: HTMLElement = this.c.div(
-		'jodit-toolbar__box'
-	);
+	private defaultToolbarContainer: HTMLElement =
+		this.c.div('jodit-toolbar__box');
 
 	/**
 	 * Container for toolbar
