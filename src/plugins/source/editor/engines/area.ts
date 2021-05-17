@@ -11,7 +11,8 @@ import { SourceEditor } from '../sourceEditor';
 
 export class TextAreaEditor
 	extends SourceEditor<HTMLTextAreaElement>
-	implements ISourceEditor {
+	implements ISourceEditor
+{
 	private autosize = this.j.async.debounce(() => {
 		this.instance.style.height = 'auto';
 		this.instance.style.height = this.instance.scrollHeight + 'px';

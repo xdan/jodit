@@ -6,13 +6,14 @@
 
 import './source.less';
 
-import type { IJodit, ISourceEditor, markerInfo } from '../../types';
+import type { IJodit, ISourceEditor } from '../../types';
 import * as consts from '../../core/constants';
 import { MODE_SOURCE } from '../../core/constants';
 import { Plugin } from '../../core/plugin';
 import { Dom } from '../../core/dom';
 import { isString, loadNext } from '../../core/helpers';
 import { createSourceEditor } from './editor/factory';
+import { autobind, watch } from '../../core/decorators';
 
 /**
  * Plug-in change simple textarea on CodeMirror editor in Source code mode
@@ -40,15 +41,21 @@ export class source extends Plugin {
 	private tempMarkerEnd = '{end-jodit-selection}';
 	private tempMarkerEndReg = /{end-jodit-selection}/g;
 
-	private selInfo: markerInfo[] = [];
+	@watch(':insertHTML.source')
+	protected onInsertHTML(html: string): void | false {
+		if (!this.j.o.readonly && !this.j.isEditorMode()) {
+			this.sourceEditor?.insertRaw(html);
+			this.toWYSIWYG();
+			return false;
+		}
+	}
 
-	private insertHTML = (html: string) => {
-		this.sourceEditor?.insertRaw(html);
-
-		this.toWYSIWYG();
-	};
-
-	private fromWYSIWYG = (force: boolean | string = false) => {
+	/**
+	 * Update source editor from WYSIWYG area
+	 * @param force
+	 */
+	@autobind
+	private fromWYSIWYG(force: boolean | string = false): void {
 		if (!this.__lock || force === true) {
 			this.__lock = true;
 			const new_value = this.j.getEditorValue(false);
@@ -59,9 +66,13 @@ export class source extends Plugin {
 
 			this.__lock = false;
 		}
-	};
+	}
 
-	private toWYSIWYG = () => {
+	/**
+	 * Update WYSIWYG area from source editor
+	 */
+	@autobind
+	private toWYSIWYG(): void {
 		if (this.__lock) {
 			return;
 		}
@@ -76,9 +87,10 @@ export class source extends Plugin {
 		this.j.setEditorValue(value);
 		this.__lock = false;
 		this.__oldMirrorValue = value;
-	};
+	}
 
-	private getNormalPosition = (pos: number, str: string): number => {
+	@autobind
+	private getNormalPosition(pos: number, str: string): number {
 		let start: number = pos;
 
 		while (start > 0) {
@@ -98,24 +110,22 @@ export class source extends Plugin {
 		}
 
 		return pos;
-	};
+	}
 
-	private __clear = (str: string): string =>
-		str.replace(consts.INVISIBLE_SPACE_REG_EXP(), '');
+	private clnInv(str: string): string {
+		return str.replace(consts.INVISIBLE_SPACE_REG_EXP(), '');
+	}
 
-	private selectAll = () => {
-		this.sourceEditor?.selectAll();
-	};
-
-	private onSelectAll = (command: string): void | false => {
+	@watch(':beforeCommand.source')
+	protected onSelectAll(command: string): void | false {
 		if (
 			command.toLowerCase() === 'selectall' &&
 			this.j.getRealMode() === MODE_SOURCE
 		) {
-			this.selectAll();
+			this.sourceEditor?.selectAll();
 			return false;
 		}
-	};
+	}
 
 	// override it for ace editors
 	private getSelectionStart = (): number => {
@@ -138,14 +148,13 @@ export class source extends Plugin {
 		this.sourceEditor?.focus();
 	}
 
-	private saveSelection = (): void => {
+	@watch(':beforeSetMode.source')
+	protected saveSelection(): void {
 		if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
-			this.selInfo = this.j.s.save() || [];
+			this.j.s.save();
 			this.j.setEditorValue();
 			this.fromWYSIWYG(true);
 		} else {
-			this.selInfo.length = 0;
-
 			if (this.j.o.editHTMLDocumentMode) {
 				return;
 			}
@@ -155,12 +164,6 @@ export class source extends Plugin {
 			if (this.getSelectionStart() === this.getSelectionEnd()) {
 				const marker = this.j.s.marker(true);
 
-				this.selInfo[0] = {
-					startId: marker.id,
-					collapsed: true,
-					startMarker: marker.outerHTML
-				};
-
 				const selectionStart = this.getNormalPosition(
 					this.getSelectionStart(),
 					this.getMirrorValue()
@@ -168,20 +171,12 @@ export class source extends Plugin {
 
 				this.setMirrorValue(
 					value.substr(0, selectionStart) +
-						this.__clear(this.selInfo[0].startMarker) +
+						this.clnInv(marker.outerHTML) +
 						value.substr(selectionStart)
 				);
 			} else {
 				const markerStart = this.j.s.marker(true);
 				const markerEnd = this.j.s.marker(false);
-
-				this.selInfo[0] = {
-					startId: markerStart.id,
-					endId: markerEnd.id,
-					collapsed: false,
-					startMarker: this.__clear(markerStart.outerHTML),
-					endMarker: this.__clear(markerEnd.outerHTML)
-				};
 
 				const selectionStart = this.getNormalPosition(
 					this.getSelectionStart(),
@@ -194,25 +189,22 @@ export class source extends Plugin {
 
 				this.setMirrorValue(
 					value.substr(0, selectionStart) +
-						this.selInfo[0].startMarker +
+						this.clnInv(markerStart.outerHTML) +
 						value.substr(
 							selectionStart,
 							selectionEnd - selectionStart
 						) +
-						this.selInfo[0].endMarker +
+						this.clnInv(markerEnd.outerHTML) +
 						value.substr(selectionEnd)
 				);
 			}
 
 			this.toWYSIWYG();
 		}
-	};
+	}
 
-	private removeSelection = () => {
-		if (!this.selInfo.length) {
-			return;
-		}
-
+	@watch(':afterSetMode.source')
+	protected removeSelection(): void {
 		if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
 			this.__lock = true;
 			this.j.s.restore();
@@ -223,20 +215,17 @@ export class source extends Plugin {
 		let value: string = this.getMirrorValue();
 		let selectionStart: number = 0,
 			selectionEnd: number = 0;
-		try {
-			if (this.selInfo[0].startMarker) {
-				value = value.replace(
-					/<span[^>]+data-jodit-selection_marker="start"[^>]*>[<>]*?<\/span>/gim,
-					this.tempMarkerStart
-				);
-			}
 
-			if (this.selInfo[0].endMarker) {
-				value = value.replace(
-					/<span[^>]+data-jodit-selection_marker="end"[^>]*>[<>]*?<\/span>/gim,
+		try {
+			value = value
+				.replace(
+					/<span[^>]+data-jodit-selection_marker=(["'])start\1[^>]*>[<>]*?<\/span>/gim,
+					this.tempMarkerStart
+				)
+				.replace(
+					/<span[^>]+data-jodit-selection_marker=(["'])end\1[^>]*>[<>]*?<\/span>/gim,
 					this.tempMarkerEnd
 				);
-			}
 
 			if (!this.j.o.editHTMLDocumentMode && this.j.o.beautifyHTML) {
 				const html = this.j.e.fire('beautifyHTML', value);
@@ -251,10 +240,11 @@ export class source extends Plugin {
 
 			value = value.replace(this.tempMarkerStartReg, '');
 
-			if (!this.selInfo[0].collapsed || selectionStart === -1) {
-				selectionEnd = value.indexOf(this.tempMarkerEnd);
-				if (selectionStart === -1) {
-					selectionStart = selectionEnd;
+			if (selectionStart !== -1) {
+				const selectionEndCursor = value.indexOf(this.tempMarkerEnd);
+
+				if (selectionEndCursor !== -1) {
+					selectionEnd = selectionEndCursor;
 				}
 			}
 
@@ -272,18 +262,70 @@ export class source extends Plugin {
 		this.toWYSIWYG();
 
 		this.setFocusToMirror(); // need for setting focus after change mode
-	};
+	}
 
-	setMirrorSelectionRange: (start: number, end: number) => void = (
-		start: number,
-		end: number
-	) => {
+	@autobind
+	private setMirrorSelectionRange(start: number, end: number): void {
 		this.sourceEditor?.setSelectionRange(start, end);
-	};
+	}
 
-	private onReadonlyReact = () => {
+	@watch(':readonly.source')
+	private onReadonlyReact(): void {
 		this.sourceEditor?.setReadOnly(this.j.o.readonly);
-	};
+	}
+
+	/** @override */
+	afterInit(editor: IJodit): void {
+		this.mirrorContainer = editor.c.div('jodit-source');
+		editor.workplace.appendChild(this.mirrorContainer);
+
+		editor.e.on('afterAddPlace changePlace afterInit', () => {
+			editor.workplace.appendChild(this.mirrorContainer);
+		});
+
+		this.sourceEditor = createSourceEditor(
+			'area',
+			editor,
+			this.mirrorContainer,
+			this.toWYSIWYG,
+			this.fromWYSIWYG
+		);
+
+		this.onReadonlyReact();
+
+		editor.e
+			.on('placeholder.source', (text: string) => {
+				this.sourceEditor?.setPlaceHolder(text);
+			})
+			.on('change.source', this.fromWYSIWYG)
+			.on('beautifyHTML', html => html);
+
+		if (editor.o.beautifyHTML) {
+			const addEventListener = () => {
+				const html_beautify = (editor.ow as any).html_beautify;
+
+				if (html_beautify && !editor.isInDestruct) {
+					editor.events
+						?.off('beautifyHTML')
+						.on('beautifyHTML', html => html_beautify(html));
+
+					return true;
+				}
+
+				return false;
+			};
+
+			if (!addEventListener()) {
+				loadNext(editor, editor.o.beautifyHTMLCDNUrlsJS).then(
+					addEventListener
+				);
+			}
+		}
+
+		this.fromWYSIWYG();
+
+		this.initSourceEditor(editor);
+	}
 
 	private initSourceEditor(editor: IJodit): void {
 		if (editor.o.sourceEditor !== 'area') {
@@ -309,76 +351,7 @@ export class source extends Plugin {
 		}
 	}
 
-	afterInit(editor: IJodit): void {
-		this.mirrorContainer = editor.c.div('jodit-source');
-		editor.workplace.appendChild(this.mirrorContainer);
-
-		editor.e.on('afterAddPlace changePlace afterInit', () => {
-			editor.workplace.appendChild(this.mirrorContainer);
-		});
-
-		this.sourceEditor = createSourceEditor(
-			'area',
-			editor,
-			this.mirrorContainer,
-			this.toWYSIWYG,
-			this.fromWYSIWYG
-		);
-
-		const addListeners = () => {
-			// save restore selection
-			editor.e
-				.off('beforeSetMode.source afterSetMode.source')
-				.on('beforeSetMode.source', this.saveSelection)
-				.on('afterSetMode.source', this.removeSelection);
-		};
-
-		addListeners();
-		this.onReadonlyReact();
-
-		editor.e
-			.on('insertHTML.source', (html: string): void | false => {
-				if (!editor.o.readonly && !this.j.isEditorMode()) {
-					this.insertHTML(html);
-					return false;
-				}
-			})
-			.on('readonly.source', this.onReadonlyReact)
-			.on('placeholder.source', (text: string) => {
-				this.sourceEditor?.setPlaceHolder(text);
-			})
-			.on('beforeCommand.source', this.onSelectAll)
-			.on('change.source', this.fromWYSIWYG);
-
-		editor.e.on('beautifyHTML', html => html);
-
-		if (editor.o.beautifyHTML) {
-			const addEventListener = () => {
-				const html_beautify = (editor.ow as any).html_beautify;
-
-				if (html_beautify && !editor.isInDestruct) {
-					editor.events
-						?.off('beautifyHTML')
-						?.on('beautifyHTML', html => html_beautify(html));
-
-					return true;
-				}
-
-				return false;
-			};
-
-			if (!addEventListener()) {
-				loadNext(editor, editor.o.beautifyHTMLCDNUrlsJS).then(
-					addEventListener
-				);
-			}
-		}
-
-		this.fromWYSIWYG();
-
-		this.initSourceEditor(editor);
-	}
-
+	/** @override */
 	beforeDestruct(jodit: IJodit): void {
 		if (this.sourceEditor) {
 			this.sourceEditor.destruct();

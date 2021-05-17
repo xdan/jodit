@@ -62,7 +62,7 @@ export function watch(
 					const [objectPath, eventName] = field.split(':');
 					const view = isViewObject(component)
 						? component
-						: ((component as unknown) as IViewComponent).jodit;
+						: (component as unknown as IViewComponent).jodit;
 
 					if (objectPath.length) {
 						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -87,7 +87,7 @@ export function watch(
 				}
 
 				const parts = field.split('.'),
-					[key] = (parts as unknown) as Array<keyof IComponent>;
+					[key] = parts as unknown as Array<keyof IComponent>;
 
 				let value: any = component[key];
 
