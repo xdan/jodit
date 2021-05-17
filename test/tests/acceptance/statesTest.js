@@ -129,9 +129,8 @@ describe('Test states', function () {
 								}
 							});
 
-							const search = editor.container.querySelector(
-								'.jodit-search'
-							);
+							const search =
+								editor.container.querySelector('.jodit-search');
 							expect(false).equals(
 								search.classList.contains('jodit-search_active')
 							);

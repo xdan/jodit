@@ -17,9 +17,8 @@ describe('Stat plugin', function () {
 			});
 
 			editor.value = '<p>Simple text</p><p>Simple text</p>';
-			const statusbar = editor.container.querySelector(
-				'.jodit-status-bar'
-			);
+			const statusbar =
+				editor.container.querySelector('.jodit-status-bar');
 
 			expect(statusbar).is.not.null;
 
@@ -43,9 +42,8 @@ describe('Stat plugin', function () {
 				});
 
 				editor.value = '<p>Simple text</p><p>Simple text</p>';
-				const statusbar = editor.container.querySelector(
-					'.jodit-status-bar'
-				);
+				const statusbar =
+					editor.container.querySelector('.jodit-status-bar');
 
 				expect(statusbar.textContent.match(/Chars: 36/)).is.not.null;
 			});
@@ -63,9 +61,8 @@ describe('Stat plugin', function () {
 				});
 
 				editor.value = '<p>Simple text</p>';
-				const statusbar = editor.container.querySelector(
-					'.jodit-status-bar'
-				);
+				const statusbar =
+					editor.container.querySelector('.jodit-status-bar');
 
 				expect(statusbar).is.not.null;
 
@@ -86,9 +83,8 @@ describe('Stat plugin', function () {
 				});
 
 				editor.value = '<p>Simple text</p>';
-				const statusbar = editor.container.querySelector(
-					'.jodit-status-bar'
-				);
+				const statusbar =
+					editor.container.querySelector('.jodit-status-bar');
 
 				expect(statusbar).is.not.null;
 
@@ -110,9 +106,8 @@ describe('Stat plugin', function () {
 				});
 
 				editor.value = '<p>Simple text</p>';
-				const statusbar = editor.container.querySelector(
-					'.jodit-status-bar'
-				);
+				const statusbar =
+					editor.container.querySelector('.jodit-status-bar');
 
 				expect(statusbar).is.not.null;
 

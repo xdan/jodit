@@ -622,9 +622,8 @@ describe('Test Inline mode', function () {
 							events: {
 								afterConstructor: function (editor) {
 									editor.value = '<p>test <img/> test</p>';
-									const img = editor.editor.querySelector(
-										'img'
-									);
+									const img =
+										editor.editor.querySelector('img');
 									simulateEvent('click', 0, img);
 									const popup = getOpenedPopup(editor);
 									expect(popup).is.null;
@@ -645,9 +644,8 @@ describe('Test Inline mode', function () {
 							events: {
 								afterConstructor: function (editor) {
 									editor.value = '<p>test <img/> test</p>';
-									const img = editor.editor.querySelector(
-										'img'
-									);
+									const img =
+										editor.editor.querySelector('img');
 									simulateEvent('click', 0, img);
 									const popup = getOpenedPopup(editor);
 									expect(popup).is.not.null;
@@ -691,15 +689,12 @@ describe('Test Inline mode', function () {
 										editor.value =
 											'<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="tests/artio.jpg">> test</p>';
 
-										const a = editor.editor.querySelector(
-											'a'
-										);
-										const img = editor.editor.querySelector(
-											'img'
-										);
-										const td = editor.editor.querySelector(
-											'td'
-										);
+										const a =
+											editor.editor.querySelector('a');
+										const img =
+											editor.editor.querySelector('img');
+										const td =
+											editor.editor.querySelector('td');
 
 										simulateEvent('click', 0, a);
 
@@ -737,15 +732,12 @@ describe('Test Inline mode', function () {
 									afterConstructor: function (editor) {
 										editor.value =
 											'<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="tests/artio.jpg">> test</p>';
-										const a = editor.editor.querySelector(
-											'a'
-										);
-										const img = editor.editor.querySelector(
-											'img'
-										);
-										const td = editor.editor.querySelector(
-											'td'
-										);
+										const a =
+											editor.editor.querySelector('a');
+										const img =
+											editor.editor.querySelector('img');
+										const td =
+											editor.editor.querySelector('td');
 										simulateEvent('click', a);
 
 										let popup = getOpenedPopup(editor);

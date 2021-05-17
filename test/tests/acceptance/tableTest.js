@@ -1409,9 +1409,8 @@ describe('Tables Jodit Editor Tests', function () {
 							1,
 							editor.editor.querySelector('table'),
 							function (options) {
-								options.relatedTarget = editor.editor.querySelector(
-									'p'
-								);
+								options.relatedTarget =
+									editor.editor.querySelector('p');
 							}
 						);
 						simulateEvent(

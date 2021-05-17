@@ -72,8 +72,7 @@ describe('Jodit FileBrowser Tests', function () {
 		it('Should add uploader icon in image buttons popup', function () {
 			const editor = getJodit({
 				uploader: {
-					url:
-						'https://xdsoft.net/jodit/connector/index.php?action=upload'
+					url: 'https://xdsoft.net/jodit/connector/index.php?action=upload'
 				},
 				filebrowser: {
 					ajax: {
@@ -309,8 +308,7 @@ describe('Jodit FileBrowser Tests', function () {
 
 							const filebrowser = new Jodit.modules.FileBrowser({
 								ajax: {
-									url:
-										'https://xdsoft.net/jodit/connector/index.php'
+									url: 'https://xdsoft.net/jodit/connector/index.php'
 								}
 							});
 
@@ -355,8 +353,7 @@ describe('Jodit FileBrowser Tests', function () {
 
 							const filebrowser = new Jodit.modules.FileBrowser({
 								ajax: {
-									url:
-										'https://xdsoft.net/jodit/connector/index.php'
+									url: 'https://xdsoft.net/jodit/connector/index.php'
 								},
 								permissions: null
 							});
@@ -508,9 +505,10 @@ describe('Jodit FileBrowser Tests', function () {
 				filebrowser
 					.open(function () {})
 					.then(async function () {
-						const filter = filebrowser.dialog.dialogbox_header.querySelector(
-							'.jodit-toolbar-content_filter'
-						);
+						const filter =
+							filebrowser.dialog.dialogbox_header.querySelector(
+								'.jodit-toolbar-content_filter'
+							);
 						const input = filter.querySelector('input');
 						const files = filebrowser.browser.querySelector(
 							'.jodit-filebrowser__files'
@@ -568,9 +566,10 @@ describe('Jodit FileBrowser Tests', function () {
 				filebrowser
 					.open(function () {})
 					.then(async function () {
-						const sort = filebrowser.dialog.dialogbox_header.querySelector(
-							'.jodit-toolbar-content_sort'
-						);
+						const sort =
+							filebrowser.dialog.dialogbox_header.querySelector(
+								'.jodit-toolbar-content_sort'
+							);
 						const select = sort.querySelector('select');
 						const files = filebrowser.browser.querySelector(
 							'.jodit-filebrowser__files'
@@ -935,13 +934,11 @@ describe('Jodit FileBrowser Tests', function () {
 				it('Should create IMG element', function (done) {
 					const editor = getJodit({
 						uploader: {
-							url:
-								'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+							url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 						},
 						filebrowser: {
 							ajax: {
-								url:
-									'https://xdsoft.net/jodit/connector/index.php'
+								url: 'https://xdsoft.net/jodit/connector/index.php'
 							}
 						}
 					});
@@ -969,13 +966,11 @@ describe('Jodit FileBrowser Tests', function () {
 				it('Should create A element', function (done) {
 					const editor = getJodit({
 						uploader: {
-							url:
-								'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+							url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 						},
 						filebrowser: {
 							ajax: {
-								url:
-									'https://xdsoft.net/jodit/connector/index.php'
+								url: 'https://xdsoft.net/jodit/connector/index.php'
 							}
 						}
 					});
@@ -1153,8 +1148,7 @@ describe('Jodit FileBrowser Tests', function () {
 					const editor = getJodit({
 						filebrowser: {
 							ajax: {
-								url:
-									'https://xdsoft.net/jodit/connector/index.php'
+								url: 'https://xdsoft.net/jodit/connector/index.php'
 							}
 						}
 					});
@@ -1254,8 +1248,7 @@ describe('Jodit FileBrowser Tests', function () {
 					const editor = getJodit({
 						filebrowser: {
 							ajax: {
-								url:
-									'https://xdsoft.net/jodit/connector/index.php'
+								url: 'https://xdsoft.net/jodit/connector/index.php'
 							}
 						}
 					});
@@ -1293,10 +1286,11 @@ describe('Jodit FileBrowser Tests', function () {
 									const dialog = getOpenedDialog(filebrowser);
 
 									expect(dialog).is.not.null;
-									const previewsButtons = dialog.querySelectorAll(
-										' .jodit-filebrowser_preview .jodit-filebrowser_preview_navigation.jodit-filebrowser_preview_navigation-prev, ' +
-											' .jodit-filebrowser_preview .jodit-filebrowser_preview_navigation.jodit-filebrowser_preview_navigation-next'
-									);
+									const previewsButtons =
+										dialog.querySelectorAll(
+											' .jodit-filebrowser_preview .jodit-filebrowser_preview_navigation.jodit-filebrowser_preview_navigation-prev, ' +
+												' .jodit-filebrowser_preview .jodit-filebrowser_preview_navigation.jodit-filebrowser_preview_navigation-next'
+										);
 
 									expect(previewsButtons.length).equals(2);
 									done();

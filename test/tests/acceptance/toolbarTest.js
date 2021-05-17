@@ -1345,9 +1345,8 @@ describe('Toolbar', function () {
 								{
 									name: 'adddate',
 									exec: function (editor) {
-										const a = editor.createInside.text(
-											'111'
-										);
+										const a =
+											editor.createInside.text('111');
 										editor.s.insertNode(a);
 									}
 								}
@@ -1490,9 +1489,8 @@ describe('Toolbar', function () {
 
 						clickTrigger('paragraph', editor);
 
-						const header = getOpenedPopup(editor).querySelector(
-							'[class*=h1]'
-						);
+						const header =
+							getOpenedPopup(editor).querySelector('[class*=h1]');
 						expect(header.getAttribute('aria-pressed')).equals(
 							'true'
 						);
@@ -1728,9 +1726,8 @@ describe('Toolbar', function () {
 
 				editor.value = 'third';
 
-				const editPlaces = editor.ownerDocument.querySelectorAll(
-					'.jodit-wysiwyg'
-				);
+				const editPlaces =
+					editor.ownerDocument.querySelectorAll('.jodit-wysiwyg');
 				expect(editPlaces.length).equals(3);
 
 				simulateEvent('focus', 0, editPlaces[0]);

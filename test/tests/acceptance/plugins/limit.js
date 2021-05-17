@@ -72,9 +72,10 @@ describe('Limit plugin', function () {
 
 						setTimeout(() => {
 							expect(editor.value).equals('<p>11111</p>');
-							const chars = editor.statusbar.container.querySelector(
-								'.jodit-status-bar__item'
-							);
+							const chars =
+								editor.statusbar.container.querySelector(
+									'.jodit-status-bar__item'
+								);
 							expect(chars.textContent.trim()).equals('Chars: 5');
 							done();
 						}, 200);

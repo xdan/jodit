@@ -463,13 +463,11 @@ describe('Test plugins', function () {
 								timeout: 0
 							},
 							uploader: {
-								url:
-									'https://xdsoft.net/jodit/connector/index.php?action=upload'
+								url: 'https://xdsoft.net/jodit/connector/index.php?action=upload'
 							},
 							filebrowser: {
 								ajax: {
-									url:
-										'https://xdsoft.net/jodit/connector/index.php'
+									url: 'https://xdsoft.net/jodit/connector/index.php'
 								}
 							},
 							disablePlugins: 'mobile'
@@ -536,11 +534,12 @@ describe('Test plugins', function () {
 									0,
 									cropper.querySelector('.jodit_bottomright'),
 									function (e) {
-										const pos = Jodit.modules.Helpers.offset(
-											cropper,
-											editor,
-											editor.ownerDocument
-										);
+										const pos =
+											Jodit.modules.Helpers.offset(
+												cropper,
+												editor,
+												editor.ownerDocument
+											);
 										e.clientX = pos.left + pos.width;
 										e.clientY = pos.top + pos.height;
 									}
@@ -551,11 +550,12 @@ describe('Test plugins', function () {
 									0,
 									editor.ownerWindow,
 									function (e) {
-										const pos = Jodit.modules.Helpers.offset(
-											cropper,
-											editor,
-											editor.ownerDocument
-										);
+										const pos =
+											Jodit.modules.Helpers.offset(
+												cropper,
+												editor,
+												editor.ownerDocument
+											);
 										e.clientX = pos.left + pos.width - 50;
 										e.clientY = pos.top + pos.height - 150;
 									}
@@ -566,11 +566,12 @@ describe('Test plugins', function () {
 									0,
 									editor.ownerWindow,
 									function (e) {
-										const pos = Jodit.modules.Helpers.offset(
-											cropper,
-											editor,
-											editor.ownerDocument
-										);
+										const pos =
+											Jodit.modules.Helpers.offset(
+												cropper,
+												editor,
+												editor.ownerDocument
+											);
 										e.clientX = pos.left + pos.width - 50;
 										e.clientY = pos.top + pos.height - 150;
 									}
@@ -605,13 +606,11 @@ describe('Test plugins', function () {
 								timeout: 0
 							},
 							uploader: {
-								url:
-									'https://xdsoft.net/jodit/connector/index.php?action=upload'
+								url: 'https://xdsoft.net/jodit/connector/index.php?action=upload'
 							},
 							filebrowser: {
 								ajax: {
-									url:
-										'https://xdsoft.net/jodit/connector/index.php'
+									url: 'https://xdsoft.net/jodit/connector/index.php'
 								}
 							}
 						});
@@ -687,11 +686,12 @@ describe('Test plugins', function () {
 									'mousedown',
 									cropper.querySelector('.jodit_bottomright'),
 									function (e) {
-										const pos = Jodit.modules.Helpers.offset(
-											cropper,
-											editor,
-											editor.ownerDocument
-										);
+										const pos =
+											Jodit.modules.Helpers.offset(
+												cropper,
+												editor,
+												editor.ownerDocument
+											);
 										e.clientX = pos.left + pos.width;
 										e.clientY = pos.top + pos.height;
 									}
@@ -701,11 +701,12 @@ describe('Test plugins', function () {
 									'mousemove',
 									editor.ownerWindow,
 									function (e) {
-										const pos = Jodit.modules.Helpers.offset(
-											cropper,
-											editor,
-											editor.ownerDocument
-										);
+										const pos =
+											Jodit.modules.Helpers.offset(
+												cropper,
+												editor,
+												editor.ownerDocument
+											);
 										e.clientX = pos.left + pos.width - 50;
 										e.clientY = pos.top + pos.height - 150;
 									}
@@ -715,11 +716,12 @@ describe('Test plugins', function () {
 									'mouseup',
 									editor.ownerWindow,
 									function (e) {
-										const pos = Jodit.modules.Helpers.offset(
-											cropper,
-											editor,
-											editor.ownerDocument
-										);
+										const pos =
+											Jodit.modules.Helpers.offset(
+												cropper,
+												editor,
+												editor.ownerDocument
+											);
 										e.clientX = pos.left + pos.width - 50;
 										e.clientY = pos.top + pos.height - 150;
 									}
@@ -755,13 +757,11 @@ describe('Test plugins', function () {
 								timeout: 0
 							},
 							uploader: {
-								url:
-									'https://xdsoft.net/jodit/connector/index.php?action=upload'
+								url: 'https://xdsoft.net/jodit/connector/index.php?action=upload'
 							},
 							filebrowser: {
 								ajax: {
-									url:
-										'https://xdsoft.net/jodit/connector/index.php'
+									url: 'https://xdsoft.net/jodit/connector/index.php'
 								}
 							}
 						});
@@ -821,11 +821,12 @@ describe('Test plugins', function () {
 									0,
 									resizer.querySelector('.jodit_bottomright'),
 									function (e) {
-										const pos = Jodit.modules.Helpers.offset(
-											resizer,
-											editor,
-											editor.ownerDocument
-										);
+										const pos =
+											Jodit.modules.Helpers.offset(
+												resizer,
+												editor,
+												editor.ownerDocument
+											);
 										e.clientX = pos.left + pos.width;
 										e.clientY = pos.top + pos.height;
 									}
@@ -836,11 +837,12 @@ describe('Test plugins', function () {
 									0,
 									editor.ownerWindow,
 									function (e) {
-										const pos = Jodit.modules.Helpers.offset(
-											resizer,
-											editor,
-											editor.ownerDocument
-										);
+										const pos =
+											Jodit.modules.Helpers.offset(
+												resizer,
+												editor,
+												editor.ownerDocument
+											);
 										e.clientX = pos.left + pos.width - 250;
 										e.clientY = pos.top + pos.height - 150;
 									}
@@ -851,11 +853,12 @@ describe('Test plugins', function () {
 									0,
 									editor.ownerWindow,
 									function (e) {
-										const pos = Jodit.modules.Helpers.offset(
-											resizer,
-											editor,
-											editor.ownerDocument
-										);
+										const pos =
+											Jodit.modules.Helpers.offset(
+												resizer,
+												editor,
+												editor.ownerDocument
+											);
 										e.clientX = pos.left + pos.width - 250;
 										e.clientY = pos.top + pos.height - 150;
 									}
@@ -889,13 +892,11 @@ describe('Test plugins', function () {
 								timeout: 0
 							},
 							uploader: {
-								url:
-									'https://xdsoft.net/jodit/connector/index.php?action=upload'
+								url: 'https://xdsoft.net/jodit/connector/index.php?action=upload'
 							},
 							filebrowser: {
 								ajax: {
-									url:
-										'https://xdsoft.net/jodit/connector/index.php'
+									url: 'https://xdsoft.net/jodit/connector/index.php'
 								}
 							}
 						});
@@ -962,11 +963,12 @@ describe('Test plugins', function () {
 									'mousedown',
 									resizer.querySelector('.jodit_bottomright'),
 									function (e) {
-										const pos = Jodit.modules.Helpers.offset(
-											resizer,
-											editor,
-											editor.ownerDocument
-										);
+										const pos =
+											Jodit.modules.Helpers.offset(
+												resizer,
+												editor,
+												editor.ownerDocument
+											);
 										e.clientX = pos.left + pos.width;
 										e.clientY = pos.top + pos.height;
 									}
@@ -976,11 +978,13 @@ describe('Test plugins', function () {
 									'mousemove',
 									editor.ownerWindow,
 									function (e) {
-										const pos = Jodit.modules.Helpers.offset(
-											resizer,
-											editor,
-											editor.ownerDocument
-										);
+										const pos =
+											Jodit.modules.Helpers.offset(
+												resizer,
+												editor,
+												editor.ownerDocument
+											);
+
 										e.clientX = pos.left + pos.width - 50;
 										e.clientY = pos.top + pos.height - 150;
 									}
@@ -990,11 +994,12 @@ describe('Test plugins', function () {
 									'mouseup',
 									editor.ownerWindow,
 									function (e) {
-										const pos = Jodit.modules.Helpers.offset(
-											resizer,
-											editor,
-											editor.ownerDocument
-										);
+										const pos =
+											Jodit.modules.Helpers.offset(
+												resizer,
+												editor,
+												editor.ownerDocument
+											);
 										e.clientX = pos.left + pos.width - 50;
 										e.clientY = pos.top + pos.height - 150;
 									}
@@ -1323,9 +1328,8 @@ describe('Test plugins', function () {
 
 					expect(dialog).is.not.null;
 
-					const currentActive2 = dialog.getElementsByTagName(
-						'a'
-					)[125];
+					const currentActive2 =
+						dialog.getElementsByTagName('a')[125];
 
 					simulateEvent('mousedown', 0, currentActive2);
 
@@ -1808,9 +1812,8 @@ describe('Test plugins', function () {
 
 					editor.value = '<p>Simple text</p>';
 
-					const statusbar = editor.container.querySelector(
-						'.jodit-status-bar'
-					);
+					const statusbar =
+						editor.container.querySelector('.jodit-status-bar');
 
 					expect(
 						editor.ownerWindow.getComputedStyle(statusbar).display

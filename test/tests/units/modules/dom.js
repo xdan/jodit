@@ -215,14 +215,17 @@ describe('Test Dom module', function () {
 			const editor = getJodit();
 
 			const variants = {
-					'<p>test <em><i>t</i></em>one <span><strong>strong</strong></span></p>': [
-						node => node && node.nodeValue === 't',
-						elm => elm.firstChild.nextSibling.firstChild.firstChild
-					],
-					'<p><em><i>t</i></em>one <span><strong>strong</strong></span></p>': [
-						node => node && node.nodeValue === 't',
-						elm => elm.firstChild.firstChild.firstChild
-					],
+					'<p>test <em><i>t</i></em>one <span><strong>strong</strong></span></p>':
+						[
+							node => node && node.nodeValue === 't',
+							elm =>
+								elm.firstChild.nextSibling.firstChild.firstChild
+						],
+					'<p><em><i>t</i></em>one <span><strong>strong</strong></span></p>':
+						[
+							node => node && node.nodeValue === 't',
+							elm => elm.firstChild.firstChild.firstChild
+						],
 					'<p>test<span><strong>strong</strong></span></p>': [
 						node => node && node.nodeType === Node.TEXT_NODE,
 						elm => elm.lastChild.lastChild.firstChild
@@ -235,10 +238,11 @@ describe('Test Dom module', function () {
 						node => node && node.nodeValue === 'one ',
 						elm => elm.firstChild
 					],
-					'<p><em>t</em>one <span><strong>strong</strong></span></p>': [
-						node => node && node.nodeValue === 't',
-						elm => elm.firstChild.firstChild
-					],
+					'<p><em>t</em>one <span><strong>strong</strong></span></p>':
+						[
+							node => node && node.nodeValue === 't',
+							elm => elm.firstChild.firstChild
+						],
 					'<p>two <span><strong>strong</strong></span></p>': [
 						node => node && node.nodeValue === 'one ',
 						() => null

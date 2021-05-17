@@ -432,7 +432,8 @@ describe('Jodit Events system Tests', function () {
 						describe('Remove event listener without namespace', function () {
 							it('Should remove handler with namespace', function () {
 								let clicked = 0;
-								const eventEmmiter = new Jodit.modules.EventsNative(),
+								const eventEmmiter =
+										new Jodit.modules.EventsNative(),
 									callback = function () {
 										clicked += 1;
 									};
@@ -454,7 +455,8 @@ describe('Jodit Events system Tests', function () {
 
 						describe('Remove event listener with namespace', function () {
 							it('Should remove handler with namespace', function () {
-								const eventEmmiter = new Jodit.modules.EventsNative();
+								const eventEmmiter =
+									new Jodit.modules.EventsNative();
 
 								let clicked = 0,
 									callback = function () {
@@ -480,7 +482,8 @@ describe('Jodit Events system Tests', function () {
 					describe('Add handlers with and without namespace', function () {
 						describe('And fire without namespace', function () {
 							it('Should fire both handlers', function () {
-								const eventEmmiter = new Jodit.modules.EventsNative();
+								const eventEmmiter =
+									new Jodit.modules.EventsNative();
 								let clicked = 0;
 								const callback = function () {
 									clicked += 1;
@@ -499,7 +502,8 @@ describe('Jodit Events system Tests', function () {
 							it('Should fire only one handler with namespace', function () {
 								let clicked = 0;
 
-								const eventEmmiter = new Jodit.modules.EventsNative(),
+								const eventEmmiter =
+										new Jodit.modules.EventsNative(),
 									callback = function () {
 										clicked += 1;
 									};
@@ -518,7 +522,8 @@ describe('Jodit Events system Tests', function () {
 								it('Should remove handler only with namespace', function () {
 									let clicked = 0;
 
-									const eventEmmiter = new Jodit.modules.EventsNative(),
+									const eventEmmiter =
+											new Jodit.modules.EventsNative(),
 										callback = function () {
 											clicked += 1;
 										};
@@ -542,7 +547,8 @@ describe('Jodit Events system Tests', function () {
 								it('Should remove all handlers', function () {
 									let clicked = 0;
 
-									const eventEmmiter = new Jodit.modules.EventsNative(),
+									const eventEmmiter =
+											new Jodit.modules.EventsNative(),
 										callback = function () {
 											clicked += 1;
 										};
@@ -715,7 +721,8 @@ describe('Jodit Events system Tests', function () {
 
 					describe('with namespace', function () {
 						it('Should remove handler with namespace only for one event', function () {
-							const eventEmmiter = new Jodit.modules.EventsNative(),
+							const eventEmmiter =
+									new Jodit.modules.EventsNative(),
 								simpleObject = {},
 								clicked = [],
 								callback = function () {
@@ -761,7 +768,8 @@ describe('Jodit Events system Tests', function () {
 
 					describe('Remove event listener for specific handler', function () {
 						it('Should remove only specific handler', function () {
-							const eventEmmiter = new Jodit.modules.EventsNative(),
+							const eventEmmiter =
+									new Jodit.modules.EventsNative(),
 								simpleObject = {},
 								clicked = [],
 								callback2 = function () {
@@ -808,7 +816,8 @@ describe('Jodit Events system Tests', function () {
 					describe('Remove event listener for whole namespace', function () {
 						it('Should remove all handlers from namespace', function () {
 							let clicked = 0;
-							const eventEmmiter = new Jodit.modules.EventsNative(),
+							const eventEmmiter =
+									new Jodit.modules.EventsNative(),
 								simpleObject = {},
 								callback = function () {
 									clicked += 1;

@@ -736,11 +736,8 @@ describe('Test image', function () {
 							const dialog = getOpenedDialog(editor);
 							expect(dialog).is.not.null;
 
-							const {
-								imageWidth,
-								imageHeight,
-								lockSize
-							} = Jodit.modules.Helpers.refs(dialog);
+							const { imageWidth, imageHeight, lockSize } =
+								Jodit.modules.Helpers.refs(dialog);
 
 							expect(imageWidth.value).equals(
 								img.offsetWidth.toString()
@@ -781,11 +778,8 @@ describe('Test image', function () {
 						const dialog = getOpenedDialog(editor);
 						expect(dialog).is.not.null;
 
-						const {
-							imageWidth,
-							imageHeight,
-							lockSize
-						} = Jodit.modules.Helpers.refs(dialog);
+						const { imageWidth, imageHeight, lockSize } =
+							Jodit.modules.Helpers.refs(dialog);
 
 						expect(imageWidth).is.not.null;
 						expect(imageHeight).is.not.null;
@@ -841,10 +835,8 @@ describe('Test image', function () {
 
 							const dialog = getOpenedDialog(editor);
 
-							const {
-								imageWidth,
-								imageHeight
-							} = Jodit.modules.Helpers.refs(dialog);
+							const { imageWidth, imageHeight } =
+								Jodit.modules.Helpers.refs(dialog);
 
 							expect(imageWidth.value).equals('100');
 							expect(imageHeight.value).equals('56');
@@ -887,11 +879,8 @@ describe('Test image', function () {
 
 								const dialog = getOpenedDialog(editor);
 
-								const {
-									imageWidth,
-									imageHeight,
-									lockSize
-								} = Jodit.modules.Helpers.refs(dialog);
+								const { imageWidth, imageHeight, lockSize } =
+									Jodit.modules.Helpers.refs(dialog);
 
 								expect(imageWidth.value).equals('100');
 								expect(imageHeight.value).equals('56');
@@ -985,11 +974,8 @@ describe('Test image', function () {
 
 							const dialog = getOpenedDialog(editor);
 
-							const {
-								imageWidth,
-								imageHeight,
-								lockSize
-							} = Jodit.modules.Helpers.refs(dialog);
+							const { imageWidth, imageHeight, lockSize } =
+								Jodit.modules.Helpers.refs(dialog);
 
 							expect(imageWidth.value).equals('100');
 							expect(imageHeight.value).equals('200');
@@ -1037,11 +1023,8 @@ describe('Test image', function () {
 
 								const dialog = getOpenedDialog(editor);
 
-								const {
-									imageWidth,
-									imageHeight,
-									lockSize
-								} = Jodit.modules.Helpers.refs(dialog);
+								const { imageWidth, imageHeight, lockSize } =
+									Jodit.modules.Helpers.refs(dialog);
 
 								expect(imageWidth.value).equals('100');
 								expect(imageHeight.value).equals('200');
@@ -1089,11 +1072,8 @@ describe('Test image', function () {
 
 						expect(dialog).is.not.null;
 
-						const {
-							imageWidth,
-							imageHeight,
-							lockSize
-						} = Jodit.modules.Helpers.refs(dialog);
+						const { imageWidth, imageHeight, lockSize } =
+							Jodit.modules.Helpers.refs(dialog);
 
 						expect(lockSize).is.not.null;
 						expect(imageWidth).is.not.null;
@@ -1145,9 +1125,8 @@ describe('Test image', function () {
 
 							expect(dialog).is.not.null;
 
-							const { lockSize } = Jodit.modules.Helpers.refs(
-								dialog
-							);
+							const { lockSize } =
+								Jodit.modules.Helpers.refs(dialog);
 
 							expect(
 								lockSize.classList.contains(
@@ -1175,11 +1154,8 @@ describe('Test image', function () {
 							const dialog = getOpenedDialog(editor);
 							expect(dialog).is.not.null;
 
-							const {
-								imageWidth,
-								imageHeight,
-								lockSize
-							} = Jodit.modules.Helpers.refs(dialog);
+							const { imageWidth, imageHeight, lockSize } =
+								Jodit.modules.Helpers.refs(dialog);
 
 							const lockerimg = lockSize.innerHTML;
 
@@ -1246,8 +1222,7 @@ describe('Test image', function () {
 			describe('Uploader and filebrowser settings set', function () {
 				const settings = {
 					uploader: {
-						url:
-							'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+						url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 					},
 
 					filebrowser: {

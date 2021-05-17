@@ -620,9 +620,8 @@ describe('Link plugin', function () {
 
 							clickButton('link', editor);
 
-							const form = getOpenedPopup(editor).querySelector(
-								'form'
-							);
+							const form =
+								getOpenedPopup(editor).querySelector('form');
 
 							expect(form).is.not.null;
 							expect(form.classList.contains('bootstrap_form')).is

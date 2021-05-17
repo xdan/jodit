@@ -82,10 +82,8 @@ function mockAjax() {
 			const files = path => {
 				const list = [
 					{
-						file:
-							'1966051_524428741092238_1051008806888563137_o.jpg',
-						thumb:
-							'_thumbs/1966051_524428741092238_1051008806888563137_o.jpg',
+						file: '1966051_524428741092238_1051008806888563137_o.jpg',
+						thumb: '_thumbs/1966051_524428741092238_1051008806888563137_o.jpg',
 						changed: '03/15/2018 12:40 PM',
 						size: '126.59kB',
 						isImage: true
@@ -1082,8 +1080,10 @@ function offset(el) {
 					"<svg xmlns='http://www.w3.org/2000/svg'>" +
 					markupText +
 					'</svg>';
-				const svgDocElement = dXML.parseFromString(sXML, 'text/xml')
-					.documentElement;
+				const svgDocElement = dXML.parseFromString(
+					sXML,
+					'text/xml'
+				).documentElement;
 
 				// Now take each node, import it and append to this element.
 				let childNode = svgDocElement.firstChild;
@@ -1146,6 +1146,5 @@ if (typeof window.chai !== 'undefined') {
 }
 
 Object.defineProperty(navigator, 'userAgent', {
-	value:
-		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 YaBrowser/18.9.0.3363 Yowser/2.5 Safari/537.36'
+	value: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 YaBrowser/18.9.0.3363 Yowser/2.5 Safari/537.36'
 });

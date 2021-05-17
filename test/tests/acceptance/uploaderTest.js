@@ -43,8 +43,7 @@ describe('Test uploader module', function () {
 							timeout: 0
 						},
 						uploader: {
-							url:
-								'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+							url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 						},
 						events: {
 							afterInsertImage: function (img) {
@@ -83,8 +82,7 @@ describe('Test uploader module', function () {
 								timeout: 0
 							},
 							uploader: {
-								url:
-									'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+								url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 							},
 							events: {
 								afterInsertImage: function (img) {
@@ -127,8 +125,7 @@ describe('Test uploader module', function () {
 							timeout: 0
 						},
 						uploader: {
-							url:
-								'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+							url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 						},
 						events: {
 							afterInsertNode: function (node) {
@@ -160,8 +157,7 @@ describe('Test uploader module', function () {
 								timeout: 0
 							},
 							uploader: {
-								url:
-									'https://xdsoft.net/jodit/connector/index.php?action=fileUpload',
+								url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload',
 								insertImageAsBase64URI: true
 							},
 							events: {

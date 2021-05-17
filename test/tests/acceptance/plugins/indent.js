@@ -88,8 +88,8 @@ describe('Test editor indent plugin', function () {
     </pre>
     `;
 
-		const children = editor.container.querySelector('.jodit-wysiwyg')
-			.children;
+		const children =
+			editor.container.querySelector('.jodit-wysiwyg').children;
 		const el1 = children[0];
 		const el1Child = el1.querySelector('i');
 		const el2 = children[1];
