@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.16
+ * Version: v3.6.17
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -912,6 +912,15 @@ var Jodit = (function (_super) {
     }
     Jodit.prototype.className = function () {
         return 'Jodit';
+    };
+    Jodit.prototype.waitForReady = function () {
+        var _this = this;
+        if (this.isReady) {
+            return Promise.resolve(this);
+        }
+        return this.async.promise(function (resolve) {
+            _this.hookStatus('ready', function () { return resolve(_this); });
+        });
     };
     Object.defineProperty(Jodit.prototype, "text", {
         get: function () {
@@ -10841,7 +10850,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.6.16";
+        _this.version = "3.6.17";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -10983,10 +10992,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.6.16";
+        return "3.6.17";
     };
     View.getVersion = function () {
-        return "3.6.16";
+        return "3.6.17";
     };
     View.prototype.initOptions = function (options) {
         this.options = helpers_1.ConfigProto(options || {}, helpers_1.ConfigProto(this.options || {}, View.defaultOptions));
