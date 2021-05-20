@@ -815,4 +815,41 @@ describe('Jodit Editor Tests', function () {
 			});
 		});
 	});
+
+	describe('Readiness', () => {
+		describe('Method waitForReady', () => {
+			describe('Sync init', () => {
+				it('Should return resolved promise', done => {
+					const jodit = getJodit();
+
+					expect(jodit.isReady).is.true;
+
+					jodit.waitForReady().then(j => {
+						expect(jodit).eq(j);
+						expect(jodit.isReady).is.true;
+						done();
+					});
+				});
+			});
+
+			describe('Async init', () => {
+				it('Should return resolved promise', done => {
+					unmockPromise();
+					const jodit = getJodit({
+						events: {
+							createEditor: () => delay(100)
+						}
+					});
+
+					expect(jodit.isReady).is.false;
+
+					jodit.waitForReady().then(j => {
+						expect(jodit).eq(j);
+						expect(jodit.isReady).is.true;
+						done();
+					});
+				});
+			});
+		});
+	});
 });

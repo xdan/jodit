@@ -49,6 +49,8 @@ interface IJodit extends IViewWithToolbar {
 
 	editorDocument: HTMLDocument;
 
+	waitForReady(): Promise<IJodit>;
+
 	/**
 	 * Alias for this.ed
 	 */

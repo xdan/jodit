@@ -70,6 +70,27 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	/**
+	 * Return promise for ready actions
+	 * @example
+	 * ```js
+	 * const jodit = Jodit.make('#editor');
+	 * await jodit.waitForReady();
+	 * jodit.e.fire('someAsyncLoadedPluginEvent', (test) => {
+	 *   alert(test);
+	 * });
+	 * ```
+	 */
+	waitForReady(): Promise<IJodit> {
+		if (this.isReady) {
+			return Promise.resolve(this);
+		}
+
+		return this.async.promise(resolve => {
+			this.hookStatus('ready', () => resolve(this));
+		});
+	}
+
+	/**
 	 * Define if object is Jodit
 	 */
 	readonly isJodit: true = true;

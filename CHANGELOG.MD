@@ -9,7 +9,27 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.6.17
+
+#### :rocket: New Feature
+
+-   Added `IJodit.waitForReady(): Promise<IJodit>` method.
+
+```js
+const jodit = Jodit.make('#editor', {
+	extraPlugins: ['myPlugin']
+});
+
+await jodit.waitForReady(); // wait for all plugins will be initialised
+
+jodit.e.fire('someAsyncLoadedPluginEvent', test => {
+	alert(test);
+});
+```
+
 ## 3.6.16
+
+#### :bug: Bug Fix
 
 -   Fixed selection restoring after blur and set source mode.
 
@@ -419,11 +439,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
 -   ex: [
--                       	{ value: "", text: "" },
--                       	{ value: "val1", text: "text1" },
--                       	{ value: "val2", text: "text2" },
--                       	{ value: "val3", text: "text3" }
--                       ]
+-                         	{ value: "", text: "" },
+-                         	{ value: "val1", text: "text1" },
+-                         	{ value: "val2", text: "text2" },
+-                         	{ value: "val3", text: "text3" }
+-                         ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
