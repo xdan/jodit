@@ -84,6 +84,7 @@ module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
 			isESNext: ESNext,
 			isTest: isTest,
 			'process.env': {
+				HOMEPAGE: JSON.stringify(pkg.homepage),
 				TARGET_ES: JSON.stringify(ES),
 				NODE_ENV: JSON.stringify(mode),
 				EXCLUDE_LANGS: JSON.stringify(excludeLangs)

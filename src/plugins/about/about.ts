@@ -32,7 +32,7 @@ Config.prototype.controls.about = {
 							: normalizeLicense(editor.o.license)
 					)}</div>
 					<div>
-						<a href="https://xdsoft.net/jodit/" target="_blank">http://xdsoft.net/jodit/</a>
+						<a href="${process.env.HOMEPAGE}" target="_blank">${process.env.HOMEPAGE}</a>
 					</div>
 					<div>
 						<a href="https://xdsoft.net/jodit/doc/" target="_blank">${i18n(
