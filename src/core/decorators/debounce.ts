@@ -67,7 +67,7 @@ export function debounce<V = IViewComponent | IViewBased>(
  * @param method
  */
 export function throttle<V = IViewComponent | IViewBased>(
-	timeout?: number | ((ctx: V) => number),
+	timeout?: number | ((ctx: V) => number | IAsyncParams) | IAsyncParams,
 	firstCallImmediately: boolean = false
 ) {
 	return debounce<V>(timeout, firstCallImmediately, 'throttle');

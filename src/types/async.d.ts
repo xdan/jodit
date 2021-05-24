@@ -26,6 +26,8 @@ export interface IAsync extends IDestructible {
 	): number;
 
 	clearTimeout(timer: number): void;
+	clearTimeout(label: string): void;
+	clearTimeout(timerOrLabel: number | string): void;
 
 	clear(): void;
 

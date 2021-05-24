@@ -15,6 +15,7 @@
 
 * Fixed table cells selection
 * [isUrl add rtmp schema #677](https://github.com/xdan/jodit/issues/677)
+* [The editor is very slow when working with tables in IE #673](https://github.com/xdan/jodit/issues/673)
 
 ## 3.6.17
 

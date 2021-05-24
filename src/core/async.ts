@@ -16,7 +16,7 @@ import {
 	clearTimeout,
 	isFunction,
 	isPlainObject,
-	isPromise
+	isPromise, isString
 } from './helpers/';
 
 export class Async implements IAsync {
@@ -38,9 +38,8 @@ export class Async implements IAsync {
 			timeout = options.timeout || 0;
 		}
 
-		if (options.label && this.timers.has(options.label)) {
-			clearTimeout(this.timers.get(options.label) as number);
-			this.timers.delete(options.label);
+		if (options.label) {
+			this.clearLabel(options.label);
 		}
 
 		const timer = setTimeout(callback, timeout, ...args),
@@ -51,10 +50,22 @@ export class Async implements IAsync {
 		return timer;
 	}
 
-	clearTimeout(timer: number): void {
-		clearTimeout(timer);
+	private clearLabel(label: string) {
+		if (label && this.timers.has(label)) {
+			clearTimeout(this.timers.get(label) as number);
+			this.timers.delete(label);
+		}
+	}
 
-		this.timers.delete(timer);
+	clearTimeout(timer: number): void;
+	clearTimeout(label: string): void;
+	clearTimeout(timerOrLabel: number | string): void {
+		if (isString(timerOrLabel)) {
+			return this.clearLabel(timerOrLabel);
+		}
+
+		clearTimeout(timerOrLabel);
+		this.timers.delete(timerOrLabel);
 	}
 
 	/**
@@ -321,6 +332,7 @@ export class Async implements IAsync {
 	}
 
 	isDestructed: boolean = false;
+
 	destruct(): any {
 		this.clear();
 		this.isDestructed = true;

@@ -13,6 +13,7 @@ import { KEY_TAB } from '../../core/constants';
 import { autobind, watch } from '../../core/decorators';
 
 const key = 'table_processor_observer';
+const MOUSE_MOVE_LABEL = 'onMoveTableSelectCell';
 
 export class selectCells extends Plugin {
 	/** @override */
@@ -118,7 +119,11 @@ export class selectCells extends Plugin {
 			.on(
 				table,
 				'mousemove.select-cells touchmove.select-cells',
-				this.onMove.bind(this, table)
+				// Don't use decorator because need clear label on mouseup
+				this.j.async.throttle(this.onMove.bind(this, table), {
+					label: MOUSE_MOVE_LABEL,
+					timeout: this.j.defaultTimeout / 2
+				})
 			)
 			.on(
 				table,
@@ -289,6 +294,8 @@ export class selectCells extends Plugin {
 				'mousemove.select-cells touchmove.select-cells mouseup.select-cells touchend.select-cells'
 			);
 		});
+
+		this.j.async.clearTimeout(MOUSE_MOVE_LABEL);
 	}
 
 	/**
