@@ -130,8 +130,9 @@ export class selectCells extends Plugin {
 	}
 
 	@watch(':outsideClick')
-	protected onOutsideClick(e: MouseEvent): void {
-		this.unselectCells();
+	protected onOutsideClick(): void {
+		this.selectedCell = null;
+		this.onRemoveSelection();
 	}
 
 	@watch(':change')
@@ -222,6 +223,7 @@ export class selectCells extends Plugin {
 			return;
 		}
 
+		this.isSelectionMode = false;
 		this.selectedCell = null;
 	}
 

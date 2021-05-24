@@ -14,6 +14,7 @@
 #### :bug: Bug Fix
 
 * Fixed table cells selection
+* [isUrl add rtmp schema #677](https://github.com/xdan/jodit/issues/677)
 
 ## 3.6.17
 

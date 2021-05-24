@@ -51,6 +51,12 @@
 				border: 1px solid #bfbfbf;
 				user-select: text;
 				vertical-align: middle;
+
+				&:active,
+				&:focusin,
+				&:focus {
+					box-shadow: var(--focus-drop-shadow), 0 0;
+				}
 			}
 		}
 	}

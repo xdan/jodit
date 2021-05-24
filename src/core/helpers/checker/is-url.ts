@@ -19,7 +19,10 @@ export function isURL(str: string): boolean {
 	if (typeof URL !== 'undefined') {
 		try {
 			const url = new URL(str);
-			return ['https:', 'http:', 'ftp:', 'file:'].includes(url.protocol);
+
+			return ['https:', 'http:', 'ftp:', 'file:', 'rtmp:'].includes(
+				url.protocol
+			);
 		} catch (e) {
 			return false;
 		}
