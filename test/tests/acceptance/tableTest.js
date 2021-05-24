@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Tables Jodit Editor Tests', function () {
 	describe('Methods', function () {
 		it('After init container must has one element .jodit-table-resizer', function () {
@@ -1329,6 +1330,8 @@ describe('Tables Jodit Editor Tests', function () {
 					'</tbody>' +
 					'</table>';
 
+				editor.editor.scrollIntoView();
+
 				let td = editor.editor.querySelector('td');
 
 				simulateEvent('mousedown', td);
@@ -1446,10 +1449,13 @@ describe('Tables Jodit Editor Tests', function () {
 					'<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>' +
 					'</table>';
 
+				editor.editor.scrollIntoView();
+
 				const td = editor.editor.querySelectorAll('td')[1],
 					box = td.getBoundingClientRect();
 
-				simulateEvent('mousemove', 1, td, function (options) {
+				debugger
+				simulateEvent('mousemove', td, function (options) {
 					options.clientX = box.left;
 					options.offsetX = 0;
 					options.pageX = 0;
@@ -1458,7 +1464,6 @@ describe('Tables Jodit Editor Tests', function () {
 
 				simulateEvent(
 					'mousedown',
-					1,
 					editor.container.querySelector('.jodit-table-resizer'),
 					function (options) {
 						options.clientX = box.left;
@@ -1467,7 +1472,7 @@ describe('Tables Jodit Editor Tests', function () {
 					}
 				);
 
-				simulateEvent('mousemove', 1, editor.ew, function (options) {
+				simulateEvent('mousemove', editor.ew, function (options) {
 					options.clientX = box.left + 500; // can move only on 5 pixels
 					options.pageX = 0;
 					options.pageY = 0;
@@ -1480,6 +1485,7 @@ describe('Tables Jodit Editor Tests', function () {
 						10
 					) < 55
 				).is.true;
+
 				done();
 			});
 
