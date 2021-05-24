@@ -16,7 +16,9 @@ import {
 	clearTimeout,
 	isFunction,
 	isPlainObject,
-	isPromise, isString
+	isPromise,
+	isString,
+	isNumber
 } from './helpers/';
 
 export class Async implements IAsync {
@@ -33,7 +35,7 @@ export class Async implements IAsync {
 
 		let options: IAsyncParams = {};
 
-		if (typeof timeout !== 'number') {
+		if (!isNumber(timeout)) {
 			options = timeout;
 			timeout = options.timeout || 0;
 		}
