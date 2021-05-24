@@ -1454,7 +1454,6 @@ describe('Tables Jodit Editor Tests', function () {
 				const td = editor.editor.querySelectorAll('td')[1],
 					box = td.getBoundingClientRect();
 
-				debugger
 				simulateEvent('mousemove', td, function (options) {
 					options.clientX = box.left;
 					options.offsetX = 0;

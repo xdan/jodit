@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.17
+ * Version: v3.6.18
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -3685,7 +3685,7 @@ function isURL(str) {
     if (typeof URL !== 'undefined') {
         try {
             const url = new URL(str);
-            return ['https:', 'http:', 'ftp:', 'file:'].includes(url.protocol);
+            return ['https:', 'http:', 'ftp:', 'file:', 'rtmp:'].includes(url.protocol);
         }
         catch (e) {
             return false;
@@ -8555,21 +8555,29 @@ class Async {
             return 0;
         }
         let options = {};
-        if (typeof timeout !== 'number') {
+        if (!(0,helpers.isNumber)(timeout)) {
             options = timeout;
             timeout = options.timeout || 0;
         }
-        if (options.label && this.timers.has(options.label)) {
-            (0,helpers.clearTimeout)(this.timers.get(options.label));
-            this.timers.delete(options.label);
+        if (options.label) {
+            this.clearLabel(options.label);
         }
         const timer = (0,helpers.setTimeout)(callback, timeout, ...args), key = options.label || timer;
         this.timers.set(key, timer);
         return timer;
     }
-    clearTimeout(timer) {
-        (0,helpers.clearTimeout)(timer);
-        this.timers.delete(timer);
+    clearLabel(label) {
+        if (label && this.timers.has(label)) {
+            (0,helpers.clearTimeout)(this.timers.get(label));
+            this.timers.delete(label);
+        }
+    }
+    clearTimeout(timerOrLabel) {
+        if ((0,helpers.isString)(timerOrLabel)) {
+            return this.clearLabel(timerOrLabel);
+        }
+        (0,helpers.clearTimeout)(timerOrLabel);
+        this.timers.delete(timerOrLabel);
     }
     debounce(fn, timeout, firstCallImmediately = false) {
         let timer = 0, fired = false;
@@ -9099,7 +9107,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.6.17";
+        this.version = "3.6.18";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -9197,10 +9205,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.6.17";
+        return "3.6.18";
     }
     static getVersion() {
-        return "3.6.17";
+        return "3.6.18";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -16449,7 +16457,7 @@ config/* Config.prototype.controls.about */.D.prototype.controls.about = {
             ? 'MIT'
             : (0,helpers.normalizeLicense)(editor.o.license))}</div>
 					<div>
-						<a href="https://xdsoft.net/jodit/" target="_blank">http://xdsoft.net/jodit/</a>
+						<a href="${"https://xdsoft.net/jodit/"}" target="_blank">${"https://xdsoft.net/jodit/"}</a>
 					</div>
 					<div>
 						<a href="https://xdsoft.net/jodit/doc/" target="_blank">${i18n("Jodit User's Guide")}</a>
@@ -22868,12 +22876,12 @@ class select_select extends Plugin {
     }
     afterInit(jodit) {
         this.proxyEventsList.forEach(eventName => {
-            jodit.e.on(eventName + '.inline-popup', this.onStartSelection);
+            jodit.e.on(eventName + '.select', this.onStartSelection);
         });
     }
     beforeDestruct(jodit) {
         this.proxyEventsList.forEach(eventName => {
-            jodit.e.on(eventName + '.inline-popup', this.onStartSelection);
+            jodit.e.on(eventName + '.select', this.onStartSelection);
         });
     }
     onStartSelection(e) {
@@ -24337,7 +24345,8 @@ class symbols extends Plugin {
 
 config/* Config.prototype.table */.D.prototype.table = {
     allowCellSelection: true,
-    selectionCellStyle: 'border: 1px double #1e88e5 !important;',
+    selectionCellStyle: 'border: 1px double #1e88e5 !important;' +
+        'background-color: rgba(158, 207, 250, 0.3)!important',
     allowCellResize: true,
     useExtraClassesOptions: false
 };
@@ -24701,7 +24710,7 @@ class resizeCells extends Plugin {
                 this.hideResizeHandle();
             }
         })
-            .on(table, 'mousemove.resize-cells touchmove.resize-cells', (event) => {
+            .on(table, 'mousemove.resize-cells touchmove.resize-cells', this.j.async.throttle((event) => {
             if (this.j.isLocked) {
                 return;
             }
@@ -24710,7 +24719,9 @@ class resizeCells extends Plugin {
                 return;
             }
             this.calcHandlePosition(table, cell, event.offsetX);
-        });
+        }, {
+            timeout: this.j.defaultTimeout
+        }));
         this.createResizeHandle();
     }
     beforeDestruct(jodit) {
@@ -24747,11 +24758,13 @@ class resizeCells extends Plugin {
 
 
 const select_cells_key = 'table_processor_observer';
+const MOUSE_MOVE_LABEL = 'onMoveTableSelectCell';
 class selectCells extends Plugin {
     constructor() {
         super(...arguments);
         this.requires = ['select'];
         this.selectedCell = null;
+        this.isSelectionMode = false;
     }
     get module() {
         return this.j.getInstance('Table', this.j.o);
@@ -24777,8 +24790,13 @@ class selectCells extends Plugin {
         ]
             .map(e => e + '.select-cells')
             .join(' '), this.onStartSelection)
-            .on('clickTr', () => {
-            if (this.module.getAllSelectedCells().length) {
+            .on('clickTr clickTbody', () => {
+            var _a;
+            const cellsCount = this.module.getAllSelectedCells().length;
+            if (cellsCount) {
+                if (cellsCount > 1) {
+                    (_a = this.j.s.sel) === null || _a === void 0 ? void 0 : _a.removeAllRanges();
+                }
                 return false;
             }
         });
@@ -24798,17 +24816,28 @@ class selectCells extends Plugin {
         if (!cell.firstChild) {
             cell.appendChild(this.j.createInside.element('br'));
         }
+        this.isSelectionMode = true;
         this.selectedCell = cell;
         this.module.addSelection(cell);
         this.j.e
-            .on(table, 'mousemove.select-cells touchmove.select-cells', this.onMove.bind(this, table))
+            .on(table, 'mousemove.select-cells touchmove.select-cells', this.j.async.throttle(this.onMove.bind(this, table), {
+            label: MOUSE_MOVE_LABEL,
+            timeout: this.j.defaultTimeout / 2
+        }))
             .on(table, 'mouseup.select-cells touchend.select-cells', this.onStopSelection.bind(this, table));
         return false;
     }
-    onOutsideClick(e) {
-        this.unselectCells();
+    onOutsideClick() {
+        this.selectedCell = null;
+        this.onRemoveSelection();
+    }
+    onChange() {
+        if (!this.j.isLocked && !this.isSelectionMode) {
+            this.onRemoveSelection();
+        }
     }
     onMove(table, e) {
+        var _a;
         if (this.j.o.readonly) {
             return;
         }
@@ -24833,6 +24862,10 @@ class selectCells extends Plugin {
                 this.module.addSelection(box[i][j]);
             }
         }
+        const cellsCount = this.module.getAllSelectedCells().length;
+        if (cellsCount > 1) {
+            (_a = this.j.s.sel) === null || _a === void 0 ? void 0 : _a.removeAllRanges();
+        }
         this.j.e.fire('hidePopup');
         e.stopPropagation();
         (() => {
@@ -24854,12 +24887,14 @@ class selectCells extends Plugin {
             this.j.e.fire('hidePopup', 'cells');
             return;
         }
+        this.isSelectionMode = false;
         this.selectedCell = null;
     }
     onStopSelection(table, e) {
         if (!this.selectedCell) {
             return;
         }
+        this.isSelectionMode = false;
         this.j.unlock();
         const node = this.j.ed.elementFromPoint(e.clientX, e.clientY);
         if (!node) {
@@ -24887,6 +24922,7 @@ class selectCells extends Plugin {
         (0,helpers.$$)('table', this.j.editor).forEach(table => {
             this.j.e.off(table, 'mousemove.select-cells touchmove.select-cells mouseup.select-cells touchend.select-cells');
         });
+        this.j.async.clearTimeout(MOUSE_MOVE_LABEL);
     }
     unselectCells(table, currentCell) {
         const module = this.module;
@@ -24965,6 +25001,9 @@ class selectCells extends Plugin {
 (0,tslib_es6.__decorate)([
     (0,decorators.watch)(':outsideClick')
 ], selectCells.prototype, "onOutsideClick", null);
+(0,tslib_es6.__decorate)([
+    (0,decorators.watch)(':change')
+], selectCells.prototype, "onChange", null);
 (0,tslib_es6.__decorate)([
     decorators.autobind
 ], selectCells.prototype, "onRemoveSelection", null);

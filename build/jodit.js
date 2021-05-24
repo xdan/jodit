@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.17
+ * Version: v3.6.18
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -5098,7 +5098,7 @@ function isURL(str) {
     if (typeof URL !== 'undefined') {
         try {
             var url = new URL(str);
-            return ['https:', 'http:', 'ftp:', 'file:'].includes(url.protocol);
+            return ['https:', 'http:', 'ftp:', 'file:', 'rtmp:'].includes(url.protocol);
         }
         catch (e) {
             return false;
@@ -9780,21 +9780,29 @@ var Async = (function () {
             return 0;
         }
         var options = {};
-        if (typeof timeout !== 'number') {
+        if (!helpers_1.isNumber(timeout)) {
             options = timeout;
             timeout = options.timeout || 0;
         }
-        if (options.label && this.timers.has(options.label)) {
-            helpers_1.clearTimeout(this.timers.get(options.label));
-            this.timers.delete(options.label);
+        if (options.label) {
+            this.clearLabel(options.label);
         }
         var timer = helpers_1.setTimeout.apply(void 0, tslib_1.__spreadArray([callback, timeout], args)), key = options.label || timer;
         this.timers.set(key, timer);
         return timer;
     };
-    Async.prototype.clearTimeout = function (timer) {
-        helpers_1.clearTimeout(timer);
-        this.timers.delete(timer);
+    Async.prototype.clearLabel = function (label) {
+        if (label && this.timers.has(label)) {
+            helpers_1.clearTimeout(this.timers.get(label));
+            this.timers.delete(label);
+        }
+    };
+    Async.prototype.clearTimeout = function (timerOrLabel) {
+        if (helpers_1.isString(timerOrLabel)) {
+            return this.clearLabel(timerOrLabel);
+        }
+        helpers_1.clearTimeout(timerOrLabel);
+        this.timers.delete(timerOrLabel);
     };
     Async.prototype.debounce = function (fn, timeout, firstCallImmediately) {
         var _this = this;
@@ -10850,7 +10858,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.6.17";
+        _this.version = "3.6.18";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -10992,10 +11000,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.6.17";
+        return "3.6.18";
     };
     View.getVersion = function () {
-        return "3.6.17";
+        return "3.6.18";
     };
     View.prototype.initOptions = function (options) {
         this.options = helpers_1.ConfigProto(options || {}, helpers_1.ConfigProto(this.options || {}, View.defaultOptions));
@@ -21963,7 +21971,7 @@ config_1.Config.prototype.controls.about = {
         dialog.setHeader(i18n('About Jodit'));
         dialog.setContent("<div class=\"jodit-about\">\n\t\t\t\t\t<div>" + i18n('Jodit Editor') + " v." + editor.getVersion() + "</div>\n\t\t\t\t\t<div>" + i18n('License: %s', !helpers_1.isLicense(editor.o.license)
             ? 'MIT'
-            : helpers_1.normalizeLicense(editor.o.license)) + "</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"https://xdsoft.net/jodit/\" target=\"_blank\">http://xdsoft.net/jodit/</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"https://xdsoft.net/jodit/doc/\" target=\"_blank\">" + i18n("Jodit User's Guide") + "</a>\n\t\t\t\t\t\t" + i18n('contains detailed help for using') + "\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>" + i18n('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.') + "</div>\n\t\t\t\t</div>");
+            : helpers_1.normalizeLicense(editor.o.license)) + "</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"" + "https://xdsoft.net/jodit/" + "\" target=\"_blank\">" + "https://xdsoft.net/jodit/" + "</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"https://xdsoft.net/jodit/doc/\" target=\"_blank\">" + i18n("Jodit User's Guide") + "</a>\n\t\t\t\t\t\t" + i18n('contains detailed help for using') + "\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>" + i18n('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.') + "</div>\n\t\t\t\t</div>");
         helpers_1.css(dialog.dialog, {
             minHeight: 200,
             minWidth: 420
@@ -29677,13 +29685,13 @@ var select = (function (_super) {
     select.prototype.afterInit = function (jodit) {
         var _this = this;
         this.proxyEventsList.forEach(function (eventName) {
-            jodit.e.on(eventName + '.inline-popup', _this.onStartSelection);
+            jodit.e.on(eventName + '.select', _this.onStartSelection);
         });
     };
     select.prototype.beforeDestruct = function (jodit) {
         var _this = this;
         this.proxyEventsList.forEach(function (eventName) {
-            jodit.e.on(eventName + '.inline-popup', _this.onStartSelection);
+            jodit.e.on(eventName + '.select', _this.onStartSelection);
         });
     };
     select.prototype.onStartSelection = function (e) {
@@ -31391,7 +31399,8 @@ var utils_1 = __webpack_require__(20);
 var helpers_1 = __webpack_require__(19);
 config_1.Config.prototype.table = {
     allowCellSelection: true,
-    selectionCellStyle: 'border: 1px double #1e88e5 !important;',
+    selectionCellStyle: 'border: 1px double #1e88e5 !important;' +
+        'background-color: rgba(158, 207, 250, 0.3)!important',
     allowCellResize: true,
     useExtraClassesOptions: false
 };
@@ -31782,7 +31791,7 @@ var resizeCells = (function (_super) {
                 _this.hideResizeHandle();
             }
         })
-            .on(table, 'mousemove.resize-cells touchmove.resize-cells', function (event) {
+            .on(table, 'mousemove.resize-cells touchmove.resize-cells', this.j.async.throttle(function (event) {
             if (_this.j.isLocked) {
                 return;
             }
@@ -31791,7 +31800,9 @@ var resizeCells = (function (_super) {
                 return;
             }
             _this.calcHandlePosition(table, cell, event.offsetX);
-        });
+        }, {
+            timeout: this.j.defaultTimeout
+        }));
         this.createResizeHandle();
     };
     resizeCells.prototype.beforeDestruct = function (jodit) {
@@ -31847,12 +31858,14 @@ var justify_1 = __webpack_require__(292);
 var constants_1 = __webpack_require__(9);
 var decorators_1 = __webpack_require__(99);
 var key = 'table_processor_observer';
+var MOUSE_MOVE_LABEL = 'onMoveTableSelectCell';
 var selectCells = (function (_super) {
     tslib_1.__extends(selectCells, _super);
     function selectCells() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.requires = ['select'];
         _this.selectedCell = null;
+        _this.isSelectionMode = false;
         return _this;
     }
     Object.defineProperty(selectCells.prototype, "module", {
@@ -31884,8 +31897,13 @@ var selectCells = (function (_super) {
         ]
             .map(function (e) { return e + '.select-cells'; })
             .join(' '), this.onStartSelection)
-            .on('clickTr', function () {
-            if (_this.module.getAllSelectedCells().length) {
+            .on('clickTr clickTbody', function () {
+            var _a;
+            var cellsCount = _this.module.getAllSelectedCells().length;
+            if (cellsCount) {
+                if (cellsCount > 1) {
+                    (_a = _this.j.s.sel) === null || _a === void 0 ? void 0 : _a.removeAllRanges();
+                }
                 return false;
             }
         });
@@ -31905,18 +31923,29 @@ var selectCells = (function (_super) {
         if (!cell.firstChild) {
             cell.appendChild(this.j.createInside.element('br'));
         }
+        this.isSelectionMode = true;
         this.selectedCell = cell;
         this.module.addSelection(cell);
         this.j.e
-            .on(table, 'mousemove.select-cells touchmove.select-cells', this.onMove.bind(this, table))
+            .on(table, 'mousemove.select-cells touchmove.select-cells', this.j.async.throttle(this.onMove.bind(this, table), {
+            label: MOUSE_MOVE_LABEL,
+            timeout: this.j.defaultTimeout / 2
+        }))
             .on(table, 'mouseup.select-cells touchend.select-cells', this.onStopSelection.bind(this, table));
         return false;
     };
-    selectCells.prototype.onOutsideClick = function (e) {
-        this.unselectCells();
+    selectCells.prototype.onOutsideClick = function () {
+        this.selectedCell = null;
+        this.onRemoveSelection();
+    };
+    selectCells.prototype.onChange = function () {
+        if (!this.j.isLocked && !this.isSelectionMode) {
+            this.onRemoveSelection();
+        }
     };
     selectCells.prototype.onMove = function (table, e) {
         var _this = this;
+        var _a;
         if (this.j.o.readonly) {
             return;
         }
@@ -31941,6 +31970,10 @@ var selectCells = (function (_super) {
                 this.module.addSelection(box[i][j]);
             }
         }
+        var cellsCount = this.module.getAllSelectedCells().length;
+        if (cellsCount > 1) {
+            (_a = this.j.s.sel) === null || _a === void 0 ? void 0 : _a.removeAllRanges();
+        }
         this.j.e.fire('hidePopup');
         e.stopPropagation();
         (function () {
@@ -31962,6 +31995,7 @@ var selectCells = (function (_super) {
             this.j.e.fire('hidePopup', 'cells');
             return;
         }
+        this.isSelectionMode = false;
         this.selectedCell = null;
     };
     selectCells.prototype.onStopSelection = function (table, e) {
@@ -31969,6 +32003,7 @@ var selectCells = (function (_super) {
         if (!this.selectedCell) {
             return;
         }
+        this.isSelectionMode = false;
         this.j.unlock();
         var node = this.j.ed.elementFromPoint(e.clientX, e.clientY);
         if (!node) {
@@ -31996,6 +32031,7 @@ var selectCells = (function (_super) {
         helpers_1.$$('table', this.j.editor).forEach(function (table) {
             _this.j.e.off(table, 'mousemove.select-cells touchmove.select-cells mouseup.select-cells touchend.select-cells');
         });
+        this.j.async.clearTimeout(MOUSE_MOVE_LABEL);
     };
     selectCells.prototype.unselectCells = function (table, currentCell) {
         var module = this.module;
@@ -32074,6 +32110,9 @@ var selectCells = (function (_super) {
     tslib_1.__decorate([
         decorators_1.watch(':outsideClick')
     ], selectCells.prototype, "onOutsideClick", null);
+    tslib_1.__decorate([
+        decorators_1.watch(':change')
+    ], selectCells.prototype, "onChange", null);
     tslib_1.__decorate([
         decorators_1.autobind
     ], selectCells.prototype, "onRemoveSelection", null);

@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.17
+ * Version: v3.6.18
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -4451,42 +4451,46 @@ html.jodit_fullsize-box_true {
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 .jodit-table-resizer {
-  cursor: col-resize;
   position: absolute;
   z-index: 3;
-  padding-left: calc(var(--jd-padding-default) / 2);
   padding-right: calc(var(--jd-padding-default) / 2);
+  padding-left: calc(var(--jd-padding-default) / 2);
   margin-left: calc(var(--jd-padding-default) / -2);
+  cursor: col-resize;
 }
 .jodit-table-resizer::after {
-  content: '';
   display: block;
-  height: 100%;
   width: 0;
+  height: 100%;
   border: 0;
+  content: '';
 }
 .jodit-table-resizer_moved {
-  background-color: var(--jd-color-background-selection);
   z-index: 2;
+  background-color: var(--jd-color-background-selection);
 }
 .jodit-table-resizer_moved::after {
   border-right: 1px solid var(--jd-color-border) moved;
 }
 .jodit-wysiwyg table {
-  border: none;
-  border-collapse: collapse;
-  table-layout: fixed;
-  empty-cells: show;
   max-width: 100%;
+  border: none;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border-collapse: collapse;
+  empty-cells: show;
+  table-layout: fixed;
 }
 .jodit-wysiwyg table tr {
   user-select: none;
 }
 .jodit-wysiwyg table tr th,
 .jodit-wysiwyg table tr td {
-  border: 1px solid #ddd;
-  vertical-align: middle;
+  min-width: 2em;
+  padding: 0.4em;
+  border: 1px solid #bfbfbf;
   user-select: text;
+  vertical-align: middle;
 }
 .jodit-form__inserter .jodit-form__table-creator-box {
   display: flex;
@@ -4497,43 +4501,43 @@ html.jodit_fullsize-box_true {
   }
 }
 .jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container {
+  min-width: 180px;
   padding: 0;
   margin: 0;
-  min-width: 180px;
   font-size: 0;
 }
 .jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container > div > span {
+  display: inline-block;
   width: var(--jd-width_element_default);
   height: var(--jd-height_element_default);
-  display: inline-block;
-  vertical-align: top;
   box-sizing: border-box;
   border: 1px solid var(--jd-color-border);
-  margin-left: 2px;
   margin-bottom: 2px;
+  margin-left: 2px;
+  vertical-align: top;
 }
 .jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container > div > span:first-child {
   margin-left: 0;
 }
 .jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container > div > span.jodit_hovered {
-  background: var(--jd-color-background-hover);
   border-color: var(--jd-color-background-hover);
+  background: var(--jd-color-background-hover);
 }
 .jodit-form__inserter .jodit-form__table-creator-box .jodit-form__options {
   font-size: var(--jd-font-size-default);
 }
 .jodit-form__inserter .jodit-form__table-creator-box .jodit-form__options label {
-  text-align: left;
   padding-top: 0;
+  text-align: left;
 }
 .jodit-form__inserter .jodit-form__table-creator-box .jodit-form__options label input {
   margin-right: var(--jd-padding-default);
 }
 .jodit-form__inserter label {
-  text-align: center;
-  font-size: 14px;
   padding: 8px;
   margin: 0;
+  font-size: 14px;
+  text-align: center;
 }
 
 /*!

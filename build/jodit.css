@@ -1,14 +1,14 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.17
+ * Version: v3.6.18
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
 	/*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.17
+ * Version: v3.6.18
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -5341,33 +5341,35 @@ html.jodit_fullsize-box_true {
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 .jodit-table-resizer {
-  cursor: col-resize;
   position: absolute;
   z-index: 3;
-  padding-left: calc(8px / 2);
   padding-right: calc(8px / 2);
+  padding-left: calc(8px / 2);
   margin-left: calc(8px / -2);
+  cursor: col-resize;
 }
 .jodit-table-resizer::after {
-  content: '';
   display: block;
-  height: 100%;
   width: 0;
+  height: 100%;
   border: 0;
+  content: '';
 }
 .jodit-table-resizer_moved {
-  background-color: #b5d6fd;
   z-index: 2;
+  background-color: #b5d6fd;
 }
 .jodit-table-resizer_moved::after {
   border-right: 1px solid #dadada moved;
 }
 .jodit-wysiwyg table {
-  border: none;
-  border-collapse: collapse;
-  table-layout: fixed;
-  empty-cells: show;
   max-width: 100%;
+  border: none;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border-collapse: collapse;
+  empty-cells: show;
+  table-layout: fixed;
 }
 .jodit-wysiwyg table tr {
   -webkit-user-select: none;
@@ -5377,12 +5379,14 @@ html.jodit_fullsize-box_true {
 }
 .jodit-wysiwyg table tr th,
 .jodit-wysiwyg table tr td {
-  border: 1px solid #ddd;
-  vertical-align: middle;
+  min-width: 2em;
+  padding: 0.4em;
+  border: 1px solid #bfbfbf;
   -webkit-user-select: text;
      -moz-user-select: text;
       -ms-user-select: text;
           user-select: text;
+  vertical-align: middle;
 }
 .jodit-form__inserter .jodit-form__table-creator-box {
   display: -webkit-box;
@@ -5398,44 +5402,44 @@ html.jodit_fullsize-box_true {
   }
 }
 .jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container {
+  min-width: 180px;
   padding: 0;
   margin: 0;
-  min-width: 180px;
   font-size: 0;
 }
 .jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container > div > span {
+  display: inline-block;
   width: 18px;
   height: 18px;
-  display: inline-block;
-  vertical-align: top;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   border: 1px solid #dadada;
-  margin-left: 2px;
   margin-bottom: 2px;
+  margin-left: 2px;
+  vertical-align: top;
 }
 .jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container > div > span:first-child {
   margin-left: 0;
 }
 .jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container > div > span.jodit_hovered {
-  background: #7a450f;
   border-color: #7a450f;
+  background: #7a450f;
 }
 .jodit-form__inserter .jodit-form__table-creator-box .jodit-form__options {
   font-size: 14px;
 }
 .jodit-form__inserter .jodit-form__table-creator-box .jodit-form__options label {
-  text-align: left;
   padding-top: 0;
+  text-align: left;
 }
 .jodit-form__inserter .jodit-form__table-creator-box .jodit-form__options label input {
   margin-right: 8px;
 }
 .jodit-form__inserter label {
-  text-align: center;
-  font-size: 14px;
   padding: 8px;
   margin: 0;
+  font-size: 14px;
+  text-align: center;
 }
 
 /*!
