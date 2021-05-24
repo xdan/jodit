@@ -31,16 +31,17 @@ export class select extends Plugin {
 		'touchend'
 	];
 
+	/** @override */
 	protected afterInit(jodit: IJodit): void {
 		this.proxyEventsList.forEach(eventName => {
-			jodit.e.on(eventName + '.inline-popup', this.onStartSelection);
+			jodit.e.on(eventName + '.select', this.onStartSelection);
 		});
 	}
 
 	/** @override */
 	protected beforeDestruct(jodit: IJodit): void {
 		this.proxyEventsList.forEach(eventName => {
-			jodit.e.on(eventName + '.inline-popup', this.onStartSelection);
+			jodit.e.on(eventName + '.select', this.onStartSelection);
 		});
 	}
 

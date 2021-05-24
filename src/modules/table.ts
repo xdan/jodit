@@ -41,6 +41,7 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	private selected: Set<HTMLTableCellElement> = new Set();
+
 	private static selectedByTable: WeakMap<
 		HTMLTableElement,
 		Set<HTMLTableCellElement>
@@ -78,6 +79,7 @@ export class Table extends ViewComponent<IJodit> {
 
 	removeSelection(td: HTMLTableCellElement): void {
 		this.selected.delete(td);
+
 		this.recalculateStyles();
 
 		const table = Dom.closest(td, 'table', this.j.editor);

@@ -1180,15 +1180,16 @@ describe('Tables Jodit Editor Tests', function () {
 		});
 
 		describe('Select cells', function () {
-			it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound', function () {
+			it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound', function (done) {
 				const editor = getJodit();
 
-				editor.value =
-					'<table>' +
-					'<tr><td>1</td><td>2</td></tr>' +
-					'<tr><td>3</td><td>4</td></tr>' +
-					'<tr><td>5</td><td>6</td></tr>' +
-					'</table>';
+				editor.value = `<table>
+					<tbody>
+						<tr><td>1</td><td>2</td></tr>
+						<tr><td>3</td><td>4</td></tr>
+						<tr><td>5</td><td>6</td></tr>
+					</tbody>
+				</table>`;
 
 				let td = editor.editor.querySelector('td');
 
@@ -1196,11 +1197,14 @@ describe('Tables Jodit Editor Tests', function () {
 
 				td = editor.editor.querySelectorAll('td')[3];
 
-				simulateEvent(['mousemove', 'mouseup'], td);
+				simulateEvent(['mousemove', 'mouseup', 'click'], td);
 
-				expect(
-					editor.getInstance('Table', editor.o).selected.size
-				).equals(4);
+				editor.async.requestIdleCallback(() => {
+					expect(
+						editor.getInstance('Table', editor.o).selected.size
+					).equals(4);
+					done();
+				});
 			});
 
 			describe('Set custom selected border color', function () {

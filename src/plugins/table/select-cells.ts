@@ -41,6 +41,7 @@ export class selectCells extends Plugin {
 			.on('beforeCommand.select-cells', this.onExecCommand)
 			.on('afterCommand.select-cells', this.onAfterCommand)
 
+			// see `plugins/select.ts`
 			.on(
 				[
 					'clickEditor',
@@ -55,8 +56,14 @@ export class selectCells extends Plugin {
 			)
 			// For `clickEditor` correct working. Because `mousedown` on first cell
 			// and mouseup on another cell call `click` only for `TR` element.
-			.on('clickTr', (): void | false => {
-				if (this.module.getAllSelectedCells().length) {
+			.on('clickTr clickTbody', (): void | false => {
+				const cellsCount = this.module.getAllSelectedCells().length;
+
+				if (cellsCount) {
+					if (cellsCount > 1) {
+						this.j.s.sel?.removeAllRanges();
+					}
+
 					return false;
 				}
 			});
@@ -66,6 +73,11 @@ export class selectCells extends Plugin {
 	 * First selected cell
 	 */
 	private selectedCell: Nullable<HTMLTableCellElement> = null;
+
+	/**
+	 * User is selecting cells now
+	 */
+	private isSelectionMode: boolean = false;
 
 	/**
 	 * Mouse click inside the table
@@ -97,6 +109,7 @@ export class selectCells extends Plugin {
 			cell.appendChild(this.j.createInside.element('br'));
 		}
 
+		this.isSelectionMode = true;
 		this.selectedCell = cell;
 
 		this.module.addSelection(cell);
@@ -119,6 +132,13 @@ export class selectCells extends Plugin {
 	@watch(':outsideClick')
 	protected onOutsideClick(e: MouseEvent): void {
 		this.unselectCells();
+	}
+
+	@watch(':change')
+	protected onChange(): void {
+		if (!this.j.isLocked && !this.isSelectionMode) {
+			this.onRemoveSelection();
+		}
 	}
 
 	/**
@@ -161,6 +181,12 @@ export class selectCells extends Plugin {
 			for (let j = bound[0][1]; j <= bound[1][1]; j += 1) {
 				this.module.addSelection(box[i][j]);
 			}
+		}
+
+		const cellsCount = this.module.getAllSelectedCells().length;
+
+		if (cellsCount > 1) {
+			this.j.s.sel?.removeAllRanges();
 		}
 
 		this.j.e.fire('hidePopup');
@@ -208,6 +234,8 @@ export class selectCells extends Plugin {
 			return;
 		}
 
+		this.isSelectionMode = false;
+
 		this.j.unlock();
 
 		const node = this.j.ed.elementFromPoint(e.clientX, e.clientY);
@@ -223,6 +251,7 @@ export class selectCells extends Plugin {
 		}
 
 		const ownTable = Dom.closest(cell, 'table', table);
+
 		if (ownTable && ownTable !== table) {
 			return; // Nested tables
 		}

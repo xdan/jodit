@@ -9,6 +9,12 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.6.18
+
+#### :bug: Bug Fix
+
+* Fixed table cells selection
+
 ## 3.6.17
 
 #### :rocket: New Feature
