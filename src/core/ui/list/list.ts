@@ -32,11 +32,11 @@ export class UIList<T extends IViewBased = IViewBased>
 	implements IUIList
 {
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'UIList';
 	}
 
-	jodit!: T;
+	override jodit!: T;
 
 	mode: IUIList['mode'] = 'horizontal';
 

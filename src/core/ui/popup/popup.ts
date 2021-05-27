@@ -54,7 +54,7 @@ export class Popup extends UIElement implements IPopup {
 	private childrenPopups: Set<IPopup> = new Set();
 
 	/** @override */
-	updateParentElement(target: IUIElement): this {
+	override updateParentElement(target: IUIElement): this {
 		if (target !== this && target instanceof Popup) {
 			this.childrenPopups.forEach(popup => {
 				if (!target.closest(popup) && popup.isOpened) {
@@ -389,7 +389,7 @@ export class Popup extends UIElement implements IPopup {
 	}
 
 	/** @override **/
-	destruct(): any {
+	override destruct(): any {
 		this.close();
 		return super.destruct();
 	}

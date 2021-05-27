@@ -19,12 +19,12 @@ import { component } from '../../../core/decorators';
 @component
 export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'ToolbarEditorCollection';
 	}
 
 	/** @override */
-	shouldBeDisabled(button: IToolbarButton): boolean {
+	override shouldBeDisabled(button: IToolbarButton): boolean {
 		const disabled = super.shouldBeDisabled(button);
 
 		if (disabled !== undefined) {
@@ -40,7 +40,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 	}
 
 	/** @override */
-	shouldBeActive(button: IToolbarButton): boolean {
+	override shouldBeActive(button: IToolbarButton): boolean {
 		const active = super.shouldBeActive(button);
 
 		if (active !== undefined) {
@@ -135,7 +135,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 	};
 
 	/** @override */
-	getTarget(button: IToolbarButton): Node | null {
+	override getTarget(button: IToolbarButton): Node | null {
 		return button.target || this.j.s.current() || null;
 	}
 }

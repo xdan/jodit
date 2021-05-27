@@ -12,14 +12,14 @@ import { component } from '../../../../decorators';
 @component
 export class UITextArea extends UIInput {
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'UITextArea';
 	}
 
-	nativeInput!: HTMLTextAreaElement;
+	override nativeInput!: HTMLTextAreaElement;
 
 	/** @override */
-	protected createContainer(options: this['state']): HTMLElement {
+	protected override createContainer(options: this['state']): HTMLElement {
 		this.nativeInput = this.j.create.element('textarea');
 		return super.createContainer(options);
 	}

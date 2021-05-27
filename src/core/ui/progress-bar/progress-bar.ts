@@ -12,12 +12,12 @@ import { UIElement } from '../element';
 
 export class ProgressBar extends UIElement implements IProgressBar {
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'ProgressBar';
 	}
 
 	/** @override */
-	protected render(): string {
+	protected override render(): string {
 		return '<div><div></div></div>';
 	}
 
@@ -40,7 +40,7 @@ export class ProgressBar extends UIElement implements IProgressBar {
 		return this;
 	}
 
-	destruct(): any {
+	override destruct(): any {
 		this.hide();
 		return super.destruct();
 	}

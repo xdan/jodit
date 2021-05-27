@@ -141,7 +141,7 @@ Config.prototype.controls.link = {
  */
 export class link extends Plugin {
 	/** @override */
-	buttons: Plugin['buttons'] = [
+	override buttons: Plugin['buttons'] = [
 		{
 			name: 'link',
 			group: 'insert'
@@ -149,7 +149,7 @@ export class link extends Plugin {
 	];
 
 	/** @override */
-	protected afterInit(jodit: IJodit): void {
+	protected override afterInit(jodit: IJodit): void {
 		if (jodit.o.link.followOnDblClick) {
 			jodit.e.on('dblclick.link', this.onDblClickOnLink);
 		}
@@ -496,7 +496,7 @@ export class link extends Plugin {
 	}
 
 	/** @override */
-	protected beforeDestruct(jodit: IJodit): void {
+	protected override beforeDestruct(jodit: IJodit): void {
 		jodit.e
 			.off('generateLinkForm.link', this.generateForm)
 			.off('dblclick.link', this.onDblClickOnLink)

@@ -183,14 +183,14 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		}
 	};
 
-	OPTIONS!: IFileBrowserOptions;
+	override OPTIONS!: IFileBrowserOptions;
 
 	dialog!: IDialog;
 
 	/**
 	 * Container for set/get value
 	 */
-	storage!: IStorage;
+	override storage!: IStorage;
 
 	uploader!: IUploader;
 
@@ -439,7 +439,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		self.initUploader(self);
 	}
 
-	destruct(): void {
+	override destruct(): void {
 		if (this.isInDestruct) {
 			return;
 		}

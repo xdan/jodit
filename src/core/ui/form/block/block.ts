@@ -14,7 +14,7 @@ import { component } from '../../../decorators';
 @component
 export class UIBlock extends UIGroup {
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'UIBlock';
 	}
 

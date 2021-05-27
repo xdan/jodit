@@ -9,6 +9,13 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.7.1
+
+#### :boom: Breaking Change
+
+* Update Typescript 4.3.2 - and used override keyword.
+* `noImplicitOverride` set true.
+
 ## 3.6.18
 
 #### :bug: Bug Fix

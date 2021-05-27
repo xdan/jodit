@@ -29,11 +29,11 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	implements IToolbarCollection
 {
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'ToolbarCollection';
 	}
 
-	jodit!: T;
+	override jodit!: T;
 
 	readonly listenEvents =
 		'updateToolbar changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
@@ -47,7 +47,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		return button || null;
 	}
 
-	protected makeButton(
+	protected override makeButton(
 		control: IControlTypeStrong,
 		target: Nullable<HTMLElement> = null
 	): IUIButton {
@@ -116,7 +116,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		this.j.e.fire('afterUpdateToolbar');
 	}
 
-	update = this.j.async.debounce(
+	override update = this.j.async.debounce(
 		this.immediateUpdate,
 		() => this.j.defaultTimeout
 	);
@@ -143,7 +143,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	}
 
 	/** @override **/
-	build(items: ButtonsGroups, target: Nullable<HTMLElement> = null): this {
+	override build(items: ButtonsGroups, target: Nullable<HTMLElement> = null): this {
 		const itemsWithGroupps = this.j.e.fire(
 			'beforeToolbarBuild',
 			items
@@ -158,7 +158,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	}
 
 	/** @override **/
-	destruct(): void {
+	override destruct(): void {
 		if (this.isDestructed) {
 			return;
 		}

@@ -43,11 +43,11 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	implements IToolbarButton
 {
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'ToolbarButton';
 	}
 
-	state = {
+	override state = {
 		...UIButtonState(),
 		theme: 'toolbar',
 		currentValue: '',
@@ -73,7 +73,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	}
 
 	/** @override **/
-	update(): void {
+	override update(): void {
 		const { control, state } = this,
 			tc = this.closest(ToolbarCollection) as ToolbarCollection;
 
@@ -90,13 +90,13 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	}
 
 	/** @override */
-	protected onChangeActivated(): void {
+	protected override onChangeActivated(): void {
 		attr(this.button, 'aria-pressed', this.state.activated);
 		super.onChangeActivated();
 	}
 
 	/** @override */
-	protected onChangeText(): void {
+	protected override onChangeText(): void {
 		if (isFunction(this.control.template)) {
 			this.text.innerHTML = this.control.template(
 				this.j,
@@ -111,12 +111,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	}
 
 	/** @override */
-	onChangeTabIndex(): void {
+	override onChangeTabIndex(): void {
 		attr(this.button, 'tabIndex', this.state.tabIndex);
 	}
 
 	/** @override */
-	protected createContainer(): HTMLElement {
+	protected override createContainer(): HTMLElement {
 		const cn = this.componentName;
 		const container = this.j.c.span(cn),
 			button = super.createContainer();
@@ -144,7 +144,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	}
 
 	/** @override */
-	focus(): void {
+	override focus(): void {
 		this.container.querySelector('button')?.focus();
 	}
 
@@ -160,7 +160,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	}
 
 	/** @override */
-	protected onChangeDisabled(): void {
+	protected override onChangeDisabled(): void {
 		const dsb = this.state.disabled ? 'disabled' : null;
 
 		attr(this.trigger, 'disabled', dsb);

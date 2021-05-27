@@ -52,7 +52,7 @@ export abstract class Plugin<T extends IViewBased = IJodit>
 	}
 
 	@autobind
-	destruct(): void {
+	override destruct(): void {
 		if (!this.isInDestruct) {
 			this.setStatus(STATUSES.beforeDestruct);
 

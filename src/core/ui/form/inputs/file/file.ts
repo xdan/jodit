@@ -15,7 +15,7 @@ import { UIButton } from '../../../button';
 export class UIFileInput extends UIInput {
 	private button!: IUIButton;
 
-	state: UIInput['state'] & {
+	override state: UIInput['state'] & {
 		onlyImages: boolean;
 	} = {
 		...UIInput.defaultState,
@@ -24,11 +24,11 @@ export class UIFileInput extends UIInput {
 	};
 
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'UIFileInput';
 	}
 
-	protected createContainer(options: Partial<this['state']>): HTMLElement {
+	protected override createContainer(options: Partial<this['state']>): HTMLElement {
 		this.button = new UIButton(this.j, {
 			icon: {
 				name: 'plus'
@@ -50,7 +50,7 @@ export class UIFileInput extends UIInput {
 		return container;
 	}
 
-	protected createNativeInput(
+	protected override createNativeInput(
 		options: Partial<this['state']>
 	): IUIInput['nativeInput'] {
 		return this.j.create.fromHTML(`<input

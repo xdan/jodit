@@ -13,11 +13,11 @@ import { component } from '../../decorators';
 @component
 export class UIForm extends UIGroup implements IUIForm {
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'UIForm';
 	}
 
-	container!: HTMLFormElement;
+	override container!: HTMLFormElement;
 
 	submit() {
 		this.j.e.fire(this.container, 'submit');
@@ -69,7 +69,7 @@ export class UIForm extends UIGroup implements IUIForm {
 	}
 
 	/** @override */
-	protected createContainer(): HTMLElement {
+	protected override createContainer(): HTMLElement {
 		const form = this.j.c.element('form');
 		form.classList.add(this.componentName);
 		attr(form, 'dir', this.j.o.direction || 'auto');

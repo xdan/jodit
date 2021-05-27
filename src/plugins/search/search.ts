@@ -86,7 +86,7 @@ Config.prototype.controls.find = {
  * ```
  */
 export class search extends Plugin {
-	buttons: IPlugin['buttons'] = [
+	override buttons: IPlugin['buttons'] = [
 		{
 			name: 'find',
 			group: 'search'

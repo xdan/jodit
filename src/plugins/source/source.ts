@@ -22,7 +22,7 @@ import { autobind, watch } from '../../core/decorators';
  */
 export class source extends Plugin {
 	/** @override */
-	buttons: Plugin['buttons'] = [
+	override buttons: Plugin['buttons'] = [
 		{
 			name: 'source',
 			group: 'source'

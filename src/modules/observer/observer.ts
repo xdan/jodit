@@ -180,7 +180,7 @@ export class Observer extends ViewComponent<IJodit> {
 		});
 	}
 
-	destruct(): void {
+	override destruct(): void {
 		if (this.j.events) {
 			this.j.e.off('.observer');
 		}

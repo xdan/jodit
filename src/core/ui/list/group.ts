@@ -24,7 +24,7 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	implements IUIGroup
 {
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'UIGroup';
 	}
 
@@ -66,7 +66,7 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	 * Update all children
 	 */
 	@watch('buttonSize')
-	update(): void {
+	override update(): void {
 		this.elements.forEach(elm => elm.update());
 		this.setMod('size', this.buttonSize);
 	}
@@ -100,7 +100,7 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	}
 
 	/** @override */
-	setMod(name: string, value: string | boolean | null): this {
+	override setMod(name: string, value: string | boolean | null): this {
 		if (this.syncMod) {
 			this.elements.forEach(elm => elm.setMod(name, value));
 		}
@@ -161,7 +161,7 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	}
 
 	/** @override */
-	destruct(): any {
+	override destruct(): any {
 		this.clear();
 		return super.destruct();
 	}

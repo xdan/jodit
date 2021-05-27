@@ -26,7 +26,7 @@ Config.prototype.controls.undo = {
  */
 export class redoUndo extends Plugin {
 	/** @override */
-	buttons: IPlugin['buttons'] = [
+	override buttons: IPlugin['buttons'] = [
 		{
 			name: 'undo',
 			group: 'history'
@@ -37,11 +37,11 @@ export class redoUndo extends Plugin {
 		}
 	];
 
-	beforeDestruct(): void {
+	protected override beforeDestruct(): void {
 		// do nothing
 	}
 
-	afterInit(editor: IJodit): void {
+	protected override afterInit(editor: IJodit): void {
 		const callback = (command: string): void | false => {
 			editor.observer[command as 'redo' | 'undo']();
 

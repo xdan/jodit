@@ -352,7 +352,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	}
 
 	/** @override */
-	destruct() {
+	override destruct() {
 		if (this.isDestructed) {
 			return;
 		}

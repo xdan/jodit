@@ -15,15 +15,15 @@ import { inputValidators, selectValidators } from '../../validators';
 @component
 export class UISelect extends UIInput implements IUISelect {
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'UISelect';
 	}
 
 	/** @override */
-	nativeInput!: IUISelect['nativeInput'];
+	override nativeInput!: IUISelect['nativeInput'];
 
 	/** @override */
-	static defaultState: IUISelect['state'] = {
+	static override defaultState: IUISelect['state'] = {
 		...UIInput.defaultState,
 		options: [],
 		size: 1,
@@ -31,10 +31,10 @@ export class UISelect extends UIInput implements IUISelect {
 	};
 
 	/** @override */
-	state: IUISelect['state'] = { ...UISelect.defaultState };
+	override state: IUISelect['state'] = { ...UISelect.defaultState };
 
 	/** @override **/
-	protected createContainer(state: Partial<IUISelect['state']>): HTMLElement {
+	protected override createContainer(state: Partial<IUISelect['state']>): HTMLElement {
 		const container = super.createContainer(state);
 
 		const { j } = this,
@@ -68,12 +68,12 @@ export class UISelect extends UIInput implements IUISelect {
 	}
 
 	/** @override **/
-	protected createNativeInput(): IUISelect['nativeInput'] {
+	protected override createNativeInput(): IUISelect['nativeInput'] {
 		return this.j.create.element('select');
 	}
 
 	/** @override **/
-	protected updateValidators() {
+	protected override updateValidators() {
 		super.updateValidators();
 
 		if (this.state.required) {

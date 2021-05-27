@@ -93,7 +93,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Define if object is Jodit
 	 */
-	readonly isJodit: true = true;
+	override readonly isJodit: true = true;
 
 	/**
 	 * Plain text editor's value
@@ -126,7 +126,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 *
 	 * @return {number}
 	 */
-	get defaultTimeout(): number {
+	override get defaultTimeout(): number {
 		return this.options && this.o.observer
 			? this.o.observer.timeout
 			: Config.defaultOptions.observer.timeout;
@@ -153,7 +153,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Default settings
 	 */
-	static get defaultOptions(): Config {
+	static override get defaultOptions(): Config {
 		return Config.defaultOptions;
 	}
 
@@ -186,7 +186,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * Container for set/get value
 	 * @type {Storage}
 	 */
-	readonly storage!: IStorage;
+	override readonly storage!: IStorage;
 
 	readonly createInside: ICreate = new Create(
 		() => this.ed,
@@ -228,11 +228,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Container for all staff
 	 */
-	get container(): HTMLDivElement {
+	override get container(): HTMLDivElement {
 		return this.currentPlace.container;
 	}
 
-	set container(container: HTMLDivElement) {
+	override set container(container: HTMLDivElement) {
 		this.setPlaceField('container', container);
 	}
 
@@ -300,11 +300,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * options All Jodit settings default + second arguments of constructor
 	 */
-	get options(): Config {
+	override get options(): Config {
 		return this.currentPlace.options as Config;
 	}
 
-	set options(opt: Config) {
+	override set options(opt: Config) {
 		this.setPlaceField('options', opt);
 	}
 
@@ -841,7 +841,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Disable selecting
 	 */
-	lock(name = 'any'): boolean {
+	override lock(name = 'any'): boolean {
 		if (super.lock(name)) {
 			this.__selectionLocked = this.s.save();
 			this.s.clear();
@@ -856,7 +856,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Enable selecting
 	 */
-	unlock(): boolean {
+	override unlock(): boolean {
 		if (super.unlock()) {
 			this.editor.classList.remove('jodit_disabled');
 
@@ -1083,14 +1083,14 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	/** @override **/
-	protected initOptions(options?: object): void {
+	protected override initOptions(options?: object): void {
 		this.options = <Config>(
 			ConfigProto(options || {}, Config.defaultOptions)
 		);
 	}
 
 	/** @override **/
-	protected initOwners(): void {
+	protected override initOwners(): void {
 		// in iframe it can be changed
 		this.editorWindow = this.o.ownerWindow;
 		this.ownerWindow = this.o.ownerWindow;
@@ -1326,7 +1326,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	/** @override */
-	protected addDisclaimer(elm: HTMLElement) {
+	protected override addDisclaimer(elm: HTMLElement) {
 		this.workplace.appendChild(elm);
 	}
 
@@ -1536,7 +1536,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Jodit's Destructor. Remove editor, and return source input
 	 */
-	destruct(): void {
+	override destruct(): void {
 		if (this.isInDestruct) {
 			return;
 		}

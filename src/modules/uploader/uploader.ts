@@ -774,7 +774,7 @@ export class Uploader extends ViewComponent implements IUploader {
 		) as IUploaderOptions<Uploader>;
 	}
 
-	destruct(): any {
+	override destruct(): any {
 		this.setStatus(STATUSES.beforeDestruct);
 
 		this.ajaxInstances.forEach(ajax => {

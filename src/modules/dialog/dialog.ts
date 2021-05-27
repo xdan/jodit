@@ -91,7 +91,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 * @property {HTMLDivElement} resizer
 	 */
 	private resizer!: HTMLElement;
-	toolbar!: IToolbarCollection;
+	override toolbar!: IToolbarCollection;
 
 	private offsetX?: number;
 	private offsetY?: number;
@@ -334,7 +334,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			.off(self.ow, 'mouseup', self.onMouseUp);
 	}
 
-	OPTIONS!: IDialogOptions;
+	override OPTIONS!: IDialogOptions;
 
 	/**
 	 * @property {HTMLDivElement} dialog
@@ -811,7 +811,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 * Build toolbar after ready
 	 */
 	@hook('ready')
-	protected buildToolbar(): void {
+	protected override buildToolbar(): void {
 		this.o.buttons &&
 			this.toolbar
 				.build(splitArray(this.o.buttons))
@@ -822,7 +822,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	/**
 	 * It destroys all objects created for the windows and also includes all the handlers for the window object
 	 */
-	destruct(): void {
+	override destruct(): void {
 		if (this.isInDestruct) {
 			return;
 		}

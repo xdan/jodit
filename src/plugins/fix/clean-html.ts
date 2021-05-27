@@ -107,7 +107,7 @@ Config.prototype.controls.eraser = {
  */
 export class cleanHtml extends Plugin<IJodit> {
 	/** @override */
-	buttons: Plugin['buttons'] = [
+	override buttons: Plugin['buttons'] = [
 		{
 			name: 'eraser',
 			group: 'font-style'
@@ -115,7 +115,7 @@ export class cleanHtml extends Plugin<IJodit> {
 	];
 
 	/** @override */
-	protected afterInit(jodit: IJodit): void {
+	protected override afterInit(jodit: IJodit): void {
 		jodit.e
 			.off('.cleanHtml')
 			.on(
@@ -536,7 +536,7 @@ export class cleanHtml extends Plugin<IJodit> {
 	}
 
 	/** @override */
-	protected beforeDestruct(): void {
+	protected override beforeDestruct(): void {
 		this.j.e.off('.cleanHtml');
 	}
 }

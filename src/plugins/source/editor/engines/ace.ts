@@ -13,7 +13,7 @@ export class AceEditor
 	extends SourceEditor<AceAjax.Editor>
 	implements ISourceEditor
 {
-	className = 'jodit_ace_editor';
+	override className = 'jodit_ace_editor';
 
 	private aceExists() {
 		return (this.j.ow as any).ace !== undefined;

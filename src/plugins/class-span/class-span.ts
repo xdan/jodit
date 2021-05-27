@@ -115,7 +115,7 @@ Config.prototype.controls.classSpan = {
  */
 export class classSpan extends Plugin {
 	/** @override */
-	buttons: Plugin['buttons'] = [
+	override buttons: Plugin['buttons'] = [
 		{
 			name: 'classSpan',
 			group: 'font'
@@ -123,7 +123,7 @@ export class classSpan extends Plugin {
 	];
 
 	/** @override */
-	protected afterInit(jodit: IJodit): void {
+	protected override afterInit(jodit: IJodit): void {
 		jodit.registerCommand(
 			'applyClassName',
 			(command: string, second: string, third: string): false => {
@@ -136,5 +136,5 @@ export class classSpan extends Plugin {
 		);
 	}
 
-	protected beforeDestruct(jodit: IJodit): void {}
+	protected override beforeDestruct(jodit: IJodit): void {}
 }

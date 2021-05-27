@@ -112,7 +112,7 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	/** @override **/
-	destruct(): any {
+	override destruct(): any {
 		this.selected.clear();
 		return super.destruct();
 	}

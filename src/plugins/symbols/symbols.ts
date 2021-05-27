@@ -24,7 +24,7 @@ import { attr } from '../../core/helpers/utils';
  */
 export class symbols extends Plugin {
 	/** @override */
-	buttons: Plugin['buttons'] = [
+	override buttons: Plugin['buttons'] = [
 		{
 			name: 'symbol',
 			group: 'insert'
@@ -34,7 +34,7 @@ export class symbols extends Plugin {
 	private countInRow: number = 17;
 
 	/** @override */
-	afterInit(jodit: IJodit): void {
+	override afterInit(jodit: IJodit): void {
 		jodit.e.on('generateSpecialCharactersTable.symbols', () => {
 			const container = jodit.c.fromHTML(
 					'<div class="jodit-symbols__container">' +

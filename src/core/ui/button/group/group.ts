@@ -18,15 +18,15 @@ import { UIButton } from '../button/button';
 
 @component
 export class UIButtonGroup extends UIGroup {
-	elements!: IUIButton[];
+	override elements!: IUIButton[];
 
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'UIButtonGroup';
 	}
 
 	/** @override */
-	protected render(options: IDictionary): string {
+	protected override render(options: IDictionary): string {
 		return `<div>
 			<div class="&__label">~${options.label}~</div>
 			<div class="&__options"></div>
@@ -34,7 +34,7 @@ export class UIButtonGroup extends UIGroup {
 	}
 
 	/** @override */
-	protected appendChildToContainer(childContainer: HTMLElement): void {
+	protected override appendChildToContainer(childContainer: HTMLElement): void {
 		this.getElm('options').appendChild(childContainer);
 	}
 

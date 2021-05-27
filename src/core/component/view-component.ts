@@ -49,7 +49,7 @@ export abstract class ViewComponent<T extends IViewBased = IViewBased>
 	}
 
 	/** @override */
-	destruct(): any {
+	override destruct(): any {
 		this.j.components.delete(this);
 		return super.destruct();
 	}

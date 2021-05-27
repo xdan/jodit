@@ -19,7 +19,7 @@ import { isArray } from '../../core/helpers/checker';
  */
 export class ContextMenu extends Popup implements IContextMenu {
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'ContextMenu';
 	}
 
