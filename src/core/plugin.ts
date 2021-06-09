@@ -13,6 +13,8 @@ export abstract class Plugin<T extends IViewBased = IJodit>
 	extends ViewComponent<T>
 	implements IPlugin<T>
 {
+	requires: string[] = [];
+
 	/** @override */
 	buttons: IPlugin['buttons'] = [];
 

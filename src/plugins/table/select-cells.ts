@@ -17,7 +17,7 @@ const MOUSE_MOVE_LABEL = 'onMoveTableSelectCell';
 
 export class selectCells extends Plugin {
 	/** @override */
-	requires = ['select'];
+	override requires = ['select'];
 
 	/**
 	 * Shortcut for Table module

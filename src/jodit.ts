@@ -991,7 +991,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * ```
 	 */
 	toggleMode(): void {
-		let mode: number = this.getMode();
+		let mode = this.getMode();
+
 		if (
 			[
 				consts.MODE_SOURCE,

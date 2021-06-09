@@ -47,7 +47,7 @@ Config.prototype.delete = {
 
 export class Delete extends Plugin {
 	/** @override */
-	requires = ['hotkeys'];
+	override requires = ['hotkeys'];
 
 	/**
 	 * Shortcut for jodit.editor

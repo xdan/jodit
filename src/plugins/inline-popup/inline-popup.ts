@@ -37,7 +37,7 @@ import { debounce, wait, autobind, watch } from '../../core/decorators';
  * Plugin for show inline popup dialog
  */
 export class inlinePopup extends Plugin {
-	requires = ['select'];
+	override requires = ['select'];
 
 	private type: Nullable<string> = null;
 
