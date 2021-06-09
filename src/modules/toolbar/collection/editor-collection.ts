@@ -149,6 +149,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 	 * Adds an invisible element to the container that can handle the
 	 * situation when the editor is inside the <label>
 	 *
+	 * @see https://github.com/jodit/jodit-react/issues/138
 	 * @param container
 	 */
 	private prependInvisibleInput(container: HTMLElement): void {
