@@ -138,4 +138,25 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 	override getTarget(button: IToolbarButton): Node | null {
 		return button.target || this.j.s.current() || null;
 	}
+
+	/** @override */
+	constructor(jodit: IJodit) {
+		super(jodit);
+		this.prependInvisibleInput(this.container);
+	}
+
+	/**
+	 * Adds an invisible element to the container that can handle the
+	 * situation when the editor is inside the <label>
+	 *
+	 * @param container
+	 */
+	private prependInvisibleInput(container: HTMLElement): void {
+		const input = this.j.create.element('input', {
+			tabIndex: -1,
+			style: 'width: 0; height:0; position: absolute; visibility: hidden;'
+		});
+
+		Dom.appendChildFirst(container, input);
+	}
 }

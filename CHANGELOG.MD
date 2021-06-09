@@ -16,6 +16,10 @@
 * Update Typescript 4.3.2 - and used override keyword.
 * `noImplicitOverride` set true.
 
+#### :bug: Bug Fix
+
+* [hovering over the text editor triggers hover over source button instantly #138](https://github.com/jodit/jodit-react/issues/138)
+
 ## 3.6.18
 
 #### :bug: Bug Fix
