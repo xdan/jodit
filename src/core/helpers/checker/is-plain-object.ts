@@ -6,7 +6,6 @@
 
 import type { IDictionary } from '../../../types';
 import { isWindow } from './is-window';
-import { hasOwn } from '../type';
 
 /**
  * Check if element is simple plaint object
@@ -21,6 +20,6 @@ export function isPlainObject<T>(
 
 	return !(
 		obj.constructor &&
-		!hasOwn.call(obj.constructor.prototype, 'isPrototypeOf')
+		!{}.hasOwnProperty.call(obj.constructor.prototype, 'isPrototypeOf')
 	);
 }

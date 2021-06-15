@@ -16,6 +16,7 @@
 * Update Typescript 4.3.2 - and used override keyword.
 * `noImplicitOverride` set true.
 * Enable `@typescript-eslint/explicit-module-boundary-types`
+* Remove `type` helper. Buy `jQuery` - it was your last part.
 
 #### :bug: Bug Fix
 

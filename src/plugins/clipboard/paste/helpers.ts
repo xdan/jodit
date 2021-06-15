@@ -6,13 +6,7 @@
 
 import type { IJodit, Nullable } from '../../../types';
 import type { PasteEvent } from '../config';
-import {
-	isArray,
-	isNumber,
-	isString,
-	isVoid,
-	type
-} from '../../../core/helpers';
+import { isArray, isNumber, isString, isVoid } from '../../../core/helpers';
 import { Dom } from '../../../core/dom';
 import { TEXT_PLAIN } from '../../../core/constants';
 
@@ -104,7 +98,10 @@ export function getAllTypes(dt: DataTransfer): string {
 
 	let types_str: string = '';
 
-	if (isArray(types) || type(types) === 'domstringlist') {
+	if (
+		isArray(types) ||
+		{}.toString.call(types) === '[object DOMStringList]'
+	) {
 		for (let i = 0; i < types.length; i += 1) {
 			types_str += types[i] + ';';
 		}

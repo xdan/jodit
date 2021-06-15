@@ -4,51 +4,6 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IDictionary } from '../../types';
-import { isFunction } from './checker';
-
-const class2type: IDictionary<string> = {};
-const toString = class2type.toString;
-export const hasOwn = class2type.hasOwnProperty;
-
-[
-	'Boolean',
-	'Number',
-	'String',
-	'Function',
-	'Array',
-	'Date',
-	'RegExp',
-	'Object',
-	'Error',
-	'Symbol',
-	'HTMLDocument',
-	'Window',
-	'HTMLElement',
-	'HTMLBodyElement',
-	'Text',
-	'DocumentFragment',
-	'DOMStringList',
-	'HTMLCollection'
-].forEach(name => {
-	class2type['[object ' + name + ']'] = name.toLowerCase();
-});
-
-/**
- * Get name object's type
- * @param obj
- */
-export const type = (obj: unknown): string => {
-	// eslint-disable-next-line eqeqeq
-	if (obj === null) {
-		return 'null';
-	}
-
-	return typeof obj === 'object' || isFunction(obj)
-		? class2type[toString.call(obj)] || 'object'
-		: typeof obj;
-};
-
 /**
  * Helper for create Error object
  * @param message

@@ -11,7 +11,6 @@ import {
 	isString
 } from '../helpers/checker';
 import { getClassName } from '../helpers/utils';
-import { type } from '../helpers';
 
 /**
  * Allow spy for the class
@@ -46,7 +45,7 @@ export const spy = function spy(target: Function): void {
 						isBoolean(a) ||
 						isNumber(a)
 							? JSON.stringify(a)
-							: `[${type(a)}]`
+							: {}.toString.call(a)
 					)})`
 				);
 
