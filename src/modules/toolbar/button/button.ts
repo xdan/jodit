@@ -413,7 +413,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 				button: this
 			});
 
-			if (result !== false) {
+			// For memorise exec
+			if (result !== false && result !== true) {
 				this.j?.e?.fire('synchro');
 
 				if (this.parentElement) {
@@ -425,7 +426,9 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 				 * @event afterExec
 				 */
 				this.j?.e?.fire('closeAllPopups afterExec');
+			}
 
+			if (result !== false) {
 				return;
 			}
 		}

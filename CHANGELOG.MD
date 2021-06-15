@@ -23,6 +23,34 @@
 * [hovering over the text editor triggers hover over source button instantly #138](https://github.com/jodit/jodit-react/issues/138)
 * Allow insert in image dialog - relative path
 
+#### :rocket: New Feature
+
+* Added `idle` decorator - allow wrap class method in `requestIdleCallback`
+
+```ts
+@component
+class UIInput extends UIElement {
+	@idle()
+	onSomeEvent() {
+		console.log('Some data');
+	}
+}
+
+const elm = new UIInput(jodit);
+elm.onSomeEvent();
+for (let i = 0; i < 5; i += 1) {
+	console.log(i);
+}
+```
+
+Output
+```
+1
+2
+3
+4
+Some data
+```
 
 ## 3.6.18
 
