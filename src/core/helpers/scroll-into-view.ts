@@ -39,7 +39,7 @@ export const scrollIntoViewIfNeeded = (
 	elm: HTMLElement,
 	root: HTMLElement,
 	doc: Document
-) => {
+): void => {
 	if (!inView(elm, root, doc)) {
 		if (root.clientHeight !== root.scrollHeight) {
 			root.scrollTop = elm.offsetTop;

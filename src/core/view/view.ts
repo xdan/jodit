@@ -331,7 +331,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	}
 
 	/** Add some element to box */
-	protected addDisclaimer(elm: HTMLElement) {
+	protected addDisclaimer(elm: HTMLElement): void {
 		this.container.appendChild(elm);
 	}
 
@@ -352,7 +352,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	}
 
 	/** @override */
-	override destruct() {
+	override destruct(): void {
 		if (this.isDestructed) {
 			return;
 		}

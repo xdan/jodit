@@ -17,7 +17,7 @@ import { autobind } from '../../core/decorators';
 @autobind
 export class size extends Plugin {
 	/** @override **/
-	protected afterInit(editor: IJodit) {
+	protected afterInit(editor: IJodit): void {
 		editor.e
 			.on('setHeight.size', this.setHeight)
 			.on('setWidth.size', this.setWidth)
@@ -186,7 +186,7 @@ export class size extends Plugin {
 	);
 
 	/** @override **/
-	protected beforeDestruct(jodit: IJodit) {
+	protected beforeDestruct(jodit: IJodit): void {
 		this.j.e
 			.off(this.j.ow, 'load.size', this.resizeWorkspaces)
 			.off('.size');

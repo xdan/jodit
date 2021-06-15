@@ -520,7 +520,7 @@ export class search extends Plugin {
 		return false;
 	};
 
-	open = (searchAndReplace: boolean = false) => {
+	open = (searchAndReplace: boolean = false): void => {
 		if (!this.isOpened) {
 			this.searchBox.classList.add('jodit-search_active');
 			this.isOpened = true;

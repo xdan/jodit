@@ -13,14 +13,14 @@ import type { CanUndef } from '../../../types';
  * @param options
  */
 export function stringify(
-	value: any,
+	value: unknown,
 	options: {
 		excludeKeys?: string[];
 		prettify?: string;
 	} = {}
 ): string {
 	if (typeof value !== 'object') {
-		return value.toString ? value.toString() : value;
+		return String(value);
 	}
 
 	const excludeKeys = new Set(options.excludeKeys);

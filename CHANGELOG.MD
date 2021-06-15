@@ -15,10 +15,13 @@
 
 * Update Typescript 4.3.2 - and used override keyword.
 * `noImplicitOverride` set true.
+* Enable `@typescript-eslint/explicit-module-boundary-types`
 
 #### :bug: Bug Fix
 
 * [hovering over the text editor triggers hover over source button instantly #138](https://github.com/jodit/jodit-react/issues/138)
+* Allow insert in image dialog - relative path
+
 
 ## 3.6.18
 

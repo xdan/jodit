@@ -198,7 +198,7 @@ export class AceEditor
 		this.j?.events?.off('aceInited.source');
 	}
 
-	setValue(value: string) {
+	setValue(value: string): void {
 		if (!this.j.o.editHTMLDocumentMode && this.j.o.beautifyHTML) {
 			const html = this.j.e.fire('beautifyHTML', value);
 
@@ -212,7 +212,7 @@ export class AceEditor
 		this.instance.clearSelection();
 	}
 
-	getValue() {
+	getValue(): string {
 		return this.instance.getValue();
 	}
 
@@ -220,7 +220,7 @@ export class AceEditor
 		this.instance.setReadOnly(isReadOnly);
 	}
 
-	focus() {
+	focus(): void {
 		this.instance.focus();
 	}
 
@@ -236,11 +236,11 @@ export class AceEditor
 		return this.getIndexByRowColumn(range.end.row, range.end.column);
 	}
 
-	selectAll() {
+	selectAll(): void {
 		this.instance.selection.selectAll();
 	}
 
-	insertRaw(html: string) {
+	insertRaw(html: string): void {
 		const start = this.instance.selection.getCursor(),
 			end = this.instance.session.insert(start, html);
 
@@ -253,7 +253,7 @@ export class AceEditor
 		);
 	}
 
-	setSelectionRange(start: number, end: number) {
+	setSelectionRange(start: number, end: number): void {
 		this.setSelectionRangeIndices(start, end);
 	}
 
@@ -261,7 +261,7 @@ export class AceEditor
 		// ACE does not support placeholder
 	}
 
-	replaceUndoManager() {
+	replaceUndoManager(): void {
 		const { observer } = this.jodit;
 
 		this.instance.commands.addCommand({

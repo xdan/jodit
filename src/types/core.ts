@@ -4,12 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit } from '../../../types';
-import './config';
+import type { Component } from '../core/component';
+import type { IDictionary } from './types';
 
-export function video(editor: IJodit): void {
-	editor.registerButton({
-		name: 'video',
-		group: 'media'
-	});
-}
+export type DecoratorHandler = <T extends Component & IDictionary>(
+	target: T,
+	propertyKey: string
+) => void;

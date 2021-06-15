@@ -25,7 +25,7 @@ const cn = (elm: ComponentCompatible): string | number => {
  */
 export function component<T extends ComponentCompatible>(
 	constructorFunction: T
-) {
+): T {
 	class newConstructorFunction extends constructorFunction {
 		constructor(...args: any[]) {
 			super(...args);

@@ -73,7 +73,7 @@ export class UISelect extends UIInput implements IUISelect {
 	}
 
 	/** @override **/
-	protected override updateValidators() {
+	protected override updateValidators(): void {
 		super.updateValidators();
 
 		if (this.state.required) {

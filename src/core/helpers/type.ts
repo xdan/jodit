@@ -5,6 +5,7 @@
  */
 
 import type { IDictionary } from '../../types';
+import { isFunction } from './checker';
 
 const class2type: IDictionary<string> = {};
 const toString = class2type.toString;
@@ -37,13 +38,13 @@ export const hasOwn = class2type.hasOwnProperty;
  * Get name object's type
  * @param obj
  */
-export const type = (obj: any): string => {
+export const type = (obj: unknown): string => {
 	// eslint-disable-next-line eqeqeq
 	if (obj === null) {
 		return 'null';
 	}
 
-	return typeof obj === 'object' || typeof obj === 'function'
+	return typeof obj === 'object' || isFunction(obj)
 		? class2type[toString.call(obj)] || 'object'
 		: typeof obj;
 };

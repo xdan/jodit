@@ -19,7 +19,7 @@ export class UIForm extends UIGroup implements IUIForm {
 
 	override container!: HTMLFormElement;
 
-	submit() {
+	submit(): void {
 		this.j.e.fire(this.container, 'submit');
 	}
 
@@ -47,7 +47,7 @@ export class UIForm extends UIGroup implements IUIForm {
 		return true;
 	}
 
-	onSubmit(handler: (data: IDictionary) => false | void) {
+	onSubmit(handler: (data: IDictionary) => false | void): void {
 		this.j.e.on(this.container, 'submit', (): false => {
 			const inputs = this.allChildren.filter(
 				elm => elm instanceof UIInput

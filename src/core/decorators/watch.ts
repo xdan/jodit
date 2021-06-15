@@ -5,7 +5,7 @@
  */
 
 import type {
-	CanUndef,
+	CanUndef, DecoratorHandler,
 	IComponent,
 	IDictionary,
 	IViewComponent
@@ -21,7 +21,7 @@ import { ObserveObject } from '../events';
 import { Component, STATUSES } from '../component';
 
 export function getPropertyDescriptor(
-	obj: any,
+	obj: unknown,
 	prop: string
 ): CanUndef<PropertyDescriptor> {
 	let desc;
@@ -41,7 +41,7 @@ export function getPropertyDescriptor(
 export function watch(
 	observeFields: string[] | string,
 	context?: object | ((c: IDictionary) => object)
-) {
+): DecoratorHandler {
 	return <T extends Component & IDictionary>(
 		target: T,
 		propertyKey: string
@@ -60,6 +60,7 @@ export function watch(
 			splitArray(observeFields).forEach(field => {
 				if (/:/.test(field)) {
 					const [objectPath, eventName] = field.split(':');
+
 					const view = isViewObject(component)
 						? component
 						: (component as unknown as IViewComponent).jodit;
@@ -73,9 +74,11 @@ export function watch(
 						context = context(component);
 					}
 
-					view.events
-						.on(context || component, eventName, callback)
-						.on(eventName, callback);
+					view.events.on(context || component, eventName, callback);
+
+					if (!context) {
+						view.events.on(eventName, callback);
+					}
 
 					view.hookStatus('beforeDestruct', () => {
 						view.events

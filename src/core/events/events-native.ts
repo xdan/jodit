@@ -546,7 +546,7 @@ export class EventsNative implements IEventsNative {
 	 *  ```
 	 *
 	 */
-	fire(subjectOrEvents: string, eventsList?: any, ...args: any[]): any;
+	fire(subjectOrEvents: string, ...args: any[]): any;
 	fire(
 		subjectOrEvents: object,
 		eventsList: string | Event,

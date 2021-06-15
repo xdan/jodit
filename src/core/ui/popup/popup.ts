@@ -379,7 +379,7 @@ export class Popup extends UIElement implements IPopup {
 	 * Set ZIndex
 	 * @param index
 	 */
-	setZIndex(index: number) {
+	setZIndex(index: number): void {
 		this.container.style.zIndex = index.toString();
 	}
 

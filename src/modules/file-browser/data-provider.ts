@@ -136,7 +136,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 	private progressHandler = (ignore: number): void => {};
 
-	onProgress(callback: (percentage: number) => void) {
+	onProgress(callback: (percentage: number) => void): void {
 		this.progressHandler = callback;
 	}
 

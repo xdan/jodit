@@ -170,7 +170,7 @@ export class symbols extends Plugin {
 	}
 
 	/** @override */
-	protected beforeDestruct(jodit: IJodit) {
+	protected beforeDestruct(jodit: IJodit): void {
 		jodit.e.off('generateSpecialCharactersTable.symbols');
 	}
 }

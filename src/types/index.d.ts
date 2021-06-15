@@ -7,6 +7,7 @@
 export * from './ajax';
 export * from './async';
 export * from './context';
+export * from './core';
 export * from './create';
 export * from './dialog';
 export * from './events';

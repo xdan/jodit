@@ -15,7 +15,7 @@ import { clearCenterAlign, css } from '../../core/helpers';
 export const hAlignElement = (
 	image: HTMLElement,
 	align: 'normal' | 'left' | 'right' | 'center' | ''
-) => {
+): void => {
 	if (align && align !== 'normal') {
 		if (align !== 'center') {
 			css(image, 'float', align);

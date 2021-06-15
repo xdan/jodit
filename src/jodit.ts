@@ -1327,7 +1327,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	/** @override */
-	protected override addDisclaimer(elm: HTMLElement) {
+	protected override addDisclaimer(elm: HTMLElement): void {
 		this.workplace.appendChild(elm);
 	}
 

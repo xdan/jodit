@@ -15,7 +15,7 @@ export class resizeHandler extends Plugin {
 	static requires: string[] = ['size'];
 
 	/** @override **/
-	protected afterInit(editor: IJodit) {
+	protected afterInit(editor: IJodit): void {
 		const { height, width, allowResizeX } = editor.o;
 		let { allowResizeY } = editor.o;
 
@@ -121,7 +121,7 @@ export class resizeHandler extends Plugin {
 	);
 
 	/** @override **/
-	protected beforeDestruct(editor: IJodit) {
+	protected beforeDestruct(editor: IJodit): void {
 		Dom.safeRemove(this.handle);
 
 		this.j.e.off(this.j.ow, 'mouseup touchsend', this.onHandleResizeEnd);

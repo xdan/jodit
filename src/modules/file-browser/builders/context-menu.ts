@@ -22,7 +22,7 @@ const CLASS_PREVIEW = F_CLASS + '_preview_',
 		Icon.get('angle-' + right) +
 		'</a>';
 
-export default (self: FileBrowser) => {
+export default (self: FileBrowser): ((e: DragEvent) => boolean | void) => {
 	if (!self.o.contextMenu) {
 		return () => {};
 	}

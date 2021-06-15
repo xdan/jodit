@@ -8,7 +8,7 @@
  * @enumerable decorator that sets the enumerable property of a class field to false.
  * @param value true|false
  */
-export const nonenumerable = (target: any, propertyKey: string) => {
+export const nonenumerable = (target: object, propertyKey: string): void => {
 	const descriptor =
 		Object.getOwnPropertyDescriptor(target, propertyKey) || {};
 

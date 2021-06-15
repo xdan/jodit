@@ -8,7 +8,8 @@ import type {
 	IDictionary,
 	IViewBased,
 	IViewComponent,
-	IAsyncParams
+	IAsyncParams,
+	DecoratorHandler
 } from '../../types';
 import {
 	error,
@@ -30,7 +31,7 @@ export function debounce<V = IViewComponent | IViewBased>(
 	timeout?: number | ((ctx: V) => number | IAsyncParams) | IAsyncParams,
 	firstCallImmediately: boolean = false,
 	method: 'debounce' | 'throttle' = 'debounce'
-) {
+): DecoratorHandler {
 	return <T extends Component & IDictionary>(
 		target: IDictionary,
 		propertyKey: string
@@ -69,6 +70,6 @@ export function debounce<V = IViewComponent | IViewBased>(
 export function throttle<V = IViewComponent | IViewBased>(
 	timeout?: number | ((ctx: V) => number | IAsyncParams) | IAsyncParams,
 	firstCallImmediately: boolean = false
-) {
+): DecoratorHandler {
 	return debounce<V>(timeout, firstCallImmediately, 'throttle');
 }

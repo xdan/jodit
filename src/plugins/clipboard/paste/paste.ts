@@ -50,7 +50,7 @@ export class paste extends Plugin {
 	pasteStack: LimitedStack<PastedValue> = new LimitedStack(20);
 
 	/** @override **/
-	protected afterInit(jodit: IJodit) {
+	protected afterInit(jodit: IJodit): void {
 		jodit.e
 			.on('paste.paste', this.onPaste)
 			.on('pasteStack.paste', (item: PastedValue) =>
@@ -395,7 +395,7 @@ export class paste extends Plugin {
 	 * TODO: need check all browser, now not used
 	 * @param event
 	 */
-	useFakeDivBox(event: PasteEvent) {
+	useFakeDivBox(event: PasteEvent): void {
 		const div = this.j.c.div('', {
 			tabindex: -1,
 			contenteditable: true,
@@ -446,7 +446,7 @@ export class paste extends Plugin {
 	}
 
 	/** @override **/
-	protected beforeDestruct(jodit: IJodit) {
+	protected beforeDestruct(jodit: IJodit): void {
 		jodit.e.off('paste.paste', this.onPaste);
 	}
 }

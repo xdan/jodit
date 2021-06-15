@@ -43,7 +43,7 @@ Config.prototype.limitHTML = false;
  */
 export class limit extends Plugin {
 	/** @override **/
-	protected afterInit(jodit: IJodit) {
+	protected afterInit(jodit: IJodit): void {
 		const { limitWords, limitChars } = jodit.o;
 
 		if (jodit && (limitWords || limitChars)) {
@@ -142,7 +142,7 @@ export class limit extends Plugin {
 	}
 
 	/** @override **/
-	protected beforeDestruct(jodit: IJodit) {
+	protected beforeDestruct(jodit: IJodit): void {
 		jodit.e.off('.limit');
 	}
 }

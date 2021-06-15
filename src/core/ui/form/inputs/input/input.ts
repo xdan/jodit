@@ -154,7 +154,7 @@ export class UIInput extends UIElement implements IUIInput {
 		return this.nativeInput.value;
 	}
 
-	set value(value) {
+	set value(value: string) {
 		if (this.value !== value) {
 			this.nativeInput.value = value;
 			this.onChangeValue();
@@ -165,7 +165,7 @@ export class UIInput extends UIElement implements IUIInput {
 	 * Call on every state value changed
 	 */
 	@watch('state.value')
-	protected onChangeStateValue() {
+	protected onChangeStateValue(): void {
 		this.value = this.state.value;
 	}
 
@@ -173,7 +173,7 @@ export class UIInput extends UIElement implements IUIInput {
 	 * Call on every native value changed
 	 */
 	@autobind
-	protected onChangeValue() {
+	protected onChangeValue(): void {
 		const { value } = this;
 
 		this.state.value = value;
@@ -252,7 +252,7 @@ export class UIInput extends UIElement implements IUIInput {
 		this.onChangeStateValue();
 	}
 
-	focus() {
+	focus(): void {
 		this.nativeInput.focus();
 	}
 

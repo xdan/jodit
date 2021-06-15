@@ -17,7 +17,7 @@ import { type } from '../helpers';
  * Allow spy for the class
  * @param target
  */
-export const spy = function spy(target: Function) {
+export const spy = function spy(target: Function): void {
 	const methods = Reflect.ownKeys(target.prototype);
 
 	methods.forEach(key => {

@@ -12,7 +12,7 @@ export interface CachePropertyDescriptor<T, R> extends PropertyDescriptor {
 }
 
 export function cache<T, R>(
-	target: any,
+	target: object,
 	name: PropertyKey,
 	descriptor: CachePropertyDescriptor<T, R>
 ): void {

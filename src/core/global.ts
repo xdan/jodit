@@ -43,7 +43,7 @@ export const pluginSystem = new PluginSystem();
 export const modules: IDictionary<Function> = {};
 
 export const lang: IDictionary<IDictionary<string>> = {};
-export const extendLang = (langs: IDictionary) => {
+export const extendLang = (langs: IDictionary): void => {
 	Object.keys(langs).forEach(key => {
 		if (lang[key]) {
 			Object.assign(lang[key], langs[key]);
@@ -66,7 +66,7 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 	jodit: IViewBased | IViewComponent,
 	classFunc: Function,
 	tag: T = 'div' as T,
-	inside: boolean = false
+	createInsideEditor: boolean = false
 ): HTMLElementTagNameMap[T] {
 	const name = getClassName(classFunc.prototype);
 
@@ -79,7 +79,7 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 		let c = view.c,
 			body = jodit.od.body;
 
-		if (inside && isJoditObject(jodit) && jodit.od !== jodit.ed) {
+		if (createInsideEditor && isJoditObject(jodit) && jodit.od !== jodit.ed) {
 			c = jodit.createInside;
 			body = tag === 'style' ? jodit.ed.head : jodit.ed.body;
 		}
