@@ -28,7 +28,9 @@ export class UIFileInput extends UIInput {
 		return 'UIFileInput';
 	}
 
-	protected override createContainer(options: Partial<this['state']>): HTMLElement {
+	protected override createContainer(
+		options: Partial<this['state']>
+	): HTMLElement {
 		this.button = new UIButton(this.j, {
 			icon: {
 				name: 'plus'

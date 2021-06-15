@@ -43,36 +43,40 @@ export class clipboard implements IPlugin {
 
 		editor.e
 			.off(`copy.${pluginKey} cut.${pluginKey}`)
-			.on(`copy.${pluginKey} cut.${pluginKey}`, (event: ClipboardEvent):
-				| false
-				| void => {
-				const selectedText = editor.s.html;
+			.on(
+				`copy.${pluginKey} cut.${pluginKey}`,
+				(event: ClipboardEvent): false | void => {
+					const selectedText = editor.s.html;
 
-				const clipboardData =
-					getDataTransfer(event) ||
-					getDataTransfer(editor.ew as any) ||
-					getDataTransfer((event as any).originalEvent);
+					const clipboardData =
+						getDataTransfer(event) ||
+						getDataTransfer(editor.ew as any) ||
+						getDataTransfer((event as any).originalEvent);
 
-				if (clipboardData) {
-					clipboardData.setData(TEXT_PLAIN, stripTags(selectedText));
-					clipboardData.setData(TEXT_HTML, selectedText);
+					if (clipboardData) {
+						clipboardData.setData(
+							TEXT_PLAIN,
+							stripTags(selectedText)
+						);
+						clipboardData.setData(TEXT_HTML, selectedText);
+					}
+
+					editor.buffer.set(pluginKey, selectedText);
+					editor.e.fire('pasteStack', {
+						html: selectedText,
+						action: editor.o.defaultActionOnPaste
+					});
+
+					if (event.type === 'cut') {
+						editor.s.remove();
+						editor.s.focus();
+					}
+
+					event.preventDefault();
+
+					editor?.events?.fire('afterCopy', selectedText);
 				}
-
-				editor.buffer.set(pluginKey, selectedText);
-				editor.e.fire('pasteStack', {
-					html: selectedText,
-					action: editor.o.defaultActionOnPaste
-				});
-
-				if (event.type === 'cut') {
-					editor.s.remove();
-					editor.s.focus();
-				}
-
-				event.preventDefault();
-
-				editor?.events?.fire('afterCopy', selectedText);
-			});
+			);
 	}
 
 	/** @override */

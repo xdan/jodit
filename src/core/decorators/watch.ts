@@ -5,7 +5,8 @@
  */
 
 import type {
-	CanUndef, DecoratorHandler,
+	CanUndef,
+	DecoratorHandler,
 	IComponent,
 	IDictionary,
 	IViewComponent

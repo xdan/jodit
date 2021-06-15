@@ -190,7 +190,9 @@ export class UIInput extends UIElement implements IUIInput {
 	}
 
 	/** @override **/
-	protected override createContainer(options: Partial<this['state']>): HTMLElement {
+	protected override createContainer(
+		options: Partial<this['state']>
+	): HTMLElement {
 		const container = super.createContainer();
 
 		this.wrapper = this.j.c.div(this.getFullElName('wrapper'));

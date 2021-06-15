@@ -34,7 +34,9 @@ export class UISelect extends UIInput implements IUISelect {
 	override state: IUISelect['state'] = { ...UISelect.defaultState };
 
 	/** @override **/
-	protected override createContainer(state: Partial<IUISelect['state']>): HTMLElement {
+	protected override createContainer(
+		state: Partial<IUISelect['state']>
+	): HTMLElement {
 		const container = super.createContainer(state);
 
 		const { j } = this,

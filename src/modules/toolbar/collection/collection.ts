@@ -143,7 +143,10 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	}
 
 	/** @override **/
-	override build(items: ButtonsGroups, target: Nullable<HTMLElement> = null): this {
+	override build(
+		items: ButtonsGroups,
+		target: Nullable<HTMLElement> = null
+	): this {
 		const itemsWithGroupps = this.j.e.fire(
 			'beforeToolbarBuild',
 			items

@@ -78,78 +78,81 @@ export function orderedList(editor: IJodit): void {
 		};
 
 	editor.e
-		.on('beforeCommand', (command: string, _, listStyleType: string):
-			| false
-			| void => {
-			if (isOurCommand(command) && listStyleType) {
-				const ul = getListWrapper();
+		.on(
+			'beforeCommand',
+			(command: string, _, listStyleType: string): false | void => {
+				if (isOurCommand(command) && listStyleType) {
+					const ul = getListWrapper();
 
-				if (ul && !listStyleTypeEqual(ul, listStyleType)) {
-					if (
-						(Dom.isTag(ul, 'ul') && /unordered/i.test(command)) ||
-						(Dom.isTag(ul, 'ol') && !/unordered/i.test(command))
-					) {
-						setListStyleType(ul, listStyleType);
-						return false;
-					}
-				}
-			}
-		})
-		.on('afterCommand', (command: string, _, listStyleType: string):
-			| false
-			| void => {
-			if (isOurCommand(command)) {
-				const ul = getListWrapper();
-
-				if (ul) {
-					setListStyleType(ul, listStyleType);
-					editor.createInside.applyCreateAttributes(ul);
-
-					ul.querySelectorAll('li').forEach(li => {
-						editor.createInside.applyCreateAttributes(li);
-					});
-				}
-
-				const unwrapList: Node[] = [],
-					shouldUnwrap = (elm: Nullable<Node>): void => {
+					if (ul && !listStyleTypeEqual(ul, listStyleType)) {
 						if (
-							Dom.isTag(elm, [
-								'p',
-								'h1',
-								'h2',
-								'h3',
-								'h4',
-								'h5',
-								'h6'
-							])
+							(Dom.isTag(ul, 'ul') &&
+								/unordered/i.test(command)) ||
+							(Dom.isTag(ul, 'ol') && !/unordered/i.test(command))
 						) {
-							unwrapList.push(elm);
+							setListStyleType(ul, listStyleType);
+							return false;
 						}
-					};
-
-				if (ul) {
-					shouldUnwrap(ul.parentNode);
-
-					ul.querySelectorAll('li').forEach(li =>
-						shouldUnwrap(li.firstChild)
-					);
-
-					if (unwrapList.length) {
-						editor.s.save();
-
-						toArray(ul.childNodes).forEach(li => {
-							if (Dom.isTag(li.lastChild, 'br')) {
-								Dom.safeRemove(li.lastChild);
-							}
-						});
-
-						unwrapList.forEach(elm => Dom.unwrap(elm));
-
-						editor.s.restore();
 					}
 				}
-
-				editor.setEditorValue();
 			}
-		});
+		)
+		.on(
+			'afterCommand',
+			(command: string, _, listStyleType: string): false | void => {
+				if (isOurCommand(command)) {
+					const ul = getListWrapper();
+
+					if (ul) {
+						setListStyleType(ul, listStyleType);
+						editor.createInside.applyCreateAttributes(ul);
+
+						ul.querySelectorAll('li').forEach(li => {
+							editor.createInside.applyCreateAttributes(li);
+						});
+					}
+
+					const unwrapList: Node[] = [],
+						shouldUnwrap = (elm: Nullable<Node>): void => {
+							if (
+								Dom.isTag(elm, [
+									'p',
+									'h1',
+									'h2',
+									'h3',
+									'h4',
+									'h5',
+									'h6'
+								])
+							) {
+								unwrapList.push(elm);
+							}
+						};
+
+					if (ul) {
+						shouldUnwrap(ul.parentNode);
+
+						ul.querySelectorAll('li').forEach(li =>
+							shouldUnwrap(li.firstChild)
+						);
+
+						if (unwrapList.length) {
+							editor.s.save();
+
+							toArray(ul.childNodes).forEach(li => {
+								if (Dom.isTag(li.lastChild, 'br')) {
+									Dom.safeRemove(li.lastChild);
+								}
+							});
+
+							unwrapList.forEach(elm => Dom.unwrap(elm));
+
+							editor.s.restore();
+						}
+					}
+
+					editor.setEditorValue();
+				}
+			}
+		);
 }

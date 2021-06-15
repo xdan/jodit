@@ -34,7 +34,9 @@ export class UIButtonGroup extends UIGroup {
 	}
 
 	/** @override */
-	protected override appendChildToContainer(childContainer: HTMLElement): void {
+	protected override appendChildToContainer(
+		childContainer: HTMLElement
+	): void {
 		this.getElm('options').appendChild(childContainer);
 	}
 

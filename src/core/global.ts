@@ -79,7 +79,11 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 		let c = view.c,
 			body = jodit.od.body;
 
-		if (createInsideEditor && isJoditObject(jodit) && jodit.od !== jodit.ed) {
+		if (
+			createInsideEditor &&
+			isJoditObject(jodit) &&
+			jodit.od !== jodit.ed
+		) {
 			c = jodit.createInside;
 			body = tag === 'style' ? jodit.ed.head : jodit.ed.body;
 		}

@@ -113,20 +113,22 @@ export class TextAreaEditor
 	replaceUndoManager(): void {
 		const { observer } = this.jodit;
 
-		this.j.e.on(this.instance, 'keydown', (e: KeyboardEvent):
-			| false
-			| void => {
-			if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
-				if (e.shiftKey) {
-					observer.redo();
-				} else {
-					observer.undo();
+		this.j.e.on(
+			this.instance,
+			'keydown',
+			(e: KeyboardEvent): false | void => {
+				if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
+					if (e.shiftKey) {
+						observer.redo();
+					} else {
+						observer.undo();
+					}
+
+					this.setSelectionRange(this.getValue().length);
+
+					return false;
 				}
-
-				this.setSelectionRange(this.getValue().length);
-
-				return false;
 			}
-		});
+		);
 	}
 }
