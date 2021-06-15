@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.18
+ * Version: v3.7.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -648,7 +648,7 @@ class EventsNative {
     }
     getStore(subject) {
         if (!subject) {
-            throw (0,type/* error */.vU)('Need subject');
+            throw (0,type/* error */.v)('Need subject');
         }
         if (subject[this.__key] === undefined) {
             const store = new EventHandlersStore();
@@ -710,10 +710,10 @@ class EventsNative {
         }
         const store = this.getStore(subject);
         if (!(0,is_string/* isString */.H)(events) || events === '') {
-            throw (0,type/* error */.vU)('Need events names');
+            throw (0,type/* error */.v)('Need events names');
         }
         if (!(0,is_function/* isFunction */.m)(callback)) {
-            throw (0,type/* error */.vU)('Need event handler');
+            throw (0,type/* error */.v)('Need event handler');
         }
         if ((0,is_array/* isArray */.k)(subject)) {
             subject.forEach((subj) => {
@@ -738,7 +738,7 @@ class EventsNative {
         }
         this.eachEvent(events, (event, namespace) => {
             if (event === '') {
-                throw (0,type/* error */.vU)('Need event name');
+                throw (0,type/* error */.v)('Need event name');
             }
             if (store.indexOf(event, namespace, callback) === false) {
                 const block = {
@@ -850,7 +850,7 @@ class EventsNative {
             ? subjectOrEvents
             : eventsList;
         if (typeof events !== 'string') {
-            throw (0,type/* error */.vU)('Need event names');
+            throw (0,type/* error */.v)('Need event names');
         }
         const store = this.getStore(subject);
         this.eachEvent(events, (event, namespace) => {
@@ -888,7 +888,7 @@ class EventsNative {
             : args;
         const isDOMElement = (0,is_function/* isFunction */.m)(subject.dispatchEvent);
         if (!isDOMElement && !(0,is_string/* isString */.H)(events)) {
-            throw (0,type/* error */.vU)('Need events names');
+            throw (0,type/* error */.v)('Need events names');
         }
         const store = this.getStore(subject);
         if (!(0,is_string/* isString */.H)(events) && isDOMElement) {
@@ -956,7 +956,7 @@ class EventsNative {
 var tslib_es6 = __webpack_require__(36);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
 var helpers = __webpack_require__(8);
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
+// EXTERNAL MODULE: ./src/core/decorators/index.ts + 9 modules
 var decorators = __webpack_require__(33);
 ;// CONCATENATED MODULE: ./src/core/events/observe-object.ts
 /*!
@@ -1081,48 +1081,13 @@ class ObserveObject {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "RI": () => (/* binding */ hasOwn),
-/* harmony export */   "dt": () => (/* binding */ type),
-/* harmony export */   "vU": () => (/* binding */ error)
+/* harmony export */   "v": () => (/* binding */ error)
 /* harmony export */ });
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-const class2type = {};
-const toString = class2type.toString;
-const hasOwn = class2type.hasOwnProperty;
-[
-    'Boolean',
-    'Number',
-    'String',
-    'Function',
-    'Array',
-    'Date',
-    'RegExp',
-    'Object',
-    'Error',
-    'Symbol',
-    'HTMLDocument',
-    'Window',
-    'HTMLElement',
-    'HTMLBodyElement',
-    'Text',
-    'DocumentFragment',
-    'DOMStringList',
-    'HTMLCollection'
-].forEach(name => {
-    class2type['[object ' + name + ']'] = name.toLowerCase();
-});
-const type = (obj) => {
-    if (obj === null) {
-        return 'null';
-    }
-    return typeof obj === 'object' || typeof obj === 'function'
-        ? class2type[toString.call(obj)] || 'object'
-        : typeof obj;
-};
 function error(message) {
     return new TypeError(message);
 }
@@ -1220,7 +1185,7 @@ __webpack_require__.d(__webpack_exports__, {
   "dataBind": () => (/* reexport */ data_bind/* dataBind */.q),
   "defaultLanguage": () => (/* reexport */ default_language/* defaultLanguage */.X),
   "each": () => (/* reexport */ each),
-  "error": () => (/* reexport */ type/* error */.vU),
+  "error": () => (/* reexport */ type/* error */.v),
   "fastClone": () => (/* reexport */ fastClone),
   "get": () => (/* reexport */ utils/* get */.U2),
   "getClassName": () => (/* reexport */ utils/* getClassName */.gj),
@@ -1228,7 +1193,6 @@ __webpack_require__.d(__webpack_exports__, {
   "getXPathByElement": () => (/* reexport */ getXPathByElement),
   "hasBrowserColorPicker": () => (/* reexport */ checker/* hasBrowserColorPicker */.EO),
   "hasContainer": () => (/* reexport */ checker/* hasContainer */.Zt),
-  "hasOwn": () => (/* reexport */ type/* hasOwn */.RI),
   "htmlspecialchars": () => (/* reexport */ htmlspecialchars),
   "humanSizeToBytes": () => (/* reexport */ humanSizeToBytes),
   "i18n": () => (/* reexport */ string/* i18n */.ag),
@@ -1293,7 +1257,6 @@ __webpack_require__.d(__webpack_exports__, {
   "toArray": () => (/* reexport */ toArray),
   "trim": () => (/* reexport */ string/* trim */.fy),
   "trimInv": () => (/* reexport */ string/* trimInv */.as),
-  "type": () => (/* reexport */ type/* type */.dt),
   "ucfirst": () => (/* reexport */ string/* ucfirst */.Ps),
   "val": () => (/* reexport */ val)
 });
@@ -1569,14 +1532,14 @@ function resolveElement(element, od) {
             resolved = od.querySelector(element);
         }
         catch (_a) {
-            throw (0,type/* error */.vU)('String "' + element + '" should be valid HTML selector');
+            throw (0,type/* error */.v)('String "' + element + '" should be valid HTML selector');
         }
     }
     if (!resolved ||
         typeof resolved !== 'object' ||
         !dom/* Dom.isElement */.i.isElement(resolved) ||
         !resolved.cloneNode) {
-        throw (0,type/* error */.vU)('Element "' + element + '" should be string or HTMLElement instance');
+        throw (0,type/* error */.v)('Element "' + element + '" should be string or HTMLElement instance');
     }
     return resolved;
 }
@@ -2818,13 +2781,15 @@ const extendLang = (langs) => {
     });
 };
 const boxes = new WeakMap();
-function getContainer(jodit, classFunc, tag = 'div', inside = false) {
+function getContainer(jodit, classFunc, tag = 'div', createInsideEditor = false) {
     const name = (0,_helpers___WEBPACK_IMPORTED_MODULE_2__.getClassName)(classFunc.prototype);
     const data = boxes.get(jodit) || {}, key = name + tag;
     const view = (0,_helpers___WEBPACK_IMPORTED_MODULE_2__.isViewObject)(jodit) ? jodit : jodit.j;
     if (!data[key]) {
         let c = view.c, body = jodit.od.body;
-        if (inside && (0,_helpers___WEBPACK_IMPORTED_MODULE_2__.isJoditObject)(jodit) && jodit.od !== jodit.ed) {
+        if (createInsideEditor &&
+            (0,_helpers___WEBPACK_IMPORTED_MODULE_2__.isJoditObject)(jodit) &&
+            jodit.od !== jodit.ed) {
             c = jodit.createInside;
             body = tag === 'style' ? jodit.ed.head : jodit.ed.body;
         }
@@ -3652,8 +3617,6 @@ function isWindow(obj) {
     return obj != null && obj === obj.window;
 }
 
-// EXTERNAL MODULE: ./src/core/helpers/type.ts
-var type = __webpack_require__(4);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-plain-object.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -3661,13 +3624,12 @@ var type = __webpack_require__(4);
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-
 function isPlainObject(obj) {
     if (!obj || typeof obj !== 'object' || obj.nodeType || isWindow(obj)) {
         return false;
     }
     return !(obj.constructor &&
-        !type/* hasOwn.call */.RI.call(obj.constructor.prototype, 'isPrototypeOf'));
+        !{}.hasOwnProperty.call(obj.constructor.prototype, 'isPrototypeOf'));
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-promise.ts
@@ -3756,7 +3718,7 @@ function isValidName(name) {
  */
 function stringify(value, options = {}) {
     if (typeof value !== 'object') {
-        return value.toString ? value.toString() : value;
+        return String(value);
     }
     const excludeKeys = new Set(options.excludeKeys);
     const map = new WeakMap();
@@ -4825,7 +4787,7 @@ var helpers = __webpack_require__(8);
 var icon = __webpack_require__(27);
 // EXTERNAL MODULE: ./src/core/ui/list/list.ts + 1 modules
 var list = __webpack_require__(31);
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
+// EXTERNAL MODULE: ./src/core/decorators/index.ts + 9 modules
 var decorators = __webpack_require__(33);
 // EXTERNAL MODULE: ./src/core/component/index.ts + 3 modules
 var component = __webpack_require__(11);
@@ -5157,7 +5119,7 @@ function getStrongControlTypes(items, controls) {
     return elements.map(item => (0,get_control_type/* getControlType */.Y)(item, controls || config/* Config.defaultOptions.controls */.D.defaultOptions.controls));
 }
 
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
+// EXTERNAL MODULE: ./src/core/decorators/index.ts + 9 modules
 var decorators = __webpack_require__(33);
 // EXTERNAL MODULE: ./src/core/ui/list/group.ts
 var group = __webpack_require__(35);
@@ -5353,6 +5315,7 @@ __webpack_require__.d(__webpack_exports__, {
   "debounce": () => (/* reexport */ debounce),
   "getPropertyDescriptor": () => (/* reexport */ getPropertyDescriptor),
   "hook": () => (/* reexport */ hook),
+  "idle": () => (/* reexport */ idle),
   "nonenumerable": () => (/* reexport */ nonenumerable),
   "persistent": () => (/* reexport */ persistent),
   "throttle": () => (/* reexport */ throttle),
@@ -5447,6 +5410,24 @@ function debounce(timeout, firstCallImmediately = false, method = 'debounce') {
 }
 function throttle(timeout, firstCallImmediately = false) {
     return debounce(timeout, firstCallImmediately, 'throttle');
+}
+
+;// CONCATENATED MODULE: ./src/core/decorators/idle.ts
+
+
+function idle() {
+    return (target, propertyKey) => {
+        if (!(0,helpers.isFunction)(target[propertyKey])) {
+            throw (0,helpers.error)('Handler must be a Function');
+        }
+        target.hookStatus(core_component/* STATUSES.ready */.n$.ready, (component) => {
+            const view = (0,helpers.isViewObject)(component)
+                ? component
+                : component.jodit;
+            const originalMethod = component[propertyKey];
+            component[propertyKey] = (...args) => view.async.requestIdleCallback(originalMethod.bind(component, ...args));
+        });
+    };
 }
 
 ;// CONCATENATED MODULE: ./src/core/decorators/hook.ts
@@ -5588,9 +5569,10 @@ function watch(observeFields, context) {
                     if ((0,helpers.isFunction)(context)) {
                         context = context(component);
                     }
-                    view.events
-                        .on(context || component, eventName, callback)
-                        .on(eventName, callback);
+                    view.events.on(context || component, eventName, callback);
+                    if (!context) {
+                        view.events.on(eventName, callback);
+                    }
                     view.hookStatus('beforeDestruct', () => {
                         view.events
                             .off(context || component, eventName, callback)
@@ -5655,6 +5637,7 @@ var esm = __webpack_require__(34);
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 
 
 
@@ -6108,10 +6091,16 @@ function __spreadArrays() {
     return r;
 }
 exports.__spreadArrays = __spreadArrays;
-function __spreadArray(to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2)
+        for (var i = 0, l = from.length, ar; i < l; i++) {
+            if (ar || !(i in from)) {
+                if (!ar)
+                    ar = Array.prototype.slice.call(from, 0, i);
+                ar[i] = from[i];
+            }
+        }
+    return to.concat(ar || from);
 }
 exports.__spreadArray = __spreadArray;
 function __await(v) {
@@ -6286,7 +6275,7 @@ var helpers = __webpack_require__(8);
 var global = __webpack_require__(12);
 // EXTERNAL MODULE: ./src/core/ui/element.ts
 var ui_element = __webpack_require__(25);
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
+// EXTERNAL MODULE: ./src/core/decorators/index.ts + 9 modules
 var decorators = __webpack_require__(33);
 ;// CONCATENATED MODULE: ./src/core/ui/popup/popup.ts
 /*!
@@ -6569,7 +6558,7 @@ var ui_element = __webpack_require__(25);
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/dom.ts
 var dom = __webpack_require__(14);
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
+// EXTERNAL MODULE: ./src/core/decorators/index.ts + 9 modules
 var decorators = __webpack_require__(33);
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
 var ui_icon = __webpack_require__(27);
@@ -11568,7 +11557,7 @@ const FileSelectorWidget = (editor, callbacks, elm, close, isImage = true) => {
                 required: true,
                 label: 'URL',
                 name: 'url',
-                type: 'url',
+                type: 'text',
                 placeholder: 'https://'
             }),
             new ui/* UIInput */.u3(editor, {
@@ -13275,7 +13264,7 @@ class Storage {
 
 // EXTERNAL MODULE: ./src/core/global.ts
 var global = __webpack_require__(12);
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
+// EXTERNAL MODULE: ./src/core/decorators/index.ts + 9 modules
 var decorators = __webpack_require__(33);
 // EXTERNAL MODULE: ./src/core/traits/index.ts + 2 modules
 var traits = __webpack_require__(26);
@@ -13301,7 +13290,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.6.18";
+        this.version = "3.7.1";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -13399,10 +13388,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.6.18";
+        return "3.7.1";
     }
     static getVersion() {
-        return "3.6.18";
+        return "3.7.1";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -13598,8 +13587,8 @@ ToolbarCollection = (0,tslib_es6.__decorate)([
 
 
 let ToolbarEditorCollection = class ToolbarEditorCollection extends ToolbarCollection {
-    constructor() {
-        super(...arguments);
+    constructor(jodit) {
+        super(jodit);
         this.checkActiveStatus = (cssObject, node) => {
             let matches = 0, total = 0;
             Object.keys(cssObject).forEach((cssProperty) => {
@@ -13618,6 +13607,7 @@ let ToolbarEditorCollection = class ToolbarEditorCollection extends ToolbarColle
             });
             return total === matches;
         };
+        this.prependInvisibleInput(this.container);
     }
     className() {
         return 'ToolbarEditorCollection';
@@ -13669,6 +13659,13 @@ let ToolbarEditorCollection = class ToolbarEditorCollection extends ToolbarColle
     }
     getTarget(button) {
         return button.target || this.j.s.current() || null;
+    }
+    prependInvisibleInput(container) {
+        const input = this.j.create.element('input', {
+            tabIndex: -1,
+            style: 'width: 0; height:0; position: absolute; visibility: hidden;'
+        });
+        dom/* Dom.appendChildFirst */.i.appendChildFirst(container, input);
     }
 };
 ToolbarEditorCollection = (0,tslib_es6.__decorate)([
@@ -13919,12 +13916,14 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
                 originalEvent,
                 button: this
             });
-            if (result !== false) {
+            if (result !== false && result !== true) {
                 (_e = (_d = this.j) === null || _d === void 0 ? void 0 : _d.e) === null || _e === void 0 ? void 0 : _e.fire('synchro');
                 if (this.parentElement) {
                     this.parentElement.update();
                 }
                 (_g = (_f = this.j) === null || _f === void 0 ? void 0 : _f.e) === null || _g === void 0 ? void 0 : _g.fire('closeAllPopups afterExec');
+            }
+            if (result !== false) {
                 return;
             }
         }
@@ -14045,11 +14044,12 @@ var helpers_buttons = __webpack_require__(38);
 class ViewWithToolbar extends View {
     constructor(options, isJodit = false) {
         super(options, isJodit);
-        this.isJodit = isJodit;
         this.toolbar = makeCollection(this);
         this.defaultToolbarContainer = this.c.div('jodit-toolbar__box');
         this.registeredButtons = new Set();
         this.groupToButtons = {};
+        this.isJodit = false;
+        this.isJodit = isJodit;
         this.e.on('beforeToolbarBuild', this.beforeToolbarBuild);
     }
     get toolbarContainer() {
@@ -14712,6 +14712,7 @@ const Confirm = (msg, title, callback) => {
 class Plugin extends component/* ViewComponent */.Hr {
     constructor(jodit) {
         super(jodit);
+        this.requires = [];
         this.buttons = [];
         this.hasStyle = false;
         jodit.e
@@ -21905,7 +21906,8 @@ function pasteInsertHtml(e, editor, html) {
 function getAllTypes(dt) {
     const types = dt.types;
     let types_str = '';
-    if ((0,helpers.isArray)(types) || (0,helpers.type)(types) === 'domstringlist') {
+    if ((0,helpers.isArray)(types) ||
+        {}.toString.call(types) === '[object DOMStringList]') {
         for (let i = 0; i < types.length; i += 1) {
             types_str += types[i] + ';';
         }
@@ -23115,7 +23117,9 @@ class enter extends Plugin {
                 ? constants.PARAGRAPH
                 : this.defaultTag;
         }
-        editor.e.off('.enter').on('keydown.enter', (event) => {
+        editor.e
+            .off('.enter')
+            .on('keydown.enter', (event) => {
             if (event.key === constants.KEY_ENTER) {
                 const beforeEnter = editor.e.fire('beforeEnter', event);
                 if (beforeEnter !== undefined) {
@@ -26026,7 +26030,8 @@ function orderedList(editor) {
         if (isOurCommand(command) && listStyleType) {
             const ul = getListWrapper();
             if (ul && !listStyleTypeEqual(ul, listStyleType)) {
-                if ((dom/* Dom.isTag */.i.isTag(ul, 'ul') && /unordered/i.test(command)) ||
+                if ((dom/* Dom.isTag */.i.isTag(ul, 'ul') &&
+                    /unordered/i.test(command)) ||
                     (dom/* Dom.isTag */.i.isTag(ul, 'ol') && !/unordered/i.test(command))) {
                     setListStyleType(ul, listStyleType);
                     return false;
@@ -29271,7 +29276,9 @@ function tableKeyboardNavigation(editor) {
             event.key === constants.KEY_UP ||
             event.key === constants.KEY_DOWN) {
             current = editor.s.current();
-            block = dom/* Dom.up */.i.up(current, (elm) => elm && elm.nodeName && /^td|th$/i.test(elm.nodeName), editor.editor);
+            block = dom/* Dom.up */.i.up(current, (elm) => elm &&
+                elm.nodeName &&
+                /^td|th$/i.test(elm.nodeName), editor.editor);
             if (!block) {
                 return;
             }
