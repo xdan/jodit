@@ -181,7 +181,7 @@ export const keys = (obj: object, own: boolean = true): string[] => {
 		return Object.keys(obj);
 	}
 
-	const props = [];
+	const props: string[] = [];
 
 	for (const key in obj) {
 		props.push(key);
