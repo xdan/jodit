@@ -69,6 +69,8 @@ Config.prototype.controls.fullsize = {
  * @param {Jodit} editor
  */
 export function fullsize(editor: IViewWithToolbar): void {
+	const { container, events } = editor;
+
 	editor.registerButton({
 		name: 'fullsize'
 	});
@@ -79,28 +81,28 @@ export function fullsize(editor: IViewWithToolbar): void {
 		wasToggled = false;
 
 	const resize = () => {
-			if (editor.events) {
+			if (events) {
 				if (isEnabled) {
 					oldHeight = css(
-						editor.container,
+						container,
 						'height',
 						undefined,
 						true
 					) as number;
 					oldWidth = css(
-						editor.container,
+						container,
 						'width',
 						undefined,
 						true
 					) as number;
-					css(editor.container, {
+					css(container, {
 						height: editor.ow.innerHeight,
 						width: editor.ow.innerWidth
 					});
 
 					wasToggled = true;
 				} else if (wasToggled) {
-					css(editor.container, {
+					css(container, {
 						height: oldHeight || 'auto',
 						width: oldWidth || 'auto'
 					});
@@ -112,12 +114,12 @@ export function fullsize(editor: IViewWithToolbar): void {
 		 * @param enable
 		 */
 		toggle = (enable?: boolean) => {
-			if (!editor.container) {
+			if (!container) {
 				return;
 			}
 
 			if (enable === undefined) {
-				enable = !editor.container.classList.contains('jodit_fullsize');
+				enable = !container.classList.contains('jodit_fullsize');
 			}
 
 			editor.setMod('fullsize', enable);
@@ -126,7 +128,7 @@ export function fullsize(editor: IViewWithToolbar): void {
 
 			isEnabled = enable;
 
-			editor.container.classList.toggle('jodit_fullsize', enable);
+			container.classList.toggle('jodit_fullsize', enable);
 
 			if (editor.toolbar) {
 				isJoditObject(editor) &&
@@ -138,7 +140,7 @@ export function fullsize(editor: IViewWithToolbar): void {
 			}
 
 			if (editor.o.globalFullSize) {
-				let node = editor.container.parentNode as HTMLElement;
+				let node = container.parentNode as HTMLElement;
 
 				while (node && node.nodeType !== Node.DOCUMENT_NODE) {
 					node.classList.toggle('jodit_fullsize-box_true', enable);
@@ -148,7 +150,7 @@ export function fullsize(editor: IViewWithToolbar): void {
 				resize();
 			}
 
-			editor.events?.fire('afterResize');
+			events.fire('afterResize');
 		};
 
 	if (editor.o.globalFullSize) {

@@ -18,6 +18,7 @@ import { pasteInsertHtml } from './paste/helpers';
 import { pluginKey as clipboardPluginKey } from './clipboard';
 
 export type PasteEvent = ClipboardEvent | DragEvent;
+
 export type InsertMode =
 	| typeof INSERT_AS_HTML
 	| typeof INSERT_CLEAR_HTML

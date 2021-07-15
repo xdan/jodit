@@ -14,44 +14,42 @@ import { css, toArray } from '../../core/helpers';
 declare module '../../config' {
 	interface Config {
 		showMessageErrors: boolean;
+
+		/**
+		 * How long show messages
+		 */
 		showMessageErrorTime: number;
+
+		/**
+		 * Offset fo message
+		 */
 		showMessageErrorOffsetPx: number;
 	}
 }
 
-/**
- * @property{boolean} showMessageErrors=true
- */
 Config.prototype.showMessageErrors = true;
-/**
- * @property{int} showMessageErrorTime=3000 How long show messages
- */
 Config.prototype.showMessageErrorTime = 3000;
-
-/**
- * @property{int} showMessageErrorOffsetPx=3 Offset fo message
- */
 Config.prototype.showMessageErrorOffsetPx = 3;
 
+const ELM_NAME = 'error-box-for-messages';
+
 /**
- * Plugin toWYSIWYG display pop-up messages in the lower right corner of the editor
+ * Plugin display pop-up messages in the lower right corner of the editor
  */
 export function errorMessages(editor: IJodit): void {
 	if (editor.o.showMessageErrors) {
-		let height: number;
+		const activeClass = editor.getFullElName(ELM_NAME, 'active', true),
+			messagesBox = editor.c.div(editor.getFullElName(ELM_NAME)),
+			calcOffsets = () => {
+				let height = 5;
 
-		const messagesBox: HTMLDivElement = editor.c.div(
-				'jodit_error_box_for_messages'
-			),
-			recalcOffsets = () => {
-				height = 5;
 				toArray(
 					messagesBox.childNodes as NodeListOf<HTMLElement>
-				).forEach((elm: HTMLElement) => {
-					css(messagesBox, 'bottom', height + 'px');
+				).forEach(elm => {
+					css(elm, 'bottom', height + 'px');
 
 					height +=
-						elm.offsetWidth + editor.o.showMessageErrorOffsetPx;
+						elm.offsetHeight + editor.o.showMessageErrorOffsetPx;
 				});
 			};
 
@@ -65,9 +63,10 @@ export function errorMessages(editor: IJodit): void {
 		 * options.showMessageErrorTime = 2000
 		 * @example
 		 * ```javascript
-		 * parent.e.fire('errorMessage', 'Error 123. File has not been upload');
-		 * parent.e.fire('errorMessage', 'You can upload file', 'info', 4000);
-		 * parent.e.fire('errorMessage', 'File was uploaded', 'success', 4000);
+		 * const editor = new Jodit('#editors');
+		 * editor.e.fire('errorMessage', 'Error 123. File has not been upload');
+		 * editor.e.fire('errorMessage', 'You can upload file', 'info', 4000);
+		 * editor.e.fire('errorMessage', 'File was uploaded', 'success', 4000);
 		 * ```
 		 */
 		editor.e
@@ -76,24 +75,24 @@ export function errorMessages(editor: IJodit): void {
 			})
 			.on(
 				'errorMessage',
-				(message: string, className: string, timeout: number) => {
+				(message: string, type: string, timeout: number) => {
 					editor.workplace.appendChild(messagesBox);
 
-					const newmessage = editor.c.div(
-						'active ' + (className || ''),
-						message
+					const msg = editor.c.div(activeClass, message);
+					msg.classList.add(
+						editor.getFullElName(ELM_NAME, 'type', type)
 					);
 
-					messagesBox.appendChild(newmessage);
+					messagesBox.appendChild(msg);
 
-					recalcOffsets();
+					calcOffsets();
 
 					editor.async.setTimeout(() => {
-						newmessage.classList.remove('active');
+						msg.classList.remove(activeClass);
 
 						editor.async.setTimeout(() => {
-							Dom.safeRemove(newmessage);
-							recalcOffsets();
+							Dom.safeRemove(msg);
+							calcOffsets();
 						}, 300);
 					}, timeout || editor.o.showMessageErrorTime);
 				}

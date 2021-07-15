@@ -317,8 +317,7 @@ export class addNewLine extends Plugin {
 	/** @override */
 	protected beforeDestruct(): void {
 		this.j.async.clearTimeout(this.timeout);
-		this.j.e.off(this.line);
-		this.j.e.off('changePlace', this.addEventListeners);
+		this.j.e.off(this.line).off('changePlace', this.addEventListeners);
 
 		Dom.safeRemove(this.line);
 

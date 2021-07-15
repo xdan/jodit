@@ -41,6 +41,7 @@ interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 	get<T>(chain: string, obj?: IDictionary): Nullable<T>;
 
 	componentName: string;
+
 	getFullElName(elementName: string): string;
 	getFullElName(elementName: string, mod: string): string;
 	getFullElName(

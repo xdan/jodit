@@ -17,15 +17,15 @@ Config.prototype.controls.about = {
 		const dialog = new Dialog({
 				language: editor.o.language
 			}),
-			i18n = editor.i18n.bind(editor);
+			i = editor.i18n.bind(editor);
 
-		dialog.setMod('theme', editor.o.theme);
-		dialog.setHeader(i18n('About Jodit'));
-
-		dialog.setContent(
-			`<div class="jodit-about">
-					<div>${i18n('Jodit Editor')} v.${editor.getVersion()}</div>
-					<div>${i18n(
+		dialog
+			.setMod('theme', editor.o.theme)
+			.setHeader(i('About Jodit'))
+			.setContent(
+				`<div class="jodit-about">
+					<div>${i('Jodit Editor')} v.${editor.getVersion()}</div>
+					<div>${i(
 						'License: %s',
 						!isLicense(editor.o.license)
 							? 'MIT'
@@ -35,24 +35,23 @@ Config.prototype.controls.about = {
 						<a href="${process.env.HOMEPAGE}" target="_blank">${process.env.HOMEPAGE}</a>
 					</div>
 					<div>
-						<a href="https://xdsoft.net/jodit/doc/" target="_blank">${i18n(
+						<a href="https://xdsoft.net/jodit/doc/" target="_blank">${i(
 							"Jodit User's Guide"
 						)}</a>
-						${i18n('contains detailed help for using')}
+						${i('contains detailed help for using')}
 					</div>
-					<div>${i18n(
+					<div>${i(
 						'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.'
 					)}</div>
 				</div>`
-		);
+			);
 
 		css(dialog.dialog, {
 			minHeight: 200,
 			minWidth: 420
 		});
 
-		dialog.open(true);
-		dialog.bindDestruct(editor);
+		dialog.open(true).bindDestruct(editor);
 	},
 	tooltip: 'About Jodit',
 	mode: constants.MODE_SOURCE + constants.MODE_WYSIWYG
