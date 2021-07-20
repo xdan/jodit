@@ -96,9 +96,9 @@ export function callPromise(
 ): CanPromise<void> {
 	if (isPromise(condition)) {
 		return condition.finally(callback);
-	} else {
-		return callback();
 	}
+
+	return callback();
 }
 
 const map: IDictionary = {};

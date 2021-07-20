@@ -6,7 +6,7 @@
 
 import './checkbox.less';
 
-import type { IDictionary, IUIInput, IViewBased } from '../../../../../types';
+import type { IUIInput, IViewBased } from '../../../../../types';
 import { UIInput } from '../input/input';
 import { component } from '../../../../decorators';
 
@@ -18,7 +18,7 @@ export class UICheckbox extends UIInput {
 	}
 
 	/** @override */
-	protected override render(options?: IDictionary): HTMLElement {
+	protected override render(): HTMLElement {
 		return this.j.c.element('label', {
 			className: this.componentName
 		});

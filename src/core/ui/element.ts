@@ -115,7 +115,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		value: string | boolean | null,
 		container: HTMLElement = this.container
 	): this {
-		Mods.setMod.call(this, name, value);
+		Mods.setMod.call(this, name, value, container);
 		return this;
 	}
 

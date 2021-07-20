@@ -5,9 +5,26 @@
  */
 
 import type { IStyle, StyleValue } from '../../types';
-import { isPlainObject, isNumeric, isVoid } from './checker/';
+import { isPlainObject, isNumeric, isVoid, isBoolean } from './checker/';
 import { normalizeCssValue } from './normalize/';
 import { camelCase, kebabCase } from './string/';
+
+export function css(
+	element: HTMLElement,
+	key: string | IStyle
+): string | number;
+
+export function css(
+	element: HTMLElement,
+	key: string | IStyle,
+	value: StyleValue
+): string | number;
+
+export function css(
+	element: HTMLElement,
+	key: string | IStyle,
+	onlyStyleMode: boolean
+): string | number;
 
 /**
  * Get the value of a computed style property for the first element in the set of matched elements or set one or
@@ -18,14 +35,19 @@ import { camelCase, kebabCase } from './string/';
  * @param value A value to set for the property.
  * @param [onlyStyleMode] Get value from style attribute, without calculating
  */
-export const css = (
+export function css(
 	element: HTMLElement,
 	key: string | IStyle,
-	value?: StyleValue,
+	value?: StyleValue | boolean,
 	onlyStyleMode: boolean = false
-): string | number => {
+): string | number {
 	const numberFieldsReg =
 		/^left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size/i;
+
+	if (isBoolean(value)) {
+		onlyStyleMode = value;
+		value = undefined;
+	}
 
 	if (isPlainObject(key) || value !== undefined) {
 		const setValue = (
@@ -44,8 +66,7 @@ export const css = (
 			if (
 				_value !== undefined &&
 				(_value == null ||
-					css(elm, _key, undefined, true) !==
-						normalizeCssValue(_key, _value))
+					css(elm, _key, true) !== normalizeCssValue(_key, _value))
 			) {
 				(elm.style as any)[_key] = _value;
 			}
@@ -88,7 +109,7 @@ export const css = (
 	}
 
 	return normalizeCssValue(key as string, result);
-};
+}
 
 /**
  * Clear center align

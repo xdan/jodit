@@ -198,7 +198,7 @@ export class UIInput extends UIElement implements IUIInput {
 		this.wrapper = this.j.c.div(this.getFullElName('wrapper'));
 
 		if (!this.nativeInput) {
-			this.nativeInput = this.createNativeInput(options);
+			this.nativeInput = this.createNativeInput();
 		}
 
 		const { nativeInput } = this;
@@ -217,7 +217,7 @@ export class UIInput extends UIElement implements IUIInput {
 	 * Create native input element
 	 */
 	protected createNativeInput(
-		options: Partial<this['state']>
+		options?: Partial<this['state']>
 	): IUIInput['nativeInput'] {
 		return this.j.create.element('input');
 	}

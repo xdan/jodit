@@ -259,6 +259,7 @@ export class AceEditor
 
 	setPlaceHolder(title: string): void {
 		// ACE does not support placeholder
+		// title
 	}
 
 	replaceUndoManager(): void {

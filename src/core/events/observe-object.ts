@@ -10,13 +10,13 @@ import { nonenumerable } from '../decorators';
 
 export class ObserveObject {
 	@nonenumerable
-	private __data!: IDictionary;
+	private readonly __data!: IDictionary;
 
 	@nonenumerable
 	private __prefix!: string[];
 
 	@nonenumerable
-	private __onEvents!: IDictionary<CallbackFunction[]>;
+	private readonly __onEvents!: IDictionary<CallbackFunction[]>;
 
 	protected constructor(
 		data: IDictionary,

@@ -108,7 +108,7 @@ export class ImageEditor extends ViewComponent {
 	private resizeUseRatio: boolean = true;
 	private cropUseRatio: boolean = true;
 
-	private dialog: Dialog;
+	private readonly dialog: Dialog;
 	private image!: HTMLImageElement;
 	private cropImage!: HTMLImageElement;
 	private clicked = false;
@@ -605,7 +605,9 @@ export class ImageEditor extends ViewComponent {
 						self.top_x -
 						self.cropHandler.offsetWidth;
 				}
+
 				css(self.cropHandler, 'left', self.top_x + self.diff_x);
+
 				if (
 					self.top_y + self.diff_y + self.cropHandler.offsetHeight >
 					self.cropImage.offsetHeight

@@ -456,11 +456,11 @@ export class imageProperties extends Plugin {
 			updateSizes = () => {
 				const width =
 						attr(image, 'width') ||
-						css(image, 'width', undefined, true) ||
+						css(image, 'width', true) ||
 						false,
 					height =
 						attr(image, 'height') ||
-						css(image, 'height', undefined, true) ||
+						css(image, 'height', true) ||
 						false;
 
 				imageWidth.value =
