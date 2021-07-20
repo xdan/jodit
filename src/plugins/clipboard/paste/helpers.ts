@@ -77,7 +77,7 @@ export function pasteInsertHtml(
 
 	if (
 		!isVoid(result) &&
-		(isString(result) || isNumber(result) || Dom.isNode(result, editor.ew))
+		(isString(result) || isNumber(result) || Dom.isNode(result))
 	) {
 		html = result;
 	}

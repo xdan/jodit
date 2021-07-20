@@ -101,7 +101,7 @@ export class ApplyStyle {
 			const box = Dom.up(
 				font,
 				node => {
-					if (node && Dom.isBlock(node, this.jodit.s.win)) {
+					if (Dom.isBlock(node)) {
 						if (
 							ulReg.test(this.style.element) ||
 							!ulReg.test(node.nodeName)
@@ -163,7 +163,7 @@ export class ApplyStyle {
 			!Dom.prev(font, this.isNormalNode, parentNode) &&
 			this.isSuitableElement(parentNode, false) &&
 			parentNode !== this.jodit.s.area &&
-			(!Dom.isBlock(parentNode, this.jodit.ew) ||
+			(!Dom.isBlock(parentNode) ||
 				this.style.elementIsBlock)
 		) {
 			this.toggleStyles(parentNode);
@@ -272,9 +272,9 @@ export class ApplyStyle {
 		return Boolean(
 			isPlainObject(rules) &&
 				!Dom.isTag(elm, 'font') &&
-				Dom.isHTMLElement(elm, this.jodit.ew) &&
+				Dom.isHTMLElement(elm) &&
 				each(rules, (property, checkValue) => {
-					const value = css(elm, property, undefined, true);
+					const value = css(elm, property, true);
 
 					return (
 						!isVoid(value) &&
@@ -357,7 +357,7 @@ export class ApplyStyle {
 			});
 		}
 
-		const isBlock = Dom.isBlock(elm, this.jodit.ew);
+		const isBlock = Dom.isBlock(elm);
 
 		const isSuitableInline =
 			!isBlock &&
@@ -421,7 +421,7 @@ export class ApplyStyle {
 	 * @param elm
 	 */
 	private wrapUnwrappedText(elm: Node): HTMLElement {
-		const { area, win } = this.jodit.selection;
+		const { area } = this.jodit.selection;
 
 		const edge = (n: Node, key: keyof Node = 'previousSibling') => {
 			let edgeNode: Node = n,
@@ -435,13 +435,13 @@ export class ApplyStyle {
 				} else {
 					node =
 						node.parentNode &&
-						!Dom.isBlock(node.parentNode, win) &&
+						!Dom.isBlock(node.parentNode) &&
 						node.parentNode !== area
 							? node.parentNode
 							: null;
 				}
 
-				if (Dom.isBlock(node, win)) {
+				if (Dom.isBlock(node)) {
 					break;
 				}
 			}

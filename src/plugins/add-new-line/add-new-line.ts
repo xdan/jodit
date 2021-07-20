@@ -121,7 +121,7 @@ export class addNewLine extends Plugin {
 	private canGetFocus = (elm: Node | null): boolean => {
 		return (
 			elm != null &&
-			Dom.isBlock(elm, this.j.ew) &&
+			Dom.isBlock(elm) &&
 			!/^(img|table|iframe|hr)$/i.test(elm.nodeName)
 		);
 	};
@@ -238,7 +238,7 @@ export class addNewLine extends Plugin {
 		) as HTMLElement;
 
 		if (
-			!Dom.isHTMLElement(currentElement, editor.ew) ||
+			!Dom.isHTMLElement(currentElement) ||
 			Dom.isOrContains(this.line, currentElement)
 		) {
 			return;
@@ -264,7 +264,7 @@ export class addNewLine extends Plugin {
 		if (this.isMatchedTag(currentElement)) {
 			const parentBox = Dom.up(
 				currentElement,
-				node => Dom.isBlock(node, editor.ew),
+				Dom.isBlock,
 				editor.editor
 			);
 

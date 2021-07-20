@@ -79,6 +79,25 @@ describe('Test Dom module', function () {
 		});
 	});
 
+	describe('Method isNode', function () {
+		it('Should return true then it gets node element', function () {
+			[
+				[null, false],
+				[document.createElement('br'), true],
+				[document.createElement('div'), true],
+				[document.createTextNode('test'), true],
+				[document.createTextNode(''), true],
+				[false, false],
+				[document, false],
+				[document.body, true],
+				['', false],
+				[{}, false]
+			].forEach(([value, result]) => {
+				expect(Dom.isNode(value)).to.eq(result);
+			});
+		});
+	});
+
 	describe('Method isEmpty', function () {
 		it('Should return true then element is empty', function () {
 			expect(true).equals(Dom.isEmpty(document.createElement('div')));

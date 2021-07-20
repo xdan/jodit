@@ -57,7 +57,7 @@ export class Select {
 	 * @param node
 	 */
 	private errorNode(node: unknown): void {
-		if (!Dom.isNode(node, this.win)) {
+		if (!Dom.isNode(node)) {
 			throw error('Parameter node must be instance of Node');
 		}
 	}
@@ -200,7 +200,7 @@ export class Select {
 	 * @param elm
 	 */
 	isMarker = (elm: Node): boolean =>
-		Dom.isNode(elm, this.win) &&
+		Dom.isNode(elm) &&
 		Dom.isTag(elm, 'span') &&
 		elm.hasAttribute('data-' + consts.MARKER_CLASS);
 
@@ -627,7 +627,7 @@ export class Select {
 			this.restore();
 		}
 
-		if (!Dom.isNode(html, this.win)) {
+		if (!Dom.isNode(html)) {
 			node.innerHTML = html.toString();
 		} else {
 			node.appendChild(html);

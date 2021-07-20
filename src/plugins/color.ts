@@ -34,12 +34,7 @@ Config.prototype.controls.brush = {
 			const currentBpx: HTMLElement =
 				(Dom.closest(
 					current,
-					elm => {
-						return (
-							Dom.isBlock(elm, editor.ew) ||
-							(elm && Dom.isElement(elm))
-						);
-					},
+					elm => Dom.isBlock(elm) || (elm && Dom.isElement(elm)),
 					editor.editor
 				) as HTMLElement) || editor.editor;
 
@@ -66,11 +61,7 @@ Config.prototype.controls.brush = {
 			tabs: TabOption[] = [],
 			currentElement: HTMLElement | null = null;
 
-		if (
-			current &&
-			current !== editor.editor &&
-			Dom.isNode(current, editor.ew)
-		) {
+		if (current && current !== editor.editor && Dom.isNode(current)) {
 			if (
 				Dom.isElement(current) &&
 				editor.s.isCollapsed() &&
@@ -82,14 +73,9 @@ Config.prototype.controls.brush = {
 			Dom.up(
 				current,
 				(node): true | void => {
-					if (Dom.isHTMLElement(node, editor.ew)) {
-						const color = css(node, 'color', undefined, true),
-							background = css(
-								node,
-								'background-color',
-								undefined,
-								true
-							);
+					if (Dom.isHTMLElement(node)) {
+						const color = css(node, 'color', true),
+							background = css(node, 'background-color', true);
 
 						if (color) {
 							colorHEX = color.toString();
@@ -168,7 +154,7 @@ Config.prototype.controls.brush = {
 		if (
 			current &&
 			current !== jodit.editor &&
-			Dom.isNode(current, jodit.ew) &&
+			Dom.isNode(current) &&
 			Dom.isElement(current)
 		) {
 			switch (mode) {

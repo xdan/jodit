@@ -17,6 +17,7 @@ import {
 	asArray,
 	css,
 	dataBind,
+	get,
 	isArray,
 	isFunction,
 	isString,
@@ -63,7 +64,7 @@ export class Dom {
 			needFindNext = false;
 			tmp = first.previousSibling;
 
-			if (tmp && !Dom.isBlock(tmp, editor.ew)) {
+			if (tmp && !Dom.isBlock(tmp)) {
 				needFindNext = true;
 				first = tmp;
 			}
@@ -73,7 +74,7 @@ export class Dom {
 			needFindNext = false;
 			tmp = last.nextSibling;
 
-			if (tmp && !Dom.isBlock(tmp, editor.ew)) {
+			if (tmp && !Dom.isBlock(tmp)) {
 				needFindNext = true;
 				last = tmp;
 			}
@@ -322,10 +323,12 @@ export class Dom {
 	/**
 	 * Returns true if it is a DOM node
 	 */
-	static isNode(object: unknown, win?: Window): object is Node {
+	static isNode(object: unknown): object is Node {
 		if (!object) {
 			return false;
 		}
+
+		const win = get<Window>('ownerDocument.defaultView', <object>object);
 
 		if (
 			typeof win === 'object' &&
@@ -341,25 +344,21 @@ export class Dom {
 
 	/**
 	 *  Check if element is table cell
-	 *
 	 * @param elm
-	 * @param win
 	 */
-	static isCell(elm: unknown, win: Window): elm is HTMLTableCellElement {
-		return Dom.isNode(elm, win) && /^(td|th)$/i.test(elm.nodeName);
+	static isCell(elm: unknown): elm is HTMLTableCellElement {
+		return Dom.isNode(elm) && /^(td|th)$/i.test(elm.nodeName);
 	}
 
 	/**
 	 * Check is element is Image element
 	 *
 	 * @param {Node} elm
-	 * @param {Window} win
 	 * @return {boolean}
 	 */
-	static isImage(elm: unknown, win: Window): elm is HTMLImageElement {
+	static isImage(elm: unknown): elm is HTMLImageElement {
 		return (
-			Dom.isNode(elm, win) &&
-			/^(img|svg|picture|canvas)$/i.test(elm.nodeName)
+			Dom.isNode(elm) && /^(img|svg|picture|canvas)$/i.test(elm.nodeName)
 		);
 	}
 
@@ -369,11 +368,11 @@ export class Dom {
 	 * @param node
 	 * @param win
 	 */
-	static isBlock(node: unknown, win: Window): node is HTMLElement {
+	static isBlock(node: unknown): node is HTMLElement {
 		return (
 			!isVoid(node) &&
 			typeof node === 'object' &&
-			Dom.isNode(node, win) &&
+			Dom.isNode(node) &&
 			consts.IS_BLOCK.test((node as Node).nodeName)
 		);
 	}
@@ -393,17 +392,27 @@ export class Dom {
 	static isElement(
 		node: Node | null | false | EventTarget | object
 	): node is Element {
-		return Boolean(node && (node as Node).nodeType === Node.ELEMENT_NODE);
+		if (!Dom.isNode(node)) {
+			return false;
+		}
+
+		const win = node.ownerDocument?.defaultView;
+
+		return Boolean(win && node.nodeType === Node.ELEMENT_NODE);
 	}
 
 	/**
 	 * Check if element is HTMLElement node
 	 * @param node
 	 */
-	static isHTMLElement(node: unknown, win: Window): node is HTMLElement {
-		return (
-			Dom.isNode(node, win) && node instanceof (win as any).HTMLElement
-		);
+	static isHTMLElement(node: unknown): node is HTMLElement {
+		if (!Dom.isNode(node)) {
+			return false;
+		}
+
+		const win = node.ownerDocument?.defaultView;
+
+		return Boolean(win && node instanceof win.HTMLElement);
 	}
 
 	/**
@@ -423,11 +432,11 @@ export class Dom {
 	/**
 	 * It's block and it can be split
 	 */
-	static canSplitBlock(node: unknown, win: Window): boolean {
+	static canSplitBlock(node: unknown): boolean {
 		return (
 			!isVoid(node) &&
-			node instanceof (win as any).HTMLElement &&
-			Dom.isBlock(node, win) &&
+			Dom.isHTMLElement(node) &&
+			Dom.isBlock(node) &&
 			!/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
 			node.style !== undefined &&
 			!/^(fixed|absolute)/i.test(node.style.position)
@@ -892,9 +901,9 @@ export class Dom {
 	/**
 	 * Move all content to another element
 	 *
-	 * @param {Node} from
-	 * @param {Node} to
-	 * @param {boolean} inStart
+	 * @param from
+	 * @param to
+	 * @param inStart
 	 */
 	static moveContent(from: Node, to: Node, inStart: boolean = false): void {
 		const fragment: DocumentFragment = (

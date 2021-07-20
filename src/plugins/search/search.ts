@@ -496,7 +496,7 @@ export class search extends Plugin {
 								endOffset: null
 							};
 						}
-					} else if (Dom.isBlock(elm, this.j.ew) && sentence !== '') {
+					} else if (Dom.isBlock(elm) && sentence !== '') {
 						sentence = next ? sentence + ' ' : ' ' + sentence;
 					}
 

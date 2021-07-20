@@ -125,7 +125,7 @@ export class paste extends Plugin {
 				text = result;
 			}
 
-			if (isString(text) || Dom.isNode(text, this.j.ew)) {
+			if (isString(text) || Dom.isNode(text)) {
 				this.insertByType(e, text, this.j.o.defaultActionOnPaste);
 			}
 

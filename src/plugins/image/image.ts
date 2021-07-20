@@ -21,7 +21,7 @@ Config.prototype.controls.image = {
 		if (
 			current &&
 			!Dom.isText(current) &&
-			Dom.isHTMLElement(current, editor.ew) &&
+			Dom.isHTMLElement(current) &&
 			(Dom.isTag(current, 'img') || $$('img', current).length)
 		) {
 			sourceImage = Dom.isTag(current, 'img')

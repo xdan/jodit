@@ -375,7 +375,7 @@ export class Delete extends Plugin {
 	private addBRInsideEmptyBlock(node: Node): void {
 		if (
 			node.parentElement !== this.root &&
-			Dom.isBlock(node.parentElement, this.j.ew) &&
+			Dom.isBlock(node.parentElement) &&
 			Dom.each(node.parentElement, Dom.isEmptyTextNode)
 		) {
 			Dom.after(node, this.j.createInside.element('br'));
@@ -436,7 +436,7 @@ export class Delete extends Plugin {
 	private checkTableCell(fakeNode: Node, backspace: boolean): void | true {
 		const cell = fakeNode.parentElement;
 
-		if (Dom.isCell(cell, this.j.ew)) {
+		if (Dom.isCell(cell)) {
 			return true;
 		}
 	}
@@ -475,7 +475,7 @@ export class Delete extends Plugin {
 		const neighbor = findNotEmptyNeighbor(fakeNode, backspace, this.root);
 
 		do {
-			if (prn && Dom.isEmpty(prn) && !Dom.isCell(prn, this.j.ew)) {
+			if (prn && Dom.isEmpty(prn) && !Dom.isCell(prn)) {
 				Dom.after(prn, fakeNode);
 
 				const tmp: Nullable<Node> = Dom.closest(

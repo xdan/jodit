@@ -148,7 +148,7 @@ export class Popup extends UIElement implements IPopup {
 			return getBound;
 		}
 
-		const element = Dom.isHTMLElement(elmUnderCursor, this.ow)
+		const element = Dom.isHTMLElement(elmUnderCursor)
 			? elmUnderCursor
 			: (elmUnderCursor.parentElement as HTMLElement);
 

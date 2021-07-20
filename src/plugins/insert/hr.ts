@@ -26,7 +26,7 @@ export function hr(editor: IJodit): void {
 
 		const block = Dom.closest(
 			elm.parentElement,
-			node => Dom.isBlock(node, editor.ew),
+			Dom.isBlock,
 			editor.editor
 		);
 
@@ -35,12 +35,7 @@ export function hr(editor: IJodit): void {
 			Dom.safeRemove(block);
 		}
 
-		let p = Dom.next(
-			elm,
-			node => Dom.isBlock(node, editor.ew),
-			editor.editor,
-			false
-		);
+		let p = Dom.next(elm, Dom.isBlock, editor.editor, false);
 
 		if (!p) {
 			p = editor.createInside.element(editor.o.enter);

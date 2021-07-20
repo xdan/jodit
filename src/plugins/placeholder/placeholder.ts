@@ -186,12 +186,7 @@ export class placeholder extends Plugin {
 
 		const current = editor.s.current(),
 			wrapper =
-				(current &&
-					Dom.closest(
-						current,
-						n => Dom.isBlock(n, editor.ew),
-						editor.editor
-					)) ||
+				(current && Dom.closest(current, Dom.isBlock, editor.editor)) ||
 				editor.editor;
 
 		const style = editor.ew.getComputedStyle(wrapper);

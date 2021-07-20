@@ -255,7 +255,7 @@ export class link extends Plugin {
 			{ target_checkbox, nofollow_checkbox, url_input } =
 				elements as IDictionary<HTMLInputElement>,
 			currentElement = current,
-			isImageContent = Dom.isImage(currentElement, jodit.ew);
+			isImageContent = Dom.isImage(currentElement);
 
 		let { content_input } = elements as IDictionary<HTMLInputElement>;
 

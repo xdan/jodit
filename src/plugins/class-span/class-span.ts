@@ -36,10 +36,7 @@ Config.prototype.controls.classSpan = {
 				(Dom.closest(
 					current,
 					elm => {
-						return (
-							Dom.isBlock(elm, editor.ew) ||
-							(elm && Dom.isElement(elm))
-						);
+						return Dom.isBlock(elm) || (elm && Dom.isElement(elm));
 					},
 					editor.editor
 				) as HTMLElement) || editor.editor;
@@ -60,12 +57,7 @@ Config.prototype.controls.classSpan = {
 			const currentBpx: HTMLElement =
 				(Dom.closest(
 					current,
-					elm => {
-						return (
-							Dom.isBlock(elm, editor.ew) ||
-							(elm && Dom.isElement(elm))
-						);
-					},
+					elm => Dom.isBlock(elm) || (elm && Dom.isElement(elm)),
 					editor.editor
 				) as HTMLElement) || editor.editor;
 
@@ -136,5 +128,6 @@ export class classSpan extends Plugin {
 		);
 	}
 
-	protected override beforeDestruct(jodit: IJodit): void {}
+	/** @override */
+	protected override beforeDestruct(): void {}
 }

@@ -257,7 +257,7 @@ export class resizeCells extends Plugin {
 		const nextTD = call(
 			this.isRTL ? Dom.prev : Dom.next,
 			this.workCell,
-			elm => Dom.isCell(elm, this.j.ew),
+			Dom.isCell,
 			this.workCell.parentNode as HTMLElement
 		) as HTMLTableCellElement;
 
@@ -374,7 +374,7 @@ export class resizeCells extends Plugin {
 			const prevTD = call(
 				this.isRTL ? Dom.next : Dom.prev,
 				cell,
-				elm => Dom.isCell(elm, this.j.ew),
+				Dom.isCell,
 				cell.parentNode as HTMLElement
 			) as HTMLTableCellElement;
 
@@ -383,7 +383,7 @@ export class resizeCells extends Plugin {
 			const nextTD = call(
 				!this.isRTL ? Dom.next : Dom.prev,
 				cell,
-				elm => Dom.isCell(elm, this.j.ew),
+				Dom.isCell,
 				cell.parentNode as HTMLElement
 			);
 
@@ -468,7 +468,7 @@ export class resizeCells extends Plugin {
 
 						const cell = Dom.up(
 							event.target as HTMLElement,
-							elm => Dom.isCell(elm, this.j.ew),
+							Dom.isCell,
 							table
 						) as HTMLTableCellElement;
 

@@ -35,8 +35,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	get toolbarContainer(): HTMLElement {
 		if (
 			!this.o.fullsize &&
-			(isString(this.o.toolbar) ||
-				Dom.isHTMLElement(this.o.toolbar, this.ow))
+			(isString(this.o.toolbar) || Dom.isHTMLElement(this.o.toolbar))
 		) {
 			return resolveElement(this.o.toolbar, this.o.shadowRoot || this.od);
 		}

@@ -20,11 +20,8 @@ Config.prototype.controls.align = {
 
 		if (current) {
 			const currentBox =
-				Dom.closest(
-					current,
-					node => Dom.isBlock(node, editor.ew),
-					editor.editor
-				) || editor.editor;
+				Dom.closest(current, Dom.isBlock, editor.editor) ||
+				editor.editor;
 
 			let currentValue = css(currentBox, 'text-align').toString();
 
@@ -59,7 +56,7 @@ Config.prototype.controls.align = {
 			const currentBox: HTMLElement =
 				(Dom.closest(
 					current,
-					node => Dom.isBlock(node, editor.ew),
+					Dom.isBlock,
 					editor.editor
 				) as HTMLElement) || editor.editor;
 
@@ -121,7 +118,7 @@ Config.prototype.controls.right = {
  */
 export const clearAlign = (node: Node, editor: IJodit): void => {
 	Dom.each(node, elm => {
-		if (Dom.isHTMLElement(elm, editor.ew)) {
+		if (Dom.isHTMLElement(elm)) {
 			if (elm.style.textAlign) {
 				elm.style.textAlign = '';
 
@@ -145,7 +142,7 @@ export const alignElement = (
 	box: HTMLElement,
 	editor: IJodit
 ): void => {
-	if (Dom.isNode(box, editor.ew) && Dom.isElement(box)) {
+	if (Dom.isNode(box) && Dom.isElement(box)) {
 		clearAlign(box, editor);
 
 		switch (command.toLowerCase()) {
@@ -188,7 +185,7 @@ export function justify(editor: IJodit): void {
 
 			let currentBox = Dom.up(
 				current,
-				node => Dom.isBlock(node, editor.ew),
+				Dom.isBlock,
 				editor.editor
 			) as HTMLElement;
 

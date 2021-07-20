@@ -258,8 +258,7 @@ export class enter extends Plugin {
 		return Boolean(
 			Dom.prev(
 				current,
-				(elm: Node | null) =>
-					Dom.isBlock(elm, editor.ew) || Dom.isImage(elm, editor.ew),
+				elm => Dom.isBlock(elm) || Dom.isImage(elm),
 				editor.editor
 			)
 		);
@@ -269,7 +268,7 @@ export class enter extends Plugin {
 		const editor = this.j,
 			sel = editor.selection;
 
-		if (!Dom.canSplitBlock(currentBox, editor.ew)) {
+		if (!Dom.canSplitBlock(currentBox)) {
 			const br = editor.createInside.element('br');
 
 			sel.insertNode(br, false);

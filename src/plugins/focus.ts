@@ -80,7 +80,7 @@ export function focus(editor: IJodit): void {
 				if (
 					editor.isEditorMode() &&
 					e.target &&
-					Dom.isBlock(e.target as Node, editor.ew) &&
+					Dom.isBlock(e.target) &&
 					!(e.target as HTMLElement).childNodes.length
 				) {
 					if (editor.editor === e.target) {

@@ -18,11 +18,8 @@ Config.prototype.controls.paragraph = {
 
 		if (current && editor.o.textIcons) {
 			const currentBox =
-					Dom.closest(
-						current,
-						node => Dom.isBlock(node, editor.ew),
-						editor.editor
-					) || editor.editor,
+					Dom.closest(current, Dom.isBlock, editor.editor) ||
+					editor.editor,
 				currentValue = currentBox.nodeName.toLowerCase(),
 				list = control.list as IDictionary;
 
@@ -65,11 +62,7 @@ Config.prototype.controls.paragraph = {
 		const current = editor.s.current();
 
 		if (current) {
-			const currentBox = Dom.closest(
-				current,
-				node => Dom.isBlock(node, editor.ew),
-				editor.editor
-			);
+			const currentBox = Dom.closest(current, Dom.isBlock, editor.editor);
 
 			return Boolean(
 				currentBox &&
@@ -86,11 +79,7 @@ Config.prototype.controls.paragraph = {
 		const current = editor.s.current();
 
 		if (current) {
-			const currentBpx = Dom.closest(
-				current,
-				node => Dom.isBlock(node, editor.ew),
-				editor.editor
-			);
+			const currentBpx = Dom.closest(current, Dom.isBlock, editor.editor);
 
 			return Boolean(
 				currentBpx &&

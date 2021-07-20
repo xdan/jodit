@@ -45,9 +45,7 @@ export const Alert = (
 
 	asArray(msg).forEach(oneMessage => {
 		container.appendChild(
-			Dom.isNode(oneMessage, dialog.ow)
-				? oneMessage
-				: dialog.c.fromHTML(oneMessage)
+			Dom.isNode(oneMessage) ? oneMessage : dialog.c.fromHTML(oneMessage)
 		);
 	});
 

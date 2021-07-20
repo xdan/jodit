@@ -26,11 +26,7 @@ Config.prototype.controls.outdent = {
 		const current = editor.s.current();
 
 		if (current) {
-			const currentBox = Dom.closest(
-				current,
-				node => Dom.isBlock(node, editor.ew),
-				editor.editor
-			);
+			const currentBox = Dom.closest(current, Dom.isBlock, editor.editor);
 
 			const key = getKey(editor.o.direction);
 
@@ -80,11 +76,7 @@ export function indent(editor: IJodit): void {
 			editor.s.save();
 
 			let currentBox = current
-				? (Dom.up(
-						current,
-						node => Dom.isBlock(node, editor.ew),
-						editor.editor
-				  ) as HTMLElement)
+				? (Dom.up(current, Dom.isBlock, editor.editor) as HTMLElement)
 				: false;
 
 			const enter = editor.o.enter;

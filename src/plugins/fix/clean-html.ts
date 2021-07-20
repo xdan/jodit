@@ -105,7 +105,7 @@ Config.prototype.controls.eraser = {
 /**
  * Clean HTML after removeFormat and insertHorizontalRule command
  */
-export class cleanHtml extends Plugin<IJodit> {
+export class cleanHtml extends Plugin {
 	/** @override */
 	override buttons: Plugin['buttons'] = [
 		{
@@ -209,7 +209,7 @@ export class cleanHtml extends Plugin<IJodit> {
 
 		if (
 			this.j.o.cleanHTML.fillEmptyParagraph &&
-			Dom.isBlock(nodeElm, this.j.ew) &&
+			Dom.isBlock(nodeElm) &&
 			Dom.isEmpty(nodeElm, /^(img|svg|canvas|input|textarea|form|br)$/)
 		) {
 			const br = this.j.createInside.element('br');
@@ -323,7 +323,7 @@ export class cleanHtml extends Plugin<IJodit> {
 		if (currentNode) {
 			const currentParagraph = Dom.up(
 				currentNode,
-				node => Dom.isBlock(node, editor.ew),
+				Dom.isBlock,
 				editor.editor
 			);
 
@@ -496,16 +496,8 @@ export class cleanHtml extends Plugin<IJodit> {
 			Dom.isTag(node, 'br') &&
 			cleanHtml.hasNotEmptyTextSibling(node) &&
 			!cleanHtml.hasNotEmptyTextSibling(node, true) &&
-			Dom.up(
-				node,
-				node => Dom.isBlock(node, this.j.ew),
-				this.j.editor
-			) !==
-				Dom.up(
-					current,
-					node => Dom.isBlock(node, this.j.ew),
-					this.j.editor
-				)
+			Dom.up(node, Dom.isBlock, this.j.editor) !==
+				Dom.up(current, Dom.isBlock, this.j.editor)
 		) {
 			return true;
 		}

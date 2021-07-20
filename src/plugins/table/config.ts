@@ -172,11 +172,7 @@ Config.prototype.controls.table = {
 				const crnt = editor.s.current();
 
 				if (crnt && editor.s.isCollapsed()) {
-					const block = Dom.closest(
-						crnt,
-						node => Dom.isBlock(node, editor.ew),
-						editor.editor
-					);
+					const block = Dom.closest(crnt, Dom.isBlock, editor.editor);
 
 					if (
 						block &&
