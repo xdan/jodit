@@ -16,11 +16,7 @@ export const getItem = (
 	root: HTMLElement,
 	tag: HTMLTagNames = 'a'
 ): Nullable<HTMLElement> =>
-	Dom.closest(
-		node as Node,
-		elm => Dom.isElement(elm) && Dom.isTag(elm, tag),
-		root
-	);
+	Dom.closest(node as Node, elm => Dom.isTag(elm, tag), root);
 
 export function nativeListeners(this: FileBrowser): void {
 	let dragElement: false | HTMLElement = false;

@@ -80,7 +80,7 @@ Config.prototype.controls.fontsize = {
 			const currentBpx: HTMLElement =
 				(Dom.closest(
 					current,
-					elm => Dom.isBlock(elm) || (elm && Dom.isElement(elm)),
+					Dom.isElement,
 					editor.editor
 				) as HTMLElement) || editor.editor;
 

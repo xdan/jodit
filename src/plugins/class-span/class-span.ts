@@ -35,9 +35,7 @@ Config.prototype.controls.classSpan = {
 			const currentBpx: HTMLElement =
 				(Dom.closest(
 					current,
-					elm => {
-						return Dom.isBlock(elm) || (elm && Dom.isElement(elm));
-					},
+					Dom.isElement,
 					editor.editor
 				) as HTMLElement) || editor.editor;
 
@@ -57,7 +55,7 @@ Config.prototype.controls.classSpan = {
 			const currentBpx: HTMLElement =
 				(Dom.closest(
 					current,
-					elm => Dom.isBlock(elm) || (elm && Dom.isElement(elm)),
+					Dom.isElement,
 					editor.editor
 				) as HTMLElement) || editor.editor;
 
