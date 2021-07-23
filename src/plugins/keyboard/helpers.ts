@@ -18,15 +18,16 @@ export function getSibling(node: Node, backspace: boolean): Nullable<Node> {
  * Returns the nearest non-empty neighbor
  *
  * @param node
- * @param backspace
+ * @param left
+ * @param root
  */
 export function findNotEmptyNeighbor(
 	node: Node,
-	backspace: boolean,
+	left: boolean,
 	root: HTMLElement
 ): Nullable<Node> {
 	return call(
-		backspace ? Dom.prev : Dom.next,
+		left ? Dom.prev : Dom.next,
 		node,
 		n => Boolean(n && (!Dom.isText(n) || trim(n?.nodeValue || '').length)),
 		root

@@ -43,6 +43,7 @@ export const pluginSystem = new PluginSystem();
 export const modules: IDictionary<Function> = {};
 
 export const lang: IDictionary<IDictionary<string>> = {};
+
 export const extendLang = (langs: IDictionary): void => {
 	Object.keys(langs).forEach(key => {
 		if (lang[key]) {

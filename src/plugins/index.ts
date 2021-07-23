@@ -17,6 +17,7 @@ export { color } from './color';
 export { DragAndDrop } from './clipboard/drag-and-drop';
 export { DragAndDropElement } from './clipboard/drag-and-drop-element';
 export { enter } from './keyboard/enter';
+export { KeyArrowOutside } from './keyboard/key-arrow-outside';
 export { errorMessages } from './error-messages/error-messages';
 export { font } from './font';
 export { formatBlock } from './format-block';

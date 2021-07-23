@@ -419,7 +419,7 @@ export class Dom {
 	 * Check element is inline block
 	 * @param node
 	 */
-	static isInlineBlock(node: Node | null | false): boolean {
+	static isInlineBlock(node: Node | null | false): node is HTMLElement {
 		return (
 			Dom.isElement(node) &&
 			!/^(BR|HR)$/i.test(node.tagName) &&
@@ -983,7 +983,7 @@ export class Dom {
 	 * Hide element
 	 * @param node
 	 */
-	static hide(node: HTMLElement | null): void {
+	static hide(node: Nullable<HTMLElement>): void {
 		if (!node) {
 			return;
 		}

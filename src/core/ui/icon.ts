@@ -16,7 +16,7 @@ export class Icon {
 	private static icons: IDictionary<string> = {};
 
 	private static getIcon(name: string): string | undefined {
-		if (/^<svg/i.test(name)) {
+		if (/<svg/i.test(name)) {
 			return name;
 		}
 
