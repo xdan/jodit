@@ -14,6 +14,11 @@ describe('Clean html plugin', function () {
 				],
 
 				[
+					'|<a href="#test">start</a> <span style="background-color: red; color: blue;">test test test|</span>',
+					'start test test test',
+				],
+
+				[
 					'start <strong>test test test|</strong>',
 					'start <strong>test test test</strong> pop ',
 					' pop '
