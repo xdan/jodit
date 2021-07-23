@@ -9,6 +9,16 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.7.3
+
+#### :house: Internal
+
+* `Dom` refactoring: from `isNode`,`isElement`,`isHTMLElement` removed `Window` argument.
+
+#### :rocket: New Feature
+
+* Added `KeyArrowOutside`, allowing to go outside of an inline element if there is no other element after that.
+
 ## 3.7.1
 
 #### :boom: Breaking Change
