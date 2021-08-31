@@ -13,7 +13,6 @@ interface ComponentCompatible {
 
 /**
  * Safe access to ClassName
- * @param elm
  */
 const cn = (elm: ComponentCompatible): string | number => {
 	return isFunction(elm.className) ? elm.className() : NaN;
@@ -21,7 +20,7 @@ const cn = (elm: ComponentCompatible): string | number => {
 
 /**
  * Decorate components and set status isReady after constructor
- * @param constructorFunction
+ * @param constructorFunction - Component constructor class
  */
 export function component<T extends ComponentCompatible>(
 	constructorFunction: T

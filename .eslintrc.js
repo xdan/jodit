@@ -8,7 +8,7 @@
 module.exports = {
 	root: true,
 	parser: '@typescript-eslint/parser',
-	plugins: ['@typescript-eslint', 'header'],
+	plugins: ['@typescript-eslint', 'header', 'eslint-plugin-tsdoc'],
 	extends: [
 		'eslint:recommended',
 		'plugin:prettier/recommended',
@@ -20,6 +20,7 @@ module.exports = {
 		node: true
 	},
 	rules: {
+		'tsdoc/syntax': 'warn',
 		strict: ['error', 'never'],
 		'no-with': 'error',
 		'no-caller': 'error',

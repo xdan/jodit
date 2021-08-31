@@ -178,7 +178,6 @@ Config.prototype.controls.brush = {
 
 /**
  * Process commands `background` and `forecolor`
- * @param {Jodit} editor
  */
 export function color(editor: IJodit): void {
 	editor.registerButton({

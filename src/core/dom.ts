@@ -364,11 +364,9 @@ export class Dom {
 
 	/**
 	 * Check the `node` is a block element
-	 *
-	 * @param node
-	 * @param win
+	 * @param node - Object to check
 	 */
-	static isBlock(node: unknown): node is HTMLElement {
+	static isBlock(node: unknown): node is HTMLDivElement {
 		return (
 			!isVoid(node) &&
 			typeof node === 'object' &&

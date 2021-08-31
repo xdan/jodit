@@ -159,10 +159,9 @@ export class Select {
 	/**
 	 * Insert the cursor toWYSIWYG any point x, y
 	 *
-	 * @method insertAtPoint
-	 * @param {int} x Coordinate by horizontal
-	 * @param {int} y Coordinate by vertical
-	 * @return boolean Something went wrong
+	 * @param x - Coordinate by horizontal
+	 * @param y - Coordinate by vertical
+	 * @returns false - Something went wrong
 	 */
 	insertCursorAtPoint(x: number, y: number): boolean {
 		this.removeMarkers();

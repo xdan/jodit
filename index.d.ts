@@ -19,6 +19,20 @@ declare global {
 		component: Nullable<IComponent>;
 	}
 
+	interface CaretPosition {
+		offsetNode: Node;
+		offset: number;
+	}
+
+	interface Document {
+		caretPositionFromPoint?(x: number, y: number): CaretPosition;
+		caretRangeFromPoint(x: number, y: number): Range;
+	}
+
+	interface ShadowRoot {
+		getSelection(): ReturnType<Window['getSelection']>;
+	}
+
 	interface Function {
 		originalConstructor: Function;
 	}

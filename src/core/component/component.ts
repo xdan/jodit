@@ -21,6 +21,9 @@ const StatusListHandlers: Map<
 	IDictionary<CallableFunction[]>
 > = new Map();
 
+/**
+ * The base class of all Jodit UI components. Provides work with a life cycle.
+ */
 export abstract class Component implements IComponent {
 	static STATUSES = STATUSES;
 
@@ -29,7 +32,7 @@ export abstract class Component implements IComponent {
 
 	/**
 	 * Calc BEM element class name
-	 * @param elementName
+	 * @param elementName - element name in the bem classification
 	 */
 	getFullElName(elementName: string): string;
 	getFullElName(elementName: string, mod: string): string;
@@ -101,8 +104,8 @@ export abstract class Component implements IComponent {
 	 * this?.a?.b?.c?.e?.g?.color
 	 * ```
 	 *
-	 * @param chain
-	 * @param obj
+	 * @param chain - the path to be traversed in the obj object
+	 * @param obj - the object in which the value is searched
 	 */
 	get<T>(chain: string, obj?: IDictionary): Nullable<T> {
 		return get<T>(chain, obj || this);
@@ -123,7 +126,8 @@ export abstract class Component implements IComponent {
 	}
 
 	/**
-	 * Component is destructing
+	 * The component is currently undergoing destructuring or has already been destroyed.
+	 * Those. you should not hang new events on him now or do anything else with him.
 	 */
 	get isInDestruct(): boolean {
 		return (
@@ -134,7 +138,6 @@ export abstract class Component implements IComponent {
 
 	/**
 	 * Bind destructor to come View
-	 * @param jodit
 	 */
 	bindDestruct(jodit: IViewBased): this {
 		const destructMe = () => {
@@ -188,7 +191,8 @@ export abstract class Component implements IComponent {
 
 	/**
 	 * Set component status
-	 * @param componentStatus
+	 * @param componentStatus - component status
+	 * @see ComponentStatus
 	 */
 	setStatus(componentStatus: ComponentStatus): void {
 		return this.setStatusComponent(componentStatus, this);
@@ -196,10 +200,6 @@ export abstract class Component implements IComponent {
 
 	/**
 	 * Set status recursively on all parents
-	 *
-	 * @param componentStatus
-	 * @param component
-	 * @private
 	 */
 	private setStatusComponent(
 		componentStatus: ComponentStatus,
@@ -228,10 +228,10 @@ export abstract class Component implements IComponent {
 	}
 
 	/**
-	 * Add hook on status
+	 * Adds a handler for changing the component's status
 	 *
-	 * @param status
-	 * @param callback
+	 * @param status - the status at which the callback is triggered
+	 * @param callback - a function that will be called when the status is `status`
 	 */
 	hookStatus(
 		status: ComponentStatus,
