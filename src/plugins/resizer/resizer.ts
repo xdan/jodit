@@ -18,7 +18,7 @@ import {
 	css,
 	offset,
 	innerWidth,
-	markOwner
+	markOwner,
 } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { eventEmitter } from '../../core/global';
@@ -218,13 +218,31 @@ export class resizer extends Plugin {
 		);
 	}
 
+	private getWorkplacePosition(): IBound {
+		return offset(
+			(this.rect.parentNode || this.j.od.documentElement) as HTMLElement,
+			this.j,
+			this.j.od,
+			true
+		);
+	}
+
 	private onResize = (e: MouseEvent) => {
 		if (this.isResized) {
-			const diff_x = e.clientX - this.start_x,
-				diff_y = e.clientY - this.start_y;
 
 			if (!this.element) {
 				return;
+			}
+
+			let diff_x, diff_y;
+
+			if (this.j.options.iframe) {
+				const workplacePosition = this.getWorkplacePosition();
+				diff_x = e.clientX + workplacePosition.left - this.start_x;
+				diff_y = e.clientY + workplacePosition.top - this.start_y;
+			} else {
+				diff_x = e.clientX - this.start_x;
+				diff_y = e.clientY - this.start_y;
 			}
 
 			const className = this.handle.className;
@@ -421,14 +439,8 @@ export class resizer extends Plugin {
 		}
 
 		if (this.element && this.rect) {
-			const workplacePosition: IBound = offset(
-					(this.rect.parentNode ||
-						this.j.od.documentElement) as HTMLElement,
-					this.j,
-					this.j.od,
-					true
-				),
-				pos: IBound = offset(this.element, this.j, this.j.ed),
+			const workplacePosition = this.getWorkplacePosition();
+			const pos: IBound = offset(this.element, this.j, this.j.ed),
 				left: number = parseInt(this.rect.style.left || '0', 10),
 				top: number = parseInt(this.rect.style.top || '0', 10),
 				w: number = this.rect.offsetWidth,
