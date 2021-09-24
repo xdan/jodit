@@ -202,7 +202,7 @@ module.exports = {
 	'There are no files': '파일이 없어요',
 	Rename: '이름 변경',
 	'Enter new name': '새 이름 입력',
-	preview: '리미보기',
+	preview: '미리보기',
 	download: '다운로드',
 	'Paste from clipboard': '클립보드 붙여넣기',
 	"Your browser doesn't support direct access to the clipboard.":
@@ -212,14 +212,14 @@ module.exports = {
 	'Border radius': '둥근 테두리',
 	'Show all': '모두 보기',
 	Apply: '적용',
-	'Please fill out this field': '이 분야',
-	'Please enter a web address': '를 입력하십시오.웹 주소',
+	'Please fill out this field': '이 항목을 입력해주세요!',
+	'Please enter a web address': '웹 URL을 입력해주세요.',
 	Default: '기본',
 	Circle: '원',
 	Dot: '점',
-	Quadrate: '정방형',
+	Quadrate: '정사각형',
 	Find: '찾기',
 	'Find Previous': '이전 찾기',
 	'Find Next': '다음 찾기',
-	'Insert className': '수업 이름 삽입'
+	'Insert className': 'className 입력'
 };
