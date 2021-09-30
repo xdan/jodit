@@ -4,35 +4,25 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { CanUndef, IStyle } from '../../../../types';
-import {
-	css,
-	each,
-	isPlainObject,
-	isVoid,
-	normalizeCssValue
-} from '../../../helpers';
+import type { IStyle } from '../../../../types';
+import { css, isVoid, normalizeCssValue } from '../../../helpers';
 import { Dom } from '../../../dom';
 
 /**
- * Element has all rules
+ * Element has the same styles as in the commit
  */
-export function elementHasSameStyle(
-	elm: Node,
-	rules: CanUndef<IStyle>
-): boolean {
+export function elementHasSameStyle(elm: Node, rules: IStyle): boolean {
 	return Boolean(
-		isPlainObject(rules) &&
-			!Dom.isTag(elm, 'font') &&
+		!Dom.isTag(elm, 'font') &&
 			Dom.isHTMLElement(elm) &&
-			each(rules, (property, checkValue) => {
+			Object.keys(rules).forEach(property => {
 				const value = css(elm, property, true);
 
 				return (
 					!isVoid(value) &&
 					value !== '' &&
-					!isVoid(checkValue) &&
-					normalizeCssValue(property, checkValue)
+					!isVoid(rules[property]) &&
+					normalizeCssValue(property, rules[property] as string)
 						.toString()
 						.toLowerCase() === value.toString().toLowerCase()
 				);

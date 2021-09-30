@@ -15,7 +15,7 @@ export function postProcessListElement(
 	style: CommitStyle,
 	wrapper: HTMLElement,
 	ci: ICreate
-): void {
+): HTMLElement {
 	// Add extra LI inside UL/OL
 	if (
 		/^(OL|UL)$/i.test(style.element) &&
@@ -25,7 +25,9 @@ export function postProcessListElement(
 			ul = Dom.wrap(li, style.element, ci);
 
 		if (ul) {
-			wrapper = ul;
+			return ul;
 		}
 	}
+
+	return wrapper;
 }

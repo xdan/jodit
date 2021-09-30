@@ -9,14 +9,16 @@ import { isNormalNode } from './is-normal-node';
 import { elementHasSameStyle } from './element-has-same-style';
 
 /**
- * This element is suitable for options
+ * Checks if an item is suitable for applying a commit. The element suits us if it
+ *  - has the same styles as in the commit (commitStyle.options.style)
+ *  - has the same tag as in the commit (commitStyle.options.element)
  *
- * @param style
- * @param elm
- * @param [strict]
+ * @param commitStyle - style commit
+ * @param elm - checked item
+ * @param strict - strict mode - false - the default tag is suitable for us if it is also in the commit
  */
 export function isSuitElement(
-	style: CommitStyle,
+	commitStyle: CommitStyle,
 	elm: Nullable<Node>,
 	strict: boolean = true
 ): elm is HTMLElement {
@@ -24,9 +26,12 @@ export function isSuitElement(
 		return false;
 	}
 
-	const { element, elementIsDefault, options } = style;
+	const { element, elementIsDefault, options } = commitStyle;
 
-	const elmHasSameStyle = elementHasSameStyle(elm, options.style);
+	const elmHasSameStyle = Boolean(
+		options.style && elementHasSameStyle(elm, options.style)
+	);
+
 	const elmIsSame = elm.nodeName.toLowerCase() === element;
 
 	return (

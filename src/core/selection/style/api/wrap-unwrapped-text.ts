@@ -53,12 +53,12 @@ export function wrapUnwrappedText(
 	range.setEndAfter(end);
 	const fragment = range.extractContents();
 
-	const wrapper = ci.element(style.element);
+	let wrapper = ci.element(style.element);
 	wrapper.appendChild(fragment);
 	range.insertNode(wrapper);
 
 	if (style.elementIsBlock) {
-		postProcessListElement(style, wrapper, ci);
+		wrapper = postProcessListElement(style, wrapper, ci);
 
 		if (
 			Dom.isEmpty(wrapper) &&
