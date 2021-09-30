@@ -23,9 +23,6 @@ process.argv
 		args[res[1]] = res[2];
 	});
 
-// const gulptasks = require(path.resolve(cwd, './gulpfile'));
-// gulptasks.watch();
-
 const config = require(path.resolve(cwd, './webpack.config'))(
 	[],
 	{

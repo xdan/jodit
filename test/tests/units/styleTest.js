@@ -6,12 +6,53 @@
 describe('Test Style module', function () {
 	let editor;
 
-	const Style = Jodit.ns.Style;
+	const Style = Jodit.ns.CommitStyle;
 
 	beforeEach(function () {
 		editor = getJodit();
 		editor.value = '<p>test</p>';
 		editor.execCommand('selectall');
+	});
+
+	describe('Base apply', () => {
+		[
+			[
+				'<p>|test|</p>',
+				{ element: 'strong' },
+				'<p>|<strong>test</strong>|</p>'
+			],
+			[
+				'<p>test|</p>',
+				{ element: 'strong' },
+				'<p>test<strong>|</strong></p>'
+			],
+			[
+				'<p><strong>|test|</strong></p>',
+				{ element: 'strong' },
+				'<p>|test|</p>'
+			],
+			[
+				'<p><strong>te|s|t</strong></p>',
+				{ element: 'strong' },
+				'<p><strong>te</strong>|s|<strong>t</strong></p>'
+			]
+		].forEach(([input, opt, output]) => {
+			describe(`For selection ${input} apply style ${JSON.stringify(
+				opt
+			)}`, () => {
+				it(`Should get ${output}`, function () {
+					editor.value = input;
+					setCursorToChar(editor);
+
+					const style = new Style(opt);
+
+					style.apply(editor);
+					replaceCursorToChar(editor);
+
+					expect(sortAttributes(editor.value)).equals(output);
+				});
+			});
+		});
 	});
 
 	describe('Apply style', function () {
@@ -844,6 +885,44 @@ describe('Test Style module', function () {
 });
 
 describe('Test Selection.applyStyle method', function () {
+	describe('Color command', function () {
+		[
+			[
+				'<p>test|<u>test</u>|test</p>',
+				'<p>test<u style="color:#FFF000">test</u>test</p>'
+			],
+			[
+				'<p><u>|test|</u></p>',
+				'<p><u style="color:#FFF000">test</u></p>'
+			],
+			[
+				'<p>|<u>test</u>|</p>',
+				'<p><u style="color:#FFF000">test</u></p>'
+			],
+			[
+				'<p><u>|tes|t</u></p>',
+				'<p><u><span style="color:#FFF000">tes</span>t</u></p>'
+			],
+			[
+				'<p><strong>|test|</strong></p>',
+				'<p><strong style="color:#FFF000">test</strong></p>'
+			]
+		].forEach(([value, result]) => {
+			describe('For ' + value, function () {
+				it('should result ' + result, function () {
+					const editor = getJodit();
+
+					editor.value = value;
+					setCursorToChar(editor);
+
+					editor.execCommand('forecolor', null, '#fff000');
+
+					expect(sortAttributes(editor.value)).equals(result);
+				});
+			});
+		});
+	});
+
 	describe('Bold command', function () {
 		describe('For box with style="font-weight:bold"', function () {
 			it('should wrap selected text in STRONG element without questions', function () {

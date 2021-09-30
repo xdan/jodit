@@ -35,7 +35,7 @@ import * as Helpers from '../core/helpers/';
 export { Helpers };
 export { ImageEditor } from './image-editor/image-editor';
 export { Observer } from './observer/observer';
-export { Select, Style } from '../core/selection';
+export { Select, CommitStyle } from '../core/selection';
 export { Snapshot } from './observer/snapshot';
 export { StatusBar } from './status-bar/status-bar';
 export { Table } from './table';

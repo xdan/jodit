@@ -11,13 +11,50 @@
 
 ## 3.7.3
 
-#### :house: Internal
+#### :boom: Breaking Change
+
+* Rename `Style` to `CommitStyle`
+```js
+const editor = Jodit.make('#editor');
+
+const style = new Jodit.ns.CommitStyle({
+	style: {
+		color: 'red'
+	}
+});
+
+editor.execCommand('selectall');
+style.apply(editor);
+```
 
 * `Dom` refactoring: from `isNode`,`isElement`,`isHTMLElement` removed `Window` argument.
+
+Before
+```js
+const editor = Jodit.make('#editor', {iframe: true});
+Dom.isNode({}, editor.ow)// false
+Dom.isNode(document.body, window)// true
+Dom.isNode(document.body, editor.ow)// true
+Dom.isNode(editor.od.body, editor.ow)// true
+Dom.isNode(editor.ed.body, editor.ow)// false
+```
+Now
+```js
+const editor = Jodit.make('#editor', {iframe: true});
+Dom.isNode({})// false
+Dom.isNode(document.body)// true
+Dom.isNode(document.body)// true
+Dom.isNode(editor.od.body)// true
+Dom.isNode(editor.ed.body)// true
+```
 
 #### :rocket: New Feature
 
 * Added `KeyArrowOutside`, allowing to go outside of an inline element if there is no other element after that.
+
+#### :bug: Bug Fix
+
+* [Eraser delete "<a>" tag! #705](https://github.com/xdan/jodit/issues/705)
 
 ## 3.7.1
 

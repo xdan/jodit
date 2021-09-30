@@ -33,7 +33,7 @@ import {
 	call,
 	toArray
 } from '../helpers';
-import { Style } from './style/style';
+import { CommitStyle } from './style/commit-style';
 import { autobind } from '../decorators';
 
 type WindowSelection = Selection | null;
@@ -196,29 +196,34 @@ export class Select {
 
 	/**
 	 * Define element is selection helper
-	 * @param elm
 	 */
-	isMarker = (elm: Node): boolean =>
-		Dom.isNode(elm) &&
-		Dom.isTag(elm, 'span') &&
-		elm.hasAttribute('data-' + consts.MARKER_CLASS);
+	static isMarker(elm: Node): boolean {
+		return (
+			Dom.isNode(elm) &&
+			Dom.isTag(elm, 'span') &&
+			elm.hasAttribute('data-' + consts.MARKER_CLASS)
+		);
+	}
 
 	/**
 	 * Check if editor has selection markers
 	 */
 	get hasMarkers(): boolean {
-		return Boolean(
-			$$('span[data-' + consts.MARKER_CLASS + ']', this.area).length
-		);
+		return Boolean(this.markers.length);
+	}
+
+	/**
+	 * Check if editor has selection markers
+	 */
+	get markers(): HTMLElement[] {
+		return $$('span[data-' + consts.MARKER_CLASS + ']', this.area);
 	}
 
 	/**
 	 * Remove all markers
 	 */
 	removeMarkers(): void {
-		$$('span[data-' + consts.MARKER_CLASS + ']', this.area).forEach(
-			Dom.safeRemove
-		);
+		this.markers.forEach(Dom.safeRemove);
 	}
 
 	/**
@@ -768,7 +773,7 @@ export class Select {
 						node &&
 						node !== this.area &&
 						!Dom.isEmptyTextNode(node) &&
-						!this.isMarker(node as HTMLElement)
+						!Select.isMarker(node as HTMLElement)
 					) {
 						nodes.push(node);
 					}
@@ -1000,6 +1005,7 @@ export class Select {
 
 		if (!start) {
 			const fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
+
 			if (!/^(img|br|input)$/i.test(last.nodeName)) {
 				last.appendChild(fakeNode);
 				last = fakeNode;
@@ -1140,7 +1146,7 @@ export class Select {
 				if (
 					font.firstChild &&
 					font.firstChild === font.lastChild &&
-					this.isMarker(font.firstChild)
+					Select.isMarker(font.firstChild)
 				) {
 					return;
 				}
@@ -1169,6 +1175,66 @@ export class Select {
 	}
 
 	/**
+	 * Wrap all selected fragments inside Tag or apply some callback
+	 */
+	*wrapInTagGen(): Generator<HTMLElement> {
+		if (this.isCollapsed()) {
+			const font = this.jodit.createInside.element('font');
+			this.insertNode(font, false, false);
+
+			const [marker] = this.markers;
+			if (marker) {
+				font.appendChild(marker);
+			} else {
+				this.setCursorIn(font);
+				this.save();
+			}
+
+			yield font;
+			Dom.unwrap(font);
+
+			return;
+		}
+
+		// fix issue https://github.com/xdan/jodit/issues/65
+		$$('*[style*=font-size]', this.area).forEach(elm =>
+			attr(elm, 'data-font-size', elm.style.fontSize.toString())
+		);
+
+		if (!this.isCollapsed()) {
+			this.j.nativeExecCommand('fontsize', false, '7');
+		} else {
+			const font = this.j.createInside.element('font');
+			attr(font, 'size', 7);
+			this.insertNode(font, false, false);
+		}
+
+		$$('*[data-font-size]', this.area).forEach(elm => {
+			const fontSize = attr(elm, 'data-font-size');
+
+			if (fontSize) {
+				elm.style.fontSize = fontSize;
+				attr(elm, 'data-font-size', null);
+			}
+		});
+
+		const elms = $$('font[size="7"]', this.area);
+
+		for (const font of elms) {
+			if (
+				font.firstChild &&
+				font.firstChild === font.lastChild &&
+				Select.isMarker(font.firstChild)
+			) {
+				continue;
+			}
+
+			yield font;
+			Dom.unwrap(font);
+		}
+	}
+
+	/**
 	 * Apply some css rules for all selections. It method wraps selections in nodeName tag.
 	 *
 	 * @param cssRules
@@ -1193,7 +1259,7 @@ export class Select {
 			defaultTag?: HTMLTagNames;
 		} = {}
 	): void {
-		const styleElm = new Style({
+		const styleElm = new CommitStyle({
 			style,
 			element: options.element,
 			className: options.className,

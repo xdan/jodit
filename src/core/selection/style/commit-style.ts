@@ -8,7 +8,7 @@ import type { HTMLTagNames, IJodit, IStyleOptions } from '../../../types';
 import { IS_BLOCK } from '../../constants';
 import { ApplyStyle } from './apply-style';
 
-export class Style {
+export class CommitStyle {
 	get element(): HTMLTagNames {
 		return this.options.element || this.defaultTag;
 	}
@@ -37,7 +37,6 @@ export class Style {
 	constructor(readonly options: IStyleOptions) {}
 
 	apply(jodit: IJodit): void {
-		const applyStyle = new ApplyStyle(jodit, this);
-		applyStyle.apply();
+		ApplyStyle(jodit, this);
 	}
 }

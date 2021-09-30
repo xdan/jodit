@@ -4,5 +4,5 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from './style/style';
+export * from './style/commit-style';
 export * from './select';

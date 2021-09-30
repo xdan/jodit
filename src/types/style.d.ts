@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { CanUndef, HTMLTagNames, IDictionary } from './types';
+import { CanUndef, HTMLTagNames, IDictionary, Nullable } from './types';
 
 export type StyleValue = number | string | null | undefined;
 

@@ -17,7 +17,7 @@ import {
 	IS_INLINE,
 	INSEPARABLE_TAGS
 } from '../../core/constants';
-import { Dom } from '../../modules';
+import { Dom, Select } from '../../modules';
 import { isString, keys, trim } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { autobind, debounce } from '../../core/decorators';
@@ -507,7 +507,7 @@ export class cleanHtml extends Plugin {
 			current != null &&
 			Dom.isElement(node) &&
 			node.nodeName.match(IS_INLINE) != null &&
-			!this.j.s.isMarker(node) &&
+			!Select.isMarker(node) &&
 			trim((node as Element).innerHTML).length === 0 &&
 			!Dom.isOrContains(node, current)
 		);

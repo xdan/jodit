@@ -9,6 +9,7 @@ import { Plugin } from '../../core/plugin';
 import { Dom } from '../../core/dom';
 import { isString } from '../../core/helpers/checker';
 import { autobind } from '../../core/decorators';
+import { Select } from '../../core/selection';
 
 /**
  * Wrap single text nodes in block wrapper
@@ -84,7 +85,7 @@ export class WrapTextNodes extends Plugin {
 	 */
 	private isSuitableStart = (n: Nullable<Node>): boolean =>
 		(Dom.isText(n) && isString(n.nodeValue) && /[^\s]/.test(n.nodeValue)) ||
-		(this.isNotClosed(n) && !this.jodit.selection.isMarker(n));
+		(this.isNotClosed(n) && !Select.isMarker(n));
 
 	/**
 	 * Node should add in block element

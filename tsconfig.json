@@ -8,6 +8,7 @@
 		"strict": true,
 		"alwaysStrict": true,
 
+		"downlevelIteration": true,
 		"strictNullChecks": true,
 		"strictFunctionTypes": true,
 		"strictBindCallApply": true,

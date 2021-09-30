@@ -5,6 +5,7 @@
  */
 
 /* eslint no-unused-vars: 0 */
+/* eslint-disable tsdoc/syntax */
 
 typeof window.chai !== 'undefined' &&
 	(function () {
@@ -959,6 +960,22 @@ function setCursorToChar(editor, char = '|') {
 
 		return true;
 	}
+
+	return false;
+}
+
+/**
+ * Set cursor inside editor by some char
+ *
+ * @param {Jodit} editor
+ * @param {string} [char]
+ * @return boolean
+ */
+function replaceCursorToChar(editor, char = '|') {
+	editor.s.save();
+	editor.s.markers.forEach(m => {
+		Jodit.modules.Dom.after(m, editor.createInside.text(char));
+	});
 
 	return false;
 }

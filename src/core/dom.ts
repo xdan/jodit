@@ -17,6 +17,7 @@ import {
 	asArray,
 	css,
 	dataBind,
+	error,
 	get,
 	isArray,
 	isFunction,
@@ -115,17 +116,17 @@ export class Dom {
 		current: Node,
 		tag: K,
 		create: ICreate
-	): Nullable<HTMLElementTagNameMap[K]>;
+	): HTMLElementTagNameMap[K];
 
 	static wrap(
 		current: Node,
 		tag: HTMLElement | HTMLTagNames,
 		create: ICreate
-	): Nullable<HTMLElement> {
+	): HTMLElement {
 		const wrapper = isString(tag) ? create.element(tag) : tag;
 
 		if (!current.parentNode) {
-			return null;
+			throw error('Element should be in DOM');
 		}
 
 		current.parentNode.insertBefore(wrapper, current);
