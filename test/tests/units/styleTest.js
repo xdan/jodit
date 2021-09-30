@@ -35,6 +35,34 @@ describe('Test Style module', function () {
 				'<p><strong>te|s|t</strong></p>',
 				{ element: 'strong' },
 				'<p><strong>te</strong>|s|<strong>t</strong></p>'
+			],
+			[
+				'<p>te|s|t</p>',
+				{
+					style: {
+						color: '#fff'
+					}
+				},
+				'<p>te|<span style="color:#FFFFFF">s</span>|t</p>'
+			],
+			[
+				'<p>te|st</p>',
+				{
+					style: {
+						color: '#fff'
+					}
+				},
+				'<p>te<span style="color:#FFFFFF">|</span>st</p>'
+			],
+			[
+				'<p>|test|</p>',
+				{
+					style: {
+						color: 'red',
+						backgroundColor: 'yellow'
+					}
+				},
+				'<p>|<span style="background-color:yellow;color:red">test</span>|</p>'
 			]
 		].forEach(([input, opt, output]) => {
 			describe(`For selection ${input} apply style ${JSON.stringify(
@@ -56,21 +84,6 @@ describe('Test Style module', function () {
 	});
 
 	describe('Apply style', function () {
-		it('Should apply style to element', function () {
-			const style = new Style({
-				style: {
-					color: 'red',
-					backgroundColor: 'yellow'
-				}
-			});
-
-			style.apply(editor);
-
-			expect(sortAttributes(editor.value)).equals(
-				'<p><span style="background-color:yellow;color:red">test</span></p>'
-			);
-		});
-
 		describe('For STYLE element', function () {
 			it('Should not apply styles to STYLE element', function () {
 				editor.value =
@@ -211,9 +224,8 @@ describe('Test Style module', function () {
 
 				describe('With same style', function () {
 					it('Should break first SPAN', function () {
-						editor.s.setCursorAfter(
-							editor.editor.firstChild.firstChild
-						);
+						editor.value = '<p>test|</p>';
+						setCursorToChar(editor);
 
 						const style = new Style({
 							style: {
@@ -225,20 +237,25 @@ describe('Test Style module', function () {
 
 						editor.s.insertHTML('stop');
 
+						expect(sortAttributes(editor.value)).equals(
+							'<p>test<span style="font-size:12px">stop</span></p>'
+						);
+
 						style.apply(editor);
 
 						editor.s.insertHTML('elem');
 
+						replaceCursorToChar(editor);
+
 						expect(sortAttributes(editor.value)).equals(
-							'<p>test<span style="font-size:12px">stop</span>elem</p>'
+							'<p>test<span style="font-size:12px">stop</span>elem|</p>'
 						);
 					});
 
 					describe('Without editing', function () {
 						it('Should unwap empty SPAN', function () {
-							editor.s.setCursorAfter(
-								editor.editor.firstChild.firstChild
-							);
+							editor.value = '<p>test|</p>';
+							setCursorToChar(editor);
 
 							const style = new Style({
 								style: {
@@ -260,9 +277,8 @@ describe('Test Style module', function () {
 
 				describe('Apply different styles', function () {
 					it('Should combine all of it', function () {
-						editor.s.setCursorAfter(
-							editor.editor.firstChild.firstChild
-						);
+						editor.value = '<p>test|</p>';
+						setCursorToChar(editor);
 
 						const style = new Style({
 							style: {

@@ -20,7 +20,7 @@ import { elementHasSameStyle } from './element-has-same-style';
 export function isSuitElement(
 	commitStyle: CommitStyle,
 	elm: Nullable<Node>,
-	strict: boolean = true
+	strict: boolean
 ): elm is HTMLElement {
 	if (!elm) {
 		return false;

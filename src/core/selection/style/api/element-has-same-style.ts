@@ -15,7 +15,7 @@ export function elementHasSameStyle(elm: Node, rules: IStyle): boolean {
 	return Boolean(
 		!Dom.isTag(elm, 'font') &&
 			Dom.isHTMLElement(elm) &&
-			Object.keys(rules).forEach(property => {
+			Object.keys(rules).every(property => {
 				const value = css(elm, property, true);
 
 				return (

@@ -20,7 +20,7 @@ export function unwrapChildren(style: CommitStyle, font: HTMLElement): boolean {
 		Dom.find(
 			font.firstChild,
 			(elm: Node | null) => {
-				if (elm && isSuitElement(style, elm as HTMLElement)) {
+				if (elm && isSuitElement(style, elm as HTMLElement, true)) {
 					if (firstElementSuit === undefined) {
 						firstElementSuit = true;
 					}

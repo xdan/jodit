@@ -7,64 +7,86 @@
 import type { CommitStyle } from '../commit-style';
 import { Dom } from '../../../dom';
 import { isSuitElement } from './is-suit-element';
-import { trim } from '../../../helpers';
+import { call, trim } from '../../../helpers';
 import type { Nullable } from '../../../../types';
+import { Select } from '../../select';
 
 /**
- * Check closest suitable wrapper element
+ * If the selection area is inside an element that matches the commit (suitable relative),
+ * but does not completely fill it.
+ * Then the method cuts the parent and leaves itself in a copy of the parent (suitable relative) in the middle.
+ * And returns it copy.
+ *
  * @example
- * `<strong><span>zxc<font>selected</font>dfdsf</span></strong>`
+ * ```html
+ * 	<strong><span>some<font>SELECTED</font>text</span></strong>
+ * 	to
+ * `<strong><span>some</span></strong><strong><span><font>SELECTED</font></span></strong><strong><span>test</span></strong>
+ * ```
  */
 export function getClosestWrapper(
 	style: CommitStyle,
 	font: HTMLElement,
 	root: HTMLElement,
-	range: () => Range
+	getRange: () => Range
 ): Nullable<HTMLElement> {
-	const wrapper = Dom.closest(font, e => isSuitElement(style, e), root);
+	const wrapper = Dom.closest(
+		font,
+		node => isSuitElement(style, node, true),
+		root
+	);
 
 	if (wrapper) {
 		if (style.elementIsBlock) {
 			return wrapper;
 		}
 
-		const leftRange = range();
+		const range = getRange();
 
-		leftRange.setStartBefore(wrapper);
-		leftRange.setEndBefore(font);
+		// Left part
+		const leftEdge = Select.isMarker(font.previousSibling)
+			? font.previousSibling
+			: font;
 
-		const leftFragment = leftRange.extractContents();
+		range.setStartBefore(wrapper);
+		range.setEndBefore(leftEdge);
 
-		if (
-			(!leftFragment.textContent ||
-				!trim(leftFragment.textContent).length) &&
-			leftFragment.firstChild
-		) {
-			Dom.unwrap(leftFragment.firstChild);
-		}
+		extractAndMove(wrapper, range, true);
 
-		if (wrapper.parentNode) {
-			wrapper.parentNode.insertBefore(leftFragment, wrapper);
-		}
+		// Right part
+		const rightEdge = Select.isMarker(font.nextSibling)
+			? font.nextSibling
+			: font;
 
-		leftRange.setStartAfter(font);
-		leftRange.setEndAfter(wrapper);
+		range.setStartAfter(rightEdge);
+		range.setEndAfter(wrapper);
 
-		const rightFragment = leftRange.extractContents();
-
-		// case then marker can be inside fragnment
-		if (
-			(!rightFragment.textContent ||
-				!trim(rightFragment.textContent).length) &&
-			rightFragment.firstChild
-		) {
-			Dom.unwrap(rightFragment.firstChild);
-		}
-
-		Dom.after(wrapper, rightFragment);
+		extractAndMove(wrapper, range, false);
 
 		return wrapper;
 	}
 
 	return null;
+}
+
+/**
+ * Retrieves content before after the selected area, clears it if it is empty, and inserts before after the framed selection
+ */
+function extractAndMove(
+	wrapper: HTMLElement,
+	range: Range,
+	left: boolean
+): void {
+	const fragment = range.extractContents();
+
+	if (
+		(!fragment.textContent || !trim(fragment.textContent).length) &&
+		fragment.firstChild
+	) {
+		Dom.unwrap(fragment.firstChild);
+	}
+
+	if (wrapper.parentNode) {
+		call(left ? Dom.before : Dom.after, wrapper, fragment);
+	}
 }

@@ -197,7 +197,7 @@ export class Select {
 	/**
 	 * Define element is selection helper
 	 */
-	static isMarker(elm: Node): boolean {
+	static isMarker(elm: Nullable<Node>): elm is HTMLElement {
 		return (
 			Dom.isNode(elm) &&
 			Dom.isTag(elm, 'span') &&
@@ -1221,12 +1221,23 @@ export class Select {
 		const elms = $$('font[size="7"]', this.area);
 
 		for (const font of elms) {
+			const { firstChild, lastChild } = font;
+
 			if (
-				font.firstChild &&
-				font.firstChild === font.lastChild &&
-				Select.isMarker(font.firstChild)
+				firstChild &&
+				firstChild === lastChild &&
+				Select.isMarker(firstChild)
 			) {
+				Dom.unwrap(font);
 				continue;
+			}
+
+			if (firstChild && Select.isMarker(firstChild)) {
+				Dom.before(font, firstChild);
+			}
+
+			if (lastChild && Select.isMarker(lastChild)) {
+				Dom.after(font, lastChild);
 			}
 
 			yield font;
