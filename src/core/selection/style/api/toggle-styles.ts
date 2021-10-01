@@ -27,11 +27,14 @@ export function toggleStyles(
 		element
 	} = style;
 
+	const tag = elm.nodeName.toLowerCase(),
+		isStyleCommit = style.elementIsDefault && Dom.isInlineBlock(elm);
+
 	// toggle CSS rules
-	if (styles && elm.nodeName.toLowerCase() === defaultTag) {
+	if (styles && (tag === defaultTag || isStyleCommit)) {
 		Object.keys(styles).forEach(rule => {
 			if (
-				!wrap ||
+				wrap === false ||
 				css(elm, rule) ===
 					normalizeCssValue(rule, styles[rule] as string)
 			) {
@@ -54,12 +57,12 @@ export function toggleStyles(
 
 	const isSuitableInline =
 		!isBlock &&
-		(!attr(elm, 'style') || elm.nodeName.toLowerCase() !== defaultTag);
+		(!attr(elm, 'style') || (tag !== defaultTag && tag === element));
 
-	const isSuitableElement =
-		!isSuitableInline && isBlock && elm.nodeName.toLowerCase() === element;
+	// h1 apply h1
+	const isSameBlockElement = !isSuitableInline && isBlock && tag === element;
 
-	if (isSuitableInline || isSuitableElement) {
+	if (isSuitableInline || isSameBlockElement) {
 		// toggle `<strong>test</strong>` to `test`, and
 		// `<span style="">test</span>` to `test`
 		Dom.unwrap(elm);

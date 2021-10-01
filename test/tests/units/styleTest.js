@@ -17,6 +17,41 @@ describe('Test Style module', function () {
 	describe('Base apply', () => {
 		[
 			[
+				'<ul><li>|1</li><li>2</li><li>3|</li></ul>',
+				{ element: 'h1' },
+				'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>'
+			],
+			[
+				'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>',
+				{ element: 'h1' },
+				'<ul><li>|1</li><li>2</li><li>3|</li></ul>'
+			],
+			[
+				'<p>test|<u>test</u>|test</p>',
+				{ style: { color: '#FFF000' } },
+				'<p>test|<u style="color:#FFF000">test</u>|test</p>'
+			],
+			[
+				'<p><u>|test|</u></p>',
+				{ style: { color: '#FFF000' } },
+				'<p><u style="color:#FFF000">|test|</u></p>'
+			],
+			[
+				'<p>|<u>test</u>|</p>',
+				{ style: { color: '#FFF000' } },
+				'<p>|<u style="color:#FFF000">test</u>|</p>'
+			],
+			[
+				'<p><u>|tes|t</u></p>',
+				{ style: { color: '#FFF000' } },
+				'<p><u>|<span style="color:#FFF000">tes</span>|t</u></p>'
+			],
+			[
+				'<p><strong>|test|</strong></p>',
+				{ style: { color: '#FFF000' } },
+				'<p><strong style="color:#FFF000">|test|</strong></p>'
+			],
+			[
 				'<p>|test|</p>',
 				{ element: 'strong' },
 				'<p>|<strong>test</strong>|</p>'
@@ -901,44 +936,6 @@ describe('Test Style module', function () {
 });
 
 describe('Test Selection.applyStyle method', function () {
-	describe('Color command', function () {
-		[
-			[
-				'<p>test|<u>test</u>|test</p>',
-				'<p>test<u style="color:#FFF000">test</u>test</p>'
-			],
-			[
-				'<p><u>|test|</u></p>',
-				'<p><u style="color:#FFF000">test</u></p>'
-			],
-			[
-				'<p>|<u>test</u>|</p>',
-				'<p><u style="color:#FFF000">test</u></p>'
-			],
-			[
-				'<p><u>|tes|t</u></p>',
-				'<p><u><span style="color:#FFF000">tes</span>t</u></p>'
-			],
-			[
-				'<p><strong>|test|</strong></p>',
-				'<p><strong style="color:#FFF000">test</strong></p>'
-			]
-		].forEach(([value, result]) => {
-			describe('For ' + value, function () {
-				it('should result ' + result, function () {
-					const editor = getJodit();
-
-					editor.value = value;
-					setCursorToChar(editor);
-
-					editor.execCommand('forecolor', null, '#fff000');
-
-					expect(sortAttributes(editor.value)).equals(result);
-				});
-			});
-		});
-	});
-
 	describe('Bold command', function () {
 		describe('For box with style="font-weight:bold"', function () {
 			it('should wrap selected text in STRONG element without questions', function () {

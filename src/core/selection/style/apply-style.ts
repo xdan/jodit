@@ -28,9 +28,9 @@ export function ApplyStyle(jodit: IJodit, style: CommitStyle): void {
 
 	let wrap: Nullable<boolean> = null;
 
-	normalizeNode(sel.area.firstChild); // FF fix for test "commandsTest - Exec command "bold"
-
 	sel.save();
+
+	normalizeNode(sel.area.firstChild); // FF fix for test "commandsTest - Exec command "bold"
 
 	for (const font of jodit.s.wrapInTagGen()) {
 		wrap = applyToElement(style, font, root, rng, ci, wrap);

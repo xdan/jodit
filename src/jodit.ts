@@ -123,8 +123,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Return default timeout period in milliseconds for some debounce or throttle functions.
 	 * By default return {observer.timeout} options
-	 *
-	 * @return {number}
 	 */
 	override get defaultTimeout(): number {
 		return this.options && this.o.observer
@@ -134,7 +132,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/**
 	 * Method wrap usual Has Object in Object helper for prevent deep object merging in options*
-	 * @param object
 	 */
 	static atom<T>(object: T): T {
 		return markAsAtomic(object);
@@ -142,9 +139,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/**
 	 * Factory for creating Jodit instance
-	 *
-	 * @param element
-	 * @param options
 	 */
 	static make(element: HTMLElement | string, options?: object): Jodit {
 		return new Jodit(element, options);
@@ -184,7 +178,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/**
 	 * Container for set/get value
-	 * @type {Storage}
 	 */
 	override readonly storage!: IStorage;
 

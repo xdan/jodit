@@ -154,9 +154,11 @@ describe('Commands Jodit Editor Tests', function () {
 						editor.editor.firstChild.lastChild.firstChild,
 						1
 					);
+
 					editor.s.selectRange(range);
 
 					editor.execCommand('formatBlock', false, 'h1');
+
 					expect(editor.value).equals(
 						'<ul>' +
 							'<li><h1>1</h1></li>' +

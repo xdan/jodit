@@ -7,6 +7,7 @@ import type { Nullable } from '../../../../types';
 import type { CommitStyle } from '../commit-style';
 import { isNormalNode } from './is-normal-node';
 import { elementHasSameStyle } from './element-has-same-style';
+import { Dom } from '../../../dom';
 
 /**
  * Checks if an item is suitable for applying a commit. The element suits us if it
@@ -34,8 +35,16 @@ export function isSuitElement(
 
 	const elmIsSame = elm.nodeName.toLowerCase() === element;
 
-	return (
+	if (
 		((!elementIsDefault || !strict) && elmIsSame) ||
 		(elmHasSameStyle && isNormalNode(elm))
-	);
+	) {
+		return true;
+	}
+
+	if (!elmIsSame && !strict && elementIsDefault && Dom.isInlineBlock(elm)) {
+		return true;
+	}
+
+	return false;
 }

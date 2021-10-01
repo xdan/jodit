@@ -66,11 +66,8 @@ Config.prototype.controls.fullsize = {
 
 /**
  * Process `toggleFullSize` event, and behavior - set/unset fullsize mode
- * @param {Jodit} editor
  */
 export function fullsize(editor: IViewWithToolbar): void {
-	const { container, events } = editor;
-
 	editor.registerButton({
 		name: 'fullsize'
 	});
@@ -81,6 +78,8 @@ export function fullsize(editor: IViewWithToolbar): void {
 		wasToggled = false;
 
 	const resize = () => {
+			const { container, events } = editor;
+
 			if (events) {
 				if (isEnabled) {
 					oldHeight = css(container, 'height', true) as number;
@@ -99,11 +98,13 @@ export function fullsize(editor: IViewWithToolbar): void {
 				}
 			}
 		},
+
 		/**
 		 * Change editor's state between FullSize and normal
-		 * @param enable
 		 */
 		toggle = (enable?: boolean) => {
+			const { container, events } = editor;
+
 			if (!container) {
 				return;
 			}
