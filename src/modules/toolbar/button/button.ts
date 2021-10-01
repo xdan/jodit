@@ -115,6 +115,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		attr(this.button, 'tabIndex', this.state.tabIndex);
 	}
 
+	@watch('state.tooltip')
+	protected override onChangeTooltip(): void {
+		attr(this.button, 'aria-label', this.state.tooltip);
+		super.onChangeTooltip();
+	}
+
 	/** @override */
 	protected override createContainer(): HTMLElement {
 		const cn = this.componentName;

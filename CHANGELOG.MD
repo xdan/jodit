@@ -54,6 +54,7 @@ Dom.isNode(editor.ed.body)// true
 
 #### :bug: Bug Fix
 
+* [Toolbar buttons are not read by screen reader correctly #725](https://github.com/xdan/jodit/issues/725)
 * [Eraser delete "<a>" tag! #705](https://github.com/xdan/jodit/issues/705)
 
 ## 3.7.1
