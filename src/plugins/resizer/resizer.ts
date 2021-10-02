@@ -148,7 +148,7 @@ export class resizer extends Plugin {
 		while (node && node !== editor) {
 			if (Dom.isTag(node, allowResizeTags)) {
 				this.bind(node);
-				this.onClickElement(node, e);
+				this.onClickElement(node);
 				return;
 			}
 
@@ -345,7 +345,7 @@ export class resizer extends Plugin {
 
 	/**
 	 * Bind an edit element toWYSIWYG element
-	 * @param {HTMLElement} element The element that you want toWYSIWYG add a function toWYSIWYG resize
+	 * @param element - The element that you want to add a function toWYSIWYG resize
 	 */
 	@autobind
 	private bind(element: HTMLElement): void {
@@ -417,7 +417,7 @@ export class resizer extends Plugin {
 		}
 	}
 
-	private onClickElement = (element: HTMLElement, e: MouseEvent) => {
+	private onClickElement = (element: HTMLElement) => {
 		if (this.isResized) {
 			return;
 		}

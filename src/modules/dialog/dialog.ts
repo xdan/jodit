@@ -76,9 +76,6 @@ Config.prototype.controls.dialog = {
 
 /**
  * Module to generate dialog windows
- *
- * @param {Object} parent Jodit main object
- * @param {Object} [opt] Extend Options
  */
 @component
 export class Dialog extends ViewWithToolbar implements IDialog {
@@ -87,9 +84,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		return 'Dialog';
 	}
 
-	/**
-	 * @property {HTMLDivElement} resizer
-	 */
 	private resizer!: HTMLElement;
 	override toolbar!: IToolbarCollection;
 

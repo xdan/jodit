@@ -27,11 +27,12 @@ describe('Test interface', function () {
 				expect(getKey(editor.container, 'color-panel')).eq('#E23DAA');
 
 				expect(getKey(document.body, 'color-text')).eq('#222222'); // only for instance
+
 				expect(
 					Jodit.modules.Helpers.normalizeColor(
 						window.getComputedStyle(
 							editor.toolbar.container.parentNode
-						).background
+						).backgroundColor
 					)
 				).eq('#E23DAA'); // only for instance
 			});
