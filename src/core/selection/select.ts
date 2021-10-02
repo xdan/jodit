@@ -1107,75 +1107,6 @@ export class Select {
 
 	/**
 	 * Wrap all selected fragments inside Tag or apply some callback
-	 * @param tagOrCallback
-	 */
-	wrapInTag(
-		tagOrCallback: HTMLTagNames | ((font: HTMLElement) => any)
-	): HTMLElement[] {
-		// fix issue https://github.com/xdan/jodit/issues/65
-		$$('*[style*=font-size]', this.area).forEach((elm: HTMLElement) => {
-			elm.style &&
-				elm.style.fontSize &&
-				elm.setAttribute(
-					'data-font-size',
-					elm.style.fontSize.toString()
-				);
-		});
-
-		if (!this.isCollapsed()) {
-			this.j.nativeExecCommand('fontsize', false, '7');
-		} else {
-			const font = this.j.createInside.element('font');
-			attr(font, 'size', 7);
-			this.insertNode(font, false, false);
-		}
-
-		$$('*[data-font-size]', this.area).forEach((elm: HTMLElement) => {
-			const fontSize = attr(elm, 'data-font-size');
-
-			if (elm.style && fontSize) {
-				elm.style.fontSize = fontSize;
-				elm.removeAttribute('data-font-size');
-			}
-		});
-
-		const result: HTMLElement[] = [];
-
-		$$('font[size="7"]', this.area).forEach((font: HTMLElement) => {
-			try {
-				if (
-					font.firstChild &&
-					font.firstChild === font.lastChild &&
-					Select.isMarker(font.firstChild)
-				) {
-					return;
-				}
-
-				if (isFunction(tagOrCallback)) {
-					tagOrCallback(font);
-				} else {
-					result.push(
-						Dom.replace(font, tagOrCallback, this.j.createInside)
-					);
-				}
-			} finally {
-				const pn = font.parentNode;
-
-				if (pn) {
-					Dom.unwrap(font);
-
-					if (Dom.isEmpty(pn)) {
-						Dom.unwrap(pn);
-					}
-				}
-			}
-		});
-
-		return result;
-	}
-
-	/**
-	 * Wrap all selected fragments inside Tag or apply some callback
 	 */
 	*wrapInTagGen(): Generator<HTMLElement> {
 		if (this.isCollapsed()) {
@@ -1247,6 +1178,47 @@ export class Select {
 			yield font;
 			Dom.unwrap(font);
 		}
+	}
+
+	/**
+	 * Wrap all selected fragments inside Tag or apply some callback
+	 */
+	wrapInTag(
+		tagOrCallback: HTMLTagNames | ((font: HTMLElement) => any)
+	): HTMLElement[] {
+		const result: HTMLElement[] = [];
+
+		for (const font of this.wrapInTagGen()) {
+			try {
+				if (
+					font.firstChild &&
+					font.firstChild === font.lastChild &&
+					Select.isMarker(font.firstChild)
+				) {
+					continue;
+				}
+
+				if (isFunction(tagOrCallback)) {
+					tagOrCallback(font);
+				} else {
+					result.push(
+						Dom.replace(font, tagOrCallback, this.j.createInside)
+					);
+				}
+			} finally {
+				const pn = font.parentNode;
+
+				if (pn) {
+					Dom.unwrap(font);
+
+					if (Dom.isEmpty(pn)) {
+						Dom.unwrap(pn);
+					}
+				}
+			}
+		}
+
+		return result;
 	}
 
 	/**
