@@ -208,6 +208,8 @@ export class link extends Plugin {
 				const embed = convertMediaUrlToVideoEmbed(html);
 
 				if (embed !== html) {
+					jodit.e.stopPropagation('processPaste');
+
 					return jodit.createInside.fromHTML(
 						embed
 					) as HTMLAnchorElement;
