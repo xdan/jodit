@@ -9,7 +9,6 @@ import { isString } from './is-string';
 
 /**
  * Check value is Int
- * @param value
  */
 export function isInt(value: number | string): boolean {
 	if (isString(value) && isNumeric(value)) {

@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.7.2
+ * Version: v3.8.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -848,7 +848,7 @@ var view_with_toolbar_1 = __webpack_require__(166);
 var global_1 = __webpack_require__(30);
 var decorators_1 = __webpack_require__(99);
 var Jodit = (function (_super) {
-    tslib_1.__extends(Jodit, _super);
+    (0, tslib_1.__extends)(Jodit, _super);
     function Jodit(element, options) {
         var _this = _super.call(this, options, true) || this;
         _this.isJodit = true;
@@ -864,7 +864,7 @@ var Jodit = (function (_super) {
         _this.isSilentChange = false;
         _this.elementToPlace = new Map();
         try {
-            helpers_1.resolveElement(element, _this.o.shadowRoot || _this.od);
+            (0, helpers_1.resolveElement)(element, _this.o.shadowRoot || _this.od);
         }
         catch (e) {
             _this.destruct();
@@ -872,7 +872,7 @@ var Jodit = (function (_super) {
         }
         _this.setStatus(modules_1.STATUSES.beforeInit);
         _this.id =
-            helpers_1.attr(helpers_1.resolveElement(element, _this.o.shadowRoot || _this.od), 'id') ||
+            (0, helpers_1.attr)((0, helpers_1.resolveElement)(element, _this.o.shadowRoot || _this.od), 'id') ||
                 new Date().getTime().toString();
         global_1.instances[_this.id] = _this;
         _this.storage = storage_1.Storage.makeStorage(true, _this.id);
@@ -885,10 +885,10 @@ var Jodit = (function (_super) {
         _this.e.on('prepareWYSIWYGEditor', _this.prepareWYSIWYGEditor);
         _this.selection = new modules_1.Select(_this);
         var beforeInitHookResult = _this.beforeInitHook();
-        helpers_1.callPromise(beforeInitHookResult, function () {
+        (0, helpers_1.callPromise)(beforeInitHookResult, function () {
             _this.e.fire('beforeInit', _this);
             var initPluginsResult = global_1.pluginSystem.init(_this);
-            helpers_1.callPromise(initPluginsResult, function () {
+            (0, helpers_1.callPromise)(initPluginsResult, function () {
                 _this.e.fire('afterPluginSystemInit', _this);
                 _this.e.on('changePlace', function () {
                     _this.setReadOnly(_this.o.readonly);
@@ -905,7 +905,7 @@ var Jodit = (function (_super) {
                     _this.setStatus(modules_1.STATUSES.ready);
                     _this.e.fire('afterConstructor', _this);
                 };
-                helpers_1.callPromise(addPlaceResult, init);
+                (0, helpers_1.callPromise)(addPlaceResult, init);
             });
         });
         return _this;
@@ -954,7 +954,7 @@ var Jodit = (function (_super) {
         configurable: true
     });
     Jodit.atom = function (object) {
-        return helpers_1.markAsAtomic(object);
+        return (0, helpers_1.markAsAtomic)(object);
     };
     Jodit.make = function (element, options) {
         return new Jodit(element, options);
@@ -1089,7 +1089,7 @@ var Jodit = (function (_super) {
     Object.defineProperty(Jodit.prototype, "filebrowser", {
         get: function () {
             var jodit = this;
-            var options = helpers_1.ConfigProto({
+            var options = (0, helpers_1.ConfigProto)({
                 defaultTimeout: jodit.defaultTimeout,
                 uploader: jodit.o.uploader,
                 language: jodit.o.language,
@@ -1129,7 +1129,7 @@ var Jodit = (function (_super) {
     });
     Jodit.prototype.getNativeEditorValue = function () {
         var value = this.e.fire('beforeGetNativeEditorValue');
-        if (helpers_1.isString(value)) {
+        if ((0, helpers_1.isString)(value)) {
             return value;
         }
         if (this.editor) {
@@ -1168,7 +1168,7 @@ var Jodit = (function (_super) {
         if (newValue === false) {
             return;
         }
-        if (helpers_1.isString(newValue)) {
+        if ((0, helpers_1.isString)(newValue)) {
             value = newValue;
         }
         if (!this.editor) {
@@ -1177,8 +1177,8 @@ var Jodit = (function (_super) {
             }
             return;
         }
-        if (!helpers_1.isString(value) && !helpers_1.isVoid(value)) {
-            throw helpers_1.error('value must be string');
+        if (!(0, helpers_1.isString)(value) && !(0, helpers_1.isVoid)(value)) {
+            throw (0, helpers_1.error)('value must be string');
         }
         if (value !== undefined && this.getNativeEditorValue() !== value) {
             this.setNativeEditorValue(value);
@@ -1206,8 +1206,8 @@ var Jodit = (function (_super) {
             : this.element.innerHTML;
     };
     Jodit.prototype.setElementValue = function (value) {
-        if (!helpers_1.isString(value) && value !== undefined) {
-            throw helpers_1.error('value must be string');
+        if (!(0, helpers_1.isString)(value) && value !== undefined) {
+            throw (0, helpers_1.error)('value must be string');
         }
         if (value !== undefined) {
             if (this.element !== this.container) {
@@ -1232,7 +1232,7 @@ var Jodit = (function (_super) {
             this.commands[commandName] = [];
         }
         this.commands[commandName].push(command);
-        if (!helpers_1.isFunction(command)) {
+        if (!(0, helpers_1.isFunction)(command)) {
             var hotkeys = this.o.commandToHotkeys[commandName] ||
                 this.o.commandToHotkeys[commandNameOriginal] ||
                 command.hotkeys;
@@ -1245,7 +1245,7 @@ var Jodit = (function (_super) {
     Jodit.prototype.registerHotkeyToCommand = function (hotkeys, commandName, shouldStop) {
         var _this = this;
         if (shouldStop === void 0) { shouldStop = true; }
-        var shortcuts = helpers_1.asArray(hotkeys)
+        var shortcuts = (0, helpers_1.asArray)(hotkeys)
             .map(helpers_1.normalizeKeyAliases)
             .map(function (hotkey) { return hotkey + '.hotkey'; })
             .join(' ');
@@ -1306,7 +1306,7 @@ var Jodit = (function (_super) {
             var result_1;
             var exec = function (command) {
                 var callback;
-                if (helpers_1.isFunction(command)) {
+                if ((0, helpers_1.isFunction)(command)) {
                     callback = command;
                 }
                 else {
@@ -1445,7 +1445,7 @@ var Jodit = (function (_super) {
     Jodit.prototype.afterInitHook = function () {
     };
     Jodit.prototype.initOptions = function (options) {
-        this.options = (helpers_1.ConfigProto(options || {}, config_1.Config.defaultOptions));
+        this.options = ((0, helpers_1.ConfigProto)(options || {}, config_1.Config.defaultOptions));
     };
     Jodit.prototype.initOwners = function () {
         this.editorWindow = this.o.ownerWindow;
@@ -1453,10 +1453,10 @@ var Jodit = (function (_super) {
     };
     Jodit.prototype.addPlace = function (source, options) {
         var _this = this;
-        var element = helpers_1.resolveElement(source, this.o.shadowRoot || this.od);
+        var element = (0, helpers_1.resolveElement)(source, this.o.shadowRoot || this.od);
         this.attachEvents(options);
         if (element.attributes) {
-            helpers_1.toArray(element.attributes).forEach(function (attr) {
+            (0, helpers_1.toArray)(element.attributes).forEach(function (attr) {
                 var name = attr.name;
                 var value = attr.value;
                 if (config_1.Config.defaultOptions[name] !== undefined &&
@@ -1475,6 +1475,11 @@ var Jodit = (function (_super) {
         container.classList.add('jodit');
         container.classList.add('jodit-container');
         container.classList.add("jodit_theme_" + (this.o.theme || 'default'));
+        var styleValues = this.o.styleValues;
+        Object.keys(styleValues).forEach(function (key) {
+            var property = (0, helpers_1.kebabCase)(key);
+            container.style.setProperty("--jd-" + property, styleValues[key]);
+        });
         container.setAttribute('contenteditable', 'false');
         var buffer = null;
         if (this.o.inline) {
@@ -1519,7 +1524,7 @@ var Jodit = (function (_super) {
             workplace: workplace,
             statusbar: statusbar,
             options: this.isReady
-                ? helpers_1.ConfigProto(options || {}, config_1.Config.defaultOptions)
+                ? (0, helpers_1.ConfigProto)(options || {}, config_1.Config.defaultOptions)
                 : this.options,
             observer: new modules_1.Observer(this),
             editorWindow: this.ow
@@ -1541,7 +1546,7 @@ var Jodit = (function (_super) {
             }
             _this.e.fire('afterAddPlace', currentPlace);
         };
-        return helpers_1.callPromise(initResult, init);
+        return (0, helpers_1.callPromise)(initResult, init);
     };
     Jodit.prototype.addDisclaimer = function (elm) {
         this.workplace.appendChild(elm);
@@ -1562,7 +1567,7 @@ var Jodit = (function (_super) {
     Jodit.prototype.initEditor = function (buffer) {
         var _this = this;
         var result = this.createEditor();
-        return helpers_1.callPromise(result, function () {
+        return (0, helpers_1.callPromise)(result, function () {
             if (_this.isInDestruct) {
                 return;
             }
@@ -1605,18 +1610,18 @@ var Jodit = (function (_super) {
         var _this = this;
         var defaultEditorArea = this.editor;
         var stayDefault = this.e.fire('createEditor', this);
-        return helpers_1.callPromise(stayDefault, function () {
+        return (0, helpers_1.callPromise)(stayDefault, function () {
             if (_this.isInDestruct) {
                 return;
             }
-            if (stayDefault === false || helpers_1.isPromise(stayDefault)) {
+            if (stayDefault === false || (0, helpers_1.isPromise)(stayDefault)) {
                 modules_1.Dom.safeRemove(defaultEditorArea);
             }
             if (_this.o.editorCssClass) {
                 _this.editor.classList.add(_this.o.editorCssClass);
             }
             if (_this.o.style) {
-                helpers_1.css(_this.editor, _this.o.style);
+                (0, helpers_1.css)(_this.editor, _this.o.style);
             }
             _this.e
                 .on('synchro', function () {
@@ -1705,7 +1710,7 @@ var Jodit = (function (_super) {
             var container = _a.container, workplace = _a.workplace, statusbar = _a.statusbar, element = _a.element, iframe = _a.iframe, editor = _a.editor, observer = _a.observer;
             if (element !== container) {
                 if (element.hasAttribute(_this.__defaultStyleDisplayKey)) {
-                    var display = helpers_1.attr(element, _this.__defaultStyleDisplayKey);
+                    var display = (0, helpers_1.attr)(element, _this.__defaultStyleDisplayKey);
                     if (display) {
                         element.style.display = display;
                         element.removeAttribute(_this.__defaultStyleDisplayKey);
@@ -1718,11 +1723,11 @@ var Jodit = (function (_super) {
             else {
                 if (element.hasAttribute(_this.__defaultClassesKey)) {
                     element.className =
-                        helpers_1.attr(element, _this.__defaultClassesKey) || '';
+                        (0, helpers_1.attr)(element, _this.__defaultClassesKey) || '';
                     element.removeAttribute(_this.__defaultClassesKey);
                 }
             }
-            if (element.hasAttribute('style') && !helpers_1.attr(element, 'style')) {
+            if (element.hasAttribute('style') && !(0, helpers_1.attr)(element, 'style')) {
                 element.removeAttribute('style');
             }
             !statusbar.isInDestruct && statusbar.destruct();
@@ -1760,13 +1765,13 @@ var Jodit = (function (_super) {
     Jodit.core = {
         Plugin: modules_1.Plugin
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.cache
     ], Jodit.prototype, "uploader", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.cache
     ], Jodit.prototype, "filebrowser", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], Jodit.prototype, "prepareWYSIWYGEditor", null);
     return Jodit;
@@ -1960,7 +1965,7 @@ exports.__createBinding = Object.create ? (function (o, m, k, k2) {
 function __exportStar(m, o) {
     for (var p in m)
         if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p))
-            exports.__createBinding(o, m, p);
+            (0, exports.__createBinding)(o, m, p);
 }
 exports.__exportStar = __exportStar;
 function __values(o) {
@@ -2027,7 +2032,7 @@ function __spreadArray(to, from, pack) {
                 ar[i] = from[i];
             }
         }
-    return to.concat(ar || from);
+    return to.concat(ar || Array.prototype.slice.call(from));
 }
 exports.__spreadArray = __spreadArray;
 function __await(v) {
@@ -2092,7 +2097,7 @@ function __importStar(mod) {
     if (mod != null)
         for (var k in mod)
             if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-                exports.__createBinding(result, mod, k);
+                (0, exports.__createBinding)(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 }
@@ -2160,6 +2165,7 @@ var Config = (function () {
             ? window
             : null);
         this.shadowRoot = null;
+        this.styleValues = {};
         this.zIndex = 0;
         this.readonly = false;
         this.disabled = false;
@@ -2480,7 +2486,7 @@ exports.SPACE_REG_EXP_START = SPACE_REG_EXP_START;
 var SPACE_REG_EXP_END = function () { return /[\s\n\t\r\uFEFF\u200b]+$/g; };
 exports.SPACE_REG_EXP_END = SPACE_REG_EXP_END;
 exports.IS_BLOCK = /^(ARTICLE|SCRIPT|STYLE|OBJECT|FOOTER|HEADER|NAV|SECTION|IFRAME|JODIT|JODIT-MEDIA|PRE|DIV|P|LI|UL|OL|H[1-6]|BLOCKQUOTE|TR|TD|TH|TBODY|THEAD|TABLE|BODY|HTML|FIGCAPTION|FIGURE|DT|DD|DL|DFN)$/i;
-exports.IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB)$/i;
+exports.IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB|A|U)$/i;
 exports.INSEPARABLE_TAGS = [
     'img',
     'br',
@@ -2590,9 +2596,9 @@ exports.BASE_PATH = (function () {
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.PluginSystem = exports.Uploader = exports.ToolbarCollection = exports.ToolbarEditorCollection = exports.Table = exports.StatusBar = exports.Snapshot = exports.Style = exports.Select = exports.Observer = exports.ImageEditor = exports.Helpers = exports.FileBrowser = exports.ViewWithToolbar = exports.View = exports.Icon = exports.ProgressBar = exports.UIBlock = exports.UICheckbox = exports.UITextArea = exports.UIInput = exports.UIForm = exports.UIList = exports.UIGroup = exports.UISeparator = exports.Popup = exports.UIButton = exports.UIElement = exports.Create = exports.Plugin = exports.Dom = exports.Dialog = exports.Prompt = exports.Confirm = exports.Alert = exports.ContextMenu = exports.STATUSES = exports.ViewComponent = exports.Component = exports.Ajax = exports.Async = void 0;
+exports.PluginSystem = exports.Uploader = exports.ToolbarCollection = exports.ToolbarEditorCollection = exports.Table = exports.StatusBar = exports.Snapshot = exports.CommitStyle = exports.Select = exports.Observer = exports.ImageEditor = exports.Helpers = exports.FileBrowser = exports.ViewWithToolbar = exports.View = exports.Icon = exports.ProgressBar = exports.UIBlock = exports.UICheckbox = exports.UITextArea = exports.UIInput = exports.UIForm = exports.UIList = exports.UIGroup = exports.UISeparator = exports.Popup = exports.UIButton = exports.UIElement = exports.Create = exports.Plugin = exports.Dom = exports.Dialog = exports.Prompt = exports.Confirm = exports.Alert = exports.ContextMenu = exports.STATUSES = exports.ViewComponent = exports.Component = exports.Ajax = exports.Async = void 0;
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(11), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(11), exports);
 var async_1 = __webpack_require__(159);
 Object.defineProperty(exports, "Async", ({ enumerable: true, get: function () { return async_1.Async; } }));
 var ajax_1 = __webpack_require__(160);
@@ -2642,19 +2648,19 @@ var observer_1 = __webpack_require__(200);
 Object.defineProperty(exports, "Observer", ({ enumerable: true, get: function () { return observer_1.Observer; } }));
 var selection_1 = __webpack_require__(204);
 Object.defineProperty(exports, "Select", ({ enumerable: true, get: function () { return selection_1.Select; } }));
-Object.defineProperty(exports, "Style", ({ enumerable: true, get: function () { return selection_1.Style; } }));
+Object.defineProperty(exports, "CommitStyle", ({ enumerable: true, get: function () { return selection_1.CommitStyle; } }));
 var snapshot_1 = __webpack_require__(201);
 Object.defineProperty(exports, "Snapshot", ({ enumerable: true, get: function () { return snapshot_1.Snapshot; } }));
-var status_bar_1 = __webpack_require__(208);
+var status_bar_1 = __webpack_require__(220);
 Object.defineProperty(exports, "StatusBar", ({ enumerable: true, get: function () { return status_bar_1.StatusBar; } }));
-var table_1 = __webpack_require__(210);
+var table_1 = __webpack_require__(222);
 Object.defineProperty(exports, "Table", ({ enumerable: true, get: function () { return table_1.Table; } }));
 var editor_collection_1 = __webpack_require__(176);
 Object.defineProperty(exports, "ToolbarEditorCollection", ({ enumerable: true, get: function () { return editor_collection_1.ToolbarEditorCollection; } }));
 var collection_1 = __webpack_require__(174);
 Object.defineProperty(exports, "ToolbarCollection", ({ enumerable: true, get: function () { return collection_1.ToolbarCollection; } }));
-tslib_1.__exportStar(__webpack_require__(211), exports);
-var uploader_1 = __webpack_require__(212);
+(0, tslib_1.__exportStar)(__webpack_require__(223), exports);
+var uploader_1 = __webpack_require__(224);
 Object.defineProperty(exports, "Uploader", ({ enumerable: true, get: function () { return uploader_1.Uploader; } }));
 var plugin_system_1 = __webpack_require__(31);
 Object.defineProperty(exports, "PluginSystem", ({ enumerable: true, get: function () { return plugin_system_1.PluginSystem; } }));
@@ -2673,9 +2679,9 @@ Object.defineProperty(exports, "PluginSystem", ({ enumerable: true, get: functio
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(12), exports);
-tslib_1.__exportStar(__webpack_require__(18), exports);
-tslib_1.__exportStar(__webpack_require__(13), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(12), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(18), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(13), exports);
 
 
 /***/ }),
@@ -2751,7 +2757,7 @@ var EventsNative = (function () {
     };
     EventsNative.prototype.getStore = function (subject) {
         if (!subject) {
-            throw type_1.error('Need subject');
+            throw (0, type_1.error)('Need subject');
         }
         if (subject[this.__key] === undefined) {
             var store = new store_1.EventHandlersStore();
@@ -2809,34 +2815,34 @@ var EventsNative = (function () {
     EventsNative.prototype.on = function (subjectOrEvents, eventsOrCallback, handlerOrSelector, onTop) {
         var _this = this;
         if (onTop === void 0) { onTop = false; }
-        var subject = is_string_1.isString(subjectOrEvents) ? this : subjectOrEvents;
-        var events = is_string_1.isString(eventsOrCallback)
+        var subject = (0, is_string_1.isString)(subjectOrEvents) ? this : subjectOrEvents;
+        var events = (0, is_string_1.isString)(eventsOrCallback)
             ? eventsOrCallback
             : subjectOrEvents;
         var callback = handlerOrSelector;
-        if (callback === undefined && is_function_1.isFunction(eventsOrCallback)) {
+        if (callback === undefined && (0, is_function_1.isFunction)(eventsOrCallback)) {
             callback = eventsOrCallback;
         }
         var store = this.getStore(subject);
-        if (!is_string_1.isString(events) || events === '') {
-            throw type_1.error('Need events names');
+        if (!(0, is_string_1.isString)(events) || events === '') {
+            throw (0, type_1.error)('Need events names');
         }
-        if (!is_function_1.isFunction(callback)) {
-            throw type_1.error('Need event handler');
+        if (!(0, is_function_1.isFunction)(callback)) {
+            throw (0, type_1.error)('Need event handler');
         }
-        if (is_array_1.isArray(subject)) {
+        if ((0, is_array_1.isArray)(subject)) {
             subject.forEach(function (subj) {
                 _this.on(subj, events, callback, onTop);
             });
             return this;
         }
-        var isDOMElement = is_function_1.isFunction(subject.addEventListener), self = this;
+        var isDOMElement = (0, is_function_1.isFunction)(subject.addEventListener), self = this;
         var syntheticCallback = function (event) {
             var args = [];
             for (var _i = 1; _i < arguments.length; _i++) {
                 args[_i - 1] = arguments[_i];
             }
-            return callback && callback.call.apply(callback, tslib_1.__spreadArray([this, event], args));
+            return callback && callback.call.apply(callback, (0, tslib_1.__spreadArray)([this, event], (0, tslib_1.__read)(args), false));
         };
         if (isDOMElement) {
             syntheticCallback = function (event) {
@@ -2851,7 +2857,7 @@ var EventsNative = (function () {
         }
         this.eachEvent(events, function (event, namespace) {
             if (event === '') {
-                throw type_1.error('Need event name');
+                throw (0, type_1.error)('Need event name');
             }
             if (store.indexOf(event, namespace, callback) === false) {
                 var block = {
@@ -2882,12 +2888,12 @@ var EventsNative = (function () {
     EventsNative.prototype.one = function (subjectOrEvents, eventsOrCallback, handlerOrSelector, onTop) {
         var _this = this;
         if (onTop === void 0) { onTop = false; }
-        var subject = is_string_1.isString(subjectOrEvents) ? this : subjectOrEvents;
-        var events = is_string_1.isString(eventsOrCallback)
+        var subject = (0, is_string_1.isString)(subjectOrEvents) ? this : subjectOrEvents;
+        var events = (0, is_string_1.isString)(eventsOrCallback)
             ? eventsOrCallback
             : subjectOrEvents;
         var callback = handlerOrSelector;
-        if (callback === undefined && is_function_1.isFunction(eventsOrCallback)) {
+        if (callback === undefined && (0, is_function_1.isFunction)(eventsOrCallback)) {
             callback = eventsOrCallback;
         }
         var newCallback = function () {
@@ -2896,32 +2902,32 @@ var EventsNative = (function () {
                 args[_i] = arguments[_i];
             }
             _this.off(subject, events, newCallback);
-            callback.apply(void 0, args);
+            callback.apply(void 0, (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(args), false));
         };
         this.on(subject, events, newCallback, onTop);
         return this;
     };
     EventsNative.prototype.off = function (subjectOrEvents, eventsOrCallback, handler) {
         var _this = this;
-        var subject = is_string_1.isString(subjectOrEvents)
+        var subject = (0, is_string_1.isString)(subjectOrEvents)
             ? this
             : subjectOrEvents;
-        var events = is_string_1.isString(eventsOrCallback)
+        var events = (0, is_string_1.isString)(eventsOrCallback)
             ? eventsOrCallback
             : subjectOrEvents;
         var store = this.getStore(subject);
         var callback = handler;
-        if (!is_string_1.isString(events) || !events) {
+        if (!(0, is_string_1.isString)(events) || !events) {
             store.namespaces().forEach(function (namespace) {
                 _this.off(subject, '.' + namespace);
             });
             this.clearStore(subject);
             return this;
         }
-        if (callback === undefined && is_function_1.isFunction(eventsOrCallback)) {
+        if (callback === undefined && (0, is_function_1.isFunction)(eventsOrCallback)) {
             callback = eventsOrCallback;
         }
-        var isDOMElement = is_function_1.isFunction(subject.removeEventListener), removeEventListener = function (block) {
+        var isDOMElement = (0, is_function_1.isFunction)(subject.removeEventListener), removeEventListener = function (block) {
             if (isDOMElement) {
                 subject.removeEventListener(block.event, block.syntheticCallback, false);
             }
@@ -2929,7 +2935,7 @@ var EventsNative = (function () {
             if (event !== '') {
                 var blocks = store.get(event, namespace);
                 if (blocks && blocks.length) {
-                    if (!is_function_1.isFunction(callback)) {
+                    if (!(0, is_function_1.isFunction)(callback)) {
                         blocks.forEach(removeEventListener);
                         blocks.length = 0;
                     }
@@ -2964,14 +2970,14 @@ var EventsNative = (function () {
     };
     EventsNative.prototype.stopPropagation = function (subjectOrEvents, eventsList) {
         var _this = this;
-        var subject = is_string_1.isString(subjectOrEvents)
+        var subject = (0, is_string_1.isString)(subjectOrEvents)
             ? this
             : subjectOrEvents;
-        var events = is_string_1.isString(subjectOrEvents)
+        var events = (0, is_string_1.isString)(subjectOrEvents)
             ? subjectOrEvents
             : eventsList;
         if (typeof events !== 'string') {
-            throw type_1.error('Need event names');
+            throw (0, type_1.error)('Need event names');
         }
         var store = this.getStore(subject);
         this.eachEvent(events, function (event, namespace) {
@@ -3005,20 +3011,20 @@ var EventsNative = (function () {
             args[_i - 2] = arguments[_i];
         }
         var result, result_value;
-        var subject = is_string_1.isString(subjectOrEvents)
+        var subject = (0, is_string_1.isString)(subjectOrEvents)
             ? this
             : subjectOrEvents;
-        var events = is_string_1.isString(subjectOrEvents)
+        var events = (0, is_string_1.isString)(subjectOrEvents)
             ? subjectOrEvents
             : eventsList;
-        var argumentsList = is_string_1.isString(subjectOrEvents)
-            ? tslib_1.__spreadArray([eventsList], args) : args;
-        var isDOMElement = is_function_1.isFunction(subject.dispatchEvent);
-        if (!isDOMElement && !is_string_1.isString(events)) {
-            throw type_1.error('Need events names');
+        var argumentsList = (0, is_string_1.isString)(subjectOrEvents)
+            ? (0, tslib_1.__spreadArray)([eventsList], (0, tslib_1.__read)(args), false) : args;
+        var isDOMElement = (0, is_function_1.isFunction)(subject.dispatchEvent);
+        if (!isDOMElement && !(0, is_string_1.isString)(events)) {
+            throw (0, type_1.error)('Need events names');
         }
         var store = this.getStore(subject);
-        if (!is_string_1.isString(events) && isDOMElement) {
+        if (!(0, is_string_1.isString)(events) && isDOMElement) {
             this.triggerNativeEvent(subject, eventsList);
         }
         else {
@@ -3030,7 +3036,7 @@ var EventsNative = (function () {
                     var blocks_1 = store.get(event, namespace);
                     if (blocks_1) {
                         try {
-                            tslib_1.__spreadArray([], blocks_1).every(function (block) {
+                            (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(blocks_1), false).every(function (block) {
                                 if (_this.isStopped(blocks_1)) {
                                     return false;
                                 }
@@ -3053,10 +3059,10 @@ var EventsNative = (function () {
                             .namespaces()
                             .filter(function (ns) { return ns !== namespace; })
                             .forEach(function (ns) {
-                            var result_second = _this.fire.apply(_this, tslib_1.__spreadArray([
+                            var result_second = _this.fire.apply(_this, (0, tslib_1.__spreadArray)([
                                 subject,
                                 event + '.' + ns
-                            ], argumentsList));
+                            ], (0, tslib_1.__read)(argumentsList), false));
                             if (result_second !== undefined) {
                                 result = result_second;
                             }
@@ -3255,23 +3261,23 @@ var ObserveObject = (function () {
                 set: function (value) {
                     var _a;
                     var oldValue = data[key];
-                    if (!helpers_1.isFastEqual(oldValue, value)) {
+                    if (!(0, helpers_1.isFastEqual)(oldValue, value)) {
                         _this.fire([
                             'beforeChange',
                             "beforeChange." + prefix.join('.')
                         ], key, value);
-                        if (helpers_1.isPlainObject(value)) {
+                        if ((0, helpers_1.isPlainObject)(value)) {
                             value = new ObserveObject(value, prefix, _this.__onEvents);
                         }
                         data[key] = value;
                         var sum_1 = [];
-                        _this.fire(tslib_1.__spreadArray([
+                        _this.fire((0, tslib_1.__spreadArray)([
                             'change'
-                        ], prefix.reduce(function (rs, p) {
+                        ], (0, tslib_1.__read)(prefix.reduce(function (rs, p) {
                             sum_1.push(p);
                             rs.push("change." + sum_1.join('.'));
                             return rs;
-                        }, [])), prefix.join('.'), oldValue, ((_a = value) === null || _a === void 0 ? void 0 : _a.valueOf)
+                        }, [])), false), prefix.join('.'), oldValue, ((_a = value) === null || _a === void 0 ? void 0 : _a.valueOf)
                             ? value.valueOf()
                             : value);
                     }
@@ -3282,7 +3288,7 @@ var ObserveObject = (function () {
                 enumerable: true,
                 configurable: true
             });
-            if (helpers_1.isPlainObject(data[key])) {
+            if ((0, helpers_1.isPlainObject)(data[key])) {
                 data[key] = new ObserveObject(data[key], prefix, _this.__onEvents);
             }
         });
@@ -3295,7 +3301,7 @@ var ObserveObject = (function () {
     };
     ObserveObject.prototype.on = function (event, callback) {
         var _this = this;
-        if (helpers_1.isArray(event)) {
+        if ((0, helpers_1.isArray)(event)) {
             event.map(function (e) { return _this.on(e, callback); });
             return this;
         }
@@ -3311,14 +3317,14 @@ var ObserveObject = (function () {
         for (var _i = 1; _i < arguments.length; _i++) {
             attr[_i - 1] = arguments[_i];
         }
-        if (helpers_1.isArray(event)) {
-            event.map(function (e) { return _this.fire.apply(_this, tslib_1.__spreadArray([e], attr)); });
+        if ((0, helpers_1.isArray)(event)) {
+            event.map(function (e) { return _this.fire.apply(_this, (0, tslib_1.__spreadArray)([e], (0, tslib_1.__read)(attr), false)); });
             return;
         }
         try {
             if (!this.__lockEvent[event] && this.__onEvents[event]) {
                 this.__lockEvent[event] = true;
-                this.__onEvents[event].forEach(function (clb) { return clb.call.apply(clb, tslib_1.__spreadArray([_this], attr)); });
+                this.__onEvents[event].forEach(function (clb) { return clb.call.apply(clb, (0, tslib_1.__spreadArray)([_this], (0, tslib_1.__read)(attr), false)); });
             }
         }
         finally {
@@ -3332,16 +3338,16 @@ var ObserveObject = (function () {
         }
         return new ObserveObject(data, prefix);
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.nonenumerable
     ], ObserveObject.prototype, "__data", void 0);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.nonenumerable
     ], ObserveObject.prototype, "__prefix", void 0);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.nonenumerable
     ], ObserveObject.prototype, "__onEvents", void 0);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.nonenumerable
     ], ObserveObject.prototype, "__lockEvent", void 0);
     return ObserveObject;
@@ -3362,33 +3368,33 @@ exports.ObserveObject = ObserveObject;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(20), exports);
-tslib_1.__exportStar(__webpack_require__(55), exports);
-tslib_1.__exportStar(__webpack_require__(59), exports);
-tslib_1.__exportStar(__webpack_require__(61), exports);
-tslib_1.__exportStar(__webpack_require__(34), exports);
-tslib_1.__exportStar(__webpack_require__(62), exports);
-tslib_1.__exportStar(__webpack_require__(64), exports);
-tslib_1.__exportStar(__webpack_require__(65), exports);
-tslib_1.__exportStar(__webpack_require__(82), exports);
-tslib_1.__exportStar(__webpack_require__(143), exports);
-tslib_1.__exportStar(__webpack_require__(68), exports);
-tslib_1.__exportStar(__webpack_require__(148), exports);
-tslib_1.__exportStar(__webpack_require__(150), exports);
-tslib_1.__exportStar(__webpack_require__(151), exports);
-tslib_1.__exportStar(__webpack_require__(81), exports);
-tslib_1.__exportStar(__webpack_require__(153), exports);
-tslib_1.__exportStar(__webpack_require__(26), exports);
-tslib_1.__exportStar(__webpack_require__(74), exports);
-tslib_1.__exportStar(__webpack_require__(154), exports);
-tslib_1.__exportStar(__webpack_require__(149), exports);
-tslib_1.__exportStar(__webpack_require__(155), exports);
-tslib_1.__exportStar(__webpack_require__(152), exports);
-tslib_1.__exportStar(__webpack_require__(156), exports);
-tslib_1.__exportStar(__webpack_require__(157), exports);
-tslib_1.__exportStar(__webpack_require__(67), exports);
-tslib_1.__exportStar(__webpack_require__(17), exports);
-tslib_1.__exportStar(__webpack_require__(158), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(20), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(55), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(59), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(61), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(34), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(62), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(64), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(65), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(82), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(143), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(68), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(148), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(150), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(151), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(81), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(153), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(26), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(74), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(154), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(149), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(155), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(152), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(156), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(157), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(67), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(17), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(158), exports);
 
 
 /***/ }),
@@ -3404,12 +3410,12 @@ tslib_1.__exportStar(__webpack_require__(158), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(21), exports);
-tslib_1.__exportStar(__webpack_require__(22), exports);
-tslib_1.__exportStar(__webpack_require__(24), exports);
-tslib_1.__exportStar(__webpack_require__(52), exports);
-tslib_1.__exportStar(__webpack_require__(53), exports);
-tslib_1.__exportStar(__webpack_require__(54), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(21), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(22), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(24), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(52), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(53), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(54), exports);
 
 
 /***/ }),
@@ -3437,7 +3443,7 @@ function markDeprecated(method, names, ctx) {
         }
         exports.cns.warn("Method \"" + names[0] + "\" deprecated." +
             (names[1] ? " Use \"" + names[1] + "\" instead" : ''));
-        return method.call.apply(method, tslib_1.__spreadArray([ctx], args));
+        return method.call.apply(method, (0, tslib_1.__spreadArray)([ctx], (0, tslib_1.__read)(args), false));
     };
 }
 exports.markDeprecated = markDeprecated;
@@ -3449,23 +3455,29 @@ exports.markDeprecated = markDeprecated;
 
 "use strict";
 
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.memorizeExec = exports.keys = exports.loadImage = exports.reset = exports.callPromise = exports.markOwner = exports.attr = exports.call = void 0;
+var tslib_1 = __webpack_require__(7);
 var is_function_1 = __webpack_require__(15);
 var is_promise_1 = __webpack_require__(23);
 var get_1 = __webpack_require__(24);
 var data_bind_1 = __webpack_require__(26);
-var checker_1 = __webpack_require__(34);
+var is_void_1 = __webpack_require__(25);
 function call(func) {
     var args = [];
     for (var _i = 1; _i < arguments.length; _i++) {
         args[_i - 1] = arguments[_i];
     }
-    return func.apply(void 0, args);
+    return func.apply(void 0, (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(args), false));
 }
 exports.call = call;
 function attr(elm, key, value) {
-    if (!elm || !is_function_1.isFunction(elm.getAttribute)) {
+    if (!elm || !(0, is_function_1.isFunction)(elm.getAttribute)) {
         return null;
     }
     if (/^-/.test(key)) {
@@ -3496,12 +3508,10 @@ function markOwner(jodit, elm) {
 }
 exports.markOwner = markOwner;
 function callPromise(condition, callback) {
-    if (is_promise_1.isPromise(condition)) {
+    if ((0, is_promise_1.isPromise)(condition)) {
         return condition.finally(callback);
     }
-    else {
-        return callback();
-    }
+    return callback();
 }
 exports.callPromise = callPromise;
 var map = {};
@@ -3515,8 +3525,8 @@ var reset = function (key) {
             if (!iframe.contentWindow) {
                 return null;
             }
-            var func = get_1.get(key, iframe.contentWindow), bind = get_1.get(key.split('.').slice(0, -1).join('.'), iframe.contentWindow);
-            if (is_function_1.isFunction(func)) {
+            var func = (0, get_1.get)(key, iframe.contentWindow), bind = (0, get_1.get)(key.split('.').slice(0, -1).join('.'), iframe.contentWindow);
+            if ((0, is_function_1.isFunction)(func)) {
                 map[key] = func.bind(bind);
             }
         }
@@ -3565,11 +3575,11 @@ exports.keys = keys;
 var memorizeExec = function (editor, _, _a, preProcessValue) {
     var control = _a.control;
     var key = "button" + control.command;
-    var value = (control.args && control.args[0]) || data_bind_1.dataBind(editor, key);
-    if (checker_1.isVoid(value)) {
+    var value = (control.args && control.args[0]) || (0, data_bind_1.dataBind)(editor, key);
+    if ((0, is_void_1.isVoid)(value)) {
         return false;
     }
-    data_bind_1.dataBind(editor, key, value);
+    (0, data_bind_1.dataBind)(editor, key, value);
     if (preProcessValue) {
         value = preProcessValue(value);
     }
@@ -3610,22 +3620,33 @@ exports.isPromise = isPromise;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.get = void 0;
+var tslib_1 = __webpack_require__(7);
 var is_string_1 = __webpack_require__(14);
 var is_void_1 = __webpack_require__(25);
 function get(chain, obj) {
-    if (!is_string_1.isString(chain) || !chain.length) {
+    var e_1, _a;
+    if (!(0, is_string_1.isString)(chain) || !chain.length) {
         return null;
     }
     var parts = chain.split('.');
     var result = obj;
-    for (var _i = 0, parts_1 = parts; _i < parts_1.length; _i++) {
-        var part = parts_1[_i];
-        if (is_void_1.isVoid(result[part])) {
-            return null;
+    try {
+        for (var parts_1 = (0, tslib_1.__values)(parts), parts_1_1 = parts_1.next(); !parts_1_1.done; parts_1_1 = parts_1.next()) {
+            var part = parts_1_1.value;
+            if ((0, is_void_1.isVoid)(result[part])) {
+                return null;
+            }
+            result = result[part];
         }
-        result = result[part];
     }
-    if (is_void_1.isVoid(result)) {
+    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+    finally {
+        try {
+            if (parts_1_1 && !parts_1_1.done && (_a = parts_1.return)) _a.call(parts_1);
+        }
+        finally { if (e_1) throw e_1.error; }
+    }
+    if ((0, is_void_1.isVoid)(result)) {
         return null;
     }
     return result;
@@ -3677,7 +3698,7 @@ var dataBind = function (elm, key, value) {
         if (elm instanceof component_1.ViewComponent) {
             e = elm.j.e;
         }
-        if (checker_1.isViewObject(elm)) {
+        if ((0, checker_1.isViewObject)(elm)) {
             e = elm.e;
         }
         e &&
@@ -3707,9 +3728,9 @@ exports.dataBind = dataBind;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(28), exports);
-tslib_1.__exportStar(__webpack_require__(29), exports);
-tslib_1.__exportStar(__webpack_require__(33), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(28), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(29), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(33), exports);
 
 
 /***/ }),
@@ -3756,8 +3777,8 @@ var Component = (function () {
         this.ownerWindow = window;
         this.__componentStatus = statuses_1.STATUSES.beforeInit;
         this.componentName =
-            'jodit-' + helpers_1.kebabCase(this.className() || helpers_1.getClassName(this));
-        this.uid = 'jodit-uid-' + global_1.uniqueUid();
+            'jodit-' + (0, helpers_1.kebabCase)(this.className() || (0, helpers_1.getClassName)(this));
+        this.uid = 'jodit-uid-' + (0, global_1.uniqueUid)();
     }
     Component.prototype.getFullElName = function (elementName, mod, modValue) {
         var result = [this.componentName];
@@ -3767,7 +3788,7 @@ var Component = (function () {
         }
         if (mod) {
             result.push('_', mod);
-            result.push('_', helpers_1.isVoid(modValue) ? 'true' : modValue.toString());
+            result.push('_', (0, helpers_1.isVoid)(modValue) ? 'true' : modValue.toString());
         }
         return result.join('');
     };
@@ -3793,7 +3814,7 @@ var Component = (function () {
         configurable: true
     });
     Component.prototype.get = function (chain, obj) {
-        return helpers_1.get(chain, obj || this);
+        return (0, helpers_1.get)(chain, obj || this);
     };
     Object.defineProperty(Component.prototype, "isReady", {
         get: function () {
@@ -3852,7 +3873,7 @@ var Component = (function () {
             return;
         }
         var proto = Object.getPrototypeOf(this);
-        if (proto && helpers_1.isFunction(proto.setStatusComponent)) {
+        if (proto && (0, helpers_1.isFunction)(proto.setStatusComponent)) {
             proto.setStatusComponent(componentStatus, component);
         }
         var statuses = StatusListHandlers.get(this), list = statuses === null || statuses === void 0 ? void 0 : statuses[componentStatus];
@@ -3922,19 +3943,19 @@ var boxes = new WeakMap();
 function getContainer(jodit, classFunc, tag, createInsideEditor) {
     if (tag === void 0) { tag = 'div'; }
     if (createInsideEditor === void 0) { createInsideEditor = false; }
-    var name = helpers_1.getClassName(classFunc.prototype);
+    var name = (0, helpers_1.getClassName)(classFunc.prototype);
     var data = boxes.get(jodit) || {}, key = name + tag;
-    var view = helpers_1.isViewObject(jodit) ? jodit : jodit.j;
+    var view = (0, helpers_1.isViewObject)(jodit) ? jodit : jodit.j;
     if (!data[key]) {
         var c = view.c, body = jodit.od.body;
         if (createInsideEditor &&
-            helpers_1.isJoditObject(jodit) &&
+            (0, helpers_1.isJoditObject)(jodit) &&
             jodit.od !== jodit.ed) {
             c = jodit.createInside;
             body = tag === 'style' ? jodit.ed.head : jodit.ed.body;
         }
         var box_1 = c.element(tag, {
-            className: "jodit jodit-" + helpers_1.kebabCase(name) + "-container jodit-box"
+            className: "jodit jodit-" + (0, helpers_1.kebabCase)(name) + "-container jodit-box"
         });
         box_1.classList.add("jodit_theme_" + (view.o.theme || 'default'));
         body.appendChild(box_1);
@@ -3976,7 +3997,7 @@ var PluginSystem = (function () {
         this.items = new Map();
     }
     PluginSystem.prototype.normalizeName = function (name) {
-        return helpers_1.kebabCase(name).toLowerCase();
+        return (0, helpers_1.kebabCase)(name).toLowerCase();
     };
     PluginSystem.prototype.add = function (name, plugin) {
         this.items.set(this.normalizeName(name), plugin);
@@ -3990,8 +4011,8 @@ var PluginSystem = (function () {
     PluginSystem.prototype.init = function (jodit) {
         var _this = this;
         var extrasList = jodit.o.extraPlugins.map(function (s) {
-            return helpers_1.isString(s) ? { name: s } : s;
-        }), disableList = helpers_1.splitArray(jodit.o.disablePlugins).map(function (s) {
+            return (0, helpers_1.isString)(s) ? { name: s } : s;
+        }), disableList = (0, helpers_1.splitArray)(jodit.o.disablePlugins).map(function (s) {
             return _this.normalizeName(s);
         }), doneList = [], promiseList = {}, plugins = [], pluginsMap = {}, makeAndInit = function (plugin, name) {
             var _a;
@@ -4002,7 +4023,7 @@ var PluginSystem = (function () {
             }
             var requires = (_a = plugin) === null || _a === void 0 ? void 0 : _a.requires;
             if (requires &&
-                helpers_1.isArray(requires) &&
+                (0, helpers_1.isArray)(requires) &&
                 _this.hasDisabledRequires(disableList, requires)) {
                 return;
             }
@@ -4012,7 +4033,7 @@ var PluginSystem = (function () {
             pluginsMap[name] = instance;
         };
         var resultLoadExtras = this.loadExtras(jodit, extrasList);
-        return helpers_1.callPromise(resultLoadExtras, function () {
+        return (0, helpers_1.callPromise)(resultLoadExtras, function () {
             if (jodit.isInDestruct) {
                 return;
             }
@@ -4026,11 +4047,11 @@ var PluginSystem = (function () {
             disableList.some(function (disabled) { return requires.includes(disabled); }));
     };
     PluginSystem.makePluginInstance = function (jodit, plugin) {
-        return helpers_1.isFunction(plugin) ? new plugin(jodit) : plugin;
+        return (0, helpers_1.isFunction)(plugin) ? new plugin(jodit) : plugin;
     };
     PluginSystem.prototype.initOrWait = function (jodit, pluginName, instance, doneList, promiseList) {
         var initPlugin = function (name, plugin) {
-            if (helpers_1.isInitable(plugin)) {
+            if ((0, helpers_1.isInitable)(plugin)) {
                 var req = plugin.requires;
                 if (!(req === null || req === void 0 ? void 0 : req.length) ||
                     req.every(function (name) { return doneList.includes(name); })) {
@@ -4065,7 +4086,7 @@ var PluginSystem = (function () {
     PluginSystem.prototype.addListenerOnBeforeDestruct = function (jodit, plugins) {
         jodit.e.on('beforeDestruct', function () {
             plugins.forEach(function (instance) {
-                if (helpers_1.isDestructable(instance)) {
+                if ((0, helpers_1.isDestructable)(instance)) {
                     instance.destruct(jodit);
                 }
             });
@@ -4080,24 +4101,24 @@ var PluginSystem = (function () {
         return Promise.all(pluginList.map(function (extra) {
             var url = extra.url ||
                 PluginSystem.getFullUrl(jodit, extra.name, true);
-            return reflect(helpers_1.appendScriptAsync(jodit, url));
+            return reflect((0, helpers_1.appendScriptAsync)(jodit, url));
         }));
     };
     PluginSystem.loadStyle = function (jodit, pluginName) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             var url;
-            return tslib_1.__generator(this, function (_a) {
+            return (0, tslib_1.__generator)(this, function (_a) {
                 url = PluginSystem.getFullUrl(jodit, pluginName, false);
                 if (this.styles.has(url)) {
                     return [2];
                 }
                 this.styles.add(url);
-                return [2, helpers_1.appendStyleAsync(jodit, url)];
+                return [2, (0, helpers_1.appendStyleAsync)(jodit, url)];
             });
         });
     };
     PluginSystem.getFullUrl = function (jodit, name, js) {
-        name = helpers_1.kebabCase(name);
+        name = (0, helpers_1.kebabCase)(name);
         return (jodit.basePath +
             'plugins/' +
             name +
@@ -4156,7 +4177,7 @@ var Dom = (function () {
         do {
             needFindNext = false;
             tmp = first.previousSibling;
-            if (tmp && !Dom.isBlock(tmp, editor.ew)) {
+            if (tmp && !Dom.isBlock(tmp)) {
                 needFindNext = true;
                 first = tmp;
             }
@@ -4164,12 +4185,12 @@ var Dom = (function () {
         do {
             needFindNext = false;
             tmp = last.nextSibling;
-            if (tmp && !Dom.isBlock(tmp, editor.ew)) {
+            if (tmp && !Dom.isBlock(tmp)) {
                 needFindNext = true;
                 last = tmp;
             }
         } while (needFindNext);
-        var wrapper = helpers_1.isString(tag) ? editor.createInside.element(tag) : tag;
+        var wrapper = (0, helpers_1.isString)(tag) ? editor.createInside.element(tag) : tag;
         if (first.parentNode) {
             first.parentNode.insertBefore(wrapper, first);
         }
@@ -4186,9 +4207,9 @@ var Dom = (function () {
         return wrapper;
     };
     Dom.wrap = function (current, tag, create) {
-        var wrapper = helpers_1.isString(tag) ? create.element(tag) : tag;
+        var wrapper = (0, helpers_1.isString)(tag) ? create.element(tag) : tag;
         if (!current.parentNode) {
-            return null;
+            throw (0, helpers_1.error)('Element should be in DOM');
         }
         current.parentNode.insertBefore(wrapper, current);
         wrapper.appendChild(current);
@@ -4238,7 +4259,7 @@ var Dom = (function () {
     Dom.replace = function (elm, newTagName, create, withAttributes, notMoveContent) {
         if (withAttributes === void 0) { withAttributes = false; }
         if (notMoveContent === void 0) { notMoveContent = false; }
-        var tag = helpers_1.isString(newTagName)
+        var tag = (0, helpers_1.isString)(newTagName)
             ? create.element(newTagName)
             : newTagName;
         if (!notMoveContent) {
@@ -4247,7 +4268,7 @@ var Dom = (function () {
             }
         }
         if (withAttributes) {
-            helpers_1.toArray(elm.attributes).forEach(function (attr) {
+            (0, helpers_1.toArray)(elm.attributes).forEach(function (attr) {
                 tag.setAttribute(attr.name, attr.value);
             });
         }
@@ -4268,23 +4289,24 @@ var Dom = (function () {
             return true;
         }
         if (Dom.isText(node)) {
-            return node.nodeValue == null || helpers_1.trim(node.nodeValue).length === 0;
+            return node.nodeValue == null || (0, helpers_1.trim)(node.nodeValue).length === 0;
         }
         return (!condNoEmptyElement.test(node.nodeName.toLowerCase()) &&
             Dom.each(node, function (elm) {
                 if ((Dom.isText(elm) &&
                     elm.nodeValue != null &&
-                    helpers_1.trim(elm.nodeValue).length !== 0) ||
+                    (0, helpers_1.trim)(elm.nodeValue).length !== 0) ||
                     (Dom.isElement(elm) &&
                         condNoEmptyElement.test(elm.nodeName.toLowerCase()))) {
                     return false;
                 }
             }));
     };
-    Dom.isNode = function (object, win) {
+    Dom.isNode = function (object) {
         if (!object) {
             return false;
         }
+        var win = (0, helpers_1.get)('ownerDocument.defaultView', object);
         if (typeof win === 'object' &&
             win &&
             (typeof win.Node === 'function' ||
@@ -4293,37 +4315,46 @@ var Dom = (function () {
         }
         return false;
     };
-    Dom.isCell = function (elm, win) {
-        return Dom.isNode(elm, win) && /^(td|th)$/i.test(elm.nodeName);
+    Dom.isCell = function (elm) {
+        return Dom.isNode(elm) && /^(td|th)$/i.test(elm.nodeName);
     };
-    Dom.isImage = function (elm, win) {
-        return (Dom.isNode(elm, win) &&
-            /^(img|svg|picture|canvas)$/i.test(elm.nodeName));
+    Dom.isImage = function (elm) {
+        return (Dom.isNode(elm) && /^(img|svg|picture|canvas)$/i.test(elm.nodeName));
     };
-    Dom.isBlock = function (node, win) {
-        return (!helpers_1.isVoid(node) &&
+    Dom.isBlock = function (node) {
+        return (!(0, helpers_1.isVoid)(node) &&
             typeof node === 'object' &&
-            Dom.isNode(node, win) &&
+            Dom.isNode(node) &&
             consts.IS_BLOCK.test(node.nodeName));
     };
     Dom.isText = function (node) {
         return Boolean(node && node.nodeType === Node.TEXT_NODE);
     };
     Dom.isElement = function (node) {
-        return Boolean(node && node.nodeType === Node.ELEMENT_NODE);
+        var _a;
+        if (!Dom.isNode(node)) {
+            return false;
+        }
+        var win = (_a = node.ownerDocument) === null || _a === void 0 ? void 0 : _a.defaultView;
+        return Boolean(win && node.nodeType === Node.ELEMENT_NODE);
     };
-    Dom.isHTMLElement = function (node, win) {
-        return (Dom.isNode(node, win) && node instanceof win.HTMLElement);
+    Dom.isHTMLElement = function (node) {
+        var _a;
+        if (!Dom.isNode(node)) {
+            return false;
+        }
+        var win = (_a = node.ownerDocument) === null || _a === void 0 ? void 0 : _a.defaultView;
+        return Boolean(win && node instanceof win.HTMLElement);
     };
     Dom.isInlineBlock = function (node) {
         return (Dom.isElement(node) &&
             !/^(BR|HR)$/i.test(node.tagName) &&
-            ['inline', 'inline-block'].indexOf(helpers_1.css(node, 'display').toString()) !== -1);
+            ['inline', 'inline-block'].indexOf((0, helpers_1.css)(node, 'display').toString()) !== -1);
     };
-    Dom.canSplitBlock = function (node, win) {
-        return (!helpers_1.isVoid(node) &&
-            node instanceof win.HTMLElement &&
-            Dom.isBlock(node, win) &&
+    Dom.canSplitBlock = function (node) {
+        return (!(0, helpers_1.isVoid)(node) &&
+            Dom.isHTMLElement(node) &&
+            Dom.isBlock(node) &&
             !/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
             node.style !== undefined &&
             !/^(fixed|absolute)/i.test(node.style.position));
@@ -4452,10 +4483,10 @@ var Dom = (function () {
     };
     Dom.closest = function (node, tagsOrCondition, root) {
         var condition;
-        if (helpers_1.isFunction(tagsOrCondition)) {
+        if ((0, helpers_1.isFunction)(tagsOrCondition)) {
             condition = tagsOrCondition;
         }
-        else if (helpers_1.isArray(tagsOrCondition)) {
+        else if ((0, helpers_1.isArray)(tagsOrCondition)) {
             condition = function (tag) {
                 return tag &&
                     tagsOrCondition.includes(tag.nodeName.toLowerCase());
@@ -4511,7 +4542,7 @@ var Dom = (function () {
     };
     Dom.append = function (root, newElement) {
         var _this = this;
-        if (helpers_1.isArray(newElement)) {
+        if ((0, helpers_1.isArray)(newElement)) {
             newElement.forEach(function (node) {
                 _this.append(root, node);
             });
@@ -4523,7 +4554,7 @@ var Dom = (function () {
     Dom.moveContent = function (from, to, inStart) {
         if (inStart === void 0) { inStart = false; }
         var fragment = (from.ownerDocument || document).createDocumentFragment();
-        helpers_1.toArray(from.childNodes).forEach(function (node) {
+        (0, helpers_1.toArray)(from.childNodes).forEach(function (node) {
             fragment.appendChild(node);
         });
         if (!inStart || !to.firstChild) {
@@ -4535,7 +4566,7 @@ var Dom = (function () {
     };
     Dom.all = function (node, condition, prev) {
         if (prev === void 0) { prev = false; }
-        var nodes = node.childNodes ? helpers_1.toArray(node.childNodes) : [];
+        var nodes = node.childNodes ? (0, helpers_1.toArray)(node.childNodes) : [];
         if (condition(node)) {
             return node;
         }
@@ -4561,20 +4592,20 @@ var Dom = (function () {
         if (!node) {
             return;
         }
-        helpers_1.dataBind(node, '__old_display', node.style.display);
+        (0, helpers_1.dataBind)(node, '__old_display', node.style.display);
         node.style.display = 'none';
     };
     Dom.show = function (node) {
         if (!node) {
             return;
         }
-        var display = helpers_1.dataBind(node, '__old_display');
+        var display = (0, helpers_1.dataBind)(node, '__old_display');
         if (node.style.display === 'none') {
             node.style.display = display || '';
         }
     };
     Dom.isTag = function (node, tagNames) {
-        var tags = helpers_1.asArray(tagNames).map(String);
+        var tags = (0, helpers_1.asArray)(tagNames).map(String);
         for (var i = 0; i < tags.length; i += 1) {
             if (this.isElement(node) &&
                 node.tagName.toLowerCase() === tags[i].toLowerCase()) {
@@ -4604,7 +4635,7 @@ exports.ViewComponent = void 0;
 var tslib_1 = __webpack_require__(7);
 var component_1 = __webpack_require__(29);
 var ViewComponent = (function (_super) {
-    tslib_1.__extends(ViewComponent, _super);
+    (0, tslib_1.__extends)(ViewComponent, _super);
     function ViewComponent(jodit) {
         var _this = _super.call(this) || this;
         _this.setParentView(jodit);
@@ -4630,7 +4661,7 @@ var ViewComponent = (function (_super) {
         for (var _i = 1; _i < arguments.length; _i++) {
             params[_i - 1] = arguments[_i];
         }
-        return (_a = this.j).i18n.apply(_a, tslib_1.__spreadArray([text], params));
+        return (_a = this.j).i18n.apply(_a, (0, tslib_1.__spreadArray)([text], (0, tslib_1.__read)(params), false));
     };
     ViewComponent.prototype.setParentView = function (jodit) {
         this.jodit = jodit;
@@ -4659,27 +4690,27 @@ exports.ViewComponent = ViewComponent;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(35), exports);
-tslib_1.__exportStar(__webpack_require__(16), exports);
-tslib_1.__exportStar(__webpack_require__(36), exports);
-tslib_1.__exportStar(__webpack_require__(37), exports);
-tslib_1.__exportStar(__webpack_require__(15), exports);
-tslib_1.__exportStar(__webpack_require__(39), exports);
-tslib_1.__exportStar(__webpack_require__(40), exports);
-tslib_1.__exportStar(__webpack_require__(41), exports);
-tslib_1.__exportStar(__webpack_require__(42), exports);
-tslib_1.__exportStar(__webpack_require__(44), exports);
-tslib_1.__exportStar(__webpack_require__(45), exports);
-tslib_1.__exportStar(__webpack_require__(46), exports);
-tslib_1.__exportStar(__webpack_require__(47), exports);
-tslib_1.__exportStar(__webpack_require__(43), exports);
-tslib_1.__exportStar(__webpack_require__(48), exports);
-tslib_1.__exportStar(__webpack_require__(23), exports);
-tslib_1.__exportStar(__webpack_require__(14), exports);
-tslib_1.__exportStar(__webpack_require__(50), exports);
-tslib_1.__exportStar(__webpack_require__(51), exports);
-tslib_1.__exportStar(__webpack_require__(25), exports);
-tslib_1.__exportStar(__webpack_require__(49), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(35), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(16), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(36), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(37), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(15), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(39), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(40), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(41), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(42), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(44), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(45), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(46), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(47), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(43), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(48), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(23), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(14), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(50), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(51), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(25), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(49), exports);
 
 
 /***/ }),
@@ -4745,7 +4776,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isFastEqual = exports.isEqual = void 0;
 var stringify_1 = __webpack_require__(38);
 function isEqual(a, b) {
-    return a === b || stringify_1.stringify(a) === stringify_1.stringify(b);
+    return a === b || (0, stringify_1.stringify)(a) === (0, stringify_1.stringify)(b);
 }
 exports.isEqual = isEqual;
 function isFastEqual(a, b) {
@@ -4806,7 +4837,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isHTML = void 0;
 var is_string_1 = __webpack_require__(14);
 var isHTML = function (str) {
-    return is_string_1.isString(str) &&
+    return (0, is_string_1.isString)(str) &&
         /<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m.test(str.replace(/[\r\n]/g, ''));
 };
 exports.isHTML = isHTML;
@@ -4850,15 +4881,15 @@ var is_function_1 = __webpack_require__(15);
 var dom_1 = __webpack_require__(32);
 var is_void_1 = __webpack_require__(25);
 function isInitable(value) {
-    return !is_void_1.isVoid(value) && is_function_1.isFunction(value.init);
+    return !(0, is_void_1.isVoid)(value) && (0, is_function_1.isFunction)(value.init);
 }
 exports.isInitable = isInitable;
 function isDestructable(value) {
-    return !is_void_1.isVoid(value) && is_function_1.isFunction(value.destruct);
+    return !(0, is_void_1.isVoid)(value) && (0, is_function_1.isFunction)(value.destruct);
 }
 exports.isDestructable = isDestructable;
 function hasContainer(value) {
-    return !is_void_1.isVoid(value) && dom_1.Dom.isElement(value.container);
+    return !(0, is_void_1.isVoid)(value) && dom_1.Dom.isElement(value.container);
 }
 exports.hasContainer = hasContainer;
 
@@ -4879,7 +4910,7 @@ exports.isInt = void 0;
 var is_numeric_1 = __webpack_require__(43);
 var is_string_1 = __webpack_require__(14);
 function isInt(value) {
-    if (is_string_1.isString(value) && is_numeric_1.isNumeric(value)) {
+    if ((0, is_string_1.isString)(value) && (0, is_numeric_1.isNumeric)(value)) {
         value = parseFloat(value);
     }
     return typeof value === 'number' && Number.isFinite(value) && !(value % 1);
@@ -4902,7 +4933,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isNumeric = void 0;
 var is_string_1 = __webpack_require__(14);
 function isNumeric(value) {
-    if (is_string_1.isString(value)) {
+    if ((0, is_string_1.isString)(value)) {
         if (!value.match(/^([+-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
             return false;
         }
@@ -4931,7 +4962,7 @@ var global_1 = __webpack_require__(30);
 function isJoditObject(jodit) {
     return Boolean(jodit &&
         jodit instanceof Object &&
-        is_function_1.isFunction(jodit.constructor) &&
+        (0, is_function_1.isFunction)(jodit.constructor) &&
         ((typeof Jodit !== 'undefined' && jodit instanceof Jodit) ||
             jodit.isJodit));
 }
@@ -4939,7 +4970,7 @@ exports.isJoditObject = isJoditObject;
 function isViewObject(jodit) {
     return Boolean(jodit &&
         jodit instanceof Object &&
-        is_function_1.isFunction(jodit.constructor) &&
+        (0, is_function_1.isFunction)(jodit.constructor) &&
         (jodit instanceof global_1.modules.View || jodit.isView));
 }
 exports.isViewObject = isViewObject;
@@ -4960,9 +4991,9 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isLicense = void 0;
 var is_string_1 = __webpack_require__(14);
 var isLicense = function (license) {
-    return (is_string_1.isString(license) &&
+    return (0, is_string_1.isString)(license) &&
         license.length === 23 &&
-        /^[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}$/i.test(license));
+        /^[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}$/i.test(license);
 };
 exports.isLicense = isLicense;
 
@@ -5023,7 +5054,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isPlainObject = void 0;
 var is_window_1 = __webpack_require__(49);
 function isPlainObject(obj) {
-    if (!obj || typeof obj !== 'object' || obj.nodeType || is_window_1.isWindow(obj)) {
+    if (!obj || typeof obj !== 'object' || obj.nodeType || (0, is_window_1.isWindow)(obj)) {
         return false;
     }
     return !(obj.constructor &&
@@ -5101,10 +5132,7 @@ function isValidName(name) {
     if (!name.length) {
         return false;
     }
-    if (/[^0-9A-Za-zа-яА-ЯЁё\w\-_.]/.test(name)) {
-        return false;
-    }
-    return true;
+    return !/[^0-9A-Za-zа-яА-ЯЁё\w\-_.]/.test(name);
 }
 exports.isValidName = isValidName;
 
@@ -5127,15 +5155,15 @@ var is_numeric_1 = __webpack_require__(43);
 var is_array_1 = __webpack_require__(16);
 var checker_1 = __webpack_require__(34);
 function set(chain, value, obj) {
-    if (!is_string_1.isString(chain) || !chain.length) {
+    if (!(0, is_string_1.isString)(chain) || !chain.length) {
         return;
     }
     var parts = chain.split('.');
     var result = obj, key = parts[0];
     for (var i = 0; i < parts.length - 1; i += 1) {
         key = parts[i];
-        if (!is_array_1.isArray(result[key]) && !checker_1.isPlainObject(result[key])) {
-            result[key] = is_numeric_1.isNumeric(parts[i + 1]) ? [] : {};
+        if (!(0, is_array_1.isArray)(result[key]) && !(0, checker_1.isPlainObject)(result[key])) {
+            result[key] = (0, is_numeric_1.isNumeric)(parts[i + 1]) ? [] : {};
         }
         result = result[key];
     }
@@ -5163,7 +5191,7 @@ var is_function_1 = __webpack_require__(15);
 exports.keepNames = new Map();
 var getClassName = function (obj) {
     var _a;
-    if (is_function_1.isFunction(obj.className)) {
+    if ((0, is_function_1.isFunction)(obj.className)) {
         return obj.className();
     }
     var constructor = ((_a = obj.constructor) === null || _a === void 0 ? void 0 : _a.originalConstructor) || obj.constructor;
@@ -5246,7 +5274,7 @@ Object.defineProperty(exports, "toArray", ({ enumerable: true, get: function () 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.asArray = void 0;
 var is_array_1 = __webpack_require__(16);
-var asArray = function (a) { return (is_array_1.isArray(a) ? a : [a]); };
+var asArray = function (a) { return ((0, is_array_1.isArray)(a) ? a : [a]); };
 exports.asArray = asArray;
 
 
@@ -5265,7 +5293,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.splitArray = void 0;
 var is_string_1 = __webpack_require__(14);
 function splitArray(a) {
-    return is_string_1.isString(a) ? a.split(/[,\s]+/) : a;
+    return (0, is_string_1.isString)(a) ? a.split(/[,\s]+/) : a;
 }
 exports.splitArray = splitArray;
 
@@ -5283,7 +5311,7 @@ exports.splitArray = splitArray;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.toArray = void 0;
-var utils_1 = __webpack_require__(20);
+var utils_1 = __webpack_require__(22);
 var is_native_function_1 = __webpack_require__(46);
 exports.toArray = function toArray() {
     var _a;
@@ -5291,9 +5319,9 @@ exports.toArray = function toArray() {
     for (var _i = 0; _i < arguments.length; _i++) {
         args[_i] = arguments[_i];
     }
-    var func = is_native_function_1.isNativeFunction(Array.from)
+    var func = (0, is_native_function_1.isNativeFunction)(Array.from)
         ? Array.from
-        : (_a = utils_1.reset('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
+        : (_a = (0, utils_1.reset)('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
     return func.apply(Array, args);
 };
 
@@ -5311,7 +5339,7 @@ exports.toArray = function toArray() {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(60), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(60), exports);
 
 
 /***/ }),
@@ -5334,10 +5362,10 @@ function setTimeout(callback, timeout) {
         args[_i - 2] = arguments[_i];
     }
     if (!timeout) {
-        callback.call.apply(callback, tslib_1.__spreadArray([null], args));
+        callback.call.apply(callback, (0, tslib_1.__spreadArray)([null], (0, tslib_1.__read)(args), false));
     }
     else {
-        return window.setTimeout.apply(window, tslib_1.__spreadArray([callback, timeout], args));
+        return window.setTimeout.apply(window, (0, tslib_1.__spreadArray)([callback, timeout], (0, tslib_1.__read)(args), false));
     }
     return 0;
 }
@@ -5376,7 +5404,7 @@ function markAsAtomic(obj) {
 }
 exports.markAsAtomic = markAsAtomic;
 function fastClone(object) {
-    return JSON.parse(stringify_1.stringify(object));
+    return JSON.parse((0, stringify_1.stringify)(object));
 }
 exports.fastClone = fastClone;
 
@@ -5394,7 +5422,7 @@ exports.fastClone = fastClone;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(63), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(63), exports);
 
 
 /***/ }),
@@ -5459,11 +5487,11 @@ function ConfigProto(options, proto, deep) {
         return options;
     }
     var def = config_1.Config.defaultOptions;
-    if (checker_1.isString(options.preset)) {
+    if ((0, checker_1.isString)(options.preset)) {
         if (def.presets[options.preset] !== undefined) {
             var preset_1 = def.presets[options.preset];
             Object.keys(preset_1).forEach(function (subKey) {
-                if (checker_1.isVoid(options[subKey])) {
+                if ((0, checker_1.isVoid)(options[subKey])) {
                     options[subKey] = preset_1[subKey];
                 }
             });
@@ -5473,12 +5501,12 @@ function ConfigProto(options, proto, deep) {
     var newOpt = {};
     Object.keys(options).forEach(function (key) {
         var opt = options[key], protoKey = proto ? proto[key] : null;
-        if (checker_1.isPlainObject(opt) && checker_1.isPlainObject(protoKey) && !extend_1.isAtom(opt)) {
+        if ((0, checker_1.isPlainObject)(opt) && (0, checker_1.isPlainObject)(protoKey) && !(0, extend_1.isAtom)(opt)) {
             newOpt[key] = ConfigProto(opt, protoKey, deep + 1);
             return;
         }
-        if (deep !== 0 && checker_1.isArray(opt) && !extend_1.isAtom(opt) && checker_1.isArray(protoKey)) {
-            newOpt[key] = tslib_1.__spreadArray(tslib_1.__spreadArray([], opt), protoKey.slice(opt.length));
+        if (deep !== 0 && (0, checker_1.isArray)(opt) && !(0, extend_1.isAtom)(opt) && (0, checker_1.isArray)(protoKey)) {
+            newOpt[key] = (0, tslib_1.__spreadArray)((0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(opt), false), (0, tslib_1.__read)(protoKey.slice(opt.length)), false);
             return;
         }
         newOpt[key] = opt;
@@ -5488,7 +5516,7 @@ function ConfigProto(options, proto, deep) {
 }
 exports.ConfigProto = ConfigProto;
 function ConfigFlatten(obj) {
-    return utils_1.keys(obj, false).reduce(function (app, key) {
+    return (0, utils_1.keys)(obj, false).reduce(function (app, key) {
         app[key] = obj[key];
         return app;
     }, {});
@@ -5509,11 +5537,11 @@ exports.ConfigFlatten = ConfigFlatten;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(66), exports);
-tslib_1.__exportStar(__webpack_require__(139), exports);
-tslib_1.__exportStar(__webpack_require__(140), exports);
-tslib_1.__exportStar(__webpack_require__(141), exports);
-tslib_1.__exportStar(__webpack_require__(142), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(66), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(139), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(140), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(141), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(142), exports);
 
 
 /***/ }),
@@ -5571,7 +5599,7 @@ function applyStyles(html) {
                 if (rules[idx].selectorText === '') {
                     return "continue";
                 }
-                collection = selector_1.$$(rules[idx].selectorText, iframeDoc.body);
+                collection = (0, selector_1.$$)(rules[idx].selectorText, iframeDoc.body);
                 collection.forEach(function (elm) {
                     elm.style.cssText = normalizeCSS(rules[idx].style.cssText + ';' + elm.style.cssText);
                 });
@@ -5592,7 +5620,7 @@ function applyStyles(html) {
                 }
             });
             convertedString = iframeDoc.firstChild
-                ? string_1.trim(iframeDoc.body.innerHTML)
+                ? (0, string_1.trim)(iframeDoc.body.innerHTML)
                 : '';
         }
     }
@@ -5604,7 +5632,7 @@ function applyStyles(html) {
     if (convertedString) {
         html = convertedString;
     }
-    return string_1.trim(html
+    return (0, string_1.trim)(html
         .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
         .replace(/<!--[^>]*>/g, ''));
 }
@@ -5669,11 +5697,11 @@ var getXPathByElement = function (element, root) {
         return "//*[@id='" + element.id + "']";
     }
     var sames = [].filter.call(element.parentNode.childNodes, function (x) { return x.nodeName === element.nodeName; });
-    return (exports.getXPathByElement(element.parentNode, root) +
+    return ((0, exports.getXPathByElement)(element.parentNode, root) +
         '/' +
         element.nodeName.toLowerCase() +
         (sames.length > 1
-            ? '[' + (array_1.toArray(sames).indexOf(element) + 1) + ']'
+            ? '[' + ((0, array_1.toArray)(sames).indexOf(element) + 1) + ']'
             : ''));
 };
 exports.getXPathByElement = getXPathByElement;
@@ -5682,9 +5710,9 @@ var refs = function (root) {
         root = root.container;
     }
     return $$('[ref],[data-ref]', root).reduce(function (def, child) {
-        var key = utils_1.attr(child, '-ref');
-        if (key && checker_1.isString(key)) {
-            def[string_1.camelCase(key)] = child;
+        var key = (0, utils_1.attr)(child, '-ref');
+        if (key && (0, checker_1.isString)(key)) {
+            def[(0, string_1.camelCase)(key)] = child;
             def[key] = child;
         }
         return def;
@@ -5722,19 +5750,19 @@ var cssPath = function (el) {
 exports.cssPath = cssPath;
 function resolveElement(element, od) {
     var resolved = element;
-    if (checker_1.isString(element)) {
+    if ((0, checker_1.isString)(element)) {
         try {
             resolved = od.querySelector(element);
         }
         catch (_a) {
-            throw type_1.error('String "' + element + '" should be valid HTML selector');
+            throw (0, type_1.error)('String "' + element + '" should be valid HTML selector');
         }
     }
     if (!resolved ||
         typeof resolved !== 'object' ||
         !dom_1.Dom.isElement(resolved) ||
         !resolved.cloneNode) {
-        throw type_1.error('Element "' + element + '" should be string or HTMLElement instance');
+        throw (0, type_1.error)('Element "' + element + '" should be string or HTMLElement instance');
     }
     return resolved;
 }
@@ -5754,12 +5782,12 @@ exports.resolveElement = resolveElement;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(69), exports);
-tslib_1.__exportStar(__webpack_require__(38), exports);
-tslib_1.__exportStar(__webpack_require__(70), exports);
-tslib_1.__exportStar(__webpack_require__(71), exports);
-tslib_1.__exportStar(__webpack_require__(72), exports);
-tslib_1.__exportStar(__webpack_require__(73), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(69), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(38), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(70), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(71), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(72), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(73), exports);
 
 
 /***/ }),
@@ -5822,14 +5850,14 @@ exports.trimInv = exports.trim = void 0;
 var constants_1 = __webpack_require__(9);
 function trim(value) {
     return value
-        .replace(constants_1.SPACE_REG_EXP_END(), '')
-        .replace(constants_1.SPACE_REG_EXP_START(), '');
+        .replace((0, constants_1.SPACE_REG_EXP_END)(), '')
+        .replace((0, constants_1.SPACE_REG_EXP_START)(), '');
 }
 exports.trim = trim;
 function trimInv(value) {
     return value
-        .replace(constants_1.INVISIBLE_SPACE_REG_EXP_END(), '')
-        .replace(constants_1.INVISIBLE_SPACE_REG_EXP_START(), '');
+        .replace((0, constants_1.INVISIBLE_SPACE_REG_EXP_END)(), '')
+        .replace((0, constants_1.INVISIBLE_SPACE_REG_EXP_START)(), '');
 }
 exports.trimInv = trimInv;
 
@@ -5889,8 +5917,8 @@ var sprintf = function (str, args) {
 };
 exports.sprintf = sprintf;
 var i18n = function (key, params, options) {
-    if (!__1.isString(key)) {
-        throw __1.error('i18n: Need string in first argument');
+    if (!(0, __1.isString)(key)) {
+        throw (0, __1.error)('i18n: Need string in first argument');
     }
     if (!key.length) {
         return key;
@@ -5898,20 +5926,20 @@ var i18n = function (key, params, options) {
     var debug = Boolean(options !== undefined && options.debugLanguage);
     var store;
     var parse = function (value) {
-        return params && params.length ? exports.sprintf(value, params) : value;
-    }, defaultLanguage = default_language_1.defaultLanguage(config_1.Config.defaultOptions.language, config_1.Config.defaultOptions.language), language = default_language_1.defaultLanguage(options === null || options === void 0 ? void 0 : options.language, defaultLanguage), tryGet = function (store) {
+        return params && params.length ? (0, exports.sprintf)(value, params) : value;
+    }, defaultLanguage = (0, default_language_1.defaultLanguage)(config_1.Config.defaultOptions.language, config_1.Config.defaultOptions.language), language = (0, default_language_1.defaultLanguage)(options === null || options === void 0 ? void 0 : options.language, defaultLanguage), tryGet = function (store) {
         if (!store) {
             return;
         }
-        if (__1.isString(store[key])) {
+        if ((0, __1.isString)(store[key])) {
             return parse(store[key]);
         }
         var lcKey = key.toLowerCase();
-        if (__1.isString(store[lcKey])) {
+        if ((0, __1.isString)(store[lcKey])) {
             return parse(store[lcKey]);
         }
-        var ucfKey = __1.ucfirst(key);
-        if (__1.isString(store[ucfKey])) {
+        var ucfKey = (0, __1.ucfirst)(key);
+        if ((0, __1.isString)(store[ucfKey])) {
             return parse(store[ucfKey]);
         }
         return;
@@ -5938,7 +5966,7 @@ var i18n = function (key, params, options) {
     if (result) {
         return result;
     }
-    if (global_1.lang.en && __1.isString(global_1.lang.en[key]) && global_1.lang.en[key]) {
+    if (global_1.lang.en && (0, __1.isString)(global_1.lang.en[key]) && global_1.lang.en[key]) {
         return parse(global_1.lang.en[key]);
     }
     if (debug) {
@@ -5966,7 +5994,7 @@ exports.defaultLanguage = void 0;
 var checker_1 = __webpack_require__(34);
 var defaultLanguage = function (language, defaultLanguage) {
     if (defaultLanguage === void 0) { defaultLanguage = 'en'; }
-    if (language !== 'auto' && checker_1.isString(language)) {
+    if (language !== 'auto' && (0, checker_1.isString)(language)) {
         return language;
     }
     if (document.documentElement && document.documentElement.lang) {
@@ -5993,15 +6021,15 @@ exports.defaultLanguage = defaultLanguage;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(76), exports);
-tslib_1.__exportStar(__webpack_require__(92), exports);
-tslib_1.__exportStar(__webpack_require__(116), exports);
-tslib_1.__exportStar(__webpack_require__(112), exports);
-tslib_1.__exportStar(__webpack_require__(110), exports);
-tslib_1.__exportStar(__webpack_require__(95), exports);
-tslib_1.__exportStar(__webpack_require__(119), exports);
-tslib_1.__exportStar(__webpack_require__(80), exports);
-tslib_1.__exportStar(__webpack_require__(137), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(76), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(92), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(116), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(112), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(110), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(95), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(119), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(80), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(137), exports);
 
 
 /***/ }),
@@ -6024,7 +6052,7 @@ var traits_1 = __webpack_require__(77);
 var helpers_1 = __webpack_require__(19);
 var icon_1 = __webpack_require__(80);
 var UIElement = (function (_super) {
-    tslib_1.__extends(UIElement, _super);
+    (0, tslib_1.__extends)(UIElement, _super);
     function UIElement(jodit, options) {
         var _this = _super.call(this, jodit) || this;
         _this.name = '';
@@ -6098,7 +6126,7 @@ var UIElement = (function (_super) {
     };
     UIElement.prototype.setMod = function (name, value, container) {
         if (container === void 0) { container = this.container; }
-        traits_1.Mods.setMod.call(this, name, value);
+        traits_1.Mods.setMod.call(this, name, value, container);
         return this;
     };
     UIElement.prototype.getMod = function (name) {
@@ -6125,7 +6153,7 @@ var UIElement = (function (_super) {
     UIElement.prototype.createContainer = function (options) {
         var _this = this;
         var result = this.render(options);
-        if (helpers_1.isString(result)) {
+        if ((0, helpers_1.isString)(result)) {
             var elm = this.j.c.fromHTML(result
                 .replace(/\*([^*]+?)\*/g, function (_, name) { return icon_1.Icon.get(name) || ''; })
                 .replace(/&__/g, this.componentName + '__')
@@ -6158,8 +6186,8 @@ exports.UIElement = UIElement;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(78), exports);
-tslib_1.__exportStar(__webpack_require__(79), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(78), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(79), exports);
 
 
 /***/ }),
@@ -6175,7 +6203,7 @@ tslib_1.__exportStar(__webpack_require__(79), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Elms = void 0;
-var helpers_1 = __webpack_require__(19);
+var to_array_1 = __webpack_require__(58);
 var Elms = (function () {
     function Elms() {
     }
@@ -6183,7 +6211,7 @@ var Elms = (function () {
         return this.container.querySelector("." + this.getFullElName(elementName));
     };
     Elms.getElms = function (elementName) {
-        return helpers_1.toArray(this.container.querySelectorAll("." + this.getFullElName(elementName)));
+        return (0, to_array_1.toArray)(this.container.querySelectorAll("." + this.getFullElName(elementName)));
     };
     return Elms;
 }());
@@ -6203,7 +6231,7 @@ exports.Elms = Elms;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Mods = void 0;
-var helpers_1 = __webpack_require__(19);
+var to_array_1 = __webpack_require__(58);
 var Mods = (function () {
     function Mods() {
     }
@@ -6213,7 +6241,7 @@ var Mods = (function () {
             return;
         }
         var mod = this.componentName + "_" + name, cl = (container || this.container).classList;
-        helpers_1.toArray(cl).forEach(function (className) {
+        (0, to_array_1.toArray)(cl).forEach(function (className) {
             if (className.indexOf(mod) === 0) {
                 cl.remove(className);
             }
@@ -6250,7 +6278,7 @@ var Icon = (function () {
     function Icon() {
     }
     Icon.getIcon = function (name) {
-        if (/^<svg/i.test(name)) {
+        if (/<svg/i.test(name)) {
             return name;
         }
         return (Icon.icons[name] ||
@@ -6274,7 +6302,7 @@ var Icon = (function () {
             var clearName = icon.name.replace(/[^a-zA-Z0-9]/g, '_');
             if (icon.iconURL) {
                 iconElement = jodit.c.span();
-                css_1.css(iconElement, 'backgroundImage', 'url(' +
+                (0, css_1.css)(iconElement, 'backgroundImage', 'url(' +
                     icon.iconURL.replace('{basePath}', (jodit === null || jodit === void 0 ? void 0 : jodit.basePath) || '') +
                     ')');
             }
@@ -6318,35 +6346,38 @@ exports.clearCenterAlign = exports.css = void 0;
 var checker_1 = __webpack_require__(34);
 var normalize_1 = __webpack_require__(82);
 var string_1 = __webpack_require__(68);
-var css = function (element, key, value, onlyStyleMode) {
+function css(element, key, value, onlyStyleMode) {
     if (onlyStyleMode === void 0) { onlyStyleMode = false; }
     var numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size/i;
-    if (checker_1.isPlainObject(key) || value !== undefined) {
+    if ((0, checker_1.isBoolean)(value)) {
+        onlyStyleMode = value;
+        value = undefined;
+    }
+    if ((0, checker_1.isPlainObject)(key) || value !== undefined) {
         var setValue = function (elm, _key, _value) {
-            if (!checker_1.isVoid(_value) &&
+            if (!(0, checker_1.isVoid)(_value) &&
                 numberFieldsReg.test(_key) &&
-                checker_1.isNumeric(_value.toString())) {
+                (0, checker_1.isNumeric)(_value.toString())) {
                 _value = parseInt(_value.toString(), 10) + 'px';
             }
             if (_value !== undefined &&
                 (_value == null ||
-                    exports.css(elm, _key, undefined, true) !==
-                        normalize_1.normalizeCssValue(_key, _value))) {
+                    css(elm, _key, true) !== (0, normalize_1.normalizeCssValue)(_key, _value))) {
                 elm.style[_key] = _value;
             }
         };
-        if (checker_1.isPlainObject(key)) {
+        if ((0, checker_1.isPlainObject)(key)) {
             var keys = Object.keys(key);
             for (var j = 0; j < keys.length; j += 1) {
-                setValue(element, string_1.camelCase(keys[j]), key[keys[j]]);
+                setValue(element, (0, string_1.camelCase)(keys[j]), key[keys[j]]);
             }
         }
         else {
-            setValue(element, string_1.camelCase(key), value);
+            setValue(element, (0, string_1.camelCase)(key), value);
         }
         return '';
     }
-    var key2 = string_1.kebabCase(key), doc = element.ownerDocument || document, win = doc ? doc.defaultView || doc.parentWindow : false;
+    var key2 = (0, string_1.kebabCase)(key), doc = element.ownerDocument || document, win = doc ? doc.defaultView || doc.parentWindow : false;
     var currentValue = element.style[key];
     var result = '';
     if (currentValue !== undefined && currentValue !== '') {
@@ -6359,12 +6390,12 @@ var css = function (element, key, value, onlyStyleMode) {
         /^[-+]?[0-9.]+px$/.test(result.toString())) {
         result = parseInt(result.toString(), 10);
     }
-    return normalize_1.normalizeCssValue(key, result);
-};
+    return (0, normalize_1.normalizeCssValue)(key, result);
+}
 exports.css = css;
 var clearCenterAlign = function (image) {
-    if (exports.css(image, 'display') === 'block') {
-        exports.css(image, 'display', '');
+    if (css(image, 'display') === 'block') {
+        css(image, 'display', '');
     }
     var style = image.style;
     if (style.marginLeft === 'auto' && style.marginRight === 'auto') {
@@ -6388,15 +6419,15 @@ exports.clearCenterAlign = clearCenterAlign;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(83), exports);
-tslib_1.__exportStar(__webpack_require__(84), exports);
-tslib_1.__exportStar(__webpack_require__(85), exports);
-tslib_1.__exportStar(__webpack_require__(86), exports);
-tslib_1.__exportStar(__webpack_require__(87), exports);
-tslib_1.__exportStar(__webpack_require__(88), exports);
-tslib_1.__exportStar(__webpack_require__(89), exports);
-tslib_1.__exportStar(__webpack_require__(90), exports);
-tslib_1.__exportStar(__webpack_require__(91), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(83), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(84), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(85), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(86), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(87), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(88), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(89), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(90), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(91), exports);
 
 
 /***/ }),
@@ -6419,7 +6450,7 @@ function normalizeKeyAliases(keys) {
     return keys
         .replace(/\+\+/g, '+add')
         .split(/[\s]*\+[\s]*/)
-        .map(function (key) { return string_1.trim(key.toLowerCase()); })
+        .map(function (key) { return (0, string_1.trim)(key.toLowerCase()); })
         .map(function (key) { return constants_1.KEY_ALIASES[key] || key; })
         .sort()
         .filter(function (key) { return !memory[key] && key !== '' && (memory[key] = true); })
@@ -6479,14 +6510,14 @@ var normalizeNode = function (node) {
             if (node.nextSibling.nodeValue != null) {
                 node.nodeValue += node.nextSibling.nodeValue;
             }
-            node.nodeValue = node.nodeValue.replace(constants_1.INVISIBLE_SPACE_REG_EXP(), '');
+            node.nodeValue = node.nodeValue.replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '');
             dom_1.Dom.safeRemove(node.nextSibling);
         }
     }
     else {
-        exports.normalizeNode(node.firstChild);
+        (0, exports.normalizeNode)(node.firstChild);
     }
-    exports.normalizeNode(node.nextSibling);
+    (0, exports.normalizeNode)(node.nextSibling);
 };
 exports.normalizeNode = normalizeNode;
 
@@ -6511,7 +6542,7 @@ var normalizePath = function () {
         path[_i] = arguments[_i];
     }
     return path
-        .filter(function (part) { return string_1.trim(part).length; })
+        .filter(function (part) { return (0, string_1.trim)(part).length; })
         .map(function (part, index) {
         part = part.replace(/([^:])[\\/]+/g, '$1/');
         if (index) {
@@ -6631,7 +6662,7 @@ var checker_1 = __webpack_require__(34);
 var string_1 = __webpack_require__(68);
 var color_1 = __webpack_require__(62);
 function normalizeCssValue(key, value) {
-    switch (string_1.kebabCase(key)) {
+    switch ((0, string_1.kebabCase)(key)) {
         case 'font-weight':
             switch (value.toString().toLowerCase()) {
                 case '700':
@@ -6644,10 +6675,10 @@ function normalizeCssValue(key, value) {
                 case 'heavy':
                     return 900;
             }
-            return checker_1.isNumeric(value) ? Number(value) : value;
+            return (0, checker_1.isNumeric)(value) ? Number(value) : value;
     }
     if (/color/i.test(key) && /^rgb/i.test(value.toString())) {
-        return color_1.colorToHex(value.toString()) || value;
+        return (0, color_1.colorToHex)(value.toString()) || value;
     }
     return value;
 }
@@ -6671,11 +6702,11 @@ var color_1 = __webpack_require__(62);
 var string_1 = __webpack_require__(68);
 var normalizeColor = function (colorInput) {
     var newcolor = ['#'];
-    var color = color_1.colorToHex(colorInput);
+    var color = (0, color_1.colorToHex)(colorInput);
     if (!color) {
         return false;
     }
-    color = string_1.trim(color.toUpperCase());
+    color = (0, string_1.trim)(color.toUpperCase());
     color = color.substr(1);
     if (color.length === 3) {
         for (var i = 0; i < 3; i += 1) {
@@ -6705,8 +6736,8 @@ exports.normalizeColor = normalizeColor;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(93), exports);
-tslib_1.__exportStar(__webpack_require__(114), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(93), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(114), exports);
 
 
 /***/ }),
@@ -6750,11 +6781,11 @@ var UIButtonState = function () { return ({
 }); };
 exports.UIButtonState = UIButtonState;
 var UIButton = (function (_super) {
-    tslib_1.__extends(UIButton, _super);
+    (0, tslib_1.__extends)(UIButton, _super);
     function UIButton(jodit, state) {
         var _this = _super.call(this, jodit) || this;
         _this.isButton = true;
-        _this.state = exports.UIButtonState();
+        _this.state = (0, exports.UIButtonState)();
         _this.actionHandlers = [];
         _this.updateSize();
         _this.onChangeSize();
@@ -6777,7 +6808,7 @@ var UIButton = (function (_super) {
         this.setMod('size', this.state.size);
     };
     UIButton.prototype.onChangeType = function () {
-        helpers_1.attr(this.container, 'type', this.state.type);
+        (0, helpers_1.attr)(this.container, 'type', this.state.type);
     };
     UIButton.prototype.updateSize = function () {
         var pe = this.closest(list_1.UIList);
@@ -6796,30 +6827,30 @@ var UIButton = (function (_super) {
         this.setMod('text-icons', Boolean(this.state.text.trim().length));
     };
     UIButton.prototype.onChangeDisabled = function () {
-        helpers_1.attr(this.container, 'disabled', this.state.disabled || null);
+        (0, helpers_1.attr)(this.container, 'disabled', this.state.disabled || null);
     };
     UIButton.prototype.onChangeActivated = function () {
-        helpers_1.attr(this.container, 'aria-pressed', this.state.activated);
+        (0, helpers_1.attr)(this.container, 'aria-pressed', this.state.activated);
     };
     UIButton.prototype.onChangeName = function () {
         this.container.classList.add(this.componentName + "_" + this.clearName(this.state.name));
         this.name = this.state.name;
-        helpers_1.attr(this.container, 'data-ref', this.state.name);
-        helpers_1.attr(this.container, 'ref', this.state.name);
+        (0, helpers_1.attr)(this.container, 'data-ref', this.state.name);
+        (0, helpers_1.attr)(this.container, 'ref', this.state.name);
     };
     UIButton.prototype.onChangeTooltip = function () {
         if (this.get('j.o.useNativeTooltip')) {
-            helpers_1.attr(this.container, 'title', this.state.tooltip);
+            (0, helpers_1.attr)(this.container, 'title', this.state.tooltip);
         }
-        helpers_1.attr(this.container, 'aria-label', this.state.tooltip);
+        (0, helpers_1.attr)(this.container, 'aria-label', this.state.tooltip);
     };
     UIButton.prototype.onChangeTabIndex = function () {
-        helpers_1.attr(this.container, 'tabIndex', this.state.tabIndex);
+        (0, helpers_1.attr)(this.container, 'tabIndex', this.state.tabIndex);
     };
     UIButton.prototype.onChangeIcon = function () {
         var textIcons = this.get('j.o.textIcons');
         if (textIcons === true ||
-            (helpers_1.isFunction(textIcons) && textIcons(this.state.name))) {
+            ((0, helpers_1.isFunction)(textIcons) && textIcons(this.state.name))) {
             return;
         }
         dom_1.Dom.detach(this.icon);
@@ -6863,46 +6894,46 @@ var UIButton = (function (_super) {
         };
         this.actionHandlers.forEach(function (callback) { return callback.call(_this, e); });
     };
-    tslib_1.__decorate([
-        decorators_1.watch('state.size')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.size')
     ], UIButton.prototype, "onChangeSize", null);
-    tslib_1.__decorate([
-        decorators_1.watch('state.type')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.type')
     ], UIButton.prototype, "onChangeType", null);
-    tslib_1.__decorate([
-        decorators_1.watch('parentElement')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('parentElement')
     ], UIButton.prototype, "updateSize", null);
-    tslib_1.__decorate([
-        decorators_1.watch('state.status')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.status')
     ], UIButton.prototype, "onChangeStatus", null);
-    tslib_1.__decorate([
-        decorators_1.watch('state.text')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.text')
     ], UIButton.prototype, "onChangeText", null);
-    tslib_1.__decorate([
-        decorators_1.watch('state.text')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.text')
     ], UIButton.prototype, "onChangeTextSetMode", null);
-    tslib_1.__decorate([
-        decorators_1.watch('state.disabled')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.disabled')
     ], UIButton.prototype, "onChangeDisabled", null);
-    tslib_1.__decorate([
-        decorators_1.watch('state.activated')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.activated')
     ], UIButton.prototype, "onChangeActivated", null);
-    tslib_1.__decorate([
-        decorators_1.watch('state.name')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.name')
     ], UIButton.prototype, "onChangeName", null);
-    tslib_1.__decorate([
-        decorators_1.watch('state.tooltip')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.tooltip')
     ], UIButton.prototype, "onChangeTooltip", null);
-    tslib_1.__decorate([
-        decorators_1.watch('state.tabIndex')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.tabIndex')
     ], UIButton.prototype, "onChangeTabIndex", null);
-    tslib_1.__decorate([
-        decorators_1.watch('state.icon')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.icon')
     ], UIButton.prototype, "onChangeIcon", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], UIButton.prototype, "onActionFire", null);
-    UIButton = tslib_1.__decorate([
+    UIButton = (0, tslib_1.__decorate)([
         decorators_1.component
     ], UIButton);
     return UIButton;
@@ -6911,7 +6942,7 @@ exports.UIButton = UIButton;
 function Button(jodit, stateOrText, text, status) {
     var button = new UIButton(jodit);
     button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
-    if (helpers_1.isString(stateOrText)) {
+    if ((0, helpers_1.isString)(stateOrText)) {
         button.state.icon.name = stateOrText;
         button.state.name = stateOrText;
         if (status) {
@@ -6962,7 +6993,7 @@ var buttons_1 = __webpack_require__(113);
 var get_control_type_1 = __webpack_require__(98);
 var helpers_1 = __webpack_require__(19);
 var UIList = (function (_super) {
-    tslib_1.__extends(UIList, _super);
+    (0, tslib_1.__extends)(UIList, _super);
     function UIList(jodit) {
         var _this = _super.call(this, jodit) || this;
         _this.mode = 'horizontal';
@@ -6998,7 +7029,7 @@ var UIList = (function (_super) {
     UIList.prototype.build = function (items, target) {
         var _this = this;
         if (target === void 0) { target = null; }
-        items = helpers_1.splitArray(items);
+        items = (0, helpers_1.splitArray)(items);
         this.clear();
         var lastBtnSeparator = false;
         var line = this.makeGroup();
@@ -7035,19 +7066,19 @@ var UIList = (function (_super) {
             return !_this.removeButtons.includes(b.name);
         };
         items.forEach(function (item) {
-            if (buttons_1.isButtonGroup(item)) {
+            if ((0, buttons_1.isButtonGroup)(item)) {
                 var buttons = item.buttons.filter(function (b) { return b; });
                 if (buttons.length) {
                     group = _this.makeGroup();
                     line.append(group);
                     group.setMod('separated', true).setMod('group', item.group);
-                    get_strong_control_types_1.getStrongControlTypes(buttons, _this.j.o.controls)
+                    (0, get_strong_control_types_1.getStrongControlTypes)(buttons, _this.j.o.controls)
                         .filter(isNotRemoved)
                         .forEach(addButton);
                 }
             }
             else {
-                var control = get_control_type_1.getControlType(item, _this.j.o.controls);
+                var control = (0, get_control_type_1.getControlType)(item, _this.j.o.controls);
                 isNotRemoved(control) && addButton(control);
             }
         });
@@ -7057,10 +7088,10 @@ var UIList = (function (_super) {
     UIList.prototype.makeButton = function (control, target) {
         return new button_1.UIButton(this.j);
     };
-    tslib_1.__decorate([
-        decorators_1.watch('mode')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('mode')
     ], UIList.prototype, "onChangeMode", null);
-    UIList = tslib_1.__decorate([
+    UIList = (0, tslib_1.__decorate)([
         decorators_1.component
     ], UIList);
     return UIList;
@@ -7095,14 +7126,14 @@ var config_1 = __webpack_require__(8);
 var checker_1 = __webpack_require__(34);
 var helpers_1 = __webpack_require__(19);
 function getStrongControlTypes(items, controls) {
-    var elements = checker_1.isArray(items)
+    var elements = (0, checker_1.isArray)(items)
         ? items
-        : helpers_1.keys(items, false).map(function (key) {
+        : (0, helpers_1.keys)(items, false).map(function (key) {
             var value = items[key] || {};
-            return helpers_1.ConfigProto({ name: key }, value);
+            return (0, helpers_1.ConfigProto)({ name: key }, value);
         });
     return elements.map(function (item) {
-        return get_control_type_1.getControlType(item, controls || config_1.Config.defaultOptions.controls);
+        return (0, get_control_type_1.getControlType)(item, controls || config_1.Config.defaultOptions.controls);
     });
 }
 exports.getStrongControlTypes = getStrongControlTypes;
@@ -7128,10 +7159,10 @@ function getControlType(button, controls) {
     var buttonControl;
     if (!controls)
         controls = config_1.Config.defaultOptions.controls;
-    if (!helpers_1.isString(button)) {
-        buttonControl = tslib_1.__assign({ name: 'empty' }, helpers_1.ConfigFlatten(button));
+    if (!(0, helpers_1.isString)(button)) {
+        buttonControl = (0, tslib_1.__assign)({ name: 'empty' }, (0, helpers_1.ConfigFlatten)(button));
         if (controls[buttonControl.name] !== undefined) {
-            buttonControl = tslib_1.__assign(tslib_1.__assign({}, helpers_1.ConfigFlatten(controls[buttonControl.name])), helpers_1.ConfigFlatten(buttonControl));
+            buttonControl = (0, tslib_1.__assign)((0, tslib_1.__assign)({}, (0, helpers_1.ConfigFlatten)(controls[buttonControl.name])), (0, helpers_1.ConfigFlatten)(buttonControl));
         }
     }
     else {
@@ -7145,7 +7176,7 @@ function getControlType(button, controls) {
 }
 exports.getControlType = getControlType;
 function findControlType(path, controls) {
-    var _a = path.split(/\./), namespaceOrKey = _a[0], key = _a[1];
+    var _a = (0, tslib_1.__read)(path.split(/\./), 2), namespaceOrKey = _a[0], key = _a[1];
     var store = controls;
     if (key != null) {
         if (controls[namespaceOrKey] !== undefined) {
@@ -7156,7 +7187,7 @@ function findControlType(path, controls) {
         key = namespaceOrKey;
     }
     return store[key]
-        ? tslib_1.__assign({ name: key }, helpers_1.ConfigFlatten(store[key])) : undefined;
+        ? (0, tslib_1.__assign)({ name: key }, (0, helpers_1.ConfigFlatten)(store[key])) : undefined;
 }
 exports.findControlType = findControlType;
 
@@ -7175,15 +7206,15 @@ exports.findControlType = findControlType;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.autobind = void 0;
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(100), exports);
-tslib_1.__exportStar(__webpack_require__(101), exports);
-tslib_1.__exportStar(__webpack_require__(102), exports);
-tslib_1.__exportStar(__webpack_require__(103), exports);
-tslib_1.__exportStar(__webpack_require__(104), exports);
-tslib_1.__exportStar(__webpack_require__(105), exports);
-tslib_1.__exportStar(__webpack_require__(106), exports);
-tslib_1.__exportStar(__webpack_require__(107), exports);
-tslib_1.__exportStar(__webpack_require__(108), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(100), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(101), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(102), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(103), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(104), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(105), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(106), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(107), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(108), exports);
 var autobind_decorator_1 = __webpack_require__(109);
 Object.defineProperty(exports, "autobind", ({ enumerable: true, get: function () { return autobind_decorator_1.default; } }));
 
@@ -7205,7 +7236,7 @@ var helpers_1 = __webpack_require__(19);
 function cache(target, name, descriptor) {
     var getter = descriptor.get;
     if (!getter) {
-        throw helpers_1.error('Getter property descriptor expected');
+        throw (0, helpers_1.error)('Getter property descriptor expected');
     }
     descriptor.get = function () {
         var value = getter.call(this);
@@ -7240,17 +7271,17 @@ exports.component = void 0;
 var tslib_1 = __webpack_require__(7);
 var helpers_1 = __webpack_require__(19);
 var cn = function (elm) {
-    return helpers_1.isFunction(elm.className) ? elm.className() : NaN;
+    return (0, helpers_1.isFunction)(elm.className) ? elm.className() : NaN;
 };
 function component(constructorFunction) {
     var newConstructorFunction = (function (_super) {
-        tslib_1.__extends(newConstructorFunction, _super);
+        (0, tslib_1.__extends)(newConstructorFunction, _super);
         function newConstructorFunction() {
             var args = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i] = arguments[_i];
             }
-            var _this = _super.apply(this, args) || this;
+            var _this = _super.apply(this, (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(args), false)) || this;
             var isSamePrototype = Object.getPrototypeOf(_this) ===
                 newConstructorFunction.prototype;
             var isSameClassName = cn(_this) ===
@@ -7288,17 +7319,17 @@ function debounce(timeout, firstCallImmediately, method) {
     if (firstCallImmediately === void 0) { firstCallImmediately = false; }
     if (method === void 0) { method = 'debounce'; }
     return function (target, propertyKey) {
-        if (!helpers_1.isFunction(target[propertyKey])) {
-            throw helpers_1.error('Handler must be a Function');
+        if (!(0, helpers_1.isFunction)(target[propertyKey])) {
+            throw (0, helpers_1.error)('Handler must be a Function');
         }
         target.hookStatus(component_1.STATUSES.ready, function (component) {
-            var view = helpers_1.isViewObject(component)
+            var view = (0, helpers_1.isViewObject)(component)
                 ? component
                 : component.jodit;
-            var realTimeout = helpers_1.isFunction(timeout)
+            var realTimeout = (0, helpers_1.isFunction)(timeout)
                 ? timeout(component)
                 : timeout;
-            component[propertyKey] = view.async[method](component[propertyKey].bind(component), helpers_1.isNumber(realTimeout) || helpers_1.isPlainObject(realTimeout)
+            component[propertyKey] = view.async[method](component[propertyKey].bind(component), (0, helpers_1.isNumber)(realTimeout) || (0, helpers_1.isPlainObject)(realTimeout)
                 ? realTimeout
                 : view.defaultTimeout, firstCallImmediately);
         });
@@ -7325,11 +7356,11 @@ var component_1 = __webpack_require__(27);
 var helpers_1 = __webpack_require__(19);
 function idle() {
     return function (target, propertyKey) {
-        if (!helpers_1.isFunction(target[propertyKey])) {
-            throw helpers_1.error('Handler must be a Function');
+        if (!(0, helpers_1.isFunction)(target[propertyKey])) {
+            throw (0, helpers_1.error)('Handler must be a Function');
         }
         target.hookStatus(component_1.STATUSES.ready, function (component) {
-            var view = helpers_1.isViewObject(component)
+            var view = (0, helpers_1.isViewObject)(component)
                 ? component
                 : component.jodit;
             var originalMethod = component[propertyKey];
@@ -7338,7 +7369,7 @@ function idle() {
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i] = arguments[_i];
                 }
-                return view.async.requestIdleCallback(originalMethod.bind.apply(originalMethod, tslib_1.__spreadArray([component], args)));
+                return view.async.requestIdleCallback(originalMethod.bind.apply(originalMethod, (0, tslib_1.__spreadArray)([component], (0, tslib_1.__read)(args), false)));
             };
         });
     };
@@ -7362,8 +7393,8 @@ exports.hook = void 0;
 var helpers_1 = __webpack_require__(19);
 function hook(status) {
     return function (target, propertyKey) {
-        if (!helpers_1.isFunction(target[propertyKey])) {
-            throw helpers_1.error('Handler must be a Function');
+        if (!(0, helpers_1.isFunction)(target[propertyKey])) {
+            throw (0, helpers_1.error)('Handler must be a Function');
         }
         target.hookStatus(status, function (component) {
             target[propertyKey].call(component);
@@ -7421,7 +7452,7 @@ var component_1 = __webpack_require__(27);
 var helpers_1 = __webpack_require__(19);
 function persistent(target, propertyKey) {
     target.hookStatus(component_1.STATUSES.ready, function (component) {
-        var jodit = helpers_1.isViewObject(component)
+        var jodit = (0, helpers_1.isViewObject)(component)
             ? component
             : component.jodit, storageKey = "" + jodit.options.namespace + component.componentName + "_prop_" + propertyKey, initialValue = component[propertyKey];
         Object.defineProperty(component, propertyKey, {
@@ -7451,15 +7482,16 @@ exports.persistent = persistent;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.wait = void 0;
+var tslib_1 = __webpack_require__(7);
 var helpers_1 = __webpack_require__(19);
 var component_1 = __webpack_require__(27);
 function wait(condition) {
     return function (target, propertyKey) {
-        if (!helpers_1.isFunction(target[propertyKey])) {
-            throw helpers_1.error('Handler must be a Function');
+        if (!(0, helpers_1.isFunction)(target[propertyKey])) {
+            throw (0, helpers_1.error)('Handler must be a Function');
         }
         target.hookStatus(component_1.STATUSES.ready, function (component) {
-            var async = helpers_1.isViewObject(component)
+            var async = (0, helpers_1.isViewObject)(component)
                 ? component.async
                 : component.j.async;
             var realMethod = component[propertyKey];
@@ -7474,7 +7506,7 @@ function wait(condition) {
                     realMethod.apply(component, args);
                 }
                 else {
-                    timeout = async.setTimeout(function () { return callProxy.apply(void 0, args); }, 10);
+                    timeout = async.setTimeout(function () { return callProxy.apply(void 0, (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(args), false)); }, 10);
                 }
             };
         });
@@ -7511,8 +7543,8 @@ function getPropertyDescriptor(obj, prop) {
 exports.getPropertyDescriptor = getPropertyDescriptor;
 function watch(observeFields, context) {
     return function (target, propertyKey) {
-        if (!helpers_1.isFunction(target[propertyKey])) {
-            throw helpers_1.error('Handler must be a Function');
+        if (!(0, helpers_1.isFunction)(target[propertyKey])) {
+            throw (0, helpers_1.error)('Handler must be a Function');
         }
         var process = function (component) {
             var callback = function (key) {
@@ -7522,19 +7554,19 @@ function watch(observeFields, context) {
                     args[_i - 1] = arguments[_i];
                 }
                 if (!component.isInDestruct) {
-                    return (_a = component)[propertyKey].apply(_a, tslib_1.__spreadArray([key], args));
+                    return (_a = component)[propertyKey].apply(_a, (0, tslib_1.__spreadArray)([key], (0, tslib_1.__read)(args), false));
                 }
             };
-            helpers_1.splitArray(observeFields).forEach(function (field) {
+            (0, helpers_1.splitArray)(observeFields).forEach(function (field) {
                 if (/:/.test(field)) {
-                    var _a = field.split(':'), objectPath = _a[0], eventName_1 = _a[1];
-                    var view_1 = helpers_1.isViewObject(component)
+                    var _a = (0, tslib_1.__read)(field.split(':'), 2), objectPath = _a[0], eventName_1 = _a[1];
+                    var view_1 = (0, helpers_1.isViewObject)(component)
                         ? component
                         : component.jodit;
                     if (objectPath.length) {
                         context = component.get(objectPath);
                     }
-                    if (helpers_1.isFunction(context)) {
+                    if ((0, helpers_1.isFunction)(context)) {
                         context = context(component);
                     }
                     view_1.events.on(context || component, eventName_1, callback);
@@ -7548,12 +7580,12 @@ function watch(observeFields, context) {
                     });
                     return;
                 }
-                var parts = field.split('.'), key = parts[0];
+                var parts = field.split('.'), _b = (0, tslib_1.__read)(parts, 1), key = _b[0];
                 var value = component[key];
                 if (value instanceof events_1.ObserveObject) {
                     value.on("change." + field, callback);
                 }
-                else if (helpers_1.isPlainObject(value) && parts.length > 1) {
+                else if ((0, helpers_1.isPlainObject)(value) && parts.length > 1) {
                     var observe = events_1.ObserveObject.create(value, [key]);
                     observe.on("change." + field, callback);
                     component[key] = observe;
@@ -7571,7 +7603,7 @@ function watch(observeFields, context) {
                             if (descriptor_1 && descriptor_1.set) {
                                 descriptor_1.set.call(component, v);
                             }
-                            if (helpers_1.isPlainObject(value)) {
+                            if ((0, helpers_1.isPlainObject)(value)) {
                                 value = events_1.ObserveObject.create(value, [key]);
                                 value.on('change.' + field, callback);
                             }
@@ -7587,7 +7619,7 @@ function watch(observeFields, context) {
                 }
             });
         };
-        if (helpers_1.isFunction(target.hookStatus)) {
+        if ((0, helpers_1.isFunction)(target.hookStatus)) {
             target.hookStatus(component_1.STATUSES.ready, process);
         }
         else {
@@ -7596,7 +7628,7 @@ function watch(observeFields, context) {
     };
 }
 exports.watch = watch;
-exports.default = watch;
+exports["default"] = watch;
 
 
 /***/ }),
@@ -7675,7 +7707,7 @@ function autobind() {
     }
     return boundMethod.apply(void 0, arguments);
 }
-exports.default = autobind;
+exports["default"] = autobind;
 
 
 /***/ }),
@@ -7698,7 +7730,7 @@ var decorators_1 = __webpack_require__(99);
 var helpers_1 = __webpack_require__(19);
 var dom_1 = __webpack_require__(32);
 var UIGroup = (function (_super) {
-    tslib_1.__extends(UIGroup, _super);
+    (0, tslib_1.__extends)(UIGroup, _super);
     function UIGroup(jodit, elements, options) {
         var _this = _super.call(this, jodit, options) || this;
         _this.syncMod = false;
@@ -7717,14 +7749,14 @@ var UIGroup = (function (_super) {
     Object.defineProperty(UIGroup.prototype, "allChildren", {
         get: function () {
             var result = [];
-            var stack = tslib_1.__spreadArray([], this.elements);
+            var stack = (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(this.elements), false);
             while (stack.length) {
                 var elm = stack.shift();
-                if (helpers_1.isArray(elm)) {
-                    stack.push.apply(stack, elm);
+                if ((0, helpers_1.isArray)(elm)) {
+                    stack.push.apply(stack, (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(elm), false));
                 }
                 else if (elm instanceof UIGroup_1) {
-                    stack.push.apply(stack, elm.elements);
+                    stack.push.apply(stack, (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(elm.elements), false));
                 }
                 else {
                     elm && result.push(elm);
@@ -7741,7 +7773,7 @@ var UIGroup = (function (_super) {
     };
     UIGroup.prototype.append = function (elm, distElement) {
         var _this = this;
-        if (helpers_1.isArray(elm)) {
+        if ((0, helpers_1.isArray)(elm)) {
             elm.forEach(function (item) { return _this.append(item); });
             return this;
         }
@@ -7787,10 +7819,10 @@ var UIGroup = (function (_super) {
         return _super.prototype.destruct.call(this);
     };
     var UIGroup_1;
-    tslib_1.__decorate([
-        decorators_1.watch('buttonSize')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('buttonSize')
     ], UIGroup.prototype, "update", null);
-    UIGroup = UIGroup_1 = tslib_1.__decorate([
+    UIGroup = UIGroup_1 = (0, tslib_1.__decorate)([
         decorators_1.component
     ], UIGroup);
     return UIGroup;
@@ -7824,14 +7856,14 @@ var tslib_1 = __webpack_require__(7);
 var element_1 = __webpack_require__(76);
 var decorators_1 = __webpack_require__(99);
 var UISeparator = (function (_super) {
-    tslib_1.__extends(UISeparator, _super);
+    (0, tslib_1.__extends)(UISeparator, _super);
     function UISeparator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     UISeparator.prototype.className = function () {
         return 'UISeparator';
     };
-    UISeparator = tslib_1.__decorate([
+    UISeparator = (0, tslib_1.__decorate)([
         decorators_1.component
     ], UISeparator);
     return UISeparator;
@@ -7852,15 +7884,16 @@ exports.UISeparator = UISeparator;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.flatButtonsSet = exports.isButtonGroup = void 0;
+var tslib_1 = __webpack_require__(7);
 var checker_1 = __webpack_require__(34);
 var isButtonGroup = function (item) {
-    return checker_1.isArray(item.buttons);
+    return (0, checker_1.isArray)(item.buttons);
 };
 exports.isButtonGroup = isButtonGroup;
 var flatButtonsSet = function (buttons) {
     return new Set(buttons.reduce(function (acc, item) {
-        if (exports.isButtonGroup(item)) {
-            acc.push.apply(acc, item.buttons);
+        if ((0, exports.isButtonGroup)(item)) {
+            acc.push.apply(acc, (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(item.buttons), false));
         }
         else {
             acc.push(item);
@@ -7890,7 +7923,7 @@ var group_1 = __webpack_require__(110);
 var decorators_1 = __webpack_require__(99);
 var button_1 = __webpack_require__(93);
 var UIButtonGroup = (function (_super) {
-    tslib_1.__extends(UIButtonGroup, _super);
+    (0, tslib_1.__extends)(UIButtonGroup, _super);
     function UIButtonGroup(jodit, options) {
         if (options === void 0) { options = {
             radio: true
@@ -7940,7 +7973,7 @@ var UIButtonGroup = (function (_super) {
         this.jodit.e.fire(this, 'select', result);
         (_b = (_a = this.options).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, result);
     };
-    UIButtonGroup = tslib_1.__decorate([
+    UIButtonGroup = (0, tslib_1.__decorate)([
         decorators_1.component
     ], UIButtonGroup);
     return UIButtonGroup;
@@ -7970,7 +8003,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(117), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(117), exports);
 
 
 /***/ }),
@@ -7994,7 +8027,7 @@ var global_1 = __webpack_require__(30);
 var element_1 = __webpack_require__(76);
 var decorators_1 = __webpack_require__(99);
 var Popup = (function (_super) {
-    tslib_1.__extends(Popup, _super);
+    (0, tslib_1.__extends)(Popup, _super);
     function Popup(jodit, smart) {
         if (smart === void 0) { smart = true; }
         var _this = _super.call(this, jodit) || this;
@@ -8008,7 +8041,7 @@ var Popup = (function (_super) {
             height: _this.ow.innerHeight
         }); };
         _this.childrenPopups = new Set();
-        helpers_1.attr(_this.container, 'role', 'popup');
+        (0, helpers_1.attr)(_this.container, 'role', 'popup');
         return _this;
     }
     Popup.prototype.className = function () {
@@ -8039,7 +8072,7 @@ var Popup = (function (_super) {
             elm = content.container;
             content.parentElement = this;
         }
-        else if (helpers_1.isString(content)) {
+        else if ((0, helpers_1.isString)(content)) {
             elm = this.j.c.fromHTML(content);
         }
         else {
@@ -8052,13 +8085,13 @@ var Popup = (function (_super) {
     };
     Popup.prototype.open = function (getBound, keepPosition) {
         if (keepPosition === void 0) { keepPosition = false; }
-        helpers_1.markOwner(this.jodit, this.container);
+        (0, helpers_1.markOwner)(this.jodit, this.container);
         this.isOpened = true;
         this.addGlobalListeners();
         this.targetBound = !keepPosition
             ? getBound
             : this.getKeepBound(getBound);
-        var parentContainer = global_1.getContainer(this.jodit, Popup);
+        var parentContainer = (0, global_1.getContainer)(this.jodit, Popup);
         if (parentContainer !== this.container.parentElement) {
             parentContainer.appendChild(this.container);
         }
@@ -8073,23 +8106,23 @@ var Popup = (function (_super) {
         if (!elmUnderCursor) {
             return getBound;
         }
-        var element = dom_1.Dom.isHTMLElement(elmUnderCursor, this.ow)
+        var element = dom_1.Dom.isHTMLElement(elmUnderCursor)
             ? elmUnderCursor
             : elmUnderCursor.parentElement;
-        var oldPos = helpers_1.position(element, this.j);
+        var oldPos = (0, helpers_1.position)(element, this.j);
         return function () {
             var bound = getBound();
-            var newPos = helpers_1.position(element, _this.j);
-            return tslib_1.__assign(tslib_1.__assign({}, bound), { top: bound.top + (newPos.top - oldPos.top), left: bound.left + (newPos.left - oldPos.left) });
+            var newPos = (0, helpers_1.position)(element, _this.j);
+            return (0, tslib_1.__assign)((0, tslib_1.__assign)({}, bound), { top: bound.top + (newPos.top - oldPos.top), left: bound.left + (newPos.left - oldPos.left) });
         };
     };
     Popup.prototype.updatePosition = function () {
         if (!this.isOpened) {
             return this;
         }
-        var _a = this.calculatePosition(this.targetBound(), this.viewBound(), helpers_1.position(this.container, this.j)), pos = _a[0], strategy = _a[1];
+        var _a = (0, tslib_1.__read)(this.calculatePosition(this.targetBound(), this.viewBound(), (0, helpers_1.position)(this.container, this.j)), 2), pos = _a[0], strategy = _a[1];
         this.setMod('strategy', strategy);
-        helpers_1.css(this.container, {
+        (0, helpers_1.css)(this.container, {
             left: pos.left,
             top: pos.top
         });
@@ -8106,10 +8139,10 @@ var Popup = (function (_super) {
             top: target.top - container.height
         };
         var list = Object.keys(x).reduce(function (keys, xKey) {
-            return keys.concat(Object.keys(y).map(function (yKey) { return "" + xKey + helpers_1.ucfirst(yKey); }));
+            return keys.concat(Object.keys(y).map(function (yKey) { return "" + xKey + (0, helpers_1.ucfirst)(yKey); }));
         }, []);
         var getPointByStrategy = function (strategy) {
-            var _a = helpers_1.kebabCase(strategy).split('-'), xKey = _a[0], yKey = _a[1];
+            var _a = (0, tslib_1.__read)((0, helpers_1.kebabCase)(strategy).split('-'), 2), xKey = _a[0], yKey = _a[1];
             return {
                 left: x[xKey],
                 top: y[yKey],
@@ -8133,7 +8166,7 @@ var Popup = (function (_super) {
             }
             return strategy;
         };
-        var strategy = getMatchStrategy(helpers_1.position(this.j.container, this.j));
+        var strategy = getMatchStrategy((0, helpers_1.position)(this.j.container, this.j));
         if (!strategy || !Popup.boxInView(getPointByStrategy(strategy), view)) {
             strategy = getMatchStrategy(view) || strategy || defaultStrategy;
         }
@@ -8211,13 +8244,13 @@ var Popup = (function (_super) {
         this.close();
         return _super.prototype.destruct.call(this);
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], Popup.prototype, "updatePosition", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], Popup.prototype, "close", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], Popup.prototype, "closeOnOutsideClick", null);
     return Popup;
@@ -8247,9 +8280,9 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(120), exports);
-tslib_1.__exportStar(__webpack_require__(121), exports);
-tslib_1.__exportStar(__webpack_require__(135), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(120), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(121), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(135), exports);
 
 
 /***/ }),
@@ -8271,7 +8304,7 @@ var inputs_1 = __webpack_require__(121);
 var utils_1 = __webpack_require__(20);
 var decorators_1 = __webpack_require__(99);
 var UIForm = (function (_super) {
-    tslib_1.__extends(UIForm, _super);
+    (0, tslib_1.__extends)(UIForm, _super);
     function UIForm() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -8282,19 +8315,38 @@ var UIForm = (function (_super) {
         this.j.e.fire(this.container, 'submit');
     };
     UIForm.prototype.validate = function () {
+        var e_1, _a, e_2, _b;
         var inputs = this.allChildren.filter(function (elm) { return elm instanceof inputs_1.UIInput; });
-        for (var _i = 0, inputs_2 = inputs; _i < inputs_2.length; _i++) {
-            var input = inputs_2[_i];
-            if (!input.validate()) {
-                return false;
+        try {
+            for (var inputs_2 = (0, tslib_1.__values)(inputs), inputs_2_1 = inputs_2.next(); !inputs_2_1.done; inputs_2_1 = inputs_2.next()) {
+                var input = inputs_2_1.value;
+                if (!input.validate()) {
+                    return false;
+                }
             }
         }
-        var selects = this.allChildren.filter(function (elm) { return elm instanceof inputs_1.UISelect; });
-        for (var _a = 0, selects_1 = selects; _a < selects_1.length; _a++) {
-            var select = selects_1[_a];
-            if (!select.validate()) {
-                return false;
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (inputs_2_1 && !inputs_2_1.done && (_a = inputs_2.return)) _a.call(inputs_2);
             }
+            finally { if (e_1) throw e_1.error; }
+        }
+        var selects = this.allChildren.filter(function (elm) { return elm instanceof inputs_1.UISelect; });
+        try {
+            for (var selects_1 = (0, tslib_1.__values)(selects), selects_1_1 = selects_1.next(); !selects_1_1.done; selects_1_1 = selects_1.next()) {
+                var select = selects_1_1.value;
+                if (!select.validate()) {
+                    return false;
+                }
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (selects_1_1 && !selects_1_1.done && (_b = selects_1.return)) _b.call(selects_1);
+            }
+            finally { if (e_2) throw e_2.error; }
         }
         return true;
     };
@@ -8315,10 +8367,10 @@ var UIForm = (function (_super) {
     UIForm.prototype.createContainer = function () {
         var form = this.j.c.element('form');
         form.classList.add(this.componentName);
-        utils_1.attr(form, 'dir', this.j.o.direction || 'auto');
+        (0, utils_1.attr)(form, 'dir', this.j.o.direction || 'auto');
         return form;
     };
-    UIForm = tslib_1.__decorate([
+    UIForm = (0, tslib_1.__decorate)([
         decorators_1.component
     ], UIForm);
     return UIForm;
@@ -8339,11 +8391,11 @@ exports.UIForm = UIForm;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(122), exports);
-tslib_1.__exportStar(__webpack_require__(127), exports);
-tslib_1.__exportStar(__webpack_require__(129), exports);
-tslib_1.__exportStar(__webpack_require__(131), exports);
-tslib_1.__exportStar(__webpack_require__(133), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(122), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(127), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(129), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(131), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(133), exports);
 
 
 /***/ }),
@@ -8368,13 +8420,13 @@ var decorators_1 = __webpack_require__(99);
 var icon_1 = __webpack_require__(80);
 var validators_1 = __webpack_require__(124);
 var UIInput = (function (_super) {
-    tslib_1.__extends(UIInput, _super);
+    (0, tslib_1.__extends)(UIInput, _super);
     function UIInput(jodit, options) {
         var _this = _super.call(this, jodit, options) || this;
         _this.label = _this.j.c.span(_this.getFullElName('label'));
         _this.icon = _this.j.c.span(_this.getFullElName('icon'));
         _this.clearButton = _this.j.c.span(_this.getFullElName('clear'), icon_1.Icon.get('cancel'));
-        _this.state = tslib_1.__assign({}, UIInput_1.defaultState);
+        _this.state = (0, tslib_1.__assign)({}, UIInput_1.defaultState);
         _this.__errorBox = _this.j.c.span(_this.getFullElName('error'));
         _this.validators = new Set([]);
         Object.assign(_this.state, options);
@@ -8421,13 +8473,13 @@ var UIInput = (function (_super) {
     UIInput.prototype.onChangeState = function () {
         this.name = this.state.name;
         var input = this.nativeInput, _a = this.state, name = _a.name, icon = _a.icon, type = _a.type, ref = _a.ref, required = _a.required, placeholder = _a.placeholder, autocomplete = _a.autocomplete, label = _a.label;
-        helpers_1.attr(input, 'name', name);
-        helpers_1.attr(input, 'type', type);
-        helpers_1.attr(input, 'data-ref', ref || name);
-        helpers_1.attr(input, 'ref', ref || name);
-        helpers_1.attr(input, 'required', required || null);
-        helpers_1.attr(input, 'autocomplete', !autocomplete ? 'off' : null);
-        helpers_1.attr(input, 'placeholder', placeholder ? this.j.i18n(placeholder) : '');
+        (0, helpers_1.attr)(input, 'name', name);
+        (0, helpers_1.attr)(input, 'type', type);
+        (0, helpers_1.attr)(input, 'data-ref', ref || name);
+        (0, helpers_1.attr)(input, 'ref', ref || name);
+        (0, helpers_1.attr)(input, 'required', required || null);
+        (0, helpers_1.attr)(input, 'autocomplete', !autocomplete ? 'off' : null);
+        (0, helpers_1.attr)(input, 'placeholder', placeholder ? this.j.i18n(placeholder) : '');
         if (icon && icon_1.Icon.exists(icon)) {
             dom_1.Dom.before(input, this.icon);
             this.icon.innerHTML = icon_1.Icon.get(icon);
@@ -8496,19 +8548,19 @@ var UIInput = (function (_super) {
     UIInput.prototype.validate = function () {
         var _this = this;
         this.error = '';
-        return helpers_1.toArray(this.validators).every(function (validator) { return validator(_this); });
+        return (0, helpers_1.toArray)(this.validators).every(function (validator) { return validator(_this); });
     };
     UIInput.prototype.createContainer = function (options) {
         var container = _super.prototype.createContainer.call(this);
         this.wrapper = this.j.c.div(this.getFullElName('wrapper'));
         if (!this.nativeInput) {
-            this.nativeInput = this.createNativeInput(options);
+            this.nativeInput = this.createNativeInput();
         }
         var nativeInput = this.nativeInput;
         nativeInput.classList.add(this.getFullElName('input'));
         this.wrapper.appendChild(nativeInput);
         container.appendChild(this.wrapper);
-        helpers_1.attr(nativeInput, 'dir', this.j.o.direction || 'auto');
+        (0, helpers_1.attr)(nativeInput, 'dir', this.j.o.direction || 'auto');
         return container;
     };
     UIInput.prototype.createNativeInput = function (options) {
@@ -8541,14 +8593,14 @@ var UIInput = (function (_super) {
         required: false,
         validators: []
     };
-    tslib_1.__decorate([
-        decorators_1.watch('state.clearButton')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.clearButton')
     ], UIInput.prototype, "onChangeClear", null);
-    tslib_1.__decorate([
-        decorators_1.watch('state.className')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.className')
     ], UIInput.prototype, "onChangeClassName", null);
-    tslib_1.__decorate([
-        decorators_1.watch([
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)([
             'state.name',
             'state.type',
             'state.label',
@@ -8556,15 +8608,15 @@ var UIInput = (function (_super) {
             'state.autocomplete',
             'state.icon'
         ]),
-        decorators_1.debounce()
+        (0, decorators_1.debounce)()
     ], UIInput.prototype, "onChangeState", null);
-    tslib_1.__decorate([
-        decorators_1.watch('state.value')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.value')
     ], UIInput.prototype, "onChangeStateValue", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], UIInput.prototype, "onChangeValue", null);
-    UIInput = UIInput_1 = tslib_1.__decorate([
+    UIInput = UIInput_1 = (0, tslib_1.__decorate)([
         decorators_1.component
     ], UIInput);
     return UIInput;
@@ -8613,14 +8665,14 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.url = exports.required = void 0;
 var helpers_1 = __webpack_require__(19);
 exports.required = function (input) {
-    if (!helpers_1.trim(input.value).length) {
+    if (!(0, helpers_1.trim)(input.value).length) {
         input.error = 'Please fill out this field';
         return false;
     }
     return true;
 };
 exports.url = function (input) {
-    if (!helpers_1.isURL(helpers_1.trim(input.value))) {
+    if (!(0, helpers_1.isURL)((0, helpers_1.trim)(input.value))) {
         input.error = 'Please enter a web address';
         return false;
     }
@@ -8643,7 +8695,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.required = void 0;
 var helpers_1 = __webpack_require__(19);
 exports.required = function (select) {
-    if (!helpers_1.trim(select.value).length) {
+    if (!(0, helpers_1.trim)(select.value).length) {
         select.error = 'Please fill out this field';
         return false;
     }
@@ -8669,7 +8721,7 @@ __webpack_require__(128);
 var input_1 = __webpack_require__(122);
 var decorators_1 = __webpack_require__(99);
 var UITextArea = (function (_super) {
-    tslib_1.__extends(UITextArea, _super);
+    (0, tslib_1.__extends)(UITextArea, _super);
     function UITextArea() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -8680,7 +8732,7 @@ var UITextArea = (function (_super) {
         this.nativeInput = this.j.create.element('textarea');
         return _super.prototype.createContainer.call(this, options);
     };
-    UITextArea = tslib_1.__decorate([
+    UITextArea = (0, tslib_1.__decorate)([
         decorators_1.component
     ], UITextArea);
     return UITextArea;
@@ -8715,19 +8767,19 @@ __webpack_require__(130);
 var input_1 = __webpack_require__(122);
 var decorators_1 = __webpack_require__(99);
 var UICheckbox = (function (_super) {
-    tslib_1.__extends(UICheckbox, _super);
+    (0, tslib_1.__extends)(UICheckbox, _super);
     function UICheckbox(jodit, options) {
-        return _super.call(this, jodit, tslib_1.__assign(tslib_1.__assign({}, options), { type: 'checkbox' })) || this;
+        return _super.call(this, jodit, (0, tslib_1.__assign)((0, tslib_1.__assign)({}, options), { type: 'checkbox' })) || this;
     }
     UICheckbox.prototype.className = function () {
         return 'UICheckbox';
     };
-    UICheckbox.prototype.render = function (options) {
+    UICheckbox.prototype.render = function () {
         return this.j.c.element('label', {
             className: this.componentName
         });
     };
-    UICheckbox = tslib_1.__decorate([
+    UICheckbox = (0, tslib_1.__decorate)([
         decorators_1.component
     ], UICheckbox);
     return UICheckbox;
@@ -8764,10 +8816,10 @@ var decorators_1 = __webpack_require__(99);
 var input_1 = __webpack_require__(122);
 var validators_1 = __webpack_require__(124);
 var UISelect = (function (_super) {
-    tslib_1.__extends(UISelect, _super);
+    (0, tslib_1.__extends)(UISelect, _super);
     function UISelect(jodit, state) {
         var _this = _super.call(this, jodit, state) || this;
-        _this.state = tslib_1.__assign({}, UISelect_1.defaultState);
+        _this.state = (0, tslib_1.__assign)({}, UISelect_1.defaultState);
         Object.assign(_this.state, state);
         return _this;
     }
@@ -8793,10 +8845,10 @@ var UISelect = (function (_super) {
             nativeInput.add(option);
         });
         if (state.size && state.size > 0) {
-            helpers_1.attr(nativeInput, 'size', state.size);
+            (0, helpers_1.attr)(nativeInput, 'size', state.size);
         }
         if (state.multiple) {
-            helpers_1.attr(nativeInput, 'multiple', '');
+            (0, helpers_1.attr)(nativeInput, 'multiple', '');
         }
         return container;
     };
@@ -8811,8 +8863,8 @@ var UISelect = (function (_super) {
         }
     };
     var UISelect_1;
-    UISelect.defaultState = tslib_1.__assign(tslib_1.__assign({}, input_1.UIInput.defaultState), { options: [], size: 1, multiple: false });
-    UISelect = UISelect_1 = tslib_1.__decorate([
+    UISelect.defaultState = (0, tslib_1.__assign)((0, tslib_1.__assign)({}, input_1.UIInput.defaultState), { options: [], size: 1, multiple: false });
+    UISelect = UISelect_1 = (0, tslib_1.__decorate)([
         decorators_1.component
     ], UISelect);
     return UISelect;
@@ -8848,10 +8900,10 @@ var input_1 = __webpack_require__(122);
 var decorators_1 = __webpack_require__(99);
 var button_1 = __webpack_require__(92);
 var UIFileInput = (function (_super) {
-    tslib_1.__extends(UIFileInput, _super);
+    (0, tslib_1.__extends)(UIFileInput, _super);
     function UIFileInput(jodit, options) {
-        var _this = _super.call(this, jodit, tslib_1.__assign({ type: 'file' }, options)) || this;
-        _this.state = tslib_1.__assign(tslib_1.__assign({}, input_1.UIInput.defaultState), { type: 'file', onlyImages: true });
+        var _this = _super.call(this, jodit, (0, tslib_1.__assign)({ type: 'file' }, options)) || this;
+        _this.state = (0, tslib_1.__assign)((0, tslib_1.__assign)({}, input_1.UIInput.defaultState), { type: 'file', onlyImages: true });
         return _this;
     }
     UIFileInput.prototype.className = function () {
@@ -8876,7 +8928,7 @@ var UIFileInput = (function (_super) {
     UIFileInput.prototype.createNativeInput = function (options) {
         return this.j.create.fromHTML("<input\n\t\t\ttype=\"file\"\n\t\t\taccept=\"" + (options.onlyImages ? 'image/*' : '*') + "\"\n\t\t\ttabindex=\"-1\"\n\t\t\tdir=\"auto\"\n\t\t\tmultiple=\"\"\n\t\t/>");
     };
-    UIFileInput = tslib_1.__decorate([
+    UIFileInput = (0, tslib_1.__decorate)([
         decorators_1.component
     ], UIFileInput);
     return UIFileInput;
@@ -8912,7 +8964,7 @@ var group_1 = __webpack_require__(110);
 var utils_1 = __webpack_require__(20);
 var decorators_1 = __webpack_require__(99);
 var UIBlock = (function (_super) {
-    tslib_1.__extends(UIBlock, _super);
+    (0, tslib_1.__extends)(UIBlock, _super);
     function UIBlock(jodit, elements, options) {
         if (options === void 0) { options = {
             align: 'left'
@@ -8922,14 +8974,14 @@ var UIBlock = (function (_super) {
         _this.setMod('align', _this.options.align || 'left');
         _this.setMod('width', _this.options.width || '');
         _this.options.mod && _this.setMod(_this.options.mod, true);
-        utils_1.attr(_this.container, 'data-ref', options.ref);
-        utils_1.attr(_this.container, 'ref', options.ref);
+        (0, utils_1.attr)(_this.container, 'data-ref', options.ref);
+        (0, utils_1.attr)(_this.container, 'ref', options.ref);
         return _this;
     }
     UIBlock.prototype.className = function () {
         return 'UIBlock';
     };
-    UIBlock = tslib_1.__decorate([
+    UIBlock = (0, tslib_1.__decorate)([
         decorators_1.component
     ], UIBlock);
     return UIBlock;
@@ -8964,7 +9016,7 @@ __webpack_require__(138);
 var dom_1 = __webpack_require__(32);
 var element_1 = __webpack_require__(76);
 var ProgressBar = (function (_super) {
-    tslib_1.__extends(ProgressBar, _super);
+    (0, tslib_1.__extends)(ProgressBar, _super);
     function ProgressBar() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -9050,7 +9102,7 @@ function cleanFromWord(html) {
                                 dom_1.Dom.unwrap(node);
                                 break;
                             default:
-                                array_1.toArray(node.attributes).forEach(function (attr) {
+                                (0, array_1.toArray)(node.attributes).forEach(function (attr) {
                                     if ([
                                         'src',
                                         'href',
@@ -9125,13 +9177,13 @@ var dom_1 = __webpack_require__(32);
 function stripTags(html, doc) {
     if (doc === void 0) { doc = document; }
     var tmp = doc.createElement('div');
-    if (checker_1.isString(html)) {
+    if ((0, checker_1.isString)(html)) {
         tmp.innerHTML = html;
     }
     else {
         tmp.appendChild(html);
     }
-    selector_1.$$('DIV, P, BR, H1, H2, H3, H4, H5, H6, HR', tmp).forEach(function (p) {
+    (0, selector_1.$$)('DIV, P, BR, H1, H2, H3, H4, H5, H6, HR', tmp).forEach(function (p) {
         var pr = p.parentNode;
         if (!pr) {
             return;
@@ -9144,7 +9196,7 @@ function stripTags(html, doc) {
             pr.insertBefore(doc.createTextNode(' '), nx);
         }
     });
-    return string_1.trim(tmp.innerText) || '';
+    return (0, string_1.trim)(tmp.innerText) || '';
 }
 exports.stripTags = stripTags;
 
@@ -9181,10 +9233,10 @@ exports.nl2br = nl2br;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(144), exports);
-tslib_1.__exportStar(__webpack_require__(145), exports);
-tslib_1.__exportStar(__webpack_require__(146), exports);
-tslib_1.__exportStar(__webpack_require__(147), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(144), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(145), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(146), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(147), exports);
 
 
 /***/ }),
@@ -9269,7 +9321,7 @@ var offset = function (elm, jodit, doc, recurse) {
     var topValue, leftValue;
     var iframe = jodit.iframe;
     if (!recurse && jodit && jodit.options && jodit.o.iframe && iframe) {
-        var _a = exports.offset(iframe, jodit, jodit.od, true), top_1 = _a.top, left = _a.left;
+        var _a = (0, exports.offset)(iframe, jodit, jodit.od, true), top_1 = _a.top, left = _a.left;
         topValue = rect.top + top_1;
         leftValue = rect.left + left;
     }
@@ -9305,7 +9357,7 @@ function position(elm, jodit, recurse) {
     if (recurse === void 0) { recurse = false; }
     var rect = elm.getBoundingClientRect();
     var xPos = rect.left, yPos = rect.top;
-    if (checker_1.isJoditObject(jodit) && jodit.iframe && !recurse) {
+    if ((0, checker_1.isJoditObject)(jodit) && jodit.iframe && !recurse) {
         var _a = position(jodit.iframe, jodit, true), left = _a.left, top_1 = _a.top;
         xPos += left;
         yPos += top_1;
@@ -9338,9 +9390,9 @@ var complete_url_1 = __webpack_require__(149);
 var checker_1 = __webpack_require__(34);
 var alreadyLoadedList = new Map();
 var cacheLoaders = function (loader) {
-    return function (jodit, url) { return tslib_1.__awaiter(void 0, void 0, void 0, function () {
+    return function (jodit, url) { return (0, tslib_1.__awaiter)(void 0, void 0, void 0, function () {
         var promise;
-        return tslib_1.__generator(this, function (_a) {
+        return (0, tslib_1.__generator)(this, function (_a) {
             if (alreadyLoadedList.has(url)) {
                 return [2, alreadyLoadedList.get(url)];
             }
@@ -9354,11 +9406,11 @@ var appendScript = function (jodit, url, callback) {
     var script = jodit.c.element('script');
     script.type = 'text/javascript';
     script.async = true;
-    if (checker_1.isFunction(callback) && !jodit.isInDestruct) {
+    if ((0, checker_1.isFunction)(callback) && !jodit.isInDestruct) {
         jodit.e.on(script, 'load', callback);
     }
     if (!script.src) {
-        script.src = complete_url_1.completeUrl(url);
+        script.src = (0, complete_url_1.completeUrl)(url);
     }
     jodit.od.body.appendChild(script);
     return {
@@ -9369,7 +9421,7 @@ var appendScript = function (jodit, url, callback) {
 exports.appendScript = appendScript;
 exports.appendScriptAsync = cacheLoaders(function (jodit, url) {
     return new Promise(function (resolve, reject) {
-        var element = exports.appendScript(jodit, url, resolve).element;
+        var element = (0, exports.appendScript)(jodit, url, resolve).element;
         !jodit.isInDestruct && jodit.e.on(element, 'error', reject);
     });
 });
@@ -9382,7 +9434,7 @@ exports.appendStyleAsync = cacheLoaders(function (jodit, url) {
         var callback = function () { return resolve(link); };
         !jodit.isInDestruct &&
             jodit.e.on(link, 'load', callback).on(link, 'error', reject);
-        link.href = complete_url_1.completeUrl(url);
+        link.href = (0, complete_url_1.completeUrl)(url);
         if (jodit.o.shadowRoot) {
             jodit.o.shadowRoot.appendChild(link);
         }
@@ -9393,11 +9445,11 @@ exports.appendStyleAsync = cacheLoaders(function (jodit, url) {
 });
 var loadNext = function (jodit, urls, i) {
     if (i === void 0) { i = 0; }
-    if (!checker_1.isString(urls[i])) {
+    if (!(0, checker_1.isString)(urls[i])) {
         return Promise.resolve();
     }
-    return exports.appendScriptAsync(jodit, urls[i]).then(function () {
-        return exports.loadNext(jodit, urls, i + 1);
+    return (0, exports.appendScriptAsync)(jodit, urls[i]).then(function () {
+        return (0, exports.loadNext)(jodit, urls, i + 1);
     });
 };
 exports.loadNext = loadNext;
@@ -9482,7 +9534,7 @@ var parse_query_1 = __webpack_require__(152);
 var convertMediaUrlToVideoEmbed = function (url, width, height) {
     if (width === void 0) { width = 400; }
     if (height === void 0) { height = 345; }
-    if (!checker_1.isURL(url)) {
+    if (!(0, checker_1.isURL)(url)) {
         return url;
     }
     var parser = document.createElement('a'), pattern1 = /(?:http?s?:\/\/)?(?:www\.)?(?:vimeo\.com)\/?(.+)/g;
@@ -9511,7 +9563,7 @@ var convertMediaUrlToVideoEmbed = function (url, width, height) {
         case 'youtu.be':
         case 'www.youtu.be': {
             var query = parser.search
-                ? parse_query_1.parseQuery(parser.search)
+                ? (0, parse_query_1.parseQuery)(parser.search)
                 : { v: parser.pathname.substr(1) };
             return query.v
                 ? '<iframe width="' +
@@ -9599,7 +9651,7 @@ exports.each = void 0;
 var checker_1 = __webpack_require__(34);
 function each(obj, callback) {
     var length, keys, i;
-    if (checker_1.isArray(obj)) {
+    if ((0, checker_1.isArray)(obj)) {
         length = obj.length;
         for (i = 0; i < length; i += 1) {
             if (callback.call(obj[i], i, obj[i]) === false) {
@@ -9666,7 +9718,7 @@ var buildQuery = function (data, prefix) {
         if (Object.prototype.hasOwnProperty.call(data, dataKey)) {
             var k = prefix ? prefix + '[' + dataKey + ']' : dataKey;
             var v = data[dataKey];
-            str.push(checker_1.isPlainObject(v) ? exports.buildQuery(v, k) : enc(k) + '=' + enc(v));
+            str.push((0, checker_1.isPlainObject)(v) ? (0, exports.buildQuery)(v, k) : enc(k) + '=' + enc(v));
         }
     }
     return str.join('&');
@@ -9706,11 +9758,11 @@ var inView = function (elm, root, doc) {
 };
 exports.inView = inView;
 var scrollIntoViewIfNeeded = function (elm, root, doc) {
-    if (!exports.inView(elm, root, doc)) {
+    if (!(0, exports.inView)(elm, root, doc)) {
         if (root.clientHeight !== root.scrollHeight) {
             root.scrollTop = elm.offsetTop;
         }
-        if (!exports.inView(elm, root, doc)) {
+        if (!(0, exports.inView)(elm, root, doc)) {
             elm.scrollIntoView();
         }
     }
@@ -9789,28 +9841,28 @@ var Async = (function () {
             return 0;
         }
         var options = {};
-        if (!helpers_1.isNumber(timeout)) {
+        if (!(0, helpers_1.isNumber)(timeout)) {
             options = timeout;
             timeout = options.timeout || 0;
         }
         if (options.label) {
             this.clearLabel(options.label);
         }
-        var timer = helpers_1.setTimeout.apply(void 0, tslib_1.__spreadArray([callback, timeout], args)), key = options.label || timer;
+        var timer = helpers_1.setTimeout.apply(void 0, (0, tslib_1.__spreadArray)([callback, timeout], (0, tslib_1.__read)(args), false)), key = options.label || timer;
         this.timers.set(key, timer);
         return timer;
     };
     Async.prototype.clearLabel = function (label) {
         if (label && this.timers.has(label)) {
-            helpers_1.clearTimeout(this.timers.get(label));
+            (0, helpers_1.clearTimeout)(this.timers.get(label));
             this.timers.delete(label);
         }
     };
     Async.prototype.clearTimeout = function (timerOrLabel) {
-        if (helpers_1.isString(timerOrLabel)) {
+        if ((0, helpers_1.isString)(timerOrLabel)) {
             return this.clearLabel(timerOrLabel);
         }
-        helpers_1.clearTimeout(timerOrLabel);
+        (0, helpers_1.clearTimeout)(timerOrLabel);
         this.timers.delete(timerOrLabel);
     };
     Async.prototype.debounce = function (fn, timeout, firstCallImmediately) {
@@ -9825,14 +9877,14 @@ var Async = (function () {
             }
             if (!fired) {
                 timer = 0;
-                var res = fn.apply(void 0, args);
+                var res = fn.apply(void 0, (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(args), false));
                 fired = true;
                 if (promises.length) {
                     var runPromises = function () {
                         promises.forEach(function (res) { return res(); });
                         promises.length = 0;
                     };
-                    helpers_1.isPromise(res) ? res.finally(runPromises) : runPromises();
+                    (0, helpers_1.isPromise)(res) ? res.finally(runPromises) : runPromises();
                 }
             }
         };
@@ -9843,18 +9895,18 @@ var Async = (function () {
             }
             fired = false;
             if (!timeout) {
-                callFn.apply(void 0, args);
+                callFn.apply(void 0, (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(args), false));
             }
             else {
                 if (!timer && firstCallImmediately) {
-                    callFn.apply(void 0, args);
+                    callFn.apply(void 0, (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(args), false));
                 }
-                helpers_1.clearTimeout(timer);
-                timer = _this.setTimeout(function () { return callFn.apply(void 0, args); }, helpers_1.isFunction(timeout) ? timeout() : timeout);
+                (0, helpers_1.clearTimeout)(timer);
+                timer = _this.setTimeout(function () { return callFn.apply(void 0, (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(args), false)); }, (0, helpers_1.isFunction)(timeout) ? timeout() : timeout);
                 _this.timers.set(fn, timer);
             }
         };
-        return helpers_1.isPlainObject(timeout) && timeout.promisify
+        return (0, helpers_1.isPlainObject)(timeout) && timeout.promisify
             ? function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
@@ -9863,7 +9915,7 @@ var Async = (function () {
                 var promise = _this.promise(function (res) {
                     promises.push(res);
                 });
-                onFire.apply(void 0, args);
+                onFire.apply(void 0, (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(args), false));
                 return promise;
             }
             : onFire;
@@ -9880,15 +9932,15 @@ var Async = (function () {
             needInvoke = true;
             lastArgs = args;
             if (!timeout) {
-                fn.apply(void 0, lastArgs);
+                fn.apply(void 0, (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(lastArgs), false));
                 return;
             }
             if (!timer) {
                 callee = function () {
                     if (needInvoke) {
-                        fn.apply(void 0, lastArgs);
+                        fn.apply(void 0, (0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(lastArgs), false));
                         needInvoke = false;
-                        timer = _this.setTimeout(callee, helpers_1.isFunction(timeout) ? timeout() : timeout);
+                        timer = _this.setTimeout(callee, (0, helpers_1.isFunction)(timeout) ? timeout() : timeout);
                         _this.timers.set(callee, timer);
                     }
                     else {
@@ -9962,7 +10014,7 @@ var Async = (function () {
             _this.cancelIdleCallback(key);
         });
         this.timers.forEach(function (key) {
-            helpers_1.clearTimeout(_this.timers.get(key));
+            (0, helpers_1.clearTimeout)(_this.timers.get(key));
         });
         this.timers.clear();
         this.promisesRejections.forEach(function (reject) {
@@ -10016,7 +10068,7 @@ var Ajax = (function () {
         this.success_response_codes = [200, 201, 202];
         this.resolved = false;
         this.activated = false;
-        this.options = helpers_1.ConfigProto(options || {}, config_1.Config.prototype.defaultAjaxOptions);
+        this.options = (0, helpers_1.ConfigProto)(options || {}, config_1.Config.prototype.defaultAjaxOptions);
         this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
         jodit &&
             jodit.events &&
@@ -10025,15 +10077,15 @@ var Ajax = (function () {
             });
     }
     Ajax.prototype.__buildParams = function (obj, prefix) {
-        if (helpers_1.isFunction(this.o.queryBuild)) {
+        if ((0, helpers_1.isFunction)(this.o.queryBuild)) {
             return this.o.queryBuild.call(this, obj, prefix);
         }
-        if (helpers_1.isString(obj) ||
+        if ((0, helpers_1.isString)(obj) ||
             (this.j.ow.FormData &&
                 obj instanceof this.j.ow.FormData)) {
             return obj;
         }
-        return helpers_1.buildQuery(obj);
+        return (0, helpers_1.buildQuery)(obj);
     };
     Object.defineProperty(Ajax.prototype, "o", {
         get: function () {
@@ -10066,18 +10118,18 @@ var Ajax = (function () {
                     result = JSON.parse(resp);
                 }
                 if (!result) {
-                    throw helpers_1.error('No JSON format');
+                    throw (0, helpers_1.error)('No JSON format');
                 }
                 return result;
             };
             _this.xhr.onabort = function () {
-                reject(helpers_1.error(_this.xhr.statusText));
+                reject((0, helpers_1.error)(_this.xhr.statusText));
             };
             _this.xhr.onerror = function () {
-                reject(helpers_1.error(_this.xhr.statusText));
+                reject((0, helpers_1.error)(_this.xhr.statusText));
             };
             _this.xhr.ontimeout = function () {
-                reject(helpers_1.error(_this.xhr.statusText));
+                reject((0, helpers_1.error)(_this.xhr.statusText));
             };
             _this.xhr.onload = function () {
                 _this.response = _this.xhr.responseText;
@@ -10105,7 +10157,7 @@ var Ajax = (function () {
                         resolve.call(_this.xhr, __parse(resp));
                     }
                     else {
-                        reject.call(_this.xhr, helpers_1.error(_this.xhr.statusText ||
+                        reject.call(_this.xhr, (0, helpers_1.error)(_this.xhr.statusText ||
                             _this.j.i18n('Connection error!')));
                     }
                 }
@@ -10117,7 +10169,7 @@ var Ajax = (function () {
                 _this.xhr.setRequestHeader('Content-type', _this.o.contentType);
             }
             if (_this.o.headers && _this.xhr.setRequestHeader) {
-                helpers_1.each(_this.o.headers, function (key, value) {
+                (0, helpers_1.each)(_this.o.headers, function (key, value) {
                     _this.xhr.setRequestHeader(key, value);
                 });
             }
@@ -10128,22 +10180,22 @@ var Ajax = (function () {
     };
     Ajax.prototype.prepareRequest = function () {
         if (!this.o.url) {
-            throw helpers_1.error('Need URL for AJAX request');
+            throw (0, helpers_1.error)('Need URL for AJAX request');
         }
         var url = this.o.url;
         var data = this.o.data;
         var method = (this.o.method || 'get').toLowerCase();
-        if (method === 'get' && data && helpers_1.isPlainObject(data)) {
+        if (method === 'get' && data && (0, helpers_1.isPlainObject)(data)) {
             var qIndex = url.indexOf('?');
             if (qIndex !== -1) {
-                var urlData = helpers_1.parseQuery(url);
+                var urlData = (0, helpers_1.parseQuery)(url);
                 url =
                     url.substr(0, qIndex) +
                         '?' +
-                        helpers_1.buildQuery(tslib_1.__assign(tslib_1.__assign({}, urlData), data));
+                        (0, helpers_1.buildQuery)((0, tslib_1.__assign)((0, tslib_1.__assign)({}, urlData), data));
             }
             else {
-                url += '?' + helpers_1.buildQuery(this.o.data);
+                url += '?' + (0, helpers_1.buildQuery)(this.o.data);
             }
         }
         var request = {
@@ -10186,7 +10238,7 @@ var popup_1 = __webpack_require__(116);
 var button_1 = __webpack_require__(92);
 var checker_1 = __webpack_require__(34);
 var ContextMenu = (function (_super) {
-    tslib_1.__extends(ContextMenu, _super);
+    (0, tslib_1.__extends)(ContextMenu, _super);
     function ContextMenu() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -10196,14 +10248,14 @@ var ContextMenu = (function (_super) {
     ContextMenu.prototype.show = function (x, y, actions) {
         var _this = this;
         var self = this, content = this.j.c.div('jodit-context-menu__actions');
-        if (!checker_1.isArray(actions)) {
+        if (!(0, checker_1.isArray)(actions)) {
             return;
         }
         actions.forEach(function (item) {
             if (!item) {
                 return;
             }
-            var action = button_1.Button(_this.jodit, item.icon || 'empty', item.title);
+            var action = (0, button_1.Button)(_this.jodit, item.icon || 'empty', item.title);
             _this.jodit && action.setParentView(_this.jodit);
             action.setMod('context', 'menu');
             action.onAction(function (e) {
@@ -10296,7 +10348,7 @@ config_1.Config.prototype.controls.dialog = {
     }
 };
 var Dialog = (function (_super) {
-    tslib_1.__extends(Dialog, _super);
+    (0, tslib_1.__extends)(Dialog, _super);
     function Dialog(options) {
         var _this = _super.call(this, options) || this;
         _this.destroyAfterClose = false;
@@ -10326,19 +10378,19 @@ var Dialog = (function (_super) {
         _this.isModal = false;
         _this.isOpened = false;
         var self = _this;
-        self.options = helpers_1.ConfigProto(options !== null && options !== void 0 ? options : {}, helpers_1.ConfigProto({
+        self.options = (0, helpers_1.ConfigProto)(options !== null && options !== void 0 ? options : {}, (0, helpers_1.ConfigProto)({
             toolbarButtonSize: 'middle'
-        }, helpers_1.ConfigProto(config_1.Config.prototype.dialog, view_1.View.defaultOptions)));
+        }, (0, helpers_1.ConfigProto)(config_1.Config.prototype.dialog, view_1.View.defaultOptions)));
         dom_1.Dom.safeRemove(self.container);
         var n = _this.getFullElName.bind(_this);
         self.container = _this.c.fromHTML("<div style=\"z-index:" + self.o.zIndex + "\" class=\"jodit jodit-dialog " + _this.componentName + "\">\n\t\t\t\t<div class=\"" + n('overlay') + "\"></div>\n\t\t\t\t<div class=\"" + _this.getFullElName('panel') + "\">\n\t\t\t\t\t<div class=\"" + n('header') + "\">\n\t\t\t\t\t\t<div class=\"" + n('header-title') + "\"></div>\n\t\t\t\t\t\t<div class=\"" + n('header-toolbar') + "\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"" + n('content') + "\"></div>\n\t\t\t\t\t<div class=\"" + n('footer') + "\"></div>\n\t\t\t\t\t" + (self.o.resizable ? "<div class=\"" + n('resizer') + "\"></div>" : '') + "\n\t\t\t\t</div>\n\t\t\t</div>");
-        helpers_1.attr(self.container, 'role', 'dialog');
+        (0, helpers_1.attr)(self.container, 'role', 'dialog');
         Object.defineProperty(self.container, 'component', {
             value: _this
         });
         self.setMod('theme', self.o.theme || 'default');
         self.dialog = self.getElm('panel');
-        helpers_1.css(self.dialog, {
+        (0, helpers_1.css)(self.dialog, {
             maxWidth: self.options.maxWidth,
             minHeight: self.options.minHeight,
             minWidth: self.options.minWidth
@@ -10354,7 +10406,7 @@ var Dialog = (function (_super) {
             self.e.on(self.resizer, 'mousedown', self.onResizerMouseDown);
         }
         var fullSize = global_1.pluginSystem.get('fullsize');
-        helpers_1.isFunction(fullSize) && fullSize(self);
+        (0, helpers_1.isFunction)(fullSize) && fullSize(self);
         _this.e
             .on(self.container, 'close_dialog', self.close)
             .on(_this.ow, 'keydown', _this.onEsc)
@@ -10374,26 +10426,26 @@ var Dialog = (function (_super) {
     Dialog.prototype.setElements = function (root, elements) {
         var _this = this;
         var elements_list = [];
-        helpers_1.asArray(elements).forEach(function (elm) {
-            if (helpers_1.isArray(elm)) {
+        (0, helpers_1.asArray)(elements).forEach(function (elm) {
+            if ((0, helpers_1.isArray)(elm)) {
                 var div = _this.c.div(_this.getFullElName('column'));
                 elements_list.push(div);
                 root.appendChild(div);
                 return _this.setElements(div, elm);
             }
             var element;
-            if (helpers_1.isString(elm)) {
+            if ((0, helpers_1.isString)(elm)) {
                 element = _this.c.fromHTML(elm);
             }
             else {
-                element = helpers_1.hasContainer(elm) ? elm.container : elm;
+                element = (0, helpers_1.hasContainer)(elm) ? elm.container : elm;
             }
             elements_list.push(element);
             if (element.parentNode !== root) {
                 root.appendChild(element);
             }
         });
-        helpers_1.toArray(root.childNodes).forEach(function (elm) {
+        (0, helpers_1.toArray)(root.childNodes).forEach(function (elm) {
             if (elements_list.indexOf(elm) === -1) {
                 root.removeChild(elm);
             }
@@ -10420,8 +10472,8 @@ var Dialog = (function (_super) {
         this.draggable = true;
         this.startX = e.clientX;
         this.startY = e.clientY;
-        this.startPoint.x = helpers_1.css(this.dialog, 'left');
-        this.startPoint.y = helpers_1.css(this.dialog, 'top');
+        this.startPoint.x = (0, helpers_1.css)(this.dialog, 'left');
+        this.startPoint.y = (0, helpers_1.css)(this.dialog, 'top');
         this.setMaxZIndex();
         e.preventDefault();
         this.lockSelect();
@@ -10490,7 +10542,7 @@ var Dialog = (function (_super) {
         if (h == null) {
             h = this.dialog.offsetHeight;
         }
-        helpers_1.css(this.dialog, {
+        (0, helpers_1.css)(this.dialog, {
             width: w,
             height: h
         });
@@ -10533,13 +10585,13 @@ var Dialog = (function (_super) {
         return this;
     };
     Dialog.prototype.getZIndex = function () {
-        return parseInt(helpers_1.css(this.container, 'zIndex'), 10) || 0;
+        return parseInt((0, helpers_1.css)(this.container, 'zIndex'), 10) || 0;
     };
     Dialog.prototype.getMaxZIndexDialog = function () {
         var maxZi = 0, dlg, zIndex, res = this;
-        helpers_1.$$('.jodit-dialog', this.destination).forEach(function (dialog) {
+        (0, helpers_1.$$)('.jodit-dialog', this.destination).forEach(function (dialog) {
             dlg = dialog.component;
-            zIndex = parseInt(helpers_1.css(dialog, 'zIndex'), 10);
+            zIndex = parseInt((0, helpers_1.css)(dialog, 'zIndex'), 10);
             if (dlg.isOpened && !isNaN(zIndex) && zIndex > maxZi) {
                 res = dlg;
                 maxZi = zIndex;
@@ -10549,14 +10601,14 @@ var Dialog = (function (_super) {
     };
     Dialog.prototype.setMaxZIndex = function () {
         var maxZIndex = 20000004, zIndex = 0;
-        helpers_1.$$('.jodit-dialog', this.destination).forEach(function (dialog) {
-            zIndex = parseInt(helpers_1.css(dialog, 'zIndex'), 10);
+        (0, helpers_1.$$)('.jodit-dialog', this.destination).forEach(function (dialog) {
+            zIndex = parseInt((0, helpers_1.css)(dialog, 'zIndex'), 10);
             maxZIndex = Math.max(isNaN(zIndex) ? 0 : zIndex, maxZIndex);
         });
         this.container.style.zIndex = (maxZIndex + 1).toString();
     };
     Dialog.prototype.maximization = function (condition) {
-        if (helpers_1.isVoid(condition)) {
+        if ((0, helpers_1.isVoid)(condition)) {
             condition = !this.getMod('fullsize');
         }
         this.setMod('fullsize', condition);
@@ -10576,15 +10628,15 @@ var Dialog = (function (_super) {
         if (this.e.fire(this, 'beforeOpen') === false) {
             return this;
         }
-        if (helpers_1.isBoolean(contentOrClose)) {
+        if ((0, helpers_1.isBoolean)(contentOrClose)) {
             destroyAfterClose = contentOrClose;
         }
-        if (helpers_1.isBoolean(titleOrModal)) {
+        if ((0, helpers_1.isBoolean)(titleOrModal)) {
             modal = titleOrModal;
         }
         this.destroyAfterClose = destroyAfterClose === true;
-        var content = helpers_1.isBoolean(contentOrClose) ? undefined : contentOrClose;
-        var title = helpers_1.isBoolean(titleOrModal) ? undefined : titleOrModal;
+        var content = (0, helpers_1.isBoolean)(contentOrClose) ? undefined : contentOrClose;
+        var title = (0, helpers_1.isBoolean)(titleOrModal) ? undefined : titleOrModal;
         if (title !== undefined) {
             this.setHeader(title);
         }
@@ -10640,7 +10692,7 @@ var Dialog = (function (_super) {
     Dialog.prototype.buildToolbar = function () {
         this.o.buttons &&
             this.toolbar
-                .build(helpers_1.splitArray(this.o.buttons))
+                .build((0, helpers_1.splitArray)(this.o.buttons))
                 .setMod('mode', 'header')
                 .appendTo(this.dialogbox_toolbar);
     };
@@ -10661,28 +10713,28 @@ var Dialog = (function (_super) {
         }
         _super.prototype.destruct.call(this);
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], Dialog.prototype, "onMouseUp", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], Dialog.prototype, "onHeaderMouseDown", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], Dialog.prototype, "onMouseMove", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], Dialog.prototype, "onEsc", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], Dialog.prototype, "onResizerMouseDown", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], Dialog.prototype, "close", null);
-    tslib_1.__decorate([
-        decorators_1.hook('ready')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.hook)('ready')
     ], Dialog.prototype, "buildToolbar", null);
-    Dialog = tslib_1.__decorate([
+    Dialog = (0, tslib_1.__decorate)([
         decorators_1.component
     ], Dialog);
     return Dialog;
@@ -10722,11 +10774,11 @@ var component_1 = __webpack_require__(27);
 var buttons_1 = __webpack_require__(113);
 var decorators_1 = __webpack_require__(99);
 var ViewWithToolbar = (function (_super) {
-    tslib_1.__extends(ViewWithToolbar, _super);
+    (0, tslib_1.__extends)(ViewWithToolbar, _super);
     function ViewWithToolbar(options, isJodit) {
         if (isJodit === void 0) { isJodit = false; }
         var _this = _super.call(this, options, isJodit) || this;
-        _this.toolbar = factory_1.makeCollection(_this);
+        _this.toolbar = (0, factory_1.makeCollection)(_this);
         _this.defaultToolbarContainer = _this.c.div('jodit-toolbar__box');
         _this.registeredButtons = new Set();
         _this.groupToButtons = {};
@@ -10738,9 +10790,8 @@ var ViewWithToolbar = (function (_super) {
     Object.defineProperty(ViewWithToolbar.prototype, "toolbarContainer", {
         get: function () {
             if (!this.o.fullsize &&
-                (helpers_1.isString(this.o.toolbar) ||
-                    dom_1.Dom.isHTMLElement(this.o.toolbar, this.ow))) {
-                return helpers_1.resolveElement(this.o.toolbar, this.o.shadowRoot || this.od);
+                ((0, helpers_1.isString)(this.o.toolbar) || dom_1.Dom.isHTMLElement(this.o.toolbar))) {
+                return (0, helpers_1.resolveElement)(this.o.toolbar, this.o.shadowRoot || this.od);
             }
             this.o.toolbar &&
                 dom_1.Dom.appendChildFirst(this.container, this.defaultToolbarContainer);
@@ -10758,7 +10809,7 @@ var ViewWithToolbar = (function (_super) {
             return;
         }
         var buttons = this.o.buttons
-            ? helpers_1.splitArray(this.o.buttons)
+            ? (0, helpers_1.splitArray)(this.o.buttons)
             : [];
         this.toolbar
             .setRemoveButtons(this.o.removeButtons)
@@ -10799,12 +10850,12 @@ var ViewWithToolbar = (function (_super) {
         var _this = this;
         if (Object.keys(this.groupToButtons).length) {
             return items.map(function (item) {
-                if (buttons_1.isButtonGroup(item) &&
+                if ((0, buttons_1.isButtonGroup)(item) &&
                     item.group &&
                     _this.groupToButtons[item.group]) {
                     return {
                         group: item.group,
-                        buttons: tslib_1.__spreadArray(tslib_1.__spreadArray([], item.buttons), _this.groupToButtons[item.group])
+                        buttons: (0, tslib_1.__spreadArray)((0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(item.buttons), false), (0, tslib_1.__read)(_this.groupToButtons[item.group]), false)
                     };
                 }
                 return item;
@@ -10820,7 +10871,7 @@ var ViewWithToolbar = (function (_super) {
         this.toolbar.destruct();
         _super.prototype.destruct.call(this);
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], ViewWithToolbar.prototype, "beforeToolbarBuild", null);
     return ViewWithToolbar;
@@ -10860,7 +10911,7 @@ var global_1 = __webpack_require__(30);
 var decorators_1 = __webpack_require__(99);
 var traits_1 = __webpack_require__(77);
 var View = (function (_super) {
-    tslib_1.__extends(View, _super);
+    (0, tslib_1.__extends)(View, _super);
     function View(options, isJodit) {
         if (isJodit === void 0) { isJodit = false; }
         var _this = _super.call(this) || this;
@@ -10868,7 +10919,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.7.2";
+        _this.version = "3.8.1";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -10915,7 +10966,7 @@ var View = (function (_super) {
     });
     Object.defineProperty(View.prototype, "defaultTimeout", {
         get: function () {
-            return helpers_1.isVoid(this.o.defaultTimeout) ? 100 : this.o.defaultTimeout;
+            return (0, helpers_1.isVoid)(this.o.defaultTimeout) ? 100 : this.o.defaultTimeout;
         },
         enumerable: false,
         configurable: true
@@ -10966,7 +11017,7 @@ var View = (function (_super) {
         for (var _i = 1; _i < arguments.length; _i++) {
             params[_i - 1] = arguments[_i];
         }
-        return helpers_1.i18n(text, params, this.options);
+        return (0, helpers_1.i18n)(text, params, this.options);
     };
     View.prototype.toggleFullSize = function (isFullSize) {
         if (isFullSize === undefined) {
@@ -11010,13 +11061,13 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.7.2";
+        return "3.8.1";
     };
     View.getVersion = function () {
-        return "3.7.2";
+        return "3.8.1";
     };
     View.prototype.initOptions = function (options) {
-        this.options = helpers_1.ConfigProto(options || {}, helpers_1.ConfigProto(this.options || {}, View.defaultOptions));
+        this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
     };
     View.prototype.initOwners = function () {
         var _a;
@@ -11031,13 +11082,13 @@ var View = (function (_super) {
         e && Object.keys(e).forEach(function (key) { return _this.e.on(key, e[key]); });
     };
     View.prototype.getInstance = function (moduleName, options) {
-        var instance = this.e.fire(helpers_1.camelCase('getInstance_' + moduleName), options);
+        var instance = this.e.fire((0, helpers_1.camelCase)('getInstance_' + moduleName), options);
         if (instance) {
             return instance;
         }
         var module = global_1.modules[moduleName], mi = this.__modulesInstances;
-        if (!helpers_1.isFunction(module)) {
-            throw helpers_1.error('Need real module name');
+        if (!(0, helpers_1.isFunction)(module)) {
+            throw (0, helpers_1.error)('Need real module name');
         }
         if (!mi.has(moduleName)) {
             var instance_1 = module.prototype instanceof modules_1.ViewComponent
@@ -11054,7 +11105,7 @@ var View = (function (_super) {
     View.prototype.beforeDestruct = function () {
         this.e.fire(modules_1.STATUSES.beforeDestruct, this);
         this.components.forEach(function (component) {
-            if (helpers_1.isDestructable(component) && !component.isInDestruct) {
+            if ((0, helpers_1.isDestructable)(component) && !component.isInDestruct) {
                 component.destruct();
             }
         });
@@ -11076,8 +11127,8 @@ var View = (function (_super) {
         modules_1.Dom.safeRemove(this.container);
         _super.prototype.destruct.call(this);
     };
-    tslib_1.__decorate([
-        decorators_1.hook(modules_1.STATUSES.beforeDestruct)
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.hook)(modules_1.STATUSES.beforeDestruct)
     ], View.prototype, "beforeDestruct", null);
     return View;
 }(modules_1.Component));
@@ -11110,9 +11161,9 @@ View.defaultOptions = {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(170), exports);
-tslib_1.__exportStar(__webpack_require__(171), exports);
-tslib_1.__exportStar(__webpack_require__(172), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(170), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(171), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(172), exports);
 
 
 /***/ }),
@@ -11252,16 +11303,16 @@ var Storage = (function () {
         }
     }
     Storage.prototype.set = function (key, value) {
-        this.provider.set(helpers_1.camelCase(this.prefix + key), value);
+        this.provider.set((0, helpers_1.camelCase)(this.prefix + key), value);
     };
     Storage.prototype.delete = function (key) {
-        this.provider.delete(helpers_1.camelCase(this.prefix + key));
+        this.provider.delete((0, helpers_1.camelCase)(this.prefix + key));
     };
     Storage.prototype.get = function (key) {
-        return this.provider.get(helpers_1.camelCase(this.prefix + key));
+        return this.provider.get((0, helpers_1.camelCase)(this.prefix + key));
     };
     Storage.prototype.exists = function (key) {
-        return this.provider.exists(helpers_1.camelCase(this.prefix + key));
+        return this.provider.exists((0, helpers_1.camelCase)(this.prefix + key));
     };
     Storage.prototype.clear = function () {
         return this.provider.clear();
@@ -11269,7 +11320,7 @@ var Storage = (function () {
     Storage.makeStorage = function (persistent, suffix) {
         if (persistent === void 0) { persistent = false; }
         var provider;
-        if (persistent && local_storage_provider_1.canUsePersistentStorage()) {
+        if (persistent && (0, local_storage_provider_1.canUsePersistentStorage)()) {
             provider = new local_storage_provider_1.LocalStorageProvider(exports.StorageKey + suffix);
         }
         if (!provider) {
@@ -11301,7 +11352,7 @@ var editor_collection_1 = __webpack_require__(176);
 var button_1 = __webpack_require__(177);
 var content_1 = __webpack_require__(179);
 function makeCollection(jodit, parentElement) {
-    var collection = helpers_1.isJoditObject(jodit)
+    var collection = (0, helpers_1.isJoditObject)(jodit)
         ? new editor_collection_1.ToolbarEditorCollection(jodit)
         : new collection_1.ToolbarCollection(jodit);
     if (jodit.o.textIcons) {
@@ -11318,7 +11369,7 @@ function makeCollection(jodit, parentElement) {
 exports.makeCollection = makeCollection;
 function makeButton(jodit, control, target) {
     if (target === void 0) { target = null; }
-    if (helpers_1.isFunction(control.getContent)) {
+    if ((0, helpers_1.isFunction)(control.getContent)) {
         return new content_1.ToolbarContent(jodit, control, target);
     }
     var button = new button_1.ToolbarButton(jodit, control, target);
@@ -11348,7 +11399,7 @@ var ui_1 = __webpack_require__(75);
 var factory_1 = __webpack_require__(173);
 var decorators_1 = __webpack_require__(99);
 var ToolbarCollection = (function (_super) {
-    tslib_1.__extends(ToolbarCollection, _super);
+    (0, tslib_1.__extends)(ToolbarCollection, _super);
     function ToolbarCollection(jodit) {
         var _this = _super.call(this, jodit) || this;
         _this.listenEvents = 'updateToolbar changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
@@ -11362,7 +11413,7 @@ var ToolbarCollection = (function (_super) {
     };
     Object.defineProperty(ToolbarCollection.prototype, "firstButton", {
         get: function () {
-            var button = this.buttons[0];
+            var _a = (0, tslib_1.__read)(this.buttons, 1), button = _a[0];
             return button || null;
         },
         enumerable: false,
@@ -11370,13 +11421,13 @@ var ToolbarCollection = (function (_super) {
     });
     ToolbarCollection.prototype.makeButton = function (control, target) {
         if (target === void 0) { target = null; }
-        return factory_1.makeButton(this.j, control, target);
+        return (0, factory_1.makeButton)(this.j, control, target);
     };
     ToolbarCollection.prototype.shouldBeActive = function (button) {
-        if (helpers_1.isJoditObject(this.j) && !this.j.editorIsActive) {
+        if ((0, helpers_1.isJoditObject)(this.j) && !this.j.editorIsActive) {
             return false;
         }
-        if (helpers_1.isFunction(button.control.isActive)) {
+        if ((0, helpers_1.isFunction)(button.control.isActive)) {
             return button.control.isActive(this.j, button.control, button);
         }
         return undefined;
@@ -11391,7 +11442,7 @@ var ToolbarCollection = (function (_super) {
             return true;
         }
         var isDisabled;
-        if (helpers_1.isFunction(button.control.isDisabled)) {
+        if ((0, helpers_1.isFunction)(button.control.isDisabled)) {
             isDisabled = button.control.isDisabled(this.j, button.control, button);
         }
         return isDisabled;
@@ -11433,10 +11484,10 @@ var ToolbarCollection = (function (_super) {
             .off('afterSetMode focus', this.immediateUpdate);
         _super.prototype.destruct.call(this);
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], ToolbarCollection.prototype, "immediateUpdate", null);
-    ToolbarCollection = tslib_1.__decorate([
+    ToolbarCollection = (0, tslib_1.__decorate)([
         decorators_1.component
     ], ToolbarCollection);
     return ToolbarCollection;
@@ -11473,20 +11524,20 @@ var dom_1 = __webpack_require__(32);
 var helpers_1 = __webpack_require__(19);
 var decorators_1 = __webpack_require__(99);
 var ToolbarEditorCollection = (function (_super) {
-    tslib_1.__extends(ToolbarEditorCollection, _super);
+    (0, tslib_1.__extends)(ToolbarEditorCollection, _super);
     function ToolbarEditorCollection(jodit) {
         var _this = _super.call(this, jodit) || this;
         _this.checkActiveStatus = function (cssObject, node) {
             var matches = 0, total = 0;
             Object.keys(cssObject).forEach(function (cssProperty) {
                 var cssValue = cssObject[cssProperty];
-                if (helpers_1.isFunction(cssValue)) {
-                    if (cssValue(_this.j, helpers_1.css(node, cssProperty).toString())) {
+                if ((0, helpers_1.isFunction)(cssValue)) {
+                    if (cssValue(_this.j, (0, helpers_1.css)(node, cssProperty).toString())) {
                         matches += 1;
                     }
                 }
                 else {
-                    if (cssValue.indexOf(helpers_1.css(node, cssProperty).toString()) !== -1) {
+                    if (cssValue.indexOf((0, helpers_1.css)(node, cssProperty).toString()) !== -1) {
                         matches += 1;
                     }
                 }
@@ -11552,11 +11603,12 @@ var ToolbarEditorCollection = (function (_super) {
     ToolbarEditorCollection.prototype.prependInvisibleInput = function (container) {
         var input = this.j.create.element('input', {
             tabIndex: -1,
+            disabled: true,
             style: 'width: 0; height:0; position: absolute; visibility: hidden;'
         });
         dom_1.Dom.appendChildFirst(container, input);
     };
-    ToolbarEditorCollection = tslib_1.__decorate([
+    ToolbarEditorCollection = (0, tslib_1.__decorate)([
         decorators_1.component
     ], ToolbarEditorCollection);
     return ToolbarEditorCollection;
@@ -11590,13 +11642,13 @@ var collection_1 = __webpack_require__(174);
 var component_1 = __webpack_require__(27);
 var get_control_type_1 = __webpack_require__(98);
 var ToolbarButton = (function (_super) {
-    tslib_1.__extends(ToolbarButton, _super);
+    (0, tslib_1.__extends)(ToolbarButton, _super);
     function ToolbarButton(jodit, control, target) {
         if (target === void 0) { target = null; }
         var _this = _super.call(this, jodit) || this;
         _this.control = control;
         _this.target = target;
-        _this.state = tslib_1.__assign(tslib_1.__assign({}, button_1.UIButtonState()), { theme: 'toolbar', currentValue: '', hasTrigger: false });
+        _this.state = (0, tslib_1.__assign)((0, tslib_1.__assign)({}, (0, button_1.UIButtonState)()), { theme: 'toolbar', currentValue: '', hasTrigger: false });
         jodit.e.on([_this.button, _this.trigger], 'mousedown', function (e) {
             return e.preventDefault();
         });
@@ -11631,17 +11683,17 @@ var ToolbarButton = (function (_super) {
             state.disabled = Boolean(tc.shouldBeDisabled(this));
             state.activated = Boolean(tc.shouldBeActive(this));
         }
-        if (helpers_1.isFunction(control.update)) {
+        if ((0, helpers_1.isFunction)(control.update)) {
             control.update(this);
         }
         _super.prototype.update.call(this);
     };
     ToolbarButton.prototype.onChangeActivated = function () {
-        helpers_1.attr(this.button, 'aria-pressed', this.state.activated);
+        (0, helpers_1.attr)(this.button, 'aria-pressed', this.state.activated);
         _super.prototype.onChangeActivated.call(this);
     };
     ToolbarButton.prototype.onChangeText = function () {
-        if (helpers_1.isFunction(this.control.template)) {
+        if ((0, helpers_1.isFunction)(this.control.template)) {
             this.text.innerHTML = this.control.template(this.j, this.control.name, this.j.i18n(this.state.text));
         }
         else {
@@ -11650,12 +11702,16 @@ var ToolbarButton = (function (_super) {
         this.setMod('text-icons', Boolean(this.text.innerText.trim().length));
     };
     ToolbarButton.prototype.onChangeTabIndex = function () {
-        helpers_1.attr(this.button, 'tabIndex', this.state.tabIndex);
+        (0, helpers_1.attr)(this.button, 'tabIndex', this.state.tabIndex);
+    };
+    ToolbarButton.prototype.onChangeTooltip = function () {
+        (0, helpers_1.attr)(this.button, 'aria-label', this.state.tooltip);
+        _super.prototype.onChangeTooltip.call(this);
     };
     ToolbarButton.prototype.createContainer = function () {
         var cn = this.componentName;
         var container = this.j.c.span(cn), button = _super.prototype.createContainer.call(this);
-        helpers_1.attr(container, 'role', 'listitem');
+        (0, helpers_1.attr)(container, 'role', 'listitem');
         button.classList.remove(cn);
         button.classList.add(cn + '__button');
         Object.defineProperty(button, 'component', {
@@ -11681,9 +11737,9 @@ var ToolbarButton = (function (_super) {
     };
     ToolbarButton.prototype.onChangeDisabled = function () {
         var dsb = this.state.disabled ? 'disabled' : null;
-        helpers_1.attr(this.trigger, 'disabled', dsb);
-        helpers_1.attr(this.button, 'disabled', dsb);
-        helpers_1.attr(this.container, 'disabled', dsb);
+        (0, helpers_1.attr)(this.trigger, 'disabled', dsb);
+        (0, helpers_1.attr)(this.button, 'disabled', dsb);
+        (0, helpers_1.attr)(this.container, 'disabled', dsb);
     };
     ToolbarButton.prototype.initTooltip = function () {
         var _this = this;
@@ -11714,9 +11770,9 @@ var ToolbarButton = (function (_super) {
         state.name = ctr.name;
         var textIcons = this.j.o.textIcons;
         if (textIcons === true ||
-            (helpers_1.isFunction(textIcons) && textIcons(ctr.name)) ||
+            ((0, helpers_1.isFunction)(textIcons) && textIcons(ctr.name)) ||
             ctr.template) {
-            state.icon = button_1.UIButtonState().icon;
+            state.icon = (0, button_1.UIButtonState)().icon;
             state.text = ctr.text || ctr.name;
         }
         else {
@@ -11735,7 +11791,7 @@ var ToolbarButton = (function (_super) {
             }
         }
         if (ctr.tooltip) {
-            state.tooltip = this.j.i18n(helpers_1.isFunction(ctr.tooltip)
+            state.tooltip = this.j.i18n((0, helpers_1.isFunction)(ctr.tooltip)
                 ? ctr.tooltip(this.j, ctr, this)
                 : ctr.tooltip);
         }
@@ -11751,37 +11807,37 @@ var ToolbarButton = (function (_super) {
         if (ctr.list) {
             return this.openControlList(ctr);
         }
-        if (helpers_1.isFunction(ctr.popup)) {
+        if ((0, helpers_1.isFunction)(ctr.popup)) {
             var popup = new popup_1.Popup(this.j);
             popup.parentElement = this;
-            if (this.j.e.fire(helpers_1.camelCase("before-" + ctr.name + "-open-popup"), this.target, ctr, popup) !== false) {
+            if (this.j.e.fire((0, helpers_1.camelCase)("before-" + ctr.name + "-open-popup"), this.target, ctr, popup) !== false) {
                 var target = (_c = (_b = (_a = this.toolbar) === null || _a === void 0 ? void 0 : _a.getTarget(this)) !== null && _b !== void 0 ? _b : this.target) !== null && _c !== void 0 ? _c : null;
                 var elm = ctr.popup(this.j, target, ctr, popup.close, this);
                 if (elm) {
                     popup
-                        .setContent(helpers_1.isString(elm) ? this.j.c.fromHTML(elm) : elm)
-                        .open(function () { return helpers_1.position(_this.container); });
+                        .setContent((0, helpers_1.isString)(elm) ? this.j.c.fromHTML(elm) : elm)
+                        .open(function () { return (0, helpers_1.position)(_this.container); });
                 }
             }
-            this.j.e.fire(helpers_1.camelCase("after-" + ctr.name + "-open-popup"), popup.container);
+            this.j.e.fire((0, helpers_1.camelCase)("after-" + ctr.name + "-open-popup"), popup.container);
         }
     };
     ToolbarButton.prototype.openControlList = function (control) {
         var _this = this;
         var _a;
         var controls = (_a = this.jodit.options.controls) !== null && _a !== void 0 ? _a : {}, getControl = function (key) {
-            return get_control_type_1.findControlType(key, controls);
+            return (0, get_control_type_1.findControlType)(key, controls);
         };
-        var list = control.list, menu = new popup_1.Popup(this.j), toolbar = factory_1.makeCollection(this.j);
+        var list = control.list, menu = new popup_1.Popup(this.j), toolbar = (0, factory_1.makeCollection)(this.j);
         menu.parentElement = this;
         toolbar.parentElement = menu;
         toolbar.mode = 'vertical';
         var getButton = function (key, value) {
-            if (helpers_1.isString(value) && getControl(value)) {
-                return tslib_1.__assign({ name: value.toString() }, getControl(value));
+            if ((0, helpers_1.isString)(value) && getControl(value)) {
+                return (0, tslib_1.__assign)({ name: value.toString() }, getControl(value));
             }
-            if (helpers_1.isString(key) && getControl(key)) {
-                return tslib_1.__assign(tslib_1.__assign({ name: key.toString() }, getControl(key)), (typeof value === 'object' ? value : {}));
+            if ((0, helpers_1.isString)(key) && getControl(key)) {
+                return (0, tslib_1.__assign)((0, tslib_1.__assign)({ name: key.toString() }, getControl(key)), (typeof value === 'object' ? value : {}));
             }
             var childControl = {
                 name: key.toString(),
@@ -11792,17 +11848,17 @@ var ToolbarButton = (function (_super) {
                 isActive: control.isChildActive,
                 isDisabled: control.isChildDisabled,
                 mode: control.mode,
-                args: tslib_1.__spreadArray(tslib_1.__spreadArray([], (control.args ? control.args : [])), [key, value])
+                args: (0, tslib_1.__spreadArray)((0, tslib_1.__spreadArray)([], (0, tslib_1.__read)((control.args ? control.args : [])), false), [key, value], false)
             };
-            if (helpers_1.isString(value)) {
+            if ((0, helpers_1.isString)(value)) {
                 childControl.text = value;
             }
             return childControl;
         };
-        toolbar.build(helpers_1.isArray(list)
+        toolbar.build((0, helpers_1.isArray)(list)
             ? list.map(getButton)
-            : helpers_1.keys(list, false).map(function (key) { return getButton(key, list[key]); }), this.target);
-        menu.setContent(toolbar.container).open(function () { return helpers_1.position(_this.container); });
+            : (0, helpers_1.keys)(list, false).map(function (key) { return getButton(key, list[key]); }), this.target);
+        menu.setContent(toolbar.container).open(function () { return (0, helpers_1.position)(_this.container); });
         this.state.activated = true;
         this.j.e.on(menu, 'afterClose', function () {
             _this.state.activated = false;
@@ -11811,7 +11867,7 @@ var ToolbarButton = (function (_super) {
     ToolbarButton.prototype.onClick = function (originalEvent) {
         var _a, _b, _c, _d, _e, _f, _g;
         var ctr = this.control;
-        if (helpers_1.isFunction(ctr.exec)) {
+        if ((0, helpers_1.isFunction)(ctr.exec)) {
             var target = (_c = (_b = (_a = this.toolbar) === null || _a === void 0 ? void 0 : _a.getTarget(this)) !== null && _b !== void 0 ? _b : this.target) !== null && _c !== void 0 ? _c : null;
             var result = ctr.exec(this.j, target, {
                 control: ctr,
@@ -11832,20 +11888,23 @@ var ToolbarButton = (function (_super) {
         if (ctr.list) {
             return this.openControlList(ctr);
         }
-        if (helpers_1.isFunction(ctr.popup)) {
+        if ((0, helpers_1.isFunction)(ctr.popup)) {
             return this.onTriggerClick(originalEvent);
         }
         if (ctr.command || ctr.name) {
-            helpers_1.call(helpers_1.isJoditObject(this.j)
+            (0, helpers_1.call)((0, helpers_1.isJoditObject)(this.j)
                 ? this.j.execCommand.bind(this.j)
                 : this.j.od.execCommand.bind(this.j.od), ctr.command || ctr.name, false, ctr.args && ctr.args[0]);
             this.j.e.fire('closeAllPopups');
         }
     };
-    tslib_1.__decorate([
-        decorators_1.watch('state.hasTrigger')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.tooltip')
+    ], ToolbarButton.prototype, "onChangeTooltip", null);
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.hasTrigger')
     ], ToolbarButton.prototype, "onChangeHasTrigger", null);
-    ToolbarButton = tslib_1.__decorate([
+    ToolbarButton = (0, tslib_1.__decorate)([
         decorators_1.component
     ], ToolbarButton);
     return ToolbarButton;
@@ -11882,14 +11941,14 @@ var dom_1 = __webpack_require__(32);
 var helpers_1 = __webpack_require__(19);
 var decorators_1 = __webpack_require__(99);
 var ToolbarContent = (function (_super) {
-    tslib_1.__extends(ToolbarContent, _super);
+    (0, tslib_1.__extends)(ToolbarContent, _super);
     function ToolbarContent(jodit, control, target) {
         if (target === void 0) { target = null; }
         var _this = _super.call(this, jodit) || this;
         _this.control = control;
         _this.target = target;
         _this.container.classList.add(_this.componentName + "_" + _this.clearName(control.name));
-        helpers_1.attr(_this.container, 'role', 'content');
+        (0, helpers_1.attr)(_this.container, 'role', 'content');
         return _this;
     }
     ToolbarContent.prototype.className = function () {
@@ -11897,16 +11956,16 @@ var ToolbarContent = (function (_super) {
     };
     ToolbarContent.prototype.update = function () {
         var content = this.control.getContent(this.j, this.control, this);
-        if (helpers_1.isString(content) || content.parentNode !== this.container) {
+        if ((0, helpers_1.isString)(content) || content.parentNode !== this.container) {
             dom_1.Dom.detach(this.container);
-            this.container.appendChild(helpers_1.isString(content) ? this.j.create.fromHTML(content) : content);
+            this.container.appendChild((0, helpers_1.isString)(content) ? this.j.create.fromHTML(content) : content);
         }
         _super.prototype.update.call(this);
     };
     ToolbarContent.prototype.createContainer = function () {
         return this.j.c.span(this.componentName);
     };
-    ToolbarContent = tslib_1.__decorate([
+    ToolbarContent = (0, tslib_1.__decorate)([
         decorators_1.component
     ], ToolbarContent);
     return ToolbarContent;
@@ -11942,18 +12001,16 @@ var dom_1 = __webpack_require__(32);
 var ui_1 = __webpack_require__(75);
 var Alert = function (msg, title, callback, className) {
     if (className === void 0) { className = 'jodit-dialog_alert'; }
-    if (helpers_1.isFunction(title)) {
+    if ((0, helpers_1.isFunction)(title)) {
         callback = title;
         title = undefined;
     }
-    var dialog = new dialog_1.Dialog(), container = dialog.c.div(className), okButton = ui_1.Button(dialog, 'ok', 'Ok');
-    helpers_1.asArray(msg).forEach(function (oneMessage) {
-        container.appendChild(dom_1.Dom.isNode(oneMessage, dialog.ow)
-            ? oneMessage
-            : dialog.c.fromHTML(oneMessage));
+    var dialog = new dialog_1.Dialog(), container = dialog.c.div(className), okButton = (0, ui_1.Button)(dialog, 'ok', 'Ok');
+    (0, helpers_1.asArray)(msg).forEach(function (oneMessage) {
+        container.appendChild(dom_1.Dom.isNode(oneMessage) ? oneMessage : dialog.c.fromHTML(oneMessage));
     });
     okButton.onAction(function () {
-        if (!callback || !helpers_1.isFunction(callback) || callback(dialog) !== false) {
+        if (!callback || !(0, helpers_1.isFunction)(callback) || callback(dialog) !== false) {
             dialog.close();
         }
     });
@@ -11982,18 +12039,18 @@ var dialog_1 = __webpack_require__(164);
 var ui_1 = __webpack_require__(75);
 var helpers_1 = __webpack_require__(19);
 var Prompt = function (msg, title, callback, placeholder, defaultValue) {
-    var dialog = new dialog_1.Dialog(), cancelButton = ui_1.Button(dialog, 'cancel', 'Cancel'), okButton = ui_1.Button(dialog, 'ok', 'Ok'), form = dialog.c.element('form', {
+    var dialog = new dialog_1.Dialog(), cancelButton = (0, ui_1.Button)(dialog, 'cancel', 'Cancel'), okButton = (0, ui_1.Button)(dialog, 'ok', 'Ok'), form = dialog.c.element('form', {
         class: 'jodit-dialog_prompt'
     }), inputElement = dialog.c.element('input', {
         autofocus: true,
         class: 'jodit-input'
     }), labelElement = dialog.c.element('label');
-    if (helpers_1.isFunction(title)) {
+    if ((0, helpers_1.isFunction)(title)) {
         callback = title;
         title = undefined;
     }
     if (placeholder) {
-        helpers_1.attr(inputElement, 'placeholder', placeholder);
+        (0, helpers_1.attr)(inputElement, 'placeholder', placeholder);
     }
     labelElement.appendChild(dialog.c.text(msg));
     form.appendChild(labelElement);
@@ -12001,7 +12058,7 @@ var Prompt = function (msg, title, callback, placeholder, defaultValue) {
     cancelButton.onAction(dialog.close);
     var onclick = function () {
         if (!callback ||
-            !helpers_1.isFunction(callback) ||
+            !(0, helpers_1.isFunction)(callback) ||
             callback(inputElement.value) !== false) {
             dialog.close();
         }
@@ -12041,7 +12098,7 @@ var helpers_1 = __webpack_require__(19);
 var ui_1 = __webpack_require__(75);
 var Confirm = function (msg, title, callback) {
     var dialog = new dialog_1.Dialog(), $div = dialog.c.fromHTML('<form class="jodit-dialog_prompt"></form>'), $label = dialog.c.element('label');
-    if (helpers_1.isFunction(title)) {
+    if ((0, helpers_1.isFunction)(title)) {
         callback = title;
         title = undefined;
     }
@@ -12052,8 +12109,8 @@ var Confirm = function (msg, title, callback) {
             dialog.close();
         }
     }; };
-    var $cancel = ui_1.Button(dialog, 'cancel', 'Cancel');
-    var $ok = ui_1.Button(dialog, 'ok', 'Yes');
+    var $cancel = (0, ui_1.Button)(dialog, 'cancel', 'Cancel');
+    var $ok = (0, ui_1.Button)(dialog, 'ok', 'Yes');
     $cancel.onAction(action(false));
     $ok.onAction(action(true));
     dialog.e.on($div, 'submit', function () {
@@ -12086,7 +12143,7 @@ var component_1 = __webpack_require__(27);
 var decorators_1 = __webpack_require__(99);
 var helpers_1 = __webpack_require__(19);
 var Plugin = (function (_super) {
-    tslib_1.__extends(Plugin, _super);
+    (0, tslib_1.__extends)(Plugin, _super);
     function Plugin(jodit) {
         var _this = _super.call(this, jodit) || this;
         _this.requires = [];
@@ -12095,7 +12152,7 @@ var Plugin = (function (_super) {
         jodit.e
             .on('afterPluginSystemInit', function () {
             var _a;
-            if (helpers_1.isJoditObject(jodit)) {
+            if ((0, helpers_1.isJoditObject)(jodit)) {
                 (_a = _this.buttons) === null || _a === void 0 ? void 0 : _a.forEach(function (btn) {
                     jodit.registerButton(btn);
                 });
@@ -12118,7 +12175,7 @@ var Plugin = (function (_super) {
         if (!this.isInDestruct) {
             this.setStatus(component_1.STATUSES.beforeDestruct);
             var j_1 = this.j;
-            if (helpers_1.isJoditObject(j_1)) {
+            if ((0, helpers_1.isJoditObject)(j_1)) {
                 (_a = this.buttons) === null || _a === void 0 ? void 0 : _a.forEach(function (btn) {
                     j_1 === null || j_1 === void 0 ? void 0 : j_1.unregisterButton(btn);
                 });
@@ -12128,7 +12185,7 @@ var Plugin = (function (_super) {
             _super.prototype.destruct.call(this);
         }
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], Plugin.prototype, "destruct", null);
     return Plugin;
@@ -12157,22 +12214,22 @@ var Create = (function () {
         this.document = document;
         this.createAttributes = createAttributes;
         this.applyAttributes = function (elm, attrs) {
-            helpers_1.each(attrs, function (key, value) {
-                if (helpers_1.isPlainObject(value) && key === 'style') {
-                    helpers_1.css(elm, value);
+            (0, helpers_1.each)(attrs, function (key, value) {
+                if ((0, helpers_1.isPlainObject)(value) && key === 'style') {
+                    (0, helpers_1.css)(elm, value);
                 }
                 else {
                     if (key === 'className') {
                         key = 'class';
                     }
-                    elm.setAttribute(helpers_1.kebabCase(key), value.toString());
+                    elm.setAttribute((0, helpers_1.kebabCase)(key), value.toString());
                 }
             });
         };
     }
     Object.defineProperty(Create.prototype, "doc", {
         get: function () {
-            return helpers_1.isFunction(this.document) ? this.document() : this.document;
+            return (0, helpers_1.isFunction)(this.document) ? this.document() : this.document;
         },
         enumerable: false,
         configurable: true
@@ -12182,7 +12239,7 @@ var Create = (function () {
         var elm = this.doc.createElement(tagName.toLowerCase());
         this.applyCreateAttributes(elm);
         if (childrenOrAttributes) {
-            if (helpers_1.isPlainObject(childrenOrAttributes)) {
+            if ((0, helpers_1.isPlainObject)(childrenOrAttributes)) {
                 this.applyAttributes(elm, childrenOrAttributes);
             }
             else {
@@ -12190,7 +12247,7 @@ var Create = (function () {
             }
         }
         if (children) {
-            helpers_1.asArray(children).forEach(function (child) {
+            (0, helpers_1.asArray)(children).forEach(function (child) {
                 return elm.appendChild(typeof child === 'string' ? _this.fromHTML(child) : child);
             });
         }
@@ -12234,7 +12291,7 @@ var Create = (function () {
             : div.firstChild;
         dom_1.Dom.safeRemove(child);
         if (refsToggleElement) {
-            var refElements_1 = helpers_1.refs(child);
+            var refElements_1 = (0, helpers_1.refs)(child);
             Object.keys(refsToggleElement).forEach(function (key) {
                 var elm = refElements_1[key];
                 if (elm && refsToggleElement[key] === false) {
@@ -12249,10 +12306,10 @@ var Create = (function () {
             var ca = this.createAttributes;
             if (ca && ca[elm.tagName.toLowerCase()]) {
                 var attrs = ca[elm.tagName.toLowerCase()];
-                if (helpers_1.isFunction(attrs)) {
+                if ((0, helpers_1.isFunction)(attrs)) {
                     attrs(elm);
                 }
-                else if (helpers_1.isPlainObject(attrs)) {
+                else if ((0, helpers_1.isPlainObject)(attrs)) {
                     this.applyAttributes(elm, attrs);
                 }
             }
@@ -12295,7 +12352,7 @@ var self_listeners_1 = __webpack_require__(199);
 var data_provider_1 = __webpack_require__(191);
 var decorators_1 = __webpack_require__(99);
 var FileBrowser = (function (_super) {
-    tslib_1.__extends(FileBrowser, _super);
+    (0, tslib_1.__extends)(FileBrowser, _super);
     function FileBrowser(options) {
         var _a;
         var _this = _super.call(this, options) || this;
@@ -12331,9 +12388,9 @@ var FileBrowser = (function (_super) {
         _this.elementsMap = {};
         _this.attachEvents(options);
         var self = _this;
-        self.options = helpers_1.ConfigProto(options || {}, config_1.Config.defaultOptions.filebrowser);
+        self.options = (0, helpers_1.ConfigProto)(options || {}, config_1.Config.defaultOptions.filebrowser);
         self.storage = storage_1.Storage.makeStorage(_this.o.saveStateInStorage);
-        self.dataProvider = factories_1.makeDataProvider(self, self.options);
+        self.dataProvider = (0, factories_1.makeDataProvider)(self, self.options);
         self.dialog = new dialog_1.Dialog({
             fullsize: self.o.fullsize,
             ownerWindow: self.ownerWindow,
@@ -12375,7 +12432,7 @@ var FileBrowser = (function (_super) {
         ];
         keys.forEach(function (key) {
             if (_this.options[key] != null) {
-                _this.options[key] = helpers_1.ConfigProto(_this.options[key], _this.o.ajax);
+                _this.options[key] = (0, helpers_1.ConfigProto)(_this.options[key], _this.o.ajax);
             }
         });
         var view = _this.storage.get(consts_1.F_CLASS + '_view');
@@ -12403,9 +12460,9 @@ var FileBrowser = (function (_super) {
         return 'FileBrowser';
     };
     FileBrowser.prototype.loadItems = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             var _this = this;
-            return tslib_1.__generator(this, function (_a) {
+            return (0, tslib_1.__generator)(this, function (_a) {
                 this.files.classList.add('jodit-filebrowser_active');
                 this.files.appendChild(this.loader.cloneNode(true));
                 return [2, this.dataProvider
@@ -12423,12 +12480,12 @@ var FileBrowser = (function (_super) {
         });
     };
     FileBrowser.prototype.loadTree = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             var errorUni, items, tree;
             var _this = this;
-            return tslib_1.__generator(this, function (_a) {
+            return (0, tslib_1.__generator)(this, function (_a) {
                 errorUni = function (e) {
-                    throw e instanceof Error ? e : helpers_1.error(e);
+                    throw e instanceof Error ? e : (0, helpers_1.error)(e);
                 };
                 if (this.uploader) {
                     this.uploader.setPath(this.state.currentPath);
@@ -12485,7 +12542,7 @@ var FileBrowser = (function (_super) {
                     files: files_1,
                     isImages: isImages_1
                 };
-                if (helpers_1.isFunction(callback)) {
+                if ((0, helpers_1.isFunction)(callback)) {
                     callback(data);
                 }
                 _this.close();
@@ -12502,7 +12559,7 @@ var FileBrowser = (function (_super) {
     });
     FileBrowser.prototype.status = function (message, success) {
         var _this = this;
-        if (!helpers_1.isString(message)) {
+        if (!(0, helpers_1.isString)(message)) {
             message = message.message;
         }
         this.status_line.classList.remove('jodit-filebrowser_success');
@@ -12530,7 +12587,7 @@ var FileBrowser = (function (_super) {
         return this.async.promise(function (resolve, reject) {
             var _a;
             if (!_this.o.items || !_this.o.items.url) {
-                throw helpers_1.error('Need set options.filebrowser.ajax.url');
+                throw (0, helpers_1.error)('Need set options.filebrowser.ajax.url');
             }
             var localTimeout = 0;
             _this.e
@@ -12555,7 +12612,7 @@ var FileBrowser = (function (_super) {
     FileBrowser.prototype.initUploader = function (editor) {
         var _this = this;
         var _a;
-        var self = this, options = (_a = editor === null || editor === void 0 ? void 0 : editor.options) === null || _a === void 0 ? void 0 : _a.uploader, uploaderOptions = helpers_1.ConfigProto(options || {}, config_1.Config.defaultOptions.uploader);
+        var self = this, options = (_a = editor === null || editor === void 0 ? void 0 : editor.options) === null || _a === void 0 ? void 0 : _a.uploader, uploaderOptions = (0, helpers_1.ConfigProto)(options || {}, config_1.Config.defaultOptions.uploader);
         var uploadHandler = function () {
             return _this.loadItems();
         };
@@ -12576,10 +12633,10 @@ var FileBrowser = (function (_super) {
         this.uploader && this.uploader.destruct();
         _super.prototype.destruct.call(this);
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], FileBrowser.prototype, "status", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], FileBrowser.prototype, "open", null);
     return FileBrowser;
@@ -12618,20 +12675,20 @@ config_1.Config.prototype.filebrowser = {
     extraButtons: [],
     filter: function (item, search) {
         search = search.toLowerCase();
-        if (helpers_1.isString(item)) {
+        if ((0, helpers_1.isString)(item)) {
             return item.toLowerCase().indexOf(search) !== -1;
         }
-        if (helpers_1.isString(item.name)) {
+        if ((0, helpers_1.isString)(item.name)) {
             return item.name.toLowerCase().indexOf(search) !== -1;
         }
-        if (helpers_1.isString(item.file)) {
+        if ((0, helpers_1.isString)(item.file)) {
             return item.file.toLowerCase().indexOf(search) !== -1;
         }
         return true;
     },
     sortBy: 'changed-desc',
     sort: function (a, b, sortBy) {
-        var _a = sortBy.toLowerCase().split('-'), sortAttr = _a[0], arrow = _a[1], asc = arrow === 'asc';
+        var _a = (0, tslib_1.__read)(sortBy.toLowerCase().split('-'), 2), sortAttr = _a[0], arrow = _a[1], asc = arrow === 'asc';
         var compareStr = function (f, s) {
             if (f < s) {
                 return asc ? -1 : 1;
@@ -12641,14 +12698,14 @@ config_1.Config.prototype.filebrowser = {
             }
             return 0;
         };
-        if (helpers_1.isString(a)) {
+        if ((0, helpers_1.isString)(a)) {
             return compareStr(a.toLowerCase(), b.toLowerCase());
         }
         if (a[sortAttr] === undefined || sortAttr === 'name') {
-            if (helpers_1.isString(a.name)) {
+            if ((0, helpers_1.isString)(a.name)) {
                 return compareStr(a.name.toLowerCase(), b.name.toLowerCase());
             }
-            if (helpers_1.isString(a.file)) {
+            if ((0, helpers_1.isString)(a.file)) {
                 return compareStr(a.file.toLowerCase(), b.file.toLowerCase());
             }
             return 0;
@@ -12659,7 +12716,7 @@ config_1.Config.prototype.filebrowser = {
                 return asc ? f - s : s - f;
             }
             case 'size': {
-                var f = helpers_1.humanSizeToBytes(a.size), s = helpers_1.humanSizeToBytes(b.size);
+                var f = (0, helpers_1.humanSizeToBytes)(a.size), s = (0, helpers_1.humanSizeToBytes)(b.size);
                 return asc ? f - s : s - f;
             }
         }
@@ -12701,7 +12758,7 @@ config_1.Config.prototype.filebrowser = {
         return resp.success;
     },
     getMessage: function (resp) {
-        return resp.data.messages !== undefined && helpers_1.isArray(resp.data.messages)
+        return resp.data.messages !== undefined && (0, helpers_1.isArray)(resp.data.messages)
             ? resp.data.messages.join(' ')
             : '';
     },
@@ -12723,10 +12780,9 @@ config_1.Config.prototype.filebrowser = {
             : '') + "</div>";
         return "<a\n\t\t\tdata-jodit-filebrowser-item=\"true\"\n\t\t\tdata-is-file=\"" + (item.isImage ? 0 : 1) + "\"\n\t\t\tdraggable=\"true\"\n\t\t\tclass=\"" + consts_1.ITEM_CLASS + "\"\n\t\t\thref=\"" + item.fileURL + "\"\n\t\t\tdata-source=\"" + source_name + "\"\n\t\t\tdata-path=\"" + item.path + "\"\n\t\t\tdata-name=\"" + name + "\"\n\t\t\ttitle=\"" + name + "\"\n\t\t\tdata-url=\"" + item.fileURL + "\">\n\t\t\t\t<img\n\t\t\t\t\tdata-is-file=\"" + (item.isImage ? 0 : 1) + "\"\n\t\t\t\t\tdata-src=\"" + item.fileURL + "\"\n\t\t\t\t\tsrc=\"" + item.imageURL + "\"\n\t\t\t\t\talt=\"" + name + "\"\n\t\t\t\t\tloading=\"lazy\"\n\t\t\t\t/>\n\t\t\t\t" + (showName || showSize || showTime ? info : '') + "\n\t\t\t</a>";
     },
-    ajax: tslib_1.__assign(tslib_1.__assign({}, config_1.Config.prototype.defaultAjaxOptions), { url: '', async: true, data: {}, cache: true, contentType: 'application/x-www-form-urlencoded; charset=UTF-8', method: 'POST', processData: true, dataType: 'json', headers: {}, prepareData: function (data) {
+    ajax: (0, tslib_1.__assign)((0, tslib_1.__assign)({}, config_1.Config.prototype.defaultAjaxOptions), { url: '', async: true, data: {}, cache: true, contentType: 'application/x-www-form-urlencoded; charset=UTF-8', method: 'POST', processData: true, dataType: 'json', headers: {}, prepareData: function (data) {
             return data;
-        },
-        process: function (resp) {
+        }, process: function (resp) {
             return resp;
         } }),
     create: {
@@ -12984,9 +13040,9 @@ var DataProvider = (function () {
             ajax_2 === null || ajax_2 === void 0 ? void 0 : ajax_2.abort();
             ai.delete(name);
         }
-        var opts = helpers_1.ConfigProto(this.options[name] !== undefined
+        var opts = (0, helpers_1.ConfigProto)(this.options[name] !== undefined
             ? this.options[name]
-            : {}, helpers_1.ConfigProto({
+            : {}, (0, helpers_1.ConfigProto)({
             onProgress: this.progressHandler
         }, this.o.ajax));
         if (opts.prepareData) {
@@ -13017,9 +13073,9 @@ var DataProvider = (function () {
         this.progressHandler = callback;
     };
     DataProvider.prototype.permissions = function (path, source) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             var _this = this;
-            return tslib_1.__generator(this, function (_a) {
+            return (0, tslib_1.__generator)(this, function (_a) {
                 if (!this.o.permissions) {
                     return [2, null];
                 }
@@ -13053,10 +13109,10 @@ var DataProvider = (function () {
     };
     DataProvider.prototype.items = function (path, source, mods) {
         if (mods === void 0) { mods = {}; }
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             var opt;
             var _this = this;
-            return tslib_1.__generator(this, function (_a) {
+            return (0, tslib_1.__generator)(this, function (_a) {
                 opt = this.options;
                 if (!opt.items) {
                     return [2, Promise.reject('Set Items api options')];
@@ -13092,12 +13148,12 @@ var DataProvider = (function () {
         sources.forEach(function (source) {
             if (source.files && source.files.length) {
                 var sort_1 = _this.o.sort;
-                if (helpers_1.isFunction(sort_1) && mods.sortBy) {
+                if ((0, helpers_1.isFunction)(sort_1) && mods.sortBy) {
                     source.files.sort(function (a, b) { return sort_1(a, b, mods.sortBy); });
                 }
                 source.files.forEach(function (item) {
                     if (inFilter(item) && canBeFile(item)) {
-                        elements.push(item_1.FileBrowserItem.create(tslib_1.__assign(tslib_1.__assign({}, item), { sourceName: source.name, source: source })));
+                        elements.push(item_1.FileBrowserItem.create((0, tslib_1.__assign)((0, tslib_1.__assign)({}, item), { sourceName: source.name, source: source })));
                     }
                 });
             }
@@ -13105,12 +13161,12 @@ var DataProvider = (function () {
         return elements;
     };
     DataProvider.prototype.tree = function (path, source) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             var _this = this;
-            return tslib_1.__generator(this, function (_a) {
+            return (0, tslib_1.__generator)(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        path = helpers_1.normalizeRelativePath(path);
+                        path = (0, helpers_1.normalizeRelativePath)(path);
                         return [4, this.permissions(path, source)];
                     case 1:
                         _a.sent();
@@ -13135,19 +13191,19 @@ var DataProvider = (function () {
     };
     DataProvider.prototype.getPathByUrl = function (url) {
         var _this = this;
-        helpers_1.set('options.getLocalFileByUrl.data.url', url, this);
+        (0, helpers_1.set)('options.getLocalFileByUrl.data.url', url, this);
         return this.get('getLocalFileByUrl', function (resp) {
             if (_this.isSuccess(resp)) {
                 return resp.data;
             }
-            throw helpers_1.error(_this.getMessage(resp));
+            throw (0, helpers_1.error)(_this.getMessage(resp));
         });
     };
     DataProvider.prototype.createFolder = function (name, path, source) {
         var _this = this;
         var create = this.o.create;
         if (!create) {
-            throw helpers_1.error('Set Create api options');
+            throw (0, helpers_1.error)('Set Create api options');
         }
         create.data.source = source;
         create.data.path = path;
@@ -13156,7 +13212,7 @@ var DataProvider = (function () {
             if (_this.isSuccess(resp)) {
                 return true;
             }
-            throw helpers_1.error(_this.getMessage(resp));
+            throw (0, helpers_1.error)(_this.getMessage(resp));
         });
     };
     DataProvider.prototype.move = function (filepath, path, source, isFile) {
@@ -13166,7 +13222,7 @@ var DataProvider = (function () {
             : 'folderMove';
         var option = this.options[mode];
         if (!option) {
-            throw helpers_1.error('Set Move api options');
+            throw (0, helpers_1.error)('Set Move api options');
         }
         option.data.from = filepath;
         option.data.path = path;
@@ -13175,14 +13231,14 @@ var DataProvider = (function () {
             if (_this.isSuccess(resp)) {
                 return true;
             }
-            throw helpers_1.error(_this.getMessage(resp));
+            throw (0, helpers_1.error)(_this.getMessage(resp));
         });
     };
     DataProvider.prototype.remove = function (action, path, file, source) {
         var _this = this;
         var fr = this.o[action];
         if (!fr) {
-            throw helpers_1.error("Set \"" + action + "\" api options");
+            throw (0, helpers_1.error)("Set \"" + action + "\" api options");
         }
         fr.data.path = path;
         fr.data.name = file;
@@ -13192,7 +13248,7 @@ var DataProvider = (function () {
                 resp = fr.process.call(_this, resp);
             }
             if (!_this.isSuccess(resp)) {
-                throw helpers_1.error(_this.getMessage(resp));
+                throw (0, helpers_1.error)(_this.getMessage(resp));
             }
             return _this.getMessage(resp);
         });
@@ -13207,7 +13263,7 @@ var DataProvider = (function () {
         var _this = this;
         var fr = this.o[action];
         if (!fr) {
-            throw helpers_1.error("Set \"" + action + "\" api options");
+            throw (0, helpers_1.error)("Set \"" + action + "\" api options");
         }
         fr.data.path = path;
         fr.data.name = name;
@@ -13218,7 +13274,7 @@ var DataProvider = (function () {
                 resp = fr.process.call(self, resp);
             }
             if (!_this.isSuccess(resp)) {
-                throw helpers_1.error(_this.getMessage(resp));
+                throw (0, helpers_1.error)(_this.getMessage(resp));
             }
             return _this.getMessage(resp);
         });
@@ -13253,7 +13309,7 @@ var DataProvider = (function () {
             if (_this.isSuccess(resp)) {
                 return true;
             }
-            throw helpers_1.error(_this.getMessage(resp));
+            throw (0, helpers_1.error)(_this.getMessage(resp));
         });
     };
     DataProvider.prototype.crop = function (path, source, name, newname, box) {
@@ -13272,12 +13328,12 @@ var DataProvider = (function () {
         this.ajaxInstances.forEach(function (a) { return a.destruct(); });
         this.ajaxInstances.clear();
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], DataProvider.prototype, "isSuccess", null);
     return DataProvider;
 }());
-exports.default = DataProvider;
+exports["default"] = DataProvider;
 
 
 /***/ }),
@@ -13310,7 +13366,7 @@ var FileBrowserItem = (function () {
     };
     Object.defineProperty(FileBrowserItem.prototype, "path", {
         get: function () {
-            return helpers_1.normalizePath(this.data.source.path ? this.data.source.path + '/' : '/');
+            return (0, helpers_1.normalizePath)(this.data.source.path ? this.data.source.path + '/' : '/');
         },
         enumerable: false,
         configurable: true
@@ -13320,7 +13376,7 @@ var FileBrowserItem = (function () {
             var timestamp = new Date().getTime().toString(), _a = this.data, thumbIsAbsolute = _a.thumbIsAbsolute, source = _a.source, thumb = _a.thumb, file = _a.file, path = thumb || file;
             return thumbIsAbsolute && path
                 ? path
-                : helpers_1.normalizeUrl(source.baseurl, source.path, path || '') +
+                : (0, helpers_1.normalizeUrl)(source.baseurl, source.path, path || '') +
                     '?_tmst=' +
                     timestamp;
         },
@@ -13336,7 +13392,7 @@ var FileBrowserItem = (function () {
             }
             return fileIsAbsolute && name
                 ? name
-                : helpers_1.normalizeUrl(source.baseurl, source.path, name || '');
+                : (0, helpers_1.normalizeUrl)(source.baseurl, source.path, name || '');
         },
         enumerable: false,
         configurable: true
@@ -13458,7 +13514,7 @@ function stateListeners() {
                 var folderElm = create.a(consts_1.F_CLASS + '__tree-item', {
                     draggable: 'draggable',
                     href: 'javascript:void(0)',
-                    'data-path': normalize_1.normalizePath(source.path, name + '/'),
+                    'data-path': (0, normalize_1.normalizePath)(source.path, name + '/'),
                     'data-name': name,
                     'data-source': sourceName,
                     'data-source-path': source.path
@@ -13466,7 +13522,7 @@ function stateListeners() {
                 var action = function (actionName) { return function (e) {
                     _this.e.fire(actionName + ".filebrowser", {
                         name: name,
-                        path: normalize_1.normalizePath(source.path + '/'),
+                        path: (0, normalize_1.normalizePath)(source.path + '/'),
                         source: sourceName
                     });
                     e.stopPropagation();
@@ -13478,7 +13534,7 @@ function stateListeners() {
                 }
                 if (options.renameFolder &&
                     _this.dataProvider.canI('FolderRename')) {
-                    var btn = ui_1.Button(_this, {
+                    var btn = (0, ui_1.Button)(_this, {
                         icon: { name: 'pencil' },
                         name: 'rename',
                         tooltip: 'Rename',
@@ -13489,7 +13545,7 @@ function stateListeners() {
                 }
                 if (options.deleteFolder &&
                     _this.dataProvider.canI('FolderRemove')) {
-                    var btn = ui_1.Button(_this, {
+                    var btn = (0, ui_1.Button)(_this, {
                         icon: { name: 'cancel' },
                         name: 'remove',
                         tooltip: 'Delete',
@@ -13501,10 +13557,10 @@ function stateListeners() {
             });
             if (options.createNewFolder &&
                 _this.dataProvider.canI('FolderCreate')) {
-                var button = ui_1.Button(_this, 'plus', 'Add folder', 'secondary');
+                var button = (0, ui_1.Button)(_this, 'plus', 'Add folder', 'secondary');
                 button.onAction(function () {
                     _this.e.fire('addFolder', {
-                        path: normalize_1.normalizePath(source.path + '/'),
+                        path: (0, normalize_1.normalizePath)(source.path + '/'),
                         source: sourceName
                     });
                 });
@@ -13536,7 +13592,7 @@ var context_menu_1 = __webpack_require__(195);
 var dom_1 = __webpack_require__(32);
 var getItem = function (node, root, tag) {
     if (tag === void 0) { tag = 'a'; }
-    return dom_1.Dom.closest(node, function (elm) { return dom_1.Dom.isElement(elm) && dom_1.Dom.isTag(elm, tag); }, root);
+    return dom_1.Dom.closest(node, function (elm) { return dom_1.Dom.isTag(elm, tag); }, root);
 };
 exports.getItem = getItem;
 function nativeListeners() {
@@ -13549,7 +13605,7 @@ function nativeListeners() {
     };
     self.e
         .on(self.tree, 'dragstart', function (e) {
-        var a = exports.getItem(e.target, self.dialog.container);
+        var a = (0, exports.getItem)(e.target, self.dialog.container);
         if (!a) {
             return;
         }
@@ -13559,37 +13615,37 @@ function nativeListeners() {
     })
         .on(self.tree, 'drop', function (e) {
         if ((self.o.moveFile || self.o.moveFolder) && dragElement) {
-            var path = helpers_1.attr(dragElement, '-path') || '';
+            var path = (0, helpers_1.attr)(dragElement, '-path') || '';
             if (!self.o.moveFolder &&
                 dragElement.classList.contains(consts_1.F_CLASS + '__tree-item')) {
                 return false;
             }
             if (dragElement.classList.contains(consts_1.ITEM_CLASS)) {
-                path += helpers_1.attr(dragElement, '-name');
+                path += (0, helpers_1.attr)(dragElement, '-name');
                 if (!self.o.moveFile) {
                     return false;
                 }
             }
-            var a = exports.getItem(e.target, self.dialog.container);
+            var a = (0, exports.getItem)(e.target, self.dialog.container);
             if (!a) {
                 return;
             }
             self.dataProvider
-                .move(path, helpers_1.attr(a, '-path') || '', helpers_1.attr(a, '-source') || '', dragElement.classList.contains(consts_1.ITEM_CLASS))
+                .move(path, (0, helpers_1.attr)(a, '-path') || '', (0, helpers_1.attr)(a, '-source') || '', dragElement.classList.contains(consts_1.ITEM_CLASS))
                 .then(function () {
                 self.loadTree();
             }, self.status);
             dragElement = false;
         }
     })
-        .on(self.files, 'contextmenu', context_menu_1.default(self))
+        .on(self.files, 'contextmenu', (0, context_menu_1.default)(self))
         .on(self.files, 'click', function (e) {
-        if (!helpers_1.ctrlKey(e)) {
+        if (!(0, helpers_1.ctrlKey)(e)) {
             _this.state.activeElements = [];
         }
     })
         .on(self.files, 'click', function (e) {
-        var a = exports.getItem(e.target, self.dialog.container);
+        var a = (0, exports.getItem)(e.target, self.dialog.container);
         if (!a) {
             return;
         }
@@ -13597,20 +13653,20 @@ function nativeListeners() {
         if (!item) {
             return;
         }
-        if (!helpers_1.ctrlKey(e)) {
+        if (!(0, helpers_1.ctrlKey)(e)) {
             self.state.activeElements = [item];
         }
         else {
-            self.state.activeElements = tslib_1.__spreadArray(tslib_1.__spreadArray([], self.state.activeElements), [
+            self.state.activeElements = (0, tslib_1.__spreadArray)((0, tslib_1.__spreadArray)([], (0, tslib_1.__read)(self.state.activeElements), false), [
                 item
-            ]);
+            ], false);
         }
         e.stopPropagation();
         return false;
     })
         .on(self.files, 'dragstart', function (e) {
         if (self.o.moveFile) {
-            var a = exports.getItem(e.target, self.dialog.container);
+            var a = (0, exports.getItem)(e.target, self.dialog.container);
             if (!a) {
                 return;
             }
@@ -13653,18 +13709,18 @@ var CLASS_PREVIEW = consts_1.F_CLASS + '_preview_', preview_tpl_next = function 
         ui_1.Icon.get('angle-' + right) +
         '</a>';
 };
-exports.default = (function (self) {
+exports["default"] = (function (self) {
     if (!self.o.contextMenu) {
         return function () { };
     }
-    var contextmenu = factories_1.makeContextMenu(self);
+    var contextmenu = (0, factories_1.makeContextMenu)(self);
     return function (e) {
-        var a = native_listeners_1.getItem(e.target, self.dialog.container);
+        var a = (0, native_listeners_1.getItem)(e.target, self.dialog.container);
         if (!a) {
             return;
         }
         var item = a;
-        var opt = self.options, ga = function (key) { return helpers_1.attr(item, key) || ''; };
+        var opt = self.options, ga = function (key) { return (0, helpers_1.attr)(item, key) || ''; };
         self.async.setTimeout(function () {
             contextmenu.show(e.clientX, e.clientY, [
                 ga('data-is-file') !== '1' &&
@@ -13683,8 +13739,8 @@ exports.default = (function (self) {
                     ? {
                         icon: 'italic',
                         title: 'Rename',
-                        exec: function () { return tslib_1.__awaiter(void 0, void 0, void 0, function () {
-                            return tslib_1.__generator(this, function (_a) {
+                        exec: function () { return (0, tslib_1.__awaiter)(void 0, void 0, void 0, function () {
+                            return (0, tslib_1.__generator)(this, function (_a) {
                                 self.e.fire('fileRename.filebrowser', ga('data-name'), ga('data-path'), ga('data-source'));
                                 return [2];
                             });
@@ -13695,8 +13751,8 @@ exports.default = (function (self) {
                     ? {
                         icon: 'bin',
                         title: 'Delete',
-                        exec: function () { return tslib_1.__awaiter(void 0, void 0, void 0, function () {
-                            return tslib_1.__generator(this, function (_a) {
+                        exec: function () { return (0, tslib_1.__awaiter)(void 0, void 0, void 0, function () {
+                            return (0, tslib_1.__generator)(this, function (_a) {
                                 switch (_a.label) {
                                     case 0: return [4, self.deleteFile(ga('data-name'), ga('data-source'))];
                                     case 1:
@@ -13754,7 +13810,7 @@ exports.default = (function (self) {
                                     item = dom_1.Dom.prevWithClass(item, consts_1.ITEM_CLASS);
                                 }
                                 if (!item) {
-                                    throw helpers_1.error('Need element');
+                                    throw (0, helpers_1.error)('Need element');
                                 }
                                 dom_1.Dom.detach(temp_content);
                                 dom_1.Dom.detach(preview_box);
@@ -13843,7 +13899,7 @@ var TABS = {
     crop: 'crop'
 };
 var ImageEditor = (function (_super) {
-    tslib_1.__extends(ImageEditor, _super);
+    (0, tslib_1.__extends)(ImageEditor, _super);
     function ImageEditor(editor) {
         var _this = _super.call(this, editor) || this;
         _this.resizeUseRatio = true;
@@ -13889,7 +13945,7 @@ var ImageEditor = (function (_super) {
                 wn = nw * (h / nh);
                 hn = h;
             }
-            helpers_1.css(_this.crop_box, {
+            (0, helpers_1.css)(_this.crop_box, {
                 width: wn,
                 height: hn
             });
@@ -13912,8 +13968,8 @@ var ImageEditor = (function (_super) {
             else {
                 _this.new_h = ImageEditor_1.calcValueByPercent(h, _this.o.cropDefaultHeight);
             }
-            helpers_1.css(_this.cropHandler, {
-                backgroundImage: 'url(' + helpers_1.attr(_this.cropImage, 'src') + ')',
+            (0, helpers_1.css)(_this.cropHandler, {
+                backgroundImage: 'url(' + (0, helpers_1.attr)(_this.cropImage, 'src') + ')',
                 width: _this.new_w,
                 height: _this.new_h,
                 left: w / 2 - _this.new_w / 2,
@@ -13926,8 +13982,8 @@ var ImageEditor = (function (_super) {
                 return;
             }
             var ratioX = _this.cropImage.offsetWidth / _this.naturalWidth, ratioY = _this.cropImage.offsetHeight / _this.naturalHeight;
-            _this.cropBox.x = helpers_1.css(_this.cropHandler, 'left') / ratioX;
-            _this.cropBox.y = helpers_1.css(_this.cropHandler, 'top') / ratioY;
+            _this.cropBox.x = (0, helpers_1.css)(_this.cropHandler, 'left') / ratioX;
+            _this.cropBox.y = (0, helpers_1.css)(_this.cropHandler, 'top') / ratioY;
             _this.cropBox.w = _this.cropHandler.offsetWidth / ratioX;
             _this.cropBox.h = _this.cropHandler.offsetHeight / ratioY;
             _this.sizes.textContent =
@@ -13939,7 +13995,7 @@ var ImageEditor = (function (_super) {
         };
         _this.setHandlers = function () {
             var self = _this;
-            var _a = helpers_1.refs(_this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput;
+            var _a = (0, helpers_1.refs)(_this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput;
             self.j.e
                 .on([
                 self.editor.querySelector('.jodit_bottomright'),
@@ -13951,9 +14007,9 @@ var ImageEditor = (function (_super) {
                 _this.j.e.fire(self.cropHandler, 'updatesize');
             });
             self.j.e
-                .on(helpers_1.toArray(_this.editor.querySelectorAll("." + jie + "__slider-title")), 'click', _this.onTitleModeClick)
+                .on((0, helpers_1.toArray)(_this.editor.querySelectorAll("." + jie + "__slider-title")), 'click', _this.onTitleModeClick)
                 .on([widthInput, heightInput], 'input', _this.onChangeSizeInput);
-            var _b = helpers_1.refs(_this.editor), keepAspectRatioResize = _b.keepAspectRatioResize, keepAspectRatioCrop = _b.keepAspectRatioCrop;
+            var _b = (0, helpers_1.refs)(_this.editor), keepAspectRatioResize = _b.keepAspectRatioResize, keepAspectRatioCrop = _b.keepAspectRatioCrop;
             if (keepAspectRatioResize) {
                 keepAspectRatioResize.addEventListener('change', function () {
                     _this.resizeUseRatio = keepAspectRatioResize.checked;
@@ -13966,7 +14022,7 @@ var ImageEditor = (function (_super) {
             }
             self.j.e
                 .on(self.resizeHandler, 'updatesize', function () {
-                helpers_1.css(self.resizeHandler, {
+                (0, helpers_1.css)(self.resizeHandler, {
                     top: 0,
                     left: 0,
                     width: self.image.offsetWidth || self.naturalWidth,
@@ -13978,7 +14034,7 @@ var ImageEditor = (function (_super) {
                 if (!self.cropImage) {
                     return;
                 }
-                var new_x = helpers_1.css(self.cropHandler, 'left'), new_y = helpers_1.css(self.cropHandler, 'top'), new_width = self.cropHandler.offsetWidth, new_height = self.cropHandler.offsetHeight;
+                var new_x = (0, helpers_1.css)(self.cropHandler, 'left'), new_y = (0, helpers_1.css)(self.cropHandler, 'top'), new_width = self.cropHandler.offsetWidth, new_height = self.cropHandler.offsetHeight;
                 if (new_x < 0) {
                     new_x = 0;
                 }
@@ -13997,7 +14053,7 @@ var ImageEditor = (function (_super) {
                         new_width = new_height * self.ratio;
                     }
                 }
-                helpers_1.css(self.cropHandler, {
+                (0, helpers_1.css)(self.cropHandler, {
                     width: new_width,
                     height: new_height,
                     left: new_x,
@@ -14020,24 +14076,24 @@ var ImageEditor = (function (_super) {
                     };
                     switch (button) {
                         case self.buttons.saveas:
-                            dialog_1.Prompt(self.j.i18n('Enter new name'), self.j.i18n('Save in new file'), function (name) {
-                                if (!helpers_1.trim(name)) {
-                                    dialog_1.Alert(self.j.i18n('The name should not be empty')).bindDestruct(_this.j);
+                            (0, dialog_1.Prompt)(self.j.i18n('Enter new name'), self.j.i18n('Save in new file'), function (name) {
+                                if (!(0, helpers_1.trim)(name)) {
+                                    (0, dialog_1.Alert)(self.j.i18n('The name should not be empty')).bindDestruct(_this.j);
                                     return false;
                                 }
                                 self.onSave(name, data, self.hide, function (e) {
-                                    dialog_1.Alert(e.message).bindDestruct(self.j);
+                                    (0, dialog_1.Alert)(e.message).bindDestruct(self.j);
                                 });
                             }).bindDestruct(_this.j);
                             break;
                         case self.buttons.save:
                             self.onSave(undefined, data, self.hide, function (e) {
-                                dialog_1.Alert(e.message).bindDestruct(self.j);
+                                (0, dialog_1.Alert)(e.message).bindDestruct(self.j);
                             });
                             break;
                         case self.buttons.reset:
                             if (self.activeTab === TABS.resize) {
-                                helpers_1.css(self.image, {
+                                (0, helpers_1.css)(self.image, {
                                     width: null,
                                     height: null
                                 });
@@ -14061,13 +14117,13 @@ var ImageEditor = (function (_super) {
         _this.resizeUseRatio = o.resizeUseRatio;
         _this.cropUseRatio = o.cropUseRatio;
         _this.buttons = {
-            reset: button_1.Button(_this.j, 'update', 'Reset'),
-            save: button_1.Button(_this.j, 'save', 'Save'),
-            saveas: button_1.Button(_this.j, 'save', 'Save as ...')
+            reset: (0, button_1.Button)(_this.j, 'update', 'Reset'),
+            save: (0, button_1.Button)(_this.j, 'save', 'Save'),
+            saveas: (0, button_1.Button)(_this.j, 'save', 'Save as ...')
         };
         _this.activeTab = o.resize ? TABS.resize : TABS.crop;
-        _this.editor = form_1.form(_this.j, _this.options);
-        var _a = helpers_1.refs(_this.editor), resizeBox = _a.resizeBox, cropBox = _a.cropBox;
+        _this.editor = (0, form_1.form)(_this.j, _this.options);
+        var _a = (0, helpers_1.refs)(_this.editor), resizeBox = _a.resizeBox, cropBox = _a.cropBox;
         _this.resize_box = resizeBox;
         _this.crop_box = cropBox;
         _this.sizes = _this.editor.querySelector("." + jie + "__area." + jie + "__area_crop .jodit-image-editor__sizes");
@@ -14099,11 +14155,11 @@ var ImageEditor = (function (_super) {
         if (!slide) {
             return;
         }
-        helpers_1.$$("." + jie + "__slider,." + jie + "__area", self.editor).forEach(function (elm) {
+        (0, helpers_1.$$)("." + jie + "__slider,." + jie + "__area", self.editor).forEach(function (elm) {
             return elm.classList.remove(jie + "_active");
         });
         slide.classList.add(jie + "_active");
-        self.activeTab = helpers_1.attr(slide, '-area') || TABS.resize;
+        self.activeTab = (0, helpers_1.attr)(slide, '-area') || TABS.resize;
         var tab = self.editor.querySelector("." + jie + "__area." + jie + "__area_" + self.activeTab);
         if (tab) {
             tab.classList.add(jie + "_active");
@@ -14113,16 +14169,16 @@ var ImageEditor = (function (_super) {
         }
     };
     ImageEditor.prototype.onChangeSizeInput = function (e) {
-        var self = this, input = e.target, _a = helpers_1.refs(this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput, isWidth = helpers_1.attr(input, 'data-ref') === 'widthInput', x = parseInt(input.value, 10), minX = isWidth ? self.o.min_width : self.o.min_height, minY = !isWidth ? self.o.min_width : self.o.min_height;
+        var self = this, input = e.target, _a = (0, helpers_1.refs)(this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput, isWidth = (0, helpers_1.attr)(input, 'data-ref') === 'widthInput', x = parseInt(input.value, 10), minX = isWidth ? self.o.min_width : self.o.min_height, minY = !isWidth ? self.o.min_width : self.o.min_height;
         var y;
         if (x > minX) {
-            helpers_1.css(self.image, isWidth ? 'width' : 'height', x);
+            (0, helpers_1.css)(self.image, isWidth ? 'width' : 'height', x);
             if (self.resizeUseRatio) {
                 y = isWidth
                     ? Math.round(x / self.ratio)
                     : Math.round(x * self.ratio);
                 if (y > minY) {
-                    helpers_1.css(self.image, !isWidth ? 'width' : 'height', y);
+                    (0, helpers_1.css)(self.image, !isWidth ? 'width' : 'height', y);
                     if (isWidth) {
                         heightInput.value = y.toString();
                     }
@@ -14143,8 +14199,8 @@ var ImageEditor = (function (_super) {
         self.start_x = e.clientX;
         self.start_y = e.clientY;
         if (self.activeTab === TABS.crop) {
-            self.top_x = helpers_1.css(self.cropHandler, 'left');
-            self.top_y = helpers_1.css(self.cropHandler, 'top');
+            self.top_x = (0, helpers_1.css)(self.cropHandler, 'left');
+            self.top_y = (0, helpers_1.css)(self.cropHandler, 'top');
             self.width = self.cropHandler.offsetWidth;
             self.height = self.cropHandler.offsetHeight;
         }
@@ -14168,7 +14224,7 @@ var ImageEditor = (function (_super) {
         if (!self.clicked) {
             return;
         }
-        var _a = helpers_1.refs(this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput;
+        var _a = (0, helpers_1.refs)(this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput;
         self.diff_x = e.clientX - self.start_x;
         self.diff_y = e.clientY - self.start_y;
         if ((self.activeTab === TABS.resize && self.resizeUseRatio) ||
@@ -14188,11 +14244,11 @@ var ImageEditor = (function (_super) {
         }
         if (self.activeTab === TABS.resize) {
             if (self.new_w > self.o.resizeMinWidth) {
-                helpers_1.css(self.image, 'width', self.new_w + 'px');
+                (0, helpers_1.css)(self.image, 'width', self.new_w + 'px');
                 widthInput.value = self.new_w.toString();
             }
             if (self.new_h > self.o.resizeMinHeight) {
-                helpers_1.css(self.image, 'height', self.new_h + 'px');
+                (0, helpers_1.css)(self.image, 'height', self.new_h + 'px');
                 heightInput.value = self.new_h.toString();
             }
             this.j.e.fire(self.resizeHandler, 'updatesize');
@@ -14205,7 +14261,7 @@ var ImageEditor = (function (_super) {
                 if (self.top_y + self.new_h > self.cropImage.offsetHeight) {
                     self.new_h = self.cropImage.offsetHeight - self.top_y;
                 }
-                helpers_1.css(self.cropHandler, {
+                (0, helpers_1.css)(self.cropHandler, {
                     width: self.new_w,
                     height: self.new_h
                 });
@@ -14218,7 +14274,7 @@ var ImageEditor = (function (_super) {
                             self.top_x -
                             self.cropHandler.offsetWidth;
                 }
-                helpers_1.css(self.cropHandler, 'left', self.top_x + self.diff_x);
+                (0, helpers_1.css)(self.cropHandler, 'left', self.top_x + self.diff_x);
                 if (self.top_y + self.diff_y + self.cropHandler.offsetHeight >
                     self.cropImage.offsetHeight) {
                     self.diff_y =
@@ -14226,7 +14282,7 @@ var ImageEditor = (function (_super) {
                             self.top_y -
                             self.cropHandler.offsetHeight;
                 }
-                helpers_1.css(self.cropHandler, 'top', self.top_y + self.diff_y);
+                (0, helpers_1.css)(self.cropHandler, 'top', self.top_y + self.diff_y);
             }
             this.j.e.fire(self.cropHandler, 'updatesize');
         }
@@ -14246,9 +14302,9 @@ var ImageEditor = (function (_super) {
         return this.j.async.promise(function (resolve) {
             var timestamp = new Date().getTime();
             _this.image = _this.j.c.element('img');
-            helpers_1.$$('img,.jodit-icon_loader', _this.resize_box).forEach(dom_1.Dom.safeRemove);
-            helpers_1.$$('img,.jodit-icon_loader', _this.crop_box).forEach(dom_1.Dom.safeRemove);
-            helpers_1.css(_this.cropHandler, 'background', 'transparent');
+            (0, helpers_1.$$)('img,.jodit-icon_loader', _this.resize_box).forEach(dom_1.Dom.safeRemove);
+            (0, helpers_1.$$)('img,.jodit-icon_loader', _this.crop_box).forEach(dom_1.Dom.safeRemove);
+            (0, helpers_1.css)(_this.cropHandler, 'background', 'transparent');
             _this.onSave = save;
             _this.resize_box.appendChild(_this.j.c.element('i', { class: 'jodit-icon_loader' }));
             _this.crop_box.appendChild(_this.j.c.element('i', { class: 'jodit-icon_loader' }));
@@ -14260,7 +14316,7 @@ var ImageEditor = (function (_super) {
             }
             _this.image.setAttribute('src', url);
             _this.dialog.open();
-            var _a = helpers_1.refs(_this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput;
+            var _a = (0, helpers_1.refs)(_this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput;
             var onload = function () {
                 if (_this.isDestructed) {
                     return;
@@ -14274,7 +14330,7 @@ var ImageEditor = (function (_super) {
                 _this.resize_box.appendChild(_this.image);
                 _this.cropImage = _this.image.cloneNode(true);
                 _this.crop_box.appendChild(_this.cropImage);
-                helpers_1.$$('.jodit-icon_loader', _this.editor).forEach(dom_1.Dom.safeRemove);
+                (0, helpers_1.$$)('.jodit-icon_loader', _this.editor).forEach(dom_1.Dom.safeRemove);
                 if (_this.activeTab === TABS.crop) {
                     _this.showCrop();
                 }
@@ -14322,29 +14378,29 @@ var ImageEditor = (function (_super) {
         }
         return valueNbr || 0;
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], ImageEditor.prototype, "onTitleModeClick", null);
-    tslib_1.__decorate([
-        decorators_1.debounce(),
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.debounce)(),
         decorators_1.autobind
     ], ImageEditor.prototype, "onChangeSizeInput", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], ImageEditor.prototype, "onResizeHandleMouseDown", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], ImageEditor.prototype, "onGlobalMouseUp", null);
-    tslib_1.__decorate([
-        decorators_1.throttle(10)
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.throttle)(10)
     ], ImageEditor.prototype, "onGlobalMouseMove", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], ImageEditor.prototype, "hide", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], ImageEditor.prototype, "open", null);
-    ImageEditor = ImageEditor_1 = tslib_1.__decorate([
+    ImageEditor = ImageEditor_1 = (0, tslib_1.__decorate)([
         decorators_1.component
     ], ImageEditor);
     return ImageEditor;
@@ -14441,6 +14497,7 @@ exports.form = form;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.selfListeners = void 0;
+var tslib_1 = __webpack_require__(7);
 var dialog_1 = __webpack_require__(163);
 var checker_1 = __webpack_require__(34);
 var helpers_1 = __webpack_require__(19);
@@ -14477,14 +14534,14 @@ function selfListeners() {
                 .join('/');
         }
         else {
-            path = helpers_1.normalizePath(data.path, data.name);
+            path = (0, helpers_1.normalizePath)(data.path, data.name);
         }
         self.state.currentPath = path;
         self.state.currentSource =
             data.name === '.' ? data_provider_1.DEFAULT_SOURCE_NAME : data.source;
     })
         .on('removeFolder.filebrowser', function (data) {
-        dialog_1.Confirm(self.i18n('Are you sure?'), self.i18n('Delete'), function (yes) {
+        (0, dialog_1.Confirm)(self.i18n('Are you sure?'), self.i18n('Delete'), function (yes) {
             if (yes) {
                 dp.folderRemove(data.path, data.name, data.source)
                     .then(function (message) {
@@ -14496,8 +14553,8 @@ function selfListeners() {
         }).bindDestruct(self);
     })
         .on('renameFolder.filebrowser', function (data) {
-        dialog_1.Prompt(self.i18n('Enter new name'), self.i18n('Rename'), function (newName) {
-            if (!checker_1.isValidName(newName)) {
+        (0, dialog_1.Prompt)(self.i18n('Enter new name'), self.i18n('Rename'), function (newName) {
+            if (!(0, checker_1.isValidName)(newName)) {
                 self.status(self.i18n('Enter new name'));
                 return false;
             }
@@ -14512,7 +14569,7 @@ function selfListeners() {
         }, self.i18n('type name'), data.name).bindDestruct(self);
     })
         .on('addFolder.filebrowser', function (data) {
-        dialog_1.Prompt(self.i18n('Enter Directory name'), self.i18n('Create directory'), function (name) {
+        (0, dialog_1.Prompt)(self.i18n('Enter Directory name'), self.i18n('Create directory'), function (name) {
             dp.createFolder(name, data.path, data.source).then(function () {
                 self.loadTree();
             }, self.status);
@@ -14520,7 +14577,7 @@ function selfListeners() {
     })
         .on('fileRemove.filebrowser', function () {
         if (self.state.activeElements.length) {
-            dialog_1.Confirm(self.i18n('Are you sure?'), '', function (yes) {
+            (0, dialog_1.Confirm)(self.i18n('Are you sure?'), '', function (yes) {
                 if (yes) {
                     var promises_1 = [];
                     self.state.activeElements.forEach(function (item) {
@@ -14536,14 +14593,14 @@ function selfListeners() {
     })
         .on('edit.filebrowser', function () {
         if (self.state.activeElements.length === 1) {
-            var file = _this.state.activeElements[0];
+            var _a = (0, tslib_1.__read)(_this.state.activeElements, 1), file = _a[0];
             image_editor_1.openImageEditor.call(self, file.fileURL, file.file || '', file.path, file.sourceName);
         }
     })
         .on('fileRename.filebrowser', function (name, path, source) {
         if (self.state.activeElements.length === 1) {
-            dialog_1.Prompt(self.i18n('Enter new name'), self.i18n('Rename'), function (newName) {
-                if (!checker_1.isValidName(newName)) {
+            (0, dialog_1.Prompt)(self.i18n('Enter new name'), self.i18n('Rename'), function (newName) {
+                if (!(0, checker_1.isValidName)(newName)) {
                     self.status(self.i18n('Enter new name'));
                     return false;
                 }
@@ -14590,7 +14647,7 @@ config_1.Config.prototype.observer = {
     timeout: 100
 };
 var Observer = (function (_super) {
-    tslib_1.__extends(Observer, _super);
+    (0, tslib_1.__extends)(Observer, _super);
     function Observer(editor) {
         var _this = _super.call(this, editor) || this;
         _this.stack = new stack_1.Stack(_this.j.o.observer.maxHistoryLength);
@@ -14696,8 +14753,8 @@ var Observer = (function (_super) {
         this.snapshot.destruct();
         _super.prototype.destruct.call(this);
     };
-    tslib_1.__decorate([
-        decorators_1.debounce()
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.debounce)()
     ], Observer.prototype, "onChange", null);
     return Observer;
 }(component_1.ViewComponent));
@@ -14721,7 +14778,7 @@ var tslib_1 = __webpack_require__(7);
 var component_1 = __webpack_require__(27);
 var dom_1 = __webpack_require__(32);
 var Snapshot = (function (_super) {
-    tslib_1.__extends(Snapshot, _super);
+    (0, tslib_1.__extends)(Snapshot, _super);
     function Snapshot() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.isBlocked = false;
@@ -14979,8 +15036,8 @@ exports.Command = Command;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(205), exports);
-tslib_1.__exportStar(__webpack_require__(207), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(205), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(210), exports);
 
 
 /***/ }),
@@ -14995,28 +15052,28 @@ tslib_1.__exportStar(__webpack_require__(207), exports);
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Style = void 0;
+exports.CommitStyle = void 0;
 var constants_1 = __webpack_require__(9);
 var apply_style_1 = __webpack_require__(206);
-var Style = (function () {
-    function Style(options) {
+var CommitStyle = (function () {
+    function CommitStyle(options) {
         this.options = options;
     }
-    Object.defineProperty(Style.prototype, "element", {
+    Object.defineProperty(CommitStyle.prototype, "element", {
         get: function () {
             return this.options.element || this.defaultTag;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Style.prototype, "elementIsBlock", {
+    Object.defineProperty(CommitStyle.prototype, "elementIsBlock", {
         get: function () {
             return Boolean(this.options.element && constants_1.IS_BLOCK.test(this.options.element));
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Style.prototype, "defaultTag", {
+    Object.defineProperty(CommitStyle.prototype, "defaultTag", {
         get: function () {
             if (this.options.defaultTag) {
                 return this.options.defaultTag;
@@ -15026,20 +15083,19 @@ var Style = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Style.prototype, "elementIsDefault", {
+    Object.defineProperty(CommitStyle.prototype, "elementIsDefault", {
         get: function () {
             return this.element === this.defaultTag;
         },
         enumerable: false,
         configurable: true
     });
-    Style.prototype.apply = function (jodit) {
-        var applyStyle = new apply_style_1.ApplyStyle(jodit, this);
-        applyStyle.apply();
+    CommitStyle.prototype.apply = function (jodit) {
+        (0, apply_style_1.ApplyStyle)(jodit, this);
     };
-    return Style;
+    return CommitStyle;
 }());
-exports.Style = Style;
+exports.CommitStyle = CommitStyle;
 
 
 /***/ }),
@@ -15056,309 +15112,161 @@ exports.Style = Style;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ApplyStyle = void 0;
 var tslib_1 = __webpack_require__(7);
-var checker_1 = __webpack_require__(34);
 var dom_1 = __webpack_require__(32);
 var helpers_1 = __webpack_require__(19);
-var decorators_1 = __webpack_require__(99);
-var mode;
-(function (mode) {
-    mode["UNWRAP"] = "UNWRAP";
-    mode["WRAP"] = "WRAP";
-})(mode || (mode = {}));
-var ApplyStyle = (function () {
-    function ApplyStyle(jodit, style) {
-        this.jodit = jodit;
-        this.style = style;
+var api_1 = __webpack_require__(207);
+function ApplyStyle(jodit, style) {
+    var e_1, _a;
+    var sel = jodit.s, root = jodit.editor, ci = jodit.createInside, rng = function () { return sel.createRange(); };
+    var wrap = null;
+    sel.save();
+    (0, helpers_1.normalizeNode)(sel.area.firstChild);
+    try {
+        for (var _b = (0, tslib_1.__values)(jodit.s.wrapInTagGen()), _c = _b.next(); !_c.done; _c = _b.next()) {
+            var font = _c.value;
+            wrap = applyToElement(style, font, root, rng, ci, wrap);
+        }
     }
-    ApplyStyle.prototype.apply = function () {
-        var sel = this.jodit.selection;
-        var isCollapsed = sel.isCollapsed();
-        if (isCollapsed) {
-            var font = this.jodit.createInside.element('font');
-            sel.insertNode(font, false, false);
-            sel.setCursorIn(font);
-            sel.save();
-            if (!this.checkSpecialElements(font)) {
-                this.applyToElement(font);
+    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+    finally {
+        try {
+            if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+        }
+        finally { if (e_1) throw e_1.error; }
+    }
+    sel.restore();
+}
+exports.ApplyStyle = ApplyStyle;
+function applyToElement(style, font, root, range, ci, wrap) {
+    if ((0, api_1.checkSpecialElements)(font, root)) {
+        return wrap;
+    }
+    var toggleNode = (0, api_1.getSuitParent)(style, font, root) ||
+        (0, api_1.getSuitChild)(style, font) ||
+        (0, api_1.getClosestWrapper)(style, font, root, range);
+    if (toggleNode) {
+        return (0, api_1.toggleStyles)(style, toggleNode, wrap);
+    }
+    if ((0, api_1.unwrapChildren)(style, font)) {
+        return wrap;
+    }
+    if (wrap == null) {
+        wrap = true;
+    }
+    if (!wrap) {
+        return wrap;
+    }
+    var wrapper = font;
+    if (style.elementIsBlock) {
+        var ulReg_1 = /^(ul|ol|li|td|th|tr|tbody|table)$/i;
+        var box_1 = dom_1.Dom.up(font, function (node) {
+            if (dom_1.Dom.isBlock(node)) {
+                if (ulReg_1.test(style.element) ||
+                    !ulReg_1.test(node.nodeName)) {
+                    return true;
+                }
             }
-            dom_1.Dom.unwrap(font);
+            return false;
+        }, root);
+        if (box_1) {
+            wrapper = box_1;
         }
         else {
-            sel.save();
-            helpers_1.normalizeNode(sel.area.firstChild);
-            sel.wrapInTag(this.applyToElement);
+            wrapper = (0, api_1.wrapUnwrappedText)(style, font, root, ci, range);
         }
-        sel.restore();
-    };
-    ApplyStyle.prototype.applyToElement = function (font) {
-        var _this = this;
-        var area = this.jodit.selection.area;
-        if (this.checkSpecialElements(font)) {
-            return;
-        }
-        if (this.checkSuitableParent(font) ||
-            this.checkSuitableChild(font) ||
-            this.checkClosestWrapper(font) ||
-            this.unwrapChildren(font)) {
-            return;
-        }
-        if (!this.mode) {
-            this.mode = mode.WRAP;
-        }
-        if (this.mode !== mode.WRAP) {
-            return;
-        }
-        var wrapper = font;
-        if (this.style.elementIsBlock) {
-            var ulReg_1 = /^(ul|ol|li|td|th|tr|tbody|table)$/i;
-            var box_1 = dom_1.Dom.up(font, function (node) {
-                if (node && dom_1.Dom.isBlock(node, _this.jodit.s.win)) {
-                    if (ulReg_1.test(_this.style.element) ||
-                        !ulReg_1.test(node.nodeName)) {
-                        return true;
-                    }
-                }
-                return false;
-            }, area);
-            if (box_1) {
-                wrapper = box_1;
-            }
-            else {
-                wrapper = this.wrapUnwrappedText(font);
-            }
-        }
-        var newWrapper = dom_1.Dom.replace(wrapper, this.style.element, this.jodit.createInside, true);
-        helpers_1.attr(newWrapper, 'size', null);
-        if (this.style.elementIsBlock) {
-            this.postProcessListElement(newWrapper);
-        }
-        if (this.style.options.style && this.style.elementIsDefault) {
-            helpers_1.css(newWrapper, this.style.options.style);
-        }
-        if (this.style.options.className) {
-            newWrapper.classList.toggle(this.style.options.className);
-        }
-    };
-    ApplyStyle.prototype.checkSpecialElements = function (font) {
-        var editor = this.jodit.editor;
-        return Boolean(dom_1.Dom.closest(font, ['style', 'script'], editor));
-    };
-    ApplyStyle.prototype.checkSuitableParent = function (font) {
-        var parentNode = font.parentNode;
-        if (parentNode &&
-            !dom_1.Dom.next(font, this.isNormalNode, parentNode) &&
-            !dom_1.Dom.prev(font, this.isNormalNode, parentNode) &&
-            this.isSuitableElement(parentNode, false) &&
-            parentNode !== this.jodit.s.area &&
-            (!dom_1.Dom.isBlock(parentNode, this.jodit.ew) ||
-                this.style.elementIsBlock)) {
-            this.toggleStyles(parentNode);
-            return true;
-        }
-        return false;
-    };
-    ApplyStyle.prototype.checkSuitableChild = function (font) {
-        var firstChild = font.firstChild;
-        if (firstChild && this.jodit.s.isMarker(firstChild)) {
-            firstChild = firstChild.nextSibling;
-        }
-        if (firstChild &&
-            !dom_1.Dom.next(firstChild, this.isNormalNode, font) &&
-            !dom_1.Dom.prev(firstChild, this.isNormalNode, font) &&
-            this.isSuitableElement(firstChild, false)) {
-            this.toggleStyles(firstChild);
-            return true;
-        }
-        return false;
-    };
-    ApplyStyle.prototype.checkClosestWrapper = function (font) {
-        var wrapper = dom_1.Dom.closest(font, this.isSuitableElement, this.jodit.editor);
-        if (wrapper) {
-            if (this.style.elementIsBlock) {
-                this.toggleStyles(wrapper);
-                return true;
-            }
-            var leftRange = this.jodit.s.createRange();
-            leftRange.setStartBefore(wrapper);
-            leftRange.setEndBefore(font);
-            var leftFragment = leftRange.extractContents();
-            if ((!leftFragment.textContent ||
-                !helpers_1.trim(leftFragment.textContent).length) &&
-                leftFragment.firstChild) {
-                dom_1.Dom.unwrap(leftFragment.firstChild);
-            }
-            if (wrapper.parentNode) {
-                wrapper.parentNode.insertBefore(leftFragment, wrapper);
-            }
-            leftRange.setStartAfter(font);
-            leftRange.setEndAfter(wrapper);
-            var rightFragment = leftRange.extractContents();
-            if ((!rightFragment.textContent ||
-                !helpers_1.trim(rightFragment.textContent).length) &&
-                rightFragment.firstChild) {
-                dom_1.Dom.unwrap(rightFragment.firstChild);
-            }
-            dom_1.Dom.after(wrapper, rightFragment);
-            this.toggleStyles(wrapper);
-            return true;
-        }
-        return false;
-    };
-    ApplyStyle.prototype.elementHasSameStyle = function (elm, rules) {
-        return Boolean(checker_1.isPlainObject(rules) &&
-            !dom_1.Dom.isTag(elm, 'font') &&
-            dom_1.Dom.isHTMLElement(elm, this.jodit.ew) &&
-            helpers_1.each(rules, function (property, checkValue) {
-                var value = helpers_1.css(elm, property, undefined, true);
-                return (!checker_1.isVoid(value) &&
-                    value !== '' &&
-                    !checker_1.isVoid(checkValue) &&
-                    helpers_1.normalizeCssValue(property, checkValue)
-                        .toString()
-                        .toLowerCase() === value.toString().toLowerCase());
-            }));
-    };
-    ApplyStyle.prototype.isSuitableElement = function (elm, strict) {
-        if (strict === void 0) { strict = true; }
-        if (!elm) {
-            return false;
-        }
-        var _a = this.style, element = _a.element, elementIsDefault = _a.elementIsDefault, options = _a.options;
-        var elmHasSameStyle = this.elementHasSameStyle(elm, options.style);
-        var elmIsSame = elm.nodeName.toLowerCase() === element;
-        return (((!elementIsDefault || !strict) && elmIsSame) ||
-            (elmHasSameStyle && this.isNormalNode(elm)));
-    };
-    ApplyStyle.prototype.isNormalNode = function (elm) {
-        return Boolean(elm != null &&
-            !dom_1.Dom.isEmptyTextNode(elm) &&
-            !this.jodit.s.isMarker(elm));
-    };
-    ApplyStyle.prototype.toggleStyles = function (elm) {
-        var _this = this;
-        var style = this.style.options.style;
-        if (style && elm.nodeName.toLowerCase() === this.style.defaultTag) {
-            Object.keys(style).forEach(function (rule) {
-                if (_this.mode === mode.UNWRAP ||
-                    helpers_1.css(elm, rule) ===
-                        helpers_1.normalizeCssValue(rule, style[rule])) {
-                    helpers_1.css(elm, rule, '');
-                    if (_this.mode === undefined) {
-                        _this.mode = mode.UNWRAP;
-                    }
-                }
-                else {
-                    helpers_1.css(elm, rule, style[rule]);
-                    if (_this.mode === undefined) {
-                        _this.mode = mode.WRAP;
-                    }
-                }
-            });
-        }
-        var isBlock = dom_1.Dom.isBlock(elm, this.jodit.ew);
-        var isSuitableInline = !isBlock &&
-            (!helpers_1.attr(elm, 'style') ||
-                elm.nodeName.toLowerCase() !== this.style.defaultTag);
-        var isSuitableBlock = !isSuitableInline &&
-            isBlock &&
-            elm.nodeName.toLowerCase() === this.style.element;
-        if (isSuitableInline || isSuitableBlock) {
-            dom_1.Dom.unwrap(elm);
-            if (this.mode === undefined) {
-                this.mode = mode.UNWRAP;
-            }
-        }
-    };
-    ApplyStyle.prototype.unwrapChildren = function (font) {
-        var _this = this;
-        var needUnwrap = [];
-        var firstElementSuit;
-        if (font.firstChild) {
-            dom_1.Dom.find(font.firstChild, function (elm) {
-                if (elm && _this.isSuitableElement(elm)) {
-                    if (firstElementSuit === undefined) {
-                        firstElementSuit = true;
-                    }
-                    needUnwrap.push(elm);
-                }
-                else {
-                    if (firstElementSuit === undefined) {
-                        firstElementSuit = false;
-                    }
-                }
-                return false;
-            }, font, true);
-        }
-        needUnwrap.forEach(dom_1.Dom.unwrap);
-        return Boolean(firstElementSuit);
-    };
-    ApplyStyle.prototype.wrapUnwrappedText = function (elm) {
-        var _a = this.jodit.selection, area = _a.area, win = _a.win;
-        var edge = function (n, key) {
-            if (key === void 0) { key = 'previousSibling'; }
-            var edgeNode = n, node = n;
-            while (node) {
-                edgeNode = node;
-                if (node[key]) {
-                    node = node[key];
-                }
-                else {
-                    node =
-                        node.parentNode &&
-                            !dom_1.Dom.isBlock(node.parentNode, win) &&
-                            node.parentNode !== area
-                            ? node.parentNode
-                            : null;
-                }
-                if (dom_1.Dom.isBlock(node, win)) {
-                    break;
-                }
-            }
-            return edgeNode;
-        };
-        var start = edge(elm), end = edge(elm, 'nextSibling');
-        var range = this.jodit.s.createRange();
-        range.setStartBefore(start);
-        range.setEndAfter(end);
-        var fragment = range.extractContents();
-        var wrapper = this.jodit.createInside.element(this.style.element);
-        wrapper.appendChild(fragment);
-        range.insertNode(wrapper);
-        if (this.style.elementIsBlock) {
-            this.postProcessListElement(wrapper);
-            if (dom_1.Dom.isEmpty(wrapper) &&
-                !dom_1.Dom.isTag(wrapper.firstElementChild, 'br')) {
-                wrapper.appendChild(this.jodit.createInside.element('br'));
-            }
-        }
-        return wrapper;
-    };
-    ApplyStyle.prototype.postProcessListElement = function (wrapper) {
-        if (/^(OL|UL)$/i.test(this.style.element) &&
-            !dom_1.Dom.isTag(wrapper.firstElementChild, 'li')) {
-            var ci = this.jodit.createInside;
-            var li = dom_1.Dom.replace(wrapper, 'li', ci), ul = dom_1.Dom.wrap(li, this.style.element, ci);
-            if (ul) {
-                wrapper = ul;
-            }
-        }
-    };
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], ApplyStyle.prototype, "applyToElement", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], ApplyStyle.prototype, "isSuitableElement", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], ApplyStyle.prototype, "isNormalNode", null);
-    return ApplyStyle;
-}());
-exports.ApplyStyle = ApplyStyle;
+    }
+    var newWrapper = dom_1.Dom.replace(wrapper, style.element, ci, true);
+    (0, helpers_1.attr)(newWrapper, 'size', null);
+    if (style.elementIsBlock) {
+        (0, api_1.postProcessListElement)(style, newWrapper, ci);
+    }
+    if (style.options.style && style.elementIsDefault) {
+        (0, helpers_1.css)(newWrapper, style.options.style);
+    }
+    if (style.options.className) {
+        newWrapper.classList.toggle(style.options.className);
+    }
+    return wrap;
+}
 
 
 /***/ }),
 /* 207 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(7);
+(0, tslib_1.__exportStar)(__webpack_require__(208), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(213), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(214), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(215), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(216), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(217), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(218), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(219), exports);
+
+
+/***/ }),
+/* 208 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getSuitParent = void 0;
+var dom_1 = __webpack_require__(32);
+var is_normal_node_1 = __webpack_require__(209);
+var is_suit_element_1 = __webpack_require__(211);
+function getSuitParent(style, node, root) {
+    var parentNode = node.parentNode;
+    if (parentNode &&
+        !dom_1.Dom.next(node, is_normal_node_1.isNormalNode, parentNode) &&
+        !dom_1.Dom.prev(node, is_normal_node_1.isNormalNode, parentNode) &&
+        (0, is_suit_element_1.isSuitElement)(style, parentNode, false) &&
+        parentNode !== root &&
+        (!dom_1.Dom.isBlock(parentNode) || style.elementIsBlock)) {
+        return parentNode;
+    }
+    return null;
+}
+exports.getSuitParent = getSuitParent;
+
+
+/***/ }),
+/* 209 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isNormalNode = void 0;
+var dom_1 = __webpack_require__(32);
+var select_1 = __webpack_require__(210);
+function isNormalNode(elm) {
+    return Boolean(elm && !dom_1.Dom.isEmptyTextNode(elm) && !select_1.Select.isMarker(elm));
+}
+exports.isNormalNode = isNormalNode;
+
+
+/***/ }),
+/* 210 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -15375,61 +15283,12 @@ var consts = __webpack_require__(9);
 var constants_1 = __webpack_require__(9);
 var dom_1 = __webpack_require__(32);
 var helpers_1 = __webpack_require__(19);
-var style_1 = __webpack_require__(205);
+var commit_style_1 = __webpack_require__(205);
 var decorators_1 = __webpack_require__(99);
 var Select = (function () {
     function Select(jodit) {
         var _this = this;
         this.jodit = jodit;
-        this.isMarker = function (elm) {
-            return dom_1.Dom.isNode(elm, _this.win) &&
-                dom_1.Dom.isTag(elm, 'span') &&
-                elm.hasAttribute('data-' + consts.MARKER_CLASS);
-        };
-        this.eachSelection = function (callback) {
-            var sel = _this.sel;
-            if (sel && sel.rangeCount) {
-                var range = sel.getRangeAt(0);
-                var nodes_1 = [], startOffset = range.startOffset, length_1 = _this.area.childNodes.length, elementOffset = startOffset < length_1 ? startOffset : length_1 - 1, start = range.startContainer === _this.area
-                    ? _this.area.childNodes[elementOffset]
-                    : range.startContainer, end_1 = range.endContainer === _this.area
-                    ? _this.area.childNodes[range.endOffset - 1]
-                    : range.endContainer;
-                dom_1.Dom.find(start, function (node) {
-                    if (node &&
-                        node !== _this.area &&
-                        !dom_1.Dom.isEmptyTextNode(node) &&
-                        !_this.isMarker(node)) {
-                        nodes_1.push(node);
-                    }
-                    return (node === end_1 ||
-                        (node && node.contains && node.contains(end_1)));
-                }, _this.area, true, 'nextSibling', false);
-                var forEvery_1 = function (current) {
-                    if (!dom_1.Dom.isOrContains(_this.j.editor, current, true)) {
-                        return;
-                    }
-                    if (current.nodeName.match(/^(UL|OL)$/)) {
-                        return helpers_1.toArray(current.childNodes).forEach(forEvery_1);
-                    }
-                    if (dom_1.Dom.isTag(current, 'li')) {
-                        if (current.firstChild) {
-                            current = current.firstChild;
-                        }
-                        else {
-                            var currentB = _this.j.createInside.text(constants_1.INVISIBLE_SPACE);
-                            current.appendChild(currentB);
-                            current = currentB;
-                        }
-                    }
-                    callback(current);
-                };
-                if (nodes_1.length === 0 && dom_1.Dom.isEmptyTextNode(start)) {
-                    nodes_1.push(start);
-                }
-                nodes_1.forEach(forEvery_1);
-            }
-        };
         jodit.e.on('removeMarkers', function () {
             _this.removeMarkers();
         });
@@ -15442,8 +15301,8 @@ var Select = (function () {
         configurable: true
     });
     Select.prototype.errorNode = function (node) {
-        if (!dom_1.Dom.isNode(node, this.win)) {
-            throw helpers_1.error('Parameter node must be instance of Node');
+        if (!dom_1.Dom.isNode(node)) {
+            throw (0, helpers_1.error)('Parameter node must be instance of Node');
         }
     };
     Object.defineProperty(Select.prototype, "area", {
@@ -15510,7 +15369,7 @@ var Select = (function () {
     };
     Select.prototype.removeNode = function (node) {
         if (!dom_1.Dom.isOrContains(this.j.editor, node, true)) {
-            throw helpers_1.error("Selection.removeNode can remove only editor's children");
+            throw (0, helpers_1.error)("Selection.removeNode can remove only editor's children");
         }
         dom_1.Dom.safeRemove(node);
         this.j.e.fire('afterRemoveNode', node);
@@ -15540,15 +15399,27 @@ var Select = (function () {
         catch (_a) { }
         return false;
     };
+    Select.isMarker = function (elm) {
+        return (dom_1.Dom.isNode(elm) &&
+            dom_1.Dom.isTag(elm, 'span') &&
+            elm.hasAttribute('data-' + consts.MARKER_CLASS));
+    };
     Object.defineProperty(Select.prototype, "hasMarkers", {
         get: function () {
-            return Boolean(helpers_1.$$('span[data-' + consts.MARKER_CLASS + ']', this.area).length);
+            return Boolean(this.markers.length);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Select.prototype, "markers", {
+        get: function () {
+            return (0, helpers_1.$$)('span[data-' + consts.MARKER_CLASS + ']', this.area);
         },
         enumerable: false,
         configurable: true
     });
     Select.prototype.removeMarkers = function () {
-        helpers_1.$$('span[data-' + consts.MARKER_CLASS + ']', this.area).forEach(dom_1.Dom.safeRemove);
+        this.markers.forEach(dom_1.Dom.safeRemove);
     };
     Select.prototype.marker = function (atStart, range) {
         if (atStart === void 0) { atStart = false; }
@@ -15819,7 +15690,7 @@ var Select = (function () {
             this.focus();
             this.restore();
         }
-        if (!dom_1.Dom.isNode(html, this.win)) {
+        if (!dom_1.Dom.isNode(html)) {
             node.innerHTML = html.toString();
         }
         else {
@@ -15851,8 +15722,8 @@ var Select = (function () {
     Select.prototype.insertImage = function (url, styles, defaultWidth) {
         if (styles === void 0) { styles = null; }
         if (defaultWidth === void 0) { defaultWidth = null; }
-        var image = helpers_1.isString(url) ? this.j.createInside.element('img') : url;
-        if (helpers_1.isString(url)) {
+        var image = (0, helpers_1.isString)(url) ? this.j.createInside.element('img') : url;
+        if ((0, helpers_1.isString)(url)) {
             image.setAttribute('src', url);
         }
         if (defaultWidth != null) {
@@ -15863,10 +15734,10 @@ var Select = (function () {
                 String(dw).indexOf('%') < 0) {
                 dw += 'px';
             }
-            helpers_1.css(image, 'width', dw);
+            (0, helpers_1.css)(image, 'width', dw);
         }
         if (styles && typeof styles === 'object') {
-            helpers_1.css(image, styles);
+            (0, helpers_1.css)(image, styles);
         }
         var onload = function () {
             if (image.naturalHeight < image.offsetHeight ||
@@ -15883,6 +15754,51 @@ var Select = (function () {
         this.insertNode(image);
         this.j.e.fire('afterInsertImage', image);
     };
+    Select.prototype.eachSelection = function (callback) {
+        var _this = this;
+        var sel = this.sel;
+        if (sel && sel.rangeCount) {
+            var range = sel.getRangeAt(0);
+            var nodes_1 = [], startOffset = range.startOffset, length_1 = this.area.childNodes.length, elementOffset = startOffset < length_1 ? startOffset : length_1 - 1, start = range.startContainer === this.area
+                ? this.area.childNodes[elementOffset]
+                : range.startContainer, end_1 = range.endContainer === this.area
+                ? this.area.childNodes[range.endOffset - 1]
+                : range.endContainer;
+            dom_1.Dom.find(start, function (node) {
+                if (node &&
+                    node !== _this.area &&
+                    !dom_1.Dom.isEmptyTextNode(node) &&
+                    !Select.isMarker(node)) {
+                    nodes_1.push(node);
+                }
+                return (node === end_1 ||
+                    (node && node.contains && node.contains(end_1)));
+            }, this.area, true, 'nextSibling', false);
+            var forEvery_1 = function (current) {
+                if (!dom_1.Dom.isOrContains(_this.j.editor, current, true)) {
+                    return;
+                }
+                if (current.nodeName.match(/^(UL|OL)$/)) {
+                    return (0, helpers_1.toArray)(current.childNodes).forEach(forEvery_1);
+                }
+                if (dom_1.Dom.isTag(current, 'li')) {
+                    if (current.firstChild) {
+                        current = current.firstChild;
+                    }
+                    else {
+                        var currentB = _this.j.createInside.text(constants_1.INVISIBLE_SPACE);
+                        current.appendChild(currentB);
+                        current = currentB;
+                    }
+                }
+                callback(current);
+            };
+            if (nodes_1.length === 0 && dom_1.Dom.isEmptyTextNode(start)) {
+                nodes_1.push(start);
+            }
+            nodes_1.forEach(forEvery_1);
+        }
+    };
     Select.prototype.cursorInTheEdge = function (start, parentBlock) {
         var _a, _b;
         var end = !start, range = (_a = this.sel) === null || _a === void 0 ? void 0 : _a.getRangeAt(0), current = this.current(false);
@@ -15898,17 +15814,17 @@ var Select = (function () {
         };
         if (dom_1.Dom.isText(container)) {
             var text = ((_b = container.nodeValue) === null || _b === void 0 ? void 0 : _b.length) ? container.nodeValue : '';
-            if (end && text.replace(constants_1.INVISIBLE_SPACE_REG_EXP_END(), '').length > offset) {
+            if (end && text.replace((0, constants_1.INVISIBLE_SPACE_REG_EXP_END)(), '').length > offset) {
                 return false;
             }
-            var inv = constants_1.INVISIBLE_SPACE_REG_EXP_START().exec(text);
+            var inv = (0, constants_1.INVISIBLE_SPACE_REG_EXP_START)().exec(text);
             if (start &&
                 ((inv && inv[0].length < offset) || (!inv && offset > 0))) {
                 return false;
             }
         }
         else {
-            var children = helpers_1.toArray(container.childNodes);
+            var children = (0, helpers_1.toArray)(container.childNodes);
             if (end) {
                 if (children.slice(offset).some(check)) {
                     return false;
@@ -15920,7 +15836,7 @@ var Select = (function () {
                 }
             }
         }
-        return !helpers_1.call(start ? dom_1.Dom.prev : dom_1.Dom.next, current, check, parentBlock);
+        return !(0, helpers_1.call)(start ? dom_1.Dom.prev : dom_1.Dom.next, current, check, parentBlock);
     };
     Select.prototype.cursorOnTheLeft = function (parentBlock) {
         return this.cursorInTheEdge(true, parentBlock);
@@ -15941,7 +15857,7 @@ var Select = (function () {
         if (!dom_1.Dom.up(node, function (elm) {
             return elm === _this.area || (elm && elm.parentNode === _this.area);
         }, this.area)) {
-            throw helpers_1.error('Node element must be in editor');
+            throw (0, helpers_1.error)('Node element must be in editor');
         }
         var range = this.createRange();
         var fakeNode = null;
@@ -15971,7 +15887,7 @@ var Select = (function () {
         if (!dom_1.Dom.up(node, function (elm) {
             return elm === _this.area || (elm && elm.parentNode === _this.area);
         }, this.area)) {
-            throw helpers_1.error('Node element must be in editor');
+            throw (0, helpers_1.error)('Node element must be in editor');
         }
         var range = this.createRange();
         var start = node, last = node;
@@ -16016,7 +15932,7 @@ var Select = (function () {
         if (!dom_1.Dom.up(node, function (elm) {
             return elm === _this.area || (elm && elm.parentNode === _this.area);
         }, this.area)) {
-            throw helpers_1.error('Node element must be in editor');
+            throw (0, helpers_1.error)('Node element must be in editor');
         }
         var range = this.createRange();
         range[inward ? 'selectNodeContents' : 'selectNode'](node);
@@ -16037,58 +15953,134 @@ var Select = (function () {
         enumerable: false,
         configurable: true
     });
-    Select.prototype.wrapInTag = function (tagOrCallback) {
-        var _this = this;
-        helpers_1.$$('*[style*=font-size]', this.area).forEach(function (elm) {
-            elm.style &&
-                elm.style.fontSize &&
-                elm.setAttribute('data-font-size', elm.style.fontSize.toString());
-        });
-        if (!this.isCollapsed()) {
-            this.j.nativeExecCommand('fontsize', false, '7');
-        }
-        else {
-            var font = this.j.createInside.element('font');
-            helpers_1.attr(font, 'size', 7);
-            this.insertNode(font, false, false);
-        }
-        helpers_1.$$('*[data-font-size]', this.area).forEach(function (elm) {
-            var fontSize = helpers_1.attr(elm, 'data-font-size');
-            if (elm.style && fontSize) {
-                elm.style.fontSize = fontSize;
-                elm.removeAttribute('data-font-size');
-            }
-        });
-        var result = [];
-        helpers_1.$$('font[size="7"]', this.area).forEach(function (font) {
-            try {
-                if (font.firstChild &&
-                    font.firstChild === font.lastChild &&
-                    _this.isMarker(font.firstChild)) {
-                    return;
-                }
-                if (helpers_1.isFunction(tagOrCallback)) {
-                    tagOrCallback(font);
-                }
-                else {
-                    result.push(dom_1.Dom.replace(font, tagOrCallback, _this.j.createInside));
-                }
-            }
-            finally {
-                var pn = font.parentNode;
-                if (pn) {
+    Select.prototype.wrapInTagGen = function () {
+        var font, _a, marker, font, elms, elms_1, elms_1_1, font, firstChild, lastChild, e_1_1;
+        var e_1, _b;
+        return (0, tslib_1.__generator)(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    if (!this.isCollapsed()) return [3, 2];
+                    font = this.jodit.createInside.element('font', constants_1.INVISIBLE_SPACE);
+                    this.insertNode(font, false, false);
+                    _a = (0, tslib_1.__read)(this.markers, 1), marker = _a[0];
+                    if (marker) {
+                        font.appendChild(marker);
+                    }
+                    else {
+                        this.setCursorIn(font);
+                        this.save();
+                    }
+                    return [4, font];
+                case 1:
+                    _c.sent();
                     dom_1.Dom.unwrap(font);
-                    if (dom_1.Dom.isEmpty(pn)) {
-                        dom_1.Dom.unwrap(pn);
+                    return [2];
+                case 2:
+                    (0, helpers_1.$$)('*[style*=font-size]', this.area).forEach(function (elm) {
+                        return (0, helpers_1.attr)(elm, 'data-font-size', elm.style.fontSize.toString());
+                    });
+                    if (!this.isCollapsed()) {
+                        this.j.nativeExecCommand('fontsize', false, '7');
+                    }
+                    else {
+                        font = this.j.createInside.element('font');
+                        (0, helpers_1.attr)(font, 'size', 7);
+                        this.insertNode(font, false, false);
+                    }
+                    (0, helpers_1.$$)('*[data-font-size]', this.area).forEach(function (elm) {
+                        var fontSize = (0, helpers_1.attr)(elm, 'data-font-size');
+                        if (fontSize) {
+                            elm.style.fontSize = fontSize;
+                            (0, helpers_1.attr)(elm, 'data-font-size', null);
+                        }
+                    });
+                    elms = (0, helpers_1.$$)('font[size="7"]', this.area);
+                    _c.label = 3;
+                case 3:
+                    _c.trys.push([3, 8, 9, 10]);
+                    elms_1 = (0, tslib_1.__values)(elms), elms_1_1 = elms_1.next();
+                    _c.label = 4;
+                case 4:
+                    if (!!elms_1_1.done) return [3, 7];
+                    font = elms_1_1.value;
+                    firstChild = font.firstChild, lastChild = font.lastChild;
+                    if (firstChild &&
+                        firstChild === lastChild &&
+                        Select.isMarker(firstChild)) {
+                        dom_1.Dom.unwrap(font);
+                        return [3, 6];
+                    }
+                    if (firstChild && Select.isMarker(firstChild)) {
+                        dom_1.Dom.before(font, firstChild);
+                    }
+                    if (lastChild && Select.isMarker(lastChild)) {
+                        dom_1.Dom.after(font, lastChild);
+                    }
+                    return [4, font];
+                case 5:
+                    _c.sent();
+                    dom_1.Dom.unwrap(font);
+                    _c.label = 6;
+                case 6:
+                    elms_1_1 = elms_1.next();
+                    return [3, 4];
+                case 7: return [3, 10];
+                case 8:
+                    e_1_1 = _c.sent();
+                    e_1 = { error: e_1_1 };
+                    return [3, 10];
+                case 9:
+                    try {
+                        if (elms_1_1 && !elms_1_1.done && (_b = elms_1.return)) _b.call(elms_1);
+                    }
+                    finally { if (e_1) throw e_1.error; }
+                    return [7];
+                case 10: return [2];
+            }
+        });
+    };
+    Select.prototype.wrapInTag = function (tagOrCallback) {
+        var e_2, _a;
+        var result = [];
+        try {
+            for (var _b = (0, tslib_1.__values)(this.wrapInTagGen()), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var font = _c.value;
+                try {
+                    if (font.firstChild &&
+                        font.firstChild === font.lastChild &&
+                        Select.isMarker(font.firstChild)) {
+                        continue;
+                    }
+                    if ((0, helpers_1.isFunction)(tagOrCallback)) {
+                        tagOrCallback(font);
+                    }
+                    else {
+                        result.push(dom_1.Dom.replace(font, tagOrCallback, this.j.createInside));
+                    }
+                }
+                finally {
+                    var pn = font.parentNode;
+                    if (pn) {
+                        dom_1.Dom.unwrap(font);
+                        if (dom_1.Dom.isEmpty(pn)) {
+                            dom_1.Dom.unwrap(pn);
+                        }
                     }
                 }
             }
-        });
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_2) throw e_2.error; }
+        }
         return result;
     };
     Select.prototype.applyStyle = function (style, options) {
         if (options === void 0) { options = {}; }
-        var styleElm = new style_1.Style({
+        var styleElm = new commit_style_1.CommitStyle({
             style: style,
             element: options.element,
             className: options.className,
@@ -16168,16 +16160,16 @@ var Select = (function () {
         }
         return currentBox.previousElementSibling;
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], Select.prototype, "focus", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], Select.prototype, "setCursorAfter", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], Select.prototype, "setCursorBefore", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], Select.prototype, "setCursorIn", null);
     return Select;
@@ -16186,7 +16178,351 @@ exports.Select = Select;
 
 
 /***/ }),
-/* 208 */
+/* 211 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isSuitElement = void 0;
+var is_normal_node_1 = __webpack_require__(209);
+var element_has_same_style_1 = __webpack_require__(212);
+var dom_1 = __webpack_require__(32);
+function isSuitElement(commitStyle, elm, strict) {
+    if (!elm) {
+        return false;
+    }
+    var element = commitStyle.element, elementIsDefault = commitStyle.elementIsDefault, options = commitStyle.options;
+    var elmHasSameStyle = Boolean(options.style && (0, element_has_same_style_1.elementHasSameStyle)(elm, options.style));
+    var elmIsSame = elm.nodeName.toLowerCase() === element;
+    if (((!elementIsDefault || !strict) && elmIsSame) ||
+        (elmHasSameStyle && (0, is_normal_node_1.isNormalNode)(elm))) {
+        return true;
+    }
+    if (!elmIsSame && !strict && elementIsDefault && dom_1.Dom.isInlineBlock(elm)) {
+        return true;
+    }
+    return false;
+}
+exports.isSuitElement = isSuitElement;
+
+
+/***/ }),
+/* 212 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.elementHasSameStyle = void 0;
+var helpers_1 = __webpack_require__(19);
+var dom_1 = __webpack_require__(32);
+function elementHasSameStyle(elm, rules) {
+    return Boolean(!dom_1.Dom.isTag(elm, 'font') &&
+        dom_1.Dom.isHTMLElement(elm) &&
+        Object.keys(rules).every(function (property) {
+            var value = (0, helpers_1.css)(elm, property, true);
+            return (!(0, helpers_1.isVoid)(value) &&
+                value !== '' &&
+                !(0, helpers_1.isVoid)(rules[property]) &&
+                (0, helpers_1.normalizeCssValue)(property, rules[property])
+                    .toString()
+                    .toLowerCase() === value.toString().toLowerCase());
+        }));
+}
+exports.elementHasSameStyle = elementHasSameStyle;
+
+
+/***/ }),
+/* 213 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getSuitChild = void 0;
+var dom_1 = __webpack_require__(32);
+var is_normal_node_1 = __webpack_require__(209);
+var is_suit_element_1 = __webpack_require__(211);
+function getSuitChild(style, font) {
+    var child = font.firstChild;
+    while (child && !(0, is_normal_node_1.isNormalNode)(child)) {
+        child = child.nextSibling;
+        if (!child) {
+            return null;
+        }
+    }
+    if (child &&
+        !dom_1.Dom.next(child, is_normal_node_1.isNormalNode, font) &&
+        (0, is_suit_element_1.isSuitElement)(style, child, false)) {
+        return child;
+    }
+    return null;
+}
+exports.getSuitChild = getSuitChild;
+
+
+/***/ }),
+/* 214 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkSpecialElements = void 0;
+var dom_1 = __webpack_require__(32);
+function checkSpecialElements(font, root) {
+    return Boolean(dom_1.Dom.closest(font, ['style', 'script'], root));
+}
+exports.checkSpecialElements = checkSpecialElements;
+
+
+/***/ }),
+/* 215 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getClosestWrapper = void 0;
+var dom_1 = __webpack_require__(32);
+var is_suit_element_1 = __webpack_require__(211);
+var helpers_1 = __webpack_require__(19);
+var select_1 = __webpack_require__(210);
+function getClosestWrapper(style, font, root, getRange) {
+    var wrapper = dom_1.Dom.closest(font, function (node) { return (0, is_suit_element_1.isSuitElement)(style, node, true); }, root);
+    if (wrapper) {
+        if (style.elementIsBlock) {
+            return wrapper;
+        }
+        var range = getRange();
+        var leftEdge = select_1.Select.isMarker(font.previousSibling)
+            ? font.previousSibling
+            : font;
+        range.setStartBefore(wrapper);
+        range.setEndBefore(leftEdge);
+        extractAndMove(wrapper, range, true);
+        var rightEdge = select_1.Select.isMarker(font.nextSibling)
+            ? font.nextSibling
+            : font;
+        range.setStartAfter(rightEdge);
+        range.setEndAfter(wrapper);
+        extractAndMove(wrapper, range, false);
+        return wrapper;
+    }
+    return null;
+}
+exports.getClosestWrapper = getClosestWrapper;
+function extractAndMove(wrapper, range, left) {
+    var fragment = range.extractContents();
+    if ((!fragment.textContent || !(0, helpers_1.trim)(fragment.textContent).length) &&
+        fragment.firstChild) {
+        dom_1.Dom.unwrap(fragment.firstChild);
+    }
+    if (wrapper.parentNode) {
+        (0, helpers_1.call)(left ? dom_1.Dom.before : dom_1.Dom.after, wrapper, fragment);
+    }
+}
+
+
+/***/ }),
+/* 216 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.unwrapChildren = void 0;
+var dom_1 = __webpack_require__(32);
+var is_suit_element_1 = __webpack_require__(211);
+function unwrapChildren(style, font) {
+    var needUnwrap = [];
+    var firstElementSuit;
+    if (font.firstChild) {
+        dom_1.Dom.find(font.firstChild, function (elm) {
+            if (elm && (0, is_suit_element_1.isSuitElement)(style, elm, true)) {
+                if (firstElementSuit === undefined) {
+                    firstElementSuit = true;
+                }
+                needUnwrap.push(elm);
+            }
+            else {
+                if (firstElementSuit === undefined) {
+                    firstElementSuit = false;
+                }
+            }
+            return false;
+        }, font, true);
+    }
+    needUnwrap.forEach(dom_1.Dom.unwrap);
+    return Boolean(firstElementSuit);
+}
+exports.unwrapChildren = unwrapChildren;
+
+
+/***/ }),
+/* 217 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.wrapUnwrappedText = void 0;
+var dom_1 = __webpack_require__(32);
+var post_process_list_element_1 = __webpack_require__(218);
+function wrapUnwrappedText(style, elm, root, ci, getRange) {
+    var edge = function (n, key) {
+        if (key === void 0) { key = 'previousSibling'; }
+        var edgeNode = n, node = n;
+        while (node) {
+            edgeNode = node;
+            if (node[key]) {
+                node = node[key];
+            }
+            else {
+                node =
+                    node.parentNode &&
+                        !dom_1.Dom.isBlock(node.parentNode) &&
+                        node.parentNode !== root
+                        ? node.parentNode
+                        : null;
+            }
+            if (dom_1.Dom.isBlock(node)) {
+                break;
+            }
+        }
+        return edgeNode;
+    };
+    var start = edge(elm), end = edge(elm, 'nextSibling');
+    var range = getRange();
+    range.setStartBefore(start);
+    range.setEndAfter(end);
+    var fragment = range.extractContents();
+    var wrapper = ci.element(style.element);
+    wrapper.appendChild(fragment);
+    range.insertNode(wrapper);
+    if (style.elementIsBlock) {
+        wrapper = (0, post_process_list_element_1.postProcessListElement)(style, wrapper, ci);
+        if (dom_1.Dom.isEmpty(wrapper) &&
+            !dom_1.Dom.isTag(wrapper.firstElementChild, 'br')) {
+            wrapper.appendChild(ci.element('br'));
+        }
+    }
+    return wrapper;
+}
+exports.wrapUnwrappedText = wrapUnwrappedText;
+
+
+/***/ }),
+/* 218 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.postProcessListElement = void 0;
+var dom_1 = __webpack_require__(32);
+function postProcessListElement(style, wrapper, ci) {
+    if (/^(OL|UL)$/i.test(style.element) &&
+        !dom_1.Dom.isTag(wrapper.firstElementChild, 'li')) {
+        var li = dom_1.Dom.replace(wrapper, 'li', ci), ul = dom_1.Dom.wrap(li, style.element, ci);
+        if (ul) {
+            return ul;
+        }
+    }
+    return wrapper;
+}
+exports.postProcessListElement = postProcessListElement;
+
+
+/***/ }),
+/* 219 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.toggleStyles = void 0;
+var helpers_1 = __webpack_require__(19);
+var dom_1 = __webpack_require__(32);
+function toggleStyles(style, elm, wrap) {
+    var styles = style.options.style, defaultTag = style.defaultTag, element = style.element;
+    var tag = elm.nodeName.toLowerCase(), isStyleCommit = style.elementIsDefault && dom_1.Dom.isInlineBlock(elm);
+    if (styles && (tag === defaultTag || isStyleCommit)) {
+        Object.keys(styles).forEach(function (rule) {
+            if (wrap === false ||
+                (0, helpers_1.css)(elm, rule) ===
+                    (0, helpers_1.normalizeCssValue)(rule, styles[rule])) {
+                (0, helpers_1.css)(elm, rule, '');
+                if (wrap == null) {
+                    wrap = false;
+                }
+            }
+            else {
+                (0, helpers_1.css)(elm, rule, styles[rule]);
+                if (wrap == null) {
+                    wrap = true;
+                }
+            }
+        });
+    }
+    var isBlock = dom_1.Dom.isBlock(elm);
+    var isSuitableInline = !isBlock &&
+        (!(0, helpers_1.attr)(elm, 'style') || (tag !== defaultTag && tag === element));
+    var isSameBlockElement = !isSuitableInline && isBlock && tag === element;
+    if (isSuitableInline || isSameBlockElement) {
+        dom_1.Dom.unwrap(elm);
+        if (wrap == null) {
+            wrap = false;
+        }
+    }
+    return wrap;
+}
+exports.toggleStyles = toggleStyles;
+
+
+/***/ }),
+/* 220 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -16199,11 +16535,11 @@ exports.Select = Select;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.StatusBar = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(209);
+__webpack_require__(221);
 var component_1 = __webpack_require__(27);
 var dom_1 = __webpack_require__(32);
 var StatusBar = (function (_super) {
-    tslib_1.__extends(StatusBar, _super);
+    (0, tslib_1.__extends)(StatusBar, _super);
     function StatusBar(jodit, target) {
         var _this = _super.call(this, jodit) || this;
         _this.target = target;
@@ -16271,7 +16607,7 @@ exports.StatusBar = StatusBar;
 
 
 /***/ }),
-/* 209 */
+/* 221 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -16280,7 +16616,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 210 */
+/* 222 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -16300,7 +16636,7 @@ var component_1 = __webpack_require__(27);
 var global_1 = __webpack_require__(30);
 var decorators_1 = __webpack_require__(99);
 var Table = (function (_super) {
-    tslib_1.__extends(Table, _super);
+    (0, tslib_1.__extends)(Table, _super);
     function Table() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.selected = new Set();
@@ -16310,10 +16646,10 @@ var Table = (function (_super) {
         return 'Table';
     };
     Table.prototype.recalculateStyles = function () {
-        var style = global_1.getContainer(this.j, Table, 'style', true);
+        var style = (0, global_1.getContainer)(this.j, Table, 'style', true);
         var selectors = [];
         this.selected.forEach(function (td) {
-            var selector = helpers_1.cssPath(td);
+            var selector = (0, helpers_1.cssPath)(td);
             selector && selectors.push(selector);
         });
         style.innerHTML = selectors.length
@@ -16346,11 +16682,11 @@ var Table = (function (_super) {
         }
     };
     Table.prototype.getAllSelectedCells = function () {
-        return helpers_1.toArray(this.selected);
+        return (0, helpers_1.toArray)(this.selected);
     };
     Table.getSelectedCellsByTable = function (table) {
         var cells = Table.selectedByTable.get(table);
-        return cells ? helpers_1.toArray(cells) : [];
+        return cells ? (0, helpers_1.toArray)(cells) : [];
     };
     Table.prototype.destruct = function () {
         this.selected.clear();
@@ -16367,7 +16703,7 @@ var Table = (function (_super) {
     };
     Table.formalMatrix = function (table, callback) {
         var matrix = [[]];
-        var rows = helpers_1.toArray(table.rows);
+        var rows = (0, helpers_1.toArray)(table.rows);
         var setCell = function (cell, i) {
             if (matrix[i] === undefined) {
                 matrix[i] = [];
@@ -16391,7 +16727,7 @@ var Table = (function (_super) {
             }
         };
         for (var i = 0; i < rows.length; i += 1) {
-            var cells = helpers_1.toArray(rows[i].cells);
+            var cells = (0, helpers_1.toArray)(rows[i].cells);
             for (var j = 0; j < cells.length; j += 1) {
                 if (setCell(cells[j], i) === false) {
                     return matrix;
@@ -16429,14 +16765,14 @@ var Table = (function (_super) {
         }
         else {
             row = line.cloneNode(true);
-            helpers_1.$$('td,th', line).forEach(function (cell) {
-                var rowspan = helpers_1.attr(cell, 'rowspan');
+            (0, helpers_1.$$)('td,th', line).forEach(function (cell) {
+                var rowspan = (0, helpers_1.attr)(cell, 'rowspan');
                 if (rowspan && parseInt(rowspan, 10) > 1) {
                     var newRowSpan = parseInt(rowspan, 10) - 1;
-                    helpers_1.attr(cell, 'rowspan', newRowSpan > 1 ? newRowSpan : null);
+                    (0, helpers_1.attr)(cell, 'rowspan', newRowSpan > 1 ? newRowSpan : null);
                 }
             });
-            helpers_1.$$('td,th', row).forEach(function (cell) {
+            (0, helpers_1.$$)('td,th', row).forEach(function (cell) {
                 cell.innerHTML = '';
             });
         }
@@ -16448,14 +16784,14 @@ var Table = (function (_super) {
             line.parentNode && line.parentNode.insertBefore(row, line);
         }
         else {
-            (helpers_1.$$(':scope>tbody', table)[0] || table).appendChild(row);
+            ((0, helpers_1.$$)(':scope>tbody', table)[0] || table).appendChild(row);
         }
     };
     Table.removeRow = function (table, rowIndex) {
         var box = Table.formalMatrix(table);
         var dec;
         var row = table.rows[rowIndex];
-        helpers_1.each(box[rowIndex], function (j, cell) {
+        (0, helpers_1.each)(box[rowIndex], function (j, cell) {
             dec = false;
             if (rowIndex - 1 >= 0 && box[rowIndex - 1][j] === cell) {
                 dec = true;
@@ -16483,7 +16819,7 @@ var Table = (function (_super) {
             if (dec &&
                 (cell.parentNode === row || cell !== box[rowIndex][j - 1])) {
                 var rowSpan = cell.rowSpan;
-                helpers_1.attr(cell, 'rowspan', rowSpan - 1 > 1 ? (rowSpan - 1).toString() : null);
+                (0, helpers_1.attr)(cell, 'rowspan', rowSpan - 1 > 1 ? (rowSpan - 1).toString() : null);
             }
         });
         dom_1.Dom.safeRemove(row);
@@ -16520,14 +16856,14 @@ var Table = (function (_super) {
                 }
             }
             if (!added) {
-                box[i][j].setAttribute('colspan', (parseInt(helpers_1.attr(box[i][j], 'colspan') || '1', 10) + 1).toString());
+                box[i][j].setAttribute('colspan', (parseInt((0, helpers_1.attr)(box[i][j], 'colspan') || '1', 10) + 1).toString());
             }
         }
     };
     Table.removeColumn = function (table, j) {
         var box = Table.formalMatrix(table);
         var dec;
-        helpers_1.each(box, function (i, cells) {
+        (0, helpers_1.each)(box, function (i, cells) {
             var td = cells[j];
             dec = false;
             if (j - 1 >= 0 && box[i][j - 1] === td) {
@@ -16541,7 +16877,7 @@ var Table = (function (_super) {
             }
             if (dec && (i - 1 < 0 || td !== box[i - 1][j])) {
                 var colSpan = td.colSpan;
-                helpers_1.attr(td, 'colspan', colSpan - 1 > 1 ? (colSpan - 1).toString() : null);
+                (0, helpers_1.attr)(td, 'colspan', colSpan - 1 > 1 ? (colSpan - 1).toString() : null);
             }
         });
     };
@@ -16652,7 +16988,7 @@ var Table = (function (_super) {
                     box[i][j].removeAttribute('colspan');
                 }
                 if (box[i][j].hasAttribute('class') &&
-                    !helpers_1.attr(box[i][j], 'class')) {
+                    !(0, helpers_1.attr)(box[i][j], 'class')) {
                     box[i][j].removeAttribute('class');
                 }
             }
@@ -16675,7 +17011,7 @@ var Table = (function (_super) {
                         if (i === bound[0][0] && td.style.width) {
                             w += td.offsetWidth;
                         }
-                        if (helpers_1.trim(cell.innerHTML.replace(/<br(\/)?>/g, '')) !== '') {
+                        if ((0, helpers_1.trim)(cell.innerHTML.replace(/<br(\/)?>/g, '')) !== '') {
                             html.push(cell.innerHTML);
                         }
                         if (cs > 1) {
@@ -16715,7 +17051,7 @@ var Table = (function (_super) {
                 delete first.__i_am_already_was;
                 Table.__unmark(__marked);
                 Table.normalizeTable(table);
-                helpers_1.each(helpers_1.toArray(table.rows), function (index, tr) {
+                (0, helpers_1.each)((0, helpers_1.toArray)(table.rows), function (index, tr) {
                     if (!tr.cells.length) {
                         dom_1.Dom.safeRemove(tr);
                     }
@@ -16825,7 +17161,7 @@ var Table = (function (_super) {
     Table.__unmark = function (marked) {
         marked.forEach(function (cell) {
             if (cell.__marked_value) {
-                helpers_1.each(cell.__marked_value, function (key, value) {
+                (0, helpers_1.each)(cell.__marked_value, function (key, value) {
                     switch (key) {
                         case 'remove':
                             dom_1.Dom.safeRemove(cell);
@@ -16857,8 +17193,8 @@ var Table = (function (_super) {
         });
     };
     Table.selectedByTable = new WeakMap();
-    tslib_1.__decorate([
-        decorators_1.debounce()
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.debounce)()
     ], Table.prototype, "recalculateStyles", null);
     return Table;
 }(component_1.ViewComponent));
@@ -16867,7 +17203,7 @@ var instance = function (j) { return j.getInstance('Table', j.o); };
 
 
 /***/ }),
-/* 211 */
+/* 223 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -16879,12 +17215,12 @@ var instance = function (j) { return j.getInstance('Table', j.o); };
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(177), exports);
-tslib_1.__exportStar(__webpack_require__(179), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(177), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(179), exports);
 
 
 /***/ }),
-/* 212 */
+/* 224 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -16897,7 +17233,7 @@ tslib_1.__exportStar(__webpack_require__(179), exports);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Uploader = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(213);
+__webpack_require__(225);
 var config_1 = __webpack_require__(8);
 var constants_1 = __webpack_require__(9);
 var ajax_1 = __webpack_require__(160);
@@ -16926,7 +17262,7 @@ config_1.Config.prototype.uploader = {
         return resp.success;
     },
     getMessage: function (resp) {
-        return resp.data.messages !== undefined && helpers_1.isArray(resp.data.messages)
+        return resp.data.messages !== undefined && (0, helpers_1.isArray)(resp.data.messages)
             ? resp.data.messages.join(' ')
             : '';
     },
@@ -16938,14 +17274,14 @@ config_1.Config.prototype.uploader = {
     },
     defaultHandlerSuccess: function (resp) {
         var j = this.j || this;
-        if (!helpers_1.isJoditObject(j)) {
+        if (!(0, helpers_1.isJoditObject)(j)) {
             return;
         }
         if (resp.files && resp.files.length) {
             resp.files.forEach(function (filename, index) {
-                var _a = resp.isImages && resp.isImages[index]
+                var _a = (0, tslib_1.__read)(resp.isImages && resp.isImages[index]
                     ? ['img', 'src']
-                    : ['a', 'href'], tagName = _a[0], attr = _a[1];
+                    : ['a', 'href'], 2), tagName = _a[0], attr = _a[1];
                 var elm = j.createInside.element(tagName);
                 elm.setAttribute(attr, resp.baseurl + filename);
                 if (tagName === 'a') {
@@ -16971,13 +17307,13 @@ config_1.Config.prototype.uploader = {
     }
 };
 var Uploader = (function (_super) {
-    tslib_1.__extends(Uploader, _super);
+    (0, tslib_1.__extends)(Uploader, _super);
     function Uploader(editor, options) {
         var _this = _super.call(this, editor) || this;
         _this.path = '';
         _this.source = 'default';
         _this.ajaxInstances = [];
-        _this.options = helpers_1.ConfigProto(options || {}, helpers_1.ConfigProto(config_1.Config.defaultOptions.uploader, helpers_1.isJoditObject(editor) ? editor.o.uploader : {}));
+        _this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(config_1.Config.defaultOptions.uploader, (0, helpers_1.isJoditObject)(editor) ? editor.o.uploader : {}));
         return _this;
     }
     Uploader.prototype.className = function () {
@@ -17009,7 +17345,7 @@ var Uploader = (function (_super) {
             if (data instanceof FD) {
                 return data;
             }
-            if (helpers_1.isString(data)) {
+            if ((0, helpers_1.isString)(data)) {
                 return data;
             }
             var newdata_1 = new FD();
@@ -17050,7 +17386,7 @@ var Uploader = (function (_super) {
                 },
                 method: _this.o.method || 'POST',
                 data: request,
-                url: helpers_1.isFunction(_this.o.url)
+                url: (0, helpers_1.isFunction)(_this.o.url)
                     ? _this.o.url(request)
                     : _this.o.url,
                 headers: _this.o.headers,
@@ -17089,12 +17425,12 @@ var Uploader = (function (_super) {
     Uploader.prototype.sendFiles = function (files, handlerSuccess, handlerError, process) {
         var _this = this;
         if (!files) {
-            return Promise.reject(helpers_1.error('Need files'));
+            return Promise.reject((0, helpers_1.error)('Need files'));
         }
         var uploader = this;
-        var fileList = helpers_1.toArray(files);
+        var fileList = (0, helpers_1.toArray)(files);
         if (!fileList.length) {
-            return Promise.reject(helpers_1.error('Need files'));
+            return Promise.reject((0, helpers_1.error)('Need files'));
         }
         var promises = [];
         if (this.o.insertImageAsBase64URI) {
@@ -17165,7 +17501,7 @@ var Uploader = (function (_super) {
             if (process) {
                 process(form_1);
             }
-            if (uploader.o.data && helpers_1.isPlainObject(uploader.o.data)) {
+            if (uploader.o.data && (0, helpers_1.isPlainObject)(uploader.o.data)) {
                 Object.keys(uploader.o.data).forEach(function (key) {
                     form_1.append(key, uploader.o.data[key]);
                 });
@@ -17182,11 +17518,11 @@ var Uploader = (function (_super) {
                     }
                 }
                 else {
-                    if (helpers_1.isFunction(handlerError ||
+                    if ((0, helpers_1.isFunction)(handlerError ||
                         uploader.o.defaultHandlerError)) {
                         (handlerError ||
                             uploader.options
-                                .defaultHandlerError).call(uploader, helpers_1.error(uploader.o.getMessage.call(uploader, resp)));
+                                .defaultHandlerError).call(uploader, (0, helpers_1.error)(uploader.o.getMessage.call(uploader, resp)));
                         return;
                     }
                 }
@@ -17227,12 +17563,12 @@ var Uploader = (function (_super) {
                             'overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;',
                         contenteditable: true
                     });
-                    global_1.getContainer(_this.j, Uploader).appendChild(div_1);
-                    var selection_1 = helpers_1.isJoditObject(_this.j)
+                    (0, global_1.getContainer)(_this.j, Uploader).appendChild(div_1);
+                    var selection_1 = (0, helpers_1.isJoditObject)(_this.j)
                         ? _this.j.s.save()
                         : null, restore_1 = function () {
                         return selection_1 &&
-                            helpers_1.isJoditObject(_this.j) &&
+                            (0, helpers_1.isJoditObject)(_this.j) &&
                             _this.j.s.restore();
                     };
                     div_1.focus();
@@ -17240,7 +17576,7 @@ var Uploader = (function (_super) {
                         var child = div_1.firstChild;
                         dom_1.Dom.safeRemove(div_1);
                         if (child && child.hasAttribute('src')) {
-                            var src = helpers_1.attr(child, 'src') || '';
+                            var src = (0, helpers_1.attr)(child, 'src') || '';
                             restore_1();
                             self.sendFiles([Uploader.dataURItoBlob(src)], handlerSuccess, handlerError);
                         }
@@ -17332,7 +17668,7 @@ var Uploader = (function (_super) {
             }
             else {
                 if (typeof (handlerError || uploader.o.defaultHandlerError) === 'function') {
-                    (handlerError || _this.o.defaultHandlerError).call(uploader, helpers_1.error(uploader.o.getMessage.call(_this, resp)));
+                    (handlerError || _this.o.defaultHandlerError).call(uploader, (0, helpers_1.error)(uploader.o.getMessage.call(_this, resp)));
                     return;
                 }
             }
@@ -17354,7 +17690,7 @@ exports.Uploader = Uploader;
 
 
 /***/ }),
-/* 213 */
+/* 225 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -17363,36 +17699,36 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 214 */
+/* 226 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var checker_1 = __webpack_require__(34);
-var en = __webpack_require__(215);
+var en = __webpack_require__(227);
 var exp = {
     en: en
 };
 if (true) {
-    var ar = __webpack_require__(216);
-    var cs_cz = __webpack_require__(217);
-    var de = __webpack_require__(218);
-    var es = __webpack_require__(219);
-    var fr = __webpack_require__(220);
-    var he = __webpack_require__(221);
-    var hu = __webpack_require__(222);
-    var id = __webpack_require__(223);
-    var it = __webpack_require__(224);
-    var ja = __webpack_require__(225);
-    var ko = __webpack_require__(226);
-    var nl = __webpack_require__(227);
-    var pl = __webpack_require__(228);
-    var pt_br = __webpack_require__(229);
-    var ru = __webpack_require__(230);
-    var tr = __webpack_require__(231);
-    var zh_cn = __webpack_require__(232);
-    var zh_tw = __webpack_require__(233);
+    var ar = __webpack_require__(228);
+    var cs_cz = __webpack_require__(229);
+    var de = __webpack_require__(230);
+    var es = __webpack_require__(231);
+    var fr = __webpack_require__(232);
+    var he = __webpack_require__(233);
+    var hu = __webpack_require__(234);
+    var id = __webpack_require__(235);
+    var it = __webpack_require__(236);
+    var ja = __webpack_require__(237);
+    var ko = __webpack_require__(238);
+    var nl = __webpack_require__(239);
+    var pl = __webpack_require__(240);
+    var pt_br = __webpack_require__(241);
+    var ru = __webpack_require__(242);
+    var tr = __webpack_require__(243);
+    var zh_cn = __webpack_require__(244);
+    var zh_tw = __webpack_require__(245);
     exp = {
         ar: ar,
         cs_cz: cs_cz,
@@ -17416,25 +17752,25 @@ if (true) {
     };
 }
 var get = function (value) { return value.default || value; }, hashLang = {};
-if (checker_1.isArray(get(en))) {
+if ((0, checker_1.isArray)(get(en))) {
     get(en).forEach(function (key, index) {
         hashLang[index] = key;
     });
 }
 Object.keys(exp).forEach(function (lang) {
     var list = get(exp[lang]);
-    if (checker_1.isArray(list)) {
+    if ((0, checker_1.isArray)(list)) {
         exp[lang] = {};
         list.forEach(function (value, index) {
             exp[lang][hashLang[index]] = value;
         });
     }
 });
-exports.default = exp;
+exports["default"] = exp;
 
 
 /***/ }),
-/* 215 */
+/* 227 */
 /***/ ((module) => {
 
 /*!
@@ -17451,7 +17787,7 @@ module.exports = {
 
 
 /***/ }),
-/* 216 */
+/* 228 */
 /***/ ((module) => {
 
 /*!
@@ -17682,7 +18018,7 @@ module.exports = {
 
 
 /***/ }),
-/* 217 */
+/* 229 */
 /***/ ((module) => {
 
 /*!
@@ -17915,7 +18251,7 @@ module.exports = {
 
 
 /***/ }),
-/* 218 */
+/* 230 */
 /***/ ((module) => {
 
 /*!
@@ -18148,7 +18484,7 @@ module.exports = {
 
 
 /***/ }),
-/* 219 */
+/* 231 */
 /***/ ((module) => {
 
 /*!
@@ -18386,7 +18722,7 @@ module.exports = {
 
 
 /***/ }),
-/* 220 */
+/* 232 */
 /***/ ((module) => {
 
 /*!
@@ -18614,7 +18950,7 @@ module.exports = {
 
 
 /***/ }),
-/* 221 */
+/* 233 */
 /***/ ((module) => {
 
 /*!
@@ -18846,7 +19182,7 @@ module.exports = {
 
 
 /***/ }),
-/* 222 */
+/* 234 */
 /***/ ((module) => {
 
 /*!
@@ -19080,7 +19416,7 @@ module.exports = {
 
 
 /***/ }),
-/* 223 */
+/* 235 */
 /***/ ((module) => {
 
 /*!
@@ -19313,7 +19649,7 @@ module.exports = {
 
 
 /***/ }),
-/* 224 */
+/* 236 */
 /***/ ((module) => {
 
 /*!
@@ -19546,7 +19882,7 @@ module.exports = {
 
 
 /***/ }),
-/* 225 */
+/* 237 */
 /***/ ((module) => {
 
 /*!
@@ -19782,7 +20118,7 @@ module.exports = {
 
 
 /***/ }),
-/* 226 */
+/* 238 */
 /***/ ((module) => {
 
 /*!
@@ -19989,7 +20325,7 @@ module.exports = {
 	'There are no files': '파일이 없어요',
 	Rename: '이름 변경',
 	'Enter new name': '새 이름 입력',
-	preview: '리미보기',
+	preview: '미리보기',
 	download: '다운로드',
 	'Paste from clipboard': '클립보드 붙여넣기',
 	"Your browser doesn't support direct access to the clipboard.":
@@ -19999,21 +20335,21 @@ module.exports = {
 	'Border radius': '둥근 테두리',
 	'Show all': '모두 보기',
 	Apply: '적용',
-	'Please fill out this field': '이 분야',
-	'Please enter a web address': '를 입력하십시오.웹 주소',
+	'Please fill out this field': '이 항목을 입력해주세요!',
+	'Please enter a web address': '웹 URL을 입력해주세요.',
 	Default: '기본',
 	Circle: '원',
 	Dot: '점',
-	Quadrate: '정방형',
+	Quadrate: '정사각형',
 	Find: '찾기',
 	'Find Previous': '이전 찾기',
 	'Find Next': '다음 찾기',
-	'Insert className': '수업 이름 삽입'
+	'Insert className': 'className 입력'
 };
 
 
 /***/ }),
-/* 227 */
+/* 239 */
 /***/ ((module) => {
 
 /*!
@@ -20247,7 +20583,7 @@ module.exports = {
 
 
 /***/ }),
-/* 228 */
+/* 240 */
 /***/ ((module) => {
 
 /*!
@@ -20481,7 +20817,7 @@ module.exports = {
 
 
 /***/ }),
-/* 229 */
+/* 241 */
 /***/ ((module) => {
 
 /*!
@@ -20719,7 +21055,7 @@ module.exports = {
 
 
 /***/ }),
-/* 230 */
+/* 242 */
 /***/ ((module) => {
 
 /*!
@@ -20951,7 +21287,7 @@ module.exports = {
 
 
 /***/ }),
-/* 231 */
+/* 243 */
 /***/ ((module) => {
 
 /*!
@@ -21183,7 +21519,7 @@ module.exports = {
 
 
 /***/ }),
-/* 232 */
+/* 244 */
 /***/ ((module) => {
 
 /*!
@@ -21415,7 +21751,7 @@ module.exports = {
 
 
 /***/ }),
-/* 233 */
+/* 245 */
 /***/ ((module) => {
 
 /*!
@@ -21645,7 +21981,7 @@ module.exports = {
 
 
 /***/ }),
-/* 234 */
+/* 246 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -21656,98 +21992,100 @@ module.exports = {
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.xpath = exports.tooltip = exports.symbols = exports.sticky = exports.stat = exports.source = exports.resizeHandler = exports.size = exports.select = exports.search = exports.resizer = exports.redoUndo = exports.placeholder = exports.orderedList = exports.mobile = exports.link = exports.limit = exports.justify = exports.inlinePopup = exports.hr = exports.indent = exports.iframe = exports.hotkeys = exports.fullsize = exports.formatBlock = exports.font = exports.errorMessages = exports.enter = exports.DragAndDropElement = exports.DragAndDrop = exports.color = exports.pasteStorage = exports.paste = exports.clipboard = exports.copyFormat = exports.WrapTextNodes = exports.cleanHtml = exports.bold = exports.Delete = exports.classSpan = exports.focus = exports.about = exports.addNewLine = void 0;
+exports.xpath = exports.tooltip = exports.symbols = exports.sticky = exports.stat = exports.source = exports.resizeHandler = exports.size = exports.select = exports.search = exports.resizer = exports.redoUndo = exports.placeholder = exports.orderedList = exports.mobile = exports.link = exports.limit = exports.justify = exports.inlinePopup = exports.hr = exports.indent = exports.iframe = exports.hotkeys = exports.fullsize = exports.formatBlock = exports.font = exports.errorMessages = exports.KeyArrowOutside = exports.enter = exports.DragAndDropElement = exports.DragAndDrop = exports.color = exports.pasteStorage = exports.paste = exports.clipboard = exports.copyFormat = exports.WrapTextNodes = exports.cleanHtml = exports.bold = exports.Delete = exports.classSpan = exports.focus = exports.about = exports.addNewLine = void 0;
 var tslib_1 = __webpack_require__(7);
-var add_new_line_1 = __webpack_require__(235);
+var add_new_line_1 = __webpack_require__(247);
 Object.defineProperty(exports, "addNewLine", ({ enumerable: true, get: function () { return add_new_line_1.addNewLine; } }));
-var about_1 = __webpack_require__(237);
+var about_1 = __webpack_require__(249);
 Object.defineProperty(exports, "about", ({ enumerable: true, get: function () { return about_1.about; } }));
-var focus_1 = __webpack_require__(239);
+var focus_1 = __webpack_require__(251);
 Object.defineProperty(exports, "focus", ({ enumerable: true, get: function () { return focus_1.focus; } }));
-var class_span_1 = __webpack_require__(240);
+var class_span_1 = __webpack_require__(252);
 Object.defineProperty(exports, "classSpan", ({ enumerable: true, get: function () { return class_span_1.classSpan; } }));
-var delete_1 = __webpack_require__(242);
+var delete_1 = __webpack_require__(254);
 Object.defineProperty(exports, "Delete", ({ enumerable: true, get: function () { return delete_1.Delete; } }));
-var bold_1 = __webpack_require__(244);
+var bold_1 = __webpack_require__(256);
 Object.defineProperty(exports, "bold", ({ enumerable: true, get: function () { return bold_1.bold; } }));
-var clean_html_1 = __webpack_require__(245);
+var clean_html_1 = __webpack_require__(257);
 Object.defineProperty(exports, "cleanHtml", ({ enumerable: true, get: function () { return clean_html_1.cleanHtml; } }));
-var wrap_text_nodes_1 = __webpack_require__(246);
+var wrap_text_nodes_1 = __webpack_require__(258);
 Object.defineProperty(exports, "WrapTextNodes", ({ enumerable: true, get: function () { return wrap_text_nodes_1.WrapTextNodes; } }));
-var clipboard_1 = __webpack_require__(247);
+var clipboard_1 = __webpack_require__(259);
 Object.defineProperty(exports, "copyFormat", ({ enumerable: true, get: function () { return clipboard_1.copyFormat; } }));
 Object.defineProperty(exports, "clipboard", ({ enumerable: true, get: function () { return clipboard_1.clipboard; } }));
 Object.defineProperty(exports, "paste", ({ enumerable: true, get: function () { return clipboard_1.paste; } }));
 Object.defineProperty(exports, "pasteStorage", ({ enumerable: true, get: function () { return clipboard_1.pasteStorage; } }));
-var color_1 = __webpack_require__(255);
+var color_1 = __webpack_require__(267);
 Object.defineProperty(exports, "color", ({ enumerable: true, get: function () { return color_1.color; } }));
-var drag_and_drop_1 = __webpack_require__(262);
+var drag_and_drop_1 = __webpack_require__(274);
 Object.defineProperty(exports, "DragAndDrop", ({ enumerable: true, get: function () { return drag_and_drop_1.DragAndDrop; } }));
-var drag_and_drop_element_1 = __webpack_require__(263);
+var drag_and_drop_element_1 = __webpack_require__(275);
 Object.defineProperty(exports, "DragAndDropElement", ({ enumerable: true, get: function () { return drag_and_drop_element_1.DragAndDropElement; } }));
-var enter_1 = __webpack_require__(264);
+var enter_1 = __webpack_require__(276);
 Object.defineProperty(exports, "enter", ({ enumerable: true, get: function () { return enter_1.enter; } }));
-var error_messages_1 = __webpack_require__(265);
+var key_arrow_outside_1 = __webpack_require__(277);
+Object.defineProperty(exports, "KeyArrowOutside", ({ enumerable: true, get: function () { return key_arrow_outside_1.KeyArrowOutside; } }));
+var error_messages_1 = __webpack_require__(278);
 Object.defineProperty(exports, "errorMessages", ({ enumerable: true, get: function () { return error_messages_1.errorMessages; } }));
-var font_1 = __webpack_require__(267);
+var font_1 = __webpack_require__(280);
 Object.defineProperty(exports, "font", ({ enumerable: true, get: function () { return font_1.font; } }));
-var format_block_1 = __webpack_require__(268);
+var format_block_1 = __webpack_require__(281);
 Object.defineProperty(exports, "formatBlock", ({ enumerable: true, get: function () { return format_block_1.formatBlock; } }));
-var fullsize_1 = __webpack_require__(269);
+var fullsize_1 = __webpack_require__(282);
 Object.defineProperty(exports, "fullsize", ({ enumerable: true, get: function () { return fullsize_1.fullsize; } }));
-var hotkeys_1 = __webpack_require__(271);
+var hotkeys_1 = __webpack_require__(284);
 Object.defineProperty(exports, "hotkeys", ({ enumerable: true, get: function () { return hotkeys_1.hotkeys; } }));
-var iframe_1 = __webpack_require__(272);
+var iframe_1 = __webpack_require__(285);
 Object.defineProperty(exports, "iframe", ({ enumerable: true, get: function () { return iframe_1.iframe; } }));
-tslib_1.__exportStar(__webpack_require__(273), exports);
-var indent_1 = __webpack_require__(283);
+(0, tslib_1.__exportStar)(__webpack_require__(286), exports);
+var indent_1 = __webpack_require__(296);
 Object.defineProperty(exports, "indent", ({ enumerable: true, get: function () { return indent_1.indent; } }));
-var insert_1 = __webpack_require__(284);
+var insert_1 = __webpack_require__(297);
 Object.defineProperty(exports, "hr", ({ enumerable: true, get: function () { return insert_1.hr; } }));
-var inline_popup_1 = __webpack_require__(286);
+var inline_popup_1 = __webpack_require__(299);
 Object.defineProperty(exports, "inlinePopup", ({ enumerable: true, get: function () { return inline_popup_1.inlinePopup; } }));
-var justify_1 = __webpack_require__(293);
+var justify_1 = __webpack_require__(306);
 Object.defineProperty(exports, "justify", ({ enumerable: true, get: function () { return justify_1.justify; } }));
-var limit_1 = __webpack_require__(294);
+var limit_1 = __webpack_require__(307);
 Object.defineProperty(exports, "limit", ({ enumerable: true, get: function () { return limit_1.limit; } }));
-var link_1 = __webpack_require__(295);
+var link_1 = __webpack_require__(308);
 Object.defineProperty(exports, "link", ({ enumerable: true, get: function () { return link_1.link; } }));
-tslib_1.__exportStar(__webpack_require__(297), exports);
-var mobile_1 = __webpack_require__(302);
+(0, tslib_1.__exportStar)(__webpack_require__(310), exports);
+var mobile_1 = __webpack_require__(315);
 Object.defineProperty(exports, "mobile", ({ enumerable: true, get: function () { return mobile_1.mobile; } }));
-var ordered_list_1 = __webpack_require__(303);
+var ordered_list_1 = __webpack_require__(316);
 Object.defineProperty(exports, "orderedList", ({ enumerable: true, get: function () { return ordered_list_1.orderedList; } }));
-var placeholder_1 = __webpack_require__(304);
+var placeholder_1 = __webpack_require__(317);
 Object.defineProperty(exports, "placeholder", ({ enumerable: true, get: function () { return placeholder_1.placeholder; } }));
-var redo_undo_1 = __webpack_require__(306);
+var redo_undo_1 = __webpack_require__(319);
 Object.defineProperty(exports, "redoUndo", ({ enumerable: true, get: function () { return redo_undo_1.redoUndo; } }));
-var resizer_1 = __webpack_require__(307);
+var resizer_1 = __webpack_require__(320);
 Object.defineProperty(exports, "resizer", ({ enumerable: true, get: function () { return resizer_1.resizer; } }));
-var search_1 = __webpack_require__(309);
+var search_1 = __webpack_require__(322);
 Object.defineProperty(exports, "search", ({ enumerable: true, get: function () { return search_1.search; } }));
-var select_1 = __webpack_require__(311);
+var select_1 = __webpack_require__(324);
 Object.defineProperty(exports, "select", ({ enumerable: true, get: function () { return select_1.select; } }));
-var size_1 = __webpack_require__(312);
+var size_1 = __webpack_require__(325);
 Object.defineProperty(exports, "size", ({ enumerable: true, get: function () { return size_1.size; } }));
 Object.defineProperty(exports, "resizeHandler", ({ enumerable: true, get: function () { return size_1.resizeHandler; } }));
-var source_1 = __webpack_require__(317);
+var source_1 = __webpack_require__(330);
 Object.defineProperty(exports, "source", ({ enumerable: true, get: function () { return source_1.source; } }));
-var stat_1 = __webpack_require__(326);
+var stat_1 = __webpack_require__(339);
 Object.defineProperty(exports, "stat", ({ enumerable: true, get: function () { return stat_1.stat; } }));
-var sticky_1 = __webpack_require__(327);
+var sticky_1 = __webpack_require__(340);
 Object.defineProperty(exports, "sticky", ({ enumerable: true, get: function () { return sticky_1.sticky; } }));
-var symbols_1 = __webpack_require__(329);
+var symbols_1 = __webpack_require__(342);
 Object.defineProperty(exports, "symbols", ({ enumerable: true, get: function () { return symbols_1.symbols; } }));
-tslib_1.__exportStar(__webpack_require__(332), exports);
-var tooltip_1 = __webpack_require__(339);
+(0, tslib_1.__exportStar)(__webpack_require__(345), exports);
+var tooltip_1 = __webpack_require__(352);
 Object.defineProperty(exports, "tooltip", ({ enumerable: true, get: function () { return tooltip_1.tooltip; } }));
-tslib_1.__exportStar(__webpack_require__(341), exports);
-var xpath_1 = __webpack_require__(344);
+(0, tslib_1.__exportStar)(__webpack_require__(354), exports);
+var xpath_1 = __webpack_require__(357);
 Object.defineProperty(exports, "xpath", ({ enumerable: true, get: function () { return xpath_1.xpath; } }));
 
 
 /***/ }),
-/* 235 */
+/* 247 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -21760,7 +22098,7 @@ Object.defineProperty(exports, "xpath", ({ enumerable: true, get: function () { 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.addNewLine = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(236);
+__webpack_require__(248);
 var config_1 = __webpack_require__(8);
 var modules_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(19);
@@ -21776,7 +22114,7 @@ config_1.Config.prototype.addNewLineTagsTriggers = [
 config_1.Config.prototype.addNewLineDeltaShow = 20;
 var ns = 'addnewline';
 var addNewLine = (function (_super) {
-    tslib_1.__extends(addNewLine, _super);
+    (0, tslib_1.__extends)(addNewLine, _super);
     function addNewLine() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.line = _this.j.c.fromHTML("<div role=\"button\" tabIndex=\"-1\" title=\"" + _this.j.i18n('Break') + "\" class=\"jodit-add-new-line\"><span>" + modules_1.Icon.get('enter') + "</span></div>");
@@ -21807,7 +22145,7 @@ var addNewLine = (function (_super) {
         };
         _this.canGetFocus = function (elm) {
             return (elm != null &&
-                modules_1.Dom.isBlock(elm, _this.j.ew) &&
+                modules_1.Dom.isBlock(elm) &&
                 !/^(img|table|iframe|hr)$/i.test(elm.nodeName));
         };
         _this.onClickLine = function (e) {
@@ -21820,7 +22158,7 @@ var addNewLine = (function (_super) {
                 editor.editor.appendChild(p);
             }
             editor.s.setCursorIn(p);
-            helpers_1.scrollIntoViewIfNeeded(p, editor.editor, editor.ed);
+            (0, helpers_1.scrollIntoViewIfNeeded)(p, editor.editor, editor.ed);
             editor.e.fire('synchro');
             _this.hideForce();
             e.preventDefault();
@@ -21831,7 +22169,7 @@ var addNewLine = (function (_super) {
                 editor.o.addNewLineOnDBLClick &&
                 e.target === editor.editor &&
                 editor.s.isCollapsed()) {
-                var editorBound = helpers_1.offset(editor.editor, editor, editor.ed);
+                var editorBound = (0, helpers_1.offset)(editor.editor, editor, editor.ed);
                 var top_1 = e.pageY - editor.ew.pageYOffset;
                 var p = editor.createInside.element(editor.o.enter);
                 if (Math.abs(top_1 - editorBound.top) <
@@ -21851,7 +22189,7 @@ var addNewLine = (function (_super) {
         _this.onMouseMove = function (e) {
             var editor = _this.j;
             var currentElement = editor.ed.elementFromPoint(e.clientX, e.clientY);
-            if (!modules_1.Dom.isHTMLElement(currentElement, editor.ew) ||
+            if (!modules_1.Dom.isHTMLElement(currentElement) ||
                 modules_1.Dom.isOrContains(_this.line, currentElement)) {
                 return;
             }
@@ -21866,16 +22204,16 @@ var addNewLine = (function (_super) {
                 return;
             }
             if (_this.isMatchedTag(currentElement)) {
-                var parentBox = modules_1.Dom.up(currentElement, function (node) { return modules_1.Dom.isBlock(node, editor.ew); }, editor.editor);
+                var parentBox = modules_1.Dom.up(currentElement, modules_1.Dom.isBlock, editor.editor);
                 if (parentBox && parentBox !== editor.editor) {
                     currentElement = parentBox;
                 }
             }
-            var pos = helpers_1.position(currentElement, _this.j);
+            var pos = (0, helpers_1.position)(currentElement, _this.j);
             var top = false;
             var clientY = e.clientY;
             if (_this.j.iframe) {
-                var top_2 = helpers_1.position(_this.j.iframe, _this.j, true).top;
+                var top_2 = (0, helpers_1.position)(_this.j.iframe, _this.j, true).top;
                 clientY += top_2;
             }
             var delta = _this.j.o.addNewLineDeltaShow;
@@ -21888,7 +22226,7 @@ var addNewLine = (function (_super) {
                 _this.preview = false;
             }
             if (top !== false &&
-                !helpers_1.call(_this.preview ? modules_1.Dom.prev : modules_1.Dom.next, currentElement, _this.canGetFocus, editor.editor)) {
+                !(0, helpers_1.call)(_this.preview ? modules_1.Dom.prev : modules_1.Dom.next, currentElement, _this.canGetFocus, editor.editor)) {
                 _this.line.style.top = top + 'px';
                 _this.current = currentElement;
                 _this.show();
@@ -21944,8 +22282,7 @@ var addNewLine = (function (_super) {
     };
     addNewLine.prototype.beforeDestruct = function () {
         this.j.async.clearTimeout(this.timeout);
-        this.j.e.off(this.line);
-        this.j.e.off('changePlace', this.addEventListeners);
+        this.j.e.off(this.line).off('changePlace', this.addEventListeners);
         modules_1.Dom.safeRemove(this.line);
         this.j.e
             .off([this.j.ow, this.j.ew, this.j.editor], '.' + ns)
@@ -21957,7 +22294,7 @@ exports.addNewLine = addNewLine;
 
 
 /***/ }),
-/* 236 */
+/* 248 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -21966,7 +22303,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 237 */
+/* 249 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -21978,7 +22315,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.about = void 0;
-__webpack_require__(238);
+__webpack_require__(250);
 var config_1 = __webpack_require__(8);
 var helpers_1 = __webpack_require__(19);
 var constants = __webpack_require__(9);
@@ -21987,18 +22324,18 @@ config_1.Config.prototype.controls.about = {
     exec: function (editor) {
         var dialog = new dialog_1.Dialog({
             language: editor.o.language
-        }), i18n = editor.i18n.bind(editor);
-        dialog.setMod('theme', editor.o.theme);
-        dialog.setHeader(i18n('About Jodit'));
-        dialog.setContent("<div class=\"jodit-about\">\n\t\t\t\t\t<div>" + i18n('Jodit Editor') + " v." + editor.getVersion() + "</div>\n\t\t\t\t\t<div>" + i18n('License: %s', !helpers_1.isLicense(editor.o.license)
+        }), i = editor.i18n.bind(editor);
+        dialog
+            .setMod('theme', editor.o.theme)
+            .setHeader(i('About Jodit'))
+            .setContent("<div class=\"jodit-about\">\n\t\t\t\t\t<div>" + i('Jodit Editor') + " v." + editor.getVersion() + "</div>\n\t\t\t\t\t<div>" + i('License: %s', !(0, helpers_1.isLicense)(editor.o.license)
             ? 'MIT'
-            : helpers_1.normalizeLicense(editor.o.license)) + "</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"" + "https://xdsoft.net/jodit/" + "\" target=\"_blank\">" + "https://xdsoft.net/jodit/" + "</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"https://xdsoft.net/jodit/doc/\" target=\"_blank\">" + i18n("Jodit User's Guide") + "</a>\n\t\t\t\t\t\t" + i18n('contains detailed help for using') + "\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>" + i18n('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.') + "</div>\n\t\t\t\t</div>");
-        helpers_1.css(dialog.dialog, {
+            : (0, helpers_1.normalizeLicense)(editor.o.license)) + "</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"" + "https://xdsoft.net/jodit/" + "\" target=\"_blank\">" + "https://xdsoft.net/jodit/" + "</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"https://xdsoft.net/jodit/doc/\" target=\"_blank\">" + i("Jodit User's Guide") + "</a>\n\t\t\t\t\t\t" + i('contains detailed help for using') + "\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>" + i('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.') + "</div>\n\t\t\t\t</div>");
+        (0, helpers_1.css)(dialog.dialog, {
             minHeight: 200,
             minWidth: 420
         });
-        dialog.open(true);
-        dialog.bindDestruct(editor);
+        dialog.open(true).bindDestruct(editor);
     },
     tooltip: 'About Jodit',
     mode: constants.MODE_SOURCE + constants.MODE_WYSIWYG
@@ -22013,7 +22350,7 @@ exports.about = about;
 
 
 /***/ }),
-/* 238 */
+/* 250 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -22022,7 +22359,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 239 */
+/* 251 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -22078,7 +22415,7 @@ function focus(editor) {
             .on(editor.editor, 'mousedown.autofocus', function (e) {
             if (editor.isEditorMode() &&
                 e.target &&
-                dom_1.Dom.isBlock(e.target, editor.ew) &&
+                dom_1.Dom.isBlock(e.target) &&
                 !e.target.childNodes.length) {
                 if (editor.editor === e.target) {
                     editor.s.focus();
@@ -22094,7 +22431,7 @@ exports.focus = focus;
 
 
 /***/ }),
-/* 240 */
+/* 252 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -22113,7 +22450,7 @@ var dom_1 = __webpack_require__(32);
 var helpers_1 = __webpack_require__(19);
 config_1.Config.prototype.controls.classSpan = {
     command: 'applyClassName',
-    icon: __webpack_require__(241),
+    icon: __webpack_require__(253),
     exec: helpers_1.memorizeExec,
     list: [
         'enabled',
@@ -22128,10 +22465,7 @@ config_1.Config.prototype.controls.classSpan = {
     isChildActive: function (editor, control) {
         var current = editor.s.current();
         if (current) {
-            var currentBpx = dom_1.Dom.closest(current, function (elm) {
-                return (dom_1.Dom.isBlock(elm, editor.ew) ||
-                    (elm && dom_1.Dom.isElement(elm)));
-            }, editor.editor) || editor.editor;
+            var currentBpx = dom_1.Dom.closest(current, dom_1.Dom.isElement, editor.editor) || editor.editor;
             return Boolean(control.args &&
                 currentBpx.classList.contains(control.args[0].toString()));
         }
@@ -22140,10 +22474,7 @@ config_1.Config.prototype.controls.classSpan = {
     isActive: function (editor, control) {
         var current = editor.s.current();
         if (current) {
-            var currentBpx_1 = dom_1.Dom.closest(current, function (elm) {
-                return (dom_1.Dom.isBlock(elm, editor.ew) ||
-                    (elm && dom_1.Dom.isElement(elm)));
-            }, editor.editor) || editor.editor;
+            var currentBpx_1 = dom_1.Dom.closest(current, dom_1.Dom.isElement, editor.editor) || editor.editor;
             var present_1 = false;
             control.list &&
                 Object.keys(control.list).forEach(function (className) {
@@ -22164,7 +22495,7 @@ config_1.Config.prototype.controls.classSpan = {
     tooltip: 'Insert className'
 };
 var classSpan = (function (_super) {
-    tslib_1.__extends(classSpan, _super);
+    (0, tslib_1.__extends)(classSpan, _super);
     function classSpan() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.buttons = [
@@ -22183,20 +22514,20 @@ var classSpan = (function (_super) {
             return false;
         });
     };
-    classSpan.prototype.beforeDestruct = function (jodit) { };
+    classSpan.prototype.beforeDestruct = function () { };
     return classSpan;
 }(plugin_1.Plugin));
 exports.classSpan = classSpan;
 
 
 /***/ }),
-/* 241 */
+/* 253 */
 /***/ ((module) => {
 
 module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M36 4h-24c-2.21 0-4 1.79-4 4v32c0 2.21 1.79 4 4 4h24c2.21 0 4-1.79 4-4v-32c0-2.21-1.79-4-4-4zm-24 4h10v16l-5-3-5 3v-16z\"/> </svg>"
 
 /***/ }),
-/* 242 */
+/* 254 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -22213,7 +22544,7 @@ var plugin_1 = __webpack_require__(184);
 var dom_1 = __webpack_require__(32);
 var constants_1 = __webpack_require__(9);
 var helpers_1 = __webpack_require__(19);
-var helpers_2 = __webpack_require__(243);
+var helpers_2 = __webpack_require__(255);
 var config_1 = __webpack_require__(8);
 config_1.Config.prototype.delete = {
     hotkeys: {
@@ -22224,7 +22555,7 @@ config_1.Config.prototype.delete = {
     }
 };
 var Delete = (function (_super) {
-    tslib_1.__extends(Delete, _super);
+    (0, tslib_1.__extends)(Delete, _super);
     function Delete() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.requires = ['hotkeys'];
@@ -22275,7 +22606,7 @@ var Delete = (function (_super) {
         if (current && dom_1.Dom.isTag(current.firstChild, 'br')) {
             jodit.s.removeNode(current.firstChild);
         }
-        if (!helpers_1.trim(jodit.editor.textContent || '') &&
+        if (!(0, helpers_1.trim)(jodit.editor.textContent || '') &&
             !jodit.editor.querySelector('img') &&
             (!current || !dom_1.Dom.closest(current, 'table', jodit.editor))) {
             jodit.editor.innerHTML = '';
@@ -22301,10 +22632,10 @@ var Delete = (function (_super) {
             if (!dom_1.Dom.isOrContains(jodit.editor, fakeNode)) {
                 return;
             }
-            helpers_2.normalizeCursorPosition(fakeNode, backspace);
+            (0, helpers_2.normalizeCursorPosition)(fakeNode, backspace);
             if (this.checkRemoveInseparableElement(fakeNode, backspace) ||
                 this.checkRemoveChar(fakeNode, backspace, block) ||
-                this.checkTableCell(fakeNode, backspace) ||
+                this.checkTableCell(fakeNode) ||
                 this.checkRemoveEmptyParent(fakeNode, backspace) ||
                 this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
                 this.checkJoinTwoLists(fakeNode, backspace) ||
@@ -22332,8 +22663,8 @@ var Delete = (function (_super) {
     Delete.prototype.checkRemoveChar = function (fakeNode, backspace, block) {
         var _a, _b, _c;
         var step = backspace ? -1 : 1;
-        var anotherSibling = helpers_2.getSibling(fakeNode, !backspace);
-        var sibling = helpers_2.getSibling(fakeNode, backspace), removeNeighbor = null;
+        var anotherSibling = (0, helpers_2.getSibling)(fakeNode, !backspace);
+        var sibling = (0, helpers_2.getSibling)(fakeNode, backspace), removeNeighbor = null;
         var charRemoved = false, removed;
         while (sibling && (dom_1.Dom.isText(sibling) || dom_1.Dom.isInlineBlock(sibling))) {
             while (dom_1.Dom.isInlineBlock(sibling)) {
@@ -22343,7 +22674,7 @@ var Delete = (function (_super) {
                 break;
             }
             if ((_a = sibling.nodeValue) === null || _a === void 0 ? void 0 : _a.length) {
-                var value = helpers_1.toArray(sibling.nodeValue);
+                var value = (0, helpers_1.toArray)(sibling.nodeValue);
                 var length_1 = value.length;
                 var index = backspace ? length_1 - 1 : 0;
                 if (value[index] === constants_1.INVISIBLE_SPACE) {
@@ -22368,7 +22699,7 @@ var Delete = (function (_super) {
                 if (!anotherSibling ||
                     !dom_1.Dom.isText(anotherSibling) ||
                     (!backspace ? / $/ : /^ /).test((_b = anotherSibling.nodeValue) !== null && _b !== void 0 ? _b : '') ||
-                    !helpers_1.trimInv(anotherSibling.nodeValue || '').length) {
+                    !(0, helpers_1.trimInv)(anotherSibling.nodeValue || '').length) {
                     for (var i = backspace ? value.length - 1 : 0; backspace ? i >= 0 : i < value.length; i += backspace ? -1 : 1) {
                         if (value[i] === ' ') {
                             value[i] = constants_1.NBSP_SPACE;
@@ -22383,19 +22714,19 @@ var Delete = (function (_super) {
             if (!((_c = sibling.nodeValue) === null || _c === void 0 ? void 0 : _c.length)) {
                 removeNeighbor = sibling;
             }
-            if (!helpers_1.isVoid(removed) && removed !== constants_1.INVISIBLE_SPACE) {
+            if (!(0, helpers_1.isVoid)(removed) && removed !== constants_1.INVISIBLE_SPACE) {
                 charRemoved = true;
-                helpers_1.call(backspace ? dom_1.Dom.after : dom_1.Dom.before, sibling, fakeNode);
+                (0, helpers_1.call)(backspace ? dom_1.Dom.after : dom_1.Dom.before, sibling, fakeNode);
                 if (block) {
                     while (this.checkRemoveChar(fakeNode, backspace, false)) { }
                 }
                 break;
             }
-            var nextSibling = helpers_2.getSibling(sibling, backspace);
+            var nextSibling = (0, helpers_2.getSibling)(sibling, backspace);
             if (!nextSibling &&
                 sibling.parentNode &&
                 sibling.parentNode !== this.root) {
-                nextSibling = helpers_2.findMostNestedNeighbor(sibling, !backspace, this.root, true);
+                nextSibling = (0, helpers_2.findMostNestedNeighbor)(sibling, !backspace, this.root, true);
             }
             if (removeNeighbor) {
                 dom_1.Dom.safeRemove(removeNeighbor);
@@ -22423,7 +22754,7 @@ var Delete = (function (_super) {
     };
     Delete.prototype.addBRInsideEmptyBlock = function (node) {
         if (node.parentElement !== this.root &&
-            dom_1.Dom.isBlock(node.parentElement, this.j.ew) &&
+            dom_1.Dom.isBlock(node.parentElement) &&
             dom_1.Dom.each(node.parentElement, dom_1.Dom.isEmptyTextNode)) {
             dom_1.Dom.after(node, this.j.createInside.element('br'));
         }
@@ -22433,7 +22764,7 @@ var Delete = (function (_super) {
         if (dom_1.Dom.isElement(neighbor) &&
             (dom_1.Dom.isTag(neighbor, constants_1.INSEPARABLE_TAGS) ||
                 dom_1.Dom.isEmpty(neighbor) ||
-                helpers_1.attr(neighbor, 'contenteditable') === 'false')) {
+                (0, helpers_1.attr)(neighbor, 'contenteditable') === 'false')) {
             dom_1.Dom.safeRemove(neighbor);
             this.j.s.setCursorBefore(fakeNode);
             if (dom_1.Dom.isTag(neighbor, 'br')) {
@@ -22442,9 +22773,9 @@ var Delete = (function (_super) {
             return true;
         }
     };
-    Delete.prototype.checkTableCell = function (fakeNode, backspace) {
+    Delete.prototype.checkTableCell = function (fakeNode) {
         var cell = fakeNode.parentElement;
-        if (dom_1.Dom.isCell(cell, this.j.ew)) {
+        if (dom_1.Dom.isCell(cell)) {
             return true;
         }
     };
@@ -22455,9 +22786,9 @@ var Delete = (function (_super) {
         if (!prn || !dom_1.Dom.isEmpty(prn)) {
             return;
         }
-        var neighbor = helpers_2.findNotEmptyNeighbor(fakeNode, backspace, this.root);
+        var neighbor = (0, helpers_2.findNotEmptyNeighbor)(fakeNode, backspace, this.root);
         do {
-            if (prn && dom_1.Dom.isEmpty(prn) && !dom_1.Dom.isCell(prn, this.j.ew)) {
+            if (prn && dom_1.Dom.isEmpty(prn) && !dom_1.Dom.isCell(prn)) {
                 dom_1.Dom.after(prn, fakeNode);
                 var tmp = dom_1.Dom.closest(prn, function (n) { return dom_1.Dom.isElement(n) && n !== prn; }, this.root);
                 dom_1.Dom.safeRemove(prn);
@@ -22490,11 +22821,11 @@ var Delete = (function (_super) {
             dom_1.Dom.isTag(prev.firstElementChild, 'li')) {
             var _a = this.j.s, setCursorBefore = _a.setCursorBefore, setCursorAfter = _a.setCursorAfter;
             var target = next.lastElementChild, second = prev.firstElementChild;
-            helpers_1.call(!backspace ? dom_1.Dom.append : dom_1.Dom.prepend, second, fakeNode);
+            (0, helpers_1.call)(!backspace ? dom_1.Dom.append : dom_1.Dom.prepend, second, fakeNode);
             dom_1.Dom.moveContent(prev, next, !backspace);
             dom_1.Dom.safeRemove(prev);
-            helpers_1.call(backspace ? dom_1.Dom.append : dom_1.Dom.prepend, target, fakeNode);
-            helpers_1.call(backspace ? setCursorBefore : setCursorAfter, fakeNode);
+            (0, helpers_1.call)(backspace ? dom_1.Dom.append : dom_1.Dom.prepend, target, fakeNode);
+            (0, helpers_1.call)(backspace ? setCursorBefore : setCursorAfter, fakeNode);
             return true;
         }
     };
@@ -22503,7 +22834,7 @@ var Delete = (function (_super) {
         if (!parent) {
             return;
         }
-        var neighbor = helpers_2.findNotEmptySibling(parent, backspace);
+        var neighbor = (0, helpers_2.findNotEmptySibling)(parent, backspace);
         if (neighbor && dom_1.Dom.isEmpty(neighbor)) {
             dom_1.Dom.safeRemove(neighbor);
             this.j.s.setCursorBefore(fakeNode);
@@ -22514,13 +22845,13 @@ var Delete = (function (_super) {
         var jodit = this.jodit;
         var nextBox = fakeNode, mainClosestBox = nextBox;
         while (nextBox &&
-            !helpers_2.findNotEmptySibling(nextBox, backspace) &&
+            !(0, helpers_2.findNotEmptySibling)(nextBox, backspace) &&
             nextBox.parentElement !== this.root) {
             nextBox = nextBox.parentElement;
             mainClosestBox = nextBox;
         }
         if (dom_1.Dom.isElement(mainClosestBox)) {
-            var sibling = helpers_2.findNotEmptySibling(mainClosestBox, backspace);
+            var sibling = (0, helpers_2.findNotEmptySibling)(mainClosestBox, backspace);
             if (sibling &&
                 (this.checkMoveListContent(mainClosestBox, sibling, backspace) ||
                     this.moveContentAndRemoveEmpty(mainClosestBox, sibling, backspace))) {
@@ -22558,57 +22889,6 @@ var Delete = (function (_super) {
             return true;
         }
         return false;
-    };
-    Delete.prototype.checkJoinNeighbors2 = function (fakeNode, backspace) {
-        var parent = dom_1.Dom.closest(fakeNode, dom_1.Dom.isElement, this.root);
-        if (!parent) {
-            return;
-        }
-        var neighbor = helpers_2.getSiblingBox(parent, backspace, this.root);
-        if (!neighbor) {
-            return;
-        }
-        var startNeighbor = neighbor;
-        this.j.s.setCursorBefore(fakeNode);
-        if (!this.j.s.cursorInTheEdge(backspace, parent)) {
-            return;
-        }
-        if (dom_1.Dom.isTag(neighbor, ['ul', 'ol']) &&
-            !dom_1.Dom.isTag(parent, ['ul', 'ol'])) {
-            neighbor = backspace
-                ? neighbor.lastElementChild
-                : neighbor.firstElementChild;
-        }
-        if (parent &&
-            neighbor &&
-            startNeighbor &&
-            dom_1.Dom.isElement(neighbor) &&
-            this.j.s.cursorInTheEdge(backspace, parent)) {
-            dom_1.Dom.moveContent(parent, neighbor, !backspace);
-            var next = void 0;
-            do {
-                next = helpers_2.findMostNestedNeighbor(startNeighbor, backspace, this.root);
-                if (next === parent) {
-                    var nextParentNode = next;
-                    do {
-                        var nextParent = nextParentNode.parentElement;
-                        dom_1.Dom.safeRemove(nextParentNode);
-                        nextParentNode = nextParent;
-                    } while (nextParentNode && dom_1.Dom.isEmpty(nextParentNode));
-                }
-                dom_1.Dom.safeRemove(next);
-            } while (next !== parent);
-            this.j.s.setCursorBefore(fakeNode);
-            return true;
-        }
-        if (dom_1.Dom.isTag(parent, 'li') &&
-            this.j.s.cursorInTheEdge(backspace, parent)) {
-            helpers_1.call(backspace ? dom_1.Dom.before : dom_1.Dom.after, parent, fakeNode);
-            var result = this.checkJoinNeighbors(fakeNode, backspace);
-            helpers_1.call(!backspace ? dom_1.Dom.append : dom_1.Dom.prepend, parent, fakeNode);
-            this.j.s.setCursorBefore(fakeNode);
-            return result;
-        }
     };
     Delete.prototype.checkRewrapListItem = function (fakeNode, backspace) {
         var _a;
@@ -22661,7 +22941,7 @@ exports.Delete = Delete;
 
 
 /***/ }),
-/* 243 */
+/* 255 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -22672,7 +22952,7 @@ exports.Delete = Delete;
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getSiblingBox = exports.normalizeCursorPosition = exports.findMostNestedNeighbor = exports.findNotEmptySibling = exports.findNotEmptyNeighbor = exports.getSibling = void 0;
+exports.normalizeCursorPosition = exports.findMostNestedNeighbor = exports.findNotEmptySibling = exports.findNotEmptyNeighbor = exports.getSibling = void 0;
 var utils_1 = __webpack_require__(20);
 var dom_1 = __webpack_require__(32);
 var constants_1 = __webpack_require__(9);
@@ -22681,15 +22961,15 @@ function getSibling(node, backspace) {
     return backspace ? node.previousSibling : node.nextSibling;
 }
 exports.getSibling = getSibling;
-function findNotEmptyNeighbor(node, backspace, root) {
-    return utils_1.call(backspace ? dom_1.Dom.prev : dom_1.Dom.next, node, function (n) { return Boolean(n && (!dom_1.Dom.isText(n) || string_1.trim((n === null || n === void 0 ? void 0 : n.nodeValue) || '').length)); }, root);
+function findNotEmptyNeighbor(node, left, root) {
+    return (0, utils_1.call)(left ? dom_1.Dom.prev : dom_1.Dom.next, node, function (n) { return Boolean(n && (!dom_1.Dom.isText(n) || (0, string_1.trim)((n === null || n === void 0 ? void 0 : n.nodeValue) || '').length)); }, root);
 }
 exports.findNotEmptyNeighbor = findNotEmptyNeighbor;
 function findNotEmptySibling(node, backspace) {
     return dom_1.Dom.findSibling(node, backspace, function (n) {
         var _a;
         return (!dom_1.Dom.isEmptyTextNode(n) &&
-            Boolean(!dom_1.Dom.isText(n) || (((_a = n.nodeValue) === null || _a === void 0 ? void 0 : _a.length) && string_1.trim(n.nodeValue))));
+            Boolean(!dom_1.Dom.isText(n) || (((_a = n.nodeValue) === null || _a === void 0 ? void 0 : _a.length) && (0, string_1.trim)(n.nodeValue))));
     });
 }
 exports.findNotEmptySibling = findNotEmptySibling;
@@ -22731,38 +23011,10 @@ function normalizeCursorPosition(node, backspace) {
     }
 }
 exports.normalizeCursorPosition = normalizeCursorPosition;
-function getSiblingBox(node, backspace, root) {
-    var _loop_1 = function () {
-        var isBox = function (elm) {
-            return dom_1.Dom.isElement(elm) && !dom_1.Dom.isTag(elm, constants_1.INSEPARABLE_TAGS);
-        };
-        var getBox_1 = function (node) {
-            var child = backspace ? node.lastChild : node.firstChild;
-            if (isBox(child)) {
-                return getBox_1(child);
-            }
-            return isBox(node) ? node : null;
-        };
-        var sibling = findNotEmptySibling(node, backspace);
-        if (sibling) {
-            return { value: isBox(sibling) ? getBox_1(sibling) : null };
-        }
-        if (node.parentElement && node.parentElement !== root) {
-            node = node.parentElement;
-        }
-    };
-    while (node) {
-        var state_1 = _loop_1();
-        if (typeof state_1 === "object")
-            return state_1.value;
-    }
-    return null;
-}
-exports.getSiblingBox = getSiblingBox;
 
 
 /***/ }),
-/* 244 */
+/* 256 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -22819,9 +23071,9 @@ config_1.Config.prototype.controls.strikethrough = {
 };
 function bold(editor) {
     var callBack = function (command) {
-        var control = config_1.Config.defaultOptions.controls[command], cssOptions = tslib_1.__assign({}, control.css), cssRules = {};
+        var control = config_1.Config.defaultOptions.controls[command], cssOptions = (0, tslib_1.__assign)({}, control.css), cssRules = {};
         Object.keys(cssOptions).forEach(function (key) {
-            cssRules[key] = helpers_1.isArray(cssOptions[key])
+            cssRules[key] = (0, helpers_1.isArray)(cssOptions[key])
                 ? cssOptions[key][0]
                 : cssOptions[key];
         });
@@ -22864,7 +23116,7 @@ exports.bold = bold;
 
 
 /***/ }),
-/* 245 */
+/* 257 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -22883,7 +23135,7 @@ var modules_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(19);
 var plugin_1 = __webpack_require__(184);
 var decorators_1 = __webpack_require__(99);
-var helpers_2 = __webpack_require__(243);
+var helpers_2 = __webpack_require__(255);
 config_1.Config.prototype.cleanHTML = {
     timeout: 300,
     removeEmptyElements: true,
@@ -22901,7 +23153,7 @@ config_1.Config.prototype.controls.eraser = {
     tooltip: 'Clear Formatting'
 };
 var cleanHtml = (function (_super) {
-    tslib_1.__extends(cleanHtml, _super);
+    (0, tslib_1.__extends)(cleanHtml, _super);
     function cleanHtml() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.buttons = [
@@ -22920,7 +23172,7 @@ var cleanHtml = (function (_super) {
                 return _this.visitNode(nodeElm.nextSibling, current, remove);
             }
             if (_this.j.o.cleanHTML.fillEmptyParagraph &&
-                modules_1.Dom.isBlock(nodeElm, _this.j.ew) &&
+                modules_1.Dom.isBlock(nodeElm) &&
                 modules_1.Dom.isEmpty(nodeElm, /^(img|svg|canvas|input|textarea|form|br)$/)) {
                 var br = _this.j.createInside.element('br');
                 nodeElm.appendChild(br);
@@ -22958,14 +23210,14 @@ var cleanHtml = (function (_super) {
             }
             var currentNode = editor.s.current();
             if (currentNode) {
-                var currentParagraph = modules_1.Dom.up(currentNode, function (node) { return modules_1.Dom.isBlock(node, editor.ew); }, editor.editor);
+                var currentParagraph = modules_1.Dom.up(currentNode, modules_1.Dom.isBlock, editor.editor);
                 if (currentParagraph) {
                     modules_1.Dom.all(currentParagraph, function (node) {
                         if (node && modules_1.Dom.isText(node)) {
                             if (node.nodeValue != null &&
-                                constants_1.INVISIBLE_SPACE_REG_EXP().test(node.nodeValue) &&
-                                node.nodeValue.replace(constants_1.INVISIBLE_SPACE_REG_EXP(), '').length !== 0) {
-                                node.nodeValue = node.nodeValue.replace(constants_1.INVISIBLE_SPACE_REG_EXP(), '');
+                                (0, constants_1.INVISIBLE_SPACE_REG_EXP)().test(node.nodeValue) &&
+                                node.nodeValue.replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '').length !== 0) {
+                                node.nodeValue = node.nodeValue.replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '');
                                 if (node === currentNode &&
                                     editor.s.isCollapsed()) {
                                     editor.s.setCursorAfter(node);
@@ -22999,7 +23251,7 @@ var cleanHtml = (function (_super) {
         var current = editor.s.current();
         var replaceOldTags = editor.o.cleanHTML.replaceOldTags;
         if (replaceOldTags && current) {
-            var tags = helpers_1.keys(replaceOldTags, false);
+            var tags = (0, helpers_1.keys)(replaceOldTags, false);
             if (editor.s.isCollapsed()) {
                 var oldParent = modules_1.Dom.closest(current, tags, editor.editor);
                 if (oldParent) {
@@ -23031,11 +23283,11 @@ var cleanHtml = (function (_super) {
         var attributesReg = /([^[]*)\[([^\]]+)]/;
         var seperator = /[\s]*,[\s]*/, attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
         var tagsHash = {};
-        if (helpers_1.isString(tags)) {
+        if ((0, helpers_1.isString)(tags)) {
             tags.split(seperator).map(function (elm) {
-                elm = helpers_1.trim(elm);
+                elm = (0, helpers_1.trim)(elm);
                 var attr = attributesReg.exec(elm), allowAttributes = {}, attributeMap = function (attrName) {
-                    attrName = helpers_1.trim(attrName);
+                    attrName = (0, helpers_1.trim)(attrName);
                     var val = attrReg.exec(attrName);
                     if (val) {
                         allowAttributes[val[1]] = val[2];
@@ -23125,7 +23377,7 @@ var cleanHtml = (function (_super) {
         });
         shouldUnwrap.forEach(function (node) { return modules_1.Dom.unwrap(node); });
         var clearParent = function (node, left) {
-            if (!helpers_2.findNotEmptySibling(node, left)) {
+            if (!(0, helpers_2.findNotEmptySibling)(node, left)) {
                 var pn = node.parentNode;
                 if (pn && pn !== s.area && pn.getAttribute('style')) {
                     pn.removeAttribute('style');
@@ -23142,7 +23394,6 @@ var cleanHtml = (function (_super) {
         modules_1.Dom.safeRemove(fakeRight);
     };
     cleanHtml.prototype.isRemovableNode = function (node, current) {
-        var _this = this;
         var allow = this.allowTagsHash;
         if (!modules_1.Dom.isText(node) &&
             ((allow && !allow[node.nodeName]) ||
@@ -23153,16 +23404,16 @@ var cleanHtml = (function (_super) {
             modules_1.Dom.isTag(node, 'br') &&
             cleanHtml.hasNotEmptyTextSibling(node) &&
             !cleanHtml.hasNotEmptyTextSibling(node, true) &&
-            modules_1.Dom.up(node, function (node) { return modules_1.Dom.isBlock(node, _this.j.ew); }, this.j.editor) !==
-                modules_1.Dom.up(current, function (node) { return modules_1.Dom.isBlock(node, _this.j.ew); }, this.j.editor)) {
+            modules_1.Dom.up(node, modules_1.Dom.isBlock, this.j.editor) !==
+                modules_1.Dom.up(current, modules_1.Dom.isBlock, this.j.editor)) {
             return true;
         }
         return (this.j.o.cleanHTML.removeEmptyElements &&
             current != null &&
             modules_1.Dom.isElement(node) &&
             node.nodeName.match(constants_1.IS_INLINE) != null &&
-            !this.j.s.isMarker(node) &&
-            helpers_1.trim(node.innerHTML).length === 0 &&
+            !modules_1.Select.isMarker(node) &&
+            (0, helpers_1.trim)(node.innerHTML).length === 0 &&
             !modules_1.Dom.isOrContains(node, current));
     };
     cleanHtml.hasNotEmptyTextSibling = function (node, next) {
@@ -23179,10 +23430,10 @@ var cleanHtml = (function (_super) {
     cleanHtml.prototype.beforeDestruct = function () {
         this.j.e.off('.cleanHtml');
     };
-    tslib_1.__decorate([
-        decorators_1.debounce(function (ctx) { return ctx.jodit.o.cleanHTML.timeout; })
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.debounce)(function (ctx) { return ctx.jodit.o.cleanHTML.timeout; })
     ], cleanHtml.prototype, "onChangeCleanHTML", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], cleanHtml.prototype, "isInlineBlock", null);
     return cleanHtml;
@@ -23191,7 +23442,7 @@ exports.cleanHtml = cleanHtml;
 
 
 /***/ }),
-/* 246 */
+/* 258 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -23208,20 +23459,20 @@ var plugin_1 = __webpack_require__(184);
 var dom_1 = __webpack_require__(32);
 var checker_1 = __webpack_require__(34);
 var decorators_1 = __webpack_require__(99);
+var selection_1 = __webpack_require__(204);
 var WrapTextNodes = (function (_super) {
-    tslib_1.__extends(WrapTextNodes, _super);
+    (0, tslib_1.__extends)(WrapTextNodes, _super);
     function WrapTextNodes() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.isSuitableStart = function (n) {
-            return (dom_1.Dom.isText(n) && checker_1.isString(n.nodeValue) && /[^\s]/.test(n.nodeValue)) ||
-                (_this.isNotClosed(n) && !_this.jodit.selection.isMarker(n));
+            return (dom_1.Dom.isText(n) && (0, checker_1.isString)(n.nodeValue) && /[^\s]/.test(n.nodeValue)) ||
+                (_this.isNotClosed(n) && !selection_1.Select.isMarker(n));
         };
         _this.isSuitable = function (n) {
             return dom_1.Dom.isText(n) || _this.isNotClosed(n);
         };
         _this.isNotClosed = function (n) {
-            return dom_1.Dom.isElement(n) &&
-                !(dom_1.Dom.isBlock(n, _this.jodit.ew) || dom_1.Dom.isTag(n, ['hr', 'style']));
+            return dom_1.Dom.isElement(n) && !(dom_1.Dom.isBlock(n) || dom_1.Dom.isTag(n, ['hr', 'style']));
         };
         return _this;
     }
@@ -23264,7 +23515,7 @@ var WrapTextNodes = (function (_super) {
             }
         }
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], WrapTextNodes.prototype, "postProcessSetEditorValue", null);
     return WrapTextNodes;
@@ -23273,7 +23524,7 @@ exports.WrapTextNodes = WrapTextNodes;
 
 
 /***/ }),
-/* 247 */
+/* 259 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -23285,15 +23536,15 @@ exports.WrapTextNodes = WrapTextNodes;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(248);
-tslib_1.__exportStar(__webpack_require__(250), exports);
-tslib_1.__exportStar(__webpack_require__(251), exports);
-tslib_1.__exportStar(__webpack_require__(252), exports);
-tslib_1.__exportStar(__webpack_require__(254), exports);
+__webpack_require__(260);
+(0, tslib_1.__exportStar)(__webpack_require__(262), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(263), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(264), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(266), exports);
 
 
 /***/ }),
-/* 248 */
+/* 260 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -23309,8 +23560,8 @@ var tslib_1 = __webpack_require__(7);
 var config_1 = __webpack_require__(8);
 var constants_1 = __webpack_require__(9);
 var dialog_1 = __webpack_require__(163);
-var helpers_1 = __webpack_require__(249);
-var clipboard_1 = __webpack_require__(250);
+var helpers_1 = __webpack_require__(261);
+var clipboard_1 = __webpack_require__(262);
 config_1.Config.prototype.askBeforePasteHTML = true;
 config_1.Config.prototype.processPasteHTML = true;
 config_1.Config.prototype.askBeforePasteFromWord = true;
@@ -23334,9 +23585,9 @@ config_1.Config.prototype.controls.paste = {
     tooltip: 'Paste from clipboard',
     exec: function (editor, _, _a) {
         var control = _a.control;
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             var text, error, items, textBlob, e_1, e_2, value;
-            return tslib_1.__generator(this, function (_b) {
+            return (0, tslib_1.__generator)(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         if (control.name === psKey) {
@@ -23393,12 +23644,12 @@ config_1.Config.prototype.controls.paste = {
                             !error && editor.e.fire('afterPaste');
                         }
                         else if (text.length) {
-                            helpers_1.pasteInsertHtml(null, editor, text);
+                            (0, helpers_1.pasteInsertHtml)(null, editor, text);
                             editor.e.fire('afterPaste');
                         }
                         else {
                             if (error) {
-                                dialog_1.Alert(editor.i18n("Your browser doesn't support direct access to the clipboard."), function () {
+                                (0, dialog_1.Alert)(editor.i18n("Your browser doesn't support direct access to the clipboard."), function () {
                                     editor.s.focus();
                                 }).bindDestruct(editor);
                             }
@@ -23423,7 +23674,7 @@ config_1.Config.prototype.controls.selectall = {
 
 
 /***/ }),
-/* 249 */
+/* 261 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -23470,11 +23721,11 @@ function pasteInsertHtml(e, editor, html) {
         editor.s.insertCursorAtPoint(e.clientX, e.clientY);
     }
     var result = editor.e.fire('beforePasteInsert', html);
-    if (!helpers_1.isVoid(result) &&
-        (helpers_1.isString(result) || helpers_1.isNumber(result) || dom_1.Dom.isNode(result, editor.ew))) {
+    if (!(0, helpers_1.isVoid)(result) &&
+        ((0, helpers_1.isString)(result) || (0, helpers_1.isNumber)(result) || dom_1.Dom.isNode(result))) {
         html = result;
     }
-    if (helpers_1.isString(html)) {
+    if ((0, helpers_1.isString)(html)) {
         html = removeExtraFragments(html);
     }
     editor.s.insertHTML(html);
@@ -23483,7 +23734,7 @@ exports.pasteInsertHtml = pasteInsertHtml;
 function getAllTypes(dt) {
     var types = dt.types;
     var types_str = '';
-    if (helpers_1.isArray(types) ||
+    if ((0, helpers_1.isArray)(types) ||
         {}.toString.call(types) === '[object DOMStringList]') {
         for (var i = 0; i < types.length; i += 1) {
             types_str += types[i] + ';';
@@ -23498,7 +23749,7 @@ exports.getAllTypes = getAllTypes;
 
 
 /***/ }),
-/* 250 */
+/* 262 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -23512,7 +23763,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.clipboard = exports.pluginKey = void 0;
 var constants_1 = __webpack_require__(9);
 var helpers_1 = __webpack_require__(19);
-var helpers_2 = __webpack_require__(249);
+var helpers_2 = __webpack_require__(261);
 exports.pluginKey = 'clipboard';
 var clipboard = (function () {
     function clipboard() {
@@ -23543,11 +23794,11 @@ var clipboard = (function () {
             .on("copy." + exports.pluginKey + " cut." + exports.pluginKey, function (event) {
             var _a;
             var selectedText = editor.s.html;
-            var clipboardData = helpers_2.getDataTransfer(event) ||
-                helpers_2.getDataTransfer(editor.ew) ||
-                helpers_2.getDataTransfer(event.originalEvent);
+            var clipboardData = (0, helpers_2.getDataTransfer)(event) ||
+                (0, helpers_2.getDataTransfer)(editor.ew) ||
+                (0, helpers_2.getDataTransfer)(event.originalEvent);
             if (clipboardData) {
-                clipboardData.setData(constants_1.TEXT_PLAIN, helpers_1.stripTags(selectedText));
+                clipboardData.setData(constants_1.TEXT_PLAIN, (0, helpers_1.stripTags)(selectedText));
                 clipboardData.setData(constants_1.TEXT_HTML, selectedText);
             }
             editor.buffer.set(exports.pluginKey, selectedText);
@@ -23574,7 +23825,7 @@ exports.clipboard = clipboard;
 
 
 /***/ }),
-/* 251 */
+/* 263 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -23588,16 +23839,16 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.paste = void 0;
 var tslib_1 = __webpack_require__(7);
 var plugin_1 = __webpack_require__(184);
-var helpers_1 = __webpack_require__(249);
+var helpers_1 = __webpack_require__(261);
 var constants_1 = __webpack_require__(9);
 var helpers_2 = __webpack_require__(19);
-var clipboard_1 = __webpack_require__(250);
+var clipboard_1 = __webpack_require__(262);
 var dom_1 = __webpack_require__(32);
 var dialog_1 = __webpack_require__(163);
 var button_1 = __webpack_require__(92);
 var decorators_1 = __webpack_require__(99);
 var paste = (function (_super) {
-    tslib_1.__extends(paste, _super);
+    (0, tslib_1.__extends)(paste, _super);
     function paste() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.pasteStack = new helpers_2.LimitedStack(20);
@@ -23628,27 +23879,37 @@ var paste = (function (_super) {
         }
     };
     paste.prototype.customPasteProcess = function (e) {
+        var e_1, _a;
         if (!this.j.o.processPasteHTML) {
             return;
         }
-        var dt = helpers_1.getDataTransfer(e), texts = [dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_HTML), dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_PLAIN)];
-        for (var _i = 0, texts_1 = texts; _i < texts_1.length; _i++) {
-            var text = texts_1[_i];
-            if (helpers_2.isHTML(text) &&
-                (this.processWordHTML(e, text) || this.processHTML(e, text))) {
-                return false;
+        var dt = (0, helpers_1.getDataTransfer)(e), texts = [dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_HTML), dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_PLAIN)];
+        try {
+            for (var texts_1 = (0, tslib_1.__values)(texts), texts_1_1 = texts_1.next(); !texts_1_1.done; texts_1_1 = texts_1.next()) {
+                var text = texts_1_1.value;
+                if ((0, helpers_2.isHTML)(text) &&
+                    (this.processWordHTML(e, text) || this.processHTML(e, text))) {
+                    return false;
+                }
             }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (texts_1_1 && !texts_1_1.done && (_a = texts_1.return)) _a.call(texts_1);
+            }
+            finally { if (e_1) throw e_1.error; }
         }
     };
     paste.prototype.defaultPasteProcess = function (e) {
-        var dt = helpers_1.getDataTransfer(e);
+        var dt = (0, helpers_1.getDataTransfer)(e);
         var text = (dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_HTML)) || (dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_PLAIN));
-        if (dt && text && helpers_2.trim(text) !== '') {
-            var result = this.j.e.fire('processPaste', e, text, helpers_1.getAllTypes(dt));
+        if (dt && text && (0, helpers_2.trim)(text) !== '') {
+            var result = this.j.e.fire('processPaste', e, text, (0, helpers_1.getAllTypes)(dt));
             if (result !== undefined) {
                 text = result;
             }
-            if (helpers_2.isString(text) || dom_1.Dom.isNode(text, this.j.ew)) {
+            if ((0, helpers_2.isString)(text) || dom_1.Dom.isNode(text)) {
                 this.insertByType(e, text, this.j.o.defaultActionOnPaste);
             }
             e.preventDefault();
@@ -23657,7 +23918,7 @@ var paste = (function (_super) {
     };
     paste.prototype.processWordHTML = function (e, text) {
         var _this = this;
-        if (this.j.o.processPasteFromWord && helpers_2.isHtmlFromWord(text)) {
+        if (this.j.o.processPasteFromWord && (0, helpers_2.isHtmlFromWord)(text)) {
             if (this.j.o.askBeforePasteFromWord) {
                 this.askInsertTypeDialog('The pasted content is coming from a Microsoft Word/Excel document. ' +
                     'Do you want to keep the format or clean it up?', 'Word Paste Detected', function (insertType) {
@@ -23691,44 +23952,44 @@ var paste = (function (_super) {
         var _a;
         switch (insertType) {
             case constants_1.INSERT_AS_HTML: {
-                html = helpers_2.applyStyles(html);
+                html = (0, helpers_2.applyStyles)(html);
                 if (this.j.o.beautifyHTML) {
                     var value = (_a = this.j.events) === null || _a === void 0 ? void 0 : _a.fire('beautifyHTML', html);
-                    if (helpers_2.isString(value)) {
+                    if ((0, helpers_2.isString)(value)) {
                         html = value;
                     }
                 }
                 break;
             }
             case constants_1.INSERT_AS_TEXT: {
-                html = helpers_2.cleanFromWord(html);
+                html = (0, helpers_2.cleanFromWord)(html);
                 break;
             }
             case constants_1.INSERT_ONLY_TEXT: {
-                html = helpers_2.stripTags(helpers_2.cleanFromWord(html));
+                html = (0, helpers_2.stripTags)((0, helpers_2.cleanFromWord)(html));
                 break;
             }
         }
-        helpers_1.pasteInsertHtml(e, this.j, html);
+        (0, helpers_1.pasteInsertHtml)(e, this.j, html);
     };
     paste.prototype.insertByType = function (e, html, action) {
         this.pasteStack.push({ html: html, action: action });
-        if (helpers_2.isString(html)) {
+        if ((0, helpers_2.isString)(html)) {
             this.j.buffer.set(clipboard_1.pluginKey, html);
             switch (action) {
                 case constants_1.INSERT_CLEAR_HTML:
-                    html = helpers_2.cleanFromWord(html);
+                    html = (0, helpers_2.cleanFromWord)(html);
                     break;
                 case constants_1.INSERT_ONLY_TEXT:
-                    html = helpers_2.stripTags(html);
+                    html = (0, helpers_2.stripTags)(html);
                     break;
                 case constants_1.INSERT_AS_TEXT:
-                    html = helpers_2.htmlspecialchars(html);
+                    html = (0, helpers_2.htmlspecialchars)(html);
                     break;
                 default:
             }
         }
-        helpers_1.pasteInsertHtml(e, this.j, html);
+        (0, helpers_1.pasteInsertHtml)(e, this.j, html);
     };
     paste.prototype.askInsertTypeDialog = function (msg, title, callback, clearButton, insertText) {
         var _a, _b, _c, _d;
@@ -23737,24 +23998,24 @@ var paste = (function (_super) {
         if (((_b = (_a = this.j) === null || _a === void 0 ? void 0 : _a.e) === null || _b === void 0 ? void 0 : _b.fire('beforeOpenPasteDialog', msg, title, callback, clearButton, insertText)) === false) {
             return;
         }
-        var dialog = dialog_1.Confirm("<div style=\"word-break: normal; white-space: normal\">" + this.j.i18n(msg) + "</div>", this.j.i18n(title));
+        var dialog = (0, dialog_1.Confirm)("<div style=\"word-break: normal; white-space: normal\">" + this.j.i18n(msg) + "</div>", this.j.i18n(title));
         dialog.bindDestruct(this.j);
-        helpers_2.markOwner(this.j, dialog.container);
-        var keep = button_1.Button(this.j, {
+        (0, helpers_2.markOwner)(this.j, dialog.container);
+        var keep = (0, button_1.Button)(this.j, {
             text: 'Keep',
             name: 'keep',
             status: 'primary',
             tabIndex: 0
         });
-        var clear = button_1.Button(this.j, {
+        var clear = (0, button_1.Button)(this.j, {
             text: clearButton,
             tabIndex: 0
         });
-        var clear2 = button_1.Button(this.j, {
+        var clear2 = (0, button_1.Button)(this.j, {
             text: insertText,
             tabIndex: 0
         });
-        var cancel = button_1.Button(this.j, {
+        var cancel = (0, button_1.Button)(this.j, {
             text: 'Cancel',
             tabIndex: 0
         });
@@ -23778,60 +24039,18 @@ var paste = (function (_super) {
         (_d = (_c = this.j) === null || _c === void 0 ? void 0 : _c.e) === null || _d === void 0 ? void 0 : _d.fire('afterOpenPasteDialog', dialog, msg, title, callback, clearButton, insertText);
         return dialog;
     };
-    paste.prototype.onProcessPasteReplaceNl2Br = function (event, text, type) {
-        if (type === constants_1.TEXT_PLAIN + ';' && !helpers_2.isHTML(text)) {
-            return helpers_2.nl2br(text);
+    paste.prototype.onProcessPasteReplaceNl2Br = function (ignore, text, type) {
+        if (type === constants_1.TEXT_PLAIN + ';' && !(0, helpers_2.isHTML)(text)) {
+            return (0, helpers_2.nl2br)(text);
         }
-    };
-    paste.prototype.useFakeDivBox = function (event) {
-        var _this = this;
-        var div = this.j.c.div('', {
-            tabindex: -1,
-            contenteditable: true,
-            style: {
-                left: -9999,
-                top: 0,
-                width: 0,
-                height: '100%',
-                lineHeight: '140%',
-                overflow: 'hidden',
-                position: 'fixed',
-                zIndex: 2147483647,
-                wordBreak: 'break-all'
-            }
-        });
-        this.j.container.appendChild(div);
-        this.j.s.save();
-        div.focus();
-        var tick = 0;
-        var removeFakeFocus = function () {
-            dom_1.Dom.safeRemove(div);
-            _this.j.selection && _this.j.s.restore();
-        };
-        var waitData = function () {
-            tick += 1;
-            if (div.childNodes && div.childNodes.length > 0) {
-                var pastedData = div.innerHTML;
-                removeFakeFocus();
-                _this.processHTML(event, pastedData);
-                return;
-            }
-            if (tick < 5) {
-                _this.j.async.setTimeout(waitData, 20);
-            }
-            else {
-                removeFakeFocus();
-            }
-        };
-        waitData();
     };
     paste.prototype.beforeDestruct = function (jodit) {
         jodit.e.off('paste.paste', this.onPaste);
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], paste.prototype, "onPaste", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], paste.prototype, "onProcessPasteReplaceNl2Br", null);
     return paste;
@@ -23840,7 +24059,7 @@ exports.paste = paste;
 
 
 /***/ }),
-/* 252 */
+/* 264 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -23853,14 +24072,14 @@ exports.paste = paste;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.pasteStorage = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(253);
+__webpack_require__(265);
 var constants_1 = __webpack_require__(9);
 var dialog_1 = __webpack_require__(163);
 var plugin_1 = __webpack_require__(184);
 var dom_1 = __webpack_require__(32);
 var helpers_1 = __webpack_require__(19);
 var pasteStorage = (function (_super) {
-    tslib_1.__extends(pasteStorage, _super);
+    (0, tslib_1.__extends)(pasteStorage, _super);
     function pasteStorage() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.currentIndex = 0;
@@ -23914,7 +24133,7 @@ var pasteStorage = (function (_super) {
         };
         _this.selectIndex = function (index) {
             if (_this.listBox) {
-                helpers_1.toArray(_this.listBox.childNodes).forEach(function (a, i) {
+                (0, helpers_1.toArray)(_this.listBox.childNodes).forEach(function (a, i) {
                     a.classList.remove('jodit_active');
                     if (index === i && _this.previewBox) {
                         a.classList.add('jodit_active');
@@ -23939,11 +24158,11 @@ var pasteStorage = (function (_super) {
             _this.list.forEach(function (html, index) {
                 var a = _this.j.c.element('a');
                 a.textContent =
-                    index + 1 + '. ' + html.replace(constants_1.SPACE_REG_EXP(), '');
+                    index + 1 + '. ' + html.replace((0, constants_1.SPACE_REG_EXP)(), '');
                 _this.j.e.on(a, 'keydown', _this.onKeyDown);
-                helpers_1.attr(a, 'href', 'javascript:void(0)');
-                helpers_1.attr(a, 'data-index', index.toString());
-                helpers_1.attr(a, 'tab-index', '-1');
+                (0, helpers_1.attr)(a, 'href', 'javascript:void(0)');
+                (0, helpers_1.attr)(a, 'data-index', index.toString());
+                (0, helpers_1.attr)(a, 'tab-index', '-1');
                 _this.listBox && _this.listBox.appendChild(a);
             });
             _this.dialog && _this.dialog.open();
@@ -23982,7 +24201,7 @@ var pasteStorage = (function (_super) {
         this.j.e.on(this.listBox, 'click dblclick', function (e) {
             var a = e.target;
             if (dom_1.Dom.isTag(a, 'a') && a.hasAttribute('data-index')) {
-                _this.selectIndex(parseInt(helpers_1.attr(a, '-index') || '0', 10));
+                _this.selectIndex(parseInt((0, helpers_1.attr)(a, '-index') || '0', 10));
             }
             if (e.type === 'dblclick') {
                 _this.paste();
@@ -24027,7 +24246,7 @@ exports.pasteStorage = pasteStorage;
 
 
 /***/ }),
-/* 253 */
+/* 265 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -24036,7 +24255,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 254 */
+/* 266 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -24068,7 +24287,7 @@ var copyStyles = [
     'fontFamily'
 ];
 var getStyle = function (editor, key, box, defaultStyles) {
-    var result = helpers_1.css(box, key);
+    var result = (0, helpers_1.css)(box, key);
     if (result === defaultStyles[key]) {
         if (box.parentNode &&
             box !== editor.editor &&
@@ -24108,7 +24327,7 @@ config_1.Config.prototype.controls.copyformat = {
             var ideal_1 = editor.createInside.span();
             editor.editor.appendChild(ideal_1);
             copyStyles.forEach(function (key) {
-                defaultStyles_1[key] = helpers_1.css(ideal_1, key);
+                defaultStyles_1[key] = (0, helpers_1.css)(ideal_1, key);
             });
             if (ideal_1 !== editor.editor) {
                 dom_1.Dom.safeRemove(ideal_1);
@@ -24119,7 +24338,7 @@ config_1.Config.prototype.controls.copyformat = {
                 var currentNode = editor.s.current();
                 if (currentNode) {
                     if (dom_1.Dom.isTag(currentNode, 'img')) {
-                        helpers_1.css(currentNode, format_1);
+                        (0, helpers_1.css)(currentNode, format_1);
                     }
                     else {
                         editor.s.applyStyle(format_1);
@@ -24145,7 +24364,7 @@ exports.copyFormat = copyFormat;
 
 
 /***/ }),
-/* 255 */
+/* 267 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -24160,47 +24379,42 @@ exports.color = void 0;
 var config_1 = __webpack_require__(8);
 var modules_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(19);
-var widget_1 = __webpack_require__(256);
+var widget_1 = __webpack_require__(268);
 config_1.Config.prototype.controls.brush = {
     update: function (button) {
-        var color = helpers_1.dataBind(button, 'color');
+        var color = (0, helpers_1.dataBind)(button, 'color');
         var editor = button.j;
         var update = function (key, value) {
-            if (value && value !== helpers_1.css(editor.editor, key).toString()) {
+            if (value && value !== (0, helpers_1.css)(editor.editor, key).toString()) {
                 button.state.icon.fill = value;
                 return;
             }
         };
         if (color) {
-            var mode = helpers_1.dataBind(button, 'color');
+            var mode = (0, helpers_1.dataBind)(button, 'color');
             update(mode === 'color' ? mode : 'background-color', color);
             return;
         }
         var current = editor.s.current();
         if (current && !button.state.disabled) {
-            var currentBpx = modules_1.Dom.closest(current, function (elm) {
-                return (modules_1.Dom.isBlock(elm, editor.ew) ||
-                    (elm && modules_1.Dom.isElement(elm)));
-            }, editor.editor) || editor.editor;
-            update('color', helpers_1.css(currentBpx, 'color').toString());
-            update('background-color', helpers_1.css(currentBpx, 'background-color').toString());
+            var currentBpx = modules_1.Dom.closest(current, modules_1.Dom.isElement, editor.editor) || editor.editor;
+            update('color', (0, helpers_1.css)(currentBpx, 'color').toString());
+            update('background-color', (0, helpers_1.css)(currentBpx, 'background-color').toString());
         }
         button.state.icon.fill = '';
         button.state.activated = false;
     },
     popup: function (editor, current, self, close, button) {
         var colorHEX = '', bg_color = '', tabs = [], currentElement = null;
-        if (current &&
-            current !== editor.editor &&
-            modules_1.Dom.isNode(current, editor.ew)) {
+        if (current && current !== editor.editor && modules_1.Dom.isNode(current)) {
             if (modules_1.Dom.isElement(current) &&
                 editor.s.isCollapsed() &&
                 !modules_1.Dom.isTag(current, ['br', 'hr'])) {
                 currentElement = current;
             }
             modules_1.Dom.up(current, function (node) {
-                if (modules_1.Dom.isHTMLElement(node, editor.ew)) {
-                    var color_1 = helpers_1.css(node, 'color', undefined, true), background = helpers_1.css(node, 'background-color', undefined, true);
+                if (modules_1.Dom.isHTMLElement(node)) {
+                    var color_1 = (0, helpers_1.css)(node, 'color', true), background = (0, helpers_1.css)(node, 'background-color', true);
                     if (color_1) {
                         colorHEX = color_1.toString();
                         return true;
@@ -24212,26 +24426,26 @@ config_1.Config.prototype.controls.brush = {
                 }
             }, editor.editor);
         }
-        var backgroundTag = widget_1.ColorPickerWidget(editor, function (value) {
+        var backgroundTag = (0, widget_1.ColorPickerWidget)(editor, function (value) {
             if (!currentElement) {
                 editor.execCommand('background', false, value);
             }
             else {
                 currentElement.style.backgroundColor = value;
             }
-            helpers_1.dataBind(button, 'color', value);
-            helpers_1.dataBind(button, 'color-mode', 'background');
+            (0, helpers_1.dataBind)(button, 'color', value);
+            (0, helpers_1.dataBind)(button, 'color-mode', 'background');
             close();
         }, bg_color);
-        var colorTab = widget_1.ColorPickerWidget(editor, function (value) {
+        var colorTab = (0, widget_1.ColorPickerWidget)(editor, function (value) {
             if (!currentElement) {
                 editor.execCommand('forecolor', false, value);
             }
             else {
                 currentElement.style.color = value;
             }
-            helpers_1.dataBind(button, 'color', value);
-            helpers_1.dataBind(button, 'color-mode', 'color');
+            (0, helpers_1.dataBind)(button, 'color', value);
+            (0, helpers_1.dataBind)(button, 'color-mode', 'color');
             close();
         }, colorHEX);
         tabs = [
@@ -24247,17 +24461,17 @@ config_1.Config.prototype.controls.brush = {
         if (editor.o.colorPickerDefaultTab !== 'background') {
             tabs = tabs.reverse();
         }
-        return widget_1.TabsWidget(editor, tabs, currentElement);
+        return (0, widget_1.TabsWidget)(editor, tabs, currentElement);
     },
     exec: function (jodit, current, _a) {
         var button = _a.button;
-        var mode = helpers_1.dataBind(button, 'color-mode'), color = helpers_1.dataBind(button, 'color');
+        var mode = (0, helpers_1.dataBind)(button, 'color-mode'), color = (0, helpers_1.dataBind)(button, 'color');
         if (!mode) {
             return false;
         }
         if (current &&
             current !== jodit.editor &&
-            modules_1.Dom.isNode(current, jodit.ew) &&
+            modules_1.Dom.isNode(current) &&
             modules_1.Dom.isElement(current)) {
             switch (mode) {
                 case 'color':
@@ -24280,7 +24494,7 @@ function color(editor) {
         group: 'color'
     });
     var callback = function (command, second, third) {
-        var colorHEX = helpers_1.normalizeColor(third);
+        var colorHEX = (0, helpers_1.normalizeColor)(third);
         switch (command) {
             case 'background':
                 editor.s.applyStyle({
@@ -24304,7 +24518,7 @@ exports.color = color;
 
 
 /***/ }),
-/* 256 */
+/* 268 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -24316,13 +24530,13 @@ exports.color = color;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(257), exports);
-tslib_1.__exportStar(__webpack_require__(259), exports);
-tslib_1.__exportStar(__webpack_require__(261), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(269), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(271), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(273), exports);
 
 
 /***/ }),
-/* 257 */
+/* 269 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -24334,16 +24548,16 @@ tslib_1.__exportStar(__webpack_require__(261), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ColorPickerWidget = void 0;
-__webpack_require__(258);
+__webpack_require__(270);
 var helpers_1 = __webpack_require__(19);
 var ui_1 = __webpack_require__(75);
 var dom_1 = __webpack_require__(32);
 var ColorPickerWidget = function (editor, callback, coldColor) {
-    var valueHex = helpers_1.normalizeColor(coldColor), form = editor.c.div('jodit-color-picker'), iconPalette = editor.o.textIcons
+    var valueHex = (0, helpers_1.normalizeColor)(coldColor), form = editor.c.div('jodit-color-picker'), iconPalette = editor.o.textIcons
         ? "<span>" + editor.i18n('palette') + "</span>"
         : ui_1.Icon.get('palette'), eachColor = function (colors) {
         var stack = [];
-        if (helpers_1.isPlainObject(colors)) {
+        if ((0, helpers_1.isPlainObject)(colors)) {
             Object.keys(colors).forEach(function (key) {
                 stack.push('<div class="jodit-color-picker__group jodit-color-picker__group-' +
                     key +
@@ -24352,7 +24566,7 @@ var ColorPickerWidget = function (editor, callback, coldColor) {
                 stack.push('</div>');
             });
         }
-        else if (helpers_1.isArray(colors)) {
+        else if ((0, helpers_1.isArray)(colors)) {
             colors.forEach(function (color) {
                 stack.push('<a ' +
                     (valueHex === color
@@ -24373,8 +24587,8 @@ var ColorPickerWidget = function (editor, callback, coldColor) {
         eachColor(editor.o.colors) +
         '</div>'));
     form.appendChild(editor.c.fromHTML('<div data-ref="extra" class="jodit-color-picker__extra"></div>'));
-    var extra = helpers_1.refs(form).extra;
-    if (editor.o.showBrowserColorPicker && helpers_1.hasBrowserColorPicker()) {
+    var extra = (0, helpers_1.refs)(form).extra;
+    if (editor.o.showBrowserColorPicker && (0, helpers_1.hasBrowserColorPicker)()) {
         extra.appendChild(editor.c.fromHTML('<div class="jodit-color-picker__native">' +
             iconPalette +
             '<input type="color" value="#ffffff"/>' +
@@ -24386,7 +24600,7 @@ var ColorPickerWidget = function (editor, callback, coldColor) {
                 return;
             }
             var color = target.value || '';
-            if (helpers_1.isFunction(callback)) {
+            if ((0, helpers_1.isFunction)(callback)) {
                 callback(color);
             }
             e.preventDefault();
@@ -24405,7 +24619,7 @@ var ColorPickerWidget = function (editor, callback, coldColor) {
         if (!dom_1.Dom.isTag(target, 'a')) {
             return;
         }
-        var color = helpers_1.attr(target, '-color') || '';
+        var color = (0, helpers_1.attr)(target, '-color') || '';
         if (callback && typeof callback === 'function') {
             callback(color);
         }
@@ -24418,7 +24632,7 @@ exports.ColorPickerWidget = ColorPickerWidget;
 
 
 /***/ }),
-/* 258 */
+/* 270 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -24427,7 +24641,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 259 */
+/* 271 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -24439,7 +24653,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TabsWidget = void 0;
-__webpack_require__(260);
+__webpack_require__(272);
 var helpers_1 = __webpack_require__(19);
 var ui_1 = __webpack_require__(75);
 var TabsWidget = function (editor, tabs, state) {
@@ -24449,14 +24663,14 @@ var TabsWidget = function (editor, tabs, state) {
     box.appendChild(tabBox);
     tabs.forEach(function (_a) {
         var icon = _a.icon, name = _a.name, content = _a.content;
-        var tab = editor.c.div('jodit-tab'), button = ui_1.Button(editor, icon || name, name);
+        var tab = editor.c.div('jodit-tab'), button = (0, ui_1.Button)(editor, icon || name, name);
         if (!firstTab) {
             firstTab = name;
         }
         buttons.appendChild(button.container);
         buttonList.push(button);
         button.container.classList.add('jodit-tabs__button', 'jodit-tabs__button_columns_' + tabs.length);
-        if (!helpers_1.isFunction(content)) {
+        if (!(0, helpers_1.isFunction)(content)) {
             tab.appendChild(content);
         }
         else {
@@ -24467,12 +24681,12 @@ var TabsWidget = function (editor, tabs, state) {
             buttonList.forEach(function (b) {
                 b.state.activated = false;
             });
-            helpers_1.$$('.jodit-tab', tabBox).forEach(function (a) {
+            (0, helpers_1.$$)('.jodit-tab', tabBox).forEach(function (a) {
                 a.classList.remove('jodit-tab_active');
             });
             button.state.activated = true;
             tab.classList.add('jodit-tab_active');
-            if (helpers_1.isFunction(content)) {
+            if ((0, helpers_1.isFunction)(content)) {
                 content.call(editor);
             }
             if (state) {
@@ -24489,7 +24703,7 @@ var TabsWidget = function (editor, tabs, state) {
     if (!tabcount) {
         return box;
     }
-    helpers_1.$$('a', buttons).forEach(function (a) {
+    (0, helpers_1.$$)('a', buttons).forEach(function (a) {
         a.style.width = (100 / tabcount).toFixed(10) + '%';
     });
     var tab = !state || !state.__activeTab || !nameToTab[state.__activeTab]
@@ -24503,7 +24717,7 @@ exports.TabsWidget = TabsWidget;
 
 
 /***/ }),
-/* 260 */
+/* 272 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -24512,7 +24726,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 261 */
+/* 273 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -24526,7 +24740,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.FileSelectorWidget = void 0;
 var helpers_1 = __webpack_require__(19);
 var dom_1 = __webpack_require__(32);
-var tabs_1 = __webpack_require__(259);
+var tabs_1 = __webpack_require__(271);
 var ui_1 = __webpack_require__(75);
 var FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
     if (isImage === void 0) { isImage = true; }
@@ -24541,10 +24755,10 @@ var FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
             ("<input type=\"file\" accept=\"" + (isImage ? 'image/*' : '*') + "\" tabindex=\"-1\" dir=\"auto\" multiple=\"\"/>") +
             '</div>');
         editor.uploader.bind(dragBox, function (resp) {
-            var handler = helpers_1.isFunction(callbacks.upload)
+            var handler = (0, helpers_1.isFunction)(callbacks.upload)
                 ? callbacks.upload
                 : editor.o.uploader.defaultHandlerSuccess;
-            if (helpers_1.isFunction(handler)) {
+            if ((0, helpers_1.isFunction)(handler)) {
                 handler.call(editor, resp);
             }
             editor.e.fire('closeAllPopups');
@@ -24594,19 +24808,19 @@ var FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
         currentImage = null;
         if (elm &&
             !dom_1.Dom.isText(elm) &&
-            (dom_1.Dom.isTag(elm, 'img') || helpers_1.$$('img', elm).length)) {
-            currentImage = elm.tagName === 'IMG' ? elm : helpers_1.$$('img', elm)[0];
-            helpers_1.val(form.container, 'input[name=url]', helpers_1.attr(currentImage, 'src'));
-            helpers_1.val(form.container, 'input[name=text]', helpers_1.attr(currentImage, 'alt'));
+            (dom_1.Dom.isTag(elm, 'img') || (0, helpers_1.$$)('img', elm).length)) {
+            currentImage = elm.tagName === 'IMG' ? elm : (0, helpers_1.$$)('img', elm)[0];
+            (0, helpers_1.val)(form.container, 'input[name=url]', (0, helpers_1.attr)(currentImage, 'src'));
+            (0, helpers_1.val)(form.container, 'input[name=text]', (0, helpers_1.attr)(currentImage, 'alt'));
             button.state.text = 'Update';
         }
         if (elm && dom_1.Dom.isTag(elm, 'a')) {
-            helpers_1.val(form.container, 'input[name=url]', helpers_1.attr(elm, 'href'));
-            helpers_1.val(form.container, 'input[name=text]', helpers_1.attr(elm, 'title'));
+            (0, helpers_1.val)(form.container, 'input[name=url]', (0, helpers_1.attr)(elm, 'href'));
+            (0, helpers_1.val)(form.container, 'input[name=text]', (0, helpers_1.attr)(elm, 'title'));
             button.state.text = 'Update';
         }
         form.onSubmit(function (data) {
-            if (helpers_1.isFunction(callbacks.url)) {
+            if ((0, helpers_1.isFunction)(callbacks.url)) {
                 callbacks.url.call(editor, data.url, data.text);
             }
         });
@@ -24616,13 +24830,13 @@ var FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
             content: form.container
         });
     }
-    return tabs_1.TabsWidget(editor, tabs);
+    return (0, tabs_1.TabsWidget)(editor, tabs);
 };
 exports.FileSelectorWidget = FileSelectorWidget;
 
 
 /***/ }),
-/* 262 */
+/* 274 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -24639,10 +24853,10 @@ var constants_1 = __webpack_require__(9);
 var dom_1 = __webpack_require__(32);
 var helpers_1 = __webpack_require__(19);
 var plugin_1 = __webpack_require__(184);
-var helpers_2 = __webpack_require__(249);
+var helpers_2 = __webpack_require__(261);
 var decorators_1 = __webpack_require__(99);
 var DragAndDrop = (function (_super) {
-    tslib_1.__extends(DragAndDrop, _super);
+    (0, tslib_1.__extends)(DragAndDrop, _super);
     function DragAndDrop() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.isFragmentFromEditor = false;
@@ -24651,7 +24865,7 @@ var DragAndDrop = (function (_super) {
         _this.draggable = null;
         _this.bufferRange = null;
         _this.getText = function (event) {
-            var dt = helpers_2.getDataTransfer(event);
+            var dt = (0, helpers_2.getDataTransfer)(event);
             return dt ? dt.getData(constants_1.TEXT_HTML) || dt.getData(constants_1.TEXT_PLAIN) : null;
         };
         return _this;
@@ -24663,7 +24877,7 @@ var DragAndDrop = (function (_super) {
         var target = event.target;
         this.onDragEnd();
         this.isFragmentFromEditor = dom_1.Dom.isOrContains(this.j.editor, target, true);
-        this.isCopyMode = this.isFragmentFromEditor ? helpers_1.ctrlKey(event) : true;
+        this.isCopyMode = this.isFragmentFromEditor ? (0, helpers_1.ctrlKey)(event) : true;
         if (this.isFragmentFromEditor) {
             var sel = this.j.s.sel;
             var range = sel && sel.rangeCount ? sel.getRangeAt(0) : null;
@@ -24682,7 +24896,7 @@ var DragAndDrop = (function (_super) {
         }
         if (dom_1.Dom.isTag(target, 'img')) {
             this.draggable = target.cloneNode(true);
-            helpers_1.dataBind(this.draggable, 'target', target);
+            (0, helpers_1.dataBind)(this.draggable, 'target', target);
         }
         this.addDragListeners();
     };
@@ -24735,19 +24949,19 @@ var DragAndDrop = (function (_super) {
             }
             else if (this.draggable) {
                 if (this.isCopyMode) {
-                    var _a = helpers_1.attr(this.draggable, '-is-file') === '1'
+                    var _a = (0, tslib_1.__read)((0, helpers_1.attr)(this.draggable, '-is-file') === '1'
                         ? ['a', 'href']
-                        : ['img', 'src'], tagName = _a[0], field = _a[1];
+                        : ['img', 'src'], 2), tagName = _a[0], field = _a[1];
                     fragment = this.j.createInside.element(tagName);
-                    fragment.setAttribute(field, helpers_1.attr(this.draggable, 'data-src') ||
-                        helpers_1.attr(this.draggable, 'src') ||
+                    fragment.setAttribute(field, (0, helpers_1.attr)(this.draggable, 'data-src') ||
+                        (0, helpers_1.attr)(this.draggable, 'src') ||
                         '');
                     if (tagName === 'a') {
-                        fragment.textContent = helpers_1.attr(fragment, field) || '';
+                        fragment.textContent = (0, helpers_1.attr)(fragment, field) || '';
                     }
                 }
                 else {
-                    fragment = helpers_1.dataBind(this.draggable, 'target');
+                    fragment = (0, helpers_1.dataBind)(this.draggable, 'target');
                 }
             }
             else if (this.getText(event)) {
@@ -24780,16 +24994,16 @@ var DragAndDrop = (function (_super) {
             .off('.DragAndDrop')
             .off([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart);
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], DragAndDrop.prototype, "onDragStart", null);
-    tslib_1.__decorate([
-        decorators_1.throttle(function (ctx) { return ctx.j.defaultTimeout / 10; })
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.throttle)(function (ctx) { return ctx.j.defaultTimeout / 10; })
     ], DragAndDrop.prototype, "onDrag", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], DragAndDrop.prototype, "onDragEnd", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], DragAndDrop.prototype, "onDrop", null);
     return DragAndDrop;
@@ -24798,7 +25012,7 @@ exports.DragAndDrop = DragAndDrop;
 
 
 /***/ }),
-/* 263 */
+/* 275 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -24817,7 +25031,7 @@ var dom_1 = __webpack_require__(32);
 var global_1 = __webpack_require__(30);
 var decorators_1 = __webpack_require__(99);
 var DragAndDropElement = (function (_super) {
-    tslib_1.__extends(DragAndDropElement, _super);
+    (0, tslib_1.__extends)(DragAndDropElement, _super);
     function DragAndDropElement() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.dragList = [];
@@ -24831,7 +25045,7 @@ var DragAndDropElement = (function (_super) {
     }
     DragAndDropElement.prototype.afterInit = function () {
         this.dragList = this.j.o.draggableTags
-            ? helpers_1.splitArray(this.j.o.draggableTags)
+            ? (0, helpers_1.splitArray)(this.j.o.draggableTags)
                 .filter(Boolean)
                 .map(function (item) { return item.toLowerCase(); })
             : [];
@@ -24859,10 +25073,10 @@ var DragAndDropElement = (function (_super) {
         }
         this.startX = event.clientX;
         this.startY = event.clientY;
-        this.isCopyMode = helpers_1.ctrlKey(event);
+        this.isCopyMode = (0, helpers_1.ctrlKey)(event);
         this.onDragEnd();
         this.draggable = lastTarget.cloneNode(true);
-        helpers_1.dataBind(this.draggable, 'target', lastTarget);
+        (0, helpers_1.dataBind)(this.draggable, 'target', lastTarget);
         this.addDragListeners();
     };
     DragAndDropElement.prototype.onDrag = function (event) {
@@ -24877,8 +25091,8 @@ var DragAndDropElement = (function (_super) {
         this.wasMoved = true;
         this.j.e.fire('hidePopup hideResizer');
         if (!this.draggable.parentNode) {
-            var target = helpers_1.dataBind(this.draggable, 'target');
-            helpers_1.css(this.draggable, {
+            var target = (0, helpers_1.dataBind)(this.draggable, 'target');
+            (0, helpers_1.css)(this.draggable, {
                 zIndex: 10000000000000,
                 pointerEvents: 'none',
                 pointer: 'drag',
@@ -24890,9 +25104,9 @@ var DragAndDropElement = (function (_super) {
                 width: (_a = target === null || target === void 0 ? void 0 : target.offsetWidth) !== null && _a !== void 0 ? _a : 100,
                 height: (_b = target === null || target === void 0 ? void 0 : target.offsetHeight) !== null && _b !== void 0 ? _b : 100
             });
-            global_1.getContainer(this.j, DragAndDropElement).appendChild(this.draggable);
+            (0, global_1.getContainer)(this.j, DragAndDropElement).appendChild(this.draggable);
         }
-        helpers_1.css(this.draggable, {
+        (0, helpers_1.css)(this.draggable, {
             left: event.clientX,
             top: event.clientY
         });
@@ -24914,7 +25128,7 @@ var DragAndDropElement = (function (_super) {
             this.onDragEnd();
             return;
         }
-        var fragment = helpers_1.dataBind(this.draggable, 'target');
+        var fragment = (0, helpers_1.dataBind)(this.draggable, 'target');
         this.onDragEnd();
         if (this.isCopyMode) {
             fragment = fragment.cloneNode(true);
@@ -24946,16 +25160,16 @@ var DragAndDropElement = (function (_super) {
         this.j.e.off('mousedown touchstart dragstart', this.onDragStart);
         this.removeDragListeners();
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], DragAndDropElement.prototype, "onDragStart", null);
-    tslib_1.__decorate([
-        decorators_1.throttle(function (ctx) { return ctx.j.defaultTimeout / 10; })
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.throttle)(function (ctx) { return ctx.j.defaultTimeout / 10; })
     ], DragAndDropElement.prototype, "onDrag", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], DragAndDropElement.prototype, "onDragEnd", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], DragAndDropElement.prototype, "onDrop", null);
     return DragAndDropElement;
@@ -24964,7 +25178,7 @@ exports.DragAndDropElement = DragAndDropElement;
 
 
 /***/ }),
-/* 264 */
+/* 276 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -24996,13 +25210,13 @@ var insertParagraph = function (editor, fake, wrapperTag, style) {
     range.collapse(true);
     editor.s.selectRange(range);
     dom_1.Dom.safeRemove(fake);
-    helpers_1.scrollIntoViewIfNeeded(p, editor.editor, editor.ed);
+    (0, helpers_1.scrollIntoViewIfNeeded)(p, editor.editor, editor.ed);
     (_a = editor.events) === null || _a === void 0 ? void 0 : _a.fire('synchro');
     return p;
 };
 exports.insertParagraph = insertParagraph;
 var enter = (function (_super) {
-    tslib_1.__extends(enter, _super);
+    (0, tslib_1.__extends)(enter, _super);
     function enter() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.brMode = false;
@@ -25053,7 +25267,7 @@ var enter = (function (_super) {
             currentBox = this.wrapText(current);
         }
         if (!currentBox || currentBox === current) {
-            exports.insertParagraph(editor, null, isLi ? 'li' : defaultTag);
+            (0, exports.insertParagraph)(editor, null, isLi ? 'li' : defaultTag);
             return false;
         }
         if (!this.checkUnsplittableBox(currentBox)) {
@@ -25074,7 +25288,7 @@ var enter = (function (_super) {
             else {
                 fake = sel.setCursorBefore(currentBox);
             }
-            exports.insertParagraph(editor, fake, this.defaultTag);
+            (0, exports.insertParagraph)(editor, fake, this.defaultTag);
             if (cursorOnTheLeft && !cursorOnTheRight) {
                 sel.setCursorIn(currentBox, true);
             }
@@ -25108,7 +25322,7 @@ var enter = (function (_super) {
             (!shiftKeyPressed && isMultiLineBlock)) {
             var br = this.j.createInside.element('br');
             this.j.s.insertNode(br, true);
-            helpers_1.scrollIntoViewIfNeeded(br, this.j.editor, this.j.ed);
+            (0, helpers_1.scrollIntoViewIfNeeded)(br, this.j.editor, this.j.ed);
             return false;
         }
         return true;
@@ -25131,13 +25345,11 @@ var enter = (function (_super) {
     };
     enter.prototype.hasPreviousBlock = function (current) {
         var editor = this.j;
-        return Boolean(dom_1.Dom.prev(current, function (elm) {
-            return dom_1.Dom.isBlock(elm, editor.ew) || dom_1.Dom.isImage(elm, editor.ew);
-        }, editor.editor));
+        return Boolean(dom_1.Dom.prev(current, function (elm) { return dom_1.Dom.isBlock(elm) || dom_1.Dom.isImage(elm); }, editor.editor));
     };
     enter.prototype.checkUnsplittableBox = function (currentBox) {
         var editor = this.j, sel = editor.selection;
-        if (!dom_1.Dom.canSplitBlock(currentBox, editor.ew)) {
+        if (!dom_1.Dom.canSplitBlock(currentBox)) {
             var br = editor.createInside.element('br');
             sel.insertNode(br, false);
             sel.setCursorAfter(br);
@@ -25168,8 +25380,8 @@ var enter = (function (_super) {
             fakeTextNode = this.j.s.setCursorBefore(ul);
         }
         dom_1.Dom.safeRemove(currentBox);
-        exports.insertParagraph(this.j, fakeTextNode, this.defaultTag);
-        if (!helpers_1.$$('li', ul).length) {
+        (0, exports.insertParagraph)(this.j, fakeTextNode, this.defaultTag);
+        if (!(0, helpers_1.$$)('li', ul).length) {
             dom_1.Dom.safeRemove(ul);
         }
     };
@@ -25182,7 +25394,53 @@ exports.enter = enter;
 
 
 /***/ }),
-/* 265 */
+/* 277 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.KeyArrowOutside = void 0;
+var tslib_1 = __webpack_require__(7);
+var plugin_1 = __webpack_require__(184);
+var decorators_1 = __webpack_require__(99);
+var constants_1 = __webpack_require__(9);
+var dom_1 = __webpack_require__(32);
+var helpers_1 = __webpack_require__(255);
+var KeyArrowOutside = (function (_super) {
+    (0, tslib_1.__extends)(KeyArrowOutside, _super);
+    function KeyArrowOutside() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    KeyArrowOutside.prototype.afterInit = function (jodit) { };
+    KeyArrowOutside.prototype.beforeDestruct = function (jodit) { };
+    KeyArrowOutside.prototype.onKeyDownArrow = function (e) {
+        var _a;
+        if (e.key !== constants_1.KEY_RIGHT || !this.j.selection.isCollapsed()) {
+            return;
+        }
+        var _b = this.j.selection.range, endContainer = _b.endContainer, endOffset = _b.endOffset;
+        if (!dom_1.Dom.isText(endContainer)) {
+            return;
+        }
+        if (((_a = endContainer.nodeValue) === null || _a === void 0 ? void 0 : _a.length) === endOffset) {
+            var parentNode = endContainer.parentNode;
+            if (dom_1.Dom.isInlineBlock(parentNode) &&
+                !(0, helpers_1.findNotEmptyNeighbor)(parentNode, false, this.j.editor)) {
+                dom_1.Dom.after(parentNode, this.j.createInside.text(constants_1.NBSP_SPACE));
+            }
+        }
+    };
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)(':keydown')
+    ], KeyArrowOutside.prototype, "onKeyDownArrow", null);
+    return KeyArrowOutside;
+}(plugin_1.Plugin));
+exports.KeyArrowOutside = KeyArrowOutside;
+
+
+/***/ }),
+/* 278 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -25194,38 +25452,39 @@ exports.enter = enter;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.errorMessages = void 0;
-__webpack_require__(266);
+__webpack_require__(279);
 var config_1 = __webpack_require__(8);
 var dom_1 = __webpack_require__(32);
 var helpers_1 = __webpack_require__(19);
 config_1.Config.prototype.showMessageErrors = true;
 config_1.Config.prototype.showMessageErrorTime = 3000;
 config_1.Config.prototype.showMessageErrorOffsetPx = 3;
+var ELM_NAME = 'error-box-for-messages';
 function errorMessages(editor) {
     if (editor.o.showMessageErrors) {
-        var height_1;
-        var messagesBox_1 = editor.c.div('jodit_error_box_for_messages'), recalcOffsets_1 = function () {
-            height_1 = 5;
-            helpers_1.toArray(messagesBox_1.childNodes).forEach(function (elm) {
-                helpers_1.css(messagesBox_1, 'bottom', height_1 + 'px');
-                height_1 +=
-                    elm.offsetWidth + editor.o.showMessageErrorOffsetPx;
+        var activeClass_1 = editor.getFullElName(ELM_NAME, 'active', true), messagesBox_1 = editor.c.div(editor.getFullElName(ELM_NAME)), calcOffsets_1 = function () {
+            var height = 5;
+            (0, helpers_1.toArray)(messagesBox_1.childNodes).forEach(function (elm) {
+                (0, helpers_1.css)(elm, 'bottom', height + 'px');
+                height +=
+                    elm.offsetHeight + editor.o.showMessageErrorOffsetPx;
             });
         };
         editor.e
             .on('beforeDestruct', function () {
             dom_1.Dom.safeRemove(messagesBox_1);
         })
-            .on('errorMessage', function (message, className, timeout) {
+            .on('errorMessage', function (message, type, timeout) {
             editor.workplace.appendChild(messagesBox_1);
-            var newmessage = editor.c.div('active ' + (className || ''), message);
-            messagesBox_1.appendChild(newmessage);
-            recalcOffsets_1();
+            var msg = editor.c.div(activeClass_1, message);
+            msg.classList.add(editor.getFullElName(ELM_NAME, 'type', type));
+            messagesBox_1.appendChild(msg);
+            calcOffsets_1();
             editor.async.setTimeout(function () {
-                newmessage.classList.remove('active');
+                msg.classList.remove(activeClass_1);
                 editor.async.setTimeout(function () {
-                    dom_1.Dom.safeRemove(newmessage);
-                    recalcOffsets_1();
+                    dom_1.Dom.safeRemove(msg);
+                    calcOffsets_1();
                 }, 300);
             }, timeout || editor.o.showMessageErrorTime);
         });
@@ -25235,7 +25494,7 @@ exports.errorMessages = errorMessages;
 
 
 /***/ }),
-/* 266 */
+/* 279 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -25244,7 +25503,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 267 */
+/* 280 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -25285,7 +25544,7 @@ config_1.Config.prototype.controls.fontsize = {
     ],
     exec: function (editor, event, _a) {
         var control = _a.control;
-        return helpers_1.memorizeExec(editor, event, { control: control }, function (value) {
+        return (0, helpers_1.memorizeExec)(editor, event, { control: control }, function (value) {
             var _a;
             if (((_a = control.command) === null || _a === void 0 ? void 0 : _a.toLowerCase()) === 'fontsize') {
                 return "" + value + editor.o.defaultFontSizePoints;
@@ -25308,11 +25567,8 @@ config_1.Config.prototype.controls.fontsize = {
                 return v;
             });
         if (current) {
-            var currentBpx = dom_1.Dom.closest(current, function (elm) {
-                return (dom_1.Dom.isBlock(elm, editor.ew) ||
-                    (elm && dom_1.Dom.isElement(elm)));
-            }, editor.editor) || editor.editor;
-            var value = helpers_1.css(currentBpx, cssKey);
+            var currentBpx = dom_1.Dom.closest(current, dom_1.Dom.isElement, editor.editor) || editor.editor;
+            var value = (0, helpers_1.css)(currentBpx, cssKey);
             return Boolean(value &&
                 control.args &&
                 normalize(control.args[0].toString()) ===
@@ -25321,7 +25577,7 @@ config_1.Config.prototype.controls.fontsize = {
         return false;
     }
 };
-config_1.Config.prototype.controls.font = tslib_1.__assign(tslib_1.__assign({}, config_1.Config.prototype.controls.fontsize), { command: 'fontname', list: {
+config_1.Config.prototype.controls.font = (0, tslib_1.__assign)((0, tslib_1.__assign)({}, config_1.Config.prototype.controls.fontsize), { command: 'fontname', list: {
         '': 'Default',
         'Helvetica,sans-serif': 'Helvetica',
         'Arial,Helvetica,sans-serif': 'Arial',
@@ -25355,7 +25611,7 @@ function font(editor) {
         switch (command) {
             case 'fontsize':
                 editor.s.applyStyle({
-                    fontSize: helpers_1.normalizeSize(third)
+                    fontSize: (0, helpers_1.normalizeSize)(third)
                 });
                 break;
             case 'fontname':
@@ -25375,7 +25631,7 @@ exports.font = font;
 
 
 /***/ }),
-/* 268 */
+/* 281 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -25395,7 +25651,8 @@ config_1.Config.prototype.controls.paragraph = {
     update: function (button) {
         var editor = button.j, control = button.control, current = editor.s.current();
         if (current && editor.o.textIcons) {
-            var currentBox = modules_1.Dom.closest(current, function (node) { return modules_1.Dom.isBlock(node, editor.ew); }, editor.editor) || editor.editor, currentValue = currentBox.nodeName.toLowerCase(), list = control.list;
+            var currentBox = modules_1.Dom.closest(current, modules_1.Dom.isBlock, editor.editor) ||
+                editor.editor, currentValue = currentBox.nodeName.toLowerCase(), list = control.list;
             if (button &&
                 control.data &&
                 control.data.currentValue !== currentValue &&
@@ -25427,7 +25684,7 @@ config_1.Config.prototype.controls.paragraph = {
     isChildActive: function (editor, control) {
         var current = editor.s.current();
         if (current) {
-            var currentBox = modules_1.Dom.closest(current, function (node) { return modules_1.Dom.isBlock(node, editor.ew); }, editor.editor);
+            var currentBox = modules_1.Dom.closest(current, modules_1.Dom.isBlock, editor.editor);
             return Boolean(currentBox &&
                 currentBox !== editor.editor &&
                 control.args !== undefined &&
@@ -25438,7 +25695,7 @@ config_1.Config.prototype.controls.paragraph = {
     isActive: function (editor, control) {
         var current = editor.s.current();
         if (current) {
-            var currentBpx = modules_1.Dom.closest(current, function (node) { return modules_1.Dom.isBlock(node, editor.ew); }, editor.editor);
+            var currentBpx = modules_1.Dom.closest(current, modules_1.Dom.isBlock, editor.editor);
             return Boolean(currentBpx &&
                 currentBpx !== editor.editor &&
                 control.list !== undefined &&
@@ -25469,7 +25726,7 @@ exports.formatBlock = formatBlock;
 
 
 /***/ }),
-/* 269 */
+/* 282 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -25481,7 +25738,7 @@ exports.formatBlock = formatBlock;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.fullsize = void 0;
-__webpack_require__(270);
+__webpack_require__(283);
 var config_1 = __webpack_require__(8);
 var consts = __webpack_require__(9);
 var helpers_1 = __webpack_require__(19);
@@ -25510,49 +25767,50 @@ function fullsize(editor) {
     });
     var isEnabled = false, oldHeight = 0, oldWidth = 0, wasToggled = false;
     var resize = function () {
-        if (editor.events) {
+        var container = editor.container, events = editor.events;
+        if (events) {
             if (isEnabled) {
-                oldHeight = helpers_1.css(editor.container, 'height', undefined, true);
-                oldWidth = helpers_1.css(editor.container, 'width', undefined, true);
-                helpers_1.css(editor.container, {
+                oldHeight = (0, helpers_1.css)(container, 'height', true);
+                oldWidth = (0, helpers_1.css)(container, 'width', true);
+                (0, helpers_1.css)(container, {
                     height: editor.ow.innerHeight,
                     width: editor.ow.innerWidth
                 });
                 wasToggled = true;
             }
             else if (wasToggled) {
-                helpers_1.css(editor.container, {
+                (0, helpers_1.css)(container, {
                     height: oldHeight || 'auto',
                     width: oldWidth || 'auto'
                 });
             }
         }
     }, toggle = function (enable) {
-        var _a;
-        if (!editor.container) {
+        var container = editor.container, events = editor.events;
+        if (!container) {
             return;
         }
         if (enable === undefined) {
-            enable = !editor.container.classList.contains('jodit_fullsize');
+            enable = !container.classList.contains('jodit_fullsize');
         }
         editor.setMod('fullsize', enable);
         editor.o.fullsize = enable;
         isEnabled = enable;
-        editor.container.classList.toggle('jodit_fullsize', enable);
+        container.classList.toggle('jodit_fullsize', enable);
         if (editor.toolbar) {
-            helpers_1.isJoditObject(editor) &&
+            (0, helpers_1.isJoditObject)(editor) &&
                 editor.toolbarContainer.appendChild(editor.toolbar.container);
-            helpers_1.css(editor.toolbar.container, 'width', 'auto');
+            (0, helpers_1.css)(editor.toolbar.container, 'width', 'auto');
         }
         if (editor.o.globalFullSize) {
-            var node = editor.container.parentNode;
+            var node = container.parentNode;
             while (node && node.nodeType !== Node.DOCUMENT_NODE) {
                 node.classList.toggle('jodit_fullsize-box_true', enable);
                 node = node.parentNode;
             }
             resize();
         }
-        (_a = editor.events) === null || _a === void 0 ? void 0 : _a.fire('afterResize');
+        events.fire('afterResize');
     };
     if (editor.o.globalFullSize) {
         editor.e.on(editor.ow, 'resize', resize);
@@ -25574,7 +25832,7 @@ exports.fullsize = fullsize;
 
 
 /***/ }),
-/* 270 */
+/* 283 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -25583,7 +25841,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 271 */
+/* 284 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -25607,7 +25865,7 @@ config_1.Config.prototype.commandToHotkeys = {
     selectall: ['ctrl+a', 'cmd+a']
 };
 var hotkeys = (function (_super) {
-    tslib_1.__extends(hotkeys, _super);
+    (0, tslib_1.__extends)(hotkeys, _super);
     function hotkeys() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.onKeyPress = function (event) {
@@ -25618,7 +25876,7 @@ var hotkeys = (function (_super) {
                     modif.push(specialKey);
                 }
             });
-            return helpers_1.normalizeKeyAliases(modif.join('+'));
+            return (0, helpers_1.normalizeKeyAliases)(modif.join('+'));
         };
         _this.specialKeys = {
             8: 'backspace',
@@ -25691,9 +25949,9 @@ var hotkeys = (function (_super) {
     }
     hotkeys.prototype.afterInit = function (editor) {
         var _this = this;
-        helpers_1.keys(editor.o.commandToHotkeys, false).forEach(function (commandName) {
+        (0, helpers_1.keys)(editor.o.commandToHotkeys, false).forEach(function (commandName) {
             var shortcuts = editor.o.commandToHotkeys[commandName];
-            if (shortcuts && (helpers_1.isArray(shortcuts) || helpers_1.isString(shortcuts))) {
+            if (shortcuts && ((0, helpers_1.isArray)(shortcuts) || (0, helpers_1.isString)(shortcuts))) {
                 editor.registerHotkeyToCommand(shortcuts, commandName);
             }
         });
@@ -25740,7 +25998,7 @@ exports.hotkeys = hotkeys;
 
 
 /***/ }),
-/* 272 */
+/* 285 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -25842,7 +26100,7 @@ function iframe(editor) {
                 .contentWindow.document;
         doc.open();
         doc.write(opt.iframeDoctype +
-            ("<html dir=\"" + opt.direction + "\" class=\"jodit\" lang=\"" + helpers_1.defaultLanguage(opt.language) + "\">") +
+            ("<html dir=\"" + opt.direction + "\" class=\"jodit\" lang=\"" + (0, helpers_1.defaultLanguage)(opt.language) + "\">") +
             '<head>' +
             ("<title>" + opt.iframeTitle + "</title>") +
             (opt.iframeBaseUrl
@@ -25888,7 +26146,7 @@ function iframe(editor) {
             editor.editorWindow = editor.iframe.contentWindow;
             var docMode = opt.editHTMLDocumentMode;
             var toggleEditable = function () {
-                helpers_1.attr(doc.body, 'contenteditable', (editor.getMode() !== constants_1.MODE_SOURCE &&
+                (0, helpers_1.attr)(doc.body, 'contenteditable', (editor.getMode() !== constants_1.MODE_SOURCE &&
                     !editor.getReadOnly()) ||
                     null);
             };
@@ -25913,7 +26171,7 @@ function iframe(editor) {
             if (docMode) {
                 var tag = editor.element.tagName;
                 if (tag !== 'TEXTAREA' && tag !== 'INPUT') {
-                    throw helpers_2.error('If enable `editHTMLDocumentMode` - source element should be INPUT or TEXTAREA');
+                    throw (0, helpers_2.error)('If enable `editHTMLDocumentMode` - source element should be INPUT or TEXTAREA');
                 }
                 editor.e
                     .on('beforeGetNativeEditorValue', function () {
@@ -25952,7 +26210,7 @@ function iframe(editor) {
                     if (editor.editor &&
                         editor.iframe &&
                         opt.height === 'auto') {
-                        helpers_1.css(editor.iframe, 'height', editor.editor.offsetHeight);
+                        (0, helpers_1.css)(editor.iframe, 'height', editor.editor.offsetHeight);
                     }
                 }, editor.defaultTimeout / 2);
                 editor.e
@@ -25977,14 +26235,14 @@ function iframe(editor) {
             }
             return false;
         };
-        return helpers_1.callPromise(result, init);
+        return (0, helpers_1.callPromise)(result, init);
     });
 }
 exports.iframe = iframe;
 
 
 /***/ }),
-/* 273 */
+/* 286 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -25996,13 +26254,13 @@ exports.iframe = iframe;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(274), exports);
-tslib_1.__exportStar(__webpack_require__(281), exports);
-tslib_1.__exportStar(__webpack_require__(282), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(287), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(294), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(295), exports);
 
 
 /***/ }),
-/* 274 */
+/* 287 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -26015,16 +26273,16 @@ tslib_1.__exportStar(__webpack_require__(282), exports);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.imageProperties = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(275);
+__webpack_require__(288);
 var config_1 = __webpack_require__(8);
 var modules_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(19);
-var widget_1 = __webpack_require__(256);
+var widget_1 = __webpack_require__(268);
 var button_1 = __webpack_require__(92);
-var templates_1 = __webpack_require__(276);
+var templates_1 = __webpack_require__(289);
 var decorators_1 = __webpack_require__(99);
 var image_editor_1 = __webpack_require__(196);
-var helpers_2 = __webpack_require__(280);
+var helpers_2 = __webpack_require__(293);
 config_1.Config.prototype.image = {
     dialogWidth: 600,
     openOnDblClick: true,
@@ -26044,7 +26302,7 @@ config_1.Config.prototype.image = {
     selectImageAfterClose: true
 };
 var normalSizeToString = function (value) {
-    value = helpers_1.trim(value);
+    value = (0, helpers_1.trim)(value);
     return /^[0-9]+$/.test(value) ? value + 'px' : value;
 };
 var normalSizeFromString = function (value) {
@@ -26053,7 +26311,7 @@ var normalSizeFromString = function (value) {
         : value;
 };
 var imageProperties = (function (_super) {
-    tslib_1.__extends(imageProperties, _super);
+    (0, tslib_1.__extends)(imageProperties, _super);
     function imageProperties() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.state = {
@@ -26071,9 +26329,9 @@ var imageProperties = (function (_super) {
         if (!this.form) {
             return;
         }
-        var _a = helpers_1.refs(this.form), marginRight = _a.marginRight, marginBottom = _a.marginBottom, marginLeft = _a.marginLeft, lockMargin = _a.lockMargin;
+        var _a = (0, helpers_1.refs)(this.form), marginRight = _a.marginRight, marginBottom = _a.marginBottom, marginLeft = _a.marginLeft, lockMargin = _a.lockMargin;
         [marginRight, marginBottom, marginLeft].forEach(function (elm) {
-            helpers_1.attr(elm, 'disabled', _this.state.marginIsLocked || null);
+            (0, helpers_1.attr)(elm, 'disabled', _this.state.marginIsLocked || null);
         });
         lockMargin.innerHTML = modules_1.Icon.get(this.state.marginIsLocked ? 'lock' : 'unlock');
     };
@@ -26081,7 +26339,7 @@ var imageProperties = (function (_super) {
         if (!this.form) {
             return;
         }
-        var _a = helpers_1.refs(this.form), lockSize = _a.lockSize, imageWidth = _a.imageWidth;
+        var _a = (0, helpers_1.refs)(this.form), lockSize = _a.lockSize, imageWidth = _a.imageWidth;
         lockSize.innerHTML = modules_1.Icon.get(this.state.sizeIsLocked ? 'lock' : 'unlock');
         lockSize.classList.remove('jodit-properties__lock');
         lockSize.classList.remove('jodit-properties__unlock');
@@ -26093,7 +26351,7 @@ var imageProperties = (function (_super) {
     imageProperties.prototype.open = function () {
         this.makeForm();
         this.j.e.fire('hidePopup');
-        helpers_1.markOwner(this.j, this.dialog.container);
+        (0, helpers_1.markOwner)(this.j, this.dialog.container);
         this.state.marginIsLocked = true;
         this.state.sizeIsLocked = true;
         this.updateValues();
@@ -26115,8 +26373,8 @@ var imageProperties = (function (_super) {
             buttons: ['fullsize', 'dialog.close']
         });
         var editor = this.j, opt = editor.o, i18n = editor.i18n.bind(editor), buttons = {
-            check: button_1.Button(editor, 'ok', 'Apply'),
-            remove: button_1.Button(editor, 'bin', 'Delete')
+            check: (0, button_1.Button)(editor, 'ok', 'Apply'),
+            remove: (0, button_1.Button)(editor, 'bin', 'Delete')
         };
         editor.e.on(this.dialog, 'afterClose', function () {
             if (_this.state.image.parentNode &&
@@ -26130,23 +26388,23 @@ var imageProperties = (function (_super) {
         });
         var dialog = this.dialog;
         dialog.setHeader(i18n('Image properties'));
-        var mainForm = templates_1.form(editor);
+        var mainForm = (0, templates_1.form)(editor);
         this.form = mainForm;
         dialog.setContent(mainForm);
-        var tabsBox = helpers_1.refs(this.form).tabsBox;
+        var tabsBox = (0, helpers_1.refs)(this.form).tabsBox;
         if (tabsBox) {
-            tabsBox.appendChild(widget_1.TabsWidget(editor, [
-                { name: 'Image', content: templates_1.mainTab(editor) },
-                { name: 'Advanced', content: templates_1.positionTab(editor) }
+            tabsBox.appendChild((0, widget_1.TabsWidget)(editor, [
+                { name: 'Image', content: (0, templates_1.mainTab)(editor) },
+                { name: 'Advanced', content: (0, templates_1.positionTab)(editor) }
             ]));
         }
         buttons.check.onAction(this.onApply);
-        var _a = helpers_1.refs(this.form), changeImage = _a.changeImage, editImage = _a.editImage;
+        var _a = (0, helpers_1.refs)(this.form), changeImage = _a.changeImage, editImage = _a.editImage;
         editor.e.on(changeImage, 'click', this.openImagePopup);
         if (opt.image.useImageEditor) {
             editor.e.on(editImage, 'click', this.openImageEditor);
         }
-        var _b = helpers_1.refs(mainForm), lockSize = _b.lockSize, lockMargin = _b.lockMargin, imageWidth = _b.imageWidth, imageHeight = _b.imageHeight;
+        var _b = (0, helpers_1.refs)(mainForm), lockSize = _b.lockSize, lockMargin = _b.lockMargin, imageWidth = _b.imageWidth, imageHeight = _b.imageHeight;
         if (lockSize) {
             editor.e.on(lockSize, 'click', function () {
                 _this.state.sizeIsLocked = !_this.state.sizeIsLocked;
@@ -26157,7 +26415,7 @@ var imageProperties = (function (_super) {
             e.preventDefault();
         });
         var changeSizes = function (event) {
-            if (!helpers_1.isNumeric(imageWidth.value) || !helpers_1.isNumeric(imageHeight.value)) {
+            if (!(0, helpers_1.isNumeric)(imageWidth.value) || !(0, helpers_1.isNumeric)(imageHeight.value)) {
                 return;
             }
             var w = parseFloat(imageWidth.value), h = parseFloat(imageHeight.value);
@@ -26184,17 +26442,17 @@ var imageProperties = (function (_super) {
         var _this = this;
         var opt = this.j.o;
         var image = this.state.image;
-        var _a = helpers_1.refs(this.form), marginTop = _a.marginTop, marginRight = _a.marginRight, marginBottom = _a.marginBottom, marginLeft = _a.marginLeft, lockMargin = _a.lockMargin, imageSrc = _a.imageSrc, id = _a.id, classes = _a.classes, align = _a.align, style = _a.style, imageTitle = _a.imageTitle, imageAlt = _a.imageAlt, borderRadius = _a.borderRadius, imageLink = _a.imageLink, imageWidth = _a.imageWidth, imageHeight = _a.imageHeight, imageLinkOpenInNewTab = _a.imageLinkOpenInNewTab, imageViewSrc = _a.imageViewSrc, lockSize = _a.lockSize;
+        var _a = (0, helpers_1.refs)(this.form), marginTop = _a.marginTop, marginRight = _a.marginRight, marginBottom = _a.marginBottom, marginLeft = _a.marginLeft, lockMargin = _a.lockMargin, imageSrc = _a.imageSrc, id = _a.id, classes = _a.classes, align = _a.align, style = _a.style, imageTitle = _a.imageTitle, imageAlt = _a.imageAlt, borderRadius = _a.borderRadius, imageLink = _a.imageLink, imageWidth = _a.imageWidth, imageHeight = _a.imageHeight, imageLinkOpenInNewTab = _a.imageLinkOpenInNewTab, imageViewSrc = _a.imageViewSrc, lockSize = _a.lockSize;
         var updateLock = function () {
             lockMargin.checked = _this.state.marginIsLocked;
             lockSize.checked = _this.state.sizeIsLocked;
         }, updateAlign = function () {
             if (image.style.cssFloat &&
                 ['left', 'right'].indexOf(image.style.cssFloat.toLowerCase()) !== -1) {
-                align.value = helpers_1.css(image, 'float');
+                align.value = (0, helpers_1.css)(image, 'float');
             }
             else {
-                if (helpers_1.css(image, 'display') === 'block' &&
+                if ((0, helpers_1.css)(image, 'display') === 'block' &&
                     image.style.marginLeft === 'auto' &&
                     image.style.marginRight === 'auto') {
                     align.value = 'center';
@@ -26203,19 +26461,19 @@ var imageProperties = (function (_super) {
         }, updateBorderRadius = function () {
             borderRadius.value = (parseInt(image.style.borderRadius || '0', 10) || '0').toString();
         }, updateId = function () {
-            id.value = helpers_1.attr(image, 'id') || '';
+            id.value = (0, helpers_1.attr)(image, 'id') || '';
         }, updateStyle = function () {
-            style.value = helpers_1.attr(image, 'style') || '';
+            style.value = (0, helpers_1.attr)(image, 'style') || '';
         }, updateClasses = function () {
-            classes.value = (helpers_1.attr(image, 'class') || '').replace(/jodit_focused_image[\s]*/, '');
+            classes.value = ((0, helpers_1.attr)(image, 'class') || '').replace(/jodit_focused_image[\s]*/, '');
         }, updateMargins = function () {
             if (!opt.image.editMargins) {
                 return;
             }
             var equal = true, wasEmptyField = false;
             [marginTop, marginRight, marginBottom, marginLeft].forEach(function (elm) {
-                var id = helpers_1.attr(elm, 'data-ref') || '';
-                var value = image.style.getPropertyValue(helpers_1.kebabCase(id));
+                var id = (0, helpers_1.attr)(elm, 'data-ref') || '';
+                var value = image.style.getPropertyValue((0, helpers_1.kebabCase)(id));
                 if (!value) {
                     wasEmptyField = true;
                     elm.value = '';
@@ -26234,10 +26492,10 @@ var imageProperties = (function (_super) {
             });
             _this.state.marginIsLocked = equal;
         }, updateSizes = function () {
-            var width = helpers_1.attr(image, 'width') ||
-                helpers_1.css(image, 'width', undefined, true) ||
-                false, height = helpers_1.attr(image, 'height') ||
-                helpers_1.css(image, 'height', undefined, true) ||
+            var width = (0, helpers_1.attr)(image, 'width') ||
+                (0, helpers_1.css)(image, 'width', true) ||
+                false, height = (0, helpers_1.attr)(image, 'height') ||
+                (0, helpers_1.css)(image, 'height', true) ||
                 false;
             imageWidth.value =
                 width !== false
@@ -26248,30 +26506,30 @@ var imageProperties = (function (_super) {
                     ? normalSizeFromString(height).toString()
                     : image.offsetHeight.toString();
             _this.state.sizeIsLocked = (function () {
-                if (!helpers_1.isNumeric(imageWidth.value) ||
-                    !helpers_1.isNumeric(imageHeight.value)) {
+                if (!(0, helpers_1.isNumeric)(imageWidth.value) ||
+                    !(0, helpers_1.isNumeric)(imageHeight.value)) {
                     return false;
                 }
                 var w = parseFloat(imageWidth.value), h = parseFloat(imageHeight.value);
                 return Math.abs(w - h * _this.state.ratio) < 1;
             })();
         }, updateText = function () {
-            imageTitle.value = helpers_1.attr(image, 'title') || '';
-            imageAlt.value = helpers_1.attr(image, 'alt') || '';
+            imageTitle.value = (0, helpers_1.attr)(image, 'title') || '';
+            imageAlt.value = (0, helpers_1.attr)(image, 'alt') || '';
             var a = modules_1.Dom.closest(image, 'a', _this.j.editor);
             if (a) {
-                imageLink.value = helpers_1.attr(a, 'href') || '';
+                imageLink.value = (0, helpers_1.attr)(a, 'href') || '';
                 imageLinkOpenInNewTab.checked =
-                    helpers_1.attr(a, 'target') === '_blank';
+                    (0, helpers_1.attr)(a, 'target') === '_blank';
             }
             else {
                 imageLink.value = '';
                 imageLinkOpenInNewTab.checked = false;
             }
         }, updateSrc = function () {
-            imageSrc.value = helpers_1.attr(image, 'src') || '';
+            imageSrc.value = (0, helpers_1.attr)(image, 'src') || '';
             if (imageViewSrc) {
-                helpers_1.attr(imageViewSrc, 'src', helpers_1.attr(image, 'src') || '');
+                (0, helpers_1.attr)(imageViewSrc, 'src', (0, helpers_1.attr)(image, 'src') || '');
             }
         };
         updateLock();
@@ -26286,14 +26544,14 @@ var imageProperties = (function (_super) {
         updateStyle();
     };
     imageProperties.prototype.onApply = function () {
-        var _a = helpers_1.refs(this.form), style = _a.style, imageSrc = _a.imageSrc, borderRadius = _a.borderRadius, imageTitle = _a.imageTitle, imageAlt = _a.imageAlt, imageLink = _a.imageLink, imageWidth = _a.imageWidth, imageHeight = _a.imageHeight, marginTop = _a.marginTop, marginRight = _a.marginRight, marginBottom = _a.marginBottom, marginLeft = _a.marginLeft, imageLinkOpenInNewTab = _a.imageLinkOpenInNewTab, align = _a.align, classes = _a.classes, id = _a.id;
+        var _a = (0, helpers_1.refs)(this.form), style = _a.style, imageSrc = _a.imageSrc, borderRadius = _a.borderRadius, imageTitle = _a.imageTitle, imageAlt = _a.imageAlt, imageLink = _a.imageLink, imageWidth = _a.imageWidth, imageHeight = _a.imageHeight, marginTop = _a.marginTop, marginRight = _a.marginRight, marginBottom = _a.marginBottom, marginLeft = _a.marginLeft, imageLinkOpenInNewTab = _a.imageLinkOpenInNewTab, align = _a.align, classes = _a.classes, id = _a.id;
         var opt = this.j.o;
         var image = this.state.image;
         if (opt.image.editStyle) {
-            helpers_1.attr(image, 'style', style.value || null);
+            (0, helpers_1.attr)(image, 'style', style.value || null);
         }
         if (imageSrc.value) {
-            helpers_1.attr(image, 'src', imageSrc.value);
+            (0, helpers_1.attr)(image, 'src', imageSrc.value);
         }
         else {
             modules_1.Dom.safeRemove(image);
@@ -26306,15 +26564,15 @@ var imageProperties = (function (_super) {
         else {
             image.style.borderRadius = '';
         }
-        helpers_1.attr(image, 'title', imageTitle.value || null);
-        helpers_1.attr(image, 'alt', imageAlt.value || null);
+        (0, helpers_1.attr)(image, 'title', imageTitle.value || null);
+        (0, helpers_1.attr)(image, 'alt', imageAlt.value || null);
         var link = modules_1.Dom.closest(image, 'a', this.j.editor);
         if (imageLink.value) {
             if (!link) {
                 link = modules_1.Dom.wrap(image, 'a', this.j.createInside);
             }
-            helpers_1.attr(link, 'href', imageLink.value);
-            helpers_1.attr(link, 'target', imageLinkOpenInNewTab.checked ? '_blank' : null);
+            (0, helpers_1.attr)(link, 'href', imageLink.value);
+            (0, helpers_1.attr)(link, 'target', imageLinkOpenInNewTab.checked ? '_blank' : null);
         }
         else {
             if (link && link.parentNode) {
@@ -26323,57 +26581,57 @@ var imageProperties = (function (_super) {
         }
         if (imageWidth.value !== image.offsetWidth.toString() ||
             imageHeight.value !== image.offsetHeight.toString()) {
-            helpers_1.css(image, {
-                width: helpers_1.trim(imageWidth.value)
+            (0, helpers_1.css)(image, {
+                width: (0, helpers_1.trim)(imageWidth.value)
                     ? normalSizeToString(imageWidth.value)
                     : null,
-                height: helpers_1.trim(imageHeight.value)
+                height: (0, helpers_1.trim)(imageHeight.value)
                     ? normalSizeToString(imageHeight.value)
                     : null
             });
-            helpers_1.attr(image, 'width', null);
-            helpers_1.attr(image, 'height', null);
+            (0, helpers_1.attr)(image, 'width', null);
+            (0, helpers_1.attr)(image, 'height', null);
         }
         var margins = [marginTop, marginRight, marginBottom, marginLeft];
         if (opt.image.editMargins) {
             if (!this.state.marginIsLocked) {
                 margins.forEach(function (margin) {
-                    var side = helpers_1.attr(margin, 'data-ref') || '';
-                    helpers_1.css(image, side, normalSizeToString(margin.value));
+                    var side = (0, helpers_1.attr)(margin, 'data-ref') || '';
+                    (0, helpers_1.css)(image, side, normalSizeToString(margin.value));
                 });
             }
             else {
-                helpers_1.css(image, 'margin', normalSizeToString(marginTop.value));
+                (0, helpers_1.css)(image, 'margin', normalSizeToString(marginTop.value));
             }
         }
         if (opt.image.editClass) {
-            helpers_1.attr(image, 'class', classes.value || null);
+            (0, helpers_1.attr)(image, 'class', classes.value || null);
         }
         if (opt.image.editId) {
-            helpers_1.attr(image, 'id', id.value || null);
+            (0, helpers_1.attr)(image, 'id', id.value || null);
         }
         if (opt.image.editAlign) {
-            helpers_2.hAlignElement(image, align.value);
+            (0, helpers_2.hAlignElement)(image, align.value);
         }
         this.j.setEditorValue();
         this.dialog.close();
     };
     imageProperties.prototype.openImageEditor = function () {
         var _this = this;
-        var url = helpers_1.attr(this.state.image, 'src') || '', a = this.j.c.element('a'), loadExternal = function () {
+        var url = (0, helpers_1.attr)(this.state.image, 'src') || '', a = this.j.c.element('a'), loadExternal = function () {
             if (a.host !== location.host) {
-                modules_1.Confirm(_this.j.i18n('You can only edit your own images. Download this image on the host?'), function (yes) {
+                (0, modules_1.Confirm)(_this.j.i18n('You can only edit your own images. Download this image on the host?'), function (yes) {
                     if (yes && _this.j.uploader) {
                         _this.j.uploader.uploadRemoteImage(a.href.toString(), function (resp) {
-                            modules_1.Alert(_this.j.i18n('The image has been successfully uploaded to the host!'), function () {
-                                if (helpers_1.isString(resp.newfilename)) {
-                                    helpers_1.attr(_this.state.image, 'src', resp.baseurl +
+                            (0, modules_1.Alert)(_this.j.i18n('The image has been successfully uploaded to the host!'), function () {
+                                if ((0, helpers_1.isString)(resp.newfilename)) {
+                                    (0, helpers_1.attr)(_this.state.image, 'src', resp.baseurl +
                                         resp.newfilename);
                                     _this.updateValues();
                                 }
                             }).bindDestruct(_this.j);
                         }, function (error) {
-                            modules_1.Alert(_this.j.i18n('There was an error loading %s', error.message)).bindDestruct(_this.j);
+                            (0, modules_1.Alert)(_this.j.i18n('There was an error loading %s', error.message)).bindDestruct(_this.j);
                         });
                     }
                 }).bindDestruct(_this.j);
@@ -26386,43 +26644,43 @@ var imageProperties = (function (_super) {
             .then(function (resp) {
             image_editor_1.openImageEditor.call(_this.j.filebrowser, a.href, resp.name, resp.path, resp.source, function () {
                 var timestamp = new Date().getTime();
-                helpers_1.attr(_this.state.image, 'src', url +
+                (0, helpers_1.attr)(_this.state.image, 'src', url +
                     (url.indexOf('?') !== -1 ? '' : '?') +
                     '&_tmp=' +
                     timestamp.toString());
                 _this.updateValues();
             }, function (error) {
-                modules_1.Alert(error.message).bindDestruct(_this.j);
+                (0, modules_1.Alert)(error.message).bindDestruct(_this.j);
             });
         })
             .catch(function (error) {
-            modules_1.Alert(error.message, loadExternal).bindDestruct(_this.j);
+            (0, modules_1.Alert)(error.message, loadExternal).bindDestruct(_this.j);
         });
     };
     imageProperties.prototype.openImagePopup = function (event) {
         var _this = this;
-        var popup = new modules_1.Popup(this.j), changeImage = helpers_1.refs(this.form).changeImage;
+        var popup = new modules_1.Popup(this.j), changeImage = (0, helpers_1.refs)(this.form).changeImage;
         popup.setZIndex(this.dialog.getZIndex() + 1);
         popup
-            .setContent(widget_1.FileSelectorWidget(this.j, {
+            .setContent((0, widget_1.FileSelectorWidget)(this.j, {
             upload: function (data) {
                 if (data.files && data.files.length) {
-                    helpers_1.attr(_this.state.image, 'src', data.baseurl + data.files[0]);
+                    (0, helpers_1.attr)(_this.state.image, 'src', data.baseurl + data.files[0]);
                 }
                 _this.updateValues();
                 popup.close();
             },
             filebrowser: function (data) {
                 if (data &&
-                    helpers_1.isArray(data.files) &&
+                    (0, helpers_1.isArray)(data.files) &&
                     data.files.length) {
-                    helpers_1.attr(_this.state.image, 'src', data.files[0]);
+                    (0, helpers_1.attr)(_this.state.image, 'src', data.files[0]);
                     popup.close();
                     _this.updateValues();
                 }
             }
         }, this.state.image, popup.close))
-            .open(function () { return helpers_1.position(changeImage); });
+            .open(function () { return (0, helpers_1.position)(changeImage); });
         event.stopPropagation();
     };
     imageProperties.prototype.afterInit = function (editor) {
@@ -26460,19 +26718,19 @@ var imageProperties = (function (_super) {
         this.dialog && this.dialog.destruct();
         editor.e.off(editor.editor, '.imageproperties').off('.imageproperties');
     };
-    tslib_1.__decorate([
-        decorators_1.watch('state.marginIsLocked')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.marginIsLocked')
     ], imageProperties.prototype, "onChangeMarginIsLocked", null);
-    tslib_1.__decorate([
-        decorators_1.watch('state.sizeIsLocked')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.sizeIsLocked')
     ], imageProperties.prototype, "onChangeSizeIsLocked", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], imageProperties.prototype, "onApply", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], imageProperties.prototype, "openImageEditor", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], imageProperties.prototype, "openImagePopup", null);
     return imageProperties;
@@ -26481,7 +26739,7 @@ exports.imageProperties = imageProperties;
 
 
 /***/ }),
-/* 275 */
+/* 288 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -26490,7 +26748,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 276 */
+/* 289 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -26502,13 +26760,13 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(277), exports);
-tslib_1.__exportStar(__webpack_require__(278), exports);
-tslib_1.__exportStar(__webpack_require__(279), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(290), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(291), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(292), exports);
 
 
 /***/ }),
-/* 277 */
+/* 290 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -26529,7 +26787,7 @@ exports.form = form;
 
 
 /***/ }),
-/* 278 */
+/* 291 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -26550,7 +26808,7 @@ exports.mainTab = mainTab;
 
 
 /***/ }),
-/* 279 */
+/* 292 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -26571,7 +26829,7 @@ exports.positionTab = positionTab;
 
 
 /***/ }),
-/* 280 */
+/* 293 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -26587,11 +26845,11 @@ var helpers_1 = __webpack_require__(19);
 var hAlignElement = function (image, align) {
     if (align && align !== 'normal') {
         if (align !== 'center') {
-            helpers_1.css(image, 'float', align);
-            helpers_1.clearCenterAlign(image);
+            (0, helpers_1.css)(image, 'float', align);
+            (0, helpers_1.clearCenterAlign)(image);
         }
         else {
-            helpers_1.css(image, {
+            (0, helpers_1.css)(image, {
                 float: '',
                 display: 'block',
                 marginLeft: 'auto',
@@ -26600,18 +26858,18 @@ var hAlignElement = function (image, align) {
         }
     }
     else {
-        if (helpers_1.css(image, 'float') &&
-            ['right', 'left'].indexOf(helpers_1.css(image, 'float').toString().toLowerCase()) !== -1) {
-            helpers_1.css(image, 'float', '');
+        if ((0, helpers_1.css)(image, 'float') &&
+            ['right', 'left'].indexOf((0, helpers_1.css)(image, 'float').toString().toLowerCase()) !== -1) {
+            (0, helpers_1.css)(image, 'float', '');
         }
-        helpers_1.clearCenterAlign(image);
+        (0, helpers_1.clearCenterAlign)(image);
     }
 };
 exports.hAlignElement = hAlignElement;
 
 
 /***/ }),
-/* 281 */
+/* 294 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -26628,7 +26886,7 @@ var JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 function imageProcessor(editor) {
     editor.e.on('change afterInit changePlace', editor.async.debounce(function () {
         if (editor.editor) {
-            helpers_1.$$('img', editor.editor).forEach(function (elm) {
+            (0, helpers_1.$$)('img', editor.editor).forEach(function (elm) {
                 if (!elm[JODIT_IMAGE_PROCESSOR_BINDED]) {
                     elm[JODIT_IMAGE_PROCESSOR_BINDED] = true;
                     if (!elm.complete) {
@@ -26651,7 +26909,7 @@ exports.imageProcessor = imageProcessor;
 
 
 /***/ }),
-/* 282 */
+/* 295 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -26666,21 +26924,21 @@ exports.image = void 0;
 var tslib_1 = __webpack_require__(7);
 var dom_1 = __webpack_require__(32);
 var helpers_1 = __webpack_require__(19);
-var widget_1 = __webpack_require__(256);
+var widget_1 = __webpack_require__(268);
 var config_1 = __webpack_require__(8);
 config_1.Config.prototype.controls.image = {
     popup: function (editor, current, self, close) {
         var sourceImage = null;
         if (current &&
             !dom_1.Dom.isText(current) &&
-            dom_1.Dom.isHTMLElement(current, editor.ew) &&
-            (dom_1.Dom.isTag(current, 'img') || helpers_1.$$('img', current).length)) {
+            dom_1.Dom.isHTMLElement(current) &&
+            (dom_1.Dom.isTag(current, 'img') || (0, helpers_1.$$)('img', current).length)) {
             sourceImage = dom_1.Dom.isTag(current, 'img')
                 ? current
-                : helpers_1.$$('img', current)[0];
+                : (0, helpers_1.$$)('img', current)[0];
         }
         editor.s.save();
-        return widget_1.FileSelectorWidget(editor, {
+        return (0, widget_1.FileSelectorWidget)(editor, {
             filebrowser: function (data) {
                 editor.s.restore();
                 data.files &&
@@ -26690,9 +26948,9 @@ config_1.Config.prototype.controls.image = {
                 close();
             },
             upload: true,
-            url: function (url, text) { return tslib_1.__awaiter(void 0, void 0, void 0, function () {
+            url: function (url, text) { return (0, tslib_1.__awaiter)(void 0, void 0, void 0, function () {
                 var image;
-                return tslib_1.__generator(this, function (_a) {
+                return (0, tslib_1.__generator)(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             editor.s.restore();
@@ -26725,7 +26983,7 @@ exports.image = image;
 
 
 /***/ }),
-/* 283 */
+/* 296 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -26751,7 +27009,7 @@ config_1.Config.prototype.controls.outdent = {
     isDisabled: function (editor) {
         var current = editor.s.current();
         if (current) {
-            var currentBox = dom_1.Dom.closest(current, function (node) { return dom_1.Dom.isBlock(node, editor.ew); }, editor.editor);
+            var currentBox = dom_1.Dom.closest(current, dom_1.Dom.isBlock, editor.editor);
             var key = getKey(editor.o.direction);
             if (currentBox && currentBox.style && currentBox.style[key]) {
                 return parseInt(currentBox.style[key], 10) <= 0;
@@ -26778,7 +27036,7 @@ function indent(editor) {
         editor.s.eachSelection(function (current) {
             editor.s.save();
             var currentBox = current
-                ? dom_1.Dom.up(current, function (node) { return dom_1.Dom.isBlock(node, editor.ew); }, editor.editor)
+                ? dom_1.Dom.up(current, dom_1.Dom.isBlock, editor.editor)
                 : false;
             var enter = editor.o.enter;
             if (!currentBox && current) {
@@ -26797,7 +27055,7 @@ function indent(editor) {
                 value +=
                     editor.o.indentMargin * (command === 'outdent' ? -1 : 1);
                 currentBox.style[key] = value > 0 ? value + 'px' : '';
-                if (!helpers_1.attr(currentBox, 'style')) {
+                if (!(0, helpers_1.attr)(currentBox, 'style')) {
                     currentBox.removeAttribute('style');
                 }
             }
@@ -26819,7 +27077,7 @@ exports.indent = indent;
 
 
 /***/ }),
-/* 284 */
+/* 297 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -26831,11 +27089,11 @@ exports.indent = indent;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(285), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(298), exports);
 
 
 /***/ }),
-/* 285 */
+/* 298 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -26862,12 +27120,12 @@ function hr(editor) {
     editor.registerCommand('insertHorizontalRule', function () {
         var elm = editor.createInside.element('hr');
         editor.s.insertNode(elm, false, false);
-        var block = dom_1.Dom.closest(elm.parentElement, function (node) { return dom_1.Dom.isBlock(node, editor.ew); }, editor.editor);
+        var block = dom_1.Dom.closest(elm.parentElement, dom_1.Dom.isBlock, editor.editor);
         if (block && dom_1.Dom.isEmpty(block) && block !== editor.editor) {
             dom_1.Dom.after(block, elm);
             dom_1.Dom.safeRemove(block);
         }
-        var p = dom_1.Dom.next(elm, function (node) { return dom_1.Dom.isBlock(node, editor.ew); }, editor.editor, false);
+        var p = dom_1.Dom.next(elm, dom_1.Dom.isBlock, editor.editor, false);
         if (!p) {
             p = editor.createInside.element(editor.o.enter);
             dom_1.Dom.after(elm, p);
@@ -26880,7 +27138,7 @@ exports.hr = hr;
 
 
 /***/ }),
-/* 286 */
+/* 299 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -26893,8 +27151,8 @@ exports.hr = hr;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.inlinePopup = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(287);
-__webpack_require__(288);
+__webpack_require__(300);
+__webpack_require__(301);
 var plugin_1 = __webpack_require__(184);
 var factory_1 = __webpack_require__(173);
 var popup_1 = __webpack_require__(116);
@@ -26902,15 +27160,15 @@ var helpers_1 = __webpack_require__(19);
 var modules_1 = __webpack_require__(10);
 var decorators_1 = __webpack_require__(99);
 var inlinePopup = (function (_super) {
-    tslib_1.__extends(inlinePopup, _super);
+    (0, tslib_1.__extends)(inlinePopup, _super);
     function inlinePopup() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.requires = ['select'];
         _this.type = null;
         _this.popup = new popup_1.Popup(_this.jodit, false);
-        _this.toolbar = factory_1.makeCollection(_this.jodit, _this.popup);
+        _this.toolbar = (0, factory_1.makeCollection)(_this.jodit, _this.popup);
         _this.snapRange = null;
-        _this.elmsList = helpers_1.keys(_this.j.o.popup, false).filter(function (s) { return !_this.isExcludedTarget(s); });
+        _this.elmsList = (0, helpers_1.keys)(_this.j.o.popup, false).filter(function (s) { return !_this.isExcludedTarget(s); });
         return _this;
     }
     inlinePopup.prototype.onClick = function (node) {
@@ -26919,7 +27177,7 @@ var inlinePopup = (function (_super) {
             ? node
             : modules_1.Dom.closest(node, elements, this.j.editor);
         if (target && this.canShowPopupForType(target.nodeName.toLowerCase())) {
-            this.showPopup(function () { return helpers_1.position(target, _this.j); }, target.nodeName.toLowerCase(), target);
+            this.showPopup(function () { return (0, helpers_1.position)(target, _this.j); }, target.nodeName.toLowerCase(), target);
             return false;
         }
     };
@@ -26932,13 +27190,13 @@ var inlinePopup = (function (_super) {
             this.previousTarget = target;
             var data = this.j.o.popup[type];
             var content = void 0;
-            if (helpers_1.isFunction(data)) {
+            if ((0, helpers_1.isFunction)(data)) {
                 content = data(this.j, target, this.popup.close);
             }
             else {
                 content = data;
             }
-            if (helpers_1.isArray(content)) {
+            if ((0, helpers_1.isArray)(content)) {
                 this.toolbar.build(content, target);
                 this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
                 content = this.toolbar.container;
@@ -26950,11 +27208,11 @@ var inlinePopup = (function (_super) {
         return true;
     };
     inlinePopup.prototype.hidePopup = function (type) {
-        if (!helpers_1.isString(type) || type === this.type) {
+        if (!(0, helpers_1.isString)(type) || type === this.type) {
             this.popup.close();
         }
     };
-    inlinePopup.prototype.onOutsideClick = function (e) {
+    inlinePopup.prototype.onOutsideClick = function () {
         this.popup.close();
     };
     inlinePopup.prototype.canShowPopupForType = function (type) {
@@ -26965,7 +27223,7 @@ var inlinePopup = (function (_super) {
         return !this.isExcludedTarget(type);
     };
     inlinePopup.prototype.isExcludedTarget = function (type) {
-        return helpers_1.splitArray(this.j.o.toolbarInlineDisableFor)
+        return (0, helpers_1.splitArray)(this.j.o.toolbarInlineDisableFor)
             .map(function (a) { return a.toLowerCase(); })
             .includes(type.toLowerCase());
     };
@@ -26975,12 +27233,12 @@ var inlinePopup = (function (_super) {
             .on('getDiffButtons.mobile', function (toolbar) {
             if (_this.toolbar === toolbar) {
                 var names_1 = _this.toolbar.getButtonsNames();
-                return helpers_1.toArray(jodit.registeredButtons)
+                return (0, helpers_1.toArray)(jodit.registeredButtons)
                     .filter(function (btn) {
                     return !_this.j.o.toolbarInlineDisabledButtons.includes(btn.name);
                 })
                     .filter(function (item) {
-                    var name = helpers_1.isString(item) ? item : item.name;
+                    var name = (0, helpers_1.isString)(item) ? item : item.name;
                     return (name &&
                         name !== '|' &&
                         name !== '\n' &&
@@ -26990,7 +27248,7 @@ var inlinePopup = (function (_super) {
         })
             .on('hidePopup', this.hidePopup)
             .on('showPopup', function (elm, rect, type) {
-            _this.showPopup(rect, type || (helpers_1.isString(elm) ? elm : elm.nodeName), helpers_1.isString(elm) ? undefined : elm);
+            _this.showPopup(rect, type || ((0, helpers_1.isString)(elm) ? elm : elm.nodeName), (0, helpers_1.isString)(elm) ? undefined : elm);
         })
             .on('mousedown keydown', this.onSelectionStart)
             .on('change', function () {
@@ -27046,7 +27304,7 @@ var inlinePopup = (function (_super) {
         var sc = r.startContainer;
         return (modules_1.Dom.isElement(sc) &&
             sc === r.endContainer &&
-            modules_1.Dom.isTag(sc.childNodes[r.startOffset], helpers_1.keys(this.j.o.popup, false)) &&
+            modules_1.Dom.isTag(sc.childNodes[r.startOffset], (0, helpers_1.keys)(this.j.o.popup, false)) &&
             r.startOffset === r.endOffset - 1);
     };
     Object.defineProperty(inlinePopup.prototype, "tableModule", {
@@ -27063,32 +27321,32 @@ var inlinePopup = (function (_super) {
         this.removeListenersForElements();
     };
     inlinePopup.prototype.addListenersForElements = function () {
-        this.j.e.on(this.elmsList.map(function (e) { return helpers_1.camelCase("click_" + e); }).join(' '), this.onClick);
+        this.j.e.on(this.elmsList.map(function (e) { return (0, helpers_1.camelCase)("click_" + e); }).join(' '), this.onClick);
     };
     inlinePopup.prototype.removeListenersForElements = function () {
-        this.j.e.off(this.elmsList.map(function (e) { return helpers_1.camelCase("click_" + e); }).join(' '), this.onClick);
+        this.j.e.off(this.elmsList.map(function (e) { return (0, helpers_1.camelCase)("click_" + e); }).join(' '), this.onClick);
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], inlinePopup.prototype, "onClick", null);
-    tslib_1.__decorate([
-        decorators_1.wait(function (ctx) { return !ctx.j.isLocked; })
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.wait)(function (ctx) { return !ctx.j.isLocked; })
     ], inlinePopup.prototype, "showPopup", null);
-    tslib_1.__decorate([
-        decorators_1.watch(':clickEditor'),
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)(':clickEditor'),
         decorators_1.autobind
     ], inlinePopup.prototype, "hidePopup", null);
-    tslib_1.__decorate([
-        decorators_1.watch(':outsideClick')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)(':outsideClick')
     ], inlinePopup.prototype, "onOutsideClick", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], inlinePopup.prototype, "onSelectionStart", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], inlinePopup.prototype, "onSelectionEnd", null);
-    tslib_1.__decorate([
-        decorators_1.debounce(function (ctx) { return ctx.defaultTimeout; })
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.debounce)(function (ctx) { return ctx.defaultTimeout; })
     ], inlinePopup.prototype, "onSelectionChange", null);
     return inlinePopup;
 }(plugin_1.Plugin));
@@ -27096,7 +27354,7 @@ exports.inlinePopup = inlinePopup;
 
 
 /***/ }),
-/* 287 */
+/* 300 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -27105,7 +27363,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 288 */
+/* 301 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -27122,11 +27380,11 @@ config_1.Config.prototype.toolbarInlineForSelection = false;
 config_1.Config.prototype.toolbarInlineDisableFor = [];
 config_1.Config.prototype.toolbarInlineDisabledButtons = ['source'];
 config_1.Config.prototype.popup = {
-    a: __webpack_require__(289)/* .default */ .Z,
-    img: __webpack_require__(290).default,
-    cells: __webpack_require__(291)/* .default */ .Z,
-    jodit: __webpack_require__(292)/* .default */ .Z,
-    'jodit-media': __webpack_require__(292)/* .default */ .Z,
+    a: __webpack_require__(302)/* ["default"] */ .Z,
+    img: __webpack_require__(303)["default"],
+    cells: __webpack_require__(304)/* ["default"] */ .Z,
+    jodit: __webpack_require__(305)/* ["default"] */ .Z,
+    'jodit-media': __webpack_require__(305)/* ["default"] */ .Z,
     selection: [
         'bold',
         'underline',
@@ -27149,7 +27407,7 @@ config_1.Config.prototype.popup = {
 
 
 /***/ }),
-/* 289 */
+/* 302 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -27167,7 +27425,7 @@ exports.Z = [
         name: 'eye',
         tooltip: 'Open link',
         exec: function (editor, current) {
-            var href = utils_1.attr(current, 'href');
+            var href = (0, utils_1.attr)(current, 'href');
             if (current && href) {
                 editor.ow.open(href);
             }
@@ -27185,7 +27443,7 @@ exports.Z = [
 
 
 /***/ }),
-/* 290 */
+/* 303 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -27200,7 +27458,7 @@ exports.align = void 0;
 var dom_1 = __webpack_require__(32);
 var checker_1 = __webpack_require__(34);
 var helpers_1 = __webpack_require__(19);
-var helpers_2 = __webpack_require__(280);
+var helpers_2 = __webpack_require__(293);
 exports.align = {
     name: 'left',
     childTemplate: function (_, __, value) { return value; },
@@ -27210,22 +27468,22 @@ exports.align = {
         if (!dom_1.Dom.isTag(elm, ['img', 'jodit', 'jodit-media'])) {
             return;
         }
-        var command = (control.args && checker_1.isString(control.args[0])
+        var command = (control.args && (0, checker_1.isString)(control.args[0])
             ? control.args[0].toLowerCase()
             : '');
         if (!command) {
             return false;
         }
-        helpers_2.hAlignElement(elm, command);
+        (0, helpers_2.hAlignElement)(elm, command);
         if (dom_1.Dom.isTag(elm, ['jodit', 'jodit-media']) && elm.firstElementChild) {
-            helpers_2.hAlignElement(elm.firstElementChild, command);
+            (0, helpers_2.hAlignElement)(elm.firstElementChild, command);
         }
         editor.setEditorValue();
         editor.e.fire('recalcPositionPopup');
     },
     tooltip: 'Horizontal align'
 };
-exports.default = [
+exports["default"] = [
     {
         name: 'delete',
         icon: 'bin',
@@ -27253,13 +27511,13 @@ exports.default = [
             if (!dom_1.Dom.isTag(image, 'img')) {
                 return;
             }
-            var command = control.args && checker_1.isString(control.args[0])
+            var command = control.args && (0, checker_1.isString)(control.args[0])
                 ? control.args[0].toLowerCase()
                 : '';
             if (!command) {
                 return false;
             }
-            helpers_1.css(image, 'vertical-align', command === 'normal' ? '' : command);
+            (0, helpers_1.css)(image, 'vertical-align', command === 'normal' ? '' : command);
             editor.e.fire('recalcPositionPopup');
         }
     },
@@ -27268,7 +27526,7 @@ exports.default = [
 
 
 /***/ }),
-/* 291 */
+/* 304 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -27282,46 +27540,41 @@ var __webpack_unused_export__;
 __webpack_unused_export__ = ({ value: true });
 var checker_1 = __webpack_require__(34);
 var helpers_1 = __webpack_require__(19);
-var widget_1 = __webpack_require__(256);
+var widget_1 = __webpack_require__(268);
 var cmd = function (control) {
-    return control.args && checker_1.isString(control.args[0])
+    return control.args && (0, checker_1.isString)(control.args[0])
         ? control.args[0].toLowerCase()
         : '';
 };
 exports.Z = [
     {
         name: 'brush',
-        popup: function (editor) {
-            if (!checker_1.isJoditObject(editor)) {
+        popup: function (editor, _, _1, close) {
+            if (!(0, checker_1.isJoditObject)(editor)) {
                 return;
             }
-            var selected = editor
-                .getInstance('Table', editor.o)
-                .getAllSelectedCells();
+            var tableModule = editor.getInstance('Table', editor.o), selected = tableModule.getAllSelectedCells();
             if (!selected.length) {
                 return false;
             }
-            var color = helpers_1.css(selected[0], 'color'), bg_color = helpers_1.css(selected[0], 'background-color'), br_color = helpers_1.css(selected[0], 'border-color'), $bg = widget_1.ColorPickerWidget(editor, function (value) {
-                selected.forEach(function (cell) {
-                    helpers_1.css(cell, 'background-color', value);
-                });
-                editor.setEditorValue();
-            }, bg_color), $cl = widget_1.ColorPickerWidget(editor, function (value) {
-                selected.forEach(function (cell) {
-                    helpers_1.css(cell, 'color', value);
-                });
-                editor.setEditorValue();
-            }, color);
-            var $br = widget_1.ColorPickerWidget(editor, function (value) {
-                selected.forEach(function (cell) {
-                    helpers_1.css(cell, 'border-color', value);
-                });
-                editor.setEditorValue();
-            }, br_color);
-            return widget_1.TabsWidget(editor, [
-                { name: 'Background', content: $bg },
-                { name: 'Text', content: $cl },
-                { name: 'Border', content: $br }
+            var makeColorPicker = function (key) {
+                return (0, widget_1.ColorPickerWidget)(editor, function (value) {
+                    selected.forEach(function (cell) {
+                        (0, helpers_1.css)(cell, key, value);
+                    });
+                    editor.lock();
+                    editor.setEditorValue();
+                    close();
+                    editor.unlock();
+                }, (0, helpers_1.css)(selected[0], key));
+            };
+            return (0, widget_1.TabsWidget)(editor, [
+                {
+                    name: 'Background',
+                    content: makeColorPicker('background-color')
+                },
+                { name: 'Text', content: makeColorPicker('color') },
+                { name: 'Border', content: makeColorPicker('border-color') }
             ]);
         },
         tooltip: 'Background'
@@ -27337,7 +27590,7 @@ exports.Z = [
                 .getInstance('Table', editor.o)
                 .getAllSelectedCells()
                 .forEach(function (cell) {
-                helpers_1.css(cell, 'vertical-align', command === 'normal' ? '' : command);
+                (0, helpers_1.css)(cell, 'vertical-align', command === 'normal' ? '' : command);
             });
         },
         tooltip: 'Vertical align'
@@ -27368,7 +27621,7 @@ exports.Z = [
         },
         exec: function (editor, table, _a) {
             var control = _a.control;
-            if (!checker_1.isJoditObject(editor)) {
+            if (!(0, checker_1.isJoditObject)(editor)) {
                 return;
             }
             var command = cmd(control);
@@ -27384,7 +27637,7 @@ exports.Z = [
         },
         exec: function (editor, table, _a) {
             var control = _a.control;
-            if (!checker_1.isJoditObject(editor)) {
+            if (!(0, checker_1.isJoditObject)(editor)) {
                 return;
             }
             var command = cmd(control);
@@ -27403,7 +27656,7 @@ exports.Z = [
         },
         exec: function (editor, table, _a) {
             var control = _a.control;
-            if (!checker_1.isJoditObject(editor)) {
+            if (!(0, checker_1.isJoditObject)(editor)) {
                 return;
             }
             var command = cmd(control);
@@ -27416,7 +27669,7 @@ exports.Z = [
 
 
 /***/ }),
-/* 292 */
+/* 305 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -27428,7 +27681,7 @@ var __webpack_unused_export__;
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 __webpack_unused_export__ = ({ value: true });
-var img_1 = __webpack_require__(290);
+var img_1 = __webpack_require__(303);
 exports.Z = [
     {
         name: 'bin',
@@ -27442,7 +27695,7 @@ exports.Z = [
 
 
 /***/ }),
-/* 293 */
+/* 306 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -27463,8 +27716,9 @@ config_1.Config.prototype.controls.align = {
     update: function (button) {
         var editor = button.j, control = button.control, current = editor.s.current();
         if (current) {
-            var currentBox = modules_1.Dom.closest(current, function (node) { return modules_1.Dom.isBlock(node, editor.ew); }, editor.editor) || editor.editor;
-            var currentValue = helpers_1.css(currentBox, 'text-align').toString();
+            var currentBox = modules_1.Dom.closest(current, modules_1.Dom.isBlock, editor.editor) ||
+                editor.editor;
+            var currentValue = (0, helpers_1.css)(currentBox, 'text-align').toString();
             if (control.defaultValue &&
                 control.defaultValue.indexOf(currentValue) !== -1) {
                 currentValue = 'left';
@@ -27486,8 +27740,8 @@ config_1.Config.prototype.controls.align = {
     isActive: function (editor, btn) {
         var current = editor.s.current();
         if (current && btn.defaultValue) {
-            var currentBox = modules_1.Dom.closest(current, function (node) { return modules_1.Dom.isBlock(node, editor.ew); }, editor.editor) || editor.editor;
-            return (btn.defaultValue.indexOf(helpers_1.css(currentBox, 'text-align').toString()) === -1);
+            var currentBox = modules_1.Dom.closest(current, modules_1.Dom.isBlock, editor.editor) || editor.editor;
+            return (btn.defaultValue.indexOf((0, helpers_1.css)(currentBox, 'text-align').toString()) === -1);
         }
         return false;
     },
@@ -27525,9 +27779,9 @@ config_1.Config.prototype.controls.right = {
     },
     tooltip: 'Align Right'
 };
-var clearAlign = function (node, editor) {
+var clearAlign = function (node) {
     modules_1.Dom.each(node, function (elm) {
-        if (modules_1.Dom.isHTMLElement(elm, editor.ew)) {
+        if (modules_1.Dom.isHTMLElement(elm)) {
             if (elm.style.textAlign) {
                 elm.style.textAlign = '';
                 if (!elm.style.cssText.trim().length) {
@@ -27538,9 +27792,9 @@ var clearAlign = function (node, editor) {
     });
 };
 exports.clearAlign = clearAlign;
-var alignElement = function (command, box, editor) {
-    if (modules_1.Dom.isNode(box, editor.ew) && modules_1.Dom.isElement(box)) {
-        exports.clearAlign(box, editor);
+var alignElement = function (command, box) {
+    if (modules_1.Dom.isNode(box) && modules_1.Dom.isElement(box)) {
+        (0, exports.clearAlign)(box);
         switch (command.toLowerCase()) {
             case 'justifyfull':
                 box.style.textAlign = 'justify';
@@ -27569,11 +27823,11 @@ function justify(editor) {
             if (!current) {
                 return;
             }
-            var currentBox = modules_1.Dom.up(current, function (node) { return modules_1.Dom.isBlock(node, editor.ew); }, editor.editor);
+            var currentBox = modules_1.Dom.up(current, modules_1.Dom.isBlock, editor.editor);
             if (!currentBox) {
                 currentBox = modules_1.Dom.wrapInline(current, editor.o.enterBlock, editor);
             }
-            exports.alignElement(command, currentBox, editor);
+            (0, exports.alignElement)(command, currentBox);
         });
         return false;
     };
@@ -27586,7 +27840,7 @@ exports.justify = justify;
 
 
 /***/ }),
-/* 294 */
+/* 307 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -27608,7 +27862,7 @@ config_1.Config.prototype.limitWords = false;
 config_1.Config.prototype.limitChars = false;
 config_1.Config.prototype.limitHTML = false;
 var limit = (function (_super) {
-    tslib_1.__extends(limit, _super);
+    (0, tslib_1.__extends)(limit, _super);
     function limit() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -27655,7 +27909,7 @@ var limit = (function (_super) {
     limit.prototype.checkPreventChanging = function (newValue, oldValue) {
         var jodit = this.jodit;
         var _a = jodit.o, limitWords = _a.limitWords, limitChars = _a.limitChars;
-        var text = jodit.o.limitHTML ? newValue : helpers_1.stripTags(newValue), words = this.splitWords(text);
+        var text = jodit.o.limitHTML ? newValue : (0, helpers_1.stripTags)(newValue), words = this.splitWords(text);
         if ((limitWords && words.length > limitWords) ||
             (Boolean(limitChars) && words.join('').length > limitChars)) {
             jodit.value = oldValue;
@@ -27663,17 +27917,17 @@ var limit = (function (_super) {
     };
     limit.prototype.splitWords = function (text) {
         return text
-            .replace(constants_1.INVISIBLE_SPACE_REG_EXP(), '')
-            .split(constants_1.SPACE_REG_EXP())
+            .replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '')
+            .split((0, constants_1.SPACE_REG_EXP)())
             .filter(function (e) { return e.length; });
     };
     limit.prototype.beforeDestruct = function (jodit) {
         jodit.e.off('.limit');
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], limit.prototype, "checkPreventKeyPressOrPaste", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], limit.prototype, "checkPreventChanging", null);
     return limit;
@@ -27682,7 +27936,7 @@ exports.limit = limit;
 
 
 /***/ }),
-/* 295 */
+/* 308 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -27698,7 +27952,7 @@ var tslib_1 = __webpack_require__(7);
 var config_1 = __webpack_require__(8);
 var dom_1 = __webpack_require__(32);
 var helpers_1 = __webpack_require__(19);
-var template_1 = __webpack_require__(296);
+var template_1 = __webpack_require__(309);
 var plugin_1 = __webpack_require__(184);
 var decorators_1 = __webpack_require__(99);
 var modules_1 = __webpack_require__(10);
@@ -27738,7 +27992,7 @@ config_1.Config.prototype.controls.link = {
     tooltip: 'Insert link'
 };
 var link = (function (_super) {
-    tslib_1.__extends(link, _super);
+    (0, tslib_1.__extends)(link, _super);
     function link() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.buttons = [
@@ -27770,7 +28024,7 @@ var link = (function (_super) {
                 dialog.setContent(htmlForm);
                 dialog.open();
                 jodit.async.requestIdleCallback(function () {
-                    var url_input = helpers_1.refs(htmlForm.container).url_input;
+                    var url_input = (0, helpers_1.refs)(htmlForm.container).url_input;
                     url_input === null || url_input === void 0 ? void 0 : url_input.focus();
                 });
             },
@@ -27781,7 +28035,7 @@ var link = (function (_super) {
         if (!dom_1.Dom.isTag(e.target, 'a')) {
             return;
         }
-        var href = helpers_1.attr(e.target, 'href');
+        var href = (0, helpers_1.attr)(e.target, 'href');
         if (href) {
             location.href = href;
             e.preventDefault();
@@ -27789,10 +28043,11 @@ var link = (function (_super) {
     };
     link.prototype.onProcessPasteLink = function (ignore, html) {
         var jodit = this.jodit;
-        if (helpers_1.isURL(html)) {
+        if ((0, helpers_1.isURL)(html)) {
             if (jodit.o.link.processVideoLink) {
-                var embed = helpers_1.convertMediaUrlToVideoEmbed(html);
+                var embed = (0, helpers_1.convertMediaUrlToVideoEmbed)(html);
                 if (embed !== html) {
+                    jodit.e.stopPropagation('processPaste');
                     return jodit.createInside.fromHTML(embed);
                 }
             }
@@ -27806,13 +28061,13 @@ var link = (function (_super) {
     link.prototype.generateForm = function (current, close) {
         var jodit = this.jodit;
         var i18n = jodit.i18n.bind(jodit), _a = jodit.o.link, openInNewTabCheckbox = _a.openInNewTabCheckbox, noFollowCheckbox = _a.noFollowCheckbox, formTemplate = _a.formTemplate, formClassName = _a.formClassName, modeClassName = _a.modeClassName;
-        var html = formTemplate(jodit), form = helpers_1.isString(html)
+        var html = formTemplate(jodit), form = (0, helpers_1.isString)(html)
             ? jodit.c.fromHTML(html, {
                 target_checkbox_box: openInNewTabCheckbox,
                 nofollow_checkbox_box: noFollowCheckbox
             })
             : html, htmlForm = dom_1.Dom.isElement(form) ? form : form.container;
-        var elements = helpers_1.refs(htmlForm), insert = elements.insert, unlink = elements.unlink, content_input_box = elements.content_input_box, _b = elements, target_checkbox = _b.target_checkbox, nofollow_checkbox = _b.nofollow_checkbox, url_input = _b.url_input, currentElement = current, isImageContent = dom_1.Dom.isImage(currentElement, jodit.ew);
+        var elements = (0, helpers_1.refs)(htmlForm), insert = elements.insert, unlink = elements.unlink, content_input_box = elements.content_input_box, _b = elements, target_checkbox = _b.target_checkbox, nofollow_checkbox = _b.nofollow_checkbox, url_input = _b.url_input, currentElement = current, isImageContent = dom_1.Dom.isImage(currentElement);
         var content_input = elements.content_input;
         var className_input = elements.className_input, className_select = elements.className_select;
         if (!content_input) {
@@ -27831,7 +28086,7 @@ var link = (function (_super) {
         var getSelectionText = function () {
             return link
                 ? link.innerText
-                : helpers_1.stripTags(jodit.s.range.cloneContents(), jodit.ed);
+                : (0, helpers_1.stripTags)(jodit.s.range.cloneContents(), jodit.ed);
         };
         if (current && dom_1.Dom.closest(current, 'a', jodit.editor)) {
             link = dom_1.Dom.closest(current, 'a', jodit.editor);
@@ -27843,12 +28098,12 @@ var link = (function (_super) {
             content_input.value = getSelectionText();
         }
         if (link) {
-            url_input.value = helpers_1.attr(link, 'href') || '';
+            url_input.value = (0, helpers_1.attr)(link, 'href') || '';
             if (modeClassName) {
                 switch (modeClassName) {
                     case 'input':
                         if (className_input) {
-                            className_input.value = helpers_1.attr(link, 'class') || '';
+                            className_input.value = (0, helpers_1.attr)(link, 'class') || '';
                         }
                         break;
                     case 'select':
@@ -27859,7 +28114,7 @@ var link = (function (_super) {
                                     option.selected = false;
                                 }
                             }
-                            var classNames = helpers_1.attr(link, 'class') || '';
+                            var classNames = (0, helpers_1.attr)(link, 'class') || '';
                             classNames.split(' ').forEach(function (className) {
                                 if (className) {
                                     for (var i = 0; i < className_select.options.length; i++) {
@@ -27876,10 +28131,10 @@ var link = (function (_super) {
                 }
             }
             if (openInNewTabCheckbox && target_checkbox) {
-                target_checkbox.checked = helpers_1.attr(link, 'target') === '_blank';
+                target_checkbox.checked = (0, helpers_1.attr)(link, 'target') === '_blank';
             }
             if (noFollowCheckbox && nofollow_checkbox) {
-                nofollow_checkbox.checked = helpers_1.attr(link, 'rel') === 'nofollow';
+                nofollow_checkbox.checked = (0, helpers_1.attr)(link, 'rel') === 'nofollow';
             }
             insert.textContent = i18n('Update');
         }
@@ -27932,20 +28187,20 @@ var link = (function (_super) {
             }
             links.forEach(function (a) {
                 var _a;
-                helpers_1.attr(a, 'href', url_input.value);
+                (0, helpers_1.attr)(a, 'href', url_input.value);
                 if (modeClassName && (className_input !== null && className_input !== void 0 ? className_input : className_select)) {
                     if (modeClassName === 'input') {
                         if (className_input.value === '' &&
                             a.hasAttribute('class')) {
-                            helpers_1.attr(a, 'class', null);
+                            (0, helpers_1.attr)(a, 'class', null);
                         }
                         if (className_input.value !== '') {
-                            helpers_1.attr(a, 'class', className_input.value);
+                            (0, helpers_1.attr)(a, 'class', className_input.value);
                         }
                     }
                     else if (modeClassName === 'select') {
                         if (a.hasAttribute('class')) {
-                            helpers_1.attr(a, 'class', null);
+                            (0, helpers_1.attr)(a, 'class', null);
                         }
                         for (var i = 0; i < className_select.selectedOptions.length; i++) {
                             var className = (_a = className_select.selectedOptions.item(i)) === null || _a === void 0 ? void 0 : _a.value;
@@ -27966,10 +28221,10 @@ var link = (function (_super) {
                     }
                 }
                 if (openInNewTabCheckbox && target_checkbox) {
-                    helpers_1.attr(a, 'target', target_checkbox.checked ? '_blank' : null);
+                    (0, helpers_1.attr)(a, 'target', target_checkbox.checked ? '_blank' : null);
                 }
                 if (noFollowCheckbox && nofollow_checkbox) {
-                    helpers_1.attr(a, 'rel', nofollow_checkbox.checked ? 'nofollow' : null);
+                    (0, helpers_1.attr)(a, 'rel', nofollow_checkbox.checked ? 'nofollow' : null);
                 }
             });
             jodit.setEditorValue();
@@ -27995,13 +28250,13 @@ var link = (function (_super) {
             .off('dblclick.link', this.onDblClickOnLink)
             .off('processPaste.link', this.onProcessPasteLink);
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], link.prototype, "onDblClickOnLink", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], link.prototype, "onProcessPasteLink", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], link.prototype, "generateForm", null);
     return link;
@@ -28010,7 +28265,7 @@ exports.link = link;
 
 
 /***/ }),
-/* 296 */
+/* 309 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -28105,7 +28360,7 @@ exports.formTemplate = formTemplate;
 
 
 /***/ }),
-/* 297 */
+/* 310 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -28117,13 +28372,13 @@ exports.formTemplate = formTemplate;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(298), exports);
-tslib_1.__exportStar(__webpack_require__(299), exports);
-tslib_1.__exportStar(__webpack_require__(301), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(311), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(312), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(314), exports);
 
 
 /***/ }),
-/* 298 */
+/* 311 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -28146,12 +28401,12 @@ function media(editor) {
     var _a = editor.options, mediaFakeTag = _a.mediaFakeTag, mediaBlocks = _a.mediaBlocks, mediaInFakeBlock = _a.mediaInFakeBlock;
     var wrap = function (element) {
         if (element.parentNode &&
-            helpers_1.attr(element.parentNode, 'data-jodit_iframe_wrapper')) {
+            (0, helpers_1.attr)(element.parentNode, 'data-jodit_iframe_wrapper')) {
             element = element.parentNode;
         }
         else {
             var wrapper = editor.createInside.fromHTML("<" + mediaFakeTag + " data-jodit-temp=\"1\" contenteditable=\"false\" draggable=\"true\" data-" + keyFake + "=\"1\"></" + mediaFakeTag + ">");
-            helpers_1.attr(wrapper, 'style', helpers_1.attr(element, 'style'));
+            (0, helpers_1.attr)(wrapper, 'style', (0, helpers_1.attr)(element, 'style'));
             wrapper.style.display =
                 element.style.display === 'inline-block'
                     ? 'inline-block'
@@ -28181,9 +28436,9 @@ function media(editor) {
             .on('change afterInit afterSetMode changePlace', editor.async.debounce(function () {
             if (!editor.isDestructed &&
                 editor.getMode() !== consts.MODE_SOURCE) {
-                helpers_1.$$(mediaBlocks.join(','), editor.editor).forEach(function (elm) {
-                    if (!helpers_1.dataBind(elm, keyFake)) {
-                        helpers_1.dataBind(elm, keyFake, true);
+                (0, helpers_1.$$)(mediaBlocks.join(','), editor.editor).forEach(function (elm) {
+                    if (!(0, helpers_1.dataBind)(elm, keyFake)) {
+                        (0, helpers_1.dataBind)(elm, keyFake, true);
                         wrap(elm);
                     }
                 });
@@ -28195,7 +28450,7 @@ exports.media = media;
 
 
 /***/ }),
-/* 299 */
+/* 312 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -28207,7 +28462,7 @@ exports.media = media;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.video = void 0;
-__webpack_require__(300);
+__webpack_require__(313);
 function video(editor) {
     editor.registerButton({
         name: 'video',
@@ -28218,7 +28473,7 @@ exports.video = video;
 
 
 /***/ }),
-/* 300 */
+/* 313 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -28230,7 +28485,7 @@ exports.video = video;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(8);
-var widget_1 = __webpack_require__(256);
+var widget_1 = __webpack_require__(268);
 var helpers_1 = __webpack_require__(19);
 var form_1 = __webpack_require__(119);
 var button_1 = __webpack_require__(92);
@@ -28247,7 +28502,7 @@ config_1.Config.prototype.controls.video = {
                 })
             ]),
             new form_1.UIBlock(editor, [
-                button_1.Button(editor, '', 'Insert', 'primary').onAction(function () {
+                (0, button_1.Button)(editor, '', 'Insert', 'primary').onAction(function () {
                     return bylink.submit();
                 })
             ])
@@ -28260,7 +28515,7 @@ config_1.Config.prototype.controls.video = {
                 })
             ]),
             new form_1.UIBlock(editor, [
-                button_1.Button(editor, '', 'Insert', 'primary').onAction(function () {
+                (0, button_1.Button)(editor, '', 'Insert', 'primary').onAction(function () {
                     return bycode.submit();
                 })
             ])
@@ -28280,12 +28535,12 @@ config_1.Config.prototype.controls.video = {
             content: bycode.container
         });
         bylink.onSubmit(function (data) {
-            insertCode(helpers_1.convertMediaUrlToVideoEmbed(data.url));
+            insertCode((0, helpers_1.convertMediaUrlToVideoEmbed)(data.url));
         });
         bycode.onSubmit(function (data) {
             insertCode(data.code);
         });
-        return widget_1.TabsWidget(editor, tabs);
+        return (0, widget_1.TabsWidget)(editor, tabs);
     },
     tags: ['iframe'],
     tooltip: 'Insert youtube/vimeo video'
@@ -28293,7 +28548,7 @@ config_1.Config.prototype.controls.video = {
 
 
 /***/ }),
-/* 301 */
+/* 314 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -28307,7 +28562,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.file = void 0;
 var config_1 = __webpack_require__(8);
 var dom_1 = __webpack_require__(32);
-var widget_1 = __webpack_require__(256);
+var widget_1 = __webpack_require__(268);
 config_1.Config.prototype.controls.file = {
     popup: function (editor, current, self, close) {
         var insert = function (url, title) {
@@ -28322,7 +28577,7 @@ config_1.Config.prototype.controls.file = {
                 ? current
                 : dom_1.Dom.closest(current, 'a', editor.editor);
         }
-        return widget_1.FileSelectorWidget(editor, {
+        return (0, widget_1.FileSelectorWidget)(editor, {
             filebrowser: function (data) {
                 data.files &&
                     data.files.forEach(function (file) { return insert(data.baseurl + file); });
@@ -28354,7 +28609,7 @@ exports.file = file;
 
 
 /***/ }),
-/* 302 */
+/* 315 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -28381,13 +28636,13 @@ config_1.Config.prototype.controls.dots = {
         var store = control.data;
         if (store === undefined) {
             store = {
-                toolbar: factory_1.makeCollection(editor),
+                toolbar: (0, factory_1.makeCollection)(editor),
                 rebuild: function () {
                     var _a;
                     if (button) {
                         var buttons = editor.e.fire('getDiffButtons.mobile', button.closest(ui_1.UIList));
                         if (buttons && store) {
-                            store.toolbar.build(helpers_1.splitArray(buttons));
+                            store.toolbar.build((0, helpers_1.splitArray)(buttons));
                             var w = ((_a = editor.toolbar.firstButton) === null || _a === void 0 ? void 0 : _a.container.offsetWidth) || 36;
                             store.toolbar.container.style.width =
                                 (w + 4) * 3 + 'px';
@@ -28403,7 +28658,7 @@ config_1.Config.prototype.controls.dots = {
     tooltip: 'Show all'
 };
 function mobile(editor) {
-    var timeout = 0, store = helpers_1.splitArray(editor.o.buttons);
+    var timeout = 0, store = (0, helpers_1.splitArray)(editor.o.buttons);
     if (editor.o.mobileTapTimeout) {
         editor.e.on('touchend', function (e) {
             if (e.changedTouches && e.changedTouches.length) {
@@ -28419,10 +28674,10 @@ function mobile(editor) {
     }
     editor.e.on('getDiffButtons.mobile', function (toolbar) {
         if (toolbar === editor.toolbar) {
-            var buttons = helpers_1.splitArray(editor.o.buttons), flatStore_1 = buttons_1.flatButtonsSet(store);
+            var buttons = (0, helpers_1.splitArray)(editor.o.buttons), flatStore_1 = (0, buttons_1.flatButtonsSet)(store);
             return buttons.reduce(function (acc, item) {
-                if (buttons_1.isButtonGroup(item)) {
-                    acc.push(tslib_1.__assign(tslib_1.__assign({}, item), { buttons: item.buttons.filter(function (btn) { return !flatStore_1.has(btn); }) }));
+                if ((0, buttons_1.isButtonGroup)(item)) {
+                    acc.push((0, tslib_1.__assign)((0, tslib_1.__assign)({}, item), { buttons: item.buttons.filter(function (btn) { return !flatStore_1.has(btn); }) }));
                 }
                 else if (!flatStore_1.has(item)) {
                     acc.push(item);
@@ -28440,15 +28695,15 @@ function mobile(editor) {
             var width = editor.container.offsetWidth;
             var newStore = (function () {
                 if (width >= editor.o.sizeLG) {
-                    return helpers_1.splitArray(editor.o.buttons);
+                    return (0, helpers_1.splitArray)(editor.o.buttons);
                 }
                 if (width >= editor.o.sizeMD) {
-                    return helpers_1.splitArray(editor.o.buttonsMD);
+                    return (0, helpers_1.splitArray)(editor.o.buttonsMD);
                 }
                 if (width >= editor.o.sizeSM) {
-                    return helpers_1.splitArray(editor.o.buttonsSM);
+                    return (0, helpers_1.splitArray)(editor.o.buttonsSM);
                 }
-                return helpers_1.splitArray(editor.o.buttonsXS);
+                return (0, helpers_1.splitArray)(editor.o.buttonsXS);
             })();
             if (newStore.toString() !== store.toString()) {
                 store = newStore;
@@ -28465,7 +28720,7 @@ exports.mobile = mobile;
 
 
 /***/ }),
-/* 303 */
+/* 316 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -28483,8 +28738,8 @@ var helpers_1 = __webpack_require__(19);
 var exec = function (jodit, _, _a) {
     var control = _a.control;
     var key = "button" + control.command;
-    var value = (control.args && control.args[0]) || helpers_1.dataBind(jodit, key);
-    helpers_1.dataBind(jodit, key, value);
+    var value = (control.args && control.args[0]) || (0, helpers_1.dataBind)(jodit, key);
+    (0, helpers_1.dataBind)(jodit, key, value);
     jodit.execCommand(control.command, false, value);
 };
 config_1.Config.prototype.controls.ul = {
@@ -28574,7 +28829,7 @@ function orderedList(editor) {
                 });
                 if (unwrapList_1.length) {
                     editor.s.save();
-                    helpers_1.toArray(ul.childNodes).forEach(function (li) {
+                    (0, helpers_1.toArray)(ul.childNodes).forEach(function (li) {
                         if (dom_1.Dom.isTag(li.lastChild, 'br')) {
                             dom_1.Dom.safeRemove(li.lastChild);
                         }
@@ -28591,7 +28846,7 @@ exports.orderedList = orderedList;
 
 
 /***/ }),
-/* 304 */
+/* 317 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -28604,7 +28859,7 @@ exports.orderedList = orderedList;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.placeholder = exports.isEditorEmpty = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(305);
+__webpack_require__(318);
 var config_1 = __webpack_require__(8);
 var consts = __webpack_require__(9);
 var helpers_1 = __webpack_require__(19);
@@ -28636,7 +28891,7 @@ function isEditorEmpty(root) {
 }
 exports.isEditorEmpty = isEditorEmpty;
 var placeholder = (function (_super) {
-    tslib_1.__extends(placeholder, _super);
+    (0, tslib_1.__extends)(placeholder, _super);
     function placeholder() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.addNativeListeners = function () {
@@ -28649,7 +28904,7 @@ var placeholder = (function (_super) {
             if (editor.o.useInputsPlaceholder &&
                 editor.element.hasAttribute('placeholder')) {
                 _this.placeholderElm.innerHTML =
-                    helpers_1.attr(editor.element, 'placeholder') || '';
+                    (0, helpers_1.attr)(editor.element, 'placeholder') || '';
             }
             editor.e.fire('placeholder', _this.placeholderElm.innerHTML);
             editor.e
@@ -28691,8 +28946,7 @@ var placeholder = (function (_super) {
             return;
         }
         var marginTop = 0, marginLeft = 0;
-        var current = editor.s.current(), wrapper = (current &&
-            dom_1.Dom.closest(current, function (n) { return dom_1.Dom.isBlock(n, editor.ew); }, editor.editor)) ||
+        var current = editor.s.current(), wrapper = (current && dom_1.Dom.closest(current, dom_1.Dom.isBlock, editor.editor)) ||
             editor.editor;
         var style = editor.ew.getComputedStyle(wrapper);
         editor.workplace.appendChild(this.placeholderElm);
@@ -28711,7 +28965,7 @@ var placeholder = (function (_super) {
             this.placeholderElm.style.lineHeight =
                 style.getPropertyValue('line-height');
         }
-        helpers_1.css(this.placeholderElm, {
+        (0, helpers_1.css)(this.placeholderElm, {
             display: 'block',
             textAlign: style.getPropertyValue('text-align'),
             marginTop: Math.max(parseInt(style.getPropertyValue('margin-top'), 10), marginTop),
@@ -28741,8 +28995,8 @@ var placeholder = (function (_super) {
         this.hide();
         jodit.e.off('.placeholder').off(window, 'load', this.toggle);
     };
-    tslib_1.__decorate([
-        decorators_1.debounce(function (ctx) { return ctx.defaultTimeout / 10; }, true)
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.debounce)(function (ctx) { return ctx.defaultTimeout / 10; }, true)
     ], placeholder.prototype, "toggle", null);
     return placeholder;
 }(plugin_1.Plugin));
@@ -28750,7 +29004,7 @@ exports.placeholder = placeholder;
 
 
 /***/ }),
-/* 305 */
+/* 318 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -28759,7 +29013,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 306 */
+/* 319 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -28786,7 +29040,7 @@ config_1.Config.prototype.controls.undo = {
     tooltip: 'Undo'
 };
 var redoUndo = (function (_super) {
-    tslib_1.__extends(redoUndo, _super);
+    (0, tslib_1.__extends)(redoUndo, _super);
     function redoUndo() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.buttons = [
@@ -28823,7 +29077,7 @@ exports.redoUndo = redoUndo;
 
 
 /***/ }),
-/* 307 */
+/* 320 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -28836,7 +29090,7 @@ exports.redoUndo = redoUndo;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.resizer = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(308);
+__webpack_require__(321);
 var config_1 = __webpack_require__(8);
 var consts = __webpack_require__(9);
 var constants_1 = __webpack_require__(9);
@@ -28854,7 +29108,7 @@ config_1.Config.prototype.resizer = {
 };
 var keyBInd = '__jodit-resizer_binded';
 var resizer = (function (_super) {
-    tslib_1.__extends(resizer, _super);
+    (0, tslib_1.__extends)(resizer, _super);
     function resizer() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.LOCK_KEY = 'resizer';
@@ -28870,9 +29124,18 @@ var resizer = (function (_super) {
         _this.sizeViewer = _this.rect.getElementsByTagName('span')[0];
         _this.onResize = function (e) {
             if (_this.isResized) {
-                var diff_x = e.clientX - _this.start_x, diff_y = e.clientY - _this.start_y;
                 if (!_this.element) {
                     return;
+                }
+                var diff_x = void 0, diff_y = void 0;
+                if (_this.j.options.iframe) {
+                    var workplacePosition = _this.getWorkplacePosition();
+                    diff_x = e.clientX + workplacePosition.left - _this.start_x;
+                    diff_y = e.clientY + workplacePosition.top - _this.start_y;
+                }
+                else {
+                    diff_x = e.clientX - _this.start_x;
+                    diff_y = e.clientY - _this.start_y;
                 }
                 var className = _this.handle.className;
                 var new_w = 0, new_h = 0;
@@ -28889,8 +29152,8 @@ var resizer = (function (_super) {
                                 (className.match(/top/) ? -1 : 1) * diff_y;
                         new_w = Math.round(new_h * _this.ratio);
                     }
-                    if (new_w > helpers_1.innerWidth(_this.j.editor, _this.j.ow)) {
-                        new_w = helpers_1.innerWidth(_this.j.editor, _this.j.ow);
+                    if (new_w > (0, helpers_1.innerWidth)(_this.j.editor, _this.j.ow)) {
+                        new_w = (0, helpers_1.innerWidth)(_this.j.editor, _this.j.ow);
                         new_h = Math.round(new_w / _this.ratio);
                     }
                 }
@@ -28902,14 +29165,14 @@ var resizer = (function (_super) {
                 }
                 if (new_w > _this.j.o.resizer.min_width) {
                     if (new_w < _this.rect.parentNode.offsetWidth) {
-                        helpers_1.css(_this.element, 'width', new_w);
+                        (0, helpers_1.css)(_this.element, 'width', new_w);
                     }
                     else {
-                        helpers_1.css(_this.element, 'width', '100%');
+                        (0, helpers_1.css)(_this.element, 'width', '100%');
                     }
                 }
                 if (new_h > _this.j.o.resizer.min_height) {
-                    helpers_1.css(_this.element, 'height', new_h);
+                    (0, helpers_1.css)(_this.element, 'height', new_h);
                 }
                 _this.updateSize();
                 _this.showSizeViewer(_this.element.offsetWidth, _this.element.offsetHeight);
@@ -28930,7 +29193,7 @@ var resizer = (function (_super) {
                 }
             }
         };
-        _this.onClickElement = function (element, e) {
+        _this.onClickElement = function (element) {
             if (_this.isResized) {
                 return;
             }
@@ -28947,14 +29210,14 @@ var resizer = (function (_super) {
                 return;
             }
             if (_this.element && _this.rect) {
-                var workplacePosition = helpers_1.offset((_this.rect.parentNode ||
-                    _this.j.od.documentElement), _this.j, _this.j.od, true), pos = helpers_1.offset(_this.element, _this.j, _this.j.ed), left = parseInt(_this.rect.style.left || '0', 10), top_1 = parseInt(_this.rect.style.top || '0', 10), w = _this.rect.offsetWidth, h = _this.rect.offsetHeight;
+                var workplacePosition = _this.getWorkplacePosition();
+                var pos = (0, helpers_1.offset)(_this.element, _this.j, _this.j.ed), left = parseInt(_this.rect.style.left || '0', 10), top_1 = parseInt(_this.rect.style.top || '0', 10), w = _this.rect.offsetWidth, h = _this.rect.offsetHeight;
                 var newTop = pos.top - 1 - workplacePosition.top, newLeft = pos.left - 1 - workplacePosition.left;
                 if (top_1 !== newTop ||
                     left !== newLeft ||
                     w !== _this.element.offsetWidth ||
                     h !== _this.element.offsetHeight) {
-                    helpers_1.css(_this.rect, {
+                    (0, helpers_1.css)(_this.rect, {
                         top: newTop,
                         left: newLeft,
                         width: _this.element.offsetWidth,
@@ -28976,7 +29239,7 @@ var resizer = (function (_super) {
     }
     resizer.prototype.afterInit = function (editor) {
         var _this = this;
-        helpers_1.$$('i', this.rect).forEach(function (resizeHandle) {
+        (0, helpers_1.$$)('i', this.rect).forEach(function (resizeHandle) {
             editor.e.on(resizeHandle, 'mousedown.resizer touchstart.resizer', _this.onClickHandle.bind(_this, resizeHandle));
         });
         global_1.eventEmitter.on('hideHelpers', this.hide);
@@ -29004,7 +29267,7 @@ var resizer = (function (_super) {
         while (node && node !== editor) {
             if (dom_1.Dom.isTag(node, allowResizeTags)) {
                 this.bind(node);
-                this.onClickElement(node, e);
+                this.onClickElement(node);
                 return;
             }
             node = node.parentNode;
@@ -29050,6 +29313,9 @@ var resizer = (function (_super) {
         this.j.lock(this.LOCK_KEY);
         this.j.e.on(this.j.ow, 'mousemove.resizer touchmove.resizer', this.onResize);
     };
+    resizer.prototype.getWorkplacePosition = function () {
+        return (0, helpers_1.offset)((this.rect.parentNode || this.j.od.documentElement), this.j, this.j.od, true);
+    };
     resizer.prototype.onDelete = function (e) {
         if (!this.element) {
             return;
@@ -29072,7 +29338,7 @@ var resizer = (function (_super) {
                 this.updateSize();
             }
         }
-        helpers_1.$$('iframe', this.j.editor).forEach(this.bind);
+        (0, helpers_1.$$)('iframe', this.j.editor).forEach(this.bind);
     };
     resizer.prototype.bind = function (element) {
         var _this = this;
@@ -29083,7 +29349,7 @@ var resizer = (function (_super) {
         var wrapper;
         if (dom_1.Dom.isTag(element, 'iframe')) {
             var iframe_1 = element;
-            if (helpers_1.attr(element.parentNode, '-jodit_iframe_wrapper')) {
+            if ((0, helpers_1.attr)(element.parentNode, '-jodit_iframe_wrapper')) {
                 element = element.parentNode;
             }
             else {
@@ -29093,8 +29359,8 @@ var resizer = (function (_super) {
                     'draggable="true" ' +
                     'data-jodit_iframe_wrapper="1"' +
                     '></jodit>');
-                helpers_1.attr(wrapper, 'style', helpers_1.attr(element, 'style'));
-                helpers_1.css(wrapper, {
+                (0, helpers_1.attr)(wrapper, 'style', (0, helpers_1.attr)(element, 'style'));
+                (0, helpers_1.css)(wrapper, {
                     display: element.style.display === 'inline-block'
                         ? 'inline-block'
                         : 'block',
@@ -29149,11 +29415,11 @@ var resizer = (function (_super) {
         }
         this.isShown = true;
         if (!this.rect.parentNode) {
-            helpers_1.markOwner(this.j, this.rect);
+            (0, helpers_1.markOwner)(this.j, this.rect);
             this.j.workplace.appendChild(this.rect);
         }
         if (this.j.isFullSize) {
-            this.rect.style.zIndex = helpers_1.css(this.j.container, 'zIndex').toString();
+            this.rect.style.zIndex = (0, helpers_1.css)(this.j.container, 'zIndex').toString();
         }
         this.updateSize();
     };
@@ -29170,16 +29436,16 @@ var resizer = (function (_super) {
         global_1.eventEmitter.off('hideHelpers', this.hide);
         jodit.e.off(this.j.ow, '.resizer').off('.resizer');
     };
-    tslib_1.__decorate([
-        decorators_1.watch(':click')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)(':click')
     ], resizer.prototype, "onEditorClick", null);
-    tslib_1.__decorate([
-        decorators_1.debounce()
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.debounce)()
     ], resizer.prototype, "onChangeEditor", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], resizer.prototype, "bind", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], resizer.prototype, "hide", null);
     return resizer;
@@ -29188,7 +29454,7 @@ exports.resizer = resizer;
 
 
 /***/ }),
-/* 308 */
+/* 321 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -29197,7 +29463,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 309 */
+/* 322 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -29210,7 +29476,7 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.search = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(310);
+__webpack_require__(323);
 var config_1 = __webpack_require__(8);
 var consts = __webpack_require__(9);
 var constants_1 = __webpack_require__(9);
@@ -29249,7 +29515,7 @@ config_1.Config.prototype.controls.find = {
     childTemplate: function (_, k, v) { return v; }
 };
 var search = (function (_super) {
-    tslib_1.__extends(search, _super);
+    (0, tslib_1.__extends)(search, _super);
     function search() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.buttons = [
@@ -29367,12 +29633,12 @@ var search = (function (_super) {
                         if (part !== false) {
                             var currentPart = search.findSomePartOfString(query, value, next);
                             if (currentPart === true) {
-                                currentPart = helpers_1.trim(query);
+                                currentPart = (0, helpers_1.trim)(query);
                             }
                             else if (currentPart === false) {
                                 currentPart = search.findSomePartOfString(value, query, next);
                                 if (currentPart === true) {
-                                    currentPart = helpers_1.trim(value);
+                                    currentPart = (0, helpers_1.trim)(value);
                                 }
                             }
                             var currentPartIndex = search.getSomePartOfStringIndex(query, value, next) || 0;
@@ -29405,7 +29671,7 @@ var search = (function (_super) {
                             };
                         }
                     }
-                    else if (dom_1.Dom.isBlock(elm, _this.j.ew) && sentence_1 !== '') {
+                    else if (dom_1.Dom.isBlock(elm) && sentence_1 !== '') {
                         sentence_1 = next ? sentence_1 + ' ' : ' ' + sentence_1;
                     }
                     return false;
@@ -29461,7 +29727,7 @@ var search = (function (_super) {
     search.findSomePartOfString = function (needle, haystack, start, getIndex) {
         if (start === void 0) { start = true; }
         if (getIndex === void 0) { getIndex = false; }
-        needle = helpers_1.trim(needle.toLowerCase().replace(consts.SPACE_REG_EXP(), ' '));
+        needle = (0, helpers_1.trim)(needle.toLowerCase().replace(consts.SPACE_REG_EXP(), ' '));
         haystack = haystack.toLowerCase();
         var i = start ? 0 : haystack.length - 1, needleStart = start ? 0 : needle.length - 1, tmpEqualLength = 0, startAtIndex = null;
         var inc = start ? 1 : -1, tmp = [];
@@ -29517,7 +29783,7 @@ var search = (function (_super) {
         if (editor.o.useSearch) {
             var self_1 = this;
             self_1.searchBox = editor.c.fromHTML(self_1.template);
-            var _a = helpers_1.refs(self_1.searchBox), query = _a.query, replace = _a.replace, cancel = _a.cancel, next = _a.next, prev = _a.prev, replaceBtn = _a.replaceBtn, counterBox = _a.counterBox;
+            var _a = (0, helpers_1.refs)(self_1.searchBox), query = _a.query, replace = _a.replace, cancel = _a.cancel, next = _a.next, prev = _a.prev, replaceBtn = _a.replaceBtn, counterBox = _a.counterBox;
             self_1.queryInput = query;
             self_1.replaceInput = replace;
             self_1.closeButton = cancel;
@@ -29644,21 +29910,21 @@ var search = (function (_super) {
         if (this.isOpened) {
             this.searchBox.classList.toggle('jodit-search_sticky', enabled);
             if (enabled) {
-                var pos = helpers_1.position(this.j.toolbarContainer);
-                helpers_1.css(this.searchBox, {
+                var pos = (0, helpers_1.position)(this.j.toolbarContainer);
+                (0, helpers_1.css)(this.searchBox, {
                     top: pos.top + pos.height,
                     left: pos.left + pos.width
                 });
             }
             else {
-                helpers_1.css(this.searchBox, {
+                (0, helpers_1.css)(this.searchBox, {
                     top: null,
                     left: null
                 });
             }
         }
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], search.prototype, "calcSticky", null);
     return search;
@@ -29667,7 +29933,7 @@ exports.search = search;
 
 
 /***/ }),
-/* 310 */
+/* 323 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -29676,7 +29942,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 311 */
+/* 324 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -29695,7 +29961,7 @@ var helpers_1 = __webpack_require__(19);
 var dom_1 = __webpack_require__(32);
 var ui_1 = __webpack_require__(75);
 var select = (function (_super) {
-    tslib_1.__extends(select, _super);
+    (0, tslib_1.__extends)(select, _super);
     function select() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.proxyEventsList = [
@@ -29723,7 +29989,7 @@ var select = (function (_super) {
         var j = this.j;
         var result, target = e.target;
         while (result === undefined && target && target !== j.editor) {
-            result = j.e.fire(helpers_1.camelCase(e.type + '_' + target.nodeName.toLowerCase()), target, e);
+            result = j.e.fire((0, helpers_1.camelCase)(e.type + '_' + target.nodeName.toLowerCase()), target, e);
             target = target.parentElement;
         }
         if (e.type === 'click' && result === undefined && target === j.editor) {
@@ -29741,11 +30007,11 @@ var select = (function (_super) {
             this.j.e.fire('outsideClick', e);
         }
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], select.prototype, "onStartSelection", null);
-    tslib_1.__decorate([
-        decorators_1.watch('ow:click')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('ow:click')
     ], select.prototype, "onOutsideClick", null);
     return select;
 }(plugin_1.Plugin));
@@ -29753,7 +30019,7 @@ exports.select = select;
 
 
 /***/ }),
-/* 312 */
+/* 325 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -29765,13 +30031,13 @@ exports.select = select;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(313);
-tslib_1.__exportStar(__webpack_require__(314), exports);
-tslib_1.__exportStar(__webpack_require__(315), exports);
+__webpack_require__(326);
+(0, tslib_1.__exportStar)(__webpack_require__(327), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(328), exports);
 
 
 /***/ }),
-/* 313 */
+/* 326 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -29790,7 +30056,7 @@ config_1.Config.prototype.saveHeightInStorage = false;
 
 
 /***/ }),
-/* 314 */
+/* 327 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -29807,7 +30073,7 @@ var plugin_1 = __webpack_require__(184);
 var dom_1 = __webpack_require__(32);
 var decorators_1 = __webpack_require__(99);
 var resizeHandler = (function (_super) {
-    tslib_1.__extends(resizeHandler, _super);
+    (0, tslib_1.__extends)(resizeHandler, _super);
     function resizeHandler() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.isResized = false;
@@ -29874,7 +30140,7 @@ var resizeHandler = (function (_super) {
         this.j.e.off(this.j.ow, 'mouseup touchsend', this.onHandleResizeEnd);
     };
     resizeHandler.requires = ['size'];
-    resizeHandler = tslib_1.__decorate([
+    resizeHandler = (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], resizeHandler);
     return resizeHandler;
@@ -29883,7 +30149,7 @@ exports.resizeHandler = resizeHandler;
 
 
 /***/ }),
-/* 315 */
+/* 328 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -29896,12 +30162,12 @@ exports.resizeHandler = resizeHandler;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.size = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(316);
+__webpack_require__(329);
 var helpers_1 = __webpack_require__(19);
 var plugin_1 = __webpack_require__(184);
 var decorators_1 = __webpack_require__(99);
 var size = (function (_super) {
-    tslib_1.__extends(size, _super);
+    (0, tslib_1.__extends)(size, _super);
     function size() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.resizeWorkspaces = _this.j.async.debounce(_this.resizeWorkspaceImd, _this.j.defaultTimeout, true);
@@ -29929,10 +30195,10 @@ var size = (function (_super) {
                 height = localHeight;
             }
         }
-        helpers_1.css(j.editor, {
+        (0, helpers_1.css)(j.editor, {
             minHeight: '100%'
         });
-        helpers_1.css(j.container, {
+        (0, helpers_1.css)(j.container, {
             minHeight: j.o.minHeight,
             maxHeight: j.o.maxHeight,
             minWidth: j.o.minWidth,
@@ -29942,32 +30208,32 @@ var size = (function (_super) {
         this.setWidth(j.o.width);
     };
     size.prototype.setHeight = function (height) {
-        if (helpers_1.isNumber(height)) {
+        if ((0, helpers_1.isNumber)(height)) {
             var _a = this.j.o, minHeight = _a.minHeight, maxHeight = _a.maxHeight;
-            if (helpers_1.isNumber(minHeight) && minHeight > height) {
+            if ((0, helpers_1.isNumber)(minHeight) && minHeight > height) {
                 height = minHeight;
             }
-            if (helpers_1.isNumber(maxHeight) && maxHeight < height) {
+            if ((0, helpers_1.isNumber)(maxHeight) && maxHeight < height) {
                 height = maxHeight;
             }
         }
-        helpers_1.css(this.j.container, 'height', height);
+        (0, helpers_1.css)(this.j.container, 'height', height);
         if (this.j.o.saveHeightInStorage) {
             this.j.storage.set('height', height);
         }
         this.resizeWorkspaceImd();
     };
     size.prototype.setWidth = function (width) {
-        if (helpers_1.isNumber(width)) {
+        if ((0, helpers_1.isNumber)(width)) {
             var _a = this.j.o, minWidth = _a.minWidth, maxWidth = _a.maxWidth;
-            if (helpers_1.isNumber(minWidth) && minWidth > width) {
+            if ((0, helpers_1.isNumber)(minWidth) && minWidth > width) {
                 width = minWidth;
             }
-            if (helpers_1.isNumber(maxWidth) && maxWidth < width) {
+            if ((0, helpers_1.isNumber)(maxWidth) && maxWidth < width) {
                 width = maxWidth;
             }
         }
-        helpers_1.css(this.j.container, 'width', width);
+        (0, helpers_1.css)(this.j.container, 'width', width);
         this.resizeWorkspaceImd();
     };
     size.prototype.getNotWorkHeight = function () {
@@ -29983,23 +30249,23 @@ var size = (function (_super) {
         if (!this.j.container || !this.j.container.parentNode) {
             return;
         }
-        var minHeight = (helpers_1.css(this.j.container, 'minHeight') || 0) -
+        var minHeight = ((0, helpers_1.css)(this.j.container, 'minHeight') || 0) -
             this.getNotWorkHeight();
-        if (helpers_1.isNumber(minHeight) && minHeight > 0) {
+        if ((0, helpers_1.isNumber)(minHeight) && minHeight > 0) {
             [this.j.workplace, this.j.iframe, this.j.editor].map(function (elm) {
-                elm && helpers_1.css(elm, 'minHeight', minHeight);
+                elm && (0, helpers_1.css)(elm, 'minHeight', minHeight);
             });
             this.j.e.fire('setMinHeight', minHeight);
         }
-        if (helpers_1.isNumber(this.j.o.maxHeight)) {
+        if ((0, helpers_1.isNumber)(this.j.o.maxHeight)) {
             var maxHeight_1 = this.j.o.maxHeight - this.getNotWorkHeight();
             [this.j.workplace, this.j.iframe, this.j.editor].map(function (elm) {
-                elm && helpers_1.css(elm, 'maxHeight', maxHeight_1);
+                elm && (0, helpers_1.css)(elm, 'maxHeight', maxHeight_1);
             });
             this.j.e.fire('setMaxHeight', maxHeight_1);
         }
         if (this.j.container) {
-            helpers_1.css(this.j.workplace, 'height', this.j.o.height !== 'auto' || this.j.isFullSize
+            (0, helpers_1.css)(this.j.workplace, 'height', this.j.o.height !== 'auto' || this.j.isFullSize
                 ? this.j.container.offsetHeight - this.getNotWorkHeight()
                 : 'auto');
         }
@@ -30009,7 +30275,7 @@ var size = (function (_super) {
             .off(this.j.ow, 'load.size', this.resizeWorkspaces)
             .off('.size');
     };
-    size = tslib_1.__decorate([
+    size = (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], size);
     return size;
@@ -30018,7 +30284,7 @@ exports.size = size;
 
 
 /***/ }),
-/* 316 */
+/* 329 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -30027,7 +30293,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 317 */
+/* 330 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -30039,12 +30305,12 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(318);
-tslib_1.__exportStar(__webpack_require__(319), exports);
+__webpack_require__(331);
+(0, tslib_1.__exportStar)(__webpack_require__(332), exports);
 
 
 /***/ }),
-/* 318 */
+/* 331 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -30087,7 +30353,7 @@ config_1.Config.prototype.controls.source = {
 
 
 /***/ }),
-/* 319 */
+/* 332 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -30100,16 +30366,16 @@ config_1.Config.prototype.controls.source = {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.source = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(320);
+__webpack_require__(333);
 var consts = __webpack_require__(9);
 var constants_1 = __webpack_require__(9);
 var plugin_1 = __webpack_require__(184);
 var dom_1 = __webpack_require__(32);
 var helpers_1 = __webpack_require__(19);
-var factory_1 = __webpack_require__(321);
+var factory_1 = __webpack_require__(334);
 var decorators_1 = __webpack_require__(99);
 var source = (function (_super) {
-    tslib_1.__extends(source, _super);
+    (0, tslib_1.__extends)(source, _super);
     function source() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.buttons = [
@@ -30251,7 +30517,7 @@ var source = (function (_super) {
                 .replace(/<span[^>]+data-jodit-selection_marker=(["'])end\1[^>]*>[<>]*?<\/span>/gim, this.tempMarkerEnd);
             if (!this.j.o.editHTMLDocumentMode && this.j.o.beautifyHTML) {
                 var html = this.j.e.fire('beautifyHTML', value);
-                if (helpers_1.isString(html)) {
+                if ((0, helpers_1.isString)(html)) {
                     value = html;
                 }
             }
@@ -30291,7 +30557,7 @@ var source = (function (_super) {
         editor.e.on('afterAddPlace changePlace afterInit', function () {
             editor.workplace.appendChild(_this.mirrorContainer);
         });
-        this.sourceEditor = factory_1.createSourceEditor('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
+        this.sourceEditor = (0, factory_1.createSourceEditor)('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
         this.onReadonlyReact();
         editor.e
             .on('placeholder.source', function (text) {
@@ -30311,7 +30577,7 @@ var source = (function (_super) {
                 return false;
             };
             if (!addEventListener_1()) {
-                helpers_1.loadNext(editor, editor.o.beautifyHTMLCDNUrlsJS).then(addEventListener_1);
+                (0, helpers_1.loadNext)(editor, editor.o.beautifyHTMLCDNUrlsJS).then(addEventListener_1);
             }
         }
         this.fromWYSIWYG();
@@ -30321,7 +30587,7 @@ var source = (function (_super) {
         var _this = this;
         var _a;
         if (editor.o.sourceEditor !== 'area') {
-            var sourceEditor_1 = factory_1.createSourceEditor(editor.o.sourceEditor, editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
+            var sourceEditor_1 = (0, factory_1.createSourceEditor)(editor.o.sourceEditor, editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
             sourceEditor_1.onReadyAlways(function () {
                 var _a, _b;
                 (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.destruct();
@@ -30345,32 +30611,32 @@ var source = (function (_super) {
         }
         dom_1.Dom.safeRemove(this.mirrorContainer);
     };
-    tslib_1.__decorate([
-        decorators_1.watch(':insertHTML.source')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)(':insertHTML.source')
     ], source.prototype, "onInsertHTML", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], source.prototype, "fromWYSIWYG", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], source.prototype, "toWYSIWYG", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], source.prototype, "getNormalPosition", null);
-    tslib_1.__decorate([
-        decorators_1.watch(':beforeCommand.source')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)(':beforeCommand.source')
     ], source.prototype, "onSelectAll", null);
-    tslib_1.__decorate([
-        decorators_1.watch(':beforeSetMode.source')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)(':beforeSetMode.source')
     ], source.prototype, "saveSelection", null);
-    tslib_1.__decorate([
-        decorators_1.watch(':afterSetMode.source')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)(':afterSetMode.source')
     ], source.prototype, "removeSelection", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], source.prototype, "setMirrorSelectionRange", null);
-    tslib_1.__decorate([
-        decorators_1.watch(':readonly.source')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)(':readonly.source')
     ], source.prototype, "onReadonlyReact", null);
     return source;
 }(plugin_1.Plugin));
@@ -30378,7 +30644,7 @@ exports.source = source;
 
 
 /***/ }),
-/* 320 */
+/* 333 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -30387,7 +30653,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 321 */
+/* 334 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -30399,7 +30665,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createSourceEditor = void 0;
-var engines_1 = __webpack_require__(322);
+var engines_1 = __webpack_require__(335);
 function createSourceEditor(type, editor, container, toWYSIWYG, fromWYSIWYG) {
     var sourceEditor;
     switch (type) {
@@ -30421,7 +30687,7 @@ exports.createSourceEditor = createSourceEditor;
 
 
 /***/ }),
-/* 322 */
+/* 335 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -30433,12 +30699,12 @@ exports.createSourceEditor = createSourceEditor;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(323), exports);
-tslib_1.__exportStar(__webpack_require__(325), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(336), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(338), exports);
 
 
 /***/ }),
-/* 323 */
+/* 336 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -30453,9 +30719,9 @@ exports.TextAreaEditor = void 0;
 var tslib_1 = __webpack_require__(7);
 var helpers_1 = __webpack_require__(19);
 var modules_1 = __webpack_require__(10);
-var sourceEditor_1 = __webpack_require__(324);
+var sourceEditor_1 = __webpack_require__(337);
 var TextAreaEditor = (function (_super) {
-    tslib_1.__extends(TextAreaEditor, _super);
+    (0, tslib_1.__extends)(TextAreaEditor, _super);
     function TextAreaEditor() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.autosize = _this.j.async.debounce(function () {
@@ -30473,7 +30739,7 @@ var TextAreaEditor = (function (_super) {
         editor.e
             .on(this.instance, 'mousedown keydown touchstart input', editor.async.debounce(this.toWYSIWYG, editor.defaultTimeout))
             .on('setMinHeight.source', function (minHeightD) {
-            helpers_1.css(_this.instance, 'minHeight', minHeightD);
+            (0, helpers_1.css)(_this.instance, 'minHeight', minHeightD);
         })
             .on(this.instance, 'change keydown mousedown touchstart input', this.autosize)
             .on('afterSetMode.source', this.autosize)
@@ -30553,7 +30819,7 @@ exports.TextAreaEditor = TextAreaEditor;
 
 
 /***/ }),
-/* 324 */
+/* 337 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -30601,7 +30867,7 @@ exports.SourceEditor = SourceEditor;
 
 
 /***/ }),
-/* 325 */
+/* 338 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -30616,9 +30882,9 @@ exports.AceEditor = void 0;
 var tslib_1 = __webpack_require__(7);
 var constants = __webpack_require__(9);
 var helpers_1 = __webpack_require__(19);
-var sourceEditor_1 = __webpack_require__(324);
+var sourceEditor_1 = __webpack_require__(337);
 var AceEditor = (function (_super) {
-    tslib_1.__extends(AceEditor, _super);
+    (0, tslib_1.__extends)(AceEditor, _super);
     function AceEditor() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.className = 'jodit_ace_editor';
@@ -30729,7 +30995,7 @@ var AceEditor = (function (_super) {
         });
         tryInitAceEditor();
         if (!this.aceExists()) {
-            helpers_1.loadNext(editor, editor.o.sourceEditorCDNUrlsJS).then(function () {
+            (0, helpers_1.loadNext)(editor, editor.o.sourceEditorCDNUrlsJS).then(function () {
                 if (!editor.isInDestruct) {
                     tryInitAceEditor();
                 }
@@ -30747,7 +31013,7 @@ var AceEditor = (function (_super) {
     AceEditor.prototype.setValue = function (value) {
         if (!this.j.o.editHTMLDocumentMode && this.j.o.beautifyHTML) {
             var html = this.j.e.fire('beautifyHTML', value);
-            if (helpers_1.isString(html)) {
+            if ((0, helpers_1.isString)(html)) {
                 value = html;
             }
         }
@@ -30809,7 +31075,7 @@ exports.AceEditor = AceEditor;
 
 
 /***/ }),
-/* 326 */
+/* 339 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -30830,7 +31096,7 @@ config_1.Config.prototype.showCharsCounter = true;
 config_1.Config.prototype.countHTMLChars = false;
 config_1.Config.prototype.showWordsCounter = true;
 var stat = (function (_super) {
-    tslib_1.__extends(stat, _super);
+    (0, tslib_1.__extends)(stat, _super);
     function stat() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.charCounter = null;
@@ -30850,13 +31116,13 @@ var stat = (function (_super) {
             if (_this.j.o.showCharsCounter && _this.charCounter) {
                 var chars = _this.j.o.countHTMLChars
                     ? _this.j.value
-                    : text.replace(constants_1.SPACE_REG_EXP(), '');
+                    : text.replace((0, constants_1.SPACE_REG_EXP)(), '');
                 _this.charCounter.textContent = _this.j.i18n('Chars: %d', chars.length);
             }
             if (_this.j.o.showWordsCounter && _this.wordCounter) {
                 _this.wordCounter.textContent = _this.j.i18n('Words: %d', text
-                    .replace(constants_1.INVISIBLE_SPACE_REG_EXP(), '')
-                    .split(constants_1.SPACE_REG_EXP())
+                    .replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '')
+                    .split((0, constants_1.SPACE_REG_EXP)())
                     .filter(function (e) { return e.length; }).length);
             }
         }, _this.j.defaultTimeout);
@@ -30881,7 +31147,7 @@ exports.stat = stat;
 
 
 /***/ }),
-/* 327 */
+/* 340 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -30894,7 +31160,7 @@ exports.stat = stat;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sticky = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(328);
+__webpack_require__(341);
 var config_1 = __webpack_require__(8);
 var constants_1 = __webpack_require__(9);
 var modules_1 = __webpack_require__(10);
@@ -30904,7 +31170,7 @@ config_1.Config.prototype.toolbarSticky = true;
 config_1.Config.prototype.toolbarDisableStickyForMobile = true;
 config_1.Config.prototype.toolbarStickyOffset = 0;
 var sticky = (function (_super) {
-    tslib_1.__extends(sticky, _super);
+    (0, tslib_1.__extends)(sticky, _super);
     function sticky() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.isToolbarSticked = false;
@@ -30921,19 +31187,19 @@ var sticky = (function (_super) {
                 _this.j.container.classList.add('jodit_sticky');
                 _this.isToolbarSticked = true;
             }
-            helpers_1.css(toolbar, {
+            (0, helpers_1.css)(toolbar, {
                 top: _this.j.o.toolbarStickyOffset || null,
                 width: _this.j.container.offsetWidth - 2
             });
             if ( true && constants_1.IS_IE && _this.dummyBox) {
-                helpers_1.css(_this.dummyBox, {
+                (0, helpers_1.css)(_this.dummyBox, {
                     height: toolbar.offsetHeight
                 });
             }
         };
         _this.removeSticky = function (toolbar) {
             if (_this.isToolbarSticked) {
-                helpers_1.css(toolbar, {
+                (0, helpers_1.css)(toolbar, {
                     width: '',
                     top: ''
                 });
@@ -30954,7 +31220,7 @@ var sticky = (function (_super) {
         var scrollWindowTop = jodit.ow.pageYOffset ||
             (jodit.od.documentElement &&
                 jodit.od.documentElement.scrollTop) ||
-            0, offsetEditor = helpers_1.offset(jodit.container, jodit, jodit.od, true), doSticky = jodit.getMode() === constants_1.MODE_WYSIWYG &&
+            0, offsetEditor = (0, helpers_1.offset)(jodit.container, jodit, jodit.od, true), doSticky = jodit.getMode() === constants_1.MODE_WYSIWYG &&
             scrollWindowTop + jodit.o.toolbarStickyOffset >
                 offsetEditor.top &&
             scrollWindowTop + jodit.o.toolbarStickyOffset <
@@ -30984,8 +31250,8 @@ var sticky = (function (_super) {
             .off(jodit.ow, 'scroll.sticky wheel.sticky mousewheel.sticky resize.sticky', this.onScroll)
             .off('.sticky');
     };
-    tslib_1.__decorate([
-        decorators_1.throttle()
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.throttle)()
     ], sticky.prototype, "onScroll", null);
     return sticky;
 }(modules_1.Plugin));
@@ -30993,7 +31259,7 @@ exports.sticky = sticky;
 
 
 /***/ }),
-/* 328 */
+/* 341 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -31002,7 +31268,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 329 */
+/* 342 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -31015,13 +31281,13 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.symbols = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(330);
-__webpack_require__(331);
+__webpack_require__(343);
+__webpack_require__(344);
 var constants_1 = __webpack_require__(9);
 var modules_1 = __webpack_require__(10);
 var utils_1 = __webpack_require__(20);
 var symbols = (function (_super) {
-    tslib_1.__extends(symbols, _super);
+    (0, tslib_1.__extends)(symbols, _super);
     function symbols() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.buttons = [
@@ -31072,7 +31338,7 @@ var symbols = (function (_super) {
                 .on(chars, 'keydown', function (e) {
                 var target = e.target;
                 if (modules_1.Dom.isTag(target, 'a')) {
-                    var index = parseInt(utils_1.attr(target, '-index') || '0', 10), jIndex = parseInt(utils_1.attr(target, 'data-index-j') || '0', 10);
+                    var index = parseInt((0, utils_1.attr)(target, '-index') || '0', 10), jIndex = parseInt((0, utils_1.attr)(target, 'data-index-j') || '0', 10);
                     var newIndex = void 0;
                     switch (e.key) {
                         case constants_1.KEY_UP:
@@ -31127,7 +31393,7 @@ exports.symbols = symbols;
 
 
 /***/ }),
-/* 330 */
+/* 343 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -31136,7 +31402,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 331 */
+/* 344 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -31377,7 +31643,7 @@ config_1.Config.prototype.controls.symbol = {
                 return box_1;
             }
             else {
-                dialog_1.Alert(container, editor.i18n('Select Special Character'), undefined, 'jodit-symbols').bindDestruct(editor);
+                (0, dialog_1.Alert)(container, editor.i18n('Select Special Character'), undefined, 'jodit-symbols').bindDestruct(editor);
                 var a = container.querySelector('a');
                 a && a.focus();
             }
@@ -31387,7 +31653,7 @@ config_1.Config.prototype.controls.symbol = {
 
 
 /***/ }),
-/* 332 */
+/* 345 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -31399,15 +31665,15 @@ config_1.Config.prototype.controls.symbol = {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(333);
-tslib_1.__exportStar(__webpack_require__(334), exports);
-tslib_1.__exportStar(__webpack_require__(336), exports);
-tslib_1.__exportStar(__webpack_require__(337), exports);
-tslib_1.__exportStar(__webpack_require__(338), exports);
+__webpack_require__(346);
+(0, tslib_1.__exportStar)(__webpack_require__(347), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(349), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(350), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(351), exports);
 
 
 /***/ }),
-/* 333 */
+/* 346 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -31424,8 +31690,7 @@ var utils_1 = __webpack_require__(20);
 var helpers_1 = __webpack_require__(19);
 config_1.Config.prototype.table = {
     allowCellSelection: true,
-    selectionCellStyle: 'border: 1px double #1e88e5 !important;' +
-        'background-color: rgba(158, 207, 250, 0.3)!important',
+    selectionCellStyle: 'border: 1px double #1e88e5 !important;',
     allowCellResize: true,
     useExtraClassesOptions: false
 };
@@ -31479,7 +31744,7 @@ config_1.Config.prototype.controls.table = {
                 return;
             }
             var k = index === undefined || isNaN(index)
-                ? parseInt(utils_1.attr(dv, '-index') || '0', 10)
+                ? parseInt((0, utils_1.attr)(dv, '-index') || '0', 10)
                 : index || 0;
             var rows_count = Math.ceil((k + 1) / default_cols_count), cols_count = (k % default_cols_count) + 1;
             for (var i = 0; i < cells.length; i += 1) {
@@ -31503,7 +31768,7 @@ config_1.Config.prototype.controls.table = {
             if (!dom_1.Dom.isTag(dv, 'span')) {
                 return;
             }
-            var k = parseInt(utils_1.attr(dv, '-index') || '0', 10);
+            var k = parseInt((0, utils_1.attr)(dv, '-index') || '0', 10);
             var rows_count = Math.ceil((k + 1) / default_cols_count), cols_count = (k % default_cols_count) + 1;
             var crt = editor.createInside, tbody = crt.element('tbody'), table = crt.element('table');
             table.appendChild(tbody);
@@ -31526,14 +31791,14 @@ config_1.Config.prototype.controls.table = {
             }
             var crnt = editor.s.current();
             if (crnt && editor.s.isCollapsed()) {
-                var block = dom_1.Dom.closest(crnt, function (node) { return dom_1.Dom.isBlock(node, editor.ew); }, editor.editor);
+                var block = dom_1.Dom.closest(crnt, dom_1.Dom.isBlock, editor.editor);
                 if (block &&
                     block !== editor.editor &&
                     !block.nodeName.match(/^TD|TH|TBODY|TABLE|THEADER|TFOOTER$/)) {
                     editor.s.setCursorAfter(block);
                 }
             }
-            helpers_1.$$('input[type=checkbox]:checked', options).forEach(function (input) {
+            (0, helpers_1.$$)('input[type=checkbox]:checked', options).forEach(function (input) {
                 input.value
                     .split(/[\s]+/)
                     .forEach(function (className) {
@@ -31544,7 +31809,7 @@ config_1.Config.prototype.controls.table = {
             editor.s.insertNode(table, false);
             if (first_td) {
                 editor.s.setCursorIn(first_td);
-                helpers_1.scrollIntoViewIfNeeded(first_td, editor.editor, editor.ed);
+                (0, helpers_1.scrollIntoViewIfNeeded)(first_td, editor.editor, editor.ed);
             }
             close();
         });
@@ -31567,7 +31832,7 @@ config_1.Config.prototype.controls.table = {
 
 
 /***/ }),
-/* 334 */
+/* 347 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -31580,14 +31845,14 @@ config_1.Config.prototype.controls.table = {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.resizeCells = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(335);
+__webpack_require__(348);
 var consts = __webpack_require__(9);
 var modules_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(19);
 var decorators_1 = __webpack_require__(99);
 var key = 'table_processor_observer-resize';
 var resizeCells = (function (_super) {
-    tslib_1.__extends(resizeCells, _super);
+    (0, tslib_1.__extends)(resizeCells, _super);
     function resizeCells() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.selectMode = false;
@@ -31677,7 +31942,7 @@ var resizeCells = (function (_super) {
         }
         this.j.e.fire('closeAllPopups');
         var x = event.clientX;
-        var workplacePosition = helpers_1.offset((this.resizeHandler.parentNode ||
+        var workplacePosition = (0, helpers_1.offset)((this.resizeHandler.parentNode ||
             this.j.od.documentElement), this.j, this.j.od, true);
         if (x < this.minX) {
             x = this.minX;
@@ -31715,16 +31980,15 @@ var resizeCells = (function (_super) {
         this.j.s.focus();
     };
     resizeCells.prototype.resizeColumns = function () {
-        var _this = this;
         var delta = this.resizeDelta;
         var marked = [];
         modules_1.Table.setColumnWidthByDelta(this.workTable, modules_1.Table.formalCoordinate(this.workTable, this.workCell, true)[1], delta, true, marked);
-        var nextTD = helpers_1.call(this.isRTL ? modules_1.Dom.prev : modules_1.Dom.next, this.workCell, function (elm) { return modules_1.Dom.isCell(elm, _this.j.ew); }, this.workCell.parentNode);
+        var nextTD = (0, helpers_1.call)(this.isRTL ? modules_1.Dom.prev : modules_1.Dom.next, this.workCell, modules_1.Dom.isCell, this.workCell.parentNode);
         modules_1.Table.setColumnWidthByDelta(this.workTable, modules_1.Table.formalCoordinate(this.workTable, nextTD)[1], -delta, false, marked);
     };
     resizeCells.prototype.resizeTable = function () {
         var delta = this.resizeDelta * (this.isRTL ? -1 : 1);
-        var width = this.workTable.offsetWidth, parentWidth = helpers_1.getContentWidth(this.workTable.parentNode, this.j.ew);
+        var width = this.workTable.offsetWidth, parentWidth = (0, helpers_1.getContentWidth)(this.workTable.parentNode, this.j.ew);
         var rightSide = !this.wholeTable;
         var needChangeWidth = this.isRTL ? !rightSide : rightSide;
         if (needChangeWidth) {
@@ -31747,15 +32011,14 @@ var resizeCells = (function (_super) {
         this.workTable = modules_1.Dom.up(cell, function (elm) { return modules_1.Dom.isTag(elm, 'table'); }, this.j.editor);
     };
     resizeCells.prototype.calcHandlePosition = function (table, cell, offsetX, delta) {
-        var _this = this;
         if (offsetX === void 0) { offsetX = 0; }
         if (delta === void 0) { delta = 0; }
-        var box = helpers_1.offset(cell, this.j, this.j.ed);
+        var box = (0, helpers_1.offset)(cell, this.j, this.j.ed);
         if (offsetX > consts.NEARBY && offsetX < box.width - consts.NEARBY) {
             this.hideResizeHandle();
             return;
         }
-        var workplacePosition = helpers_1.offset(this.j.workplace, this.j, this.j.od, true), parentBox = helpers_1.offset(table, this.j, this.j.ed);
+        var workplacePosition = (0, helpers_1.offset)(this.j.workplace, this.j, this.j.od, true), parentBox = (0, helpers_1.offset)(table, this.j, this.j.ed);
         this.resizeHandler.style.left =
             (offsetX <= consts.NEARBY ? box.left : box.left + box.width) -
                 workplacePosition.left +
@@ -31767,11 +32030,11 @@ var resizeCells = (function (_super) {
         });
         this.showResizeHandle();
         if (offsetX <= consts.NEARBY) {
-            var prevTD = helpers_1.call(this.isRTL ? modules_1.Dom.next : modules_1.Dom.prev, cell, function (elm) { return modules_1.Dom.isCell(elm, _this.j.ew); }, cell.parentNode);
+            var prevTD = (0, helpers_1.call)(this.isRTL ? modules_1.Dom.next : modules_1.Dom.prev, cell, modules_1.Dom.isCell, cell.parentNode);
             this.setWorkCell(prevTD || cell, prevTD ? null : true);
         }
         else {
-            var nextTD = helpers_1.call(!this.isRTL ? modules_1.Dom.next : modules_1.Dom.prev, cell, function (elm) { return modules_1.Dom.isCell(elm, _this.j.ew); }, cell.parentNode);
+            var nextTD = (0, helpers_1.call)(!this.isRTL ? modules_1.Dom.next : modules_1.Dom.prev, cell, modules_1.Dom.isCell, cell.parentNode);
             this.setWorkCell(cell, !nextTD ? false : null);
         }
     };
@@ -31784,7 +32047,7 @@ var resizeCells = (function (_super) {
             .off(this.j.ow, '.resize-cells')
             .off('.resize-cells')
             .on('change.resize-cells afterCommand.resize-cells afterSetMode.resize-cells', function () {
-            helpers_1.$$('table', editor.editor).forEach(_this.observe);
+            (0, helpers_1.$$)('table', editor.editor).forEach(_this.observe);
         })
             .on(this.j.ow, 'scroll.resize-cells', function () {
             if (!_this.drag) {
@@ -31805,10 +32068,10 @@ var resizeCells = (function (_super) {
     };
     resizeCells.prototype.observe = function (table) {
         var _this = this;
-        if (helpers_1.dataBind(table, key)) {
+        if ((0, helpers_1.dataBind)(table, key)) {
             return;
         }
-        helpers_1.dataBind(table, key, true);
+        (0, helpers_1.dataBind)(table, key, true);
         this.j.e
             .on(table, 'mouseleave.resize-cells', function (e) {
             if (_this.resizeHandler &&
@@ -31820,7 +32083,7 @@ var resizeCells = (function (_super) {
             if (_this.j.isLocked) {
                 return;
             }
-            var cell = modules_1.Dom.up(event.target, function (elm) { return modules_1.Dom.isCell(elm, _this.j.ew); }, table);
+            var cell = modules_1.Dom.up(event.target, modules_1.Dom.isCell, table);
             if (!cell) {
                 return;
             }
@@ -31836,16 +32099,16 @@ var resizeCells = (function (_super) {
             jodit.e.off('.resize-cells');
         }
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], resizeCells.prototype, "onHandleMouseDown", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], resizeCells.prototype, "onMouseMove", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], resizeCells.prototype, "onMouseUp", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], resizeCells.prototype, "observe", null);
     return resizeCells;
@@ -31854,7 +32117,7 @@ exports.resizeCells = resizeCells;
 
 
 /***/ }),
-/* 335 */
+/* 348 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -31863,7 +32126,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 336 */
+/* 349 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -31879,13 +32142,13 @@ var tslib_1 = __webpack_require__(7);
 var plugin_1 = __webpack_require__(184);
 var modules_1 = __webpack_require__(10);
 var helpers_1 = __webpack_require__(19);
-var justify_1 = __webpack_require__(293);
+var justify_1 = __webpack_require__(306);
 var constants_1 = __webpack_require__(9);
 var decorators_1 = __webpack_require__(99);
 var key = 'table_processor_observer';
 var MOUSE_MOVE_LABEL = 'onMoveTableSelectCell';
 var selectCells = (function (_super) {
-    tslib_1.__extends(selectCells, _super);
+    (0, tslib_1.__extends)(selectCells, _super);
     function selectCells() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.requires = ['select'];
@@ -31988,7 +32251,7 @@ var selectCells = (function (_super) {
         if (cell !== this.selectedCell) {
             this.j.lock(key);
         }
-        this.unselectCells(table);
+        this.unselectCells();
         var bound = modules_1.Table.getSelectedBound(table, [cell, this.selectedCell]), box = modules_1.Table.formalMatrix(table);
         for (var i = bound[0][0]; i <= bound[1][0]; i += 1) {
             for (var j = bound[0][1]; j <= bound[1][1]; j += 1) {
@@ -32045,7 +32308,7 @@ var selectCells = (function (_super) {
         var bound = modules_1.Table.getSelectedBound(table, [cell, this.selectedCell]), box = modules_1.Table.formalMatrix(table);
         var max = box[bound[1][0]][bound[1][1]], min = box[bound[0][0]][bound[0][1]];
         this.j.e.fire('showPopup', table, function () {
-            var minOffset = helpers_1.position(min, _this.j), maxOffset = helpers_1.position(max, _this.j);
+            var minOffset = (0, helpers_1.position)(min, _this.j), maxOffset = (0, helpers_1.position)(max, _this.j);
             return {
                 left: minOffset.left,
                 top: minOffset.top,
@@ -32053,12 +32316,12 @@ var selectCells = (function (_super) {
                 height: maxOffset.top - minOffset.top + maxOffset.height
             };
         }, 'cells');
-        helpers_1.$$('table', this.j.editor).forEach(function (table) {
+        (0, helpers_1.$$)('table', this.j.editor).forEach(function (table) {
             _this.j.e.off(table, 'mousemove.select-cells touchmove.select-cells mouseup.select-cells touchend.select-cells');
         });
         this.j.async.clearTimeout(MOUSE_MOVE_LABEL);
     };
-    selectCells.prototype.unselectCells = function (table, currentCell) {
+    selectCells.prototype.unselectCells = function (currentCell) {
         var module = this.module;
         var cells = module.getAllSelectedCells();
         if (cells.length) {
@@ -32074,7 +32337,7 @@ var selectCells = (function (_super) {
             command = command.replace('table', '');
             var cells = this.module.getAllSelectedCells();
             if (cells.length) {
-                var cell = cells[0];
+                var _a = (0, tslib_1.__read)(cells, 1), cell = _a[0];
                 if (!cell) {
                     return;
                 }
@@ -32118,36 +32381,35 @@ var selectCells = (function (_super) {
         }
     };
     selectCells.prototype.onAfterCommand = function (command) {
-        var _this = this;
         if (/^justify/.test(command)) {
             this.module
                 .getAllSelectedCells()
-                .forEach(function (elm) { return justify_1.alignElement(command, elm, _this.j); });
+                .forEach(function (elm) { return (0, justify_1.alignElement)(command, elm); });
         }
     };
     selectCells.prototype.beforeDestruct = function (jodit) {
         this.onRemoveSelection();
         jodit.e.off('.select-cells');
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], selectCells.prototype, "onStartSelection", null);
-    tslib_1.__decorate([
-        decorators_1.watch(':outsideClick')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)(':outsideClick')
     ], selectCells.prototype, "onOutsideClick", null);
-    tslib_1.__decorate([
-        decorators_1.watch(':change')
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)(':change')
     ], selectCells.prototype, "onChange", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], selectCells.prototype, "onRemoveSelection", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], selectCells.prototype, "onStopSelection", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], selectCells.prototype, "onExecCommand", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], selectCells.prototype, "onAfterCommand", null);
     return selectCells;
@@ -32156,7 +32418,7 @@ exports.selectCells = selectCells;
 
 
 /***/ }),
-/* 337 */
+/* 350 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -32237,9 +32499,7 @@ function tableKeyboardNavigation(editor) {
                     modules_1.Table.appendRow(table, sibling === 'next'
                         ? false
                         : table.querySelector('tr'), sibling === 'next', editor.createInside);
-                    next = dom_1.Dom[sibling](block, function (elm) {
-                        return elm && dom_1.Dom.isCell(elm, editor.ew);
-                    }, table);
+                    next = dom_1.Dom[sibling](block, dom_1.Dom.isCell, table);
                 }
                 break;
             }
@@ -32289,7 +32549,7 @@ exports.tableKeyboardNavigation = tableKeyboardNavigation;
 
 
 /***/ }),
-/* 338 */
+/* 351 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -32311,7 +32571,7 @@ exports.table = table;
 
 
 /***/ }),
-/* 339 */
+/* 352 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -32324,14 +32584,14 @@ exports.table = table;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.tooltip = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(340);
+__webpack_require__(353);
 var helpers_1 = __webpack_require__(19);
 var plugin_1 = __webpack_require__(184);
 var dom_1 = __webpack_require__(32);
 var global_1 = __webpack_require__(30);
 var decorators_1 = __webpack_require__(99);
 var tooltip = (function (_super) {
-    tslib_1.__extends(tooltip, _super);
+    (0, tslib_1.__extends)(tooltip, _super);
     function tooltip() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.isOpened = false;
@@ -32341,7 +32601,7 @@ var tooltip = (function (_super) {
     tooltip.prototype.afterInit = function (jodit) {
         var _this = this;
         this.container = jodit.c.div('jodit-tooltip');
-        global_1.getContainer(this.j, tooltip).appendChild(this.container);
+        (0, global_1.getContainer)(this.j, tooltip).appendChild(this.container);
         var timeout = 0;
         jodit.e
             .off('.tooltip')
@@ -32373,7 +32633,7 @@ var tooltip = (function (_super) {
     };
     tooltip.prototype.setPosition = function (getPoint) {
         var point = getPoint();
-        helpers_1.css(this.container, {
+        (0, helpers_1.css)(this.container, {
             left: point.x,
             top: point.y
         });
@@ -32383,7 +32643,7 @@ var tooltip = (function (_super) {
         if (this.isOpened) {
             this.isOpened = false;
             this.container.classList.remove('jodit-tooltip_visible');
-            helpers_1.css(this.container, {
+            (0, helpers_1.css)(this.container, {
                 left: -5000
             });
         }
@@ -32393,10 +32653,10 @@ var tooltip = (function (_super) {
         this.close();
         dom_1.Dom.safeRemove(this.container);
     };
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], tooltip.prototype, "delayOpen", null);
-    tslib_1.__decorate([
+    (0, tslib_1.__decorate)([
         decorators_1.autobind
     ], tooltip.prototype, "close", null);
     return tooltip;
@@ -32405,7 +32665,7 @@ exports.tooltip = tooltip;
 
 
 /***/ }),
-/* 340 */
+/* 353 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -32414,7 +32674,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 341 */
+/* 354 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -32426,12 +32686,12 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(7);
-tslib_1.__exportStar(__webpack_require__(342), exports);
-tslib_1.__exportStar(__webpack_require__(343), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(355), exports);
+(0, tslib_1.__exportStar)(__webpack_require__(356), exports);
 
 
 /***/ }),
-/* 342 */
+/* 355 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -32454,12 +32714,12 @@ config_1.Config.prototype.controls.preview = {
             theme: editor.o.theme
         });
         var div = editor.c.div();
-        helpers_1.css(div, {
+        (0, helpers_1.css)(div, {
             padding: 16
         });
         if (editor.iframe) {
             var iframe = editor.create.element('iframe');
-            helpers_1.css(iframe, {
+            (0, helpers_1.css)(iframe, {
                 minWidth: 800,
                 minHeight: 600,
                 border: 0
@@ -32473,7 +32733,7 @@ config_1.Config.prototype.controls.preview = {
             }
         }
         else {
-            helpers_1.css(div, {
+            (0, helpers_1.css)(div, {
                 minWidth: 1024,
                 minHeight: 600,
                 border: 0
@@ -32495,7 +32755,7 @@ exports.preview = preview;
 
 
 /***/ }),
-/* 343 */
+/* 356 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -32523,7 +32783,7 @@ config_1.Config.prototype.controls.print = {
             height: 0,
             border: 0
         });
-        global_1.getContainer(editor, config_1.Config).appendChild(iframe);
+        (0, global_1.getContainer)(editor, config_1.Config).appendChild(iframe);
         var afterFinishPrint = function () {
             editor.e.off(editor.ow, 'mousemove', afterFinishPrint);
             dom_1.Dom.safeRemove(iframe);
@@ -32539,7 +32799,7 @@ config_1.Config.prototype.controls.print = {
             }
             else {
                 mywindow.document.write('<!doctype html><html lang="' +
-                    helpers_1.defaultLanguage(editor.o.language) +
+                    (0, helpers_1.defaultLanguage)(editor.o.language) +
                     '"><head><title></title></head>' +
                     '<body>' +
                     editor.value +
@@ -32562,7 +32822,7 @@ exports.print = print;
 
 
 /***/ }),
-/* 344 */
+/* 357 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -32575,7 +32835,7 @@ exports.print = print;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.xpath = void 0;
 var tslib_1 = __webpack_require__(7);
-__webpack_require__(345);
+__webpack_require__(358);
 var config_1 = __webpack_require__(8);
 var constants_1 = __webpack_require__(9);
 var context_menu_1 = __webpack_require__(161);
@@ -32585,7 +32845,7 @@ var plugin_1 = __webpack_require__(184);
 var factory_1 = __webpack_require__(173);
 config_1.Config.prototype.showXPathInStatusbar = true;
 var xpath = (function (_super) {
-    tslib_1.__extends(xpath, _super);
+    (0, tslib_1.__extends)(xpath, _super);
     function xpath() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.onContext = function (bindElement, event) {
@@ -32618,7 +32878,7 @@ var xpath = (function (_super) {
         };
         _this.onSelectPath = function (bindElement, event) {
             _this.j.s.focus();
-            var path = helpers_1.attr(event.target, '-path') || '/';
+            var path = (0, helpers_1.attr)(event.target, '-path') || '/';
             if (path === '/') {
                 _this.j.execCommand('selectall');
                 return false;
@@ -32637,7 +32897,7 @@ var xpath = (function (_super) {
             return false;
         };
         _this.tpl = function (bindElement, path, name, title) {
-            var item = _this.j.c.fromHTML("<span class=\"jodit-xpath__item\"><a role=\"button\" data-path=\"" + path + "\" href=\"javascript:void(0)\" title=\"" + title + "\" tabindex=\"-1\"'>" + helpers_1.trim(name) + "</a></span>");
+            var item = _this.j.c.fromHTML("<span class=\"jodit-xpath__item\"><a role=\"button\" data-path=\"" + path + "\" href=\"javascript:void(0)\" title=\"" + title + "\" tabindex=\"-1\"'>" + (0, helpers_1.trim)(name) + "</a></span>");
             var a = item.firstChild;
             _this.j.e
                 .on(a, 'click', _this.onSelectPath.bind(_this, bindElement))
@@ -32652,7 +32912,7 @@ var xpath = (function (_super) {
         };
         _this.appendSelectAll = function () {
             _this.removeSelectAll();
-            _this.selectAllButton = factory_1.makeButton(_this.j, tslib_1.__assign({ name: 'selectall' }, _this.j.o.controls.selectall));
+            _this.selectAllButton = (0, factory_1.makeButton)(_this.j, (0, tslib_1.__assign)({ name: 'selectall' }, _this.j.o.controls.selectall));
             _this.selectAllButton.state.size = 'tiny';
             _this.container &&
                 _this.container.insertBefore(_this.selectAllButton.container, _this.container.firstChild);
@@ -32670,7 +32930,7 @@ var xpath = (function (_super) {
                 dom_1.Dom.up(current, function (elm) {
                     if (elm && _this.j.editor !== elm && !dom_1.Dom.isText(elm)) {
                         name_1 = elm.nodeName.toLowerCase();
-                        xpth_1 = helpers_1.getXPathByElement(elm, _this.j.editor).replace(/^\//, '');
+                        xpth_1 = (0, helpers_1.getXPathByElement)(elm, _this.j.editor).replace(/^\//, '');
                         li_1 = _this.tpl(elm, xpth_1, name_1, _this.j.i18n('Select %s', name_1));
                         _this.container &&
                             _this.container.insertBefore(li_1, _this.container.firstChild);
@@ -32723,7 +32983,7 @@ exports.xpath = xpath;
 
 
 /***/ }),
-/* 345 */
+/* 358 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -32732,7 +32992,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 346 */
+/* 359 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -32745,652 +33005,652 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.paragraph = exports.palette = exports.outdent = exports.omega = exports.ol = exports.ok = exports.merge = exports.menu = exports.lock = exports.link = exports.left = exports.justify = exports.italic = exports.info_circle = exports.indent = exports.image = exports.hr = exports.fullsize = exports.fontsize = exports.font = exports.folder = exports.file = exports.eye = exports.eraser = exports.enter = exports.chevron = exports.dots = exports.dedent = exports.cut = exports.crop = exports.copy = exports.copyformat = exports.check_square = exports.check = exports.chain_broken = exports.center = exports.cancel = exports.brush = exports.bold = exports.bin = exports.attachment = exports.arrows_h = exports.arrows_alt = exports.angle_up = exports.angle_right = exports.angle_left = exports.angle_down = exports.addrow = exports.addcolumn = exports.about = void 0;
 exports.video = exports.valign = exports.upload = exports.update = exports.unlock = exports.unlink = exports.undo = exports.underline = exports.ul = exports.th_list = exports.th = exports.table = exports.superscript = exports.subscript = exports.strikethrough = exports.splitv = exports.splitg = exports.source = exports.shrink = exports.settings = exports.select_all = exports.search = exports.save = exports.right = exports.resizer = exports.resize = exports.redo = exports.print = exports.plus = exports.pencil = exports.paste = void 0;
-var about = __webpack_require__(347);
+var about = __webpack_require__(360);
 exports.about = about;
-var addcolumn = __webpack_require__(348);
+var addcolumn = __webpack_require__(361);
 exports.addcolumn = addcolumn;
-var addrow = __webpack_require__(349);
+var addrow = __webpack_require__(362);
 exports.addrow = addrow;
-var angle_down = __webpack_require__(350);
+var angle_down = __webpack_require__(363);
 exports.angle_down = angle_down;
-var angle_left = __webpack_require__(351);
+var angle_left = __webpack_require__(364);
 exports.angle_left = angle_left;
-var angle_right = __webpack_require__(352);
+var angle_right = __webpack_require__(365);
 exports.angle_right = angle_right;
-var angle_up = __webpack_require__(353);
+var angle_up = __webpack_require__(366);
 exports.angle_up = angle_up;
-var arrows_alt = __webpack_require__(354);
+var arrows_alt = __webpack_require__(367);
 exports.arrows_alt = arrows_alt;
-var arrows_h = __webpack_require__(355);
+var arrows_h = __webpack_require__(368);
 exports.arrows_h = arrows_h;
-var attachment = __webpack_require__(356);
+var attachment = __webpack_require__(369);
 exports.attachment = attachment;
-var bin = __webpack_require__(357);
+var bin = __webpack_require__(370);
 exports.bin = bin;
-var bold = __webpack_require__(358);
+var bold = __webpack_require__(371);
 exports.bold = bold;
-var brush = __webpack_require__(359);
+var brush = __webpack_require__(372);
 exports.brush = brush;
-var cancel = __webpack_require__(360);
+var cancel = __webpack_require__(373);
 exports.cancel = cancel;
-var center = __webpack_require__(361);
+var center = __webpack_require__(374);
 exports.center = center;
-var chain_broken = __webpack_require__(362);
+var chain_broken = __webpack_require__(375);
 exports.chain_broken = chain_broken;
-var check = __webpack_require__(363);
+var check = __webpack_require__(376);
 exports.check = check;
-var check_square = __webpack_require__(364);
+var check_square = __webpack_require__(377);
 exports.check_square = check_square;
-var chevron = __webpack_require__(365);
+var chevron = __webpack_require__(378);
 exports.chevron = chevron;
-var copyformat = __webpack_require__(366);
+var copyformat = __webpack_require__(379);
 exports.copyformat = copyformat;
-var crop = __webpack_require__(367);
+var crop = __webpack_require__(380);
 exports.crop = crop;
-var copy = __webpack_require__(368);
+var copy = __webpack_require__(381);
 exports.copy = copy;
-var cut = __webpack_require__(369);
+var cut = __webpack_require__(382);
 exports.cut = cut;
-var dedent = __webpack_require__(370);
+var dedent = __webpack_require__(383);
 exports.dedent = dedent;
-var dots = __webpack_require__(371);
+var dots = __webpack_require__(384);
 exports.dots = dots;
-var enter = __webpack_require__(372);
+var enter = __webpack_require__(385);
 exports.enter = enter;
-var eraser = __webpack_require__(373);
+var eraser = __webpack_require__(386);
 exports.eraser = eraser;
-var eye = __webpack_require__(374);
+var eye = __webpack_require__(387);
 exports.eye = eye;
-var file = __webpack_require__(375);
+var file = __webpack_require__(388);
 exports.file = file;
-var folder = __webpack_require__(376);
+var folder = __webpack_require__(389);
 exports.folder = folder;
-var font = __webpack_require__(377);
+var font = __webpack_require__(390);
 exports.font = font;
-var fontsize = __webpack_require__(378);
+var fontsize = __webpack_require__(391);
 exports.fontsize = fontsize;
-var fullsize = __webpack_require__(379);
+var fullsize = __webpack_require__(392);
 exports.fullsize = fullsize;
-var hr = __webpack_require__(380);
+var hr = __webpack_require__(393);
 exports.hr = hr;
-var image = __webpack_require__(381);
+var image = __webpack_require__(394);
 exports.image = image;
-var indent = __webpack_require__(382);
+var indent = __webpack_require__(395);
 exports.indent = indent;
-var info_circle = __webpack_require__(383);
+var info_circle = __webpack_require__(396);
 exports.info_circle = info_circle;
-var italic = __webpack_require__(384);
+var italic = __webpack_require__(397);
 exports.italic = italic;
-var justify = __webpack_require__(385);
+var justify = __webpack_require__(398);
 exports.justify = justify;
-var left = __webpack_require__(386);
+var left = __webpack_require__(399);
 exports.left = left;
-var link = __webpack_require__(387);
+var link = __webpack_require__(400);
 exports.link = link;
-var lock = __webpack_require__(388);
+var lock = __webpack_require__(401);
 exports.lock = lock;
-var menu = __webpack_require__(389);
+var menu = __webpack_require__(402);
 exports.menu = menu;
-var merge = __webpack_require__(390);
+var merge = __webpack_require__(403);
 exports.merge = merge;
-var ok = __webpack_require__(391);
+var ok = __webpack_require__(404);
 exports.ok = ok;
-var ol = __webpack_require__(392);
+var ol = __webpack_require__(405);
 exports.ol = ol;
-var omega = __webpack_require__(393);
+var omega = __webpack_require__(406);
 exports.omega = omega;
-var outdent = __webpack_require__(394);
+var outdent = __webpack_require__(407);
 exports.outdent = outdent;
-var palette = __webpack_require__(395);
+var palette = __webpack_require__(408);
 exports.palette = palette;
-var paragraph = __webpack_require__(396);
+var paragraph = __webpack_require__(409);
 exports.paragraph = paragraph;
-var paste = __webpack_require__(397);
+var paste = __webpack_require__(410);
 exports.paste = paste;
-var pencil = __webpack_require__(398);
+var pencil = __webpack_require__(411);
 exports.pencil = pencil;
-var plus = __webpack_require__(399);
+var plus = __webpack_require__(412);
 exports.plus = plus;
-var print = __webpack_require__(400);
+var print = __webpack_require__(413);
 exports.print = print;
-var redo = __webpack_require__(401);
+var redo = __webpack_require__(414);
 exports.redo = redo;
-var resize = __webpack_require__(402);
+var resize = __webpack_require__(415);
 exports.resize = resize;
-var resizer = __webpack_require__(403);
+var resizer = __webpack_require__(416);
 exports.resizer = resizer;
-var right = __webpack_require__(404);
+var right = __webpack_require__(417);
 exports.right = right;
-var save = __webpack_require__(405);
+var save = __webpack_require__(418);
 exports.save = save;
-var search = __webpack_require__(406);
+var search = __webpack_require__(419);
 exports.search = search;
-var settings = __webpack_require__(407);
+var settings = __webpack_require__(420);
 exports.settings = settings;
-var select_all = __webpack_require__(408);
+var select_all = __webpack_require__(421);
 exports.select_all = select_all;
-var shrink = __webpack_require__(409);
+var shrink = __webpack_require__(422);
 exports.shrink = shrink;
-var source = __webpack_require__(410);
+var source = __webpack_require__(423);
 exports.source = source;
-var splitg = __webpack_require__(411);
+var splitg = __webpack_require__(424);
 exports.splitg = splitg;
-var splitv = __webpack_require__(412);
+var splitv = __webpack_require__(425);
 exports.splitv = splitv;
-var strikethrough = __webpack_require__(413);
+var strikethrough = __webpack_require__(426);
 exports.strikethrough = strikethrough;
-var subscript = __webpack_require__(414);
+var subscript = __webpack_require__(427);
 exports.subscript = subscript;
-var superscript = __webpack_require__(415);
+var superscript = __webpack_require__(428);
 exports.superscript = superscript;
-var table = __webpack_require__(416);
+var table = __webpack_require__(429);
 exports.table = table;
-var th = __webpack_require__(417);
+var th = __webpack_require__(430);
 exports.th = th;
-var th_list = __webpack_require__(418);
+var th_list = __webpack_require__(431);
 exports.th_list = th_list;
-var ul = __webpack_require__(419);
+var ul = __webpack_require__(432);
 exports.ul = ul;
-var underline = __webpack_require__(420);
+var underline = __webpack_require__(433);
 exports.underline = underline;
-var undo = __webpack_require__(421);
+var undo = __webpack_require__(434);
 exports.undo = undo;
-var unlink = __webpack_require__(422);
+var unlink = __webpack_require__(435);
 exports.unlink = unlink;
-var unlock = __webpack_require__(423);
+var unlock = __webpack_require__(436);
 exports.unlock = unlock;
-var update = __webpack_require__(424);
+var update = __webpack_require__(437);
 exports.update = update;
-var upload = __webpack_require__(425);
+var upload = __webpack_require__(438);
 exports.upload = upload;
-var valign = __webpack_require__(426);
+var valign = __webpack_require__(439);
 exports.valign = valign;
-var video = __webpack_require__(427);
+var video = __webpack_require__(440);
 exports.video = video;
 
-
-/***/ }),
-/* 347 */
-/***/ ((module) => {
-
-module.exports = "<svg viewBox=\"0 0 1792 1792\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z\"/> </svg>"
-
-/***/ }),
-/* 348 */
-/***/ ((module) => {
-
-module.exports = "<svg viewBox=\"0 0 18.151 18.151\" xmlns=\"http://www.w3.org/2000/svg\"> <g> <path stroke-width=\"0\" d=\"M6.237,16.546H3.649V1.604h5.916v5.728c0.474-0.122,0.968-0.194,1.479-0.194 c0.042,0,0.083,0.006,0.125,0.006V0H2.044v18.15h5.934C7.295,17.736,6.704,17.19,6.237,16.546z\"/> <path stroke-width=\"0\" d=\"M11.169,8.275c-2.723,0-4.938,2.215-4.938,4.938s2.215,4.938,4.938,4.938s4.938-2.215,4.938-4.938 S13.892,8.275,11.169,8.275z M11.169,16.81c-1.983,0-3.598-1.612-3.598-3.598c0-1.983,1.614-3.597,3.598-3.597 s3.597,1.613,3.597,3.597C14.766,15.198,13.153,16.81,11.169,16.81z\"/> <polygon stroke-width=\"0\" points=\"11.792,11.073 10.502,11.073 10.502,12.578 9.03,12.578 9.03,13.868 10.502,13.868 10.502,15.352 11.792,15.352 11.792,13.868 13.309,13.868 13.309,12.578 11.792,12.578 \"/> </g> </svg>"
-
-/***/ }),
-/* 349 */
-/***/ ((module) => {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176\"/> </g> </svg>"
-
-/***/ }),
-/* 350 */
-/***/ ((module) => {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
-
-/***/ }),
-/* 351 */
-/***/ ((module) => {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
-
-/***/ }),
-/* 352 */
-/***/ ((module) => {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
-
-/***/ }),
-/* 353 */
-/***/ ((module) => {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
-
-/***/ }),
-/* 354 */
-/***/ ((module) => {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1411 541l-355 355 355 355 144-144q29-31 70-14 39 17 39 59v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l144-144-355-355-355 355 144 144q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l144 144 355-355-355-355-144 144q-19 19-45 19-12 0-24-5-40-17-40-59v-448q0-26 19-45t45-19h448q42 0 59 40 17 39-14 69l-144 144 355 355 355-355-144-144q-31-30-14-69 17-40 59-40h448q26 0 45 19t19 45v448q0 42-39 59-13 5-25 5-26 0-45-19z\"/> </svg>"
-
-/***/ }),
-/* 355 */
-/***/ ((module) => {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 896q0 26-19 45l-256 256q-19 19-45 19t-45-19-19-45v-128h-1024v128q0 26-19 45t-45 19-45-19l-256-256q-19-19-19-45t19-45l256-256q19-19 45-19t45 19 19 45v128h1024v-128q0-26 19-45t45-19 45 19l256 256q19 19 19 45z\"/> </svg>"
-
-/***/ }),
-/* 356 */
-/***/ ((module) => {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1596 1385q0 117-79 196t-196 79q-135 0-235-100l-777-776q-113-115-113-271 0-159 110-270t269-111q158 0 273 113l605 606q10 10 10 22 0 16-30.5 46.5t-46.5 30.5q-13 0-23-10l-606-607q-79-77-181-77-106 0-179 75t-73 181q0 105 76 181l776 777q63 63 145 63 64 0 106-42t42-106q0-82-63-145l-581-581q-26-24-60-24-29 0-48 19t-19 48q0 32 25 59l410 410q10 10 10 22 0 16-31 47t-47 31q-12 0-22-10l-410-410q-63-61-63-149 0-82 57-139t139-57q88 0 149 63l581 581q100 98 100 235z\"/> </svg>"
-
-/***/ }),
-/* 357 */
-/***/ ((module) => {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z\"/> </svg>"
-
-/***/ }),
-/* 358 */
-/***/ ((module) => {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z\"/> </svg>"
-
-/***/ }),
-/* 359 */
-/***/ ((module) => {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 1152q0-36-20-69-1-1-15.5-22.5t-25.5-38-25-44-21-50.5q-4-16-21-16t-21 16q-7 23-21 50.5t-25 44-25.5 38-15.5 22.5q-20 33-20 69 0 53 37.5 90.5t90.5 37.5 90.5-37.5 37.5-90.5zm512-128q0 212-150 362t-362 150-362-150-150-362q0-145 81-275 6-9 62.5-90.5t101-151 99.5-178 83-201.5q9-30 34-47t51-17 51.5 17 33.5 47q28 93 83 201.5t99.5 178 101 151 62.5 90.5q81 127 81 275z\"/> </svg>"
 
 /***/ }),
 /* 360 */
 /***/ ((module) => {
 
-module.exports = "<svg viewBox=\"0 0 14 14\" xmlns=\"http://www.w3.org/2000/svg\"> <g stroke=\"none\" stroke-width=\"1\"> <path d=\"M14,1.4 L12.6,0 L7,5.6 L1.4,0 L0,1.4 L5.6,7 L0,12.6 L1.4,14 L7,8.4 L12.6,14 L14,12.6 L8.4,7 L14,1.4 Z\"/> </g> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z\"/> </svg>"
 
 /***/ }),
 /* 361 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h896q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-640q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h640q26 0 45 19t19 45z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 18.151 18.151\" xmlns=\"http://www.w3.org/2000/svg\"> <g> <path stroke-width=\"0\" d=\"M6.237,16.546H3.649V1.604h5.916v5.728c0.474-0.122,0.968-0.194,1.479-0.194 c0.042,0,0.083,0.006,0.125,0.006V0H2.044v18.15h5.934C7.295,17.736,6.704,17.19,6.237,16.546z\"/> <path stroke-width=\"0\" d=\"M11.169,8.275c-2.723,0-4.938,2.215-4.938,4.938s2.215,4.938,4.938,4.938s4.938-2.215,4.938-4.938 S13.892,8.275,11.169,8.275z M11.169,16.81c-1.983,0-3.598-1.612-3.598-3.598c0-1.983,1.614-3.597,3.598-3.597 s3.597,1.613,3.597,3.597C14.766,15.198,13.153,16.81,11.169,16.81z\"/> <polygon stroke-width=\"0\" points=\"11.792,11.073 10.502,11.073 10.502,12.578 9.03,12.578 9.03,13.868 10.502,13.868 10.502,15.352 11.792,15.352 11.792,13.868 13.309,13.868 13.309,12.578 11.792,12.578 \"/> </g> </svg>"
 
 /***/ }),
 /* 362 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176\"/> </g> </svg>"
 
 /***/ }),
 /* 363 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
 
 /***/ }),
 /* 364 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
 
 /***/ }),
 /* 365 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
 
 /***/ }),
 /* 366 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
 
 /***/ }),
 /* 367 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1411 541l-355 355 355 355 144-144q29-31 70-14 39 17 39 59v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l144-144-355-355-355 355 144 144q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l144 144 355-355-355-355-144 144q-19 19-45 19-12 0-24-5-40-17-40-59v-448q0-26 19-45t45-19h448q42 0 59 40 17 39-14 69l-144 144 355 355 355-355-144-144q-31-30-14-69 17-40 59-40h448q26 0 45 19t19 45v448q0 42-39 59-13 5-25 5-26 0-45-19z\"/> </svg>"
 
 /***/ }),
 /* 368 */
 /***/ ((module) => {
 
-module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 896q0 26-19 45l-256 256q-19 19-45 19t-45-19-19-45v-128h-1024v128q0 26-19 45t-45 19-45-19l-256-256q-19-19-19-45t19-45l256-256q19-19 45-19t45 19 19 45v128h1024v-128q0-26 19-45t45-19 45 19l256 256q19 19 19 45z\"/> </svg>"
 
 /***/ }),
 /* 369 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1596 1385q0 117-79 196t-196 79q-135 0-235-100l-777-776q-113-115-113-271 0-159 110-270t269-111q158 0 273 113l605 606q10 10 10 22 0 16-30.5 46.5t-46.5 30.5q-13 0-23-10l-606-607q-79-77-181-77-106 0-179 75t-73 181q0 105 76 181l776 777q63 63 145 63 64 0 106-42t42-106q0-82-63-145l-581-581q-26-24-60-24-29 0-48 19t-19 48q0 32 25 59l410 410q10 10 10 22 0 16-31 47t-47 31q-12 0-22-10l-410-410q-63-61-63-149 0-82 57-139t139-57q88 0 149 63l581 581q100 98 100 235z\"/> </svg>"
 
 /***/ }),
 /* 370 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z\"/> </svg>"
 
 /***/ }),
 /* 371 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z\"/> </svg>"
 
 /***/ }),
 /* 372 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 1152q0-36-20-69-1-1-15.5-22.5t-25.5-38-25-44-21-50.5q-4-16-21-16t-21 16q-7 23-21 50.5t-25 44-25.5 38-15.5 22.5q-20 33-20 69 0 53 37.5 90.5t90.5 37.5 90.5-37.5 37.5-90.5zm512-128q0 212-150 362t-362 150-362-150-150-362q0-145 81-275 6-9 62.5-90.5t101-151 99.5-178 83-201.5q9-30 34-47t51-17 51.5 17 33.5 47q28 93 83 201.5t99.5 178 101 151 62.5 90.5q81 127 81 275z\"/> </svg>"
 
 /***/ }),
 /* 373 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 14 14\" xmlns=\"http://www.w3.org/2000/svg\"> <g stroke=\"none\" stroke-width=\"1\"> <path d=\"M14,1.4 L12.6,0 L7,5.6 L1.4,0 L0,1.4 L5.6,7 L0,12.6 L1.4,14 L7,8.4 L12.6,14 L14,12.6 L8.4,7 L14,1.4 Z\"/> </g> </svg>"
 
 /***/ }),
 /* 374 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h896q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-640q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h640q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 /* 375 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
 
 /***/ }),
 /* 376 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/> </svg>"
 
 /***/ }),
 /* 377 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg>"
 
 /***/ }),
 /* 378 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg>"
 
 /***/ }),
 /* 379 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg>"
 
 /***/ }),
 /* 380 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg>"
 
 /***/ }),
 /* 381 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg>"
 
 /***/ }),
 /* 382 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg>"
 
 /***/ }),
 /* 383 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 384 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg>"
 
 /***/ }),
 /* 385 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125\"/> </svg>"
 
 /***/ }),
 /* 386 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg>"
 
 /***/ }),
 /* 387 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/> </svg>"
 
 /***/ }),
 /* 388 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg>"
 
 /***/ }),
 /* 389 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg>"
 
 /***/ }),
 /* 390 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/> </svg>"
 
 /***/ }),
 /* 391 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 32 32\"> <path d=\"M27 4l-15 15-7-7-5 5 12 12 20-20z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/> </svg>"
 
 /***/ }),
 /* 392 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg>"
 
 /***/ }),
 /* 393 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/> </svg>"
 
 /***/ }),
 /* 394 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/> </svg>"
 
 /***/ }),
 /* 395 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 396 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/> </svg>"
 
 /***/ }),
 /* 397 */
 /***/ ((module) => {
 
-module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/> </svg>"
 
 /***/ }),
 /* 398 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 /* 399 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 /* 400 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/> </svg>"
 
 /***/ }),
 /* 401 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg>"
 
 /***/ }),
 /* 402 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg>"
 
 /***/ }),
 /* 403 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg>"
 
 /***/ }),
 /* 404 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 32 32\"> <path d=\"M27 4l-15 15-7-7-5 5 12 12 20-20z\"/> </svg>"
 
 /***/ }),
 /* 405 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 406 */
 /***/ ((module) => {
 
-module.exports = "<svg viewBox=\"0 0 500 500\" xmlns=\"http://www.w3.org/2000/svg\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg>"
 
 /***/ }),
 /* 407 */
 /***/ ((module) => {
 
-module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke=\"null\" d=\"m42.276011,26.302547c0.098397,-0.76605 0.172194,-1.54407 0.172194,-2.33406s-0.073797,-1.56801 -0.172194,-2.33406l5.202718,-3.961917c0.467384,-0.359086 0.602679,-1.005441 0.29519,-1.532101l-4.919828,-8.29489c-0.307489,-0.51469 -0.947067,-0.730142 -1.500548,-0.51469l-6.125186,2.405877c-1.266856,-0.945594 -2.656707,-1.747553 -4.157255,-2.357999l-0.922468,-6.343855c-0.110696,-0.562568 -0.614979,-1.005441 -1.229957,-1.005441l-9.839656,0c-0.614979,0 -1.119261,0.442873 -1.217657,1.005441l-0.922468,6.343855c-1.500548,0.610446 -2.890399,1.400436 -4.157255,2.357999l-6.125186,-2.405877c-0.553481,-0.203482 -1.193058,0 -1.500548,0.51469l-4.919828,8.29489c-0.307489,0.51469 -0.172194,1.161045 0.29519,1.532101l5.190419,3.961917c-0.098397,0.76605 -0.172194,1.54407 -0.172194,2.33406s0.073797,1.56801 0.172194,2.33406l-5.190419,3.961917c-0.467384,0.359086 -0.602679,1.005441 -0.29519,1.532101l4.919828,8.29489c0.307489,0.51469 0.947067,0.730142 1.500548,0.51469l6.125186,-2.405877c1.266856,0.945594 2.656707,1.747553 4.157255,2.357999l0.922468,6.343855c0.098397,0.562568 0.602679,1.005441 1.217657,1.005441l9.839656,0c0.614979,0 1.119261,-0.442873 1.217657,-1.005441l0.922468,-6.343855c1.500548,-0.610446 2.890399,-1.400436 4.157255,-2.357999l6.125186,2.405877c0.553481,0.203482 1.193058,0 1.500548,-0.51469l4.919828,-8.29489c0.307489,-0.51469 0.172194,-1.161045 -0.29519,-1.532101l-5.190419,-3.961917zm-18.277162,6.044617c-4.759934,0 -8.609699,-3.746465 -8.609699,-8.378677s3.849766,-8.378677 8.609699,-8.378677s8.609699,3.746465 8.609699,8.378677s-3.849766,8.378677 -8.609699,8.378677z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 408 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </svg>"
 
 /***/ }),
 /* 409 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg>"
 
 /***/ }),
 /* 410 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg>"
 
 /***/ }),
 /* 411 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg>"
 
 /***/ }),
 /* 412 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg>"
 
 /***/ }),
 /* 413 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg>"
 
 /***/ }),
 /* 414 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg>"
 
 /***/ }),
 /* 415 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </svg>"
 
 /***/ }),
 /* 416 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg>"
 
 /***/ }),
 /* 417 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 /* 418 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg>"
 
 /***/ }),
 /* 419 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 500 500\" xmlns=\"http://www.w3.org/2000/svg\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg>"
 
 /***/ }),
 /* 420 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke=\"null\" d=\"m42.276011,26.302547c0.098397,-0.76605 0.172194,-1.54407 0.172194,-2.33406s-0.073797,-1.56801 -0.172194,-2.33406l5.202718,-3.961917c0.467384,-0.359086 0.602679,-1.005441 0.29519,-1.532101l-4.919828,-8.29489c-0.307489,-0.51469 -0.947067,-0.730142 -1.500548,-0.51469l-6.125186,2.405877c-1.266856,-0.945594 -2.656707,-1.747553 -4.157255,-2.357999l-0.922468,-6.343855c-0.110696,-0.562568 -0.614979,-1.005441 -1.229957,-1.005441l-9.839656,0c-0.614979,0 -1.119261,0.442873 -1.217657,1.005441l-0.922468,6.343855c-1.500548,0.610446 -2.890399,1.400436 -4.157255,2.357999l-6.125186,-2.405877c-0.553481,-0.203482 -1.193058,0 -1.500548,0.51469l-4.919828,8.29489c-0.307489,0.51469 -0.172194,1.161045 0.29519,1.532101l5.190419,3.961917c-0.098397,0.76605 -0.172194,1.54407 -0.172194,2.33406s0.073797,1.56801 0.172194,2.33406l-5.190419,3.961917c-0.467384,0.359086 -0.602679,1.005441 -0.29519,1.532101l4.919828,8.29489c0.307489,0.51469 0.947067,0.730142 1.500548,0.51469l6.125186,-2.405877c1.266856,0.945594 2.656707,1.747553 4.157255,2.357999l0.922468,6.343855c0.098397,0.562568 0.602679,1.005441 1.217657,1.005441l9.839656,0c0.614979,0 1.119261,-0.442873 1.217657,-1.005441l0.922468,-6.343855c1.500548,-0.610446 2.890399,-1.400436 4.157255,-2.357999l6.125186,2.405877c0.553481,0.203482 1.193058,0 1.500548,-0.51469l4.919828,-8.29489c0.307489,-0.51469 0.172194,-1.161045 -0.29519,-1.532101l-5.190419,-3.961917zm-18.277162,6.044617c-4.759934,0 -8.609699,-3.746465 -8.609699,-8.378677s3.849766,-8.378677 8.609699,-8.378677s8.609699,3.746465 8.609699,8.378677s-3.849766,8.378677 -8.609699,8.378677z\"/> </svg>"
 
 /***/ }),
 /* 421 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg>"
 
 /***/ }),
 /* 422 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg>"
 
 /***/ }),
 /* 423 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg>"
 
 /***/ }),
 /* 424 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
 
 /***/ }),
 /* 425 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
 
 /***/ }),
 /* 426 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg>"
 
 /***/ }),
 /* 427 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg>"
+
+/***/ }),
+/* 428 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg>"
+
+/***/ }),
+/* 429 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg>"
+
+/***/ }),
+/* 430 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg>"
+
+/***/ }),
+/* 431 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg>"
+
+/***/ }),
+/* 432 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+
+/***/ }),
+/* 433 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg>"
+
+/***/ }),
+/* 434 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg>"
+
+/***/ }),
+/* 435 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
+
+/***/ }),
+/* 436 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/> </svg>"
+
+/***/ }),
+/* 437 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/> </svg>"
+
+/***/ }),
+/* 438 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/> </svg>"
+
+/***/ }),
+/* 439 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/> </svg>"
+
+/***/ }),
+/* 440 */
 /***/ ((module) => {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 352v1088q0 42-39 59-13 5-25 5-27 0-45-19l-403-403v166q0 119-84.5 203.5t-203.5 84.5h-704q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h704q119 0 203.5 84.5t84.5 203.5v165l403-402q18-19 45-19 12 0 25 5 39 17 39 59z\"/> </svg>"
@@ -33465,12 +33725,12 @@ if ( true && typeof window !== 'undefined') {
     __webpack_require__(2);
 }
 var jodit_1 = __webpack_require__(6);
-var langs_1 = __webpack_require__(214);
+var langs_1 = __webpack_require__(226);
 var decorators = __webpack_require__(99);
 var consts = __webpack_require__(9);
 var Modules = __webpack_require__(10);
-var Plugins = __webpack_require__(234);
-var Icons = __webpack_require__(346);
+var Plugins = __webpack_require__(246);
+var Icons = __webpack_require__(359);
 Object.keys(consts).forEach(function (key) {
     jodit_1.Jodit[key] = consts[key];
 });

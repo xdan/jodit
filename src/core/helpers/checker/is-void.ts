@@ -6,7 +6,6 @@
 
 /**
  * Check value is undefined or null
- * @param value
  */
 export function isVoid(value: unknown): value is undefined | null {
 	// eslint-disable-next-line eqeqeq

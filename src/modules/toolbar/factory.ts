@@ -47,10 +47,6 @@ export function makeCollection(
 
 /**
  * Button factory
- *
- * @param jodit
- * @param control
- * @param [target]
  */
 export function makeButton(
 	jodit: IViewBased,

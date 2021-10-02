@@ -1,12 +1,12 @@
 {
 	"name": "jodit",
-	"version": "3.7.2",
+	"version": "3.8.1",
 	"description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
 	"main": "build/jodit.min.js",
 	"types": "index.d.ts",
 	"typings": "index.d.ts",
 	"scripts": {
-    "coverage": "npx type-coverage ./src --detail --ignore-files 'build/**' --ignore-files 'test/**' --ignore-files 'examples/**'",
+		"coverage": "npx type-coverage ./src --detail --ignore-files 'build/**' --ignore-files 'test/**' --ignore-files 'examples/**'",
 		"newversion": "npm run lint && npm test && npm version patch --no-git-tag-version && npm run build && npm run newversiongit && npm publish ./",
 		"newversiongit": "git add --all  && git commit -m \"New version $npm_package_version. Read more https://github.com/xdan/jodit/blob/master/CHANGELOG.MD \" && git tag $npm_package_version && git push --tags origin HEAD:master",
 		"start": "node server.js --port=2000",

@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.7.2
+ * Version: v3.8.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -58,6 +58,7 @@ class Config {
             ? window
             : null);
         this.shadowRoot = null;
+        this.styleValues = {};
         this.zIndex = 0;
         this.readonly = false;
         this.disabled = false;
@@ -410,7 +411,7 @@ const SPACE_REG_EXP = () => /[\s\n\t\r\uFEFF\u200b]+/g;
 const SPACE_REG_EXP_START = () => /^[\s\n\t\r\uFEFF\u200b]+/g;
 const SPACE_REG_EXP_END = () => /[\s\n\t\r\uFEFF\u200b]+$/g;
 const IS_BLOCK = /^(ARTICLE|SCRIPT|STYLE|OBJECT|FOOTER|HEADER|NAV|SECTION|IFRAME|JODIT|JODIT-MEDIA|PRE|DIV|P|LI|UL|OL|H[1-6]|BLOCKQUOTE|TR|TD|TH|TBODY|THEAD|TABLE|BODY|HTML|FIGCAPTION|FIGURE|DT|DD|DL|DFN)$/i;
-const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB)$/i;
+const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB|A|U)$/i;
 const INSEPARABLE_TAGS = [
     'img',
     'br',
@@ -953,11 +954,11 @@ class EventsNative {
 }
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(36);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
+var tslib_es6 = __webpack_require__(39);
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 9 modules
-var decorators = __webpack_require__(33);
+var decorators = __webpack_require__(36);
 ;// CONCATENATED MODULE: ./src/core/events/observe-object.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1051,16 +1052,16 @@ class ObserveObject {
         return new ObserveObject(data, prefix);
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.nonenumerable
 ], ObserveObject.prototype, "__data", void 0);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.nonenumerable
 ], ObserveObject.prototype, "__prefix", void 0);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.nonenumerable
 ], ObserveObject.prototype, "__onEvents", void 0);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.nonenumerable
 ], ObserveObject.prototype, "__lockEvent", void 0);
 
@@ -1254,14 +1255,14 @@ __webpack_require__.d(__webpack_exports__, {
   "sprintf": () => (/* reexport */ string/* sprintf */.gB),
   "stringify": () => (/* reexport */ string/* stringify */.Pz),
   "stripTags": () => (/* reexport */ stripTags),
-  "toArray": () => (/* reexport */ toArray),
+  "toArray": () => (/* reexport */ to_array/* toArray */.q),
   "trim": () => (/* reexport */ string/* trim */.fy),
   "trimInv": () => (/* reexport */ string/* trimInv */.as),
   "ucfirst": () => (/* reexport */ string/* ucfirst */.Ps),
   "val": () => (/* reexport */ val)
 });
 
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 6 modules
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 4 modules
 var utils = __webpack_require__(9);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-array.ts
 var is_array = __webpack_require__(7);
@@ -1287,24 +1288,8 @@ function splitArray(a) {
     return (0,is_string/* isString */.H)(a) ? a.split(/[,\s]+/) : a;
 }
 
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-native-function.ts
-var is_native_function = __webpack_require__(19);
-;// CONCATENATED MODULE: ./src/core/helpers/array/to-array.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-const toArray = function toArray(...args) {
-    var _a;
-    const func = (0,is_native_function/* isNativeFunction */.Q)(Array.from)
-        ? Array.from
-        : (_a = (0,utils/* reset */.mc)('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
-    return func.apply(Array, args);
-};
-
+// EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
+var to_array = __webpack_require__(23);
 ;// CONCATENATED MODULE: ./src/core/helpers/array/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1343,7 +1328,7 @@ function set_timeout_clearTimeout(timer) {
 
 
 // EXTERNAL MODULE: ./src/core/helpers/string/stringify.ts
-var stringify = __webpack_require__(16);
+var stringify = __webpack_require__(17);
 ;// CONCATENATED MODULE: ./src/core/helpers/extend.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1367,9 +1352,9 @@ function fastClone(object) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
-var checker = __webpack_require__(15);
+var checker = __webpack_require__(16);
 // EXTERNAL MODULE: ./src/core/helpers/color/color-to-hex.ts
-var color_to_hex = __webpack_require__(21);
+var color_to_hex = __webpack_require__(24);
 ;// CONCATENATED MODULE: ./src/core/helpers/color/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1430,15 +1415,15 @@ function ConfigFlatten(obj) {
 }
 
 // EXTERNAL MODULE: ./src/core/dom.ts
-var dom = __webpack_require__(14);
+var dom = __webpack_require__(15);
 // EXTERNAL MODULE: ./src/core/constants.ts
 var constants = __webpack_require__(2);
 // EXTERNAL MODULE: ./src/core/helpers/type.ts
 var type = __webpack_require__(4);
 // EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 5 modules
-var string = __webpack_require__(22);
+var string = __webpack_require__(25);
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
-var ui = __webpack_require__(24);
+var ui = __webpack_require__(27);
 ;// CONCATENATED MODULE: ./src/core/helpers/selector.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1481,7 +1466,7 @@ const getXPathByElement = (element, root) => {
         '/' +
         element.nodeName.toLowerCase() +
         (sames.length > 1
-            ? '[' + (toArray(sames).indexOf(element) + 1) + ']'
+            ? '[' + ((0,to_array/* toArray */.q)(sames).indexOf(element) + 1) + ']'
             : ''));
 };
 const refs = (root) => {
@@ -1665,7 +1650,7 @@ function cleanFromWord(html) {
                                 dom/* Dom.unwrap */.i.unwrap(node);
                                 break;
                             default:
-                                toArray(node.attributes).forEach((attr) => {
+                                (0,to_array/* toArray */.q)(node.attributes).forEach((attr) => {
                                     if ([
                                         'src',
                                         'href',
@@ -1766,7 +1751,7 @@ function nl2br(html) {
 
 
 // EXTERNAL MODULE: ./src/core/helpers/normalize/index.ts + 9 modules
-var normalize = __webpack_require__(29);
+var normalize = __webpack_require__(32);
 ;// CONCATENATED MODULE: ./src/core/helpers/size/get-content-width.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2054,7 +2039,7 @@ const convertMediaUrlToVideoEmbed = (url, width = 400, height = 345) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/css.ts
-var css = __webpack_require__(28);
+var css = __webpack_require__(31);
 ;// CONCATENATED MODULE: ./src/core/helpers/ctrl-key.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2075,9 +2060,9 @@ const ctrlKey = (e) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/data-bind.ts
-var data_bind = __webpack_require__(10);
+var data_bind = __webpack_require__(11);
 // EXTERNAL MODULE: ./src/core/helpers/default-language.ts
-var default_language = __webpack_require__(23);
+var default_language = __webpack_require__(26);
 ;// CONCATENATED MODULE: ./src/core/helpers/each.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2237,19 +2222,19 @@ const val = (elm, selector, value) => {
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
   "lI": () => (/* reexport */ LimitedStack),
-  "Lj": () => (/* reexport */ attr),
-  "RE": () => (/* reexport */ call),
-  "C6": () => (/* reexport */ callPromise),
+  "Lj": () => (/* reexport */ utils/* attr */.Lj),
+  "RE": () => (/* reexport */ utils/* call */.RE),
+  "C6": () => (/* reexport */ utils/* callPromise */.C6),
   "H5": () => (/* reexport */ cns),
-  "U2": () => (/* reexport */ get),
+  "U2": () => (/* reexport */ get/* get */.U),
   "gj": () => (/* reexport */ getClassName),
   "kc": () => (/* reexport */ keepNames),
-  "XP": () => (/* reexport */ keys),
-  "po": () => (/* reexport */ loadImage),
+  "XP": () => (/* reexport */ utils/* keys */.XP),
+  "po": () => (/* reexport */ utils/* loadImage */.po),
   "Q8": () => (/* reexport */ markDeprecated),
-  "MN": () => (/* reexport */ markOwner),
-  "u3": () => (/* reexport */ memorizeExec),
-  "mc": () => (/* reexport */ utils_reset),
+  "MN": () => (/* reexport */ utils/* markOwner */.MN),
+  "u3": () => (/* reexport */ utils/* memorizeExec */.u3),
+  "mc": () => (/* reexport */ utils/* reset */.mc),
   "t8": () => (/* reexport */ set)
 });
 
@@ -2268,159 +2253,18 @@ function markDeprecated(method, names = [''], ctx = null) {
     };
 }
 
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-function.ts
-var is_function = __webpack_require__(6);
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-promise.ts
-var is_promise = __webpack_require__(20);
+// EXTERNAL MODULE: ./src/core/helpers/utils/utils.ts
+var utils = __webpack_require__(10);
+// EXTERNAL MODULE: ./src/core/helpers/utils/get.ts
+var get = __webpack_require__(22);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
 var is_string = __webpack_require__(5);
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-void.ts
-var is_void = __webpack_require__(17);
-;// CONCATENATED MODULE: ./src/core/helpers/utils/get.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function get(chain, obj) {
-    if (!(0,is_string/* isString */.H)(chain) || !chain.length) {
-        return null;
-    }
-    const parts = chain.split('.');
-    let result = obj;
-    for (const part of parts) {
-        if ((0,is_void/* isVoid */.n)(result[part])) {
-            return null;
-        }
-        result = result[part];
-    }
-    if ((0,is_void/* isVoid */.n)(result)) {
-        return null;
-    }
-    return result;
-}
-
-// EXTERNAL MODULE: ./src/core/helpers/data-bind.ts
-var data_bind = __webpack_require__(10);
-// EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
-var checker = __webpack_require__(15);
-;// CONCATENATED MODULE: ./src/core/helpers/utils/utils.ts
-
-
-
-
-
-function call(func, ...args) {
-    return func(...args);
-}
-function attr(elm, key, value) {
-    if (!elm || !(0,is_function/* isFunction */.m)(elm.getAttribute)) {
-        return null;
-    }
-    if (/^-/.test(key)) {
-        const res = attr(elm, `data${key}`);
-        if (res) {
-            return res;
-        }
-        key = key.substr(1);
-    }
-    if (value !== undefined) {
-        if (value == null) {
-            elm.hasAttribute(key) && elm.removeAttribute(key);
-        }
-        else {
-            elm.setAttribute(key, value.toString());
-            return value.toString();
-        }
-    }
-    return elm.getAttribute(key);
-}
-function markOwner(jodit, elm) {
-    attr(elm, 'data-editor_id', jodit.id);
-    !elm.component &&
-        Object.defineProperty(elm, 'jodit', {
-            value: jodit
-        });
-}
-function callPromise(condition, callback) {
-    if ((0,is_promise/* isPromise */.t)(condition)) {
-        return condition.finally(callback);
-    }
-    else {
-        return callback();
-    }
-}
-const map = {};
-const utils_reset = function (key) {
-    var _a, _b;
-    if (!(key in map)) {
-        const iframe = document.createElement('iframe');
-        try {
-            iframe.src = 'about:blank';
-            document.body.appendChild(iframe);
-            if (!iframe.contentWindow) {
-                return null;
-            }
-            const func = get(key, iframe.contentWindow), bind = get(key.split('.').slice(0, -1).join('.'), iframe.contentWindow);
-            if ((0,is_function/* isFunction */.m)(func)) {
-                map[key] = func.bind(bind);
-            }
-        }
-        catch (e) {
-            if (false) {}
-        }
-        finally {
-            (_a = iframe.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(iframe);
-        }
-    }
-    return (_b = map[key]) !== null && _b !== void 0 ? _b : null;
-};
-const loadImage = (src, jodit) => jodit.async.promise((res, rej) => {
-    const image = new Image(), onError = () => {
-        jodit.e.off(image);
-        rej === null || rej === void 0 ? void 0 : rej();
-    }, onSuccess = () => {
-        jodit.e.off(image);
-        res(image);
-    };
-    jodit.e
-        .one(image, 'load', onSuccess)
-        .one(image, 'error', onError)
-        .one(image, 'abort', onError);
-    image.src = src;
-    if (image.complete) {
-        onSuccess();
-    }
-});
-const keys = (obj, own = true) => {
-    if (own) {
-        return Object.keys(obj);
-    }
-    const props = [];
-    for (const key in obj) {
-        props.push(key);
-    }
-    return props;
-};
-const memorizeExec = (editor, _, { control }, preProcessValue) => {
-    const key = `button${control.command}`;
-    let value = (control.args && control.args[0]) || (0,data_bind/* dataBind */.q)(editor, key);
-    if ((0,checker/* isVoid */.nj)(value)) {
-        return false;
-    }
-    (0,data_bind/* dataBind */.q)(editor, key, value);
-    if (preProcessValue) {
-        value = preProcessValue(value);
-    }
-    editor.execCommand(control.command, false, value || undefined);
-};
-
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-numeric.ts
-var is_numeric = __webpack_require__(18);
+var is_numeric = __webpack_require__(19);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-array.ts
 var is_array = __webpack_require__(7);
+// EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
+var checker = __webpack_require__(16);
 ;// CONCATENATED MODULE: ./src/core/helpers/utils/set.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2449,6 +2293,8 @@ function set(chain, value, obj) {
     }
 }
 
+// EXTERNAL MODULE: ./src/core/helpers/checker/is-function.ts
+var is_function = __webpack_require__(6);
 ;// CONCATENATED MODULE: ./src/core/helpers/utils/get-class-name.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2515,10 +2361,144 @@ class LimitedStack {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "RE": () => (/* binding */ call),
+/* harmony export */   "Lj": () => (/* binding */ attr),
+/* harmony export */   "MN": () => (/* binding */ markOwner),
+/* harmony export */   "C6": () => (/* binding */ callPromise),
+/* harmony export */   "mc": () => (/* binding */ reset),
+/* harmony export */   "po": () => (/* binding */ loadImage),
+/* harmony export */   "XP": () => (/* binding */ keys),
+/* harmony export */   "u3": () => (/* binding */ memorizeExec)
+/* harmony export */ });
+/* harmony import */ var _checker_is_function__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _checker_is_promise__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(21);
+/* harmony import */ var _get__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(22);
+/* harmony import */ var _data_bind__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(18);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+function call(func, ...args) {
+    return func(...args);
+}
+function attr(elm, key, value) {
+    if (!elm || !(0,_checker_is_function__WEBPACK_IMPORTED_MODULE_1__/* .isFunction */ .m)(elm.getAttribute)) {
+        return null;
+    }
+    if (/^-/.test(key)) {
+        const res = attr(elm, `data${key}`);
+        if (res) {
+            return res;
+        }
+        key = key.substr(1);
+    }
+    if (value !== undefined) {
+        if (value == null) {
+            elm.hasAttribute(key) && elm.removeAttribute(key);
+        }
+        else {
+            elm.setAttribute(key, value.toString());
+            return value.toString();
+        }
+    }
+    return elm.getAttribute(key);
+}
+function markOwner(jodit, elm) {
+    attr(elm, 'data-editor_id', jodit.id);
+    !elm.component &&
+        Object.defineProperty(elm, 'jodit', {
+            value: jodit
+        });
+}
+function callPromise(condition, callback) {
+    if ((0,_checker_is_promise__WEBPACK_IMPORTED_MODULE_2__/* .isPromise */ .t)(condition)) {
+        return condition.finally(callback);
+    }
+    return callback();
+}
+const map = {};
+const reset = function (key) {
+    var _a, _b;
+    if (!(key in map)) {
+        const iframe = document.createElement('iframe');
+        try {
+            iframe.src = 'about:blank';
+            document.body.appendChild(iframe);
+            if (!iframe.contentWindow) {
+                return null;
+            }
+            const func = (0,_get__WEBPACK_IMPORTED_MODULE_3__/* .get */ .U)(key, iframe.contentWindow), bind = (0,_get__WEBPACK_IMPORTED_MODULE_3__/* .get */ .U)(key.split('.').slice(0, -1).join('.'), iframe.contentWindow);
+            if ((0,_checker_is_function__WEBPACK_IMPORTED_MODULE_1__/* .isFunction */ .m)(func)) {
+                map[key] = func.bind(bind);
+            }
+        }
+        catch (e) {
+            if (false) {}
+        }
+        finally {
+            (_a = iframe.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(iframe);
+        }
+    }
+    return (_b = map[key]) !== null && _b !== void 0 ? _b : null;
+};
+const loadImage = (src, jodit) => jodit.async.promise((res, rej) => {
+    const image = new Image(), onError = () => {
+        jodit.e.off(image);
+        rej === null || rej === void 0 ? void 0 : rej();
+    }, onSuccess = () => {
+        jodit.e.off(image);
+        res(image);
+    };
+    jodit.e
+        .one(image, 'load', onSuccess)
+        .one(image, 'error', onError)
+        .one(image, 'abort', onError);
+    image.src = src;
+    if (image.complete) {
+        onSuccess();
+    }
+});
+const keys = (obj, own = true) => {
+    if (own) {
+        return Object.keys(obj);
+    }
+    const props = [];
+    for (const key in obj) {
+        props.push(key);
+    }
+    return props;
+};
+const memorizeExec = (editor, _, { control }, preProcessValue) => {
+    const key = `button${control.command}`;
+    let value = (control.args && control.args[0]) || (0,_data_bind__WEBPACK_IMPORTED_MODULE_0__/* .dataBind */ .q)(editor, key);
+    if ((0,_checker_is_void__WEBPACK_IMPORTED_MODULE_4__/* .isVoid */ .n)(value)) {
+        return false;
+    }
+    (0,_data_bind__WEBPACK_IMPORTED_MODULE_0__/* .dataBind */ .q)(editor, key, value);
+    if (preProcessValue) {
+        value = preProcessValue(value);
+    }
+    editor.execCommand(control.command, false, value || undefined);
+};
+
+
+/***/ }),
+/* 11 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "q": () => (/* binding */ dataBind)
 /* harmony export */ });
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
-/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
+/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -2553,7 +2533,7 @@ const dataBind = (elm, key, value) => {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2579,10 +2559,10 @@ var STATUSES;
     STATUSES["destructed"] = "destructed";
 })(STATUSES || (STATUSES = {}));
 
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(12);
+var global = __webpack_require__(13);
 ;// CONCATENATED MODULE: ./src/core/component/component.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2734,7 +2714,7 @@ class ViewComponent extends Component {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2748,8 +2728,8 @@ class ViewComponent extends Component {
 /* harmony export */   "TB": () => (/* binding */ eventEmitter)
 /* harmony export */ });
 /* unused harmony export extendLang */
-/* harmony import */ var _plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
-/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14);
+/* harmony import */ var _plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
 /* harmony import */ var _helpers___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
 /* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3);
 /*!
@@ -2816,7 +2796,7 @@ const eventEmitter = new _events__WEBPACK_IMPORTED_MODULE_3__/* .EventsNative */
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2971,7 +2951,7 @@ PluginSystem.styles = new Set();
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3000,7 +2980,7 @@ class Dom {
         do {
             needFindNext = false;
             tmp = first.previousSibling;
-            if (tmp && !Dom.isBlock(tmp, editor.ew)) {
+            if (tmp && !Dom.isBlock(tmp)) {
                 needFindNext = true;
                 first = tmp;
             }
@@ -3008,7 +2988,7 @@ class Dom {
         do {
             needFindNext = false;
             tmp = last.nextSibling;
-            if (tmp && !Dom.isBlock(tmp, editor.ew)) {
+            if (tmp && !Dom.isBlock(tmp)) {
                 needFindNext = true;
                 last = tmp;
             }
@@ -3032,7 +3012,7 @@ class Dom {
     static wrap(current, tag, create) {
         const wrapper = (0,_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(tag) ? create.element(tag) : tag;
         if (!current.parentNode) {
-            return null;
+            throw (0,_helpers__WEBPACK_IMPORTED_MODULE_1__.error)('Element should be in DOM');
         }
         current.parentNode.insertBefore(wrapper, current);
         wrapper.appendChild(current);
@@ -3122,10 +3102,11 @@ class Dom {
                 }
             }));
     }
-    static isNode(object, win) {
+    static isNode(object) {
         if (!object) {
             return false;
         }
+        const win = (0,_helpers__WEBPACK_IMPORTED_MODULE_1__.get)('ownerDocument.defaultView', object);
         if (typeof win === 'object' &&
             win &&
             (typeof win.Node === 'function' ||
@@ -3134,37 +3115,46 @@ class Dom {
         }
         return false;
     }
-    static isCell(elm, win) {
-        return Dom.isNode(elm, win) && /^(td|th)$/i.test(elm.nodeName);
+    static isCell(elm) {
+        return Dom.isNode(elm) && /^(td|th)$/i.test(elm.nodeName);
     }
-    static isImage(elm, win) {
-        return (Dom.isNode(elm, win) &&
-            /^(img|svg|picture|canvas)$/i.test(elm.nodeName));
+    static isImage(elm) {
+        return (Dom.isNode(elm) && /^(img|svg|picture|canvas)$/i.test(elm.nodeName));
     }
-    static isBlock(node, win) {
+    static isBlock(node) {
         return (!(0,_helpers__WEBPACK_IMPORTED_MODULE_1__.isVoid)(node) &&
             typeof node === 'object' &&
-            Dom.isNode(node, win) &&
+            Dom.isNode(node) &&
             _constants__WEBPACK_IMPORTED_MODULE_0__.IS_BLOCK.test(node.nodeName));
     }
     static isText(node) {
         return Boolean(node && node.nodeType === Node.TEXT_NODE);
     }
     static isElement(node) {
-        return Boolean(node && node.nodeType === Node.ELEMENT_NODE);
+        var _a;
+        if (!Dom.isNode(node)) {
+            return false;
+        }
+        const win = (_a = node.ownerDocument) === null || _a === void 0 ? void 0 : _a.defaultView;
+        return Boolean(win && node.nodeType === Node.ELEMENT_NODE);
     }
-    static isHTMLElement(node, win) {
-        return (Dom.isNode(node, win) && node instanceof win.HTMLElement);
+    static isHTMLElement(node) {
+        var _a;
+        if (!Dom.isNode(node)) {
+            return false;
+        }
+        const win = (_a = node.ownerDocument) === null || _a === void 0 ? void 0 : _a.defaultView;
+        return Boolean(win && node instanceof win.HTMLElement);
     }
     static isInlineBlock(node) {
         return (Dom.isElement(node) &&
             !/^(BR|HR)$/i.test(node.tagName) &&
             ['inline', 'inline-block'].indexOf((0,_helpers__WEBPACK_IMPORTED_MODULE_1__.css)(node, 'display').toString()) !== -1);
     }
-    static canSplitBlock(node, win) {
+    static canSplitBlock(node) {
         return (!(0,_helpers__WEBPACK_IMPORTED_MODULE_1__.isVoid)(node) &&
-            node instanceof win.HTMLElement &&
-            Dom.isBlock(node, win) &&
+            Dom.isHTMLElement(node) &&
+            Dom.isBlock(node) &&
             !/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
             node.style !== undefined &&
             !/^(fixed|absolute)/i.test(node.style.position));
@@ -3410,7 +3400,7 @@ class Dom {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3477,7 +3467,7 @@ function isBoolean(elm) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/string/stringify.ts
-var stringify = __webpack_require__(16);
+var stringify = __webpack_require__(17);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-equal.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -3519,9 +3509,9 @@ function isHtmlFromWord(data) {
 }
 
 // EXTERNAL MODULE: ./src/core/dom.ts
-var dom = __webpack_require__(14);
+var dom = __webpack_require__(15);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-void.ts
-var is_void = __webpack_require__(17);
+var is_void = __webpack_require__(18);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-imp-interface.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -3542,7 +3532,7 @@ function hasContainer(value) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-numeric.ts
-var is_numeric = __webpack_require__(18);
+var is_numeric = __webpack_require__(19);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-int.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -3559,7 +3549,7 @@ function isInt(value) {
 }
 
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(12);
+var global = __webpack_require__(13);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-jodit-object.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -3589,14 +3579,12 @@ function isViewObject(jodit) {
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const isLicense = (license) => {
-    return ((0,is_string/* isString */.H)(license) &&
-        license.length === 23 &&
-        /^[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}$/i.test(license));
-};
+const isLicense = (license) => (0,is_string/* isString */.H)(license) &&
+    license.length === 23 &&
+    /^[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}$/i.test(license);
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-native-function.ts
-var is_native_function = __webpack_require__(19);
+var is_native_function = __webpack_require__(20);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-number.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -3633,7 +3621,7 @@ function isPlainObject(obj) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-promise.ts
-var is_promise = __webpack_require__(20);
+var is_promise = __webpack_require__(21);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-url.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -3668,10 +3656,7 @@ function isValidName(name) {
     if (!name.length) {
         return false;
     }
-    if (/[^0-9A-Za-zа-яА-ЯЁё\w\-_.]/.test(name)) {
-        return false;
-    }
-    return true;
+    return !/[^0-9A-Za-zа-яА-ЯЁё\w\-_.]/.test(name);
 }
 
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/index.ts
@@ -3704,7 +3689,7 @@ function isValidName(name) {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3739,7 +3724,7 @@ function stringify(value, options = {}) {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3757,7 +3742,7 @@ function isVoid(value) {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3783,7 +3768,7 @@ function isNumeric(value) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3804,7 +3789,7 @@ function isNativeFunction(f) {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3822,7 +3807,69 @@ function isPromise(val) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "U": () => (/* binding */ get)
+/* harmony export */ });
+/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
+/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function get(chain, obj) {
+    if (!(0,_checker_is_string__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .H)(chain) || !chain.length) {
+        return null;
+    }
+    const parts = chain.split('.');
+    let result = obj;
+    for (const part of parts) {
+        if ((0,_checker_is_void__WEBPACK_IMPORTED_MODULE_1__/* .isVoid */ .n)(result[part])) {
+            return null;
+        }
+        result = result[part];
+    }
+    if ((0,_checker_is_void__WEBPACK_IMPORTED_MODULE_1__/* .isVoid */ .n)(result)) {
+        return null;
+    }
+    return result;
+}
+
+
+/***/ }),
+/* 23 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "q": () => (/* binding */ toArray)
+/* harmony export */ });
+/* harmony import */ var _utils_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/* harmony import */ var _checker_is_native_function__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(20);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+const toArray = function toArray(...args) {
+    var _a;
+    const func = (0,_checker_is_native_function__WEBPACK_IMPORTED_MODULE_1__/* .isNativeFunction */ .Q)(Array.from)
+        ? Array.from
+        : (_a = (0,_utils_utils__WEBPACK_IMPORTED_MODULE_0__/* .reset */ .mc)('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
+    return func.apply(Array, args);
+};
+
+
+/***/ }),
+/* 24 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3859,7 +3906,7 @@ const colorToHex = (color) => {
 
 
 /***/ }),
-/* 22 */
+/* 25 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3889,7 +3936,7 @@ const camelCase = (key) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/string/stringify.ts
-var stringify = __webpack_require__(16);
+var stringify = __webpack_require__(17);
 ;// CONCATENATED MODULE: ./src/core/helpers/string/kebab-case.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -3940,11 +3987,11 @@ const ucfirst = (value) => {
 // EXTERNAL MODULE: ./src/config.ts
 var config = __webpack_require__(1);
 // EXTERNAL MODULE: ./src/core/helpers/default-language.ts
-var default_language = __webpack_require__(23);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
+var default_language = __webpack_require__(26);
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(12);
+var global = __webpack_require__(13);
 ;// CONCATENATED MODULE: ./src/core/helpers/string/i18n.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4042,14 +4089,14 @@ const i18n = (key, params, options) => {
 
 
 /***/ }),
-/* 23 */
+/* 26 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "X": () => (/* binding */ defaultLanguage)
 /* harmony export */ });
-/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(16);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -4071,7 +4118,7 @@ const defaultLanguage = (language, defaultLanguage = 'en') => {
 
 
 /***/ }),
-/* 24 */
+/* 27 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4098,23 +4145,23 @@ __webpack_require__.d(__webpack_exports__, {
 // UNUSED EXPORTS: UIButtonGroup, UIButtonState, UISelect
 
 // EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(25);
+var ui_element = __webpack_require__(28);
 // EXTERNAL MODULE: ./src/core/ui/button/index.ts + 2 modules
-var ui_button = __webpack_require__(30);
+var ui_button = __webpack_require__(33);
 // EXTERNAL MODULE: ./src/core/ui/popup/index.ts + 1 modules
-var popup = __webpack_require__(39);
+var popup = __webpack_require__(42);
 // EXTERNAL MODULE: ./src/core/ui/separator.ts
-var separator = __webpack_require__(37);
+var separator = __webpack_require__(40);
 // EXTERNAL MODULE: ./src/core/ui/list/group.ts
-var group = __webpack_require__(35);
+var group = __webpack_require__(38);
 // EXTERNAL MODULE: ./src/core/ui/list/list.ts + 1 modules
-var list = __webpack_require__(31);
+var list = __webpack_require__(34);
 // EXTERNAL MODULE: ./src/core/ui/form/index.ts + 11 modules
-var ui_form = __webpack_require__(40);
+var ui_form = __webpack_require__(43);
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
-var icon = __webpack_require__(27);
+var icon = __webpack_require__(30);
 // EXTERNAL MODULE: ./src/core/dom.ts
-var dom = __webpack_require__(14);
+var dom = __webpack_require__(15);
 ;// CONCATENATED MODULE: ./src/core/ui/progress-bar/progress-bar.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4168,18 +4215,18 @@ class ProgressBar extends ui_element/* UIElement */.u {
 
 
 /***/ }),
-/* 25 */
+/* 28 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "u": () => (/* binding */ UIElement)
 /* harmony export */ });
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
-/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14);
-/* harmony import */ var _traits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(26);
+/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
+/* harmony import */ var _traits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(29);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
-/* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(27);
+/* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(30);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -4257,7 +4304,7 @@ class UIElement extends _component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent
         return elm ? elm === null || elm === void 0 ? void 0 : elm.component : null;
     }
     setMod(name, value, container = this.container) {
-        _traits__WEBPACK_IMPORTED_MODULE_2__/* .Mods.setMod.call */ .$.setMod.call(this, name, value);
+        _traits__WEBPACK_IMPORTED_MODULE_2__/* .Mods.setMod.call */ .$.setMod.call(this, name, value, container);
         return this;
     }
     getMod(name) {
@@ -4302,7 +4349,7 @@ class UIElement extends _component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent
 
 
 /***/ }),
-/* 26 */
+/* 29 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4313,8 +4360,8 @@ __webpack_require__.d(__webpack_exports__, {
   "$": () => (/* reexport */ Mods)
 });
 
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
-var helpers = __webpack_require__(8);
+// EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
+var to_array = __webpack_require__(23);
 ;// CONCATENATED MODULE: ./src/core/traits/elms.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4327,7 +4374,7 @@ class Elms {
         return this.container.querySelector(`.${this.getFullElName(elementName)}`);
     }
     static getElms(elementName) {
-        return (0,helpers.toArray)(this.container.querySelectorAll(`.${this.getFullElName(elementName)}`));
+        return (0,to_array/* toArray */.q)(this.container.querySelectorAll(`.${this.getFullElName(elementName)}`));
     }
 }
 
@@ -4345,7 +4392,7 @@ class Mods {
             return;
         }
         const mod = `${this.componentName}_${name}`, cl = (container || this.container).classList;
-        (0,helpers.toArray)(cl).forEach(className => {
+        (0,to_array/* toArray */.q)(cl).forEach(className => {
             if (className.indexOf(mod) === 0) {
                 cl.remove(className);
             }
@@ -4372,14 +4419,14 @@ class Mods {
 
 
 /***/ }),
-/* 27 */
+/* 30 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "J": () => (/* binding */ Icon)
 /* harmony export */ });
-/* harmony import */ var _helpers_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(28);
+/* harmony import */ var _helpers_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -4388,7 +4435,7 @@ class Mods {
 
 class Icon {
     static getIcon(name) {
-        if (/^<svg/i.test(name)) {
+        if (/<svg/i.test(name)) {
             return name;
         }
         return (Icon.icons[name] ||
@@ -4438,7 +4485,7 @@ Icon.icons = {};
 
 
 /***/ }),
-/* 28 */
+/* 31 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4446,9 +4493,9 @@ Icon.icons = {};
 /* harmony export */   "i": () => (/* binding */ css),
 /* harmony export */   "b": () => (/* binding */ clearCenterAlign)
 /* harmony export */ });
-/* harmony import */ var _checker___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
-/* harmony import */ var _normalize___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(29);
-/* harmony import */ var _string___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
+/* harmony import */ var _checker___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(16);
+/* harmony import */ var _normalize___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(32);
+/* harmony import */ var _string___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(25);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -4457,8 +4504,12 @@ Icon.icons = {};
 
 
 
-const css = (element, key, value, onlyStyleMode = false) => {
+function css(element, key, value, onlyStyleMode = false) {
     const numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size/i;
+    if ((0,_checker___WEBPACK_IMPORTED_MODULE_0__/* .isBoolean */ .jn)(value)) {
+        onlyStyleMode = value;
+        value = undefined;
+    }
     if ((0,_checker___WEBPACK_IMPORTED_MODULE_0__/* .isPlainObject */ .PO)(key) || value !== undefined) {
         const setValue = (elm, _key, _value) => {
             if (!(0,_checker___WEBPACK_IMPORTED_MODULE_0__/* .isVoid */ .nj)(_value) &&
@@ -4468,8 +4519,7 @@ const css = (element, key, value, onlyStyleMode = false) => {
             }
             if (_value !== undefined &&
                 (_value == null ||
-                    css(elm, _key, undefined, true) !==
-                        (0,_normalize___WEBPACK_IMPORTED_MODULE_1__/* .normalizeCssValue */ .Zh)(_key, _value))) {
+                    css(elm, _key, true) !== (0,_normalize___WEBPACK_IMPORTED_MODULE_1__/* .normalizeCssValue */ .Zh)(_key, _value))) {
                 elm.style[_key] = _value;
             }
         };
@@ -4498,7 +4548,7 @@ const css = (element, key, value, onlyStyleMode = false) => {
         result = parseInt(result.toString(), 10);
     }
     return (0,_normalize___WEBPACK_IMPORTED_MODULE_1__/* .normalizeCssValue */ .Zh)(key, result);
-};
+}
 const clearCenterAlign = (image) => {
     if (css(image, 'display') === 'block') {
         css(image, 'display', '');
@@ -4512,7 +4562,7 @@ const clearCenterAlign = (image) => {
 
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4531,7 +4581,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 5 modules
-var string = __webpack_require__(22);
+var string = __webpack_require__(25);
 // EXTERNAL MODULE: ./src/core/constants.ts
 var constants = __webpack_require__(2);
 ;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-key-aliases.ts
@@ -4572,7 +4622,7 @@ const normalizeLicense = (license, count = 8) => {
 };
 
 // EXTERNAL MODULE: ./src/core/dom.ts
-var dom = __webpack_require__(14);
+var dom = __webpack_require__(15);
 ;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-node.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4680,9 +4730,9 @@ const normalizeUrl = (...urls) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
-var checker = __webpack_require__(15);
+var checker = __webpack_require__(16);
 // EXTERNAL MODULE: ./src/core/helpers/color/color-to-hex.ts
-var color_to_hex = __webpack_require__(21);
+var color_to_hex = __webpack_require__(24);
 ;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-css-value.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4761,7 +4811,7 @@ const normalizeColor = (colorInput) => {
 
 
 /***/ }),
-/* 30 */
+/* 33 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4776,21 +4826,21 @@ __webpack_require__.d(__webpack_exports__, {
 // UNUSED EXPORTS: UIButtonGroup
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(36);
+var tslib_es6 = __webpack_require__(39);
 // EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(25);
+var ui_element = __webpack_require__(28);
 // EXTERNAL MODULE: ./src/core/dom.ts
-var dom = __webpack_require__(14);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
+var dom = __webpack_require__(15);
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
-var icon = __webpack_require__(27);
+var icon = __webpack_require__(30);
 // EXTERNAL MODULE: ./src/core/ui/list/list.ts + 1 modules
-var list = __webpack_require__(31);
+var list = __webpack_require__(34);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 9 modules
-var decorators = __webpack_require__(33);
+var decorators = __webpack_require__(36);
 // EXTERNAL MODULE: ./src/core/component/index.ts + 3 modules
-var component = __webpack_require__(11);
+var component = __webpack_require__(12);
 ;// CONCATENATED MODULE: ./src/core/ui/button/button/button.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4935,46 +4985,46 @@ let UIButton = class UIButton extends ui_element/* UIElement */.u {
         this.actionHandlers.forEach(callback => callback.call(this, e));
     }
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.size')
 ], UIButton.prototype, "onChangeSize", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.type')
 ], UIButton.prototype, "onChangeType", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('parentElement')
 ], UIButton.prototype, "updateSize", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.status')
 ], UIButton.prototype, "onChangeStatus", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.text')
 ], UIButton.prototype, "onChangeText", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.text')
 ], UIButton.prototype, "onChangeTextSetMode", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.disabled')
 ], UIButton.prototype, "onChangeDisabled", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.activated')
 ], UIButton.prototype, "onChangeActivated", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.name')
 ], UIButton.prototype, "onChangeName", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.tooltip')
 ], UIButton.prototype, "onChangeTooltip", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.tabIndex')
 ], UIButton.prototype, "onChangeTabIndex", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.icon')
 ], UIButton.prototype, "onChangeIcon", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], UIButton.prototype, "onActionFire", null);
-UIButton = (0,tslib_es6.__decorate)([
+UIButton = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UIButton);
 
@@ -4998,7 +5048,7 @@ function Button(jodit, stateOrText, text, status) {
 }
 
 // EXTERNAL MODULE: ./src/core/ui/list/group.ts
-var group = __webpack_require__(35);
+var group = __webpack_require__(38);
 ;// CONCATENATED MODULE: ./src/core/ui/button/group/group.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5061,7 +5111,7 @@ let UIButtonGroup = class UIButtonGroup extends group/* UIGroup */.q {
         (_b = (_a = this.options).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, result);
     }
 };
-UIButtonGroup = (0,tslib_es6.__decorate)([
+UIButtonGroup = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UIButtonGroup);
 
@@ -5077,7 +5127,7 @@ UIButtonGroup = (0,tslib_es6.__decorate)([
 
 
 /***/ }),
-/* 31 */
+/* 34 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5088,16 +5138,16 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(36);
+var tslib_es6 = __webpack_require__(39);
 // EXTERNAL MODULE: ./src/core/ui/button/index.ts + 2 modules
-var ui_button = __webpack_require__(30);
+var ui_button = __webpack_require__(33);
 // EXTERNAL MODULE: ./src/core/ui/helpers/get-control-type.ts
-var get_control_type = __webpack_require__(32);
+var get_control_type = __webpack_require__(35);
 // EXTERNAL MODULE: ./src/config.ts
 var config = __webpack_require__(1);
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
-var checker = __webpack_require__(15);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
+var checker = __webpack_require__(16);
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
 var helpers = __webpack_require__(8);
 ;// CONCATENATED MODULE: ./src/core/ui/helpers/get-strong-control-types.ts
 /*!
@@ -5120,13 +5170,13 @@ function getStrongControlTypes(items, controls) {
 }
 
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 9 modules
-var decorators = __webpack_require__(33);
+var decorators = __webpack_require__(36);
 // EXTERNAL MODULE: ./src/core/ui/list/group.ts
-var group = __webpack_require__(35);
+var group = __webpack_require__(38);
 // EXTERNAL MODULE: ./src/core/ui/separator.ts
-var separator = __webpack_require__(37);
+var separator = __webpack_require__(40);
 // EXTERNAL MODULE: ./src/core/ui/helpers/buttons.ts
-var buttons = __webpack_require__(38);
+var buttons = __webpack_require__(41);
 ;// CONCATENATED MODULE: ./src/core/ui/list/list.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5230,17 +5280,17 @@ let UIList = class UIList extends group/* UIGroup */.q {
         return new ui_button/* UIButton */.y3(this.j);
     }
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('mode')
 ], UIList.prototype, "onChangeMode", null);
-UIList = (0,tslib_es6.__decorate)([
+UIList = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UIList);
 
 
 
 /***/ }),
-/* 32 */
+/* 35 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5300,7 +5350,7 @@ function findControlType(path, controls) {
 
 
 /***/ }),
-/* 33 */
+/* 36 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5323,7 +5373,7 @@ __webpack_require__.d(__webpack_exports__, {
   "watch": () => (/* reexport */ watch)
 });
 
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
 var helpers = __webpack_require__(8);
 ;// CONCATENATED MODULE: ./src/core/decorators/cache.ts
 /*!
@@ -5381,7 +5431,7 @@ function component(constructorFunction) {
 }
 
 // EXTERNAL MODULE: ./src/core/component/index.ts + 3 modules
-var core_component = __webpack_require__(11);
+var core_component = __webpack_require__(12);
 ;// CONCATENATED MODULE: ./src/core/decorators/debounce.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5630,7 +5680,7 @@ function watch(observeFields, context) {
 /* harmony default export */ const decorators_watch = ((/* unused pure expression or super */ null && (watch)));
 
 // EXTERNAL MODULE: ./node_modules/autobind-decorator/lib/esm/index.js
-var esm = __webpack_require__(34);
+var esm = __webpack_require__(37);
 ;// CONCATENATED MODULE: ./src/core/decorators/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5650,7 +5700,7 @@ var esm = __webpack_require__(34);
 
 
 /***/ }),
-/* 34 */
+/* 37 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -5730,18 +5780,18 @@ exports.ZP = autobind;
 
 
 /***/ }),
-/* 35 */
+/* 38 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "q": () => (/* binding */ UIGroup)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(36);
-/* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(25);
-/* harmony import */ var _decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(33);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(39);
+/* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(28);
+/* harmony import */ var _decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
-/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(14);
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(15);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5838,20 +5888,21 @@ let UIGroup = UIGroup_1 = class UIGroup extends _element__WEBPACK_IMPORTED_MODUL
         return super.destruct();
     }
 };
-(0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+(0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)([
     (0,_decorators__WEBPACK_IMPORTED_MODULE_1__.watch)('buttonSize')
 ], UIGroup.prototype, "update", null);
-UIGroup = UIGroup_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+UIGroup = UIGroup_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)([
     _decorators__WEBPACK_IMPORTED_MODULE_1__.component
 ], UIGroup);
 
 
 
 /***/ }),
-/* 36 */
+/* 39 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
+var __webpack_unused_export__;
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -5867,8 +5918,8 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.__classPrivateFieldSet = exports.__classPrivateFieldGet = exports.__importDefault = exports.__importStar = exports.__makeTemplateObject = exports.__asyncValues = exports.__asyncDelegator = exports.__asyncGenerator = exports.__await = exports.__spreadArray = exports.__spreadArrays = exports.__spread = exports.__read = exports.__values = exports.__exportStar = exports.__createBinding = exports.__generator = exports.__awaiter = exports.__metadata = exports.__param = exports.__decorate = exports.__rest = exports.__assign = exports.__extends = void 0;
+__webpack_unused_export__ = ({ value: true });
+__webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = exports.cu = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = exports.gn = __webpack_unused_export__ = exports.pi = __webpack_unused_export__ = void 0;
 var extendStatics = function (d, b) {
     extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -5884,9 +5935,9 @@ function __extends(d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 }
-exports.__extends = __extends;
+__webpack_unused_export__ = __extends;
 var __assign = function () {
-    exports.__assign = Object.assign || function __assign(t) {
+    exports.pi = Object.assign || function __assign(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
             s = arguments[i];
             for (var p in s)
@@ -5895,9 +5946,9 @@ var __assign = function () {
         }
         return t;
     };
-    return exports.__assign.apply(this, arguments);
+    return exports.pi.apply(this, arguments);
 };
-exports.__assign = __assign;
+exports.pi = __assign;
 function __rest(s, e) {
     var t = {};
     for (var p in s)
@@ -5910,7 +5961,7 @@ function __rest(s, e) {
         }
     return t;
 }
-exports.__rest = __rest;
+__webpack_unused_export__ = __rest;
 function __decorate(decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
@@ -5921,16 +5972,16 @@ function __decorate(decorators, target, key, desc) {
                 r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 }
-exports.__decorate = __decorate;
+exports.gn = __decorate;
 function __param(paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); };
 }
-exports.__param = __param;
+__webpack_unused_export__ = __param;
 function __metadata(metadataKey, metadataValue) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
         return Reflect.metadata(metadataKey, metadataValue);
 }
-exports.__metadata = __metadata;
+__webpack_unused_export__ = __metadata;
 function __awaiter(thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -5950,7 +6001,7 @@ function __awaiter(thisArg, _arguments, P, generator) {
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 }
-exports.__awaiter = __awaiter;
+__webpack_unused_export__ = __awaiter;
 function __generator(thisArg, body) {
     var _ = { label: 0, sent: function () { if (t[0] & 1)
             throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
@@ -6020,8 +6071,8 @@ function __generator(thisArg, body) {
         return { value: op[0] ? op[1] : void 0, done: true };
     }
 }
-exports.__generator = __generator;
-exports.__createBinding = Object.create ? (function (o, m, k, k2) {
+__webpack_unused_export__ = __generator;
+exports.cu = Object.create ? (function (o, m, k, k2) {
     if (k2 === undefined)
         k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function () { return m[k]; } });
@@ -6033,9 +6084,9 @@ exports.__createBinding = Object.create ? (function (o, m, k, k2) {
 function __exportStar(m, o) {
     for (var p in m)
         if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p))
-            exports.__createBinding(o, m, p);
+            (0, exports.cu)(o, m, p);
 }
-exports.__exportStar = __exportStar;
+__webpack_unused_export__ = __exportStar;
 function __values(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m)
@@ -6050,7 +6101,7 @@ function __values(o) {
         };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 }
-exports.__values = __values;
+__webpack_unused_export__ = __values;
 function __read(o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m)
@@ -6075,13 +6126,13 @@ function __read(o, n) {
     }
     return ar;
 }
-exports.__read = __read;
+__webpack_unused_export__ = __read;
 function __spread() {
     for (var ar = [], i = 0; i < arguments.length; i++)
         ar = ar.concat(__read(arguments[i]));
     return ar;
 }
-exports.__spread = __spread;
+__webpack_unused_export__ = __spread;
 function __spreadArrays() {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++)
         s += arguments[i].length;
@@ -6090,7 +6141,7 @@ function __spreadArrays() {
             r[k] = a[j];
     return r;
 }
-exports.__spreadArrays = __spreadArrays;
+__webpack_unused_export__ = __spreadArrays;
 function __spreadArray(to, from, pack) {
     if (pack || arguments.length === 2)
         for (var i = 0, l = from.length, ar; i < l; i++) {
@@ -6100,13 +6151,13 @@ function __spreadArray(to, from, pack) {
                 ar[i] = from[i];
             }
         }
-    return to.concat(ar || from);
+    return to.concat(ar || Array.prototype.slice.call(from));
 }
-exports.__spreadArray = __spreadArray;
+__webpack_unused_export__ = __spreadArray;
 function __await(v) {
     return this instanceof __await ? (this.v = v, this) : new __await(v);
 }
-exports.__await = __await;
+__webpack_unused_export__ = __await;
 function __asyncGenerator(thisArg, _arguments, generator) {
     if (!Symbol.asyncIterator)
         throw new TypeError("Symbol.asyncIterator is not defined.");
@@ -6126,13 +6177,13 @@ function __asyncGenerator(thisArg, _arguments, generator) {
     function settle(f, v) { if (f(v), q.shift(), q.length)
         resume(q[0][0], q[0][1]); }
 }
-exports.__asyncGenerator = __asyncGenerator;
+__webpack_unused_export__ = __asyncGenerator;
 function __asyncDelegator(o) {
     var i, p;
     return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
     function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
 }
-exports.__asyncDelegator = __asyncDelegator;
+__webpack_unused_export__ = __asyncDelegator;
 function __asyncValues(o) {
     if (!Symbol.asyncIterator)
         throw new TypeError("Symbol.asyncIterator is not defined.");
@@ -6141,7 +6192,7 @@ function __asyncValues(o) {
     function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function (v) { resolve({ value: v, done: d }); }, reject); }
 }
-exports.__asyncValues = __asyncValues;
+__webpack_unused_export__ = __asyncValues;
 function __makeTemplateObject(cooked, raw) {
     if (Object.defineProperty) {
         Object.defineProperty(cooked, "raw", { value: raw });
@@ -6151,7 +6202,7 @@ function __makeTemplateObject(cooked, raw) {
     }
     return cooked;
 }
-exports.__makeTemplateObject = __makeTemplateObject;
+__webpack_unused_export__ = __makeTemplateObject;
 ;
 var __setModuleDefault = Object.create ? (function (o, v) {
     Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -6165,15 +6216,15 @@ function __importStar(mod) {
     if (mod != null)
         for (var k in mod)
             if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-                exports.__createBinding(result, mod, k);
+                (0, exports.cu)(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 }
-exports.__importStar = __importStar;
+__webpack_unused_export__ = __importStar;
 function __importDefault(mod) {
     return (mod && mod.__esModule) ? mod : { default: mod };
 }
-exports.__importDefault = __importDefault;
+__webpack_unused_export__ = __importDefault;
 function __classPrivateFieldGet(receiver, state, kind, f) {
     if (kind === "a" && !f)
         throw new TypeError("Private accessor was defined without a getter");
@@ -6181,7 +6232,7 @@ function __classPrivateFieldGet(receiver, state, kind, f) {
         throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 }
-exports.__classPrivateFieldGet = __classPrivateFieldGet;
+__webpack_unused_export__ = __classPrivateFieldGet;
 function __classPrivateFieldSet(receiver, state, value, kind, f) {
     if (kind === "m")
         throw new TypeError("Private method is not writable");
@@ -6191,20 +6242,20 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
         throw new TypeError("Cannot write private member to an object whose class did not declare it");
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 }
-exports.__classPrivateFieldSet = __classPrivateFieldSet;
+__webpack_unused_export__ = __classPrivateFieldSet;
 
 
 /***/ }),
-/* 37 */
+/* 40 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "l": () => (/* binding */ UISeparator)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(36);
-/* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(25);
-/* harmony import */ var _decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(33);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(39);
+/* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(28);
+/* harmony import */ var _decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6218,14 +6269,14 @@ let UISeparator = class UISeparator extends _element__WEBPACK_IMPORTED_MODULE_0_
         return 'UISeparator';
     }
 };
-UISeparator = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
+UISeparator = (0,tslib__WEBPACK_IMPORTED_MODULE_2__/* .__decorate */ .gn)([
     _decorators__WEBPACK_IMPORTED_MODULE_1__.component
 ], UISeparator);
 
 
 
 /***/ }),
-/* 38 */
+/* 41 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6233,7 +6284,7 @@ UISeparator = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
 /* harmony export */   "A": () => (/* binding */ isButtonGroup),
 /* harmony export */   "q": () => (/* binding */ flatButtonsSet)
 /* harmony export */ });
-/* harmony import */ var _helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(16);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6255,7 +6306,7 @@ const flatButtonsSet = (buttons) => new Set(buttons.reduce((acc, item) => {
 
 
 /***/ }),
-/* 39 */
+/* 42 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6266,17 +6317,17 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(36);
+var tslib_es6 = __webpack_require__(39);
 // EXTERNAL MODULE: ./src/core/dom.ts
-var dom = __webpack_require__(14);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
+var dom = __webpack_require__(15);
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(12);
+var global = __webpack_require__(13);
 // EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(25);
+var ui_element = __webpack_require__(28);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 9 modules
-var decorators = __webpack_require__(33);
+var decorators = __webpack_require__(36);
 ;// CONCATENATED MODULE: ./src/core/ui/popup/popup.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6364,7 +6415,7 @@ class Popup extends ui_element/* UIElement */.u {
         if (!elmUnderCursor) {
             return getBound;
         }
-        const element = dom/* Dom.isHTMLElement */.i.isHTMLElement(elmUnderCursor, this.ow)
+        const element = dom/* Dom.isHTMLElement */.i.isHTMLElement(elmUnderCursor)
             ? elmUnderCursor
             : elmUnderCursor.parentElement;
         const oldPos = (0,helpers.position)(element, this.j);
@@ -6504,13 +6555,13 @@ class Popup extends ui_element/* UIElement */.u {
         return super.destruct();
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Popup.prototype, "updatePosition", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Popup.prototype, "close", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Popup.prototype, "closeOnOutsideClick", null);
 
@@ -6524,7 +6575,7 @@ class Popup extends ui_element/* UIElement */.u {
 
 
 /***/ }),
-/* 40 */
+/* 43 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6549,19 +6600,19 @@ __webpack_require__.d(input_namespaceObject, {
 });
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(36);
+var tslib_es6 = __webpack_require__(39);
 // EXTERNAL MODULE: ./src/core/ui/list/group.ts
-var group = __webpack_require__(35);
+var group = __webpack_require__(38);
 // EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(25);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
+var ui_element = __webpack_require__(28);
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/dom.ts
-var dom = __webpack_require__(14);
+var dom = __webpack_require__(15);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 9 modules
-var decorators = __webpack_require__(33);
+var decorators = __webpack_require__(36);
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
-var ui_icon = __webpack_require__(27);
+var ui_icon = __webpack_require__(30);
 ;// CONCATENATED MODULE: ./src/core/ui/form/validators/input.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6747,7 +6798,7 @@ let UIInput = UIInput_1 = class UIInput extends ui_element/* UIElement */.u {
         const container = super.createContainer();
         this.wrapper = this.j.c.div(this.getFullElName('wrapper'));
         if (!this.nativeInput) {
-            this.nativeInput = this.createNativeInput(options);
+            this.nativeInput = this.createNativeInput();
         }
         const { nativeInput } = this;
         nativeInput.classList.add(this.getFullElName('input'));
@@ -6782,13 +6833,13 @@ UIInput.defaultState = {
     required: false,
     validators: []
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.clearButton')
 ], UIInput.prototype, "onChangeClear", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.className')
 ], UIInput.prototype, "onChangeClassName", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)([
         'state.name',
         'state.type',
@@ -6799,13 +6850,13 @@ UIInput.defaultState = {
     ]),
     (0,decorators.debounce)()
 ], UIInput.prototype, "onChangeState", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.value')
 ], UIInput.prototype, "onChangeStateValue", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], UIInput.prototype, "onChangeValue", null);
-UIInput = UIInput_1 = (0,tslib_es6.__decorate)([
+UIInput = UIInput_1 = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UIInput);
 
@@ -6829,7 +6880,7 @@ let UITextArea = class UITextArea extends UIInput {
         return super.createContainer(options);
     }
 };
-UITextArea = (0,tslib_es6.__decorate)([
+UITextArea = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UITextArea);
 
@@ -6848,7 +6899,7 @@ let UICheckbox = class UICheckbox extends UIInput {
     className() {
         return 'UICheckbox';
     }
-    render(options) {
+    render() {
         return this.j.c.element('label', {
             className: this.componentName
         });
@@ -6857,7 +6908,7 @@ let UICheckbox = class UICheckbox extends UIInput {
         super(jodit, { ...options, type: 'checkbox' });
     }
 };
-UICheckbox = (0,tslib_es6.__decorate)([
+UICheckbox = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UICheckbox);
 
@@ -6926,13 +6977,13 @@ UISelect.defaultState = {
     size: 1,
     multiple: false
 };
-UISelect = UISelect_1 = (0,tslib_es6.__decorate)([
+UISelect = UISelect_1 = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UISelect);
 
 
 // EXTERNAL MODULE: ./src/core/ui/button/index.ts + 2 modules
-var ui_button = __webpack_require__(30);
+var ui_button = __webpack_require__(33);
 ;// CONCATENATED MODULE: ./src/core/ui/form/inputs/file/file.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6985,7 +7036,7 @@ let UIFileInput = class UIFileInput extends UIInput {
 		/>`);
     }
 };
-UIFileInput = (0,tslib_es6.__decorate)([
+UIFileInput = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UIFileInput);
 
@@ -7002,7 +7053,7 @@ UIFileInput = (0,tslib_es6.__decorate)([
 
 
 
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 6 modules
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 4 modules
 var utils = __webpack_require__(9);
 ;// CONCATENATED MODULE: ./src/core/ui/form/form.ts
 /*!
@@ -7057,7 +7108,7 @@ let UIForm = class UIForm extends group/* UIGroup */.q {
         return form;
     }
 };
-UIForm = (0,tslib_es6.__decorate)([
+UIForm = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UIForm);
 
@@ -7089,7 +7140,7 @@ let UIBlock = class UIBlock extends group/* UIGroup */.q {
         return 'UIBlock';
     }
 };
-UIBlock = (0,tslib_es6.__decorate)([
+UIBlock = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UIBlock);
 
@@ -7106,7 +7157,7 @@ UIBlock = (0,tslib_es6.__decorate)([
 
 
 /***/ }),
-/* 41 */
+/* 44 */
 /***/ ((module) => {
 
 /*!
@@ -7123,13 +7174,13 @@ module.exports = {
 
 
 /***/ }),
-/* 42 */
+/* 45 */
 /***/ ((module) => {
 
 module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M36 4h-24c-2.21 0-4 1.79-4 4v32c0 2.21 1.79 4 4 4h24c2.21 0 4-1.79 4-4v-32c0-2.21-1.79-4-4-4zm-24 4h10v16l-5-3-5 3v-16z\"/> </svg>"
 
 /***/ }),
-/* 43 */
+/* 46 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -7141,12 +7192,12 @@ __webpack_require__.d(__webpack_exports__, {
   "IL": () => (/* reexport */ TabsWidget)
 });
 
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
-var ui = __webpack_require__(24);
+var ui = __webpack_require__(27);
 // EXTERNAL MODULE: ./src/core/dom.ts
-var dom = __webpack_require__(14);
+var dom = __webpack_require__(15);
 ;// CONCATENATED MODULE: ./src/modules/widget/color-picker/color-picker.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -7412,7 +7463,7 @@ const FileSelectorWidget = (editor, callbacks, elm, close, isImage = true) => {
 
 
 /***/ }),
-/* 44 */
+/* 47 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -7452,7 +7503,7 @@ const hAlignElement = (image, align) => {
 
 
 /***/ }),
-/* 45 */
+/* 48 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -7489,7 +7540,7 @@ const hAlignElement = (image, align) => {
 
 
 /***/ }),
-/* 46 */
+/* 49 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -7497,10 +7548,10 @@ const hAlignElement = (image, align) => {
 /* harmony export */   "A": () => (/* binding */ align),
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
-/* harmony import */ var _core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
+/* harmony import */ var _core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16);
 /* harmony import */ var _core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
-/* harmony import */ var _image_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(44);
+/* harmony import */ var _image_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(47);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7575,16 +7626,16 @@ const align = {
 
 
 /***/ }),
-/* 47 */
+/* 50 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(16);
 /* harmony import */ var _core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8);
-/* harmony import */ var _modules_widget__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(43);
+/* harmony import */ var _modules_widget__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(46);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7599,37 +7650,30 @@ const cmd = (control) => control.args && (0,_core_helpers_checker__WEBPACK_IMPOR
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([
     {
         name: 'brush',
-        popup: (editor) => {
+        popup: (editor, _, _1, close) => {
             if (!(0,_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isJoditObject */ .Zu)(editor)) {
                 return;
             }
-            const selected = editor
-                .getInstance('Table', editor.o)
-                .getAllSelectedCells();
+            const tableModule = editor.getInstance('Table', editor.o), selected = tableModule.getAllSelectedCells();
             if (!selected.length) {
                 return false;
             }
-            const color = (0,_core_helpers__WEBPACK_IMPORTED_MODULE_1__.css)(selected[0], 'color'), bg_color = (0,_core_helpers__WEBPACK_IMPORTED_MODULE_1__.css)(selected[0], 'background-color'), br_color = (0,_core_helpers__WEBPACK_IMPORTED_MODULE_1__.css)(selected[0], 'border-color'), $bg = (0,_modules_widget__WEBPACK_IMPORTED_MODULE_2__/* .ColorPickerWidget */ .YW)(editor, (value) => {
-                selected.forEach((cell) => {
-                    (0,_core_helpers__WEBPACK_IMPORTED_MODULE_1__.css)(cell, 'background-color', value);
+            const makeColorPicker = (key) => (0,_modules_widget__WEBPACK_IMPORTED_MODULE_2__/* .ColorPickerWidget */ .YW)(editor, (value) => {
+                selected.forEach(cell => {
+                    (0,_core_helpers__WEBPACK_IMPORTED_MODULE_1__.css)(cell, key, value);
                 });
+                editor.lock();
                 editor.setEditorValue();
-            }, bg_color), $cl = (0,_modules_widget__WEBPACK_IMPORTED_MODULE_2__/* .ColorPickerWidget */ .YW)(editor, (value) => {
-                selected.forEach((cell) => {
-                    (0,_core_helpers__WEBPACK_IMPORTED_MODULE_1__.css)(cell, 'color', value);
-                });
-                editor.setEditorValue();
-            }, color);
-            const $br = (0,_modules_widget__WEBPACK_IMPORTED_MODULE_2__/* .ColorPickerWidget */ .YW)(editor, (value) => {
-                selected.forEach((cell) => {
-                    (0,_core_helpers__WEBPACK_IMPORTED_MODULE_1__.css)(cell, 'border-color', value);
-                });
-                editor.setEditorValue();
-            }, br_color);
+                close();
+                editor.unlock();
+            }, (0,_core_helpers__WEBPACK_IMPORTED_MODULE_1__.css)(selected[0], key));
             return (0,_modules_widget__WEBPACK_IMPORTED_MODULE_2__/* .TabsWidget */ .IL)(editor, [
-                { name: 'Background', content: $bg },
-                { name: 'Text', content: $cl },
-                { name: 'Border', content: $br }
+                {
+                    name: 'Background',
+                    content: makeColorPicker('background-color')
+                },
+                { name: 'Text', content: makeColorPicker('color') },
+                { name: 'Border', content: makeColorPicker('border-color') }
             ]);
         },
         tooltip: 'Background'
@@ -7720,14 +7764,14 @@ const cmd = (control) => control.args && (0,_core_helpers_checker__WEBPACK_IMPOR
 
 
 /***/ }),
-/* 48 */
+/* 51 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _img__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(46);
+/* harmony import */ var _img__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(49);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7747,487 +7791,487 @@ const cmd = (control) => control.args && (0,_core_helpers_checker__WEBPACK_IMPOR
 
 
 /***/ }),
-/* 49 */
+/* 52 */
 /***/ ((module) => {
 
 module.exports = "<svg viewBox=\"0 0 1792 1792\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z\"/> </svg>"
 
 /***/ }),
-/* 50 */
+/* 53 */
 /***/ ((module) => {
 
 module.exports = "<svg viewBox=\"0 0 18.151 18.151\" xmlns=\"http://www.w3.org/2000/svg\"> <g> <path stroke-width=\"0\" d=\"M6.237,16.546H3.649V1.604h5.916v5.728c0.474-0.122,0.968-0.194,1.479-0.194 c0.042,0,0.083,0.006,0.125,0.006V0H2.044v18.15h5.934C7.295,17.736,6.704,17.19,6.237,16.546z\"/> <path stroke-width=\"0\" d=\"M11.169,8.275c-2.723,0-4.938,2.215-4.938,4.938s2.215,4.938,4.938,4.938s4.938-2.215,4.938-4.938 S13.892,8.275,11.169,8.275z M11.169,16.81c-1.983,0-3.598-1.612-3.598-3.598c0-1.983,1.614-3.597,3.598-3.597 s3.597,1.613,3.597,3.597C14.766,15.198,13.153,16.81,11.169,16.81z\"/> <polygon stroke-width=\"0\" points=\"11.792,11.073 10.502,11.073 10.502,12.578 9.03,12.578 9.03,13.868 10.502,13.868 10.502,15.352 11.792,15.352 11.792,13.868 13.309,13.868 13.309,12.578 11.792,12.578 \"/> </g> </svg>"
 
 /***/ }),
-/* 51 */
+/* 54 */
 /***/ ((module) => {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176\"/> </g> </svg>"
 
 /***/ }),
-/* 52 */
+/* 55 */
 /***/ ((module) => {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 53 */
+/* 56 */
 /***/ ((module) => {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 54 */
+/* 57 */
 /***/ ((module) => {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 55 */
+/* 58 */
 /***/ ((module) => {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 56 */
+/* 59 */
 /***/ ((module) => {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1411 541l-355 355 355 355 144-144q29-31 70-14 39 17 39 59v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l144-144-355-355-355 355 144 144q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l144 144 355-355-355-355-144 144q-19 19-45 19-12 0-24-5-40-17-40-59v-448q0-26 19-45t45-19h448q42 0 59 40 17 39-14 69l-144 144 355 355 355-355-144-144q-31-30-14-69 17-40 59-40h448q26 0 45 19t19 45v448q0 42-39 59-13 5-25 5-26 0-45-19z\"/> </svg>"
 
 /***/ }),
-/* 57 */
+/* 60 */
 /***/ ((module) => {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 896q0 26-19 45l-256 256q-19 19-45 19t-45-19-19-45v-128h-1024v128q0 26-19 45t-45 19-45-19l-256-256q-19-19-19-45t19-45l256-256q19-19 45-19t45 19 19 45v128h1024v-128q0-26 19-45t45-19 45 19l256 256q19 19 19 45z\"/> </svg>"
 
 /***/ }),
-/* 58 */
+/* 61 */
 /***/ ((module) => {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1596 1385q0 117-79 196t-196 79q-135 0-235-100l-777-776q-113-115-113-271 0-159 110-270t269-111q158 0 273 113l605 606q10 10 10 22 0 16-30.5 46.5t-46.5 30.5q-13 0-23-10l-606-607q-79-77-181-77-106 0-179 75t-73 181q0 105 76 181l776 777q63 63 145 63 64 0 106-42t42-106q0-82-63-145l-581-581q-26-24-60-24-29 0-48 19t-19 48q0 32 25 59l410 410q10 10 10 22 0 16-31 47t-47 31q-12 0-22-10l-410-410q-63-61-63-149 0-82 57-139t139-57q88 0 149 63l581 581q100 98 100 235z\"/> </svg>"
 
 /***/ }),
-/* 59 */
+/* 62 */
 /***/ ((module) => {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z\"/> </svg>"
 
 /***/ }),
-/* 60 */
+/* 63 */
 /***/ ((module) => {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z\"/> </svg>"
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ ((module) => {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 1152q0-36-20-69-1-1-15.5-22.5t-25.5-38-25-44-21-50.5q-4-16-21-16t-21 16q-7 23-21 50.5t-25 44-25.5 38-15.5 22.5q-20 33-20 69 0 53 37.5 90.5t90.5 37.5 90.5-37.5 37.5-90.5zm512-128q0 212-150 362t-362 150-362-150-150-362q0-145 81-275 6-9 62.5-90.5t101-151 99.5-178 83-201.5q9-30 34-47t51-17 51.5 17 33.5 47q28 93 83 201.5t99.5 178 101 151 62.5 90.5q81 127 81 275z\"/> </svg>"
 
 /***/ }),
-/* 62 */
+/* 65 */
 /***/ ((module) => {
 
 module.exports = "<svg viewBox=\"0 0 14 14\" xmlns=\"http://www.w3.org/2000/svg\"> <g stroke=\"none\" stroke-width=\"1\"> <path d=\"M14,1.4 L12.6,0 L7,5.6 L1.4,0 L0,1.4 L5.6,7 L0,12.6 L1.4,14 L7,8.4 L12.6,14 L14,12.6 L8.4,7 L14,1.4 Z\"/> </g> </svg>"
 
 /***/ }),
-/* 63 */
+/* 66 */
 /***/ ((module) => {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h896q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-640q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h640q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
-/* 64 */
-/***/ ((module) => {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
-
-/***/ }),
-/* 65 */
-/***/ ((module) => {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/> </svg>"
-
-/***/ }),
-/* 66 */
-/***/ ((module) => {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg>"
-
-/***/ }),
 /* 67 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
 
 /***/ }),
 /* 68 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/> </svg>"
 
 /***/ }),
 /* 69 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg>"
 
 /***/ }),
 /* 70 */
 /***/ ((module) => {
 
-module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg>"
 
 /***/ }),
 /* 71 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg>"
 
 /***/ }),
 /* 72 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg>"
 
 /***/ }),
 /* 73 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg>"
 
 /***/ }),
 /* 74 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg>"
 
 /***/ }),
 /* 75 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 76 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg>"
 
 /***/ }),
 /* 77 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125\"/> </svg>"
 
 /***/ }),
 /* 78 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg>"
 
 /***/ }),
 /* 79 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/> </svg>"
 
 /***/ }),
 /* 80 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg>"
 
 /***/ }),
 /* 81 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg>"
 
 /***/ }),
 /* 82 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/> </svg>"
 
 /***/ }),
 /* 83 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/> </svg>"
 
 /***/ }),
 /* 84 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg>"
 
 /***/ }),
 /* 85 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/> </svg>"
 
 /***/ }),
 /* 86 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/> </svg>"
 
 /***/ }),
 /* 87 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 88 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/> </svg>"
 
 /***/ }),
 /* 89 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/> </svg>"
 
 /***/ }),
 /* 90 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 /* 91 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 /* 92 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/> </svg>"
 
 /***/ }),
 /* 93 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 32 32\"> <path d=\"M27 4l-15 15-7-7-5 5 12 12 20-20z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg>"
 
 /***/ }),
 /* 94 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg>"
 
 /***/ }),
 /* 95 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg>"
 
 /***/ }),
 /* 96 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 32 32\"> <path d=\"M27 4l-15 15-7-7-5 5 12 12 20-20z\"/> </svg>"
 
 /***/ }),
 /* 97 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 98 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg>"
 
 /***/ }),
 /* 99 */
 /***/ ((module) => {
 
-module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 100 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </svg>"
 
 /***/ }),
 /* 101 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg>"
 
 /***/ }),
 /* 102 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg>"
 
 /***/ }),
 /* 103 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg>"
 
 /***/ }),
 /* 104 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg>"
 
 /***/ }),
 /* 105 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg>"
 
 /***/ }),
 /* 106 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg>"
 
 /***/ }),
 /* 107 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </svg>"
 
 /***/ }),
 /* 108 */
 /***/ ((module) => {
 
-module.exports = "<svg viewBox=\"0 0 500 500\" xmlns=\"http://www.w3.org/2000/svg\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg>"
 
 /***/ }),
 /* 109 */
 /***/ ((module) => {
 
-module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke=\"null\" d=\"m42.276011,26.302547c0.098397,-0.76605 0.172194,-1.54407 0.172194,-2.33406s-0.073797,-1.56801 -0.172194,-2.33406l5.202718,-3.961917c0.467384,-0.359086 0.602679,-1.005441 0.29519,-1.532101l-4.919828,-8.29489c-0.307489,-0.51469 -0.947067,-0.730142 -1.500548,-0.51469l-6.125186,2.405877c-1.266856,-0.945594 -2.656707,-1.747553 -4.157255,-2.357999l-0.922468,-6.343855c-0.110696,-0.562568 -0.614979,-1.005441 -1.229957,-1.005441l-9.839656,0c-0.614979,0 -1.119261,0.442873 -1.217657,1.005441l-0.922468,6.343855c-1.500548,0.610446 -2.890399,1.400436 -4.157255,2.357999l-6.125186,-2.405877c-0.553481,-0.203482 -1.193058,0 -1.500548,0.51469l-4.919828,8.29489c-0.307489,0.51469 -0.172194,1.161045 0.29519,1.532101l5.190419,3.961917c-0.098397,0.76605 -0.172194,1.54407 -0.172194,2.33406s0.073797,1.56801 0.172194,2.33406l-5.190419,3.961917c-0.467384,0.359086 -0.602679,1.005441 -0.29519,1.532101l4.919828,8.29489c0.307489,0.51469 0.947067,0.730142 1.500548,0.51469l6.125186,-2.405877c1.266856,0.945594 2.656707,1.747553 4.157255,2.357999l0.922468,6.343855c0.098397,0.562568 0.602679,1.005441 1.217657,1.005441l9.839656,0c0.614979,0 1.119261,-0.442873 1.217657,-1.005441l0.922468,-6.343855c1.500548,-0.610446 2.890399,-1.400436 4.157255,-2.357999l6.125186,2.405877c0.553481,0.203482 1.193058,0 1.500548,-0.51469l4.919828,-8.29489c0.307489,-0.51469 0.172194,-1.161045 -0.29519,-1.532101l-5.190419,-3.961917zm-18.277162,6.044617c-4.759934,0 -8.609699,-3.746465 -8.609699,-8.378677s3.849766,-8.378677 8.609699,-8.378677s8.609699,3.746465 8.609699,8.378677s-3.849766,8.378677 -8.609699,8.378677z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 /* 110 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg>"
 
 /***/ }),
 /* 111 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 500 500\" xmlns=\"http://www.w3.org/2000/svg\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg>"
 
 /***/ }),
 /* 112 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke=\"null\" d=\"m42.276011,26.302547c0.098397,-0.76605 0.172194,-1.54407 0.172194,-2.33406s-0.073797,-1.56801 -0.172194,-2.33406l5.202718,-3.961917c0.467384,-0.359086 0.602679,-1.005441 0.29519,-1.532101l-4.919828,-8.29489c-0.307489,-0.51469 -0.947067,-0.730142 -1.500548,-0.51469l-6.125186,2.405877c-1.266856,-0.945594 -2.656707,-1.747553 -4.157255,-2.357999l-0.922468,-6.343855c-0.110696,-0.562568 -0.614979,-1.005441 -1.229957,-1.005441l-9.839656,0c-0.614979,0 -1.119261,0.442873 -1.217657,1.005441l-0.922468,6.343855c-1.500548,0.610446 -2.890399,1.400436 -4.157255,2.357999l-6.125186,-2.405877c-0.553481,-0.203482 -1.193058,0 -1.500548,0.51469l-4.919828,8.29489c-0.307489,0.51469 -0.172194,1.161045 0.29519,1.532101l5.190419,3.961917c-0.098397,0.76605 -0.172194,1.54407 -0.172194,2.33406s0.073797,1.56801 0.172194,2.33406l-5.190419,3.961917c-0.467384,0.359086 -0.602679,1.005441 -0.29519,1.532101l4.919828,8.29489c0.307489,0.51469 0.947067,0.730142 1.500548,0.51469l6.125186,-2.405877c1.266856,0.945594 2.656707,1.747553 4.157255,2.357999l0.922468,6.343855c0.098397,0.562568 0.602679,1.005441 1.217657,1.005441l9.839656,0c0.614979,0 1.119261,-0.442873 1.217657,-1.005441l0.922468,-6.343855c1.500548,-0.610446 2.890399,-1.400436 4.157255,-2.357999l6.125186,2.405877c0.553481,0.203482 1.193058,0 1.500548,-0.51469l4.919828,-8.29489c0.307489,-0.51469 0.172194,-1.161045 -0.29519,-1.532101l-5.190419,-3.961917zm-18.277162,6.044617c-4.759934,0 -8.609699,-3.746465 -8.609699,-8.378677s3.849766,-8.378677 8.609699,-8.378677s8.609699,3.746465 8.609699,8.378677s-3.849766,8.378677 -8.609699,8.378677z\"/> </svg>"
 
 /***/ }),
 /* 113 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg>"
 
 /***/ }),
 /* 114 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg>"
 
 /***/ }),
 /* 115 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg>"
 
 /***/ }),
 /* 116 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
 
 /***/ }),
 /* 117 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
 
 /***/ }),
 /* 118 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg>"
 
 /***/ }),
 /* 119 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg>"
 
 /***/ }),
 /* 120 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg>"
 
 /***/ }),
 /* 121 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg>"
 
 /***/ }),
 /* 122 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg>"
 
 /***/ }),
 /* 123 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg>"
 
 /***/ }),
 /* 124 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 125 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg>"
 
 /***/ }),
 /* 126 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg>"
 
 /***/ }),
 /* 127 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
 
 /***/ }),
 /* 128 */
 /***/ ((module) => {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/> </svg>"
 
 /***/ }),
 /* 129 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/> </svg>"
+
+/***/ }),
+/* 130 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/> </svg>"
+
+/***/ }),
+/* 131 */
+/***/ ((module) => {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/> </svg>"
+
+/***/ }),
+/* 132 */
 /***/ ((module) => {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 352v1088q0 42-39 59-13 5-25 5-27 0-45-19l-403-403v166q0 119-84.5 203.5t-203.5 84.5h-704q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h704q119 0 203.5 84.5t84.5 203.5v165l403-402q18-19 45-19 12 0 25 5 39 17 39 59z\"/> </svg>"
@@ -8308,6 +8352,7 @@ __webpack_require__.d(modules_namespaceObject, {
   "Ajax": () => (Ajax),
   "Alert": () => (Alert),
   "Async": () => (Async),
+  "CommitStyle": () => (CommitStyle),
   "Component": () => (component/* Component */.wA),
   "Confirm": () => (Confirm),
   "ContextMenu": () => (ContextMenu),
@@ -8331,7 +8376,6 @@ __webpack_require__.d(modules_namespaceObject, {
   "Select": () => (Select),
   "Snapshot": () => (Snapshot),
   "StatusBar": () => (StatusBar),
-  "Style": () => (Style),
   "Table": () => (Table),
   "ToolbarButton": () => (ToolbarButton),
   "ToolbarCollection": () => (ToolbarCollection),
@@ -8361,6 +8405,7 @@ __webpack_require__.d(plugins_namespaceObject, {
   "Delete": () => (Delete),
   "DragAndDrop": () => (DragAndDrop),
   "DragAndDropElement": () => (DragAndDropElement),
+  "KeyArrowOutside": () => (KeyArrowOutside),
   "WrapTextNodes": () => (WrapTextNodes),
   "about": () => (about),
   "addNewLine": () => (addNewLine),
@@ -8503,14 +8548,14 @@ __webpack_require__.d(icons_namespaceObject, {
 });
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(36);
+var tslib_es6 = __webpack_require__(39);
 // EXTERNAL MODULE: ./src/config.ts
 var config = __webpack_require__(1);
 // EXTERNAL MODULE: ./src/core/constants.ts
 var constants = __webpack_require__(2);
 // EXTERNAL MODULE: ./src/core/events/index.ts + 3 modules
 var events = __webpack_require__(3);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
 var helpers = __webpack_require__(8);
 ;// CONCATENATED MODULE: ./src/core/async.ts
 /*!
@@ -8641,12 +8686,7 @@ class Async {
             rejectCallback = reject;
             return executor(resolve, reject);
         });
-        if (!promise.finally && "es2018" !== 'es2018') {
-            promise.finally = (onfinally) => {
-                promise.then(onfinally).catch(onfinally);
-                return promise;
-            };
-        }
+        if (!promise.finally && "es2018" !== 'es2018') {}
         promise.finally(() => {
             this.promisesRejections.delete(rejectCallback);
         });
@@ -8875,13 +8915,13 @@ class Ajax {
 Ajax.log = [];
 
 // EXTERNAL MODULE: ./src/core/component/index.ts + 3 modules
-var component = __webpack_require__(11);
+var component = __webpack_require__(12);
 // EXTERNAL MODULE: ./src/core/ui/popup/index.ts + 1 modules
-var ui_popup = __webpack_require__(39);
+var ui_popup = __webpack_require__(42);
 // EXTERNAL MODULE: ./src/core/ui/button/index.ts + 2 modules
-var ui_button = __webpack_require__(30);
+var ui_button = __webpack_require__(33);
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
-var checker = __webpack_require__(15);
+var checker = __webpack_require__(16);
 ;// CONCATENATED MODULE: ./src/modules/context-menu/context-menu.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -9069,11 +9109,11 @@ class Storage {
 
 
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(12);
+var global = __webpack_require__(13);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 9 modules
-var decorators = __webpack_require__(33);
+var decorators = __webpack_require__(36);
 // EXTERNAL MODULE: ./src/core/traits/index.ts + 2 modules
-var traits = __webpack_require__(26);
+var traits = __webpack_require__(29);
 ;// CONCATENATED MODULE: ./src/core/view/view.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -9096,7 +9136,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.7.2";
+        this.version = "3.8.1";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -9194,10 +9234,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.7.2";
+        return "3.8.1";
     }
     static getVersion() {
-        return "3.7.2";
+        return "3.8.1";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -9260,7 +9300,7 @@ class View extends component/* Component */.wA {
         super.destruct();
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.hook)(component/* STATUSES.beforeDestruct */.n$.beforeDestruct)
 ], View.prototype, "beforeDestruct", null);
 View.defaultOptions = {
@@ -9278,9 +9318,9 @@ View.defaultOptions = {
 };
 
 // EXTERNAL MODULE: ./src/core/dom.ts
-var dom = __webpack_require__(14);
+var dom = __webpack_require__(15);
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
-var ui = __webpack_require__(24);
+var ui = __webpack_require__(27);
 ;// CONCATENATED MODULE: ./src/modules/toolbar/collection/collection.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -9372,10 +9412,10 @@ let ToolbarCollection = class ToolbarCollection extends ui/* UIList */.bz {
         super.destruct();
     }
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ToolbarCollection.prototype, "immediateUpdate", null);
-ToolbarCollection = (0,tslib_es6.__decorate)([
+ToolbarCollection = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], ToolbarCollection);
 
@@ -9469,18 +9509,19 @@ let ToolbarEditorCollection = class ToolbarEditorCollection extends ToolbarColle
     prependInvisibleInput(container) {
         const input = this.j.create.element('input', {
             tabIndex: -1,
+            disabled: true,
             style: 'width: 0; height:0; position: absolute; visibility: hidden;'
         });
         dom/* Dom.appendChildFirst */.i.appendChildFirst(container, input);
     }
 };
-ToolbarEditorCollection = (0,tslib_es6.__decorate)([
+ToolbarEditorCollection = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], ToolbarEditorCollection);
 
 
 // EXTERNAL MODULE: ./src/core/ui/helpers/get-control-type.ts
-var get_control_type = __webpack_require__(32);
+var get_control_type = __webpack_require__(35);
 ;// CONCATENATED MODULE: ./src/modules/toolbar/button/button.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -9553,6 +9594,10 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
     }
     onChangeTabIndex() {
         (0,helpers.attr)(this.button, 'tabIndex', this.state.tabIndex);
+    }
+    onChangeTooltip() {
+        (0,helpers.attr)(this.button, 'aria-label', this.state.tooltip);
+        super.onChangeTooltip();
     }
     createContainer() {
         const cn = this.componentName;
@@ -9747,10 +9792,13 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
         }
     }
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)('state.tooltip')
+], ToolbarButton.prototype, "onChangeTooltip", null);
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.hasTrigger')
 ], ToolbarButton.prototype, "onChangeHasTrigger", null);
-ToolbarButton = (0,tslib_es6.__decorate)([
+ToolbarButton = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], ToolbarButton);
 
@@ -9790,7 +9838,7 @@ let ToolbarContent = class ToolbarContent extends ui_button/* UIButton */.y3 {
         return this.j.c.span(this.componentName);
     }
 };
-ToolbarContent = (0,tslib_es6.__decorate)([
+ToolbarContent = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], ToolbarContent);
 
@@ -9831,7 +9879,7 @@ function makeButton(jodit, control, target = null) {
 }
 
 // EXTERNAL MODULE: ./src/core/ui/helpers/buttons.ts
-var helpers_buttons = __webpack_require__(38);
+var helpers_buttons = __webpack_require__(41);
 ;// CONCATENATED MODULE: ./src/core/view/view-with-toolbar.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -9860,8 +9908,7 @@ class ViewWithToolbar extends View {
     }
     get toolbarContainer() {
         if (!this.o.fullsize &&
-            ((0,helpers.isString)(this.o.toolbar) ||
-                dom/* Dom.isHTMLElement */.i.isHTMLElement(this.o.toolbar, this.ow))) {
+            ((0,helpers.isString)(this.o.toolbar) || dom/* Dom.isHTMLElement */.i.isHTMLElement(this.o.toolbar))) {
             return (0,helpers.resolveElement)(this.o.toolbar, this.o.shadowRoot || this.od);
         }
         this.o.toolbar &&
@@ -9942,7 +9989,7 @@ class ViewWithToolbar extends View {
         super.destruct();
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ViewWithToolbar.prototype, "beforeToolbarBuild", null);
 
@@ -10351,28 +10398,28 @@ let Dialog = class Dialog extends ViewWithToolbar {
         super.destruct();
     }
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Dialog.prototype, "onMouseUp", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Dialog.prototype, "onHeaderMouseDown", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Dialog.prototype, "onMouseMove", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Dialog.prototype, "onEsc", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Dialog.prototype, "onResizerMouseDown", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Dialog.prototype, "close", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.hook)('ready')
 ], Dialog.prototype, "buildToolbar", null);
-Dialog = (0,tslib_es6.__decorate)([
+Dialog = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], Dialog);
 
@@ -10394,9 +10441,7 @@ const Alert = (msg, title, callback, className = 'jodit-dialog_alert') => {
     }
     const dialog = new Dialog(), container = dialog.c.div(className), okButton = (0,ui/* Button */.zx)(dialog, 'ok', 'Ok');
     (0,helpers.asArray)(msg).forEach(oneMessage => {
-        container.appendChild(dom/* Dom.isNode */.i.isNode(oneMessage, dialog.ow)
-            ? oneMessage
-            : dialog.c.fromHTML(oneMessage));
+        container.appendChild(dom/* Dom.isNode */.i.isNode(oneMessage) ? oneMessage : dialog.c.fromHTML(oneMessage));
     });
     okButton.onAction(() => {
         if (!callback || !(0,helpers.isFunction)(callback) || callback(dialog) !== false) {
@@ -10557,7 +10602,7 @@ class Plugin extends component/* ViewComponent */.Hr {
         }
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Plugin.prototype, "destruct", null);
 
@@ -11356,7 +11401,7 @@ class DataProvider {
         this.ajaxInstances.clear();
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], DataProvider.prototype, "isSuccess", null);
 
@@ -11376,7 +11421,7 @@ function makeContextMenu(parent) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/normalize/index.ts + 9 modules
-var normalize = __webpack_require__(29);
+var normalize = __webpack_require__(32);
 ;// CONCATENATED MODULE: ./src/modules/file-browser/listeners/state-listeners.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -12095,29 +12140,29 @@ ImageEditor.calcValueByPercent = (value, percent) => {
     }
     return valueNbr || 0;
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ImageEditor.prototype, "onTitleModeClick", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.debounce)(),
     decorators.autobind
 ], ImageEditor.prototype, "onChangeSizeInput", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ImageEditor.prototype, "onResizeHandleMouseDown", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ImageEditor.prototype, "onGlobalMouseUp", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.throttle)(10)
 ], ImageEditor.prototype, "onGlobalMouseMove", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ImageEditor.prototype, "hide", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ImageEditor.prototype, "open", null);
-ImageEditor = ImageEditor_1 = (0,tslib_es6.__decorate)([
+ImageEditor = ImageEditor_1 = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], ImageEditor);
 
@@ -12312,7 +12357,7 @@ const CLASS_PREVIEW = F_CLASS + '_preview_', preview_tpl_next = (next = 'next', 
 
 
 
-const getItem = (node, root, tag = 'a') => dom/* Dom.closest */.i.closest(node, elm => dom/* Dom.isElement */.i.isElement(elm) && dom/* Dom.isTag */.i.isTag(elm, tag), root);
+const getItem = (node, root, tag = 'a') => dom/* Dom.closest */.i.closest(node, elm => dom/* Dom.isTag */.i.isTag(elm, tag), root);
 function nativeListeners() {
     let dragElement = false;
     const self = this;
@@ -12804,10 +12849,10 @@ class FileBrowser extends ViewWithToolbar {
         super.destruct();
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], FileBrowser.prototype, "status", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], FileBrowser.prototype, "open", null);
 
@@ -13154,342 +13199,9 @@ class Observer extends component/* ViewComponent */.Hr {
         super.destruct();
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.debounce)()
 ], Observer.prototype, "onChange", null);
-
-;// CONCATENATED MODULE: ./src/core/selection/style/apply-style.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-var mode;
-(function (mode) {
-    mode["UNWRAP"] = "UNWRAP";
-    mode["WRAP"] = "WRAP";
-})(mode || (mode = {}));
-class ApplyStyle {
-    constructor(jodit, style) {
-        this.jodit = jodit;
-        this.style = style;
-    }
-    apply() {
-        const sel = this.jodit.selection;
-        const isCollapsed = sel.isCollapsed();
-        if (isCollapsed) {
-            const font = this.jodit.createInside.element('font');
-            sel.insertNode(font, false, false);
-            sel.setCursorIn(font);
-            sel.save();
-            if (!this.checkSpecialElements(font)) {
-                this.applyToElement(font);
-            }
-            dom/* Dom.unwrap */.i.unwrap(font);
-        }
-        else {
-            sel.save();
-            (0,helpers.normalizeNode)(sel.area.firstChild);
-            sel.wrapInTag(this.applyToElement);
-        }
-        sel.restore();
-    }
-    applyToElement(font) {
-        const { area } = this.jodit.selection;
-        if (this.checkSpecialElements(font)) {
-            return;
-        }
-        if (this.checkSuitableParent(font) ||
-            this.checkSuitableChild(font) ||
-            this.checkClosestWrapper(font) ||
-            this.unwrapChildren(font)) {
-            return;
-        }
-        if (!this.mode) {
-            this.mode = mode.WRAP;
-        }
-        if (this.mode !== mode.WRAP) {
-            return;
-        }
-        let wrapper = font;
-        if (this.style.elementIsBlock) {
-            const ulReg = /^(ul|ol|li|td|th|tr|tbody|table)$/i;
-            const box = dom/* Dom.up */.i.up(font, node => {
-                if (node && dom/* Dom.isBlock */.i.isBlock(node, this.jodit.s.win)) {
-                    if (ulReg.test(this.style.element) ||
-                        !ulReg.test(node.nodeName)) {
-                        return true;
-                    }
-                }
-                return false;
-            }, area);
-            if (box) {
-                wrapper = box;
-            }
-            else {
-                wrapper = this.wrapUnwrappedText(font);
-            }
-        }
-        const newWrapper = dom/* Dom.replace */.i.replace(wrapper, this.style.element, this.jodit.createInside, true);
-        (0,helpers.attr)(newWrapper, 'size', null);
-        if (this.style.elementIsBlock) {
-            this.postProcessListElement(newWrapper);
-        }
-        if (this.style.options.style && this.style.elementIsDefault) {
-            (0,helpers.css)(newWrapper, this.style.options.style);
-        }
-        if (this.style.options.className) {
-            newWrapper.classList.toggle(this.style.options.className);
-        }
-    }
-    checkSpecialElements(font) {
-        const { editor } = this.jodit;
-        return Boolean(dom/* Dom.closest */.i.closest(font, ['style', 'script'], editor));
-    }
-    checkSuitableParent(font) {
-        const { parentNode } = font;
-        if (parentNode &&
-            !dom/* Dom.next */.i.next(font, this.isNormalNode, parentNode) &&
-            !dom/* Dom.prev */.i.prev(font, this.isNormalNode, parentNode) &&
-            this.isSuitableElement(parentNode, false) &&
-            parentNode !== this.jodit.s.area &&
-            (!dom/* Dom.isBlock */.i.isBlock(parentNode, this.jodit.ew) ||
-                this.style.elementIsBlock)) {
-            this.toggleStyles(parentNode);
-            return true;
-        }
-        return false;
-    }
-    checkSuitableChild(font) {
-        let { firstChild } = font;
-        if (firstChild && this.jodit.s.isMarker(firstChild)) {
-            firstChild = firstChild.nextSibling;
-        }
-        if (firstChild &&
-            !dom/* Dom.next */.i.next(firstChild, this.isNormalNode, font) &&
-            !dom/* Dom.prev */.i.prev(firstChild, this.isNormalNode, font) &&
-            this.isSuitableElement(firstChild, false)) {
-            this.toggleStyles(firstChild);
-            return true;
-        }
-        return false;
-    }
-    checkClosestWrapper(font) {
-        const wrapper = dom/* Dom.closest */.i.closest(font, this.isSuitableElement, this.jodit.editor);
-        if (wrapper) {
-            if (this.style.elementIsBlock) {
-                this.toggleStyles(wrapper);
-                return true;
-            }
-            const leftRange = this.jodit.s.createRange();
-            leftRange.setStartBefore(wrapper);
-            leftRange.setEndBefore(font);
-            const leftFragment = leftRange.extractContents();
-            if ((!leftFragment.textContent ||
-                !(0,helpers.trim)(leftFragment.textContent).length) &&
-                leftFragment.firstChild) {
-                dom/* Dom.unwrap */.i.unwrap(leftFragment.firstChild);
-            }
-            if (wrapper.parentNode) {
-                wrapper.parentNode.insertBefore(leftFragment, wrapper);
-            }
-            leftRange.setStartAfter(font);
-            leftRange.setEndAfter(wrapper);
-            const rightFragment = leftRange.extractContents();
-            if ((!rightFragment.textContent ||
-                !(0,helpers.trim)(rightFragment.textContent).length) &&
-                rightFragment.firstChild) {
-                dom/* Dom.unwrap */.i.unwrap(rightFragment.firstChild);
-            }
-            dom/* Dom.after */.i.after(wrapper, rightFragment);
-            this.toggleStyles(wrapper);
-            return true;
-        }
-        return false;
-    }
-    elementHasSameStyle(elm, rules) {
-        return Boolean((0,checker/* isPlainObject */.PO)(rules) &&
-            !dom/* Dom.isTag */.i.isTag(elm, 'font') &&
-            dom/* Dom.isHTMLElement */.i.isHTMLElement(elm, this.jodit.ew) &&
-            (0,helpers.each)(rules, (property, checkValue) => {
-                const value = (0,helpers.css)(elm, property, undefined, true);
-                return (!(0,checker/* isVoid */.nj)(value) &&
-                    value !== '' &&
-                    !(0,checker/* isVoid */.nj)(checkValue) &&
-                    (0,helpers.normalizeCssValue)(property, checkValue)
-                        .toString()
-                        .toLowerCase() === value.toString().toLowerCase());
-            }));
-    }
-    isSuitableElement(elm, strict = true) {
-        if (!elm) {
-            return false;
-        }
-        const { element, elementIsDefault, options } = this.style;
-        const elmHasSameStyle = this.elementHasSameStyle(elm, options.style);
-        const elmIsSame = elm.nodeName.toLowerCase() === element;
-        return (((!elementIsDefault || !strict) && elmIsSame) ||
-            (elmHasSameStyle && this.isNormalNode(elm)));
-    }
-    isNormalNode(elm) {
-        return Boolean(elm != null &&
-            !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm) &&
-            !this.jodit.s.isMarker(elm));
-    }
-    toggleStyles(elm) {
-        const { style } = this.style.options;
-        if (style && elm.nodeName.toLowerCase() === this.style.defaultTag) {
-            Object.keys(style).forEach(rule => {
-                if (this.mode === mode.UNWRAP ||
-                    (0,helpers.css)(elm, rule) ===
-                        (0,helpers.normalizeCssValue)(rule, style[rule])) {
-                    (0,helpers.css)(elm, rule, '');
-                    if (this.mode === undefined) {
-                        this.mode = mode.UNWRAP;
-                    }
-                }
-                else {
-                    (0,helpers.css)(elm, rule, style[rule]);
-                    if (this.mode === undefined) {
-                        this.mode = mode.WRAP;
-                    }
-                }
-            });
-        }
-        const isBlock = dom/* Dom.isBlock */.i.isBlock(elm, this.jodit.ew);
-        const isSuitableInline = !isBlock &&
-            (!(0,helpers.attr)(elm, 'style') ||
-                elm.nodeName.toLowerCase() !== this.style.defaultTag);
-        const isSuitableBlock = !isSuitableInline &&
-            isBlock &&
-            elm.nodeName.toLowerCase() === this.style.element;
-        if (isSuitableInline || isSuitableBlock) {
-            dom/* Dom.unwrap */.i.unwrap(elm);
-            if (this.mode === undefined) {
-                this.mode = mode.UNWRAP;
-            }
-        }
-    }
-    unwrapChildren(font) {
-        const needUnwrap = [];
-        let firstElementSuit;
-        if (font.firstChild) {
-            dom/* Dom.find */.i.find(font.firstChild, (elm) => {
-                if (elm && this.isSuitableElement(elm)) {
-                    if (firstElementSuit === undefined) {
-                        firstElementSuit = true;
-                    }
-                    needUnwrap.push(elm);
-                }
-                else {
-                    if (firstElementSuit === undefined) {
-                        firstElementSuit = false;
-                    }
-                }
-                return false;
-            }, font, true);
-        }
-        needUnwrap.forEach(dom/* Dom.unwrap */.i.unwrap);
-        return Boolean(firstElementSuit);
-    }
-    wrapUnwrappedText(elm) {
-        const { area, win } = this.jodit.selection;
-        const edge = (n, key = 'previousSibling') => {
-            let edgeNode = n, node = n;
-            while (node) {
-                edgeNode = node;
-                if (node[key]) {
-                    node = node[key];
-                }
-                else {
-                    node =
-                        node.parentNode &&
-                            !dom/* Dom.isBlock */.i.isBlock(node.parentNode, win) &&
-                            node.parentNode !== area
-                            ? node.parentNode
-                            : null;
-                }
-                if (dom/* Dom.isBlock */.i.isBlock(node, win)) {
-                    break;
-                }
-            }
-            return edgeNode;
-        };
-        const start = edge(elm), end = edge(elm, 'nextSibling');
-        const range = this.jodit.s.createRange();
-        range.setStartBefore(start);
-        range.setEndAfter(end);
-        const fragment = range.extractContents();
-        const wrapper = this.jodit.createInside.element(this.style.element);
-        wrapper.appendChild(fragment);
-        range.insertNode(wrapper);
-        if (this.style.elementIsBlock) {
-            this.postProcessListElement(wrapper);
-            if (dom/* Dom.isEmpty */.i.isEmpty(wrapper) &&
-                !dom/* Dom.isTag */.i.isTag(wrapper.firstElementChild, 'br')) {
-                wrapper.appendChild(this.jodit.createInside.element('br'));
-            }
-        }
-        return wrapper;
-    }
-    postProcessListElement(wrapper) {
-        if (/^(OL|UL)$/i.test(this.style.element) &&
-            !dom/* Dom.isTag */.i.isTag(wrapper.firstElementChild, 'li')) {
-            const ci = this.jodit.createInside;
-            const li = dom/* Dom.replace */.i.replace(wrapper, 'li', ci), ul = dom/* Dom.wrap */.i.wrap(li, this.style.element, ci);
-            if (ul) {
-                wrapper = ul;
-            }
-        }
-    }
-}
-(0,tslib_es6.__decorate)([
-    decorators.autobind
-], ApplyStyle.prototype, "applyToElement", null);
-(0,tslib_es6.__decorate)([
-    decorators.autobind
-], ApplyStyle.prototype, "isSuitableElement", null);
-(0,tslib_es6.__decorate)([
-    decorators.autobind
-], ApplyStyle.prototype, "isNormalNode", null);
-
-;// CONCATENATED MODULE: ./src/core/selection/style/style.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-class Style {
-    constructor(options) {
-        this.options = options;
-    }
-    get element() {
-        return this.options.element || this.defaultTag;
-    }
-    get elementIsBlock() {
-        return Boolean(this.options.element && constants.IS_BLOCK.test(this.options.element));
-    }
-    get defaultTag() {
-        if (this.options.defaultTag) {
-            return this.options.defaultTag;
-        }
-        return this.elementIsBlock ? 'p' : 'span';
-    }
-    get elementIsDefault() {
-        return this.element === this.defaultTag;
-    }
-    apply(jodit) {
-        const applyStyle = new ApplyStyle(jodit, this);
-        applyStyle.apply();
-    }
-}
 
 ;// CONCATENATED MODULE: ./src/core/selection/select.ts
 /*!
@@ -13507,53 +13219,6 @@ class Style {
 class Select {
     constructor(jodit) {
         this.jodit = jodit;
-        this.isMarker = (elm) => dom/* Dom.isNode */.i.isNode(elm, this.win) &&
-            dom/* Dom.isTag */.i.isTag(elm, 'span') &&
-            elm.hasAttribute('data-' + constants.MARKER_CLASS);
-        this.eachSelection = (callback) => {
-            const sel = this.sel;
-            if (sel && sel.rangeCount) {
-                const range = sel.getRangeAt(0);
-                const nodes = [], startOffset = range.startOffset, length = this.area.childNodes.length, elementOffset = startOffset < length ? startOffset : length - 1, start = range.startContainer === this.area
-                    ? this.area.childNodes[elementOffset]
-                    : range.startContainer, end = range.endContainer === this.area
-                    ? this.area.childNodes[range.endOffset - 1]
-                    : range.endContainer;
-                dom/* Dom.find */.i.find(start, (node) => {
-                    if (node &&
-                        node !== this.area &&
-                        !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(node) &&
-                        !this.isMarker(node)) {
-                        nodes.push(node);
-                    }
-                    return (node === end ||
-                        (node && node.contains && node.contains(end)));
-                }, this.area, true, 'nextSibling', false);
-                const forEvery = (current) => {
-                    if (!dom/* Dom.isOrContains */.i.isOrContains(this.j.editor, current, true)) {
-                        return;
-                    }
-                    if (current.nodeName.match(/^(UL|OL)$/)) {
-                        return (0,helpers.toArray)(current.childNodes).forEach(forEvery);
-                    }
-                    if (dom/* Dom.isTag */.i.isTag(current, 'li')) {
-                        if (current.firstChild) {
-                            current = current.firstChild;
-                        }
-                        else {
-                            const currentB = this.j.createInside.text(constants.INVISIBLE_SPACE);
-                            current.appendChild(currentB);
-                            current = currentB;
-                        }
-                    }
-                    callback(current);
-                };
-                if (nodes.length === 0 && dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(start)) {
-                    nodes.push(start);
-                }
-                nodes.forEach(forEvery);
-            }
-        };
         jodit.e.on('removeMarkers', () => {
             this.removeMarkers();
         });
@@ -13562,7 +13227,7 @@ class Select {
         return this.jodit;
     }
     errorNode(node) {
-        if (!dom/* Dom.isNode */.i.isNode(node, this.win)) {
+        if (!dom/* Dom.isNode */.i.isNode(node)) {
             throw (0,helpers.error)('Parameter node must be instance of Node');
         }
     }
@@ -13638,11 +13303,19 @@ class Select {
         catch (_a) { }
         return false;
     }
+    static isMarker(elm) {
+        return (dom/* Dom.isNode */.i.isNode(elm) &&
+            dom/* Dom.isTag */.i.isTag(elm, 'span') &&
+            elm.hasAttribute('data-' + constants.MARKER_CLASS));
+    }
     get hasMarkers() {
-        return Boolean((0,helpers.$$)('span[data-' + constants.MARKER_CLASS + ']', this.area).length);
+        return Boolean(this.markers.length);
+    }
+    get markers() {
+        return (0,helpers.$$)('span[data-' + constants.MARKER_CLASS + ']', this.area);
     }
     removeMarkers() {
-        (0,helpers.$$)('span[data-' + constants.MARKER_CLASS + ']', this.area).forEach(dom/* Dom.safeRemove */.i.safeRemove);
+        this.markers.forEach(dom/* Dom.safeRemove */.i.safeRemove);
     }
     marker(atStart = false, range) {
         let newRange = null;
@@ -13903,7 +13576,7 @@ class Select {
             this.focus();
             this.restore();
         }
-        if (!dom/* Dom.isNode */.i.isNode(html, this.win)) {
+        if (!dom/* Dom.isNode */.i.isNode(html)) {
             node.innerHTML = html.toString();
         }
         else {
@@ -13964,6 +13637,50 @@ class Select {
         }
         this.insertNode(image);
         this.j.e.fire('afterInsertImage', image);
+    }
+    eachSelection(callback) {
+        const sel = this.sel;
+        if (sel && sel.rangeCount) {
+            const range = sel.getRangeAt(0);
+            const nodes = [], startOffset = range.startOffset, length = this.area.childNodes.length, elementOffset = startOffset < length ? startOffset : length - 1, start = range.startContainer === this.area
+                ? this.area.childNodes[elementOffset]
+                : range.startContainer, end = range.endContainer === this.area
+                ? this.area.childNodes[range.endOffset - 1]
+                : range.endContainer;
+            dom/* Dom.find */.i.find(start, (node) => {
+                if (node &&
+                    node !== this.area &&
+                    !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(node) &&
+                    !Select.isMarker(node)) {
+                    nodes.push(node);
+                }
+                return (node === end ||
+                    (node && node.contains && node.contains(end)));
+            }, this.area, true, 'nextSibling', false);
+            const forEvery = (current) => {
+                if (!dom/* Dom.isOrContains */.i.isOrContains(this.j.editor, current, true)) {
+                    return;
+                }
+                if (current.nodeName.match(/^(UL|OL)$/)) {
+                    return (0,helpers.toArray)(current.childNodes).forEach(forEvery);
+                }
+                if (dom/* Dom.isTag */.i.isTag(current, 'li')) {
+                    if (current.firstChild) {
+                        current = current.firstChild;
+                    }
+                    else {
+                        const currentB = this.j.createInside.text(constants.INVISIBLE_SPACE);
+                        current.appendChild(currentB);
+                        current = currentB;
+                    }
+                }
+                callback(current);
+            };
+            if (nodes.length === 0 && dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(start)) {
+                nodes.push(start);
+            }
+            nodes.forEach(forEvery);
+        }
     }
     cursorInTheEdge(start, parentBlock) {
         var _a, _b;
@@ -14101,12 +13818,23 @@ class Select {
         }
         return '';
     }
-    wrapInTag(tagOrCallback) {
-        (0,helpers.$$)('*[style*=font-size]', this.area).forEach((elm) => {
-            elm.style &&
-                elm.style.fontSize &&
-                elm.setAttribute('data-font-size', elm.style.fontSize.toString());
-        });
+    *wrapInTagGen() {
+        if (this.isCollapsed()) {
+            const font = this.jodit.createInside.element('font', constants.INVISIBLE_SPACE);
+            this.insertNode(font, false, false);
+            const [marker] = this.markers;
+            if (marker) {
+                font.appendChild(marker);
+            }
+            else {
+                this.setCursorIn(font);
+                this.save();
+            }
+            yield font;
+            dom/* Dom.unwrap */.i.unwrap(font);
+            return;
+        }
+        (0,helpers.$$)('*[style*=font-size]', this.area).forEach(elm => (0,helpers.attr)(elm, 'data-font-size', elm.style.fontSize.toString()));
         if (!this.isCollapsed()) {
             this.j.nativeExecCommand('fontsize', false, '7');
         }
@@ -14115,20 +13843,40 @@ class Select {
             (0,helpers.attr)(font, 'size', 7);
             this.insertNode(font, false, false);
         }
-        (0,helpers.$$)('*[data-font-size]', this.area).forEach((elm) => {
+        (0,helpers.$$)('*[data-font-size]', this.area).forEach(elm => {
             const fontSize = (0,helpers.attr)(elm, 'data-font-size');
-            if (elm.style && fontSize) {
+            if (fontSize) {
                 elm.style.fontSize = fontSize;
-                elm.removeAttribute('data-font-size');
+                (0,helpers.attr)(elm, 'data-font-size', null);
             }
         });
+        const elms = (0,helpers.$$)('font[size="7"]', this.area);
+        for (const font of elms) {
+            const { firstChild, lastChild } = font;
+            if (firstChild &&
+                firstChild === lastChild &&
+                Select.isMarker(firstChild)) {
+                dom/* Dom.unwrap */.i.unwrap(font);
+                continue;
+            }
+            if (firstChild && Select.isMarker(firstChild)) {
+                dom/* Dom.before */.i.before(font, firstChild);
+            }
+            if (lastChild && Select.isMarker(lastChild)) {
+                dom/* Dom.after */.i.after(font, lastChild);
+            }
+            yield font;
+            dom/* Dom.unwrap */.i.unwrap(font);
+        }
+    }
+    wrapInTag(tagOrCallback) {
         const result = [];
-        (0,helpers.$$)('font[size="7"]', this.area).forEach((font) => {
+        for (const font of this.wrapInTagGen()) {
             try {
                 if (font.firstChild &&
                     font.firstChild === font.lastChild &&
-                    this.isMarker(font.firstChild)) {
-                    return;
+                    Select.isMarker(font.firstChild)) {
+                    continue;
                 }
                 if ((0,helpers.isFunction)(tagOrCallback)) {
                     tagOrCallback(font);
@@ -14146,11 +13894,11 @@ class Select {
                     }
                 }
             }
-        });
+        }
         return result;
     }
     applyStyle(style, options = {}) {
-        const styleElm = new Style({
+        const styleElm = new CommitStyle({
             style,
             element: options.element,
             className: options.className,
@@ -14231,18 +13979,432 @@ class Select {
         return currentBox.previousElementSibling;
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Select.prototype, "focus", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Select.prototype, "setCursorAfter", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Select.prototype, "setCursorBefore", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Select.prototype, "setCursorIn", null);
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/is-normal-node.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function isNormalNode(elm) {
+    return Boolean(elm && !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm) && !Select.isMarker(elm));
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/element-has-same-style.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function elementHasSameStyle(elm, rules) {
+    return Boolean(!dom/* Dom.isTag */.i.isTag(elm, 'font') &&
+        dom/* Dom.isHTMLElement */.i.isHTMLElement(elm) &&
+        Object.keys(rules).every(property => {
+            const value = (0,helpers.css)(elm, property, true);
+            return (!(0,helpers.isVoid)(value) &&
+                value !== '' &&
+                !(0,helpers.isVoid)(rules[property]) &&
+                (0,helpers.normalizeCssValue)(property, rules[property])
+                    .toString()
+                    .toLowerCase() === value.toString().toLowerCase());
+        }));
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/is-suit-element.ts
+
+
+
+function isSuitElement(commitStyle, elm, strict) {
+    if (!elm) {
+        return false;
+    }
+    const { element, elementIsDefault, options } = commitStyle;
+    const elmHasSameStyle = Boolean(options.style && elementHasSameStyle(elm, options.style));
+    const elmIsSame = elm.nodeName.toLowerCase() === element;
+    if (((!elementIsDefault || !strict) && elmIsSame) ||
+        (elmHasSameStyle && isNormalNode(elm))) {
+        return true;
+    }
+    if (!elmIsSame && !strict && elementIsDefault && dom/* Dom.isInlineBlock */.i.isInlineBlock(elm)) {
+        return true;
+    }
+    return false;
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/get-suit-parent.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function getSuitParent(style, node, root) {
+    const { parentNode } = node;
+    if (parentNode &&
+        !dom/* Dom.next */.i.next(node, isNormalNode, parentNode) &&
+        !dom/* Dom.prev */.i.prev(node, isNormalNode, parentNode) &&
+        isSuitElement(style, parentNode, false) &&
+        parentNode !== root &&
+        (!dom/* Dom.isBlock */.i.isBlock(parentNode) || style.elementIsBlock)) {
+        return parentNode;
+    }
+    return null;
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/get-suit-child.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function getSuitChild(style, font) {
+    let { firstChild: child } = font;
+    while (child && !isNormalNode(child)) {
+        child = child.nextSibling;
+        if (!child) {
+            return null;
+        }
+    }
+    if (child &&
+        !dom/* Dom.next */.i.next(child, isNormalNode, font) &&
+        isSuitElement(style, child, false)) {
+        return child;
+    }
+    return null;
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/check-special-elements.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function checkSpecialElements(font, root) {
+    return Boolean(dom/* Dom.closest */.i.closest(font, ['style', 'script'], root));
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/get-closest-wrapper.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+function getClosestWrapper(style, font, root, getRange) {
+    const wrapper = dom/* Dom.closest */.i.closest(font, node => isSuitElement(style, node, true), root);
+    if (wrapper) {
+        if (style.elementIsBlock) {
+            return wrapper;
+        }
+        const range = getRange();
+        const leftEdge = Select.isMarker(font.previousSibling)
+            ? font.previousSibling
+            : font;
+        range.setStartBefore(wrapper);
+        range.setEndBefore(leftEdge);
+        extractAndMove(wrapper, range, true);
+        const rightEdge = Select.isMarker(font.nextSibling)
+            ? font.nextSibling
+            : font;
+        range.setStartAfter(rightEdge);
+        range.setEndAfter(wrapper);
+        extractAndMove(wrapper, range, false);
+        return wrapper;
+    }
+    return null;
+}
+function extractAndMove(wrapper, range, left) {
+    const fragment = range.extractContents();
+    if ((!fragment.textContent || !(0,helpers.trim)(fragment.textContent).length) &&
+        fragment.firstChild) {
+        dom/* Dom.unwrap */.i.unwrap(fragment.firstChild);
+    }
+    if (wrapper.parentNode) {
+        (0,helpers.call)(left ? dom/* Dom.before */.i.before : dom/* Dom.after */.i.after, wrapper, fragment);
+    }
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/unwrap-children.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function unwrapChildren(style, font) {
+    const needUnwrap = [];
+    let firstElementSuit;
+    if (font.firstChild) {
+        dom/* Dom.find */.i.find(font.firstChild, (elm) => {
+            if (elm && isSuitElement(style, elm, true)) {
+                if (firstElementSuit === undefined) {
+                    firstElementSuit = true;
+                }
+                needUnwrap.push(elm);
+            }
+            else {
+                if (firstElementSuit === undefined) {
+                    firstElementSuit = false;
+                }
+            }
+            return false;
+        }, font, true);
+    }
+    needUnwrap.forEach(dom/* Dom.unwrap */.i.unwrap);
+    return Boolean(firstElementSuit);
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/post-process-list-element.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function postProcessListElement(style, wrapper, ci) {
+    if (/^(OL|UL)$/i.test(style.element) &&
+        !dom/* Dom.isTag */.i.isTag(wrapper.firstElementChild, 'li')) {
+        const li = dom/* Dom.replace */.i.replace(wrapper, 'li', ci), ul = dom/* Dom.wrap */.i.wrap(li, style.element, ci);
+        if (ul) {
+            return ul;
+        }
+    }
+    return wrapper;
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/wrap-unwrapped-text.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function wrapUnwrappedText(style, elm, root, ci, getRange) {
+    const edge = (n, key = 'previousSibling') => {
+        let edgeNode = n, node = n;
+        while (node) {
+            edgeNode = node;
+            if (node[key]) {
+                node = node[key];
+            }
+            else {
+                node =
+                    node.parentNode &&
+                        !dom/* Dom.isBlock */.i.isBlock(node.parentNode) &&
+                        node.parentNode !== root
+                        ? node.parentNode
+                        : null;
+            }
+            if (dom/* Dom.isBlock */.i.isBlock(node)) {
+                break;
+            }
+        }
+        return edgeNode;
+    };
+    const start = edge(elm), end = edge(elm, 'nextSibling');
+    const range = getRange();
+    range.setStartBefore(start);
+    range.setEndAfter(end);
+    const fragment = range.extractContents();
+    let wrapper = ci.element(style.element);
+    wrapper.appendChild(fragment);
+    range.insertNode(wrapper);
+    if (style.elementIsBlock) {
+        wrapper = postProcessListElement(style, wrapper, ci);
+        if (dom/* Dom.isEmpty */.i.isEmpty(wrapper) &&
+            !dom/* Dom.isTag */.i.isTag(wrapper.firstElementChild, 'br')) {
+            wrapper.appendChild(ci.element('br'));
+        }
+    }
+    return wrapper;
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/toggle-styles.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function toggleStyles(style, elm, wrap) {
+    const { options: { style: styles }, defaultTag, element } = style;
+    const tag = elm.nodeName.toLowerCase(), isStyleCommit = style.elementIsDefault && dom/* Dom.isInlineBlock */.i.isInlineBlock(elm);
+    if (styles && (tag === defaultTag || isStyleCommit)) {
+        Object.keys(styles).forEach(rule => {
+            if (wrap === false ||
+                (0,helpers.css)(elm, rule) ===
+                    (0,helpers.normalizeCssValue)(rule, styles[rule])) {
+                (0,helpers.css)(elm, rule, '');
+                if (wrap == null) {
+                    wrap = false;
+                }
+            }
+            else {
+                (0,helpers.css)(elm, rule, styles[rule]);
+                if (wrap == null) {
+                    wrap = true;
+                }
+            }
+        });
+    }
+    const isBlock = dom/* Dom.isBlock */.i.isBlock(elm);
+    const isSuitableInline = !isBlock &&
+        (!(0,helpers.attr)(elm, 'style') || (tag !== defaultTag && tag === element));
+    const isSameBlockElement = !isSuitableInline && isBlock && tag === element;
+    if (isSuitableInline || isSameBlockElement) {
+        dom/* Dom.unwrap */.i.unwrap(elm);
+        if (wrap == null) {
+            wrap = false;
+        }
+    }
+    return wrap;
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/index.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+
+
+;// CONCATENATED MODULE: ./src/core/selection/style/apply-style.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function ApplyStyle(jodit, style) {
+    const { s: sel, editor: root, createInside: ci } = jodit, rng = () => sel.createRange();
+    let wrap = null;
+    sel.save();
+    (0,helpers.normalizeNode)(sel.area.firstChild);
+    for (const font of jodit.s.wrapInTagGen()) {
+        wrap = applyToElement(style, font, root, rng, ci, wrap);
+    }
+    sel.restore();
+}
+function applyToElement(style, font, root, range, ci, wrap) {
+    if (checkSpecialElements(font, root)) {
+        return wrap;
+    }
+    const toggleNode = getSuitParent(style, font, root) ||
+        getSuitChild(style, font) ||
+        getClosestWrapper(style, font, root, range);
+    if (toggleNode) {
+        return toggleStyles(style, toggleNode, wrap);
+    }
+    if (unwrapChildren(style, font)) {
+        return wrap;
+    }
+    if (wrap == null) {
+        wrap = true;
+    }
+    if (!wrap) {
+        return wrap;
+    }
+    let wrapper = font;
+    if (style.elementIsBlock) {
+        const ulReg = /^(ul|ol|li|td|th|tr|tbody|table)$/i;
+        const box = dom/* Dom.up */.i.up(font, node => {
+            if (dom/* Dom.isBlock */.i.isBlock(node)) {
+                if (ulReg.test(style.element) ||
+                    !ulReg.test(node.nodeName)) {
+                    return true;
+                }
+            }
+            return false;
+        }, root);
+        if (box) {
+            wrapper = box;
+        }
+        else {
+            wrapper = wrapUnwrappedText(style, font, root, ci, range);
+        }
+    }
+    const newWrapper = dom/* Dom.replace */.i.replace(wrapper, style.element, ci, true);
+    (0,helpers.attr)(newWrapper, 'size', null);
+    if (style.elementIsBlock) {
+        postProcessListElement(style, newWrapper, ci);
+    }
+    if (style.options.style && style.elementIsDefault) {
+        (0,helpers.css)(newWrapper, style.options.style);
+    }
+    if (style.options.className) {
+        newWrapper.classList.toggle(style.options.className);
+    }
+    return wrap;
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/commit-style.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+class CommitStyle {
+    constructor(options) {
+        this.options = options;
+    }
+    get element() {
+        return this.options.element || this.defaultTag;
+    }
+    get elementIsBlock() {
+        return Boolean(this.options.element && constants.IS_BLOCK.test(this.options.element));
+    }
+    get defaultTag() {
+        if (this.options.defaultTag) {
+            return this.options.defaultTag;
+        }
+        return this.elementIsBlock ? 'p' : 'span';
+    }
+    get elementIsDefault() {
+        return this.element === this.defaultTag;
+    }
+    apply(jodit) {
+        ApplyStyle(jodit, this);
+    }
+}
 
 ;// CONCATENATED MODULE: ./src/core/selection/index.ts
 /*!
@@ -14888,7 +15050,7 @@ class Table extends component/* ViewComponent */.Hr {
     }
 }
 Table.selectedByTable = new WeakMap();
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.debounce)()
 ], Table.prototype, "recalculateStyles", null);
 const instance = (j) => j.getInstance('Table', j.o);
@@ -15216,34 +15378,7 @@ class Uploader extends component/* ViewComponent */.Hr {
                 this.sendFiles(cData.files, handlerSuccess, handlerError);
                 return false;
             }
-            if (constants.IS_IE && !true) {
-                if (cData &&
-                    (!cData.types.length || cData.types[0] !== constants.TEXT_PLAIN)) {
-                    const div = this.j.c.div('', {
-                        tabindex: -1,
-                        style: 'left: -9999px; top: 0; width: 0; height: 100%;line-height: 140%; ' +
-                            'overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;',
-                        contenteditable: true
-                    });
-                    (0,global/* getContainer */.ZO)(this.j, Uploader).appendChild(div);
-                    const selection = (0,helpers.isJoditObject)(this.j)
-                        ? this.j.s.save()
-                        : null, restore = () => selection &&
-                        (0,helpers.isJoditObject)(this.j) &&
-                        this.j.s.restore();
-                    div.focus();
-                    this.j.async.setTimeout(() => {
-                        const child = div.firstChild;
-                        dom/* Dom.safeRemove */.i.safeRemove(div);
-                        if (child && child.hasAttribute('src')) {
-                            const src = (0,helpers.attr)(child, 'src') || '';
-                            restore();
-                            self.sendFiles([Uploader.dataURItoBlob(src)], handlerSuccess, handlerError);
-                        }
-                    }, this.j.defaultTimeout);
-                }
-                return;
-            }
+            if (constants.IS_IE && !true) {}
             if (cData && cData.items && cData.items.length) {
                 const items = cData.items;
                 for (i = 0; i < items.length; i += 1) {
@@ -15344,7 +15479,7 @@ class Uploader extends component/* ViewComponent */.Hr {
 }
 
 // EXTERNAL MODULE: ./src/core/plugin-system.ts
-var plugin_system = __webpack_require__(13);
+var plugin_system = __webpack_require__(14);
 ;// CONCATENATED MODULE: ./src/modules/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -15925,6 +16060,11 @@ class Jodit extends ViewWithToolbar {
         container.classList.add('jodit');
         container.classList.add('jodit-container');
         container.classList.add(`jodit_theme_${this.o.theme || 'default'}`);
+        const { styleValues } = this.o;
+        Object.keys(styleValues).forEach(key => {
+            const property = (0,helpers.kebabCase)(key);
+            container.style.setProperty(`--jd-${property}`, styleValues[key]);
+        });
         container.setAttribute('contenteditable', 'false');
         let buffer = null;
         if (this.o.inline) {
@@ -16206,19 +16346,19 @@ Jodit.lang = global/* lang */.KQ;
 Jodit.core = {
     Plugin: Plugin
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.cache
 ], Jodit.prototype, "uploader", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.cache
 ], Jodit.prototype, "filebrowser", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Jodit.prototype, "prepareWYSIWYGEditor", null);
 
 ;// CONCATENATED MODULE: ./src/langs/index.ts
 
-const en = __webpack_require__(41);
+const en = __webpack_require__(44);
 let exp = {
     en
 };
@@ -16290,7 +16430,7 @@ class addNewLine extends Plugin {
         };
         this.canGetFocus = (elm) => {
             return (elm != null &&
-                dom/* Dom.isBlock */.i.isBlock(elm, this.j.ew) &&
+                dom/* Dom.isBlock */.i.isBlock(elm) &&
                 !/^(img|table|iframe|hr)$/i.test(elm.nodeName));
         };
         this.onClickLine = (e) => {
@@ -16334,7 +16474,7 @@ class addNewLine extends Plugin {
         this.onMouseMove = (e) => {
             const editor = this.j;
             let currentElement = editor.ed.elementFromPoint(e.clientX, e.clientY);
-            if (!dom/* Dom.isHTMLElement */.i.isHTMLElement(currentElement, editor.ew) ||
+            if (!dom/* Dom.isHTMLElement */.i.isHTMLElement(currentElement) ||
                 dom/* Dom.isOrContains */.i.isOrContains(this.line, currentElement)) {
                 return;
             }
@@ -16349,7 +16489,7 @@ class addNewLine extends Plugin {
                 return;
             }
             if (this.isMatchedTag(currentElement)) {
-                const parentBox = dom/* Dom.up */.i.up(currentElement, node => dom/* Dom.isBlock */.i.isBlock(node, editor.ew), editor.editor);
+                const parentBox = dom/* Dom.up */.i.up(currentElement, dom/* Dom.isBlock */.i.isBlock, editor.editor);
                 if (parentBox && parentBox !== editor.editor) {
                     currentElement = parentBox;
                 }
@@ -16425,8 +16565,7 @@ class addNewLine extends Plugin {
     }
     beforeDestruct() {
         this.j.async.clearTimeout(this.timeout);
-        this.j.e.off(this.line);
-        this.j.e.off('changePlace', this.addEventListeners);
+        this.j.e.off(this.line).off('changePlace', this.addEventListeners);
         dom/* Dom.safeRemove */.i.safeRemove(this.line);
         this.j.e
             .off([this.j.ow, this.j.ew, this.j.editor], '.' + ns)
@@ -16449,29 +16588,29 @@ config/* Config.prototype.controls.about */.D.prototype.controls.about = {
     exec: (editor) => {
         const dialog = new Dialog({
             language: editor.o.language
-        }), i18n = editor.i18n.bind(editor);
-        dialog.setMod('theme', editor.o.theme);
-        dialog.setHeader(i18n('About Jodit'));
-        dialog.setContent(`<div class="jodit-about">
-					<div>${i18n('Jodit Editor')} v.${editor.getVersion()}</div>
-					<div>${i18n('License: %s', !(0,helpers.isLicense)(editor.o.license)
+        }), i = editor.i18n.bind(editor);
+        dialog
+            .setMod('theme', editor.o.theme)
+            .setHeader(i('About Jodit'))
+            .setContent(`<div class="jodit-about">
+					<div>${i('Jodit Editor')} v.${editor.getVersion()}</div>
+					<div>${i('License: %s', !(0,helpers.isLicense)(editor.o.license)
             ? 'MIT'
             : (0,helpers.normalizeLicense)(editor.o.license))}</div>
 					<div>
 						<a href="${"https://xdsoft.net/jodit/"}" target="_blank">${"https://xdsoft.net/jodit/"}</a>
 					</div>
 					<div>
-						<a href="https://xdsoft.net/jodit/doc/" target="_blank">${i18n("Jodit User's Guide")}</a>
-						${i18n('contains detailed help for using')}
+						<a href="https://xdsoft.net/jodit/doc/" target="_blank">${i("Jodit User's Guide")}</a>
+						${i('contains detailed help for using')}
 					</div>
-					<div>${i18n('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.')}</div>
+					<div>${i('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.')}</div>
 				</div>`);
         (0,helpers.css)(dialog.dialog, {
             minHeight: 200,
             minWidth: 420
         });
-        dialog.open(true);
-        dialog.bindDestruct(editor);
+        dialog.open(true).bindDestruct(editor);
     },
     tooltip: 'About Jodit',
     mode: constants.MODE_SOURCE + constants.MODE_WYSIWYG
@@ -16531,7 +16670,7 @@ function focus_focus(editor) {
             .on(editor.editor, 'mousedown.autofocus', (e) => {
             if (editor.isEditorMode() &&
                 e.target &&
-                dom/* Dom.isBlock */.i.isBlock(e.target, editor.ew) &&
+                dom/* Dom.isBlock */.i.isBlock(e.target) &&
                 !e.target.childNodes.length) {
                 if (editor.editor === e.target) {
                     editor.s.focus();
@@ -16556,7 +16695,7 @@ function focus_focus(editor) {
 
 config/* Config.prototype.controls.classSpan */.D.prototype.controls.classSpan = {
     command: 'applyClassName',
-    icon: __webpack_require__(42),
+    icon: __webpack_require__(45),
     exec: helpers.memorizeExec,
     list: [
         'enabled',
@@ -16571,10 +16710,7 @@ config/* Config.prototype.controls.classSpan */.D.prototype.controls.classSpan =
     isChildActive: (editor, control) => {
         const current = editor.s.current();
         if (current) {
-            const currentBpx = dom/* Dom.closest */.i.closest(current, elm => {
-                return (dom/* Dom.isBlock */.i.isBlock(elm, editor.ew) ||
-                    (elm && dom/* Dom.isElement */.i.isElement(elm)));
-            }, editor.editor) || editor.editor;
+            const currentBpx = dom/* Dom.closest */.i.closest(current, dom/* Dom.isElement */.i.isElement, editor.editor) || editor.editor;
             return Boolean(control.args &&
                 currentBpx.classList.contains(control.args[0].toString()));
         }
@@ -16583,10 +16719,7 @@ config/* Config.prototype.controls.classSpan */.D.prototype.controls.classSpan =
     isActive: (editor, control) => {
         const current = editor.s.current();
         if (current) {
-            const currentBpx = dom/* Dom.closest */.i.closest(current, elm => {
-                return (dom/* Dom.isBlock */.i.isBlock(elm, editor.ew) ||
-                    (elm && dom/* Dom.isElement */.i.isElement(elm)));
-            }, editor.editor) || editor.editor;
+            const currentBpx = dom/* Dom.closest */.i.closest(current, dom/* Dom.isElement */.i.isElement, editor.editor) || editor.editor;
             let present = false;
             control.list &&
                 Object.keys(control.list).forEach((className) => {
@@ -16622,13 +16755,13 @@ class classSpan extends Plugin {
             return false;
         });
     }
-    beforeDestruct(jodit) { }
+    beforeDestruct() { }
 }
 
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 6 modules
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 4 modules
 var utils = __webpack_require__(9);
 // EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 5 modules
-var string = __webpack_require__(22);
+var string = __webpack_require__(25);
 ;// CONCATENATED MODULE: ./src/plugins/keyboard/helpers.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -16642,8 +16775,8 @@ var string = __webpack_require__(22);
 function getSibling(node, backspace) {
     return backspace ? node.previousSibling : node.nextSibling;
 }
-function findNotEmptyNeighbor(node, backspace, root) {
-    return (0,utils/* call */.RE)(backspace ? dom/* Dom.prev */.i.prev : dom/* Dom.next */.i.next, node, n => Boolean(n && (!dom/* Dom.isText */.i.isText(n) || (0,string/* trim */.fy)((n === null || n === void 0 ? void 0 : n.nodeValue) || '').length)), root);
+function findNotEmptyNeighbor(node, left, root) {
+    return (0,utils/* call */.RE)(left ? dom/* Dom.prev */.i.prev : dom/* Dom.next */.i.next, node, n => Boolean(n && (!dom/* Dom.isText */.i.isText(n) || (0,string/* trim */.fy)((n === null || n === void 0 ? void 0 : n.nodeValue) || '').length)), root);
 }
 function findNotEmptySibling(node, backspace) {
     return dom/* Dom.findSibling */.i.findSibling(node, backspace, n => {
@@ -16685,26 +16818,6 @@ function normalizeCursorPosition(node, backspace) {
         anotherSibling = getSibling(node, !backspace);
     }
 }
-function getSiblingBox(node, backspace, root) {
-    while (node) {
-        const isBox = (elm) => dom/* Dom.isElement */.i.isElement(elm) && !dom/* Dom.isTag */.i.isTag(elm, constants.INSEPARABLE_TAGS);
-        const getBox = (node) => {
-            const child = backspace ? node.lastChild : node.firstChild;
-            if (isBox(child)) {
-                return getBox(child);
-            }
-            return isBox(node) ? node : null;
-        };
-        const sibling = findNotEmptySibling(node, backspace);
-        if (sibling) {
-            return isBox(sibling) ? getBox(sibling) : null;
-        }
-        if (node.parentElement && node.parentElement !== root) {
-            node = node.parentElement;
-        }
-    }
-    return null;
-}
 
 ;// CONCATENATED MODULE: ./src/plugins/keyboard/delete.ts
 /*!
@@ -16718,7 +16831,7 @@ function getSiblingBox(node, backspace, root) {
 
 
 
-config/* Config.prototype.delete */.D.prototype.delete = {
+config/* Config.prototype.delete */.D.prototype["delete"] = {
     hotkeys: {
         delete: ['delete', 'cmd+backspace'],
         deleteWord: ['ctrl+delete', 'cmd+alt+backspace', 'ctrl+alt+backspace'],
@@ -16799,7 +16912,7 @@ class Delete extends Plugin {
             normalizeCursorPosition(fakeNode, backspace);
             if (this.checkRemoveInseparableElement(fakeNode, backspace) ||
                 this.checkRemoveChar(fakeNode, backspace, block) ||
-                this.checkTableCell(fakeNode, backspace) ||
+                this.checkTableCell(fakeNode) ||
                 this.checkRemoveEmptyParent(fakeNode, backspace) ||
                 this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
                 this.checkJoinTwoLists(fakeNode, backspace) ||
@@ -16918,7 +17031,7 @@ class Delete extends Plugin {
     }
     addBRInsideEmptyBlock(node) {
         if (node.parentElement !== this.root &&
-            dom/* Dom.isBlock */.i.isBlock(node.parentElement, this.j.ew) &&
+            dom/* Dom.isBlock */.i.isBlock(node.parentElement) &&
             dom/* Dom.each */.i.each(node.parentElement, dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode)) {
             dom/* Dom.after */.i.after(node, this.j.createInside.element('br'));
         }
@@ -16937,9 +17050,9 @@ class Delete extends Plugin {
             return true;
         }
     }
-    checkTableCell(fakeNode, backspace) {
+    checkTableCell(fakeNode) {
         const cell = fakeNode.parentElement;
-        if (dom/* Dom.isCell */.i.isCell(cell, this.j.ew)) {
+        if (dom/* Dom.isCell */.i.isCell(cell)) {
             return true;
         }
     }
@@ -16952,7 +17065,7 @@ class Delete extends Plugin {
         }
         const neighbor = findNotEmptyNeighbor(fakeNode, backspace, this.root);
         do {
-            if (prn && dom/* Dom.isEmpty */.i.isEmpty(prn) && !dom/* Dom.isCell */.i.isCell(prn, this.j.ew)) {
+            if (prn && dom/* Dom.isEmpty */.i.isEmpty(prn) && !dom/* Dom.isCell */.i.isCell(prn)) {
                 dom/* Dom.after */.i.after(prn, fakeNode);
                 const tmp = dom/* Dom.closest */.i.closest(prn, n => dom/* Dom.isElement */.i.isElement(n) && n !== prn, this.root);
                 dom/* Dom.safeRemove */.i.safeRemove(prn);
@@ -17051,57 +17164,6 @@ class Delete extends Plugin {
             return true;
         }
         return false;
-    }
-    checkJoinNeighbors2(fakeNode, backspace) {
-        const parent = dom/* Dom.closest */.i.closest(fakeNode, dom/* Dom.isElement */.i.isElement, this.root);
-        if (!parent) {
-            return;
-        }
-        let neighbor = getSiblingBox(parent, backspace, this.root);
-        if (!neighbor) {
-            return;
-        }
-        const startNeighbor = neighbor;
-        this.j.s.setCursorBefore(fakeNode);
-        if (!this.j.s.cursorInTheEdge(backspace, parent)) {
-            return;
-        }
-        if (dom/* Dom.isTag */.i.isTag(neighbor, ['ul', 'ol']) &&
-            !dom/* Dom.isTag */.i.isTag(parent, ['ul', 'ol'])) {
-            neighbor = backspace
-                ? neighbor.lastElementChild
-                : neighbor.firstElementChild;
-        }
-        if (parent &&
-            neighbor &&
-            startNeighbor &&
-            dom/* Dom.isElement */.i.isElement(neighbor) &&
-            this.j.s.cursorInTheEdge(backspace, parent)) {
-            dom/* Dom.moveContent */.i.moveContent(parent, neighbor, !backspace);
-            let next;
-            do {
-                next = findMostNestedNeighbor(startNeighbor, backspace, this.root);
-                if (next === parent) {
-                    let nextParentNode = next;
-                    do {
-                        const nextParent = nextParentNode.parentElement;
-                        dom/* Dom.safeRemove */.i.safeRemove(nextParentNode);
-                        nextParentNode = nextParent;
-                    } while (nextParentNode && dom/* Dom.isEmpty */.i.isEmpty(nextParentNode));
-                }
-                dom/* Dom.safeRemove */.i.safeRemove(next);
-            } while (next !== parent);
-            this.j.s.setCursorBefore(fakeNode);
-            return true;
-        }
-        if (dom/* Dom.isTag */.i.isTag(parent, 'li') &&
-            this.j.s.cursorInTheEdge(backspace, parent)) {
-            (0,helpers.call)(backspace ? dom/* Dom.before */.i.before : dom/* Dom.after */.i.after, parent, fakeNode);
-            const result = this.checkJoinNeighbors(fakeNode, backspace);
-            (0,helpers.call)(!backspace ? dom/* Dom.append */.i.append : dom/* Dom.prepend */.i.prepend, parent, fakeNode);
-            this.j.s.setCursorBefore(fakeNode);
-            return result;
-        }
     }
     checkRewrapListItem(fakeNode, backspace) {
         var _a;
@@ -17293,7 +17355,7 @@ class cleanHtml extends Plugin {
                 return this.visitNode(nodeElm.nextSibling, current, remove);
             }
             if (this.j.o.cleanHTML.fillEmptyParagraph &&
-                dom/* Dom.isBlock */.i.isBlock(nodeElm, this.j.ew) &&
+                dom/* Dom.isBlock */.i.isBlock(nodeElm) &&
                 dom/* Dom.isEmpty */.i.isEmpty(nodeElm, /^(img|svg|canvas|input|textarea|form|br)$/)) {
                 const br = this.j.createInside.element('br');
                 nodeElm.appendChild(br);
@@ -17331,7 +17393,7 @@ class cleanHtml extends Plugin {
             }
             const currentNode = editor.s.current();
             if (currentNode) {
-                const currentParagraph = dom/* Dom.up */.i.up(currentNode, node => dom/* Dom.isBlock */.i.isBlock(node, editor.ew), editor.editor);
+                const currentParagraph = dom/* Dom.up */.i.up(currentNode, dom/* Dom.isBlock */.i.isBlock, editor.editor);
                 if (currentParagraph) {
                     dom/* Dom.all */.i.all(currentParagraph, node => {
                         if (node && dom/* Dom.isText */.i.isText(node)) {
@@ -17523,15 +17585,15 @@ class cleanHtml extends Plugin {
             dom/* Dom.isTag */.i.isTag(node, 'br') &&
             cleanHtml.hasNotEmptyTextSibling(node) &&
             !cleanHtml.hasNotEmptyTextSibling(node, true) &&
-            dom/* Dom.up */.i.up(node, node => dom/* Dom.isBlock */.i.isBlock(node, this.j.ew), this.j.editor) !==
-                dom/* Dom.up */.i.up(current, node => dom/* Dom.isBlock */.i.isBlock(node, this.j.ew), this.j.editor)) {
+            dom/* Dom.up */.i.up(node, dom/* Dom.isBlock */.i.isBlock, this.j.editor) !==
+                dom/* Dom.up */.i.up(current, dom/* Dom.isBlock */.i.isBlock, this.j.editor)) {
             return true;
         }
         return (this.j.o.cleanHTML.removeEmptyElements &&
             current != null &&
             dom/* Dom.isElement */.i.isElement(node) &&
             node.nodeName.match(constants.IS_INLINE) != null &&
-            !this.j.s.isMarker(node) &&
+            !Select.isMarker(node) &&
             (0,helpers.trim)(node.innerHTML).length === 0 &&
             !dom/* Dom.isOrContains */.i.isOrContains(node, current));
     }
@@ -17549,10 +17611,10 @@ class cleanHtml extends Plugin {
         this.j.e.off('.cleanHtml');
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.debounce)(ctx => ctx.jodit.o.cleanHTML.timeout)
 ], cleanHtml.prototype, "onChangeCleanHTML", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], cleanHtml.prototype, "isInlineBlock", null);
 
@@ -17567,14 +17629,14 @@ class cleanHtml extends Plugin {
 
 
 
+
 class WrapTextNodes extends Plugin {
     constructor() {
         super(...arguments);
         this.isSuitableStart = (n) => (dom/* Dom.isText */.i.isText(n) && (0,checker/* isString */.HD)(n.nodeValue) && /[^\s]/.test(n.nodeValue)) ||
-            (this.isNotClosed(n) && !this.jodit.selection.isMarker(n));
+            (this.isNotClosed(n) && !Select.isMarker(n));
         this.isSuitable = (n) => dom/* Dom.isText */.i.isText(n) || this.isNotClosed(n);
-        this.isNotClosed = (n) => dom/* Dom.isElement */.i.isElement(n) &&
-            !(dom/* Dom.isBlock */.i.isBlock(n, this.jodit.ew) || dom/* Dom.isTag */.i.isTag(n, ['hr', 'style']));
+        this.isNotClosed = (n) => dom/* Dom.isElement */.i.isElement(n) && !(dom/* Dom.isBlock */.i.isBlock(n) || dom/* Dom.isTag */.i.isTag(n, ['hr', 'style']));
     }
     afterInit(jodit) {
         if (jodit.o.enter.toLowerCase() === 'br') {
@@ -17616,7 +17678,7 @@ class WrapTextNodes extends Plugin {
         }
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], WrapTextNodes.prototype, "postProcessSetEditorValue", null);
 
@@ -17661,7 +17723,7 @@ function pasteInsertHtml(e, editor, html) {
     }
     const result = editor.e.fire('beforePasteInsert', html);
     if (!(0,helpers.isVoid)(result) &&
-        ((0,helpers.isString)(result) || (0,helpers.isNumber)(result) || dom/* Dom.isNode */.i.isNode(result, editor.ew))) {
+        ((0,helpers.isString)(result) || (0,helpers.isNumber)(result) || dom/* Dom.isNode */.i.isNode(result))) {
         html = result;
     }
     if ((0,helpers.isString)(html)) {
@@ -17908,7 +17970,7 @@ class paste extends Plugin {
             if (result !== undefined) {
                 text = result;
             }
-            if ((0,helpers.isString)(text) || dom/* Dom.isNode */.i.isNode(text, this.j.ew)) {
+            if ((0,helpers.isString)(text) || dom/* Dom.isNode */.i.isNode(text)) {
                 this.insertByType(e, text, this.j.o.defaultActionOnPaste);
             }
             e.preventDefault();
@@ -18034,60 +18096,19 @@ class paste extends Plugin {
         (_d = (_c = this.j) === null || _c === void 0 ? void 0 : _c.e) === null || _d === void 0 ? void 0 : _d.fire('afterOpenPasteDialog', dialog, msg, title, callback, clearButton, insertText);
         return dialog;
     }
-    onProcessPasteReplaceNl2Br(event, text, type) {
+    onProcessPasteReplaceNl2Br(ignore, text, type) {
         if (type === constants.TEXT_PLAIN + ';' && !(0,helpers.isHTML)(text)) {
             return (0,helpers.nl2br)(text);
         }
-    }
-    useFakeDivBox(event) {
-        const div = this.j.c.div('', {
-            tabindex: -1,
-            contenteditable: true,
-            style: {
-                left: -9999,
-                top: 0,
-                width: 0,
-                height: '100%',
-                lineHeight: '140%',
-                overflow: 'hidden',
-                position: 'fixed',
-                zIndex: 2147483647,
-                wordBreak: 'break-all'
-            }
-        });
-        this.j.container.appendChild(div);
-        this.j.s.save();
-        div.focus();
-        let tick = 0;
-        const removeFakeFocus = () => {
-            dom/* Dom.safeRemove */.i.safeRemove(div);
-            this.j.selection && this.j.s.restore();
-        };
-        const waitData = () => {
-            tick += 1;
-            if (div.childNodes && div.childNodes.length > 0) {
-                const pastedData = div.innerHTML;
-                removeFakeFocus();
-                this.processHTML(event, pastedData);
-                return;
-            }
-            if (tick < 5) {
-                this.j.async.setTimeout(waitData, 20);
-            }
-            else {
-                removeFakeFocus();
-            }
-        };
-        waitData();
     }
     beforeDestruct(jodit) {
         jodit.e.off('paste.paste', this.onPaste);
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], paste.prototype, "onPaste", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], paste.prototype, "onProcessPasteReplaceNl2Br", null);
 
@@ -18375,7 +18396,7 @@ function copyFormat(editor) {
 
 
 // EXTERNAL MODULE: ./src/modules/widget/index.ts + 3 modules
-var widget = __webpack_require__(43);
+var widget = __webpack_require__(46);
 ;// CONCATENATED MODULE: ./src/plugins/color.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -18403,10 +18424,7 @@ config/* Config.prototype.controls.brush */.D.prototype.controls.brush = {
         }
         const current = editor.s.current();
         if (current && !button.state.disabled) {
-            const currentBpx = dom/* Dom.closest */.i.closest(current, elm => {
-                return (dom/* Dom.isBlock */.i.isBlock(elm, editor.ew) ||
-                    (elm && dom/* Dom.isElement */.i.isElement(elm)));
-            }, editor.editor) || editor.editor;
+            const currentBpx = dom/* Dom.closest */.i.closest(current, dom/* Dom.isElement */.i.isElement, editor.editor) || editor.editor;
             update('color', (0,helpers.css)(currentBpx, 'color').toString());
             update('background-color', (0,helpers.css)(currentBpx, 'background-color').toString());
         }
@@ -18415,17 +18433,15 @@ config/* Config.prototype.controls.brush */.D.prototype.controls.brush = {
     },
     popup: (editor, current, self, close, button) => {
         let colorHEX = '', bg_color = '', tabs = [], currentElement = null;
-        if (current &&
-            current !== editor.editor &&
-            dom/* Dom.isNode */.i.isNode(current, editor.ew)) {
+        if (current && current !== editor.editor && dom/* Dom.isNode */.i.isNode(current)) {
             if (dom/* Dom.isElement */.i.isElement(current) &&
                 editor.s.isCollapsed() &&
                 !dom/* Dom.isTag */.i.isTag(current, ['br', 'hr'])) {
                 currentElement = current;
             }
             dom/* Dom.up */.i.up(current, (node) => {
-                if (dom/* Dom.isHTMLElement */.i.isHTMLElement(node, editor.ew)) {
-                    const color = (0,helpers.css)(node, 'color', undefined, true), background = (0,helpers.css)(node, 'background-color', undefined, true);
+                if (dom/* Dom.isHTMLElement */.i.isHTMLElement(node)) {
+                    const color = (0,helpers.css)(node, 'color', true), background = (0,helpers.css)(node, 'background-color', true);
                     if (color) {
                         colorHEX = color.toString();
                         return true;
@@ -18481,7 +18497,7 @@ config/* Config.prototype.controls.brush */.D.prototype.controls.brush = {
         }
         if (current &&
             current !== jodit.editor &&
-            dom/* Dom.isNode */.i.isNode(current, jodit.ew) &&
+            dom/* Dom.isNode */.i.isNode(current) &&
             dom/* Dom.isElement */.i.isElement(current)) {
             switch (mode) {
                 case 'color':
@@ -18676,16 +18692,16 @@ class DragAndDrop extends Plugin {
             .off([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart);
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], DragAndDrop.prototype, "onDragStart", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.throttle)(ctx => ctx.j.defaultTimeout / 10)
 ], DragAndDrop.prototype, "onDrag", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], DragAndDrop.prototype, "onDragEnd", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], DragAndDrop.prototype, "onDrop", null);
 
@@ -18827,16 +18843,16 @@ class DragAndDropElement extends Plugin {
         this.removeDragListeners();
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], DragAndDropElement.prototype, "onDragStart", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.throttle)(ctx => ctx.j.defaultTimeout / 10)
 ], DragAndDropElement.prototype, "onDrag", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], DragAndDropElement.prototype, "onDragEnd", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], DragAndDropElement.prototype, "onDrop", null);
 
@@ -18994,11 +19010,11 @@ class enter extends Plugin {
     }
     hasPreviousBlock(current) {
         const editor = this.j;
-        return Boolean(dom/* Dom.prev */.i.prev(current, (elm) => dom/* Dom.isBlock */.i.isBlock(elm, editor.ew) || dom/* Dom.isImage */.i.isImage(elm, editor.ew), editor.editor));
+        return Boolean(dom/* Dom.prev */.i.prev(current, elm => dom/* Dom.isBlock */.i.isBlock(elm) || dom/* Dom.isImage */.i.isImage(elm), editor.editor));
     }
     checkUnsplittableBox(currentBox) {
         const editor = this.j, sel = editor.selection;
-        if (!dom/* Dom.canSplitBlock */.i.canSplitBlock(currentBox, editor.ew)) {
+        if (!dom/* Dom.canSplitBlock */.i.canSplitBlock(currentBox)) {
             const br = editor.createInside.element('br');
             sel.insertNode(br, false);
             sel.setCursorAfter(br);
@@ -19039,6 +19055,38 @@ class enter extends Plugin {
     }
 }
 
+;// CONCATENATED MODULE: ./src/plugins/keyboard/key-arrow-outside.ts
+
+
+
+
+
+
+class KeyArrowOutside extends Plugin {
+    afterInit(jodit) { }
+    beforeDestruct(jodit) { }
+    onKeyDownArrow(e) {
+        var _a;
+        if (e.key !== constants.KEY_RIGHT || !this.j.selection.isCollapsed()) {
+            return;
+        }
+        const { endContainer, endOffset } = this.j.selection.range;
+        if (!dom/* Dom.isText */.i.isText(endContainer)) {
+            return;
+        }
+        if (((_a = endContainer.nodeValue) === null || _a === void 0 ? void 0 : _a.length) === endOffset) {
+            const { parentNode } = endContainer;
+            if (dom/* Dom.isInlineBlock */.i.isInlineBlock(parentNode) &&
+                !findNotEmptyNeighbor(parentNode, false, this.j.editor)) {
+                dom/* Dom.after */.i.after(parentNode, this.j.createInside.text(constants.NBSP_SPACE));
+            }
+        }
+    }
+}
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)(':keydown')
+], KeyArrowOutside.prototype, "onKeyDownArrow", null);
+
 ;// CONCATENATED MODULE: ./src/plugins/error-messages/error-messages.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -19052,31 +19100,32 @@ class enter extends Plugin {
 config/* Config.prototype.showMessageErrors */.D.prototype.showMessageErrors = true;
 config/* Config.prototype.showMessageErrorTime */.D.prototype.showMessageErrorTime = 3000;
 config/* Config.prototype.showMessageErrorOffsetPx */.D.prototype.showMessageErrorOffsetPx = 3;
+const ELM_NAME = 'error-box-for-messages';
 function errorMessages(editor) {
     if (editor.o.showMessageErrors) {
-        let height;
-        const messagesBox = editor.c.div('jodit_error_box_for_messages'), recalcOffsets = () => {
-            height = 5;
-            (0,helpers.toArray)(messagesBox.childNodes).forEach((elm) => {
-                (0,helpers.css)(messagesBox, 'bottom', height + 'px');
+        const activeClass = editor.getFullElName(ELM_NAME, 'active', true), messagesBox = editor.c.div(editor.getFullElName(ELM_NAME)), calcOffsets = () => {
+            let height = 5;
+            (0,helpers.toArray)(messagesBox.childNodes).forEach(elm => {
+                (0,helpers.css)(elm, 'bottom', height + 'px');
                 height +=
-                    elm.offsetWidth + editor.o.showMessageErrorOffsetPx;
+                    elm.offsetHeight + editor.o.showMessageErrorOffsetPx;
             });
         };
         editor.e
             .on('beforeDestruct', () => {
             dom/* Dom.safeRemove */.i.safeRemove(messagesBox);
         })
-            .on('errorMessage', (message, className, timeout) => {
+            .on('errorMessage', (message, type, timeout) => {
             editor.workplace.appendChild(messagesBox);
-            const newmessage = editor.c.div('active ' + (className || ''), message);
-            messagesBox.appendChild(newmessage);
-            recalcOffsets();
+            const msg = editor.c.div(activeClass, message);
+            msg.classList.add(editor.getFullElName(ELM_NAME, 'type', type));
+            messagesBox.appendChild(msg);
+            calcOffsets();
             editor.async.setTimeout(() => {
-                newmessage.classList.remove('active');
+                msg.classList.remove(activeClass);
                 editor.async.setTimeout(() => {
-                    dom/* Dom.safeRemove */.i.safeRemove(newmessage);
-                    recalcOffsets();
+                    dom/* Dom.safeRemove */.i.safeRemove(msg);
+                    calcOffsets();
                 }, 300);
             }, timeout || editor.o.showMessageErrorTime);
         });
@@ -19137,10 +19186,7 @@ config/* Config.prototype.controls.fontsize */.D.prototype.controls.fontsize = {
                 return v;
             });
         if (current) {
-            const currentBpx = dom/* Dom.closest */.i.closest(current, elm => {
-                return (dom/* Dom.isBlock */.i.isBlock(elm, editor.ew) ||
-                    (elm && dom/* Dom.isElement */.i.isElement(elm)));
-            }, editor.editor) || editor.editor;
+            const currentBpx = dom/* Dom.closest */.i.closest(current, dom/* Dom.isElement */.i.isElement, editor.editor) || editor.editor;
             const value = (0,helpers.css)(currentBpx, cssKey);
             return Boolean(value &&
                 control.args &&
@@ -19222,7 +19268,8 @@ config/* Config.prototype.controls.paragraph */.D.prototype.controls.paragraph =
     update(button) {
         const editor = button.j, control = button.control, current = editor.s.current();
         if (current && editor.o.textIcons) {
-            const currentBox = dom/* Dom.closest */.i.closest(current, node => dom/* Dom.isBlock */.i.isBlock(node, editor.ew), editor.editor) || editor.editor, currentValue = currentBox.nodeName.toLowerCase(), list = control.list;
+            const currentBox = dom/* Dom.closest */.i.closest(current, dom/* Dom.isBlock */.i.isBlock, editor.editor) ||
+                editor.editor, currentValue = currentBox.nodeName.toLowerCase(), list = control.list;
             if (button &&
                 control.data &&
                 control.data.currentValue !== currentValue &&
@@ -19254,7 +19301,7 @@ config/* Config.prototype.controls.paragraph */.D.prototype.controls.paragraph =
     isChildActive: (editor, control) => {
         const current = editor.s.current();
         if (current) {
-            const currentBox = dom/* Dom.closest */.i.closest(current, node => dom/* Dom.isBlock */.i.isBlock(node, editor.ew), editor.editor);
+            const currentBox = dom/* Dom.closest */.i.closest(current, dom/* Dom.isBlock */.i.isBlock, editor.editor);
             return Boolean(currentBox &&
                 currentBox !== editor.editor &&
                 control.args !== undefined &&
@@ -19265,7 +19312,7 @@ config/* Config.prototype.controls.paragraph */.D.prototype.controls.paragraph =
     isActive: (editor, control) => {
         const current = editor.s.current();
         if (current) {
-            const currentBpx = dom/* Dom.closest */.i.closest(current, node => dom/* Dom.isBlock */.i.isBlock(node, editor.ew), editor.editor);
+            const currentBpx = dom/* Dom.closest */.i.closest(current, dom/* Dom.isBlock */.i.isBlock, editor.editor);
             return Boolean(currentBpx &&
                 currentBpx !== editor.editor &&
                 control.list !== undefined &&
@@ -19326,49 +19373,50 @@ function fullsize(editor) {
     });
     let isEnabled = false, oldHeight = 0, oldWidth = 0, wasToggled = false;
     const resize = () => {
-        if (editor.events) {
+        const { container, events } = editor;
+        if (events) {
             if (isEnabled) {
-                oldHeight = (0,helpers.css)(editor.container, 'height', undefined, true);
-                oldWidth = (0,helpers.css)(editor.container, 'width', undefined, true);
-                (0,helpers.css)(editor.container, {
+                oldHeight = (0,helpers.css)(container, 'height', true);
+                oldWidth = (0,helpers.css)(container, 'width', true);
+                (0,helpers.css)(container, {
                     height: editor.ow.innerHeight,
                     width: editor.ow.innerWidth
                 });
                 wasToggled = true;
             }
             else if (wasToggled) {
-                (0,helpers.css)(editor.container, {
+                (0,helpers.css)(container, {
                     height: oldHeight || 'auto',
                     width: oldWidth || 'auto'
                 });
             }
         }
     }, toggle = (enable) => {
-        var _a;
-        if (!editor.container) {
+        const { container, events } = editor;
+        if (!container) {
             return;
         }
         if (enable === undefined) {
-            enable = !editor.container.classList.contains('jodit_fullsize');
+            enable = !container.classList.contains('jodit_fullsize');
         }
         editor.setMod('fullsize', enable);
         editor.o.fullsize = enable;
         isEnabled = enable;
-        editor.container.classList.toggle('jodit_fullsize', enable);
+        container.classList.toggle('jodit_fullsize', enable);
         if (editor.toolbar) {
             (0,helpers.isJoditObject)(editor) &&
                 editor.toolbarContainer.appendChild(editor.toolbar.container);
             (0,helpers.css)(editor.toolbar.container, 'width', 'auto');
         }
         if (editor.o.globalFullSize) {
-            let node = editor.container.parentNode;
+            let node = container.parentNode;
             while (node && node.nodeType !== Node.DOCUMENT_NODE) {
                 node.classList.toggle('jodit_fullsize-box_true', enable);
                 node = node.parentNode;
             }
             resize();
         }
-        (_a = editor.events) === null || _a === void 0 ? void 0 : _a.fire('afterResize');
+        events.fire('afterResize');
     };
     if (editor.o.globalFullSize) {
         editor.e.on(editor.ow, 'resize', resize);
@@ -19903,7 +19951,7 @@ function positionTab(editor) {
 
 
 // EXTERNAL MODULE: ./src/plugins/image/helpers.ts
-var image_helpers = __webpack_require__(44);
+var image_helpers = __webpack_require__(47);
 ;// CONCATENATED MODULE: ./src/plugins/image/image-properties/image-properties.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -20126,9 +20174,9 @@ class imageProperties extends Plugin {
             this.state.marginIsLocked = equal;
         }, updateSizes = () => {
             const width = (0,helpers.attr)(image, 'width') ||
-                (0,helpers.css)(image, 'width', undefined, true) ||
+                (0,helpers.css)(image, 'width', true) ||
                 false, height = (0,helpers.attr)(image, 'height') ||
-                (0,helpers.css)(image, 'height', undefined, true) ||
+                (0,helpers.css)(image, 'height', true) ||
                 false;
             imageWidth.value =
                 width !== false
@@ -20349,19 +20397,19 @@ class imageProperties extends Plugin {
         editor.e.off(editor.editor, '.imageproperties').off('.imageproperties');
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.marginIsLocked')
 ], imageProperties.prototype, "onChangeMarginIsLocked", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.sizeIsLocked')
 ], imageProperties.prototype, "onChangeSizeIsLocked", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], imageProperties.prototype, "onApply", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], imageProperties.prototype, "openImageEditor", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], imageProperties.prototype, "openImagePopup", null);
 
@@ -20411,7 +20459,7 @@ config/* Config.prototype.controls.image */.D.prototype.controls.image = {
         let sourceImage = null;
         if (current &&
             !dom/* Dom.isText */.i.isText(current) &&
-            dom/* Dom.isHTMLElement */.i.isHTMLElement(current, editor.ew) &&
+            dom/* Dom.isHTMLElement */.i.isHTMLElement(current) &&
             (dom/* Dom.isTag */.i.isTag(current, 'img') || (0,helpers.$$)('img', current).length)) {
             sourceImage = dom/* Dom.isTag */.i.isTag(current, 'img')
                 ? current
@@ -20476,7 +20524,7 @@ config/* Config.prototype.controls.outdent */.D.prototype.controls.outdent = {
     isDisabled: (editor) => {
         const current = editor.s.current();
         if (current) {
-            const currentBox = dom/* Dom.closest */.i.closest(current, node => dom/* Dom.isBlock */.i.isBlock(node, editor.ew), editor.editor);
+            const currentBox = dom/* Dom.closest */.i.closest(current, dom/* Dom.isBlock */.i.isBlock, editor.editor);
             const key = getKey(editor.o.direction);
             if (currentBox && currentBox.style && currentBox.style[key]) {
                 return parseInt(currentBox.style[key], 10) <= 0;
@@ -20503,7 +20551,7 @@ function indent(editor) {
         editor.s.eachSelection((current) => {
             editor.s.save();
             let currentBox = current
-                ? dom/* Dom.up */.i.up(current, node => dom/* Dom.isBlock */.i.isBlock(node, editor.ew), editor.editor)
+                ? dom/* Dom.up */.i.up(current, dom/* Dom.isBlock */.i.isBlock, editor.editor)
                 : false;
             const enter = editor.o.enter;
             if (!currentBox && current) {
@@ -20562,12 +20610,12 @@ function hr(editor) {
     editor.registerCommand('insertHorizontalRule', () => {
         const elm = editor.createInside.element('hr');
         editor.s.insertNode(elm, false, false);
-        const block = dom/* Dom.closest */.i.closest(elm.parentElement, node => dom/* Dom.isBlock */.i.isBlock(node, editor.ew), editor.editor);
+        const block = dom/* Dom.closest */.i.closest(elm.parentElement, dom/* Dom.isBlock */.i.isBlock, editor.editor);
         if (block && dom/* Dom.isEmpty */.i.isEmpty(block) && block !== editor.editor) {
             dom/* Dom.after */.i.after(block, elm);
             dom/* Dom.safeRemove */.i.safeRemove(block);
         }
-        let p = dom/* Dom.next */.i.next(elm, node => dom/* Dom.isBlock */.i.isBlock(node, editor.ew), editor.editor, false);
+        let p = dom/* Dom.next */.i.next(elm, dom/* Dom.isBlock */.i.isBlock, editor.editor, false);
         if (!p) {
             p = editor.createInside.element(editor.o.enter);
             dom/* Dom.after */.i.after(elm, p);
@@ -20597,11 +20645,11 @@ config/* Config.prototype.toolbarInlineForSelection */.D.prototype.toolbarInline
 config/* Config.prototype.toolbarInlineDisableFor */.D.prototype.toolbarInlineDisableFor = [];
 config/* Config.prototype.toolbarInlineDisabledButtons */.D.prototype.toolbarInlineDisabledButtons = ['source'];
 config/* Config.prototype.popup */.D.prototype.popup = {
-    a: __webpack_require__(45)/* .default */ .Z,
-    img: __webpack_require__(46)/* .default */ .Z,
-    cells: __webpack_require__(47)/* .default */ .Z,
-    jodit: __webpack_require__(48)/* .default */ .Z,
-    'jodit-media': __webpack_require__(48)/* .default */ .Z,
+    a: __webpack_require__(48)/* ["default"] */ .Z,
+    img: __webpack_require__(49)/* ["default"] */ .Z,
+    cells: __webpack_require__(50)/* ["default"] */ .Z,
+    jodit: __webpack_require__(51)/* ["default"] */ .Z,
+    'jodit-media': __webpack_require__(51)/* ["default"] */ .Z,
     selection: [
         'bold',
         'underline',
@@ -20687,7 +20735,7 @@ class inlinePopup extends Plugin {
             this.popup.close();
         }
     }
-    onOutsideClick(e) {
+    onOutsideClick() {
         this.popup.close();
     }
     canShowPopupForType(type) {
@@ -20795,26 +20843,26 @@ class inlinePopup extends Plugin {
         this.j.e.off(this.elmsList.map(e => (0,helpers.camelCase)(`click_${e}`)).join(' '), this.onClick);
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], inlinePopup.prototype, "onClick", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.wait)((ctx) => !ctx.j.isLocked)
 ], inlinePopup.prototype, "showPopup", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)(':clickEditor'),
     decorators.autobind
 ], inlinePopup.prototype, "hidePopup", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)(':outsideClick')
 ], inlinePopup.prototype, "onOutsideClick", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], inlinePopup.prototype, "onSelectionStart", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], inlinePopup.prototype, "onSelectionEnd", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.debounce)(ctx => ctx.defaultTimeout)
 ], inlinePopup.prototype, "onSelectionChange", null);
 
@@ -20833,7 +20881,8 @@ config/* Config.prototype.controls.align */.D.prototype.controls.align = {
     update(button) {
         const editor = button.j, control = button.control, current = editor.s.current();
         if (current) {
-            const currentBox = dom/* Dom.closest */.i.closest(current, node => dom/* Dom.isBlock */.i.isBlock(node, editor.ew), editor.editor) || editor.editor;
+            const currentBox = dom/* Dom.closest */.i.closest(current, dom/* Dom.isBlock */.i.isBlock, editor.editor) ||
+                editor.editor;
             let currentValue = (0,helpers.css)(currentBox, 'text-align').toString();
             if (control.defaultValue &&
                 control.defaultValue.indexOf(currentValue) !== -1) {
@@ -20856,7 +20905,7 @@ config/* Config.prototype.controls.align */.D.prototype.controls.align = {
     isActive: (editor, btn) => {
         const current = editor.s.current();
         if (current && btn.defaultValue) {
-            const currentBox = dom/* Dom.closest */.i.closest(current, node => dom/* Dom.isBlock */.i.isBlock(node, editor.ew), editor.editor) || editor.editor;
+            const currentBox = dom/* Dom.closest */.i.closest(current, dom/* Dom.isBlock */.i.isBlock, editor.editor) || editor.editor;
             return (btn.defaultValue.indexOf((0,helpers.css)(currentBox, 'text-align').toString()) === -1);
         }
         return false;
@@ -20895,9 +20944,9 @@ config/* Config.prototype.controls.right */.D.prototype.controls.right = {
     },
     tooltip: 'Align Right'
 };
-const clearAlign = (node, editor) => {
+const clearAlign = (node) => {
     dom/* Dom.each */.i.each(node, elm => {
-        if (dom/* Dom.isHTMLElement */.i.isHTMLElement(elm, editor.ew)) {
+        if (dom/* Dom.isHTMLElement */.i.isHTMLElement(elm)) {
             if (elm.style.textAlign) {
                 elm.style.textAlign = '';
                 if (!elm.style.cssText.trim().length) {
@@ -20907,9 +20956,9 @@ const clearAlign = (node, editor) => {
         }
     });
 };
-const alignElement = (command, box, editor) => {
-    if (dom/* Dom.isNode */.i.isNode(box, editor.ew) && dom/* Dom.isElement */.i.isElement(box)) {
-        clearAlign(box, editor);
+const alignElement = (command, box) => {
+    if (dom/* Dom.isNode */.i.isNode(box) && dom/* Dom.isElement */.i.isElement(box)) {
+        clearAlign(box);
         switch (command.toLowerCase()) {
             case 'justifyfull':
                 box.style.textAlign = 'justify';
@@ -20937,11 +20986,11 @@ function justify(editor) {
             if (!current) {
                 return;
             }
-            let currentBox = dom/* Dom.up */.i.up(current, node => dom/* Dom.isBlock */.i.isBlock(node, editor.ew), editor.editor);
+            let currentBox = dom/* Dom.up */.i.up(current, dom/* Dom.isBlock */.i.isBlock, editor.editor);
             if (!currentBox) {
                 currentBox = dom/* Dom.wrapInline */.i.wrapInline(current, editor.o.enterBlock, editor);
             }
-            alignElement(command, currentBox, editor);
+            alignElement(command, currentBox);
         });
         return false;
     };
@@ -21023,15 +21072,15 @@ class limit extends Plugin {
         jodit.e.off('.limit');
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], limit.prototype, "checkPreventKeyPressOrPaste", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], limit.prototype, "checkPreventChanging", null);
 
 // EXTERNAL MODULE: ./src/core/ui/form/index.ts + 11 modules
-var ui_form = __webpack_require__(40);
+var ui_form = __webpack_require__(43);
 ;// CONCATENATED MODULE: ./src/plugins/link/template.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -21220,6 +21269,7 @@ class link_link extends Plugin {
             if (jodit.o.link.processVideoLink) {
                 const embed = (0,helpers.convertMediaUrlToVideoEmbed)(html);
                 if (embed !== html) {
+                    jodit.e.stopPropagation('processPaste');
                     return jodit.createInside.fromHTML(embed);
                 }
             }
@@ -21239,7 +21289,7 @@ class link_link extends Plugin {
                 nofollow_checkbox_box: noFollowCheckbox
             })
             : html, htmlForm = dom/* Dom.isElement */.i.isElement(form) ? form : form.container;
-        const elements = (0,helpers.refs)(htmlForm), { insert, unlink, content_input_box } = elements, { target_checkbox, nofollow_checkbox, url_input } = elements, currentElement = current, isImageContent = dom/* Dom.isImage */.i.isImage(currentElement, jodit.ew);
+        const elements = (0,helpers.refs)(htmlForm), { insert, unlink, content_input_box } = elements, { target_checkbox, nofollow_checkbox, url_input } = elements, currentElement = current, isImageContent = dom/* Dom.isImage */.i.isImage(currentElement);
         let { content_input } = elements;
         const { className_input } = elements, { className_select } = elements;
         if (!content_input) {
@@ -21421,13 +21471,13 @@ class link_link extends Plugin {
             .off('processPaste.link', this.onProcessPasteLink);
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], link_link.prototype, "onDblClickOnLink", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], link_link.prototype, "onProcessPasteLink", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], link_link.prototype, "generateForm", null);
 
@@ -21935,8 +21985,7 @@ class placeholder extends Plugin {
             return;
         }
         let marginTop = 0, marginLeft = 0;
-        const current = editor.s.current(), wrapper = (current &&
-            dom/* Dom.closest */.i.closest(current, n => dom/* Dom.isBlock */.i.isBlock(n, editor.ew), editor.editor)) ||
+        const current = editor.s.current(), wrapper = (current && dom/* Dom.closest */.i.closest(current, dom/* Dom.isBlock */.i.isBlock, editor.editor)) ||
             editor.editor;
         const style = editor.ew.getComputedStyle(wrapper);
         editor.workplace.appendChild(this.placeholderElm);
@@ -21986,7 +22035,7 @@ class placeholder extends Plugin {
         jodit.e.off('.placeholder').off(window, 'load', this.toggle);
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.debounce)(ctx => ctx.defaultTimeout / 10, true)
 ], placeholder.prototype, "toggle", null);
 
@@ -22087,9 +22136,18 @@ class resizer extends Plugin {
         this.sizeViewer = this.rect.getElementsByTagName('span')[0];
         this.onResize = (e) => {
             if (this.isResized) {
-                const diff_x = e.clientX - this.start_x, diff_y = e.clientY - this.start_y;
                 if (!this.element) {
                     return;
+                }
+                let diff_x, diff_y;
+                if (this.j.options.iframe) {
+                    const workplacePosition = this.getWorkplacePosition();
+                    diff_x = e.clientX + workplacePosition.left - this.start_x;
+                    diff_y = e.clientY + workplacePosition.top - this.start_y;
+                }
+                else {
+                    diff_x = e.clientX - this.start_x;
+                    diff_y = e.clientY - this.start_y;
                 }
                 const className = this.handle.className;
                 let new_w = 0, new_h = 0;
@@ -22147,7 +22205,7 @@ class resizer extends Plugin {
                 }
             }
         };
-        this.onClickElement = (element, e) => {
+        this.onClickElement = (element) => {
             if (this.isResized) {
                 return;
             }
@@ -22164,8 +22222,8 @@ class resizer extends Plugin {
                 return;
             }
             if (this.element && this.rect) {
-                const workplacePosition = (0,helpers.offset)((this.rect.parentNode ||
-                    this.j.od.documentElement), this.j, this.j.od, true), pos = (0,helpers.offset)(this.element, this.j, this.j.ed), left = parseInt(this.rect.style.left || '0', 10), top = parseInt(this.rect.style.top || '0', 10), w = this.rect.offsetWidth, h = this.rect.offsetHeight;
+                const workplacePosition = this.getWorkplacePosition();
+                const pos = (0,helpers.offset)(this.element, this.j, this.j.ed), left = parseInt(this.rect.style.left || '0', 10), top = parseInt(this.rect.style.top || '0', 10), w = this.rect.offsetWidth, h = this.rect.offsetHeight;
                 const newTop = pos.top - 1 - workplacePosition.top, newLeft = pos.left - 1 - workplacePosition.left;
                 if (top !== newTop ||
                     left !== newLeft ||
@@ -22219,7 +22277,7 @@ class resizer extends Plugin {
         while (node && node !== editor) {
             if (dom/* Dom.isTag */.i.isTag(node, allowResizeTags)) {
                 this.bind(node);
-                this.onClickElement(node, e);
+                this.onClickElement(node);
                 return;
             }
             node = node.parentNode;
@@ -22263,6 +22321,9 @@ class resizer extends Plugin {
         this.j.e.fire('hidePopup');
         this.j.lock(this.LOCK_KEY);
         this.j.e.on(this.j.ow, 'mousemove.resizer touchmove.resizer', this.onResize);
+    }
+    getWorkplacePosition() {
+        return (0,helpers.offset)((this.rect.parentNode || this.j.od.documentElement), this.j, this.j.od, true);
     }
     onDelete(e) {
         if (!this.element) {
@@ -22378,16 +22439,16 @@ class resizer extends Plugin {
         jodit.e.off(this.j.ow, '.resizer').off('.resizer');
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)(':click')
 ], resizer.prototype, "onEditorClick", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.debounce)()
 ], resizer.prototype, "onChangeEditor", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], resizer.prototype, "bind", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], resizer.prototype, "hide", null);
 
@@ -22606,7 +22667,7 @@ class search extends Plugin {
                             };
                         }
                     }
-                    else if (dom/* Dom.isBlock */.i.isBlock(elm, this.j.ew) && sentence !== '') {
+                    else if (dom/* Dom.isBlock */.i.isBlock(elm) && sentence !== '') {
                         sentence = next ? sentence + ' ' : ' ' + sentence;
                     }
                     return false;
@@ -22852,7 +22913,7 @@ class search extends Plugin {
         }
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], search.prototype, "calcSticky", null);
 
@@ -22911,10 +22972,10 @@ class select_select extends Plugin {
         }
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], select_select.prototype, "onStartSelection", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('ow:click')
 ], select_select.prototype, "onOutsideClick", null);
 
@@ -23006,7 +23067,7 @@ let resizeHandler = class resizeHandler extends Plugin {
     }
 };
 resizeHandler.requires = ['size'];
-resizeHandler = (0,tslib_es6.__decorate)([
+resizeHandler = (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], resizeHandler);
 
@@ -23130,7 +23191,7 @@ let size = class size extends Plugin {
             .off('.size');
     }
 };
-size = (0,tslib_es6.__decorate)([
+size = (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], size);
 
@@ -23790,31 +23851,31 @@ class source extends Plugin {
         dom/* Dom.safeRemove */.i.safeRemove(this.mirrorContainer);
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)(':insertHTML.source')
 ], source.prototype, "onInsertHTML", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], source.prototype, "fromWYSIWYG", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], source.prototype, "toWYSIWYG", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], source.prototype, "getNormalPosition", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)(':beforeCommand.source')
 ], source.prototype, "onSelectAll", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)(':beforeSetMode.source')
 ], source.prototype, "saveSelection", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)(':afterSetMode.source')
 ], source.prototype, "removeSelection", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], source.prototype, "setMirrorSelectionRange", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)(':readonly.source')
 ], source.prototype, "onReadonlyReact", null);
 
@@ -23973,7 +24034,7 @@ class sticky extends Plugin {
             .off('.sticky');
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.throttle)()
 ], sticky.prototype, "onScroll", null);
 
@@ -24350,8 +24411,7 @@ class symbols extends Plugin {
 
 config/* Config.prototype.table */.D.prototype.table = {
     allowCellSelection: true,
-    selectionCellStyle: 'border: 1px double #1e88e5 !important;' +
-        'background-color: rgba(158, 207, 250, 0.3)!important',
+    selectionCellStyle: 'border: 1px double #1e88e5 !important;',
     allowCellResize: true,
     useExtraClassesOptions: false
 };
@@ -24452,7 +24512,7 @@ config/* Config.prototype.controls.table */.D.prototype.controls.table = {
             }
             const crnt = editor.s.current();
             if (crnt && editor.s.isCollapsed()) {
-                const block = dom/* Dom.closest */.i.closest(crnt, node => dom/* Dom.isBlock */.i.isBlock(node, editor.ew), editor.editor);
+                const block = dom/* Dom.closest */.i.closest(crnt, dom/* Dom.isBlock */.i.isBlock, editor.editor);
                 if (block &&
                     block !== editor.editor &&
                     !block.nodeName.match(/^TD|TH|TBODY|TABLE|THEADER|TFOOTER$/)) {
@@ -24624,7 +24684,7 @@ class resizeCells extends Plugin {
         const delta = this.resizeDelta;
         const marked = [];
         Table.setColumnWidthByDelta(this.workTable, Table.formalCoordinate(this.workTable, this.workCell, true)[1], delta, true, marked);
-        const nextTD = (0,helpers.call)(this.isRTL ? dom/* Dom.prev */.i.prev : dom/* Dom.next */.i.next, this.workCell, elm => dom/* Dom.isCell */.i.isCell(elm, this.j.ew), this.workCell.parentNode);
+        const nextTD = (0,helpers.call)(this.isRTL ? dom/* Dom.prev */.i.prev : dom/* Dom.next */.i.next, this.workCell, dom/* Dom.isCell */.i.isCell, this.workCell.parentNode);
         Table.setColumnWidthByDelta(this.workTable, Table.formalCoordinate(this.workTable, nextTD)[1], -delta, false, marked);
     }
     resizeTable() {
@@ -24668,11 +24728,11 @@ class resizeCells extends Plugin {
         });
         this.showResizeHandle();
         if (offsetX <= constants.NEARBY) {
-            const prevTD = (0,helpers.call)(this.isRTL ? dom/* Dom.next */.i.next : dom/* Dom.prev */.i.prev, cell, elm => dom/* Dom.isCell */.i.isCell(elm, this.j.ew), cell.parentNode);
+            const prevTD = (0,helpers.call)(this.isRTL ? dom/* Dom.next */.i.next : dom/* Dom.prev */.i.prev, cell, dom/* Dom.isCell */.i.isCell, cell.parentNode);
             this.setWorkCell(prevTD || cell, prevTD ? null : true);
         }
         else {
-            const nextTD = (0,helpers.call)(!this.isRTL ? dom/* Dom.next */.i.next : dom/* Dom.prev */.i.prev, cell, elm => dom/* Dom.isCell */.i.isCell(elm, this.j.ew), cell.parentNode);
+            const nextTD = (0,helpers.call)(!this.isRTL ? dom/* Dom.next */.i.next : dom/* Dom.prev */.i.prev, cell, dom/* Dom.isCell */.i.isCell, cell.parentNode);
             this.setWorkCell(cell, !nextTD ? false : null);
         }
     }
@@ -24719,7 +24779,7 @@ class resizeCells extends Plugin {
             if (this.j.isLocked) {
                 return;
             }
-            const cell = dom/* Dom.up */.i.up(event.target, elm => dom/* Dom.isCell */.i.isCell(elm, this.j.ew), table);
+            const cell = dom/* Dom.up */.i.up(event.target, dom/* Dom.isCell */.i.isCell, table);
             if (!cell) {
                 return;
             }
@@ -24736,16 +24796,16 @@ class resizeCells extends Plugin {
         }
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], resizeCells.prototype, "onHandleMouseDown", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], resizeCells.prototype, "onMouseMove", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], resizeCells.prototype, "onMouseUp", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], resizeCells.prototype, "observe", null);
 
@@ -24860,7 +24920,7 @@ class selectCells extends Plugin {
         if (cell !== this.selectedCell) {
             this.j.lock(select_cells_key);
         }
-        this.unselectCells(table);
+        this.unselectCells();
         const bound = Table.getSelectedBound(table, [cell, this.selectedCell]), box = Table.formalMatrix(table);
         for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
             for (let j = bound[0][1]; j <= bound[1][1]; j += 1) {
@@ -24929,7 +24989,7 @@ class selectCells extends Plugin {
         });
         this.j.async.clearTimeout(MOUSE_MOVE_LABEL);
     }
-    unselectCells(table, currentCell) {
+    unselectCells(currentCell) {
         const module = this.module;
         const cells = module.getAllSelectedCells();
         if (cells.length) {
@@ -24992,7 +25052,7 @@ class selectCells extends Plugin {
         if (/^justify/.test(command)) {
             this.module
                 .getAllSelectedCells()
-                .forEach(elm => alignElement(command, elm, this.j));
+                .forEach(elm => alignElement(command, elm));
         }
     }
     beforeDestruct(jodit) {
@@ -25000,25 +25060,25 @@ class selectCells extends Plugin {
         jodit.e.off('.select-cells');
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], selectCells.prototype, "onStartSelection", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)(':outsideClick')
 ], selectCells.prototype, "onOutsideClick", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)(':change')
 ], selectCells.prototype, "onChange", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], selectCells.prototype, "onRemoveSelection", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], selectCells.prototype, "onStopSelection", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], selectCells.prototype, "onExecCommand", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], selectCells.prototype, "onAfterCommand", null);
 
@@ -25089,7 +25149,7 @@ function tableKeyboardNavigation(editor) {
                     Table.appendRow(table, sibling === 'next'
                         ? false
                         : table.querySelector('tr'), sibling === 'next', editor.createInside);
-                    next = dom/* Dom */.i[sibling](block, (elm) => elm && dom/* Dom.isCell */.i.isCell(elm, editor.ew), table);
+                    next = dom/* Dom */.i[sibling](block, dom/* Dom.isCell */.i.isCell, table);
                 }
                 break;
             }
@@ -25234,10 +25294,10 @@ class tooltip extends Plugin {
         dom/* Dom.safeRemove */.i.safeRemove(this.container);
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], tooltip.prototype, "delayOpen", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], tooltip.prototype, "close", null);
 
@@ -25563,168 +25623,169 @@ class xpath extends Plugin {
 
 
 
+
 // EXTERNAL MODULE: ./src/styles/icons/about.svg
-var icons_about = __webpack_require__(49);
+var icons_about = __webpack_require__(52);
 // EXTERNAL MODULE: ./src/styles/icons/addcolumn.svg
-var addcolumn = __webpack_require__(50);
+var addcolumn = __webpack_require__(53);
 // EXTERNAL MODULE: ./src/styles/icons/addrow.svg
-var addrow = __webpack_require__(51);
+var addrow = __webpack_require__(54);
 // EXTERNAL MODULE: ./src/styles/icons/angle-down.svg
-var angle_down = __webpack_require__(52);
+var angle_down = __webpack_require__(55);
 // EXTERNAL MODULE: ./src/styles/icons/angle-left.svg
-var angle_left = __webpack_require__(53);
+var angle_left = __webpack_require__(56);
 // EXTERNAL MODULE: ./src/styles/icons/angle-right.svg
-var angle_right = __webpack_require__(54);
+var angle_right = __webpack_require__(57);
 // EXTERNAL MODULE: ./src/styles/icons/angle-up.svg
-var angle_up = __webpack_require__(55);
+var angle_up = __webpack_require__(58);
 // EXTERNAL MODULE: ./src/styles/icons/arrows-alt.svg
-var arrows_alt = __webpack_require__(56);
+var arrows_alt = __webpack_require__(59);
 // EXTERNAL MODULE: ./src/styles/icons/arrows-h.svg
-var arrows_h = __webpack_require__(57);
+var arrows_h = __webpack_require__(60);
 // EXTERNAL MODULE: ./src/styles/icons/attachment.svg
-var attachment = __webpack_require__(58);
+var attachment = __webpack_require__(61);
 // EXTERNAL MODULE: ./src/styles/icons/bin.svg
-var bin = __webpack_require__(59);
+var bin = __webpack_require__(62);
 // EXTERNAL MODULE: ./src/styles/icons/bold.svg
-var icons_bold = __webpack_require__(60);
+var icons_bold = __webpack_require__(63);
 // EXTERNAL MODULE: ./src/styles/icons/brush.svg
-var brush = __webpack_require__(61);
+var brush = __webpack_require__(64);
 // EXTERNAL MODULE: ./src/styles/icons/cancel.svg
-var cancel = __webpack_require__(62);
+var cancel = __webpack_require__(65);
 // EXTERNAL MODULE: ./src/styles/icons/center.svg
-var center = __webpack_require__(63);
+var center = __webpack_require__(66);
 // EXTERNAL MODULE: ./src/styles/icons/chain-broken.svg
-var chain_broken = __webpack_require__(64);
+var chain_broken = __webpack_require__(67);
 // EXTERNAL MODULE: ./src/styles/icons/check.svg
-var check = __webpack_require__(65);
+var check = __webpack_require__(68);
 // EXTERNAL MODULE: ./src/styles/icons/check-square.svg
-var check_square = __webpack_require__(66);
+var check_square = __webpack_require__(69);
 // EXTERNAL MODULE: ./src/styles/icons/chevron.svg
-var chevron = __webpack_require__(67);
+var chevron = __webpack_require__(70);
 // EXTERNAL MODULE: ./src/styles/icons/copyformat.svg
-var copyformat = __webpack_require__(68);
+var copyformat = __webpack_require__(71);
 // EXTERNAL MODULE: ./src/styles/icons/crop.svg
-var crop = __webpack_require__(69);
+var crop = __webpack_require__(72);
 // EXTERNAL MODULE: ./src/styles/icons/copy.svg
-var copy = __webpack_require__(70);
+var copy = __webpack_require__(73);
 // EXTERNAL MODULE: ./src/styles/icons/cut.svg
-var cut = __webpack_require__(71);
+var cut = __webpack_require__(74);
 // EXTERNAL MODULE: ./src/styles/icons/dedent.svg
-var dedent = __webpack_require__(72);
+var dedent = __webpack_require__(75);
 // EXTERNAL MODULE: ./src/styles/icons/dots.svg
-var dots = __webpack_require__(73);
+var dots = __webpack_require__(76);
 // EXTERNAL MODULE: ./src/styles/icons/enter.svg
-var icons_enter = __webpack_require__(74);
+var icons_enter = __webpack_require__(77);
 // EXTERNAL MODULE: ./src/styles/icons/eraser.svg
-var eraser = __webpack_require__(75);
+var eraser = __webpack_require__(78);
 // EXTERNAL MODULE: ./src/styles/icons/eye.svg
-var eye = __webpack_require__(76);
+var eye = __webpack_require__(79);
 // EXTERNAL MODULE: ./src/styles/icons/file.svg
-var icons_file = __webpack_require__(77);
+var icons_file = __webpack_require__(80);
 // EXTERNAL MODULE: ./src/styles/icons/folder.svg
-var folder = __webpack_require__(78);
+var folder = __webpack_require__(81);
 // EXTERNAL MODULE: ./src/styles/icons/font.svg
-var icons_font = __webpack_require__(79);
+var icons_font = __webpack_require__(82);
 // EXTERNAL MODULE: ./src/styles/icons/fontsize.svg
-var fontsize = __webpack_require__(80);
+var fontsize = __webpack_require__(83);
 // EXTERNAL MODULE: ./src/styles/icons/fullsize.svg
-var icons_fullsize = __webpack_require__(81);
+var icons_fullsize = __webpack_require__(84);
 // EXTERNAL MODULE: ./src/styles/icons/hr.svg
-var icons_hr = __webpack_require__(82);
+var icons_hr = __webpack_require__(85);
 // EXTERNAL MODULE: ./src/styles/icons/image.svg
-var icons_image = __webpack_require__(83);
+var icons_image = __webpack_require__(86);
 // EXTERNAL MODULE: ./src/styles/icons/indent.svg
-var icons_indent = __webpack_require__(84);
+var icons_indent = __webpack_require__(87);
 // EXTERNAL MODULE: ./src/styles/icons/info-circle.svg
-var info_circle = __webpack_require__(85);
+var info_circle = __webpack_require__(88);
 // EXTERNAL MODULE: ./src/styles/icons/italic.svg
-var italic = __webpack_require__(86);
+var italic = __webpack_require__(89);
 // EXTERNAL MODULE: ./src/styles/icons/justify.svg
-var icons_justify = __webpack_require__(87);
+var icons_justify = __webpack_require__(90);
 // EXTERNAL MODULE: ./src/styles/icons/left.svg
-var left = __webpack_require__(88);
+var left = __webpack_require__(91);
 // EXTERNAL MODULE: ./src/styles/icons/link.svg
-var icons_link = __webpack_require__(89);
+var icons_link = __webpack_require__(92);
 // EXTERNAL MODULE: ./src/styles/icons/lock.svg
-var lock = __webpack_require__(90);
+var lock = __webpack_require__(93);
 // EXTERNAL MODULE: ./src/styles/icons/menu.svg
-var menu = __webpack_require__(91);
+var menu = __webpack_require__(94);
 // EXTERNAL MODULE: ./src/styles/icons/merge.svg
-var merge = __webpack_require__(92);
+var merge = __webpack_require__(95);
 // EXTERNAL MODULE: ./src/styles/icons/ok.svg
-var ok = __webpack_require__(93);
+var ok = __webpack_require__(96);
 // EXTERNAL MODULE: ./src/styles/icons/ol.svg
-var ol = __webpack_require__(94);
+var ol = __webpack_require__(97);
 // EXTERNAL MODULE: ./src/styles/icons/omega.svg
-var omega = __webpack_require__(95);
+var omega = __webpack_require__(98);
 // EXTERNAL MODULE: ./src/styles/icons/outdent.svg
-var outdent = __webpack_require__(96);
+var outdent = __webpack_require__(99);
 // EXTERNAL MODULE: ./src/styles/icons/palette.svg
-var palette = __webpack_require__(97);
+var palette = __webpack_require__(100);
 // EXTERNAL MODULE: ./src/styles/icons/paragraph.svg
-var paragraph = __webpack_require__(98);
+var paragraph = __webpack_require__(101);
 // EXTERNAL MODULE: ./src/styles/icons/paste.svg
-var icons_paste = __webpack_require__(99);
+var icons_paste = __webpack_require__(102);
 // EXTERNAL MODULE: ./src/styles/icons/pencil.svg
-var pencil = __webpack_require__(100);
+var pencil = __webpack_require__(103);
 // EXTERNAL MODULE: ./src/styles/icons/plus.svg
-var plus = __webpack_require__(101);
+var plus = __webpack_require__(104);
 // EXTERNAL MODULE: ./src/styles/icons/print.svg
-var icons_print = __webpack_require__(102);
+var icons_print = __webpack_require__(105);
 // EXTERNAL MODULE: ./src/styles/icons/redo.svg
-var redo = __webpack_require__(103);
+var redo = __webpack_require__(106);
 // EXTERNAL MODULE: ./src/styles/icons/resize.svg
-var resize = __webpack_require__(104);
+var resize = __webpack_require__(107);
 // EXTERNAL MODULE: ./src/styles/icons/resizer.svg
-var icons_resizer = __webpack_require__(105);
+var icons_resizer = __webpack_require__(108);
 // EXTERNAL MODULE: ./src/styles/icons/right.svg
-var right = __webpack_require__(106);
+var right = __webpack_require__(109);
 // EXTERNAL MODULE: ./src/styles/icons/save.svg
-var save = __webpack_require__(107);
+var save = __webpack_require__(110);
 // EXTERNAL MODULE: ./src/styles/icons/search.svg
-var icons_search = __webpack_require__(108);
+var icons_search = __webpack_require__(111);
 // EXTERNAL MODULE: ./src/styles/icons/settings.svg
-var settings = __webpack_require__(109);
+var settings = __webpack_require__(112);
 // EXTERNAL MODULE: ./src/styles/icons/select-all.svg
-var select_all = __webpack_require__(110);
+var select_all = __webpack_require__(113);
 // EXTERNAL MODULE: ./src/styles/icons/shrink.svg
-var shrink = __webpack_require__(111);
+var shrink = __webpack_require__(114);
 // EXTERNAL MODULE: ./src/styles/icons/source.svg
-var icons_source = __webpack_require__(112);
+var icons_source = __webpack_require__(115);
 // EXTERNAL MODULE: ./src/styles/icons/splitg.svg
-var splitg = __webpack_require__(113);
+var splitg = __webpack_require__(116);
 // EXTERNAL MODULE: ./src/styles/icons/splitv.svg
-var splitv = __webpack_require__(114);
+var splitv = __webpack_require__(117);
 // EXTERNAL MODULE: ./src/styles/icons/strikethrough.svg
-var strikethrough = __webpack_require__(115);
+var strikethrough = __webpack_require__(118);
 // EXTERNAL MODULE: ./src/styles/icons/subscript.svg
-var subscript = __webpack_require__(116);
+var subscript = __webpack_require__(119);
 // EXTERNAL MODULE: ./src/styles/icons/superscript.svg
-var superscript = __webpack_require__(117);
+var superscript = __webpack_require__(120);
 // EXTERNAL MODULE: ./src/styles/icons/table.svg
-var icons_table = __webpack_require__(118);
+var icons_table = __webpack_require__(121);
 // EXTERNAL MODULE: ./src/styles/icons/th.svg
-var th = __webpack_require__(119);
+var th = __webpack_require__(122);
 // EXTERNAL MODULE: ./src/styles/icons/th-list.svg
-var th_list = __webpack_require__(120);
+var th_list = __webpack_require__(123);
 // EXTERNAL MODULE: ./src/styles/icons/ul.svg
-var ul = __webpack_require__(121);
+var ul = __webpack_require__(124);
 // EXTERNAL MODULE: ./src/styles/icons/underline.svg
-var underline = __webpack_require__(122);
+var underline = __webpack_require__(125);
 // EXTERNAL MODULE: ./src/styles/icons/undo.svg
-var undo = __webpack_require__(123);
+var undo = __webpack_require__(126);
 // EXTERNAL MODULE: ./src/styles/icons/unlink.svg
-var unlink = __webpack_require__(124);
+var unlink = __webpack_require__(127);
 // EXTERNAL MODULE: ./src/styles/icons/unlock.svg
-var unlock = __webpack_require__(125);
+var unlock = __webpack_require__(128);
 // EXTERNAL MODULE: ./src/styles/icons/update.svg
-var update = __webpack_require__(126);
+var update = __webpack_require__(129);
 // EXTERNAL MODULE: ./src/styles/icons/upload.svg
-var upload = __webpack_require__(127);
+var upload = __webpack_require__(130);
 // EXTERNAL MODULE: ./src/styles/icons/valign.svg
-var valign = __webpack_require__(128);
+var valign = __webpack_require__(131);
 // EXTERNAL MODULE: ./src/styles/icons/video.svg
-var icons_video = __webpack_require__(129);
+var icons_video = __webpack_require__(132);
 ;// CONCATENATED MODULE: ./src/styles/icons/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)

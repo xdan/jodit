@@ -653,7 +653,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 * Closes the dialog box , if you want to call the method {@link Dialog~destruct|destruct}
 	 *
 	 * @see destroy
-	 * @method close
 	 * @fires beforeClose
 	 * @fires afterClose
 	 * @example

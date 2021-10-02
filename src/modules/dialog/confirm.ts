@@ -11,10 +11,8 @@ import { Button } from '../../core/ui';
 /**
  * Show `confirm` dialog. Work without Jodit object
  *
- * @method Confirm
- * @param {string} msg Message
- * @param {string|function} [title] Title or callback
- * @param {function} [callback] callback. The first argument is the value entered
+ * @param title - Title or callback
+ * @param callback - callback. The first argument is the value entered
  * @example
  * ```javascript
  * Jodit.Confirm("Are you shure?", "Confirm Dialog", function (yes) {

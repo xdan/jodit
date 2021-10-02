@@ -6,16 +6,11 @@
 
 /**
  * Check if name has normal format
- * @param name
  */
 export function isValidName(name: string): boolean {
 	if (!name.length) {
 		return false;
 	}
 
-	if (/[^0-9A-Za-zа-яА-ЯЁё\w\-_.]/.test(name)) {
-		return false;
-	}
-
-	return true;
+	return !/[^0-9A-Za-zа-яА-ЯЁё\w\-_.]/.test(name);
 }

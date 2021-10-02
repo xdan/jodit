@@ -6,7 +6,6 @@
 
 /**
  * Check if function or method was not replaced on some custom implementation
- * @param f
  */
 export function isNativeFunction(f: Function): boolean {
 	return (

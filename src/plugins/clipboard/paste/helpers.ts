@@ -12,7 +12,6 @@ import { TEXT_PLAIN } from '../../../core/constants';
 
 /**
  * Get DataTransfer from different event types
- * @param event
  */
 export const getDataTransfer = (
 	event: ClipboardEvent | DragEvent
@@ -30,7 +29,6 @@ export const getDataTransfer = (
 
 /**
  * Remove special HTML comments
- * @param html
  */
 function removeExtraFragments(html: string): string {
 	html = html.replace(/<meta[^>]+?>/g, '');
@@ -87,7 +85,6 @@ export function pasteInsertHtml(
 
 /**
  * Return all available data types in event
- * @param dt
  */
 export function getAllTypes(dt: DataTransfer): string {
 	const types: ReadonlyArray<string> | string = dt.types;

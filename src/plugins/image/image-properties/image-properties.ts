@@ -780,7 +780,6 @@ export class imageProperties extends Plugin {
 
 	/**
 	 * Open popup with filebrowser/uploader buttons for image
-	 * @param event
 	 */
 	@autobind
 	private openImagePopup(event: MouseEvent): void {
