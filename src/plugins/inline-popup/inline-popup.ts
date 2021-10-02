@@ -283,7 +283,6 @@ export class inlinePopup extends Plugin {
 
 	/**
 	 * In not collapsed selection - only one image
-	 * @param r
 	 */
 	private isSelectedTarget(r: Range): boolean {
 		const sc = r.startContainer;

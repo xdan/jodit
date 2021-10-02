@@ -1179,10 +1179,14 @@ export class Select {
 	 */
 	*wrapInTagGen(): Generator<HTMLElement> {
 		if (this.isCollapsed()) {
-			const font = this.jodit.createInside.element('font');
+			const font = this.jodit.createInside.element(
+				'font',
+				INVISIBLE_SPACE
+			);
 			this.insertNode(font, false, false);
 
 			const [marker] = this.markers;
+
 			if (marker) {
 				font.appendChild(marker);
 			} else {
