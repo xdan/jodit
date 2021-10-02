@@ -70,7 +70,7 @@ Dom.isNode(editor.ed.body); // true
 #### :bug: Bug Fix
 
 - [Toolbar buttons are not read by screen reader correctly #725](https://github.com/xdan/jodit/issues/725)
-- [Bug : table & background color #722] ttps://github.com/xdan/jodit/issues/722
+- [Bug : table & background color #722](https://github.com/xdan/jodit/issues/722)
 - [Video links are not reliably converted to an IFrame. #714](https://github.com/xdan/jodit/issues/714)
 - [Eraser delete "<a>" tag! #705](https://github.com/xdan/jodit/issues/705)
 
