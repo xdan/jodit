@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IBound, IDestructible } from './types';
-import { IUIElement } from './ui';
+import type { IBound, IDestructible } from './types';
+import type { IUIElement } from './ui';
 
 export type PopupStrategy =
 	| 'leftBottom'

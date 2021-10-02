@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDestructible, IInitable } from './types';
+import type { IDestructible, IInitable } from './types';
 
 export interface ISourceEditor extends IDestructible, IInitable {
 	getValue(): string;

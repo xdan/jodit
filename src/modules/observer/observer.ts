@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, SnapshotType } from '../../types';
+import type { IJodit, SnapshotType, IObserver } from '../../types';
 import { Config } from '../../config';
 import { ViewComponent } from '../../core/component';
 import { Snapshot } from './snapshot';
@@ -39,7 +39,7 @@ Config.prototype.observer = {
  * @see {@link Snapshot|Snapshot}
  * @params {Jodit} parent Jodit main object
  */
-export class Observer extends ViewComponent<IJodit> {
+export class Observer extends ViewComponent<IJodit> implements IObserver {
 	/** @override */
 	className(): string {
 		return 'Observer';
@@ -47,11 +47,11 @@ export class Observer extends ViewComponent<IJodit> {
 
 	private __startValue!: SnapshotType;
 
-	get startValue(): SnapshotType {
+	protected get startValue(): SnapshotType {
 		return this.__startValue;
 	}
 
-	set startValue(value: SnapshotType) {
+	protected set startValue(value: SnapshotType) {
 		this.__startValue = value;
 	}
 

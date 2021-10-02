@@ -20,7 +20,8 @@ import type {
 	ICreate,
 	IFileBrowserCallBackData,
 	IStorage,
-	CanPromise
+	CanPromise,
+	IObserver
 } from './types';
 
 import { Config } from './config';
@@ -254,7 +255,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.setPlaceField('iframe', iframe);
 	}
 
-	get observer(): Observer {
+	get observer(): IObserver {
 		return this.currentPlace.observer;
 	}
 

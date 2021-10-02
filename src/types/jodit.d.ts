@@ -7,10 +7,9 @@
 import { IViewOptions, IViewWithToolbar } from './view';
 import type { Config } from '../config';
 import type { Select } from '../core/selection/select';
-import { CustomCommand, ICreate, IStatusBar, IStorage, Modes } from './';
-import { IUploader } from './uploader';
-import { IFileBrowser } from './file-browser';
-import type { Observer } from '../modules';
+import type { CustomCommand, ICreate, IObserver, IStatusBar, Modes } from './';
+import type { IUploader } from './uploader';
+import type { IFileBrowser } from './file-browser';
 
 interface IWorkPlace {
 	editor: HTMLDivElement | HTMLBodyElement;
@@ -20,7 +19,7 @@ interface IWorkPlace {
 	statusbar: IStatusBar;
 	iframe?: HTMLIFrameElement | void;
 	editorWindow: Window;
-	observer: Observer;
+	observer: IObserver;
 	options: IViewOptions;
 }
 
@@ -28,7 +27,7 @@ interface IJodit extends IViewWithToolbar {
 	isJodit: true;
 
 	options: Config;
-	observer: Observer;
+	observer: IObserver;
 	editor: HTMLElement;
 	element: HTMLElement;
 

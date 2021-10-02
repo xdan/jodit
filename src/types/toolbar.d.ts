@@ -7,7 +7,6 @@
 import type {
 	HTMLTagNames,
 	IComponent,
-	IDestructible,
 	IDictionary,
 	Modes,
 	Nullable,

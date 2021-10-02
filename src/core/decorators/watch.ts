@@ -19,7 +19,7 @@ import {
 	splitArray
 } from '../helpers';
 import { ObserveObject } from '../events';
-import { Component, STATUSES } from '../component';
+import { STATUSES } from '../component';
 
 export function getPropertyDescriptor(
 	obj: unknown,
@@ -37,13 +37,12 @@ export function getPropertyDescriptor(
 
 /**
  * Watch decorator. Added observer for some change in field value
- * @param observeFields
  */
 export function watch(
 	observeFields: string[] | string,
 	context?: object | ((c: IDictionary) => object)
 ): DecoratorHandler {
-	return <T extends Component & IDictionary>(
+	return <T extends IComponent & IDictionary>(
 		target: T,
 		propertyKey: string
 	) => {

@@ -5,7 +5,7 @@
  */
 
 import type { IComponent, IContainer } from '../../types';
-import { toArray } from '../helpers';
+import { toArray } from '../helpers/array/to-array';
 
 export abstract class Elms {
 	abstract getElm(elementName: string): HTMLElement;
@@ -13,7 +13,6 @@ export abstract class Elms {
 
 	/**
 	 * Return element with BEM class name
-	 * @param elementName
 	 */
 	static getElm(
 		this: IComponent & IContainer,
@@ -27,7 +26,6 @@ export abstract class Elms {
 
 	/**
 	 * Return elements with BEM class name
-	 * @param elementName
 	 */
 	static getElms(
 		this: IComponent & IContainer,

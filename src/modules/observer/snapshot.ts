@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, SnapshotType } from '../../types';
+import type { IJodit, ISnapshot, SnapshotType } from '../../types';
 import { ViewComponent } from '../../core/component';
 import { Dom } from '../../core/dom';
 
@@ -12,7 +12,7 @@ import { Dom } from '../../core/dom';
 /**
  * Module for creating snapshot of editor which includes html content and the current selection
  */
-export class Snapshot extends ViewComponent<IJodit> {
+export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	/** @override */
 	className(): string {
 		return 'Snapshot';

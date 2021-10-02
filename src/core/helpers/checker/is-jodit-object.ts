@@ -16,6 +16,7 @@ export function isJoditObject(jodit: unknown): jodit is IJodit {
 		jodit &&
 			jodit instanceof Object &&
 			isFunction(jodit.constructor) &&
+			// @ts-ignore
 			((typeof Jodit !== 'undefined' && jodit instanceof Jodit) ||
 				(jodit as IJodit).isJodit)
 	);

@@ -4,7 +4,6 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { Buttons } from './toolbar';
 import type {
 	IDestructible,
 	IDictionary,

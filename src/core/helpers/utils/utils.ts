@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 import type {
 	CanPromise,
 	IControlType,
@@ -16,7 +17,7 @@ import { isFunction } from '../checker/is-function';
 import { isPromise } from '../checker/is-promise';
 import { get } from './get';
 import { dataBind } from '../data-bind';
-import { isVoid } from '../checker';
+import { isVoid } from '../checker/is-void';
 
 /**
  * Call function with parameters

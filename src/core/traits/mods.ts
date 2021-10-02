@@ -5,7 +5,7 @@
  */
 
 import type { IComponent, IContainer, IDictionary } from '../../types';
-import { toArray } from '../helpers';
+import { toArray } from '../helpers/array/to-array';
 
 export abstract class Mods {
 	abstract mods: IDictionary<string | boolean | null>;

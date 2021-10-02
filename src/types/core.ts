@@ -4,10 +4,9 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { Component } from '../core/component';
-import type { IDictionary } from './types';
+import type { IComponent, IDictionary } from './types';
 
-export type DecoratorHandler = <T extends Component & IDictionary>(
+export type DecoratorHandler = <T extends IComponent & IDictionary>(
 	target: T,
 	propertyKey: string
 ) => void;

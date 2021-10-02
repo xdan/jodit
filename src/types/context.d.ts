@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDestructible } from './types';
+import type { IDestructible } from './types';
 import type { IPopup } from './popup';
 
 export interface IContextMenuAction {

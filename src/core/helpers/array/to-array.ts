@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { reset } from '../utils';
+import { reset } from '../utils/utils';
 import { isNativeFunction } from '../checker/is-native-function';
 
 /**

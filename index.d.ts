@@ -5,12 +5,12 @@
  */
 
 import type { IComponent, Nullable } from './src/types';
-import { Jodit as Super } from './src/jodit';
+import type { IJodit } from './src/types';
 
 export * from './src/types';
 
 declare global {
-	const Jodit: typeof Super;
+	const Jodit: IJodit;
 	const isProd: boolean;
 	const isESNext: boolean;
 	const appVersion: string;

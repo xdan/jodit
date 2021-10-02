@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IViewBased, IViewOptions } from './view';
-import { IComponent, IContainer } from './types';
+import type { IViewBased, IViewOptions } from './view';
+import type { IComponent, IContainer } from './types';
 import type { Mods } from '../core/traits';
 
 export interface IDialogOptions extends IViewOptions {

@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary } from './types';
+import type { IDictionary } from './types';
 
 export type Attributes = IDictionary<
 	string | number | boolean | IDictionary<string | number | boolean>

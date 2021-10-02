@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { CanUndef } from '../../types';
+import type { CanUndef, IStack } from '../../types';
 import type { Command } from './command';
 
-export class Stack {
+export class Stack implements IStack {
 	private commands: Command[] = [];
 	private stackPosition: number = -1;
 

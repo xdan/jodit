@@ -13,9 +13,8 @@ import type {
 	IViewComponent,
 	Nullable
 } from './types';
-import type { ButtonsGroups } from './toolbar';
 import type { IViewBased } from './view';
-import { ButtonsOption } from './toolbar';
+import type { ButtonsOption } from './toolbar';
 
 export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 	parentElement: Nullable<IUIElement>;
