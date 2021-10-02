@@ -150,11 +150,11 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 	 * situation when the editor is inside the <label>
 	 *
 	 * @see https://github.com/jodit/jodit-react/issues/138
-	 * @param container
 	 */
 	private prependInvisibleInput(container: HTMLElement): void {
 		const input = this.j.create.element('input', {
 			tabIndex: -1,
+			disabled: true, // Becouse <label> can trigger click
 			style: 'width: 0; height:0; position: absolute; visibility: hidden;'
 		});
 

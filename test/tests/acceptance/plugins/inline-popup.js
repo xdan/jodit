@@ -215,20 +215,24 @@ describe('Text Inline Popup plugin', function () {
 		it('Open inline popup after click inside the cell', function () {
 			const editor = getJodit();
 
-			editor.value = '<table>' + '<tr><td>1</td></tr>' + '</table>';
+			editor.value = '<table><tbody><tr><td>1</td></tr></tbody></table>';
 
 			const td = editor.editor.querySelector('td'),
 				pos = Jodit.modules.Helpers.position(td);
 
-			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
-				Object.assign(e, {
-					clientX: pos.left,
-					clientY: pos.top
-				});
-			});
+			simulateEvent('focus', editor.editor);
+			simulateEvent(
+				['mousedown', 'selectstart', 'mouseup', 'click'],
+				td,
+				e => {
+					Object.assign(e, {
+						clientX: pos.left,
+						clientY: pos.top
+					});
+				}
+			);
 
 			const popup = getOpenedPopup(editor);
-
 			expect(popup).is.not.null;
 		});
 
