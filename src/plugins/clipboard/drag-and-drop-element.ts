@@ -46,7 +46,6 @@ export class DragAndDropElement extends Plugin {
 
 	/**
 	 * Drag start handler
-	 * @param event
 	 */
 	@autobind
 	private onDragStart(event: DragEvent): void | false {
@@ -85,7 +84,6 @@ export class DragAndDropElement extends Plugin {
 
 	/**
 	 * Mouse move handler handler
-	 * @param event
 	 */
 	@throttle<IViewComponent>(ctx => ctx.j.defaultTimeout / 10)
 	private onDrag(event: DragEvent): void {

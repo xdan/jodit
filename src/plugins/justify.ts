@@ -112,11 +112,8 @@ Config.prototype.controls.right = {
 
 /**
  * Remove text-align style for all selected children
- *
- * @param node
- * @param editor
  */
-export const clearAlign = (node: Node, editor: IJodit): void => {
+export const clearAlign = (node: Node): void => {
 	Dom.each(node, elm => {
 		if (Dom.isHTMLElement(elm)) {
 			if (elm.style.textAlign) {
@@ -132,18 +129,10 @@ export const clearAlign = (node: Node, editor: IJodit): void => {
 
 /**
  * Apply align for element
- *
- * @param command
- * @param box
- * @param editor
  */
-export const alignElement = (
-	command: string,
-	box: HTMLElement,
-	editor: IJodit
-): void => {
+export const alignElement = (command: string, box: HTMLElement): void => {
 	if (Dom.isNode(box) && Dom.isElement(box)) {
-		clearAlign(box, editor);
+		clearAlign(box);
 
 		switch (command.toLowerCase()) {
 			case 'justifyfull':
@@ -167,7 +156,6 @@ export const alignElement = (
 
 /**
  * Process commands: `justifyfull`, `justifyleft`, `justifyright`, `justifycenter`
- * @param {Jodit} editor
  */
 export function justify(editor: IJodit): void {
 	editor.registerButton({
@@ -197,7 +185,7 @@ export function justify(editor: IJodit): void {
 				) as HTMLElement;
 			}
 
-			alignElement(command, currentBox, editor);
+			alignElement(command, currentBox);
 		});
 
 		return false;

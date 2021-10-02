@@ -21,8 +21,6 @@ export class AceEditor
 
 	/**
 	 * Proxy Method
-	 * @param e
-	 * @private
 	 */
 	private proxyOnFocus = (e: MouseEvent) => {
 		this.j.e.fire('focus', e);

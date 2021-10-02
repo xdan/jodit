@@ -54,7 +54,6 @@ export class Select implements ISelect {
 
 	/**
 	 * Throw Error exception if parameter is not Node
-	 * @param node
 	 */
 	private errorNode(node: unknown): void {
 		if (!Dom.isNode(node)) {
@@ -105,7 +104,7 @@ export class Select implements ISelect {
 
 	/**
 	 * Return current selection object
-	 * @param select Immediately add in selection
+	 * @param select - Immediately add in selection
 	 */
 	createRange(select: boolean = false): Range {
 		const range = this.doc.createRange();
@@ -727,10 +726,8 @@ export class Select implements ISelect {
 		this.insertNode(image);
 
 		/**
-		 * Triggered after image was inserted {@link Selection~insertImage|insertImage}. This method can executed from
+		 * Triggered after image was inserted {@link Select|insertImage}. This method can executed from
 		 * {@link FileBrowser|FileBrowser} or {@link Uploader|Uploader}
-		 * @event afterInsertImage
-		 * @param {HTMLImageElement} image
 		 * @example
 		 * ```javascript
 		 * var editor = new Jodit("#redactor");
@@ -744,7 +741,6 @@ export class Select implements ISelect {
 
 	/**
 	 * Call callback for all selection node
-	 * @param callback
 	 */
 	eachSelection(callback: (current: Node) => void): void {
 		const sel = this.sel;

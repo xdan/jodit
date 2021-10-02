@@ -17,8 +17,6 @@ import { autobind, watch } from '../../core/decorators';
 
 /**
  * Plug-in change simple textarea on CodeMirror editor in Source code mode
- *
- * @module source
  */
 export class source extends Plugin {
 	/** @override */
@@ -52,7 +50,6 @@ export class source extends Plugin {
 
 	/**
 	 * Update source editor from WYSIWYG area
-	 * @param force
 	 */
 	@autobind
 	private fromWYSIWYG(force: boolean | string = false): void {

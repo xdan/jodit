@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/* eslint-disable tsdoc/syntax */
+
 import './image-editor.less';
 
 import type {
@@ -35,54 +37,54 @@ Config.prototype.imageeditor = {
 	min_width: 20,
 	min_height: 20,
 	/**
-	 * @property{boolean} imageeditor.closeAfterSave=false Close editor after save image
+	 * @property {boolean} imageeditor.closeAfterSave=false Close editor after save image
 	 */
 	closeAfterSave: false,
 
 	/**
-	 * @property{string|int} imageeditor.width=85% Default dialog width by screen
+	 * @property {string|int} imageeditor.width=85% Default dialog width by screen
 	 */
 	width: '85%',
 
 	/**
-	 * @property{string|int} imageeditor.height=85% Default dialog height by screen
+	 * @property {string|int} imageeditor.height=85% Default dialog height by screen
 	 */
 	height: '85%',
 
 	/**
-	 * @property{boolean} imageeditor.crop=true Show tab cropping
+	 * @property {boolean} imageeditor.crop=true Show tab cropping
 	 */
 	crop: true,
 
 	/**
-	 * @property{boolean} imageeditor.resize=true Show tab resizing
+	 * @property {boolean} imageeditor.resize=true Show tab resizing
 	 */
 	resize: true,
 
 	/**
-	 * @property{boolean} imageeditor.resizeUseRatio=true Keep aspect ratio on resize
+	 * @property {boolean} imageeditor.resizeUseRatio=true Keep aspect ratio on resize
 	 */
 	resizeUseRatio: true,
 
 	/**
-	 * @property{int} imageeditor.resizeMinWidth=20 minimal width on resize
+	 * @property {int} imageeditor.resizeMinWidth=20 minimal width on resize
 	 */
 	resizeMinWidth: 20,
 
 	/**
-	 * @property{boolean} imageeditor.resizeMinHeight=20 minimal height on resize
+	 * @property {boolean} imageeditor.resizeMinHeight=20 minimal height on resize
 	 */
 	resizeMinHeight: 20,
 
 	/**
-	 * @property{boolean} imageeditor.cropUseRatio=true Keep aspect ratio on crop
+	 * @property {boolean} imageeditor.cropUseRatio=true Keep aspect ratio on crop
 	 */
 	cropUseRatio: true,
 
 	/**
-	 * @property{string} imageeditor.cropDefaultWidth=70% In the tab, crop the image is displayed not in real size.
+	 * @property {string} imageeditor.cropDefaultWidth=70% In the tab, crop the image is displayed not in real size.
 	 * Boxing default size for it
-	 * @property{string} imageeditor.cropDefaultHeight=70%
+	 * @property {string} imageeditor.cropDefaultHeight=70%
 	 */
 	cropDefaultWidth: '70%',
 	cropDefaultHeight: '70%'
@@ -138,7 +140,9 @@ export class ImageEditor extends ViewComponent {
 	private editor: HTMLElement;
 
 	private resize_box: HTMLElement;
+
 	private crop_box: HTMLElement;
+
 	private sizes: HTMLElement;
 
 	private resizeHandler: HTMLElement;

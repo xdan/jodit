@@ -40,6 +40,9 @@ import { getContainer } from '../../core/global';
 
 declare module '../../config' {
 	interface Config {
+		/**
+		 * Enable drag and drop file editor
+		 */
 		enableDragAndDropFileToEditor: boolean;
 		uploader: IUploaderOptions<Uploader>;
 	}
@@ -47,14 +50,9 @@ declare module '../../config' {
 
 /**
  * Module for processing download documents and images by Drag and Drop
- *
- * @tutorial {@link http://xdsoft.net/jodit/doc/tutorial-uploader-settings.html|Uploader options and
- * Drag and Drop files}
- * @params {Object} parent Jodit main object
+ * Drag and Drop files
  */
-/**
- * @property {boolean} - enableDragAndDropFileToEditor=true Enable drag and drop file toWYSIWYG editor
- */
+
 Config.prototype.enableDragAndDropFileToEditor = true;
 
 Config.prototype.uploader = {
@@ -153,9 +151,6 @@ export class Uploader extends ViewComponent implements IUploader {
 
 	/**
 	 * Convert dataURI to Blob
-	 *
-	 * @param {string} dataURI
-	 * @return {Blob}
 	 */
 	static dataURItoBlob(dataURI: string): Blob {
 		// convert base64 toWYSIWYG raw binary data held in a string
@@ -312,11 +307,6 @@ export class Uploader extends ViewComponent implements IUploader {
 
 	/**
 	 * Send files to server
-	 *
-	 * @param files
-	 * @param handlerSuccess
-	 * @param handlerError
-	 * @param process
 	 */
 	private sendFiles(
 		files: FileList | File[] | null,
@@ -502,8 +492,6 @@ export class Uploader extends ViewComponent implements IUploader {
 
 	/**
 	 * It sets the path for uploading files
-	 * @method setPath
-	 * @param {string} path
 	 */
 	setPath(path: string): void {
 		this.path = path;
@@ -511,9 +499,6 @@ export class Uploader extends ViewComponent implements IUploader {
 
 	/**
 	 * It sets the source for connector
-	 *
-	 * @method setSource
-	 * @param {string} source
 	 */
 	setSource(source: string): void {
 		this.source = source;
@@ -522,13 +507,11 @@ export class Uploader extends ViewComponent implements IUploader {
 	/**
 	 * Set the handlers Drag and Drop toWYSIWYG `$form`
 	 *
-	 * @method bind
-	 * @param {HTMLElement} form Form or any Node on which you can drag and drop the file. In addition will be processed
+	 * @param form - Form or any Node on which you can drag and drop the file. In addition will be processed
 	 * <code>&lt;input type="file" &gt;</code>
-	 * @param {function} [handlerSuccess] The function toWYSIWYG be called when a successful uploading files
+	 * @param handlerSuccess - The function be called when a successful uploading files
 	 * toWYSIWYG the server
-	 * @param {function} [handlerError] The function that will be called during a failed download files
-	 * toWYSIWYG a server
+	 * @param handlerError - The function that will be called during a failed download files a server
 	 * @example
 	 * ```javascript
 	 * var $form = jQuery('<form><input type="text" typpe="file"></form>');
@@ -715,10 +698,6 @@ export class Uploader extends ViewComponent implements IUploader {
 
 	/**
 	 * Upload images toWYSIWYG a server by its URL, making it through the connector server.
-	 *
-	 * @param {string} url
-	 * @param {HandlerSuccess} [handlerSuccess]
-	 * @param {HandlerError} [handlerError]
 	 */
 	uploadRemoteImage(
 		url: string,

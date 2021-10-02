@@ -8,10 +8,6 @@
  * Module for working with tables . Delete, insert , merger, division of cells , rows and columns.
  * When creating elements such as <table> for each of them
  * creates a new instance Jodit.modules.TableProcessor and it can be accessed via $('table').data('table-processor')
- *
- * @module Table
- * @param {Object} parent Jodit main object
- * @param {HTMLTableElement} table Table for which to create a module
  */
 
 import type { ICreate, IJodit } from '../types';
@@ -97,16 +93,6 @@ export class Table extends ViewComponent<IJodit> {
 		}
 	}
 
-	clearSelection(): void {
-		const cells = this.getAllSelectedCells();
-
-		if (cells.length) {
-			cells.forEach(cell => {
-				this.removeSelection(cell);
-			});
-		}
-	}
-
 	/**
 	 * Returns array of selected cells
 	 */
@@ -129,7 +115,6 @@ export class Table extends ViewComponent<IJodit> {
 
 	/**
 	 * Returns rows count in the table
-	 * @param table
 	 */
 	static getRowsCount(table: HTMLTableElement): number {
 		return table.rows.length;
@@ -137,7 +122,6 @@ export class Table extends ViewComponent<IJodit> {
 
 	/**
 	 * Returns columns count in the table
-	 * @param table
 	 */
 	static getColumnsCount(table: HTMLTableElement): number {
 		const matrix = Table.formalMatrix(table);
@@ -148,10 +132,7 @@ export class Table extends ViewComponent<IJodit> {
 
 	/**
 	 * Generate formal table martix columns*rows
-	 *
-	 * @param {HTMLTableElement} table
-	 * @param {function(HTMLTableCellElement, int, int, int, int):boolean} [callback] if return false cycle break
-	 * @return {Array}
+	 * @param callback - if return false cycle break
 	 */
 	static formalMatrix(
 		table: HTMLTableElement,
@@ -221,10 +202,6 @@ export class Table extends ViewComponent<IJodit> {
 
 	/**
 	 * Get cell coordinate in formal table (without colspan and rowspan)
-	 *
-	 * @param table
-	 * @param cell
-	 * @param max
 	 */
 	static formalCoordinate(
 		table: HTMLTableElement,
@@ -267,10 +244,9 @@ export class Table extends ViewComponent<IJodit> {
 	/**
 	 * Inserts a new line after row what contains the selected cell
 	 *
-	 * @param {HTMLTableElement} table
-	 * @param {Boolean|HTMLTableRowElement} [line=false] Insert a new line after/before this
+	 * @param line - Insert a new line after/before this
 	 * line contains the selected cell
-	 * @param {Boolean} [after=true] Insert a new line after line contains the selected cell
+	 * @param after - Insert a new line after line contains the selected cell
 	 */
 	static appendRow(
 		table: HTMLTableElement,
@@ -317,9 +293,6 @@ export class Table extends ViewComponent<IJodit> {
 
 	/**
 	 * Remove row
-	 *
-	 * @param {HTMLTableElement} table
-	 * @param {int} rowIndex
 	 */
 	static removeRow(table: HTMLTableElement, rowIndex: number): void {
 		const box = Table.formalMatrix(table);
@@ -381,11 +354,6 @@ export class Table extends ViewComponent<IJodit> {
 
 	/**
 	 * Insert column before / after all the columns containing the selected cells
-	 *
-	 * @param table
-	 * @param j
-	 * @param after
-	 * @param create
 	 */
 	static appendColumn(
 		table: HTMLTableElement,
@@ -440,9 +408,6 @@ export class Table extends ViewComponent<IJodit> {
 
 	/**
 	 * Remove column by index
-	 *
-	 * @param {HTMLTableElement} table
-	 * @param {int} [j]
 	 */
 	static removeColumn(table: HTMLTableElement, j: number): void {
 		const box: HTMLTableCellElement[][] = Table.formalMatrix(table);
@@ -472,10 +437,6 @@ export class Table extends ViewComponent<IJodit> {
 
 	/**
 	 * Define bound for selected cells
-	 *
-	 * @param {HTMLTableElement} table
-	 * @param {Array.<HTMLTableCellElement>} selectedCells
-	 * @return {number[][]}
 	 */
 	static getSelectedBound(
 		table: HTMLTableElement,
@@ -535,7 +496,6 @@ export class Table extends ViewComponent<IJodit> {
 
 	/**
 	 * Try recalculate all coluns and rows after change
-	 * @param {HTMLTableElement} table
 	 */
 	static normalizeTable(table: HTMLTableElement): void {
 		let i: number, j: number, min: number, not: boolean;
@@ -639,7 +599,6 @@ export class Table extends ViewComponent<IJodit> {
 
 	/**
 	 * It combines all of the selected cells into one. The contents of the cells will also be combined
-	 * @param table
 	 */
 	static mergeSelected(table: HTMLTableElement, jodit: IJodit): void {
 		const html: string[] = [],
@@ -904,12 +863,6 @@ export class Table extends ViewComponent<IJodit> {
 
 	/**
 	 * Set column width used delta value
-	 *
-	 * @param {HTMLTableElement} table
-	 * @param {int} j column
-	 * @param {int} delta
-	 * @param {boolean} noUnmark
-	 * @param {HTMLTableCellElement[]} marked
 	 */
 	static setColumnWidthByDelta(
 		table: HTMLTableElement,
@@ -937,14 +890,6 @@ export class Table extends ViewComponent<IJodit> {
 		}
 	}
 
-	/**
-	 *
-	 * @param {HTMLTableCellElement} cell
-	 * @param {string} key
-	 * @param {string} value
-	 * @param {HTMLTableCellElement[]} marked
-	 * @private
-	 */
 	private static __mark(
 		cell: HTMLTableCellElement,
 		key: string,

@@ -68,13 +68,6 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 	private ajaxInstances: Map<string, IAjax> = new Map();
 
-	/**
-	 *
-	 * @param {string} name
-	 * @param {Function} success
-	 * @param {Function} error
-	 * @return {Promise}
-	 */
 	protected get<T = IFileBrowserAnswer>(
 		name: keyof IFileBrowserOptions,
 		success?: (resp: IFileBrowserAnswer) => void,
@@ -142,9 +135,6 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 	/**
 	 * Load permissions for path and source
-	 *
-	 * @param path
-	 * @param source
 	 */
 	async permissions(
 		path: string,
@@ -203,10 +193,6 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 	/**
 	 * Load items list by path and source
-	 *
-	 * @param path
-	 * @param source
-	 * @param mods
 	 */
 	async items(
 		path: string,
@@ -307,14 +293,6 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 	/**
 	 * Get path by url. You can use this method in another modules
-	 *
-	 * @method getPathByUrl
-	 * @param {string} url Full url
-	 * @param {function} success
-	 * @param {string} success.path path toWYSIWYG file from connector's root (without filename)
-	 * @param {string} success.name filename
-	 * @param {function} onFailed filename
-	 * @param {string} onFailed.message
 	 */
 	getPathByUrl(url: string): Promise<any> {
 		set('options.getLocalFileByUrl.data.url', url, this);
@@ -331,10 +309,9 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	/**
 	 * Create a directory on the server
 	 *
-	 * @method create
-	 * @param {string} name Name the new folder
-	 * @param {string} path Relative toWYSIWYG the directory in which you want toWYSIWYG create a folder
-	 * @param {string} source Server source key
+	 * @param name - Name the new folder
+	 * @param path - Relative directory in which you want create a folder
+	 * @param source - Server source key
 	 */
 	createFolder(name: string, path: string, source: string): Promise<boolean> {
 		const { create } = this.o;
@@ -359,11 +336,8 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	/**
 	 * Move a file / directory on the server
 	 *
-	 * @method move
-	 * @param {string} filepath The relative path toWYSIWYG the file / folder source
-	 * @param {string} path Relative toWYSIWYG the directory where you want toWYSIWYG move the file / folder
-	 * @param {string} source Source
-	 * @param {boolean} isFile
+	 * @param filepath - The relative path toWYSIWYG the file / folder source
+	 * @param path - Relative toWYSIWYG the directory where you want toWYSIWYG move the file / folder
 	 */
 	move(
 		filepath: string,
@@ -397,10 +371,9 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	/**
 	 * Deleting item
 	 *
-	 * @param action
-	 * @param path Relative path
-	 * @param file The filename
-	 * @param source Source
+	 * @param path - Relative path
+	 * @param file - The filename
+	 * @param source - Source
 	 */
 	private remove(
 		action: 'fileRemove' | 'folderRemove',
@@ -434,9 +407,9 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	/**
 	 * Deleting a file
 	 *
-	 * @param path Relative path
-	 * @param file The filename
-	 * @param source Source
+	 * @param path - Relative path
+	 * @param file - The filename
+	 * @param source - Source
 	 */
 	fileRemove(path: string, file: string, source: string): Promise<string> {
 		return this.remove('fileRemove', path, file, source);
@@ -445,9 +418,9 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	/**
 	 * Deleting a folder
 	 *
-	 * @param path Relative path
-	 * @param file The filename
-	 * @param source Source
+	 * @param path - Relative path
+	 * @param file - The filename
+	 * @param source - Source
 	 */
 	folderRemove(path: string, file: string, source: string): Promise<string> {
 		return this.remove('folderRemove', path, file, source);
@@ -456,10 +429,10 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	/**
 	 * Rename action
 	 *
-	 * @param path Relative path
-	 * @param name Old name
-	 * @param newname New name
-	 * @param source Source
+	 * @param path - Relative path
+	 * @param name - Old name
+	 * @param newname - New name
+	 * @param source - Source
 	 */
 	private rename(
 		action: 'fileRename' | 'folderRename',
@@ -560,11 +533,6 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 	/**
 	 * Send command to server to crop image
-	 * @param path
-	 * @param source
-	 * @param name
-	 * @param newname
-	 * @param box
 	 */
 	crop(
 		path: string,
@@ -578,12 +546,6 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 	/**
 	 * Send command to server to resize image
-	 *
-	 * @param path
-	 * @param source
-	 * @param name
-	 * @param newname
-	 * @param box
 	 */
 	resize(
 		path: string,

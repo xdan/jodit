@@ -15,6 +15,8 @@ import type {
 } from './';
 import type { IFileBrowser } from './file-browser';
 
+import type { IUIButton, IUIElement, IUIList } from './ui';
+
 interface IControlType<
 	T = IJodit | IViewBased | IFileBrowser,
 	B = IToolbarButton
@@ -31,9 +33,7 @@ interface IControlType<
 
 	/**
 	 * You can use it function for control - active/not active button
-	 * @param {Jodit} editor
-	 * @param {IControlType} btn
-	 * @return {boolean}
+	 *
 	 * @see copyformat plugin
 	 * @example
 	 * ```javascript
@@ -72,9 +72,6 @@ interface IControlType<
 	/**
 	 * You can use it function for control - disable/enable button
 	 *
-	 * @param {Jodit} editor
-	 * @param {IControlType} btn
-	 * @return {boolean}
 	 * @see copyformat plugin
 	 * @example
 	 * ```javascript
@@ -137,7 +134,7 @@ interface IControlType<
 	 *            return '<div>' + value + '</div>';
 	 *        }
 	 *  });
-	 *  ```
+	 * ```
 	 */
 	list?: IDictionary<string> | string[] | IControlType[];
 
@@ -244,9 +241,6 @@ interface IControlType<
 
 	defaultValue?: string | string[];
 }
-
-import { IUIButton, IUIElement, IUIList } from './ui';
-import { IPluginButton } from './plugin';
 
 interface IControlTypeStrong extends IControlType {
 	name: NonNullable<IControlType['name']>;

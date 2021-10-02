@@ -349,12 +349,6 @@ export class search extends Plugin {
 		return false;
 	};
 
-	/**
-	 *
-	 * @param start
-	 * @param query
-	 * @param next
-	 */
 	findAndSelect = (
 		start: Node | null,
 		query: string,
@@ -754,7 +748,6 @@ export class search extends Plugin {
 
 	/**
 	 * Calculate position if sticky is enabled
-	 * @param enabled
 	 */
 	@autobind
 	private calcSticky(enabled: boolean): void {

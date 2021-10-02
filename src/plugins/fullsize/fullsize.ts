@@ -98,7 +98,6 @@ export function fullsize(editor: IViewWithToolbar): void {
 				}
 			}
 		},
-
 		/**
 		 * Change editor's state between FullSize and normal
 		 */

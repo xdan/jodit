@@ -69,9 +69,7 @@ export class inlinePopup extends Plugin {
 	/**
 	 * Show inline popup with some toolbar
 	 *
-	 * @param rect
 	 * @param type - selection, img, a etc.
-	 * @param target
 	 */
 	@wait((ctx: IViewComponent) => !ctx.j.isLocked)
 	private showPopup(
@@ -127,13 +125,12 @@ export class inlinePopup extends Plugin {
 	}
 
 	@watch(':outsideClick')
-	protected onOutsideClick(e: MouseEvent): void {
+	protected onOutsideClick(): void {
 		this.popup.close();
 	}
 
 	/**
 	 * Can show popup for this type
-	 * @param type
 	 */
 	private canShowPopupForType(type: string): boolean {
 		const data = this.j.o.popup[type.toLowerCase()];
@@ -147,7 +144,6 @@ export class inlinePopup extends Plugin {
 
 	/**
 	 * For some elements do not show popup
-	 * @param type
 	 */
 	private isExcludedTarget(type: string): boolean {
 		return splitArray(this.j.o.toolbarInlineDisableFor)

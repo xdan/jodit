@@ -33,8 +33,8 @@
 .jodit-ui-button-interaction() {
 	&:hover:not([disabled]) {
 		background-color: var(--color-button-background-hover);
-		outline: 0;
 		opacity: 1;
+		outline: 0;
 	}
 
 	&:active:not([disabled]),
@@ -75,17 +75,17 @@
 	}
 
 	&_context_menu &__text {
+		position: relative;
 		justify-content: left;
 		padding-left: var(--padding-default);
-		position: relative;
 
 		&::before {
-			content: '';
 			position: absolute;
-			border-left: 1px solid var(--color-border);
-			height: 35px;
 			top: calc(var(--padding-default) * -1);
 			left: 0;
+			height: 35px;
+			border-left: 1px solid var(--color-border);
+			content: '';
 		}
 	}
 
@@ -99,19 +99,19 @@
 }
 
 .jodit-ui-button_clear {
-	appearance: none;
-	padding: 0;
 	position: relative;
-	text-align: center;
-	background: 0 0;
-	text-transform: none;
-	font-style: normal;
-	box-shadow: none;
-	border: 0;
 	box-sizing: border-box;
-	user-select: none;
-	text-decoration: none;
+	padding: 0;
+	border: 0;
+	appearance: none;
+	background: 0 0;
+	box-shadow: none;
+	font-style: normal;
 	outline: 0;
+	text-align: center;
+	text-decoration: none;
+	text-transform: none;
+	user-select: none;
 }
 
 .jodit-ui-button-sizes {
@@ -161,8 +161,8 @@
 
 .jodit-ui-button-style {
 	display: inline-flex;
-	justify-content: center;
 	align-items: center;
+	justify-content: center;
 
 	padding: 0 var(--padding-default);
 	border-radius: var(--border-radius-default);

@@ -67,7 +67,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	}
 
 	/**
-	 * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
+	 * @property {string} ID attribute for source element, id add {id}_editor it's editor's id
 	 */
 	id: string;
 

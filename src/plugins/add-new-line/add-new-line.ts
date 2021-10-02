@@ -18,29 +18,31 @@ import {
 
 declare module '../../config' {
 	interface Config {
+		/**
+		 * Create helper
+		 */
 		addNewLine: boolean;
+
+		/**
+		 * What kind of tags it will be impact
+		 */
 		addNewLineTagsTriggers: HTMLTagNames[];
+
+		/**
+		 * On dbl click on empty space of editor it add new P element
+		 */
 		addNewLineOnDBLClick: boolean;
+
+		/**
+		 * Absolute delta between cursor position and edge(top or bottom)
+		 * of element when show line
+		 */
 		addNewLineDeltaShow: number;
 	}
 }
 
-/**
- * Create helper
- * @type {boolean}
- */
 Config.prototype.addNewLine = true;
-
-/**
- * On dbl click on empty space of editor it add new P element
- * @type {boolean}
- */
 Config.prototype.addNewLineOnDBLClick = true;
-
-/**
- * What kind of tags it will be impact
- * @type {string[]}
- */
 Config.prototype.addNewLineTagsTriggers = [
 	'table',
 	'iframe',
@@ -48,19 +50,12 @@ Config.prototype.addNewLineTagsTriggers = [
 	'hr',
 	'jodit'
 ];
-
-/**
- * Absolute delta between cursor position and edge(top or bottom)
- * of element when show line
- */
 Config.prototype.addNewLineDeltaShow = 20;
 
 const ns = 'addnewline';
 
 /**
  * Create helper for adding new paragraph(Jodit.defaultOptions.enter tag) before iframe, table or image
- *
- * @param {Jodit} editor
  */
 export class addNewLine extends Plugin {
 	private line = this.j.c.fromHTML(

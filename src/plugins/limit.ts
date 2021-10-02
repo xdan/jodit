@@ -17,25 +17,25 @@ import { autobind } from '../core/decorators';
 
 declare module '../config' {
 	interface Config {
+		/**
+		 * limit words count
+		 */
 		limitWords: false | number;
+
+		/**
+		 * limit chars count
+		 */
 		limitChars: false | number;
+
+		/**
+		 * limit html chars count
+		 */
 		limitHTML: false;
 	}
 }
 
-/**
- * @property {boolean | number} limitWords=false limit words count
- */
 Config.prototype.limitWords = false;
-
-/**
- * @property {boolean | number} limitChars=false limit chars count
- */
 Config.prototype.limitChars = false;
-
-/**
- * @property {boolean} limitHTML=false limit html chars count
- */
 Config.prototype.limitHTML = false;
 
 /**
@@ -70,9 +70,6 @@ export class limit extends Plugin {
 
 	/**
 	 * Action should be prevented
-	 *
-	 * @param event
-	 * @param inputText
 	 */
 	private shouldPreventInsertHTML(
 		event: KeyboardEvent | null = null,
@@ -98,8 +95,6 @@ export class limit extends Plugin {
 
 	/**
 	 * Check if some keypress or paste should be prevented
-	 * @param event
-	 * @private
 	 */
 	@autobind
 	private checkPreventKeyPressOrPaste(event: KeyboardEvent): void | false {
@@ -110,8 +105,6 @@ export class limit extends Plugin {
 
 	/**
 	 * Check if some external changing should be prevented
-	 * @param newValue
-	 * @param oldValue
 	 */
 	@autobind
 	private checkPreventChanging(newValue: string, oldValue: string) {
@@ -131,8 +124,6 @@ export class limit extends Plugin {
 
 	/**
 	 * Split text on words without technical characters
-	 * @param text
-	 * @private
 	 */
 	private splitWords(text: string): string[] {
 		return text

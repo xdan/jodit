@@ -16,7 +16,6 @@ import { throttle } from '../../core/decorators';
 declare module '../../config' {
 	interface Config {
 		/**
-		 * @type {boolean}
 		 * @example
 		 * ```javascript
 		 * var editor = new Jodit('#someid', {
@@ -59,7 +58,6 @@ export class sticky extends Plugin {
 
 	/**
 	 * Add sticky
-	 * @param toolbar
 	 */
 	addSticky = (toolbar: HTMLElement): void => {
 		if (!this.isToolbarSticked) {
@@ -84,7 +82,6 @@ export class sticky extends Plugin {
 
 	/**
 	 * Remove sticky behaviour
-	 * @param toolbar
 	 */
 	removeSticky = (toolbar: HTMLElement): void => {
 		if (this.isToolbarSticked) {
@@ -98,7 +95,6 @@ export class sticky extends Plugin {
 		}
 	};
 
-	/** @override */
 	afterInit(jodit: IJodit): void {
 		jodit.e
 			.on(
@@ -111,7 +107,6 @@ export class sticky extends Plugin {
 
 	/**
 	 * Scroll handler
-	 * @private
 	 */
 	@throttle()
 	private onScroll(): void {
@@ -155,7 +150,6 @@ export class sticky extends Plugin {
 
 	/**
 	 * Is mobile device
-	 * @private
 	 */
 	private isMobile(): boolean {
 		return (

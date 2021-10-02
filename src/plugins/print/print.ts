@@ -38,11 +38,6 @@ Config.prototype.controls.print = {
 				.on(editor.ow, 'mousemove', afterFinishPrint);
 
 			if (editor.o.iframe) {
-				/**
-				 * @event generateDocumentStructure.iframe
-				 * @property {Document} doc Iframe document
-				 * @property {Jodit} editor
-				 */
 				editor.e.fire(
 					'generateDocumentStructure.iframe',
 					mywindow.document,

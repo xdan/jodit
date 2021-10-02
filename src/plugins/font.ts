@@ -132,7 +132,6 @@ Config.prototype.controls.font = {
 
 /**
  * Process commands `fontsize` and `fontname`
- * @param {Jodit} editor
  */
 export function font(editor: IJodit): void {
 	editor

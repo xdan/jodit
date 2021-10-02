@@ -25,12 +25,14 @@ declare module '../../config' {
  * You can redefine hotkeys for some command
  *
  * @example
+ * ```js
  * var jodit = new Jodit('#editor', {
  *  commandToHotkeys: {
  *      bold: 'ctrl+shift+b',
  *      italic: ['ctrl+i', 'ctrl+b'],
  *  }
  * })
+ * ```
  */
 Config.prototype.commandToHotkeys = {
 	removeFormat: ['ctrl+shift+m', 'cmd+shift+m'],

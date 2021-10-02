@@ -27,31 +27,11 @@ import { Plugin } from '../../core/plugin';
 import { autobind } from '../../core/decorators';
 import { Dialog, UIForm } from '../../modules';
 
-/**
- * @property {object}  link `{@link link|link}` plugin's options
- * @property {boolean} link.followOnDblClick=true Follow lnk address after dblclick
- * @property {boolean} link.processVideoLink=true Replace inserted youtube/vimeo link toWYSIWYG `iframe`
- * @property {boolean} link.processPastedLink=true Wrap inserted link in &lt;a href="link">link&lt;/a>
- * @property {boolean} link.removeLinkAfterFormat=true When the button is pressed toWYSIWYG clean format,
- * if it was done on the link is removed like command `unlink`
- * @property {"input"|"select"|""} link.modeClassName="input" Use an input text to ask the classname or a select or not ask
- * @property {boolean} link.selectMultipleClassName=true Allow multiple choises (to use with modeClassName="select")
- * @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
- * @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
- * ex: [
- *			{ value: "", text: "" },
- *			{ value: "val1", text: "text1" },
- *			{ value: "val2", text: "text2" },
- *			{ value: "val3", text: "text3" }
- *		]
- */
-
 declare module '../../config' {
 	interface Config {
 		link: {
 			/**
 			 * Template for the link dialog form
-			 * @param editor
 			 */
 			formTemplate: (editor: IJodit) => string | HTMLElement | IUIForm;
 			formClassName?: string;
@@ -62,12 +42,12 @@ declare module '../../config' {
 			followOnDblClick: boolean;
 
 			/**
-			 * Replace inserted youtube/vimeo link toWYSIWYG `iframe`
+			 * Replace inserted youtube/vimeo link to `iframe`
 			 */
 			processVideoLink: boolean;
 
 			/**
-			 * Wrap inserted link in &lt;a href="link">link&lt;/a>
+			 * Wrap inserted link
 			 */
 			processPastedLink: boolean;
 
@@ -81,9 +61,24 @@ declare module '../../config' {
 			 */
 			openInNewTabCheckbox: boolean;
 
+			/**
+			 * Use an input text to ask the classname or a select or not ask
+			 */
 			modeClassName: 'input' | 'select';
+
+			/**
+			 * Allow multiple choises (to use with modeClassName="select")
+			 */
 			selectMultipleClassName: boolean;
+
+			/**
+			 * The size of the select (to use with modeClassName="select")
+			 */
 			selectSizeClassName?: number;
+
+			/**
+			 * The list of the option for the select (to use with modeClassName="select")
+			 */
 			selectOptionsClassName: IUIOption[];
 
 			hotkeys: string[];

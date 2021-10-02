@@ -13,12 +13,6 @@ import { INVISIBLE_SPACE } from '../../core/constants';
 
 /**
  * Insert default paragraph
- *
- * @param editor
- * @param [fake]
- * @param [wrapperTag]
- * @param [style]
- * @return {HTMLElement}
  */
 export const insertParagraph = (
 	editor: IJodit,
@@ -81,8 +75,6 @@ export class enter extends Plugin {
 					/**
 					 * Fired on processing `Enter` key. If return some value, plugin `enter` will do nothing.
 					 * if return false - prevent default Enter behavior
-					 *
-					 * @event beforeEnter
 					 */
 					const beforeEnter = editor.e.fire('beforeEnter', event);
 

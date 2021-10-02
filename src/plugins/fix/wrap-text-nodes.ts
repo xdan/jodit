@@ -34,7 +34,6 @@ export class WrapTextNodes extends Plugin {
 
 	/**
 	 * Process changed value
-	 * @private
 	 */
 	@autobind
 	private postProcessSetEditorValue() {
@@ -81,7 +80,6 @@ export class WrapTextNodes extends Plugin {
 
 	/**
 	 * Found Node which should be wrapped
-	 * @param n
 	 */
 	private isSuitableStart = (n: Nullable<Node>): boolean =>
 		(Dom.isText(n) && isString(n.nodeValue) && /[^\s]/.test(n.nodeValue)) ||
@@ -89,14 +87,12 @@ export class WrapTextNodes extends Plugin {
 
 	/**
 	 * Node should add in block element
-	 * @param n
 	 */
 	private isSuitable = (n: Nullable<Node>): boolean =>
 		Dom.isText(n) || this.isNotClosed(n);
 
 	/**
 	 * Some element which need append in block
-	 * @param n
 	 */
 	private isNotClosed = (n: Nullable<Node>): n is Element =>
 		Dom.isElement(n) && !(Dom.isBlock(n) || Dom.isTag(n, ['hr', 'style']));

@@ -23,7 +23,6 @@ export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 
 	/**
 	 * Apply callback for all parents
-	 * @param callback
 	 */
 	bubble(callback: (parent: IUIElement) => void): this;
 

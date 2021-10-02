@@ -89,7 +89,7 @@ interface IViewBased<T = IViewOptions>
 	isView: true;
 
 	/**
-	 * ID attribute for source element, id add {id}_editor it's editor's id
+	 * ID attribute for source element, id add \{id\}_editor it's editor's id
 	 */
 	id: string;
 

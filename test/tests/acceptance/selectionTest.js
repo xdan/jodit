@@ -585,9 +585,6 @@ describe('Selection Module Tests', function () {
 				sourceEditor: 'ace',
 				beautifyHTML: false,
 				events: {
-					/**
-					 * @this Events
-					 */
 					sourceEditorReady: function (jodit) {
 						jodit.setMode(Jodit.MODE_WYSIWYG);
 						jodit.setEditorValue(

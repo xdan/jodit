@@ -333,7 +333,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 	/**
 	 * Create and open popup list
-	 * @param control
 	 */
 	private openControlList(control: IControlTypeStrongList): void {
 		const controls: Controls = this.jodit.options.controls ?? {},

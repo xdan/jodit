@@ -444,10 +444,6 @@ describe('Link plugin', function () {
 							beforeLinkOpenPopup: function () {
 								popup_opened += 1;
 							},
-							/**
-							 *
-							 * @param {HTMLElement} popup_container
-							 */
 							afterLinkOpenPopup: function () {
 								popup_opened += 1;
 							}

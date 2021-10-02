@@ -22,9 +22,8 @@ import { Dom } from '../../../core/dom';
 /**
  * Build color picker
  *
- * @param {Jodit} editor
- * @param {function} callback Callback 'function (color) {}'
- * @param {string} [coldColor] Color value ex. #fff or rgb(123, 123, 123) or rgba(123, 123, 123, 1)
+ * @param callback - Callback 'function (color) \{\}'
+ * @param coldColor - Color value ex. #fff or rgb(123, 123, 123) or rgba(123, 123, 123, 1)
  * @example
  * ```javascript
  * $tabs = TabsWidget(editor, {

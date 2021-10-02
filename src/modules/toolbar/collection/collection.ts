@@ -123,7 +123,6 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 
 	/**
 	 * Set direction
-	 * @param direction
 	 */
 	setDirection(direction: 'rtl' | 'ltr'): void {
 		this.container.style.direction = direction;

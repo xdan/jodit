@@ -16,7 +16,6 @@ const key = 'table_processor_observer';
 const MOUSE_MOVE_LABEL = 'onMoveTableSelectCell';
 
 export class selectCells extends Plugin {
-	/** @override */
 	override requires = ['select'];
 
 	/**
@@ -26,7 +25,6 @@ export class selectCells extends Plugin {
 		return this.j.getInstance<Table>('Table', this.j.o);
 	}
 
-	/** @override */
 	protected afterInit(jodit: IJodit): void {
 		if (!jodit.o.table.allowCellSelection) {
 			return;
@@ -82,7 +80,6 @@ export class selectCells extends Plugin {
 
 	/**
 	 * Mouse click inside the table
-	 * @param cell
 	 */
 	@autobind
 	protected onStartSelection(cell: HTMLTableCellElement): void | false {
@@ -149,9 +146,6 @@ export class selectCells extends Plugin {
 
 	/**
 	 * Mouse move inside the table
-	 *
-	 * @param table
-	 * @param e
 	 */
 	private onMove(table: HTMLTableElement, e: MouseEvent): void {
 		if (this.j.o.readonly) {
@@ -178,7 +172,7 @@ export class selectCells extends Plugin {
 			this.j.lock(key);
 		}
 
-		this.unselectCells(table);
+		this.unselectCells();
 
 		const bound = Table.getSelectedBound(table, [cell, this.selectedCell]),
 			box = Table.formalMatrix(table);
@@ -300,14 +294,8 @@ export class selectCells extends Plugin {
 
 	/**
 	 * Remove selection for all cells
-	 *
-	 * @param [table]
-	 * @param [currentCell]
 	 */
-	private unselectCells(
-		table?: HTMLTableElement,
-		currentCell?: Nullable<HTMLTableCellElement>
-	) {
+	private unselectCells(currentCell?: Nullable<HTMLTableCellElement>) {
 		const module = this.module;
 		const cells = module.getAllSelectedCells();
 
@@ -322,7 +310,6 @@ export class selectCells extends Plugin {
 
 	/**
 	 * Execute custom commands for table
-	 * @param {string} command
 	 */
 	@autobind
 	private onExecCommand(command: string): false | void {
@@ -408,14 +395,13 @@ export class selectCells extends Plugin {
 
 	/**
 	 * Add some align after native command
-	 * @param command
 	 */
 	@autobind
 	private onAfterCommand(command: string): void {
 		if (/^justify/.test(command)) {
 			this.module
 				.getAllSelectedCells()
-				.forEach(elm => alignElement(command, elm, this.j));
+				.forEach(elm => alignElement(command, elm));
 		}
 	}
 

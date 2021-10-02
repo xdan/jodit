@@ -91,7 +91,6 @@ export class resizeCells extends Plugin {
 
 	/**
 	 * Click on resize handle
-	 * @param event
 	 */
 	@autobind
 	private onHandleMouseDown(event: MouseEvent) {
@@ -161,7 +160,6 @@ export class resizeCells extends Plugin {
 
 	/**
 	 * Mouse move after click on resize handle
-	 * @param event
 	 */
 	@autobind
 	private onMouseMove(event: MouseEvent) {
@@ -202,7 +200,6 @@ export class resizeCells extends Plugin {
 
 	/**
 	 * Mouse up every where after move and click
-	 * @param event
 	 */
 	@autobind
 	private onMouseUp(e: MouseEvent): void {
@@ -309,8 +306,7 @@ export class resizeCells extends Plugin {
 	/**
 	 * Memoize current cell
 	 *
-	 * @param ell
-	 * @param [wholeTable] true - resize whole table by left side,
+	 * @param wholeTable - resize whole table by left side,
 	 * false - resize whole table by right side, null - resize column
 	 */
 	private setWorkCell(
@@ -330,11 +326,6 @@ export class resizeCells extends Plugin {
 
 	/**
 	 * Calc helper resize handle position
-	 *
-	 * @param table
-	 * @param cell
-	 * @param [offsetX=0]
-	 * @param [delta=0]
 	 */
 	private calcHandlePosition(
 		table: HTMLTableElement,
@@ -438,7 +429,6 @@ export class resizeCells extends Plugin {
 
 	/**
 	 * Add to every Table listeners
-	 * @param table
 	 */
 	@autobind
 	private observe(table: HTMLTableElement) {
@@ -487,7 +477,6 @@ export class resizeCells extends Plugin {
 		this.createResizeHandle();
 	}
 
-	/** @ovveride */
 	beforeDestruct(jodit: IJodit): void {
 		if (jodit.events) {
 			jodit.e.off(this.j.ow, '.resize-cells');

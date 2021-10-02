@@ -52,10 +52,6 @@ function removeExtraFragments(html: string): string {
 
 /**
  * One insert point for clipboard plugins
- *
- * @param e
- * @param editor
- * @param html
  */
 export function pasteInsertHtml(
 	e: Nullable<PasteEvent>,

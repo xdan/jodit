@@ -105,8 +105,6 @@ Config.prototype.controls.paragraph = {
 
 /**
  * Process command - `formatblock`
- *
- * @param {Jodit} editor
  */
 export function formatBlock(editor: IJodit): void {
 	editor.registerButton({

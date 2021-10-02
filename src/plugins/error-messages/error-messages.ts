@@ -56,10 +56,8 @@ export function errorMessages(editor: IJodit): void {
 		/**
 		 * Show popup error in the bottom of editor
 		 *
-		 * @event errorMessage
-		 * @param message
-		 * @param className Additional class for status. Allow: info, error, success
-		 * @param timeout How many seconds show error
+		 * @param className - Additional class for status. Allow: info, error, success
+		 * @param timeout - How many seconds show error
 		 * options.showMessageErrorTime = 2000
 		 * @example
 		 * ```javascript

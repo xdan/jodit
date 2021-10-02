@@ -16,10 +16,6 @@ export function getSibling(node: Node, backspace: boolean): Nullable<Node> {
 
 /**
  * Returns the nearest non-empty neighbor
- *
- * @param node
- * @param left
- * @param root
  */
 export function findNotEmptyNeighbor(
 	node: Node,
@@ -36,9 +32,6 @@ export function findNotEmptyNeighbor(
 
 /**
  * Returns the nearest non-empty sibling
- *
- * @param node
- * @param backspace
  */
 export function findNotEmptySibling(
 	node: Node,
@@ -57,11 +50,6 @@ export function findNotEmptySibling(
 /**
  * Finds the nearest neighbor that would be in the maximum nesting depth.
  * Ie if neighbor `<DIV><SPAN>Text` then return Text node.
- *
- * @param node
- * @param right
- * @param root
- * @param onlyInlide
  */
 export function findMostNestedNeighbor(
 	node: Node,
@@ -94,9 +82,6 @@ export function findMostNestedNeighbor(
 /**
  * Moves the fake node inside the adjacent element if it lies next to it but not inside.
  * When the cursor is positioned in its place, it must be inside the element and not outside its border.
- *
- * @param node
- * @param backspace
  */
 export function normalizeCursorPosition(node: Node, backspace: boolean): void {
 	let sibling = Dom.findSibling(node, backspace),
@@ -116,37 +101,4 @@ export function normalizeCursorPosition(node: Node, backspace: boolean): void {
 		sibling = getSibling(node, backspace);
 		anotherSibling = getSibling(node, !backspace);
 	}
-}
-
-export function getSiblingBox(
-	node: HTMLElement,
-	backspace: boolean,
-	root: HTMLElement
-): Nullable<Node> {
-	while (node) {
-		const isBox = (elm: Nullable<Node>): elm is HTMLElement =>
-			Dom.isElement(elm) && !Dom.isTag(elm, INSEPARABLE_TAGS);
-
-		const getBox = (node: Element): Nullable<Node> => {
-			const child = backspace ? node.lastChild : node.firstChild;
-
-			if (isBox(child)) {
-				return getBox(child);
-			}
-
-			return isBox(node) ? node : null;
-		};
-
-		const sibling = findNotEmptySibling(node, backspace);
-
-		if (sibling) {
-			return isBox(sibling) ? getBox(sibling) : null;
-		}
-
-		if (node.parentElement && node.parentElement !== root) {
-			node = node.parentElement;
-		}
-	}
-
-	return null;
 }

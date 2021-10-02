@@ -33,8 +33,6 @@ Config.prototype.saveSelectionOnBlur = true;
 
 /**
  * Autofocus plugin - set focus inside the editor after reload
- *
- * @param {Jodit} editor
  */
 export function focus(editor: IJodit): void {
 	if (editor.o.saveSelectionOnBlur) {

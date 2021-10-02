@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/* eslint-disable tsdoc/syntax */
+
 import type { IDictionary, IViewComponent } from './types';
 
 interface IUploaderData {
@@ -132,9 +134,10 @@ export type BuildDataResult =
  * });
  * ```
  * @example
+ * ```js
  * // buildData can return Promise
  * // this example demonstrate how send file like as base64 text. Work only in Firefox and Chrome
- * var editor = new Jodit('#editor',  {
+ * var editor = new Jodit('#editor', {
  *      uploader: {
  *          url: 'index.php?action=fileUpload',
  *          queryBuild: function (data) {
@@ -159,6 +162,7 @@ export type BuildDataResult =
  *          }
  *      },
  *  });
+ * ```
  */
 export interface IUploaderOptions<T> {
 	url:
@@ -199,18 +203,6 @@ export interface IUploaderOptions<T> {
 export interface IUploader extends IViewComponent {
 	buildData(data: FormData | IDictionary<string> | string): BuildDataResult;
 
-	// send(
-	// 	data: FormData | IDictionary<string>,
-	// 	success: (resp: IUploaderAnswer) => void
-	// ): Promise<any>;
-
-	// sendFiles(
-	// 	files: FileList | File[] | null,
-	// 	handlerSuccess?: HandlerSuccess,
-	// 	handlerError?: HandlerError,
-	// 	process?: (form: FormData) => void
-	// ): Promise<any>;
-
 	bind(
 		form: HTMLElement,
 		handlerSuccess?: HandlerSuccess,
@@ -225,15 +217,11 @@ export interface IUploader extends IViewComponent {
 
 	/**
 	 * It sets the path for uploading files
-	 * @method setPath
-	 * @param {string} path
 	 */
 	setPath(path: string): void;
+
 	/**
 	 * It sets the source for connector
-	 *
-	 * @method setSource
-	 * @param {string} source
 	 */
 	setSource(source: string): void;
 }

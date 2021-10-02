@@ -102,6 +102,7 @@ Config.prototype.controls.classSpan = {
  *		}
  *	}
  * });
+ * ```
  */
 export class classSpan extends Plugin {
 	/** @override */

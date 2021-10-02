@@ -8,9 +8,6 @@ import { clearCenterAlign, css } from '../../core/helpers';
 
 /**
  * Align image
- *
- * @param image
- * @param align
  */
 export const hAlignElement = (
 	image: HTMLElement,

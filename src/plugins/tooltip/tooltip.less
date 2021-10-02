@@ -9,24 +9,25 @@
 
 .jodit-tooltip {
 	position: fixed;
+	z-index: var(--z-index-tooltip);
+	width: auto;
+	max-width: 120px;
+	padding: calc(var(--padding-default) / 4) calc(var(--padding-default) / 2);
+
 	background: #727171;
+	background-clip: padding-box;
+	border-radius: 2px;
 	color: #fff;
 
 	.font();
 
 	font-size: 11px;
 	line-height: 1.4;
-	white-space: normal;
-	padding: calc(var(--padding-default) / 4) calc(var(--padding-default) / 2);
-	z-index: var(--z-index-tooltip);
-	max-width: 120px;
-	border-radius: 2px;
-	width: auto;
+	opacity: 0;
+	text-rendering: optimizeLegibility;
 	transition: opacity 0.2s ease 0s;
 	user-select: none;
-	background-clip: padding-box;
-	text-rendering: optimizeLegibility;
-	opacity: 0;
+	white-space: normal;
 
 	@media (max-width: @screen-sm) {
 		display: none;

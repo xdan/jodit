@@ -11,7 +11,6 @@ import { Table } from '../../modules';
 
 /**
  * Process navigate keypressing in table cell
- * @param {Jodit} editor
  */
 export function tableKeyboardNavigation(editor: IJodit): void {
 	editor.e

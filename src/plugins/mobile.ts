@@ -24,17 +24,15 @@ declare module '../config' {
 		 * Mobile timeout for CLICK emulation
 		 */
 		mobileTapTimeout: number;
+
+		/**
+		 * After resize it will change buttons set for different sizes
+		 */
 		toolbarAdaptive: boolean;
 	}
 }
 
 Config.prototype.mobileTapTimeout = 300;
-
-/**
- * After resize it will change buttons set for different sizes
- *
- * @type {boolean}
- */
 Config.prototype.toolbarAdaptive = true;
 
 Config.prototype.controls.dots = {

@@ -11,6 +11,8 @@ import { camelCase } from '../core/helpers';
 import { Dom } from '../core/dom';
 import { Popup, UIElement } from '../core/ui';
 
+/* eslint-disable tsdoc/syntax */
+
 /**
  * A utility plugin that allows you to subscribe to a click/mousedown/touchstart/mouseup on an element in DOM order
  *
@@ -69,8 +71,7 @@ export class select extends Plugin {
 
 	/**
 	 *
-	 * @param e
-	 * @emits outsideClick(e) - when user clicked in the outside of editor
+	 * @event outsideClick(e) - when user clicked in the outside of editor
 	 */
 	@watch('ow:click')
 	protected onOutsideClick(e: MouseEvent): void {

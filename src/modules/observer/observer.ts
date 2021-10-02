@@ -12,15 +12,17 @@ import { Stack } from './stack';
 import { Command } from './command';
 import { debounce } from '../../core/decorators';
 
-/**
- * @property {object} observer module settings {@link Observer|Observer}
- * @property {int} observer.timeout=100 Delay on every change
- * @property {int} observer.maxHistoryLength=Infinity Limit of history length
- */
 declare module '../../config' {
 	interface Config {
 		observer: {
+			/**
+			 * Limit of history length
+			 */
 			maxHistoryLength: number;
+
+			/**
+			 * Delay on every change
+			 */
 			timeout: number;
 		};
 	}
@@ -33,11 +35,6 @@ Config.prototype.observer = {
 
 /**
  * The module monitors the status of the editor and creates / deletes the required number of Undo / Redo shots .
- * To track changes in use {@link https://developer.mozilla.org/ru/docs/Web/API/MutationObserver|MutationObserver}
- *
- * @module Observer
- * @see {@link Snapshot|Snapshot}
- * @params {Jodit} parent Jodit main object
  */
 export class Observer extends ViewComponent<IJodit> implements IObserver {
 	/** @override */

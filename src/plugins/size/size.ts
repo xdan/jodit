@@ -16,7 +16,6 @@ import { autobind } from '../../core/decorators';
  */
 @autobind
 export class size extends Plugin {
-	/** @override **/
 	protected afterInit(editor: IJodit): void {
 		editor.e
 			.on('setHeight.size', this.setHeight)
@@ -74,7 +73,6 @@ export class size extends Plugin {
 
 	/**
 	 * Manually change height
-	 * @param height
 	 */
 	private setHeight(height: number | string) {
 		if (isNumber(height)) {
@@ -100,7 +98,6 @@ export class size extends Plugin {
 
 	/**
 	 * Manually change width
-	 * @param width
 	 */
 	private setWidth(width: number | string) {
 		if (isNumber(width)) {

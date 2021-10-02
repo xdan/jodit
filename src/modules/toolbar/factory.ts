@@ -21,7 +21,6 @@ import { ToolbarContent } from './button/content';
 
 /**
  * Collection factory
- * @param jodit
  */
 export function makeCollection(
 	jodit: IViewBased,

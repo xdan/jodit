@@ -11,30 +11,29 @@ import { $$, attr, dataBind } from '../../core/helpers/';
 
 declare module '../../config' {
 	interface Config {
+		/**
+		 * Decorate media elements
+		 */
 		mediaInFakeBlock: boolean;
+
+		/**
+		 * Decorate media element with tag
+		 */
 		mediaFakeTag: string;
+
+		/**
+		 * Media tags
+		 */
 		mediaBlocks: string[];
 	}
 }
 
-/**
- * @property {string} mediaFakeTag='jodit-media' Decorate media element with tag
- */
 Config.prototype.mediaFakeTag = 'jodit-media';
-
-/**
- * @property {boolean} mediaInFakeBlock=true Decorate media elements
- */
 Config.prototype.mediaInFakeBlock = true;
-
-/**
- * @property {string[]} mediaBlocks=['video', 'audio'] Media tags
- */
 Config.prototype.mediaBlocks = ['video', 'audio'];
 
 /**
  * Process `video` and `audio`
- * @param editor
  */
 export function media(editor: IJodit): void {
 	const keyFake: string = 'jodit_fake_wrapper';

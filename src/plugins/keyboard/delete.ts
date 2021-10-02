@@ -18,7 +18,6 @@ import {
 	findNotEmptyNeighbor,
 	findNotEmptySibling,
 	getSibling,
-	getSiblingBox,
 	normalizeCursorPosition
 } from './helpers';
 import { Config } from '../../config';
@@ -127,9 +126,6 @@ export class Delete extends Plugin {
 
 	/**
 	 * Listener BackSpace or Delete button
-	 *
-	 * @param backspace
-	 * @param block
 	 */
 	private onDelete(backspace: boolean, block: boolean = false): false | void {
 		const sel = this.j.selection;
@@ -159,7 +155,7 @@ export class Delete extends Plugin {
 			if (
 				this.checkRemoveInseparableElement(fakeNode, backspace) ||
 				this.checkRemoveChar(fakeNode, backspace, block) ||
-				this.checkTableCell(fakeNode, backspace) ||
+				this.checkTableCell(fakeNode) ||
 				this.checkRemoveEmptyParent(fakeNode, backspace) ||
 				this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
 				this.checkJoinTwoLists(fakeNode, backspace) ||
@@ -213,9 +209,6 @@ export class Delete extends Plugin {
 	 * ```html
 	 * t|st
 	 * ```
-	 * @param fakeNode
-	 * @param backspace
-	 * @param block
 	 */
 	private checkRemoveChar(
 		fakeNode: Node,
@@ -351,7 +344,6 @@ export class Delete extends Plugin {
 
 	/**
 	 * Helper remove all empty inline parents
-	 * @param node
 	 */
 	private removeEmptyInlineParent(node: Node): void {
 		let parent = node.parentElement;
@@ -370,7 +362,6 @@ export class Delete extends Plugin {
 
 	/**
 	 * Helper add BR element inside empty block element
-	 * @param node
 	 */
 	private addBRInsideEmptyBlock(node: Node): void {
 		if (
@@ -393,8 +384,6 @@ export class Delete extends Plugin {
 	 * ```html
 	 * <p>first second | stop</p>
 	 * ```
-	 * @param fakeNode
-	 * @param backspace
 	 */
 	private checkRemoveInseparableElement(
 		fakeNode: Node,
@@ -430,10 +419,8 @@ export class Delete extends Plugin {
 	 * ```html
 	 * <table><tr><td>|test</td></tr></table>
 	 * ```
-	 * @param fakeNode
-	 * @param backspace
 	 */
-	private checkTableCell(fakeNode: Node, backspace: boolean): void | true {
+	private checkTableCell(fakeNode: Node): void | true {
 		const cell = fakeNode.parentElement;
 
 		if (Dom.isCell(cell)) {
@@ -452,8 +439,6 @@ export class Delete extends Plugin {
 	 * ```html
 	 * <p>first stop|</p>
 	 * ```
-	 * @param fakeNode
-	 * @param backspace
 	 */
 	private checkRemoveEmptyParent(
 		fakeNode: Node,
@@ -514,8 +499,6 @@ export class Delete extends Plugin {
 	/**
 	 * Try join two UL elements
 	 *
-	 * @param fakeNode
-	 * @param backspace
 	 * @example
 	 * ```html
 	 * <ul><li>one</li></ul>|<ol><li>two</li></ol>
@@ -564,8 +547,6 @@ export class Delete extends Plugin {
 	 * ```html
 	 * <p>|second stop</p>
 	 * ```
-	 * @param fakeNode
-	 * @param backspace
 	 */
 	private checkRemoveEmptyNeighbor(
 		fakeNode: Node,
@@ -588,9 +569,6 @@ export class Delete extends Plugin {
 
 	/**
 	 * Check if two separate elements can be connected
-	 *
-	 * @param fakeNode
-	 * @param backspace
 	 */
 	private checkJoinNeighbors(
 		fakeNode: Node,
@@ -693,100 +671,15 @@ export class Delete extends Plugin {
 		return false;
 	}
 
-	checkJoinNeighbors2(fakeNode: Node, backspace: boolean): true | void {
-		const parent = Dom.closest(fakeNode, Dom.isElement, this.root);
-
-		if (!parent) {
-			return;
-		}
-
-		let neighbor = getSiblingBox(parent, backspace, this.root);
-
-		if (!neighbor) {
-			return;
-		}
-
-		const startNeighbor = neighbor;
-
-		this.j.s.setCursorBefore(fakeNode);
-
-		if (!this.j.s.cursorInTheEdge(backspace, parent)) {
-			return;
-		}
-
-		if (
-			Dom.isTag(neighbor, ['ul', 'ol']) &&
-			!Dom.isTag(parent, ['ul', 'ol'])
-		) {
-			neighbor = backspace
-				? neighbor.lastElementChild
-				: neighbor.firstElementChild;
-		}
-
-		if (
-			parent &&
-			neighbor &&
-			startNeighbor &&
-			Dom.isElement(neighbor) &&
-			this.j.s.cursorInTheEdge(backspace, parent)
-		) {
-			Dom.moveContent(parent, neighbor, !backspace);
-
-			// <p><b>ab</b></p><p><b></b></p>
-
-			let next;
-
-			// FIXME
-			do {
-				next = findMostNestedNeighbor(
-					startNeighbor,
-					backspace,
-					this.root
-				);
-
-				if (next === parent) {
-					let nextParentNode: Nullable<Node> = next;
-
-					do {
-						const nextParent: Nullable<Node> =
-							nextParentNode.parentElement;
-						Dom.safeRemove(nextParentNode);
-						nextParentNode = nextParent;
-					} while (nextParentNode && Dom.isEmpty(nextParentNode));
-				}
-
-				Dom.safeRemove(next);
-			} while (next !== parent);
-
-			this.j.s.setCursorBefore(fakeNode);
-			return true;
-		}
-
-		// Try move cursor in the UL if it was in the edge of LI
-		if (
-			Dom.isTag(parent, 'li') &&
-			this.j.s.cursorInTheEdge(backspace, parent)
-		) {
-			call(backspace ? Dom.before : Dom.after, parent, fakeNode);
-			const result = this.checkJoinNeighbors(fakeNode, backspace);
-			call(!backspace ? Dom.append : Dom.prepend, parent, fakeNode);
-			this.j.s.setCursorBefore(fakeNode);
-
-			return result;
-		}
-	}
-
 	/**
 	 * For first item in list on backspace try move his content in new P
 	 *
-	 * @param fakeNode
-	 * @param backspace
 	 * @example
 	 * ```html
 	 * <ul><li>|first</li><li>second</li></ul>
 	 * ```
 	 * Result
-	 *  ```html
+	 * ```html
 	 * <p>|first</p><ul><li>second</li></ul>
 	 * ```
 	 */
@@ -822,7 +715,6 @@ export class Delete extends Plugin {
 
 	/**
 	 * Remove node and replace cursor position out of it
-	 * @param fakeNode
 	 */
 	private safeRemoveEmptyNode(fakeNode: Node) {
 		const { range } = this.j.s;

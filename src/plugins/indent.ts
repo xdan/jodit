@@ -16,7 +16,6 @@ Config.prototype.controls.indent = {
 
 /**
  * Get style rule key for current direction
- * @param direction
  */
 const getKey = (direction: string) =>
 	direction === 'rtl' ? 'marginRight' : 'marginLeft';
@@ -42,19 +41,17 @@ Config.prototype.controls.outdent = {
 
 declare module '../config' {
 	interface Config {
+		/**
+		 * The number of pixels to use for indenting the current line.
+		 */
 		indentMargin: number;
 	}
 }
 
-/**
- * The number of pixels to use for indenting the current line.
- * @type {number}
- */
 Config.prototype.indentMargin = 10;
 
 /**
  * Indents the line containing the selection or insertion point.
- * @param {Jodit} editor
  */
 export function indent(editor: IJodit): void {
 	const key = getKey(editor.o.direction);

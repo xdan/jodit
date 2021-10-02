@@ -21,9 +21,8 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	/**
 	 * Compare two snapshotes, if and htmls and selections match, then return true
 	 *
-	 * @param {SnapshotType} first - the first snapshote
-	 * @param {SnapshotType} second - second shot
-	 * @return {boolean}
+	 * @param first - the first snapshote
+	 * @param second - second shot
 	 */
 	static equal(first: SnapshotType, second: SnapshotType): boolean {
 		return (
@@ -31,11 +30,9 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 			JSON.stringify(first.range) === JSON.stringify(second.range)
 		);
 	}
+
 	/**
 	 * Calc count element before some node in parentNode. All text nodes are joined
-	 *
-	 * @param {Node | null} elm
-	 * @return {number}
 	 */
 	private static countNodesBeforeInParent(elm: Node): number {
 		if (!elm.parentNode) {
@@ -68,10 +65,6 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 
 	/**
 	 * Calc normal offset in joined text nodes
-	 *
-	 * @param {Node | null} elm
-	 * @param {number} offset
-	 * @return {number}
 	 */
 	private static strokeOffset(elm: Node | null, offset: number): number {
 		while (Dom.isText(elm)) {
@@ -87,10 +80,6 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 
 	/**
 	 * Calc whole hierarchy path before some element in editor's tree
-	 *
-	 * @param {Node | null} elm
-	 * @return {number[]}
-	 * @private
 	 */
 	private calcHierarchyLadder(elm: Node | null): number[] {
 		const counts: number[] = [];
@@ -126,10 +115,8 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	/**
 	 * Creates object a snapshot of editor: html and the current selection. Current selection calculate by
 	 * offset by start document
-	 *
-	 * @return {object}
-	 * {html: string, range: {startContainer: int, startOffset: int, endContainer: int, endOffset: int}} or
-	 * {html: string} without selection
+	 * \{html: string, range: \{startContainer: int, startOffset: int, endContainer: int, endOffset: int\}\} or
+	 * \{html: string\} without selection
 	 */
 	make(): SnapshotType {
 		const snapshot: SnapshotType = {
@@ -185,7 +172,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	/**
 	 * Restores the state of the editor of the snapshot. Rebounding is not only html but selected text
 	 *
-	 * @param {object} snapshot - snapshot of editor resulting from the `{@link Snapshot~make|make}`
+	 * @param snapshot - snapshot of editor resulting from the `{@link Snapshot~make|make}`
 	 * @see make
 	 */
 	restore(snapshot: SnapshotType): void {
@@ -219,7 +206,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	/**
 	 * Restore selection from snapshot
 	 *
-	 * @param {object} snapshot - snapshot of editor resulting from the `{@link Snapshot~make|make}`
+	 * @param snapshot - snapshot of editor resulting from the `{@link Snapshot~make|make}`
 	 * @see make
 	 */
 	restoreOnlySelection(snapshot: SnapshotType): void {

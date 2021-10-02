@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/* eslint-disable tsdoc/syntax */
+
 import type { CallbackFunction, IDestructible } from './types';
 
 interface IEventsNative extends IDestructible {
@@ -145,14 +147,13 @@ interface IEventsNative extends IDestructible {
 	 * dialog.open('Hello world!!!');
 	 * ```
 	 *  or you can trigger native browser listener
-	 *  ```javascript
+	 * ```javascript
 	 *  var events = new Jodit.modules.EventsNative();
 	 *  events.on(document.body, 'click',function (event) {
 	 *      alert('click on ' + event.target.id );
 	 *  });
 	 *  events.fire(document.body.querySelector('div'), 'click');
-	 *  ```
-	 *
+	 * ```
 	 */
 	fire(subjectOrEvents: string, ...args: any[]): any;
 	fire(

@@ -194,10 +194,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 	uploader!: IUploader;
 
-	/**
-	 *
-	 * @return {boolean}
-	 */
 	get isOpened(): boolean {
 		return this.dialog.isOpened && this.browser.style.display !== 'none';
 	}
@@ -205,9 +201,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	/**
 	 * It displays a message in the status bar of filebrowser
 	 *
-	 * @method status
-	 * @param {string|Error} message Message
-	 * @param {boolean} [success] true It will be shown a message light . If no option is specified ,
+	 * @param success - true It will be shown a message light . If no option is specified ,
 	 * ßan error will be shown the red
 	 * @example
 	 * ```javascript
@@ -246,7 +240,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 	/**
 	 * Close dialog
-	 * @method close
 	 */
 	close = (): void => {
 		this.dialog.close();
@@ -255,8 +248,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	/**
 	 * It opens a web browser window
 	 *
-	 * @param {Function} callback The function that will be called after the file selection in the browser
-	 * @param {boolean} [onlyImages=false] Show only images
+	 * @param callback - The function that will be called after the file selection in the browser
+	 * @param onlyImages - Show only images
 	 * @example
 	 * ```javascript
 	 * var fb = new Jodit.modules.FileBrowser(parent);
@@ -267,7 +260,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	 *     }
 	 * });
 	 * ```
-	 * @return Promise
 	 */
 	@autobind
 	open(

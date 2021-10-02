@@ -18,7 +18,7 @@ import {
 	css,
 	offset,
 	innerWidth,
-	markOwner,
+	markOwner
 } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { eventEmitter } from '../../core/global';
@@ -26,20 +26,30 @@ import { autobind, debounce, watch } from '../../core/decorators';
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table
- * @module Resizer
- * @params {Object} parent Jodit main object
  */
-/**
- * @property{boolean} useIframeResizer=true Use true frame for editing iframe size
- */
+
 declare module '../../config' {
 	interface Config {
+		/**
+		 * Use true frame for editing iframe size
+		 */
 		allowResizeTags: HTMLTagNames[];
 
 		resizer: {
+			/**
+			 * Show size
+			 */
 			showSize: boolean;
 			hideSizeTimeout: number;
+
+			/**
+			 * The minimum width for the editable element
+			 */
 			min_width: number;
+
+			/**
+			 * The minimum height for the item being edited
+			 */
 			min_height: number;
 		};
 	}
@@ -47,12 +57,6 @@ declare module '../../config' {
 
 Config.prototype.allowResizeTags = ['img', 'iframe', 'table', 'jodit'];
 
-/**
- * @property {object} resizer
- * @property {int} resizer.min_width=10 The minimum width for the editable element
- * @property {int} resizer.min_height=10 The minimum height for the item being edited
- * @property {boolean} resizer.showSize=true Show size
- */
 Config.prototype.resizer = {
 	showSize: true,
 	hideSizeTimeout: 1000,
@@ -64,7 +68,6 @@ const keyBInd = '__jodit-resizer_binded';
 
 /**
  * Resize table and img
- * @param {Jodit} editor
  */
 export class resizer extends Plugin {
 	private LOCK_KEY = 'resizer';
@@ -132,8 +135,6 @@ export class resizer extends Plugin {
 
 	/**
 	 * Click in the editor area
-	 * @param e
-	 * @protected
 	 */
 	@watch(':click')
 	protected onEditorClick(e: MouseEvent): void {
@@ -229,7 +230,6 @@ export class resizer extends Plugin {
 
 	private onResize = (e: MouseEvent) => {
 		if (this.isResized) {
-
 			if (!this.element) {
 				return;
 			}

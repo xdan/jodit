@@ -46,26 +46,9 @@ import { hAlignElement } from '../helpers';
 /**
  * Plug-in for image editing window
  *
- */
-/**
- * @property{object} image Plugin {@link Image|Image}'s options
- * @property{boolean} image.openOnDblClick=true Open editing dialog after double click on image
- * @property{boolean} image.editSrc=true Show edit 'src' input
- * @property{boolean} image.useImageEditor=true Show crop/resize btn
- * @property{boolean} image.editTitle=true Show edit 'title' input
- * @property{boolean} image.editAlt=true Show edit 'alt' input
- * @property{boolean} image.editLink=true Show edit image link's options
- * @property{boolean} image.editSize=true Show edit image size's inputs
- * @property{boolean} image.editMargins=true Show edit margin inputs
- * @property{boolean} image.editStyle=true Show style edit input
- * @property{boolean} image.editClass=true Show edit classNames input
- * @property{boolean} image.editId=true Show edit ID input
- * @property{boolean} image.editAlign=true Show Alignment selector
- * @property{boolean} image.showPreview=true Show preview image
- * @property{boolean} image.selectImageAfterClose=true Select image after close dialog
  * @example
  * ```javascript
- * var editor = new Jodit('#editor', {
+ * const editor = Jodit.make('#editor', {
  *     image: {
  *         editSrc: false,
  *         editLink: false
@@ -78,20 +61,76 @@ declare module '../../../config' {
 	interface Config {
 		image: {
 			dialogWidth: number;
+
+			/**
+			 * Open editing dialog after double click on image
+			 */
 			openOnDblClick: boolean;
+
+			/**
+			 * Show edit 'src' input
+			 */
 			editSrc: boolean;
+
+			/**
+			 * Show crop/resize btn
+			 */
 			useImageEditor: boolean;
+
+			/**
+			 * Show edit 'title' input
+			 */
 			editTitle: boolean;
+
+			/**
+			 * Show edit 'alt' input
+			 */
 			editAlt: boolean;
+
+			/**
+			 * Show edit image link's options
+			 */
 			editLink: boolean;
+
+			/**
+			 * Show edit image size's inputs
+			 */
 			editSize: boolean;
+
+			/**
+			 * Show edit margin inputs
+			 */
 			editMargins: boolean;
 			editBorderRadius: boolean;
+
+			/**
+			 * Show edit classNames input
+			 */
 			editClass: boolean;
+
+			/**
+			 * Show style edit input
+			 */
 			editStyle: boolean;
+
+			/**
+			 * Show edit ID input
+			 */
 			editId: boolean;
+
+			/**
+			 * Show Alignment selector
+			 */
 			editAlign: boolean;
+
+			/**
+			 * Show preview image
+			 */
 			showPreview: boolean;
+
+			/**
+			 * Select image after close dialog
+			 */
 			selectImageAfterClose: boolean;
 		};
 	}

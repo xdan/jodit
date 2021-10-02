@@ -18,51 +18,50 @@ import { debounce } from '../../core/decorators';
 /**
  * Show placeholder
  */
-
-/**
- * @property {boolean} showPlaceholder=true Show placeholder
- * @example
- * ```javascript
- * var editor = new Jodit('#editor', {
- *    showPlaceholder: false
- * });
- * ```
- */
 declare module '../../config' {
 	interface Config {
+		/**
+		 * Show placeholder
+		 * @example
+		 * ```javascript
+		 * var editor = new Jodit('#editor', {
+		 *    showPlaceholder: false
+		 * });
+		 * ```
+		 */
 		showPlaceholder: boolean;
+
+		/**
+		 * Use a placeholder from original input field, if it was set
+		 * @example
+		 * ```javascript
+		 * //<textarea id="editor" placeholder="start typing text ..." cols="30" rows="10"></textarea>
+		 * var editor = new Jodit('#editor', {
+		 *    useInputsPlaceholder: true
+		 * });
+		 * ```
+		 */
 		useInputsPlaceholder: boolean;
+
+		/**
+		 * Default placeholder
+		 * @example
+		 * ```javascript
+		 * var editor = new Jodit('#editor', {
+		 *    placeholder: 'start typing text ...'
+		 * });
+		 * ```
+		 */
 		placeholder: string;
 	}
 }
+
 Config.prototype.showPlaceholder = true;
-
-/**
- * @property useInputsPlaceholder=true use a placeholder from original input field, if it was set
- * @example
- * ```javascript
- * //<textarea id="editor" placeholder="start typing text ..." cols="30" rows="10"></textarea>
- * var editor = new Jodit('#editor', {
- *    useInputsPlaceholder: true
- * });
- * ```
- */
 Config.prototype.useInputsPlaceholder = true;
-
-/**
- * @property placeholder='Type something' Default placeholder
- * @example
- * ```javascript
- * var editor = new Jodit('#editor', {
- *    placeholder: 'start typing text ...'
- * });
- * ```
- */
 Config.prototype.placeholder = 'Type something';
 
 /**
  * Check if root node is empty
- * @param root
  */
 export function isEditorEmpty(root: HTMLElement): boolean {
 	if (!root.firstChild) {
@@ -101,8 +100,6 @@ export function isEditorEmpty(root: HTMLElement): boolean {
 
 /**
  * Show placeholder inside empty editor
- *
- * @param {Jodit} editor
  */
 export class placeholder extends Plugin {
 	private placeholderElm!: HTMLElement;

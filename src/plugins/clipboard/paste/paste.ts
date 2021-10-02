@@ -64,7 +64,6 @@ export class paste extends Plugin {
 
 	/**
 	 * Paste event handler
-	 * @param e
 	 */
 	@autobind
 	private onPaste(e: PasteEvent): void | false {
@@ -85,7 +84,6 @@ export class paste extends Plugin {
 
 	/**
 	 * Process before paste
-	 * @param event
 	 */
 	private customPasteProcess(e: PasteEvent): void | false {
 		if (!this.j.o.processPasteHTML) {
@@ -107,7 +105,6 @@ export class paste extends Plugin {
 
 	/**
 	 * Default paster process
-	 * @param event
 	 */
 	private defaultPasteProcess(e: PasteEvent): void {
 		const dt = getDataTransfer(e);
@@ -136,7 +133,6 @@ export class paste extends Plugin {
 
 	/**
 	 * Try if text is Word's document fragment and try process this
-	 * @param text
 	 */
 	private processWordHTML(e: PasteEvent, text: string): boolean {
 		if (this.j.o.processPasteFromWord && isHtmlFromWord(text)) {
@@ -166,8 +162,6 @@ export class paste extends Plugin {
 
 	/**
 	 * Process usual HTML text fragment
-	 * @param e
-	 * @param html
 	 */
 	private processHTML(e: PasteEvent, html: string): boolean {
 		if (this.j.o.askBeforePasteHTML) {
@@ -201,10 +195,6 @@ export class paste extends Plugin {
 
 	/**
 	 * Clear extra styles and tags from Word's pasted text
-	 *
-	 * @param e
-	 * @param html
-	 * @param insertType
 	 */
 	private insertFromWordByType(
 		e: PasteEvent,
@@ -242,10 +232,6 @@ export class paste extends Plugin {
 
 	/**
 	 * Insert HTML by option type
-	 *
-	 * @param e
-	 * @param html
-	 * @param action
 	 */
 	insertByType(e: PasteEvent, html: string | Node, action: InsertMode): void {
 		this.pasteStack.push({ html, action });
@@ -275,13 +261,6 @@ export class paste extends Plugin {
 
 	/**
 	 * Make command dialog
-	 *
-	 * @param msg
-	 * @param title
-	 * @param callback
-	 * @param clearButton
-	 * @param insertText
-	 * @private
 	 */
 	private askInsertTypeDialog(
 		msg: string,
@@ -373,76 +352,17 @@ export class paste extends Plugin {
 	}
 
 	/**
-	 * Replace all \n chars in plain text to br
-	 *
-	 * @param event
-	 * @param text
-	 * @param type
+	 * Replace all \\n chars in plain text to br
 	 */
 	@autobind
 	private onProcessPasteReplaceNl2Br(
-		event: PasteEvent,
+		ignore: PasteEvent,
 		text: string,
 		type: string
 	): string | void {
 		if (type === TEXT_PLAIN + ';' && !isHTML(text)) {
 			return nl2br(text);
 		}
-	}
-
-	/**
-	 * Deprecated browser helper.
-	 * TODO: need check all browser, now not used
-	 * @param event
-	 */
-	useFakeDivBox(event: PasteEvent): void {
-		const div = this.j.c.div('', {
-			tabindex: -1,
-			contenteditable: true,
-			style: {
-				left: -9999,
-				top: 0,
-				width: 0,
-				height: '100%',
-				lineHeight: '140%',
-				overflow: 'hidden',
-				position: 'fixed',
-				zIndex: 2147483647,
-				wordBreak: 'break-all'
-			}
-		});
-
-		this.j.container.appendChild(div);
-
-		this.j.s.save();
-
-		div.focus();
-		let tick: number = 0;
-
-		const removeFakeFocus = () => {
-			Dom.safeRemove(div);
-			this.j.selection && this.j.s.restore();
-		};
-
-		const waitData = () => {
-			tick += 1;
-
-			// If data has been processes by browser, process it
-			if (div.childNodes && div.childNodes.length > 0) {
-				const pastedData = div.innerHTML;
-				removeFakeFocus();
-				this.processHTML(event, pastedData);
-				return;
-			}
-
-			if (tick < 5) {
-				this.j.async.setTimeout(waitData, 20);
-			} else {
-				removeFakeFocus();
-			}
-		};
-
-		waitData();
 	}
 
 	/** @override **/

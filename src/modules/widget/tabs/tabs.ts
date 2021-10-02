@@ -19,10 +19,8 @@ export interface TabOption {
 /**
  * Build tabs system
  *
- * @param {Jodit} editor
- * @param {object} tabs PlainObject where 'key' will be tab's Title and `value` is tab's content
- * @param {object} state You can use for this param any HTML element for remembering active tab
- * @param {string} state.activeTab
+ * @param tabs - PlainObject where 'key' will be tab's Title and `value` is tab's content
+ * @param state - You can use for this param any HTML element for remembering active tab
  *
  * @example
  * ```javascript

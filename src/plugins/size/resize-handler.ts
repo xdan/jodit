@@ -51,7 +51,6 @@ export class resizeHandler extends Plugin {
 
 	/**
 	 * Start point
-	 * @private
 	 */
 	private start: IPointBound = {
 		x: 0,
@@ -62,7 +61,6 @@ export class resizeHandler extends Plugin {
 
 	/**
 	 * Handler: Click on handle - start resizing
-	 * @param e
 	 */
 	private onHandleResizeStart(e: MouseEvent) {
 		this.isResized = true;
@@ -81,7 +79,6 @@ export class resizeHandler extends Plugin {
 
 	/**
 	 * Handler: Mouse move after start resizing
-	 * @param e
 	 */
 	private onHandleResize(e: MouseEvent) {
 		if (!this.isResized) {
