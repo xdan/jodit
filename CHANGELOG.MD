@@ -13,7 +13,8 @@
 
 #### :boom: Breaking Change
 
-* Rename `Style` to `CommitStyle`
+-   Rename `Style` to `CommitStyle`
+
 ```js
 const editor = Jodit.make('#editor');
 
@@ -27,54 +28,68 @@ editor.execCommand('selectall');
 style.apply(editor);
 ```
 
-* `Dom` refactoring: from `isNode`,`isElement`,`isHTMLElement` removed `Window` argument.
+-   `Dom` refactoring: from `isNode`,`isElement`,`isHTMLElement` removed `Window` argument.
 
 Before
+
 ```js
-const editor = Jodit.make('#editor', {iframe: true});
-Dom.isNode({}, editor.ow)// false
-Dom.isNode(document.body, window)// true
-Dom.isNode(document.body, editor.ow)// true
-Dom.isNode(editor.od.body, editor.ow)// true
-Dom.isNode(editor.ed.body, editor.ow)// false
+const editor = Jodit.make('#editor', { iframe: true });
+Dom.isNode({}, editor.ow); // false
+Dom.isNode(document.body, window); // true
+Dom.isNode(document.body, editor.ow); // true
+Dom.isNode(editor.od.body, editor.ow); // true
+Dom.isNode(editor.ed.body, editor.ow); // false
 ```
+
 Now
+
 ```js
-const editor = Jodit.make('#editor', {iframe: true});
-Dom.isNode({})// false
-Dom.isNode(document.body)// true
-Dom.isNode(document.body)// true
-Dom.isNode(editor.od.body)// true
-Dom.isNode(editor.ed.body)// true
+const editor = Jodit.make('#editor', { iframe: true });
+Dom.isNode({}); // false
+Dom.isNode(document.body); // true
+Dom.isNode(document.body); // true
+Dom.isNode(editor.od.body); // true
+Dom.isNode(editor.ed.body); // true
 ```
 
 #### :rocket: New Feature
 
-* Added `KeyArrowOutside`, allowing to go outside of an inline element if there is no other element after that.
+-   Added `KeyArrowOutside`, allowing to go outside of an inline element if there is no other element after that.
+-   Dictionary of variable values in css, a complete list can be found here https://github.com/xdan/jodit/blob/master/src/styles/variables.less#L25
+    ```js
+    const editor = Jodit.make('#editor', {
+    	styleValues: {
+    		'color-icon': '#0f0',
+    		'color-text': 'red',
+    		colorBorder: 'black',
+    		'color-panel': 'blue'
+    	}
+    });
+    ```
 
 #### :bug: Bug Fix
 
-* [Toolbar buttons are not read by screen reader correctly #725](https://github.com/xdan/jodit/issues/725)
-* [Bug : table & background color #722] ttps://github.com/xdan/jodit/issues/722
-* [Eraser delete "<a>" tag! #705](https://github.com/xdan/jodit/issues/705)
+-   [Toolbar buttons are not read by screen reader correctly #725](https://github.com/xdan/jodit/issues/725)
+-   [Bug : table & background color #722] ttps://github.com/xdan/jodit/issues/722
+-   [Eraser delete "<a>" tag! #705](https://github.com/xdan/jodit/issues/705)
 
 ## 3.7.1
 
 #### :boom: Breaking Change
 
-* Update Typescript 4.3.2 - and used override keyword.
-* `noImplicitOverride` set true.
-* Enable `@typescript-eslint/explicit-module-boundary-types`
-* Remove `type` helper. Buy `jQuery` - it was your last part.
+-   Update Typescript 4.3.2 - and used override keyword.
+-   `noImplicitOverride` set true.
+-   Enable `@typescript-eslint/explicit-module-boundary-types`
+-   Remove `type` helper. Buy `jQuery` - it was your last part.
 
 #### :bug: Bug Fix
 
-* [hovering over the text editor triggers hover over source button instantly #138](https://github.com/jodit/jodit-react/issues/138)
-* Allow insert in image dialog - relative path
+-   [hovering over the text editor triggers hover over source button instantly #138](https://github.com/jodit/jodit-react/issues/138)
+-   Allow insert in image dialog - relative path
 
 #### :rocket: New Feature
 
-* Added `idle` decorator - allow wrap class method in `requestIdleCallback`
+-   Added `idle` decorator - allow wrap class method in `requestIdleCallback`
 
 ```ts
 @component
@@ -93,6 +108,7 @@ for (let i = 0; i < 5; i += 1) {
 ```
 
 Output
+
 ```
 1
 2
@@ -105,9 +121,9 @@ Some data
 
 #### :bug: Bug Fix
 
-* Fixed table cells selection
-* [isUrl add rtmp schema #677](https://github.com/xdan/jodit/issues/677)
-* [The editor is very slow when working with tables in IE #673](https://github.com/xdan/jodit/issues/673)
+-   Fixed table cells selection
+-   [isUrl add rtmp schema #677](https://github.com/xdan/jodit/issues/677)
+-   [The editor is very slow when working with tables in IE #673](https://github.com/xdan/jodit/issues/673)
 
 ## 3.6.17
 
@@ -539,11 +555,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
 -   ex: [
--                         	{ value: "", text: "" },
--                         	{ value: "val1", text: "text1" },
--                         	{ value: "val2", text: "text2" },
--                         	{ value: "val3", text: "text3" }
--                         ]
+-                           	{ value: "", text: "" },
+-                           	{ value: "val1", text: "text1" },
+-                           	{ value: "val2", text: "text2" },
+-                           	{ value: "val3", text: "text3" }
+-                           ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

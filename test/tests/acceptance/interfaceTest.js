@@ -3,9 +3,43 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Test interface', function () {
+	describe('Style values', function () {
+		describe('Set styleValues dictionary', () => {
+			it('Should apply keys of it ass custom properties in CSS in instance', () => {
+				const getKey = (elm, key) =>
+					window
+						.getComputedStyle(elm)
+						.getPropertyValue('--jd-' + key)
+						.trim();
+
+				const editor = getJodit({
+					styleValues: {
+						'color-text': '#F9D90F',
+						colorBorder: '#1AB942',
+						'color-Panel': '#E23DAA'
+					}
+				});
+
+				expect(getKey(editor.container, 'color-text')).eq('#F9D90F');
+				expect(getKey(editor.container, 'color-border')).eq('#1AB942');
+				expect(getKey(editor.container, 'color-panel')).eq('#E23DAA');
+
+				expect(getKey(document.body, 'color-text')).eq('#222222'); // only for instance
+				expect(
+					Jodit.modules.Helpers.normalizeColor(
+						window.getComputedStyle(
+							editor.toolbar.container.parentNode
+						).background
+					)
+				).eq('#E23DAA'); // only for instance
+			});
+		});
+	});
+
 	describe('About dialog', function () {
-		it('Should conteins License element', function () {
+		it('Should contains License element', function () {
 			const editor = getJodit({
 				license: '111',
 				toolbarAdaptive: false

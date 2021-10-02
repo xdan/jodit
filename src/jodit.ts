@@ -51,7 +51,8 @@ import {
 	callPromise,
 	toArray,
 	markAsAtomic,
-	ConfigProto
+	ConfigProto,
+	kebabCase
 } from './core/helpers/';
 
 import { Storage } from './core/storage/';
@@ -1212,6 +1213,13 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		container.classList.add('jodit');
 		container.classList.add('jodit-container');
 		container.classList.add(`jodit_theme_${this.o.theme || 'default'}`);
+
+		const { styleValues } = this.o;
+
+		Object.keys(styleValues).forEach(key => {
+			const property = kebabCase(key);
+			container.style.setProperty(`--jd-${property}`, styleValues[key]);
+		});
 
 		container.setAttribute('contenteditable', 'false');
 
