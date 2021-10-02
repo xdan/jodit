@@ -8,7 +8,7 @@ import './search.less';
 
 import type {
 	ISelectionRange,
-	markerInfo,
+	MarkerInfo,
 	IJodit,
 	Nullable,
 	IControlType,
@@ -194,7 +194,7 @@ export class search extends Plugin {
 
 	private isOpened: boolean = false;
 
-	private selInfo: Nullable<markerInfo[]> = null;
+	private selInfo: Nullable<MarkerInfo[]> = null;
 	private current: Nullable<Node> = null;
 
 	private eachMap = (

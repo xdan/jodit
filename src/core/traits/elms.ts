@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IComponent, IContainer } from '../../types';
+import type { IComponent, IContainer, IElms } from '../../types';
 import { toArray } from '../helpers/array/to-array';
 
-export abstract class Elms {
+export abstract class Elms implements IElms {
 	abstract getElm(elementName: string): HTMLElement;
 	abstract getElms(elementName: string): HTMLElement[];
 

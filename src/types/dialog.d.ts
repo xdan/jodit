@@ -6,7 +6,7 @@
 
 import type { IViewBased, IViewOptions } from './view';
 import type { IComponent, IContainer } from './types';
-import type { Mods } from '../core/traits';
+import type { IMods } from './traits';
 
 export interface IDialogOptions extends IViewOptions {
 	resizable?: boolean;
@@ -22,7 +22,7 @@ export type Content =
 	| ContentItem[]
 	| Array<ContentItem | ContentItem[]>;
 
-export interface IDialog extends IComponent, IContainer, Mods, IViewBased {
+export interface IDialog extends IComponent, IContainer, IMods, IViewBased {
 	isOpened: boolean;
 	dialog: HTMLElement;
 

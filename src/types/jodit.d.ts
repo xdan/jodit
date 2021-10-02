@@ -6,10 +6,10 @@
 
 import { IViewOptions, IViewWithToolbar } from './view';
 import type { Config } from '../config';
-import type { Select } from '../core/selection/select';
 import type { CustomCommand, ICreate, IObserver, IStatusBar, Modes } from './';
 import type { IUploader } from './uploader';
 import type { IFileBrowser } from './file-browser';
+import { ISelect } from './select';
 
 interface IWorkPlace {
 	editor: HTMLDivElement | HTMLBodyElement;
@@ -64,10 +64,7 @@ interface IJodit extends IViewWithToolbar {
 
 	createInside: ICreate;
 
-	/**
-	 * @property {Select} selection
-	 */
-	selection: Select;
+	selection: ISelect;
 
 	/**
 	 * Alias for this.selection

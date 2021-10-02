@@ -178,18 +178,6 @@ export interface SnapshotType {
 	range: RangeType;
 }
 
-export interface markerInfo {
-	startId: string;
-	endId?: string;
-	collapsed: boolean;
-	startMarker: string;
-	endMarker?: string;
-}
-
-/**
- * @property {ImageEditorOptions} imageeditor module's options
- */
-
 export interface ImageEditorOptions {
 	min_width: number;
 	min_height: number;

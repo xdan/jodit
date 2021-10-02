@@ -11,8 +11,6 @@ const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 
 /**
  * Change editor's size after load all images
- *
- * @param {Jodit} editor
  */
 export function imageProcessor(editor: IJodit): void {
 	editor.e.on(

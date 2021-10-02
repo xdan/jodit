@@ -12,7 +12,7 @@ import type {
 	IStatusBar,
 	IViewOptions,
 	IWorkPlace,
-	markerInfo,
+	MarkerInfo,
 	Modes,
 	IFileBrowser,
 	IJodit,
@@ -174,7 +174,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	private commands: IDictionary<Array<CustomCommand<IJodit>>> = {};
 
-	private __selectionLocked: markerInfo[] | null = null;
+	private __selectionLocked: MarkerInfo[] | null = null;
 
 	private __wasReadOnly = false;
 

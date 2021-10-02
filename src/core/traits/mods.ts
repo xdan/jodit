@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IComponent, IContainer, IDictionary } from '../../types';
+import type { IComponent, IContainer, IDictionary, IMods } from '../../types';
 import { toArray } from '../helpers/array/to-array';
 
-export abstract class Mods {
+export abstract class Mods implements IMods {
 	abstract mods: IDictionary<string | boolean | null>;
 	abstract componentName: string;
 	abstract container: HTMLElement;
@@ -53,7 +53,6 @@ export abstract class Mods {
 
 	/**
 	 * Get BEM class modification value
-	 * @param name
 	 */
 	static getMod(
 		this: IComponent & IContainer & Mods,

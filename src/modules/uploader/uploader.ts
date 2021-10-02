@@ -50,11 +50,10 @@ declare module '../../config' {
  *
  * @tutorial {@link http://xdsoft.net/jodit/doc/tutorial-uploader-settings.html|Uploader options and
  * Drag and Drop files}
- * @module Uploader
  * @params {Object} parent Jodit main object
  */
 /**
- * @property {boolean} enableDragAndDropFileToEditor=true Enable drag and drop file toWYSIWYG editor
+ * @property {boolean} - enableDragAndDropFileToEditor=true Enable drag and drop file toWYSIWYG editor
  */
 Config.prototype.enableDragAndDropFileToEditor = true;
 

@@ -16,9 +16,6 @@ import type { IViewBased, IViewOptions } from './view';
 
 /**
  * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new
- *
- * @module FileBrowser
- * @params {Object} parent Jodit main object
  */
 export interface ISourceFile {
 	type: 'folder' | 'image' | 'file';

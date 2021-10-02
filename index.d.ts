@@ -29,6 +29,7 @@ declare global {
 		caretRangeFromPoint(x: number, y: number): Range;
 	}
 
+	// https://github.com/xdan/jodit/issues/718
 	interface ShadowRoot {
 		getSelection(): ReturnType<Window['getSelection']>;
 	}

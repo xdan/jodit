@@ -4,23 +4,25 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type {
+	CanUndef,
+	HTMLTagNames,
+	IDictionary,
+	IJodit,
+	ISelect,
+	IStyle,
+	MarkerInfo,
+	Nullable
+} from '../../types';
+
 import * as consts from '../constants';
+
 import {
 	INSEPARABLE_TAGS,
 	INVISIBLE_SPACE,
 	INVISIBLE_SPACE_REG_EXP_END as INV_END,
 	INVISIBLE_SPACE_REG_EXP_START as INV_START
 } from '../constants';
-
-import type {
-	CanUndef,
-	HTMLTagNames,
-	IDictionary,
-	IJodit,
-	IStyle,
-	markerInfo,
-	Nullable
-} from '../../types';
 import { Dom } from '../dom';
 
 import {
@@ -36,9 +38,7 @@ import {
 import { CommitStyle } from './style/commit-style';
 import { autobind } from '../decorators';
 
-type WindowSelection = Selection | null;
-
-export class Select {
+export class Select implements ISelect {
 	constructor(readonly jodit: IJodit) {
 		jodit.e.on('removeMarkers', () => {
 			this.removeMarkers();
@@ -72,21 +72,21 @@ export class Select {
 	/**
 	 * Editor Window - it can be different for iframe mode
 	 */
-	get win(): Window {
+	private get win(): Window {
 		return this.j.ew;
 	}
 
 	/**
 	 * Current jodit editor doc
 	 */
-	get doc(): Document {
+	private get doc(): Document {
 		return this.j.ed;
 	}
 
 	/**
 	 * Return current selection object
 	 */
-	get sel(): WindowSelection {
+	get sel(): ISelect['sel'] {
 		if (this.j.o.shadowRoot) {
 			return this.j.o.shadowRoot.getSelection();
 		}
@@ -143,7 +143,6 @@ export class Select {
 
 	/**
 	 * Remove node element from editor
-	 * @param node
 	 */
 	removeNode(node: Node): void {
 		if (!Dom.isOrContains(this.j.editor, node, true)) {
@@ -321,9 +320,9 @@ export class Select {
 
 	/**
 	 * Saves selections using marker invisible elements in the DOM.
-	 * @param [silent] Do not change current range
+	 * @param silent - Do not change current range
 	 */
-	save(silent: boolean = false): markerInfo[] {
+	save(silent: boolean = false): MarkerInfo[] {
 		if (this.hasMarkers) {
 			return [];
 		}
@@ -334,7 +333,7 @@ export class Select {
 			return [];
 		}
 
-		const info: markerInfo[] = [],
+		const info: MarkerInfo[] = [],
 			length: number = sel.rangeCount,
 			ranges: Range[] = [];
 
@@ -551,7 +550,7 @@ export class Select {
 	 */
 	insertNode(
 		node: Node,
-		insertCursorAfter = true,
+		insertCursorAfter: boolean = true,
 		fireChange: boolean = true
 	): void {
 		this.errorNode(node);
@@ -747,7 +746,7 @@ export class Select {
 	 * Call callback for all selection node
 	 * @param callback
 	 */
-	eachSelection = (callback: (current: Node) => void): void => {
+	eachSelection(callback: (current: Node) => void): void {
 		const sel = this.sel;
 
 		if (sel && sel.rangeCount) {
@@ -820,7 +819,7 @@ export class Select {
 
 			nodes.forEach(forEvery);
 		}
-	};
+	}
 
 	/**
 	 * Checks if the cursor is at the end(start) block
