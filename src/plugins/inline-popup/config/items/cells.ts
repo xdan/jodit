@@ -18,61 +18,41 @@ const cmd = (control: IControlType): string =>
 export default [
 	{
 		name: 'brush',
-		popup: (editor): void | false | HTMLElement => {
+		popup: (editor, _, _1, close): void | false | HTMLElement => {
 			if (!isJoditObject(editor)) {
 				return;
 			}
 
-			const selected: HTMLTableCellElement[] = editor
-				.getInstance<Table>('Table', editor.o)
-				.getAllSelectedCells();
+			const tableModule = editor.getInstance<Table>('Table', editor.o),
+				selected = tableModule.getAllSelectedCells();
 
 			if (!selected.length) {
 				return false;
 			}
 
-			const color = css(selected[0], 'color') as string,
-				bg_color = css(selected[0], 'background-color') as string,
-				br_color = css(selected[0], 'border-color') as string,
-				$bg = ColorPickerWidget(
+			const makeColorPicker = (key: string) =>
+				ColorPickerWidget(
 					editor,
 					(value: string) => {
-						selected.forEach((cell: HTMLTableCellElement) => {
-							css(cell, 'background-color', value);
+						selected.forEach(cell => {
+							css(cell, key, value);
 						});
 
+						editor.lock();
 						editor.setEditorValue();
+						close();
+						editor.unlock();
 					},
-					bg_color
-				),
-				$cl = ColorPickerWidget(
-					editor,
-					(value: string) => {
-						selected.forEach((cell: HTMLTableCellElement) => {
-							css(cell, 'color', value);
-						});
-						editor.setEditorValue();
-						// close();
-					},
-					color
+					css(selected[0], key) as string
 				);
 
-			const $br = ColorPickerWidget(
-				editor,
-				(value: string) => {
-					selected.forEach((cell: HTMLTableCellElement) => {
-						css(cell, 'border-color', value);
-					});
-					editor.setEditorValue();
-					// close();
-				},
-				br_color
-			);
-
 			return TabsWidget(editor, [
-				{ name: 'Background', content: $bg },
-				{ name: 'Text', content: $cl },
-				{ name: 'Border', content: $br }
+				{
+					name: 'Background',
+					content: makeColorPicker('background-color')
+				},
+				{ name: 'Text', content: makeColorPicker('color') },
+				{ name: 'Border', content: makeColorPicker('border-color') }
 			]);
 		},
 		tooltip: 'Background'

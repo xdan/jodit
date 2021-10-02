@@ -12,9 +12,7 @@ import { $$, scrollIntoViewIfNeeded } from '../../core/helpers';
 
 Config.prototype.table = {
 	allowCellSelection: true,
-	selectionCellStyle:
-		'border: 1px double #1e88e5 !important;' +
-		'background-color: rgba(158, 207, 250, 0.3)!important',
+	selectionCellStyle: 'border: 1px double #1e88e5 !important;',
 
 	allowCellResize: true,
 	useExtraClassesOptions: false

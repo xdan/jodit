@@ -97,6 +97,16 @@ export class Table extends ViewComponent<IJodit> {
 		}
 	}
 
+	clearSelection(): void {
+		const cells = this.getAllSelectedCells();
+
+		if (cells.length) {
+			cells.forEach(cell => {
+				this.removeSelection(cell);
+			});
+		}
+	}
+
 	/**
 	 * Returns array of selected cells
 	 */

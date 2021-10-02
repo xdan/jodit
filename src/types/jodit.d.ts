@@ -34,7 +34,7 @@ interface IJodit extends IViewWithToolbar {
 
 	getNativeEditorValue(): string;
 	getEditorValue(removeSelectionMarkers?: boolean): string;
-	setEditorValue(value?: string, notChangeStack?: boolean): void;
+	setEditorValue(value?: string): void;
 
 	getReadOnly(): boolean;
 	setReadOnly(enable: boolean): void;

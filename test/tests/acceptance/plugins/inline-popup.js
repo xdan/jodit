@@ -191,22 +191,24 @@ describe('Text Inline Popup plugin', function () {
 						clickTrigger('brush', popup);
 
 						const popupColor = getOpenedPopup(editor);
+
 						expect(
 							popupColor &&
 								window.getComputedStyle(popupColor).display
 						).equals('block');
 
 						simulateEvent(
-							'mousedown',
-							0,
-							popupColor.querySelector('a')
+							['mousedown', 'mouseup', 'click'],
+							popupColor.querySelector('a[data-color="#0000FF"]')
 						);
 
 						expect(
 							Jodit.modules.Helpers.normalizeColor(
 								td.style.backgroundColor
 							)
-						).equals('#000000');
+						).equals('#0000FF');
+
+						expect(popupColor.parentNode).is.null;
 					});
 				});
 			});
