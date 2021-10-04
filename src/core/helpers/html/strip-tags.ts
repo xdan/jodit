@@ -49,13 +49,12 @@ export function stripTags(
  * Removes dangerous constructs from HTML
  */
 export function safeHTML(box: HTMLElement): void {
-	const removeOnError = (elm: HTMLElement) =>
-			Dom.isElement(elm) && attr(elm, 'onerror', null),
-		safeLink = (elm: HTMLElement) => {
-			if (!Dom.isElement(elm)) {
-				return;
-			}
+	if (!Dom.isElement(box)) {
+		return;
+	}
 
+	const removeOnError = (elm: HTMLElement) => attr(elm, 'onerror', null),
+		safeLink = (elm: HTMLElement) => {
 			const href = elm.getAttribute('href');
 
 			if (href && href.trim().indexOf('javascript') === 0) {
@@ -63,11 +62,9 @@ export function safeHTML(box: HTMLElement): void {
 			}
 		};
 
-	if (Dom.isElement(box)) {
-		removeOnError(box);
-		safeLink(box);
+	removeOnError(box);
+	safeLink(box);
 
-		$$('[onerror]', box).forEach(removeOnError);
-		$$<HTMLAnchorElement>('a[href^="javascript"]', box).forEach(safeLink);
-	}
+	$$('[onerror]', box).forEach(removeOnError);
+	$$<HTMLAnchorElement>('a[href^="javascript"]', box).forEach(safeLink);
 }
