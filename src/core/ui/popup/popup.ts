@@ -29,7 +29,7 @@ import {
 } from '../../helpers';
 import { eventEmitter, getContainer } from '../../global';
 import { UIElement } from '../element';
-import { autobind } from '../../decorators';
+import { autobind, throttle } from '../../decorators';
 
 type getBoundFunc = () => IBound;
 
@@ -106,9 +106,6 @@ export class Popup extends UIElement implements IPopup {
 
 	/**
 	 * Open popup near with some bound
-	 *
-	 * @param getBound
-	 * @param keepPosition
 	 */
 	open(getBound: getBoundFunc, keepPosition: boolean = false): this {
 		markOwner(this.jodit, this.container);
@@ -135,7 +132,6 @@ export class Popup extends UIElement implements IPopup {
 
 	/**
 	 * Calculate static bound for point
-	 * @param getBound
 	 */
 	protected getKeepBound(getBound: getBoundFunc): getBoundFunc {
 		const oldBound = getBound();
@@ -191,6 +187,12 @@ export class Popup extends UIElement implements IPopup {
 		this.childrenPopups.forEach(popup => popup.updatePosition());
 
 		return this;
+	}
+
+	@throttle(10)
+	@autobind
+	throttleUpdatePosition(): void {
+		this.updatePosition();
 	}
 
 	/**
@@ -333,7 +335,7 @@ export class Popup extends UIElement implements IPopup {
 	}
 
 	private addGlobalListeners(): void {
-		const up = this.updatePosition,
+		const up = this.throttleUpdatePosition,
 			ow = this.ow;
 
 		eventEmitter.on('closeAllPopups', this.close);
@@ -351,10 +353,14 @@ export class Popup extends UIElement implements IPopup {
 			.on(this.container, 'scroll mousewheel', up)
 			.on(ow, 'scroll', up)
 			.on(ow, 'resize', up);
+
+		Dom.up(this.j.container, box => {
+			box && this.j.e.on(box, 'scroll mousewheel', up);
+		});
 	}
 
 	private removeGlobalListeners(): void {
-		const up = this.updatePosition,
+		const up = this.throttleUpdatePosition,
 			ow = this.ow;
 
 		eventEmitter.off('closeAllPopups', this.close);
@@ -373,6 +379,10 @@ export class Popup extends UIElement implements IPopup {
 			.off(this.container, 'scroll mousewheel', up)
 			.off(ow, 'scroll', up)
 			.off(ow, 'resize', up);
+
+		Dom.up(this.j.container, box => {
+			box && this.j.e.off(box, 'scroll mousewheel', up);
+		});
 	}
 
 	/**
