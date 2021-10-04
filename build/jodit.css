@@ -1,14 +1,14 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.8.2
+ * Version: v3.8.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
 	/*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.8.2
+ * Version: v3.8.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -667,7 +667,6 @@ svg.jodit-icon {
 }
 .jodit-container:not(.jodit_inline) {
   border: 1px solid #dadada;
-  background-color: #fff;
   border-radius: 3px;
 }
 .jodit-container:not(.jodit_inline) .jodit-workplace {
@@ -1177,7 +1176,7 @@ svg.jodit-icon {
   padding: 0 8px;
 }
 .jodit-ui-button-statuses_status_default {
-  background-color: #d8d8d8;
+  background-color: #e3e3e3;
   color: #212529;
 }
 .jodit-ui-button-statuses_status_default svg {
@@ -1536,7 +1535,7 @@ svg.jodit-icon {
   outline: 1px dashed #b5d6fd;
 }
 .jodit-ui-button_status_default {
-  background-color: #d8d8d8;
+  background-color: #e3e3e3;
   color: #212529;
 }
 .jodit-ui-button_status_default svg {
@@ -1823,24 +1822,24 @@ svg.jodit-icon {
   float: none;
   outline: 0;
   position: fixed;
-  display: inline-block;
   z-index: 10000001;
-  -webkit-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0);
+  display: inline-block;
   -webkit-box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
 		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
           box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
 		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
 }
 .jodit-popup__content {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 		Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
   font-size: 14px;
+  overflow: auto;
+  max-height: 300px;
   padding: 8px;
   background: #fff;
   overflow-scrolling: touch;
-  overflow: auto;
-  max-height: 300px;
 }
 .jodit-popup_padding_false .jodit-popup__content {
   padding: 0;
@@ -2461,25 +2460,25 @@ svg.jodit-icon {
   float: none;
   outline: 0;
   position: fixed;
-  display: inline-block;
   z-index: 10000001;
-  -webkit-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0);
+  display: inline-block;
   -webkit-box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
 		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
           box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
 		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
   z-index: 30000005;
 }
 .jodit-context-menu__content {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 		Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
   font-size: 14px;
+  overflow: auto;
+  max-height: 300px;
   padding: 8px;
   background: #fff;
   overflow-scrolling: touch;
-  overflow: auto;
-  max-height: 300px;
 }
 .jodit-context-menu_padding_false .jodit-context-menu__content {
   padding: 0;
@@ -2848,10 +2847,10 @@ svg.jodit-icon {
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 .jodit-toolbar__box:not(:empty) {
-  background-color: #f9f9f9;
   overflow: hidden;
-  border-radius: 3px 3px 0 0;
   border-bottom: 1px solid #dadada;
+  background-color: #f9f9f9;
+  border-radius: 3px 3px 0 0;
 }
 
 /*!
@@ -3518,7 +3517,7 @@ svg.jodit-icon {
   outline: 1px dashed #b5d6fd;
 }
 .jodit-toolbar-content_status_default {
-  background-color: #d8d8d8;
+  background-color: #e3e3e3;
   color: #212529;
 }
 .jodit-toolbar-content_status_default svg {
@@ -4057,65 +4056,65 @@ svg.jodit-icon {
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 .jodit-filebrowser_preview {
-  text-align: center;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   min-width: 600px;
   max-width: 1000px;
   min-height: 700px;
   max-height: 100%;
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
 }
 @media (max-width: 768px) {
   .jodit-filebrowser_preview {
-    max-width: 100%;
-    max-height: 100%;
     min-width: auto;
-    min-height: auto;
+    max-width: 100%;
     height: 100%;
+    min-height: auto;
+    max-height: 100%;
   }
 }
 .jodit-filebrowser_preview_box {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 .jodit-filebrowser_preview_navigation {
   position: absolute;
   top: 0;
-  height: 100%;
   left: 0;
+  height: 100%;
 }
 .jodit-filebrowser_preview_navigation-next {
-  left: auto;
   right: 0;
+  left: auto;
 }
 .jodit-filebrowser_preview_navigation svg {
-  width: 45px;
-  height: 45px;
   position: relative;
   top: 50%;
+  width: 45px;
+  height: 45px;
   margin-top: -22px;
+  fill: #9e9ba7;
   -webkit-transition: fill 0.3s linear;
   -o-transition: fill 0.3s linear;
   transition: fill 0.3s linear;
-  fill: #9e9ba7;
 }
 .jodit-filebrowser_preview_navigation:hover svg {
   fill: #000;
@@ -4613,45 +4612,45 @@ svg.jodit-icon {
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 .jodit-color-picker {
-  text-align: left;
   margin: 0;
+  text-align: left;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
 }
-.jodit-color-picker .jodit-color-picker__group {
-  margin-bottom: calc(8px / 2);
-  white-space: normal;
-  max-width: calc(24px * 10);
+.jodit-color-picker__group {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  max-width: undefined;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  margin-bottom: calc(8px / 2);
+  white-space: normal;
 }
-.jodit-color-picker a {
-  width: 24px;
-  height: 24px;
+.jodit-color-picker__color-item {
   display: block;
+  width: undefined;
+  height: undefined;
+  border: 1px solid transparent;
+  text-align: center;
   text-decoration: none;
   vertical-align: middle;
-  text-align: center;
-  border: 1px solid transparent;
 }
-.jodit-color-picker a:hover {
+.jodit-color-picker__color-item:hover {
   border-color: #000;
 }
-.jodit-color-picker a.jodit_active {
+.jodit-color-picker__color-item_active_true {
   border: 2px solid #1e88e5;
 }
-.jodit-color-picker a:active {
+.jodit-color-picker__color-item:active {
   border: 2px solid #1e88e5;
 }
 .jodit-color-picker__native svg {
+  display: inline-block;
   width: 16px;
   height: 16px;
-  display: inline-block;
   margin-right: 4px;
 }
 .jodit-color-picker__native input {
@@ -5156,32 +5155,32 @@ html.jodit_fullsize-box_true {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  overflow: hidden;
+  height: auto;
+  min-height: 50px;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  height: auto;
-  min-height: 50px;
-  overflow: hidden;
 }
 .jodit-container:not(.jodit_inline) .jodit-editor__resize {
   position: relative;
 }
-.jodit-container:not(.jodit_inline) .jodit-editor__resize a {
+.jodit-container:not(.jodit_inline) .jodit-editor__resize span {
   position: absolute;
-  bottom: 0;
   right: 0;
+  bottom: 0;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  border-width: 7px 7px 0 0;
+  border-style: dashed solid dashed dashed;
+  border-color: rgba(0, 0, 0, 0) #dadada rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+  cursor: se-resize;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  border-width: 7px 7px 0 0;
-  border-color: rgba(0, 0, 0, 0) #dadada rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
-  border-style: dashed solid dashed dashed;
-  cursor: se-resize;
 }
 
 /*!
@@ -5301,10 +5300,10 @@ html.jodit_fullsize-box_true {
   width: 12%;
 }
 .jodit-symbols .jodit-symbols__container_preview .jodit-symbols__preview {
-  font-size: 34px;
-  text-align: center;
   padding: 20px 0;
   border: 1px solid #dadada;
+  font-size: 34px;
+  text-align: center;
 }
 .jodit-symbols table {
   border: 0;
@@ -5315,17 +5314,18 @@ html.jodit_fullsize-box_true {
   padding: 0;
 }
 .jodit-symbols table td a {
-  font-size: 16px;
-  text-decoration: none;
-  color: #4c4c4c;
   display: inline-block;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
   width: calc(18px * 1.2);
   height: calc(18px * 1.2);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   border: 1px solid transparent;
-  text-align: center;
+  color: #4c4c4c;
+  cursor: pointer;
+  font-size: 16px;
   line-height: calc(18px * 1.2);
+  text-align: center;
+  text-decoration: none;
   vertical-align: top;
 }
 .jodit-symbols table td a:hover {

@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.8.2
+ * Version: v3.8.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -194,10 +194,6 @@ class Config {
         this.sizeSM = 400;
         this.buttons = [
             {
-                group: 'source',
-                buttons: []
-            },
-            {
                 group: 'font-style',
                 buttons: []
             },
@@ -248,6 +244,10 @@ class Config {
             },
             {
                 group: 'search',
+                buttons: []
+            },
+            {
+                group: 'source',
                 buttons: []
             },
             {
@@ -955,7 +955,7 @@ class EventsNative {
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__(39);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 9 modules
 var decorators = __webpack_require__(36);
@@ -1191,6 +1191,7 @@ __webpack_require__.d(__webpack_exports__, {
   "get": () => (/* reexport */ utils/* get */.U2),
   "getClassName": () => (/* reexport */ utils/* getClassName */.gj),
   "getContentWidth": () => (/* reexport */ getContentWidth),
+  "getScrollParent": () => (/* reexport */ getScrollParent),
   "getXPathByElement": () => (/* reexport */ getXPathByElement),
   "hasBrowserColorPicker": () => (/* reexport */ checker/* hasBrowserColorPicker */.EO),
   "hasContainer": () => (/* reexport */ checker/* hasContainer */.Zt),
@@ -1248,6 +1249,7 @@ __webpack_require__.d(__webpack_exports__, {
   "refs": () => (/* reexport */ refs),
   "reset": () => (/* reexport */ utils/* reset */.mc),
   "resolveElement": () => (/* reexport */ resolveElement),
+  "safeHTML": () => (/* reexport */ safeHTML),
   "scrollIntoViewIfNeeded": () => (/* reexport */ scrollIntoViewIfNeeded),
   "set": () => (/* reexport */ utils/* set */.t8),
   "setTimeout": () => (/* reexport */ set_timeout_setTimeout),
@@ -1704,6 +1706,7 @@ function htmlspecialchars(html) {
 
 
 
+
 function stripTags(html, doc = document) {
     const tmp = doc.createElement('div');
     if ((0,checker/* isString */.HD)(html)) {
@@ -1726,6 +1729,25 @@ function stripTags(html, doc = document) {
         }
     });
     return (0,string/* trim */.fy)(tmp.innerText) || '';
+}
+function safeHTML(box, options) {
+    if (!dom/* Dom.isElement */.i.isElement(box)) {
+        return;
+    }
+    const removeOnError = (elm) => (0,utils/* attr */.Lj)(elm, 'onerror', null), safeLink = (elm) => {
+        const href = elm.getAttribute('href');
+        if (href && href.trim().indexOf('javascript') === 0) {
+            (0,utils/* attr */.Lj)(elm, 'href', location.protocol + '//' + href);
+        }
+    };
+    if (options.removeOnError) {
+        removeOnError(box);
+        $$('[onerror]', box).forEach(removeOnError);
+    }
+    if (options.safeJavaScriptLink) {
+        safeLink(box);
+        $$('a[href^="javascript"]', box).forEach(safeLink);
+    }
 }
 
 ;// CONCATENATED MODULE: ./src/core/helpers/html/nl2br.ts
@@ -1762,6 +1784,31 @@ const getContentWidth = (element, win) => {
     const pi = (value) => parseInt(value, 10), style = win.getComputedStyle(element), width = element.offsetWidth, paddingLeft = pi(style.getPropertyValue('padding-left') || '0'), paddingRight = pi(style.getPropertyValue('padding-right') || '0');
     return width - paddingLeft - paddingRight;
 };
+
+// EXTERNAL MODULE: ./src/core/helpers/css.ts
+var css = __webpack_require__(31);
+;// CONCATENATED MODULE: ./src/core/helpers/size/get-scroll-parent.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function getScrollParent(node) {
+    const isElement = dom/* Dom.isHTMLElement */.i.isHTMLElement(node);
+    const overflowY = isElement && (0,css/* css */.i)(node, 'overflowY');
+    const isScrollable = isElement && overflowY !== 'visible' && overflowY !== 'hidden';
+    if (!node) {
+        return null;
+    }
+    else if (isScrollable && node.scrollHeight >= node.clientHeight) {
+        return node;
+    }
+    return (getScrollParent(node.parentNode) ||
+        document.scrollingElement ||
+        document.body);
+}
 
 ;// CONCATENATED MODULE: ./src/core/helpers/size/inner-width.ts
 /*!
@@ -1853,6 +1900,7 @@ function position(elm, jodit, recurse = false) {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 
 
 
@@ -2038,8 +2086,6 @@ const convertMediaUrlToVideoEmbed = (url, width = 400, height = 345) => {
     return url;
 };
 
-// EXTERNAL MODULE: ./src/core/helpers/css.ts
-var css = __webpack_require__(31);
 ;// CONCATENATED MODULE: ./src/core/helpers/ctrl-key.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2559,7 +2605,7 @@ var STATUSES;
     STATUSES["destructed"] = "destructed";
 })(STATUSES || (STATUSES = {}));
 
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/global.ts
 var global = __webpack_require__(13);
@@ -3988,7 +4034,7 @@ const ucfirst = (value) => {
 var config = __webpack_require__(1);
 // EXTERNAL MODULE: ./src/core/helpers/default-language.ts
 var default_language = __webpack_require__(26);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/global.ts
 var global = __webpack_require__(13);
@@ -4831,7 +4877,7 @@ var tslib_es6 = __webpack_require__(39);
 var ui_element = __webpack_require__(28);
 // EXTERNAL MODULE: ./src/core/dom.ts
 var dom = __webpack_require__(15);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
 var icon = __webpack_require__(30);
@@ -4861,7 +4907,7 @@ const UIButtonState = () => ({
     type: 'button',
     name: '',
     value: '',
-    status: '',
+    status: 'initial',
     disabled: false,
     activated: false,
     icon: {
@@ -5147,7 +5193,7 @@ var get_control_type = __webpack_require__(35);
 var config = __webpack_require__(1);
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
 var checker = __webpack_require__(16);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
 var helpers = __webpack_require__(8);
 ;// CONCATENATED MODULE: ./src/core/ui/helpers/get-strong-control-types.ts
 /*!
@@ -5373,7 +5419,7 @@ __webpack_require__.d(__webpack_exports__, {
   "watch": () => (/* reexport */ watch)
 });
 
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
 var helpers = __webpack_require__(8);
 ;// CONCATENATED MODULE: ./src/core/decorators/cache.ts
 /*!
@@ -6320,7 +6366,7 @@ __webpack_require__.d(__webpack_exports__, {
 var tslib_es6 = __webpack_require__(39);
 // EXTERNAL MODULE: ./src/core/dom.ts
 var dom = __webpack_require__(15);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/global.ts
 var global = __webpack_require__(13);
@@ -6442,6 +6488,9 @@ class Popup extends ui_element/* UIElement */.u {
         this.childrenPopups.forEach(popup => popup.updatePosition());
         return this;
     }
+    throttleUpdatePosition() {
+        this.updatePosition();
+    }
     calculatePosition(target, view, container, defaultStrategy = this.strategy) {
         const x = {
             left: target.left,
@@ -6516,7 +6565,7 @@ class Popup extends ui_element/* UIElement */.u {
         this.close();
     }
     addGlobalListeners() {
-        const up = this.updatePosition, ow = this.ow;
+        const up = this.throttleUpdatePosition, ow = this.ow;
         global/* eventEmitter.on */.TB.on('closeAllPopups', this.close);
         if (this.smart) {
             this.j.e
@@ -6530,9 +6579,12 @@ class Popup extends ui_element/* UIElement */.u {
             .on(this.container, 'scroll mousewheel', up)
             .on(ow, 'scroll', up)
             .on(ow, 'resize', up);
+        dom/* Dom.up */.i.up(this.j.container, box => {
+            box && this.j.e.on(box, 'scroll mousewheel', up);
+        });
     }
     removeGlobalListeners() {
-        const up = this.updatePosition, ow = this.ow;
+        const up = this.throttleUpdatePosition, ow = this.ow;
         global/* eventEmitter.off */.TB.off('closeAllPopups', this.close);
         if (this.smart) {
             this.j.e
@@ -6546,6 +6598,9 @@ class Popup extends ui_element/* UIElement */.u {
             .off(this.container, 'scroll mousewheel', up)
             .off(ow, 'scroll', up)
             .off(ow, 'resize', up);
+        dom/* Dom.up */.i.up(this.j.container, box => {
+            box && this.j.e.off(box, 'scroll mousewheel', up);
+        });
     }
     setZIndex(index) {
         this.container.style.zIndex = index.toString();
@@ -6558,6 +6613,10 @@ class Popup extends ui_element/* UIElement */.u {
 (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Popup.prototype, "updatePosition", null);
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.throttle)(10),
+    decorators.autobind
+], Popup.prototype, "throttleUpdatePosition", null);
 (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Popup.prototype, "close", null);
@@ -6605,7 +6664,7 @@ var tslib_es6 = __webpack_require__(39);
 var group = __webpack_require__(38);
 // EXTERNAL MODULE: ./src/core/ui/element.ts
 var ui_element = __webpack_require__(28);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/dom.ts
 var dom = __webpack_require__(15);
@@ -7192,7 +7251,7 @@ __webpack_require__.d(__webpack_exports__, {
   "IL": () => (/* reexport */ TabsWidget)
 });
 
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
 var ui = __webpack_require__(27);
@@ -7209,46 +7268,31 @@ var dom = __webpack_require__(15);
 
 
 const ColorPickerWidget = (editor, callback, coldColor) => {
-    const valueHex = (0,helpers.normalizeColor)(coldColor), form = editor.c.div('jodit-color-picker'), iconPalette = editor.o.textIcons
+    const cn = 'jodit-color-picker', valueHex = (0,helpers.normalizeColor)(coldColor), form = editor.c.div(cn), iconPalette = editor.o.textIcons
         ? `<span>${editor.i18n('palette')}</span>`
         : ui/* Icon.get */.JO.get('palette'), eachColor = (colors) => {
         const stack = [];
         if ((0,helpers.isPlainObject)(colors)) {
             Object.keys(colors).forEach(key => {
-                stack.push('<div class="jodit-color-picker__group jodit-color-picker__group-' +
-                    key +
-                    '">');
+                stack.push(`<div class="${cn}__group ${cn}__group-${key}">`);
                 stack.push(eachColor(colors[key]));
                 stack.push('</div>');
             });
         }
         else if ((0,helpers.isArray)(colors)) {
             colors.forEach(color => {
-                stack.push('<a ' +
-                    (valueHex === color
-                        ? ' class="jodit_active" '
-                        : '') +
-                    ' title="' +
-                    color +
-                    '" style="background-color:' +
-                    color +
-                    '" data-color="' +
-                    color +
-                    '" href="javascript:void(0)"></a>');
+                stack.push(`<span class='${cn}__color-item ${valueHex === color
+                    ? cn + '__color-item_active_true'
+                    : ''}' title="${color}" style="background-color:${color}" data-color="${color}"></span>`);
             });
         }
         return stack.join('');
     };
-    form.appendChild(editor.c.fromHTML('<div class="jodit-color-picker__groups">' +
-        eachColor(editor.o.colors) +
-        '</div>'));
-    form.appendChild(editor.c.fromHTML('<div data-ref="extra" class="jodit-color-picker__extra"></div>'));
+    form.appendChild(editor.c.fromHTML(`<div class="${cn}__groups">${eachColor(editor.o.colors)}</div>`));
+    form.appendChild(editor.c.fromHTML(`<div data-ref="extra" class="${cn}__extra"></div>`));
     const { extra } = (0,helpers.refs)(form);
     if (editor.o.showBrowserColorPicker && (0,helpers.hasBrowserColorPicker)()) {
-        extra.appendChild(editor.c.fromHTML('<div class="jodit-color-picker__native">' +
-            iconPalette +
-            '<input type="color" value="#ffffff"/>' +
-            '</div>'));
+        extra.appendChild(editor.c.fromHTML(`<div class="${cn}__native">${iconPalette}<input type="color" value="#ffffff"/></div>`));
         editor.e.on(form, 'change', (e) => {
             e.stopPropagation();
             const target = e.target;
@@ -7270,13 +7314,14 @@ const ColorPickerWidget = (editor, callback, coldColor) => {
             dom/* Dom.isTag */.i.isTag(target, 'svg') ||
             dom/* Dom.isTag */.i.isTag(target, 'path')) &&
             target.parentNode) {
-            target = dom/* Dom.closest */.i.closest(target.parentNode, 'a', editor.editor);
+            target = dom/* Dom.closest */.i.closest(target.parentNode, 'span', editor.editor);
         }
-        if (!dom/* Dom.isTag */.i.isTag(target, 'a')) {
+        if (!dom/* Dom.isTag */.i.isTag(target, 'span') ||
+            !target.classList.contains(cn + '__color-item')) {
             return;
         }
         const color = (0,helpers.attr)(target, '-color') || '';
-        if (callback && typeof callback === 'function') {
+        if (callback && (0,helpers.isFunction)(callback)) {
             callback(color);
         }
         e.preventDefault();
@@ -8555,7 +8600,7 @@ var config = __webpack_require__(1);
 var constants = __webpack_require__(2);
 // EXTERNAL MODULE: ./src/core/events/index.ts + 3 modules
 var events = __webpack_require__(3);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 31 modules
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 32 modules
 var helpers = __webpack_require__(8);
 ;// CONCATENATED MODULE: ./src/core/async.ts
 /*!
@@ -9136,7 +9181,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.8.2";
+        this.version = "3.8.3";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -9234,10 +9279,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.8.2";
+        return "3.8.3";
     }
     static getVersion() {
-        return "3.8.2";
+        return "3.8.3";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -10648,7 +10693,7 @@ class Create {
             }
         }
         if (children) {
-            (0,helpers.asArray)(children).forEach((child) => elm.appendChild(typeof child === 'string' ? this.fromHTML(child) : child));
+            (0,helpers.asArray)(children).forEach((child) => elm.appendChild((0,helpers.isString)(child) ? this.fromHTML(child) : child));
         }
         return elm;
     }
@@ -11494,7 +11539,7 @@ function stateListeners() {
             source.folders.forEach((name) => {
                 const folderElm = create.a(F_CLASS + '__tree-item', {
                     draggable: 'draggable',
-                    href: 'javascript:void(0)',
+                    href: '#',
                     'data-path': (0,normalize/* normalizePath */.AH)(source.path, name + '/'),
                     'data-name': name,
                     'data-source': sourceName,
@@ -11507,6 +11552,7 @@ function stateListeners() {
                         source: sourceName
                     });
                     e.stopPropagation();
+                    e.preventDefault();
                 };
                 this.e.on(folderElm, 'click', action('openFolder'));
                 this.tree.appendChild(folderElm);
@@ -12207,7 +12253,7 @@ function openImageEditor(href, name, path, source, onSuccess, onFailed) {
 
 
 
-const CLASS_PREVIEW = F_CLASS + '_preview_', preview_tpl_next = (next = 'next', right = 'right') => `<a href="javascript:void(0)" class="${CLASS_PREVIEW}navigation ${CLASS_PREVIEW}navigation-${next}">` +
+const CLASS_PREVIEW = F_CLASS + '_preview_', preview_tpl_next = (next = 'next', right = 'right') => `<div class="${CLASS_PREVIEW}navigation ${CLASS_PREVIEW}navigation-${next}">` +
     '' +
     ui/* Icon.get */.JO.get('angle-' + right) +
     '</a>';
@@ -13433,6 +13479,7 @@ class Select {
     }) {
         var _a, _b;
         if (!this.isFocused()) {
+            const scrollParent = (0,helpers.getScrollParent)(this.j.container), scrollTop = scrollParent === null || scrollParent === void 0 ? void 0 : scrollParent.scrollTop;
             if (this.j.iframe) {
                 if (this.doc.readyState === 'complete') {
                     this.j.iframe.focus();
@@ -13440,6 +13487,9 @@ class Select {
             }
             this.win.focus();
             this.area.focus(options);
+            if (scrollTop) {
+                scrollParent === null || scrollParent === void 0 ? void 0 : scrollParent.scrollTo(0, scrollTop);
+            }
             const sel = this.sel, range = (sel === null || sel === void 0 ? void 0 : sel.rangeCount) ? sel === null || sel === void 0 ? void 0 : sel.getRangeAt(0) : null;
             if (!range || !dom/* Dom.isOrContains */.i.isOrContains(this.area, range.startContainer)) {
                 const range = this.createRange();
@@ -13524,6 +13574,7 @@ class Select {
     insertNode(node, insertCursorAfter = true, fireChange = true) {
         var _a;
         this.errorNode(node);
+        this.j.e.fire('safeHTML', node);
         if (!this.isFocused() && this.j.isEditorMode()) {
             this.focus();
             this.restore();
@@ -13618,7 +13669,7 @@ class Select {
                 String(dw).indexOf('%') < 0) {
                 dw += 'px';
             }
-            (0,helpers.css)(image, 'width', dw);
+            (0,helpers.call)(this.j.o.resizer.forImageChangeAttributes ? helpers.attr : helpers.css, image, 'width', dw);
         }
         if (styles && typeof styles === 'object') {
             (0,helpers.css)(image, styles);
@@ -15736,11 +15787,14 @@ class Jodit extends ViewWithToolbar {
         return this.getElementValue();
     }
     setNativeEditorValue(value) {
-        if (this.e.fire('beforeSetNativeEditorValue', value)) {
+        const data = {
+            value
+        };
+        if (this.e.fire('beforeSetNativeEditorValue', data)) {
             return;
         }
         if (this.editor) {
-            this.editor.innerHTML = value;
+            this.editor.innerHTML = data.value;
         }
     }
     getEditorValue(removeSelectionMarkers = true) {
@@ -17330,7 +17384,9 @@ config/* Config.prototype.cleanHTML */.D.prototype.cleanHTML = {
         b: 'strong'
     },
     allowTags: false,
-    denyTags: false
+    denyTags: false,
+    removeOnError: true,
+    safeJavaScriptLink: true
 };
 config/* Config.prototype.controls.eraser */.D.prototype.controls.eraser = {
     command: 'removeFormat',
@@ -17430,6 +17486,7 @@ class cleanHtml extends Plugin {
             return;
         }
         const editor = this.j;
+        this.onSafeHTML(editor.editor);
         const current = editor.s.current();
         const replaceOldTags = editor.o.cleanHTML.replaceOldTags;
         if (replaceOldTags && current) {
@@ -17607,6 +17664,16 @@ class cleanHtml extends Plugin {
         }
         return false;
     }
+    onBeforeSetNativeEditorValue(data) {
+        const sandBox = this.j.createInside.div();
+        sandBox.innerHTML = data.value;
+        this.onSafeHTML(sandBox);
+        data.value = sandBox.innerHTML;
+        return false;
+    }
+    onSafeHTML(sandBox) {
+        (0,helpers.safeHTML)(sandBox, this.j.o.cleanHTML);
+    }
     beforeDestruct() {
         this.j.e.off('.cleanHtml');
     }
@@ -17617,6 +17684,12 @@ class cleanHtml extends Plugin {
 (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], cleanHtml.prototype, "isInlineBlock", null);
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)(':beforeSetNativeEditorValue')
+], cleanHtml.prototype, "onBeforeSetNativeEditorValue", null);
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)(':safeHTML')
+], cleanHtml.prototype, "onSafeHTML", null);
 
 ;// CONCATENATED MODULE: ./src/plugins/fix/wrap-text-nodes.ts
 /*!
@@ -18124,6 +18197,7 @@ class paste extends Plugin {
 
 
 
+
 class pasteStorage extends Plugin {
     constructor() {
         super(...arguments);
@@ -18205,7 +18279,7 @@ class pasteStorage extends Plugin {
                 a.textContent =
                     index + 1 + '. ' + html.replace((0,constants.SPACE_REG_EXP)(), '');
                 this.j.e.on(a, 'keydown', this.onKeyDown);
-                (0,helpers.attr)(a, 'href', 'javascript:void(0)');
+                (0,helpers.attr)(a, 'href', '#');
                 (0,helpers.attr)(a, 'data-index', index.toString());
                 (0,helpers.attr)(a, 'tab-index', '-1');
                 this.listBox && this.listBox.appendChild(a);
@@ -18220,18 +18294,10 @@ class pasteStorage extends Plugin {
         this.dialog = new Dialog({
             language: this.j.o.language
         });
-        const pasteButton = this.j.c.fromHTML('<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
-            '<span>' +
-            this.j.i18n('Paste') +
-            '</span>' +
-            '</a>');
-        this.j.e.on(pasteButton, 'click', this.paste);
-        const cancelButton = this.j.c.fromHTML('<a href="javascript:void(0)" style="float:right; margin-right: 10px;" class="jodit-button">' +
-            '<span>' +
-            this.j.i18n('Cancel') +
-            '</span>' +
-            '</a>');
-        this.j.e.on(cancelButton, 'click', this.dialog.close);
+        const pasteButton = (0,ui/* Button */.zx)(this.j, 'paste', 'Paste', 'primary');
+        pasteButton.onAction(this.paste);
+        const cancelButton = (0,ui/* Button */.zx)(this.j, '', 'Cancel');
+        cancelButton.onAction(this.dialog.close);
         this.container = this.j.c.div();
         this.container.classList.add('jodit-paste-storage');
         this.listBox = this.j.c.div();
@@ -19750,7 +19816,7 @@ function iframe(editor) {
                 editor.e
                     .on('beforeGetNativeEditorValue', () => clearMarkers(editor.o.iframeDoctype +
                     doc.documentElement.outerHTML))
-                    .on('beforeSetNativeEditorValue', (value) => {
+                    .on('beforeSetNativeEditorValue', ({ value }) => {
                     if (editor.isLocked) {
                         return false;
                     }
@@ -19763,15 +19829,17 @@ function iframe(editor) {
                                 clearMarkers(value));
                             doc.close();
                             editor.editor = doc.body;
+                            editor.e.fire('safeHTML', editor.editor);
                             toggleEditable();
                             editor.e.fire('prepareWYSIWYGEditor');
+                            editor.e.stopPropagation('beforeSetNativeEditorValue');
                         }
                     }
                     else {
                         doc.body.innerHTML = value;
                     }
                     return true;
-                });
+                }, undefined, true);
             }
             editor.editor = doc.body;
             editor.e.on('afterSetMode afterInit afterAddPlace', toggleEditable);
@@ -21365,6 +21433,7 @@ class link_link extends Plugin {
         const snapshot = jodit.observer.snapshot.make();
         if (unlink) {
             jodit.e.on(unlink, 'click', (e) => {
+                jodit.s.restore();
                 jodit.observer.snapshot.restore(snapshot);
                 if (link) {
                     dom/* Dom.unwrap */.i.unwrap(link);
@@ -21381,6 +21450,7 @@ class link_link extends Plugin {
                 return false;
             }
             let links;
+            jodit.s.restore();
             jodit.s.removeMarkers();
             jodit.editor.normalize();
             jodit.observer.snapshot.restore(snapshot);
@@ -21401,6 +21471,7 @@ class link_link extends Plugin {
                     jodit.s.insertNode(a, false, false);
                     links = [a];
                 }
+                links.forEach(link => jodit.s.select(link));
             }
             else {
                 links = [link];
@@ -21431,13 +21502,18 @@ class link_link extends Plugin {
                     }
                 }
                 if (!isImageContent) {
+                    let newContent = a.textContent;
                     if (content_input.value.trim().length) {
                         if (textWasChanged) {
-                            a.textContent = content_input.value;
+                            newContent = content_input.value;
                         }
                     }
                     else {
-                        a.textContent = url_input.value;
+                        newContent = url_input.value;
+                    }
+                    const content = a.textContent;
+                    if (newContent !== content) {
+                        a.textContent = newContent;
                     }
                 }
                 if (openInNewTabCheckbox && target_checkbox) {
@@ -22110,6 +22186,7 @@ config/* Config.prototype.allowResizeTags */.D.prototype.allowResizeTags = ['img
 config/* Config.prototype.resizer */.D.prototype.resizer = {
     showSize: true,
     hideSizeTimeout: 1000,
+    forImageChangeAttributes: true,
     min_width: 10,
     min_height: 10
 };
@@ -22177,14 +22254,14 @@ class resizer extends Plugin {
                 }
                 if (new_w > this.j.o.resizer.min_width) {
                     if (new_w < this.rect.parentNode.offsetWidth) {
-                        (0,helpers.css)(this.element, 'width', new_w);
+                        this.applySize(this.element, 'width', new_w);
                     }
                     else {
-                        (0,helpers.css)(this.element, 'width', '100%');
+                        this.applySize(this.element, 'width', '100%');
                     }
                 }
                 if (new_h > this.j.o.resizer.min_height) {
-                    (0,helpers.css)(this.element, 'height', new_h);
+                    this.applySize(this.element, 'height', new_h);
                 }
                 this.updateSize();
                 this.showSizeViewer(this.element.offsetWidth, this.element.offsetHeight);
@@ -22261,7 +22338,7 @@ class resizer extends Plugin {
         })
             .on('afterInit changePlace', this.addEventListeners.bind(this))
             .on('afterGetValueFromEditor.resizer', (data) => {
-            const rgx = /<jodit[^>]+data-jodit_iframe_wrapper[^>]+>(.*?<iframe[^>]+>.*?<\/iframe>.*?)<\/jodit>/gi;
+            const rgx = /<jodit[^>]+data-jodit_iframe_wrapper[^>]+>(.*?<iframe[^>]*>.*?<\/iframe>.*?)<\/jodit>/gi;
             if (rgx.test(data.value)) {
                 data.value = data.value.replace(rgx, '$1');
             }
@@ -22324,6 +22401,14 @@ class resizer extends Plugin {
     }
     getWorkplacePosition() {
         return (0,helpers.offset)((this.rect.parentNode || this.j.od.documentElement), this.j, this.j.od, true);
+    }
+    applySize(element, key, value) {
+        if (dom/* Dom.isImage */.i.isImage(element) && this.j.o.resizer.forImageChangeAttributes) {
+            (0,helpers.attr)(element, key, value);
+        }
+        else {
+            (0,helpers.css)(element, key, value);
+        }
     }
     onDelete(e) {
         if (!this.element) {
@@ -23011,7 +23096,7 @@ let resizeHandler = class resizeHandler extends Plugin {
             w: 0,
             h: 0
         };
-        this.handle = this.j.c.div('jodit-editor__resize', '<a tabindex="-1" href="javascript:void(0)"></a>');
+        this.handle = this.j.c.div('jodit-editor__resize', '<span tabindex="-1"></span>');
     }
     afterInit(editor) {
         const { height, width, allowResizeX } = editor.o;
@@ -24306,17 +24391,20 @@ class symbols extends Plugin {
     }
     afterInit(jodit) {
         jodit.e.on('generateSpecialCharactersTable.symbols', () => {
-            const container = jodit.c.fromHTML('<div class="jodit-symbols__container">' +
-                '<div class="jodit-symbols__container_table"><table><tbody></tbody></table></div>' +
-                '<div class="jodit-symbols__container_preview"><div class="jodit-symbols__preview"></div></div>' +
-                '</div>'), preview = container.querySelector('.jodit-symbols__preview'), table = container.querySelector('table'), body = table.tBodies[0], chars = [];
+            const container = jodit.c.fromHTML(`<div class="jodit-symbols__container">
+						<div class="jodit-symbols__container_table">
+							<table><tbody></tbody></table>
+						</div>
+						<div class="jodit-symbols__container_preview">
+							<div class="jodit-symbols__preview"></div>
+						</div>
+					</div>`), preview = container.querySelector('.jodit-symbols__preview'), table = container.querySelector('table'), body = table.tBodies[0], chars = [];
             for (let i = 0; i < jodit.o.specialCharacters.length;) {
                 const tr = jodit.c.element('tr');
                 for (let j = 0; j < this.countInRow && i < jodit.o.specialCharacters.length; j += 1, i += 1) {
                     const td = jodit.c.element('td'), a = jodit.c.fromHTML(`<a
 									data-index="${i}"
 									data-index-j="${j}"
-									href="javascript:void(0)"
 									role="option"
 									tabindex="-1"
 							>${jodit.o.specialCharacters[i]}</a>`);
@@ -25490,7 +25578,7 @@ class xpath extends Plugin {
             return false;
         };
         this.tpl = (bindElement, path, name, title) => {
-            const item = this.j.c.fromHTML(`<span class="jodit-xpath__item"><a role="button" data-path="${path}" href="javascript:void(0)" title="${title}" tabindex="-1"'>${(0,helpers.trim)(name)}</a></span>`);
+            const item = this.j.c.fromHTML(`<span class="jodit-xpath__item"><a role="button" data-path="${path}" title="${title}" tabindex="-1"'>${(0,helpers.trim)(name)}</a></span>`);
             const a = item.firstChild;
             this.j.e
                 .on(a, 'click', this.onSelectPath.bind(this, bindElement))
