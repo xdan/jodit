@@ -43,6 +43,11 @@ declare module '../../config' {
 			hideSizeTimeout: number;
 
 			/**
+			 * When resizing images, change not the styles but the width and height attributes
+			 */
+			forImageChangeAttributes: boolean;
+
+			/**
 			 * The minimum width for the editable element
 			 */
 			min_width: number;
@@ -60,6 +65,7 @@ Config.prototype.allowResizeTags = ['img', 'iframe', 'table', 'jodit'];
 Config.prototype.resizer = {
 	showSize: true,
 	hideSizeTimeout: 1000,
+	forImageChangeAttributes: true,
 	min_width: 10,
 	min_height: 10
 };
@@ -276,14 +282,14 @@ export class resizer extends Plugin {
 
 			if (new_w > this.j.o.resizer.min_width) {
 				if (new_w < (this.rect.parentNode as HTMLElement).offsetWidth) {
-					css(this.element, 'width', new_w);
+					this.applySize(this.element, 'width', new_w);
 				} else {
-					css(this.element, 'width', '100%');
+					this.applySize(this.element, 'width', '100%');
 				}
 			}
 
 			if (new_h > this.j.o.resizer.min_height) {
-				css(this.element, 'height', new_h);
+				this.applySize(this.element, 'height', new_h);
 			}
 
 			this.updateSize();
@@ -296,6 +302,18 @@ export class resizer extends Plugin {
 			e.stopImmediatePropagation();
 		}
 	};
+
+	private applySize(
+		element: HTMLElement,
+		key: 'width' | 'height',
+		value: number | string
+	): void {
+		if (Dom.isImage(element) && this.j.o.resizer.forImageChangeAttributes) {
+			attr(element, key, value);
+		} else {
+			css(element, key, value);
+		}
+	}
 
 	private onClickOutside = (e: MouseEvent) => {
 		if (this.isShown) {

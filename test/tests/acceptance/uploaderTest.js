@@ -9,6 +9,9 @@ describe('Test uploader module', function () {
 			it('Should insert image with SRC in base64', function (done) {
 				const file = new FileImage(),
 					editor = getJodit({
+						resizer: {
+							forImageChangeAttributes: true
+						},
 						uploader: {
 							insertImageAsBase64URI: true
 						},
@@ -18,14 +21,14 @@ describe('Test uploader module', function () {
 								expect(sortAttributes(editor.value)).equals(
 									'<p><img src="' +
 										file.dataURI +
-										'" style="width:300px"></p>'
+										'" width="300px"></p>'
 								);
 								done();
 							}
 						}
 					});
 
-				simulateEvent('drop', 0, editor.editor, function (data) {
+				simulateEvent('drop', editor.editor, function (data) {
 					Object.defineProperty(data, 'dataTransfer', {
 						value: {
 							files: [file]

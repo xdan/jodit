@@ -824,6 +824,9 @@ describe('Jodit FileBrowser Tests', function () {
 		describe('DblClick on image from filebrowser', function () {
 			it('Should insert IMG element in editor in the selected before place', function (done) {
 				const editor = getJodit({
+					resizer: {
+						forImageChangeAttributes: true
+					},
 					filebrowser: {
 						ajax: {
 							url: 'https://xdsoft.net/jodit/connector/index.php'
@@ -863,7 +866,7 @@ describe('Jodit FileBrowser Tests', function () {
 						);
 
 						expect(editor.value).equals(
-							'<p>Some text</p><p>Another<img src="https://xdsoft.net/jodit/files/ibanez-s520-443140.jpg" style="width: 300px;"> text</p><p>Another some text</p>'
+							'<p>Some text</p><p>Another<img src="https://xdsoft.net/jodit/files/ibanez-s520-443140.jpg" width="300px"> text</p><p>Another some text</p>'
 						);
 
 						filebrowser.destruct();
@@ -933,6 +936,9 @@ describe('Jodit FileBrowser Tests', function () {
 			describe('Image', function () {
 				it('Should create IMG element', function (done) {
 					const editor = getJodit({
+						resizer: {
+							forImageChangeAttributes: false
+						},
 						uploader: {
 							url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 						},
@@ -952,7 +958,7 @@ describe('Jodit FileBrowser Tests', function () {
 						done();
 					});
 
-					simulateEvent('drop', 0, editor.editor, function (data) {
+					simulateEvent('drop', editor.editor, function (data) {
 						Object.defineProperty(data, 'dataTransfer', {
 							value: {
 								files: [{ name: 'test.png', type: 'image/png' }]

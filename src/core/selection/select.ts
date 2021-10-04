@@ -703,7 +703,13 @@ export class Select implements ISelect {
 				dw += 'px';
 			}
 
-			css(image, 'width', dw);
+			call(
+				// @ts-ignore
+				this.j.o.resizer.forImageChangeAttributes ? attr : css,
+				image,
+				'width',
+				dw
+			);
 		}
 
 		if (styles && typeof styles === 'object') {

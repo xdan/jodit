@@ -14,6 +14,15 @@
 #### :boom: Breaking Change
 
 - beforeSetNativeEditorValue - get object {value: string} and can change value
+- Added `resizer.forImageChangeAttributes=true` option. Issue: https://github.com/xdan/jodit/issues/696
+```js
+// Disable
+Jodit.make('#editor', {
+	resizer: {
+		forImageChangeAttributes: false
+	}
+});
+```
 
 #### :house: Internal
 

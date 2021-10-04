@@ -363,6 +363,8 @@ if (Jodit.defaultOptions.cleanHTML) {
 	Jodit.defaultOptions.cleanHTML.fillEmptyParagraph = false;
 }
 
+Jodit.defaultOptions.resizer.forImageChangeAttributes = false;
+
 Jodit.defaultOptions.sourceEditor = 'area';
 Jodit.defaultOptions.language = 'en';
 Jodit.defaultOptions.iframeCSSLinks.push('/app.css');
