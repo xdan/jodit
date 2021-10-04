@@ -11,6 +11,10 @@
 
 ## 3.8.3
 
+#### :boom: Breaking Change
+
+- beforeSetNativeEditorValue - get object {value: string} and can change value
+
 #### :house: Internal
 
 -   The Source button has been moved to the depth of the toolbar as it is not cool for the WYSIWYG editor

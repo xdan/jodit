@@ -413,7 +413,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		if (this.editor) {
-			this.editor.innerHTML = value;
+			this.editor.innerHTML = data.value;
 		}
 	}
 
