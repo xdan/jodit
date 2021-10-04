@@ -63,9 +63,11 @@ export function safeHTML(box: HTMLElement): void {
 			}
 		};
 
-	removeOnError(box);
-	safeLink(box);
+	if (Dom.isElement(box)) {
+		removeOnError(box);
+		safeLink(box);
 
-	$$('[onerror]', box).forEach(removeOnError);
-	$$<HTMLAnchorElement>('a[href^="javascript"]', box).forEach(safeLink);
+		$$('[onerror]', box).forEach(removeOnError);
+		$$<HTMLAnchorElement>('a[href^="javascript"]', box).forEach(safeLink);
+	}
 }

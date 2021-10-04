@@ -21,7 +21,8 @@ import {
 	isFunction,
 	kebabCase,
 	refs,
-	safeHTML
+	safeHTML,
+	isString
 } from './helpers/';
 
 import { Dom } from './dom';
@@ -84,9 +85,7 @@ export class Create implements ICreate {
 
 		if (children) {
 			asArray(children).forEach((child: string | Node) =>
-				elm.appendChild(
-					typeof child === 'string' ? this.fromHTML(child) : child
-				)
+				elm.appendChild(isString(child) ? this.fromHTML(child) : child)
 			);
 		}
 

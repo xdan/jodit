@@ -1089,6 +1089,7 @@ export class Select implements ISelect {
 				'font',
 				INVISIBLE_SPACE
 			);
+
 			this.insertNode(font, false, false);
 
 			const [marker] = this.markers;
