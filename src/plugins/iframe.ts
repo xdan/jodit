@@ -340,16 +340,26 @@ export function iframe(editor: IJodit): void {
 										);
 										doc.close();
 										editor.editor = doc.body;
+										editor.e.fire(
+											'safeHTML',
+											editor.editor
+										);
 
 										toggleEditable();
 										editor.e.fire('prepareWYSIWYGEditor');
+
+										editor.e.stopPropagation(
+											'beforeSetNativeEditorValue'
+										);
 									}
 								} else {
 									doc.body.innerHTML = value;
 								}
 
 								return true;
-							}
+							},
+							undefined,
+							true
 						);
 				}
 

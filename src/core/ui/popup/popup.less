@@ -14,18 +14,18 @@
 	.jodit-box();
 
 	position: fixed;
-	display: inline-block;
 	z-index: var(--z-index-popup);
-	transform: translate3d(0, 0, 0);
+	display: inline-block;
 	box-shadow: var(--box-shadow);
+	transform: translate3d(0, 0, 0);
 
 	&__content {
 		.font();
+		overflow: auto;
+		max-height: 300px;
 		padding: var(--padding-default);
 		background: var(--color-background-default);
 		overflow-scrolling: touch;
-		overflow: auto;
-		max-height: 300px;
 	}
 
 	&_padding_false &__content {
