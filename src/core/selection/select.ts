@@ -33,7 +33,8 @@ import {
 	$$,
 	css,
 	call,
-	toArray
+	toArray,
+	getScrollParent
 } from '../helpers';
 import { CommitStyle } from './style/commit-style';
 import { autobind } from '../decorators';
@@ -402,6 +403,9 @@ export class Select implements ISelect {
 		}
 	): boolean {
 		if (!this.isFocused()) {
+			const scrollParent = getScrollParent(this.j.container),
+				scrollTop = scrollParent?.scrollTop;
+
 			if (this.j.iframe) {
 				if (this.doc.readyState === 'complete') {
 					this.j.iframe.focus();
@@ -410,6 +414,10 @@ export class Select implements ISelect {
 
 			this.win.focus();
 			this.area.focus(options);
+
+			if (scrollTop) {
+				scrollParent?.scrollTo(0, scrollTop);
+			}
 
 			const sel = this.sel,
 				range = sel?.rangeCount ? sel?.getRangeAt(0) : null;

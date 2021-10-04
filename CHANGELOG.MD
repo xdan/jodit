@@ -22,6 +22,7 @@
 #### :bug: Bug Fix
 
 - [Trying to get in touch regarding a security issue #702](https://github.com/xdan/jodit/issues/702)
+- [Scrolling to top of editor bug in Safari. #715](https://github.com/xdan/jodit/issues/715)
 - [Refused to run the JavaScript URL because it violates the following Content Security Policy directive #716](https://github.com/xdan/jodit/issues/716)
 - Fixed the link dialog: the unlink button does not work in some cases, and the selection is not restored
 

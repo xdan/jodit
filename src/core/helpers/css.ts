@@ -30,10 +30,9 @@ export function css(
  * Get the value of a computed style property for the first element in the set of matched elements or set one or
  * more CSS properties for every matched element
  *
- * @param element
- * @param key An object of property-value pairs to set. A CSS property name.
- * @param value A value to set for the property.
- * @param [onlyStyleMode] Get value from style attribute, without calculating
+ * @param key - An object of property-value pairs to set. A CSS property name.
+ * @param value - A value to set for the property.
+ * @param onlyStyleMode - Get value from style attribute, without calculating
  */
 export function css(
 	element: HTMLElement,
@@ -113,7 +112,6 @@ export function css(
 
 /**
  * Clear center align
- * @param image
  */
 export const clearCenterAlign = (image: HTMLElement): void => {
 	if (css(image, 'display') === 'block') {
