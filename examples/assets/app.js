@@ -31,7 +31,7 @@ if (examples) {
 	});
 }
 
-[].slice.call(document.getElementsByTagName('pre')).forEach(function (pre) {
+Array.from(document.getElementsByTagName('pre')).forEach(function (pre) {
 	if (pre.firstChild.nodeName === 'CODE') {
 		pre = pre.firstChild;
 	}

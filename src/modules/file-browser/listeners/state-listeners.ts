@@ -123,7 +123,7 @@ export function stateListeners(this: FileBrowser): void {
 							F_CLASS + '__tree-item',
 							{
 								draggable: 'draggable',
-								href: 'javascript:void(0)',
+								href: '#',
 								'data-path': normalizePath(
 									source.path,
 									name + '/'
@@ -144,6 +144,7 @@ export function stateListeners(this: FileBrowser): void {
 								});
 
 								e.stopPropagation();
+								e.preventDefault();
 							};
 
 						this.e.on(folderElm, 'click', action('openFolder'));

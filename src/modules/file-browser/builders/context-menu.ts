@@ -17,7 +17,7 @@ import { openImageEditor } from '../../image-editor/image-editor';
 
 const CLASS_PREVIEW = F_CLASS + '_preview_',
 	preview_tpl_next = (next = 'next', right = 'right') =>
-		`<a href="javascript:void(0)" class="${CLASS_PREVIEW}navigation ${CLASS_PREVIEW}navigation-${next}">` +
+		`<div class="${CLASS_PREVIEW}navigation ${CLASS_PREVIEW}navigation-${next}">` +
 		'' +
 		Icon.get('angle-' + right) +
 		'</a>';

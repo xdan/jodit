@@ -10,7 +10,8 @@ import type {
 	IUIButton,
 	IUIButtonState,
 	IUIButtonStatePartial,
-	IViewBased
+	IViewBased,
+	ButtonStatus
 } from '../../../../types';
 import { UIElement } from '../../element';
 import { Dom } from '../../../dom';
@@ -26,7 +27,7 @@ export const UIButtonState = (): IUIButtonState => ({
 	name: '',
 	value: '',
 
-	status: '',
+	status: 'default',
 	disabled: false,
 	activated: false,
 
@@ -57,7 +58,6 @@ export class UIButton extends UIElement implements IUIButton {
 
 	/**
 	 * Set state
-	 * @param state
 	 */
 	setState(state: IUIButtonStatePartial): this {
 		Object.assign(this.state, state);
@@ -228,7 +228,6 @@ export class UIButton extends UIElement implements IUIButton {
 
 	/**
 	 * Add action handler
-	 * @param originalEvent
 	 */
 	onAction(callback: (originalEvent: MouseEvent) => void): this {
 		this.actionHandlers.push(callback);
@@ -237,7 +236,6 @@ export class UIButton extends UIElement implements IUIButton {
 
 	/**
 	 * Fire all click handlers
-	 * @param e
 	 */
 	@autobind
 	private onActionFire(e: MouseEvent): void {
@@ -259,19 +257,19 @@ export function Button(
 	jodit: IViewBased,
 	icon: string,
 	text: string,
-	status?: string
+	status?: ButtonStatus
 ): IUIButton;
 export function Button(
 	jodit: IViewBased,
 	state: IUIButtonStatePartial,
-	status?: string
+	status?: ButtonStatus
 ): IUIButton;
 
 export function Button(
 	jodit: IViewBased,
 	stateOrText: string | IUIButtonStatePartial,
 	text?: string,
-	status?: string
+	status?: ButtonStatus
 ): IUIButton {
 	const button = new UIButton(jodit);
 

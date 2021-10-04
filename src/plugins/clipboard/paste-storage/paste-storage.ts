@@ -16,6 +16,7 @@ import { Dialog } from '../../../modules/dialog';
 import { Plugin } from '../../../core/plugin';
 import { Dom } from '../../../core/dom';
 import { attr, toArray } from '../../../core/helpers';
+import { Button } from '../../../core/ui';
 
 /**
  * Show dialog choose content to paste
@@ -121,7 +122,7 @@ export class pasteStorage extends Plugin {
 
 			this.j.e.on(a, 'keydown', this.onKeyDown);
 
-			attr(a, 'href', 'javascript:void(0)');
+			attr(a, 'href', '#');
 			attr(a, 'data-index', index.toString());
 			attr(a, 'tab-index', '-1');
 
@@ -140,25 +141,13 @@ export class pasteStorage extends Plugin {
 			language: this.j.o.language
 		});
 
-		const pasteButton: HTMLAnchorElement = this.j.c.fromHTML(
-			'<a href="javascript:void(0)" style="float:right;" class="jodit-button">' +
-				'<span>' +
-				this.j.i18n('Paste') +
-				'</span>' +
-				'</a>'
-		) as HTMLAnchorElement;
+		const pasteButton = Button(this.j, 'paste', 'Paste', 'primary');
 
-		this.j.e.on(pasteButton, 'click', this.paste);
+		pasteButton.onAction(this.paste);
 
-		const cancelButton: HTMLAnchorElement = this.j.c.fromHTML(
-			'<a href="javascript:void(0)" style="float:right; margin-right: 10px;" class="jodit-button">' +
-				'<span>' +
-				this.j.i18n('Cancel') +
-				'</span>' +
-				'</a>'
-		) as HTMLAnchorElement;
+		const cancelButton = Button(this.j, '', 'Cancel');
 
-		this.j.e.on(cancelButton, 'click', this.dialog.close);
+		cancelButton.onAction(this.dialog.close);
 
 		this.container = this.j.c.div();
 		this.container.classList.add('jodit-paste-storage');

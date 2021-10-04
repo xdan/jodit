@@ -24,10 +24,10 @@
 		width: 12%;
 
 		.jodit-symbols__preview {
-			font-size: 34px;
-			text-align: center;
 			padding: 20px 0;
 			border: 1px solid var(--color-border);
+			font-size: 34px;
+			text-align: center;
 		}
 	}
 
@@ -40,16 +40,21 @@
 			padding: 0;
 
 			a {
-				font-size: 16px;
-				text-decoration: none;
-				color: var(--color-default);
 				display: inline-block;
-				box-sizing: border-box;
 				width: calc(var(--width_element_default) * 1.2);
 				height: calc(var(--height_element_default) * 1.2);
+
+				box-sizing: border-box;
+
 				border: 1px solid transparent;
-				text-align: center;
+				color: var(--color-default);
+				cursor: pointer;
+
+				font-size: 16px;
 				line-height: calc(var(--height_element_default) * 1.2);
+				text-align: center;
+
+				text-decoration: none;
 				vertical-align: top;
 
 				&:hover,

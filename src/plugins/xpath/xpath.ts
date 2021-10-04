@@ -90,7 +90,7 @@ export class xpath extends Plugin {
 		title: string
 	): HTMLElement => {
 		const item = this.j.c.fromHTML(
-			`<span class="jodit-xpath__item"><a role="button" data-path="${path}" href="javascript:void(0)" title="${title}" tabindex="-1"'>${trim(
+			`<span class="jodit-xpath__item"><a role="button" data-path="${path}" title="${title}" tabindex="-1"'>${trim(
 				name
 			)}</a></span>`
 		) as HTMLLIElement;

@@ -37,10 +37,14 @@ export class symbols extends Plugin {
 	override afterInit(jodit: IJodit): void {
 		jodit.e.on('generateSpecialCharactersTable.symbols', () => {
 			const container = jodit.c.fromHTML(
-					'<div class="jodit-symbols__container">' +
-						'<div class="jodit-symbols__container_table"><table><tbody></tbody></table></div>' +
-						'<div class="jodit-symbols__container_preview"><div class="jodit-symbols__preview"></div></div>' +
-						'</div>'
+					`<div class="jodit-symbols__container">
+						<div class="jodit-symbols__container_table">
+							<table><tbody></tbody></table>
+						</div>
+						<div class="jodit-symbols__container_preview">
+							<div class="jodit-symbols__preview"></div>
+						</div>
+					</div>`
 				) as HTMLDivElement,
 				preview = container.querySelector(
 					'.jodit-symbols__preview'
@@ -53,7 +57,7 @@ export class symbols extends Plugin {
 				const tr = jodit.c.element('tr');
 
 				for (
-					let j: number = 0;
+					let j = 0;
 					j < this.countInRow && i < jodit.o.specialCharacters.length;
 					j += 1, i += 1
 				) {
@@ -62,7 +66,6 @@ export class symbols extends Plugin {
 							`<a
 									data-index="${i}"
 									data-index-j="${j}"
-									href="javascript:void(0)"
 									role="option"
 									tabindex="-1"
 							>${jodit.o.specialCharacters[i]}</a>`

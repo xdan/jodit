@@ -114,7 +114,7 @@ export class resizeHandler extends Plugin {
 	 */
 	private handle = this.j.c.div(
 		'jodit-editor__resize',
-		'<a tabindex="-1" href="javascript:void(0)"></a>'
+		'<span tabindex="-1"></span>'
 	);
 
 	/** @override **/

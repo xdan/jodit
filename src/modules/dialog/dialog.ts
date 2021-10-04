@@ -660,7 +660,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 * //You can close dialog two ways
 	 * var dialog = new Jodit.modules.Dialog();
 	 * dialog.open('Hello world!', 'Title');
-	 * var $close = Jodit.modules.helper.dom('<a href="javascript:void(0)" style="float:left;" class="jodit-button">
+	 * var $close = dialog.create.fromHTML('<a href="#" style="float:left;" class="jodit-button">
 	 *     <i class="icon icon-check"></i>&nbsp;' + Jodit.prototype.i18n('Ok') + '</a>');
 	 * $close.addEventListener('click', function () {
 	 *     dialog.close();
@@ -690,7 +690,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		 * Called up to close the window
 		 *
 		 * @event beforeClose
-		 * @this {Dialog} current dialog
 		 */
 		if (this.e) {
 			this.e.fire('beforeClose', this);

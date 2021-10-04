@@ -50,11 +50,18 @@ export interface IUIIconState {
 	fill: string;
 }
 
+export type ButtonStatus =
+	| 'primary'
+	| 'default'
+	| 'secondary'
+	| 'success'
+	| 'danger';
+
 export interface IUIButtonState {
 	size: 'tiny' | 'xsmall' | 'small' | 'middle' | 'large';
 	name: string;
 	value: string | number | boolean;
-	status: string;
+	status: ButtonStatus;
 	type: 'button' | 'submit';
 	disabled: boolean;
 	activated: boolean;

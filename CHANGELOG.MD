@@ -17,8 +17,9 @@
 
 #### :bug: Bug Fix
 
--   [Trying to get in touch regarding a security issue #702](https://github.com/xdan/jodit/issues/702)
--   Fixed the link dialog: the unlink button does not work in some cases, and the selection is not restored
+- [Trying to get in touch regarding a security issue #702](https://github.com/xdan/jodit/issues/702)
+- [Refused to run the JavaScript URL because it violates the following Content Security Policy directive #716](https://github.com/xdan/jodit/issues/716)
+- Fixed the link dialog: the unlink button does not work in some cases, and the selection is not restored
 
 ## 3.8.1
 
@@ -567,11 +568,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
 -   ex: [
--                               	{ value: "", text: "" },
--                               	{ value: "val1", text: "text1" },
--                               	{ value: "val2", text: "text2" },
--                               	{ value: "val3", text: "text3" }
--                               ]
+-                                   	{ value: "", text: "" },
+-                                   	{ value: "val1", text: "text1" },
+-                                   	{ value: "val2", text: "text2" },
+-                                   	{ value: "val3", text: "text3" }
+-                                   ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

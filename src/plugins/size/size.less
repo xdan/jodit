@@ -12,28 +12,30 @@
 
 	.jodit-workplace {
 		display: flex;
-		flex-direction: column;
+		overflow: hidden;
 		height: auto;
 		min-height: 50px;
-		overflow: hidden;
+		flex-direction: column;
 	}
 
 	.jodit-editor__resize {
 		position: relative;
 
-		a {
+		span {
 			position: absolute;
-			bottom: 0;
 			right: 0;
-			user-select: none;
+			bottom: 0;
+			overflow: hidden;
+
 			width: 0;
 			height: 0;
-			overflow: hidden;
+
 			border-width: @resizer-size @resizer-size 0 0;
-			border-color: rgba(0, 0, 0, 0) var(--color-border) rgba(0, 0, 0, 0)
-				rgba(0, 0, 0, 0);
 			border-style: dashed solid dashed dashed;
+			border-color: rgba(0, 0, 0, 0) var(--color-border) rgba(0, 0, 0, 0);
+
 			cursor: se-resize;
+			user-select: none;
 		}
 	}
 }

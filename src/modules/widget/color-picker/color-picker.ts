@@ -41,8 +41,9 @@ export const ColorPickerWidget = (
 	callback: (newColor: string) => void,
 	coldColor: string
 ): HTMLDivElement => {
-	const valueHex = normalizeColor(coldColor),
-		form = editor.c.div('jodit-color-picker'),
+	const cn = 'jodit-color-picker',
+		valueHex = normalizeColor(coldColor),
+		form = editor.c.div(cn),
 		iconPalette: string = editor.o.textIcons
 			? `<span>${editor.i18n('palette')}</span>`
 			: Icon.get('palette'),
@@ -52,9 +53,7 @@ export const ColorPickerWidget = (
 			if (isPlainObject(colors)) {
 				Object.keys(colors).forEach(key => {
 					stack.push(
-						'<div class="jodit-color-picker__group jodit-color-picker__group-' +
-							key +
-							'">'
+						`<div class="${cn}__group ${cn}__group-${key}">`
 					);
 					stack.push(eachColor((colors as any)[key]));
 					stack.push('</div>');
@@ -62,35 +61,26 @@ export const ColorPickerWidget = (
 			} else if (isArray(colors)) {
 				colors.forEach(color => {
 					stack.push(
-						'<a ' +
-							(valueHex === color
-								? ' class="jodit_active" '
-								: '') +
-							' title="' +
-							color +
-							'" style="background-color:' +
-							color +
-							'" data-color="' +
-							color +
-							'" href="javascript:void(0)"></a>'
+						`<span class='${cn}__color-item ${
+							valueHex === color
+								? cn + '__color-item_active_true'
+								: ''
+						}' title="${color}" style="background-color:${color}" data-color="${color}"></span>`
 					);
 				});
 			}
+
 			return stack.join('');
 		};
 
 	form.appendChild(
 		editor.c.fromHTML(
-			'<div class="jodit-color-picker__groups">' +
-				eachColor(editor.o.colors) +
-				'</div>'
+			`<div class="${cn}__groups">${eachColor(editor.o.colors)}</div>`
 		)
 	);
 
 	form.appendChild(
-		editor.c.fromHTML(
-			'<div data-ref="extra" class="jodit-color-picker__extra"></div>'
-		)
+		editor.c.fromHTML(`<div data-ref="extra" class="${cn}__extra"></div>`)
 	);
 
 	const { extra } = refs(form);
@@ -98,17 +88,14 @@ export const ColorPickerWidget = (
 	if (editor.o.showBrowserColorPicker && hasBrowserColorPicker()) {
 		extra.appendChild(
 			editor.c.fromHTML(
-				'<div class="jodit-color-picker__native">' +
-					iconPalette +
-					'<input type="color" value="#ffffff"/>' +
-					'</div>'
+				`<div class="${cn}__native">${iconPalette}<input type="color" value="#ffffff"/></div>`
 			)
 		);
 
 		editor.e.on(form, 'change', (e: MouseEvent) => {
 			e.stopPropagation();
 
-			const target: HTMLInputElement = e.target as HTMLInputElement;
+			const target = e.target as HTMLInputElement;
 
 			if (!target || !target.tagName || !Dom.isTag(target, 'input')) {
 				return;
@@ -138,18 +125,21 @@ export const ColorPickerWidget = (
 		) {
 			target = Dom.closest(
 				target.parentNode,
-				'a',
+				'span',
 				editor.editor
 			) as HTMLElement;
 		}
 
-		if (!Dom.isTag(target, 'a')) {
+		if (
+			!Dom.isTag(target, 'span') ||
+			!target.classList.contains(cn + '__color-item')
+		) {
 			return;
 		}
 
 		const color: string = attr(target, '-color') || '';
 
-		if (callback && typeof callback === 'function') {
+		if (callback && isFunction(callback)) {
 			callback(color);
 		}
 
