@@ -360,6 +360,7 @@ export class link extends Plugin {
 
 		if (unlink) {
 			jodit.e.on(unlink, 'click', (e: MouseEvent) => {
+				jodit.s.restore();
 				jodit.observer.snapshot.restore(snapshot);
 
 				if (link) {
@@ -382,6 +383,7 @@ export class link extends Plugin {
 
 			let links: HTMLAnchorElement[];
 
+			jodit.s.restore();
 			jodit.s.removeMarkers();
 			jodit.editor.normalize();
 			jodit.observer.snapshot.restore(snapshot);
@@ -405,6 +407,8 @@ export class link extends Plugin {
 					jodit.s.insertNode(a, false, false);
 					links = [a];
 				}
+
+				links.forEach(link => jodit.s.select(link));
 			} else {
 				links = [link];
 			}
@@ -445,12 +449,20 @@ export class link extends Plugin {
 				}
 
 				if (!isImageContent) {
+					let newContent = a.textContent;
+
 					if (content_input.value.trim().length) {
 						if (textWasChanged) {
-							a.textContent = content_input.value;
+							newContent = content_input.value;
 						}
 					} else {
-						a.textContent = url_input.value;
+						newContent = url_input.value;
+					}
+
+					const content = a.textContent;
+
+					if (newContent !== content) {
+						a.textContent = newContent;
 					}
 				}
 

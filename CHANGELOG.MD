@@ -11,9 +11,14 @@
 
 ## 3.8.3
 
+#### :house: Internal
+
+-   The Source button has been moved to the depth of the toolbar as it is not cool for the WYSIWYG editor
+
 #### :bug: Bug Fix
 
-- [Trying to get in touch regarding a security issue #702](https://github.com/xdan/jodit/issues/702)
+-   [Trying to get in touch regarding a security issue #702](https://github.com/xdan/jodit/issues/702)
+-   Fixed the link dialog: the unlink button does not work in some cases, and the selection is not restored
 
 ## 3.8.1
 
@@ -75,10 +80,10 @@ Dom.isNode(editor.ed.body); // true
 
 #### :bug: Bug Fix
 
-- [Toolbar buttons are not read by screen reader correctly #725](https://github.com/xdan/jodit/issues/725)
-- [Bug : table & background color #722](https://github.com/xdan/jodit/issues/722)
-- [Video links are not reliably converted to an IFrame. #714](https://github.com/xdan/jodit/issues/714)
-- [Eraser delete "<a>" tag! #705](https://github.com/xdan/jodit/issues/705)
+-   [Toolbar buttons are not read by screen reader correctly #725](https://github.com/xdan/jodit/issues/725)
+-   [Bug : table & background color #722](https://github.com/xdan/jodit/issues/722)
+-   [Video links are not reliably converted to an IFrame. #714](https://github.com/xdan/jodit/issues/714)
+-   [Eraser delete "<a>" tag! #705](https://github.com/xdan/jodit/issues/705)
 
 ## 3.7.1
 
@@ -562,11 +567,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
 -   ex: [
--                           	{ value: "", text: "" },
--                           	{ value: "val1", text: "text1" },
--                           	{ value: "val2", text: "text2" },
--                           	{ value: "val3", text: "text3" }
--                           ]
+-                               	{ value: "", text: "" },
+-                               	{ value: "val1", text: "text1" },
+-                               	{ value: "val2", text: "text2" },
+-                               	{ value: "val3", text: "text3" }
+-                               ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

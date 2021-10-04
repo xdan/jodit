@@ -384,6 +384,49 @@ describe('Link plugin', function () {
 						});
 					});
 				});
+
+				describe('Press unlink button', function () {
+					describe('In inline popup', function () {
+						it('Should unwrap existing link', function () {
+							const editor = getJodit();
+
+							editor.value =
+								'<p>test <a href="#somelink">|link <strong>strong</strong></a> open</p>';
+							setCursorToChar(editor);
+
+							simulateEvent(
+								'click',
+								editor.editor.querySelector('a')
+							);
+
+							clickButton('unlink', getOpenedPopup(editor));
+
+							expect(editor.value).equals(
+								'<p>test link <strong>strong</strong> open</p>'
+							);
+						});
+					});
+
+					describe('In toolbar popup', function () {
+						it('Should unwrap existing link', function () {
+							const editor = getJodit();
+
+							editor.value =
+								'<p>test <a href="#somelink">|link <strong>strong</strong></a> open</p>';
+							setCursorToChar(editor);
+
+							clickButton('link', editor);
+
+							const popup = getOpenedPopup(editor);
+							getButton('unlink', popup).focus();
+							clickButton('unlink', popup);
+
+							expect(editor.value).equals(
+								'<p>test link <strong>strong</strong> open</p>'
+							);
+						});
+					});
+				});
 			});
 
 			describe('In dialog', function () {

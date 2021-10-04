@@ -843,8 +843,7 @@ function getButton(buttonName, joditOrElement, role, last) {
  */
 function clickButton(buttonName, joditOrElement, role, last) {
 	simulateEvent(
-		'click',
-		0,
+		['mousedown', 'mouseup', 'click'],
 		getButton(buttonName, joditOrElement, role, last)
 	);
 }
