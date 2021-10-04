@@ -133,7 +133,7 @@ describe('Test orderedList plugin', function () {
 
 		describe('Run second time', function () {
 			describe('On same place', function () {
-				it('Should not do anything', function () {
+				it('Should unwrap source elements', function () {
 					const editor = getJodit();
 					editor.value = '<p>test</p>';
 					editor.s.setCursorIn(editor.editor.firstChild);
