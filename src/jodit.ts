@@ -404,15 +404,16 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * Set value to native editor
 	 */
 	setNativeEditorValue(value: string): void {
-		if (this.e.fire('beforeSetNativeEditorValue', value)) {
+		const data = {
+			value
+		};
+
+		if (this.e.fire('beforeSetNativeEditorValue', data)) {
 			return;
 		}
 
 		if (this.editor) {
-			const data = this.createInside.fromHTML(value);
-			Dom.detach(this.editor);
-			Dom.moveContent(data, this.editor);
-			// this.editor.appendChild(data);
+			this.editor.innerHTML = value;
 		}
 	}
 

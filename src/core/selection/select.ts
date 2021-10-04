@@ -33,8 +33,7 @@ import {
 	$$,
 	css,
 	call,
-	toArray,
-	safeHTML
+	toArray
 } from '../helpers';
 import { CommitStyle } from './style/commit-style';
 import { autobind } from '../decorators';
@@ -550,7 +549,7 @@ export class Select implements ISelect {
 	): void {
 		this.errorNode(node);
 
-		safeHTML(<HTMLElement>node);
+		this.j.e.fire('safeHTML', <HTMLElement>node);
 
 		if (!this.isFocused() && this.j.isEditorMode()) {
 			this.focus();

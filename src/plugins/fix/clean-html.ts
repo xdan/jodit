@@ -20,7 +20,7 @@ import {
 import { Dom, Select } from '../../modules';
 import { isString, keys, safeHTML, trim } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
-import { autobind, debounce } from '../../core/decorators';
+import { watch, autobind, debounce } from '../../core/decorators';
 import { findNotEmptySibling } from '../keyboard/helpers';
 
 declare module '../../config' {
@@ -35,6 +35,16 @@ declare module '../../config' {
 			fillEmptyParagraph: boolean;
 			removeEmptyElements: boolean;
 			replaceOldTags: IDictionary<HTMLTagNames> | false;
+
+			/**
+			 * Remove onError attributes
+			 */
+			removeOnError: boolean;
+
+			/**
+			 * Safe href="javascript:" links
+			 */
+			safeJavaScriptLink: boolean;
 
 			/**
 			 * The allowTags option defines which elements will remain in the
@@ -96,7 +106,10 @@ Config.prototype.cleanHTML = {
 		b: 'strong'
 	},
 	allowTags: false,
-	denyTags: false
+	denyTags: false,
+
+	removeOnError: true,
+	safeJavaScriptLink: true
 };
 
 Config.prototype.controls.eraser = {
@@ -139,7 +152,7 @@ export class cleanHtml extends Plugin {
 
 		const editor = this.j;
 
-		safeHTML(editor.editor);
+		this.onSafeHTML(editor.editor);
 
 		const current = editor.s.current();
 
@@ -528,6 +541,24 @@ export class cleanHtml extends Plugin {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Event handler when manually assigning a value to the HTML editor.
+	 */
+	@watch(':beforeSetNativeEditorValue')
+	protected onBeforeSetNativeEditorValue(data: { value: string }): boolean {
+		const sandBox = this.j.createInside.div();
+		sandBox.innerHTML = data.value;
+		this.onSafeHTML(sandBox);
+		data.value = sandBox.innerHTML;
+
+		return false;
+	}
+
+	@watch(':safeHTML')
+	protected onSafeHTML(sandBox: HTMLElement): void {
+		safeHTML(sandBox, this.j.o.cleanHTML);
 	}
 
 	/** @override */

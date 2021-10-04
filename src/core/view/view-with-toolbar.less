@@ -10,11 +10,12 @@
 	&__box {
 		&:not(:empty) {
 			--color-background-default: var(--color-panel);
-			background-color: var(--color-panel);
+
 			overflow: hidden;
+			border-bottom: 1px solid var(--color-border);
+			background-color: var(--color-panel);
 			border-radius: var(--border-radius-default)
 				var(--border-radius-default) 0 0;
-			border-bottom: 1px solid var(--color-border);
 		}
 	}
 }

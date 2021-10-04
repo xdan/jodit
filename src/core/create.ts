@@ -21,7 +21,6 @@ import {
 	isFunction,
 	kebabCase,
 	refs,
-	safeHTML,
 	isString
 } from './helpers/';
 
@@ -218,8 +217,6 @@ export class Create implements ICreate {
 				}
 			});
 		}
-
-		safeHTML(child);
 
 		return child;
 	}

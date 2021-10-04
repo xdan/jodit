@@ -173,7 +173,6 @@ describe('Text Inline Popup plugin', function () {
 
 						simulateEvent(
 							['mousedown', 'mouseup', 'click'],
-							0,
 							td,
 							e => {
 								Object.assign(e, {
@@ -199,7 +198,7 @@ describe('Text Inline Popup plugin', function () {
 
 						simulateEvent(
 							['mousedown', 'mouseup', 'click'],
-							popupColor.querySelector('a[data-color="#0000FF"]')
+							popupColor.querySelector('[data-color="#0000FF"]')
 						);
 
 						expect(
@@ -280,7 +279,7 @@ describe('Text Inline Popup plugin', function () {
 			const td = editor.editor.querySelector('td'),
 				pos = Jodit.modules.Helpers.position(td);
 
-			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
+			simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
 				Object.assign(e, {
 					clientX: pos.left,
 					clientY: pos.top

@@ -321,7 +321,7 @@ export function iframe(editor: IJodit): void {
 						)
 						.on(
 							'beforeSetNativeEditorValue',
-							(value: string): boolean => {
+							({ value }: { value: string }): boolean => {
 								if (editor.isLocked) {
 									return false;
 								}

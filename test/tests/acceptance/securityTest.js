@@ -99,5 +99,40 @@ describe('Security test', () => {
 				});
 			});
 		});
+
+		describe('Disable', () => {
+			describe('Set HTML with onerror JS', () => {
+				it('Should not remove this unsafe attribute', () => {
+					const editor = getJodit({
+						cleanHTML: {
+							removeOnError: false
+						}
+					});
+					editor.value =
+						'<math><iframe></iframe></math><img src onerror="console.log(document.cookie);"/>';
+
+					expect(sortAttributes(editor.value)).eq(
+						'<p><math><iframe></iframe></math><img onerror="console.log(document.cookie);" src=""></p>'
+					);
+				});
+			});
+
+			describe('Create JS link', () => {
+				it('Should change this unsafe attribute to safe', () => {
+					const editor = getJodit({
+						cleanHTML: {
+							safeJavaScriptLink: false
+						}
+					});
+
+					editor.value =
+						'<p><a href="javascript:console.log(\'yo\');">test</a></p>';
+
+					expect(sortAttributes(editor.value)).eq(
+						'<p><a href="javascript:console.log(\'yo\');">test</a></p>'
+					);
+				});
+			});
+		});
 	});
 });
