@@ -32,10 +32,8 @@ const $$temp = () => {
  *      });
  * })
  * ```
- * @param selector CSS like selector
- * @param root
+ * @param selector - CSS like selector
  *
- * @return {HTMLElement[]}
  */
 export function $$<K extends HTMLTagNames>(
 	selector: K,
@@ -47,7 +45,7 @@ export function $$<T extends HTMLElement>(
 	root: HTMLElement | HTMLDocument
 ): T[];
 
-export function $$<T extends HTMLElement>(
+export function $$<T extends Element>(
 	selector: string | HTMLTagNames,
 	root: HTMLElement | HTMLDocument
 ): T[] {
@@ -59,19 +57,19 @@ export function $$<T extends HTMLElement>(
 		IS_IE &&
 		!(root && root.nodeType === Node.DOCUMENT_NODE)
 	) {
-		const id: string = (root as HTMLElement).id,
+		const id: string = (root as Element).id,
 			temp_id: string =
 				id ||
 				'_selector_id_' + String(Math.random()).slice(2) + $$temp();
 
 		selector = selector.replace(/:scope/g, '#' + temp_id);
 
-		!id && (root as HTMLElement).setAttribute('id', temp_id);
+		!id && (root as Element).setAttribute('id', temp_id);
 
-		result = (root.parentNode as HTMLElement).querySelectorAll(selector);
+		result = (root.parentNode as Element).querySelectorAll(selector);
 
 		if (!id) {
-			(root as HTMLElement).removeAttribute('id');
+			(root as Element).removeAttribute('id');
 		}
 	} else {
 		result = root.querySelectorAll(selector);

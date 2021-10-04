@@ -20,7 +20,8 @@ import {
 	css,
 	isFunction,
 	kebabCase,
-	refs
+	refs,
+	safeHTML
 } from './helpers/';
 
 import { Dom } from './dom';
@@ -40,9 +41,6 @@ export class Create implements ICreate {
 
 	/**
 	 * Apply some object key-value to HTMLElement
-	 *
-	 * @param elm
-	 * @param attrs
 	 */
 	private applyAttributes = (elm: HTMLElement, attrs: Attributes) => {
 		each(attrs, (key: string, value) => {
@@ -161,7 +159,6 @@ export class Create implements ICreate {
 
 	/**
 	 * Create text node
-	 * @param value
 	 */
 	text(value: string): Text {
 		return this.doc.createTextNode(value);
@@ -169,7 +166,6 @@ export class Create implements ICreate {
 
 	/**
 	 * Create invisible text node
-	 * @param value
 	 */
 	fake(): Text {
 		return this.text(INVISIBLE_SPACE);
@@ -185,16 +181,23 @@ export class Create implements ICreate {
 	/**
 	 * Create DOM element from HTML text
 	 *
-	 * @param html
-	 * @param refsToggleElement
-	 *
-	 * @return HTMLElement
+	 * @param refsToggleElement - State dictionary in which you can set the visibility of some of the elements
+	 * ```js
+	 * const editor = Jodit.make('#editor');
+	 * editor.createInside.fromHTML(`<div>
+	 *   <input name="name" ref="name"/>
+	 *   <input name="email" ref="email"/>
+	 * </div>`, {
+	 *   name: true,
+	 *   email: false
+	 * });
+	 * ```
 	 */
 	fromHTML(
 		html: string | number,
 		refsToggleElement?: IDictionary<boolean | void>
 	): HTMLElement {
-		const div: HTMLDivElement = this.div();
+		const div = this.div();
 
 		div.innerHTML = html.toString();
 
@@ -217,12 +220,13 @@ export class Create implements ICreate {
 			});
 		}
 
+		safeHTML(child);
+
 		return child;
 	}
 
 	/**
 	 * Apply to element `createAttributes` options
-	 * @param elm
 	 */
 	applyCreateAttributes(elm: HTMLElement): void {
 		if (this.createAttributes) {

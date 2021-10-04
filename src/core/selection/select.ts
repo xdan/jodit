@@ -33,7 +33,8 @@ import {
 	$$,
 	css,
 	call,
-	toArray
+	toArray,
+	safeHTML
 } from '../helpers';
 import { CommitStyle } from './style/commit-style';
 import { autobind } from '../decorators';
@@ -226,9 +227,6 @@ export class Select implements ISelect {
 
 	/**
 	 * Create marker element
-	 *
-	 * @param atStart
-	 * @param range
 	 */
 	marker(atStart = false, range?: Range): HTMLSpanElement {
 		let newRange: Range | null = null;
@@ -397,7 +395,6 @@ export class Select implements ISelect {
 
 	/**
 	 * Set focus in editor
-	 * @param options
 	 */
 	@autobind
 	focus(
@@ -437,7 +434,7 @@ export class Select implements ISelect {
 
 	/**
 	 * Checks whether the current selection is something or just set the cursor is
-	 * @return boolean true Selection does't have content
+	 * @returns true Selection does't have content
 	 */
 	isCollapsed(): boolean {
 		const sel = this.sel;
@@ -543,9 +540,8 @@ export class Select implements ISelect {
 	/**
 	 * Insert element in editor
 	 *
-	 * @param node
-	 * @param [insertCursorAfter] After insert, cursor will move after element
-	 * @param [fireChange] After insert, editor fire change event. You can prevent this behavior
+	 * @param insertCursorAfter - After insert, cursor will move after element
+	 * @param fireChange - After insert, editor fire change event. You can prevent this behavior
 	 */
 	insertNode(
 		node: Node,
@@ -553,6 +549,8 @@ export class Select implements ISelect {
 		fireChange: boolean = true
 	): void {
 		this.errorNode(node);
+
+		safeHTML(<HTMLElement>node);
 
 		if (!this.isFocused() && this.j.isEditorMode()) {
 			this.focus();
@@ -608,7 +606,7 @@ export class Select implements ISelect {
 	/**
 	 * Inserts in the current cursor position some HTML snippet
 	 *
-	 * @param  {string} html HTML The text toWYSIWYG be inserted into the document
+	 * @param html - HTML The text toWYSIWYG be inserted into the document
 	 * @example
 	 * ```javascript
 	 * parent.s.insertHTML('<img src="image.png"/>');
@@ -669,11 +667,11 @@ export class Select implements ISelect {
 	/**
 	 * Insert image in editor
 	 *
-	 * @param  url URL for image, or HTMLImageElement
-	 * @param  [styles] If specified, it will be applied <code>$(image).css(styles)</code>
-	 * @param defaultWidth
+	 * @param  url - URL for image, or HTMLImageElement
+	 * @param  styles - If specified, it will be applied <code>$(image).css(styles)</code>
 	 *
-	 * @fired afterInsertImage
+	 * eslint-disable-next-line tsdoc/syntax
+	 * @emits afterInsertImage - Triggered aafter insert image
 	 */
 	insertImage(
 		url: string | HTMLImageElement,
@@ -820,10 +818,10 @@ export class Select implements ISelect {
 	/**
 	 * Checks if the cursor is at the end(start) block
 	 *
-	 * @param  {boolean} start=false true - check whether the cursor is at the start block
-	 * @param {HTMLElement} parentBlock - Find in this
+	 * @param  start - true - check whether the cursor is at the start block
+	 * @param parentBlock - Find in this
 	 *
-	 * @return {boolean | null} true - the cursor is at the end(start) block, null - cursor somewhere outside
+	 * @returns true - the cursor is at the end(start) block, null - cursor somewhere outside
 	 */
 	cursorInTheEdge(
 		start: boolean,
@@ -882,7 +880,6 @@ export class Select implements ISelect {
 
 	/**
 	 * Wrapper for cursorInTheEdge
-	 * @param parentBlock
 	 */
 	cursorOnTheLeft(parentBlock: HTMLElement): Nullable<boolean> {
 		return this.cursorInTheEdge(true, parentBlock);
@@ -890,7 +887,6 @@ export class Select implements ISelect {
 
 	/**
 	 * Wrapper for cursorInTheEdge
-	 * @param parentBlock
 	 */
 	cursorOnTheRight(parentBlock: HTMLElement): Nullable<boolean> {
 		return this.cursorInTheEdge(false, parentBlock);
@@ -898,9 +894,7 @@ export class Select implements ISelect {
 
 	/**
 	 * Set cursor after the node
-	 *
-	 * @param {Node} node
-	 * @return {Node} fake invisible textnode. After insert it can be removed
+	 * @returns fake invisible textnode. After insert it can be removed
 	 */
 	@autobind
 	setCursorAfter(node: Node): Nullable<Text> {
@@ -909,9 +903,7 @@ export class Select implements ISelect {
 
 	/**
 	 * Set cursor before the node
-	 *
-	 * @param node
-	 * @return fake invisible textnode. After insert it can be removed
+	 * @returns fake invisible textnode. After insert it can be removed
 	 */
 	@autobind
 	setCursorBefore(node: Node): Nullable<Text> {
@@ -920,9 +912,6 @@ export class Select implements ISelect {
 
 	/**
 	 * Add fake node for new cursor position
-	 *
-	 * @param node
-	 * @param inStart
 	 */
 	private setCursorNearWith(node: Node, inStart: boolean): Nullable<Text> {
 		this.errorNode(node);
@@ -966,9 +955,7 @@ export class Select implements ISelect {
 
 	/**
 	 * Set cursor in the node
-	 *
-	 * @param node
-	 * @param [inStart] set cursor in start of element
+	 * @param inStart - set cursor in start of element
 	 */
 	@autobind
 	setCursorIn(node: Node, inStart: boolean = false): Node {
@@ -1019,11 +1006,7 @@ export class Select implements ISelect {
 
 	/**
 	 * Set range selection
-	 *
-	 * @param range
-	 * @param [focus]
-	 *
-	 * @fires changeSelection
+	 * @emits changeSelection
 	 */
 	selectRange(range: Range, focus: boolean = true): void {
 		const sel = this.sel;
@@ -1039,7 +1022,6 @@ export class Select implements ISelect {
 
 		/**
 		 * Fired after change selection
-		 *
 		 * @event changeSelection
 		 */
 		this.j.e.fire('changeSelection');
@@ -1047,9 +1029,7 @@ export class Select implements ISelect {
 
 	/**
 	 * Select node
-	 *
-	 * @param {Node} node
-	 * @param {boolean} [inward=false] select all inside
+	 * @param inward - select all inside
 	 */
 	select(
 		node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement,
@@ -1219,8 +1199,6 @@ export class Select implements ISelect {
 	/**
 	 * Apply some css rules for all selections. It method wraps selections in nodeName tag.
 	 *
-	 * @param cssRules
-	 * @param options
 	 * @param options.element - tag - equal CSSRule (e.g. strong === font-weight: 700)
 	 * @param options.defaultTag - tag for wrapping and apply styles
 	 * @example
@@ -1253,8 +1231,6 @@ export class Select implements ISelect {
 
 	/**
 	 * Split selection on two parts: left and right
-	 * @param currentBox
-	 * @return Left part
 	 */
 	splitSelection(currentBox: HTMLElement): Nullable<Element> {
 		if (!this.isCollapsed()) {

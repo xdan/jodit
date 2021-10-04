@@ -9,6 +9,12 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.8.3
+
+#### :bug: Bug Fix
+
+- [Trying to get in touch regarding a security issue #702](https://github.com/xdan/jodit/issues/702)
+
 ## 3.8.1
 
 #### :boom: Breaking Change

@@ -18,7 +18,7 @@ import {
 	INSEPARABLE_TAGS
 } from '../../core/constants';
 import { Dom, Select } from '../../modules';
-import { isString, keys, trim } from '../../core/helpers';
+import { isString, keys, safeHTML, trim } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { autobind, debounce } from '../../core/decorators';
 import { findNotEmptySibling } from '../keyboard/helpers';
@@ -138,6 +138,8 @@ export class cleanHtml extends Plugin {
 		}
 
 		const editor = this.j;
+
+		safeHTML(editor.editor);
 
 		const current = editor.s.current();
 

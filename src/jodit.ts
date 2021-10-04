@@ -402,7 +402,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/**
 	 * Set value to native editor
-	 * @param value
 	 */
 	setNativeEditorValue(value: string): void {
 		if (this.e.fire('beforeSetNativeEditorValue', value)) {
@@ -410,7 +409,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		if (this.editor) {
-			this.editor.innerHTML = value;
+			const data = this.createInside.fromHTML(value);
+			Dom.detach(this.editor);
+			Dom.moveContent(data, this.editor);
+			// this.editor.appendChild(data);
 		}
 	}
 
