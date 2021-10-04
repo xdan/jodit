@@ -27,7 +27,7 @@ export const UIButtonState = (): IUIButtonState => ({
 	name: '',
 	value: '',
 
-	status: 'default',
+	status: 'initial',
 	disabled: false,
 	activated: false,
 

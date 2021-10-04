@@ -51,8 +51,9 @@ export interface IUIIconState {
 }
 
 export type ButtonStatus =
-	| 'primary'
+	| 'initial'
 	| 'default'
+	| 'primary'
 	| 'secondary'
 	| 'success'
 	| 'danger';
