@@ -628,10 +628,6 @@ export class Config implements IViewOptions {
 	 */
 	buttons: ButtonsOption = [
 		{
-			group: 'source',
-			buttons: []
-		},
-		{
 			group: 'font-style',
 			buttons: []
 		},
@@ -682,6 +678,10 @@ export class Config implements IViewOptions {
 		},
 		{
 			group: 'search',
+			buttons: []
+		},
+		{
+			group: 'source',
 			buttons: []
 		},
 		{
