@@ -1097,10 +1097,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/**
 	 * Create instance of Jodit
-	 * @constructor
 	 *
-	 * @param {HTMLInputElement | string} element Selector or HTMLElement
-	 * @param {object} options Editor's options
+	 * @param element - Selector or HTMLElement
+	 * @param options - Editor's options
 	 */
 	constructor(element: HTMLElement | string, options?: object) {
 		super(options as IViewOptions, true);
