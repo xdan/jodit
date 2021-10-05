@@ -62,9 +62,6 @@ export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 
 	/**
 	 * Add element in statusbar
-	 *
-	 * @param child
-	 * @param inTheRight
 	 */
 	append(child: HTMLElement, inTheRight: boolean = false): void {
 		const wrapper =

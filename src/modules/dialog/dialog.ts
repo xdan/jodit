@@ -165,7 +165,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 				/**
 				 * Fired when dialog box is finished to resizing
-				 * @event endResize
 				 */
 				this.e.fire(this, 'endResize endMove');
 			}
@@ -174,7 +173,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 	/**
 	 *
-	 * @param {MouseEvent} e
 	 */
 	@autobind
 	private onHeaderMouseDown(e: MouseEvent): void {
@@ -220,9 +218,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			if (this.e) {
 				/**
 				 * Fired when dialog box is moved
-				 * @event move
-				 * @param {int} dx Delta X
-				 * @param {int} dy Delta Y
 				 */
 				this.e.fire(
 					this,
@@ -714,9 +709,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		/**
 		 * It called after the window is closed
-		 *
-		 * @event afterClose
-		 * @this {Dialog} current dialog
 		 */
 		this.e?.fire(this, 'afterClose');
 		this.e?.fire(this.ow, 'joditCloseDialog');

@@ -11,11 +11,9 @@ import { attr, isFunction } from '../../core/helpers';
 /**
  * Show `Prompt` dialog. Work without Jodit object
  *
- * @method Prompt
- * @param {string} msg Message
- * @param {string|function} [title] Title or callback
- * @param {function} [callback] callback. The first argument is the value entered
- * @param {string} [placeholder] Placeholder for input
+ * @param title - Title or callback
+ * @param callback - callback. The first argument is the value entered
+ * @param placeholder - Placeholder for input
  * @example
  * ```javascript
  * Jodit.Prompt("Enter your name", "Prompt Dialog", function (name) {
