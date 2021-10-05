@@ -316,13 +316,10 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 			/**
 			 * Fired after popup was opened for some control button
-			 * @event after{CONTROLNAME}OpenPopup
 			 */
 
 			/**
 			 * Close all opened popups
-			 *
-			 * @event closeAllPopups
 			 */
 			this.j.e.fire(
 				camelCase(`after-${ctr.name}-open-popup`),
@@ -404,7 +401,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 	/**
 	 * Click handler
-	 * @param originalEvent
 	 */
 	protected onClick(originalEvent: MouseEvent): void {
 		const { control: ctr } = this;
@@ -428,7 +424,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 				/**
 				 * Fired after calling `button.exec` function
-				 * @event afterExec
 				 */
 				this.j?.e?.fire('closeAllPopups afterExec');
 			}

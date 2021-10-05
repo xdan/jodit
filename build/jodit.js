@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.8.3
+ * Version: v3.8.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -10991,7 +10991,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.8.3";
+        _this.version = "3.8.4";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -11133,10 +11133,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.8.3";
+        return "3.8.4";
     };
     View.getVersion = function () {
-        return "3.8.3";
+        return "3.8.4";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -15232,7 +15232,7 @@ function applyToElement(style, font, root, range, ci, wrap) {
     var wrapper = font;
     if (style.elementIsBlock) {
         var ulReg_1 = /^(ul|ol|li|td|th|tr|tbody|table)$/i;
-        var box_1 = dom_1.Dom.up(font, function (node) {
+        var box = dom_1.Dom.up(font, function (node) {
             if (dom_1.Dom.isBlock(node)) {
                 if (ulReg_1.test(style.element) ||
                     !ulReg_1.test(node.nodeName)) {
@@ -15241,8 +15241,8 @@ function applyToElement(style, font, root, range, ci, wrap) {
             }
             return false;
         }, root);
-        if (box_1) {
-            wrapper = box_1;
+        if (box) {
+            wrapper = box;
         }
         else {
             wrapper = (0, api_1.wrapUnwrappedText)(style, font, root, ci, range);
@@ -23594,14 +23594,14 @@ var WrapTextNodes = (function (_super) {
                     jodit.s.save();
                 }
                 isChanged = true;
-                var box_1 = jodit.createInside.element(jodit.o.enter);
-                dom_1.Dom.before(child, box_1);
+                var box = jodit.createInside.element(jodit.o.enter);
+                dom_1.Dom.before(child, box);
                 while (child && this.isSuitable(child)) {
                     var next = child.nextSibling;
-                    box_1.appendChild(child);
+                    box.appendChild(child);
                     child = next;
                 }
-                box_1.normalize();
+                box.normalize();
             }
             child = child && child.nextSibling;
         }
@@ -24413,7 +24413,7 @@ config_1.Config.prototype.controls.copyformat = {
             editor.e.off(editor.editor, 'mouseup.' + pluginKey);
         }
         else {
-            var defaultStyles_1 = {}, box_1 = dom_1.Dom.up(current, function (elm) { return elm && !dom_1.Dom.isText(elm); }, editor.editor) || editor.editor;
+            var defaultStyles_1 = {}, box = dom_1.Dom.up(current, function (elm) { return elm && !dom_1.Dom.isText(elm); }, editor.editor) || editor.editor;
             var ideal_1 = editor.createInside.span();
             editor.editor.appendChild(ideal_1);
             copyStyles.forEach(function (key) {
@@ -24422,7 +24422,7 @@ config_1.Config.prototype.controls.copyformat = {
             if (ideal_1 !== editor.editor) {
                 dom_1.Dom.safeRemove(ideal_1);
             }
-            var format_1 = getStyles(editor, box_1, defaultStyles_1);
+            var format_1 = getStyles(editor, box, defaultStyles_1);
             var onMouseUp = function () {
                 editor.buffer.delete(pluginKey);
                 var currentNode = editor.s.current();
@@ -31729,11 +31729,11 @@ config_1.Config.prototype.controls.symbol = {
         var container = editor.e.fire('generateSpecialCharactersTable.symbols');
         if (container) {
             if (editor.o.usePopupForSpecialCharacters) {
-                var box_1 = editor.c.div();
-                box_1.classList.add('jodit-symbols');
-                box_1.appendChild(container);
+                var box = editor.c.div();
+                box.classList.add('jodit-symbols');
+                box.appendChild(container);
                 editor.e.on(container, 'close_dialog', close);
-                return box_1;
+                return box;
             }
             else {
                 (0, dialog_1.Alert)(container, editor.i18n('Select Special Character'), undefined, 'jodit-symbols').bindDestruct(editor);

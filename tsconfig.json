@@ -33,5 +33,14 @@
 
 		"lib": ["es5", "esnext", "dom", "scripthost"]
 	},
-	"files": ["./index.d.ts", "./src/index.ts", "./src/typings.d.ts", "./src/types/index.d.ts"]
+	"include": [
+    "./src/types/"
+  ],
+	"files": [
+		"./index.d.ts",
+		"./src/index.ts",
+		"./src/typings.d.ts",
+		"./src/types/index.d.ts",
+		"./src/types/async.d.ts",
+	]
 }
