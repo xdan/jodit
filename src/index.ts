@@ -68,4 +68,4 @@ Object.keys(Languages)
 		DefaultJodit.lang[key] = (Languages as any)[key];
 	});
 
-export const Jodit = DefaultJodit;
+export { DefaultJodit as Jodit };

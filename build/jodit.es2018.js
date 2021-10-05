@@ -12581,7 +12581,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
-  "Jodit": () => (/* binding */ src_Jodit)
+  "Jodit": () => (/* reexport */ Jodit)
 });
 
 // NAMESPACE OBJECT: ./src/modules/index.ts
@@ -30244,7 +30244,7 @@ Object.keys(langs)
     .forEach((key) => {
     Jodit.lang[key] = langs[key];
 });
-const src_Jodit = Jodit;
+
 
 })();
 

@@ -33818,6 +33818,7 @@ if ( true && typeof window !== 'undefined') {
     __webpack_require__(2);
 }
 var jodit_1 = __webpack_require__(6);
+Object.defineProperty(exports, "Jodit", ({ enumerable: true, get: function () { return jodit_1.Jodit; } }));
 var langs_1 = __webpack_require__(227);
 var decorators = __webpack_require__(99);
 var consts = __webpack_require__(9);
@@ -33856,7 +33857,6 @@ Object.keys(langs_1.default)
     .forEach(function (key) {
     jodit_1.Jodit.lang[key] = langs_1.default[key];
 });
-exports.Jodit = jodit_1.Jodit;
 
 })();
 
