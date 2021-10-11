@@ -643,17 +643,20 @@ export class imageProperties extends Plugin {
 			imageWidth.value !== image.offsetWidth.toString() ||
 			imageHeight.value !== image.offsetHeight.toString()
 		) {
+			const updatedtWidth = trim(imageWidth.value)
+				? normalSizeToString(imageWidth.value)
+				: null;
+			const updatedHeight = trim(imageHeight.value)
+				? normalSizeToString(imageHeight.value)
+				: null;
+
 			css(image, {
-				width: trim(imageWidth.value)
-					? normalSizeToString(imageWidth.value)
-					: null,
-				height: trim(imageHeight.value)
-					? normalSizeToString(imageHeight.value)
-					: null
+				width: updatedtWidth,
+				height: updatedHeight
 			});
 
-			attr(image, 'width', null);
-			attr(image, 'height', null);
+			attr(image, 'width', attr(image, 'width') ? updatedtWidth : null);
+			attr(image, 'height', attr(image, 'height') ? updatedHeight : null);
 		}
 
 		const margins = [marginTop, marginRight, marginBottom, marginLeft];
