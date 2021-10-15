@@ -22,10 +22,6 @@ import { Component, STATUSES } from '../component';
 
 /**
  * Wrap function in debounce wrapper
- *
- * @param timeout
- * @param firstCallImmediately
- * @param method
  */
 export function debounce<V = IViewComponent | IViewBased>(
 	timeout?: number | ((ctx: V) => number | IAsyncParams) | IAsyncParams,
@@ -62,10 +58,6 @@ export function debounce<V = IViewComponent | IViewBased>(
 
 /**
  * Wrap function in throttle wrapper
- *
- * @param timeout
- * @param firstCallImmediately
- * @param method
  */
 export function throttle<V = IViewComponent | IViewBased>(
 	timeout?: number | ((ctx: V) => number | IAsyncParams) | IAsyncParams,

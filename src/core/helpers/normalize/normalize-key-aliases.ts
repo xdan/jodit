@@ -10,8 +10,6 @@ import { KEY_ALIASES } from '../../constants';
 
 /**
  * Normalize keys to some standard name
- *
- * @param keys
  */
 export function normalizeKeyAliases(keys: string): string {
 	const memory: IDictionary<boolean> = {};

@@ -8,12 +8,7 @@ import { isURL } from './checker/';
 import { parseQuery } from './parse-query';
 
 /**
- *  Javascript url pattern converter replace youtube/vimeo url in embed code.
- *
- * @param {string} url
- * @param {int} [width=400]
- * @param {int} [height=345]
- * return {string} embed code
+ * Javascript url pattern converter replace youtube/vimeo url in embed code.
  */
 export const convertMediaUrlToVideoEmbed = (
 	url: string,

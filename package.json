@@ -25,7 +25,7 @@
 		"types": "rm -rf types/* && cp -r ./src/types ./types/types && tsc --project . --declaration --declarationDir types --outDir types --emitDeclarationOnly --removeComments false",
 		"pretty": "npx prettier --write ./src/*.{ts,less} ./src/**/*.{ts,less} ./src/**/**/*.{ts,less} ./src/**/**/**/*.{ts,less} ./src/**/**/**/**/*.{ts,less}",
 		"fix": "npx eslint ./src/ ./test/ --fix && npm run pretty",
-		"lint": "npx eslint ./src/ ./test/ && stylelint ./src/**/*.less"
+		"lint": "npx eslint ./src/ ./test/ && stylelint ./src/**/**.less"
 	},
 	"repository": {
 		"type": "git",

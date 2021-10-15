@@ -7,15 +7,15 @@
 @import (reference) '../../styles/variables';
 
 .jodit_fullsize-box_true {
-	z-index: var(--z-index-full-size) !important;
 	position: static !important;
+	z-index: var(--z-index-full-size) !important;
 	overflow: visible !important;
 
 	html&,
 	body& {
-		height: 0 !important;
-		width: 0 !important;
 		overflow: initial !important;
+		width: 0 !important;
+		height: 0 !important;
 	}
 
 	html& {
@@ -25,11 +25,11 @@
 
 .jodit_fullsize {
 	position: absolute;
+	z-index: var(--z-index-full-size);
 	top: 0;
-	left: 0;
 	right: 0;
 	bottom: 0;
-	z-index: var(--z-index-full-size);
+	left: 0;
 	max-width: none !important;
 
 	.toolbar {

@@ -29,7 +29,6 @@ export class Icon {
 
 	/**
 	 * Check if icon exist in store
-	 * @param name
 	 */
 	static exists(name: string): boolean {
 		return this.getIcon(name) !== undefined;
@@ -37,9 +36,6 @@ export class Icon {
 
 	/**
 	 * Return SVG icon
-	 *
-	 * @param name icon
-	 * @param [defaultValue='<span></span>']
 	 */
 	static get(name: string, defaultValue: string = '<span></span>'): string {
 		return this.getIcon(name) || defaultValue;
@@ -47,9 +43,6 @@ export class Icon {
 
 	/**
 	 * Set SVG in store
-	 *
-	 * @param name
-	 * @param value
 	 */
 	static set(name: string, value: string): void {
 		this.icons[name.replace('_', '-')] = value;
@@ -57,9 +50,6 @@ export class Icon {
 
 	/**
 	 * Make icon html element
-	 *
-	 * @param jodit
-	 * @param icon
 	 */
 	static makeIcon(jodit: IViewBased, icon: IUIIconState): CanUndef<Node> {
 		let iconElement: CanUndef<HTMLElement>;

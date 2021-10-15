@@ -38,9 +38,6 @@ import { keys } from './utils';
  * console.log(options.d.g); // 8
  *
  * ```
- * @param options
- * @param proto
- * @param level
  */
 export function ConfigProto(
 	options: IDictionary,

@@ -6,7 +6,6 @@
 
 /**
  *  Inserts HTML line breaks before all newlines in a string
- * @param html
  */
 export function nl2br(html: string): string {
 	return html.replace(/([^>])([\n\r]+)/g, '$1<br/>$2');

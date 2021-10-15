@@ -74,10 +74,6 @@ export class Async implements IAsync {
 	 * Debouncing enforces that a function not be called again until a certain amount of time has passed without
 	 * it being called. As in "execute this function only if 100 milliseconds have passed without it being called."
 	 *
-	 * @param {function} fn
-	 * @param {int} timeout
-	 * @return {function}
-	 *
 	 * @example
 	 * ```javascript
 	 * var jodit = new Jodit('.editor');
@@ -86,9 +82,6 @@ export class Async implements IAsync {
 	 * }, 100));
 	 * ```
 	 *
-	 * @param fn
-	 * @param timeout
-	 * @param firstCallImmediately
 	 */
 	debounce(
 		fn: CallbackFunction,
@@ -154,11 +147,6 @@ export class Async implements IAsync {
 	 * Throttling enforces a maximum number of times a function can be called over time.
 	 * As in "execute this function at most once every 100 milliseconds."
 	 *
-	 * @method throttle
-	 * @param {function} fn
-	 * @param {int} timeout
-	 * @param {context} [ctx] Context
-	 * @return {function}
 	 * @example
 	 * ```javascript
 	 * var jodit = new Jodit('.editor');
@@ -241,7 +229,6 @@ export class Async implements IAsync {
 
 	/**
 	 * Get Promise status
-	 * @param p
 	 */
 	promiseState(
 		p: Promise<any>

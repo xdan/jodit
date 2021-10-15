@@ -94,13 +94,11 @@ export class Config implements IViewOptions {
 
 	/**
 	 * Change the read-only state of the editor
-	 * @type {boolean}
 	 */
 	readonly: boolean = false;
 
 	/**
 	 * Change the disabled state of the editor
-	 * @type {boolean}
 	 */
 	disabled: boolean = false;
 
@@ -132,8 +130,6 @@ export class Config implements IViewOptions {
 
 	/**
 	 * Inline editing mode
-	 *
-	 * @type {boolean}
 	 */
 	inline: boolean = false;
 
@@ -199,7 +195,7 @@ export class Config implements IViewOptions {
 	 * After all changes in editors for textarea will call change trigger
 	 *
 	 * @example
-	 *  ```javascript
+	 * ```javascript
 	 * var editor = new Jodit('#editor');
 	 * document.getElementById('editor').addEventListener('change', function () {
 	 *      console.log(this.value);
@@ -257,7 +253,7 @@ export class Config implements IViewOptions {
 	debugLanguage: boolean = false;
 
 	/**
-	 * Collection of language pack data {en: {'Type something': 'Type something', ...}}
+	 * Collection of language pack data `{en: {'Type something': 'Type something', ...}}`
 	 *
 	 * @example
 	 * ```javascript
@@ -304,7 +300,6 @@ export class Config implements IViewOptions {
 
 	/**
 	 * Instead of create custop tooltip - use native title tooltips
-	 * @type {boolean}
 	 */
 	useNativeTooltip: boolean = false;
 
@@ -341,8 +336,6 @@ export class Config implements IViewOptions {
 
 	/**
 	 * Use split mode
-	 *
-	 * @type {boolean}
 	 */
 	useSplitMode: boolean = false;
 
@@ -514,6 +507,7 @@ export class Config implements IViewOptions {
 	 * But for a declarative declaration, you can use this option.
 	 *
 	 * @example
+	 * ```js
 	 * Jodit.modules.Icon.set('someIcon', '<svg><path.../></svg>');
 	 * const editor = Jodit.make({
 	 *   extraButtons: [{
@@ -532,14 +526,16 @@ export class Config implements IViewOptions {
 	 *     icon: 'someIcon'
 	 *   }]
 	 * });
-	 *
+	 * ```
 	 * @example
+	 * ```js
 	 * const editor = Jodit.make({
 	 *   extraButtons: [{
 	 *     name: 'someButton',
 	 *     icon: '<svg><path.../></svg>'
 	 *   }]
 	 * });
+	 * ```
 	 */
 	extraIcons: IDictionary<string> = {};
 
@@ -624,7 +620,7 @@ export class Config implements IViewOptions {
 	 *            return '<div>' + value + '</div>';
 	 *        }
 	 *  });
-	 *  ```
+	 * ```
 	 */
 	buttons: ButtonsOption = [
 		{
@@ -760,7 +756,7 @@ export class Config implements IViewOptions {
 	];
 
 	/**
-	 * The list of buttons that appear in the editor's toolbar on extra small places (< options.sizeSM).
+	 * The list of buttons that appear in the editor's toolbar on extra small places `(< options.sizeSM)`.
 	 */
 	buttonsXS: ButtonsOption = [
 		'bold',
@@ -787,13 +783,11 @@ export class Config implements IViewOptions {
 
 	/**
 	 * Buttons in toolbat without SVG - only texts
-	 * @type {boolean}
 	 */
 	textIcons: boolean = false;
 
 	/**
 	 * shows a INPUT[type=color] to open the browser color picker, on the right bottom of widget color picker
-	 * @type {boolean}
 	 */
 	showBrowserColorPicker: boolean = true;
 

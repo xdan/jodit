@@ -6,10 +6,6 @@
 
 /**
  * Check if a string is a url
- *
- * @method isURL
- * @param {string} str
- * @return {boolean}
  */
 export function isURL(str: string): boolean {
 	if (str.includes(' ')) {

@@ -8,8 +8,6 @@ import { isString } from './is-string';
 
 /**
  * Check value has numeric format
- *
- * @param value
  */
 export function isNumeric(value: number | string): boolean {
 	if (isString(value)) {

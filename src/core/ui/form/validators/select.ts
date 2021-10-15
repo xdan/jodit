@@ -9,7 +9,6 @@ import { trim } from '../../../helpers';
 
 /**
  * Select is required
- * @param input
  */
 export const required = <IUIInputValidator>function (select): boolean {
 	if (!trim(select.value).length) {

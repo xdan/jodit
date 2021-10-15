@@ -8,7 +8,6 @@ import { isString } from '../checker/is-string';
 
 /**
  * Split separated elements
- * @param a
  */
 export function splitArray(a: string): string[];
 

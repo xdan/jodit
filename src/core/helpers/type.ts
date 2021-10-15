@@ -6,7 +6,6 @@
 
 /**
  * Helper for create Error object
- * @param message
  */
 export function error(message: string): Error {
 	return new TypeError(message);

@@ -38,17 +38,45 @@ export interface IAjax extends IDestructible {
 }
 
 export interface AjaxOptions {
+	/**
+	 * json or text The type of data that you're expecting back
+	 * from the server. if `json` the return value passes through the `JSON.parse`
+	 */
 	dataType?: string;
+
+	/**
+	 * The HTTP method toWYSIWYG use for the request
+	 * (e.g. "POST", "GET", "PUT")
+	 */
 	method?: string;
 
+	/**
+	 * A string containing the URL toWYSIWYG which the request is sent.
+	 */
 	url?: string;
 
+	/**
+	 * Data toWYSIWYG be sent toWYSIWYG the server.
+	 * It is converted toWYSIWYG a query string, if not already a string. It's appended toWYSIWYG the url for GET-requests.
+	 */
 	data: DataVariant;
 
+	/**
+	 * When sending data toWYSIWYG the server, use this content type. Default is "application/x-www-form-urlencoded;
+	 * charset=UTF-8", which is fine for most cases
+	 */
 	contentType?: string | false;
 
+	/**
+	 * An object of additional header key/value pairs toWYSIWYG send along
+	 * with requests using the XMLHttpRequest transport. Uses in {@link FileBrowser|FileBrowser}
+	 * and {@link Uploader|Uploader}
+	 */
 	headers?: IDictionary<string> | null;
 
+	/**
+	 * Enable or disable Access-Control-Allow-Credentials client side. Useful for cross domain requests
+	 */
 	withCredentials?: boolean;
 
 	queryBuild?: (

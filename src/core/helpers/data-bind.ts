@@ -10,12 +10,6 @@ import { isViewObject } from './checker';
 
 const store = new WeakMap();
 
-/**
- *
- * @param elm
- * @param key
- * @param value
- */
 export const dataBind = <T = any>(
 	elm: IViewComponent | Node | object,
 	key: string,

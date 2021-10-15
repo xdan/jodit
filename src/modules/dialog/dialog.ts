@@ -40,15 +40,6 @@ import { eventEmitter, pluginSystem } from '../../core/global';
 import { component, autobind, hook } from '../../core/decorators';
 import { View } from '../../core/view/view';
 
-/**
- * @property {object} dialog module settings {@link Dialog|Dialog}
- * @property {int} dialog.zIndex=1000 Default Z-index for dialog window. {@link Dialog|Dialog}'s settings
- * @property {boolean} dialog.resizable=true This dialog can resize by trigger
- * @property {boolean} dialog.draggable=true This dialog can move by header
- * @property {boolean} dialog.fullsize=false A dialog window will open in full screen by default
- * @property {Buttons} dialog.buttons=['close.dialog', 'fullsize.dialog']
- */
-
 declare module '../../config' {
 	interface Config {
 		dialog: IDialogOptions;
@@ -58,7 +49,15 @@ declare module '../../config' {
 Config.prototype.dialog = {
 	namespace: '',
 	extraButtons: [],
+
+	/**
+	 * This dialog can resize by trigger
+	 */
 	resizable: true,
+
+	/**
+	 * This dialog can move by header
+	 */
 	draggable: true,
 	buttons: ['dialog.close'],
 	removeButtons: []
@@ -201,7 +200,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		if (this.e) {
 			/**
 			 * Fired when dialog box is started moving
-			 * @event startMove
 			 */
 			this.e.fire(this, 'startMove');
 		}
@@ -239,9 +237,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			if (this.e) {
 				/**
 				 * Fired when dialog box is resized
-				 * @event resizeDialog
-				 * @param {int} dx Delta X
-				 * @param {int} dy Delta Y
 				 */
 				this.e.fire(
 					this,
@@ -301,7 +296,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		if (this.e) {
 			/**
 			 * Fired when dialog box is started resizing
-			 * @event startResize
 			 */
 			this.e.fire(this, 'startResize');
 		}
@@ -325,9 +319,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 	override OPTIONS!: IDialogOptions;
 
-	/**
-	 * @property {HTMLDivElement} dialog
-	 */
 	dialog!: HTMLElement;
 
 	workplace!: HTMLDivElement;
@@ -340,8 +331,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	/**
 	 * Specifies the size of the window
 	 *
-	 * @param {number} [w] - The width of the window
-	 * @param {number} [h] - The height of the window
+	 * @param w - The width of the window
+	 * @param h - The height of the window
 	 */
 	setSize(w?: number | string, h?: number | string): this {
 		if (w == null) {
@@ -374,8 +365,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 * Specifies the position of the upper left corner of the window . If x and y are specified,
 	 * the window is centered on the center of the screen
 	 *
-	 * @param {Number} [x] - Position px Horizontal
-	 * @param {Number} [y] - Position px Vertical
+	 * @param x - Position px Horizontal
+	 * @param y - Position px Vertical
 	 */
 	setPosition(x?: number, y?: number): this {
 		const w = this.ow.innerWidth,
@@ -407,7 +398,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	/**
 	 * Specifies the dialog box title . It can take a string and an array of objects
 	 *
-	 * @param {string|string[]|Element|Element[]} content - A string or an HTML element ,
+	 * @param content - A string or an HTML element ,
 	 * or an array of strings and elements
 	 * @example
 	 * ```javascript
@@ -425,7 +416,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	/**
 	 * It specifies the contents of the dialog box. It can take a string and an array of objects
 	 *
-	 * @param {string|string[]|Element|Element[]} content A string or an HTML element ,
+	 * @param content - A string or an HTML element ,
 	 * or an array of strings and elements
 	 * @example
 	 * ```javascript
@@ -443,7 +434,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	/**
 	 * Sets the bottom of the dialog. It can take a string and an array of objects
 	 *
-	 * @param {string|string[]|Element|Element[]} content - A string or an HTML element ,
+	 * @param content - A string or an HTML element ,
 	 * or an array of strings and elements
 	 * @example
 	 * ```javascript
@@ -474,8 +465,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 	/**
 	 * Get dialog instance with maximum z-index displaying it on top of all the dialog boxes
-	 *
-	 * @return {Dialog}
 	 */
 	getMaxZIndexDialog(): IDialog {
 		let maxZi: number = 0,
@@ -513,9 +502,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 	/**
 	 * Expands the dialog on full browser window
-	 *
-	 * @param {boolean} condition true - fullsize
-	 * @return {boolean} true - fullsize
 	 */
 	maximization(condition?: boolean): boolean {
 		if (isVoid(condition)) {
@@ -555,14 +541,11 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	/**
 	 * It opens a dialog box to center it, and causes the two event.
 	 *
-	 * @param {string|string[]|Element|Element[]} [content]  specifies the contents of the dialog box.
-	 * Can be false или undefined. see {@link Dialog~setContent|setContent}
-	 * @param {string|string[]|Element|Element[]} [title]  specifies the title of the dialog box, @see setHeader
-	 * @param {boolean} [destroyAfterClose] true - After closing the window , the destructor will be called.
-	 * see {@link Dialog~destruct|destruct}
-	 * @param {boolean} [modal] - true window will be opened in modal mode
-	 * @fires {@link event:beforeOpen} id returns 'false' then the window will not open
-	 * @fires {@link event:afterOpen}
+	 * @param contentOrClose - specifies the contents of the dialog box.
+	 * Can be false или undefined. see `{@link Dialog~setContent|setContent}`
+	 * @param title - specifies the title of the dialog box, @see setHeader
+	 * @param destroyAfterClose - true - After closing the window , the destructor will be called.
+	 * @param modal - true window will be opened in modal mode
 	 */
 	open(
 		contentOrClose?: Content | boolean,
@@ -574,8 +557,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		/**
 		 * Called before the opening of the dialog box
-		 *
-		 * @event beforeOpen
 		 */
 		if (this.e.fire(this, 'beforeOpen') === false) {
 			return this;
@@ -619,7 +600,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		/**
 		 * Called after the opening of the dialog box
-		 * @event afterOpen
 		 */
 		this.e.fire('afterOpen', this);
 
@@ -630,7 +610,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 	/**
 	 * Set modal mode
-	 * @param modal
 	 */
 	setModal(modal: undefined | boolean): this {
 		this.isModal = Boolean(modal);
@@ -644,12 +623,10 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 */
 	isOpened: boolean = false;
 
-	/**
-	 * Closes the dialog box , if you want to call the method {@link Dialog~destruct|destruct}
+	/****
+	 * Closes the dialog box , if you want to call the method `destruct`
 	 *
 	 * @see destroy
-	 * @fires beforeClose
-	 * @fires afterClose
 	 * @example
 	 * ```javascript
 	 * //You can close dialog two ways
@@ -683,8 +660,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		/**
 		 * Called up to close the window
-		 *
-		 * @event beforeClose
 		 */
 		if (this.e) {
 			this.e.fire('beforeClose', this);

@@ -11,12 +11,6 @@ import { Button } from '../../core/ui';
 
 /**
  * Show `alert` dialog. Work without Jodit object
- *
- * @method Alert
- * @param {string} msg Message
- * @param {string|function} [title] Title or callback
- * @param {function} [callback] callback
- * @param {string} [className]
  * @example
  * ```javascript
  * Jodit.Alert("File was uploaded");

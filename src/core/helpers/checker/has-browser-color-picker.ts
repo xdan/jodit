@@ -6,9 +6,6 @@
 
 /**
  * Check if browser has a color picker (a new HTML5 attribute for input tag)
- *
- * @method hasBrowserColorPicker
- * @return {boolean}
  */
 export function hasBrowserColorPicker(): boolean {
 	let supportsColor = true;

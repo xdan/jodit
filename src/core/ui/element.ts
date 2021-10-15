@@ -61,7 +61,6 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 
 	/**
 	 * Find match parent
-	 * @param type
 	 */
 	// tslint:disable-next-line:ban-types
 	closest<T extends IUIElement>(type: Function | IUIElement): Nullable<T> {
@@ -92,7 +91,6 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 
 	/**
 	 * Find closest UIElement in DOM
-	 * @param node
 	 */
 	static closestElement(node: Node, type: Function): Nullable<IUIElement> {
 		const elm = Dom.up(node, node => {
@@ -143,7 +141,6 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 
 	/**
 	 * Append container to element
-	 * @param element
 	 */
 	appendTo(element: HTMLElement): this {
 		element.appendChild(this.container);
@@ -159,7 +156,6 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 
 	/**
 	 * Method create only box
-	 * @param options
 	 */
 	protected render(options?: IDictionary): HTMLElement | string {
 		return this.j.c.div(this.componentName);

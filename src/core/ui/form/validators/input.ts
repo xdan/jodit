@@ -9,7 +9,6 @@ import { isURL, trim } from '../../../helpers';
 
 /**
  * Input is required
- * @param input
  */
 export const required = <IUIInputValidator>function (input: IUIInput): boolean {
 	if (!trim(input.value).length) {
@@ -22,7 +21,6 @@ export const required = <IUIInputValidator>function (input: IUIInput): boolean {
 
 /**
  * Input value should be valid URL
- * @param input
  */
 export const url = <IUIInputValidator>function (input: IUIInput): boolean {
 	if (!isURL(trim(input.value))) {

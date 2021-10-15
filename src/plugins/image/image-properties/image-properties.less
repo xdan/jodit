@@ -9,16 +9,20 @@
 .jodit-properties {
 	&__unlock > svg,
 	&__lock > svg {
-		font-style: normal;
 		display: inline-block;
+		overflow: hidden;
+
 		width: 14px;
 		height: 14px;
-		line-height: 14px;
-		font-size: 8px;
-		overflow: hidden;
-		vertical-align: middle;
+
 		fill: #222;
+
+		font-size: 8px;
+		font-style: normal;
+		line-height: 14px;
+
 		transform-origin: 0 0 !important;
+		vertical-align: middle;
 	}
 
 	.jodit-properties_view_box {
@@ -26,9 +30,9 @@
 
 		.jodit-properties_image_view {
 			display: flex;
+			height: 150px;
 			align-items: center;
 			justify-content: center;
-			height: 150px;
 			padding: 0;
 			margin: 0 0 var(--padding-default);
 			background-color: #f6f6f6;
@@ -40,11 +44,11 @@
 		}
 
 		.jodit-properties_image_sizes.jodit-form__group {
+			min-width: auto;
 			flex-direction: row;
 			align-items: center;
 			padding: 0 !important;
 			margin: 0 !important;
-			min-width: auto;
 
 			a {
 				display: inline-block;

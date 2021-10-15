@@ -33,11 +33,6 @@ const cacheLoaders = (loader: Loader): Loader => {
 
 /**
  * Append script in document and call callback function after download
- *
- * @param url
- * @param callback
- * @param className
- * @param doc
  */
 export const appendScript = (
 	jodit: IViewBased,
@@ -79,9 +74,6 @@ export const appendScriptAsync = cacheLoaders(
 
 /**
  * Download CSS style script
- *
- * @param url
- * @param doc
  */
 export const appendStyleAsync = cacheLoaders(
 	(jodit: IViewBased, url: string): Promise<HTMLElement> => {

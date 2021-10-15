@@ -6,7 +6,6 @@
 
 /**
  * Module returns method that is used to determine the browser
- * @params {Object} parent main Jodit object
  * @example
  * ```javascript
  * console.log(Jodit.modules.Helpers.browser('mse'));

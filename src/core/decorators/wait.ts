@@ -10,7 +10,6 @@ import { STATUSES } from '../component';
 
 /**
  * Wrap function in wait wrapper, it will be called after `condition` returns `true`
- * @param condition
  */
 export function wait<T extends IViewBased>(
 	condition: (ctx: T) => boolean

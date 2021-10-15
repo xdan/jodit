@@ -674,11 +674,8 @@ export class Select implements ISelect {
 	/**
 	 * Insert image in editor
 	 *
-	 * @param  url - URL for image, or HTMLImageElement
-	 * @param  styles - If specified, it will be applied <code>$(image).css(styles)</code>
-	 *
-	 * eslint-disable-next-line tsdoc/syntax
-	 * @emits afterInsertImage - Triggered aafter insert image
+	 * @param url - URL for image, or HTMLImageElement
+	 * @param styles - If specified, it will be applied <code>$(image).css(styles)</code>
 	 */
 	insertImage(
 		url: string | HTMLImageElement,
@@ -704,6 +701,7 @@ export class Select implements ISelect {
 			}
 
 			call(
+				// @ts-ignore
 				this.j.o.resizer.forImageChangeAttributes ? attr : css,
 				image,
 				'width',
@@ -1210,9 +1208,6 @@ export class Select implements ISelect {
 
 	/**
 	 * Apply some css rules for all selections. It method wraps selections in nodeName tag.
-	 *
-	 * @param options.element - tag - equal CSSRule (e.g. strong === font-weight: 700)
-	 * @param options.defaultTag - tag for wrapping and apply styles
 	 * @example
 	 * ```js
 	 * const editor = Jodit.make('#editor');
@@ -1226,8 +1221,14 @@ export class Select implements ISelect {
 	applyStyle(
 		style: CanUndef<IStyle>,
 		options: {
+			/**
+			 * equal CSSRule (e.g. strong === font-weight: 700)
+			 */
 			element?: HTMLTagNames;
 			className?: string;
+			/**
+			 * tag for wrapping and apply styles
+			 */
 			defaultTag?: HTMLTagNames;
 		} = {}
 	): void {

@@ -48,7 +48,6 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 
 	/**
 	 * Change panel container
-	 * @param element
 	 */
 	setPanel(element: HTMLElement | string): void {
 		this.o.toolbar = element;
@@ -78,7 +77,6 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 
 	/**
 	 * Register button for group
-	 * @param btn
 	 */
 	registerButton(btn: IPluginButton): this {
 		this.registeredButtons.add(btn);
@@ -99,7 +97,6 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 
 	/**
 	 * Remove button from group
-	 * @param btn
 	 */
 	unregisterButton(btn: IPluginButton): this {
 		this.registeredButtons.delete(btn);
@@ -124,8 +121,6 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 
 	/**
 	 * Prepare toolbar items and append buttons in groups
-	 * @param items
-	 * @private
 	 */
 	@autobind
 	private beforeToolbarBuild(items: ButtonsGroups): ButtonsGroups | void {

@@ -6,10 +6,7 @@
 
 /**
  * Converts from human readable file size (kb,mb,gb,tb) to bytes
- *
- * @method humanSizeToBytes
- * @param {string|int} human readable file size. Example 1gb or 11.2mb
- * @return {int}
+ * @param human - readable file size. Example 1gb or 11.2mb
  */
 export const humanSizeToBytes = (human: string): number => {
 	if (/^[0-9.]+$/.test(human.toString())) {

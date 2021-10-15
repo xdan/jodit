@@ -6,9 +6,6 @@
 
 /**
  * Detect if string is HTML from MS Word or Excel
- *
- * @param {string} data
- * @return {boolean}
  */
 export function isHtmlFromWord(data: string): boolean {
 	return (

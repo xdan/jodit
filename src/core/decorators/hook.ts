@@ -15,7 +15,6 @@ import { error, isFunction } from '../helpers';
 
 /**
  * Call on some component status
- * @param timeout
  */
 export function hook(status: ComponentStatus) {
 	return <T extends Component & IDictionary>(

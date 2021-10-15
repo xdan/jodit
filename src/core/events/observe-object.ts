@@ -100,8 +100,6 @@ export class ObserveObject {
 
 	/**
 	 * Add listener on some changes
-	 * @param event
-	 * @param callback
 	 */
 	on(event: string | string[], callback: CallbackFunction): this {
 		if (isArray(event)) {

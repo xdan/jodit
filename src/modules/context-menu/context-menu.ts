@@ -13,9 +13,6 @@ import { isArray } from '../../core/helpers/checker';
 
 /**
  * Module to generate context menu
- *
- * @module ContextMenu
- * @param {Object} parent Jodit main object
  */
 export class ContextMenu extends Popup implements IContextMenu {
 	/** @override */
@@ -26,9 +23,9 @@ export class ContextMenu extends Popup implements IContextMenu {
 	/**
 	 * Generate and show context menu
 	 *
-	 * @param x Global coordinate by X
-	 * @param y Global coordinate by Y
-	 * @param actions Array with plain objects {icon: 'bin', title: 'Delete', exec: function () { do smth}}
+	 * @param x - Global coordinate by X
+	 * @param y - Global coordinate by Y
+	 * @param actions - Array with plain objects `{icon: 'bin', title: 'Delete', exec: function () {}}`
 	 * @example
 	 * ```javascript
 	 * parent.show(e.clientX, e.clientY, [{icon: 'bin', title: 'Delete', exec: function () { alert(1) }]);

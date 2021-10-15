@@ -58,10 +58,6 @@ const boxes = new WeakMap<IComponent, IDictionary<HTMLElement>>();
 
 /**
  * Create unique box(HTMLCotainer) and remove it after destroy
- *
- * @param jodit
- * @param name
- * @param [tag]
  */
 export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 	jodit: IViewBased | IViewComponent,

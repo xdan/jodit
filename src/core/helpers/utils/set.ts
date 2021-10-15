@@ -22,8 +22,6 @@ import { isPlainObject } from '../checker';
  * Jodit.modules.Helpers.set('a.0.e', 1, b);
  * console.log(b);// {a: [{e: 1}]}
  * ```
- * @param chain
- * @param obj
  */
 export function set<T>(chain: string, value: unknown, obj: IDictionary): void {
 	if (!isString(chain) || !chain.length) {

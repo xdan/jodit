@@ -5,8 +5,7 @@
  */
 
 /**
- * @enumerable decorator that sets the enumerable property of a class field to false.
- * @param value true|false
+ * Decorator that sets the enumerable property of a class field to false.
  */
 export const nonenumerable = (target: object, propertyKey: string): void => {
 	const descriptor =

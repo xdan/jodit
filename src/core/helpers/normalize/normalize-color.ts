@@ -10,9 +10,8 @@ import { trim } from '../string/';
 /**
  * Convert rgba and short HEX color to Full text color. #fff to #FFFFFF
  *
- * @method normalizeColor
- * @param {string} colorInput - string like rgba(red, green, blue, alpha) or rgb(red, green, blue) or #fff or #ffffff
- * @return {string|boolean} HEX color, false - for transparent color
+ * @param colorInput - string like rgba(red, green, blue, alpha) or rgb(red, green, blue) or #fff or #ffffff
+ * @returns HEX color, false - for transparent color
  */
 export const normalizeColor = (colorInput: string): string | false => {
 	const newcolor: string[] = ['#'];

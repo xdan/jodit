@@ -156,9 +156,6 @@ export class UIList<T extends IViewBased = IViewBased>
 
 	/**
 	 * Create button instance
-	 *
-	 * @param control
-	 * @param target
 	 */
 	protected makeButton(
 		control: IControlTypeStrong,

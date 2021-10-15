@@ -14,26 +14,27 @@
 }
 
 .jodit-icon_loader {
-	background: data-uri('../icons/loader.png') no-repeat center;
-	background-size: 100% 100%;
+	display: inline-block;
 	width: var(--icon-loader-size);
 	height: var(--icon-loader-size);
-	display: inline-block;
+	animation: rotate 2s ease-out 0s infinite;
+	background: data-uri('../icons/loader.png') no-repeat center;
+	background-size: 100% 100%;
 	vertical-align: middle;
 	will-change: transform;
-	animation: rotate 2s ease-out 0s infinite;
 }
 
 .jodit-icon {
+	overflow: visible;
 	.size(@icon-middle-size);
+
+	background: center no-repeat;
+	background-size: contain;
 
 	fill: var(--color-icon);
 	stroke: var(--color-icon);
 
 	transform-origin: 0 0 !important;
-	overflow: visible;
-	background: center no-repeat;
-	background-size: contain;
 }
 
 .jodit-icon_close {
@@ -41,8 +42,8 @@
 }
 
 svg.jodit-icon {
-	isolation: isolate;
 	height: auto;
+	isolation: isolate;
 }
 
 .jodit-icon_text {

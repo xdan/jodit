@@ -12,9 +12,6 @@ import { lang } from '../../global';
 
 /**
  * Simple variant sprintf function
- *
- * @param str
- * @param args
  */
 // declare const isProd: boolean;
 export const sprintf = (str: string, args?: Array<string | number>): string => {
@@ -39,10 +36,6 @@ export const sprintf = (str: string, args?: Array<string | number>): string => {
 
 /**
  * Internationalization method. Uses Jodit.lang object
- *
- * @param {string} key Some text
- * @param {string[]} params Some text
- * @return {string}
  * @example
  * ```javascript
  * var editor = new Jodit("#redactor", {

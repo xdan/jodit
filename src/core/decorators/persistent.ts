@@ -10,9 +10,6 @@ import { isViewObject } from '../helpers';
 
 /**
  * Allow save value inside persistent storage as set/get to property
- *
- * @param target
- * @param propertyKey
  */
 export function persistent<T extends IComponent>(
 	target: T,

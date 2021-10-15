@@ -17,13 +17,12 @@
 }
 
 .jodit-toolbar-button {
+	display: flex;
+	overflow: hidden;
+	align-items: center;
+	justify-content: center;
 	border: 1px solid transparent;
 	border-radius: var(--border-radius-default);
-	overflow: hidden;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
 
 	.jodit-ui-button-icon-text();
 
@@ -41,12 +40,12 @@
 
 	&__trigger {
 		display: flex;
+		height: 100%;
 		align-items: center;
 		justify-content: center;
 		border-radius: 0 var(--border-radius-default)
 			var(--border-radius-default) 0;
 		opacity: 0.4;
-		height: 100%;
 
 		.jodit-ui-button-interaction();
 		.trigger-size(@icon-middle-size);

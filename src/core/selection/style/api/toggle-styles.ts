@@ -12,9 +12,7 @@ import { Dom } from '../../../dom';
 /**
  * Add or remove styles to element
  *
- * @param style
  * @param elm - The element to switch styles
- * @param wrap
  */
 export function toggleStyles(
 	style: CommitStyle,

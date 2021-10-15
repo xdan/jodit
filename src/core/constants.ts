@@ -74,23 +74,23 @@ export const BR = 'br';
 export const PARAGRAPH = 'p';
 
 /**
- * @property {int} MODE_WYSIWYG=1 WYSIWYG editor mode
+ * WYSIWYG editor mode
  */
 export const MODE_WYSIWYG = 1;
 
 /**
- * @property {int} MODE_SOURCE=2 html editor mode
+ * html editor mode
  */
 export const MODE_SOURCE = 2;
 
 /**
- * @property {int} MODE_SPLIT=3  Source code editor and HTML editor both like
+ * Source code editor and HTML editor both like
  * {@link http://getuikit.com/docs/htmleditor.html|this}
  */
 export const MODE_SPLIT = 3;
 
 /**
- * @property {boolean} Is Internet Explorer
+ * Is Internet Explorer
  */
 export const IS_IE =
 	typeof navigator !== 'undefined' &&
@@ -98,7 +98,7 @@ export const IS_IE =
 		/rv:11.0/i.test(navigator.userAgent));
 
 /**
- * @property {string} TEXT_PLAIN='text/plain'  For IE11 it will be 'text'. Need for dataTransfer.setData
+ * For IE11 it will be 'text'. Need for dataTransfer.setData
  */
 export const TEXT_PLAIN = IS_IE ? 'text' : 'text/plain';
 export const TEXT_HTML = IS_IE ? 'html' : 'text/html';

@@ -8,9 +8,6 @@ import { isString } from './checker';
 
 /**
  * Try define user language
- *
- * @param language
- * @param defaultLanguage
  */
 export const defaultLanguage = (
 	language?: string,

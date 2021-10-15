@@ -7,14 +7,14 @@
 @import (reference) '../../styles/variables';
 
 .jodit-placeholder {
-	width: 100%;
-	user-select: none !important;
+	position: absolute;
+	z-index: 1;
 	top: 0;
 	left: 0;
 	display: block;
-	position: absolute;
+	width: 100%;
 	padding: var(--padding-default);
 	color: var(--color-placeholder);
-	z-index: 1;
 	pointer-events: none;
+	user-select: none !important;
 }

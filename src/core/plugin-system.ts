@@ -50,9 +50,6 @@ export class PluginSystem implements IPluginSystem {
 
 	/**
 	 * Add plugin in store
-	 *
-	 * @param name
-	 * @param plugin
 	 */
 	add(name: string, plugin: PluginType): void {
 		this.items.set(this.normalizeName(name), plugin);
@@ -60,7 +57,6 @@ export class PluginSystem implements IPluginSystem {
 
 	/**
 	 * Get plugin from store
-	 * @param name
 	 */
 	get(name: string): PluginType | void {
 		return this.items.get(this.normalizeName(name));
@@ -68,7 +64,6 @@ export class PluginSystem implements IPluginSystem {
 
 	/**
 	 * Remove plugin from store
-	 * @param name
 	 */
 	remove(name: string): void {
 		this.items.delete(this.normalizeName(name));
@@ -76,7 +71,6 @@ export class PluginSystem implements IPluginSystem {
 
 	/**
 	 * Public method for async init all plugins
-	 * @param jodit
 	 */
 	init(jodit: IJodit): CanPromise<void> {
 		const extrasList: IExtraPlugin[] = jodit.o.extraPlugins.map(s =>
@@ -135,8 +129,6 @@ export class PluginSystem implements IPluginSystem {
 
 	/**
 	 * Plugin type has disabled requires
-	 * @param disableList
-	 * @param requires
 	 */
 	private hasDisabledRequires(
 		disableList: string[],
@@ -150,9 +142,6 @@ export class PluginSystem implements IPluginSystem {
 
 	/**
 	 * Create instance of plugin
-	 *
-	 * @param jodit
-	 * @param plugin
 	 */
 	static makePluginInstance(
 		jodit: IJodit,
@@ -163,12 +152,6 @@ export class PluginSystem implements IPluginSystem {
 
 	/**
 	 * Init plugin if it has not dependencies in another case wait requires plugins will be init
-	 *
-	 * @param jodit
-	 * @param pluginName
-	 * @param instance
-	 * @param doneList
-	 * @param promiseList
 	 */
 	private initOrWait(
 		jodit: IJodit,
@@ -220,9 +203,6 @@ export class PluginSystem implements IPluginSystem {
 
 	/**
 	 * Destroy all plugins before - Jodit will be destroyed
-	 *
-	 * @param jodit
-	 * @param plugins
 	 */
 	private addListenerOnBeforeDestruct(
 		jodit: IJodit,
@@ -243,9 +223,6 @@ export class PluginSystem implements IPluginSystem {
 
 	/**
 	 * Download plugins
-	 *
-	 * @param jodit
-	 * @param pluginList
 	 */
 	private load(jodit: IJodit, pluginList: IExtraPlugin[]): Promise<any> {
 		const reflect = (p: Promise<any>) =>
@@ -265,10 +242,6 @@ export class PluginSystem implements IPluginSystem {
 		);
 	}
 
-	/**
-	 * @param jodit
-	 * @param pluginName
-	 */
 	private static async loadStyle(
 		jodit: IJodit,
 		pluginName: string
@@ -288,10 +261,6 @@ export class PluginSystem implements IPluginSystem {
 
 	/**
 	 * Call full url to the script or style file
-	 *
-	 * @param jodit
-	 * @param name
-	 * @param js
 	 */
 	private static getFullUrl(
 		jodit: IJodit,

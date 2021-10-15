@@ -16,8 +16,6 @@ import { Config } from '../../../config';
 
 /**
  * Get control for button name
- * @param button
- * @param controls
  */
 export function getControlType(
 	button: IControlType | string,

@@ -19,9 +19,7 @@ export abstract class Mods implements IMods {
 	/**
 	 * Set/remove BEM class modification
 	 *
-	 * @param name
-	 * @param value if null, mod will be removed
-	 * @param [container]
+	 * @param value - if null, mod will be removed
 	 */
 	static setMod(
 		this: IComponent & IContainer & Mods,

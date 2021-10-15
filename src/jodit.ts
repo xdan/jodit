@@ -124,7 +124,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/**
 	 * Return default timeout period in milliseconds for some debounce or throttle functions.
-	 * By default return {observer.timeout} options
+	 * By default return `{observer.timeout}` options
 	 */
 	override get defaultTimeout(): number {
 		return this.options && this.o.observer
@@ -303,9 +303,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.setPlaceField('options', opt);
 	}
 
-	/**
-	 * @property {Select} selection
-	 */
 	readonly selection: Select;
 
 	/**
@@ -315,17 +312,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		return this.selection;
 	}
 
-	/**
-	 * @property {Uploader} uploader
-	 */
 	@cache
 	get uploader(): IUploader {
 		return this.getInstance('Uploader', this.o.uploader);
 	}
 
-	/**
-	 * @property {FileBrowser} filebrowser
-	 */
 	@cache
 	get filebrowser(): IFileBrowser {
 		const jodit = this;
@@ -383,8 +374,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/**
 	 * Return real HTML value from WYSIWYG editor.
-	 *
-	 * @return {string}
 	 */
 	getNativeEditorValue(): string {
 		const value: string = this.e.fire('beforeGetNativeEditorValue');
@@ -422,10 +411,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 */
 	getEditorValue(removeSelectionMarkers: boolean = true): string {
 		/**
-		 * Triggered before {@link Jodit~getEditorValue|getEditorValue} executed.
+		 * Triggered before getEditorValue executed.
 		 * If returned not undefined getEditorValue will return this value
-		 *
-		 * @event beforeGetValueFromEditor
 		 * @example
 		 * ```javascript
 		 * var editor = new Jodit("#redactor");
@@ -459,11 +446,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		/**
-		 * Triggered after  {@link Jodit~getEditorValue|getEditorValue} got value from wysiwyg.
+		 * Triggered after getEditorValue got value from wysiwyg.
 		 * It can change new_value.value
 		 *
-		 * @event afterGetValueFromEditor
-		 * @param string new_value
 		 * @example
 		 * ```javascript
 		 * var editor = new Jodit("#redactor");
@@ -484,17 +469,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Set editor html value and if set sync fill source element value
 	 * When method was called without arguments - it is simple way to synchronize editor to element
-	 * @event beforeSetValueToEditor
-	 * @param [value]
-	 * @param [notChangeStack]
 	 */
 	setEditorValue(value?: string): void {
 		/**
-		 * Triggered before  {@link Jodit~getEditorValue|setEditorValue} set value to wysiwyg.
-		 *
-		 * @event beforeSetValueToEditor
-		 * @param string old_value
-		 * @returns string | undefined | false
+		 * Triggered before getEditorValue set value to wysiwyg.
 		 * @example
 		 * ```javascript
 		 * var editor = new Jodit("#redactor");
@@ -570,8 +548,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Set source element value and if set sync fill editor value
 	 * When method was called without arguments - it is simple way to synchronize element to editor
-	 *
-	 * @param {string} [value]
 	 */
 	setElementValue(value?: string): void {
 		if (!isString(value) && value !== undefined) {
@@ -624,9 +600,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * });
 	 *
 	 * ```
-	 *
-	 * @param {string} commandNameOriginal
-	 * @param {ICommandType | Function} command
 	 */
 	registerCommand(
 		commandNameOriginal: string,
@@ -663,10 +636,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/**
 	 * Register hotkey for command
-	 *
-	 * @param hotkeys
-	 * @param commandName
-	 * @param shouldStop
 	 */
 	registerHotkeyToCommand(
 		hotkeys: string | string[],
@@ -689,14 +658,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * Execute command editor
 	 *
-	 * @param  {string} command command. It supports all the
+	 * @param command - command. It supports all the
 	 * {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#commands} and a number of its own
 	 * for example applyStyleProperty. Comand fontSize receives the second parameter px,
 	 * formatBlock and can take several options
-	 * @param  {boolean|string|int} showUI
-	 * @param  {boolean|string|int} value
-	 * @fires beforeCommand
-	 * @fires afterCommand
 	 * @example
 	 * ```javascript
 	 * this.execCommand('fontSize', 12); // sets the size of 12 px
@@ -718,10 +683,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		/**
 		 * Called before any command
-		 * @event beforeCommand
-		 * @param {string} command Command name in lowercase
-		 * @param {string} second The second parameter for the command
-		 * @param {string} third The third option is for the team
+		 * @param command - Command name in lowercase
+		 * @param second - The second parameter for the command
+		 * @param third - The third option is for the team
 		 * @example
 		 * ```javascript
 		 * parent.e.on('beforeCommand', function (command) {
@@ -759,10 +723,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		/**
 		 * It called after any command
-		 * @event afterCommand
-		 * @param {string} command name command
-		 * @param {*} second The second parameter for the command
-		 * @param {*} third The third option is for the team
+		 * @param command - name command
+		 * @param second - The second parameter for the command
+		 * @param third - The third option is for the team
 		 */
 		this.e.fire('afterCommand', command, showUI, value);
 
@@ -778,10 +741,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/**
 	 * Exec native command
-	 *
-	 * @param command
-	 * @param showUI
-	 * @param value
 	 */
 	nativeExecCommand(
 		command: string,
@@ -871,7 +830,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/**
 	 * Return current editor mode: Jodit.MODE_WYSIWYG, Jodit.MODE_SOURCE or Jodit.MODE_SPLIT
-	 * @return {number}
 	 */
 	getMode(): Modes {
 		return this.mode;
@@ -913,9 +871,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/**
 	 * Set current mode
-	 *
-	 * @fired beforeSetMode
-	 * @fired afterSetMode
 	 */
 	setMode(mode: number | string): void {
 		const oldmode: Modes = this.getMode();
@@ -930,9 +885,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			];
 
 		/**
-		 * Triggered before {@link Jodit~setMode|setMode} executed. If returned false method stopped
-		 * @event beforeSetMode
-		 * @param {Object} data PlainObject {mode: {string}} In handler you can change data.mode
+		 * Triggered before setMode executed. If returned false method stopped
+		 * @param data - PlainObject `{mode: {string}}` In handler you can change data.mode
 		 * @example
 		 * ```javascript
 		 * var editor = new Jodit("#redactor");
@@ -964,8 +918,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.container.classList.add(modeClasses[this.mode - 1]);
 
 		/**
-		 * Triggered after {@link Jodit~setMode|setMode} executed
-		 * @event afterSetMode
+		 * Triggered after setMode executed
 		 * @example
 		 * ```javascript
 		 * var editor = new Jodit("#redactor");
@@ -1010,8 +963,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * Switch on/off the editor into the disabled state.
 	 * When in disabled, the user is not able to change the editor content
 	 * This function firing the `disabled` event.
-	 *
-	 * @param {boolean} isDisabled
 	 */
 	setDisabled(isDisabled: boolean): void {
 		this.o.disabled = isDisabled;
@@ -1040,8 +991,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * When in readonly, the user is not able to change the editor content, but can still
 	 * use some editor functions (show source code, print content, or seach).
 	 * This function firing the `readonly` event.
-	 *
-	 * @param {boolean} isReadOnly
 	 */
 	setReadOnly(isReadOnly: boolean): void {
 		if (this.__wasReadOnly === isReadOnly) {
@@ -1177,8 +1126,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/**
 	 * Create and init current editable place
-	 * @param source
-	 * @param options
 	 */
 	addPlace(
 		source: HTMLElement | string,
@@ -1337,7 +1284,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/**
 	 * Set current place object
-	 * @param place
 	 */
 	setCurrentPlace(place: IWorkPlace): void {
 		if (this.currentPlace === place) {
@@ -1415,8 +1361,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/**
 	 * Create main DIV element and replace source textarea
-	 *
-	 * @private
 	 */
 	private createEditor(): void | Promise<any> {
 		const defaultEditorArea = this.editor;

@@ -8,7 +8,6 @@ import { isString } from './is-string';
 
 /**
  * Check if a string is html or not
- ** @param str
  */
 export const isHTML = (str: unknown): str is string =>
 	isString(str) &&

@@ -67,7 +67,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	}
 
 	/**
-	 * @property {string} ID attribute for source element, id add {id}_editor it's editor's id
+	 * ID attribute for source element, id add `{id}_editor` it's editor's id
 	 */
 	id: string;
 
@@ -91,9 +91,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 	/**
 	 * Return default timeout period in milliseconds for some debounce or throttle functions.
-	 * By default return {observer.timeout} options
-	 *
-	 * @return {number}
+	 * By default return `{observer.timeout}` options
 	 */
 	get defaultTimeout(): number {
 		return isVoid(this.o.defaultTimeout) ? 100 : this.o.defaultTimeout;
@@ -103,15 +101,12 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 	/**
 	 * Some extra data inside editor
-	 *
-	 * @type {{}}
 	 * @see copyformat plugin
 	 */
 	buffer: IStorage = Storage.makeStorage();
 
 	/**
 	 * Container for persistent set/get value
-	 * @type {Storage}
 	 */
 	readonly storage = Storage.makeStorage(true, this.componentName);
 
@@ -158,9 +153,6 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 	/**
 	 * Internationalization method. Uses Jodit.lang object
-	 *
-	 * @param text
-	 * @param params
 	 */
 	i18n(text: string, ...params: Array<string | number>): string {
 		return i18n(text, params, this.options);
@@ -168,10 +160,6 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 	private __isFullSize: boolean = false;
 
-	/**
-	 * @override
-	 * @param isFullSize
-	 */
 	toggleFullSize(isFullSize?: boolean): void {
 		if (isFullSize === undefined) {
 			isFullSize = !this.__isFullSize;
@@ -259,7 +247,6 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 	/**
 	 * Add option's event handlers in emitter
-	 * @param options
 	 */
 	protected attachEvents(options?: IViewOptions): void {
 		if (!options) {
@@ -295,9 +282,6 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 	/**
 	 * Make one instance of one module
-	 *
-	 * @param moduleName
-	 * @param options
 	 */
 	getInstance<T extends IComponent>(moduleName: string, options?: object): T {
 		const instance: Nullable<T> = this.e.fire(

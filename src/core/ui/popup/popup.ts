@@ -76,7 +76,6 @@ export class Popup extends UIElement implements IPopup {
 
 	/**
 	 * Set popup content
-	 * @param content
 	 */
 	setContent(content: IUIElement | HTMLElement | string): this {
 		Dom.detach(this.container);
@@ -197,11 +196,6 @@ export class Popup extends UIElement implements IPopup {
 
 	/**
 	 * Calculate start point
-	 *
-	 * @param target
-	 * @param view
-	 * @param container
-	 * @param defaultStrategy
 	 */
 	private calculatePosition(
 		target: IBound,
@@ -272,9 +266,6 @@ export class Popup extends UIElement implements IPopup {
 
 	/**
 	 * Check if one box is inside second
-	 *
-	 * @param box
-	 * @param view
 	 */
 	private static boxInView(box: IBound, view: IBound): boolean {
 		const accuracy = 2;
@@ -312,7 +303,6 @@ export class Popup extends UIElement implements IPopup {
 
 	/**
 	 * Close popup if click was in outside
-	 * @param e
 	 */
 	@autobind
 	private closeOnOutsideClick(e: MouseEvent): void {
@@ -387,7 +377,6 @@ export class Popup extends UIElement implements IPopup {
 
 	/**
 	 * Set ZIndex
-	 * @param index
 	 */
 	setZIndex(index: number): void {
 		this.container.style.zIndex = index.toString();

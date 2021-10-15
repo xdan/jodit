@@ -186,11 +186,11 @@ export class EventsNative implements IEventsNative {
 	/**
 	 * Sets the handler for the specified event ( Event List ) for a given element .
 	 *
-	 * @param {object|string} subjectOrEvents - The object for which toWYSIWYG set an event handler
-	 * @param {string|Function} eventsOrCallback - List of events , separated by a space or comma
-	 * @param {function} [handlerOrSelector] - The event handler
-	 * @param {selector} [selector] - Selector for capturing
-	 * @param {Boolean} [onTop=false] - Set handler in first
+	 * @param subjectOrEvents - The object for which toWYSIWYG set an event handler
+	 * @param eventsOrCallback - List of events , separated by a space or comma
+	 * @param handlerOrSelector - The event handler
+	 * @param selector - Selector for capturing
+	 * @param onTop - Set handler in first
 	 *
 	 * @example
 	 * ```javascript
@@ -371,10 +371,10 @@ export class EventsNative implements IEventsNative {
 	/**
 	 * Disable all handlers specified event ( Event List ) for a given element. Either a specific event handler.
 	 *
-	 * @param {object} subjectOrEvents - The object which is disabled handlers
-	 * @param {string|Function} [eventsOrCallback] - List of events, separated by a space or comma , which is necessary
+	 * @param subjectOrEvents - The object which is disabled handlers
+	 * @param eventsOrCallback - List of events, separated by a space or comma , which is necessary
 	 * toWYSIWYG disable the handlers for a given object
-	 * @param {function} [handler] - Specific event handler toWYSIWYG be removed
+	 * @param handler - Specific event handler toWYSIWYG be removed
 	 *
 	 * @example
 	 * ```javascript
@@ -490,9 +490,6 @@ export class EventsNative implements IEventsNative {
 
 	/**
 	 * Stop execute all another listeners for this event
-	 *
-	 * @param subjectOrEvents
-	 * @param eventsList
 	 */
 	stopPropagation(events: string): void;
 	stopPropagation(subject: object, eventsList: string): void;
@@ -553,10 +550,10 @@ export class EventsNative implements IEventsNative {
 	/**
 	 * Sets the handler for the specified event (Event List) for a given element .
 	 *
-	 * @param {object|string} subjectOrEvents - The object which is caused by certain events
-	 * @param {string|Array} eventsList - List of events , separated by a space or comma
-	 * @param {Array} [args] - Options for the event handler
-	 * @return {boolean} `false` if one of the handlers return `false`
+	 * @param subjectOrEvents - The object which is caused by certain events
+	 * @param eventsList - List of events , separated by a space or comma
+	 * @param args - Options for the event handler
+	 * @returns `false` if one of the handlers return `false`
 	 * @example
 	 * ```javascript
 	 * var dialog = new Jodit.modules.Dialog();
@@ -566,13 +563,13 @@ export class EventsNative implements IEventsNative {
 	 * dialog.open('Hello world!!!');
 	 * ```
 	 *  or you can trigger native browser listener
-	 *  ```javascript
+	 * ```javascript
 	 *  var events = new Jodit.modules.EventsNative();
 	 *  events.on(document.body, 'click',function (event) {
 	 *      alert('click on ' + event.target.id );
 	 *  });
 	 *  events.fire(document.body.querySelector('div'), 'click');
-	 *  ```
+	 * ```
 	 *
 	 */
 	fire(subjectOrEvents: string, ...args: any[]): any;

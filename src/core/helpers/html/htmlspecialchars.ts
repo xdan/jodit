@@ -6,10 +6,6 @@
 
 /**
  * Convert special characters to HTML entities
- *
- * @method htmlspecialchars
- * @param {string} html
- * @return {string}
  */
 export function htmlspecialchars(html: string): string {
 	const tmp = document.createElement('div');

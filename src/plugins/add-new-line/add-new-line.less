@@ -13,24 +13,26 @@
 }
 
 .jodit-add-new-line {
+	position: fixed;
+	z-index: 1;
+	top: 0;
+
+	display: block;
+	height: 1px;
+
 	box-sizing: border-box;
+	outline: none;
 
 	* {
 		box-sizing: border-box;
 	}
 
-	z-index: 1;
-	position: fixed;
-	height: 1px;
-	top: 0;
-	outline: none;
-
 	&::after {
-		content: '';
-		background-color: var(--color-new-line);
-		height: 1px;
 		display: block;
 		width: calc(100% - var(--width-icon));
+		height: 1px;
+		background-color: var(--color-new-line);
+		content: '';
 	}
 
 	span {
@@ -38,14 +40,13 @@
 		right: 0;
 
 		display: flex;
-		justify-content: center;
-		align-items: center;
-
 		width: var(--width-icon);
 		height: var(--height-icon);
+		align-items: center;
+		justify-content: center;
 
-		background: var(--color-background-button-hover-opacity30);
 		border: 1px solid var(--color-new-line);
+		background: var(--color-background-button-hover-opacity30);
 		cursor: pointer;
 
 		&:hover {
@@ -61,8 +62,6 @@
 		width: 16px;
 		fill: var(--color-new-line);
 	}
-
-	display: block;
 }
 
 .jodit-source__mode {

@@ -6,9 +6,7 @@
 
 /**
  * CTRL pressed
- *
- * @param  {KeyboardEvent} e Event
- * @return {boolean} true ctrl key was pressed
+ * @returns true ctrl key was pressed
  */
 export const ctrlKey = (e: MouseEvent | KeyboardEvent): boolean => {
 	if (

@@ -6,12 +6,6 @@
 
 /**
  * Create async callback if set timeout value - else call function immediately
- *
- * @param callback
- * @param timeout
- * @param a1
- * @param a2
- * @param a3
  */
 export function setTimeout<T = any>(
 	callback: (...args: T[]) => void,
@@ -29,7 +23,6 @@ export function setTimeout<T = any>(
 
 /**
  * Clear timeout
- * @param timer
  */
 export function clearTimeout(timer: number): void {
 	window.clearTimeout(timer);

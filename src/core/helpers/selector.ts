@@ -114,7 +114,6 @@ export const getXPathByElement = (
 
 /**
  * Find all `ref` or `data-ref` elements inside HTMLElement
- * @param root
  */
 export const refs = <T extends HTMLElement>(
 	root: HTMLElement | UIElement
@@ -137,7 +136,6 @@ export const refs = <T extends HTMLElement>(
 
 /**
  * Calculate full CSS selector
- * @param el
  */
 export const cssPath = (el: Element): Nullable<string> => {
 	if (!Dom.isElement(el)) {
@@ -180,9 +178,6 @@ export const cssPath = (el: Element): Nullable<string> => {
 
 /**
  * Try to find element by selector
- *
- * @param element
- * @param od
  */
 export function resolveElement(
 	element: string | HTMLElement,

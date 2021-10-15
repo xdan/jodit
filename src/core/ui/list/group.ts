@@ -73,7 +73,6 @@ export class UIGroup<T extends IViewBased = IViewBased>
 
 	/**
 	 * Append new element into group
-	 * @param elm
 	 */
 	append(elm: IUIElement | IUIElement[], distElement?: string): this {
 		if (isArray(elm)) {
@@ -110,7 +109,6 @@ export class UIGroup<T extends IViewBased = IViewBased>
 
 	/**
 	 * Allow set another container for the box of all children
-	 * @param childContainer
 	 */
 	protected appendChildToContainer(childContainer: HTMLElement): void {
 		this.container.appendChild(childContainer);
@@ -118,7 +116,6 @@ export class UIGroup<T extends IViewBased = IViewBased>
 
 	/**
 	 * Remove element from group
-	 * @param elm
 	 */
 	remove(elm: IUIElement): this {
 		const index = this.elements.indexOf(elm);
@@ -143,9 +140,7 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	}
 
 	/**
-	 * @override
-	 * @param jodit
-	 * @param elements Items of group
+	 * @param elements - Items of group
 	 */
 	constructor(
 		jodit: T,

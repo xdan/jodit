@@ -6,7 +6,6 @@
 
 /**
  * Check if element is array
- * @param elm
  */
 export function isArray<T = any>(elm: unknown): elm is T[] {
 	return Array.isArray(elm);

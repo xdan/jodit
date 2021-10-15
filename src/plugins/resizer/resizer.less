@@ -13,33 +13,33 @@
 }
 
 [data-jodit_iframe_wrapper] {
+	position: relative;
 	display: block;
 	user-select: none;
-	position: relative;
 
 	&::after {
 		position: absolute;
-		content: '';
 		z-index: 1;
 		top: 0;
-		left: 0;
 		right: 0;
 		bottom: 0;
-		cursor: pointer;
+		left: 0;
 		display: block;
 		background: rgba(0, 0, 0, 0);
+		content: '';
+		cursor: pointer;
 	}
 }
 
 .jodit-resizer {
-	width: 100px;
-	height: 100px;
 	position: absolute;
-	border: 1px solid var(--color-border-dark);
 	top: 0;
 	left: 0;
-	pointer-events: none;
+	width: 100px;
+	height: 100px;
+	border: 1px solid var(--color-border-dark);
 	font-size: 0;
+	pointer-events: none;
 
 	* {
 		box-sizing: border-box;
@@ -47,47 +47,52 @@
 
 	> span {
 		position: absolute;
-		left: 50%;
 		top: 50%;
+		left: 50%;
+
 		display: inline-block;
+		overflow: visible;
 		width: var(--viewer_width);
 		height: var(--viewer_height);
-		margin-left: calc(var(--viewer_width) / -2);
 		margin-top: calc(var(--viewer_height) / -2);
-		line-height: var(--viewer_height);
-		font-size: 12px;
-		text-align: center;
-		color: var(--color-white);
+		margin-left: calc(var(--viewer_width) / -2);
+
 		background-color: var(--color-placeholder);
+		color: var(--color-white);
+
+		font-size: 12px;
+		line-height: var(--viewer_height);
+
 		opacity: 0;
+		text-align: center;
 		transition: opacity 0.2s linear;
-		overflow: visible;
 	}
 
 	> i {
 		position: absolute;
-		display: inline-block;
 		z-index: 4;
-		pointer-events: all;
+		display: inline-block;
+
+		width: var(--resizer-handle-size);
+		height: var(--resizer-handle-size);
+
 		border: 1px solid var(--color-border-dark);
 		background-color: var(--color-background-gray);
+		pointer-events: all;
 
 		&:hover {
 			background-color: var(--color-background-gray-hover);
 		}
 
-		width: var(--resizer-handle-size);
-		height: var(--resizer-handle-size);
-
 		&:nth-child(1) {
-			left: calc(var(--resizer-handle-size) / -2);
 			top: calc(var(--resizer-handle-size) / -2);
+			left: calc(var(--resizer-handle-size) / -2);
 			cursor: nw-resize;
 		}
 
 		&:nth-child(2) {
-			right: calc(var(--resizer-handle-size) / -2);
 			top: calc(var(--resizer-handle-size) / -2);
+			right: calc(var(--resizer-handle-size) / -2);
 			cursor: ne-resize;
 		}
 
@@ -98,8 +103,8 @@
 		}
 
 		&:nth-child(4) {
-			left: calc(var(--resizer-handle-size) / -2);
 			bottom: calc(var(--resizer-handle-size) / -2);
+			left: calc(var(--resizer-handle-size) / -2);
 			cursor: sw-resize;
 		}
 
