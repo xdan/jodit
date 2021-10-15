@@ -15,13 +15,11 @@ import type {
 
 import {
 	isPlainObject,
-	each,
 	asArray,
-	css,
 	isFunction,
-	kebabCase,
 	refs,
-	isString
+	isString,
+	attr
 } from './helpers/';
 
 import { Dom } from './dom';
@@ -38,23 +36,6 @@ export class Create implements ICreate {
 			IDictionary<Attributes | NodeFunction>
 		>
 	) {}
-
-	/**
-	 * Apply some object key-value to HTMLElement
-	 */
-	private applyAttributes = (elm: HTMLElement, attrs: Attributes) => {
-		each(attrs, (key: string, value) => {
-			if (isPlainObject(value) && key === 'style') {
-				css(elm, value as IDictionary<string>);
-			} else {
-				if (key === 'className') {
-					key = 'class';
-				}
-
-				elm.setAttribute(kebabCase(key), value.toString());
-			}
-		});
-	};
 
 	element<K extends keyof HTMLElementTagNameMap>(
 		tagName: K,
@@ -76,7 +57,7 @@ export class Create implements ICreate {
 
 		if (childrenOrAttributes) {
 			if (isPlainObject(childrenOrAttributes)) {
-				this.applyAttributes(elm, childrenOrAttributes as Attributes);
+				attr(elm, <IDictionary>childrenOrAttributes);
 			} else {
 				children = childrenOrAttributes as Children;
 			}
@@ -229,12 +210,12 @@ export class Create implements ICreate {
 			const ca = this.createAttributes;
 
 			if (ca && ca[elm.tagName.toLowerCase()]) {
-				const attrs = ca[elm.tagName.toLowerCase()];
+				const attrsOpt = ca[elm.tagName.toLowerCase()];
 
-				if (isFunction(attrs)) {
-					attrs(elm);
-				} else if (isPlainObject(attrs)) {
-					this.applyAttributes(elm, attrs);
+				if (isFunction(attrsOpt)) {
+					attrsOpt(elm);
+				} else if (isPlainObject(attrsOpt)) {
+					attr(elm, <IDictionary>attrsOpt);
 				}
 			}
 		}

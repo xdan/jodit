@@ -10,11 +10,14 @@ import type {
 	ICreate,
 	IJodit,
 	NodeCondition,
-	Nullable
+	Nullable,
+	IDictionary
 } from '../types';
 import * as consts from './constants';
 import {
+	$$,
 	asArray,
+	attr,
 	css,
 	dataBind,
 	error,
@@ -26,6 +29,7 @@ import {
 	toArray,
 	trim
 } from './helpers';
+import { Select } from './selection';
 
 /**
  * Module for working with DOM
@@ -33,7 +37,6 @@ import {
 export class Dom {
 	/**
 	 * Remove all content from element
-	 * @param node
 	 */
 	static detach(node: Node): void {
 		while (node.firstChild) {
@@ -43,10 +46,6 @@ export class Dom {
 
 	/**
 	 * Wrap all inline siblings
-	 *
-	 * @param current
-	 * @param tag
-	 * @param editor
 	 */
 	static wrapInline(
 		current: Node,
@@ -107,10 +106,6 @@ export class Dom {
 
 	/**
 	 * Wrap node inside another node
-	 *
-	 * @param current
-	 * @param tag
-	 * @param editor
 	 */
 	static wrap<K extends HTMLTagNames>(
 		current: Node,
@@ -138,7 +133,6 @@ export class Dom {
 
 	/**
 	 * Remove parent of node and insert this node instead that parent
-	 * @param node
 	 */
 	static unwrap(node: Node): void {
 		const parent = node.parentNode;
@@ -155,8 +149,8 @@ export class Dom {
 	/**
 	 * It goes through all the internal elements of the node, causing a callback function
 	 *
-	 * @param elm elements , the internal node is necessary to sort out
-	 * @param callback It called for each item found
+	 * @param elm - the element whose children and descendants you want to iterate over
+	 * @param callback - It called for each item found
 	 * @example
 	 * ```javascript
 	 * Jodit.modules.Dom.each(parent.s.current(), function (node) {
@@ -195,9 +189,6 @@ export class Dom {
 
 	/**
 	 * Call function for all nodes between `start` and `end`
-	 *
-	 * @param start
-	 * @param end
 	 */
 	static between(
 		start: Node,
@@ -228,12 +219,10 @@ export class Dom {
 	/**
 	 * Replace one tag to another transfer content
 	 *
-	 * @param  {Node} elm The element that needs to be replaced by new
-	 * @param  {string} newTagName tag name for which will change `elm`
-	 * @param  {boolean} withAttributes=false If true move tag's attributes
-	 * @param  {boolean} notMoveContent=false false - Move content from elm to newTagName
-	 * @param  {Document} [doc=document]
-	 * @return {Node} Returns a new tag
+	 * @param elm - The element that needs to be replaced by new
+	 * @param newTagName - tag name for which will change `elm`
+	 * @param withAttributes - If true move tag's attributes
+	 * @param notMoveContent - false - Move content from elm to newTagName
 	 * @example
 	 * ```javascript
 	 * Jodit.modules.Dom.replace(parent.editor.getElementsByTagName('span')[0], 'p');
@@ -274,8 +263,7 @@ export class Dom {
 	 * Checks whether the Node text and blank (in this case it may contain invisible auxiliary characters ,
 	 * it is also empty )
 	 *
-	 * @param  {Node} node The element of wood to be checked
-	 * @return {Boolean} true element is empty
+	 * @param node - The element of wood to be checked
 	 */
 	static isEmptyTextNode(node: Node): boolean {
 		return (
@@ -288,10 +276,6 @@ export class Dom {
 
 	/**
 	 * Check if element is empty
-	 *
-	 * @param {Node} node
-	 * @param {RegExp} condNoEmptyElement
-	 * @return {boolean}
 	 */
 	static isEmpty(
 		node: Node,
@@ -345,7 +329,6 @@ export class Dom {
 
 	/**
 	 *  Check if element is table cell
-	 * @param elm
 	 */
 	static isCell(elm: unknown): elm is HTMLTableCellElement {
 		return Dom.isNode(elm) && /^(td|th)$/i.test(elm.nodeName);
@@ -353,9 +336,6 @@ export class Dom {
 
 	/**
 	 * Check is element is Image element
-	 *
-	 * @param {Node} elm
-	 * @return {boolean}
 	 */
 	static isImage(elm: unknown): elm is HTMLImageElement {
 		return (
@@ -378,7 +358,6 @@ export class Dom {
 
 	/**
 	 * Check if element is text node
-	 * @param node
 	 */
 	static isText(node: Node | null | false): node is Text {
 		return Boolean(node && node.nodeType === Node.TEXT_NODE);
@@ -386,11 +365,8 @@ export class Dom {
 
 	/**
 	 * Check if element is element node
-	 * @param node
 	 */
-	static isElement(
-		node: Node | null | false | EventTarget | object
-	): node is Element {
+	static isElement(node: unknown): node is Element {
 		if (!Dom.isNode(node)) {
 			return false;
 		}
@@ -402,7 +378,6 @@ export class Dom {
 
 	/**
 	 * Check if element is HTMLElement node
-	 * @param node
 	 */
 	static isHTMLElement(node: unknown): node is HTMLElement {
 		if (!Dom.isNode(node)) {
@@ -416,7 +391,6 @@ export class Dom {
 
 	/**
 	 * Check element is inline block
-	 * @param node
 	 */
 	static isInlineBlock(node: Node | null | false): node is HTMLElement {
 		return (
@@ -444,9 +418,6 @@ export class Dom {
 
 	/**
 	 * Get last matched node inside root
-	 *
-	 * @param root
-	 * @param condition
 	 */
 	static last(
 		root: Nullable<Node>,
@@ -489,11 +460,6 @@ export class Dom {
 
 	/**
 	 * Find previous node
-	 *
-	 * @param node
-	 * @param condition
-	 * @param root
-	 * @param [withChild]
 	 */
 	static prev(
 		node: Node,
@@ -513,11 +479,6 @@ export class Dom {
 
 	/**
 	 * Find next node what `condition(next) === true`
-	 *
-	 * @param node
-	 * @param condition
-	 * @param root
-	 * @param [withChild]
 	 */
 	static next(
 		node: Node,
@@ -563,13 +524,6 @@ export class Dom {
 
 	/**
 	 * Find next/prev node what `condition(next) === true`
-	 *
-	 * @param node
-	 * @param condition
-	 * @param root
-	 * @param [recurse] check first argument
-	 * @param [sibling] nextSibling or previousSibling
-	 * @param [child] firstChild or lastChild
 	 */
 	static find(
 		node: Node,
@@ -620,12 +574,6 @@ export class Dom {
 
 	/**
 	 * Find next/prev node what `condition(next) === true`
-	 *
-	 * @param node
-	 * @param condition
-	 * @param root
-	 * @param [sibling] nextSibling or previousSibling
-	 * @param [child] firstChild or lastChild
 	 */
 	static findWithCurrent(
 		node: Node,
@@ -669,10 +617,6 @@ export class Dom {
 
 	/**
 	 * Get not empty  sibling
-	 *
-	 * @param node
-	 * @param [left]
-	 * @param [cond]
 	 */
 	static findSibling(
 		node: Node,
@@ -694,11 +638,6 @@ export class Dom {
 
 	/**
 	 * It goes through all the elements in ascending order, and checks to see if they meet the predetermined condition
-	 *
-	 * @param node
-	 * @param condition
-	 * @param [root] Root element
-	 * @param [checkRoot]
 	 */
 	static up<T extends HTMLElement>(
 		node: Nullable<Node>,
@@ -733,10 +672,6 @@ export class Dom {
 
 	/**
 	 * Find parent by tag name
-	 *
-	 * @param node
-	 * @param tags
-	 * @param root
 	 */
 	static closest<T extends HTMLElement, K extends HTMLTagNames>(
 		node: Nullable<Node>,
@@ -784,10 +719,6 @@ export class Dom {
 
 	/**
 	 * Furthest parent node matching condition
-	 *
-	 * @param node
-	 * @param condition
-	 * @param root
 	 */
 	static furthest<T extends HTMLElement>(
 		node: Nullable<Node>,
@@ -807,8 +738,6 @@ export class Dom {
 
 	/**
 	 * Append new element in the start of root
-	 * @param root
-	 * @param newElement
 	 */
 	static appendChildFirst(
 		root: HTMLElement,
@@ -827,9 +756,6 @@ export class Dom {
 
 	/**
 	 * Insert newElement after element
-	 *
-	 * @param elm
-	 * @param newElement
 	 */
 	static after(elm: Node, newElement: Node | DocumentFragment): void {
 		const { parentNode } = elm;
@@ -847,9 +773,6 @@ export class Dom {
 
 	/**
 	 * Insert newElement before element
-	 *
-	 * @param elm
-	 * @param newElement
 	 */
 	static before(elm: Node, newElement: Node | DocumentFragment): void {
 		const { parentNode } = elm;
@@ -863,9 +786,6 @@ export class Dom {
 
 	/**
 	 * Insert newElement as first child inside element
-	 *
-	 * @param elm
-	 * @param newElement
 	 */
 	static prepend(root: Node, newElement: Node | DocumentFragment): void {
 		root.insertBefore(newElement, root.firstChild);
@@ -873,9 +793,6 @@ export class Dom {
 
 	/**
 	 * Insert newElement as last child inside element
-	 *
-	 * @param elm
-	 * @param newElement
 	 */
 	static append(
 		root: Node,
@@ -899,10 +816,6 @@ export class Dom {
 
 	/**
 	 * Move all content to another element
-	 *
-	 * @param from
-	 * @param to
-	 * @param inStart
 	 */
 	static moveContent(from: Node, to: Node, inStart: boolean = false): void {
 		const fragment: DocumentFragment = (
@@ -922,10 +835,6 @@ export class Dom {
 
 	/**
 	 * Call callback condition function for all elements of node
-	 *
-	 * @param node
-	 * @param condition
-	 * @param prev
 	 */
 	static all(
 		node: Node,
@@ -951,10 +860,6 @@ export class Dom {
 
 	/**
 	 * Check root contains child or equal child
-	 *
-	 * @param root
-	 * @param child
-	 * @param [onlyContains]
 	 */
 	static isOrContains(
 		root: Node,
@@ -972,7 +877,6 @@ export class Dom {
 
 	/**
 	 * Safe remove element from DOM
-	 * @param node
 	 */
 	static safeRemove(node: Node | false | null | void): void {
 		node && node.parentNode && node.parentNode.removeChild(node);
@@ -980,7 +884,6 @@ export class Dom {
 
 	/**
 	 * Hide element
-	 * @param node
 	 */
 	static hide(node: Nullable<HTMLElement>): void {
 		if (!node) {
@@ -993,7 +896,6 @@ export class Dom {
 
 	/**
 	 * Show element
-	 * @param node
 	 */
 	static show(node: Nullable<HTMLElement>): void {
 		if (!node) {
@@ -1009,9 +911,6 @@ export class Dom {
 
 	/**
 	 * Check if element is some tag
-	 *
-	 * @param node
-	 * @param tagNames
 	 */
 	static isTag<K extends keyof HTMLElementTagNameMap>(
 		node: Node | null | false | EventTarget,
@@ -1039,5 +938,45 @@ export class Dom {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Marks an item as temporary
+	 */
+	static markTemporary<K extends HTMLElement>(
+		element: K,
+		attributes?: IDictionary
+	): K {
+		attributes && attr(element, attributes);
+		attr(element, 'data-jodit-temp', true);
+		return element;
+	}
+
+	/**
+	 * Check if element is temporary
+	 */
+	static isTemporary(element: unknown): boolean {
+		if (!Dom.isElement(element)) {
+			return false;
+		}
+
+		return (
+			Select.isMarker(element) || attr(element, 'data-jodit-temp') === 'true'
+		);
+	}
+
+	/**
+	 * Replace temporary elements from string
+	 */
+	static replaceTemporaryFromString(value: string): string {
+		return value.replace(/<([a-z]+)[^>]+data-jodit-temp[^>]+>(.+?)<\/\1>/gi, '$2');
+	}
+
+
+	/**
+	 * Get temporary list
+	 */
+	static temporaryList(root: HTMLElement): HTMLElement[] {
+		return $$('[data-jodit-temp]', root);
 	}
 }

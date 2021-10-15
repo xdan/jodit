@@ -6,11 +6,10 @@
 
 import type { Nullable } from '../../../../types';
 import { Dom } from '../../../dom';
-import { Select } from '../../select';
 
 /**
  * Is normal usual element
  */
 export function isNormalNode(elm: Nullable<Node>): boolean {
-	return Boolean(elm && !Dom.isEmptyTextNode(elm) && !Select.isMarker(elm));
+	return Boolean(elm && !Dom.isEmptyTextNode(elm) && !Dom.isTemporary(elm));
 }

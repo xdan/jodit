@@ -17,7 +17,7 @@ import {
 	IS_INLINE,
 	INSEPARABLE_TAGS
 } from '../../core/constants';
-import { Dom, Select } from '../../modules';
+import { Dom } from '../../modules';
 import { isString, keys, safeHTML, trim } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { watch, autobind, debounce } from '../../core/decorators';
@@ -523,7 +523,7 @@ export class cleanHtml extends Plugin {
 			current != null &&
 			Dom.isElement(node) &&
 			node.nodeName.match(IS_INLINE) != null &&
-			!Select.isMarker(node) &&
+			!Dom.isTemporary(node) &&
 			trim((node as Element).innerHTML).length === 0 &&
 			!Dom.isOrContains(node, current)
 		);

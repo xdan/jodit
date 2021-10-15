@@ -9,7 +9,6 @@ import { isWindow } from './is-window';
 
 /**
  * Check if element is simple plaint object
- * @param obj
  */
 export function isPlainObject<T>(
 	obj: any | IDictionary<T>
