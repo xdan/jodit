@@ -18,12 +18,13 @@ import { isPromise } from '../checker/is-promise';
 import { get } from './get';
 import { dataBind } from '../data-bind';
 import { isVoid } from '../checker/is-void';
+import { isPlainObject, isString } from '../checker';
+import { css } from '../css';
+import { kebabCase } from '../string';
 
 /**
  * Call function with parameters
  *
- * @param func
- * @param args
  * @example
  * ```js
  * const f = Math.random();
@@ -42,19 +43,46 @@ export function call<T extends any[], R>(
  * Alias for `elm.getAttribute` but if set second argument `-{key}`
  * it will also check `data-{key}` attribute
  * if set `value` it is alias for setAttribute with same logic
- *
- * @param elm
- * @param key
- * @param [value]
  */
+export function attr(elm: Element, key: string): null | string;
 export function attr(
-	elm: Element | null,
+	elm: Element,
 	key: string,
+	value: string | number | boolean | null
+): null;
+export function attr(
+	elm: Element,
+	attributes: IDictionary<string | number | boolean | null>
+): null;
+
+export function attr(
+	elm: Element,
+	keyOrAttributes: string | IDictionary<string | number | boolean | null>,
 	value?: string | number | boolean | null
 ): null | string {
 	if (!elm || !isFunction(elm.getAttribute)) {
 		return null;
 	}
+
+	if (!isString(keyOrAttributes)) {
+		Object.keys(keyOrAttributes).forEach(key => {
+			const value = keyOrAttributes[key];
+
+			if (isPlainObject(value) && key === 'style') {
+				css(<HTMLElement>elm, value as IDictionary<string>);
+			} else {
+				if (key === 'className') {
+					key = 'class';
+				}
+
+				attr(elm, kebabCase(key), value);
+			}
+		});
+
+		return null;
+	}
+
+	let key = kebabCase(keyOrAttributes);
 
 	if (/^-/.test(key)) {
 		const res = attr(elm, `data${key}`);
@@ -80,7 +108,6 @@ export function attr(
 
 /**
  * Mark element for debugging
- * @param elm
  */
 export function markOwner(jodit: IViewBased, elm: HTMLElement): void {
 	attr(elm, 'data-editor_id', jodit.id);
@@ -106,7 +133,6 @@ const map: IDictionary = {};
 
 /**
  * Reset Vanila JS native function
- * @param key
  * @example
  * ```js
  * reset('Array.from')(Set([1,2,3])) // [1, 2, 3]
@@ -147,8 +173,6 @@ export const reset = function <T extends Function>(key: string): Nullable<T> {
 
 /**
  * Allow load image in promise
- * @param src
- * @param jodit
  */
 export const loadImage = (
 	src: string,
@@ -193,9 +217,6 @@ export const keys = (obj: object, own: boolean = true): string[] => {
 
 /**
  * Memorize last user chose
- * @param editor
- * @param _
- * @param control
  */
 export const memorizeExec = <T extends IJodit = IJodit>(
 	editor: T,

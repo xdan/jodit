@@ -9,18 +9,30 @@ import { isArray } from './checker';
 
 type eachCallback<T, N> = (this: T, key: N, value: T) => boolean | void;
 
+/**
+ * @deprecated Use Object.keys
+ */
 export function each<T>(obj: T[], callback: eachCallback<T, number>): boolean;
 
+/**
+ * @deprecated Use Object.keys
+ */
 export function each<T>(
 	obj: IDictionary<T>,
 	callback: eachCallback<T, string>
 ): boolean;
 
+/**
+ * @deprecated Use Object.keys
+ */
 export function each<T>(
 	obj: T[] | IDictionary<T>,
 	callback: eachCallback<T, number | string>
 ): boolean;
 
+/**
+ * @deprecated Use Object.keys
+ */
 export function each<T>(
 	obj: T[] | IDictionary<T>,
 	callback: eachCallback<T, any>
