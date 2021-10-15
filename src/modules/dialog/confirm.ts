@@ -15,7 +15,7 @@ import { Button } from '../../core/ui';
  * @param callback - callback. The first argument is the value entered
  * @example
  * ```javascript
- * Jodit.Confirm("Are you shure?", "Confirm Dialog", function (yes) {
+ * Jodit.Confirm("Are you sure?", "Confirm Dialog", function (yes) {
  *     if (yes) {
  *         // do something
  *     }
