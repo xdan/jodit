@@ -12,10 +12,6 @@ export const cns = console;
 
 /**
  * Mark function as deprecated
- *
- * @param method
- * @param names
- * @param ctx
  */
 export function markDeprecated(
 	method: Function,

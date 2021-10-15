@@ -17,10 +17,6 @@ export function position(
 
 /**
  * Calculate screen element position
- *
- * @param elm
- * @param jodit
- * @param recurse
  */
 export function position(
 	elm: HTMLElement,

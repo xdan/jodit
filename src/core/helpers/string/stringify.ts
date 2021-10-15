@@ -8,9 +8,6 @@ import type { CanUndef } from '../../../types';
 
 /**
  * Safe stringify circular object
- *
- * @param value
- * @param options
  */
 export function stringify(
 	value: unknown,

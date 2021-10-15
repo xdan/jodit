@@ -20,7 +20,7 @@ import { dataBind } from '../data-bind';
 import { isVoid } from '../checker/is-void';
 import { isPlainObject, isString } from '../checker';
 import { css } from '../css';
-import { kebabCase } from '../string';
+import { CamelCaseToKebabCase } from '../string';
 
 /**
  * Call function with parameters
@@ -48,7 +48,7 @@ export function attr(elm: Element, key: string): null | string;
 export function attr(
 	elm: Element,
 	key: string,
-	value: string | number | boolean | null
+	value: string | number | boolean | null | undefined
 ): null;
 export function attr(
 	elm: Element,
@@ -75,14 +75,14 @@ export function attr(
 					key = 'class';
 				}
 
-				attr(elm, kebabCase(key), value);
+				attr(elm, key, value);
 			}
 		});
 
 		return null;
 	}
 
-	let key = kebabCase(keyOrAttributes);
+	let key = CamelCaseToKebabCase(keyOrAttributes);
 
 	if (/^-/.test(key)) {
 		const res = attr(elm, `data${key}`);

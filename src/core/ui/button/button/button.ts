@@ -145,7 +145,7 @@ export class UIButton extends UIElement implements IUIButton {
 
 	@watch('state.tabIndex')
 	onChangeTabIndex(): void {
-		attr(this.container, 'tabIndex', this.state.tabIndex);
+		attr(this.container, 'tabindex', this.state.tabIndex);
 	}
 
 	@watch('state.icon')

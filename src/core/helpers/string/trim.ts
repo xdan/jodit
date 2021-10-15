@@ -14,7 +14,6 @@ import {
 /**
  * It clears the line of all auxiliary invisible characters , from the spaces and line breaks , tabs
  * from the beginning and end of the line
- * @param value input string
  */
 export function trim(value: string): string {
 	return value
@@ -24,7 +23,6 @@ export function trim(value: string): string {
 
 /**
  * Trim only invisible chars
- * @param value
  */
 export function trimInv(value: string): string {
 	return value

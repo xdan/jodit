@@ -704,10 +704,10 @@ export class Select implements ISelect {
 			}
 
 			call(
-				// @ts-ignore
 				this.j.o.resizer.forImageChangeAttributes ? attr : css,
 				image,
 				'width',
+				// @ts-ignore
 				dw
 			);
 		}
@@ -1019,7 +1019,6 @@ export class Select implements ISelect {
 
 	/**
 	 * Set range selection
-	 * @emits changeSelection
 	 */
 	selectRange(range: Range, focus: boolean = true): void {
 		const sel = this.sel;
@@ -1035,7 +1034,6 @@ export class Select implements ISelect {
 
 		/**
 		 * Fired after change selection
-		 * @event changeSelection
 		 */
 		this.j.e.fire('changeSelection');
 	}

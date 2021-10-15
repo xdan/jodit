@@ -6,9 +6,6 @@
 
 /**
  * Normalize value to CSS meters
- * @method normalizeSize
- * @param {string|int} value Input string
- * @return {string}
  */
 export const normalizeSize = (value: string | number): string => {
 	if (/^[0-9]+$/.test(value.toString())) {

@@ -5,8 +5,7 @@
  */
 
 /**
- * Convert (kebab-case or snake_case) => camelCase
- * @param key
+ * Convert (kebab-case or snake_case) to camelCase
  */
 export const camelCase = (key: string): string => {
 	return key.replace(/([-_])(.)/g, (m, code, letter) => {

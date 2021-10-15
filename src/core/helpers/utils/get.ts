@@ -26,8 +26,6 @@ import { isVoid } from '../checker/is-void';
  * console.log(Jodit.modules.Helpers.get('a.b.c.d.e', obj) === false); // true
  * console.log(Jodit.modules.Helpers.get('a.b.a.d.e', obj) === null); // false
  * ```
- * @param chain
- * @param obj
  */
 export function get<T>(chain: string, obj: IDictionary): Nullable<T> {
 	if (!isString(chain) || !chain.length) {

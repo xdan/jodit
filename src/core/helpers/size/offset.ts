@@ -6,13 +6,7 @@
 
 /**
  * Calc relative offset by start editor field
- *
- * @method offset
- * @param {HTMLElement} elm
- * @param {Jodit} jodit
- * @param {Document} doc
- * @param {boolean} recurse
- * @return {{top: number, left: number}} returns an object containing the properties top and left.
+ * @returns returns an object containing the properties top and left.
  */
 
 import type { IBound, IHasScroll, IJodit, IViewBased } from '../../../types';

@@ -112,7 +112,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 	/** @override */
 	override onChangeTabIndex(): void {
-		attr(this.button, 'tabIndex', this.state.tabIndex);
+		attr(this.button, 'tabindex', this.state.tabIndex);
 	}
 
 	@watch('state.tooltip')

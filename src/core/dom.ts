@@ -961,7 +961,8 @@ export class Dom {
 		}
 
 		return (
-			Select.isMarker(element) || attr(element, 'data-jodit-temp') === 'true'
+			Select.isMarker(element) ||
+			attr(element, 'data-jodit-temp') === 'true'
 		);
 	}
 
@@ -969,9 +970,11 @@ export class Dom {
 	 * Replace temporary elements from string
 	 */
 	static replaceTemporaryFromString(value: string): string {
-		return value.replace(/<([a-z]+)[^>]+data-jodit-temp[^>]+>(.+?)<\/\1>/gi, '$2');
+		return value.replace(
+			/<([a-z]+)[^>]+data-jodit-temp[^>]+>(.+?)<\/\1>/gi,
+			'$2'
+		);
 	}
-
 
 	/**
 	 * Get temporary list

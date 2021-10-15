@@ -69,6 +69,7 @@ describe('Dialog system tests', function () {
 			simulateEvent('click', editor.editor.querySelector('img'));
 
 			const popup = getOpenedPopup(editor);
+
 			clickButton('pencil', popup);
 
 			const dialog = getOpenedDialog(editor);

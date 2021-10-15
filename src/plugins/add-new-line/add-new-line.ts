@@ -59,7 +59,7 @@ const ns = 'addnewline';
  */
 export class addNewLine extends Plugin {
 	private line = this.j.c.fromHTML(
-		`<div role="button" tabIndex="-1" title="${this.j.i18n(
+		`<div role="button" tabindex="-1" title="${this.j.i18n(
 			'Break'
 		)}" class="jodit-add-new-line"><span>${Icon.get('enter')}</span></div>`
 	) as HTMLDivElement;

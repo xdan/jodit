@@ -8,8 +8,6 @@ import { trim } from '../string';
 
 /**
  * Replaces back slashes and correctly concatenates several parts of the path.
- * @param path
- * @see Test helpers
  */
 export const normalizePath = (...path: string[]): string => {
 	return path

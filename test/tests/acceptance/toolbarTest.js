@@ -431,9 +431,9 @@ describe('Toolbar', function () {
 			const popup = editor.ownerDocument.querySelector(
 				'[role="popup"][data-editor_id="' + editor.id + '"]'
 			);
-			expect(popup).is.not.null;
 
-			simulateEvent('mousedown', 0, window);
+			expect(popup).is.not.null;
+			simulateEvent('mousedown', window);
 
 			expect(popup && popup.parentNode == null).is.true;
 		});
@@ -521,7 +521,7 @@ describe('Toolbar', function () {
 			expect(list && window.getComputedStyle(list).display === 'block').is
 				.true;
 
-			simulateEvent('mousedown', 0, window);
+			simulateEvent('mousedown', window);
 
 			expect(list && list.parentNode == null).is.true;
 		});

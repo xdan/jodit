@@ -80,9 +80,6 @@ export function $$<T extends Element>(
 
 /**
  * Calculate XPath selector
- *
- * @param element
- * @param root
  */
 export const getXPathByElement = (
 	element: HTMLElement,

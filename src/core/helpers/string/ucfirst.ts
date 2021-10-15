@@ -6,14 +6,11 @@
 
 /**
  * Make a string's first character uppercase
- *
- * @param {string} value input string
- * @return {string}
  */
-export const ucfirst = (value: string): string => {
+export function ucfirst(value: string): string {
 	if (!value.length) {
 		return '';
 	}
 
 	return value[0].toUpperCase() + value.substr(1);
-};
+}

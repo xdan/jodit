@@ -33,7 +33,6 @@ export abstract class ViewComponent<T extends IViewBased = IViewBased>
 
 	/**
 	 * Attach component to View
-	 * @param jodit
 	 */
 	setParentView(jodit: T): this {
 		this.jodit = jodit;
