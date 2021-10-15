@@ -1243,4 +1243,103 @@ describe('Jodit Events system Tests', function () {
 			});
 		});
 	});
+
+	describe('Mute/Unmute', () => {
+		describe('Custom event', () => {
+			it('Should mute events handlers', () => {
+				const editor = getJodit();
+				let counter = 0;
+				editor.events.on('some', () => {
+					counter++;
+				});
+
+				editor.events.fire('some');
+				editor.events.mute('some');
+				editor.events.fire('some');
+				editor.events.fire('some');
+				editor.events.fire('some');
+
+				expect(editor.events.isMuted('some')).is.true;
+				expect(counter).eq(1);
+
+				editor.events.unmute('some');
+				editor.events.fire('some');
+				editor.events.fire('some');
+
+				expect(counter).eq(3);
+			});
+		});
+
+		describe('Native event', () => {
+			it('Should mute events handlers', () => {
+				const editor = getJodit();
+				let counter = 0;
+				editor.events.on('keydown', () => {
+					counter++;
+				});
+
+				simulateEvent('keydown', editor);
+				editor.events.mute('keydown');
+				simulateEvent('keydown', editor);
+				simulateEvent('keydown', editor);
+				simulateEvent('keydown', editor);
+				editor.events.fire('keydown');
+
+				expect(editor.events.isMuted('keydown')).is.true;
+				expect(counter).eq(1);
+
+				editor.events.unmute('keydown');
+				simulateEvent('keydown', editor);
+				simulateEvent('keydown', editor);
+				editor.events.fire('keydown', 0);
+
+				expect(counter).eq(4);
+			});
+		});
+
+		describe('Mute all events', () => {
+			it('Should mute all events handlers', () => {
+				const editor = getJodit();
+				const counter = [];
+
+				editor.events
+					.on('keydown', () => {
+						counter.push('keydown');
+					})
+					.on('some', () => {
+						counter.push('some');
+					});
+
+				simulateEvent('keydown', editor);
+				editor.events.fire('some');
+
+				editor.events.mute('*');
+				simulateEvent('keydown', editor);
+				editor.events.fire('keydown');
+				editor.events.fire('some');
+
+				expect(editor.events.isMuted('keydown')).is.true;
+				expect(editor.events.isMuted('some')).is.true;
+				expect(counter).deep.eq(['keydown', 'some']);
+
+				editor.events.unmute('*');
+				expect(editor.events.isMuted('keydown')).is.false;
+				expect(editor.events.isMuted('some')).is.false;
+
+				simulateEvent('keydown', editor);
+				simulateEvent('keydown', editor);
+				editor.events.fire('keydown', 0);
+				editor.events.fire('some');
+
+				expect(counter).deep.eq([
+					'keydown',
+					'some',
+					'keydown',
+					'keydown',
+					'keydown',
+					'some'
+				]);
+			});
+		});
+	});
 });

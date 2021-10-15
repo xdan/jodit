@@ -27,6 +27,21 @@ interface IEventsNative extends IDestructible {
 	currents: string[];
 
 	/**
+	 * Doesn't start any handler
+	 */
+	mute(event?: string): IEventsNative;
+
+	/**
+	 * No handlers are triggered for the event
+	 */
+	isMuted(event?: string): boolean;
+
+	/**
+	 * Returns event handling
+	 */
+	unmute(event?: string): IEventsNative;
+
+	/**
 	 * Sets the handler for the specified event ( Event List ) for a given element .
 	 *
 	 * @param {object|string} subjectOrEvents - The object for which toWYSIWYG set an event handler

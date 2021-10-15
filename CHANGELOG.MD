@@ -9,12 +9,34 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.8.4
+
+#### :rocket: New Feature
+
+-   В eventEmmiter добавлены методы:
+    -   `mute(event?: string)` Doesn't start any handler;
+    -   `isMuted(event?: string)` No handlers are triggered for the event
+    -   `unmute(event?: string)` Returns event handling
+
+```js
+const editor = Jodit.make('#editor');
+
+editor.events.on('change', () => {console.log(editor.value);});
+editor.value = '1'; // Console '1'
+
+editor.events.mute('change');
+editor.value = '2'; // Nothing
+editor.events.unmute('change');
+editor.value = '3'; // Console '3'
+```
+
 ## 3.8.3
 
 #### :boom: Breaking Change
 
-- beforeSetNativeEditorValue - get object {value: string} and can change value
-- Added `resizer.forImageChangeAttributes=true` option. Issue: https://github.com/xdan/jodit/issues/696
+-   beforeSetNativeEditorValue - get object {value: string} and can change value
+-   Added `resizer.forImageChangeAttributes=true` option. Issue: https://github.com/xdan/jodit/issues/696
+
 ```js
 // Disable
 Jodit.make('#editor', {
@@ -30,11 +52,11 @@ Jodit.make('#editor', {
 
 #### :bug: Bug Fix
 
-- [Trying to get in touch regarding a security issue #702](https://github.com/xdan/jodit/issues/702)
-- [Scrolling to top of editor bug in Safari. #715](https://github.com/xdan/jodit/issues/715)
-- [Refused to run the JavaScript URL because it violates the following Content Security Policy directive #716](https://github.com/xdan/jodit/issues/716)
-- [Popup doesn't follow the toolbar on scroll #703](https://github.com/xdan/jodit/issues/703)
-- Fixed the link dialog: the unlink button does not work in some cases, and the selection is not restored
+-   [Trying to get in touch regarding a security issue #702](https://github.com/xdan/jodit/issues/702)
+-   [Scrolling to top of editor bug in Safari. #715](https://github.com/xdan/jodit/issues/715)
+-   [Refused to run the JavaScript URL because it violates the following Content Security Policy directive #716](https://github.com/xdan/jodit/issues/716)
+-   [Popup doesn't follow the toolbar on scroll #703](https://github.com/xdan/jodit/issues/703)
+-   Fixed the link dialog: the unlink button does not work in some cases, and the selection is not restored
 
 ## 3.8.1
 
@@ -583,11 +605,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
 -   ex: [
--                                   	{ value: "", text: "" },
--                                   	{ value: "val1", text: "text1" },
--                                   	{ value: "val2", text: "text2" },
--                                   	{ value: "val3", text: "text3" }
--                                   ]
+-                                     	{ value: "", text: "" },
+-                                     	{ value: "val1", text: "text1" },
+-                                     	{ value: "val2", text: "text2" },
+-                                     	{ value: "val3", text: "text3" }
+-                                     ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
@@ -1471,7 +1493,7 @@ Jodit.Promt('Enter your name', 'Promt Dialog', function (name) {
 ![Confirm dialog](http://xdsoft.net/jodit/stuf/confirm.jpg)
 
 ```javascript
-Jodit.Confirm('Are you shure?', function (yes) {
+Jodit.Confirm('Are you sure?', function (yes) {
 	if (yes) {
 		// do something
 	}
@@ -1703,7 +1725,7 @@ Fix syncronize code in TableProcessor module
 Fix bug in Dialog.Confirm
 
 ```javascript
-Jodit.Confirm('Are you shure?', 'Confirm', function (success) {
+Jodit.Confirm('Are you sure?', 'Confirm', function (success) {
 	if (success) {
 		alert('Agree');
 	}

@@ -20,6 +20,26 @@ import { isArray } from '../helpers/checker/is-array';
 import { error } from '../helpers/type';
 
 export class EventsNative implements IEventsNative {
+	private mutedEvents: Set<string> = new Set();
+
+	mute(event?: string): this {
+		this.mutedEvents.add(event ?? '*');
+		return this;
+	}
+
+	isMuted(event?: string): boolean {
+		if (event && this.mutedEvents.has(event)) {
+			return true;
+		}
+
+		return this.mutedEvents.has('*');
+	}
+
+	unmute(event?: string): this {
+		this.mutedEvents.delete(event ?? '*');
+		return this;
+	}
+
 	readonly __key: string = '__JoditEventsNativeNamespaces';
 
 	private doc: Document = document;
@@ -160,6 +180,7 @@ export class EventsNative implements IEventsNative {
 	get current(): string {
 		return this.currents[this.currents.length - 1];
 	}
+
 	currents: string[] = [];
 
 	/**
@@ -246,12 +267,16 @@ export class EventsNative implements IEventsNative {
 		const isDOMElement = isFunction((subject as any).addEventListener),
 			self: EventsNative = this;
 
-		let syntheticCallback = function (
+		let syntheticCallback: CallbackFunction = function (
 			this: any,
-			event: MouseEvent | TouchEvent,
+			event: string,
 			...args: any[]
-		) {
-			return callback && callback.call(this, event, ...args);
+		): any {
+			if (self.isMuted(event)) {
+				return;
+			}
+
+			return callback && callback.call(this, ...args);
 		};
 
 		if (isDOMElement) {
@@ -259,6 +284,10 @@ export class EventsNative implements IEventsNative {
 				this: any,
 				event: MouseEvent | TouchEvent
 			): void | false {
+				if (self.isMuted(event.type)) {
+					return;
+				}
+
 				self.prepareEvent(event as TouchEvent);
 
 				if (callback && callback.call(this, event) === false) {
@@ -603,11 +632,11 @@ export class EventsNative implements IEventsNative {
 
 									this.currents.push(event);
 
-									result_value =
-										block.syntheticCallback.apply(
-											subject,
-											argumentsList
-										);
+									result_value = block.syntheticCallback.call(
+										subject,
+										event,
+										...argumentsList
+									);
 
 									this.currents.pop();
 
