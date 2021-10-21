@@ -788,7 +788,8 @@ function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
  * @return {HTMLElement|null}
  */
 function getOpenedPopup(editor) {
-	const popups = editor.ownerDocument.querySelectorAll(
+	const root = editor.o.shadowRoot || editor.ownerDocument;
+	const popups = root.querySelectorAll(
 		'[role="popup"][data-editor_id="' + editor.id + '"]:last-child'
 	);
 	return popups.length ? popups[popups.length - 1] : null;

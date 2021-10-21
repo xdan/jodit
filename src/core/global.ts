@@ -74,7 +74,10 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 
 	if (!data[key]) {
 		let c = view.c,
-			body = jodit.od.body;
+			body =
+				isJoditObject(jodit) && jodit.o.shadowRoot
+					? jodit.o.shadowRoot
+					: jodit.od.body;
 
 		if (
 			createInsideEditor &&
@@ -82,7 +85,12 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 			jodit.od !== jodit.ed
 		) {
 			c = jodit.createInside;
-			body = tag === 'style' ? jodit.ed.head : jodit.ed.body;
+			const place = tag === 'style' ? jodit.ed.head : jodit.ed.body;
+
+			body =
+				isJoditObject(jodit) && jodit.o.shadowRoot
+					? jodit.o.shadowRoot
+					: place;
 		}
 
 		const box = c.element(tag, {

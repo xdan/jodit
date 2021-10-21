@@ -19,6 +19,8 @@
 
 - [When I merged some cells by dragging it to change its width. #737](https://github.com/xdan/jodit/issues/737)
 - [Color dropdown looks broken #736](https://github.com/xdan/jodit/issues/736)
+- [all popups and dialogs are outside shadow dom #731](https://github.com/xdan/jodit/issues/731)
+- [shadow dom browser support #730](https://github.com/xdan/jodit/issues/730)
 
 ## 3.8.4
 

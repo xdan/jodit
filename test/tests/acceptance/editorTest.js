@@ -347,6 +347,54 @@ describe('Jodit Editor Tests', function () {
 				expect(editor4.options.toolbar).is.false;
 			});
 		});
+
+		describe('Init in shadow root', function () {
+			it('Should create all elements inside shadow root', function () {
+				const app = appendTestDiv();
+				app.attachShadow({ mode: 'open' });
+				const root = app.shadowRoot;
+
+				root.innerHTML = '<div id="edit"></div>';
+
+				const editor = getJodit(
+					{
+						globalFullSize: false,
+						shadowRoot: root
+					},
+					root.getElementById('edit')
+				);
+
+				clickButton('brush', editor);
+
+				const popup = getOpenedPopup(editor);
+
+				expect(popup.parentNode.parentNode === root).is.true;
+			});
+
+			describe('Select element inside', function () {
+				it('Should use Selection from shadow root', function () {
+					const app = appendTestDiv();
+					app.attachShadow({ mode: 'open' });
+					const root = app.shadowRoot;
+
+					root.innerHTML = '<div id="edit"></div>';
+
+					const editor = getJodit(
+						{
+							globalFullSize: false,
+							shadowRoot: root
+						},
+						root.getElementById('edit')
+					);
+
+					editor.value = '<p>test</p>';
+					editor.s.select(editor.editor.firstChild, true);
+					replaceCursorToChar(editor);
+
+					expect(editor.value).eq('<p>|test|</p>');
+				});
+			});
+		});
 	});
 
 	describe('Editors stack', function () {

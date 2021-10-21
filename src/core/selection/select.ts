@@ -87,7 +87,10 @@ export class Select implements ISelect {
 	 * Return current selection object
 	 */
 	get sel(): ISelect['sel'] {
-		if (this.j.o.shadowRoot) {
+		if (
+			this.j.o.shadowRoot &&
+			isFunction(this.j.o.shadowRoot.getSelection)
+		) {
 			return this.j.o.shadowRoot.getSelection();
 		}
 
