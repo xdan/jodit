@@ -7,17 +7,18 @@
 @import (reference) '../../../styles/variables';
 @import (reference) '../../../styles/mixins';
 
-.jodit-color-picker {
-	--color-cell-size: 24px;
-	--color-cell-icon-size: 12px;
+:root {
+	--color-picker-cell-size: 24px;
+}
 
+.jodit-color-picker {
 	margin: 0;
 	text-align: left;
 	user-select: none;
 
 	&__group {
 		display: flex;
-		max-width: calc(var(--color-cell-size) * 10);
+		max-width: calc(var(--color-picker-cell-size) * 10);
 		flex-wrap: wrap;
 		margin-bottom: calc(var(--padding-default) / 2);
 		white-space: normal;
@@ -26,8 +27,8 @@
 	&__color-item {
 		display: block;
 
-		width: var(--color-cell-size);
-		height: var(--color-cell-size);
+		width: var(--color-picker-cell-size);
+		height: var(--color-picker-cell-size);
 
 		border: 1px solid transparent;
 		text-align: center;

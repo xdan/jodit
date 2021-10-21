@@ -7,6 +7,15 @@
 @import (reference) './variables';
 @import (reference) './mixins';
 
+:root {
+	--switche-width: 60px;
+	--switche-height: 32px;
+	--switche-slider-margin: 4px;
+	--switche-slider-size: calc(
+		var(--switche-height) - var(--switche-slider-margin) * 2
+	);
+}
+
 .jodit-form {
 	.font();
 
@@ -201,15 +210,10 @@
 }
 
 .jodi-switcher {
-	--width: 60px;
-	--height: 32px;
-	--slider-margin: 4px;
-	--slider-size: calc(var(--height) - var(--slider-margin) * 2);
-
 	position: relative;
 	display: inline-block;
-	width: var(--width);
-	height: var(--height);
+	width: var(--switche-width);
+	height: var(--switche-height);
 
 	input {
 		width: 0;
@@ -217,23 +221,23 @@
 		opacity: 0;
 	}
 
-	&__slider {
+	& &__slider {
 		position: absolute;
 		top: 0;
 		right: 0;
 		bottom: 0;
 		left: 0;
 		background-color: var(--color-gray);
-		border-radius: var(--height);
+		border-radius: var(--switche-height);
 		cursor: pointer;
 		transition: 0.4s;
 
 		&:before {
 			position: absolute;
-			bottom: var(--slider-margin);
-			left: var(--slider-margin);
-			width: var(--slider-size);
-			height: var(--slider-size);
+			bottom: var(--switche-slider-margin);
+			left: var(--switche-slider-margin);
+			width: var(--switche-slider-size);
+			height: var(--switche-slider-size);
 			background-color: white;
 			border-radius: 50%;
 			content: '';
@@ -247,7 +251,8 @@
 		&:before {
 			transform: translateX(
 				calc(
-					var(--width) - var(--slider-margin) * 2 - var(--slider-size)
+					var(--switche-width) - var(--switche-slider-margin) * 2 -
+						var(--switche-slider-size)
 				)
 			);
 		}
