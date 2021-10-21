@@ -9,6 +9,7 @@
 
 typeof window.chai !== 'undefined' &&
 	(function () {
+		chai.config.truncateThreshold = 0;
 		chai.config.includeStack = true;
 		chai.config.showDiff = true;
 	})();

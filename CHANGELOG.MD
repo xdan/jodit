@@ -9,6 +9,17 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.8.5
+
+#### :house: Internal
+
+-   The build system is divided into modules and is now located in the 'build-system' folder, the `src/utils` folder has been moved to it.
+
+#### :bug: Bug Fix
+
+- [When I merged some cells by dragging it to change its width. #737](https://github.com/xdan/jodit/issues/737)
+- [Color dropdown looks broken #736](https://github.com/xdan/jodit/issues/736)
+
 ## 3.8.4
 
 #### :rocket: New Feature
@@ -21,7 +32,9 @@
 ```js
 const editor = Jodit.make('#editor');
 
-editor.events.on('change', () => {console.log(editor.value);});
+editor.events.on('change', () => {
+	console.log(editor.value);
+});
 editor.value = '1'; // Console '1'
 
 editor.events.mute('change');
@@ -605,11 +618,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
 -   ex: [
--                                     	{ value: "", text: "" },
--                                     	{ value: "val1", text: "text1" },
--                                     	{ value: "val2", text: "text2" },
--                                     	{ value: "val3", text: "text3" }
--                                     ]
+-                                       	{ value: "", text: "" },
+-                                       	{ value: "val1", text: "text1" },
+-                                       	{ value: "val2", text: "text2" },
+-                                       	{ value: "val3", text: "text3" }
+-                                       ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

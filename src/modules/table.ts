@@ -866,19 +866,25 @@ export class Table extends ViewComponent<IJodit> {
 	 */
 	static setColumnWidthByDelta(
 		table: HTMLTableElement,
-		j: number,
+		column: number,
 		delta: number,
 		noUnmark: boolean,
 		marked: HTMLTableCellElement[]
 	): void {
 		const box = Table.formalMatrix(table);
-		let i: number, w: number, percent: number;
 
-		for (i = 0; i < box.length; i += 1) {
-			w = box[i][j].offsetWidth;
-			percent = ((w + delta) / table.offsetWidth) * 100;
+		for (let i = 0; i < box.length; i += 1) {
+			const cell = box[i][column];
+
+			if (cell.colSpan > 1) {
+				continue;
+			}
+
+			const w = cell.offsetWidth;
+			const percent = ((w + delta) / table.offsetWidth) * 100;
+
 			Table.__mark(
-				box[i][j],
+				cell,
 				'width',
 				percent.toFixed(consts.ACCURACY) + '%',
 				marked
@@ -913,6 +919,7 @@ export class Table extends ViewComponent<IJodit> {
 							case 'remove':
 								Dom.safeRemove(cell);
 								break;
+
 							case 'rowspan':
 								if (value > 1) {
 									cell.setAttribute(
@@ -923,6 +930,7 @@ export class Table extends ViewComponent<IJodit> {
 									cell.removeAttribute('rowspan');
 								}
 								break;
+
 							case 'colspan':
 								if (value > 1) {
 									cell.setAttribute(
@@ -933,13 +941,16 @@ export class Table extends ViewComponent<IJodit> {
 									cell.removeAttribute('colspan');
 								}
 								break;
+
 							case 'width':
 								cell.style.width = value.toString();
 								break;
 						}
+
 						delete (cell as any).__marked_value[key];
 					}
 				);
+
 				delete (cell as any).__marked_value;
 			}
 		});

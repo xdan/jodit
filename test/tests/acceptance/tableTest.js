@@ -1775,6 +1775,60 @@ describe('Tables Jodit Editor Tests', function () {
 						});
 					});
 				});
+
+				describe('For merged cells', () => {
+					it('should change only not merged cells', () => {
+						const editor = getJodit();
+
+						editor.value = `<table style="width: 100px; border-collapse: separate;" cellspacing="0">
+								<tbody>
+									<tr><td>1</td><td colspan="2">2 3</td><td>4</td></tr>
+									<tr><td>5</td><td>6</td><td>7</td><td>8</td></tr>
+								</tbody>
+							</table>`;
+
+						const td = editor.editor.querySelectorAll('td')[5],
+							box = td.getBoundingClientRect();
+
+						simulateEvent('mousemove', td, options => {
+							options.clientX = box.left;
+							options.offsetX = 0;
+							options.pageX = 0;
+							options.pageY = 0;
+						});
+
+						simulateEvent(
+							'mousedown',
+							editor.container.querySelector(
+								'.jodit-table-resizer'
+							),
+							options => {
+								options.clientX = box.left;
+								options.pageX = 0;
+								options.pageY = 0;
+							}
+						);
+
+						simulateEvent(
+							['mousemove', 'mouseup'],
+							editor.ew,
+							options => {
+								options.clientX = box.left + 5; // move on 5 pixels
+								options.pageX = 0;
+								options.pageY = 0;
+							}
+						);
+
+						expect(sortAttributes(editor.value)).equals(
+							`<table cellspacing="0" style="border-collapse:separate;width:100px">
+								<tbody>
+									<tr><td>1</td><td colspan="2">2 3</td><td>4</td></tr>
+									<tr><td>5</td><td style="width:30%">6</td><td style="width:20%">7</td><td>8</td></tr>
+								</tbody>
+							</table>`
+						);
+					});
+				});
 			});
 
 			it('When move mouse over right edge of last cell and press mouse button and move cursor to right in 50 pixels - the width of the whole table should increase', function () {
