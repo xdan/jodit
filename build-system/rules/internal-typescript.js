@@ -1,0 +1,23 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+const path = require('path');
+
+module.exports = ({ dirname, uglify, ES }) => {
+	return {
+		test: /\.ts$/,
+		loader: 'ts-loader',
+		options: {
+			transpileOnly: uglify,
+			allowTsInNodeModules: true,
+			compilerOptions: {
+				target: ES
+			}
+		},
+		include: [path.resolve(dirname, './src/')],
+		exclude: [/langs\/[a-z]{2}\.ts/, /langs\/[a-z]{2}_[a-z]{2}\.ts/]
+	};
+};

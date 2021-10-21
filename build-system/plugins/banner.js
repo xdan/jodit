@@ -4,4 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-module.exports = require('./build-system/index');
+const webpack = require('webpack');
+
+module.exports = ({ banner }) => {
+	return new webpack.BannerPlugin({
+		banner,
+		raw: true,
+		entryOnly: true
+	});
+};

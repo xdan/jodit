@@ -1,0 +1,14 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports.fileName = ({ argv, ES, isTest, excludeLangs, uglify }) =>
+	argv.filename
+		? () => argv.filename
+		: name =>
+				name +
+				(ES === 'es5' || isTest ? '' : '.' + ES) +
+				(excludeLangs ? '.en' : '') +
+				(uglify ? '.min' : '');
