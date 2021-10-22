@@ -7,7 +7,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
-module.exports = ({ debug, isTest, dirname }) => [
+module.exports = ({ debug, isTest, superDirname }) => [
 	debug || isTest ? 'style-loader' : MiniCssExtractPlugin.loader,
 	{
 		loader: 'css-loader',
@@ -18,7 +18,7 @@ module.exports = ({ debug, isTest, dirname }) => [
 	},
 	{
 		loader: path.resolve(
-			dirname,
+			superDirname,
 			'./build-system/loaders/css-variables-prefixes'
 		)
 	},

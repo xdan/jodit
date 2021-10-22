@@ -6,11 +6,14 @@
 
 const path = require('path');
 
-module.exports = ({ dirname }) => {
+module.exports = ({ superDirname }) => {
 	return {
 		test: /\.svg$/i,
 		use: {
-			loader: path.resolve(dirname, './build-system/loaders/svg-loader')
+			loader: path.resolve(
+				superDirname,
+				'./build-system/loaders/svg-loader'
+			)
 		}
 	};
 };

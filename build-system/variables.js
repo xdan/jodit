@@ -31,10 +31,12 @@ module.exports.variables = (argv, dir) => {
 
 	const ESNext = ES === 'es2018';
 	const dirname = dir;
+	const superDirname = path.resolve(__dirname, '..');
 	const outputPath = path.join(dir, 'build');
 
 	return {
 		argv,
+		superDirname,
 		outputPath,
 		banner,
 		dirname,

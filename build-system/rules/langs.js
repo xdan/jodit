@@ -6,15 +6,15 @@
 
 const path = require('path');
 
-module.exports = ({ dirname }) => {
+module.exports = ({ superDirname }) => {
 	return {
 		test: /\.(ts)$/,
 		use: [
 			{
-				loader: path.resolve('../loaders/lang-loader')
+				loader: path.resolve(__dirname, '../loaders/lang-loader')
 			}
 		],
-		include: path.resolve(dirname, './src/langs'),
-		exclude: path.resolve(dirname, './src/langs/index.ts')
+		include: path.resolve(superDirname, './src/langs'),
+		exclude: path.resolve(superDirname, './src/langs/index.ts')
 	};
 };

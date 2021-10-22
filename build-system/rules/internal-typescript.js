@@ -6,7 +6,7 @@
 
 const path = require('path');
 
-module.exports = ({ dirname, uglify, ES }) => {
+module.exports = ({ superDirname, uglify, ES }) => {
 	return {
 		test: /\.ts$/,
 		loader: 'ts-loader',
@@ -17,7 +17,7 @@ module.exports = ({ dirname, uglify, ES }) => {
 				target: ES
 			}
 		},
-		include: [path.resolve(dirname, './src/')],
+		include: [path.resolve(superDirname, './src/')],
 		exclude: [/langs\/[a-z]{2}\.ts/, /langs\/[a-z]{2}_[a-z]{2}\.ts/]
 	};
 };

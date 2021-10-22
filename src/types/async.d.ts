@@ -4,9 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { CallbackFunction, IDestructible } from './types';
+import type { CallbackFunction, IDestructible } from './types';
 
 export type ITimeout = number | (() => number);
+
 export interface IAsyncParams {
 	timeout?: number;
 	label?: string;
@@ -54,7 +55,7 @@ export interface IAsync extends IDestructible {
 		firstCallImmediately?: boolean
 	): CallbackFunction;
 
-	requestIdleCallback(fn: CallbackFunction): number;
-	requestIdlePromise(): Promise<number>;
+	requestIdleCallback(fn: IdleRequestCallback): number;
+	requestIdlePromise(): RejectablePromise<number>;
 	cancelIdleCallback(request: number): void;
 }

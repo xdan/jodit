@@ -121,6 +121,7 @@ export class Async implements IAsync {
 				}
 
 				clearTimeout(timer);
+
 				timer = this.setTimeout(
 					() => callFn(...args),
 					isFunction(timeout) ? timeout() : timeout
@@ -269,7 +270,7 @@ export class Async implements IAsync {
 
 	private requestIdleCallbackNative =
 		(window as any)['requestIdleCallback']?.bind(window) ??
-		((callback: CallbackFunction): number => {
+		((callback: IdleRequestCallback): number => {
 			const start = Date.now();
 
 			return this.setTimeout(() => {
@@ -286,14 +287,14 @@ export class Async implements IAsync {
 			this.clearTimeout(request);
 		});
 
-	requestIdleCallback(callback: CallbackFunction): number {
+	requestIdleCallback(callback: IdleRequestCallback): number {
 		const request = this.requestIdleCallbackNative(callback);
 		this.requestsIdle.add(request);
 		return request;
 	}
 
-	requestIdlePromise(): Promise<number> {
-		return new Promise<number>(res => {
+	requestIdlePromise(): RejectablePromise<number> {
+		return this.promise<number>(res => {
 			const request = this.requestIdleCallback(() => res(request));
 		});
 	}
@@ -317,6 +318,7 @@ export class Async implements IAsync {
 		this.promisesRejections.forEach(reject => {
 			reject();
 		});
+
 		this.promisesRejections.clear();
 	}
 

@@ -6,7 +6,7 @@
 
 const path = require('path');
 
-module.exports = ({ dirname, ES }) => {
+module.exports = ({ ES, superDirname }) => {
 	return {
 		test: /\.(js|ts)$/,
 		loader: 'ts-loader',
@@ -17,6 +17,6 @@ module.exports = ({ dirname, ES }) => {
 				target: ES
 			}
 		},
-		include: [path.resolve(dirname, './node_modules')]
+		include: [path.resolve(superDirname, './node_modules')]
 	};
 };
