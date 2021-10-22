@@ -21,6 +21,9 @@
 - [Color dropdown looks broken #736](https://github.com/xdan/jodit/issues/736)
 - [all popups and dialogs are outside shadow dom #731](https://github.com/xdan/jodit/issues/731)
 - [shadow dom browser support #730](https://github.com/xdan/jodit/issues/730)
+- [fix removal of attributes width and height when editing images](https://github.com/xdan/jodit/pull/733)
+- Fixed work in IE11
+- [toolbar menus are almost not visible on IE11 #458](https://github.com/xdan/jodit/issues/458)
 
 ## 3.8.4
 

@@ -31,7 +31,7 @@
 
 		"importHelpers": true,
 
-		"lib": ["es5", "esnext", "dom", "scripthost"]
+		"lib": ["es5", "esnext", "dom", "scripthost", "es2015.iterable"]
 	},
 	"include": [
     "./src/types/"

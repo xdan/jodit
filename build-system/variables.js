@@ -19,6 +19,7 @@ module.exports.variables = (argv, dir) => {
 	`;
 
 	const debug = !argv || !argv.mode || !argv.mode.match(/production/);
+
 	const isTest = Boolean(argv && argv.isTest);
 
 	const mode = debug ? 'development' : argv.mode;
@@ -27,6 +28,7 @@ module.exports.variables = (argv, dir) => {
 	const excludeLangs = Boolean(argv.excludeLangs) || false;
 
 	const ES = argv && ['es5', 'es2018'].includes(argv.es) ? argv.es : 'es2018';
+
 	const ESNext = ES === 'es2018';
 	const dirname = dir;
 	const outputPath = path.join(dir, 'build');

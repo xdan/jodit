@@ -418,8 +418,8 @@ export class Select implements ISelect {
 			this.win.focus();
 			this.area.focus(options);
 
-			if (scrollTop) {
-				scrollParent?.scrollTo(0, scrollTop);
+			if (scrollTop && scrollParent?.scrollTo) {
+				scrollParent.scrollTo(0, scrollTop);
 			}
 
 			const sel = this.sel,

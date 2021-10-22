@@ -32,8 +32,12 @@ export function ApplyStyle(jodit: IJodit, style: CommitStyle): void {
 
 	normalizeNode(sel.area.firstChild); // FF fix for test "commandsTest - Exec command "bold"
 
-	for (const font of jodit.s.wrapInTagGen()) {
-		wrap = applyToElement(style, font, root, rng, ci, wrap);
+	const gen = jodit.s.wrapInTagGen();
+	let font = gen.next();
+
+	while (!font.done) {
+		wrap = applyToElement(style, font.value, root, rng, ci, wrap);
+		font = gen.next();
 	}
 
 	sel.restore();

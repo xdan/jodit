@@ -13,7 +13,7 @@ const path = require('path');
 
 const cwd = process.cwd();
 
-const reg = /--([a-z]+)\s*=\s*(.*)/;
+const reg = /--([a-zA-Z]+)\s*=\s*(.*)/;
 const args = {};
 
 process.argv
@@ -21,13 +21,22 @@ process.argv
 	.forEach(c => {
 		const res = reg.exec(c);
 		args[res[1]] = res[2];
+
+		if (args[res[1]] === 'true') {
+			args[res[1]] = true;
+		}
+
+		if (args[res[1]] === 'false') {
+			args[res[1]] = false;
+		}
 	});
 
 const config = require(path.resolve(cwd, './webpack.config'))(
 	[],
 	{
-		es: args['es'] || 'es5',
-		isTest: true
+		es: 'es5',
+		isTest: true,
+		...args
 	},
 	cwd
 );

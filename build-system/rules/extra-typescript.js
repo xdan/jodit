@@ -6,13 +6,16 @@
 
 const path = require('path');
 
-module.exports = ({ dirname }) => {
+module.exports = ({ dirname, ES }) => {
 	return {
 		test: /\.(js|ts)$/,
 		loader: 'ts-loader',
 		options: {
 			transpileOnly: true,
-			allowTsInNodeModules: true
+			allowTsInNodeModules: true,
+			compilerOptions: {
+				target: ES
+			}
 		},
 		include: [path.resolve(dirname, './node_modules')]
 	};
