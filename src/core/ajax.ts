@@ -55,7 +55,7 @@ export class Ajax implements IAjax {
 
 	private readonly xhr!: XMLHttpRequest;
 
-	private success_response_codes = [200, 201, 202];
+	private successResponseCodes = [200, 201, 202];
 
 	private __buildParams(
 		obj: string | IDictionary<string | object> | FormData,
@@ -103,16 +103,16 @@ export class Ajax implements IAjax {
 	private resolved = false;
 	private activated = false;
 
-	send(): Promise<any> {
+	send<T = any>(): Promise<T> {
 		this.activated = true;
 
 		return new Promise(
 			(
-				resolve: (this: XMLHttpRequest, resp: object) => any,
+				resolve: (this: XMLHttpRequest, resp: T) => any,
 				reject: (error: Error) => any
 			) => {
-				const __parse = (resp: string): object => {
-					let result: object | null = null;
+				const __parse = (resp: string): T => {
+					let result: T | null = null;
 
 					if (this.o.dataType === 'json') {
 						result = JSON.parse(resp);
@@ -142,7 +142,7 @@ export class Ajax implements IAjax {
 					this.status = this.xhr.status;
 					this.resolved = true;
 
-					resolve.call(this.xhr, __parse(this.response) || {});
+					resolve.call(this.xhr, __parse(this.response) || ({} as T));
 				};
 
 				this.xhr.onprogress = (e): void => {
@@ -166,9 +166,8 @@ export class Ajax implements IAjax {
 						this.resolved = true;
 
 						if (
-							this.success_response_codes.indexOf(
-								this.xhr.status
-							) > -1
+							this.successResponseCodes.indexOf(this.xhr.status) >
+							-1
 						) {
 							resolve.call(this.xhr, __parse(resp));
 						} else {
@@ -203,7 +202,7 @@ export class Ajax implements IAjax {
 				}
 
 				// IE
-				setTimeout(() => {
+				this.j.async.setTimeout(() => {
 					this.xhr.send(data ? this.__buildParams(data) : undefined);
 				}, 0);
 			}
@@ -216,6 +215,7 @@ export class Ajax implements IAjax {
 		}
 
 		let url: string = this.o.url;
+
 		const data = this.o.data;
 		const method = (this.o.method || 'get').toLowerCase();
 
@@ -224,6 +224,7 @@ export class Ajax implements IAjax {
 
 			if (qIndex !== -1) {
 				const urlData = parseQuery(url);
+
 				url =
 					url.substr(0, qIndex) +
 					'?' +
@@ -253,14 +254,10 @@ export class Ajax implements IAjax {
 
 		this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
 
-		jodit &&
-			jodit.events &&
-			jodit.e.on('beforeDestruct', () => {
-				this.abort();
-			});
+		jodit && jodit.e && jodit.e.on('beforeDestruct', () => this.abort());
 	}
 
-	destruct(): any {
+	destruct(): void {
 		if (this.activated && !this.resolved) {
 			this.abort();
 			this.resolved = true;

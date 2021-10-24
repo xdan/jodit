@@ -7,15 +7,8 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { fileName } = require('../utils/filename');
 
-module.exports = ({ argv, ES, isTest, excludeLangs, uglify }) => {
+module.exports = vars => {
 	return new MiniCssExtractPlugin({
-		filename:
-			fileName({
-				argv,
-				ES,
-				isTest,
-				excludeLangs,
-				uglify
-			})('[name]') + '.css'
+		filename: fileName(vars)('[name]') + '.css'
 	});
 };
