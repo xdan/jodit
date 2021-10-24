@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.8.7
+ * Version: v3.8.8
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -11639,7 +11639,7 @@ var Async = (function () {
     };
     Async.prototype.requestIdlePromise = function () {
         var _this = this;
-        return new Promise(function (res) {
+        return this.promise(function (res) {
             var request = _this.requestIdleCallback(function () { return res(request); });
         });
     };
@@ -11704,16 +11704,12 @@ var Ajax = (function () {
     function Ajax(jodit, options) {
         var _this = this;
         this.jodit = jodit;
-        this.success_response_codes = [200, 201, 202];
+        this.successResponseCodes = [200, 201, 202];
         this.resolved = false;
         this.activated = false;
         this.options = (0, helpers_1.ConfigProto)(options || {}, config_1.Config.prototype.defaultAjaxOptions);
         this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
-        jodit &&
-            jodit.events &&
-            jodit.e.on('beforeDestruct', function () {
-                _this.abort();
-            });
+        jodit && jodit.e && jodit.e.on('beforeDestruct', function () { return _this.abort(); });
     }
     Ajax.prototype.__buildParams = function (obj, prefix) {
         if ((0, helpers_1.isFunction)(this.o.queryBuild)) {
@@ -11792,7 +11788,8 @@ var Ajax = (function () {
                     _this.response = resp;
                     _this.status = _this.xhr.status;
                     _this.resolved = true;
-                    if (_this.success_response_codes.indexOf(_this.xhr.status) > -1) {
+                    if (_this.successResponseCodes.indexOf(_this.xhr.status) >
+                        -1) {
                         resolve.call(_this.xhr, __parse(resp));
                     }
                     else {
@@ -11812,7 +11809,7 @@ var Ajax = (function () {
                     _this.xhr.setRequestHeader(key, value);
                 });
             }
-            setTimeout(function () {
+            _this.j.async.setTimeout(function () {
                 _this.xhr.send(data ? _this.__buildParams(data) : undefined);
             }, 0);
         });
@@ -12558,7 +12555,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.8.7";
+        _this.version = "3.8.8";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -12700,10 +12697,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.8.7";
+        return "3.8.8";
     };
     View.getVersion = function () {
-        return "3.8.7";
+        return "3.8.8";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));

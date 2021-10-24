@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.8.7
+ * Version: v3.8.8
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -10037,7 +10037,7 @@ class Async {
         return request;
     }
     requestIdlePromise() {
-        return new Promise(res => {
+        return this.promise(res => {
             const request = this.requestIdleCallback(() => res(request));
         });
     }
@@ -10089,16 +10089,12 @@ config/* Config.prototype.defaultAjaxOptions */.D.prototype.defaultAjaxOptions =
 class Ajax {
     constructor(jodit, options) {
         this.jodit = jodit;
-        this.success_response_codes = [200, 201, 202];
+        this.successResponseCodes = [200, 201, 202];
         this.resolved = false;
         this.activated = false;
         this.options = (0,helpers.ConfigProto)(options || {}, config/* Config.prototype.defaultAjaxOptions */.D.prototype.defaultAjaxOptions);
         this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
-        jodit &&
-            jodit.events &&
-            jodit.e.on('beforeDestruct', () => {
-                this.abort();
-            });
+        jodit && jodit.e && jodit.e.on('beforeDestruct', () => this.abort());
     }
     __buildParams(obj, prefix) {
         if ((0,helpers.isFunction)(this.o.queryBuild)) {
@@ -10168,7 +10164,8 @@ class Ajax {
                     this.response = resp;
                     this.status = this.xhr.status;
                     this.resolved = true;
-                    if (this.success_response_codes.indexOf(this.xhr.status) > -1) {
+                    if (this.successResponseCodes.indexOf(this.xhr.status) >
+                        -1) {
                         resolve.call(this.xhr, __parse(resp));
                     }
                     else {
@@ -10188,7 +10185,7 @@ class Ajax {
                     this.xhr.setRequestHeader(key, value);
                 });
             }
-            setTimeout(() => {
+            this.j.async.setTimeout(() => {
                 this.xhr.send(data ? this.__buildParams(data) : undefined);
             }, 0);
         });
@@ -10453,7 +10450,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.8.7";
+        this.version = "3.8.8";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -10551,10 +10548,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.8.7";
+        return "3.8.8";
     }
     static getVersion() {
-        return "3.8.7";
+        return "3.8.8";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));

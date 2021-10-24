@@ -1,6 +1,7 @@
 {
-	"extends": "stylelint-config-idiomatic-order",
+	"extends": ["stylelint-config-idiomatic-order"],
 	"plugins": ["stylelint-prettier"],
+  "customSyntax": "postcss-less",
 	"rules": {
 		"prettier/prettier": true,
 		"selector-type-no-unknown": null,
