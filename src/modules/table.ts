@@ -46,6 +46,7 @@ export class Table extends ViewComponent<IJodit> {
 	@debounce()
 	private recalculateStyles(): void {
 		const style = getContainer(this.j, Table, 'style', true);
+
 		const selectors: string[] = [];
 
 		this.selected.forEach(td => {
@@ -125,9 +126,11 @@ export class Table extends ViewComponent<IJodit> {
 	 */
 	static getColumnsCount(table: HTMLTableElement): number {
 		const matrix = Table.formalMatrix(table);
-		return matrix.reduce((max_count, cells) => {
-			return Math.max(max_count, cells.length);
-		}, 0);
+
+		return matrix.reduce(
+			(max_count, cells) => Math.max(max_count, cells.length),
+			0
+		);
 	}
 
 	/**
@@ -182,6 +185,7 @@ export class Table extends ViewComponent<IJodit> {
 					) {
 						return false;
 					}
+
 					matrix[i + row][currentColumn + column] = cell;
 				}
 			}
@@ -257,7 +261,7 @@ export class Table extends ViewComponent<IJodit> {
 		let row: HTMLTableRowElement;
 
 		if (!line) {
-			const columnsCount: number = Table.getColumnsCount(table);
+			const columnsCount = Table.getColumnsCount(table);
 
 			row = create.element('tr');
 
@@ -287,7 +291,9 @@ export class Table extends ViewComponent<IJodit> {
 		} else if (!after && line) {
 			line.parentNode && line.parentNode.insertBefore(row, line);
 		} else {
-			($$(':scope>tbody', table)[0] || table).appendChild(row);
+			(table.getElementsByTagName('tbody')?.[0] || table).appendChild(
+				row
+			);
 		}
 	}
 
@@ -296,6 +302,7 @@ export class Table extends ViewComponent<IJodit> {
 	 */
 	static removeRow(table: HTMLTableElement, rowIndex: number): void {
 		const box = Table.formalMatrix(table);
+
 		let dec: boolean;
 		const row = table.rows[rowIndex];
 
@@ -312,23 +319,26 @@ export class Table extends ViewComponent<IJodit> {
 					) {
 						dec = true;
 						let nextCell = j + 1;
+
 						while (box[rowIndex + 1][nextCell] === cell) {
 							nextCell += 1;
 						}
 
-						const nextRow: HTMLTableRowElement = Dom.next(
+						const nextRow = Dom.next<HTMLTableRowElement>(
 							cell.parentNode,
-							(elm: Node | null) => Dom.isTag(elm, 'tr'),
+							elm => Dom.isTag(elm, 'tr'),
 							table
-						) as HTMLTableRowElement;
+						);
 
-						if (box[rowIndex + 1][nextCell]) {
-							nextRow.insertBefore(
-								cell,
-								box[rowIndex + 1][nextCell]
-							);
-						} else {
-							nextRow.appendChild(cell);
+						if (nextRow) {
+							if (box[rowIndex + 1][nextCell]) {
+								nextRow.insertBefore(
+									cell,
+									box[rowIndex + 1][nextCell]
+								);
+							} else {
+								nextRow.appendChild(cell);
+							}
 						}
 					}
 				} else {
@@ -338,13 +348,9 @@ export class Table extends ViewComponent<IJodit> {
 					dec &&
 					(cell.parentNode === row || cell !== box[rowIndex][j - 1])
 				) {
-					const rowSpan: number = cell.rowSpan;
+					const rowSpan = cell.rowSpan;
 
-					attr(
-						cell,
-						'rowspan',
-						rowSpan - 1 > 1 ? (rowSpan - 1).toString() : null
-					);
+					attr(cell, 'rowspan', rowSpan - 1 > 1 ? rowSpan - 1 : null);
 				}
 			}
 		);
@@ -361,7 +367,8 @@ export class Table extends ViewComponent<IJodit> {
 		after: boolean,
 		create: ICreate
 	): void {
-		const box: HTMLTableCellElement[][] = Table.formalMatrix(table);
+		const box = Table.formalMatrix(table);
+
 		let i: number;
 
 		if (j === undefined || j < 0) {
@@ -370,16 +377,17 @@ export class Table extends ViewComponent<IJodit> {
 
 		for (i = 0; i < box.length; i += 1) {
 			const cell = create.element('td');
-			const td: HTMLTableCellElement = box[i][j];
+			const td = box[i][j];
+
 			let added: boolean = false;
+
 			if (after) {
 				if (
 					(box[i] && td && j + 1 >= box[i].length) ||
 					td !== box[i][j + 1]
 				) {
 					if (td.nextSibling) {
-						td.parentNode &&
-							td.parentNode.insertBefore(cell, td.nextSibling);
+						Dom.before(td.nextSibling, cell);
 					} else {
 						td.parentNode && td.parentNode.appendChild(cell);
 					}
@@ -390,17 +398,16 @@ export class Table extends ViewComponent<IJodit> {
 					j - 1 < 0 ||
 					(box[i][j] !== box[i][j - 1] && box[i][j].parentNode)
 				) {
-					td.parentNode &&
-						td.parentNode.insertBefore(cell, box[i][j]);
+					Dom.before(box[i][j], cell);
 					added = true;
 				}
 			}
+
 			if (!added) {
-				box[i][j].setAttribute(
+				attr(
+					box[i][j],
 					'colspan',
-					(
-						parseInt(attr(box[i][j], 'colspan') || '1', 10) + 1
-					).toString()
+					parseInt(attr(box[i][j], 'colspan') || '1', 10) + 1
 				);
 			}
 		}
@@ -410,12 +417,14 @@ export class Table extends ViewComponent<IJodit> {
 	 * Remove column by index
 	 */
 	static removeColumn(table: HTMLTableElement, j: number): void {
-		const box: HTMLTableCellElement[][] = Table.formalMatrix(table);
+		const box = Table.formalMatrix(table);
 
 		let dec: boolean;
 		each(box, (i: number, cells: HTMLTableCellElement[]) => {
-			const td: HTMLTableCellElement = cells[j];
+			const td = cells[j];
+
 			dec = false;
+
 			if (j - 1 >= 0 && box[i][j - 1] === td) {
 				dec = true;
 			} else if (j + 1 < cells.length && box[i][j + 1] === td) {
@@ -423,8 +432,9 @@ export class Table extends ViewComponent<IJodit> {
 			} else {
 				Dom.safeRemove(td);
 			}
+
 			if (dec && (i - 1 < 0 || td !== box[i - 1][j])) {
-				const colSpan: number = td.colSpan;
+				const colSpan = td.colSpan;
 
 				attr(
 					td,
@@ -446,6 +456,7 @@ export class Table extends ViewComponent<IJodit> {
 			[Infinity, Infinity],
 			[0, 0]
 		];
+
 		const box = Table.formalMatrix(table);
 		let i: number, j: number, k: number;
 
@@ -501,20 +512,23 @@ export class Table extends ViewComponent<IJodit> {
 		let i: number, j: number, min: number, not: boolean;
 
 		const __marked: HTMLTableCellElement[] = [],
-			box: HTMLTableCellElement[][] = Table.formalMatrix(table);
+			box = Table.formalMatrix(table);
 
 		// remove extra colspans
 		for (j = 0; j < box[0].length; j += 1) {
 			min = 1000000;
 			not = false;
+
 			for (i = 0; i < box.length; i += 1) {
 				if (box[i][j] === undefined) {
 					continue; // broken table
 				}
+
 				if (box[i][j].colSpan < 2) {
 					not = true;
 					break;
 				}
+
 				min = Math.min(min, box[i][j].colSpan);
 			}
 			if (!not) {
@@ -522,6 +536,7 @@ export class Table extends ViewComponent<IJodit> {
 					if (box[i][j] === undefined) {
 						continue; // broken table
 					}
+
 					Table.__mark(
 						box[i][j],
 						'colspan',
@@ -575,21 +590,21 @@ export class Table extends ViewComponent<IJodit> {
 					box[i][j].hasAttribute('rowspan') &&
 					box[i][j].rowSpan === 1
 				) {
-					box[i][j].removeAttribute('rowspan');
+					attr(box[i][j], 'rowspan', null);
 				}
 
 				if (
 					box[i][j].hasAttribute('colspan') &&
 					box[i][j].colSpan === 1
 				) {
-					box[i][j].removeAttribute('colspan');
+					attr(box[i][j], 'colspan', null);
 				}
 
 				if (
 					box[i][j].hasAttribute('class') &&
 					!attr(box[i][j], 'class')
 				) {
-					box[i][j].removeAttribute('class');
+					attr(box[i][j], 'class', null);
 				}
 			}
 		}
@@ -602,7 +617,7 @@ export class Table extends ViewComponent<IJodit> {
 	 */
 	static mergeSelected(table: HTMLTableElement, jodit: IJodit): void {
 		const html: string[] = [],
-			bound: number[][] = Table.getSelectedBound(
+			bound = Table.getSelectedBound(
 				table,
 				Table.getSelectedCellsByTable(table)
 			);
@@ -753,13 +768,16 @@ export class Table extends ViewComponent<IJodit> {
 							);
 						}
 					});
+
 					Dom.after(
 						Dom.closest(cell, 'tr', table) as HTMLTableRowElement,
 						tr
 					);
+
 					tr.appendChild(td);
 				} else {
 					Table.__mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
+
 					Table.formalMatrix(
 						table,
 						(tdElm: HTMLTableCellElement, i: number, j: number) => {
@@ -777,6 +795,7 @@ export class Table extends ViewComponent<IJodit> {
 							}
 						}
 					);
+
 					if (after) {
 						Dom.after(after, td);
 					} else {
@@ -792,6 +811,7 @@ export class Table extends ViewComponent<IJodit> {
 				instance(jodit).removeSelection(cell);
 			}
 		);
+
 		this.normalizeTable(table);
 	}
 
@@ -803,60 +823,55 @@ export class Table extends ViewComponent<IJodit> {
 
 		const __marked: HTMLTableCellElement[] = [];
 
-		Table.getSelectedCellsByTable(table).forEach(
-			(cell: HTMLTableCellElement) => {
-				coord = Table.formalCoordinate(table, cell);
-				if (cell.colSpan < 2) {
-					Table.formalMatrix(table, (tdElm, i, j) => {
-						if (
-							coord[1] === j &&
-							coord[0] !== i &&
-							tdElm !== cell
-						) {
-							Table.__mark(
-								tdElm,
-								'colspan',
-								tdElm.colSpan + 1,
-								__marked
-							);
-						}
-					});
-				} else {
-					Table.__mark(cell, 'colspan', cell.colSpan - 1, __marked);
-				}
+		Table.getSelectedCellsByTable(table).forEach(cell => {
+			coord = Table.formalCoordinate(table, cell);
 
-				td = jodit.createInside.element('td');
-				td.appendChild(jodit.createInside.element('br'));
-
-				if (cell.rowSpan > 1) {
-					Table.__mark(td, 'rowspan', cell.rowSpan, __marked);
-				}
-
-				const oldWidth = cell.offsetWidth; // get old width
-
-				Dom.after(cell, td);
-
-				percentage = oldWidth / table.offsetWidth / 2;
-
-				Table.__mark(
-					cell,
-					'width',
-					(percentage * 100).toFixed(consts.ACCURACY) + '%',
-					__marked
-				);
-
-				Table.__mark(
-					td,
-					'width',
-					(percentage * 100).toFixed(consts.ACCURACY) + '%',
-					__marked
-				);
-
-				Table.__unmark(__marked);
-
-				instance(jodit).removeSelection(cell);
+			if (cell.colSpan < 2) {
+				Table.formalMatrix(table, (tdElm, i, j) => {
+					if (coord[1] === j && coord[0] !== i && tdElm !== cell) {
+						Table.__mark(
+							tdElm,
+							'colspan',
+							tdElm.colSpan + 1,
+							__marked
+						);
+					}
+				});
+			} else {
+				Table.__mark(cell, 'colspan', cell.colSpan - 1, __marked);
 			}
-		);
+
+			td = jodit.createInside.element('td');
+			td.appendChild(jodit.createInside.element('br'));
+
+			if (cell.rowSpan > 1) {
+				Table.__mark(td, 'rowspan', cell.rowSpan, __marked);
+			}
+
+			const oldWidth = cell.offsetWidth; // get old width
+
+			Dom.after(cell, td);
+
+			percentage = oldWidth / table.offsetWidth / 2;
+
+			Table.__mark(
+				cell,
+				'width',
+				(percentage * 100).toFixed(consts.ACCURACY) + '%',
+				__marked
+			);
+
+			Table.__mark(
+				td,
+				'width',
+				(percentage * 100).toFixed(consts.ACCURACY) + '%',
+				__marked
+			);
+
+			Table.__unmark(__marked);
+
+			instance(jodit).removeSelection(cell);
+		});
 
 		Table.normalizeTable(table);
 	}
@@ -903,9 +918,11 @@ export class Table extends ViewComponent<IJodit> {
 		marked: HTMLTableCellElement[]
 	) {
 		marked.push(cell);
+
 		if (!(cell as any).__marked_value) {
 			(cell as any).__marked_value = {};
 		}
+
 		(cell as any).__marked_value[key] = value === undefined ? 1 : value;
 	}
 
@@ -921,25 +938,11 @@ export class Table extends ViewComponent<IJodit> {
 								break;
 
 							case 'rowspan':
-								if (value > 1) {
-									cell.setAttribute(
-										'rowspan',
-										value.toString()
-									);
-								} else {
-									cell.removeAttribute('rowspan');
-								}
+								attr(cell, 'rowspan', value > 1 ? value : null);
 								break;
 
 							case 'colspan':
-								if (value > 1) {
-									cell.setAttribute(
-										'colspan',
-										value.toString()
-									);
-								} else {
-									cell.removeAttribute('colspan');
-								}
+								attr(cell, 'colspan', value > 1 ? value : null);
 								break;
 
 							case 'width':
