@@ -21,6 +21,14 @@ describe('Test Style module', function () {
 				{ element: 'h1' },
 				'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>'
 			],
+
+			[
+				'test|<br>test<br>test<br>test',
+				{ element: 'h1' },
+				'<h1>test</h1>|<br>test<br>test<br>test',
+				{ enter: 'BR' }
+			],
+
 			[
 				'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>',
 				{ element: 'h1' },
@@ -98,12 +106,25 @@ describe('Test Style module', function () {
 					}
 				},
 				'<p>|<span style="background-color:yellow;color:red">test</span>|</p>'
+			],
+			[
+				'<p>|test <span style="color:#FFFFFF">test</span> test|</p>',
+				{
+					style: {
+						color: '#00FF00'
+					}
+				},
+				'<p>|<span style="color:#00FF00">test test test</span>|</p>'
 			]
-		].forEach(([input, opt, output]) => {
+		].forEach(([input, opt, output, jSettings]) => {
 			describe(`For selection ${input} apply style ${JSON.stringify(
 				opt
 			)}`, () => {
 				it(`Should get ${output}`, function () {
+					if (jSettings) {
+						editor = getJodit(jSettings);
+					}
+
 					editor.value = input;
 					setCursorToChar(editor);
 
