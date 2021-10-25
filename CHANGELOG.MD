@@ -41,6 +41,22 @@ await new Ajax(editor, {
 	.then(resp => resp.json()); // {success: true, data: ...}
 ```
 
+-   In `.npmignore` added:
+    -   build-system/
+    -   test.html
+    -   .eslintrc.js
+    -   .eslintignore
+    -   .editorconfig
+    -   .gitignore
+    -   .prettierrc.json
+    -   .stylelintrc
+    -   app.css
+    -   composer.json
+
+#### :bug: Bug Fix
+
+-   [When {"enter": "BR"} option is enabled, adding a heading to the text causes it to become wrapped by a "h\*" tag #547](https://github.com/xdan/jodit/issues/547)
+
 ## 3.8.5
 
 #### :house: Internal
