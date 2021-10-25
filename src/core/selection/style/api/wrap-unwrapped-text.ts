@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { ICreate, Nullable } from '../../../../types';
+import type { IJodit, Nullable } from '../../../../types';
 import type { CommitStyle } from '../commit-style';
 import { Dom } from '../../../dom';
 import { postProcessListElement } from './post-process-list-element';
@@ -15,35 +15,40 @@ import { postProcessListElement } from './post-process-list-element';
 export function wrapUnwrappedText(
 	style: CommitStyle,
 	elm: Node,
-	root: HTMLElement,
-	ci: ICreate,
+	jodit: IJodit,
 	getRange: () => Range
 ): HTMLElement {
-	const edge = (n: Node, key: keyof Node = 'previousSibling') => {
-		let edgeNode: Node = n,
-			node: Nullable<Node> = n;
+	const root = jodit.editor,
+		ci = jodit.createInside,
+		edge = (n: Node, key: keyof Node = 'previousSibling') => {
+			let edgeNode: Node = n,
+				node: Nullable<Node> = n;
 
-		while (node) {
-			edgeNode = node;
+			while (node) {
+				if (Dom.isTag(node, jodit.o.enter)) {
+					break;
+				}
 
-			if (node[key]) {
-				node = node[key] as Nullable<Node>;
-			} else {
-				node =
-					node.parentNode &&
-					!Dom.isBlock(node.parentNode) &&
-					node.parentNode !== root
-						? node.parentNode
-						: null;
+				edgeNode = node;
+
+				if (node[key]) {
+					node = node[key] as Nullable<Node>;
+				} else {
+					node =
+						node.parentNode &&
+						!Dom.isBlock(node.parentNode) &&
+						node.parentNode !== root
+							? node.parentNode
+							: null;
+				}
+
+				if (Dom.isBlock(node)) {
+					break;
+				}
 			}
 
-			if (Dom.isBlock(node)) {
-				break;
-			}
-		}
-
-		return edgeNode;
-	};
+			return edgeNode;
+		};
 
 	const start: Node = edge(elm),
 		end: Node = edge(elm, 'nextSibling');

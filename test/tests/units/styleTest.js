@@ -25,7 +25,7 @@ describe('Test Style module', function () {
 			[
 				'test|<br>test<br>test<br>test',
 				{ element: 'h1' },
-				'<h1>test</h1>|<br>test<br>test<br>test',
+				'<h1>test|</h1><br>test<br>test<br>test',
 				{ enter: 'BR' }
 			],
 
@@ -122,6 +122,7 @@ describe('Test Style module', function () {
 			)}`, () => {
 				it(`Should get ${output}`, function () {
 					if (jSettings) {
+						editor.destruct();
 						editor = getJodit(jSettings);
 					}
 

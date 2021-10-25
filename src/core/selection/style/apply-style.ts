@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { ICreate, IJodit, Nullable } from '../../../types';
+import type { IJodit, Nullable } from '../../../types';
 import type { CommitStyle } from './commit-style';
 import { Dom } from '../../dom';
 import { attr, css, normalizeNode } from '../../helpers';
@@ -23,7 +23,7 @@ import {
  * Apply options to selection
  */
 export function ApplyStyle(jodit: IJodit, style: CommitStyle): void {
-	const { s: sel, editor: root, createInside: ci } = jodit,
+	const { s: sel } = jodit,
 		rng = () => sel.createRange();
 
 	let wrap: Nullable<boolean> = null;
@@ -36,7 +36,7 @@ export function ApplyStyle(jodit: IJodit, style: CommitStyle): void {
 	let font = gen.next();
 
 	while (!font.done) {
-		wrap = applyToElement(style, font.value, root, rng, ci, wrap);
+		wrap = applyToElement(style, font.value, rng, jodit, wrap);
 		font = gen.next();
 	}
 
@@ -50,11 +50,12 @@ export function ApplyStyle(jodit: IJodit, style: CommitStyle): void {
 function applyToElement(
 	style: CommitStyle,
 	font: HTMLElement,
-	root: HTMLElement,
 	range: () => Range,
-	ci: ICreate,
+	jodit: IJodit,
 	wrap: Nullable<boolean>
 ): Nullable<boolean> {
+	const root = jodit.editor;
+
 	if (checkSpecialElements(font, root)) {
 		return wrap;
 	}
@@ -105,16 +106,21 @@ function applyToElement(
 		if (box) {
 			wrapper = box;
 		} else {
-			wrapper = wrapUnwrappedText(style, font, root, ci, range);
+			wrapper = wrapUnwrappedText(style, font, jodit, range);
 		}
 	}
 
-	const newWrapper = Dom.replace(wrapper, style.element, ci, true);
+	const newWrapper = Dom.replace(
+		wrapper,
+		style.element,
+		jodit.createInside,
+		true
+	);
 
 	attr(newWrapper, 'size', null);
 
 	if (style.elementIsBlock) {
-		postProcessListElement(style, newWrapper, ci);
+		postProcessListElement(style, newWrapper, jodit.createInside);
 	}
 
 	if (style.options.style && style.elementIsDefault) {
