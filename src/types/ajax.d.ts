@@ -20,24 +20,33 @@ export interface IRequest {
 	data: DataVariant;
 }
 
-export interface IAjax extends IDestructible {
-	status: number;
 
-	response: string;
+export interface IResponse<T> {
+	readonly status: number;
+	readonly statusText: string;
+	readonly url: string;
+	readonly request: IRequest;
 
+	json(): Promise<T>;
+	text(): Promise<string>;
+}
+
+export interface IAjax<T> extends IDestructible {
 	options: AjaxOptions;
 	o: this['options'];
 
 	jodit: IViewBased;
 
-	abort(): IAjax;
+	abort(): IAjax<T>;
 
-	send(): Promise<any>;
+	send(): Promise<IResponse<T>>;
 
 	prepareRequest(): IRequest;
 }
 
 export interface AjaxOptions {
+	successStatuses: number[];
+
 	/**
 	 * json or text The type of data that you're expecting back
 	 * from the server. if `json` the return value passes through the `JSON.parse`
@@ -80,7 +89,7 @@ export interface AjaxOptions {
 	withCredentials?: boolean;
 
 	queryBuild?: (
-		this: IAjax,
+		this: IAjax<any>,
 		obj: string | IDictionary<string | object> | FormData,
 		prefix?: string
 	) => string | FormData;

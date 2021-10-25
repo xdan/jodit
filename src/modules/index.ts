@@ -6,7 +6,7 @@
 
 export * from '../core/events';
 export { Async } from '../core/async';
-export { Ajax } from '../core/ajax';
+export * from '../core/request';
 export { Component, ViewComponent, STATUSES } from '../core/component';
 export { ContextMenu } from './context-menu/context-menu';
 export { Alert, Confirm, Prompt, Dialog } from './dialog/';

@@ -97,7 +97,7 @@ Jodit.make('#editor', {
 -   filebrowser.ajax.headers={} An object of additional header key/value pairs toWYSIWYG
     send along with requests using the `XMLHttpRequest` transport. The header `X-Requested-With: XMLHttpRequest`
     is always added, but its default `XMLHttpRequest` value can be changed here.
-    @property {object} filebrowser.resize Settings for AJAX connections toWYSIWYG the server toWYSIWYG resize
+    @property {object} `filebrowser.resize` Settings for AJAX connections toWYSIWYG the server toWYSIWYG resize
     image. By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} with argument
     action=create
 -   filebrowser.crop Settings for AJAX connections toWYSIWYG the server toWYSIWYG crop image.

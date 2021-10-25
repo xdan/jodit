@@ -102,8 +102,11 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		}
 
 		this.tree.classList.add('jodit-filebrowser_active');
+
 		Dom.detach(this.tree);
+
 		this.tree.appendChild(this.loader.cloneNode(true));
+
 		const items = this.loadItems();
 
 		if (this.o.showFoldersPanel) {

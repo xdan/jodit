@@ -29,7 +29,7 @@ import {
 	normalizeRelativePath,
 	set
 } from '../../core/helpers';
-import { Ajax } from '../../core/ajax';
+import { Ajax } from '../../core/request';
 import { autobind } from '../../core/decorators';
 import { FileBrowserItem } from './builders/item';
 
@@ -66,12 +66,10 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		return this.options;
 	}
 
-	private ajaxInstances: Map<string, IAjax> = new Map();
+	private ajaxInstances: Map<string, IAjax<IFileBrowserAnswer>> = new Map();
 
-	protected get<T = IFileBrowserAnswer>(
-		name: keyof IFileBrowserOptions,
-		success?: (resp: IFileBrowserAnswer) => void,
-		error?: (error: Error) => void
+	protected get<T extends IFileBrowserAnswer = IFileBrowserAnswer>(
+		name: keyof IFileBrowserOptions
 	): Promise<T> {
 		const ai = this.ajaxInstances;
 
@@ -98,33 +96,25 @@ export default class DataProvider implements IFileBrowserDataProvider {
 			opts.data = opts.prepareData.call(this, opts.data as IDictionary);
 		}
 
-		const ajax = new Ajax(this.parent, opts);
-
-		let promise = ajax.send();
-
+		const ajax = new Ajax<T>(this.parent, opts);
 		ai.set(name, ajax);
 
-		promise = promise.then(resp => {
-			if (!this.isSuccess(resp)) {
-				throw new Error(this.getMessage(resp));
-			}
+		return ajax
+			.send()
+			.then(resp => resp.json())
+			.then(resp => {
+				if (resp && !this.isSuccess(resp)) {
+					throw new Error(this.getMessage(resp));
+				}
 
-			return resp;
-		});
+				return resp;
+			})
+			.finally(() => {
+				ajax.destruct();
+				ai.delete(name);
 
-		if (success) {
-			promise = promise.then(success);
-		}
-
-		if (error) {
-			promise = promise.catch(error);
-		}
-
-		return promise.finally(() => {
-			ajax.destruct();
-			ai.delete(name);
-			this.progressHandler(100);
-		});
+				this.progressHandler(100);
+			});
 	}
 
 	private progressHandler = (ignore: number): void => {};
@@ -297,7 +287,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	getPathByUrl(url: string): Promise<any> {
 		set('options.getLocalFileByUrl.data.url', url, this);
 
-		return this.get('getLocalFileByUrl', resp => {
+		return this.get('getLocalFileByUrl').then(resp => {
 			if (this.isSuccess(resp)) {
 				return resp.data;
 			}
@@ -396,10 +386,6 @@ export default class DataProvider implements IFileBrowserDataProvider {
 				resp = fr.process.call(this, resp);
 			}
 
-			if (!this.isSuccess(resp)) {
-				throw error(this.getMessage(resp));
-			}
-
 			return this.getMessage(resp);
 		});
 	}
@@ -457,10 +443,6 @@ export default class DataProvider implements IFileBrowserDataProvider {
 				resp = fr.process.call(self, resp);
 			}
 
-			if (!this.isSuccess(resp)) {
-				throw error(this.getMessage(resp));
-			}
-
 			return this.getMessage(resp);
 		});
 	}
@@ -496,7 +478,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		name: string,
 		newname: string | void,
 		box: ImageBox | void
-	): Promise<boolean> {
+	): Promise<true> {
 		if (!this.o[type]) {
 			this.o[type] = {
 				data: {}
@@ -522,12 +504,8 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		query.data.name = name;
 		query.data.source = source;
 
-		return this.get(type).then(resp => {
-			if (this.isSuccess(resp)) {
-				return true;
-			}
-
-			throw error(this.getMessage(resp));
+		return this.get(type).then(() => {
+			return true;
 		});
 	}
 

@@ -35,7 +35,7 @@ export interface IAsync extends IDestructible {
 	promise<T>(
 		executor: (
 			resolve: (value: T | PromiseLike<T>) => void,
-			reject?: (reason?: any) => void
+			reject: (reason?: any) => void
 		) => void
 	): RejectablePromise<T>;
 

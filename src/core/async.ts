@@ -201,7 +201,7 @@ export class Async implements IAsync {
 	promise<T>(
 		executor: (
 			resolve: (value: T | PromiseLike<T>) => void,
-			reject?: (reason?: any) => void
+			reject: (reason?: any) => void
 		) => void
 	): RejectablePromise<T> {
 		let rejectCallback: RejectablePromise<T>['rejectCallback'] = () => {};

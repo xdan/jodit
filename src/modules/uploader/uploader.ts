@@ -22,7 +22,7 @@ import type {
 } from '../../types';
 import { Config } from '../../config';
 import { IS_IE, TEXT_PLAIN } from '../../core/constants';
-import { Ajax } from '../../core/ajax';
+import { Ajax } from '../../core/request';
 import {
 	attr,
 	error,
@@ -211,7 +211,7 @@ export class Uploader extends ViewComponent implements IUploader {
 		return data;
 	}
 
-	private ajaxInstances: IAjax[] = [];
+	private ajaxInstances: IAjax<IUploaderAnswer>[] = [];
 
 	private send(
 		data: FormData | IDictionary<string>,
@@ -221,7 +221,7 @@ export class Uploader extends ViewComponent implements IUploader {
 			sendData = (
 				request: FormData | IDictionary<string> | string
 			): Promise<any> => {
-				const ajax = new Ajax(this.j, {
+				const ajax = new Ajax<IUploaderAnswer>(this.j, {
 					xhr: () => {
 						const xhr = new XMLHttpRequest();
 
@@ -286,9 +286,9 @@ export class Uploader extends ViewComponent implements IUploader {
 
 				return ajax
 					.send()
-					.then(resp => {
+					.then(async resp => {
 						removeAjaxInstanceFromList();
-						success.call(this, resp);
+						success.call(this, await resp.json());
 					})
 					.catch(error => {
 						removeAjaxInstanceFromList();
