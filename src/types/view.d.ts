@@ -18,7 +18,7 @@ import type { Attributes, ICreate } from './create';
 import type { IStorage } from './storage';
 import type { IAsync } from './async';
 import type { IUIButtonState } from './ui';
-import type { IEventsNative } from './events';
+import type { IEventEmitter } from './events';
 import type { IPluginButton } from './plugin';
 import type { Mods, Elms } from '../core/traits';
 
@@ -108,7 +108,7 @@ interface IViewBased<T = IViewOptions>
 
 	progressbar: IProgressBar;
 
-	events: IEventsNative;
+	events: IEventEmitter;
 	e: this['events'];
 
 	async: IAsync;

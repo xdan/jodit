@@ -4,14 +4,11 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-/**
- * The module editor's event manager
- */
-
+// eslint-disable-next-line max-classes-per-file
 import type {
 	CallbackFunction,
 	EventHandlerBlock,
-	IEventsNative
+	IEventEmitter
 } from '../../types';
 import { defaultNameSpace, EventHandlersStore } from './store';
 import { isString } from '../helpers/checker/is-string';
@@ -19,7 +16,10 @@ import { isFunction } from '../helpers/checker/is-function';
 import { isArray } from '../helpers/checker/is-array';
 import { error } from '../helpers/type';
 
-export class EventsNative implements IEventsNative {
+/**
+ * The module editor's event manager
+ */
+export class EventEmitter implements IEventEmitter {
 	private mutedEvents: Set<string> = new Set();
 
 	mute(event?: string): this {
@@ -40,7 +40,7 @@ export class EventsNative implements IEventsNative {
 		return this;
 	}
 
-	readonly __key: string = '__JoditEventsNativeNamespaces';
+	readonly __key: string = '__JoditEventEmitterNamespaces';
 
 	private doc: Document = document;
 
@@ -265,7 +265,7 @@ export class EventsNative implements IEventsNative {
 		}
 
 		const isDOMElement = isFunction((subject as any).addEventListener),
-			self: EventsNative = this;
+			self: EventEmitter = this;
 
 		let syntheticCallback: CallbackFunction = function (
 			this: any,
@@ -564,7 +564,7 @@ export class EventsNative implements IEventsNative {
 	 * ```
 	 *  or you can trigger native browser listener
 	 * ```javascript
-	 *  var events = new Jodit.modules.EventsNative();
+	 *  var events = new Jodit.modules.EventEmitter();
 	 *  events.on(document.body, 'click',function (event) {
 	 *      alert('click on ' + event.target.id );
 	 *  });
@@ -697,3 +697,8 @@ export class EventsNative implements IEventsNative {
 		delete (this as any)[this.__key];
 	}
 }
+
+/**
+ * @deprecated Use `EventEmitter` instead
+ */
+export class EventsNative extends EventEmitter implements IEventEmitter {}

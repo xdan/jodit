@@ -8,7 +8,7 @@
 
 import type { CallbackFunction, IDestructible } from './types';
 
-interface IEventsNative extends IDestructible {
+interface IEventEmitter extends IDestructible {
 	/**
 	 * Get current event name
 	 *
@@ -29,7 +29,7 @@ interface IEventsNative extends IDestructible {
 	/**
 	 * Doesn't start any handler
 	 */
-	mute(event?: string): IEventsNative;
+	mute(event?: string): IEventEmitter;
 
 	/**
 	 * No handlers are triggered for the event
@@ -39,7 +39,7 @@ interface IEventsNative extends IDestructible {
 	/**
 	 * Returns event handling
 	 */
-	unmute(event?: string): IEventsNative;
+	unmute(event?: string): IEventEmitter;
 
 	/**
 	 * Sets the handler for the specified event ( Event List ) for a given element .
@@ -70,30 +70,30 @@ interface IEventsNative extends IDestructible {
 		handler: CallbackFunction,
 		handlerOrSelector?: void,
 		onTop?: boolean
-	): IEventsNative;
+	): IEventEmitter;
 
 	on(
 		subject: HTMLElement,
 		events: string,
 		handler: CallbackFunction,
 		onTop?: boolean
-	): IEventsNative;
+	): IEventEmitter;
 
 	on(
 		subject: object,
 		events: string,
 		handler: CallbackFunction,
 		onTop?: boolean
-	): IEventsNative;
+	): IEventEmitter;
 
 	on(
 		subjectOrEvents: object | string,
 		eventsOrCallback: string | CallbackFunction,
 		handlerOrSelector?: CallbackFunction | void,
 		onTop?: boolean
-	): IEventsNative;
+	): IEventEmitter;
 
-	one(...args: Parameters<IEventsNative['on']>): IEventsNative;
+	one(...args: Parameters<IEventEmitter['on']>): IEventEmitter;
 
 	/**
 	 * Disable all handlers specified event ( Event List ) for a given element. Either a specific event handler.
@@ -129,17 +129,17 @@ interface IEventsNative extends IDestructible {
 	off(
 		subjectOrEvents: string,
 		eventsOrCallback?: CallbackFunction
-	): IEventsNative;
+	): IEventEmitter;
 	off(
 		subjectOrEvents: object,
 		eventsOrCallback?: string,
 		handler?: CallbackFunction
-	): IEventsNative;
+	): IEventEmitter;
 	off(
 		subjectOrEvents: object | string,
 		eventsOrCallback?: string | (() => void),
 		handler?: CallbackFunction
-	): IEventsNative;
+	): IEventEmitter;
 
 	stopPropagation(
 		subjectOrEvents: object | string,
@@ -163,7 +163,7 @@ interface IEventsNative extends IDestructible {
 	 * ```
 	 *  or you can trigger native browser listener
 	 * ```javascript
-	 *  var events = new Jodit.modules.EventsNative();
+	 *  var events = new Jodit.modules.EventEmitter();
 	 *  events.on(document.body, 'click',function (event) {
 	 *      alert('click on ' + event.target.id );
 	 *  });

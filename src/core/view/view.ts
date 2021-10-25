@@ -29,7 +29,7 @@ import { BASE_PATH } from '../constants';
 import {
 	Component,
 	STATUSES,
-	EventsNative,
+	EventEmitter,
 	ProgressBar,
 	Create,
 	Dom,
@@ -124,7 +124,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		this.__container = container;
 	}
 
-	events!: EventsNative;
+	events!: EventEmitter;
 	get e(): this['events'] {
 		return this.events;
 	}
@@ -269,7 +269,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		this.initOptions(options);
 		this.initOwners();
 
-		this.events = new EventsNative(this.od);
+		this.events = new EventEmitter(this.od);
 		this.create = new Create(this.od);
 
 		this.container = this.c.div();

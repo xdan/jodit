@@ -24,7 +24,7 @@ import {
 	kebabCase
 } from './helpers/';
 
-import { EventsNative } from './events';
+import { EventEmitter } from './events';
 
 export const instances: IDictionary<IJodit> = {};
 
@@ -124,4 +124,4 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 /**
  * Global event emitter
  */
-export const eventEmitter = new EventsNative();
+export const eventEmitter = new EventEmitter();

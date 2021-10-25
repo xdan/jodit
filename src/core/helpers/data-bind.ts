@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IEventsNative, IViewComponent, Nullable } from '../../types';
+import type { IEventEmitter, IViewComponent, Nullable } from '../../types';
 import { ViewComponent } from '../component';
 import { isViewObject } from './checker';
 
@@ -21,7 +21,7 @@ export const dataBind = <T = any>(
 		itemStore = {};
 		store.set(elm, itemStore);
 
-		let e: Nullable<IEventsNative> = null;
+		let e: Nullable<IEventEmitter> = null;
 
 		if (elm instanceof ViewComponent) {
 			e = (elm as IViewComponent).j.e;

@@ -272,18 +272,18 @@ describe('Jodit Events system Tests', function () {
 	describe('Combine events', function () {
 		describe('Pass arguments in handler', function () {
 			it('Should pass all Fire arguments in handler', function () {
-				const eventEmmiter = new Jodit.modules.EventsNative(),
+				const eventEmitter = new Jodit.modules.EventEmitter(),
 					simpleObject = {};
 
 				let clicked = 0;
 
-				eventEmmiter.on(simpleObject, 'click', function (count) {
+				eventEmitter.on(simpleObject, 'click', function (count) {
 					clicked += count;
 				});
 
-				eventEmmiter.fire(simpleObject, 'click', 1);
-				eventEmmiter.fire(simpleObject, 'click', 2);
-				eventEmmiter.fire(simpleObject, 'click', 3);
+				eventEmitter.fire(simpleObject, 'click', 1);
+				eventEmitter.fire(simpleObject, 'click', 2);
+				eventEmitter.fire(simpleObject, 'click', 3);
 
 				expect(6).equals(clicked);
 			});
@@ -291,20 +291,20 @@ describe('Jodit Events system Tests', function () {
 
 		describe('Queue operations', function () {
 			it('Should call handlers in order how the were added but handler with onTop option should be called first', function () {
-				const eventEmmiter = new Jodit.modules.EventsNative(),
+				const eventEmitter = new Jodit.modules.EventEmitter(),
 					simpleObject = {},
 					clicked = [];
 
-				eventEmmiter.on(simpleObject, 'click', function () {
+				eventEmitter.on(simpleObject, 'click', function () {
 					clicked.push(1);
 				});
-				eventEmmiter.on(simpleObject, 'click', function () {
+				eventEmitter.on(simpleObject, 'click', function () {
 					clicked.push(2);
 				});
-				eventEmmiter.on(simpleObject, 'click', function () {
+				eventEmitter.on(simpleObject, 'click', function () {
 					clicked.push(3);
 				});
-				eventEmmiter.on(
+				eventEmitter.on(
 					simpleObject,
 					'click',
 					function () {
@@ -313,42 +313,42 @@ describe('Jodit Events system Tests', function () {
 					true
 				);
 
-				eventEmmiter.fire(simpleObject, 'click');
+				eventEmitter.fire(simpleObject, 'click');
 
 				expect('4,1,2,3').equals(clicked.toString());
 			});
 
 			describe('Stop propagation', function () {
 				it('Should stop all calls for this event but another events should be called', function () {
-					const eventEmmiter = new Jodit.modules.EventsNative(),
+					const eventEmitter = new Jodit.modules.EventEmitter(),
 						simpleObject = {},
 						clicked = [];
 
-					eventEmmiter.on(simpleObject, 'lope', function () {
+					eventEmitter.on(simpleObject, 'lope', function () {
 						clicked.push(15);
 					});
 
-					eventEmmiter.on(simpleObject, 'pop', function () {
+					eventEmitter.on(simpleObject, 'pop', function () {
 						clicked.push(16);
 					});
 
-					eventEmmiter.on(simpleObject, 'click', function () {
+					eventEmitter.on(simpleObject, 'click', function () {
 						clicked.push(1);
 					});
 
-					eventEmmiter.on(simpleObject, 'click', function () {
+					eventEmitter.on(simpleObject, 'click', function () {
 						clicked.push(2);
-						eventEmmiter.fire(simpleObject, 'pop');
-						eventEmmiter.stopPropagation(simpleObject, 'click');
-						eventEmmiter.fire(simpleObject, 'lope');
+						eventEmitter.fire(simpleObject, 'pop');
+						eventEmitter.stopPropagation(simpleObject, 'click');
+						eventEmitter.fire(simpleObject, 'lope');
 					});
 
 					// this handler will not be called
-					eventEmmiter.on(simpleObject, 'click', function () {
+					eventEmitter.on(simpleObject, 'click', function () {
 						clicked.push(3);
 					});
 
-					eventEmmiter.on(
+					eventEmitter.on(
 						simpleObject,
 						'click',
 						function () {
@@ -357,8 +357,8 @@ describe('Jodit Events system Tests', function () {
 						true
 					);
 
-					eventEmmiter.fire(simpleObject, 'click');
-					eventEmmiter.fire(simpleObject, 'click');
+					eventEmitter.fire(simpleObject, 'click');
+					eventEmitter.fire(simpleObject, 'click');
 
 					expect('4,1,2,16,15,4,1,2,16,15').equals(
 						clicked.toString()
@@ -367,33 +367,33 @@ describe('Jodit Events system Tests', function () {
 
 				describe('Default object', function () {
 					it('Should stop all calls for this event but another events should be called', function () {
-						const eventEmmiter = new Jodit.modules.EventsNative(),
+						const eventEmitter = new Jodit.modules.EventEmitter(),
 							clicked = [];
 
-						eventEmmiter.on('lope', function () {
+						eventEmitter.on('lope', function () {
 							clicked.push(15);
 						});
-						eventEmmiter.on('pop', function () {
+						eventEmitter.on('pop', function () {
 							clicked.push(16);
 						});
 
-						eventEmmiter.on('click', function () {
+						eventEmitter.on('click', function () {
 							clicked.push(1);
 						});
 
-						eventEmmiter.on('click', function () {
+						eventEmitter.on('click', function () {
 							clicked.push(2);
-							eventEmmiter.fire('pop');
-							eventEmmiter.stopPropagation('click');
-							eventEmmiter.fire('lope');
+							eventEmitter.fire('pop');
+							eventEmitter.stopPropagation('click');
+							eventEmitter.fire('lope');
 						});
 
 						// this handler will not be called
-						eventEmmiter.on('click', function () {
+						eventEmitter.on('click', function () {
 							clicked.push(3);
 						});
 
-						eventEmmiter.on(
+						eventEmitter.on(
 							'click',
 							function () {
 								clicked.push(4);
@@ -402,8 +402,8 @@ describe('Jodit Events system Tests', function () {
 							true
 						);
 
-						eventEmmiter.fire('click');
-						eventEmmiter.fire('click');
+						eventEmitter.fire('click');
+						eventEmitter.fire('click');
 
 						expect('4,1,2,16,15,4,1,2,16,15').equals(
 							clicked.toString()
@@ -416,14 +416,14 @@ describe('Jodit Events system Tests', function () {
 		describe('Short form', function () {
 			describe('Add event to simple object', function () {
 				it('Should work with on handler', function () {
-					const eventEmmiter = new Jodit.modules.EventsNative();
+					const eventEmitter = new Jodit.modules.EventEmitter();
 					let clicked = false;
 
-					eventEmmiter.on('click', function () {
+					eventEmitter.on('click', function () {
 						clicked = true;
 					});
 
-					eventEmmiter.fire('click');
+					eventEmitter.fire('click');
 
 					expect(true).equals(clicked);
 				});
@@ -432,22 +432,22 @@ describe('Jodit Events system Tests', function () {
 						describe('Remove event listener without namespace', function () {
 							it('Should remove handler with namespace', function () {
 								let clicked = 0;
-								const eventEmmiter =
-										new Jodit.modules.EventsNative(),
+								const eventEmitter =
+										new Jodit.modules.EventEmitter(),
 									callback = function () {
 										clicked += 1;
 									};
 
-								eventEmmiter.on('click.jodit', callback);
-								eventEmmiter.fire('click');
-								eventEmmiter.fire('click.jodit');
+								eventEmitter.on('click.jodit', callback);
+								eventEmitter.fire('click');
+								eventEmitter.fire('click.jodit');
 
 								expect(2).equals(clicked);
 
-								eventEmmiter.off('click');
+								eventEmitter.off('click');
 
-								eventEmmiter.fire('click.jodit');
-								eventEmmiter.fire('click');
+								eventEmitter.fire('click.jodit');
+								eventEmitter.fire('click');
 
 								expect(2).equals(clicked);
 							});
@@ -455,24 +455,24 @@ describe('Jodit Events system Tests', function () {
 
 						describe('Remove event listener with namespace', function () {
 							it('Should remove handler with namespace', function () {
-								const eventEmmiter =
-									new Jodit.modules.EventsNative();
+								const eventEmitter =
+									new Jodit.modules.EventEmitter();
 
 								let clicked = 0,
 									callback = function () {
 										clicked += 1;
 									};
 
-								eventEmmiter.on('click.jodit', callback);
-								eventEmmiter.fire('click');
-								eventEmmiter.fire('click.jodit');
+								eventEmitter.on('click.jodit', callback);
+								eventEmitter.fire('click');
+								eventEmitter.fire('click.jodit');
 
 								expect(2).equals(clicked);
 
-								eventEmmiter.off('click.jodit');
+								eventEmitter.off('click.jodit');
 
-								eventEmmiter.fire('click.jodit');
-								eventEmmiter.fire('click');
+								eventEmitter.fire('click.jodit');
+								eventEmitter.fire('click');
 
 								expect(2).equals(clicked);
 							});
@@ -482,17 +482,17 @@ describe('Jodit Events system Tests', function () {
 					describe('Add handlers with and without namespace', function () {
 						describe('And fire without namespace', function () {
 							it('Should fire both handlers', function () {
-								const eventEmmiter =
-									new Jodit.modules.EventsNative();
+								const eventEmitter =
+									new Jodit.modules.EventEmitter();
 								let clicked = 0;
 								const callback = function () {
 									clicked += 1;
 								};
 
-								eventEmmiter.on('click', callback);
-								eventEmmiter.on('click.jodit', callback);
+								eventEmitter.on('click', callback);
+								eventEmitter.on('click.jodit', callback);
 
-								eventEmmiter.fire('click');
+								eventEmitter.fire('click');
 
 								expect(2).equals(clicked);
 							});
@@ -502,16 +502,16 @@ describe('Jodit Events system Tests', function () {
 							it('Should fire only one handler with namespace', function () {
 								let clicked = 0;
 
-								const eventEmmiter =
-										new Jodit.modules.EventsNative(),
+								const eventEmitter =
+										new Jodit.modules.EventEmitter(),
 									callback = function () {
 										clicked += 1;
 									};
 
-								eventEmmiter.on('click', callback);
-								eventEmmiter.on('click.jodit', callback);
+								eventEmitter.on('click', callback);
+								eventEmitter.on('click.jodit', callback);
 
-								eventEmmiter.fire('click.jodit');
+								eventEmitter.fire('click.jodit');
 
 								expect(1).equals(clicked);
 							});
@@ -522,22 +522,22 @@ describe('Jodit Events system Tests', function () {
 								it('Should remove handler only with namespace', function () {
 									let clicked = 0;
 
-									const eventEmmiter =
-											new Jodit.modules.EventsNative(),
+									const eventEmitter =
+											new Jodit.modules.EventEmitter(),
 										callback = function () {
 											clicked += 1;
 										};
 
-									eventEmmiter.on('click', callback);
-									eventEmmiter.on('click.jodit', callback);
+									eventEmitter.on('click', callback);
+									eventEmitter.on('click.jodit', callback);
 
-									eventEmmiter.fire('click');
+									eventEmitter.fire('click');
 									expect(2).equals(clicked);
 
-									eventEmmiter.off('click.jodit');
+									eventEmitter.off('click.jodit');
 
-									eventEmmiter.fire('click.jodit');
-									eventEmmiter.fire('click');
+									eventEmitter.fire('click.jodit');
+									eventEmitter.fire('click');
 
 									expect(3).equals(clicked);
 								});
@@ -547,23 +547,23 @@ describe('Jodit Events system Tests', function () {
 								it('Should remove all handlers', function () {
 									let clicked = 0;
 
-									const eventEmmiter =
-											new Jodit.modules.EventsNative(),
+									const eventEmitter =
+											new Jodit.modules.EventEmitter(),
 										callback = function () {
 											clicked += 1;
 										};
 
-									eventEmmiter.on('click', callback);
-									eventEmmiter.on('click.jodit', callback);
+									eventEmitter.on('click', callback);
+									eventEmitter.on('click.jodit', callback);
 
-									eventEmmiter.fire('click');
+									eventEmitter.fire('click');
 
 									expect(2).equals(clicked);
 
-									eventEmmiter.off('click');
+									eventEmitter.off('click');
 
-									eventEmmiter.fire('click.jodit');
-									eventEmmiter.fire('click');
+									eventEmitter.fire('click.jodit');
+									eventEmitter.fire('click');
 
 									expect(2).equals(clicked);
 								});
@@ -576,22 +576,22 @@ describe('Jodit Events system Tests', function () {
 
 		describe('Return value', function () {
 			it('Should return last not undefined value from fire', function () {
-				const eventEmmiter = new Jodit.modules.EventsNative(),
+				const eventEmitter = new Jodit.modules.EventEmitter(),
 					simpleObject = {};
 
 				let clicked = 0;
 
-				eventEmmiter.on(simpleObject, 'click', function () {
+				eventEmitter.on(simpleObject, 'click', function () {
 					return 50;
 				});
 
-				eventEmmiter.on(simpleObject, 'click', function () {
+				eventEmitter.on(simpleObject, 'click', function () {
 					return 60;
 				});
 
-				eventEmmiter.on(simpleObject, 'click', function () {});
+				eventEmitter.on(simpleObject, 'click', function () {});
 
-				clicked = eventEmmiter.fire(simpleObject, 'click');
+				clicked = eventEmitter.fire(simpleObject, 'click');
 
 				expect(60).equals(clicked);
 			});
@@ -599,33 +599,33 @@ describe('Jodit Events system Tests', function () {
 
 		describe('Add event to simple object', function () {
 			it('Should work with on handler', function () {
-				const eventEmmiter = new Jodit.modules.EventsNative(),
+				const eventEmitter = new Jodit.modules.EventEmitter(),
 					simpleObject = {};
 
 				let clicked = false;
 
-				eventEmmiter.on(simpleObject, 'click', function () {
+				eventEmitter.on(simpleObject, 'click', function () {
 					clicked = true;
 				});
 
-				eventEmmiter.fire(simpleObject, 'click');
+				eventEmitter.fire(simpleObject, 'click');
 
 				expect(true).equals(clicked);
 			});
 
 			it('Should work with several handlers', function () {
-				const eventEmmiter = new Jodit.modules.EventsNative(),
+				const eventEmitter = new Jodit.modules.EventEmitter(),
 					simpleObject = {},
 					clicked = [];
 
-				eventEmmiter.on(simpleObject, 'click', function () {
+				eventEmitter.on(simpleObject, 'click', function () {
 					clicked.push(1);
 				});
-				eventEmmiter.on(simpleObject, 'click', function () {
+				eventEmitter.on(simpleObject, 'click', function () {
 					clicked.push(2);
 				});
 
-				eventEmmiter.fire(simpleObject, 'click');
+				eventEmitter.fire(simpleObject, 'click');
 
 				expect('1,2').equals(clicked.toString());
 			});
@@ -633,12 +633,12 @@ describe('Jodit Events system Tests', function () {
 			describe('Add event to simple object with namespace', function () {
 				describe('Fire event', function () {
 					it('Should work with namespace and without namespace', function () {
-						const eventEmmiter = new Jodit.modules.EventsNative(),
+						const eventEmitter = new Jodit.modules.EventEmitter(),
 							simpleObject = {};
 
 						let clicked = 0;
 
-						eventEmmiter.on(
+						eventEmitter.on(
 							simpleObject,
 							'click.jodit',
 							function () {
@@ -646,22 +646,22 @@ describe('Jodit Events system Tests', function () {
 							}
 						);
 
-						eventEmmiter.fire(simpleObject, 'click.jodit');
-						eventEmmiter.fire(simpleObject, 'click');
+						eventEmitter.fire(simpleObject, 'click.jodit');
+						eventEmitter.fire(simpleObject, 'click');
 
-						eventEmmiter.fire(simpleObject, 'click.test'); // should not work
+						eventEmitter.fire(simpleObject, 'click.test'); // should not work
 
 						expect(2).equals(clicked);
 					});
 
 					it('Should work only for current object', function () {
-						const eventEmmiter = new Jodit.modules.EventsNative(),
+						const eventEmitter = new Jodit.modules.EventEmitter(),
 							simpleObject = {},
 							simpleObject2 = {};
 
 						let clicked = 0;
 
-						eventEmmiter.on(
+						eventEmitter.on(
 							simpleObject,
 							'click.jodit',
 							function () {
@@ -669,8 +669,8 @@ describe('Jodit Events system Tests', function () {
 							}
 						);
 
-						eventEmmiter.fire(simpleObject, 'click.jodit');
-						eventEmmiter.fire(simpleObject2, 'click');
+						eventEmitter.fire(simpleObject, 'click.jodit');
+						eventEmitter.fire(simpleObject2, 'click');
 
 						expect(1).equals(clicked);
 					});
@@ -679,63 +679,63 @@ describe('Jodit Events system Tests', function () {
 				describe('Remove event listener', function () {
 					it('Should remove handler without namespace', function () {
 						let clicked = 0;
-						const eventEmmiter = new Jodit.modules.EventsNative(),
+						const eventEmitter = new Jodit.modules.EventEmitter(),
 							simpleObject = {},
 							callback = function () {
 								clicked += 1;
 							};
 
-						eventEmmiter.on(simpleObject, 'click.jodit', callback);
-						eventEmmiter.fire(simpleObject, 'click');
+						eventEmitter.on(simpleObject, 'click.jodit', callback);
+						eventEmitter.fire(simpleObject, 'click');
 
 						expect(1).equals(clicked);
 
-						eventEmmiter.off(simpleObject, 'click.jodit');
+						eventEmitter.off(simpleObject, 'click.jodit');
 
-						eventEmmiter.fire(simpleObject, 'click.jodit');
-						eventEmmiter.fire(simpleObject, 'click');
+						eventEmitter.fire(simpleObject, 'click.jodit');
+						eventEmitter.fire(simpleObject, 'click');
 
 						expect(1).equals(clicked);
 					});
 
 					it('Should remove handler  with namespace', function () {
 						let clicked = 0;
-						const eventEmmiter = new Jodit.modules.EventsNative(),
+						const eventEmitter = new Jodit.modules.EventEmitter(),
 							simpleObject = {},
 							callback = function () {
 								clicked += 1;
 							};
 
-						eventEmmiter.on(simpleObject, 'click', callback);
-						eventEmmiter.fire(simpleObject, 'click');
+						eventEmitter.on(simpleObject, 'click', callback);
+						eventEmitter.fire(simpleObject, 'click');
 
 						expect(1).equals(clicked);
 
-						eventEmmiter.off(simpleObject, 'click.jodit');
+						eventEmitter.off(simpleObject, 'click.jodit');
 
-						eventEmmiter.fire(simpleObject, 'click.jodit'); // should not work
-						eventEmmiter.fire(simpleObject, 'click');
+						eventEmitter.fire(simpleObject, 'click.jodit'); // should not work
+						eventEmitter.fire(simpleObject, 'click');
 
 						expect(2).equals(clicked);
 					});
 
 					describe('with namespace', function () {
 						it('Should remove handler with namespace only for one event', function () {
-							const eventEmmiter =
-									new Jodit.modules.EventsNative(),
+							const eventEmitter =
+									new Jodit.modules.EventEmitter(),
 								simpleObject = {},
 								clicked = [],
 								callback = function () {
 									clicked.push(1);
 								};
 
-							eventEmmiter.on(
+							eventEmitter.on(
 								simpleObject,
 								'click.jodit mousedown.jodit',
 								callback
 							);
 
-							eventEmmiter.on(
+							eventEmitter.on(
 								simpleObject,
 								'mousedown',
 								function () {
@@ -743,24 +743,24 @@ describe('Jodit Events system Tests', function () {
 								}
 							);
 
-							eventEmmiter.fire(simpleObject, 'click');
+							eventEmitter.fire(simpleObject, 'click');
 
 							expect('1').equals(clicked.toString());
 
-							eventEmmiter.off(simpleObject, 'click.jodit');
+							eventEmitter.off(simpleObject, 'click.jodit');
 
-							eventEmmiter.fire(simpleObject, 'click.jodit');
-							eventEmmiter.fire(simpleObject, 'click');
+							eventEmitter.fire(simpleObject, 'click.jodit');
+							eventEmitter.fire(simpleObject, 'click');
 
 							expect('1').equals(clicked.toString());
 
-							eventEmmiter.fire(simpleObject, 'mousedown');
+							eventEmitter.fire(simpleObject, 'mousedown');
 
 							expect('1,2,1').equals(clicked.toString());
 
-							eventEmmiter.off(simpleObject, 'mousedown');
+							eventEmitter.off(simpleObject, 'mousedown');
 
-							eventEmmiter.fire(simpleObject, 'mousedown');
+							eventEmitter.fire(simpleObject, 'mousedown');
 
 							expect('1,2,1').equals(clicked.toString());
 						});
@@ -768,8 +768,8 @@ describe('Jodit Events system Tests', function () {
 
 					describe('Remove event listener for specific handler', function () {
 						it('Should remove only specific handler', function () {
-							const eventEmmiter =
-									new Jodit.modules.EventsNative(),
+							const eventEmitter =
+									new Jodit.modules.EventEmitter(),
 								simpleObject = {},
 								clicked = [],
 								callback2 = function () {
@@ -779,36 +779,36 @@ describe('Jodit Events system Tests', function () {
 									clicked.push(1);
 								};
 
-							eventEmmiter.on(
+							eventEmitter.on(
 								simpleObject,
 								'click.jodit',
 								callback
 							);
-							eventEmmiter.on(simpleObject, 'click', callback2);
+							eventEmitter.on(simpleObject, 'click', callback2);
 
-							eventEmmiter.fire(simpleObject, 'click');
+							eventEmitter.fire(simpleObject, 'click');
 
 							expect('2,1').equals(clicked.toString());
 
-							eventEmmiter.off(
+							eventEmitter.off(
 								simpleObject,
 								'click.jodit',
 								callback
 							);
-							eventEmmiter.off(
+							eventEmitter.off(
 								simpleObject,
 								'click.jodit',
 								callback2
 							);
 
-							eventEmmiter.fire(simpleObject, 'click.jodit');
-							eventEmmiter.fire(simpleObject, 'click');
+							eventEmitter.fire(simpleObject, 'click.jodit');
+							eventEmitter.fire(simpleObject, 'click');
 							expect('2,1,2').equals(clicked.toString());
 
-							eventEmmiter.off(simpleObject, 'click', callback2);
+							eventEmitter.off(simpleObject, 'click', callback2);
 
-							eventEmmiter.fire(simpleObject, 'click.jodit');
-							eventEmmiter.fire(simpleObject, 'click');
+							eventEmitter.fire(simpleObject, 'click.jodit');
+							eventEmitter.fire(simpleObject, 'click');
 							expect('2,1,2').equals(clicked.toString());
 						});
 					});
@@ -816,31 +816,31 @@ describe('Jodit Events system Tests', function () {
 					describe('Remove event listener for whole namespace', function () {
 						it('Should remove all handlers from namespace', function () {
 							let clicked = 0;
-							const eventEmmiter =
-									new Jodit.modules.EventsNative(),
+							const eventEmitter =
+									new Jodit.modules.EventEmitter(),
 								simpleObject = {},
 								callback = function () {
 									clicked += 1;
 								};
 
-							eventEmmiter.on(
+							eventEmitter.on(
 								simpleObject,
 								'click.jodit',
 								callback
 							);
-							eventEmmiter.on(
+							eventEmitter.on(
 								simpleObject,
 								'mousedown.jodit',
 								callback
 							);
-							eventEmmiter.fire(simpleObject, 'click mousedown');
+							eventEmitter.fire(simpleObject, 'click mousedown');
 
 							expect(2).equals(clicked);
 
-							eventEmmiter.off(simpleObject, '.jodit');
+							eventEmitter.off(simpleObject, '.jodit');
 
-							eventEmmiter.fire(simpleObject, 'click');
-							eventEmmiter.fire(simpleObject, 'mousedown');
+							eventEmitter.fire(simpleObject, 'click');
+							eventEmitter.fire(simpleObject, 'mousedown');
 
 							expect(2).equals(clicked);
 						});
@@ -852,12 +852,12 @@ describe('Jodit Events system Tests', function () {
 		describe('Native Events', function () {
 			it('Create simple event handler on some DOM element', function () {
 				let work = false;
-				const eventEmmiter = new Jodit.modules.EventsNative(),
+				const eventEmitter = new Jodit.modules.EventEmitter(),
 					div = document.createElement('button');
 
 				document.body.appendChild(div);
 
-				eventEmmiter.on(div, 'click', function () {
+				eventEmitter.on(div, 'click', function () {
 					work = true;
 				});
 
@@ -870,12 +870,12 @@ describe('Jodit Events system Tests', function () {
 
 			it('Create simple event handler on some DOM element on few events', function () {
 				let work = 0;
-				const eventEmmiter = new Jodit.modules.EventsNative(),
+				const eventEmitter = new Jodit.modules.EventEmitter(),
 					div = document.createElement('button');
 
 				document.body.appendChild(div);
 
-				eventEmmiter.on(div, 'click dblclick keydown', function () {
+				eventEmitter.on(div, 'click dblclick keydown', function () {
 					work++;
 				});
 
@@ -889,19 +889,19 @@ describe('Jodit Events system Tests', function () {
 
 			it('Add and remove event handler', function () {
 				let work = 0;
-				const eventEmmiter = new Jodit.modules.EventsNative(),
+				const eventEmitter = new Jodit.modules.EventEmitter(),
 					div = document.createElement('button');
 
 				document.body.appendChild(div);
 
-				eventEmmiter.on(div, 'click', function () {
+				eventEmitter.on(div, 'click', function () {
 					work++;
 				});
 
 				simulateEvent('click', 0, div);
 				expect(work).equals(1);
 
-				eventEmmiter.off(div, 'click');
+				eventEmitter.off(div, 'click');
 
 				simulateEvent('click', 0, div);
 				expect(work).equals(1);
@@ -911,20 +911,20 @@ describe('Jodit Events system Tests', function () {
 
 			it('Add a few handlers for several evens and remove all handlers', function () {
 				let work = 0;
-				const eventEmmiter = new Jodit.modules.EventsNative(),
+				const eventEmitter = new Jodit.modules.EventEmitter(),
 					div = document.createElement('button');
 
 				document.body.appendChild(div);
 
-				eventEmmiter.on(div, 'click', function () {
+				eventEmitter.on(div, 'click', function () {
 					work++;
 				});
 
-				eventEmmiter.on(div, 'dblclick', function () {
+				eventEmitter.on(div, 'dblclick', function () {
 					work++;
 				});
 
-				eventEmmiter.on(div, 'mousedown', function () {
+				eventEmitter.on(div, 'mousedown', function () {
 					work++;
 				});
 
@@ -934,7 +934,7 @@ describe('Jodit Events system Tests', function () {
 
 				expect(work).equals(3);
 
-				eventEmmiter.off(div);
+				eventEmitter.off(div);
 
 				simulateEvent('click', 0, div);
 				simulateEvent('dblclick', 0, div);
@@ -949,7 +949,7 @@ describe('Jodit Events system Tests', function () {
 				let work = '';
 
 				const editor = getJodit(),
-					eventEmmiter = new Jodit.modules.EventsNative(),
+					eventEmitter = new Jodit.modules.EventEmitter(),
 					div1 = editor.ed.createElement('button'),
 					div2 = editor.ed.createElement('button');
 
@@ -959,12 +959,12 @@ describe('Jodit Events system Tests', function () {
 				div1.textContent = 'test1';
 				div2.textContent = 'test2';
 
-				eventEmmiter.on([div1, div2], 'click', function () {
+				eventEmitter.on([div1, div2], 'click', function () {
 					work += this.textContent;
 				});
 
-				eventEmmiter.fire(div1, 'click');
-				eventEmmiter.fire(div2, 'click');
+				eventEmitter.fire(div1, 'click');
+				eventEmitter.fire(div2, 'click');
 
 				expect(work).equals('test1test2');
 
@@ -974,16 +974,16 @@ describe('Jodit Events system Tests', function () {
 
 			it('Fire trigger', function () {
 				let work = 0;
-				const eventEmmiter = new Jodit.modules.EventsNative(),
+				const eventEmitter = new Jodit.modules.EventEmitter(),
 					div = document.createElement('button');
 
 				document.body.appendChild(div);
 
-				eventEmmiter.on(div, 'click', function () {
+				eventEmitter.on(div, 'click', function () {
 					work++;
 				});
 
-				eventEmmiter.fire(div, 'click');
+				eventEmitter.fire(div, 'click');
 				expect(work).equals(1);
 
 				div.parentNode.removeChild(div);
@@ -992,32 +992,32 @@ describe('Jodit Events system Tests', function () {
 			describe('Remove all handlers using event namespace', function () {
 				it('Should remove all handlers in this namespace', function () {
 					let work = 0;
-					const eventEmmiter = new Jodit.modules.EventsNative(),
+					const eventEmitter = new Jodit.modules.EventEmitter(),
 						div = document.createElement('button');
 
 					document.body.appendChild(div);
 
-					eventEmmiter.on(div, 'click.test', function () {
+					eventEmitter.on(div, 'click.test', function () {
 						work++;
 					});
 
-					eventEmmiter.on(div, 'mousedown.test', function () {
+					eventEmitter.on(div, 'mousedown.test', function () {
 						work++;
 					});
 
-					eventEmmiter.fire(div, 'click');
-					eventEmmiter.fire(div, 'mousedown');
-					eventEmmiter.fire(div, 'click.test');
-					eventEmmiter.fire(div, 'mousedown.test');
+					eventEmitter.fire(div, 'click');
+					eventEmitter.fire(div, 'mousedown');
+					eventEmitter.fire(div, 'click.test');
+					eventEmitter.fire(div, 'mousedown.test');
 
 					expect(work).equals(4);
 
-					eventEmmiter.off(div, '.test');
+					eventEmitter.off(div, '.test');
 
-					eventEmmiter.fire(div, 'click');
-					eventEmmiter.fire(div, 'mousedown');
-					eventEmmiter.fire(div, 'click.test');
-					eventEmmiter.fire(div, 'mousedown.test');
+					eventEmitter.fire(div, 'click');
+					eventEmitter.fire(div, 'mousedown');
+					eventEmitter.fire(div, 'click.test');
+					eventEmitter.fire(div, 'mousedown.test');
 
 					expect(work).equals(4);
 
@@ -1028,14 +1028,14 @@ describe('Jodit Events system Tests', function () {
 			it('Proxy event from iframe.window to main.window', function () {
 				let work = 0;
 
-				const eventEmmiter = new Jodit.modules.EventsNative(),
+				const eventEmitter = new Jodit.modules.EventEmitter(),
 					mousedown = function () {
 						work++;
 					};
 
 				window.addEventListener('mousedown', mousedown);
 
-				eventEmmiter.fire(window, 'mousedown');
+				eventEmitter.fire(window, 'mousedown');
 
 				expect(work).equals(1);
 
@@ -1169,21 +1169,21 @@ describe('Jodit Events system Tests', function () {
 
 	describe('Check case sensitive', function () {
 		it('Should call event listener only when match case', function () {
-			const eventEmmiter = new Jodit.modules.EventsNative(),
+			const eventEmitter = new Jodit.modules.EventEmitter(),
 				simpleObject = {};
 			let clicked = '';
 
-			eventEmmiter.on(simpleObject, 'click', function (count) {
+			eventEmitter.on(simpleObject, 'click', function (count) {
 				clicked += count;
 			});
 
-			eventEmmiter.on(simpleObject, 'CLICK', function (count) {
+			eventEmitter.on(simpleObject, 'CLICK', function (count) {
 				clicked += count;
 			});
 
-			eventEmmiter.fire(simpleObject, 'Click', '1');
-			eventEmmiter.fire(simpleObject, 'CLICK', '2');
-			eventEmmiter.fire(simpleObject, 'click', '3');
+			eventEmitter.fire(simpleObject, 'Click', '1');
+			eventEmitter.fire(simpleObject, 'CLICK', '2');
+			eventEmitter.fire(simpleObject, 'click', '3');
 
 			expect('23').equals(clicked);
 		});

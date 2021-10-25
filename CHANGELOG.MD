@@ -9,6 +9,38 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.8.6
+
+#### :boom: Breaking Change
+
+-   `EventsNative` module - renamed to `EventEmitter`
+
+```js
+const editor = Jodit.make('#editor');
+
+console.log(editor.e instanceof Jodit.modules.EventEmitter); // true
+console.log(editor.events instanceof Jodit.modules.EventEmitter); // true
+console.log(editor.events instanceof Jodit.modules.EventsNative); // true, deprecated
+```
+
+-   Changed the signature of the send method in the Ajax API and is closer to the fetch () API
+
+```js
+const editor = Jodit.make('#editor');
+
+// Before
+await new Ajax(editor, {
+	url: 'index.php'
+}).send(); // {success: true, data: ...}
+
+// Now
+await new Ajax(editor, {
+	url: 'index.php'
+})
+	.send()˚
+	.then(resp => resp.json()); // {success: true, data: ...}
+```
+
 ## 3.8.5
 
 #### :house: Internal
