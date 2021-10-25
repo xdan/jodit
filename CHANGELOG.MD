@@ -49,19 +49,19 @@ await new Ajax(editor, {
 
 #### :bug: Bug Fix
 
-- [When I merged some cells by dragging it to change its width. #737](https://github.com/xdan/jodit/issues/737)
-- [Color dropdown looks broken #736](https://github.com/xdan/jodit/issues/736)
-- [all popups and dialogs are outside shadow dom #731](https://github.com/xdan/jodit/issues/731)
-- [shadow dom browser support #730](https://github.com/xdan/jodit/issues/730)
-- [fix removal of attributes width and height when editing images](https://github.com/xdan/jodit/pull/733)
-- Fixed work in IE11
-- [toolbar menus are almost not visible on IE11 #458](https://github.com/xdan/jodit/issues/458)
+-   [When I merged some cells by dragging it to change its width. #737](https://github.com/xdan/jodit/issues/737)
+-   [Color dropdown looks broken #736](https://github.com/xdan/jodit/issues/736)
+-   [all popups and dialogs are outside shadow dom #731](https://github.com/xdan/jodit/issues/731)
+-   [shadow dom browser support #730](https://github.com/xdan/jodit/issues/730)
+-   [fix removal of attributes width and height when editing images](https://github.com/xdan/jodit/pull/733)
+-   Fixed work in IE11
+-   [toolbar menus are almost not visible on IE11 #458](https://github.com/xdan/jodit/issues/458)
 
 ## 3.8.4
 
 #### :rocket: New Feature
 
--   В eventEmmiter добавлены методы:
+-   В eventEmitter добавлены методы:
     -   `mute(event?: string)` Doesn't start any handler;
     -   `isMuted(event?: string)` No handlers are triggered for the event
     -   `unmute(event?: string)` Returns event handling
@@ -153,7 +153,7 @@ Dom.isNode(editor.ed.body); // true
 
 #### :rocket: New Feature
 
--   Added `KeyArrowOutside`, allowing to go outside of an inline element if there is no other element after that.
+-   Added `KeyArrowOutside`, allowing to go outside an inline element if there is no other element after that.
 -   Dictionary of variable values in css, a complete list can be found here https://github.com/xdan/jodit/blob/master/src/styles/variables.less#L25
     ```js
     const editor = Jodit.make('#editor', {
@@ -308,7 +308,7 @@ editor.s.restore();
 #### :bug: Bug Fix
 
 -   ['allowResizeX' option does not work without 'height' option #668](https://github.com/xdan/jodit/issues/668)
--   [Pasting link with an colon (:) crashes the browser/makes it unresponsive #667](https://github.com/xdan/jodit/issues/667)
+-   [Pasting link with a colon (:) crashes the browser/makes it unresponsive #667](https://github.com/xdan/jodit/issues/667)
 -   [Inserting images/videos scrolls user to top of text area #644](https://github.com/xdan/jodit/issues/644)
 -   [Change event is fired twice after inserting a link #636](https://github.com/xdan/jodit/issues/636)
 -   [iPhone is out of text selection #632](https://github.com/xdan/jodit/issues/632)
@@ -622,7 +622,7 @@ console.log(item.options); // {some: false}
 -   [Backspace in beginning of a _styled_ line does not affect the line positioning #567](https://github.com/xdan/jodit/issues/567)
 -   [Table cell elements are always left-aligned #550](https://github.com/xdan/jodit/issues/550)
 -   [editor.destruct throws error #543](https://github.com/xdan/jodit/issues/543)
--   [How i can get Iframe without parent element <jodit>...</jodit> #540](https://github.com/xdan/jodit/issues/540)
+-   [How I can get Iframe without parent element <jodit>...</jodit> #540](https://github.com/xdan/jodit/issues/540)
 -   [Layout bug and drag&drop image loading #536](https://github.com/xdan/jodit/issues/536)
 -   [Popups are not showing at all on Legacy Edge #531](https://github.com/xdan/jodit/issues/531)
 -   Fixed a bug when the search bar was shown in the scrolling editor, the editor was scrolled up. And the search box was not in sticky mode.
@@ -655,11 +655,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
 -   ex: [
--                                       	{ value: "", text: "" },
--                                       	{ value: "val1", text: "text1" },
--                                       	{ value: "val2", text: "text2" },
--                                       	{ value: "val3", text: "text3" }
--                                       ]
+-                                             	{ value: "", text: "" },
+-                                             	{ value: "val1", text: "text1" },
+-                                             	{ value: "val2", text: "text2" },
+-                                             	{ value: "val3", text: "text3" }
+-                                             ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
@@ -797,7 +797,7 @@ const editor = Jodit.make({
 ## 3.4.27
 
 -   https://github.com/xdan/jodit/issues/514
-    Run command insertUnorderedList & insertOrderedList should replace all headings (h1, h2, etc) to ul>li
+    Run command insertUnorderedList & insertOrderedList should replace all headings (h1, h2, etc.) to ul>li
 
 ## 3.4.26
 
@@ -1029,7 +1029,7 @@ editor.events.on(
 );
 ```
 
-Now, you should use event.target
+Now, you should use `event.target`
 
 ```js
 editor.events.on(document.querySelector('div'), 'click', function (e) {
@@ -1185,7 +1185,7 @@ console.log(Jodit.modules.Helpers.position(editor.editor.querySelector('p')));
 
 ### BugFix
 
--   Fixed a lots bugs inside `link` plugin
+-   Fixed a lots of bugs inside `link` plugin
     [#331](https://github.com/xdan/jodit/issues/331)
     [#334](https://github.com/xdan/jodit/issues/334)
     [#334](https://github.com/xdan/jodit/issues/334)
@@ -1390,7 +1390,7 @@ Jodit.plugins.remove('insertText');
 
 ### `extraPlugins` options
 
-Inside plugin you can use several fields:
+Inside plugin, you can use several fields:
 
 ```js
 // emoji.js
@@ -1559,7 +1559,7 @@ First step for Mobile-friendly [sizeLG,sizeMD,sizeSM](http://xdsoft.net/jodit/do
 -   buttons The list of buttons that appear in the editor's toolbar on large places (≥ options.sizeLG).
 -   buttonsMD The list of buttons that appear in the editor's toolbar on medium places (≥ options.sizeMD).
 -   buttonsSM The list of buttons that appear in the editor's toolbar on small places (≥ options.sizeSM).
--   buttonsXS The list of buttons that appear in the editor's toolbar on extra small places (< options.sizeSM).
+-   buttonsXS The list of buttons that appear in the editor's toolbar on tiny places (< options.sizeSM).
 
 ```javascript
 var editor = new Jodit('#some-editor', {
@@ -1910,7 +1910,7 @@ Added edit button in Image Properties Dialog
 
 ### 2.5.1
 
--   Dom module was rewrited and was fixed afew bugs
+-   Dom module was rewritten and was fixed afew bugs
 -   In [OEM and Pro](http://xdsoft.net/jodit/#download) added [Image Editor module](http://xdsoft.net/jodit/doc/module-ImageEditor.html) resize and crop image. You can try [here](http://xdsoft.net/jodit/)
     ![Crop Image](http://xdsoft.net/jodit/stuf/crop.jpg)
     ![Resize Image](http://xdsoft.net/jodit/stuf/resize.jpg)
@@ -2271,7 +2271,7 @@ Fixed bug in Uploader module when `http://sitename.net/jodit///files/fg.jpg` was
 ### 2.3.18
 
 Added `afterInsertImage` event - triggered after image was inserted [selection.insertImage](http://xdsoft.net/jodit/doc/module-Selection.html#-insertImage__anchor).
-This method can executed from [Filebrowser](http://xdsoft.net/jodit/doc/module-Filebrowser.html) or [Uploader](http://xdsoft.net/jodit/doc/module-Uploader.html)
+This method can execute from [Filebrowser](http://xdsoft.net/jodit/doc/module-Filebrowser.html) or [Uploader](http://xdsoft.net/jodit/doc/module-Uploader.html)
 
 ```javascript
 var editor = new Jodit('#redactor');
@@ -2367,7 +2367,7 @@ Fixed bug in filebrowser
 
 ### 1.2.0
 
-Fixed bug when [selection.insertHTML](http://xdsoft.net/jodit/doc/module-Selection.html#-inner-insertHTML__anchor) dosn't work without focus
+Fixed bug when [selection.insertHTML](http://xdsoft.net/jodit/doc/module-Selection.html#-inner-insertHTML__anchor) doesn't work without focus
 
 ### 1.1.0
 
