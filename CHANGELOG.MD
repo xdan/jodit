@@ -61,9 +61,10 @@ await new Ajax(editor, {
 
 #### :bug: Bug Fix
 
--   [When {"enter": "BR"} option is enabled, adding a heading to the text causes it to become wrapped by a "h\*" tag #547](https://github.com/xdan/jodit/issues/547)
+-   [Indent doesn't work in table cell #729](https://github.com/xdan/jodit/issues/729)
 -   [Fixed Resize column table #712](https://github.com/xdan/jodit/issues/712)
 -   [Delete multi rows and colums #690](https://github.com/xdan/jodit/issues/690)
+-   [When {"enter": "BR"} option is enabled, adding a heading to the text causes it to become wrapped by a "h\*" tag #547](https://github.com/xdan/jodit/issues/547)
 
 ## 3.8.5
 

@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IControlType, HTMLTagNames, IJodit } from '../types/';
+import type { IControlType, IJodit } from '../types/';
 import { Config } from '../config';
 import { BR, PARAGRAPH } from '../core/constants';
 import { Dom } from '../core/dom';
@@ -17,8 +17,13 @@ Config.prototype.controls.indent = {
 /**
  * Get style rule key for current direction
  */
-const getKey = (direction: string) =>
-	direction === 'rtl' ? 'marginRight' : 'marginLeft';
+const getKey = (
+	direction: string,
+	box: HTMLElement
+): 'marginLeft' | 'marginRight' | 'paddingLeft' | 'paddingRight' =>
+	`${Dom.isCell(box) ? 'padding' : 'margin'}${
+		direction === 'rtl' ? 'Right' : 'Left'
+	}`;
 
 Config.prototype.controls.outdent = {
 	isDisabled: (editor: IJodit): boolean => {
@@ -27,10 +32,9 @@ Config.prototype.controls.outdent = {
 		if (current) {
 			const currentBox = Dom.closest(current, Dom.isBlock, editor.editor);
 
-			const key = getKey(editor.o.direction);
-
-			if (currentBox && currentBox.style && currentBox.style[key]) {
-				return parseInt(currentBox.style[key], 10) <= 0;
+			if (currentBox) {
+				const arrow = getKey(editor.o.direction, currentBox);
+				return parseInt(currentBox.style[arrow], 10) <= 0;
 			}
 		}
 
@@ -54,8 +58,6 @@ Config.prototype.indentMargin = 10;
  * Indents the line containing the selection or insertion point.
  */
 export function indent(editor: IJodit): void {
-	const key = getKey(editor.o.direction);
-
 	editor
 		.registerButton({
 			name: 'indent',
@@ -67,21 +69,21 @@ export function indent(editor: IJodit): void {
 		});
 
 	const callback = (command: string): void | false => {
-		const indentedBoxes: HTMLElement[] = [];
+		const processedElements: HTMLElement[] = [];
 
-		editor.s.eachSelection((current: Node): false | void => {
+		editor.s.eachSelection((current): false | void => {
 			editor.s.save();
 
 			let currentBox = current
-				? (Dom.up(current, Dom.isBlock, editor.editor) as HTMLElement)
+				? Dom.up(current, Dom.isBlock, editor.editor)
 				: false;
 
-			const enter = editor.o.enter;
+			const { enter } = editor.o;
 
 			if (!currentBox && current) {
 				currentBox = Dom.wrapInline(
 					current,
-					enter !== BR ? (enter as HTMLTagNames) : PARAGRAPH,
+					enter !== BR ? enter : PARAGRAPH,
 					editor
 				);
 			}
@@ -91,10 +93,12 @@ export function indent(editor: IJodit): void {
 				return false;
 			}
 
-			const alreadyIndented = indentedBoxes.indexOf(currentBox) !== -1;
+			const alreadyIndented = processedElements.includes(currentBox);
 
-			if (currentBox && currentBox.style && !alreadyIndented) {
-				indentedBoxes.push(currentBox);
+			if (currentBox && !alreadyIndented) {
+				const key = getKey(editor.o.direction, currentBox);
+
+				processedElements.push(currentBox);
 
 				let value = currentBox.style[key]
 					? parseInt(currentBox.style[key], 10)
@@ -106,7 +110,7 @@ export function indent(editor: IJodit): void {
 				currentBox.style[key] = value > 0 ? value + 'px' : '';
 
 				if (!attr(currentBox, 'style')) {
-					currentBox.removeAttribute('style');
+					attr(currentBox, 'style', null);
 				}
 			}
 

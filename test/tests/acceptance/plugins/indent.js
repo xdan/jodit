@@ -37,6 +37,35 @@ describe('Test editor indent plugin', function () {
 				);
 			});
 
+			describe('Inside table cell', function () {
+				it('Should increase padding-left', () => {
+					const editor = getJodit();
+					editor.value =
+						'<table><tbody><tr><td>|test</td></tr></tbody></table>';
+					setCursorToChar(editor);
+
+					editor.execCommand('indent');
+					expect(sortAttributes(editor.value)).equals(
+						'<table><tbody><tr><td style="padding-left:10px">test</td></tr></tbody></table>'
+					);
+
+					editor.execCommand('indent');
+					expect(sortAttributes(editor.value)).equals(
+						'<table><tbody><tr><td style="padding-left:20px">test</td></tr></tbody></table>'
+					);
+
+					editor.execCommand('outdent');
+					expect(sortAttributes(editor.value)).equals(
+						'<table><tbody><tr><td style="padding-left:10px">test</td></tr></tbody></table>'
+					);
+
+					editor.execCommand('outdent');
+					expect(sortAttributes(editor.value)).equals(
+						'<table><tbody><tr><td>test</td></tr></tbody></table>'
+					);
+				});
+			});
+
 			describe('For RTL direction', function () {
 				it('Should increase margin-right', function () {
 					const editor = getJodit({
