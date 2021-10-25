@@ -30,6 +30,7 @@ import {
 	trim
 } from './helpers';
 import { Select } from './selection';
+import { TEMP_ATTR } from './constants';
 
 /**
  * Module for working with DOM
@@ -169,7 +170,7 @@ export class Dom {
 
 		if (node) {
 			while (node) {
-				const next = Dom.next(node, Boolean, elm);
+				const next: Nullable<Node> = Dom.next(node, Boolean, elm);
 
 				if (callback(node) === false) {
 					return false;
@@ -461,13 +462,13 @@ export class Dom {
 	/**
 	 * Find previous node
 	 */
-	static prev(
+	static prev<T extends Node = Node>(
 		node: Node,
 		condition: NodeCondition,
 		root: Node | HTMLElement | ParentNode,
 		withChild: boolean = true
-	): Nullable<Node> {
-		return Dom.find(
+	): Nullable<T> {
+		return Dom.find<T>(
 			node,
 			condition,
 			root,
@@ -480,13 +481,13 @@ export class Dom {
 	/**
 	 * Find next node what `condition(next) === true`
 	 */
-	static next(
+	static next<T extends Node = Node>(
 		node: Node,
 		condition: NodeCondition,
 		root: Node | HTMLElement | ParentNode,
 		withChild: boolean = true
-	): Nullable<Node> {
-		return Dom.find(
+	): Nullable<T> {
+		return Dom.find<T>(
 			node,
 			condition,
 			root,
@@ -525,16 +526,16 @@ export class Dom {
 	/**
 	 * Find next/prev node what `condition(next) === true`
 	 */
-	static find(
+	static find<T extends Node = Node>(
 		node: Node,
 		condition: NodeCondition,
 		root: ParentNode | HTMLElement | Node,
 		recurse = false,
 		sibling: keyof Node = 'nextSibling',
 		child: keyof Node | false = 'firstChild'
-	): Nullable<Node> {
+	): Nullable<T> {
 		if (recurse && condition(node)) {
-			return node;
+			return node as T;
 		}
 
 		let start: Nullable<Node> = node,
@@ -544,7 +545,7 @@ export class Dom {
 			next = start[sibling] as Node;
 
 			if (condition(next)) {
-				return next ? next : null;
+				return next ? (next as T) : null;
 			}
 
 			if (child && next && next[child]) {
@@ -558,7 +559,7 @@ export class Dom {
 				);
 
 				if (nextOne) {
-					return nextOne;
+					return nextOne as T;
 				}
 			}
 
@@ -948,7 +949,7 @@ export class Dom {
 		attributes?: IDictionary
 	): K {
 		attributes && attr(element, attributes);
-		attr(element, 'data-jodit-temp', true);
+		attr(element, TEMP_ATTR, true);
 		return element;
 	}
 
@@ -960,10 +961,7 @@ export class Dom {
 			return false;
 		}
 
-		return (
-			Select.isMarker(element) ||
-			attr(element, 'data-jodit-temp') === 'true'
-		);
+		return Select.isMarker(element) || attr(element, TEMP_ATTR) === 'true';
 	}
 
 	/**
@@ -980,6 +978,6 @@ export class Dom {
 	 * Get temporary list
 	 */
 	static temporaryList(root: HTMLElement): HTMLElement[] {
-		return $$('[data-jodit-temp]', root);
+		return $$(`[${TEMP_ATTR}]`, root);
 	}
 }

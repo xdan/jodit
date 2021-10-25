@@ -9,6 +9,7 @@ import { toArray } from '../helpers/array/to-array';
 
 export abstract class Elms implements IElms {
 	abstract getElm(elementName: string): HTMLElement;
+
 	abstract getElms(elementName: string): HTMLElement[];
 
 	/**

@@ -118,7 +118,7 @@ export class resizeHandler extends Plugin {
 	);
 
 	/** @override **/
-	protected beforeDestruct(editor: IJodit): void {
+	protected beforeDestruct(): void {
 		Dom.safeRemove(this.handle);
 
 		this.j.e.off(this.j.ow, 'mouseup touchsend', this.onHandleResizeEnd);

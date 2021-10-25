@@ -349,7 +349,7 @@ export class source extends Plugin {
 	}
 
 	/** @override */
-	beforeDestruct(jodit: IJodit): void {
+	beforeDestruct(): void {
 		if (this.sourceEditor) {
 			this.sourceEditor.destruct();
 			delete this.sourceEditor;

@@ -40,21 +40,37 @@ export function call<T extends any[], R>(
 }
 
 /**
- * Alias for `elm.getAttribute` but if set second argument `-{key}`
- * it will also check `data-{key}` attribute
- * if set `value` it is alias for setAttribute with same logic
+ * Get attribute
  */
 export function attr(elm: Element, key: string): null | string;
+
+/**
+ * Remove attribute
+ */
+export function attr(elm: Element, key: string, value: null): null | string;
+
+/**
+ * Set attribute
+ */
 export function attr(
 	elm: Element,
 	key: string,
-	value: string | number | boolean | null | undefined
+	value: string | number | boolean | undefined | null
 ): null;
+
+/**
+ * Set or remove several attributes
+ */
 export function attr(
 	elm: Element,
 	attributes: IDictionary<string | number | boolean | null>
 ): null;
 
+/**
+ * Alias for `elm.getAttribute` but if set second argument `-{key}`
+ * it will also check `data-{key}` attribute
+ * if set `value` it is alias for setAttribute with same logic
+ */
 export function attr(
 	elm: Element,
 	keyOrAttributes: string | IDictionary<string | number | boolean | null>,

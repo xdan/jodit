@@ -184,8 +184,6 @@ export class size extends Plugin {
 
 	/** @override **/
 	protected beforeDestruct(jodit: IJodit): void {
-		this.j.e
-			.off(this.j.ow, 'load.size', this.resizeWorkspaces)
-			.off('.size');
+		jodit.e.off(jodit.ow, 'load.size', this.resizeWorkspaces).off('.size');
 	}
 }

@@ -162,3 +162,5 @@ export const BASE_PATH: string = ((): string => {
 
 	return window.location.href;
 })();
+
+export const TEMP_ATTR = 'data-jodit-temp';

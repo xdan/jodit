@@ -42,9 +42,7 @@ export function isSuitElement(
 		return true;
 	}
 
-	if (!elmIsSame && !strict && elementIsDefault && Dom.isInlineBlock(elm)) {
-		return true;
-	}
-
-	return false;
+	return Boolean(
+		!elmIsSame && !strict && elementIsDefault && Dom.isInlineBlock(elm)
+	);
 }
