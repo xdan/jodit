@@ -23,6 +23,12 @@ console.log(editor.events instanceof Jodit.modules.EventEmitter); // true
 console.log(editor.events instanceof Jodit.modules.EventsNative); // true, deprecated
 ```
 
+-   BOOM: Move Ajax class into `request` folder.
+
+```js
+import { Ajax } from 'jodit/src/core/request';
+```
+
 -   Changed the signature of the send method in the Ajax API and is closer to the fetch () API
 
 ```js
@@ -56,6 +62,8 @@ await new Ajax(editor, {
 #### :bug: Bug Fix
 
 -   [When {"enter": "BR"} option is enabled, adding a heading to the text causes it to become wrapped by a "h\*" tag #547](https://github.com/xdan/jodit/issues/547)
+-   [Fixed Resize column table #712](https://github.com/xdan/jodit/issues/712)
+-   [Delete multi rows and colums #690](https://github.com/xdan/jodit/issues/690)
 
 ## 3.8.5
 
@@ -671,11 +679,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
 -   ex: [
--                                             	{ value: "", text: "" },
--                                             	{ value: "val1", text: "text1" },
--                                             	{ value: "val2", text: "text2" },
--                                             	{ value: "val3", text: "text3" }
--                                             ]
+-                                                     	{ value: "", text: "" },
+-                                                     	{ value: "val1", text: "text1" },
+-                                                     	{ value: "val2", text: "text2" },
+-                                                     	{ value: "val3", text: "text3" }
+-                                                     ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

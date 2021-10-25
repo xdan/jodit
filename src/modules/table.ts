@@ -891,7 +891,7 @@ export class Table extends ViewComponent<IJodit> {
 		for (let i = 0; i < box.length; i += 1) {
 			const cell = box[i][column];
 
-			if (cell.colSpan > 1) {
+			if (cell.colSpan > 1 && box.length > 1) {
 				continue;
 			}
 
@@ -904,6 +904,8 @@ export class Table extends ViewComponent<IJodit> {
 				percent.toFixed(consts.ACCURACY) + '%',
 				marked
 			);
+
+			break;
 		}
 
 		if (!noUnmark) {

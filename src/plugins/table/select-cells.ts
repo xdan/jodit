@@ -357,14 +357,32 @@ export class selectCells extends Plugin {
 						break;
 
 					case 'binrow':
-						Table.removeRow(
-							table,
-							(cell.parentNode as HTMLTableRowElement).rowIndex
-						);
+						new Set(
+							cells.map(
+								td => td.parentNode as HTMLTableRowElement
+							)
+						).forEach(row => {
+							Table.removeRow(table, row.rowIndex);
+						});
+
 						break;
 
 					case 'bincolumn':
-						Table.removeColumn(table, cell.cellIndex);
+						{
+							const columnsSet = new Set<number>(),
+								columns = cells.reduce((acc, td) => {
+									if (!columnsSet.has(td.cellIndex)) {
+										acc.push(td);
+										columnsSet.add(td.cellIndex);
+									}
+
+									return acc;
+								}, <HTMLTableCellElement[]>[]);
+
+							columns.forEach(td => {
+								Table.removeColumn(table, td.cellIndex);
+							});
+						}
 						break;
 
 					case 'addcolumnafter':

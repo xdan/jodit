@@ -311,32 +311,177 @@ describe('Tables Jodit Editor Tests', function () {
 			);
 		});
 
-		it('Remove row should delete TR from table', function () {
-			const editor = getJodit();
+		describe('Remove row', function () {
+			it('Remove row should delete TR from table', function () {
+				const editor = getJodit();
 
-			editor.value =
-				'<table>' +
-				'<tr><td>1</td><td>2</td><td>3</td></tr>' +
-				'<tr><td rowspan="2">4</td><td>5</td><td>6</td></tr>' +
-				'<tr><td>7</td><td>8</td></tr>' +
-				'</table>';
-
-			simulateEvent(
-				'mousedown',
-				Jodit.KEY_TAB,
-				editor.editor.querySelectorAll('td')[4]
-			);
-
-			Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
-
-			expect(editor.value.toLowerCase()).equals(
-				'<table>' +
-					'<tbody>' +
+				editor.value =
+					'<table>' +
 					'<tr><td>1</td><td>2</td><td>3</td></tr>' +
-					'<tr><td>4</td><td>7</td><td>8</td></tr>' +
-					'</tbody>' +
-					'</table>'
-			);
+					'<tr><td rowspan="2">4</td><td>5</td><td>6</td></tr>' +
+					'<tr><td>7</td><td>8</td></tr>' +
+					'</table>';
+
+				simulateEvent(
+					'mousedown',
+					Jodit.KEY_TAB,
+					editor.editor.querySelectorAll('td')[4]
+				);
+
+				Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
+
+				expect(editor.value.toLowerCase()).equals(
+					'<table>' +
+						'<tbody>' +
+						'<tr><td>1</td><td>2</td><td>3</td></tr>' +
+						'<tr><td>4</td><td>7</td><td>8</td></tr>' +
+						'</tbody>' +
+						'</table>'
+				);
+			});
+
+			describe('Remove simple row without rowspan', () => {
+				it('should simple remove row', function () {
+					const editor = getJodit();
+
+					editor.value =
+						'<table>' +
+						'<tr><td>1</td><td>2</td></tr>' +
+						'<tr><td>3</td><td>4</td></tr>' +
+						'</table>';
+
+					Jodit.modules.Table.removeRow(editor.editor.firstChild, 0);
+
+					expect(editor.value.toLowerCase()).equals(
+						'<table>' +
+							'<tbody>' +
+							'<tr><td>3</td><td>4</td></tr>' +
+							'</tbody>' +
+							'</table>'
+					);
+				});
+			});
+
+			describe('Remove row which not consists td, because of in previous row was cell with rowspan', () => {
+				it('should simple remove row and decrement rowspan', function () {
+					const editor = getJodit();
+
+					editor.value =
+						'<table>' +
+						'<tr><td rowspan="2">1</td><td>2</td></tr>' +
+						'<tr><td>3</td></tr>' +
+						'</table>';
+
+					Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
+
+					expect(editor.value.toLowerCase()).equals(
+						'<table>' +
+							'<tbody>' +
+							'<tr><td>1</td><td>2</td></tr>' +
+							'</tbody>' +
+							'</table>'
+					);
+				});
+			});
+
+			describe('Remove row which not consists td, because of in previous row was cell with rowspan and colspan', () => {
+				it('should simple remove row and decrement rowspan once time', function () {
+					const editor = getJodit();
+
+					editor.value =
+						'<table>' +
+						'<tr><td rowspan="3" colspan="2">1</td><td>2</td></tr>' +
+						'<tr><td>3</td></tr>' +
+						'<tr><td>4</td></tr>' +
+						'<tr><td>5</td><td>6</td><td>7</td></tr>' +
+						'</table>';
+
+					// const table = new Jodit.modules.Table(editor);
+					Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
+
+					expect(editor.value.toLowerCase()).equals(
+						'<table>' +
+							'<tbody>' +
+							'<tr><td rowspan="2" colspan="2">1</td><td>2</td></tr>' +
+							'<tr><td>4</td></tr>' +
+							'<tr><td>5</td><td>6</td><td>7</td></tr>' +
+							'</tbody>' +
+							'</table>'
+					);
+				});
+			});
+
+			describe('Remove row which consists td with rowspan ', () => {
+				it('should simple remove row and decrement rowspan and move that cell into next row', function () {
+					const editor = getJodit();
+
+					editor.value =
+						'<table>' +
+						'<tr><td rowspan="2">1</td><td>2</td></tr>' +
+						'<tr><td>3</td></tr>' +
+						'</table>';
+
+					// const table = new Jodit.modules.Table(editor);
+					Jodit.modules.Table.removeRow(editor.editor.firstChild, 0);
+
+					expect(editor.value.toLowerCase()).equals(
+						'<table>' +
+							'<tbody>' +
+							'<tr><td>1</td><td>3</td></tr>' +
+							'</tbody>' +
+							'</table>'
+					);
+				});
+			});
+
+			describe('Remove row which consists td with rowspan and colspan ', () => {
+				it('should simple remove row and decrement rowspan and move that cell into next row', function () {
+					const editor = getJodit();
+
+					editor.value =
+						'<table>' +
+						'<tr><td rowspan="2" colspan="2">1</td><td>2</td></tr>' +
+						'<tr><td>3</td></tr>' +
+						'<tr><td>4</td><td>5</td><td>6</td></tr>' +
+						'</table>';
+
+					// const table = new Jodit.modules.Table(editor);
+					Jodit.modules.Table.removeRow(editor.editor.firstChild, 0);
+
+					expect(editor.value.toLowerCase()).equals(
+						'<table>' +
+							'<tbody>' +
+							'<tr><td colspan="2">1</td><td>3</td></tr>' +
+							'<tr><td>4</td><td>5</td><td>6</td></tr>' +
+							'</tbody>' +
+							'</table>'
+					);
+				});
+			});
+
+			describe('Remove row which consists last td with rowspan and colspan ', () => {
+				it('should simple remove row and decrement rowspan and move that cell into next row in last position', function () {
+					const editor = getJodit();
+
+					editor.value =
+						'<table>' +
+						'<tr><td>1</td><td>2</td><td>3</td></tr>' +
+						'<tr><td>4</td><td colspan="2" rowspan="2">5</td></tr>' +
+						'<tr><td>6</td></tr>' +
+						'</table>';
+
+					Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
+
+					expect(editor.value.toLowerCase()).equals(
+						'<table>' +
+							'<tbody>' +
+							'<tr><td>1</td><td>2</td><td>3</td></tr>' +
+							'<tr><td>6</td><td colspan="2">5</td></tr>' +
+							'</tbody>' +
+							'</table>'
+					);
+				});
+			});
 		});
 
 		describe('Method merge selected cells', function () {
@@ -949,133 +1094,82 @@ describe('Tables Jodit Editor Tests', function () {
 			);
 		});
 
-		describe('Remove row', function () {
-			it('Remove simple row without rowspan should simple remove row', function () {
-				const editor = getJodit();
+		describe('Select cells and', () => {
+			let editor;
+
+			beforeEach(() => {
+				editor = getJodit();
 
 				editor.value =
 					'<table>' +
-					'<tr><td>1</td><td>2</td></tr>' +
-					'<tr><td>3</td><td>4</td></tr>' +
-					'</table>';
-
-				Jodit.modules.Table.removeRow(editor.editor.firstChild, 0);
-
-				expect(editor.value.toLowerCase()).equals(
-					'<table>' +
-						'<tbody>' +
-						'<tr><td>3</td><td>4</td></tr>' +
-						'</tbody>' +
-						'</table>'
-				);
-			});
-			it('Remove row which not consists td, because of in previous row was cell with rowspan should simple remove row and decrement rowspan', function () {
-				const editor = getJodit();
-
-				editor.value =
-					'<table>' +
-					'<tr><td rowspan="2">1</td><td>2</td></tr>' +
-					'<tr><td>3</td></tr>' +
-					'</table>';
-
-				// const table = new Jodit.modules.Table(editor);
-				Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
-
-				expect(editor.value.toLowerCase()).equals(
-					'<table>' +
-						'<tbody>' +
-						'<tr><td>1</td><td>2</td></tr>' +
-						'</tbody>' +
-						'</table>'
-				);
-			});
-			it('Remove row which not consists td, because of in previous row was cell with rowspan and colspan should simple remove row and decrement rowspan once time', function () {
-				const editor = getJodit();
-
-				editor.value =
-					'<table>' +
-					'<tr><td rowspan="3" colspan="2">1</td><td>2</td></tr>' +
-					'<tr><td>3</td></tr>' +
-					'<tr><td>4</td></tr>' +
-					'<tr><td>5</td><td>6</td><td>7</td></tr>' +
-					'</table>';
-
-				// const table = new Jodit.modules.Table(editor);
-				Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
-
-				expect(editor.value.toLowerCase()).equals(
-					'<table>' +
-						'<tbody>' +
-						'<tr><td rowspan="2" colspan="2">1</td><td>2</td></tr>' +
-						'<tr><td>4</td></tr>' +
-						'<tr><td>5</td><td>6</td><td>7</td></tr>' +
-						'</tbody>' +
-						'</table>'
-				);
-			});
-			it('Remove row which consists td with rowspan should simple remove row and decrement rowspan and move that cell into next row', function () {
-				const editor = getJodit();
-
-				editor.value =
-					'<table>' +
-					'<tr><td rowspan="2">1</td><td>2</td></tr>' +
-					'<tr><td>3</td></tr>' +
-					'</table>';
-
-				// const table = new Jodit.modules.Table(editor);
-				Jodit.modules.Table.removeRow(editor.editor.firstChild, 0);
-
-				expect(editor.value.toLowerCase()).equals(
-					'<table>' +
-						'<tbody>' +
-						'<tr><td>1</td><td>3</td></tr>' +
-						'</tbody>' +
-						'</table>'
-				);
-			});
-			it('Remove row which consists td with rowspan and colspan should simple remove row and decrement rowspan and move that cell into next row', function () {
-				const editor = getJodit();
-
-				editor.value =
-					'<table>' +
-					'<tr><td rowspan="2" colspan="2">1</td><td>2</td></tr>' +
-					'<tr><td>3</td></tr>' +
-					'<tr><td>4</td><td>5</td><td>6</td></tr>' +
-					'</table>';
-
-				// const table = new Jodit.modules.Table(editor);
-				Jodit.modules.Table.removeRow(editor.editor.firstChild, 0);
-
-				expect(editor.value.toLowerCase()).equals(
-					'<table>' +
-						'<tbody>' +
-						'<tr><td colspan="2">1</td><td>3</td></tr>' +
-						'<tr><td>4</td><td>5</td><td>6</td></tr>' +
-						'</tbody>' +
-						'</table>'
-				);
-			});
-			it('Remove row which consists last td with rowspan and colspan should simple remove row and decrement rowspan and move that cell into next row in last position', function () {
-				const editor = getJodit();
-
-				editor.value =
-					'<table>' +
+					'<tbody>' +
 					'<tr><td>1</td><td>2</td><td>3</td></tr>' +
-					'<tr><td>4</td><td colspan="2" rowspan="2">5</td></tr>' +
-					'<tr><td>6</td></tr>' +
+					'<tr><td>4</td><td>5</td><td>6</td></tr>' +
+					'<tr><td>7</td><td>8</td><td>9</td></tr>' +
+					'</tbody>' +
 					'</table>';
+			});
 
-				// const table = new Jodit.modules.Table(editor);
-				Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
+			describe('Remove row', () => {
+				it('Should remove all rows with selected cells', done => {
+					let td = editor.editor.querySelector('td');
 
-				expect(editor.value.toLowerCase()).equals(
-					'<table>' +
-						'<tbody>' +
-						'<tr><td>1</td><td>2</td><td>3</td></tr>' +
-						'<tr><td>6</td><td colspan="2">5</td></tr>' +
-						'</tbody>' +
-						'</table>'
-				);
+					simulateEvent('mousedown', td);
+
+					td = editor.editor.querySelectorAll('td')[3];
+
+					simulateEvent(['mousemove', 'mouseup', 'click'], td);
+
+					editor.async.requestIdleCallback(() => {
+						const popup = getOpenedPopup(editor);
+						clickTrigger('delete', popup);
+
+						const list = getOpenedPopup(editor);
+						clickButton('tablebinrow', list);
+
+						expect(editor.value).eq(
+							'<table>' +
+								'<tbody>' +
+								'<tr><td>7</td><td>8</td><td>9</td></tr>' +
+								'</tbody>' +
+								'</table>'
+						);
+
+						done();
+					});
+				});
+			});
+
+			describe('Remove column', () => {
+				it('Should remove all columns with selected cells', done => {
+					let td = editor.editor.querySelector('td');
+
+					simulateEvent('mousedown', td);
+
+					td = editor.editor.querySelectorAll('td')[1];
+
+					simulateEvent(['mousemove', 'mouseup', 'click'], td);
+
+					editor.async.requestIdleCallback(() => {
+						const popup = getOpenedPopup(editor);
+						clickTrigger('delete', popup);
+
+						const list = getOpenedPopup(editor);
+						clickButton('tablebincolumn', list);
+
+						expect(editor.value).eq(
+							'<table>' +
+								'<tbody>' +
+								'<tr><td>3</td></tr>' +
+								'<tr><td>6</td></tr>' +
+								'<tr><td>9</td></tr>' +
+								'</tbody>' +
+								'</table>'
+						);
+
+						done();
+					});
+				});
 			});
 		});
 
@@ -1489,62 +1583,115 @@ describe('Tables Jodit Editor Tests', function () {
 			});
 
 			describe('When move mouse over left edge of cell and press mouse button and move cursor to right in 5 pixels', function () {
-				it('should decrease the width of the right column and the width of the left column should increase', function (done) {
-					const editor = getJodit();
+				describe('For one row', () => {
+					it('should decrease the width of the right column and the width of the left column should increase', function (done) {
+						const editor = getJodit();
 
-					editor.value =
-						'<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
-						'<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
-						'</table>';
+						editor.value =
+							'<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+							'<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
+							'</table>';
 
-					const td = editor.editor.querySelectorAll('td')[1],
-						box = td.getBoundingClientRect();
+						const td = editor.editor.querySelectorAll('td')[1],
+							box = td.getBoundingClientRect();
 
-					simulateEvent('mousemove', 1, td, function (options) {
-						options.clientX = box.left;
-						options.offsetX = 0;
-						options.pageX = 0;
-						options.pageY = 0;
-					});
-
-					simulateEvent(
-						'mousedown',
-						1,
-						editor.container.querySelector('.jodit-table-resizer'),
-						function (options) {
+						simulateEvent('mousemove', td, function (options) {
 							options.clientX = box.left;
+							options.offsetX = 0;
 							options.pageX = 0;
 							options.pageY = 0;
-						}
-					);
+						});
 
-					simulateEvent(
-						'mousemove',
-						1,
-						editor.ew,
-						function (options) {
-							options.clientX = box.left + 5; // move on 5 pixels
-							options.pageX = 0;
-							options.pageY = 0;
-						}
-					);
-					simulateEvent('mouseup', 1, window, function (options) {
-						options.clientX = box.left + 5; // move on 5 pixels
-						options.pageX = 0;
-						options.pageY = 0;
+						simulateEvent(
+							'mousedown',
+							editor.container.querySelector(
+								'.jodit-table-resizer'
+							),
+							function (options) {
+								options.clientX = box.left;
+								options.pageX = 0;
+								options.pageY = 0;
+							}
+						);
+
+						simulateEvent(
+							['mousemove', 'mouseup'],
+							editor.ew,
+							function (options) {
+								options.clientX = box.left + 5; // move on 5 pixels
+								options.pageX = 0;
+								options.pageY = 0;
+							}
+						);
+
+						expect(editor.editor.innerHTML.toLowerCase()).equals(
+							'<table style="width: 100px; border-collapse: separate;" cellspacing="0"><tbody>' +
+								'<tr>' +
+								'<td style="width: 30%;">1</td>' +
+								'<td style="width: 20%;">2</td>' +
+								'<td>3</td>' +
+								'<td>4</td>' +
+								'</tr>' +
+								'</tbody></table>'
+						);
+
+						done();
 					});
+				});
 
-					expect(editor.editor.innerHTML.toLowerCase()).equals(
-						'<table style="width: 100px; border-collapse: separate;" cellspacing="0"><tbody>' +
-							'<tr>' +
-							'<td style="width: 30%;">1</td>' +
-							'<td style="width: 20%;">2</td>' +
-							'<td>3</td>' +
-							'<td>4</td>' +
-							'</tr>' +
-							'</tbody></table>'
-					);
-					done();
+				describe('For several rows', () => {
+					it("should change witdt only first selected row's cells", function (done) {
+						const editor = getJodit();
+
+						editor.value =
+							'<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+							'<tbody>' +
+							'<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
+							'<tr><td>5</td><td>6</td><td>7</td><td>8</td></tr>' +
+							'</tbody>' +
+							'</table>';
+
+						const td = editor.editor.querySelectorAll('td')[1],
+							box = td.getBoundingClientRect();
+
+						simulateEvent('mousemove', td, function (options) {
+							options.clientX = box.left;
+							options.offsetX = 0;
+							options.pageX = 0;
+							options.pageY = 0;
+						});
+
+						simulateEvent(
+							'mousedown',
+							editor.container.querySelector(
+								'.jodit-table-resizer'
+							),
+							function (options) {
+								options.clientX = box.left;
+								options.pageX = 0;
+								options.pageY = 0;
+							}
+						);
+
+						simulateEvent(
+							['mousemove', 'mouseup'],
+							editor.ew,
+							function (options) {
+								options.clientX = box.left + 5; // move on 5 pixels
+								options.pageX = 0;
+								options.pageY = 0;
+							}
+						);
+
+						expect(editor.editor.innerHTML.toLowerCase()).equals(
+							'<table style="width: 100px; border-collapse: separate;" cellspacing="0"><tbody>' +
+								'<tr><td style="width: 30%;">1</td><td style="width: 20%;">2</td><td>3</td><td>4</td></tr>' +
+								'<tr><td>5</td><td>6</td><td>7</td><td>8</td></tr>' +
+								'</tbody></table>'
+						);
+
+						done();
+					});
 				});
 
 				describe('After resize', function () {
@@ -1570,7 +1717,6 @@ describe('Tables Jodit Editor Tests', function () {
 
 						simulateEvent(
 							'mousedown',
-							1,
 							editor.container.querySelector(
 								'.jodit-table-resizer'
 							),
@@ -1583,7 +1729,6 @@ describe('Tables Jodit Editor Tests', function () {
 
 						simulateEvent(
 							'mousemove',
-							1,
 							editor.ew,
 							function (options) {
 								options.clientX = box.left + 5; // move on 5 pixels
@@ -1593,7 +1738,6 @@ describe('Tables Jodit Editor Tests', function () {
 						);
 						simulateEvent(
 							'mouseup',
-							1,
 							editor.ownerWindow,
 							function (options) {
 								options.clientX = box.left + 5; // move on 5 pixels
@@ -1827,6 +1971,59 @@ describe('Tables Jodit Editor Tests', function () {
 								</tbody>
 							</table>`
 						);
+					});
+
+					describe('Table in one row', () => {
+						it('should change usual way', () => {
+							const editor = getJodit();
+
+							editor.value =
+								'<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+								'<tbody>' +
+								'<tr><td>1</td><td colspan="2">2 3</td><td>4</td></tr>' +
+								'</tbody>' +
+								'</table>';
+
+							const td = editor.editor.querySelectorAll('td')[1],
+								box = td.getBoundingClientRect();
+
+							simulateEvent('mousemove', td, options => {
+								options.clientX = box.left;
+								options.offsetX = 0;
+								options.pageX = 0;
+								options.pageY = 0;
+							});
+
+							simulateEvent(
+								'mousedown',
+								editor.container.querySelector(
+									'.jodit-table-resizer'
+								),
+								options => {
+									options.clientX = box.left;
+									options.pageX = 0;
+									options.pageY = 0;
+								}
+							);
+
+							simulateEvent(
+								['mousemove', 'mouseup'],
+								editor.ew,
+								options => {
+									options.clientX = box.left - 5; // move on 5 pixels
+									options.pageX = 0;
+									options.pageY = 0;
+								}
+							);
+
+							expect(sortAttributes(editor.value)).equals(
+								'<table cellspacing="0" style="border-collapse:separate;width:100px">' +
+									'<tbody>' +
+									'<tr><td style="width:20%">1</td><td colspan="2" style="width:55%">2 3</td><td>4</td></tr>' +
+									'</tbody>' +
+									'</table>'
+							);
+						});
 					});
 				});
 			});
