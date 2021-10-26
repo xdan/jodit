@@ -266,7 +266,7 @@ describe('Test Inline mode', function () {
 					).is.true;
 
 					editor.editor.scrollTop = editor.editor.scrollTop + 50;
-					simulateEvent('scroll', 0, editor.editor);
+					simulateEvent('scroll', editor.editor);
 
 					imgPosition = offset(img);
 					popupPosition = offset(popup);

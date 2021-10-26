@@ -790,38 +790,34 @@ describe('Selection Module Tests', function () {
 				disablePlugins: ['WrapTextNodes']
 			});
 			editor.value =
-				'<p>1</p><p>2</p><strong><span>22</span></strong><p>4</p>stop';
-			const range = editor.s.createRange();
-			range.setStartBefore(editor.editor.firstChild);
-			range.setEndAfter(editor.editor.lastChild);
-			editor.s.selectRange(range);
+				'|<p>1</p><p>2</p><strong><span>22</span></strong><p>4</p>stop|';
+
+			setCursorToChar(editor);
 
 			const nodesNames = [];
 			editor.s.eachSelection(function (node) {
 				nodesNames.push(node.nodeName);
 			});
 
-			expect(
+			expect(nodesNames.toString().toLowerCase()).equals(
 				['P', 'P', 'STRONG', 'P', '#text'].toString().toLowerCase()
-			).equals(nodesNames.toString().toLowerCase());
+			);
 		});
 
 		it('Should call callback for each node in selection range', function () {
 			const editor = getJodit({ disablePlugins: ['WrapTextNodes'] });
 			editor.value =
-				'<p>1</p><p>2</p><strong><span>22</span></strong><p>4</p>stop';
-			const range = editor.s.createRange();
-			range.setStartBefore(editor.editor.firstChild.nextSibling);
-			range.setEndAfter(editor.editor.lastChild.previousSibling);
-			editor.s.selectRange(range);
+				'<p>1</p>|<p>2</p><strong><span>22</span></strong><p>4</p>|stop';
+
+			setCursorToChar(editor);
 
 			const nodesNames = [];
-			editor.s.eachSelection(function (node) {
+			editor.s.eachSelection(node => {
 				nodesNames.push(node.nodeName);
 			});
 
-			expect(['p', 'strong', 'p'].toString().toLowerCase()).equals(
-				nodesNames.toString().toLowerCase()
+			expect(nodesNames.toString().toLowerCase()).equals(
+				['p', 'strong', 'p'].toString().toLowerCase()
 			);
 		});
 
@@ -843,11 +839,12 @@ describe('Selection Module Tests', function () {
 
 		it('Should call callback for current node if selection is collapsed', function () {
 			const editor = getJodit();
-			editor.value = '<p>1</p><p>2</p>';
+			editor.value = '<p>|1</p><p>2</p>';
 
-			editor.s.setCursorIn(editor.editor.firstChild);
+			setCursorToChar(editor);
 
 			const nodesNames = [];
+
 			editor.s.eachSelection(function (node) {
 				nodesNames.push(node.nodeName);
 			});

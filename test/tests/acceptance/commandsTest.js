@@ -417,16 +417,8 @@ describe('Commands Jodit Editor Tests', function () {
 	describe('Align', function () {
 		it('Justify to right', function () {
 			const editor = getJodit();
-			editor.value = '<p>test</p>';
-
-			const sel = editor.s.sel,
-				range = editor.s.createRange();
-
-			range.setStart(editor.editor.firstChild.firstChild, 2);
-			range.collapse(true);
-
-			sel.removeAllRanges();
-			sel.addRange(range);
+			editor.value = '<p>te|st</p>';
+			setCursorToChar(editor);
 
 			editor.execCommand('justifyright');
 
@@ -439,16 +431,9 @@ describe('Commands Jodit Editor Tests', function () {
 			const editor = getJodit({
 				disablePlugins: ['WrapTextNodes']
 			});
-			editor.value = 'test';
+			editor.value = 'te|st';
 
-			const sel = editor.s.sel,
-				range = editor.s.createRange();
-
-			range.setStart(editor.editor.firstChild, 2);
-			range.collapse(true);
-
-			sel.removeAllRanges();
-			sel.addRange(range);
+			setCursorToChar(editor);
 
 			editor.execCommand('justifycenter');
 
@@ -457,20 +442,13 @@ describe('Commands Jodit Editor Tests', function () {
 			);
 		});
 
-		it('Justify to left', function () {
+		it('Justify to left', () => {
 			const editor = getJodit({
 				disablePlugins: ['WrapTextNodes']
 			});
-			editor.value = 'test some text <span>test</span><br><p>data</p>';
 
-			const sel = editor.s.sel,
-				range = editor.s.createRange();
-
-			range.setStart(editor.editor.firstChild, 8);
-			range.collapse(true);
-
-			sel.removeAllRanges();
-			sel.addRange(range);
+			editor.value = 'test som|e text <span>test</span><br><p>data</p>';
+			setCursorToChar(editor);
 
 			editor.execCommand('justifyleft');
 
