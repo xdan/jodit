@@ -2023,7 +2023,7 @@ describe('Tables Jodit Editor Tests', function () {
 							const editor = getJodit();
 
 							editor.value =
-								'<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+								'<table style="width: 120px; border-collapse: separate;" cellspacing="0">' +
 								'<tbody>' +
 								'<tr><td>1</td><td colspan="2">2 3</td></tr>' +
 								'<tr><td>4</td><td>5</td><td>6</td></tr>' +
@@ -2056,17 +2056,17 @@ describe('Tables Jodit Editor Tests', function () {
 								['mousemove', 'mouseup'],
 								editor.ew,
 								options => {
-									options.clientX = box.left - 10;
+									options.clientX = box.left - 12;
 									options.pageX = 0;
 									options.pageY = 0;
 								}
 							);
 
 							expect(sortAttributes(editor.value)).equals(
-								'<table cellspacing="0" style="border-collapse:separate;width:100px">' +
+								'<table cellspacing="0" style="border-collapse:separate;width:120px">' +
 									'<tbody>' +
 									'<tr><td>1</td><td colspan="2">2 3</td></tr>' +
-									'<tr><td>4</td><td style="width:24%">5</td><td style="width:43%">6</td></tr>' +
+									'<tr><td>4</td><td style="width:23.33%">5</td><td style="width:43.33%">6</td></tr>' +
 									'</tbody>' +
 									'</table>'
 							);
@@ -2078,7 +2078,7 @@ describe('Tables Jodit Editor Tests', function () {
 							const editor = getJodit();
 
 							editor.value =
-								'<table cellspacing="0" style="border-collapse:separate;width:100px;table-layout:fixed">' +
+								'<table cellspacing="0" style="border-collapse:separate;width:120px;table-layout:fixed">' +
 								'<tbody>' +
 								'<tr><td>1</td><td colspan="2">2 3</td></tr>' +
 								'<tr><td>4</td><td style="width:33%">5</td><td style="width:33%">6</td></tr>' +
@@ -2112,17 +2112,17 @@ describe('Tables Jodit Editor Tests', function () {
 								['mousemove', 'mouseup'],
 								editor.ew,
 								options => {
-									options.clientX = box.left - 10;
+									options.clientX = box.left - 12;
 									options.pageX = 0;
 									options.pageY = 0;
 								}
 							);
 
 							expect(sortAttributes(editor.value)).equals(
-								'<table cellspacing="0" style="border-collapse:separate;table-layout:fixed;width:100px">' +
+								'<table cellspacing="0" style="border-collapse:separate;table-layout:fixed;width:120px">' +
 									'<tbody>' +
 									'<tr><td>1</td><td colspan="2">2 3</td></tr>' +
-									'<tr><td>4</td><td style="width:24%">5</td><td style="width:43%">6</td></tr>' +
+									'<tr><td>4</td><td style="width:23.33%">5</td><td style="width:43.33%">6</td></tr>' +
 									'<tr><td>7</td><td>8</td><td>9</td></tr>' +
 									'</tbody>' +
 									'</table>'

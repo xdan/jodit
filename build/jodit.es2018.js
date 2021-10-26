@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.9.2
+ * Version: v3.9.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -14761,7 +14761,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.9.2";
+        this.version = "3.9.3";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -14859,10 +14859,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.9.2";
+        return "3.9.3";
     }
     static getVersion() {
-        return "3.9.2";
+        return "3.9.3";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -18884,6 +18884,7 @@ class StatusBar extends component/* ViewComponent */.Hr {
 
 
 
+const markedValue = new WeakMap();
 class Table extends component/* ViewComponent */.Hr {
     constructor() {
         super(...arguments);
@@ -19036,14 +19037,13 @@ class Table extends component/* ViewComponent */.Hr {
         const box = Table.formalMatrix(table);
         let dec;
         const row = table.rows[rowIndex];
-        (0,helpers.each)(box[rowIndex], (j, cell) => {
+        box[rowIndex].forEach((cell, j) => {
             dec = false;
             if (rowIndex - 1 >= 0 && box[rowIndex - 1][j] === cell) {
                 dec = true;
             }
             else if (box[rowIndex + 1] && box[rowIndex + 1][j] === cell) {
-                if (cell.parentNode === row &&
-                    cell.parentNode.nextSibling) {
+                if (cell.parentNode === row && cell.parentNode.nextSibling) {
                     dec = true;
                     let nextCell = j + 1;
                     while (box[rowIndex + 1][nextCell] === cell) {
@@ -19108,7 +19108,7 @@ class Table extends component/* ViewComponent */.Hr {
     static removeColumn(table, j) {
         const box = Table.formalMatrix(table);
         let dec;
-        (0,helpers.each)(box, (i, cells) => {
+        box.forEach((cells, i) => {
             const td = cells[j];
             dec = false;
             if (j - 1 >= 0 && box[i][j - 1] === td) {
@@ -19193,7 +19193,7 @@ class Table extends component/* ViewComponent */.Hr {
                     if (box[i][j] === undefined) {
                         continue;
                     }
-                    Table.__mark(box[i][j], 'colspan', box[i][j].colSpan - min + 1, __marked);
+                    Table.mark(box[i][j], 'colspan', box[i][j].colSpan - min + 1, __marked);
                 }
             }
         }
@@ -19215,7 +19215,7 @@ class Table extends component/* ViewComponent */.Hr {
                     if (box[i][j] === undefined) {
                         continue;
                     }
-                    Table.__mark(box[i][j], 'rowspan', box[i][j].rowSpan - min + 1, __marked);
+                    Table.mark(box[i][j], 'rowspan', box[i][j].rowSpan - min + 1, __marked);
                 }
             }
         }
@@ -19238,21 +19238,21 @@ class Table extends component/* ViewComponent */.Hr {
                 }
             }
         }
-        Table.__unmark(__marked);
+        Table.unmark(__marked);
     }
     static mergeSelected(table, jodit) {
         const html = [], bound = Table.getSelectedBound(table, Table.getSelectedCellsByTable(table));
         let w = 0, first = null, first_j = 0, td, cols = 0, rows = 0;
-        const __marked = [];
+        const alreadyMerged = new Set(), __marked = [];
         if (bound && (bound[0][0] - bound[1][0] || bound[0][1] - bound[1][1])) {
             Table.formalMatrix(table, (cell, i, j, cs, rs) => {
                 if (i >= bound[0][0] && i <= bound[1][0]) {
                     if (j >= bound[0][1] && j <= bound[1][1]) {
                         td = cell;
-                        if (td.__i_am_already_was) {
+                        if (alreadyMerged.has(td)) {
                             return;
                         }
-                        td.__i_am_already_was = true;
+                        alreadyMerged.add(td);
                         if (i === bound[0][0] && td.style.width) {
                             w += td.offsetWidth;
                         }
@@ -19270,7 +19270,7 @@ class Table extends component/* ViewComponent */.Hr {
                             first_j = j;
                         }
                         else {
-                            Table.__mark(td, 'remove', 1, __marked);
+                            Table.mark(td, 'remove', 1, __marked);
                             instance(jodit).removeSelection(td);
                         }
                     }
@@ -19280,23 +19280,23 @@ class Table extends component/* ViewComponent */.Hr {
             rows = bound[1][0] - bound[0][0] + 1;
             if (first) {
                 if (cols > 1) {
-                    Table.__mark(first, 'colspan', cols, __marked);
+                    Table.mark(first, 'colspan', cols, __marked);
                 }
                 if (rows > 1) {
-                    Table.__mark(first, 'rowspan', rows, __marked);
+                    Table.mark(first, 'rowspan', rows, __marked);
                 }
                 if (w) {
-                    Table.__mark(first, 'width', ((w / table.offsetWidth) * 100).toFixed(constants.ACCURACY) + '%', __marked);
+                    Table.mark(first, 'width', ((w / table.offsetWidth) * 100).toFixed(constants.ACCURACY) + '%', __marked);
                     if (first_j) {
                         Table.setColumnWidthByDelta(table, first_j, 0, true, __marked);
                     }
                 }
                 first.innerHTML = html.join('<br/>');
                 instance(jodit).addSelection(first);
-                delete first.__i_am_already_was;
-                Table.__unmark(__marked);
+                alreadyMerged.delete(first);
+                Table.unmark(__marked);
                 Table.normalizeTable(table);
-                (0,helpers.each)((0,helpers.toArray)(table.rows), (index, tr) => {
+                (0,helpers.toArray)(table.rows).forEach((tr, index) => {
                     if (!tr.cells.length) {
                         dom/* Dom.safeRemove */.i.safeRemove(tr);
                     }
@@ -19317,14 +19317,14 @@ class Table extends component/* ViewComponent */.Hr {
                     if (coord[0] === i &&
                         coord[1] !== j &&
                         tdElm !== cell) {
-                        Table.__mark(tdElm, 'rowspan', tdElm.rowSpan + 1, __marked);
+                        Table.mark(tdElm, 'rowspan', tdElm.rowSpan + 1, __marked);
                     }
                 });
                 dom/* Dom.after */.i.after(dom/* Dom.closest */.i.closest(cell, 'tr', table), tr);
                 tr.appendChild(td);
             }
             else {
-                Table.__mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
+                Table.mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
                 Table.formalMatrix(table, (tdElm, i, j) => {
                     if (i > coord[0] &&
                         i < coord[0] + cell.rowSpan &&
@@ -19345,9 +19345,9 @@ class Table extends component/* ViewComponent */.Hr {
                 }
             }
             if (cell.colSpan > 1) {
-                Table.__mark(td, 'colspan', cell.colSpan, __marked);
+                Table.mark(td, 'colspan', cell.colSpan, __marked);
             }
-            Table.__unmark(__marked);
+            Table.unmark(__marked);
             instance(jodit).removeSelection(cell);
         });
         this.normalizeTable(table);
@@ -19360,30 +19360,31 @@ class Table extends component/* ViewComponent */.Hr {
             if (cell.colSpan < 2) {
                 Table.formalMatrix(table, (tdElm, i, j) => {
                     if (coord[1] === j && coord[0] !== i && tdElm !== cell) {
-                        Table.__mark(tdElm, 'colspan', tdElm.colSpan + 1, __marked);
+                        Table.mark(tdElm, 'colspan', tdElm.colSpan + 1, __marked);
                     }
                 });
             }
             else {
-                Table.__mark(cell, 'colspan', cell.colSpan - 1, __marked);
+                Table.mark(cell, 'colspan', cell.colSpan - 1, __marked);
             }
             td = jodit.createInside.element('td');
             td.appendChild(jodit.createInside.element('br'));
             if (cell.rowSpan > 1) {
-                Table.__mark(td, 'rowspan', cell.rowSpan, __marked);
+                Table.mark(td, 'rowspan', cell.rowSpan, __marked);
             }
             const oldWidth = cell.offsetWidth;
             dom/* Dom.after */.i.after(cell, td);
             percentage = oldWidth / table.offsetWidth / 2;
-            Table.__mark(cell, 'width', (percentage * 100).toFixed(constants.ACCURACY) + '%', __marked);
-            Table.__mark(td, 'width', (percentage * 100).toFixed(constants.ACCURACY) + '%', __marked);
-            Table.__unmark(__marked);
+            Table.mark(cell, 'width', (percentage * 100).toFixed(constants.ACCURACY) + '%', __marked);
+            Table.mark(td, 'width', (percentage * 100).toFixed(constants.ACCURACY) + '%', __marked);
+            Table.unmark(__marked);
             instance(jodit).removeSelection(cell);
         });
         Table.normalizeTable(table);
     }
     static setColumnWidthByDelta(table, column, delta, noUnmark, marked) {
         const box = Table.formalMatrix(table);
+        let clearWidthIndex = 0;
         for (let i = 0; i < box.length; i += 1) {
             const cell = box[i][column];
             if (cell.colSpan > 1 && box.length > 1) {
@@ -19391,41 +19392,56 @@ class Table extends component/* ViewComponent */.Hr {
             }
             const w = cell.offsetWidth;
             const percent = ((w + delta) / table.offsetWidth) * 100;
-            Table.__mark(cell, 'width', percent.toFixed(constants.ACCURACY) + '%', marked);
+            Table.mark(cell, 'width', percent.toFixed(constants.ACCURACY) + '%', marked);
+            clearWidthIndex = i;
             break;
         }
+        for (let i = clearWidthIndex + 1; i < box.length; i += 1) {
+            const cell = box[i][column];
+            Table.mark(cell, 'width', null, marked);
+        }
         if (!noUnmark) {
-            Table.__unmark(marked);
+            Table.unmark(marked);
         }
     }
-    static __mark(cell, key, value, marked) {
+    static mark(cell, key, value, marked) {
+        var _a;
         marked.push(cell);
-        if (!cell.__marked_value) {
-            cell.__marked_value = {};
-        }
-        cell.__marked_value[key] = value === undefined ? 1 : value;
+        const dict = (_a = markedValue.get(cell)) !== null && _a !== void 0 ? _a : {};
+        dict[key] = value === undefined ? 1 : value;
+        markedValue.set(cell, dict);
     }
-    static __unmark(marked) {
+    static unmark(marked) {
         marked.forEach(cell => {
-            if (cell.__marked_value) {
-                (0,helpers.each)(cell.__marked_value, (key, value) => {
+            const dict = markedValue.get(cell);
+            if (dict) {
+                Object.keys(dict).forEach((key) => {
+                    const value = dict[key];
                     switch (key) {
                         case 'remove':
                             dom/* Dom.safeRemove */.i.safeRemove(cell);
                             break;
                         case 'rowspan':
-                            (0,helpers.attr)(cell, 'rowspan', value > 1 ? value : null);
+                            (0,helpers.attr)(cell, 'rowspan', (0,helpers.isNumber)(value) && value > 1 ? value : null);
                             break;
                         case 'colspan':
-                            (0,helpers.attr)(cell, 'colspan', value > 1 ? value : null);
+                            (0,helpers.attr)(cell, 'colspan', (0,helpers.isNumber)(value) && value > 1 ? value : null);
                             break;
                         case 'width':
-                            cell.style.width = value.toString();
+                            if (value == null) {
+                                cell.style.removeProperty('width');
+                                if (!(0,helpers.attr)(cell, 'style')) {
+                                    (0,helpers.attr)(cell, 'style', null);
+                                }
+                            }
+                            else {
+                                cell.style.width = value.toString();
+                            }
                             break;
                     }
-                    delete cell.__marked_value[key];
+                    delete dict[key];
                 });
-                delete cell.__marked_value;
+                markedValue.delete(cell);
             }
         });
     }
@@ -28975,6 +28991,7 @@ config/* Config.prototype.controls.table */.D.prototype.controls.table = {
                     if (!first_td) {
                         first_td = td;
                     }
+                    (0,helpers.css)(td, 'width', (100 / cols_count).toFixed(4) + '%');
                     td.appendChild(crt.element('br'));
                     tr.appendChild(crt.text('\n'));
                     tr.appendChild(crt.text('\t'));

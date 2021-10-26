@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.9.2
+ * Version: v3.9.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -12739,7 +12739,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.9.2";
+        _this.version = "3.9.3";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -12881,10 +12881,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.9.2";
+        return "3.9.3";
     };
     View.getVersion = function () {
-        return "3.9.2";
+        return "3.9.3";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -16931,6 +16931,7 @@ var helpers_1 = __webpack_require__(19);
 var component_1 = __webpack_require__(27);
 var global_1 = __webpack_require__(30);
 var decorators_1 = __webpack_require__(45);
+var markedValue = new WeakMap();
 var Table = (function (_super) {
     (0, tslib_1.__extends)(Table, _super);
     function Table() {
@@ -17086,14 +17087,13 @@ var Table = (function (_super) {
         var box = Table.formalMatrix(table);
         var dec;
         var row = table.rows[rowIndex];
-        (0, helpers_1.each)(box[rowIndex], function (j, cell) {
+        box[rowIndex].forEach(function (cell, j) {
             dec = false;
             if (rowIndex - 1 >= 0 && box[rowIndex - 1][j] === cell) {
                 dec = true;
             }
             else if (box[rowIndex + 1] && box[rowIndex + 1][j] === cell) {
-                if (cell.parentNode === row &&
-                    cell.parentNode.nextSibling) {
+                if (cell.parentNode === row && cell.parentNode.nextSibling) {
                     dec = true;
                     var nextCell = j + 1;
                     while (box[rowIndex + 1][nextCell] === cell) {
@@ -17158,7 +17158,7 @@ var Table = (function (_super) {
     Table.removeColumn = function (table, j) {
         var box = Table.formalMatrix(table);
         var dec;
-        (0, helpers_1.each)(box, function (i, cells) {
+        box.forEach(function (cells, i) {
             var td = cells[j];
             dec = false;
             if (j - 1 >= 0 && box[i][j - 1] === td) {
@@ -17243,7 +17243,7 @@ var Table = (function (_super) {
                     if (box[i][j] === undefined) {
                         continue;
                     }
-                    Table.__mark(box[i][j], 'colspan', box[i][j].colSpan - min + 1, __marked);
+                    Table.mark(box[i][j], 'colspan', box[i][j].colSpan - min + 1, __marked);
                 }
             }
         }
@@ -17265,7 +17265,7 @@ var Table = (function (_super) {
                     if (box[i][j] === undefined) {
                         continue;
                     }
-                    Table.__mark(box[i][j], 'rowspan', box[i][j].rowSpan - min + 1, __marked);
+                    Table.mark(box[i][j], 'rowspan', box[i][j].rowSpan - min + 1, __marked);
                 }
             }
         }
@@ -17288,21 +17288,21 @@ var Table = (function (_super) {
                 }
             }
         }
-        Table.__unmark(__marked);
+        Table.unmark(__marked);
     };
     Table.mergeSelected = function (table, jodit) {
         var html = [], bound = Table.getSelectedBound(table, Table.getSelectedCellsByTable(table));
         var w = 0, first = null, first_j = 0, td, cols = 0, rows = 0;
-        var __marked = [];
+        var alreadyMerged = new Set(), __marked = [];
         if (bound && (bound[0][0] - bound[1][0] || bound[0][1] - bound[1][1])) {
             Table.formalMatrix(table, function (cell, i, j, cs, rs) {
                 if (i >= bound[0][0] && i <= bound[1][0]) {
                     if (j >= bound[0][1] && j <= bound[1][1]) {
                         td = cell;
-                        if (td.__i_am_already_was) {
+                        if (alreadyMerged.has(td)) {
                             return;
                         }
-                        td.__i_am_already_was = true;
+                        alreadyMerged.add(td);
                         if (i === bound[0][0] && td.style.width) {
                             w += td.offsetWidth;
                         }
@@ -17320,7 +17320,7 @@ var Table = (function (_super) {
                             first_j = j;
                         }
                         else {
-                            Table.__mark(td, 'remove', 1, __marked);
+                            Table.mark(td, 'remove', 1, __marked);
                             instance(jodit).removeSelection(td);
                         }
                     }
@@ -17330,23 +17330,23 @@ var Table = (function (_super) {
             rows = bound[1][0] - bound[0][0] + 1;
             if (first) {
                 if (cols > 1) {
-                    Table.__mark(first, 'colspan', cols, __marked);
+                    Table.mark(first, 'colspan', cols, __marked);
                 }
                 if (rows > 1) {
-                    Table.__mark(first, 'rowspan', rows, __marked);
+                    Table.mark(first, 'rowspan', rows, __marked);
                 }
                 if (w) {
-                    Table.__mark(first, 'width', ((w / table.offsetWidth) * 100).toFixed(consts.ACCURACY) + '%', __marked);
+                    Table.mark(first, 'width', ((w / table.offsetWidth) * 100).toFixed(consts.ACCURACY) + '%', __marked);
                     if (first_j) {
                         Table.setColumnWidthByDelta(table, first_j, 0, true, __marked);
                     }
                 }
                 first.innerHTML = html.join('<br/>');
                 instance(jodit).addSelection(first);
-                delete first.__i_am_already_was;
-                Table.__unmark(__marked);
+                alreadyMerged.delete(first);
+                Table.unmark(__marked);
                 Table.normalizeTable(table);
-                (0, helpers_1.each)((0, helpers_1.toArray)(table.rows), function (index, tr) {
+                (0, helpers_1.toArray)(table.rows).forEach(function (tr, index) {
                     if (!tr.cells.length) {
                         dom_1.Dom.safeRemove(tr);
                     }
@@ -17367,14 +17367,14 @@ var Table = (function (_super) {
                     if (coord[0] === i &&
                         coord[1] !== j &&
                         tdElm !== cell) {
-                        Table.__mark(tdElm, 'rowspan', tdElm.rowSpan + 1, __marked);
+                        Table.mark(tdElm, 'rowspan', tdElm.rowSpan + 1, __marked);
                     }
                 });
                 dom_1.Dom.after(dom_1.Dom.closest(cell, 'tr', table), tr);
                 tr.appendChild(td);
             }
             else {
-                Table.__mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
+                Table.mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
                 Table.formalMatrix(table, function (tdElm, i, j) {
                     if (i > coord[0] &&
                         i < coord[0] + cell.rowSpan &&
@@ -17395,9 +17395,9 @@ var Table = (function (_super) {
                 }
             }
             if (cell.colSpan > 1) {
-                Table.__mark(td, 'colspan', cell.colSpan, __marked);
+                Table.mark(td, 'colspan', cell.colSpan, __marked);
             }
-            Table.__unmark(__marked);
+            Table.unmark(__marked);
             instance(jodit).removeSelection(cell);
         });
         this.normalizeTable(table);
@@ -17410,30 +17410,31 @@ var Table = (function (_super) {
             if (cell.colSpan < 2) {
                 Table.formalMatrix(table, function (tdElm, i, j) {
                     if (coord[1] === j && coord[0] !== i && tdElm !== cell) {
-                        Table.__mark(tdElm, 'colspan', tdElm.colSpan + 1, __marked);
+                        Table.mark(tdElm, 'colspan', tdElm.colSpan + 1, __marked);
                     }
                 });
             }
             else {
-                Table.__mark(cell, 'colspan', cell.colSpan - 1, __marked);
+                Table.mark(cell, 'colspan', cell.colSpan - 1, __marked);
             }
             td = jodit.createInside.element('td');
             td.appendChild(jodit.createInside.element('br'));
             if (cell.rowSpan > 1) {
-                Table.__mark(td, 'rowspan', cell.rowSpan, __marked);
+                Table.mark(td, 'rowspan', cell.rowSpan, __marked);
             }
             var oldWidth = cell.offsetWidth;
             dom_1.Dom.after(cell, td);
             percentage = oldWidth / table.offsetWidth / 2;
-            Table.__mark(cell, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%', __marked);
-            Table.__mark(td, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%', __marked);
-            Table.__unmark(__marked);
+            Table.mark(cell, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%', __marked);
+            Table.mark(td, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%', __marked);
+            Table.unmark(__marked);
             instance(jodit).removeSelection(cell);
         });
         Table.normalizeTable(table);
     };
     Table.setColumnWidthByDelta = function (table, column, delta, noUnmark, marked) {
         var box = Table.formalMatrix(table);
+        var clearWidthIndex = 0;
         for (var i = 0; i < box.length; i += 1) {
             var cell = box[i][column];
             if (cell.colSpan > 1 && box.length > 1) {
@@ -17441,41 +17442,56 @@ var Table = (function (_super) {
             }
             var w = cell.offsetWidth;
             var percent = ((w + delta) / table.offsetWidth) * 100;
-            Table.__mark(cell, 'width', percent.toFixed(consts.ACCURACY) + '%', marked);
+            Table.mark(cell, 'width', percent.toFixed(consts.ACCURACY) + '%', marked);
+            clearWidthIndex = i;
             break;
         }
+        for (var i = clearWidthIndex + 1; i < box.length; i += 1) {
+            var cell = box[i][column];
+            Table.mark(cell, 'width', null, marked);
+        }
         if (!noUnmark) {
-            Table.__unmark(marked);
+            Table.unmark(marked);
         }
     };
-    Table.__mark = function (cell, key, value, marked) {
+    Table.mark = function (cell, key, value, marked) {
+        var _a;
         marked.push(cell);
-        if (!cell.__marked_value) {
-            cell.__marked_value = {};
-        }
-        cell.__marked_value[key] = value === undefined ? 1 : value;
+        var dict = (_a = markedValue.get(cell)) !== null && _a !== void 0 ? _a : {};
+        dict[key] = value === undefined ? 1 : value;
+        markedValue.set(cell, dict);
     };
-    Table.__unmark = function (marked) {
+    Table.unmark = function (marked) {
         marked.forEach(function (cell) {
-            if (cell.__marked_value) {
-                (0, helpers_1.each)(cell.__marked_value, function (key, value) {
+            var dict = markedValue.get(cell);
+            if (dict) {
+                Object.keys(dict).forEach(function (key) {
+                    var value = dict[key];
                     switch (key) {
                         case 'remove':
                             dom_1.Dom.safeRemove(cell);
                             break;
                         case 'rowspan':
-                            (0, helpers_1.attr)(cell, 'rowspan', value > 1 ? value : null);
+                            (0, helpers_1.attr)(cell, 'rowspan', (0, helpers_1.isNumber)(value) && value > 1 ? value : null);
                             break;
                         case 'colspan':
-                            (0, helpers_1.attr)(cell, 'colspan', value > 1 ? value : null);
+                            (0, helpers_1.attr)(cell, 'colspan', (0, helpers_1.isNumber)(value) && value > 1 ? value : null);
                             break;
                         case 'width':
-                            cell.style.width = value.toString();
+                            if (value == null) {
+                                cell.style.removeProperty('width');
+                                if (!(0, helpers_1.attr)(cell, 'style')) {
+                                    (0, helpers_1.attr)(cell, 'style', null);
+                                }
+                            }
+                            else {
+                                cell.style.width = value.toString();
+                            }
                             break;
                     }
-                    delete cell.__marked_value[key];
+                    delete dict[key];
                 });
-                delete cell.__marked_value;
+                markedValue.delete(cell);
             }
         });
     };
@@ -32098,6 +32114,7 @@ config_1.Config.prototype.controls.table = {
                     if (!first_td) {
                         first_td = td;
                     }
+                    (0, helpers_1.css)(td, 'width', (100 / cols_count).toFixed(4) + '%');
                     td.appendChild(crt.element('br'));
                     tr.appendChild(crt.text('\n'));
                     tr.appendChild(crt.text('\t'));
