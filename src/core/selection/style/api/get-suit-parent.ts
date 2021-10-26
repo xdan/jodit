@@ -25,7 +25,7 @@ export function getSuitParent(
 	const { parentNode } = node;
 
 	if (
-		parentNode &&
+		Dom.isHTMLElement(parentNode) &&
 		!Dom.next(node, isNormalNode, parentNode) &&
 		!Dom.prev(node, isNormalNode, parentNode) &&
 		isSuitElement(style, parentNode, false) &&

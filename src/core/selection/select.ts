@@ -760,42 +760,74 @@ export class Select implements ISelect {
 		if (sel && sel.rangeCount) {
 			const range = sel.getRangeAt(0);
 
+			let root = range.commonAncestorContainer;
+
+			if (!Dom.isHTMLElement(root)) {
+				root = root.parentElement as HTMLElement;
+			}
+
 			const nodes: Node[] = [],
 				startOffset = range.startOffset,
-				length = this.area.childNodes.length,
-				elementOffset = startOffset < length ? startOffset : length - 1,
-				start: Node =
+				length = root.childNodes.length,
+				elementOffset = startOffset < length ? startOffset : length - 1;
+
+			let start: Node =
 					range.startContainer === this.area
-						? this.area.childNodes[elementOffset]
+						? root.childNodes[elementOffset]
 						: range.startContainer,
 				end: Node =
 					range.endContainer === this.area
-						? this.area.childNodes[range.endOffset - 1]
+						? root.childNodes[range.endOffset - 1]
 						: range.endContainer;
 
-			Dom.find(
-				start,
-				(node: Node | null) => {
-					if (
-						node &&
-						node !== this.area &&
-						!Dom.isEmptyTextNode(node) &&
-						!Select.isMarker(node as HTMLElement)
-					) {
-						nodes.push(node);
-					}
+			if (
+				Dom.isText(start) &&
+				start === range.startContainer &&
+				range.startOffset === start.nodeValue?.length &&
+				start.nextSibling
+			) {
+				start = start.nextSibling;
+			}
 
-					// checks parentElement as well because partial selections are not equal to entire element
-					return (
-						node === end ||
-						(node && node.contains && node.contains(end))
-					);
-				},
-				this.area,
-				true,
-				'nextSibling',
-				false
-			);
+			if (
+				Dom.isText(end) &&
+				end === range.endContainer &&
+				range.endOffset === 0 &&
+				end.previousSibling
+			) {
+				end = end.previousSibling;
+			}
+
+			const checkElm = (node: Nullable<Node>) => {
+				if (
+					node &&
+					node !== root &&
+					!Dom.isEmptyTextNode(node) &&
+					!Select.isMarker(node as HTMLElement)
+				) {
+					nodes.push(node);
+				}
+			};
+
+			checkElm(start);
+
+			if (start !== end) {
+				Dom.find(
+					start,
+					node => {
+						checkElm(node);
+
+						// checks parentElement as well because partial selections are not equal to entire element
+						return (
+							node === end ||
+							(node && node.contains && node.contains(end))
+						);
+					},
+					<HTMLElement>root,
+					true,
+					false
+				);
+			}
 
 			const forEvery = (current: Node): void => {
 				if (!Dom.isOrContains(this.j.editor, current, true)) {

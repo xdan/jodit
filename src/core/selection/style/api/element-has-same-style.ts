@@ -29,3 +29,16 @@ export function elementHasSameStyle(elm: Node, rules: IStyle): boolean {
 			})
 	);
 }
+
+/**
+ * Element has the similar styles
+ */
+export function elementHasSameStyleKeys(elm: Node, rules: IStyle): boolean {
+	return Boolean(
+		!Dom.isTag(elm, 'font') &&
+			Dom.isHTMLElement(elm) &&
+			Object.keys(rules).every(
+				property => !isVoid(css(elm, property, true))
+			)
+	);
+}

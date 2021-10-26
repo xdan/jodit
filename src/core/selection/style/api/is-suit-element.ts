@@ -6,7 +6,10 @@
 import type { Nullable } from '../../../../types';
 import type { CommitStyle } from '../commit-style';
 import { isNormalNode } from './is-normal-node';
-import { elementHasSameStyle } from './element-has-same-style';
+import {
+	elementHasSameStyle,
+	elementHasSameStyleKeys
+} from './element-has-same-style';
 import { Dom } from '../../../dom';
 
 /**
@@ -45,4 +48,23 @@ export function isSuitElement(
 	return Boolean(
 		!elmIsSame && !strict && elementIsDefault && Dom.isInlineBlock(elm)
 	);
+}
+
+export function isSameStyleChild(
+	commitStyle: CommitStyle,
+	elm: Nullable<Node>
+): elm is HTMLElement {
+	const { element, options } = commitStyle;
+
+	if (!elm || !isNormalNode(elm)) {
+		return false;
+	}
+
+	const elmIsSame = elm.nodeName.toLowerCase() === element;
+
+	const elmHasSameStyle = Boolean(
+		options.style && elementHasSameStyleKeys(elm, options.style)
+	);
+
+	return elmIsSame && elmHasSameStyle;
 }
