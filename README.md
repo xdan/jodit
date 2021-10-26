@@ -6,7 +6,6 @@ An excellent WYSIWYG editor written in pure TypeScript without the use of additi
 [![Build Status](https://github.com/xdan/jodit/workflows/Run%20tests/badge.svg)](https://github.com/xdan/jodit/actions/workflows/tests.yml)
 [![npm version](https://badge.fury.io/js/jodit.svg)](https://badge.fury.io/js/jodit)
 [![npm](https://img.shields.io/npm/dm/jodit.svg)](https://www.npmjs.com/package/jodit)
-[![Gitter](https://badges.gitter.im/xdan/jodit.svg)](https://gitter.im/xdan/jodit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
  * [Demo and Official site](https://xdsoft.net/jodit/)
  * [PRO Version](https://xdsoft.net/jodit/pro/)
