@@ -57,7 +57,7 @@ export function unwrapChildren(style: CommitStyle, font: HTMLElement): boolean {
 						needUnwrap.push(elm);
 					}
 				});
-			} else {
+			} else if (!Dom.isEmptyTextNode(elm)) {
 				if (firstElementSuit === undefined) {
 					firstElementSuit = false;
 				}
