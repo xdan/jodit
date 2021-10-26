@@ -1083,9 +1083,43 @@ describe('Clipboard text', function () {
 							};
 						};
 
-					simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
+					simulateEvent('paste', editor.editor, emulatePasteEvent);
 
 					expect(editor.value).equals('<p>test</p>');
+				});
+
+				describe('For not empty editor', function () {
+					it('Should insert text on the cursor place', function () {
+						// https://github.com/xdan/jodit/issues/522
+						const editor = getJodit({
+								askBeforePasteHTML: false,
+								askBeforePasteFromWord: false,
+								defaultActionOnPaste: Jodit.INSERT_ONLY_TEXT
+							}),
+							pastedText = '<strong>editor</strong>',
+							emulatePasteEvent = function (data) {
+								data.clipboardData = {
+									types: ['text/html'],
+									getData: function () {
+										return pastedText;
+									}
+								};
+							};
+
+						editor.value = '<p>Jodit is awesome |</p>';
+
+						setCursorToChar(editor);
+						simulateEvent(
+							'paste',
+							editor.editor,
+							emulatePasteEvent
+						);
+						replaceCursorToChar(editor);
+
+						expect(editor.value).equals(
+							'<p>Jodit is awesome editor|</p>'
+						);
+					});
 				});
 			});
 
