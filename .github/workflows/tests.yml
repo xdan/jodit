@@ -14,5 +14,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - uses: actions/setup-node@v1 #Setup Node
+      with:
+        node-version: '14'
+    - name: Run Karma Tests
+      run: |
+        npm install
+        npm run test        
