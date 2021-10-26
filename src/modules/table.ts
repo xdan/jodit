@@ -10,10 +10,10 @@
  * creates a new instance Jodit.modules.TableProcessor and it can be accessed via $('table').data('table-processor')
  */
 
-import type { ICreate, IJodit } from '../types';
+import type { ICreate, IDictionary, IJodit } from '../types';
 import * as consts from '../core/constants';
 import { Dom } from '../core/dom';
-import { $$, attr, cssPath, each, toArray, trim } from '../core/helpers/';
+import { $$, attr, cssPath, isNumber, toArray, trim } from '../core/helpers/';
 import { ViewComponent } from '../core/component';
 import { getContainer } from '../core/global';
 import { debounce } from '../core/decorators';
@@ -29,6 +29,11 @@ declare module '../config' {
 		};
 	}
 }
+
+const markedValue = new WeakMap<
+	HTMLElement,
+	IDictionary<string | number | null>
+>();
 
 export class Table extends ViewComponent<IJodit> {
 	/** @override */
@@ -306,54 +311,49 @@ export class Table extends ViewComponent<IJodit> {
 		let dec: boolean;
 		const row = table.rows[rowIndex];
 
-		each<HTMLTableCellElement>(
-			box[rowIndex],
-			(j: number, cell: HTMLTableCellElement) => {
-				dec = false;
-				if (rowIndex - 1 >= 0 && box[rowIndex - 1][j] === cell) {
+		box[rowIndex].forEach((cell: HTMLTableCellElement, j: number) => {
+			dec = false;
+
+			if (rowIndex - 1 >= 0 && box[rowIndex - 1][j] === cell) {
+				dec = true;
+			} else if (box[rowIndex + 1] && box[rowIndex + 1][j] === cell) {
+				if (cell.parentNode === row && cell.parentNode.nextSibling) {
 					dec = true;
-				} else if (box[rowIndex + 1] && box[rowIndex + 1][j] === cell) {
-					if (
-						cell.parentNode === row &&
-						cell.parentNode.nextSibling
-					) {
-						dec = true;
-						let nextCell = j + 1;
+					let nextCell = j + 1;
 
-						while (box[rowIndex + 1][nextCell] === cell) {
-							nextCell += 1;
-						}
+					while (box[rowIndex + 1][nextCell] === cell) {
+						nextCell += 1;
+					}
 
-						const nextRow = Dom.next<HTMLTableRowElement>(
-							cell.parentNode,
-							elm => Dom.isTag(elm, 'tr'),
-							table
-						);
+					const nextRow = Dom.next<HTMLTableRowElement>(
+						cell.parentNode,
+						elm => Dom.isTag(elm, 'tr'),
+						table
+					);
 
-						if (nextRow) {
-							if (box[rowIndex + 1][nextCell]) {
-								nextRow.insertBefore(
-									cell,
-									box[rowIndex + 1][nextCell]
-								);
-							} else {
-								nextRow.appendChild(cell);
-							}
+					if (nextRow) {
+						if (box[rowIndex + 1][nextCell]) {
+							nextRow.insertBefore(
+								cell,
+								box[rowIndex + 1][nextCell]
+							);
+						} else {
+							nextRow.appendChild(cell);
 						}
 					}
-				} else {
-					Dom.safeRemove(cell);
 				}
-				if (
-					dec &&
-					(cell.parentNode === row || cell !== box[rowIndex][j - 1])
-				) {
-					const rowSpan = cell.rowSpan;
-
-					attr(cell, 'rowspan', rowSpan - 1 > 1 ? rowSpan - 1 : null);
-				}
+			} else {
+				Dom.safeRemove(cell);
 			}
-		);
+			if (
+				dec &&
+				(cell.parentNode === row || cell !== box[rowIndex][j - 1])
+			) {
+				const rowSpan = cell.rowSpan;
+
+				attr(cell, 'rowspan', rowSpan - 1 > 1 ? rowSpan - 1 : null);
+			}
+		});
 
 		Dom.safeRemove(row);
 	}
@@ -420,7 +420,7 @@ export class Table extends ViewComponent<IJodit> {
 		const box = Table.formalMatrix(table);
 
 		let dec: boolean;
-		each(box, (i: number, cells: HTMLTableCellElement[]) => {
+		box.forEach((cells: HTMLTableCellElement[], i: number) => {
 			const td = cells[j];
 
 			dec = false;
@@ -537,7 +537,7 @@ export class Table extends ViewComponent<IJodit> {
 						continue; // broken table
 					}
 
-					Table.__mark(
+					Table.mark(
 						box[i][j],
 						'colspan',
 						box[i][j].colSpan - min + 1,
@@ -569,7 +569,7 @@ export class Table extends ViewComponent<IJodit> {
 						continue; // broken table
 					}
 
-					Table.__mark(
+					Table.mark(
 						box[i][j],
 						'rowspan',
 						box[i][j].rowSpan - min + 1,
@@ -609,7 +609,7 @@ export class Table extends ViewComponent<IJodit> {
 			}
 		}
 
-		Table.__unmark(__marked);
+		Table.unmark(__marked);
 	}
 
 	/**
@@ -629,7 +629,8 @@ export class Table extends ViewComponent<IJodit> {
 			cols: number = 0,
 			rows: number = 0;
 
-		const __marked: HTMLTableCellElement[] = [];
+		const alreadyMerged = new Set<HTMLTableCellElement>(),
+			__marked: HTMLTableCellElement[] = [];
 
 		if (bound && (bound[0][0] - bound[1][0] || bound[0][1] - bound[1][1])) {
 			Table.formalMatrix(
@@ -645,11 +646,11 @@ export class Table extends ViewComponent<IJodit> {
 						if (j >= bound[0][1] && j <= bound[1][1]) {
 							td = cell;
 
-							if ((td as any).__i_am_already_was) {
+							if (alreadyMerged.has(td)) {
 								return;
 							}
 
-							(td as any).__i_am_already_was = true;
+							alreadyMerged.add(td);
 
 							if (i === bound[0][0] && td.style.width) {
 								w += td.offsetWidth;
@@ -674,7 +675,7 @@ export class Table extends ViewComponent<IJodit> {
 								first = cell;
 								first_j = j;
 							} else {
-								Table.__mark(td, 'remove', 1, __marked);
+								Table.mark(td, 'remove', 1, __marked);
 
 								instance(jodit).removeSelection(td);
 							}
@@ -688,14 +689,14 @@ export class Table extends ViewComponent<IJodit> {
 
 			if (first) {
 				if (cols > 1) {
-					Table.__mark(first, 'colspan', cols, __marked);
+					Table.mark(first, 'colspan', cols, __marked);
 				}
 				if (rows > 1) {
-					Table.__mark(first, 'rowspan', rows, __marked);
+					Table.mark(first, 'rowspan', rows, __marked);
 				}
 
 				if (w) {
-					Table.__mark(
+					Table.mark(
 						first,
 						'width',
 						((w / table.offsetWidth) * 100).toFixed(
@@ -718,13 +719,13 @@ export class Table extends ViewComponent<IJodit> {
 				(first as HTMLTableCellElement).innerHTML = html.join('<br/>');
 				instance(jodit).addSelection(first);
 
-				delete (first as any).__i_am_already_was;
+				alreadyMerged.delete(first);
 
-				Table.__unmark(__marked);
+				Table.unmark(__marked);
 
 				Table.normalizeTable(table);
 
-				each(toArray(table.rows), (index, tr) => {
+				toArray(table.rows).forEach((tr, index) => {
 					if (!tr.cells.length) {
 						Dom.safeRemove(tr);
 					}
@@ -760,7 +761,7 @@ export class Table extends ViewComponent<IJodit> {
 							coord[1] !== j &&
 							tdElm !== cell
 						) {
-							Table.__mark(
+							Table.mark(
 								tdElm,
 								'rowspan',
 								tdElm.rowSpan + 1,
@@ -776,7 +777,7 @@ export class Table extends ViewComponent<IJodit> {
 
 					tr.appendChild(td);
 				} else {
-					Table.__mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
+					Table.mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
 
 					Table.formalMatrix(
 						table,
@@ -804,10 +805,10 @@ export class Table extends ViewComponent<IJodit> {
 				}
 
 				if (cell.colSpan > 1) {
-					Table.__mark(td, 'colspan', cell.colSpan, __marked);
+					Table.mark(td, 'colspan', cell.colSpan, __marked);
 				}
 
-				Table.__unmark(__marked);
+				Table.unmark(__marked);
 				instance(jodit).removeSelection(cell);
 			}
 		);
@@ -829,7 +830,7 @@ export class Table extends ViewComponent<IJodit> {
 			if (cell.colSpan < 2) {
 				Table.formalMatrix(table, (tdElm, i, j) => {
 					if (coord[1] === j && coord[0] !== i && tdElm !== cell) {
-						Table.__mark(
+						Table.mark(
 							tdElm,
 							'colspan',
 							tdElm.colSpan + 1,
@@ -838,14 +839,14 @@ export class Table extends ViewComponent<IJodit> {
 					}
 				});
 			} else {
-				Table.__mark(cell, 'colspan', cell.colSpan - 1, __marked);
+				Table.mark(cell, 'colspan', cell.colSpan - 1, __marked);
 			}
 
 			td = jodit.createInside.element('td');
 			td.appendChild(jodit.createInside.element('br'));
 
 			if (cell.rowSpan > 1) {
-				Table.__mark(td, 'rowspan', cell.rowSpan, __marked);
+				Table.mark(td, 'rowspan', cell.rowSpan, __marked);
 			}
 
 			const oldWidth = cell.offsetWidth; // get old width
@@ -854,21 +855,21 @@ export class Table extends ViewComponent<IJodit> {
 
 			percentage = oldWidth / table.offsetWidth / 2;
 
-			Table.__mark(
+			Table.mark(
 				cell,
 				'width',
 				(percentage * 100).toFixed(consts.ACCURACY) + '%',
 				__marked
 			);
 
-			Table.__mark(
+			Table.mark(
 				td,
 				'width',
 				(percentage * 100).toFixed(consts.ACCURACY) + '%',
 				__marked
 			);
 
-			Table.__unmark(__marked);
+			Table.unmark(__marked);
 
 			instance(jodit).removeSelection(cell);
 		});
@@ -888,6 +889,7 @@ export class Table extends ViewComponent<IJodit> {
 	): void {
 		const box = Table.formalMatrix(table);
 
+		let clearWidthIndex = 0;
 		for (let i = 0; i < box.length; i += 1) {
 			const cell = box[i][column];
 
@@ -898,65 +900,87 @@ export class Table extends ViewComponent<IJodit> {
 			const w = cell.offsetWidth;
 			const percent = ((w + delta) / table.offsetWidth) * 100;
 
-			Table.__mark(
+			Table.mark(
 				cell,
 				'width',
 				percent.toFixed(consts.ACCURACY) + '%',
 				marked
 			);
 
+			clearWidthIndex = i;
 			break;
 		}
 
+		for (let i = clearWidthIndex + 1; i < box.length; i += 1) {
+			const cell = box[i][column];
+
+			Table.mark(cell, 'width', null, marked);
+		}
+
 		if (!noUnmark) {
-			Table.__unmark(marked);
+			Table.unmark(marked);
 		}
 	}
 
-	private static __mark(
+	private static mark(
 		cell: HTMLTableCellElement,
 		key: string,
-		value: string | number,
+		value: string | number | null,
 		marked: HTMLTableCellElement[]
 	) {
 		marked.push(cell);
 
-		if (!(cell as any).__marked_value) {
-			(cell as any).__marked_value = {};
-		}
-
-		(cell as any).__marked_value[key] = value === undefined ? 1 : value;
+		const dict = markedValue.get(cell) ?? {};
+		dict[key] = value === undefined ? 1 : value;
+		markedValue.set(cell, dict);
 	}
 
-	private static __unmark(marked: HTMLTableCellElement[]) {
+	private static unmark(marked: HTMLTableCellElement[]) {
 		marked.forEach(cell => {
-			if ((cell as any).__marked_value) {
-				each(
-					(cell as any).__marked_value,
-					(key: string, value: number) => {
-						switch (key) {
-							case 'remove':
-								Dom.safeRemove(cell);
-								break;
+			const dict = markedValue.get(cell);
 
-							case 'rowspan':
-								attr(cell, 'rowspan', value > 1 ? value : null);
-								break;
+			if (dict) {
+				Object.keys(dict).forEach((key: string) => {
+					const value = dict[key];
 
-							case 'colspan':
-								attr(cell, 'colspan', value > 1 ? value : null);
-								break;
+					switch (key) {
+						case 'remove':
+							Dom.safeRemove(cell);
+							break;
 
-							case 'width':
+						case 'rowspan':
+							attr(
+								cell,
+								'rowspan',
+								isNumber(value) && value > 1 ? value : null
+							);
+							break;
+
+						case 'colspan':
+							attr(
+								cell,
+								'colspan',
+								isNumber(value) && value > 1 ? value : null
+							);
+							break;
+
+						case 'width':
+							if (value == null) {
+								cell.style.removeProperty('width');
+								if (!attr(cell, 'style')) {
+									attr(cell, 'style', null);
+								}
+							} else {
 								cell.style.width = value.toString();
-								break;
-						}
+							}
 
-						delete (cell as any).__marked_value[key];
+							break;
 					}
-				);
 
-				delete (cell as any).__marked_value;
+					delete dict[key];
+				});
+
+				markedValue.delete(cell);
 			}
 		});
 	}

@@ -1539,7 +1539,7 @@ describe('Tables Jodit Editor Tests', function () {
 				const editor = getJodit();
 
 				editor.value =
-					'<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+					'<table style="width: 100px; table-layout: fixed; border-collapse: separate;" cellspacing="0">' +
 					'<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>' +
 					'</table>';
 
@@ -1588,7 +1588,7 @@ describe('Tables Jodit Editor Tests', function () {
 						const editor = getJodit();
 
 						editor.value =
-							'<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+							'<table style="width: 100px;table-layout: fixed;border-collapse: separate;" cellspacing="0">' +
 							'<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
 							'</table>';
 
@@ -1624,11 +1624,11 @@ describe('Tables Jodit Editor Tests', function () {
 							}
 						);
 
-						expect(editor.editor.innerHTML.toLowerCase()).equals(
-							'<table style="width: 100px; border-collapse: separate;" cellspacing="0"><tbody>' +
+						expect(sortAttributes(editor.value)).equals(
+							'<table cellspacing="0" style="border-collapse:separate;table-layout:fixed;width:100px"><tbody>' +
 								'<tr>' +
-								'<td style="width: 30%;">1</td>' +
-								'<td style="width: 20%;">2</td>' +
+								'<td style="width:30%">1</td>' +
+								'<td style="width:20%">2</td>' +
 								'<td>3</td>' +
 								'<td>4</td>' +
 								'</tr>' +
@@ -1644,7 +1644,7 @@ describe('Tables Jodit Editor Tests', function () {
 						const editor = getJodit();
 
 						editor.value =
-							'<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+							'<table style="width: 100px; table-layout: fixed;border-collapse: separate;" cellspacing="0">' +
 							'<tbody>' +
 							'<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
 							'<tr><td>5</td><td>6</td><td>7</td><td>8</td></tr>' +
@@ -1683,9 +1683,9 @@ describe('Tables Jodit Editor Tests', function () {
 							}
 						);
 
-						expect(editor.editor.innerHTML.toLowerCase()).equals(
-							'<table style="width: 100px; border-collapse: separate;" cellspacing="0"><tbody>' +
-								'<tr><td style="width: 30%;">1</td><td style="width: 20%;">2</td><td>3</td><td>4</td></tr>' +
+						expect(sortAttributes(editor.value)).equals(
+							'<table cellspacing="0" style="border-collapse:separate;table-layout:fixed;width:100px"><tbody>' +
+								'<tr><td style="width:30%">1</td><td style="width:20%">2</td><td>3</td><td>4</td></tr>' +
 								'<tr><td>5</td><td>6</td><td>7</td><td>8</td></tr>' +
 								'</tbody></table>'
 						);
@@ -1699,7 +1699,7 @@ describe('Tables Jodit Editor Tests', function () {
 						const editor = getJodit();
 
 						editor.value =
-							'<p>test</p><table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+							'<p>test</p><table style="width: 100px; table-layout: fixed;border-collapse: separate;" cellspacing="0">' +
 							'<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
 							'</table>';
 
@@ -1750,7 +1750,7 @@ describe('Tables Jodit Editor Tests', function () {
 
 						expect(sortAttributes(editor.value)).equals(
 							'<p>teststop</p>' +
-								'<table cellspacing="0" style="border-collapse:separate;width:100px">' +
+								'<table cellspacing="0" style="border-collapse:separate;table-layout:fixed;width:100px">' +
 								'<tbody>' +
 								'<tr>' +
 								'<td style="width:30%">1</td>' +
@@ -1773,7 +1773,7 @@ describe('Tables Jodit Editor Tests', function () {
 						});
 
 						editor.value =
-							'<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+							'<table style="width: 100px; table-layout: fixed; border-collapse: separate;" cellspacing="0">' +
 							'<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
 							'</table>';
 
@@ -1822,12 +1822,12 @@ describe('Tables Jodit Editor Tests', function () {
 							}
 						);
 
-						expect(editor.editor.innerHTML.toLowerCase()).equals(
-							'<table style="width: 100px; border-collapse: separate;" cellspacing="0"><tbody>' +
+						expect(sortAttributes(editor.value)).equals(
+							'<table cellspacing="0" style="border-collapse:separate;table-layout:fixed;width:100px"><tbody>' +
 								'<tr>' +
 								'<td>1</td>' +
-								'<td style="width: 20%;">2</td>' +
-								'<td style="width: 30%;">3</td>' +
+								'<td style="width:20%">2</td>' +
+								'<td style="width:30%">3</td>' +
 								'<td>4</td>' +
 								'</tr>' +
 								'</tbody></table>'
@@ -1843,7 +1843,7 @@ describe('Tables Jodit Editor Tests', function () {
 							});
 
 							editor.value =
-								'<p>test</p><table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+								'<p>test</p><table style="width: 100px; table-layout: fixed; border-collapse: separate;" cellspacing="0">' +
 								'<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
 								'</table>';
 
@@ -1852,21 +1852,15 @@ describe('Tables Jodit Editor Tests', function () {
 
 							editor.s.setCursorIn(editor.editor.firstChild);
 
-							simulateEvent(
-								'mousemove',
-								1,
-								td,
-								function (options) {
-									options.clientX = box.left;
-									options.offsetX = 0;
-									options.pageX = 0;
-									options.pageY = 0;
-								}
-							);
+							simulateEvent('mousemove', td, function (options) {
+								options.clientX = box.left;
+								options.offsetX = 0;
+								options.pageX = 0;
+								options.pageY = 0;
+							});
 
 							simulateEvent(
 								'mousedown',
-								1,
 								editor.container.querySelector(
 									'.jodit-table-resizer'
 								),
@@ -1879,7 +1873,6 @@ describe('Tables Jodit Editor Tests', function () {
 
 							simulateEvent(
 								'mousemove',
-								1,
 								editor.ew,
 								function (options) {
 									options.clientX = box.left + 5; // move on 5 pixels
@@ -1890,7 +1883,6 @@ describe('Tables Jodit Editor Tests', function () {
 
 							simulateEvent(
 								'mouseup',
-								1,
 								editor.ownerWindow,
 								function (options) {
 									options.clientX = box.left + 5; // move on 5 pixels
@@ -1903,7 +1895,7 @@ describe('Tables Jodit Editor Tests', function () {
 
 							expect(sortAttributes(editor.value)).equals(
 								'<p>teststop</p>' +
-									'<table cellspacing="0" style="border-collapse:separate;width:100px">' +
+									'<table cellspacing="0" style="border-collapse:separate;table-layout:fixed;width:100px">' +
 									'<tbody>' +
 									'<tr>' +
 									'<td>1</td>' +
@@ -1924,7 +1916,7 @@ describe('Tables Jodit Editor Tests', function () {
 					it('should change only not merged cells', () => {
 						const editor = getJodit();
 
-						editor.value = `<table style="width: 100px; border-collapse: separate;" cellspacing="0">
+						editor.value = `<table style="width: 100px; border-collapse: separate;table-layout: fixed" cellspacing="0">
 								<tbody>
 									<tr><td>1</td><td colspan="2">2 3</td><td>4</td></tr>
 									<tr><td>5</td><td>6</td><td>7</td><td>8</td></tr>
@@ -1964,7 +1956,7 @@ describe('Tables Jodit Editor Tests', function () {
 						);
 
 						expect(sortAttributes(editor.value)).equals(
-							`<table cellspacing="0" style="border-collapse:separate;width:100px">
+							`<table cellspacing="0" style="border-collapse:separate;table-layout:fixed;width:100px">
 								<tbody>
 									<tr><td>1</td><td colspan="2">2 3</td><td>4</td></tr>
 									<tr><td>5</td><td style="width:30%">6</td><td style="width:20%">7</td><td>8</td></tr>
@@ -1978,7 +1970,7 @@ describe('Tables Jodit Editor Tests', function () {
 							const editor = getJodit();
 
 							editor.value =
-								'<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+								'<table style="width: 100px; border-collapse: separate;table-layout: fixed" cellspacing="0">' +
 								'<tbody>' +
 								'<tr><td>1</td><td colspan="2">2 3</td><td>4</td></tr>' +
 								'</tbody>' +
@@ -2017,9 +2009,121 @@ describe('Tables Jodit Editor Tests', function () {
 							);
 
 							expect(sortAttributes(editor.value)).equals(
-								'<table cellspacing="0" style="border-collapse:separate;width:100px">' +
+								'<table cellspacing="0" style="border-collapse:separate;table-layout:fixed;width:100px">' +
 									'<tbody>' +
 									'<tr><td style="width:20%">1</td><td colspan="2" style="width:55%">2 3</td><td>4</td></tr>' +
+									'</tbody>' +
+									'</table>'
+							);
+						});
+					});
+
+					describe('Table in two row', () => {
+						it('should change usual way', () => {
+							const editor = getJodit();
+
+							editor.value =
+								'<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+								'<tbody>' +
+								'<tr><td>1</td><td colspan="2">2 3</td></tr>' +
+								'<tr><td>4</td><td>5</td><td>6</td></tr>' +
+								'</tbody>' +
+								'</table>';
+
+							const td = editor.editor.querySelectorAll('td')[4],
+								box = td.getBoundingClientRect();
+
+							simulateEvent('mousemove', td, options => {
+								options.clientX = box.left;
+								options.offsetX = 0;
+								options.pageX = 0;
+								options.pageY = 0;
+							});
+
+							simulateEvent(
+								'mousedown',
+								editor.container.querySelector(
+									'.jodit-table-resizer'
+								),
+								options => {
+									options.clientX = box.left;
+									options.pageX = 0;
+									options.pageY = 0;
+								}
+							);
+
+							simulateEvent(
+								['mousemove', 'mouseup'],
+								editor.ew,
+								options => {
+									options.clientX = box.left - 10;
+									options.pageX = 0;
+									options.pageY = 0;
+								}
+							);
+
+							expect(sortAttributes(editor.value)).equals(
+								'<table cellspacing="0" style="border-collapse:separate;width:100px">' +
+									'<tbody>' +
+									'<tr><td>1</td><td colspan="2">2 3</td></tr>' +
+									'<tr><td>4</td><td style="width:24%">5</td><td style="width:43%">6</td></tr>' +
+									'</tbody>' +
+									'</table>'
+							);
+						});
+					});
+
+					describe('Table in three row', () => {
+						it('should change usual way', () => {
+							const editor = getJodit();
+
+							editor.value =
+								'<table cellspacing="0" style="border-collapse:separate;width:100px;table-layout:fixed">' +
+								'<tbody>' +
+								'<tr><td>1</td><td colspan="2">2 3</td></tr>' +
+								'<tr><td>4</td><td style="width:33%">5</td><td style="width:33%">6</td></tr>' +
+								'<tr><td>7</td><td style="width:33%">8</td><td style="width:33%">9</td></tr>' +
+								'</tbody>' +
+								'</table>';
+
+							const td = editor.editor.querySelectorAll('td')[4],
+								box = td.getBoundingClientRect();
+
+							simulateEvent('mousemove', td, options => {
+								options.clientX = box.left;
+								options.offsetX = 0;
+								options.pageX = 0;
+								options.pageY = 0;
+							});
+
+							simulateEvent(
+								'mousedown',
+								editor.container.querySelector(
+									'.jodit-table-resizer'
+								),
+								options => {
+									options.clientX = box.left;
+									options.pageX = 0;
+									options.pageY = 0;
+								}
+							);
+
+							simulateEvent(
+								['mousemove', 'mouseup'],
+								editor.ew,
+								options => {
+									options.clientX = box.left - 10;
+									options.pageX = 0;
+									options.pageY = 0;
+								}
+							);
+
+							expect(sortAttributes(editor.value)).equals(
+								'<table cellspacing="0" style="border-collapse:separate;table-layout:fixed;width:100px">' +
+									'<tbody>' +
+									'<tr><td>1</td><td colspan="2">2 3</td></tr>' +
+									'<tr><td>4</td><td style="width:24%">5</td><td style="width:43%">6</td></tr>' +
+									'<tr><td>7</td><td>8</td><td>9</td></tr>' +
 									'</tbody>' +
 									'</table>'
 							);
@@ -2034,7 +2138,7 @@ describe('Tables Jodit Editor Tests', function () {
 				getBox().style.width = '202px';
 
 				editor.value =
-					'<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+					'<table style="width: 100px; table-layout: fixed; border-collapse: separate;" cellspacing="0">' +
 					'<tr><td>1</td><td>2</td><td>3</td><td>5</td></tr>' +
 					'</table>';
 				const td = editor.editor.querySelectorAll('td')[3],
@@ -2064,7 +2168,7 @@ describe('Tables Jodit Editor Tests', function () {
 				expect(
 					sortAttributes(editor.editor.innerHTML.toLowerCase())
 				).equals(
-					'<table cellspacing="0" style="border-collapse:separate;width:81.52%"><tbody>' +
+					'<table cellspacing="0" style="border-collapse:separate;table-layout:fixed;width:81.52%"><tbody>' +
 						'<tr>' +
 						'<td>1</td>' +
 						'<td>2</td>' +
@@ -2083,21 +2187,20 @@ describe('Tables Jodit Editor Tests', function () {
 						getBox().style.width = '202px';
 
 						editor.value =
-							'<table style="width: 100px">' +
+							'<table style="table-layout: fixed;width: 100px">' +
 							'<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
 							'</table>';
 
 						const td = editor.editor.querySelectorAll('td')[0],
 							box = td.getBoundingClientRect();
 
-						simulateEvent('mousemove', 1, td, function (options) {
+						simulateEvent('mousemove', td, function (options) {
 							options.clientX = box.left;
 							options.offsetX = 0;
 						});
 
 						simulateEvent(
 							'mousedown',
-							1,
 							editor.container.querySelector(
 								'.jodit-table-resizer'
 							),
@@ -2106,14 +2209,9 @@ describe('Tables Jodit Editor Tests', function () {
 							}
 						);
 
-						simulateEvent(
-							'mousemove',
-							1,
-							window,
-							function (options) {
-								options.clientX = box.left + 50;
-							}
-						);
+						simulateEvent('mousemove', window, function (options) {
+							options.clientX = box.left + 50;
+						});
 						simulateEvent('mouseup', 1, window, function (options) {
 							options.clientX = box.left + 50;
 						});
@@ -2123,7 +2221,7 @@ describe('Tables Jodit Editor Tests', function () {
 								editor.editor.innerHTML.toLowerCase()
 							)
 						).equals(
-							'<table style="margin-left:27.17%;width:27.17%">' +
+							'<table style="margin-left:27.17%;table-layout:fixed;width:27.17%">' +
 								'<tbody>' +
 								'<tr>' +
 								'<td>1</td>' +

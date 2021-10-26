@@ -8,7 +8,7 @@ import type { IControlType, IDictionary, IJodit } from '../../types';
 import { Config } from '../../config';
 import { Dom } from '../../core/dom';
 import { attr } from '../../core/helpers/utils';
-import { $$, scrollIntoViewIfNeeded } from '../../core/helpers';
+import { $$, css, scrollIntoViewIfNeeded } from '../../core/helpers';
 
 Config.prototype.table = {
 	allowCellSelection: true,
@@ -156,6 +156,8 @@ Config.prototype.controls.table = {
 						if (!first_td) {
 							first_td = td;
 						}
+
+						css(td, 'width', (100 / cols_count).toFixed(4) + '%');
 
 						td.appendChild(crt.element('br'));
 						tr.appendChild(crt.text('\n'));
