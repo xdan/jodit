@@ -61,7 +61,6 @@ function mockAjax() {
 	if (typeof window.chai !== 'undefined') {
 		let temp = {};
 		Jodit.modules.Ajax.prototype.send = function () {
-			debugger;
 			const ajax = this;
 
 			const request = this.prepareRequest();
