@@ -478,7 +478,7 @@ export class Dom {
 		leftToRight: boolean = true,
 		withChild: boolean = true
 	): Nullable<T> {
-		const gen = this.findGen(node, root, leftToRight, withChild);
+		const gen = this.nextGen(node, root, leftToRight, withChild);
 
 		let item = gen.next();
 
@@ -496,7 +496,7 @@ export class Dom {
 	/**
 	 * Find next/prev node what `condition(next) === true`
 	 */
-	static *findGen(
+	static *nextGen(
 		start: Node,
 		root: HTMLElement,
 		leftToRight: boolean = true,
