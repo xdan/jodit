@@ -34,7 +34,10 @@ Config.prototype.controls.outdent = {
 
 			if (currentBox) {
 				const arrow = getKey(editor.o.direction, currentBox);
-				return parseInt(currentBox.style[arrow], 10) <= 0;
+				return (
+					!currentBox.style[arrow] ||
+					parseInt(currentBox.style[arrow], 10) <= 0
+				);
 			}
 		}
 

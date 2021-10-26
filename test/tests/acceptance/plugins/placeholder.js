@@ -96,8 +96,8 @@ describe('Placeholder plugin', function () {
 		it("Should set Placeholder's text-align", function () {
 			const editor = getJodit();
 
-			editor.value = '<p><br></p>';
-			editor.s.setCursorIn(editor.editor.firstChild);
+			editor.value = '<p>|<br></p>';
+			setCursorToChar(editor);
 
 			clickTrigger('left', editor);
 			const list = getOpenedPopup(editor);

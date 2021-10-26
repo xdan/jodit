@@ -205,4 +205,78 @@ describe('Test editor indent plugin', function () {
 			expect(div.style.marginLeft).does.not.equals('10px');
 		});
 	});
+
+	describe('Indent plugin', function () {
+		it('Should set active outdent button if current container has marginLeft', function () {
+			const area = appendTestArea();
+			const editor = new Jodit(area, {
+				toolbarAdaptive: false,
+				buttons: 'indent,outdent'
+			});
+
+			editor.value = '<p>|text</p>';
+			setCursorToChar(editor);
+
+			simulateEvent('mousedown', editor.editor.firstChild);
+
+			expect(getButton('outdent', editor).hasAttribute('disabled')).is
+				.true;
+
+			editor.editor.firstChild.style.marginLeft = '100px';
+
+			simulateEvent('mousedown', editor.editor.firstChild);
+
+			expect(getButton('outdent', editor).hasAttribute('disabled')).is
+				.false;
+		});
+
+		describe('Press Indent button', function () {
+			it('Should increase indent for current blocks', function () {
+				const area = appendTestArea();
+				const editor = new Jodit(area, {
+					toolbarAdaptive: false,
+					buttons: 'indent,outdent',
+					indentMargin: 5
+				});
+
+				editor.value = '<h1>test</h1><p>text</p><p>text</p>';
+
+				const range = editor.s.createRange();
+
+				range.setStartBefore(editor.editor.firstChild);
+				range.setEndAfter(editor.editor.firstChild.nextSibling);
+				editor.s.selectRange(range);
+
+				clickButton('indent', editor);
+				clickButton('indent', editor);
+				clickButton('indent', editor);
+
+				expect(
+					'<h1 style="margin-left: 15px;">test</h1><p style="margin-left: 15px;">text</p><p>text</p>'
+				).equals(editor.value);
+
+				clickButton('outdent', editor);
+				clickButton('outdent', editor);
+				clickButton('outdent', editor);
+
+				expect('<h1>test</h1><p>text</p><p>text</p>').equals(
+					editor.value
+				);
+			});
+		});
+
+		describe('Run indent command for inline elements', function () {
+			it('should wrap elements in block and change margin for it', function () {
+				const editor = getJodit();
+				editor.value = '<p>a|<br>b<br>c<br></p>';
+				setCursorToChar(editor);
+
+				editor.execCommand('indent');
+
+				expect(sortAttributes(editor.value)).equals(
+					'<p style="margin-left:10px">a<br>b<br>c<br></p>'
+				);
+			});
+		});
+	});
 });
