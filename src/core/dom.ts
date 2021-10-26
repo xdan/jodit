@@ -148,47 +148,6 @@ export class Dom {
 	}
 
 	/**
-	 * It goes through all the internal elements of the node, causing a callback function
-	 *
-	 * @param elm - the element whose children and descendants you want to iterate over
-	 * @param callback - It called for each item found
-	 * @example
-	 * ```javascript
-	 * Jodit.modules.Dom.each(parent.s.current(), function (node) {
-	 *  if (node.nodeType === Node.TEXT_NODE) {
-	 *      node.nodeValue = node.nodeValue.replace(Jodit.INVISIBLE_SPACE_REG_EX, '') // remove all of
-	 *      the text element codes invisible character
-	 *  }
-	 * });
-	 * ```
-	 */
-	static each(
-		elm: Node | HTMLElement,
-		callback: (node: Node) => void | boolean
-	): boolean {
-		let node: Node | null | false = elm.firstChild;
-
-		if (node) {
-			while (node) {
-				const next: Nullable<Node> = Dom.next(node, Boolean, elm);
-
-				if (callback(node) === false) {
-					return false;
-				}
-
-				// inside callback - node could be removed
-				if (node.parentNode && !Dom.each(node, callback)) {
-					return false;
-				}
-
-				node = next;
-			}
-		}
-
-		return true;
-	}
-
-	/**
 	 * Call function for all nodes between `start` and `end`
 	 */
 	static between(
@@ -465,17 +424,10 @@ export class Dom {
 	static prev<T extends Node = Node>(
 		node: Node,
 		condition: NodeCondition,
-		root: Node | HTMLElement | ParentNode,
+		root: HTMLElement,
 		withChild: boolean = true
 	): Nullable<T> {
-		return Dom.find<T>(
-			node,
-			condition,
-			root,
-			false,
-			'previousSibling',
-			withChild ? 'lastChild' : false
-		);
+		return Dom.find<T>(node, condition, root, false, withChild);
 	}
 
 	/**
@@ -484,17 +436,10 @@ export class Dom {
 	static next<T extends Node = Node>(
 		node: Node,
 		condition: NodeCondition,
-		root: Node | HTMLElement | ParentNode,
+		root: HTMLElement,
 		withChild: boolean = true
 	): Nullable<T> {
-		return Dom.find<T>(
-			node,
-			condition,
-			root,
-			undefined,
-			undefined,
-			withChild ? 'firstChild' : false
-		);
+		return Dom.find<T>(node, condition, root, true, withChild);
 	}
 
 	static prevWithClass(
@@ -529,48 +474,119 @@ export class Dom {
 	static find<T extends Node = Node>(
 		node: Node,
 		condition: NodeCondition,
-		root: ParentNode | HTMLElement | Node,
-		recurse = false,
-		sibling: keyof Node = 'nextSibling',
-		child: keyof Node | false = 'firstChild'
+		root: HTMLElement,
+		leftToRight: boolean = true,
+		withChild: boolean = true
 	): Nullable<T> {
-		if (recurse && condition(node)) {
-			return node as T;
+		const gen = this.findGen(node, root, leftToRight, withChild);
+
+		let item = gen.next();
+
+		while (!item.done) {
+			if (condition(item.value)) {
+				return <T>item.value;
+			}
+
+			item = gen.next();
 		}
 
-		let start: Nullable<Node> = node,
-			next: Nullable<Node>;
+		return null;
+	}
+
+	/**
+	 * Find next/prev node what `condition(next) === true`
+	 */
+	static *findGen(
+		start: Node,
+		root: HTMLElement,
+		leftToRight: boolean = true,
+		withChild: boolean = true
+	): Generator<Node> {
+		const stack: Node[] = [];
+
+		let currentNode = start;
 
 		do {
-			next = start[sibling] as Node;
+			let next = leftToRight
+				? currentNode.nextSibling
+				: currentNode.previousSibling;
 
-			if (condition(next)) {
-				return next ? (next as T) : null;
+			while (next) {
+				stack.unshift(next);
+				next = leftToRight ? next.nextSibling : next.previousSibling;
 			}
 
-			if (child && next && next[child]) {
-				const nextOne = Dom.find(
-					next[child] as Node,
-					condition,
-					next,
-					true,
-					sibling,
-					child
-				);
+			yield* this.runInStack(start, stack, leftToRight, withChild);
 
-				if (nextOne) {
-					return nextOne as T;
-				}
-			}
-
-			if (!next) {
-				next = start.parentNode;
-			}
-
-			start = next;
-		} while (start && start !== root);
+			currentNode = <Node>currentNode.parentNode;
+		} while (currentNode !== root);
 
 		return null;
+	}
+
+	/**
+	 * It goes through all the internal elements of the node, causing a callback function
+	 *
+	 * @param elm - the element whose children and descendants you want to iterate over
+	 * @param callback - It called for each item found
+	 * @example
+	 * ```javascript
+	 * Jodit.modules.Dom.each(parent.s.current(), function (node) {
+	 *  if (node.nodeType === Node.TEXT_NODE) {
+	 *      node.nodeValue = node.nodeValue.replace(Jodit.INVISIBLE_SPACE_REG_EX, '') // remove all of
+	 *      the text element codes invisible character
+	 *  }
+	 * });
+	 * ```
+	 */
+	static each(
+		elm: Node,
+		callback: (node: Node) => void | boolean,
+		leftToRight: boolean = true
+	): boolean {
+		const gen = this.eachGen(elm, leftToRight);
+
+		let item = gen.next();
+
+		while (!item.done) {
+			if (callback(item.value) === false) {
+				return false;
+			}
+
+			item = gen.next();
+		}
+
+		return true;
+	}
+
+	static eachGen(root: Node, leftToRight: boolean = true): Generator<Node> {
+		return this.runInStack(root, [root], leftToRight);
+	}
+
+	private static *runInStack(
+		start: Node,
+		stack: Node[],
+		leftToRight: boolean,
+		withChild: boolean = true
+	): Generator<Node> {
+		while (stack.length) {
+			const item = <Node>stack.pop();
+
+			if (start !== item) {
+				yield item;
+			}
+
+			if (withChild) {
+				let child = leftToRight ? item.lastChild : item.firstChild;
+
+				while (child) {
+					stack.push(child);
+					child = leftToRight
+						? child.previousSibling
+						: child.nextSibling;
+				}
+			}
+		}
 	}
 
 	/**

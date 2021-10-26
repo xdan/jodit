@@ -6,24 +6,146 @@
 describe('Test Dom module', function () {
 	const Dom = Jodit.modules.Dom;
 
-	describe('Method each', function () {
-		it('Should pass through all child nodes', function () {
-			const node = document.createElement('div');
+	describe('Iterate over', function () {
+		const names = [],
+			iterate = function (elm) {
+				names.push(Dom.isText(elm) ? elm.nodeValue : elm.nodeName);
+			};
 
-			node.innerHTML =
-				'<ul>' +
-				'<li>1</li>' +
-				'<li>2</li>' +
-				'<li><img> text</li>' +
-				'</ul>';
+		beforeEach(() => {
+			names.length = 0;
+		});
 
-			const names = [];
-			Dom.each(node, function (elm) {
-				names.push(elm.nodeName);
+		describe('Method each', function () {
+			describe('Left to right', function () {
+				it('Should pass through all child nodes', function () {
+					const node = document.createElement('div');
+
+					node.innerHTML =
+						'<ul>' +
+						'<li>1</li>' +
+						'<li>2</li>' +
+						'<li><img> test</li>' +
+						'</ul>' +
+						'<p>lena</p>';
+
+					Dom.each(node, iterate);
+
+					expect(names.toString()).equals(
+						'UL,LI,1,LI,2,LI,IMG, test,P,lena'
+					);
+				});
+
+				describe('Break', function () {
+					it('Should stop iterate nodes', () => {
+						const node = document.createElement('div');
+
+						node.innerHTML =
+							'<ul>' +
+							'<li>1</li>' +
+							'<li>2</li>' +
+							'<li><img> test</li>' +
+							'</ul>' +
+							'<p>lena</p>';
+
+						Dom.each(node, node => {
+							iterate(node);
+							if (node.nodeName === 'IMG') {
+								return false;
+							}
+						});
+
+						expect(names.toString()).equals('UL,LI,1,LI,2,LI,IMG');
+					});
+				});
 			});
-			expect('UL,LI,#text,LI,#text,LI,IMG,#text').equals(
-				names.toString()
-			);
+
+			describe('Right to right', function () {
+				it('Should pass through all child nodes', function () {
+					const div = document.createElement('div');
+
+					div.innerHTML =
+						'<ul>' +
+						'<li>1</li>' +
+						'<li>2</li>' +
+						'<li><img> test</li>' +
+						'</ul>' +
+						'<p>lena</p>';
+
+					Dom.each(div, iterate, false);
+
+					expect(names.toString()).equals(
+						'P,lena,UL,LI, test,IMG,LI,2,LI,1'
+					);
+				});
+			});
+		});
+
+		describe('Method find', function () {
+			describe('Left to right', function () {
+				it('Should pass through all child nodes after node', () => {
+					const node = document.createElement('div');
+
+					node.innerHTML =
+						'<ul>' +
+						'<li>1</li>' +
+						'<li>2</li>' +
+						'<li><img> test</li>' +
+						'</ul>' +
+						'<p>lena</p>';
+
+					Dom.find(node.querySelector('img'), iterate, node);
+
+					expect(names.toString()).equals(' test,P,lena');
+				});
+
+				describe('Break', function () {
+					it('Should stop iterate nodes', () => {
+						const node = document.createElement('div');
+
+						node.innerHTML =
+							'<ul>' +
+							'<li>1</li>' +
+							'<li>2</li>' +
+							'<li><img> test</li>' +
+							'</ul>' +
+							'<p>lena</p>';
+
+						expect(
+							Dom.find(
+								node.querySelector('li'),
+								node => {
+									iterate(node);
+									if (node.nodeName === 'IMG') {
+										return true;
+									}
+								},
+								node
+							)
+						).eq(node.querySelector('img'));
+
+						expect(names.toString()).equals('LI,2,LI,IMG');
+					});
+				});
+			});
+
+			describe('Right to left', function () {
+				it('Should pass through all child nodes before node', () => {
+					const node = document.createElement('div');
+
+					node.innerHTML =
+						'<ul>' +
+						'<li>1</li>' +
+						'<li>2</li>' +
+						'<li><img> test</li>' +
+						'</ul>' +
+						'<p>lena</p>';
+
+					Dom.find(node.querySelector('img'), iterate, node, false);
+
+					expect(names.toString()).equals('LI,2,LI,1');
+				});
+			});
 		});
 	});
 
