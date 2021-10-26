@@ -286,9 +286,10 @@ export class Uploader extends ViewComponent implements IUploader {
 
 				return ajax
 					.send()
-					.then(async resp => {
+					.then(resp => resp.json())
+					.then(resp => {
 						removeAjaxInstanceFromList();
-						success.call(this, await resp.json());
+						success.call(this, resp);
 					})
 					.catch(error => {
 						removeAjaxInstanceFromList();

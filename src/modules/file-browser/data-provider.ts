@@ -99,8 +99,16 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		const ajax = new Ajax<T>(this.parent, opts);
 		ai.set(name, ajax);
 
-		return ajax
-			.send()
+		const promise = ajax.send();
+
+		promise.finally(() => {
+			ajax.destruct();
+			ai.delete(name);
+
+			this.progressHandler(100);
+		});
+
+		return promise
 			.then(resp => resp.json())
 			.then(resp => {
 				if (resp && !this.isSuccess(resp)) {
@@ -108,12 +116,6 @@ export default class DataProvider implements IFileBrowserDataProvider {
 				}
 
 				return resp;
-			})
-			.finally(() => {
-				ajax.destruct();
-				ai.delete(name);
-
-				this.progressHandler(100);
 			});
 	}
 

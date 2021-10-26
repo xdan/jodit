@@ -11,7 +11,7 @@ typeof window.chai !== 'undefined' &&
 	(function () {
 		chai.config.truncateThreshold = 0;
 		chai.config.includeStack = true;
-		chai.config.showDiff = true;
+		// chai.config.showDiff = true;
 	})();
 
 typeof window.mocha !== 'undefined' && mocha.timeout(15000);
@@ -61,6 +61,7 @@ function mockAjax() {
 	if (typeof window.chai !== 'undefined') {
 		let temp = {};
 		Jodit.modules.Ajax.prototype.send = function () {
+			debugger;
 			const ajax = this;
 
 			const request = this.prepareRequest();
@@ -125,15 +126,23 @@ function mockAjax() {
 				}
 			};
 
+			const makeResponse = (resp = {}) => ({
+				json() {
+					return Promise.resolve(resp);
+				}
+			});
+
 			return new Promise(function (resolve) {
 				switch (action) {
 					case 'folderCreate': {
 						temp.folderName = ajax.options.data.name;
+
 						resolve({
 							success: true,
 							time: '2020-08-04 19:03:23',
 							data: { code: 220 }
 						});
+
 						break;
 					}
 
@@ -180,6 +189,7 @@ function mockAjax() {
 							}
 						});
 						break;
+
 					case 'folders': {
 						const folderName = temp.folderName || 'ceicom';
 						delete temp.folderName;
@@ -206,6 +216,7 @@ function mockAjax() {
 						});
 						break;
 					}
+
 					case 'permissions':
 						resolve({
 							success: true,
@@ -214,6 +225,7 @@ function mockAjax() {
 							code: 220
 						});
 						break;
+
 					case 'fileUploadRemote':
 						resolve({
 							success: true,
@@ -225,6 +237,7 @@ function mockAjax() {
 							}
 						});
 						break;
+
 					case 'getLocalFileByUrl':
 						switch (ajax.options.data.url) {
 							case location.protocol +
@@ -255,6 +268,7 @@ function mockAjax() {
 									}
 								});
 								break;
+
 							default:
 								resolve({
 									success: false,
@@ -268,11 +282,12 @@ function mockAjax() {
 								});
 								break;
 						}
+
 						break;
 					default:
 						break;
 				}
-			});
+			}).then(makeResponse);
 		};
 	}
 }

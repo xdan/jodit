@@ -1226,7 +1226,6 @@ describe('Test image', function () {
 					},
 
 					filebrowser: {
-						// buttons: ['list', 'tiles', 'sort'],
 						ajax: {
 							url: 'https://xdsoft.net/jodit/connector/index.php'
 						}
@@ -1239,7 +1238,6 @@ describe('Test image', function () {
 					editor.value = '<img src="tests/artio.jpg"/>';
 					simulateEvent(
 						'dblclick',
-						0,
 						editor.editor.querySelector('img')
 					);
 
@@ -1260,7 +1258,6 @@ describe('Test image', function () {
 
 						simulateEvent(
 							'dblclick',
-							0,
 							editor.editor.querySelector('img')
 						);
 
@@ -1287,9 +1284,9 @@ describe('Test image', function () {
 
 							editor.value =
 								'<img src="https://xdsoft.net/jodit/build/images/artio.jpg"/>';
+
 							simulateEvent(
 								'dblclick',
-								0,
 								editor.editor.querySelector('img')
 							);
 
@@ -1302,7 +1299,7 @@ describe('Test image', function () {
 							);
 							expect(edi).is.not.null;
 
-							simulateEvent('click', 0, edi);
+							simulateEvent('click', edi);
 
 							const dialog2 = getOpenedDialog(editor);
 							expect(dialog2).is.not.null;
@@ -1360,7 +1357,7 @@ describe('Test image', function () {
 
 			const img = editor.editor.querySelector('img');
 
-			simulateEvent('click', 0, img);
+			simulateEvent('click', img);
 
 			const resizer = editor.ownerDocument.querySelector(
 				'.jodit-resizer[data-editor_id=' + editor.id + ']'
@@ -1374,11 +1371,12 @@ describe('Test image', function () {
 				const editor = getJodit({
 					fullsize: true
 				});
+
 				editor.value = '<img src="tests/artio.jpg"/>';
 
 				const img = editor.editor.querySelector('img');
 
-				simulateEvent('click', 0, img);
+				simulateEvent('click', img);
 
 				const resizer = document.querySelector(
 					'.jodit-resizer[data-editor_id=' + editor.id + ']'
