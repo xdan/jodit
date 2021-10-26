@@ -19,6 +19,19 @@ describe('Clean html plugin', function () {
 				],
 
 				[
+					'<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;">|line 1</p>\n' +
+						'<p><br></p>\n' +
+						'<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;">line 2</p>\n' +
+						'<p><br></p>\n' +
+						'<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;">line 4|</p>\n',
+					'<p dir="ltr">line 1</p>\n' +
+						'<p><br></p>\n' +
+						'<p dir="ltr">line 2</p>\n' +
+						'<p><br></p>\n' +
+						'<p dir="ltr">line 4</p>\n'
+				],
+
+				[
 					'start <strong>test test test|</strong>',
 					'start <strong>test test test</strong> pop ',
 					' pop '
@@ -116,7 +129,6 @@ describe('Clean html plugin', function () {
 							disablePlugins: ['WrapTextNodes']
 						});
 
-						const button = getButton('eraser', editor);
 						editor.value = test[0];
 
 						if (!setCursorToChar(editor)) {
@@ -125,7 +137,7 @@ describe('Clean html plugin', function () {
 							editor.s.selectRange(range);
 						}
 
-						simulateEvent('click', button);
+						clickButton('eraser', editor);
 
 						if (test[2]) {
 							editor.s.insertHTML(test[2]);
@@ -138,36 +150,6 @@ describe('Clean html plugin', function () {
 				});
 			});
 		});
-
-		// describe('For collapsed selection', function () {
-		// 	it('Should move cursor outside from styled element', function () {
-		// 		const editor = getJodit({
-		// 			disablePlugins: ['WrapTextNodes']
-		// 		});
-		//
-		// 		[
-		//
-		// 		].forEach(function (test) {
-		// 			editor.value = test[0];
-		//
-		// 			const range = editor.s.createRange();
-		// 			range.selectNodeContents(
-		// 				editor.editor.querySelector(test[1])
-		// 			);
-		// 			range.collapse(false);
-		//
-		// 			editor.s.selectRange(range);
-		//
-		// 			const button = getButton('eraser', editor);
-		//
-		// 			simulateEvent('click', 0, button);
-		//
-		// 			editor.s.insertHTML(' pop ');
-		//
-		// 			expect(editor.value).equals(test[2]);
-		// 		});
-		// 	});
-		// });
 	});
 
 	describe('Replace old tags', function () {
@@ -180,16 +162,8 @@ describe('Clean html plugin', function () {
 
 			editor.value = 'test <b>old</b> test';
 
-			const range = editor.s.createRange(true);
-			range.setStart(editor.editor.querySelector('b').firstChild, 2);
-			range.collapse(true);
-
-			simulateEvent('mousedown', 0, editor.editor);
-
-			editor.s.insertHTML(' some ');
-
 			expect(editor.value).equals(
-				'<p>test <strong>ol some d</strong> test</p>'
+				'<p>test <strong>old</strong> test</p>'
 			);
 		});
 
@@ -232,7 +206,7 @@ describe('Clean html plugin', function () {
 				range.setStart(editor.editor.querySelector('b').firstChild, 2);
 				range.collapse(true);
 
-				simulateEvent('mousedown', 0, editor.editor);
+				simulateEvent('mousedown', editor.editor);
 
 				editor.s.insertHTML(' some ');
 
@@ -251,7 +225,9 @@ describe('Clean html plugin', function () {
 						denyTags: 'p'
 					}
 				});
+
 				editor.value = '<p>te<strong>stop</strong>st</p><h1>pop</h1>';
+
 				expect(editor.value).equals('<h1>pop</h1>');
 			});
 		});
@@ -265,7 +241,9 @@ describe('Clean html plugin', function () {
 						allowTags: 'p'
 					}
 				});
+
 				editor.value = '<p>te<strong>stop</strong>st</p><h1>pop</h1>';
+
 				expect(editor.value).equals('<p>test</p>');
 			});
 		});

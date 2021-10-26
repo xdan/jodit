@@ -18,7 +18,7 @@ import {
 	INSEPARABLE_TAGS
 } from '../../core/constants';
 import { Dom } from '../../modules';
-import { isString, keys, safeHTML, trim } from '../../core/helpers';
+import { attr, isString, keys, safeHTML, trim } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { watch, autobind, debounce } from '../../core/decorators';
 import { findNotEmptySibling } from '../keyboard/helpers';
@@ -468,6 +468,10 @@ export class cleanHtml extends Plugin {
 			if (this.isInlineBlock(node)) {
 				shouldUnwrap.push(node);
 			}
+
+			if (Dom.isElement(node) && attr(node, 'style')) {
+				attr(node, 'style', null);
+			}
 		});
 
 		shouldUnwrap.forEach(node => Dom.unwrap(node));
@@ -476,8 +480,8 @@ export class cleanHtml extends Plugin {
 			if (!findNotEmptySibling(node, left)) {
 				const pn = node.parentNode as Element;
 
-				if (pn && pn !== s.area && pn.getAttribute('style')) {
-					pn.removeAttribute('style');
+				if (pn && pn !== s.area && attr(pn, 'style')) {
+					attr(pn, 'style', null);
 					clearParent(pn, left);
 
 					return true;
