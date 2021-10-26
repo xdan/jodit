@@ -142,6 +142,33 @@ export class cleanHtml extends Plugin {
 	}
 
 	/**
+	 * Replaces an element with a newer one if specified in the configuration match
+	 */
+	private replaceIfMatched(oldParent: Node): Node {
+		const replaceOldTags = this.j.o.cleanHTML.replaceOldTags;
+
+		if (!replaceOldTags || !Dom.isHTMLElement(oldParent)) {
+			return oldParent;
+		}
+
+		const tagName: string =
+			replaceOldTags[oldParent.nodeName.toLowerCase()] ||
+			replaceOldTags[oldParent.nodeName];
+
+		if (tagName) {
+			return Dom.replace(
+				oldParent as HTMLElement,
+				tagName as HTMLTagNames,
+				this.j.createInside,
+				true,
+				false
+			);
+		}
+
+		return oldParent;
+	}
+
+	/**
 	 * Clean HTML code on every change
 	 */
 	@debounce<IPlugin<IJodit>>(ctx => ctx.jodit.o.cleanHTML.timeout)
@@ -166,19 +193,7 @@ export class cleanHtml extends Plugin {
 
 				if (oldParent) {
 					editor.s.save();
-
-					const tagName: string =
-						replaceOldTags[oldParent.nodeName.toLowerCase()] ||
-						replaceOldTags[oldParent.nodeName];
-
-					Dom.replace(
-						oldParent as HTMLElement,
-						tagName as HTMLTagNames,
-						editor.createInside,
-						true,
-						false
-					);
-
+					this.replaceIfMatched(oldParent);
 					editor.s.restore();
 				}
 			}
@@ -218,6 +233,8 @@ export class cleanHtml extends Plugin {
 		if (!nodeElm) {
 			return work;
 		}
+
+		nodeElm = this.replaceIfMatched(nodeElm);
 
 		if (this.isRemovableNode(nodeElm, current)) {
 			remove.push(nodeElm);

@@ -9,7 +9,7 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
-## 3.8.6
+## 3.9.1
 
 #### :boom: Breaking Change
 
@@ -87,6 +87,7 @@ while (!next2.done) {
 #### :bug: Bug Fix
 
 -   [Indent doesn't work in table cell #729](https://github.com/xdan/jodit/issues/729)
+-   [cleanHTML replaceOldTags doesn't seem to do anything #728](https://github.com/xdan/jodit/issues/728)
 -   [Fixed Resize column table #712](https://github.com/xdan/jodit/issues/712)
 -   [Font and font size settings are not applied to all text if part of it has been changed earlier #706](https://github.com/xdan/jodit/issues/706)
 -   [Delete multi rows and colums #690](https://github.com/xdan/jodit/issues/690)
@@ -707,11 +708,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
 -   ex: [
--                                                       	{ value: "", text: "" },
--                                                       	{ value: "val1", text: "text1" },
--                                                       	{ value: "val2", text: "text2" },
--                                                       	{ value: "val3", text: "text3" }
--                                                       ]
+-                                                           	{ value: "", text: "" },
+-                                                           	{ value: "val1", text: "text1" },
+-                                                           	{ value: "val2", text: "text2" },
+-                                                           	{ value: "val3", text: "text3" }
+-                                                           ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

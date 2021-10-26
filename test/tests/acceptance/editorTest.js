@@ -846,10 +846,10 @@ describe('Jodit Editor Tests', function () {
 				editor.s.insertNode(spans[2]);
 
 				editor.s.setCursorAfter(spans[1]);
-				editor.s.insertNode(editor.ed.createElement('i'));
+				editor.s.insertNode(editor.ed.createElement('em'));
 
 				expect(editor.value).equals(
-					'<p><span></span><span></span><i></i><span></span></p>'
+					'<p><span></span><span></span><em></em><span></span></p>'
 				);
 			});
 
