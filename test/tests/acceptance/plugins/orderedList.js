@@ -152,6 +152,26 @@ describe('Test orderedList plugin', function () {
 				});
 			});
 
+			describe('For several paragraphs', () => {
+				it('Should return all elements', () => {
+					const editor = getJodit();
+					editor.value = '<p>|test</p><p>order</p><p>list|</p>';
+					setCursorToChar(editor);
+
+					clickButton('ul', editor);
+
+					expect(editor.value.replace(/<br>/, '')).equals(
+						'<ul><li>test</li><li>order</li><li>list</li></ul>'
+					);
+
+					clickButton('ul', editor);
+
+					expect(editor.value.replace(/<br>/, '')).equals(
+						'<p>test</p><p>order</p><p>list</p>'
+					);
+				});
+			});
+
 			describe('Unordered after Unordered', function () {
 				it('Should unwrap selected ul/li', function () {
 					const editor = getJodit();
