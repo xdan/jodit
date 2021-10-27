@@ -19,8 +19,15 @@ Config.prototype.controls.preview = {
 
 		const div = editor.c.div();
 		css(div, {
+			position: 'relative',
 			padding: 16
 		});
+
+		const value =
+			editor.value ||
+			`<div style='position: absolute;left:50%;top:50%;transform: translateX(-50%) translateY(-50%);color:#ccc;'>${editor.i18n(
+				'Empty'
+			)}</div>`;
 
 		if (editor.iframe) {
 			const iframe = editor.create.element('iframe');
@@ -43,7 +50,7 @@ Config.prototype.controls.preview = {
 					editor
 				);
 
-				mywindow.document.body.innerHTML = editor.value;
+				mywindow.document.body.innerHTML = value;
 			}
 		} else {
 			css(div, {
@@ -52,7 +59,7 @@ Config.prototype.controls.preview = {
 				border: 0
 			});
 
-			div.innerHTML = editor.value;
+			div.innerHTML = value;
 			dialog.open(div, editor.i18n('Preview'));
 		}
 

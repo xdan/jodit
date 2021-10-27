@@ -34,6 +34,7 @@ export { link } from './link/link';
 export * from './media';
 export { mobile } from './mobile';
 export { orderedList } from './ordered-list';
+export { poweredByJodit } from './powered-by-jodit';
 export { placeholder } from './placeholder/placeholder';
 export { redoUndo } from './redo-undo';
 export { resizer } from './resizer/resizer';

@@ -9,7 +9,10 @@
 :root {
 	--viewer_width: 70px;
 	--viewer_height: 24px;
-	--resizer-handle-size: var(--padding-default);
+	--resizer-handle-size: 10px;
+	--resizer-border-color: #98c1f1;
+	--resizer-handle-color: #5ba4f3;
+	--resizer-handle-hover-color: #537ebb;
 }
 
 [data-jodit_iframe_wrapper] {
@@ -37,8 +40,9 @@
 	left: 0;
 	width: 100px;
 	height: 100px;
-	border: 1px solid var(--color-border-dark);
+	box-sizing: border-box;
 	font-size: 0;
+	outline: 3px solid var(--resizer-border-color);
 	pointer-events: none;
 
 	* {
@@ -68,7 +72,7 @@
 		transition: opacity 0.2s linear;
 	}
 
-	> i {
+	> div {
 		position: absolute;
 		z-index: 4;
 		display: inline-block;
@@ -76,12 +80,11 @@
 		width: var(--resizer-handle-size);
 		height: var(--resizer-handle-size);
 
-		border: 1px solid var(--color-border-dark);
-		background-color: var(--color-background-gray);
+		background-color: var(--resizer-handle-color);
 		pointer-events: all;
 
 		&:hover {
-			background-color: var(--color-background-gray-hover);
+			background-color: var(--resizer-handle-hover-color);
 		}
 
 		&:nth-child(1) {
@@ -110,7 +113,7 @@
 
 		@media (max-width: @screen-sm) {
 			:root {
-				--resizer-handle-size: calc(var(--padding-default) * 2);
+				--resizer-handle-size: calc(var(--resizer-handle-size) * 2);
 			}
 		}
 	}

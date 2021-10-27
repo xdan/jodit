@@ -33,7 +33,7 @@
 
 	.jodit-popup {
 		&__content {
-			background: var(--dark_background_color);
+			background: var(--dark_background_ligher);
 		}
 	}
 
@@ -55,8 +55,18 @@
 	.jodit-status-bar {
 		border-color: rgba(95, 92, 92, 0.8);
 		background-color: rgba(95, 92, 92, 0.8);
+		color: var(--dark_text_color);
+
+		a.jodit-status-bar-link {
+			&,
+			&:hover,
+			&:visited {
+				color: var(--dark_text_color);
+			}
+		}
 
 		&,
+		.jodit-status-bar__item a,
 		.jodit-status-bar__item span {
 			color: var(--dark_text_color);
 		}

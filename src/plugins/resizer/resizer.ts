@@ -91,10 +91,10 @@ export class resizer extends Plugin {
 
 	private rect = this.j.c.fromHTML(
 		`<div class="jodit-resizer">
-				<i class="jodit-resizer-topleft"></i>
-				<i class="jodit-resizer-topright"></i>
-				<i class="jodit-resizer-bottomright"></i>
-				<i class="jodit-resizer-bottomleft"></i>
+				<div class="jodit-resizer__top-left"></div>
+				<div class="jodit-resizer__top-right"></div>
+				<div class="jodit-resizer__bottom-right"></div>
+				<div class="jodit-resizer__bottom-left"></div>
 				<span>100x100</span>
 			</div>`
 	);
@@ -104,7 +104,7 @@ export class resizer extends Plugin {
 
 	/** @override */
 	protected afterInit(editor: IJodit): void {
-		$$('i', this.rect).forEach((resizeHandle: HTMLElement) => {
+		$$('div', this.rect).forEach((resizeHandle: HTMLElement) => {
 			editor.e.on(
 				resizeHandle,
 				'mousedown.resizer touchstart.resizer',
@@ -458,17 +458,15 @@ export class resizer extends Plugin {
 
 		if (this.element && this.rect) {
 			const workplacePosition = this.getWorkplacePosition();
-			const pos: IBound = offset(this.element, this.j, this.j.ed),
-				left: number = parseInt(this.rect.style.left || '0', 10),
-				top: number = parseInt(this.rect.style.top || '0', 10),
-				w: number = this.rect.offsetWidth,
-				h: number = this.rect.offsetHeight;
 
-			// 1 - because need move border higher and toWYSIWYG the left than the picture
-			// 2 - in box-sizing: border-box mode width is real width indifferent by border-width.
+			const pos = offset(this.element, this.j, this.j.ed),
+				left = parseInt(this.rect.style.left || '0', 10),
+				top = parseInt(this.rect.style.top || '0', 10),
+				w = this.rect.offsetWidth,
+				h = this.rect.offsetHeight;
 
-			const newTop: number = pos.top - 1 - workplacePosition.top,
-				newLeft: number = pos.left - 1 - workplacePosition.left;
+			const newTop = pos.top - workplacePosition.top,
+				newLeft = pos.left - workplacePosition.left;
 
 			if (
 				top !== newTop ||
