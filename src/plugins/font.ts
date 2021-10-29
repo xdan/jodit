@@ -114,7 +114,17 @@ Config.prototype.controls.font = {
 	},
 
 	childTemplate: (editor, key: string, value: string) => {
-		return `<span style="font-family: ${key}!important;">${value}</span>`;
+		let isAvailable = false;
+
+		try {
+			isAvailable =
+				key.indexOf('dings') === -1 &&
+				document.fonts.check(`16px ${key}`, value);
+		} catch {}
+
+		return `<span style="${
+			isAvailable ? `font-family: ${key}!important;` : ''
+		}">${value}</span>`;
 	},
 
 	data: {
