@@ -16,6 +16,7 @@ import type {
 import type { IFileBrowser } from './file-browser';
 
 import type { IUIButton, IUIElement, IUIList } from './ui';
+import { IMods } from './';
 
 interface IControlType<
 	T = IJodit | IViewBased | IFileBrowser,
@@ -301,7 +302,7 @@ interface IToolbarCollection extends IUIList {
 	getTarget(button: IToolbarButton): Node | null;
 }
 
-export interface IStatusBar extends IComponent {
+export interface IStatusBar extends IComponent, IMods {
 	jodit: IViewBased;
 
 	show(): void;

@@ -6,9 +6,10 @@
 
 import './status-bar.less';
 
-import type { IJodit, IStatusBar } from '../../types';
+import type { IJodit, IStatusBar, IDictionary } from '../../types';
 import { ViewComponent, STATUSES } from '../../core/component';
 import { Dom } from '../../core/dom';
+import { Mods } from '../../core/traits';
 
 export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 	className(): string {
@@ -36,6 +37,19 @@ export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 	 */
 	get isShown(): boolean {
 		return !this.container.classList.contains('jodit_hidden');
+	}
+
+	readonly mods: IDictionary<string | boolean | null> = {};
+
+	/** @see [[Mods.setMod]] */
+	setMod(name: string, value: string | boolean | null): this {
+		Mods.setMod.call(this, name, value);
+		return this;
+	}
+
+	/** @see [[Mods.getMod]] */
+	getMod(name: string): string | boolean | null {
+		return Mods.getMod.call(this, name);
 	}
 
 	/**

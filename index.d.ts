@@ -24,6 +24,16 @@ declare global {
 		offset: number;
 	}
 
+	interface IdleDeadline {
+		readonly didTimeout: boolean;
+		timeRemaining(): DOMHighResTimeStamp;
+	}
+
+	// https://github.com/xdan/jodit/issues/743
+	interface IdleRequestCallback {
+		(deadline: IdleDeadline): void;
+	}
+
 	interface Document {
 		caretPositionFromPoint?(x: number, y: number): CaretPosition;
 		caretRangeFromPoint(x: number, y: number): Range;

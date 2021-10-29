@@ -28,6 +28,8 @@ export class resizeHandler extends Plugin {
 			(height !== 'auto' || width !== 'auto') &&
 			(allowResizeX || allowResizeY)
 		) {
+			editor.statusbar.setMod('resize-handle', true);
+
 			editor.e
 				.on('toggleFullSize.resizeHandler', () => {
 					this.handle.style.display = editor.isFullSize
