@@ -16,3 +16,5 @@ export interface IStyleOptions {
 	className: CanUndef<string>;
 	defaultTag: CanUndef<HTMLTagNames>;
 }
+
+export type CommitMode = 'wrap'| 'unwrap' | 'change';

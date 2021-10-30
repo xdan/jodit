@@ -6,9 +6,8 @@
 
 export * from './get-suit-parent';
 export * from './get-suit-child';
-export * from './check-special-elements';
+export * from './is-inside-invisible-element';
 export * from './get-closest-wrapper';
 export * from './unwrap-children';
 export * from './wrap-unwrapped-text';
-export * from './post-process-list-element';
 export * from './toggle-styles';

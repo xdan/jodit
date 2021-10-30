@@ -7,7 +7,6 @@
 import type { IJodit, Nullable } from '../../../../types';
 import type { CommitStyle } from '../commit-style';
 import { Dom } from '../../../dom';
-import { postProcessListElement } from './post-process-list-element';
 
 /**
  * Wrap text or inline elements inside Block element
@@ -58,13 +57,11 @@ export function wrapUnwrappedText(
 	range.setEndAfter(end);
 	const fragment = range.extractContents();
 
-	let wrapper = ci.element(style.element);
+	const wrapper = ci.element(style.element);
 	wrapper.appendChild(fragment);
 	range.insertNode(wrapper);
 
 	if (style.elementIsBlock) {
-		wrapper = postProcessListElement(style, wrapper, ci);
-
 		if (
 			Dom.isEmpty(wrapper) &&
 			!Dom.isTag(wrapper.firstElementChild, 'br')

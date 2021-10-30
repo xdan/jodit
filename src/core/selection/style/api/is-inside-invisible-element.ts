@@ -9,7 +9,7 @@ import { Dom } from '../../../dom';
 /**
  * Check if FONT inside STYLE or SCRIPT element
  */
-export function checkSpecialElements(
+export function isInsideInvisibleElement(
 	font: HTMLElement,
 	root: HTMLElement
 ): boolean {

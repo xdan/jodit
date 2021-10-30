@@ -8,6 +8,8 @@ import type { IControlType, IJodit, Nullable } from '../types';
 import { Config } from '../config';
 import { Dom } from '../core/dom';
 import { dataBind, toArray } from '../core/helpers';
+import { Plugin } from '../core/plugin';
+import { autobind } from '../core/decorators';
 
 const exec: IControlType<IJodit>['exec'] = (jodit, _, { control }): void => {
 	const key = `button${control.command}`;
@@ -52,7 +54,44 @@ Config.prototype.controls.ol = {
 /**
  * Process commands insertOrderedList and insertUnOrderedList
  */
-export function orderedList(editor: IJodit): void {
+export class orderedList extends Plugin {
+	override buttons: Plugin['buttons'] = [
+		{
+			name: 'ul',
+			group: 'list'
+		},
+		{
+			name: 'ol',
+			group: 'list'
+		}
+	];
+
+	protected afterInit(jodit: IJodit): void {
+		jodit
+			.registerCommand('insertUnorderedList', this.onCommand)
+			.registerCommand('insertOrderedList', this.onCommand);
+	}
+
+	@autobind
+	private onCommand(command: string, _: unknown, type: string): false {
+		this.jodit.s.applyStyle(
+			{
+				listStyleType: type ?? null
+			},
+			{
+				element: command === 'insertunorderedlist' ? 'ul' : 'ol'
+			}
+		);
+
+		this.jodit.setEditorValue();
+
+		return false;
+	}
+
+	protected beforeDestruct(jodit: IJodit): void {}
+}
+
+export function orderedList1(editor: IJodit): void {
 	const isOurCommand = (command: string) =>
 			/insert(un)?orderedlist/i.test(command),
 		getListWrapper = () =>

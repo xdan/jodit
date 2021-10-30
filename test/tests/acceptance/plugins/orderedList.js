@@ -160,13 +160,13 @@ describe('Test orderedList plugin', function () {
 
 					clickButton('ul', editor);
 
-					expect(editor.value.replace(/<br>/, '')).equals(
+					expect(editor.value.replace(/<br>/g, '')).equals(
 						'<ul><li>test</li><li>order</li><li>list</li></ul>'
 					);
 
 					clickButton('ul', editor);
 
-					expect(editor.value.replace(/<br>/, '')).equals(
+					expect(editor.value.replace(/<br>/g, '')).equals(
 						'<p>test</p><p>order</p><p>list</p>'
 					);
 				});

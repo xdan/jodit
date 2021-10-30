@@ -8,7 +8,17 @@ import type { HTMLTagNames, IJodit, IStyleOptions } from '../../../types';
 import { IS_BLOCK } from '../../constants';
 import { ApplyStyle } from './apply-style';
 
+export const WRAP = 'wrap';
+export const UNWRAP = 'unwrap';
+export const CHANGE = 'change';
+
 export class CommitStyle {
+	get elementIsList(): boolean {
+		return Boolean(
+			this.options.element && ['ul', 'ol'].includes(this.options.element)
+		);
+	}
+
 	get element(): HTMLTagNames {
 		return this.options.element || this.defaultTag;
 	}

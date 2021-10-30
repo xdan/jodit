@@ -4,39 +4,44 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, Nullable } from '../../../types';
+import type { IJodit, Nullable, CommitMode } from '../../../types';
 import type { CommitStyle } from './commit-style';
-import { Dom } from '../../dom';
-import { attr, css, normalizeNode } from '../../helpers';
+import { normalizeNode } from '../../helpers';
 import {
 	getSuitParent,
 	getSuitChild,
-	checkSpecialElements,
 	getClosestWrapper,
-	unwrapChildren,
-	wrapUnwrappedText,
-	postProcessListElement,
-	toggleStyles
+	toggleCommitStyles,
+	isInsideInvisibleElement,
+	unwrapChildren
 } from './api';
+import { CHANGE, UNWRAP, WRAP } from './commit-style';
+import { extractSelectedPart } from './api/extract';
+import { wrapAndCommitStyle } from './api/wrap-and-commit-style';
+import { Dom } from '../../dom';
+import { checkAndToggleOrderedList } from './api/toggle/toggle-ordered-list';
 
 /**
  * Apply options to selection
  */
 export function ApplyStyle(jodit: IJodit, style: CommitStyle): void {
-	const { s: sel } = jodit,
-		rng = () => sel.createRange();
+	const { s: sel, editor } = jodit;
 
-	let wrap: Nullable<boolean> = null;
+	let wrap: Nullable<CommitMode> = null;
 
 	sel.save();
 
 	normalizeNode(sel.area.firstChild); // FF fix for test "commandsTest - Exec command "bold"
 
 	const gen = jodit.s.wrapInTagGen();
+
 	let font = gen.next();
 
 	while (!font.done) {
-		wrap = applyToElement(style, font.value, rng, jodit, wrap);
+		if (!isInsideInvisibleElement(font.value, editor)) {
+			wrap = applyToElement(style, font.value, jodit, wrap);
+		}
+
 		font = gen.next();
 	}
 
@@ -48,88 +53,46 @@ export function ApplyStyle(jodit: IJodit, style: CommitStyle): void {
  * @param font - a fake element that wraps all parts of the selection
  */
 function applyToElement(
-	style: CommitStyle,
+	cs: CommitStyle,
 	font: HTMLElement,
-	range: () => Range,
 	jodit: IJodit,
-	wrap: Nullable<boolean>
-): Nullable<boolean> {
+	mode: Nullable<CommitMode>
+): Nullable<CommitMode> {
 	const root = jodit.editor;
 
-	if (checkSpecialElements(font, root)) {
-		return wrap;
+	const toggleElm = getSuitParent(cs, font, root) || getSuitChild(cs, font);
+
+	if (toggleElm) {
+		return toggleCommitStyles(cs, toggleElm, jodit, mode);
 	}
 
-	const toggleNode =
-		getSuitParent(style, font, root) ||
-		getSuitChild(style, font) ||
-		getClosestWrapper(style, font, root, range);
+	const wrapper = getClosestWrapper(cs, font, root);
 
-	if (toggleNode) {
-		return toggleStyles(style, toggleNode, wrap);
-	}
-
-	if (unwrapChildren(style, font)) {
-		return wrap;
-	}
-
-	if (wrap == null) {
-		wrap = true;
-	}
-
-	if (!wrap) {
-		return wrap;
-	}
-
-	let wrapper = font;
-
-	if (style.elementIsBlock) {
-		const ulReg = /^(ul|ol|li|td|th|tr|tbody|table)$/i;
-
-		const box = Dom.up(
-			font,
-			node => {
-				if (Dom.isBlock(node)) {
-					if (
-						ulReg.test(style.element) ||
-						!ulReg.test(node.nodeName)
-					) {
-						return true;
-					}
-				}
-
-				return false;
-			},
-			root
-		);
-
-		if (box) {
-			wrapper = box;
+	if (wrapper) {
+		if (!cs.elementIsBlock) {
+			extractSelectedPart(wrapper, font, jodit.s.createRange);
 		} else {
-			wrapper = wrapUnwrappedText(style, font, jodit, range);
+			if (cs.elementIsList && Dom.isTag(wrapper, ['ul', 'ol'])) {
+				return checkAndToggleOrderedList(cs, font, jodit, mode);
+			}
 		}
+
+		return toggleCommitStyles(cs, wrapper, jodit, mode);
 	}
 
-	const newWrapper = Dom.replace(
-		wrapper,
-		style.element,
-		jodit.createInside,
-		true
-	);
-
-	attr(newWrapper, 'size', null);
-
-	if (style.elementIsBlock) {
-		postProcessListElement(style, newWrapper, jodit.createInside);
+	if (mode == null) {
+		mode = WRAP;
 	}
 
-	if (style.options.style && style.elementIsDefault) {
-		css(newWrapper, style.options.style);
+	if (mode === UNWRAP || mode === CHANGE) {
+		return mode;
 	}
 
-	if (style.options.className) {
-		newWrapper.classList.toggle(style.options.className);
+	if (unwrapChildren(cs, font)) {
+		return mode;
 	}
 
-	return wrap;
+	wrapAndCommitStyle(cs, font, jodit, mode);
+
+	return WRAP;
 }

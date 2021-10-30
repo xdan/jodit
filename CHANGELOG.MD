@@ -21,6 +21,7 @@
 #### :bug: Bug Fix
 
 - Fixed popup color for dark theme
+- [Change html tags when list style on/off #738](https://github.com/xdan/jodit/issues/738)
 
 ## 3.9.3
 

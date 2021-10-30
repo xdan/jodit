@@ -633,7 +633,7 @@ export class Config implements IViewOptions {
 		},
 		{
 			group: 'list',
-			buttons: ['ul', 'ol']
+			buttons: []
 		},
 		{
 			group: 'indent',

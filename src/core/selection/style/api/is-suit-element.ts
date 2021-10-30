@@ -36,7 +36,9 @@ export function isSuitElement(
 		options.style && elementHasSameStyle(elm, options.style)
 	);
 
-	const elmIsSame = elm.nodeName.toLowerCase() === element;
+	const elmIsSame =
+		elm.nodeName.toLowerCase() === element ||
+		(Dom.isTag(elm, ['ul', 'ol']) && commitStyle.elementIsList);
 
 	if (
 		((!elementIsDefault || !strict) && elmIsSame) ||

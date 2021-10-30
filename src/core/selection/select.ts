@@ -110,6 +110,7 @@ export class Select implements ISelect {
 	 * Return current selection object
 	 * @param select - Immediately add in selection
 	 */
+	@autobind
 	createRange(select: boolean = false): Range {
 		const range = this.doc.createRange();
 

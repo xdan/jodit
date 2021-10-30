@@ -18,6 +18,143 @@ describe('Apply style', () => {
 		describe('Base apply', () => {
 			[
 				[
+					'<p><strong>te|st</strong> so|me</p>',
+					{
+						element: 'strong',
+						style: {
+							fontWeight: 700
+						}
+					},
+					'<p><strong>te</strong>|st so|me</p>'
+				],
+				[
+					'<p><span style="color:#FF0000">|test|</span></p>',
+					{ style: { color: '#FF0000' } },
+					'<p>|test|</p>'
+				],
+				[
+					'<p>test<span style="background-color:yellow">|stop|</span></p>',
+					{ style: { color: 'yellow' } },
+					'<p>test<span style="background-color:yellow;color:yellow">|stop|</span></p>'
+				],
+				[
+					'<p>|test</p><style>.a {color: red}</style><p>stop|</p>',
+					{ style: { fontFamily: 'Helvetica,sans-serif' } },
+					'<p>|<span style="font-family:Helvetica,sans-serif">test</span></p><style>.a {color: red}</style><p><span style="font-family:Helvetica,sans-serif">stop</span>|</p>'
+				],
+				[
+					'<p>|test</p><p>ordered</p><p>list|</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+
+				[
+					'<p>|test</p><p>ordered</p><p>list|</p>',
+					{ element: 'ol', style: { listStyleType: null } },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+
+				[
+					'<p>|test</p>\n\n<p>ordered</p>\n\n<p>list|</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+
+				[
+					'<h1>|test</h1><p>ordered</p><p>list|</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list</li></ol>'
+				],
+				[
+					'<ol><li>|test</li><li>ordered</li><li>list</li></ol>',
+					{ element: 'ol' },
+					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>'
+				],
+				[
+					'<ol><li>test</li><li>ord|ered</li><li>list</li></ol>',
+					{ element: 'ol' },
+					'<ol><li>test</li></ol><p>ord|ered</p><ol><li>list</li></ol>'
+				],
+				[
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>',
+					{ element: 'ol' },
+					'<p>|test</p><p>ordered</p><p>list|</p>'
+				],
+
+				[
+					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
+					{ element: 'ul' },
+					'<p>|test</p><p>unordered</p><p>list|</p>'
+				],
+
+				[
+					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>'
+				],
+
+				[
+					'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>',
+					{
+						element: 'ol',
+						style: { 'list-style-type': 'lower-roman' }
+					},
+					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
+				],
+
+				[
+					'<ol style="list-style-type:lower-roman"><li>|test</li><li>ordered</li><li>list|</li></ol>',
+					{
+						element: 'ol',
+						style: { 'list-style-type': 'lower-roman' }
+					},
+					'<p>|test</p><p>ordered</p><p>list|</p>'
+				],
+
+				[
+					'<ol style="list-style-type:lower-alpha"><li>|test</li><li>unordered</li><li>list|</li></ol>',
+					{
+						element: 'ol',
+						style: { 'list-style-type': 'lower-roman' }
+					},
+					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
+				],
+
+				[
+					'<p>|test</p><p>ordered</p><p>list|</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+
+				[
+					'<p>|test</p><p>ordered</p><p>list</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li></ol><p>ordered</p><p>list</p>'
+				],
+
+				[
+					'<h1>|test</h1><p>ordered</p><p>list|</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+
+				[
+					'<p>te|st</p><p>ordered</p><p>li|st</p>',
+					{ element: 'ol' },
+					'<ol><li>te|st</li><li>ordered</li><li>li|st</li></ol>'
+				],
+
+				[
+					'<p>|test</p><p>unordered</p><p>list|</p>',
+					{ element: 'ul' },
+					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>'
+				],
+				[
 					'<ul><li>|1</li><li>2</li><li>3|</li></ul>',
 					{ element: 'h1' },
 					'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>'
@@ -130,6 +267,13 @@ describe('Apply style', () => {
 						element: 'strong'
 					},
 					'<p>|test test test|</p>'
+				],
+				[
+					'<p>|pop <strong>test test</strong> test|</p>',
+					{
+						element: 'strong'
+					},
+					'<p>|<strong>pop test test test</strong>|</p>'
 				]
 			].forEach(([input, opt, output, jSettings]) => {
 				describe(`For selection ${input} apply style ${JSON.stringify(
@@ -149,7 +293,9 @@ describe('Apply style', () => {
 						style.apply(editor);
 						replaceCursorToChar(editor);
 
-						expect(sortAttributes(editor.value)).equals(output);
+						expect(sortAttributes(editor.value).trim()).equals(
+							output
+						);
 					});
 				});
 			});
@@ -794,7 +940,7 @@ describe('Apply style', () => {
 					);
 					range.setEnd(editor.editor.firstChild.lastChild, 3);
 					editor.s.selectRange(range);
-
+debugger
 					const style = new Style({
 						element: 'strong',
 						style: {
