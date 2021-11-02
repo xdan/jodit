@@ -13,10 +13,10 @@ import type {
 } from '../types/';
 import { Config } from '../config';
 import * as consts from '../core/constants';
-import { splitArray } from '../core/helpers/';
+import { splitArray, toArray } from '../core/helpers/';
 import { makeCollection } from '../modules/toolbar/factory';
 import { UIList } from '../core/ui';
-import { flatButtonsSet, isButtonGroup } from '../core/ui/helpers/buttons';
+import { flatButtonsSet } from '../core/ui/helpers/buttons';
 
 declare module '../config' {
 	interface Config {
@@ -117,18 +117,14 @@ export function mobile(editor: IJodit): void {
 		'getDiffButtons.mobile',
 		(toolbar: IToolbarCollection): void | ButtonsGroups => {
 			if (toolbar === editor.toolbar) {
-				const buttons: ButtonsGroups = splitArray(editor.o.buttons),
-					flatStore = flatButtonsSet(store);
+				const buttons = flatButtonsSet(
+						splitArray(editor.o.buttons),
+						editor
+					),
+					flatStore = flatButtonsSet(store, editor);
 
-				return buttons.reduce((acc, item) => {
-					if (isButtonGroup(item)) {
-						acc.push({
-							...item,
-							buttons: item.buttons.filter(
-								btn => !flatStore.has(btn)
-							)
-						});
-					} else if (!flatStore.has(item)) {
+				return toArray(buttons).reduce((acc, item) => {
+					if (!flatStore.has(item)) {
 						acc.push(item);
 					}
 

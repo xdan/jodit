@@ -75,6 +75,10 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	registeredButtons: Set<IPluginButton> = new Set();
 	private groupToButtons: IDictionary<string[]> = {};
 
+	getRegisteredButtonGroups(): IDictionary<string[]> {
+		return this.groupToButtons;
+	}
+
 	/**
 	 * Register button for group
 	 */

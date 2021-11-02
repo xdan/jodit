@@ -138,6 +138,7 @@ interface IViewWithToolbar<T = IViewOptions> extends IViewBased<T> {
 	registeredButtons: Set<IPluginButton>;
 	registerButton(btn: IPluginButton): this;
 	unregisterButton(btn: IPluginButton): this;
+	getRegisteredButtonGroups(): IDictionary<string[]>
 
 	setPanel(element: HTMLElement | string): void;
 }

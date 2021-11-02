@@ -8,7 +8,8 @@ import type {
 	Buttons,
 	ButtonsGroup,
 	ButtonsGroups,
-	IControlType
+	IControlType,
+	IJodit
 } from '../../../types';
 import { isArray } from '../../helpers/checker';
 
@@ -18,14 +19,20 @@ export const isButtonGroup = (
 	return isArray((<ButtonsGroup>item).buttons);
 };
 
-export const flatButtonsSet = (
-	buttons: ButtonsGroups
-): Set<string | IControlType> =>
-	new Set(
+export function flatButtonsSet(
+	buttons: ButtonsGroups,
+	jodit: IJodit
+): Set<string | IControlType> {
+	const groups = jodit.getRegisteredButtonGroups();
+
+	return new Set(
 		buttons.reduce(
 			(acc: Buttons, item: ButtonsGroup | string | IControlType) => {
 				if (isButtonGroup(item)) {
-					acc.push(...(<ButtonsGroup>item).buttons);
+					acc = acc.concat([
+						...(<ButtonsGroup>item).buttons,
+						...(groups[item.group] ?? [])
+					]);
 				} else {
 					acc.push(item);
 				}
@@ -35,3 +42,4 @@ export const flatButtonsSet = (
 			[] as Buttons
 		)
 	);
+}
