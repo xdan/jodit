@@ -225,12 +225,19 @@ export class Dom {
 	 *
 	 * @param node - The element of wood to be checked
 	 */
-	static isEmptyTextNode(node: Node): boolean {
+	static isEmptyTextNode(node: Nullable<Node>): boolean {
 		return (
 			Dom.isText(node) &&
 			(!node.nodeValue ||
-				node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP(), '')
-					.length === 0)
+				node.nodeValue
+					.replace(consts.INVISIBLE_SPACE_REG_EXP(), '')
+					.trim().length === 0)
+		);
+	}
+
+	static isEmptyContent(node: Node): boolean {
+		return Dom.each(node as HTMLElement, (elm: Node | null): boolean =>
+			Dom.isEmptyTextNode(elm)
 		);
 	}
 

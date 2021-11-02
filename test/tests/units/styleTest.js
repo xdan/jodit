@@ -114,9 +114,9 @@ describe('Apply style', () => {
 				],
 
 				[
-					'<p>|test</p>\n\n<p>ordered</p>\n\n<p>list|</p>',
+					'<p>|test1</p>\n\n<p>ordered</p>\n\n<p>list1|</p>',
 					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+					'<ol><li>|test1</li><li>ordered</li><li>list1|</li></ol>'
 				],
 
 				[

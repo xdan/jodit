@@ -98,7 +98,12 @@ function getShadowRoot(jodit: IJodit): HTMLElement {
 	const container = getContainer(jodit, function Utils() {});
 
 	const iframe = document.createElement('iframe');
-	css(iframe, 'display', 'none');
+	css(iframe, {
+		width: 0,
+		height: 0,
+		position: 'absolute',
+		border: 0
+	});
 
 	iframe.src = 'about:blank';
 	container.appendChild(iframe);

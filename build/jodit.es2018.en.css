@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.9.3
+ * Version: v3.9.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -680,7 +680,7 @@ svg.jodit-icon {
 }
 .jodit-dialog_theme_dark .jodit-popup__content,
 .jodit_theme_dark .jodit-popup__content {
-  background: var(--jd-dark_background_color);
+  background: var(--jd-dark_background_ligher);
 }
 .jodit-dialog_theme_dark .jodit-ui-button__text,
 .jodit_theme_dark .jodit-ui-button__text,
@@ -706,9 +706,20 @@ svg.jodit-icon {
 .jodit_theme_dark .jodit-status-bar {
   border-color: rgba(95, 92, 92, 0.8);
   background-color: rgba(95, 92, 92, 0.8);
+  color: var(--jd-dark_text_color);
+}
+.jodit-dialog_theme_dark .jodit-status-bar a.jodit-status-bar-link,
+.jodit_theme_dark .jodit-status-bar a.jodit-status-bar-link,
+.jodit-dialog_theme_dark .jodit-status-bar a.jodit-status-bar-link:hover,
+.jodit_theme_dark .jodit-status-bar a.jodit-status-bar-link:hover,
+.jodit-dialog_theme_dark .jodit-status-bar a.jodit-status-bar-link:visited,
+.jodit_theme_dark .jodit-status-bar a.jodit-status-bar-link:visited {
+  color: var(--jd-dark_text_color);
 }
 .jodit-dialog_theme_dark .jodit-status-bar,
 .jodit_theme_dark .jodit-status-bar,
+.jodit-dialog_theme_dark .jodit-status-bar .jodit-status-bar__item a,
+.jodit_theme_dark .jodit-status-bar .jodit-status-bar__item a,
 .jodit-dialog_theme_dark .jodit-status-bar .jodit-status-bar__item span,
 .jodit_theme_dark .jodit-status-bar .jodit-status-bar__item span {
   color: var(--jd-dark_text_color);
@@ -1141,6 +1152,7 @@ svg.jodit-icon {
   justify-content: center;
   padding: 0 var(--jd-padding-default);
   border-radius: var(--jd-border-radius-default);
+  cursor: pointer;
   min-width: 34px;
   height: 34px;
 }
@@ -1454,6 +1466,7 @@ svg.jodit-icon {
   width: 100%;
   height: auto;
   min-height: var(--jd-button-size);
+  cursor: pointer;
 }
 .jodit-ui-list_mode_vertical .jodit-toolbar-button__text:not(:empty) {
   justify-content: left;
@@ -1534,9 +1547,11 @@ svg.jodit-icon {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-.jodit-popup {
-  --jd-box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
+:root {
+  --jd-popup-box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
 		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
+}
+.jodit-popup {
   position: static;
   width: auto;
   max-width: none;
@@ -1550,7 +1565,7 @@ svg.jodit-icon {
   position: fixed;
   z-index: var(--jd-z-index-popup);
   display: inline-block;
-  box-shadow: var(--jd-box-shadow);
+  box-shadow: var(--jd-popup-box-shadow);
   transform: translate3d(0, 0, 0);
 }
 .jodit-popup__content {
@@ -2024,8 +2039,6 @@ svg.jodit-icon {
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 .jodit-context-menu {
-  --jd-box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
-		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
   position: static;
   width: auto;
   max-width: none;
@@ -2039,7 +2052,7 @@ svg.jodit-icon {
   position: fixed;
   z-index: var(--jd-z-index-popup);
   display: inline-block;
-  box-shadow: var(--jd-box-shadow);
+  box-shadow: var(--jd-popup-box-shadow);
   transform: translate3d(0, 0, 0);
   z-index: var(--jd-z-index-context-menu);
 }
@@ -2450,6 +2463,7 @@ svg.jodit-icon {
   width: 100%;
   height: auto;
   min-height: var(--jd-button-size);
+  cursor: pointer;
 }
 .jodit-toolbar-collection_mode_vertical .jodit-toolbar-button__text:not(:empty),
 .jodit-toolbar-editor-collection_mode_vertical .jodit-toolbar-button__text:not(:empty) {
@@ -2602,6 +2616,7 @@ svg.jodit-icon {
   padding: 0 var(--jd-padding-default);
 }
 .jodit-toolbar-button__button {
+  cursor: pointer;
   position: relative;
   box-sizing: border-box;
   padding: 0;
@@ -2645,6 +2660,7 @@ svg.jodit-icon {
   justify-content: center;
   border-radius: 0 var(--jd-border-radius-default) var(--jd-border-radius-default) 0;
   opacity: 0.4;
+  cursor: pointer;
   width: 14px;
 }
 .jodit-toolbar-button__trigger:hover:not([disabled]) {
@@ -2721,6 +2737,7 @@ svg.jodit-icon {
   justify-content: center;
   padding: 0 var(--jd-padding-default);
   border-radius: var(--jd-border-radius-default);
+  cursor: pointer;
   min-width: 34px;
   height: 34px;
   padding: 0;
@@ -3600,12 +3617,18 @@ svg.jodit-icon {
 .jodit-status-bar {
   display: flex;
   overflow: hidden;
+  height: 20px;
   align-items: center;
   justify-content: flex-start;
   padding: 0 calc(var(--jd-padding-default) / 2);
   background-color: var(--jd-color-panel);
   border-radius: 0 0 var(--jd-border-radius-default) var(--jd-border-radius-default);
+  color: var(--jd-color-text-icons);
   font-size: var(--jd-font-size-small);
+  text-transform: uppercase;
+}
+.jodit-status-bar_resize-handle_true {
+  padding-right: 14px;
 }
 .jodit-status-bar::before {
   flex: auto;
@@ -3635,8 +3658,19 @@ svg.jodit-icon {
 }
 .jodit-status-bar .jodit-status-bar__item a:hover {
   background-color: var(--jd-color-background-gray);
-  color: var(--jd-color-text);
   text-decoration: none;
+}
+.jodit-status-bar a.jodit-status-bar-link {
+  cursor: pointer;
+}
+.jodit-status-bar a.jodit-status-bar-link,
+.jodit-status-bar a.jodit-status-bar-link:hover,
+.jodit-status-bar a.jodit-status-bar-link:visited {
+  background-color: transparent;
+  color: var(--jd-color-text-icons);
+}
+.jodit-status-bar a.jodit-status-bar-link:hover {
+  text-decoration: underline;
 }
 .jodit-workplace + .jodit-status-bar:not(:empty) {
   border-top: 1px solid var(--jd-color-border);
@@ -3888,6 +3922,7 @@ svg.jodit-icon {
 }
 .jodit-tabs .jodit-tabs__buttons > * {
   margin-left: calc(var(--jd-padding-default) / 2);
+  cursor: pointer;
 }
 .jodit-tabs .jodit-tabs__buttons > *:only-of-type {
   width: 100%;
@@ -4087,7 +4122,10 @@ html.jodit_fullsize-box_true {
 :root {
   --jd-viewer_width: 70px;
   --jd-viewer_height: 24px;
-  --jd-resizer-handle-size: var(--jd-padding-default);
+  --jd-resizer-handle-size: 10px;
+  --jd-resizer-border-color: #98c1f1;
+  --jd-resizer-handle-color: #5ba4f3;
+  --jd-resizer-handle-hover-color: #537ebb;
 }
 [data-jodit_iframe_wrapper] {
   position: relative;
@@ -4112,8 +4150,9 @@ html.jodit_fullsize-box_true {
   left: 0;
   width: 100px;
   height: 100px;
-  border: 1px solid var(--jd-color-border-dark);
+  box-sizing: border-box;
   font-size: 0;
+  outline: 3px solid var(--jd-resizer-border-color);
   pointer-events: none;
 }
 .jodit-resizer * {
@@ -4137,42 +4176,41 @@ html.jodit_fullsize-box_true {
   text-align: center;
   transition: opacity 0.2s linear;
 }
-.jodit-resizer > i {
+.jodit-resizer > div {
   position: absolute;
   z-index: 4;
   display: inline-block;
   width: var(--jd-resizer-handle-size);
   height: var(--jd-resizer-handle-size);
-  border: 1px solid var(--jd-color-border-dark);
-  background-color: var(--jd-color-background-gray);
+  background-color: var(--jd-resizer-handle-color);
   pointer-events: all;
 }
-.jodit-resizer > i:hover {
-  background-color: var(--jd-color-background-gray-hover);
+.jodit-resizer > div:hover {
+  background-color: var(--jd-resizer-handle-hover-color);
 }
-.jodit-resizer > i:nth-child(1) {
+.jodit-resizer > div:nth-child(1) {
   top: calc(var(--jd-resizer-handle-size) / -2);
   left: calc(var(--jd-resizer-handle-size) / -2);
   cursor: nw-resize;
 }
-.jodit-resizer > i:nth-child(2) {
+.jodit-resizer > div:nth-child(2) {
   top: calc(var(--jd-resizer-handle-size) / -2);
   right: calc(var(--jd-resizer-handle-size) / -2);
   cursor: ne-resize;
 }
-.jodit-resizer > i:nth-child(3) {
+.jodit-resizer > div:nth-child(3) {
   right: calc(var(--jd-resizer-handle-size) / -2);
   bottom: calc(var(--jd-resizer-handle-size) / -2);
   cursor: se-resize;
 }
-.jodit-resizer > i:nth-child(4) {
+.jodit-resizer > div:nth-child(4) {
   bottom: calc(var(--jd-resizer-handle-size) / -2);
   left: calc(var(--jd-resizer-handle-size) / -2);
   cursor: sw-resize;
 }
 @media (max-width: 768px) {
-  .jodit-resizer > i :root {
-    --jd-resizer-handle-size: calc(var(--jd-padding-default) * 2);
+  .jodit-resizer > div :root {
+    --jd-resizer-handle-size: calc(var(--jd-resizer-handle-size) * 2);
   }
 }
 
@@ -4315,17 +4353,15 @@ html.jodit_fullsize-box_true {
 .jodit-container:not(.jodit_inline) .jodit-editor__resize {
   position: relative;
 }
-.jodit-container:not(.jodit_inline) .jodit-editor__resize span {
+.jodit-container:not(.jodit_inline) .jodit-editor__resize svg {
   position: absolute;
   right: 0;
   bottom: 0;
   overflow: hidden;
-  width: 0;
-  height: 0;
-  border-width: 7px 7px 0 0;
-  border-style: dashed solid dashed dashed;
-  border-color: rgba(0, 0, 0, 0) var(--jd-color-border) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
-  cursor: se-resize;
+  width: 12px;
+  height: 12px;
+  cursor: nwse-resize;
+  fill: var(--jd-color-gray-dark);
   user-select: none;
 }
 

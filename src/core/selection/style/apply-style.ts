@@ -50,7 +50,10 @@ export function ApplyStyle(jodit: IJodit, cs: CommitStyle): void {
 					return;
 				}
 
-				if (isInsideInvisibleElement(font.value, editor)) {
+				if (
+					isInsideInvisibleElement(font.value, editor) ||
+					Dom.isEmptyContent(font.value)
+				) {
 					return;
 				}
 
