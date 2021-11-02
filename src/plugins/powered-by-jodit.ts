@@ -13,7 +13,13 @@ declare module '../config' {
 }
 
 export function poweredByJodit(jodit: IJodit): void {
-	if (!jodit.o.hidePoweredByJodit) {
+	if (
+		!jodit.o.hidePoweredByJodit &&
+		!jodit.o.inline &&
+		(jodit.o.showCharsCounter ||
+			jodit.o.showWordsCounter ||
+			jodit.o.showXPathInStatusbar)
+	) {
 		jodit.hookStatus('ready', () => {
 			jodit.statusbar.append(
 				jodit.create.fromHTML(
