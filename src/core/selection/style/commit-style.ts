@@ -11,6 +11,9 @@ import { ApplyStyle } from './apply-style';
 export const WRAP = 'wrap';
 export const UNWRAP = 'unwrap';
 export const CHANGE = 'change';
+export const UNSET = 'unset';
+export const INITIAL = 'initial';
+export const REPLACE = 'replace';
 
 export class CommitStyle {
 	get elementIsList(): boolean {

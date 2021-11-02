@@ -4,95 +4,193 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, Nullable, CommitMode } from '../../../types';
+import type { IJodit, Nullable, CanUndef, CommitMode } from '../../../types';
 import type { CommitStyle } from './commit-style';
 import { normalizeNode } from '../../helpers';
 import {
 	getSuitParent,
 	getSuitChild,
-	getClosestWrapper,
-	toggleCommitStyles,
 	isInsideInvisibleElement,
+	toggleCommitStyles,
 	unwrapChildren
 } from './api';
-import { CHANGE, UNWRAP, WRAP } from './commit-style';
-import { extractSelectedPart } from './api/extract';
-import { wrapAndCommitStyle } from './api/wrap-and-commit-style';
+import { CHANGE, INITIAL, REPLACE, UNWRAP, WRAP } from './commit-style';
 import { Dom } from '../../dom';
-import { checkAndToggleOrderedList } from './api/toggle/toggle-ordered-list';
+import {
+	toggleOrderedList,
+	wrapAndCommitStyle,
+	isSuitElement,
+	extractSelectedPart,
+	toggleCSS,
+	FiniteStateMachine
+} from './api';
 
-/**
- * Apply options to selection
- */
-export function ApplyStyle(jodit: IJodit, style: CommitStyle): void {
+export function ApplyStyle(jodit: IJodit, cs: CommitStyle): void {
 	const { s: sel, editor } = jodit;
 
-	let wrap: Nullable<CommitMode> = null;
+	const fsm = new FiniteStateMachine('start', {
+		start: {
+			start() {
+				sel.save();
+				normalizeNode(editor.firstChild); // FF fix for test "commandsTest - Exec command "bold"
+				this.setState('generator');
+			}
+		},
 
-	sel.save();
+		generator: {
+			initGenerator() {
+				return jodit.s.wrapInTagGen();
+			},
 
-	normalizeNode(sel.area.firstChild); // FF fix for test "commandsTest - Exec command "bold"
+			nextFont(gen: Generator<HTMLElement>): CanUndef<HTMLElement> {
+				const font = gen.next();
 
-	const gen = jodit.s.wrapInTagGen();
+				if (font.done) {
+					this.setState('end');
+					return;
+				}
 
-	let font = gen.next();
+				if (isInsideInvisibleElement(font.value, editor)) {
+					return;
+				}
 
-	while (!font.done) {
-		if (!isInsideInvisibleElement(font.value, editor)) {
-			wrap = applyToElement(style, font.value, jodit, wrap);
-		}
+				this.setState('check');
 
-		font = gen.next();
-	}
+				return font.value;
+			}
+		},
 
-	sel.restore();
-}
+		check: {
+			work(font: HTMLElement): Nullable<HTMLElement> {
+				let elm =
+					getSuitParent(cs, font, jodit.editor) ||
+					getSuitChild(cs, font);
 
-/**
- * Apply options to all selected fragment
- * @param font - a fake element that wraps all parts of the selection
- */
-function applyToElement(
-	cs: CommitStyle,
-	font: HTMLElement,
-	jodit: IJodit,
-	mode: Nullable<CommitMode>
-): Nullable<CommitMode> {
-	const root = jodit.editor;
+				if (elm) {
+					this.setState('wholeElement');
+					return elm;
+				}
 
-	const toggleElm = getSuitParent(cs, font, root) || getSuitChild(cs, font);
+				elm = Dom.closest(
+					font,
+					node => isSuitElement(cs, node, true),
+					jodit.editor
+				);
 
-	if (toggleElm) {
-		return toggleCommitStyles(cs, toggleElm, jodit, mode);
-	}
+				if (elm) {
+					if (!cs.elementIsBlock) {
+						extractSelectedPart(elm, font, jodit);
+					}
+				}
 
-	const wrapper = getClosestWrapper(cs, font, root);
+				if (cs.elementIsList && Dom.isTag(elm, ['ul', 'ol'])) {
+					this.setState('orderList');
+					return font;
+				}
 
-	if (wrapper) {
-		if (!cs.elementIsBlock) {
-			extractSelectedPart(wrapper, font, jodit.s.createRange);
-		} else {
-			if (cs.elementIsList && Dom.isTag(wrapper, ['ul', 'ol'])) {
-				return checkAndToggleOrderedList(cs, font, jodit, mode);
+				if (elm) {
+					this.setState('wholeElement');
+					return elm;
+				}
+
+				if (unwrapChildren(cs, font)) {
+					this.setState('endProcess');
+					return null;
+				}
+
+				this.setState('wrap');
+				return font;
+			}
+		},
+
+		wholeElement: {
+			toggleStyles(toggleElm: HTMLElement): void {
+				let mode: CommitMode = INITIAL;
+
+				if (toggleCommitStyles(cs, toggleElm)) {
+					mode = UNWRAP;
+				} else {
+					mode = toggleCSS(cs, toggleElm, jodit, mode);
+				}
+
+				this.setState('generator', mode);
+			}
+		},
+
+		orderList: {
+			toggleStyles(font: HTMLElement): void {
+				let mode: CommitMode = INITIAL;
+				const li = Dom.closest(font, 'li', jodit.editor);
+
+				if (!li) {
+					this.setState('generator');
+					return;
+				}
+
+				const ul = Dom.closest(font, ['ul', 'ol'], jodit.editor);
+
+				if (!ul) {
+					this.setState('generator');
+					return;
+				}
+
+				mode = toggleOrderedList(cs, li, jodit, mode);
+
+				if (mode === REPLACE || mode === UNWRAP || mode === CHANGE) {
+					this.setState('endWhile');
+					return;
+				}
+
+				this.setState('generator');
+			}
+		},
+
+		wrap: {
+			toggleStyles(font: HTMLElement): void {
+				if (this.getSubState() !== 'unwrap') {
+					const toggleElm = wrapAndCommitStyle(cs, font, jodit);
+					toggleCSS(cs, toggleElm, jodit, WRAP);
+				}
+
+				this.setState('generator');
+			}
+		},
+
+		endWhile: {
+			nextFont(gen: Generator<HTMLElement>): void {
+				const font = gen.next();
+
+				if (font.done) {
+					this.setState('end');
+				}
+			}
+		},
+
+		endProcess: {
+			toggleStyles() {
+				this.setState('generator');
+			}
+		},
+
+		end: {
+			finalize() {
+				sel.restore();
 			}
 		}
+	});
 
-		return toggleCommitStyles(cs, wrapper, jodit, mode);
+	fsm.dispatch('start');
+
+	const gen = fsm.dispatch('initGenerator');
+
+	while (fsm.getState() !== 'end') {
+		const font = fsm.dispatch<HTMLElement>('nextFont', gen);
+
+		if (font) {
+			const wrapper = fsm.dispatch<HTMLElement>('work', font);
+			fsm.dispatch('toggleStyles', wrapper);
+		}
 	}
 
-	if (mode == null) {
-		mode = WRAP;
-	}
-
-	if (mode === UNWRAP || mode === CHANGE) {
-		return mode;
-	}
-
-	if (unwrapChildren(cs, font)) {
-		return mode;
-	}
-
-	wrapAndCommitStyle(cs, font, jodit, mode);
-
-	return WRAP;
+	fsm.dispatch('finalize', gen);
 }

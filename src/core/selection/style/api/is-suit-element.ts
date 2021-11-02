@@ -52,6 +52,15 @@ export function isSuitElement(
 	);
 }
 
+/**
+ * Внутри родительского элемента есть блок с теми же стилями
+ * @example
+ * For selection:
+ * ```html
+ * <p>|test<strong>test</strong>|</p>
+ * ```
+ * Apply `{element:'strong'}`
+ */
 export function isSameStyleChild(
 	commitStyle: CommitStyle,
 	elm: Nullable<Node>

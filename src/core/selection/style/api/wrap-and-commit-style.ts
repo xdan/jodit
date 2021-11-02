@@ -4,29 +4,32 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, CommitMode, Nullable } from '../../../../types';
+import type { IJodit } from '../../../../types';
 import type { CommitStyle } from '../commit-style';
 import { Dom } from '../../../dom';
 import { wrapUnwrappedText } from './wrap-unwrapped-text';
 import { attr } from '../../../helpers';
-import { toggleCSS } from './toggle/toggle-css';
 import { wrapOrderedList } from './wrap-ordered-list';
 
+/**
+ * Replaces the parent tag with the applicable one, or wraps the text and also replaces the tag
+ */
 export function wrapAndCommitStyle(
 	commitStyle: CommitStyle,
 	font: HTMLElement,
-	jodit: IJodit,
-	mode: Nullable<CommitMode>
-): Nullable<CommitMode> {
+	jodit: IJodit
+): HTMLElement {
 	const wrapper = findOrCreateWrapper(commitStyle, font, jodit);
 
-	const newWrapper = commitStyle.elementIsList
+	return commitStyle.elementIsList
 		? wrapOrderedList(commitStyle, wrapper, jodit)
 		: Dom.replace(wrapper, commitStyle.element, jodit.createInside, true);
-
-	return toggleCSS(commitStyle, newWrapper, jodit, mode);
 }
 
+/**
+ * If we apply a block element, then it finds the closest block parent (exclude table cell etc.),
+ * otherwise it wraps free text in an element.
+ */
 function findOrCreateWrapper(
 	commitStyle: CommitStyle,
 	font: HTMLElement,

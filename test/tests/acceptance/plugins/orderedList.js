@@ -103,8 +103,8 @@ describe('Test orderedList plugin', function () {
 			describe('With second argument', function () {
 				it('Should wrap this text in styled ul/li', function () {
 					const editor = getJodit();
-					editor.value = 'Hello world';
-					editor.s.select(editor.editor.firstChild);
+					editor.value = '<p>|Hello world|</p>';
+					setCursorToChar(editor);
 
 					editor.execCommand('insertUnorderedList', false, 'circle');
 

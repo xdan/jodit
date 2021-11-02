@@ -266,16 +266,9 @@ describe('Commands Jodit Editor Tests', function () {
 		describe('in collapsed selection', function () {
 			it('should place cursor inward', function () {
 				const editor = getJodit();
-				editor.value = '<p>test</p>';
+				editor.value = '<p>te|st</p>';
 
-				const sel = editor.s.sel,
-					range = editor.s.createRange();
-
-				range.setStart(editor.editor.firstChild.firstChild, 2);
-				range.collapse(true);
-
-				sel.removeAllRanges();
-				sel.addRange(range);
+				setCursorToChar(editor);
 
 				editor.execCommand('underline');
 				editor.s.insertNode(editor.createInside.text('data'));

@@ -40,7 +40,7 @@ Config.prototype.controls.underline = {
 	tagRegExp: /^(u)$/i,
 	tags: ['u'],
 	css: {
-		'text-decoration': 'underline'
+		'text-decoration-line': 'underline'
 	},
 	tooltip: 'Underline'
 } as IControlType;
@@ -49,7 +49,7 @@ Config.prototype.controls.strikethrough = {
 	tagRegExp: /^(s)$/i,
 	tags: ['s'],
 	css: {
-		'text-decoration': 'line-through'
+		'text-decoration-line': 'line-through'
 	},
 	tooltip: 'Strike through'
 } as IControlType;

@@ -18,6 +18,65 @@ describe('Apply style', () => {
 		describe('Base apply', () => {
 			[
 				[
+					'<p>|Hello world|</p>',
+					{
+						element: 'ul',
+						style: {
+							listStyleType: 'circle'
+						}
+					},
+					'<ul style="list-style-type:circle"><li>|Hello world|</li></ul>'
+				],
+				[
+					'<p><strong>|test|</strong></p>',
+					{
+						className: 'class1'
+					},
+					'<p><strong class="class1">|test|</strong></p>'
+				],
+				[
+					'<p><strong>|test|</strong></p>',
+					{
+						element: 'em',
+						style: {
+							fontStyle: 'italic'
+						}
+					},
+					'<p><strong>|<em>test</em>|</strong></p>'
+				],
+
+				[
+					'<p>t|es|t</p>',
+					{
+						style: {
+							fontSize: 24
+						}
+					},
+					'<p>t|<span style="font-size:24px">es</span>|t</p>'
+				],
+				[
+					'<p><span style="font-weight:700;font-size:24px;">|test|</span></p>',
+					{
+						element: 'strong',
+						style: {
+							fontWeight: 700
+						}
+					},
+					'<p><span style="font-size:24px">|test|</span></p>'
+				],
+				[
+					'<p><span style="font-weight:700">|test|</span></p>',
+					{
+						element: 'strong',
+						style: {
+							fontWeight: 700
+						}
+					},
+					'<p>|test|</p>'
+				],
+				[
+					// (st) => getClosestWrapper -> extractSelectedPart -> toggleCommitStyles -> unwrap -> toggleCSS
+					// (so) => ----
 					'<p><strong>te|st</strong> so|me</p>',
 					{
 						element: 'strong',
@@ -96,6 +155,15 @@ describe('Apply style', () => {
 					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
 					{ element: 'ol' },
 					'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>'
+				],
+
+				[
+					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
+					{
+						element: 'ol',
+						style: { 'list-style-type': 'lower-roman' }
+					},
+					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
 				],
 
 				[
@@ -768,18 +836,8 @@ describe('Apply style', () => {
 
 				describe('With style', function () {
 					it('Should wrap contents again', function () {
-						editor.value = '<strong>test</strong>';
-						const range = editor.s.createRange();
-
-						range.setStart(
-							editor.editor.firstChild.firstChild.firstChild,
-							0
-						);
-						range.setEnd(
-							editor.editor.firstChild.firstChild.firstChild,
-							4
-						);
-						editor.s.selectRange(range);
+						editor.value = '<p><strong>|test|</strong></p>';
+						setCursorToChar(editor);
 
 						const style = new Style({
 							element: 'em',
@@ -940,7 +998,7 @@ describe('Apply style', () => {
 					);
 					range.setEnd(editor.editor.firstChild.lastChild, 3);
 					editor.s.selectRange(range);
-debugger
+
 					const style = new Style({
 						element: 'strong',
 						style: {
@@ -1494,23 +1552,16 @@ debugger
 				describe('For box with style="font-name:Arial"', function () {
 					it('should wrap selected text in SPAN with style="font-family:Arial" element without questions', function () {
 						const editor = getJodit();
-						editor.value = '<p>test</p>';
+						editor.value = '<p>te|st|</p>';
 
-						const sel = editor.s.sel,
-							range = editor.s.createRange();
-
-						range.setStart(editor.editor.firstChild.firstChild, 2);
-						range.setEnd(editor.editor.firstChild.firstChild, 4);
-
-						sel.removeAllRanges();
-						sel.addRange(range);
+						setCursorToChar(editor);
 
 						editor.editor.style.fontFamily = 'Arial';
 
 						editor.execCommand('fontName', false, 'Arial');
 
-						expect(editor.value).equals(
-							'<p>te<span style="font-family: Arial;">st</span></p>'
+						expect(sortAttributes(editor.value)).equals(
+							'<p>te<span style="font-family:Arial">st</span></p>'
 						);
 					});
 				});

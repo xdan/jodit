@@ -5,29 +5,23 @@
  */
 
 import type { CommitStyle } from '../commit-style';
-import type { CommitMode, IJodit, Nullable } from '../../../../types';
 import { Dom } from '../../../dom';
-import { toggleCSS } from './toggle/toggle-css';
 
 /**
  * Add or remove styles to element
- *
  * @param elm - The element to switch styles
  */
 export function toggleCommitStyles(
 	commitStyle: CommitStyle,
-	elm: HTMLElement,
-	jodit: IJodit,
-	mode: Nullable<CommitMode>
-): Nullable<CommitMode> {
+	elm: HTMLElement
+): boolean {
 	if (
 		commitStyle.elementIsBlock ||
 		(Dom.isTag(elm, commitStyle.element) && !commitStyle.elementIsDefault)
 	) {
 		Dom.unwrap(elm);
+		return true;
 	}
 
-	toggleCSS(commitStyle, elm, jodit, mode);
-
-	return mode;
+	return false;
 }

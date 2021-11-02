@@ -8,6 +8,10 @@ import type { IJodit } from '../../../../types';
 import { Dom } from '../../../dom';
 import type { CommitStyle } from '../commit-style';
 
+/**
+ * Replaces non-leaf items with leaf items and either creates a new list or
+ * adds a new item to the nearest old list
+ */
 export function wrapOrderedList(
 	commitStyle: CommitStyle,
 	wrapper: HTMLElement,
@@ -29,5 +33,5 @@ export function wrapOrderedList(
 		Dom.prepend(list, newWrapper);
 	}
 
-	return newWrapper;
+	return <HTMLElement>list;
 }

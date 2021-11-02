@@ -4,6 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IJodit } from '../../../../types';
 import { Select } from '../../select';
 import { call, trim } from '../../../helpers';
 import { Dom } from '../../../dom';
@@ -26,9 +27,9 @@ import { Dom } from '../../../dom';
 export function extractSelectedPart(
 	wrapper: HTMLElement,
 	font: HTMLElement,
-	getRange: () => Range
+	jodit: IJodit
 ): void {
-	const range = getRange();
+	const range = jodit.s.createRange();
 
 	// Left part
 	const leftEdge = Select.isMarker(font.previousSibling)

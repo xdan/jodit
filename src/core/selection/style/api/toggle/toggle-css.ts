@@ -3,52 +3,127 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import type { CommitMode, IJodit, Nullable } from '../../../../../types';
-import { CHANGE, CommitStyle } from '../../commit-style';
-import { attr, css, normalizeCssValue, size } from '../../../../helpers';
-import { Dom } from '../../../../dom';
 
+import type { CommitMode, IJodit } from '../../../../../types';
+import type { CommitStyle } from '../../commit-style';
+import {
+	attr,
+	css,
+	dataBind,
+	kebabCase,
+	normalizeCssValue,
+	size
+} from '../../../../helpers';
+import { Dom } from '../../../../dom';
+import { CHANGE, UNSET, UNWRAP } from '../../commit-style';
+import { getContainer } from '../../../../global';
+
+/**
+ * Toggles css and classname
+ */
 export function toggleCSS(
 	commitStyle: CommitStyle,
 	elm: HTMLElement,
 	jodit: IJodit,
-	mode: Nullable<CommitMode>
-): Nullable<CommitMode> {
-	const { style } = commitStyle.options;
+	mode: CommitMode,
+	dry: boolean = false
+): CommitMode {
+	const { style, className } = commitStyle.options;
 
 	if (style && size(style) > 0) {
 		Object.keys(style).forEach((rule: string) => {
-			const inlineValue = elm.style.getPropertyValue(rule);
+			const inlineValue = elm.style.getPropertyValue(kebabCase(rule));
 
 			if (inlineValue === '' && style[rule] == null) {
 				return;
 			}
 
 			if (
-				css(elm, rule) ===
+				getNativeCSSValue(jodit, elm, rule) ===
 				normalizeCssValue(rule, style[rule] as string)
 			) {
-				css(elm, rule, null);
-				removeExtraCSS(commitStyle, elm);
-
+				!dry && css(elm, rule, null);
+				mode = UNSET;
+				mode = removeExtraCSS(commitStyle, elm, mode);
 				return;
 			}
 
-			css(elm, rule, style[rule]);
-
 			mode = CHANGE;
+			!dry && css(elm, rule, style[rule]);
 		});
+	}
+
+	if (className) {
+		if (elm.classList.contains(className)) {
+			elm.classList.remove(className);
+			mode = UNSET;
+		} else {
+			elm.classList.add(className);
+			mode = CHANGE;
+		}
 	}
 
 	return mode;
 }
 
-function removeExtraCSS(commitStyle: CommitStyle, elm: HTMLElement) {
+/**
+ * If the element has an empty style attribute, it removes the attribute,
+ * and if it is default, it removes the element itself
+ */
+function removeExtraCSS(
+	commitStyle: CommitStyle,
+	elm: HTMLElement,
+	mode: CommitMode
+): CommitMode {
 	if (!attr(elm, 'style')) {
 		attr(elm, 'style', null);
+
+		if (elm.tagName.toLowerCase() === commitStyle.defaultTag) {
+			Dom.unwrap(elm);
+			mode = UNWRAP;
+		}
 	}
 
-	if (elm.tagName.toLowerCase() === commitStyle.defaultTag) {
-		Dom.unwrap(elm);
+	return mode;
+}
+
+/**
+ * Creates an iframe into which elements will be inserted to test their default styles in the browser
+ */
+function getShadowRoot(jodit: IJodit): HTMLElement {
+	if (dataBind(jodit, 'shadowRoot') !== undefined) {
+		return dataBind(jodit, 'shadowRoot');
 	}
+
+	const container = getContainer(jodit, function Utils() {});
+
+	const iframe = document.createElement('iframe');
+	css(iframe, 'display', 'none');
+
+	iframe.src = 'about:blank';
+	container.appendChild(iframe);
+
+	const doc = iframe.contentWindow?.document;
+
+	const shadowRoot = !doc ? jodit.od.body : doc.body;
+	dataBind(jodit, 'shadowRoot', shadowRoot);
+
+	return shadowRoot;
+}
+
+/**
+ * `strong -> fontWeight 700`
+ */
+function getNativeCSSValue(
+	jodit: IJodit,
+	elm: HTMLElement,
+	key: string
+): ReturnType<typeof css> {
+	const newElm = jodit.create.element(elm.tagName.toLowerCase());
+	newElm.style.cssText = elm.style.cssText;
+	const root = getShadowRoot(jodit);
+	root.appendChild(newElm);
+	const result = css(newElm, key);
+	Dom.safeRemove(newElm);
+	return result;
 }
