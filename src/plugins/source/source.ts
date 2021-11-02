@@ -8,7 +8,7 @@ import './source.less';
 
 import type { IJodit, ISourceEditor } from '../../types';
 import * as consts from '../../core/constants';
-import { MODE_SOURCE } from '../../core/constants';
+import { INVISIBLE_SPACE, MODE_SOURCE } from '../../core/constants';
 import { Plugin } from '../../core/plugin';
 import { Dom } from '../../core/dom';
 import { isString, loadNext } from '../../core/helpers';
@@ -88,6 +88,20 @@ export class source extends Plugin {
 
 	@autobind
 	private getNormalPosition(pos: number, str: string): number {
+		str = str.replace(/<(script|style|iframe)[^>]*>.*?<\/\1>/is, m => {
+			let res = '';
+
+			for (let i = 0; i < m.length; i += 1) {
+				res += INVISIBLE_SPACE;
+			}
+
+			return res;
+		});
+
+		while (pos > 0 && str[pos] === INVISIBLE_SPACE) {
+			pos--;
+		}
+
 		let start: number = pos;
 
 		while (start > 0) {

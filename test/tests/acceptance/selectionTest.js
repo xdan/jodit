@@ -632,22 +632,94 @@ describe('Selection Module Tests', function () {
 			});
 		}).timeout(116000);
 
-		it('Should restore collapsed selection when user change mode - from TEXTAREA to WYSIWYG', function () {
-			const editor = getJodit({
-				useAceEditor: false,
-				defaultMode: Jodit.MODE_SOURCE
+		describe('from TEXTAREA to WYSIWYG', () => {
+			it('Should restore collapsed selection when user change mode - from TEXTAREA to WYSIWYG', function () {
+				const editor = getJodit({
+					useAceEditor: false,
+					defaultMode: Jodit.MODE_SOURCE
+				});
+				editor.value = '<p>test</p>';
+
+				const mirror = editor.container.querySelector(
+					'textarea.jodit-source__mirror'
+				);
+				mirror.setSelectionRange(5, 5);
+
+				editor.setMode(Jodit.MODE_WYSIWYG);
+				editor.s.insertNode(editor.createInside.text(' a '));
+
+				expect(editor.value).equals('<p>te a st</p>');
 			});
-			editor.value = '<p>test</p>';
 
-			const mirror = editor.container.querySelector(
-				'textarea.jodit-source__mirror'
-			);
-			mirror.setSelectionRange(5, 5);
+			describe('Inside SCRIPT/STYLE/IFRAME', () => {
+				describe('Script', () => {
+					it('Should restore selection before these tag', function () {
+						const editor = getJodit({
+							useAceEditor: false,
+							defaultMode: Jodit.MODE_SOURCE
+						});
+						editor.value = '<p>test</p><script>alert(1)</script>';
 
-			editor.setMode(Jodit.MODE_WYSIWYG);
-			editor.s.insertNode(editor.createInside.text(' a '));
+						const mirror = editor.container.querySelector(
+							'textarea.jodit-source__mirror'
+						);
+						mirror.setSelectionRange(25, 25);
 
-			expect(editor.value).equals('<p>te a st</p>');
+						editor.setMode(Jodit.MODE_WYSIWYG);
+						editor.s.insertNode(editor.createInside.text(' a '));
+
+						expect(editor.value).equals(
+							'<p>test a </p><script>alert(1)</script>'
+						);
+					});
+				});
+
+				describe('Style', () => {
+					it('Should restore selection before these tag', function () {
+						const editor = getJodit({
+							useAceEditor: false,
+							defaultMode: Jodit.MODE_SOURCE
+						});
+						editor.value =
+							'<p>test</p><style>body {color: red}</style>';
+
+						const mirror = editor.container.querySelector(
+							'textarea.jodit-source__mirror'
+						);
+						mirror.setSelectionRange(25, 25);
+
+						editor.setMode(Jodit.MODE_WYSIWYG);
+						editor.s.insertNode(editor.createInside.text(' a '));
+
+						expect(editor.value).equals(
+							'<p>test a </p><style>body {color: red}</style>'
+						);
+					});
+				});
+
+				describe('Iframe', () => {
+					it('Should restore selection before these tag', function () {
+						const editor = getJodit({
+							useAceEditor: false,
+							defaultMode: Jodit.MODE_SOURCE
+						});
+						editor.value =
+							'<p>test</p><iframe>body {color: red}</iframe>';
+
+						const mirror = editor.container.querySelector(
+							'textarea.jodit-source__mirror'
+						);
+						mirror.setSelectionRange(25, 25);
+
+						editor.setMode(Jodit.MODE_WYSIWYG);
+						editor.s.insertNode(editor.createInside.text(' a '));
+
+						expect(editor.value).equals(
+							'<p>test a </p><iframe>body {color: red}</iframe>'
+						);
+					});
+				});
+			});
 		});
 
 		it('Should restore non collapsed selection when user change mode - from WYSIWYG to TEXTAREA', function () {

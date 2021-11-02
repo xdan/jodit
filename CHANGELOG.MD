@@ -23,6 +23,7 @@
 -   [Change html tags when list style on/off #738](https://github.com/xdan/jodit/issues/738)
 -   [order list/unorder list in source view #732](https://github.com/xdan/jodit/issues/732)
 -   [dots supplementary buttons shown incorrectly #692](https://github.com/xdan/jodit/issues/692)
+-   [Jodit adds unexpected <span> tag when user lefts cursor inside <script> tag #687](https://github.com/xdan/jodit/issues/687)
 
 ## 3.9.3
 
@@ -730,11 +731,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
 -   ex: [
--                                                                   	{ value: "", text: "" },
--                                                                   	{ value: "val1", text: "text1" },
--                                                                   	{ value: "val2", text: "text2" },
--                                                                   	{ value: "val3", text: "text3" }
--                                                                   ]
+-                                                                     	{ value: "", text: "" },
+-                                                                     	{ value: "val1", text: "text1" },
+-                                                                     	{ value: "val2", text: "text2" },
+-                                                                     	{ value: "val3", text: "text3" }
+-                                                                     ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
