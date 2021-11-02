@@ -13,15 +13,16 @@
 
 #### :rocket: New Feature
 
-- Changed style resize rectangle for resize image or table
-- Added link `POWERED BY JODIT` in statusbar
-- Changed icon for resize handle in the bottom right corner
-
+-   Changed style resize rectangle for resize image or table
+-   Added link `POWERED BY JODIT` in statusbar
+-   Changed icon for resize handle in the bottom right corner
 
 #### :bug: Bug Fix
 
-- Fixed popup color for dark theme
-- [Change html tags when list style on/off #738](https://github.com/xdan/jodit/issues/738)
+-   Fixed popup color for dark theme
+-   [Change html tags when list style on/off #738](https://github.com/xdan/jodit/issues/738)
+-   [order list/unorder list in source view #732](https://github.com/xdan/jodit/issues/732)
+-   [dots supplementary buttons shown incorrectly #692](https://github.com/xdan/jodit/issues/692)
 
 ## 3.9.3
 
@@ -729,11 +730,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
 -   ex: [
--                                                                 	{ value: "", text: "" },
--                                                                 	{ value: "val1", text: "text1" },
--                                                                 	{ value: "val2", text: "text2" },
--                                                                 	{ value: "val3", text: "text3" }
--                                                                 ]
+-                                                                   	{ value: "", text: "" },
+-                                                                   	{ value: "val1", text: "text1" },
+-                                                                   	{ value: "val2", text: "text2" },
+-                                                                   	{ value: "val3", text: "text3" }
+-                                                                   ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
