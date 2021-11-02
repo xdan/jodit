@@ -58,7 +58,6 @@ describe('Resize plugin', function () {
 				);
 				simulateEvent(
 					['mousedown', 'mouseup', 'click'],
-					0,
 					editor.editor.querySelector('img')
 				);
 				//
@@ -75,30 +74,19 @@ describe('Resize plugin', function () {
 				//
 				simulateEvent(
 					'mousedown',
-					0,
-					resizer.getElementsByTagName('i')[0]
+					resizer.getElementsByTagName('div')[0]
 				);
-				simulateEvent(
-					'mousemove',
-					0,
-					editor.ownerWindow,
-					function (data) {
-						data.clientX = positionResizer.left - 10;
-						data.clientY = positionResizer.top - 10;
-					}
-				);
+				simulateEvent('mousemove', editor.ownerWindow, function (data) {
+					data.clientX = positionResizer.left - 10;
+					data.clientY = positionResizer.top - 10;
+				});
 				//
 				expect(popup.parentNode).is.null;
 
-				simulateEvent(
-					'mouseup',
-					0,
-					editor.ownerWindow,
-					function (data) {
-						data.clientX = positionResizer.left - 10;
-						data.clientY = positionResizer.top - 10;
-					}
-				);
+				simulateEvent('mouseup', editor.ownerWindow, function (data) {
+					data.clientX = positionResizer.left - 10;
+					data.clientY = positionResizer.top - 10;
+				});
 
 				expect(popup.parentNode).is.null;
 				//
@@ -138,18 +126,16 @@ describe('Resize plugin', function () {
 					).equals('0');
 
 					const positionResizer = offset(
-						resizer.getElementsByTagName('i')[1]
+						resizer.getElementsByTagName('div')[1]
 					);
 
 					simulateEvent(
 						'mousedown',
-						0,
-						resizer.getElementsByTagName('i')[1]
+						resizer.getElementsByTagName('div')[1]
 					);
 
 					simulateEvent(
 						'mousemove',
-						0,
 						editor.ownerWindow,
 						function (data) {
 							data.clientX = positionResizer.left + 10;
@@ -159,7 +145,6 @@ describe('Resize plugin', function () {
 
 					simulateEvent(
 						'mouseup',
-						0,
 						editor.ownerWindow,
 						function (data) {
 							data.clientX = positionResizer.left + 10;
@@ -206,12 +191,12 @@ describe('Resize plugin', function () {
 						).equals('0');
 
 						const positionResizer = offset(
-							resizer.getElementsByTagName('i')[2]
+							resizer.getElementsByTagName('div')[2]
 						);
 
 						simulateEvent(
 							'mousedown',
-							resizer.getElementsByTagName('i')[2]
+							resizer.getElementsByTagName('div')[2]
 						);
 
 						simulateEvent(
@@ -260,12 +245,11 @@ describe('Resize plugin', function () {
 
 					simulateEvent(
 						'mousedown',
-						0,
-						resizer.getElementsByTagName('i')[1]
+						resizer.getElementsByTagName('div')[1]
 					);
+
 					simulateEvent(
 						'mousemove',
-						0,
 						editor.ownerWindow,
 						function (data) {
 							data.clientX = positionResizer.left + 1000;
@@ -275,7 +259,6 @@ describe('Resize plugin', function () {
 
 					simulateEvent(
 						'mouseup',
-						0,
 						editor.ownerWindow,
 						function (data) {
 							data.clientX = positionResizer.left + 1000;
