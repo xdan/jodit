@@ -29,8 +29,12 @@ export class size extends Plugin {
 			.on(editor.ow, 'load.size', this.resizeWorkspaces)
 			.on(
 				'afterInit.size resize.size afterUpdateToolbar.size ' +
-					'scroll.size afterResize.size toggleFullSize.size',
+					'scroll.size afterResize.size',
 				this.resizeWorkspaces
+			)
+			.on(
+				'toggleFullSize.size toggleToolbar.size',
+				this.resizeWorkspaceImd
 			);
 
 		this.initialize();
@@ -131,6 +135,7 @@ export class size extends Plugin {
 	/**
 	 * Calculate workspace height
 	 */
+	@autobind
 	private resizeWorkspaceImd() {
 		if (!this.j || this.j.isDestructed || !this.j.o || this.j.o.inline) {
 			return;

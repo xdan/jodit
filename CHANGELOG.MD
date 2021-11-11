@@ -13,10 +13,11 @@
 
 #### :rocket: New Feature
 
-- [Feature request: Open the inline toolbar without having to highlight text. #600](https://github.com/xdan/jodit/issues/600)
-Allow open inline toolbar. This feature is implemented on the basis of the `inline-popup` plugin,
-a setting has been added to it: `popup.toolbar`, which lists the buttons that will be shown in such a toolbar.
-Added the `showInline` method to the `ToolbarEditorCollection` itself:
+-   [Feature request: Open the inline toolbar without having to highlight text. #600](https://github.com/xdan/jodit/issues/600)
+    Allow open inline toolbar. This feature is implemented on the basis of the `inline-popup` plugin,
+    a setting has been added to it: `popup.toolbar`, which lists the buttons that will be shown in such a toolbar.
+    Added the `showInline` method to the `ToolbarEditorCollection` itself:
+
 ```js
 const editor = Jodit.make('#editor', {
 	preset: 'inline',
@@ -28,10 +29,18 @@ editor.s.focus();
 
 editor.toolbar.showInline();
 // or
-editor.e.fire('showInlineToolbar')
+editor.e.fire('showInlineToolbar');
 ```
 
-- Allow use prototype as component name
+Also added `ToolbarCollection.hide` and `ToolbarCollection.show` methods.
+
+```js
+const editor = Jodit.make('#editor');
+editor.toolbar.hide();
+editor.toolbar.show();
+```
+
+-   Allow use prototype as component name
 
 ```js
 console.log(Jodit.modules.UIButton.getFullElName('element')); // jodit-ui-button__element
@@ -826,11 +835,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
 -   ex: [
--                                                                           	{ value: "", text: "" },
--                                                                           	{ value: "val1", text: "text1" },
--                                                                           	{ value: "val2", text: "text2" },
--                                                                           	{ value: "val3", text: "text3" }
--                                                                           ]
+-                                                                             	{ value: "", text: "" },
+-                                                                             	{ value: "val1", text: "text1" },
+-                                                                             	{ value: "val2", text: "text2" },
+-                                                                             	{ value: "val3", text: "text3" }
+-                                                                             ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

@@ -174,5 +174,11 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 	override hide(): void {
 		this.jodit.e.fire('hidePopup');
 		super.hide();
+		this.jodit.e.fire('toggleToolbar');
+	}
+
+	override show(): void {
+		super.show();
+		this.jodit.e.fire('toggleToolbar');
 	}
 }

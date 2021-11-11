@@ -58,7 +58,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	/**
 	 * Helper for append toolbar in its place
 	 */
-	buildToolbar(): void {
+	protected buildToolbar(): void {
 		if (!this.o.toolbar) {
 			return;
 		}
