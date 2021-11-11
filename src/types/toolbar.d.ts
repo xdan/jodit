@@ -11,7 +11,9 @@ import type {
 	Modes,
 	Nullable,
 	IViewBased,
-	IJodit, IPoint, IBound
+	IJodit,
+	IPoint,
+	IBound
 } from './';
 import type { IFileBrowser } from './file-browser';
 

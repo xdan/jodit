@@ -15,7 +15,8 @@ import type {
 	IViewBased,
 	ButtonsGroups,
 	CanUndef,
-	IViewWithToolbar, IBound
+	IViewWithToolbar,
+	IBound
 } from '../../../types/';
 
 import { error, isFunction, isJoditObject } from '../../../core/helpers/';

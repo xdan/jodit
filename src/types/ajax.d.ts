@@ -20,7 +20,6 @@ export interface IRequest {
 	data: DataVariant;
 }
 
-
 export interface IResponse<T> {
 	readonly status: number;
 	readonly statusText: string;

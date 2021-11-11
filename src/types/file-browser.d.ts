@@ -94,11 +94,13 @@ export interface IFileBrowserOptions extends IViewOptions {
 	showPreviewNavigation: boolean;
 	showSelectButtonInPreview: boolean;
 
-	saveStateInStorage: false | {
-		storeLastOpenedFolder?: boolean;
-		storeView?: boolean;
-		storeSortBy?: boolean;
-	};
+	saveStateInStorage:
+		| false
+		| {
+				storeLastOpenedFolder?: boolean;
+				storeView?: boolean;
+				storeSortBy?: boolean;
+		  };
 
 	contextMenu: boolean;
 
@@ -112,7 +114,6 @@ export interface IFileBrowserOptions extends IViewOptions {
 	moveFile: boolean;
 
 	showFoldersPanel: boolean;
-
 
 	width: number;
 	height: number;
