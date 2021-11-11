@@ -12,9 +12,9 @@ export type StorageValueType =
 	| StorageValueType[];
 
 export interface IStorage<T = StorageValueType> {
-	set(key: string, value: T): void;
-	delete(key: string): void;
+	set(key: string, value: T): IStorage<T>;
+	delete(key: string): IStorage<T>;
 	get<R = T>(key: string): R | void;
 	exists(key: string): boolean;
-	clear(): void;
+	clear(): IStorage<T>;
 }

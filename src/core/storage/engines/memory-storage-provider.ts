@@ -11,12 +11,14 @@ export class MemoryStorageProvider<T = StorageValueType>
 {
 	private data: Map<string, T> = new Map();
 
-	set(key: string, value: T): void {
+	set(key: string, value: T): IStorage<T> {
 		this.data.set(key, value);
+		return this;
 	}
 
-	delete(key: string): void {
+	delete(key: string): IStorage<T> {
 		this.data.delete(key);
+		return this;
 	}
 
 	get<R = T>(key: string): R | void {
@@ -27,7 +29,8 @@ export class MemoryStorageProvider<T = StorageValueType>
 		return this.data.has(key);
 	}
 
-	clear(): void {
+	clear(): IStorage<T> {
 		this.data.clear();
+		return this;
 	}
 }

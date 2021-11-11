@@ -17,12 +17,14 @@ export const StorageKey: string = 'Jodit_';
 export class Storage<T = StorageValueType> implements IStorage<T> {
 	readonly prefix = StorageKey;
 
-	set(key: string, value: T): void {
+	set(key: string, value: T): IStorage<T> {
 		this.provider.set(camelCase(this.prefix + key), value);
+		return this;
 	}
 
-	delete(key: string): void {
+	delete(key: string): IStorage<T> {
 		this.provider.delete(camelCase(this.prefix + key));
+		return this;
 	}
 
 	get<R = T>(key: string): R | void {
@@ -33,8 +35,9 @@ export class Storage<T = StorageValueType> implements IStorage<T> {
 		return this.provider.exists(camelCase(this.prefix + key));
 	}
 
-	clear(): void {
-		return this.provider.clear();
+	clear(): IStorage<T> {
+		this.provider.clear();
+		return this;
 	}
 
 	protected constructor(readonly provider: IStorage<T>, suffix?: string) {
