@@ -35,7 +35,7 @@
 	}
 }
 
-.jodit-ui-separator {
+.jodit-ui-separator-func() {
 	padding: 0;
 	border-right: 1px solid var(--color-border);
 	border-left: 0;
@@ -43,9 +43,17 @@
 	cursor: default;
 }
 
+.jodit-ui-separator {
+	.jodit-ui-separator-func();
+}
+
 .jodit-ui-break {
 	width: 0;
 	height: 0 !important;
 	flex-basis: 100%;
 	border-top: 1px solid var(--color-border);
+}
+
+.jodit-ui-spacer {
+	flex: 1;
 }

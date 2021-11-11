@@ -628,10 +628,6 @@ export class Config implements IViewOptions {
 			buttons: []
 		},
 		{
-			group: 'script',
-			buttons: []
-		},
-		{
 			group: 'list',
 			buttons: []
 		},
@@ -645,6 +641,11 @@ export class Config implements IViewOptions {
 		},
 		{
 			group: 'color',
+			buttons: []
+		},
+		'---',
+		{
+			group: 'script',
 			buttons: []
 		},
 		{
@@ -668,6 +669,7 @@ export class Config implements IViewOptions {
 			group: 'form',
 			buttons: []
 		},
+		'---',
 		{
 			group: 'history',
 			buttons: []
@@ -694,8 +696,6 @@ export class Config implements IViewOptions {
 	 * The list of buttons that appear in the editor's toolbar on medium places (≥ options.sizeMD).
 	 */
 	buttonsMD: ButtonsOption = [
-		'source',
-		'|',
 		'bold',
 		'italic',
 		'|',
@@ -707,19 +707,20 @@ export class Config implements IViewOptions {
 		'fontsize',
 		'brush',
 		'paragraph',
-		'|',
+		'align',
+		'---',
 		'image',
 		'table',
+		'|',
 		'link',
-		'|',
-		'align',
 		'\n',
-		'undo',
-		'redo',
-		'|',
 		'hr',
 		'copyformat',
 		'fullsize',
+		'---',
+		'undo',
+		'redo',
+		'|',
 		'dots'
 	];
 
@@ -727,8 +728,6 @@ export class Config implements IViewOptions {
 	 * The list of buttons that appear in the editor's toolbar on small places (≥ options.sizeSM).
 	 */
 	buttonsSM: ButtonsOption = [
-		'source',
-		'|',
 		'bold',
 		'italic',
 		'|',
@@ -739,7 +738,7 @@ export class Config implements IViewOptions {
 		'fontsize',
 		'brush',
 		'paragraph',
-		'|',
+		'---',
 		'image',
 		'table',
 		'\n',
@@ -752,6 +751,7 @@ export class Config implements IViewOptions {
 		'|',
 		'copyformat',
 		'fullsize',
+		'---',
 		'dots'
 	];
 
@@ -760,17 +760,16 @@ export class Config implements IViewOptions {
 	 */
 	buttonsXS: ButtonsOption = [
 		'bold',
-		'image',
-		'|',
 		'brush',
 		'paragraph',
 		'eraser',
+		'---',
+		'image',
 		'\n',
 		'align',
-		'|',
 		'undo',
 		'redo',
-		'|',
+		'---',
 		'dots'
 	];
 

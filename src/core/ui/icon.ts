@@ -23,6 +23,7 @@ export class Icon {
 		return (
 			Icon.icons[name] ||
 			Icon.icons[name.replace(/-/g, '_')] ||
+			Icon.icons[name.replace(/_/g, '-')] ||
 			Icon.icons[name.toLowerCase()]
 		);
 	}

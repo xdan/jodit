@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { UIElement } from './element';
-import { component } from '../decorators';
+import { UIElement } from '../element';
+import { component } from '../../decorators';
 
 @component
 export class UISeparator extends UIElement {

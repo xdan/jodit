@@ -21,7 +21,8 @@ import { UIButton } from '../button';
 import { getStrongControlTypes } from '../helpers/get-strong-control-types';
 import { component, watch } from '../../decorators';
 import { UIGroup } from './group';
-import { UISeparator } from '../separator';
+import { UISpacer } from './spacer';
+import { UISeparator } from './separator';
 import { isButtonGroup } from '../helpers/buttons';
 import { getControlType } from '../helpers/get-control-type';
 import { splitArray } from '../../helpers';
@@ -89,8 +90,9 @@ export class UIList<T extends IViewBased = IViewBased>
 
 		let lastBtnSeparator: boolean = false;
 
-		let line: IUIGroup = this.makeGroup();
+		let line = this.makeGroup();
 		this.append(line);
+		line.setMod('line', true);
 
 		let group: IUIGroup;
 
@@ -100,6 +102,7 @@ export class UIList<T extends IViewBased = IViewBased>
 			switch (control.name) {
 				case '\n':
 					line = this.makeGroup();
+					line.setMod('line', true);
 					group = this.makeGroup();
 					line.append(group);
 					this.append(line);
@@ -111,6 +114,19 @@ export class UIList<T extends IViewBased = IViewBased>
 						elm = new UISeparator(this.j);
 					}
 					break;
+
+				case '---': {
+					group.setMod('before-spacer', true);
+
+					const space = new UISpacer(this.j);
+					line.append(space);
+
+					group = this.makeGroup();
+					line.append(group);
+					lastBtnSeparator = false;
+
+					break;
+				}
 
 				default:
 					lastBtnSeparator = false;
@@ -136,8 +152,9 @@ export class UIList<T extends IViewBased = IViewBased>
 
 				if (buttons.length) {
 					group = this.makeGroup();
-					line.append(group);
 					group.setMod('separated', true).setMod('group', item.group);
+
+					line.append(group);
 
 					getStrongControlTypes(buttons, this.j.o.controls)
 						.filter(isNotRemoved)

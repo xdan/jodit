@@ -4,10 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from './element';
-export * from './button';
-export * from './popup';
-export * from './list';
-export * from './form';
-export * from './icon';
-export * from './progress-bar/progress-bar';
+import { UIElement } from '../element';
+import { component } from '../../decorators';
+
+@component
+export class UISpacer extends UIElement {
+	className(): string {
+		return 'UISpacer';
+	}
+}

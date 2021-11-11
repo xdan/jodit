@@ -10,14 +10,20 @@
 .jodit-ui-group {
 	display: inline-flex;
 	max-width: 100%;
+
 	flex: 0 0 auto;
 	flex-shrink: 0;
 	flex-wrap: wrap;
 
-	&_separated_true:not(:last-child) {
+	&_line_true {
+		display: flex;
+		justify-content: stretch;
+	}
+
+	&_separated_true:not(:last-child):not(&_before-spacer_true) {
 		&:after {
 			content: '';
-			.jodit-ui-separator();
+			.jodit-ui-separator-func();
 		}
 	}
 
