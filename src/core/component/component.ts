@@ -27,7 +27,17 @@ const StatusListHandlers: Map<
 export abstract class Component implements IComponent {
 	static STATUSES = STATUSES;
 
-	readonly componentName: string;
+	private __componentName!: string;
+
+	get componentName(): string {
+		if (!this.__componentName) {
+			this.__componentName =
+				'jodit-' + kebabCase(this.className() || getClassName(this));
+		}
+
+		return this.__componentName;
+	}
+
 	readonly uid: string;
 
 	/**
@@ -156,9 +166,6 @@ export abstract class Component implements IComponent {
 	abstract className(): string;
 
 	protected constructor() {
-		this.componentName =
-			'jodit-' + kebabCase(this.className() || getClassName(this));
-
 		this.uid = 'jodit-uid-' + uniqueUid();
 	}
 

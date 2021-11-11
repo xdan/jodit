@@ -9,6 +9,39 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.9.5
+
+#### :rocket: New Feature
+
+-   Allow use prototype as component name
+
+```js
+console.log(Jodit.modules.UIButton.getFullElName('element')); // jodit-ui-button__element
+console.log(Jodit.modules.UIButton.componentName); // jodit-ui-button
+```
+
+-   [Remember last opened folder with FileBrowser #675](https://github.com/xdan/jodit/issues/675)
+-   [Spacer in Button Toolbar](https://github.com/xdan/jodit/issues/713)
+    In addition to the `|` metacharacters and `\n` which stand for separator and newline, the `---` metacharacter has appeared,
+    which allows you to add a spacer element which pushes all buttons behind the spacer to the right side of the toolbar
+    and creates space in the middle.
+
+```js
+Jodit.make('#editor', {
+	buttons: [
+		'source',
+		'bold',
+		'|',
+		'---',
+		'|',
+		'brush',
+		'about',
+		'\n',
+		'italic'
+	]
+});
+```
+
 ## 3.9.4
 
 #### :rocket: New Feature
