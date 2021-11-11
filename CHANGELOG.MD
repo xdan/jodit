@@ -13,7 +13,25 @@
 
 #### :rocket: New Feature
 
--   Allow use prototype as component name
+- [Feature request: Open the inline toolbar without having to highlight text. #600](https://github.com/xdan/jodit/issues/600)
+Allow open inline toolbar. This feature is implemented on the basis of the `inline-popup` plugin,
+a setting has been added to it: `popup.toolbar`, which lists the buttons that will be shown in such a toolbar.
+Added the `showInline` method to the `ToolbarEditorCollection` itself:
+```js
+const editor = Jodit.make('#editor', {
+	preset: 'inline',
+	popup: {
+		toolbar: Jodit.atom(['bold', 'italic', 'image'])
+	}
+});
+editor.s.focus();
+
+editor.toolbar.showInline();
+// or
+editor.e.fire('showInlineToolbar')
+```
+
+- Allow use prototype as component name
 
 ```js
 console.log(Jodit.modules.UIButton.getFullElName('element')); // jodit-ui-button__element

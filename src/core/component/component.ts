@@ -8,7 +8,6 @@ import type {
 	ComponentStatus,
 	IComponent,
 	IDictionary,
-	IViewBased,
 	Nullable
 } from '../../types';
 
@@ -149,16 +148,11 @@ export abstract class Component implements IComponent {
 	/**
 	 * Bind destructor to come View
 	 */
-	bindDestruct(jodit: IViewBased): this {
-		const destructMe = () => {
-			!this.isInDestruct && this.destruct();
-		};
-
-		jodit.e && jodit.e.on(STATUSES.beforeDestruct, destructMe);
-
-		this.hookStatus(STATUSES.beforeDestruct, () => {
-			jodit.e && jodit.e.off(STATUSES.beforeDestruct, destructMe);
-		});
+	bindDestruct(component: IComponent): this {
+		component.hookStatus(
+			STATUSES.beforeDestruct,
+			() => !this.isInDestruct && this.destruct()
+		);
 
 		return this;
 	}

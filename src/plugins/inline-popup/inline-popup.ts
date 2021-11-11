@@ -181,6 +181,7 @@ export class inlinePopup extends Plugin {
 				}
 			)
 			.on('hidePopup', this.hidePopup)
+			.on('showInlineToolbar', this.showInlineToolbar)
 			.on(
 				'showPopup',
 				(
@@ -326,5 +327,21 @@ export class inlinePopup extends Plugin {
 			this.elmsList.map(e => camelCase(`click_${e}`)).join(' '),
 			this.onClick
 		);
+	}
+
+	/**
+	 * Show the inline WYSIWYG toolbar editor.
+	 */
+	@autobind
+	private showInlineToolbar(bound?: IBound) {
+		this.showPopup(() => {
+			if (bound) {
+				return bound;
+			}
+
+			const { range } = this.j.s;
+
+			return range.getBoundingClientRect();
+		}, 'toolbar');
 	}
 }

@@ -14,17 +14,18 @@ import type {
 	IControlTypeStrong,
 	IViewBased,
 	ButtonsGroups,
-	CanUndef
+	CanUndef,
+	IViewWithToolbar, IBound
 } from '../../../types/';
 
-import { isFunction, isJoditObject } from '../../../core/helpers/';
+import { error, isFunction, isJoditObject } from '../../../core/helpers/';
 
 import { UIList } from '../../../core/ui';
 import { makeButton } from '../factory';
 import { component, autobind } from '../../../core/decorators';
 
 @component
-export class ToolbarCollection<T extends IViewBased = IViewBased>
+export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 	extends UIList<T>
 	implements IToolbarCollection
 {
@@ -139,6 +140,18 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 			// .on(this.j.ow, 'mousedown touchend', this.closeAllPopups)
 			.on(this.listenEvents, this.update)
 			.on('afterSetMode focus', this.immediateUpdate);
+	}
+
+	hide(): void {
+		this.container.remove();
+	}
+
+	show(): void {
+		this.appendTo(this.j.toolbarContainer);
+	}
+
+	showInline(bound?: IBound): void {
+		throw error('The method is not implemented for this class.');
 	}
 
 	/** @override **/

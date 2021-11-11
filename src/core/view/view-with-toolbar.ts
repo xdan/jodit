@@ -24,7 +24,8 @@ import { isButtonGroup } from '../ui/helpers/buttons';
 import { autobind } from '../decorators';
 
 export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
-	toolbar: IToolbarCollection = makeCollection(this);
+	TOOLBAR!: IToolbarCollection;
+	toolbar: this['TOOLBAR'] = makeCollection(this);
 
 	private defaultToolbarContainer: HTMLElement =
 		this.c.div('jodit-toolbar__box');
@@ -57,7 +58,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	/**
 	 * Helper for append toolbar in its place
 	 */
-	protected buildToolbar(): void {
+	buildToolbar(): void {
 		if (!this.o.toolbar) {
 			return;
 		}

@@ -63,7 +63,7 @@ interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 		callback: (component: this) => void
 	): void;
 
-	bindDestruct(jodit: T): this;
+	bindDestruct(component: IComponent): this;
 }
 
 interface IViewComponent<T extends IViewBased = IViewBased> extends IComponent {

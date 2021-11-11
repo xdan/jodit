@@ -11,7 +11,8 @@ import type {
 	IDictionary,
 	IToolbarButton,
 	IViewBased,
-	IJodit
+	IJodit,
+	IBound
 } from '../../../types';
 import { css, isFunction } from '../../../core/helpers';
 import { component } from '../../../core/decorators';
@@ -159,5 +160,19 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 		});
 
 		Dom.appendChildFirst(container, input);
+	}
+
+	/**
+	 * Show the inline toolbar inside WYSIWYG editor.
+	 * @param bound - you can set the place for displaying the toolbar,
+	 * or the place will be in the place of the cursor
+	 */
+	override showInline(bound?: IBound): void {
+		this.jodit.e.fire('showInlineToolbar', bound);
+	}
+
+	override hide(): void {
+		this.jodit.e.fire('hidePopup');
+		super.hide();
 	}
 }

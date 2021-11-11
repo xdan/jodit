@@ -11,7 +11,7 @@ import type {
 	Modes,
 	Nullable,
 	IViewBased,
-	IJodit
+	IJodit, IPoint, IBound
 } from './';
 import type { IFileBrowser } from './file-browser';
 
@@ -300,6 +300,10 @@ interface IToolbarCollection extends IUIList {
 	shouldBeDisabled(button: IToolbarButton): boolean | void;
 	shouldBeActive(button: IToolbarButton): boolean | void;
 	getTarget(button: IToolbarButton): Node | null;
+
+	show(): void;
+	hide(): void;
+	showInline(bound?: IBound): void;
 }
 
 export interface IStatusBar extends IComponent, IMods {

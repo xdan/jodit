@@ -38,6 +38,8 @@ export interface ISelect {
 
 	save(silent?: boolean): MarkerInfo[];
 	restore(): void;
+	readonly hasMarkers: boolean;
+	readonly markers: HTMLElement[];
 	removeMarkers(): void;
 	marker(atStart?: boolean, range?: Range): HTMLSpanElement;
 
