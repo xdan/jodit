@@ -15,6 +15,7 @@ import { attr, ctrlKey, dataBind } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { getDataTransfer } from './paste/helpers';
 import { autobind, throttle } from '../../core/decorators';
+import { FileBrowserFiles } from '../../modules/file-browser/ui';
 
 /**
  * Process drag and drop image from FileBrowser and movev image inside the editor
@@ -68,7 +69,9 @@ export class DragAndDrop extends Plugin {
 
 		if (
 			Dom.isElement(target) &&
-			target.classList.contains('jodit-filebrowser__files-item')
+			target.classList.contains(
+				FileBrowserFiles.prototype.getFullElName('item')
+			)
 		) {
 			target = target.querySelector('img') as HTMLElement;
 		}

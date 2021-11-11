@@ -20,7 +20,6 @@ import type {
 } from '../../types/';
 
 import { humanSizeToBytes, isArray, isString } from '../../core/helpers';
-import { ITEM_CLASS as IC } from './consts';
 import { UIFileInput } from '../../core/ui';
 
 declare module '../../config' {
@@ -117,7 +116,9 @@ Config.prototype.filebrowser = {
 	renameFolder: true,
 	moveFolder: true,
 	moveFile: true,
+
 	showFoldersPanel: true,
+	storeLastOpenedFolder: true,
 
 	width: 859,
 	height: 400,
@@ -156,7 +157,13 @@ Config.prototype.filebrowser = {
 	showFileName: true,
 	showFileSize: true,
 	showFileChangeTime: true,
-	saveStateInStorage: true,
+
+	saveStateInStorage: {
+		storeLastOpenedFolder: true,
+		storeView: true,
+		storeSortBy: true
+	},
+
 	pixelOffsetLoadNewChunk: 200,
 
 	getThumbTemplate(
@@ -166,6 +173,7 @@ Config.prototype.filebrowser = {
 		source_name: string
 	): string {
 		const opt = this.options,
+			IC = this.files.getFullElName('item'),
 			showName = opt.showFileName,
 			showSize = opt.showFileSize && item.size,
 			showTime = opt.showFileChangeTime && item.time;

@@ -8,7 +8,7 @@ import type { IJodit, IPointBound } from '../../types';
 import { Plugin } from '../../core/plugin';
 import { Dom } from '../../core/dom';
 import { autobind } from '../../core/decorators';
-import * as icon from './assests/resize-handler.svg';
+import { Icon } from '../../core/ui';
 
 @autobind
 export class resizeHandler extends Plugin {
@@ -115,7 +115,10 @@ export class resizeHandler extends Plugin {
 	/**
 	 * Resize handle
 	 */
-	private handle = this.j.c.div('jodit-editor__resize', icon);
+	private handle = this.j.c.div(
+		'jodit-editor__resize',
+		Icon.get('resize_handler')
+	);
 
 	/** @override **/
 	protected beforeDestruct(): void {

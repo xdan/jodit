@@ -36,26 +36,30 @@ import './config';
 
 import { Dom } from '../../core/dom';
 import { ObserveObject } from '../../core/events/';
-import { F_CLASS, ICON_LOADER } from './consts';
 import { makeDataProvider } from './factories';
 import { stateListeners } from './listeners/state-listeners';
 import { nativeListeners } from './listeners/native-listeners';
 import { selfListeners } from './listeners/self-listeners';
 import { DEFAULT_SOURCE_NAME } from './data-provider';
 import { autobind } from '../../core/decorators';
+import { FileBrowserFiles, FileBrowserTree } from './ui';
 
 export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	/** @override */
 	className(): string {
-		return 'FileBrowser';
+		return 'Filebrowser';
 	}
 
-	private loader = this.c.div(F_CLASS + '__loader', ICON_LOADER);
-	private browser = this.c.div(F_CLASS + ' non-selected');
-	private status_line = this.c.div(F_CLASS + '__status');
+	private loader = this.c.div(
+		this.getFullElName('loader'),
+		'<div class="jodit-icon_loader"></div>'
+	);
 
-	tree = this.c.div(F_CLASS + '__tree');
-	files = this.c.div(F_CLASS + '__files');
+	private browser = this.c.div(this.componentName);
+	private status_line = this.c.div(this.getFullElName('status'));
+
+	tree = new FileBrowserTree(this);
+	files = new FileBrowserFiles(this);
 
 	state = ObserveObject.create<IFileBrowserState>({
 		currentPath: '',
@@ -75,8 +79,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	dataProvider!: IFileBrowserDataProvider;
 
 	async loadItems(): Promise<any> {
-		this.files.classList.add('jodit-filebrowser_active');
-		this.files.appendChild(this.loader.cloneNode(true));
+		this.files.setMod('active', true);
+		this.files.container.appendChild(this.loader.cloneNode(true));
 
 		return this.dataProvider
 			.items(this.state.currentPath, this.state.currentSource, {
@@ -101,11 +105,11 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			this.uploader.setSource(this.state.currentSource);
 		}
 
-		this.tree.classList.add('jodit-filebrowser_active');
+		this.tree.setMod('active', true);
 
-		Dom.detach(this.tree);
+		Dom.detach(this.tree.container);
 
-		this.tree.appendChild(this.loader.cloneNode(true));
+		this.tree.container.appendChild(this.loader.cloneNode(true));
 
 		const items = this.loadItems();
 
@@ -125,7 +129,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 			return Promise.all([tree, items]).catch(error);
 		} else {
-			this.tree.classList.remove('jodit-filebrowser_active');
+			this.tree.setMod('active', false);
 		}
 
 		return items.catch(error);
@@ -217,21 +221,23 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			message = message.message;
 		}
 
-		this.status_line.classList.remove('jodit-filebrowser_success');
+		const successClass = this.getFullElName('status', 'success', true),
+			activeClass = this.getFullElName('status', 'active', true);
 
-		this.status_line.classList.add('jodit-filebrowser_active');
+		this.status_line.classList.remove(successClass);
+		this.status_line.classList.add(activeClass);
 
 		const messageBox = this.c.div();
 		messageBox.textContent = message;
 		this.status_line.appendChild(messageBox);
 
 		if (success) {
-			this.status_line.classList.add('jodit-filebrowser_success');
+			this.status_line.classList.add(successClass);
 		}
 
 		this.async.setTimeout(
 			() => {
-				this.status_line.classList.remove('jodit-filebrowser_active');
+				this.status_line.classList.remove(activeClass);
 				Dom.detach(this.status_line);
 			},
 			{
@@ -280,9 +286,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			let localTimeout: number = 0;
 
 			this.e
-				.off(this.files, 'dblclick')
-				.on(this.files, 'dblclick', this.onSelect(callback))
-				.on(this.files, 'touchstart', () => {
+				.off(this.files.container, 'dblclick')
+				.on(this.files.container, 'dblclick', this.onSelect(callback))
+				.on(this.files.container, 'touchstart', () => {
 					const now = new Date().getTime();
 
 					if (now - localTimeout < consts.EMULATE_DBLCLICK_TIMEOUT) {
@@ -345,7 +351,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			Config.defaultOptions.filebrowser
 		) as IFileBrowserOptions;
 
-		self.storage = Storage.makeStorage(this.o.saveStateInStorage);
+		self.storage = Storage.makeStorage(
+			Boolean(this.o.saveStateInStorage),
+			this.componentName
+		);
 
 		self.dataProvider = makeDataProvider(self, self.options);
 
@@ -366,11 +375,13 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			});
 		});
 
+		self.browser.component = this;
+
 		if (self.o.showFoldersPanel) {
-			self.browser.appendChild(self.tree);
+			self.browser.appendChild(self.tree.container);
 		}
 
-		self.browser.appendChild(self.files);
+		self.browser.appendChild(self.files.container);
 		self.browser.appendChild(self.status_line);
 
 		selfListeners.call(self);
@@ -404,7 +415,14 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			}
 		});
 
-		const view = this.storage.get(F_CLASS + '_view');
+		const { storeView, storeSortBy, storeLastOpenedFolder } = this.o
+			.saveStateInStorage || {
+			storeLastOpenedFolder: false,
+			storeView: false,
+			storeSortBy: false
+		};
+
+		const view = storeView && this.storage.get('view');
 
 		if (view && this.o.view == null) {
 			self.state.view = view === 'list' ? 'list' : 'tiles';
@@ -414,7 +432,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 		this.state.fire('change.view');
 
-		const sortBy = self.storage.get<string>(F_CLASS + '_sortby');
+		const sortBy = storeSortBy && self.storage.get<string>('sortBy');
 
 		if (sortBy) {
 			const parts = sortBy.split('-');
@@ -426,10 +444,13 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			self.state.sortBy = self.o.sortBy || 'changed-desc';
 		}
 
-		// TODO
-		// self.dataProvider.currentBaseUrl = $$('base', editorDoc).length
-		// 	? attr($$('base', editorDoc)[0], 'href') || ''
-		// 	: location.protocol + '//' + location.host;
+		if (storeLastOpenedFolder) {
+			const currentPath = self.storage.get<string>('currentPath'),
+				currentSource = self.storage.get<string>('currentSource');
+
+			self.state.currentPath = currentPath ?? '';
+			self.state.currentSource = currentSource ?? '';
+		}
 
 		self.initUploader(self);
 	}

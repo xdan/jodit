@@ -13,6 +13,7 @@ import type {
 } from './types';
 import type { IUploader, IUploaderOptions } from './uploader';
 import type { IViewBased, IViewOptions } from './view';
+import type { IUIElement } from './ui';
 
 /**
  * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new
@@ -92,7 +93,12 @@ export interface IFileBrowserOptions extends IViewOptions {
 	preview: boolean;
 	showPreviewNavigation: boolean;
 	showSelectButtonInPreview: boolean;
-	saveStateInStorage: boolean;
+
+	saveStateInStorage: false | {
+		storeLastOpenedFolder?: boolean;
+		storeView?: boolean;
+		storeSortBy?: boolean;
+	};
 
 	contextMenu: boolean;
 
@@ -104,7 +110,9 @@ export interface IFileBrowserOptions extends IViewOptions {
 	renameFolder: boolean;
 	moveFolder: boolean;
 	moveFile: boolean;
+
 	showFoldersPanel: boolean;
+
 
 	width: number;
 	height: number;
@@ -236,6 +244,9 @@ export interface IFileBrowser<
 > extends IViewBased<T> {
 	readonly dataProvider: IFileBrowserDataProvider;
 	readonly state: IFileBrowserState;
+
+	readonly tree: IUIElement;
+	readonly files: IUIElement;
 
 	isOpened: boolean;
 

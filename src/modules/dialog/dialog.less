@@ -268,21 +268,7 @@
 	}
 
 	&__resizer {
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		display: inline-block;
-		width: 0;
-		height: 0;
-		border-right: 0 solid transparent;
-		border-bottom: 10px solid var(--color-border);
-		border-left: 10px solid transparent;
-		cursor: se-resize;
-		opacity: 1;
-
-		&:hover {
-			border-bottom-color: rgba(0, 0, 0, 0.6);
-		}
+		.resize-handle();
 	}
 
 	@media (max-width: @screen-xs) {

@@ -1,0 +1,118 @@
+@import (reference) '../../../../styles/variables';
+@import (reference) '../../../../styles/mixins';
+
+.jodit-filebrowser-tree {
+	position: relative;
+	display: none;
+	height: 100%;
+	vertical-align: top;
+
+	.jodit-button {
+		border-radius: 0;
+	}
+
+	&_active_true {
+		display: flex;
+	}
+
+	.scrollbarSlim();
+
+	&_active_true {
+		z-index: 2;
+		width: var(--first_column);
+		min-width: 200px;
+		max-width: 290px;
+		flex-direction: column;
+
+		@media (max-width: @screen-xs) {
+			width: auto;
+			max-width: 100%;
+			height: 100px;
+		}
+
+		background-color: var(--color-background-filebrowser-folders);
+		overflow-y: auto;
+
+		&::-webkit-scrollbar {
+			width: calc(var(--padding-default) / 2);
+		}
+
+		&::-webkit-scrollbar-track {
+			-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: rgba(127, 127, 127, 0.5);
+			outline: 1px solid slategrey;
+		}
+
+		--text-color: #b1b1b1;
+	}
+
+	&__item {
+		position: relative;
+		display: flex;
+		min-height: 38px;
+		align-items: center;
+		justify-content: space-between;
+		padding: calc(var(--padding-default) / 2) var(--padding-default);
+		border-bottom: 1px solid #474747;
+		color: var(--text-color);
+		text-decoration: none;
+		transition: background-color 0.2s ease 0s;
+		word-break: break-all;
+
+		&-title {
+			flex: 1;
+		}
+
+		.jodit-icon_folder {
+			display: flex;
+			width: calc(var(--icon-size) + 4px);
+			height: calc(var(--icon-size) + 4px);
+
+			align-items: center;
+			justify-content: center;
+
+			margin-left: calc(var(--padding-default) / 2);
+
+			opacity: 0.3;
+
+			& svg {
+				width: var(--icon-size);
+				height: var(--icon-size);
+				fill: var(--text-color) !important;
+				stroke: var(--text-color) !important;
+			}
+
+			&:hover {
+				background: #696969;
+			}
+		}
+
+		&:hover {
+			background-color: var(--color-background-button-hover);
+			color: #222;
+
+			i.jodit-icon_folder {
+				opacity: 0.6;
+			}
+		}
+	}
+
+	&__source-title {
+		position: relative;
+		display: block;
+		padding: 2px 4px;
+		border-bottom: 1px solid #484848;
+		background: #5a5a5a;
+		color: #969696;
+		font-size: 12px;
+		user-select: none;
+		word-break: break-all;
+	}
+
+	a + &__source-title {
+		margin-top: var(--padding-default);
+	}
+}

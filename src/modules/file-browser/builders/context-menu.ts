@@ -8,16 +8,15 @@ import type { FileBrowser } from '../file-browser';
 import { Dialog } from '../../dialog';
 
 import { Dom } from '../../../core/dom';
-import { F_CLASS, ICON_LOADER, ITEM_CLASS } from '../consts';
 import { attr, error } from '../../../core/helpers';
 import { makeContextMenu } from '../factories';
 import { Icon } from '../../../core/ui';
-import { getItem } from '../listeners/native-listeners';
+import { elementToItem, getItem } from '../listeners/native-listeners';
 import { openImageEditor } from '../../image-editor/image-editor';
 
-const CLASS_PREVIEW = F_CLASS + '_preview_',
+const CLASS_PREVIEW = 'jodit-filebrowser-preview',
 	preview_tpl_next = (next = 'next', right = 'right') =>
-		`<div class="${CLASS_PREVIEW}navigation ${CLASS_PREVIEW}navigation-${next}">` +
+		`<div class="${CLASS_PREVIEW}__navigation ${CLASS_PREVIEW}__navigation_arrow_${next}">` +
 		'' +
 		Icon.get('angle-' + right) +
 		'</a>';
@@ -42,6 +41,14 @@ export default (self: FileBrowser): ((e: DragEvent) => boolean | void) => {
 			ga = (key: string) => attr(item, key) || '';
 
 		self.async.setTimeout(() => {
+			const selectedItem = elementToItem(a, self.elementsMap);
+
+			if (!selectedItem) {
+				return;
+			}
+
+			self.state.activeElements = [selectedItem];
+
 			contextmenu.show(e.clientX, e.clientY, [
 				ga('data-is-file') !== '1' &&
 				opt.editImage &&
@@ -105,11 +112,11 @@ export default (self: FileBrowser): ((e: DragEvent) => boolean | void) => {
 										buttons: ['fullsize', 'dialog.close']
 									}),
 									temp_content = self.c.div(
-										F_CLASS + '_preview',
-										ICON_LOADER
+										CLASS_PREVIEW,
+										'<div class="jodit-icon_loader"></div>'
 									),
 									preview_box = self.c.div(
-										F_CLASS + '_preview_box'
+										CLASS_PREVIEW + '__box'
 									),
 									next = self.c.fromHTML(preview_tpl_next()),
 									prev = self.c.fromHTML(
@@ -133,7 +140,9 @@ export default (self: FileBrowser): ((e: DragEvent) => boolean | void) => {
 												if (
 													Dom.prevWithClass(
 														item,
-														ITEM_CLASS
+														self.files.getFullElName(
+															'item'
+														)
 													)
 												) {
 													temp_content.appendChild(
@@ -144,7 +153,9 @@ export default (self: FileBrowser): ((e: DragEvent) => boolean | void) => {
 												if (
 													Dom.nextWithClass(
 														item,
-														ITEM_CLASS
+														self.files.getFullElName(
+															'item'
+														)
 													)
 												) {
 													temp_content.appendChild(
@@ -177,20 +188,15 @@ export default (self: FileBrowser): ((e: DragEvent) => boolean | void) => {
 									[next, prev],
 									'click',
 									function (this: HTMLElement) {
-										if (
-											this.classList.contains(
-												CLASS_PREVIEW +
-													'navigation-next'
-											)
-										) {
+										if (this === next) {
 											item = Dom.nextWithClass(
 												item,
-												ITEM_CLASS
+												self.files.getFullElName('item')
 											) as HTMLElement;
 										} else {
 											item = Dom.prevWithClass(
 												item,
-												ITEM_CLASS
+												self.files.getFullElName('item')
 											) as HTMLElement;
 										}
 
@@ -201,7 +207,8 @@ export default (self: FileBrowser): ((e: DragEvent) => boolean | void) => {
 										Dom.detach(temp_content);
 										Dom.detach(preview_box);
 
-										temp_content.innerHTML = ICON_LOADER;
+										temp_content.innerHTML =
+											'<div class="jodit-icon_loader"></div>';
 
 										addLoadHandler(ga('href'));
 									}
@@ -212,7 +219,7 @@ export default (self: FileBrowser): ((e: DragEvent) => boolean | void) => {
 								});
 
 								preview.container.classList.add(
-									F_CLASS + '_preview_dialog'
+									CLASS_PREVIEW + '__dialog'
 								);
 								preview.setContent(temp_content);
 								preview.setPosition();
@@ -242,9 +249,9 @@ export default (self: FileBrowser): ((e: DragEvent) => boolean | void) => {
 			]);
 		}, self.defaultTimeout);
 
-		self?.e.on('beforeDestruct', () => {
-			contextmenu.destruct();
-		});
+		self?.dialog.e
+			.on('beforeClose', () => contextmenu.close())
+			.on('beforeDestruct', () => contextmenu.destruct());
 
 		e.stopPropagation();
 		e.preventDefault();

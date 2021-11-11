@@ -6,18 +6,20 @@
 
 @import (reference) '../../../styles/variables';
 
-.jodit-filebrowser_preview {
+.jodit-filebrowser-preview {
 	position: relative;
 	display: flex;
 
-	min-width: 600px;
-	max-width: 1000px;
-	min-height: 700px;
+	min-width: 400px;
+	max-width: min(100%, 1000px);
+	height: 100%;
+	min-height: min(100%, 500px);
 	max-height: 100%;
 
 	align-items: center;
 	justify-content: center;
 
+	margin: auto;
 	text-align: center;
 
 	@media (max-width: @screen-sm) {
@@ -28,20 +30,21 @@
 		max-height: 100%;
 	}
 
-	&_box {
+	&__box {
 		display: flex;
 		flex-grow: 1;
 		align-items: center;
 		justify-content: center;
 	}
 
-	&_navigation {
+	&__navigation {
 		position: absolute;
 		top: 0;
 		left: 0;
 		height: 100%;
+		cursor: pointer;
 
-		&-next {
+		&_arrow_next {
 			right: 0;
 			left: auto;
 		}
@@ -51,8 +54,8 @@
 			top: 50%;
 			width: 45px;
 			height: 45px;
-			margin-top: -22px;
 			fill: #9e9ba7;
+			transform: translateY(-50%);
 			transition: fill 0.3s linear;
 		}
 

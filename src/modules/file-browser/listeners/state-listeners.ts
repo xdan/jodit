@@ -6,13 +6,11 @@
 
 import type { IFileBrowserItem } from '../../../types';
 import type { FileBrowser } from '../file-browser';
-import { F_CLASS, ITEM_CLASS } from '../consts';
 import { Dom } from '../../../core/dom';
 import { normalizePath } from '../../../core/helpers/normalize';
 import { Button } from '../../../core/ui';
 
-const DEFAULT_SOURCE_NAME = 'default',
-	ITEM_ACTIVE_CLASS = ITEM_CLASS + '_active_true';
+const DEFAULT_SOURCE_NAME = 'default';
 
 /**
  * Convert state to view
@@ -49,6 +47,15 @@ export function stateListeners(this: FileBrowser): void {
 		.on(
 			['change.currentPath', 'change.currentSource'],
 			this.async.debounce(() => {
+				if (
+					this.o.saveStateInStorage &&
+					this.o.saveStateInStorage.storeLastOpenedFolder
+				) {
+					this.storage
+						.set('currentPath', this.state.currentPath)
+						.set('currentSource', this.state.currentSource);
+				}
+
 				this.loadTree();
 			}, this.defaultTimeout)
 		)
@@ -57,7 +64,10 @@ export function stateListeners(this: FileBrowser): void {
 				const key = item.uniqueHashKey,
 					{ elm } = elementsMap[key];
 
-				elm && elm.classList.remove(ITEM_ACTIVE_CLASS);
+				elm &&
+					elm.classList.remove(
+						files.getFullElName('item', 'active', true)
+					);
 			});
 		})
 
@@ -68,35 +78,45 @@ export function stateListeners(this: FileBrowser): void {
 				const key = item.uniqueHashKey,
 					{ elm } = elementsMap[key];
 
-				elm && elm.classList.add(ITEM_ACTIVE_CLASS);
+				elm &&
+					elm.classList.add(
+						files.getFullElName('item', 'active', true)
+					);
 			});
 		})
 
 		.on('change.view', () => {
-			files.classList.remove(F_CLASS + '__files_view_tiles');
-			files.classList.remove(F_CLASS + '__files_view_list');
-			files.classList.add(F_CLASS + '__files_view_' + state.view);
-
-			this.storage.set(F_CLASS + '_view', state.view);
+			files.setMod('view', state.view);
+			if (
+				this.o.saveStateInStorage &&
+				this.o.saveStateInStorage.storeView
+			) {
+				this.storage.set('view', state.view);
+			}
 		})
 
 		.on('change.sortBy', () => {
-			this.storage.set(F_CLASS + '_sortby', state.sortBy);
+			if (
+				this.o.saveStateInStorage &&
+				this.o.saveStateInStorage.storeSortBy
+			) {
+				this.storage.set('sortBy', state.sortBy);
+			}
 		})
 
 		.on(
 			'change.elements',
 			this.async.debounce(() => {
-				Dom.detach(files);
+				Dom.detach(files.container);
 
 				if (state.elements.length) {
 					state.elements.forEach(item => {
-						this.files.appendChild(getDomElement(item));
+						this.files.container.appendChild(getDomElement(item));
 					});
 				} else {
-					files.appendChild(
+					files.container.appendChild(
 						create.div(
-							F_CLASS + '_no_files',
+							this.componentName + '_no-files_true',
 							this.i18n('There are no files')
 						)
 					);
@@ -107,20 +127,23 @@ export function stateListeners(this: FileBrowser): void {
 		.on(
 			'change.sources',
 			this.async.debounce(() => {
-				Dom.detach(this.tree);
+				Dom.detach(this.tree.container);
 
 				state.sources.forEach(source => {
 					const sourceName = source.name;
 
 					if (sourceName && sourceName !== DEFAULT_SOURCE_NAME) {
-						this.tree.appendChild(
-							create.div(F_CLASS + '__source-title', sourceName)
+						this.tree.container.appendChild(
+							create.div(
+								this.tree.getFullElName('source-title'),
+								sourceName
+							)
 						);
 					}
 
 					source.folders.forEach((name: string) => {
 						const folderElm = create.a(
-							F_CLASS + '__tree-item',
+							this.tree.getFullElName('item'),
 							{
 								draggable: 'draggable',
 								href: '#',
@@ -132,7 +155,10 @@ export function stateListeners(this: FileBrowser): void {
 								'data-source': sourceName,
 								'data-source-path': source.path
 							},
-							create.span(F_CLASS + '__tree-item-title', name)
+							create.span(
+								this.tree.getFullElName('item-title'),
+								name
+							)
 						);
 
 						const action =
@@ -149,7 +175,7 @@ export function stateListeners(this: FileBrowser): void {
 
 						this.e.on(folderElm, 'click', action('openFolder'));
 
-						this.tree.appendChild(folderElm);
+						this.tree.container.appendChild(folderElm);
 
 						if (name === '..' || name === '.') {
 							return;
@@ -206,7 +232,7 @@ export function stateListeners(this: FileBrowser): void {
 							});
 						});
 
-						this.tree.appendChild(button.container);
+						this.tree.append(button);
 					}
 				});
 			}, this.defaultTimeout)

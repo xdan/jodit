@@ -96,3 +96,23 @@
 
 	overflow-anchor: auto;
 }
+
+.resize-handle() {
+	position: relative;
+
+	svg {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		overflow: hidden;
+
+		width: 12px;
+		height: 12px;
+
+		cursor: nwse-resize;
+
+		fill: var(--color-gray-dark);
+
+		user-select: none;
+	}
+}

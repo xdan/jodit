@@ -39,6 +39,7 @@ import { STATUSES } from '../../core/component';
 import { eventEmitter, pluginSystem } from '../../core/global';
 import { component, autobind, hook } from '../../core/decorators';
 import { View } from '../../core/view/view';
+import { Icon } from '../../core/ui';
 
 declare module '../../config' {
 	interface Config {
@@ -723,7 +724,13 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 					</div>
 					<div class="${n('content')}"></div>
 					<div class="${n('footer')}"></div>
-					${self.o.resizable ? `<div class="${n('resizer')}"></div>` : ''}
+					${
+						self.o.resizable
+							? `<div class="${n('resizer')}">${Icon.get(
+									'resize_handler'
+							  )}</div>`
+							: ''
+					}
 				</div>
 			</div>`
 		) as HTMLDivElement;

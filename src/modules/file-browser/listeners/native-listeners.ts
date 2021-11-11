@@ -4,10 +4,14 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { HTMLTagNames, IFileBrowserItem, Nullable } from '../../../types';
+import type {
+	HTMLTagNames,
+	IFileBrowserItem,
+	Nullable,
+	IDictionary
+} from '../../../types';
 import type { FileBrowser } from '../file-browser';
 import { ctrlKey, attr } from '../../../core/helpers';
-import { F_CLASS, ITEM_CLASS } from '../consts';
 import contextMenu from '../builders/context-menu';
 import { Dom } from '../../../core/dom';
 
@@ -18,20 +22,26 @@ export const getItem = (
 ): Nullable<HTMLElement> =>
 	Dom.closest(node as Node, elm => Dom.isTag(elm, tag), root);
 
+export const elementToItem = (
+	elm: HTMLElement,
+	elementsMap: IDictionary<{
+		elm: HTMLElement;
+		item: IFileBrowserItem;
+	}>
+): IFileBrowserItem | void => {
+	const { key } = elm.dataset,
+		{ item } = elementsMap[key || ''];
+
+	return item;
+};
+
 export function nativeListeners(this: FileBrowser): void {
 	let dragElement: false | HTMLElement = false;
 
 	const self = this;
 
-	const elementToItem = (elm: HTMLElement): IFileBrowserItem | void => {
-		const { key } = elm.dataset,
-			{ item } = self.elementsMap[key || ''];
-
-		return item;
-	};
-
 	self.e
-		.on(self.tree, 'dragstart', (e: MouseEvent): void => {
+		.on(self.tree.container, 'dragstart', (e: MouseEvent): void => {
 			const a = getItem(e.target, self.dialog.container);
 
 			if (!a) {
@@ -42,20 +52,26 @@ export function nativeListeners(this: FileBrowser): void {
 				dragElement = a;
 			}
 		})
-		.on(self.tree, 'drop', (e: MouseEvent): boolean | void => {
+		.on(self.tree.container, 'drop', (e: MouseEvent): boolean | void => {
 			if ((self.o.moveFile || self.o.moveFolder) && dragElement) {
 				let path = attr(dragElement, '-path') || '';
 
 				// move folder
 				if (
 					!self.o.moveFolder &&
-					dragElement.classList.contains(F_CLASS + '__tree-item')
+					dragElement.classList.contains(
+						this.tree.getFullElName('item')
+					)
 				) {
 					return false;
 				}
 
 				// move file
-				if (dragElement.classList.contains(ITEM_CLASS)) {
+				if (
+					dragElement.classList.contains(
+						this.files.getFullElName('item')
+					)
+				) {
 					path += attr(dragElement, '-name');
 
 					if (!self.o.moveFile) {
@@ -74,7 +90,9 @@ export function nativeListeners(this: FileBrowser): void {
 						path,
 						attr(a, '-path') || '',
 						attr(a, '-source') || '',
-						dragElement.classList.contains(ITEM_CLASS)
+						dragElement.classList.contains(
+							this.files.getFullElName('item')
+						)
 					)
 					.then(() => {
 						self.loadTree();
@@ -83,20 +101,20 @@ export function nativeListeners(this: FileBrowser): void {
 				dragElement = false;
 			}
 		})
-		.on(self.files, 'contextmenu', contextMenu(self))
-		.on(self.files, 'click', (e: MouseEvent): void => {
+		.on(self.files.container, 'contextmenu', contextMenu(self))
+		.on(self.files.container, 'click', (e: MouseEvent): void => {
 			if (!ctrlKey(e)) {
 				this.state.activeElements = [];
 			}
 		})
-		.on(self.files, 'click', (e: MouseEvent): false | void => {
+		.on(self.files.container, 'click', (e: MouseEvent): false | void => {
 			const a = getItem(e.target, self.dialog.container);
 
 			if (!a) {
 				return;
 			}
 
-			const item = elementToItem(a);
+			const item = elementToItem(a, self.elementsMap);
 
 			if (!item) {
 				return;
@@ -115,7 +133,7 @@ export function nativeListeners(this: FileBrowser): void {
 
 			return false;
 		})
-		.on(self.files, 'dragstart', (e: MouseEvent) => {
+		.on(self.files.container, 'dragstart', (e: MouseEvent) => {
 			if (self.o.moveFile) {
 				const a = getItem(e.target, self.dialog.container);
 

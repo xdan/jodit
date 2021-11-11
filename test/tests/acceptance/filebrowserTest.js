@@ -4,6 +4,16 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+function getFirstItem(fb, index = 0, file = false) {
+	return fb.browser.querySelectorAll(
+		'.' +
+			fb.files.getFullElName('item') +
+			'[data-is-file="' +
+			(file ? 1 : 0) +
+			'"]'
+	)[index];
+}
+
 describe('Jodit FileBrowser Tests', function () {
 	describe('Constructor/Destructor', function () {
 		describe('Without Jodit', function () {
@@ -107,14 +117,16 @@ describe('Jodit FileBrowser Tests', function () {
 					.open(function () {})
 					.then(function () {
 						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser__files'
+							'.' + filebrowser.files.componentName
 						);
 
 						expect(files).is.not.null;
 
 						expect(
 							files.querySelector(
-								'.jodit-filebrowser__files-item img[data-src="https://xdsoft.net/jodit/files/images.jpg"]'
+								'.' +
+									filebrowser.files.getFullElName('item') +
+									' img[data-src="https://xdsoft.net/jodit/files/images.jpg"]'
 							)
 						).is.not.null;
 
@@ -209,6 +221,7 @@ describe('Jodit FileBrowser Tests', function () {
 					});
 			});
 		});
+
 		describe('Disable buttons', function () {
 			describe('Edit button', function () {
 				it('Should be disable while not selected some image', function (done) {
@@ -231,7 +244,11 @@ describe('Jodit FileBrowser Tests', function () {
 							simulateEvent(
 								'click',
 								filebrowser.browser.querySelector(
-									'.jodit-filebrowser__files-item[data-is-file="0"]'
+									'.' +
+										filebrowser.files.getFullElName(
+											'item'
+										) +
+										'[data-is-file="0"]'
 								)
 							);
 
@@ -264,22 +281,13 @@ describe('Jodit FileBrowser Tests', function () {
 
 							expect(edit.hasAttribute('disabled')).is.true;
 
-							simulateEvent(
-								'click',
-								0,
-								filebrowser.browser.querySelectorAll(
-									'.jodit-filebrowser__files-item[data-is-file="0"]'
-								)[0]
-							);
+							simulateEvent('click', getFirstItem(filebrowser));
 
 							expect(edit.hasAttribute('disabled')).is.false;
 
 							simulateEvent(
 								'click',
-								0,
-								filebrowser.browser.querySelectorAll(
-									'.jodit-filebrowser__files-item[data-is-file="0"]'
-								)[1],
+								getFirstItem(filebrowser, 1),
 								function (data) {
 									data[
 										!navigator.userAgent.indexOf('Mac OS X')
@@ -326,10 +334,7 @@ describe('Jodit FileBrowser Tests', function () {
 
 									simulateEvent(
 										'click',
-										0,
-										filebrowser.browser.querySelector(
-											'.jodit-filebrowser__files-item[data-is-file="0"]'
-										)
+										getFirstItem(filebrowser)
 									);
 
 									expect(
@@ -373,10 +378,7 @@ describe('Jodit FileBrowser Tests', function () {
 
 									simulateEvent(
 										'click',
-										0,
-										filebrowser.browser.querySelector(
-											'.jodit-filebrowser__files-item[data-is-file="0"]'
-										)
+										getFirstItem(filebrowser)
 									);
 
 									expect(
@@ -412,14 +414,16 @@ describe('Jodit FileBrowser Tests', function () {
 						const tiles = getButton('tiles', filebrowser.dialog);
 						const list = getButton('list', filebrowser.dialog);
 
-						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser__files'
-						);
+						const files = filebrowser.files.container;
 
 						expect(files).is.not.null;
 						expect(
 							files.classList.contains(
-								'jodit-filebrowser__files_view_tiles'
+								filebrowser.files.getFullElName(
+									'',
+									'view',
+									'tiles'
+								)
 							)
 						).is.true;
 
@@ -454,29 +458,39 @@ describe('Jodit FileBrowser Tests', function () {
 							);
 							const list = getButton('list', filebrowser.dialog);
 
-							const files = filebrowser.browser.querySelector(
-								'.jodit-filebrowser__files'
-							);
+							const files = filebrowser.files.container;
 							expect(files).is.not.null;
+
 							expect(
 								files.classList.contains(
-									'jodit-filebrowser__files_view_tiles'
+									filebrowser.files.getFullElName(
+										'',
+										'view',
+										'tiles'
+									)
 								)
 							).is.true;
 
 							expect(tiles.component.state.activated).is.true;
 							expect(list.component.state.activated).is.false;
 
-							simulateEvent('click', 0, list);
-
+							simulateEvent('click', list);
 							expect(
 								files.classList.contains(
-									'jodit-filebrowser__files_view_tiles'
+									filebrowser.files.getFullElName(
+										'',
+										'view',
+										'tiles'
+									)
 								)
 							).is.false;
 							expect(
 								files.classList.contains(
-									'jodit-filebrowser__files_view_list'
+									filebrowser.files.getFullElName(
+										'',
+										'view',
+										'list'
+									)
 								)
 							).is.true;
 							expect(tiles.component.state.activated).is.false;
@@ -510,16 +524,14 @@ describe('Jodit FileBrowser Tests', function () {
 								'.jodit-toolbar-content_filter'
 							);
 						const input = filter.querySelector('input');
-						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser__files'
-						);
+						const files = filebrowser.files.container;
 
 						expect(files).is.not.null;
 						expect(filter).is.not.null;
 						expect(input).is.not.null;
 
 						const count = files.querySelectorAll(
-							'.jodit-filebrowser__files-item'
+							'.' + filebrowser.files.getFullElName('item')
 						).length;
 
 						input.value = 'i';
@@ -529,7 +541,7 @@ describe('Jodit FileBrowser Tests', function () {
 
 						expect(
 							files.querySelectorAll(
-								'.jodit-filebrowser__files-item'
+								'.' + filebrowser.files.getFullElName('item')
 							).length
 						).does.not.equal(count);
 
@@ -540,7 +552,7 @@ describe('Jodit FileBrowser Tests', function () {
 
 						expect(
 							files.querySelectorAll(
-								'.jodit-filebrowser__files-item'
+								'.' + filebrowser.files.getFullElName('item')
 							).length
 						).equals(count);
 
@@ -571,9 +583,7 @@ describe('Jodit FileBrowser Tests', function () {
 								'.jodit-toolbar-content_sort'
 							);
 						const select = sort.querySelector('select');
-						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser__files'
-						);
+						const files = filebrowser.files.container;
 
 						expect(files).is.not.null;
 						expect(sort).is.not.null;
@@ -621,19 +631,23 @@ describe('Jodit FileBrowser Tests', function () {
 						for (const key in pars) {
 							select.value = key;
 
-							simulateEvent('change', 0, select);
+							simulateEvent('change', select);
 
 							await filebrowser.async.requestIdlePromise();
 
 							const items = files.querySelectorAll(
-								'.jodit-filebrowser__files-item'
+								'.' + filebrowser.files.getFullElName('item')
 							);
 
 							expect(
 								Array.from(items)
 									.map(function (item) {
 										return item.querySelector(
-											'.jodit-filebrowser__files-item-info-filename'
+											'.' +
+												filebrowser.files.getFullElName(
+													'item'
+												) +
+												'-info-filename'
 										).textContent;
 									})
 									.join(',')
@@ -673,9 +687,7 @@ describe('Jodit FileBrowser Tests', function () {
 					})
 					.then(function () {
 						const select = getButton('select', filebrowser.dialog);
-						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser__files'
-						);
+						const files = filebrowser.files.container;
 
 						expect(files).is.not.null;
 						expect(select).is.not.null;
@@ -684,15 +696,12 @@ describe('Jodit FileBrowser Tests', function () {
 
 						simulateEvent(
 							'click',
-							0,
-							filebrowser.browser.querySelector(
-								'.jodit-filebrowser__files-item'
-							)
+							getFirstItem(filebrowser, 0, true)
 						);
 
 						expect(select.hasAttribute('disabled')).is.false;
 
-						simulateEvent('click', 0, select);
+						simulateEvent('click', select);
 
 						filebrowser.close();
 						filebrowser.destruct();
@@ -722,16 +731,16 @@ describe('Jodit FileBrowser Tests', function () {
 				filebrowser
 					.open(function () {})
 					.then(function () {
-						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser__files'
-						);
+						const files = filebrowser.files.container;
 
 						expect(files).is.not.null;
 
 						simulateEvent(
 							'dragstart',
 							files.querySelector(
-								'.jodit-filebrowser__files-item img[data-src="https://xdsoft.net/jodit/files/images.jpg"]'
+								'.' +
+									filebrowser.files.getFullElName('item') +
+									' img[data-src="https://xdsoft.net/jodit/files/images.jpg"]'
 							)
 						);
 
@@ -779,16 +788,16 @@ describe('Jodit FileBrowser Tests', function () {
 				filebrowser
 					.open(function () {})
 					.then(function () {
-						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser__files'
-						);
+						const files = filebrowser.files.container;
 
 						expect(files).is.not.null;
 
 						simulateEvent(
 							'dragstart',
 							files.querySelector(
-								'.jodit-filebrowser__files-item[data-is-file="1"] img'
+								'.' +
+									filebrowser.files.getFullElName('item') +
+									'[data-is-file="1"] img'
 							)
 						);
 
@@ -851,17 +860,15 @@ describe('Jodit FileBrowser Tests', function () {
 				filebrowser
 					.open()
 					.then(function () {
-						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser__files'
-						);
+						const files = filebrowser.files.container;
 
 						expect(files).is.not.null;
 
 						simulateEvent(
 							['click', 'dblclick'],
-							0,
 							files.querySelector(
-								'a[data-is-file="0"].jodit-filebrowser__files-item'
+								'a[data-is-file="0"].' +
+									filebrowser.files.getFullElName('item')
 							)
 						);
 
@@ -903,17 +910,15 @@ describe('Jodit FileBrowser Tests', function () {
 				filebrowser
 					.open()
 					.then(function () {
-						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser__files'
-						);
+						const files = filebrowser.files.container;
 
 						expect(files).is.not.null;
 
 						simulateEvent(
 							['click', 'dblclick'],
-							0,
 							files.querySelector(
-								'a[data-is-file="1"].jodit-filebrowser__files-item'
+								'a[data-is-file="1"].' +
+									filebrowser.files.getFullElName('item')
 							)
 						);
 
@@ -1020,14 +1025,12 @@ describe('Jodit FileBrowser Tests', function () {
 				filebrowser
 					.open(function () {})
 					.then(async function () {
-						const tree = filebrowser.browser.querySelector(
-							'.jodit-filebrowser__tree'
-						);
+						const tree = filebrowser.tree.container;
 
 						expect(tree).is.not.null;
 
 						const item = tree.querySelectorAll(
-							'.jodit-filebrowser__tree-item'
+							'.' + filebrowser.tree.getFullElName('item')
 						)[1];
 
 						expect(item).is.not.null;
@@ -1055,7 +1058,7 @@ describe('Jodit FileBrowser Tests', function () {
 						await filebrowser.async.requestIdlePromise();
 
 						const item2 = tree.querySelectorAll(
-							'.jodit-filebrowser__tree-item'
+							'.' + filebrowser.tree.getFullElName('item')
 						)[1];
 						expect(item2.textContent.trim()).equals('ceicom1');
 
@@ -1086,14 +1089,12 @@ describe('Jodit FileBrowser Tests', function () {
 				filebrowser
 					.open(function () {})
 					.then(function () {
-						const tree = filebrowser.browser.querySelector(
-							'.jodit-filebrowser__tree'
-						);
+						const tree = filebrowser.tree.container;
 
 						expect(tree).is.not.null;
 
 						const item = tree.querySelectorAll(
-							'.jodit-filebrowser__tree-item'
+							'.' + filebrowser.tree.getFullElName('item')
 						)[1];
 
 						expect(item).is.not.null;
@@ -1180,12 +1181,10 @@ describe('Jodit FileBrowser Tests', function () {
 							clickButton('ok', dialog);
 							await filebrowser.async.requestIdlePromise();
 
-							const tree = filebrowser.browser.querySelector(
-								'.jodit-filebrowser__tree'
-							);
+							const tree = filebrowser.tree.container;
 
 							const item = tree.querySelectorAll(
-								'.jodit-filebrowser__tree-item'
+								'.' + filebrowser.tree.getFullElName('item')
 							)[1];
 							expect(item.textContent.trim()).equals('free');
 
@@ -1217,14 +1216,14 @@ describe('Jodit FileBrowser Tests', function () {
 				filebrowser
 					.open(function () {})
 					.then(function () {
-						const files = filebrowser.browser.querySelector(
-							'.jodit-filebrowser__files'
-						);
+						const files = filebrowser.files.container;
 
 						expect(files).is.not.null;
 
 						const item = files.querySelector(
-								'.jodit-filebrowser__files-item[data-is-file="1"]'
+								'.' +
+									filebrowser.files.getFullElName('item') +
+									'[data-is-file="1"]'
 							),
 							pos = Jodit.modules.Helpers.position(item);
 
@@ -1264,18 +1263,14 @@ describe('Jodit FileBrowser Tests', function () {
 					filebrowser
 						.open()
 						.then(function () {
-							const files = filebrowser.browser.querySelector(
-								'.jodit-filebrowser__files'
-							);
+							const files = filebrowser.files.container;
 
 							expect(files).is.not.null;
 
-							const item = files.querySelector(
-									'.jodit-filebrowser__files-item[data-is-file="0"]'
-								),
+							const item = getFirstItem(filebrowser),
 								pos = Jodit.modules.Helpers.position(item);
 
-							simulateEvent('contextmenu', 0, item, function (o) {
+							simulateEvent('contextmenu', item, function (o) {
 								Object.assign(o, {
 									clientX: pos.left + 10,
 									clientY: pos.top + 10
@@ -1294,8 +1289,7 @@ describe('Jodit FileBrowser Tests', function () {
 									expect(dialog).is.not.null;
 									const previewsButtons =
 										dialog.querySelectorAll(
-											' .jodit-filebrowser_preview .jodit-filebrowser_preview_navigation.jodit-filebrowser_preview_navigation-prev, ' +
-												' .jodit-filebrowser_preview .jodit-filebrowser_preview_navigation.jodit-filebrowser_preview_navigation-next'
+											'.jodit-filebrowser-preview__navigation'
 										);
 
 									expect(previewsButtons.length).equals(2);

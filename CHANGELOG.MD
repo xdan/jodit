@@ -21,6 +21,50 @@ console.log(Jodit.modules.UIButton.componentName); // jodit-ui-button
 ```
 
 -   [Remember last opened folder with FileBrowser #675](https://github.com/xdan/jodit/issues/675)
+    Boolean option `filebrowser.saveStateInStorage` split to dictionary:
+
+```ts
+interface IFileBrowserOptions: {}
+	saveStateInStorage: false | {
+		storeLastOpenedFolder?: boolean;
+		storeView?: boolean;
+		storeSortBy?: boolean;
+	};
+}
+```
+
+By default:
+
+```js
+{
+	saveStateInStorage: {
+		storeLastOpenedFolder: true,
+		storeView: true,
+		storeSortBy: true
+	}
+}
+```
+
+Disable it:
+
+```js
+Jodit.make('#editor', {
+	filebrowser: {
+		saveStateInStorage: false
+	}
+});
+
+// or
+
+Jodit.make('#editor', {
+	filebrowser: {
+		saveStateInStorage: {
+			storeLastOpenedFolder: false
+		}
+	}
+});
+```
+
 -   [Spacer in Button Toolbar](https://github.com/xdan/jodit/issues/713)
     In addition to the `|` metacharacters and `\n` which stand for separator and newline, the `---` metacharacter has appeared,
     which allows you to add a spacer element which pushes all buttons behind the spacer to the right side of the toolbar
@@ -764,11 +808,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {number} link.selectSizeClassName=3 The size of the select (to use with modeClassName="select")
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with modeClassName="select")
 -   ex: [
--                                                                       	{ value: "", text: "" },
--                                                                       	{ value: "val1", text: "text1" },
--                                                                       	{ value: "val2", text: "text2" },
--                                                                       	{ value: "val3", text: "text3" }
--                                                                       ]
+-                                                                           	{ value: "", text: "" },
+-                                                                           	{ value: "val1", text: "text1" },
+-                                                                           	{ value: "val2", text: "text2" },
+-                                                                           	{ value: "val3", text: "text3" }
+-                                                                           ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

@@ -60,6 +60,7 @@ import * as plus from './plus.svg';
 import * as print from './print.svg';
 import * as redo from './redo.svg';
 import * as resize from './resize.svg';
+import * as resize_handler from './resize-handler.svg';
 import * as resizer from './resizer.svg';
 import * as right from './right.svg';
 import * as save from './save.svg';
@@ -143,6 +144,7 @@ export {
 	print,
 	redo,
 	resize,
+	resize_handler,
 	resizer,
 	right,
 	save,
