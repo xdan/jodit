@@ -1,14 +1,14 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.9.4
+ * Version: v3.9.6
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
 	/*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.9.4
+ * Version: v3.9.6
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -1789,6 +1789,11 @@ svg.jodit-icon {
       flex-basis: 100%;
   border-top: 1px solid #dadada;
 }
+.jodit-ui-spacer {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
 
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1808,7 +1813,15 @@ svg.jodit-icon {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
 }
-.jodit-ui-group_separated_true:not(:last-child):after {
+.jodit-ui-group_line_true {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: stretch;
+      -ms-flex-pack: stretch;
+          justify-content: stretch;
+}
+.jodit-ui-group_separated_true:not(:last-child):not(.jodit-ui-group_before-spacer_true):after {
   content: '';
   padding: 0;
   border-right: 1px solid #dadada;
@@ -2841,20 +2854,21 @@ svg.jodit-icon {
   display: flex;
 }
 .jodit-dialog__resizer {
+  position: relative;
+}
+.jodit-dialog__resizer svg {
   position: absolute;
   right: 0;
   bottom: 0;
-  display: inline-block;
-  width: 0;
-  height: 0;
-  border-right: 0 solid transparent;
-  border-bottom: 10px solid #dadada;
-  border-left: 10px solid transparent;
-  cursor: se-resize;
-  opacity: 1;
-}
-.jodit-dialog__resizer:hover {
-  border-bottom-color: rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  width: 12px;
+  height: 12px;
+  cursor: nwse-resize;
+  fill: #a5a5a5;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 @media (max-width: 480px) {
   .jodit-dialog__resizer {
@@ -3749,7 +3763,7 @@ svg.jodit-icon {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 		Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 }
-.jodit-filebrowser_no_files {
+.jodit-filebrowser_no-files_true {
   padding: 8px;
 }
 @media (max-width: 480px) {
@@ -3767,7 +3781,7 @@ svg.jodit-icon {
   width: 100%;
   height: 100%;
 }
-.jodit-filebrowser__loader i {
+.jodit-filebrowser__loader div {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -3794,307 +3808,12 @@ svg.jodit-icon {
   visibility: hidden;
   word-break: break-all;
 }
-.jodit-filebrowser__status.jodit-filebrowser_success {
+.jodit-filebrowser__status_success_true {
   color: #c5c5c5;
 }
-.jodit-filebrowser__status.jodit-filebrowser_active {
+.jodit-filebrowser__status_active_true {
   opacity: 1;
   visibility: visible;
-}
-.jodit-filebrowser__tree,
-.jodit-filebrowser__files {
-  position: relative;
-  display: none;
-  height: 100%;
-  vertical-align: top;
-  overflow-anchor: auto;
-}
-.jodit-filebrowser__tree .jodit-button,
-.jodit-filebrowser__files .jodit-button {
-  border-radius: 0;
-}
-.jodit-filebrowser__tree.jodit-filebrowser_active,
-.jodit-filebrowser__files.jodit-filebrowser_active {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.jodit-filebrowser__tree::-webkit-scrollbar {
-  width: calc(8px / 2);
-}
-.jodit-filebrowser__files::-webkit-scrollbar {
-  width: calc(8px / 2);
-}
-.jodit-filebrowser__tree::-webkit-scrollbar-track,
-.jodit-filebrowser__files::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-.jodit-filebrowser__tree::-webkit-scrollbar-thumb,
-.jodit-filebrowser__files::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
-}
-.jodit-filebrowser__tree.jodit-filebrowser_active {
-  z-index: 2;
-  width: 31%;
-  min-width: 200px;
-  max-width: 290px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  background-color: #3f3f3f;
-  overflow-y: auto;
-}
-@media (max-width: 480px) {
-  .jodit-filebrowser__tree.jodit-filebrowser_active {
-    width: auto;
-    max-width: 100%;
-    height: 100px;
-  }
-}
-.jodit-filebrowser__tree.jodit-filebrowser_active::-webkit-scrollbar {
-  width: calc(8px / 2);
-}
-.jodit-filebrowser__tree.jodit-filebrowser_active::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-.jodit-filebrowser__tree.jodit-filebrowser_active::-webkit-scrollbar-thumb {
-  background-color: rgba(127, 127, 127, 0.5);
-  outline: 1px solid slategrey;
-}
-.jodit-filebrowser__tree.jodit-filebrowser_active .jodit-filebrowser__source-title {
-  position: relative;
-  display: block;
-  padding: 2px 4px;
-  border-bottom: 1px solid #484848;
-  background: #5a5a5a;
-  color: #969696;
-  font-size: 12px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  word-break: break-all;
-}
-.jodit-filebrowser__tree.jodit-filebrowser_active .jodit-filebrowser__tree-item {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  min-height: 38px;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  padding: calc(8px / 2) 8px;
-  border-bottom: 1px solid #474747;
-  color: #b1b1b1;
-  text-decoration: none;
-  -webkit-transition: background-color 0.2s ease 0s;
-  -o-transition: background-color 0.2s ease 0s;
-  transition: background-color 0.2s ease 0s;
-  word-break: break-all;
-}
-.jodit-filebrowser__tree.jodit-filebrowser_active .jodit-filebrowser__tree-item-title {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-}
-.jodit-filebrowser__tree.jodit-filebrowser_active .jodit-filebrowser__tree-item .jodit-icon_folder {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: calc(12px + 4px);
-  height: calc(12px + 4px);
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  margin-left: calc(8px / 2);
-  opacity: 0.3;
-}
-.jodit-filebrowser__tree.jodit-filebrowser_active .jodit-filebrowser__tree-item .jodit-icon_folder svg {
-  width: 12px;
-  height: 12px;
-  fill: #b1b1b1 !important;
-  stroke: #b1b1b1 !important;
-}
-.jodit-filebrowser__tree.jodit-filebrowser_active .jodit-filebrowser__tree-item .jodit-icon_folder:hover {
-  background: #696969;
-}
-.jodit-filebrowser__tree.jodit-filebrowser_active .jodit-filebrowser__tree-item:hover {
-  background-color: #ecebe9;
-  color: #222;
-}
-.jodit-filebrowser__tree.jodit-filebrowser_active .jodit-filebrowser__tree-item:hover i.jodit-icon_folder {
-  opacity: 0.6;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active {
-  width: 100%;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -ms-flex-line-pack: start;
-      align-content: flex-start;
-  padding: calc(8px / 2);
-  overflow-y: auto;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active .jodit-filebrowser__source-title {
-  position: relative;
-  display: block;
-  padding: 8px;
-  margin: calc(8px * -1);
-  margin-bottom: 0;
-  background: #5a5a5a;
-  color: #969696;
-  font-size: 16px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  word-break: break-all;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active a + .jodit-filebrowser__source-title {
-  margin-top: 8px;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active .jodit-filebrowser__files-item {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  overflow: hidden;
-  width: 150px;
-  height: 150px;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  border: 1px solid #dadada;
-  margin: calc(8px / 2);
-  font-size: 0;
-  text-align: center;
-  -webkit-transition: border 0.1s linear, bottom 0.1s linear;
-  -o-transition: border 0.1s linear, bottom 0.1s linear;
-  transition: border 0.1s linear, bottom 0.1s linear;
-}
-@media (max-width: 480px) {
-  .jodit-filebrowser__files.jodit-filebrowser_active .jodit-filebrowser__files-item {
-    width: calc(50% - 8px);
-  }
-}
-.jodit-filebrowser__files.jodit-filebrowser_active .jodit-filebrowser__files-item img {
-  max-width: 100%;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active .jodit-filebrowser__files-item:hover {
-  border-color: #433b5c;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active .jodit-filebrowser__files-item_active_true {
-  border-color: #1e88e5;
-  background-color: #b5b5b5;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active .jodit-filebrowser__files-item_active_true .jodit-filebrowser__files-item-info {
-  background-color: #b5b5b5;
-  color: white;
-  text-shadow: none;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active .jodit-filebrowser__files-item-info {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: visible;
-  padding: 0.3em 0.6em;
-  background-color: #e9e9e9;
-  color: #333333;
-  font-size: 14px;
-  line-height: 16px;
-  opacity: 0.85;
-  text-align: left;
-  text-shadow: #eeeeee 0 1px 0;
-  -webkit-transition: opacity 400ms ease;
-  -o-transition: opacity 400ms ease;
-  transition: opacity 400ms ease;
-  white-space: normal;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active .jodit-filebrowser__files-item-info > span {
-  display: block;
-  overflow: hidden;
-  font-size: 0.75em;
-  -o-text-overflow: ellipsis;
-     text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active .jodit-filebrowser__files-item-info > span.jodit-filebrowser__files-item-info-filename {
-  font-size: 0.9em;
-  font-weight: bold;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active .jodit-filebrowser__files-item:hover:not(.jodit-filebrowser__files-item_active_true) .jodit-filebrowser__files-item-info {
-  bottom: -100px;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active.jodit-filebrowser__files_view_list {
-  scroll-behavior: smooth;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active.jodit-filebrowser__files_view_list a {
-  display: block;
-  width: 100%;
-  height: 26px;
-  border-width: 0 0 1px 0;
-  margin: 0;
-  line-height: 26px;
-  text-align: left;
-  white-space: nowrap;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active.jodit-filebrowser__files_view_list a img {
-  display: inline-block;
-  min-width: 16px;
-  max-width: 16px;
-  margin-left: 4px;
-  vertical-align: middle;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active.jodit-filebrowser__files_view_list a .jodit-filebrowser__files-item-info {
-  position: static;
-  display: inline-block;
-  width: calc(100% - 20px);
-  height: 100%;
-  padding: 0;
-  margin-left: 4px;
-  background-color: transparent;
-  font-size: 0;
-  line-height: inherit;
-  vertical-align: middle;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active.jodit-filebrowser__files_view_list a .jodit-filebrowser__files-item-info > span {
-  display: inline-block;
-  height: 100%;
-  font-size: 12px;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active.jodit-filebrowser__files_view_list a .jodit-filebrowser__files-item-info > span.jodit-filebrowser__files-item-info-filename {
-  width: 50%;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active.jodit-filebrowser__files_view_list a .jodit-filebrowser__files-item-info > span.jodit-filebrowser__files-item-info-filesize {
-  width: 25%;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active.jodit-filebrowser__files_view_list a .jodit-filebrowser__files-item-info > span.jodit-filebrowser__files-item-info-filechanged {
-  width: 25%;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active.jodit-filebrowser__files_view_list a:hover {
-  background-color: #433b5c;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active.jodit-filebrowser__files_view_list a:hover .jodit-filebrowser__files-item-info {
-  color: #fff;
-  text-shadow: none;
-}
-.jodit-filebrowser__files.jodit-filebrowser_active.jodit-filebrowser__files_view_list a::before {
-  display: inline-block;
-  height: 100%;
-  content: '';
-  vertical-align: middle;
 }
 .jodit_draghover {
   background-color: #ecebe9;
@@ -4113,14 +3832,15 @@ svg.jodit-icon {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-.jodit-filebrowser_preview {
+.jodit-filebrowser-preview {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  min-width: 600px;
-  max-width: 1000px;
-  min-height: 700px;
+  min-width: 400px;
+  max-width: min(100%, 1000px);
+  height: 100%;
+  min-height: min(100%, 500px);
   max-height: 100%;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -4128,10 +3848,11 @@ svg.jodit-icon {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  margin: auto;
   text-align: center;
 }
 @media (max-width: 768px) {
-  .jodit-filebrowser_preview {
+  .jodit-filebrowser-preview {
     min-width: auto;
     max-width: 100%;
     height: 100%;
@@ -4139,7 +3860,7 @@ svg.jodit-icon {
     max-height: 100%;
   }
 }
-.jodit-filebrowser_preview_box {
+.jodit-filebrowser-preview__box {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4153,31 +3874,34 @@ svg.jodit-icon {
       -ms-flex-pack: center;
           justify-content: center;
 }
-.jodit-filebrowser_preview_navigation {
+.jodit-filebrowser-preview__navigation {
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
+  cursor: pointer;
 }
-.jodit-filebrowser_preview_navigation-next {
+.jodit-filebrowser-preview__navigation_arrow_next {
   right: 0;
   left: auto;
 }
-.jodit-filebrowser_preview_navigation svg {
+.jodit-filebrowser-preview__navigation svg {
   position: relative;
   top: 50%;
   width: 45px;
   height: 45px;
-  margin-top: -22px;
   fill: #9e9ba7;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
   -webkit-transition: fill 0.3s linear;
   -o-transition: fill 0.3s linear;
   transition: fill 0.3s linear;
 }
-.jodit-filebrowser_preview_navigation:hover svg {
+.jodit-filebrowser-preview__navigation:hover svg {
   fill: #000;
 }
-.jodit-filebrowser_preview img {
+.jodit-filebrowser-preview img {
   max-width: 100%;
   max-height: 100%;
 }
@@ -4405,6 +4129,305 @@ svg.jodit-icon {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.jodit-filebrowser-files {
+  position: relative;
+  display: none;
+  height: 100%;
+  vertical-align: top;
+  overflow-anchor: auto;
+}
+.jodit-filebrowser-files .jodit-button {
+  border-radius: 0;
+}
+.jodit-filebrowser-files_active_true {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.jodit-filebrowser-files::-webkit-scrollbar {
+  width: calc(8px / 2);
+}
+.jodit-filebrowser-files::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.jodit-filebrowser-files::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+.jodit-filebrowser-files_active_true {
+  width: 100%;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+  padding: calc(8px / 2);
+  overflow-y: auto;
+}
+.jodit-filebrowser-files__item {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+  width: 150px;
+  height: 150px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border: 1px solid #dadada;
+  margin: calc(8px / 2);
+  font-size: 0;
+  text-align: center;
+  -webkit-transition: border 0.1s linear, bottom 0.1s linear;
+  -o-transition: border 0.1s linear, bottom 0.1s linear;
+  transition: border 0.1s linear, bottom 0.1s linear;
+}
+@media (max-width: 480px) {
+  .jodit-filebrowser-files__item {
+    width: calc(50% - 8px);
+  }
+}
+.jodit-filebrowser-files__item img {
+  max-width: 100%;
+}
+.jodit-filebrowser-files__item:hover {
+  border-color: #433b5c;
+}
+.jodit-filebrowser-files__item_active_true {
+  border-color: #1e88e5;
+  background-color: #b5b5b5;
+}
+.jodit-filebrowser-files__item_active_true .jodit-filebrowser-files__item-info {
+  background-color: #b5b5b5;
+  color: white;
+  text-shadow: none;
+}
+.jodit-filebrowser-files__item-info {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: visible;
+  padding: 0.3em 0.6em;
+  background-color: #e9e9e9;
+  color: #333333;
+  font-size: 14px;
+  line-height: 16px;
+  opacity: 0.85;
+  text-align: left;
+  text-shadow: #eeeeee 0 1px 0;
+  -webkit-transition: opacity 400ms ease;
+  -o-transition: opacity 400ms ease;
+  transition: opacity 400ms ease;
+  white-space: normal;
+}
+.jodit-filebrowser-files__item-info > span {
+  display: block;
+  overflow: hidden;
+  font-size: 0.75em;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.jodit-filebrowser-files__item-info > span.jodit-filebrowser-files__item-info-filename {
+  font-size: 0.9em;
+  font-weight: bold;
+}
+.jodit-filebrowser-files__item:hover:not(.jodit-filebrowser-files__item_active_true) .jodit-filebrowser-files__item-info {
+  bottom: -100px;
+}
+.jodit-filebrowser-files_view_list {
+  scroll-behavior: smooth;
+}
+.jodit-filebrowser-files_view_list a {
+  display: block;
+  width: 100%;
+  height: 26px;
+  border-width: 0 0 1px 0;
+  margin: 0;
+  line-height: 26px;
+  text-align: left;
+  white-space: nowrap;
+}
+.jodit-filebrowser-files_view_list a img {
+  display: inline-block;
+  min-width: 16px;
+  max-width: 16px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.jodit-filebrowser-files_view_list a .jodit-filebrowser-files__item-info {
+  position: static;
+  display: inline-block;
+  width: calc(100% - 20px);
+  height: 100%;
+  padding: 0;
+  margin-left: 4px;
+  background-color: transparent;
+  font-size: 0;
+  line-height: inherit;
+  vertical-align: middle;
+}
+.jodit-filebrowser-files_view_list a .jodit-filebrowser-files__item-info > span {
+  display: inline-block;
+  height: 100%;
+  font-size: 12px;
+}
+.jodit-filebrowser-files_view_list a .jodit-filebrowser-files__item-info-filename {
+  width: 50%;
+}
+.jodit-filebrowser-files_view_list a .jodit-filebrowser-files__item-info-filesize {
+  width: 25%;
+}
+.jodit-filebrowser-files_view_list a .jodit-filebrowser-files__item-info-filechanged {
+  width: 25%;
+}
+.jodit-filebrowser-files_view_list a:hover {
+  background-color: #433b5c;
+}
+.jodit-filebrowser-files_view_list a:hover .jodit-filebrowser-files__item-info {
+  color: #fff;
+  text-shadow: none;
+}
+.jodit-filebrowser-files_view_list a::before {
+  display: inline-block;
+  height: 100%;
+  content: '';
+  vertical-align: middle;
+}
+
+.jodit-filebrowser-tree {
+  position: relative;
+  display: none;
+  height: 100%;
+  vertical-align: top;
+  overflow-anchor: auto;
+}
+.jodit-filebrowser-tree .jodit-button {
+  border-radius: 0;
+}
+.jodit-filebrowser-tree_active_true {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.jodit-filebrowser-tree::-webkit-scrollbar {
+  width: calc(8px / 2);
+}
+.jodit-filebrowser-tree::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.jodit-filebrowser-tree::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+.jodit-filebrowser-tree_active_true {
+  z-index: 2;
+  width: 31%;
+  min-width: 200px;
+  max-width: 290px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #3f3f3f;
+  overflow-y: auto;
+}
+@media (max-width: 480px) {
+  .jodit-filebrowser-tree_active_true {
+    width: auto;
+    max-width: 100%;
+    height: 100px;
+  }
+}
+.jodit-filebrowser-tree_active_true::-webkit-scrollbar {
+  width: calc(8px / 2);
+}
+.jodit-filebrowser-tree_active_true::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.jodit-filebrowser-tree_active_true::-webkit-scrollbar-thumb {
+  background-color: rgba(127, 127, 127, 0.5);
+  outline: 1px solid slategrey;
+}
+.jodit-filebrowser-tree__item {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 38px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: calc(8px / 2) 8px;
+  border-bottom: 1px solid #474747;
+  color: undefined;
+  text-decoration: none;
+  -webkit-transition: background-color 0.2s ease 0s;
+  -o-transition: background-color 0.2s ease 0s;
+  transition: background-color 0.2s ease 0s;
+  word-break: break-all;
+}
+.jodit-filebrowser-tree__item-title {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+.jodit-filebrowser-tree__item .jodit-icon_folder {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: calc(12px + 4px);
+  height: calc(12px + 4px);
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-left: calc(8px / 2);
+  opacity: 0.3;
+}
+.jodit-filebrowser-tree__item .jodit-icon_folder svg {
+  width: 12px;
+  height: 12px;
+  fill: undefined !important;
+  stroke: undefined !important;
+}
+.jodit-filebrowser-tree__item .jodit-icon_folder:hover {
+  background: #696969;
+}
+.jodit-filebrowser-tree__item:hover {
+  background-color: #ecebe9;
+  color: #222;
+}
+.jodit-filebrowser-tree__item:hover i.jodit-icon_folder {
+  opacity: 0.6;
+}
+.jodit-filebrowser-tree__source-title {
+  position: relative;
+  display: block;
+  padding: 2px 4px;
+  border-bottom: 1px solid #484848;
+  background: #5a5a5a;
+  color: #969696;
+  font-size: 12px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  word-break: break-all;
+}
+a + .jodit-filebrowser-tree__source-title {
+  margin-top: 8px;
 }
 
 /*!

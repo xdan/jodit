@@ -9,7 +9,6 @@ import type { Config } from '../config';
 import type {
 	CustomCommand,
 	ICreate,
-	IJoditToolbarCollection,
 	IObserver,
 	IStatusBar,
 	Modes
