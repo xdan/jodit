@@ -22,6 +22,10 @@ export class AceEditor
 	/**
 	 * Proxy Method
 	 */
+	private proxyOnBlur = (e: MouseEvent) => {
+		this.j.e.fire('blur', e);
+	};
+
 	private proxyOnFocus = (e: MouseEvent) => {
 		this.j.e.fire('focus', e);
 	};
@@ -133,6 +137,7 @@ export class AceEditor
 			this.instance.on('change', this.toWYSIWYG as any);
 			this.instance.on('focus', this.proxyOnFocus);
 			this.instance.on('mousedown', this.proxyOnMouseDown);
+			this.instance.on('blur', this.proxyOnBlur);
 
 			if (editor.getRealMode() !== constants.MODE_WYSIWYG) {
 				this.setValue(this.getValue());
