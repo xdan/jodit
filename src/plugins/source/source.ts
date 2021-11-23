@@ -8,12 +8,13 @@ import './source.less';
 
 import type { IJodit, ISourceEditor } from '../../types';
 import * as consts from '../../core/constants';
-import { INVISIBLE_SPACE, MODE_SOURCE } from '../../core/constants';
+import { INVISIBLE_SPACE, MODE_SOURCE, MODE_SPLIT } from '../../core/constants';
 import { Plugin } from '../../core/plugin';
 import { Dom } from '../../core/dom';
 import { isString, loadNext } from '../../core/helpers';
 import { createSourceEditor } from './editor/factory';
 import { autobind, watch } from '../../core/decorators';
+import { SOURCE_CONSUMER } from './const';
 
 /**
  * Plug-in change simple textarea on CodeMirror editor in Source code mode
@@ -55,7 +56,7 @@ export class source extends Plugin {
 	private fromWYSIWYG(force: boolean | string = false): void {
 		if (!this.__lock || force === true) {
 			this.__lock = true;
-			const new_value = this.j.getEditorValue(false);
+			const new_value = this.j.getEditorValue(false, SOURCE_CONSUMER);
 
 			if (new_value !== this.getMirrorValue()) {
 				this.setMirrorValue(new_value);
@@ -308,7 +309,11 @@ export class source extends Plugin {
 			.on('placeholder.source', (text: string) => {
 				this.sourceEditor?.setPlaceHolder(text);
 			})
-			.on('change.source', this.fromWYSIWYG)
+			.on('change.source', () => {
+				if (editor.getMode() === MODE_SPLIT) {
+					this.fromWYSIWYG();
+				}
+			})
 			.on('beautifyHTML', html => html);
 
 		if (editor.o.beautifyHTML) {
@@ -333,9 +338,18 @@ export class source extends Plugin {
 			}
 		}
 
-		this.fromWYSIWYG();
+		this.syncValueFromWYSIWYG(editor);
 
 		this.initSourceEditor(editor);
+	}
+
+	private syncValueFromWYSIWYG(editor: IJodit) {
+		if (
+			editor.getMode() === MODE_SPLIT ||
+			editor.getMode() === MODE_SOURCE
+		) {
+			this.fromWYSIWYG(true);
+		}
 	}
 
 	private initSourceEditor(editor: IJodit): void {
@@ -351,12 +365,12 @@ export class source extends Plugin {
 			sourceEditor.onReadyAlways(() => {
 				this.sourceEditor?.destruct();
 				this.sourceEditor = sourceEditor;
-				this.fromWYSIWYG(true);
+				this.syncValueFromWYSIWYG(editor);
 				editor.events?.fire('sourceEditorReady', editor);
 			});
 		} else {
 			this.sourceEditor?.onReadyAlways(() => {
-				this.fromWYSIWYG(true);
+				this.syncValueFromWYSIWYG(editor);
 				editor.events?.fire('sourceEditorReady', editor);
 			});
 		}

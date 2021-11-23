@@ -6,13 +6,7 @@
 
 import { IViewOptions, IViewWithToolbar } from './view';
 import type { Config } from '../config';
-import type {
-	CustomCommand,
-	ICreate,
-	IObserver,
-	IStatusBar,
-	Modes
-} from './';
+import type { CustomCommand, ICreate, IObserver, IStatusBar, Modes } from './';
 import type { IUploader } from './uploader';
 import type { IFileBrowser } from './file-browser';
 import { ISelect } from './select';
@@ -38,7 +32,10 @@ interface IJodit extends IViewWithToolbar {
 	element: HTMLElement;
 
 	getNativeEditorValue(): string;
-	getEditorValue(removeSelectionMarkers?: boolean): string;
+	getEditorValue(
+		removeSelectionMarkers?: boolean,
+		consumer?: string
+	): string;
 	setEditorValue(value?: string): void;
 
 	getReadOnly(): boolean;
