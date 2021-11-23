@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.9.6
+ * Version: v3.10.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -801,7 +801,7 @@ class EventEmitter {
         }
         const newCallback = (...args) => {
             this.off(subject, events, newCallback);
-            callback(...args);
+            return callback(...args);
         };
         this.on(subject, events, newCallback, onTop);
         return this;
@@ -1254,6 +1254,7 @@ __webpack_require__.d(__webpack_exports__, {
   "keys": function() { return /* reexport */ utils/* keys */.XP; },
   "loadImage": function() { return /* reexport */ utils/* loadImage */.po; },
   "loadNext": function() { return /* reexport */ loadNext; },
+  "loadNextStyle": function() { return /* reexport */ loadNextStyle; },
   "markAsAtomic": function() { return /* reexport */ markAsAtomic; },
   "markDeprecated": function() { return /* reexport */ utils/* markDeprecated */.Q8; },
   "markOwner": function() { return /* reexport */ utils/* markOwner */.MN; },
@@ -2028,6 +2029,12 @@ const loadNext = (jodit, urls, i = 0) => {
     }
     return appendScriptAsync(jodit, urls[i]).then(() => loadNext(jodit, urls, i + 1));
 };
+const loadNextStyle = (jodit, urls, i = 0) => {
+    if (!(0,checker/* isString */.HD)(urls[i])) {
+        return Promise.resolve();
+    }
+    return appendStyleAsync(jodit, urls[i]).then(() => loadNextStyle(jodit, urls, i + 1));
+};
 
 ;// CONCATENATED MODULE: ./src/core/helpers/browser.ts
 /*!
@@ -2663,13 +2670,12 @@ __webpack_require__.d(__webpack_exports__, {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-var STATUSES;
-(function (STATUSES) {
-    STATUSES["beforeInit"] = "beforeInit";
-    STATUSES["ready"] = "ready";
-    STATUSES["beforeDestruct"] = "beforeDestruct";
-    STATUSES["destructed"] = "destructed";
-})(STATUSES || (STATUSES = {}));
+const STATUSES = {
+    beforeInit: 'beforeInit',
+    ready: 'ready',
+    beforeDestruct: 'beforeDestruct',
+    destructed: 'destructed'
+};
 
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 33 modules
 var helpers = __webpack_require__(8);
@@ -2854,9 +2860,18 @@ class ViewComponent extends Component {
 
 const instances = {};
 let counter = 1;
+const uuids = new Set();
 function uniqueUid() {
-    counter += 10 * (Math.random() + 1);
-    return Math.round(counter).toString(16);
+    function gen() {
+        counter += 10 * (Math.random() + 1);
+        return Math.round(counter).toString(16);
+    }
+    let uid = gen();
+    while (uuids.has(uid)) {
+        uid = gen();
+    }
+    uuids.add(uid);
+    return uid;
 }
 const pluginSystem = new _plugin_system__WEBPACK_IMPORTED_MODULE_0__/* .PluginSystem */ .h();
 const modules = {};
@@ -3164,6 +3179,9 @@ class Dom {
         }
     }
     static replace(elm, newTagName, create, withAttributes = false, notMoveContent = false) {
+        if ((0,_helpers__WEBPACK_IMPORTED_MODULE_1__.isHTML)(newTagName)) {
+            newTagName = create.fromHTML(newTagName);
+        }
         const tag = (0,_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(newTagName)
             ? create.element(newTagName)
             : newTagName;
@@ -7104,9 +7122,9 @@ class UIElement extends _component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent
         return null;
     }
     static closestElement(node, type) {
-        const elm = _dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.up */ .i.up(node, node => {
-            if (node) {
-                const { component } = node;
+        const elm = _dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.up */ .i.up(node, elm => {
+            if (elm) {
+                const { component } = elm;
                 return component && component instanceof type;
             }
             return false;
@@ -7261,6 +7279,7 @@ class Icon {
     }
     static set(name, value) {
         this.icons[name.replace('_', '-')] = value;
+        return this;
     }
     static makeIcon(jodit, icon) {
         var _a;
@@ -7346,7 +7365,7 @@ const UIButtonState = () => ({
     type: 'button',
     name: '',
     value: '',
-    status: 'initial',
+    variant: 'initial',
     disabled: false,
     activated: false,
     icon: {
@@ -7394,7 +7413,7 @@ let UIButton = class UIButton extends ui_element/* UIElement */.u {
         }
     }
     onChangeStatus() {
-        this.setMod('status', this.state.status);
+        this.setMod('variant', this.state.variant);
     }
     onChangeText() {
         this.text.textContent = this.jodit.i18n(this.state.text);
@@ -7480,7 +7499,7 @@ let UIButton = class UIButton extends ui_element/* UIElement */.u {
     (0,decorators.watch)('parentElement')
 ], UIButton.prototype, "updateSize", null);
 (0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.status')
+    (0,decorators.watch)('state.variant')
 ], UIButton.prototype, "onChangeStatus", null);
 (0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.text')
@@ -7513,14 +7532,14 @@ UIButton = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UIButton);
 
-function Button(jodit, stateOrText, text, status) {
+function Button(jodit, stateOrText, text, variant) {
     const button = new UIButton(jodit);
     button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
     if ((0,helpers.isString)(stateOrText)) {
         button.state.icon.name = stateOrText;
         button.state.name = stateOrText;
-        if (status) {
-            button.state.status = status;
+        if (variant) {
+            button.state.variant = variant;
         }
         if (text) {
             button.state.text = text;
@@ -7554,7 +7573,7 @@ let UIButtonGroup = class UIButtonGroup extends group/* UIGroup */.q {
             const btn = new UIButton(jodit, {
                 text: opt.text,
                 value: opt.value,
-                status: 'primary'
+                variant: 'primary'
             });
             btn.onAction(() => {
                 this.select(opt.value);
@@ -7877,6 +7896,7 @@ var UIGroup_1;
 let UIGroup = UIGroup_1 = class UIGroup extends _element__WEBPACK_IMPORTED_MODULE_0__/* .UIElement */ .u {
     constructor(jodit, elements, options) {
         super(jodit, options);
+        this.options = options;
         this.syncMod = false;
         this.elements = [];
         this.buttonSize = 'middle';
@@ -7913,7 +7933,7 @@ let UIGroup = UIGroup_1 = class UIGroup extends _element__WEBPACK_IMPORTED_MODUL
     }
     append(elm, distElement) {
         if ((0,_helpers__WEBPACK_IMPORTED_MODULE_2__.isArray)(elm)) {
-            elm.forEach(item => this.append(item));
+            elm.forEach(item => this.append(item, distElement));
             return this;
         }
         this.elements.push(elm);
@@ -8155,6 +8175,7 @@ class Popup extends ui_element/* UIElement */.u {
     }
     open(getBound, keepPosition = false) {
         (0,helpers.markOwner)(this.jodit, this.container);
+        this.calculateZIndex();
         this.isOpened = true;
         this.addGlobalListeners();
         this.targetBound = !keepPosition
@@ -8167,6 +8188,40 @@ class Popup extends ui_element/* UIElement */.u {
         this.updatePosition();
         this.j.e.fire(this, 'afterOpen');
         return this;
+    }
+    calculateZIndex() {
+        if (this.container.style.zIndex) {
+            return;
+        }
+        const checkView = (view) => {
+            const zIndex = view.container.style.zIndex || view.o.zIndex;
+            if (zIndex) {
+                this.setZIndex(1 + parseInt(zIndex.toString(), 10));
+                return true;
+            }
+            return false;
+        };
+        if (checkView(this.j)) {
+            return;
+        }
+        let pe = this.parentElement;
+        while (pe) {
+            if (checkView(pe.j)) {
+                return;
+            }
+            if (pe.container.style.zIndex) {
+                this.setZIndex(1 + parseInt(pe.container.style.zIndex.toString(), 10));
+                return;
+            }
+            if (!pe.parentElement && pe.container.parentElement) {
+                const elm = ui_element/* UIElement.closestElement */.u.closestElement(pe.container.parentElement, ui_element/* UIElement */.u);
+                if (elm) {
+                    pe = elm;
+                    continue;
+                }
+            }
+            pe = pe.parentElement;
+        }
     }
     getKeepBound(getBound) {
         const oldBound = getBound();
@@ -8457,6 +8512,9 @@ let UIInput = UIInput_1 = class UIInput extends ui_element/* UIElement */.u {
         this.state = { ...UIInput_1.defaultState };
         this.__errorBox = this.j.c.span(this.getFullElName('error'));
         this.validators = new Set([]);
+        if ((options === null || options === void 0 ? void 0 : options.value) !== undefined) {
+            options.value = options.value.toString();
+        }
         Object.assign(this.state, options);
         if (this.state.clearButton !== undefined) {
             this.j.e
@@ -8553,14 +8611,19 @@ let UIInput = UIInput_1 = class UIInput extends ui_element/* UIElement */.u {
         }
     }
     onChangeStateValue() {
-        this.value = this.state.value;
+        const value = this.state.value.toString();
+        if (value !== this.value) {
+            this.value = value;
+        }
     }
     onChangeValue() {
         var _a, _b;
         const { value } = this;
-        this.state.value = value;
-        this.j.e.fire(this, 'change', value);
-        (_b = (_a = this.state).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, value);
+        if (this.state.value !== value) {
+            this.state.value = value;
+            this.j.e.fire(this, 'change', value);
+            (_b = (_a = this.state).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, value);
+        }
     }
     validate() {
         this.error = '';
@@ -8639,11 +8702,20 @@ UIInput = UIInput_1 = (0,tslib_es6/* __decorate */.gn)([
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+var UITextArea_1;
 
 
 
 
-let UITextArea = class UITextArea extends UIInput {
+let UITextArea = UITextArea_1 = class UITextArea extends UIInput {
+    constructor(jodit, state) {
+        super(jodit, state);
+        this.state = { ...UITextArea_1.defaultState };
+        Object.assign(this.state, state);
+        if (this.state.resizable === false) {
+            this.nativeInput.style.resize = 'none';
+        }
+    }
     className() {
         return 'UITextArea';
     }
@@ -8652,7 +8724,12 @@ let UITextArea = class UITextArea extends UIInput {
         return super.createContainer(options);
     }
 };
-UITextArea = (0,tslib_es6/* __decorate */.gn)([
+UITextArea.defaultState = {
+    ...UIInput.defaultState,
+    size: 5,
+    resizable: true
+};
+UITextArea = UITextArea_1 = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UITextArea);
 
@@ -8663,11 +8740,17 @@ UITextArea = (0,tslib_es6/* __decorate */.gn)([
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+var UICheckbox_1;
 
 
 
 
-let UICheckbox = class UICheckbox extends UIInput {
+let UICheckbox = UICheckbox_1 = class UICheckbox extends UIInput {
+    constructor(jodit, options) {
+        super(jodit, { ...options, type: 'checkbox' });
+        this.state = { ...UICheckbox_1.defaultState };
+        Object.assign(this.state, options);
+    }
     className() {
         return 'UICheckbox';
     }
@@ -8676,11 +8759,27 @@ let UICheckbox = class UICheckbox extends UIInput {
             className: this.componentName
         });
     }
-    constructor(jodit, options) {
-        super(jodit, { ...options, type: 'checkbox' });
+    onChangeChecked() {
+        this.value = this.state.checked.toString();
+        this.nativeInput.checked = this.state.checked;
+        this.setMod('checked', this.state.checked);
+    }
+    onChangeNativeCheckBox() {
+        this.state.checked = this.nativeInput.checked;
     }
 };
-UICheckbox = (0,tslib_es6/* __decorate */.gn)([
+UICheckbox.defaultState = {
+    ...UIInput.defaultState,
+    checked: false
+};
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)('state.checked'),
+    (0,decorators.hook)('ready')
+], UICheckbox.prototype, "onChangeChecked", null);
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)('nativeInput:change')
+], UICheckbox.prototype, "onChangeNativeCheckBox", null);
+UICheckbox = UICheckbox_1 = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UICheckbox);
 
@@ -8839,6 +8938,13 @@ var utils = __webpack_require__(9);
 
 
 let UIForm = class UIForm extends group/* UIGroup */.q {
+    constructor(...args) {
+        var _a, _b;
+        super(...args);
+        if ((_a = this.options) === null || _a === void 0 ? void 0 : _a.className) {
+            this.container.classList.add((_b = this.options) === null || _b === void 0 ? void 0 : _b.className);
+        }
+    }
     className() {
         return 'UIForm';
     }
@@ -13260,7 +13366,7 @@ const TabsWidget = (editor, tabs, state) => {
         buttonList.push(button);
         button.container.classList.add('jodit-tabs__button', 'jodit-tabs__button_columns_' + tabs.length);
         if (!(0,helpers.isFunction)(content)) {
-            tab.appendChild(content);
+            tab.appendChild(content instanceof ui/* UIElement */.u1 ? content.container : content);
         }
         else {
             tab.appendChild(editor.c.div('jodit-tab_empty'));
@@ -13359,7 +13465,7 @@ const FileSelectorWidget = (editor, callbacks, elm, close, isImage = true) => {
     if (callbacks.url) {
         const button = new ui/* UIButton */.y3(editor, {
             type: 'submit',
-            status: 'primary',
+            variant: 'primary',
             text: 'Insert'
         }), form = new ui/* UIForm */.x4(editor, [
             new ui/* UIInput */.u3(editor, {
@@ -15160,7 +15266,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.9.6";
+        this.version = "3.10.1";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -15258,10 +15364,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.9.6";
+        return "3.10.1";
     }
     static getVersion() {
-        return "3.9.6";
+        return "3.10.1";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -15376,9 +15482,6 @@ let ToolbarCollection = class ToolbarCollection extends ui/* UIList */.bz {
         return makeButton(this.j, control, target);
     }
     shouldBeActive(button) {
-        if ((0,helpers.isJoditObject)(this.j) && !this.j.editorIsActive) {
-            return false;
-        }
         if ((0,helpers.isFunction)(button.control.isActive)) {
             return button.control.isActive(this.j, button.control, button);
         }
@@ -15502,6 +15605,9 @@ let ToolbarEditorCollection = class ToolbarEditorCollection extends ToolbarColle
         return !(mode === constants.MODE_SPLIT || mode === this.j.getRealMode());
     }
     shouldBeActive(button) {
+        if ((0,helpers.isJoditObject)(this.j) && !this.j.editorIsActive) {
+            return false;
+        }
         const active = super.shouldBeActive(button);
         if (active !== undefined) {
             return active;
@@ -16406,8 +16512,8 @@ let Dialog = class Dialog extends ViewWithToolbar {
             e.stopImmediatePropagation();
             e.preventDefault();
         }
-        if (this.e) {
-            this.e.fire('beforeClose', this);
+        if (this.e && this.e.fire('beforeClose', this) === false) {
+            return this;
         }
         this.setMod('active', false);
         this.isOpened = false;
@@ -20497,12 +20603,6 @@ class Jodit extends ViewWithToolbar {
         div.innerHTML = this.getElementValue();
         return div.innerText || '';
     }
-    get value() {
-        return this.getEditorValue();
-    }
-    set value(html) {
-        this.setEditorValue(html);
-    }
     get defaultTimeout() {
         return this.options && this.o.observer
             ? this.o.observer.timeout
@@ -20635,9 +20735,15 @@ class Jodit extends ViewWithToolbar {
             this.editor.innerHTML = data.value;
         }
     }
-    getEditorValue(removeSelectionMarkers = true) {
+    get value() {
+        return this.getEditorValue();
+    }
+    set value(html) {
+        this.setEditorValue(html);
+    }
+    getEditorValue(removeSelectionMarkers = true, consumer) {
         let value;
-        value = this.e.fire('beforeGetValueFromEditor');
+        value = this.e.fire('beforeGetValueFromEditor', consumer);
         if (value !== undefined) {
             return value;
         }
@@ -20649,7 +20755,7 @@ class Jodit extends ViewWithToolbar {
             value = '';
         }
         const new_value = { value };
-        this.e.fire('afterGetValueFromEditor', new_value);
+        this.e.fire('afterGetValueFromEditor', new_value, consumer);
         return new_value.value;
     }
     setEditorValue(value) {
@@ -21329,6 +21435,7 @@ config/* Config.prototype.addNewLineTagsTriggers */.D.prototype.addNewLineTagsTr
     'iframe',
     'img',
     'hr',
+    'pre',
     'jodit'
 ];
 config/* Config.prototype.addNewLineDeltaShow */.D.prototype.addNewLineDeltaShow = 20;
@@ -23025,7 +23132,7 @@ class paste extends Plugin {
         const keep = (0,ui_button/* Button */.zx)(this.j, {
             text: 'Keep',
             name: 'keep',
-            status: 'primary',
+            variant: 'primary',
             tabIndex: 0
         });
         const clear = (0,ui_button/* Button */.zx)(this.j, {
@@ -25343,6 +25450,10 @@ class imageProperties extends Plugin {
                     return;
                 }
                 if (editor.o.image.openOnDblClick) {
+                    if (this.j.e.fire('openOnDblClick', image) ===
+                        false) {
+                        return;
+                    }
                     self.state.image = image;
                     if (!editor.o.readonly) {
                         e.stopImmediatePropagation();
@@ -26136,13 +26247,13 @@ const formTemplate = (editor) => {
         new ui_form/* UIBlock */.eC(editor, [
             new ui_button/* UIButton */.y3(editor, {
                 name: 'unlink',
-                status: 'default',
+                variant: 'default',
                 text: 'Unlink'
             }),
             new ui_button/* UIButton */.y3(editor, {
                 name: 'insert',
                 type: 'submit',
-                status: 'primary',
+                variant: 'primary',
                 text: 'Insert'
             })
         ], {
@@ -28448,6 +28559,9 @@ class AceEditor extends SourceEditor {
     constructor() {
         super(...arguments);
         this.className = 'jodit_ace_editor';
+        this.proxyOnBlur = (e) => {
+            this.j.e.fire('blur', e);
+        };
         this.proxyOnFocus = (e) => {
             this.j.e.fire('focus', e);
         };
@@ -28523,6 +28637,7 @@ class AceEditor extends SourceEditor {
             this.instance.on('change', this.toWYSIWYG);
             this.instance.on('focus', this.proxyOnFocus);
             this.instance.on('mousedown', this.proxyOnMouseDown);
+            this.instance.on('blur', this.proxyOnBlur);
             if (editor.getRealMode() !== constants.MODE_WYSIWYG) {
                 this.setValue(this.getValue());
             }
@@ -28663,12 +28778,21 @@ function createSourceEditor(type, editor, container, toWYSIWYG, fromWYSIWYG) {
     return sourceEditor;
 }
 
+;// CONCATENATED MODULE: ./src/plugins/source/const.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const SOURCE_CONSUMER = 'source-consumer';
+
 ;// CONCATENATED MODULE: ./src/plugins/source/source.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 
 
 
@@ -28713,7 +28837,7 @@ class source extends Plugin {
     fromWYSIWYG(force = false) {
         if (!this.__lock || force === true) {
             this.__lock = true;
-            const new_value = this.j.getEditorValue(false);
+            const new_value = this.j.getEditorValue(false, SOURCE_CONSUMER);
             if (new_value !== this.getMirrorValue()) {
                 this.setMirrorValue(new_value);
             }
@@ -28874,7 +28998,7 @@ class source extends Plugin {
             var _a;
             (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.setPlaceHolder(text);
         })
-            .on('change.source', this.fromWYSIWYG)
+            .on('change.source', this.syncValueFromWYSIWYG)
             .on('beautifyHTML', html => html);
         if (editor.o.beautifyHTML) {
             const addEventListener = () => {
@@ -28890,8 +29014,15 @@ class source extends Plugin {
                 (0,helpers.loadNext)(editor, editor.o.beautifyHTMLCDNUrlsJS).then(addEventListener);
             }
         }
-        this.fromWYSIWYG();
+        this.syncValueFromWYSIWYG();
         this.initSourceEditor(editor);
+    }
+    syncValueFromWYSIWYG() {
+        const editor = this.j;
+        if (editor.getMode() === constants.MODE_SPLIT ||
+            editor.getMode() === constants.MODE_SOURCE) {
+            this.fromWYSIWYG(true);
+        }
     }
     initSourceEditor(editor) {
         var _a;
@@ -28901,14 +29032,14 @@ class source extends Plugin {
                 var _a, _b;
                 (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.destruct();
                 this.sourceEditor = sourceEditor;
-                this.fromWYSIWYG(true);
+                this.syncValueFromWYSIWYG();
                 (_b = editor.events) === null || _b === void 0 ? void 0 : _b.fire('sourceEditorReady', editor);
             });
         }
         else {
             (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.onReadyAlways(() => {
                 var _a;
-                this.fromWYSIWYG(true);
+                this.syncValueFromWYSIWYG();
                 (_a = editor.events) === null || _a === void 0 ? void 0 : _a.fire('sourceEditorReady', editor);
             });
         }
@@ -28948,6 +29079,9 @@ class source extends Plugin {
 (0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)(':readonly.source')
 ], source.prototype, "onReadonlyReact", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], source.prototype, "syncValueFromWYSIWYG", null);
 
 ;// CONCATENATED MODULE: ./src/plugins/source/index.ts
 /*!
@@ -30399,7 +30533,15 @@ class tooltip extends Plugin {
 
 config/* Config.prototype.controls.preview */.D.prototype.controls.preview = {
     icon: 'eye',
-    exec: (editor) => {
+    command: 'preview',
+    mode: constants.MODE_SOURCE + constants.MODE_WYSIWYG,
+    tooltip: 'Preview'
+};
+function preview(editor) {
+    editor.registerButton({
+        name: 'preview'
+    });
+    editor.registerCommand('preview', (_, _1, defaultValue) => {
         const dialog = editor.getInstance('Dialog', {
             language: editor.o.language,
             theme: editor.o.theme
@@ -30409,7 +30551,8 @@ config/* Config.prototype.controls.preview */.D.prototype.controls.preview = {
             position: 'relative',
             padding: 16
         });
-        const value = editor.value ||
+        const value = defaultValue ||
+            editor.value ||
             `<div style='position: absolute;left:50%;top:50%;transform: translateX(-50%) translateY(-50%);color:#ccc;'>${editor.i18n('Empty')}</div>`;
         if (editor.iframe) {
             const iframe = editor.create.element('iframe');
@@ -30432,17 +30575,42 @@ config/* Config.prototype.controls.preview */.D.prototype.controls.preview = {
                 minHeight: 600,
                 border: 0
             });
-            div.innerHTML = value;
-            dialog.open(div, editor.i18n('Preview'));
+            dialog.setSize(1024, 600).open(div, editor.i18n('Preview'));
+            const setHTML = (box, value) => {
+                const dv = editor.c.div();
+                dv.innerHTML = value;
+                for (let i = 0; i < dv.children.length; i += 1) {
+                    const c = dv.children[i];
+                    const newNode = document.createElement(c.nodeName);
+                    for (let j = 0; j < c.attributes.length; j += 1) {
+                        (0,helpers.attr)(newNode, c.attributes[j].nodeName, c.attributes[j].nodeValue);
+                    }
+                    if (c.children.length === 0) {
+                        switch (c.nodeName) {
+                            case 'SCRIPT':
+                                if (c.textContent) {
+                                    newNode.textContent = c.textContent;
+                                }
+                                break;
+                            default:
+                                if (c.innerHTML) {
+                                    newNode.innerHTML = c.innerHTML;
+                                }
+                                break;
+                        }
+                    }
+                    else {
+                        setHTML(newNode, c.innerHTML);
+                    }
+                    try {
+                        box.appendChild(newNode);
+                    }
+                    catch (_a) { }
+                }
+            };
+            setHTML(div, value);
         }
         dialog.setModal(true);
-    },
-    mode: constants.MODE_SOURCE + constants.MODE_WYSIWYG,
-    tooltip: 'Preview'
-};
-function preview(editor) {
-    editor.registerButton({
-        name: 'preview'
     });
 }
 

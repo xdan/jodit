@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.9.6
+ * Version: v3.10.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -615,6 +615,9 @@ svg.jodit-icon {
   width: 100%;
   height: 100%;
 }
+.jodit-wysiwyg *[contentEditable='false'] {
+  cursor: default;
+}
 .jodit-container:not(.jodit_inline) {
   border: 1px solid var(--jd-color-border);
   border-radius: var(--jd-border-radius-default);
@@ -975,155 +978,155 @@ svg.jodit-icon {
 .jodit-ui-button-sizes_size_large_text-icons_true button {
   padding: 0 var(--jd-padding-default);
 }
-.jodit-ui-button-statuses_status_default {
+.jodit-ui-button-variants_variant_default {
   background-color: #e3e3e3;
   color: #212529;
 }
-.jodit-ui-button-statuses_status_default svg {
+.jodit-ui-button-variants_variant_default svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-ui-button-statuses_status_default [disabled] {
+.jodit-ui-button-variants_variant_default [disabled] {
   opacity: 0.7;
 }
-.jodit-ui-button-statuses_status_default:hover:not([disabled]) {
+.jodit-ui-button-variants_variant_default:hover:not([disabled]) {
   background-color: #c9cdd1;
   color: #212529;
 }
-.jodit-ui-button-statuses_status_default:hover:not([disabled]) svg {
+.jodit-ui-button-variants_variant_default:hover:not([disabled]) svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-ui-button-statuses_status_default:active:not([disabled]) {
+.jodit-ui-button-variants_variant_default:active:not([disabled]) {
   background-color: #dae0e5;
   color: #212529;
 }
-.jodit-ui-button-statuses_status_default:active:not([disabled]) svg {
+.jodit-ui-button-variants_variant_default:active:not([disabled]) svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-ui-button-statuses_status_default:focus:not([disabled]) {
+.jodit-ui-button-variants_variant_default:focus:not([disabled]) {
   outline: 1px dashed #dae0e5;
 }
-.jodit-ui-button-statuses_status_primary {
+.jodit-ui-button-variants_variant_primary {
   background-color: #007bff;
   color: #fff;
 }
-.jodit-ui-button-statuses_status_primary svg {
+.jodit-ui-button-variants_variant_primary svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button-statuses_status_primary [disabled] {
+.jodit-ui-button-variants_variant_primary [disabled] {
   opacity: 0.7;
 }
-.jodit-ui-button-statuses_status_primary:hover:not([disabled]) {
+.jodit-ui-button-variants_variant_primary:hover:not([disabled]) {
   background-color: #0069d9;
   color: #fff;
 }
-.jodit-ui-button-statuses_status_primary:hover:not([disabled]) svg {
+.jodit-ui-button-variants_variant_primary:hover:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button-statuses_status_primary:active:not([disabled]) {
+.jodit-ui-button-variants_variant_primary:active:not([disabled]) {
   background-color: #0062cc;
   color: #fff;
 }
-.jodit-ui-button-statuses_status_primary:active:not([disabled]) svg {
+.jodit-ui-button-variants_variant_primary:active:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button-statuses_status_primary:focus:not([disabled]) {
+.jodit-ui-button-variants_variant_primary:focus:not([disabled]) {
   outline: 1px dashed #0062cc;
 }
-.jodit-ui-button-statuses_status_secondary {
+.jodit-ui-button-variants_variant_secondary {
   background-color: #d8d8d8;
   color: #212529;
   border-radius: 0;
 }
-.jodit-ui-button-statuses_status_secondary svg {
+.jodit-ui-button-variants_variant_secondary svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-ui-button-statuses_status_secondary [disabled] {
+.jodit-ui-button-variants_variant_secondary [disabled] {
   opacity: 0.7;
 }
-.jodit-ui-button-statuses_status_secondary:hover:not([disabled]) {
+.jodit-ui-button-variants_variant_secondary:hover:not([disabled]) {
   background-color: #c9cdd1;
   color: #212529;
 }
-.jodit-ui-button-statuses_status_secondary:hover:not([disabled]) svg {
+.jodit-ui-button-variants_variant_secondary:hover:not([disabled]) svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-ui-button-statuses_status_secondary:active:not([disabled]) {
+.jodit-ui-button-variants_variant_secondary:active:not([disabled]) {
   background-color: #dae0e5;
   color: #212529;
 }
-.jodit-ui-button-statuses_status_secondary:active:not([disabled]) svg {
+.jodit-ui-button-variants_variant_secondary:active:not([disabled]) svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-ui-button-statuses_status_secondary:focus:not([disabled]) {
+.jodit-ui-button-variants_variant_secondary:focus:not([disabled]) {
   outline: 1px dashed #dae0e5;
 }
-.jodit-ui-button-statuses_status_success {
+.jodit-ui-button-variants_variant_success {
   background-color: #28a745;
   color: #fff;
 }
-.jodit-ui-button-statuses_status_success svg {
+.jodit-ui-button-variants_variant_success svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button-statuses_status_success [disabled] {
+.jodit-ui-button-variants_variant_success [disabled] {
   opacity: 0.7;
 }
-.jodit-ui-button-statuses_status_success:hover:not([disabled]) {
+.jodit-ui-button-variants_variant_success:hover:not([disabled]) {
   background-color: #218838;
   color: #fff;
 }
-.jodit-ui-button-statuses_status_success:hover:not([disabled]) svg {
+.jodit-ui-button-variants_variant_success:hover:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button-statuses_status_success:active:not([disabled]) {
+.jodit-ui-button-variants_variant_success:active:not([disabled]) {
   background-color: #1e7e34;
   color: #fff;
 }
-.jodit-ui-button-statuses_status_success:active:not([disabled]) svg {
+.jodit-ui-button-variants_variant_success:active:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button-statuses_status_success:focus:not([disabled]) {
+.jodit-ui-button-variants_variant_success:focus:not([disabled]) {
   outline: 1px dashed #1e7e34;
 }
-.jodit-ui-button-statuses_status_danger {
+.jodit-ui-button-variants_variant_danger {
   background-color: #dc3545;
   color: #fff;
 }
-.jodit-ui-button-statuses_status_danger svg {
+.jodit-ui-button-variants_variant_danger svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button-statuses_status_danger [disabled] {
+.jodit-ui-button-variants_variant_danger [disabled] {
   opacity: 0.7;
 }
-.jodit-ui-button-statuses_status_danger:hover:not([disabled]) {
+.jodit-ui-button-variants_variant_danger:hover:not([disabled]) {
   background-color: #c82333;
   color: #fff;
 }
-.jodit-ui-button-statuses_status_danger:hover:not([disabled]) svg {
+.jodit-ui-button-variants_variant_danger:hover:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button-statuses_status_danger:active:not([disabled]) {
+.jodit-ui-button-variants_variant_danger:active:not([disabled]) {
   background-color: #bd2130;
   color: #fff;
 }
-.jodit-ui-button-statuses_status_danger:active:not([disabled]) svg {
+.jodit-ui-button-variants_variant_danger:active:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button-statuses_status_danger:focus:not([disabled]) {
+.jodit-ui-button-variants_variant_danger:focus:not([disabled]) {
   outline: 1px dashed #bd2130;
 }
 .jodit-ui-button-style {
@@ -1292,155 +1295,155 @@ svg.jodit-icon {
 .jodit-ui-button:focus:not([disabled]) {
   outline: 1px dashed var(--jd-color-background-selection);
 }
-.jodit-ui-button_status_default {
+.jodit-ui-button_variant_default {
   background-color: #e3e3e3;
   color: #212529;
 }
-.jodit-ui-button_status_default svg {
+.jodit-ui-button_variant_default svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-ui-button_status_default [disabled] {
+.jodit-ui-button_variant_default [disabled] {
   opacity: 0.7;
 }
-.jodit-ui-button_status_default:hover:not([disabled]) {
+.jodit-ui-button_variant_default:hover:not([disabled]) {
   background-color: #c9cdd1;
   color: #212529;
 }
-.jodit-ui-button_status_default:hover:not([disabled]) svg {
+.jodit-ui-button_variant_default:hover:not([disabled]) svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-ui-button_status_default:active:not([disabled]) {
+.jodit-ui-button_variant_default:active:not([disabled]) {
   background-color: #dae0e5;
   color: #212529;
 }
-.jodit-ui-button_status_default:active:not([disabled]) svg {
+.jodit-ui-button_variant_default:active:not([disabled]) svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-ui-button_status_default:focus:not([disabled]) {
+.jodit-ui-button_variant_default:focus:not([disabled]) {
   outline: 1px dashed #dae0e5;
 }
-.jodit-ui-button_status_primary {
+.jodit-ui-button_variant_primary {
   background-color: #007bff;
   color: #fff;
 }
-.jodit-ui-button_status_primary svg {
+.jodit-ui-button_variant_primary svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button_status_primary [disabled] {
+.jodit-ui-button_variant_primary [disabled] {
   opacity: 0.7;
 }
-.jodit-ui-button_status_primary:hover:not([disabled]) {
+.jodit-ui-button_variant_primary:hover:not([disabled]) {
   background-color: #0069d9;
   color: #fff;
 }
-.jodit-ui-button_status_primary:hover:not([disabled]) svg {
+.jodit-ui-button_variant_primary:hover:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button_status_primary:active:not([disabled]) {
+.jodit-ui-button_variant_primary:active:not([disabled]) {
   background-color: #0062cc;
   color: #fff;
 }
-.jodit-ui-button_status_primary:active:not([disabled]) svg {
+.jodit-ui-button_variant_primary:active:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button_status_primary:focus:not([disabled]) {
+.jodit-ui-button_variant_primary:focus:not([disabled]) {
   outline: 1px dashed #0062cc;
 }
-.jodit-ui-button_status_secondary {
+.jodit-ui-button_variant_secondary {
   background-color: #d8d8d8;
   color: #212529;
   border-radius: 0;
 }
-.jodit-ui-button_status_secondary svg {
+.jodit-ui-button_variant_secondary svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-ui-button_status_secondary [disabled] {
+.jodit-ui-button_variant_secondary [disabled] {
   opacity: 0.7;
 }
-.jodit-ui-button_status_secondary:hover:not([disabled]) {
+.jodit-ui-button_variant_secondary:hover:not([disabled]) {
   background-color: #c9cdd1;
   color: #212529;
 }
-.jodit-ui-button_status_secondary:hover:not([disabled]) svg {
+.jodit-ui-button_variant_secondary:hover:not([disabled]) svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-ui-button_status_secondary:active:not([disabled]) {
+.jodit-ui-button_variant_secondary:active:not([disabled]) {
   background-color: #dae0e5;
   color: #212529;
 }
-.jodit-ui-button_status_secondary:active:not([disabled]) svg {
+.jodit-ui-button_variant_secondary:active:not([disabled]) svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-ui-button_status_secondary:focus:not([disabled]) {
+.jodit-ui-button_variant_secondary:focus:not([disabled]) {
   outline: 1px dashed #dae0e5;
 }
-.jodit-ui-button_status_success {
+.jodit-ui-button_variant_success {
   background-color: #28a745;
   color: #fff;
 }
-.jodit-ui-button_status_success svg {
+.jodit-ui-button_variant_success svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button_status_success [disabled] {
+.jodit-ui-button_variant_success [disabled] {
   opacity: 0.7;
 }
-.jodit-ui-button_status_success:hover:not([disabled]) {
+.jodit-ui-button_variant_success:hover:not([disabled]) {
   background-color: #218838;
   color: #fff;
 }
-.jodit-ui-button_status_success:hover:not([disabled]) svg {
+.jodit-ui-button_variant_success:hover:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button_status_success:active:not([disabled]) {
+.jodit-ui-button_variant_success:active:not([disabled]) {
   background-color: #1e7e34;
   color: #fff;
 }
-.jodit-ui-button_status_success:active:not([disabled]) svg {
+.jodit-ui-button_variant_success:active:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button_status_success:focus:not([disabled]) {
+.jodit-ui-button_variant_success:focus:not([disabled]) {
   outline: 1px dashed #1e7e34;
 }
-.jodit-ui-button_status_danger {
+.jodit-ui-button_variant_danger {
   background-color: #dc3545;
   color: #fff;
 }
-.jodit-ui-button_status_danger svg {
+.jodit-ui-button_variant_danger svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button_status_danger [disabled] {
+.jodit-ui-button_variant_danger [disabled] {
   opacity: 0.7;
 }
-.jodit-ui-button_status_danger:hover:not([disabled]) {
+.jodit-ui-button_variant_danger:hover:not([disabled]) {
   background-color: #c82333;
   color: #fff;
 }
-.jodit-ui-button_status_danger:hover:not([disabled]) svg {
+.jodit-ui-button_variant_danger:hover:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button_status_danger:active:not([disabled]) {
+.jodit-ui-button_variant_danger:active:not([disabled]) {
   background-color: #bd2130;
   color: #fff;
 }
-.jodit-ui-button_status_danger:active:not([disabled]) svg {
+.jodit-ui-button_variant_danger:active:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-ui-button_status_danger:focus:not([disabled]) {
+.jodit-ui-button_variant_danger:focus:not([disabled]) {
   outline: 1px dashed #bd2130;
 }
 
@@ -1664,7 +1667,7 @@ svg.jodit-icon {
   background-color: var(--jd-color-gray);
 }
 .jodit-ui-input_focused_true .jodit-ui-input__wrapper {
-  box-shadow: var(--jd-focus-input-box-shadow);
+  border-color: var(--jd-color-border-selected);
 }
 .jodit-ui-input__icon:not(:empty) {
   display: flex;
@@ -1770,7 +1773,7 @@ svg.jodit-icon {
   background-color: var(--jd-color-gray);
 }
 .jodit-ui-text-area_focused_true .jodit-ui-text-area__wrapper {
-  box-shadow: var(--jd-focus-input-box-shadow);
+  border-color: var(--jd-color-border-selected);
 }
 .jodit-ui-text-area__icon:not(:empty) {
   display: flex;
@@ -1804,7 +1807,11 @@ svg.jodit-icon {
 .jodit-ui-text-area_theme_dark .jodit-ui-text-area__clear svg {
   fill: var(--jd-color-dark);
 }
+.jodit-ui-text-area__wrapper {
+  flex: 1;
+}
 .jodit-ui-text-area__input {
+  height: 100%;
   min-height: 60px;
 }
 
@@ -1889,7 +1896,7 @@ svg.jodit-icon {
   background-color: var(--jd-color-gray);
 }
 .jodit-ui-select_focused_true .jodit-ui-select__wrapper {
-  box-shadow: var(--jd-focus-input-box-shadow);
+  border-color: var(--jd-color-border-selected);
 }
 .jodit-ui-select__icon:not(:empty) {
   display: flex;
@@ -2187,7 +2194,6 @@ svg.jodit-icon {
 }
 .jodit-dialog__header {
   display: flex;
-  overflow: hidden;
   min-height: 50px;
   justify-content: space-between;
   border-bottom: 1px solid var(--jd-color-border);
@@ -2884,155 +2890,155 @@ svg.jodit-icon {
 .jodit-toolbar-content:focus:not([disabled]) {
   outline: 1px dashed var(--jd-color-background-selection);
 }
-.jodit-toolbar-content_status_default {
+.jodit-toolbar-content_variant_default {
   background-color: #e3e3e3;
   color: #212529;
 }
-.jodit-toolbar-content_status_default svg {
+.jodit-toolbar-content_variant_default svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-toolbar-content_status_default [disabled] {
+.jodit-toolbar-content_variant_default [disabled] {
   opacity: 0.7;
 }
-.jodit-toolbar-content_status_default:hover:not([disabled]) {
+.jodit-toolbar-content_variant_default:hover:not([disabled]) {
   background-color: #c9cdd1;
   color: #212529;
 }
-.jodit-toolbar-content_status_default:hover:not([disabled]) svg {
+.jodit-toolbar-content_variant_default:hover:not([disabled]) svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-toolbar-content_status_default:active:not([disabled]) {
+.jodit-toolbar-content_variant_default:active:not([disabled]) {
   background-color: #dae0e5;
   color: #212529;
 }
-.jodit-toolbar-content_status_default:active:not([disabled]) svg {
+.jodit-toolbar-content_variant_default:active:not([disabled]) svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-toolbar-content_status_default:focus:not([disabled]) {
+.jodit-toolbar-content_variant_default:focus:not([disabled]) {
   outline: 1px dashed #dae0e5;
 }
-.jodit-toolbar-content_status_primary {
+.jodit-toolbar-content_variant_primary {
   background-color: #007bff;
   color: #fff;
 }
-.jodit-toolbar-content_status_primary svg {
+.jodit-toolbar-content_variant_primary svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-toolbar-content_status_primary [disabled] {
+.jodit-toolbar-content_variant_primary [disabled] {
   opacity: 0.7;
 }
-.jodit-toolbar-content_status_primary:hover:not([disabled]) {
+.jodit-toolbar-content_variant_primary:hover:not([disabled]) {
   background-color: #0069d9;
   color: #fff;
 }
-.jodit-toolbar-content_status_primary:hover:not([disabled]) svg {
+.jodit-toolbar-content_variant_primary:hover:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-toolbar-content_status_primary:active:not([disabled]) {
+.jodit-toolbar-content_variant_primary:active:not([disabled]) {
   background-color: #0062cc;
   color: #fff;
 }
-.jodit-toolbar-content_status_primary:active:not([disabled]) svg {
+.jodit-toolbar-content_variant_primary:active:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-toolbar-content_status_primary:focus:not([disabled]) {
+.jodit-toolbar-content_variant_primary:focus:not([disabled]) {
   outline: 1px dashed #0062cc;
 }
-.jodit-toolbar-content_status_secondary {
+.jodit-toolbar-content_variant_secondary {
   background-color: #d8d8d8;
   color: #212529;
   border-radius: 0;
 }
-.jodit-toolbar-content_status_secondary svg {
+.jodit-toolbar-content_variant_secondary svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-toolbar-content_status_secondary [disabled] {
+.jodit-toolbar-content_variant_secondary [disabled] {
   opacity: 0.7;
 }
-.jodit-toolbar-content_status_secondary:hover:not([disabled]) {
+.jodit-toolbar-content_variant_secondary:hover:not([disabled]) {
   background-color: #c9cdd1;
   color: #212529;
 }
-.jodit-toolbar-content_status_secondary:hover:not([disabled]) svg {
+.jodit-toolbar-content_variant_secondary:hover:not([disabled]) svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-toolbar-content_status_secondary:active:not([disabled]) {
+.jodit-toolbar-content_variant_secondary:active:not([disabled]) {
   background-color: #dae0e5;
   color: #212529;
 }
-.jodit-toolbar-content_status_secondary:active:not([disabled]) svg {
+.jodit-toolbar-content_variant_secondary:active:not([disabled]) svg {
   fill: #212529;
   stroke: #212529;
 }
-.jodit-toolbar-content_status_secondary:focus:not([disabled]) {
+.jodit-toolbar-content_variant_secondary:focus:not([disabled]) {
   outline: 1px dashed #dae0e5;
 }
-.jodit-toolbar-content_status_success {
+.jodit-toolbar-content_variant_success {
   background-color: #28a745;
   color: #fff;
 }
-.jodit-toolbar-content_status_success svg {
+.jodit-toolbar-content_variant_success svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-toolbar-content_status_success [disabled] {
+.jodit-toolbar-content_variant_success [disabled] {
   opacity: 0.7;
 }
-.jodit-toolbar-content_status_success:hover:not([disabled]) {
+.jodit-toolbar-content_variant_success:hover:not([disabled]) {
   background-color: #218838;
   color: #fff;
 }
-.jodit-toolbar-content_status_success:hover:not([disabled]) svg {
+.jodit-toolbar-content_variant_success:hover:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-toolbar-content_status_success:active:not([disabled]) {
+.jodit-toolbar-content_variant_success:active:not([disabled]) {
   background-color: #1e7e34;
   color: #fff;
 }
-.jodit-toolbar-content_status_success:active:not([disabled]) svg {
+.jodit-toolbar-content_variant_success:active:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-toolbar-content_status_success:focus:not([disabled]) {
+.jodit-toolbar-content_variant_success:focus:not([disabled]) {
   outline: 1px dashed #1e7e34;
 }
-.jodit-toolbar-content_status_danger {
+.jodit-toolbar-content_variant_danger {
   background-color: #dc3545;
   color: #fff;
 }
-.jodit-toolbar-content_status_danger svg {
+.jodit-toolbar-content_variant_danger svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-toolbar-content_status_danger [disabled] {
+.jodit-toolbar-content_variant_danger [disabled] {
   opacity: 0.7;
 }
-.jodit-toolbar-content_status_danger:hover:not([disabled]) {
+.jodit-toolbar-content_variant_danger:hover:not([disabled]) {
   background-color: #c82333;
   color: #fff;
 }
-.jodit-toolbar-content_status_danger:hover:not([disabled]) svg {
+.jodit-toolbar-content_variant_danger:hover:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-toolbar-content_status_danger:active:not([disabled]) {
+.jodit-toolbar-content_variant_danger:active:not([disabled]) {
   background-color: #bd2130;
   color: #fff;
 }
-.jodit-toolbar-content_status_danger:active:not([disabled]) svg {
+.jodit-toolbar-content_variant_danger:active:not([disabled]) svg {
   fill: #fff;
   stroke: #fff;
 }
-.jodit-toolbar-content_status_danger:focus:not([disabled]) {
+.jodit-toolbar-content_variant_danger:focus:not([disabled]) {
   outline: 1px dashed #bd2130;
 }
 .jodit-toolbar-content:hover:not([disabled]) {
@@ -3958,7 +3964,7 @@ a + .jodit-filebrowser-tree__source-title {
   min-width: 80px;
 }
 .jodit-tabs__button_columns_3 {
-  width: 100% / 3;
+  width: calc(100% / 3);
 }
 .jodit-tabs__button_columns_2 {
   width: 50%;
