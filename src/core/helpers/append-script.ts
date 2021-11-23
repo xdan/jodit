@@ -113,3 +113,17 @@ export const loadNext = (
 		loadNext(jodit, urls, i + 1)
 	);
 };
+
+export const loadNextStyle = (
+	jodit: IViewBased,
+	urls: string[],
+	i: number = 0
+): Promise<void> => {
+	if (!isString(urls[i])) {
+		return Promise.resolve();
+	}
+
+	return appendStyleAsync(jodit, urls[i]).then(() =>
+		loadNextStyle(jodit, urls, i + 1)
+	);
+};
