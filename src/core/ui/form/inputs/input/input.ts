@@ -166,7 +166,11 @@ export class UIInput extends UIElement implements IUIInput {
 	 */
 	@watch('state.value')
 	protected onChangeStateValue(): void {
-		this.value = this.state.value;
+		const value = this.state.value.toString();
+
+		if (value !== this.value) {
+			this.value = value;
+		}
 	}
 
 	/**
@@ -176,9 +180,11 @@ export class UIInput extends UIElement implements IUIInput {
 	protected onChangeValue(): void {
 		const { value } = this;
 
-		this.state.value = value;
-		this.j.e.fire(this, 'change', value);
-		this.state.onChange?.(value);
+		if (this.state.value !== value) {
+			this.state.value = value;
+			this.j.e.fire(this, 'change', value);
+			this.state.onChange?.(value);
+		}
 	}
 
 	protected validators: Set<IUIInputValidator> = new Set([]);
@@ -225,6 +231,10 @@ export class UIInput extends UIElement implements IUIInput {
 	/** @override **/
 	constructor(jodit: IViewBased, options?: Partial<IUIInput['state']>) {
 		super(jodit, options);
+
+		if (options?.value !== undefined) {
+			options.value = options.value.toString();
+		}
 
 		Object.assign(this.state, options);
 

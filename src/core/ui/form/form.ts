@@ -75,4 +75,12 @@ export class UIForm extends UIGroup implements IUIForm {
 		attr(form, 'dir', this.j.o.direction || 'auto');
 		return form;
 	}
+
+	constructor(...args: ConstructorParameters<typeof UIGroup>) {
+		super(...args);
+
+		if (this.options?.className) {
+			this.container.classList.add(this.options?.className);
+		}
+	}
 }
