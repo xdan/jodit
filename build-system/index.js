@@ -19,18 +19,15 @@ const { variables } = require('./variables');
 const { fileName } = require('./utils/filename');
 
 /**
- * @param {array} env
- * @param {object} argv
- * @param {string} dir
  * @param {boolean} onlyTS - build only TypeScript files
  */
-module.exports = (env, argv, dir = __dirname, onlyTS = false) => {
+module.exports = (env, argv, dir = process.cwd(), onlyTS = false) => {
 	const vars = variables(argv, dir);
 
 	const { ES, mode, isTest, isProd, debug, ESNext, uglify, outputPath } =
 		vars;
 
-	console.warn(`ES:${ES} Mode:${mode} Test:${isTest}`);
+	console.warn(`ES:${ES} Mode:${mode} Test:${isTest} Uglify:${uglify}`);
 
 	return {
 		cache: !isProd,

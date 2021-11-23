@@ -6,6 +6,13 @@
 
 const path = require('path');
 
+/**
+ *
+ */
+function Bool(str) {
+	return typeof str === 'boolean' ? str : str === 'true';
+}
+
 module.exports.variables = (argv, dir) => {
 	const pkg = require(path.resolve(dir, './package.json'));
 
@@ -18,14 +25,16 @@ module.exports.variables = (argv, dir) => {
  */
 	`;
 
+	argv = { ...argv.env, ...argv };
+
 	const debug = !argv || !argv.mode || !argv.mode.match(/production/);
 
-	const isTest = Boolean(argv && argv.isTest);
+	const isTest = Bool(argv && argv.isTest);
 
 	const mode = debug ? 'development' : argv.mode;
 	const isProd = mode === 'production';
-	const uglify = !debug && argv && Boolean(argv.uglify);
-	const excludeLangs = Boolean(argv.excludeLangs) || false;
+	const uglify = Boolean(!debug && argv && Bool(argv.uglify));
+	const excludeLangs = Bool(argv.excludeLangs);
 
 	const ES = argv && ['es5', 'es2018'].includes(argv.es) ? argv.es : 'es2018';
 
