@@ -309,11 +309,7 @@ export class source extends Plugin {
 			.on('placeholder.source', (text: string) => {
 				this.sourceEditor?.setPlaceHolder(text);
 			})
-			.on('change.source', () => {
-				if (editor.getMode() === MODE_SPLIT) {
-					this.fromWYSIWYG();
-				}
-			})
+			.on('change.source', this.syncValueFromWYSIWYG)
 			.on('beautifyHTML', html => html);
 
 		if (editor.o.beautifyHTML) {
@@ -338,12 +334,14 @@ export class source extends Plugin {
 			}
 		}
 
-		this.syncValueFromWYSIWYG(editor);
-
+		this.syncValueFromWYSIWYG();
 		this.initSourceEditor(editor);
 	}
 
-	private syncValueFromWYSIWYG(editor: IJodit) {
+	@autobind
+	private syncValueFromWYSIWYG() {
+		const editor = this.j;
+
 		if (
 			editor.getMode() === MODE_SPLIT ||
 			editor.getMode() === MODE_SOURCE
@@ -365,12 +363,12 @@ export class source extends Plugin {
 			sourceEditor.onReadyAlways(() => {
 				this.sourceEditor?.destruct();
 				this.sourceEditor = sourceEditor;
-				this.syncValueFromWYSIWYG(editor);
+				this.syncValueFromWYSIWYG();
 				editor.events?.fire('sourceEditorReady', editor);
 			});
 		} else {
 			this.sourceEditor?.onReadyAlways(() => {
-				this.syncValueFromWYSIWYG(editor);
+				this.syncValueFromWYSIWYG();
 				editor.events?.fire('sourceEditorReady', editor);
 			});
 		}

@@ -17,7 +17,6 @@ export class UICheckbox extends UIInput implements IUICheckBox {
 		return 'UICheckbox';
 	}
 
-
 	/** @override */
 	static override defaultState: IUICheckBox['state'] = {
 		...UIInput.defaultState,
