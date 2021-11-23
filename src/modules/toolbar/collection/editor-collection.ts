@@ -14,7 +14,7 @@ import type {
 	IJodit,
 	IBound
 } from '../../../types';
-import { css, isFunction } from '../../../core/helpers';
+import { css, isFunction, isJoditObject } from '../../../core/helpers';
 import { component } from '../../../core/decorators';
 
 @component
@@ -42,6 +42,10 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 
 	/** @override */
 	override shouldBeActive(button: IToolbarButton): boolean {
+		if (isJoditObject(this.j) && !this.j.editorIsActive) {
+			return false;
+		}
+
 		const active = super.shouldBeActive(button);
 
 		if (active !== undefined) {

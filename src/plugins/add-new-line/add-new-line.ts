@@ -48,6 +48,7 @@ Config.prototype.addNewLineTagsTriggers = [
 	'iframe',
 	'img',
 	'hr',
+	'pre',
 	'jodit'
 ];
 Config.prototype.addNewLineDeltaShow = 20;

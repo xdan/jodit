@@ -662,8 +662,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		/**
 		 * Called up to close the window
 		 */
-		if (this.e) {
-			this.e.fire('beforeClose', this);
+		if (this.e && this.e.fire('beforeClose', this) === false) {
+			return this;
 		}
 
 		this.setMod('active', false);

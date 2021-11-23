@@ -24,6 +24,7 @@ import {
 	get,
 	isArray,
 	isFunction,
+	isHTML,
 	isString,
 	isVoid,
 	toArray,
@@ -191,11 +192,15 @@ export class Dom {
 	 */
 	static replace(
 		elm: HTMLElement,
-		newTagName: HTMLTagNames | HTMLElement,
+		newTagName: HTMLTagNames | HTMLElement | string,
 		create: ICreate,
 		withAttributes = false,
 		notMoveContent = false
 	): HTMLElement {
+		if (isHTML(newTagName)) {
+			newTagName = create.fromHTML(newTagName);
+		}
+
 		const tag = isString(newTagName)
 			? create.element(newTagName)
 			: newTagName;

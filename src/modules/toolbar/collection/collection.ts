@@ -19,7 +19,7 @@ import type {
 	IBound
 } from '../../../types/';
 
-import { error, isFunction, isJoditObject } from '../../../core/helpers/';
+import { error, isFunction } from '../../../core/helpers/';
 
 import { UIList } from '../../../core/ui';
 import { makeButton } from '../factory';
@@ -60,10 +60,6 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 	 * Button should be active
 	 */
 	shouldBeActive(button: IToolbarButton): boolean | undefined {
-		if (isJoditObject(this.j) && !this.j.editorIsActive) {
-			return false;
-		}
-
 		if (isFunction(button.control.isActive)) {
 			return button.control.isActive(this.j, button.control, button);
 		}
@@ -138,7 +134,6 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 
 	private initEvents() {
 		this.j.e
-			// .on(this.j.ow, 'mousedown touchend', this.closeAllPopups)
 			.on(this.listenEvents, this.update)
 			.on('afterSetMode focus', this.immediateUpdate);
 	}

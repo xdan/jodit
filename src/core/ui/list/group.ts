@@ -76,7 +76,7 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	 */
 	append(elm: IUIElement | IUIElement[], distElement?: string): this {
 		if (isArray(elm)) {
-			elm.forEach(item => this.append(item));
+			elm.forEach(item => this.append(item, distElement));
 			return this;
 		}
 
@@ -145,7 +145,7 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	constructor(
 		jodit: T,
 		elements?: Array<IUIElement | void | null | false>,
-		options?: IDictionary
+		readonly options?: IDictionary
 	) {
 		super(jodit, options);
 		elements?.forEach(elm => elm && this.append(elm));

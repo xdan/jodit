@@ -109,6 +109,8 @@ export class Popup extends UIElement implements IPopup {
 	open(getBound: getBoundFunc, keepPosition: boolean = false): this {
 		markOwner(this.jodit, this.container);
 
+		this.calculateZIndex();
+
 		this.isOpened = true;
 		this.addGlobalListeners();
 
@@ -127,6 +129,56 @@ export class Popup extends UIElement implements IPopup {
 		this.j.e.fire(this, 'afterOpen');
 
 		return this;
+	}
+
+	private calculateZIndex(): void {
+		if (this.container.style.zIndex) {
+			return;
+		}
+
+		const checkView = (view: IViewBased): boolean => {
+			const zIndex = view.container.style.zIndex || view.o.zIndex;
+
+			if (zIndex) {
+				this.setZIndex(1 + parseInt(zIndex.toString(), 10));
+				return true;
+			}
+
+			return false;
+		};
+
+		if (checkView(this.j)) {
+			return;
+		}
+
+		let pe = this.parentElement;
+
+		while (pe) {
+			if (checkView(pe.j)) {
+				return;
+			}
+
+			if (pe.container.style.zIndex) {
+				this.setZIndex(
+					1 + parseInt(pe.container.style.zIndex.toString(), 10)
+				);
+				return;
+			}
+
+			if (!pe.parentElement && pe.container.parentElement) {
+				const elm = UIElement.closestElement(
+					pe.container.parentElement,
+					UIElement
+				);
+
+				if (elm) {
+					pe = elm;
+					continue;
+				}
+			}
+
+			pe = pe.parentElement;
+		}
 	}
 
 	/**
@@ -378,7 +430,7 @@ export class Popup extends UIElement implements IPopup {
 	/**
 	 * Set ZIndex
 	 */
-	setZIndex(index: number): void {
+	setZIndex(index: number | string): void {
 		this.container.style.zIndex = index.toString();
 	}
 
