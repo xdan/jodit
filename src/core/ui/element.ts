@@ -46,6 +46,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 			callback(parent);
 			parent = parent.parentElement;
 		}
+
 		return this;
 	}
 
@@ -93,9 +94,9 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	 * Find closest UIElement in DOM
 	 */
 	static closestElement(node: Node, type: Function): Nullable<IUIElement> {
-		const elm = Dom.up(node, node => {
-			if (node) {
-				const { component } = node as any;
+		const elm = Dom.up(node, elm => {
+			if (elm) {
+				const { component } = elm as HTMLElement;
 				return component && component instanceof type;
 			}
 

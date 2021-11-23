@@ -296,7 +296,7 @@ export class paste extends Plugin {
 		const keep = Button(this.j, {
 			text: 'Keep',
 			name: 'keep',
-			status: 'primary',
+			variant: 'primary',
 			tabIndex: 0
 		});
 

@@ -45,8 +45,9 @@ export class Icon {
 	/**
 	 * Set SVG in store
 	 */
-	static set(name: string, value: string): void {
+	static set(name: string, value: string): typeof Icon {
 		this.icons[name.replace('_', '-')] = value;
+		return this;
 	}
 
 	/**

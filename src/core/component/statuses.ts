@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export enum STATUSES {
-	beforeInit = 'beforeInit',
-	ready = 'ready',
-	beforeDestruct = 'beforeDestruct',
-	destructed = 'destructed'
-}
+export const STATUSES = {
+	beforeInit: 'beforeInit',
+	ready: 'ready',
+	beforeDestruct: 'beforeDestruct',
+	destructed: 'destructed'
+} as const;

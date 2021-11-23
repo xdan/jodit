@@ -42,7 +42,7 @@ export class UIButtonGroup extends UIGroup {
 
 	constructor(
 		jodit: IViewBased,
-		readonly options: {
+		override readonly options: {
 			name?: string;
 			value?: string | boolean | number;
 			label?: string;
@@ -59,7 +59,7 @@ export class UIButtonGroup extends UIGroup {
 				const btn = new UIButton(jodit, {
 					text: opt.text,
 					value: opt.value,
-					status: 'primary'
+					variant: 'primary'
 				});
 
 				btn.onAction(() => {

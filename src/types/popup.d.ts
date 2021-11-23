@@ -12,6 +12,7 @@ export type PopupStrategy =
 	| 'rightBottom'
 	| 'leftTop'
 	| 'rightTop';
+
 export interface IPopup extends IUIElement, IDestructible {
 	container: HTMLElement;
 

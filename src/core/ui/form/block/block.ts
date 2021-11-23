@@ -21,7 +21,7 @@ export class UIBlock extends UIGroup {
 	constructor(
 		jodit: IViewBased,
 		elements?: Array<IUIElement | void | null | false>,
-		readonly options: {
+		override readonly options: {
 			align?: 'center' | 'left' | 'right' | 'full';
 			width?: 'full';
 			ref?: string;

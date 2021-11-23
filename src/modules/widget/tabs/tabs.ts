@@ -8,12 +8,12 @@ import './tabs.less';
 
 import type { IDictionary, IJodit, IUIButton } from '../../../types';
 import { $$, isFunction } from '../../../core/helpers';
-import { Button } from '../../../core/ui';
+import { Button, UIElement } from '../../../core/ui';
 
 export interface TabOption {
 	icon?: string;
 	name: string;
-	content: HTMLElement | (() => void);
+	content: HTMLElement | (() => void) | UIElement;
 }
 
 /**
@@ -70,7 +70,9 @@ export const TabsWidget = (
 		);
 
 		if (!isFunction(content)) {
-			tab.appendChild(content);
+			tab.appendChild(
+				content instanceof UIElement ? content.container : content
+			);
 		} else {
 			tab.appendChild(editor.c.div('jodit-tab_empty'));
 		}

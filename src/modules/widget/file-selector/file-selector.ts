@@ -132,7 +132,7 @@ export const FileSelectorWidget = (
 	if (callbacks.url) {
 		const button = new UIButton(editor, {
 				type: 'submit',
-				status: 'primary',
+				variant: 'primary',
 				text: 'Insert'
 			}),
 			form = new UIForm(editor, [

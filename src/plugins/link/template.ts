@@ -93,13 +93,13 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 			[
 				new UIButton(editor, {
 					name: 'unlink',
-					status: 'default',
+					variant: 'default',
 					text: 'Unlink'
 				}),
 				new UIButton(editor, {
 					name: 'insert',
 					type: 'submit',
-					status: 'primary',
+					variant: 'primary',
 					text: 'Insert'
 				})
 			],

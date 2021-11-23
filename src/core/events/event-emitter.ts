@@ -264,7 +264,9 @@ export class EventEmitter implements IEventEmitter {
 			return this;
 		}
 
-		const isDOMElement = isFunction((subject as any).addEventListener),
+		const isDOMElement = isFunction(
+				(subject as HTMLElement).addEventListener
+			),
 			self: EventEmitter = this;
 
 		let syntheticCallback: CallbackFunction = function (
@@ -360,7 +362,7 @@ export class EventEmitter implements IEventEmitter {
 
 		const newCallback = (...args: any) => {
 			this.off(subject, events, newCallback);
-			callback(...args);
+			return callback(...args);
 		};
 
 		this.on(subject, events, newCallback, onTop);

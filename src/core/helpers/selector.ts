@@ -4,7 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { HTMLTagNames, IDictionary, Nullable } from '../../types/';
+import type {
+	HTMLTagNames,
+	IDictionary,
+	IUIElement,
+	Nullable
+} from '../../types/';
 import { IS_IE } from '../constants';
 import { isString } from './checker';
 import { attr } from './utils';
@@ -116,13 +121,13 @@ export const getXPathByElement = (
  * Find all `ref` or `data-ref` elements inside HTMLElement
  */
 export const refs = <T extends HTMLElement>(
-	root: HTMLElement | UIElement
+	root: HTMLElement | IUIElement
 ): IDictionary<T> => {
 	if (root instanceof UIElement) {
 		root = root.container;
 	}
 
-	return $$('[ref],[data-ref]', root).reduce((def, child) => {
+	return $$('[ref],[data-ref]', <HTMLElement>root).reduce((def, child) => {
 		const key = attr(child, '-ref');
 
 		if (key && isString(key)) {

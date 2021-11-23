@@ -851,6 +851,13 @@ export class imageProperties extends Plugin {
 							}
 
 							if (editor.o.image.openOnDblClick) {
+								if (
+									this.j.e.fire('openOnDblClick', image) ===
+									false
+								) {
+									return;
+								}
+
 								self.state.image = image;
 
 								if (!editor.o.readonly) {

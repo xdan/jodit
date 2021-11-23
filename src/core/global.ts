@@ -30,12 +30,23 @@ export const instances: IDictionary<IJodit> = {};
 
 let counter = 1;
 
+const uuids = new Set();
 /**
  * Generate global unique uid
  */
 export function uniqueUid(): string {
-	counter += 10 * (Math.random() + 1);
-	return Math.round(counter).toString(16);
+	function gen(): string {
+		counter += 10 * (Math.random() + 1);
+		return Math.round(counter).toString(16);
+	}
+
+	let uid = gen();
+	while (uuids.has(uid)) {
+		uid = gen();
+	}
+	uuids.add(uid);
+
+	return uid;
 }
 
 export const pluginSystem = new PluginSystem();

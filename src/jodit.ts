@@ -112,17 +112,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	/**
-	 * HTML value
-	 */
-	get value(): string {
-		return this.getEditorValue();
-	}
-
-	set value(html: string) {
-		this.setEditorValue(html);
-	}
-
-	/**
 	 * Return default timeout period in milliseconds for some debounce or throttle functions.
 	 * By default return `{observer.timeout}` options
 	 */
@@ -407,9 +396,23 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	/**
+	 * HTML value
+	 */
+	get value(): string {
+		return this.getEditorValue();
+	}
+
+	set value(html: string) {
+		this.setEditorValue(html);
+	}
+
+	/**
 	 * Return editor value
 	 */
-	getEditorValue(removeSelectionMarkers: boolean = true): string {
+	getEditorValue(
+		removeSelectionMarkers: boolean = true,
+		consumer?: string
+	): string {
 		/**
 		 * Triggered before getEditorValue executed.
 		 * If returned not undefined getEditorValue will return this value
@@ -423,7 +426,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 */
 		let value: string;
 
-		value = this.e.fire('beforeGetValueFromEditor');
+		value = this.e.fire('beforeGetValueFromEditor', consumer);
 
 		if (value !== undefined) {
 			return value;
@@ -459,7 +462,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 */
 		const new_value: { value: string } = { value };
 
-		this.e.fire('afterGetValueFromEditor', new_value);
+		this.e.fire('afterGetValueFromEditor', new_value, consumer);
 
 		return new_value.value;
 	}
