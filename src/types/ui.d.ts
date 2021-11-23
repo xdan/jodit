@@ -50,7 +50,7 @@ export interface IUIIconState {
 	fill: string;
 }
 
-export type ButtonStatus =
+export type ButtonVariant =
 	| 'initial'
 	| 'default'
 	| 'primary'
@@ -62,7 +62,9 @@ export interface IUIButtonState {
 	size: 'tiny' | 'xsmall' | 'small' | 'middle' | 'large';
 	name: string;
 	value: string | number | boolean;
-	status: ButtonStatus;
+
+	variant: ButtonVariant;
+
 	type: 'button' | 'submit';
 	disabled: boolean;
 	activated: boolean;
@@ -131,11 +133,11 @@ export interface IUIInput extends IUIElement {
 		className: string;
 		autocomplete: boolean;
 		name: string;
-		value: string;
+		value: string | number;
 		icon: string;
 		label: string;
 		ref: string;
-		type: 'text' | 'checkbox' | 'url' | 'file' | 'hidden';
+		type: 'text' | 'number' |'checkbox' | 'url' | 'file' | 'hidden';
 		placeholder: string;
 		required: boolean;
 		validators: string[];
@@ -170,9 +172,25 @@ export interface IUISelect extends IUIInput {
 	};
 }
 
+export interface IUITextArea extends IUIInput {
+	readonly nativeInput: HTMLTextAreaElement;
+
+	readonly state: IUIInput['state'] & {
+		size?: number;
+		resizable?: boolean;
+	};
+}
+
 export interface IUIRange extends IUIInput {
 	readonly state: IUIInput['state'] & {
 		min: number;
 		max: number;
+	};
+}
+
+
+export interface IUICheckBox extends IUIInput {
+	readonly state: IUIInput['state'] & {
+		checked: boolean;
 	};
 }

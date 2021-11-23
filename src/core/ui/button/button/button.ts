@@ -11,7 +11,7 @@ import type {
 	IUIButtonState,
 	IUIButtonStatePartial,
 	IViewBased,
-	ButtonStatus
+	ButtonVariant
 } from '../../../../types';
 import { UIElement } from '../../element';
 import { Dom } from '../../../dom';
@@ -27,7 +27,7 @@ export const UIButtonState = (): IUIButtonState => ({
 	name: '',
 	value: '',
 
-	status: 'initial',
+	variant: 'initial',
 	disabled: false,
 	activated: false,
 
@@ -97,9 +97,9 @@ export class UIButton extends UIElement implements IUIButton {
 		}
 	}
 
-	@watch('state.status')
+	@watch('state.variant')
 	protected onChangeStatus(): void {
-		this.setMod('status', this.state.status);
+		this.setMod('variant', this.state.variant);
 	}
 
 	@watch('state.text')
@@ -257,19 +257,19 @@ export function Button(
 	jodit: IViewBased,
 	icon: string,
 	text: string,
-	status?: ButtonStatus
+	variant?: ButtonVariant
 ): IUIButton;
 export function Button(
 	jodit: IViewBased,
 	state: IUIButtonStatePartial,
-	status?: ButtonStatus
+	variant?: ButtonVariant
 ): IUIButton;
 
 export function Button(
 	jodit: IViewBased,
 	stateOrText: string | IUIButtonStatePartial,
 	text?: string,
-	status?: ButtonStatus
+	variant?: ButtonVariant
 ): IUIButton {
 	const button = new UIButton(jodit);
 
@@ -279,8 +279,8 @@ export function Button(
 		button.state.icon.name = stateOrText;
 		button.state.name = stateOrText;
 
-		if (status) {
-			button.state.status = status;
+		if (variant) {
+			button.state.variant = variant;
 		}
 
 		if (text) {
