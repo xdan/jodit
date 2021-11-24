@@ -28,8 +28,10 @@ declare module '../../config' {
 			hotkeys: {
 				delete: string[];
 				deleteWord: string[];
+				deleteSentence: string[];
 				backspace: string[];
 				backspaceWord: string[];
+				backspaceSentence: string[];
 			};
 		};
 	}
@@ -39,10 +41,14 @@ Config.prototype.delete = {
 	hotkeys: {
 		delete: ['delete', 'cmd+backspace'],
 		deleteWord: ['ctrl+delete', 'cmd+alt+backspace', 'ctrl+alt+backspace'],
+		deleteSentence: ['ctrl+shift+delete', 'cmd+shift+delete'],
 		backspace: ['backspace'],
-		backspaceWord: ['ctrl+backspace']
+		backspaceWord: ['ctrl+backspace'],
+		backspaceSentence: ['ctrl+shift+backspace', 'cmd+shift+backspace']
 	}
 };
+
+type DeleteMode = 'char' | 'word' | 'sentence';
 
 export class Delete extends Plugin {
 	/** @override */
@@ -85,12 +91,20 @@ export class Delete extends Plugin {
 				}
 			)
 			.registerCommand('deleteWordButton', {
-				exec: () => this.onDelete(false, true),
+				exec: () => this.onDelete(false, 'word'),
 				hotkeys: jodit.o.delete.hotkeys.deleteWord
 			})
 			.registerCommand('backspaceWordButton', {
-				exec: () => this.onDelete(true, true),
+				exec: () => this.onDelete(true, 'word'),
 				hotkeys: jodit.o.delete.hotkeys.backspaceWord
+			})
+			.registerCommand('deleteSentenceButton', {
+				exec: () => this.onDelete(false, 'sentence'),
+				hotkeys: jodit.o.delete.hotkeys.deleteSentence
+			})
+			.registerCommand('backspaceSentenceButton', {
+				exec: () => this.onDelete(true, 'sentence'),
+				hotkeys: jodit.o.delete.hotkeys.backspaceSentence
 			});
 	}
 
@@ -127,7 +141,10 @@ export class Delete extends Plugin {
 	/**
 	 * Listener BackSpace or Delete button
 	 */
-	private onDelete(backspace: boolean, block: boolean = false): false | void {
+	private onDelete(
+		backspace: boolean,
+		mode: DeleteMode = 'char'
+	): false | void {
 		const sel = this.j.selection;
 
 		if (!sel.isFocused()) {
@@ -154,7 +171,7 @@ export class Delete extends Plugin {
 
 			if (
 				this.checkRemoveInseparableElement(fakeNode, backspace) ||
-				this.checkRemoveChar(fakeNode, backspace, block) ||
+				this.checkRemoveChar(fakeNode, backspace, mode) ||
 				this.checkTableCell(fakeNode) ||
 				this.checkRemoveEmptyParent(fakeNode, backspace) ||
 				this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
@@ -213,7 +230,7 @@ export class Delete extends Plugin {
 	private checkRemoveChar(
 		fakeNode: Node,
 		backspace: boolean,
-		block: boolean
+		mode: DeleteMode
 	): void | true {
 		const step = backspace ? -1 : 1;
 		const anotherSibling: Nullable<Node> = getSibling(fakeNode, !backspace);
@@ -303,8 +320,13 @@ export class Delete extends Plugin {
 
 				call(backspace ? Dom.after : Dom.before, sibling, fakeNode);
 
-				if (block) {
-					while (this.checkRemoveChar(fakeNode, backspace, false)) {}
+				if (
+					mode === 'sentence' ||
+					(mode === 'word' &&
+						removed !== ' ' &&
+						removed !== NBSP_SPACE)
+				) {
+					this.checkRemoveChar(fakeNode, backspace, mode);
 				}
 
 				break;

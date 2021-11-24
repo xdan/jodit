@@ -9,6 +9,40 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.10.2
+
+#### :boom: Breaking Change
+
+-   The hotkeys have been castled in the Delete plugin:
+    Was:
+
+```js
+const hotkeys = {
+	delete: ['delete', 'cmd+backspace'],
+	deleteWord: ['ctrl+delete', 'cmd+alt+backspace', 'ctrl+alt+backspace'],
+	backspace: ['backspace'],
+	backspaceWord: ['ctrl+backspace']
+};
+```
+
+But the setting was called incorrectly, when the combination was pressed, not one word was deleted, but a whole sentence.
+Now added one more setting:
+
+```js
+const hotkeys = {
+	delete: ['delete', 'cmd+backspace'],
+	deleteWord: ['ctrl+delete', 'cmd+alt+backspace', 'ctrl+alt+backspace'],
+	deleteSentence: ['ctrl+shift+delete', 'cmd+shift+delete'],
+	backspace: ['backspace'],
+	backspaceWord: ['ctrl+backspace'],
+	backspaceSentence: ['ctrl+shift+backspace', 'cmd+shift+backspace']
+};
+```
+
+#### :bug: Bug Fix
+
+-   fixed sync between WYSIWYG and source editor
+
 ## 3.10.1
 
 #### :boom: Breaking Change
@@ -868,11 +902,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                     	{ value: "", text: "" },
--                                                                                     	{ value: "val1", text: "text1" },
--                                                                                     	{ value: "val2", text: "text2" },
--                                                                                     	{ value: "val3", text: "text3" }
--                                                                                     ]
+-                                                                                               	{ value: "", text: "" },
+-                                                                                               	{ value: "val1", text: "text1" },
+-                                                                                               	{ value: "val2", text: "text2" },
+-                                                                                               	{ value: "val3", text: "text3" }
+-                                                                                               ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

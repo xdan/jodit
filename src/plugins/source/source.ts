@@ -334,19 +334,19 @@ export class source extends Plugin {
 			}
 		}
 
-		this.syncValueFromWYSIWYG();
+		this.syncValueFromWYSIWYG(true);
 		this.initSourceEditor(editor);
 	}
 
 	@autobind
-	private syncValueFromWYSIWYG() {
+	private syncValueFromWYSIWYG(force: boolean = false) {
 		const editor = this.j;
 
 		if (
 			editor.getMode() === MODE_SPLIT ||
 			editor.getMode() === MODE_SOURCE
 		) {
-			this.fromWYSIWYG(true);
+			this.fromWYSIWYG(force);
 		}
 	}
 
@@ -363,12 +363,12 @@ export class source extends Plugin {
 			sourceEditor.onReadyAlways(() => {
 				this.sourceEditor?.destruct();
 				this.sourceEditor = sourceEditor;
-				this.syncValueFromWYSIWYG();
+				this.syncValueFromWYSIWYG(true);
 				editor.events?.fire('sourceEditorReady', editor);
 			});
 		} else {
 			this.sourceEditor?.onReadyAlways(() => {
-				this.syncValueFromWYSIWYG();
+				this.syncValueFromWYSIWYG(true);
 				editor.events?.fire('sourceEditorReady', editor);
 			});
 		}

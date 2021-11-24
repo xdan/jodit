@@ -183,12 +183,9 @@ describe('Backspace/Delete key', function () {
 			});
 
 			describe('With pressed `ctrl/cmd`', function () {
-				it('Should remove previous whole part of text before cursor', function () {
-					editor.value = '<p>Hello evil world</p>';
-
-					range.setStart(editor.editor.firstChild.firstChild, 10);
-					range.collapse(true);
-					editor.s.selectRange(range);
+				it('Should remove previous word before cursor', function () {
+					editor.value = '<p>Hello evil| world</p>';
+					setCursorToChar(editor);
 
 					simulateEvent(
 						'keydown',
@@ -199,16 +196,14 @@ describe('Backspace/Delete key', function () {
 						}
 					);
 
-					expect(editor.value).equals('<p> world</p>');
+					expect(editor.value).equals('<p>Hello world</p>');
 				});
 
 				describe('Delete`', function () {
-					it('Should remove next whole part of text after cursor', function () {
-						editor.value = '<p>Hello evil world</p>';
+					it('Should remove next word text after cursor', function () {
+						editor.value = '<p>Hello |evil world</p>';
 
-						range.setStart(editor.editor.firstChild.firstChild, 10);
-						range.collapse(true);
-						editor.s.selectRange(range);
+						setCursorToChar(editor);
 
 						simulateEvent(
 							'keydown',
@@ -219,7 +214,46 @@ describe('Backspace/Delete key', function () {
 							}
 						);
 
-						expect(editor.value).equals('<p>Hello evil</p>');
+						expect(editor.value).equals('<p>Hello world</p>');
+					});
+				});
+			});
+
+			describe('With pressed `SHIFT`', function () {
+				it('Should remove previous whole part of text before cursor', function () {
+					editor.value = '<p>Hello evil| world</p>';
+					setCursorToChar(editor);
+
+					simulateEvent(
+						'keydown',
+						Jodit.KEY_BACKSPACE,
+						editor.editor,
+						function (opt) {
+							opt.ctrlKey = true;
+							opt.shiftKey = true;
+						}
+					);
+
+					expect(editor.value).equals('<p> world</p>');
+				});
+
+				describe('Delete`', function () {
+					it('Should remove next whole part of text after cursor', function () {
+						editor.value = '<p>Hello |evil world</p>';
+
+						setCursorToChar(editor);
+
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_DELETE,
+							editor.editor,
+							function (opt) {
+								opt.ctrlKey = true;
+								opt.shiftKey = true;
+							}
+						);
+
+						expect(editor.value).equals('<p>Hello </p>');
 					});
 				});
 			});
