@@ -192,5 +192,6 @@ export interface IUIRange extends IUIInput {
 export interface IUICheckBox extends IUIInput {
 	readonly state: IUIInput['state'] & {
 		checked: boolean;
+		switch: boolean;
 	};
 }

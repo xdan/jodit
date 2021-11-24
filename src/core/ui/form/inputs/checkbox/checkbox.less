@@ -10,6 +10,56 @@
 	&__input {
 		margin-right: var(--padding-default);
 	}
+
+	&_switch_true &__wrapper {
+		position: relative;
+		display: inline-block;
+		width: 60px;
+		height: 34px;
+		margin-right: var(--padding-default);
+
+		input {
+			width: 0;
+			height: 0;
+			opacity: 0;
+		}
+	}
+
+	&_switch_true &__switch-slider {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background-color: #ccc;
+		border-radius: 34px;
+		cursor: pointer;
+		transition: 0.4s;
+
+		&:before {
+			position: absolute;
+			bottom: 4px;
+			left: 4px;
+			width: 26px;
+			height: 26px;
+			background-color: white;
+			border-radius: 50%;
+			content: '';
+			transition: 0.4s;
+		}
+	}
+
+	&_switch_true&_checked_true &__switch-slider {
+		background-color: #2196f3;
+
+		&:before {
+			transform: translateX(26px);
+		}
+	}
+
+	&_switch_true&_focused_true &__switch-slider {
+		box-shadow: 0 0 1px #2196f3;
+	}
 }
 
 .jodit-ui-block .jodit-ui-checkbox {

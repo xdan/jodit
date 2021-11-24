@@ -9,6 +9,7 @@ import './checkbox.less';
 import type { IViewBased, IUICheckBox } from '../../../../../types';
 import { UIInput } from '../input/input';
 import { component, watch, hook } from '../../../../decorators';
+import { Dom } from '../../../../dom';
 
 @component
 export class UICheckbox extends UIInput implements IUICheckBox {
@@ -20,7 +21,8 @@ export class UICheckbox extends UIInput implements IUICheckBox {
 	/** @override */
 	static override defaultState: IUICheckBox['state'] = {
 		...UIInput.defaultState,
-		checked: false
+		checked: false,
+		switch: false
 	};
 
 	/** @override */
@@ -51,5 +53,23 @@ export class UICheckbox extends UIInput implements IUICheckBox {
 	@watch('nativeInput:change')
 	protected onChangeNativeCheckBox(): void {
 		this.state.checked = (<HTMLInputElement>this.nativeInput).checked;
+	}
+
+	@watch('state.switch')
+	@hook('ready')
+	protected onChangeSwitch(): void {
+		this.setMod('switch', this.state.switch);
+
+		let slider: HTMLElement | null = this.getElm('switch-slider');
+
+		if (this.state.switch) {
+			if (!slider) {
+				slider = this.j.c.div(this.getFullElName('switch-slider'));
+			}
+
+			Dom.after(this.nativeInput, slider);
+		} else {
+			Dom.safeRemove(slider);
+		}
 	}
 }
