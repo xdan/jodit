@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.10.1
+ * Version: v3.10.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -8745,6 +8745,7 @@ var UICheckbox_1;
 
 
 
+
 let UICheckbox = UICheckbox_1 = class UICheckbox extends UIInput {
     constructor(jodit, options) {
         super(jodit, { ...options, type: 'checkbox' });
@@ -8767,10 +8768,24 @@ let UICheckbox = UICheckbox_1 = class UICheckbox extends UIInput {
     onChangeNativeCheckBox() {
         this.state.checked = this.nativeInput.checked;
     }
+    onChangeSwitch() {
+        this.setMod('switch', this.state.switch);
+        let slider = this.getElm('switch-slider');
+        if (this.state.switch) {
+            if (!slider) {
+                slider = this.j.c.div(this.getFullElName('switch-slider'));
+            }
+            dom/* Dom.after */.i.after(this.nativeInput, slider);
+        }
+        else {
+            dom/* Dom.safeRemove */.i.safeRemove(slider);
+        }
+    }
 };
 UICheckbox.defaultState = {
     ...UIInput.defaultState,
-    checked: false
+    checked: false,
+    switch: false
 };
 (0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.checked'),
@@ -8779,6 +8794,10 @@ UICheckbox.defaultState = {
 (0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('nativeInput:change')
 ], UICheckbox.prototype, "onChangeNativeCheckBox", null);
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)('state.switch'),
+    (0,decorators.hook)('ready')
+], UICheckbox.prototype, "onChangeSwitch", null);
 UICheckbox = UICheckbox_1 = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UICheckbox);
@@ -11072,7 +11091,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.10.1";
+        this.version = "3.10.2";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -11170,10 +11189,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.10.1";
+        return "3.10.2";
     }
     static getVersion() {
-        return "3.10.1";
+        return "3.10.2";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -17640,8 +17659,10 @@ config/* Config.prototype.delete */.D.prototype["delete"] = {
     hotkeys: {
         delete: ['delete', 'cmd+backspace'],
         deleteWord: ['ctrl+delete', 'cmd+alt+backspace', 'ctrl+alt+backspace'],
+        deleteSentence: ['ctrl+shift+delete', 'cmd+shift+delete'],
         backspace: ['backspace'],
-        backspaceWord: ['ctrl+backspace']
+        backspaceWord: ['ctrl+backspace'],
+        backspaceSentence: ['ctrl+shift+backspace', 'cmd+shift+backspace']
     }
 };
 class Delete extends Plugin {
@@ -17672,12 +17693,20 @@ class Delete extends Plugin {
             stopPropagation: false
         })
             .registerCommand('deleteWordButton', {
-            exec: () => this.onDelete(false, true),
+            exec: () => this.onDelete(false, 'word'),
             hotkeys: jodit.o.delete.hotkeys.deleteWord
         })
             .registerCommand('backspaceWordButton', {
-            exec: () => this.onDelete(true, true),
+            exec: () => this.onDelete(true, 'word'),
             hotkeys: jodit.o.delete.hotkeys.backspaceWord
+        })
+            .registerCommand('deleteSentenceButton', {
+            exec: () => this.onDelete(false, 'sentence'),
+            hotkeys: jodit.o.delete.hotkeys.deleteSentence
+        })
+            .registerCommand('backspaceSentenceButton', {
+            exec: () => this.onDelete(true, 'sentence'),
+            hotkeys: jodit.o.delete.hotkeys.backspaceSentence
         });
     }
     beforeDestruct(jodit) {
@@ -17697,7 +17726,7 @@ class Delete extends Plugin {
             jodit.s.removeNode(node);
         }
     }
-    onDelete(backspace, block = false) {
+    onDelete(backspace, mode = 'char') {
         var _a;
         const sel = this.j.selection;
         if (!sel.isFocused()) {
@@ -17716,7 +17745,7 @@ class Delete extends Plugin {
             }
             normalizeCursorPosition(fakeNode, backspace);
             if (this.checkRemoveInseparableElement(fakeNode, backspace) ||
-                this.checkRemoveChar(fakeNode, backspace, block) ||
+                this.checkRemoveChar(fakeNode, backspace, mode) ||
                 this.checkTableCell(fakeNode) ||
                 this.checkRemoveEmptyParent(fakeNode, backspace) ||
                 this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
@@ -17742,7 +17771,7 @@ class Delete extends Plugin {
             return true;
         }
     }
-    checkRemoveChar(fakeNode, backspace, block) {
+    checkRemoveChar(fakeNode, backspace, mode) {
         var _a, _b, _c;
         const step = backspace ? -1 : 1;
         const anotherSibling = getSibling(fakeNode, !backspace);
@@ -17799,8 +17828,11 @@ class Delete extends Plugin {
             if (!(0,helpers.isVoid)(removed) && removed !== constants.INVISIBLE_SPACE) {
                 charRemoved = true;
                 (0,helpers.call)(backspace ? dom/* Dom.after */.i.after : dom/* Dom.before */.i.before, sibling, fakeNode);
-                if (block) {
-                    while (this.checkRemoveChar(fakeNode, backspace, false)) { }
+                if (mode === 'sentence' ||
+                    (mode === 'word' &&
+                        removed !== ' ' &&
+                        removed !== constants.NBSP_SPACE)) {
+                    this.checkRemoveChar(fakeNode, backspace, mode);
                 }
                 break;
             }
@@ -24780,14 +24812,14 @@ class source extends Plugin {
                 (0,helpers.loadNext)(editor, editor.o.beautifyHTMLCDNUrlsJS).then(addEventListener);
             }
         }
-        this.syncValueFromWYSIWYG();
+        this.syncValueFromWYSIWYG(true);
         this.initSourceEditor(editor);
     }
-    syncValueFromWYSIWYG() {
+    syncValueFromWYSIWYG(force = false) {
         const editor = this.j;
         if (editor.getMode() === constants.MODE_SPLIT ||
             editor.getMode() === constants.MODE_SOURCE) {
-            this.fromWYSIWYG(true);
+            this.fromWYSIWYG(force);
         }
     }
     initSourceEditor(editor) {
@@ -24798,14 +24830,14 @@ class source extends Plugin {
                 var _a, _b;
                 (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.destruct();
                 this.sourceEditor = sourceEditor;
-                this.syncValueFromWYSIWYG();
+                this.syncValueFromWYSIWYG(true);
                 (_b = editor.events) === null || _b === void 0 ? void 0 : _b.fire('sourceEditorReady', editor);
             });
         }
         else {
             (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.onReadyAlways(() => {
                 var _a;
-                this.syncValueFromWYSIWYG();
+                this.syncValueFromWYSIWYG(true);
                 (_a = editor.events) === null || _a === void 0 ? void 0 : _a.fire('sourceEditorReady', editor);
             });
         }

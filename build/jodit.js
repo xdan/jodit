@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.10.1
+ * Version: v3.10.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -10925,6 +10925,7 @@ var tslib_1 = __webpack_require__(7);
 __webpack_require__(152);
 var input_1 = __webpack_require__(144);
 var decorators_1 = __webpack_require__(41);
+var dom_1 = __webpack_require__(32);
 var UICheckbox = (function (_super) {
     (0, tslib_1.__extends)(UICheckbox, _super);
     function UICheckbox(jodit, options) {
@@ -10950,8 +10951,21 @@ var UICheckbox = (function (_super) {
     UICheckbox.prototype.onChangeNativeCheckBox = function () {
         this.state.checked = this.nativeInput.checked;
     };
+    UICheckbox.prototype.onChangeSwitch = function () {
+        this.setMod('switch', this.state.switch);
+        var slider = this.getElm('switch-slider');
+        if (this.state.switch) {
+            if (!slider) {
+                slider = this.j.c.div(this.getFullElName('switch-slider'));
+            }
+            dom_1.Dom.after(this.nativeInput, slider);
+        }
+        else {
+            dom_1.Dom.safeRemove(slider);
+        }
+    };
     var UICheckbox_1;
-    UICheckbox.defaultState = (0, tslib_1.__assign)((0, tslib_1.__assign)({}, input_1.UIInput.defaultState), { checked: false });
+    UICheckbox.defaultState = (0, tslib_1.__assign)((0, tslib_1.__assign)({}, input_1.UIInput.defaultState), { checked: false, switch: false });
     (0, tslib_1.__decorate)([
         (0, decorators_1.watch)('state.checked'),
         (0, decorators_1.hook)('ready')
@@ -10959,6 +10973,10 @@ var UICheckbox = (function (_super) {
     (0, tslib_1.__decorate)([
         (0, decorators_1.watch)('nativeInput:change')
     ], UICheckbox.prototype, "onChangeNativeCheckBox", null);
+    (0, tslib_1.__decorate)([
+        (0, decorators_1.watch)('state.switch'),
+        (0, decorators_1.hook)('ready')
+    ], UICheckbox.prototype, "onChangeSwitch", null);
     UICheckbox = UICheckbox_1 = (0, tslib_1.__decorate)([
         decorators_1.component
     ], UICheckbox);
@@ -13254,7 +13272,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.10.1";
+        _this.version = "3.10.2";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -13396,10 +13414,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.10.1";
+        return "3.10.2";
     };
     View.getVersion = function () {
-        return "3.10.1";
+        return "3.10.2";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -23516,8 +23534,10 @@ config_1.Config.prototype.delete = {
     hotkeys: {
         delete: ['delete', 'cmd+backspace'],
         deleteWord: ['ctrl+delete', 'cmd+alt+backspace', 'ctrl+alt+backspace'],
+        deleteSentence: ['ctrl+shift+delete', 'cmd+shift+delete'],
         backspace: ['backspace'],
-        backspaceWord: ['ctrl+backspace']
+        backspaceWord: ['ctrl+backspace'],
+        backspaceSentence: ['ctrl+shift+backspace', 'cmd+shift+backspace']
     }
 };
 var Delete = (function (_super) {
@@ -23555,12 +23575,20 @@ var Delete = (function (_super) {
             stopPropagation: false
         })
             .registerCommand('deleteWordButton', {
-            exec: function () { return _this.onDelete(false, true); },
+            exec: function () { return _this.onDelete(false, 'word'); },
             hotkeys: jodit.o.delete.hotkeys.deleteWord
         })
             .registerCommand('backspaceWordButton', {
-            exec: function () { return _this.onDelete(true, true); },
+            exec: function () { return _this.onDelete(true, 'word'); },
             hotkeys: jodit.o.delete.hotkeys.backspaceWord
+        })
+            .registerCommand('deleteSentenceButton', {
+            exec: function () { return _this.onDelete(false, 'sentence'); },
+            hotkeys: jodit.o.delete.hotkeys.deleteSentence
+        })
+            .registerCommand('backspaceSentenceButton', {
+            exec: function () { return _this.onDelete(true, 'sentence'); },
+            hotkeys: jodit.o.delete.hotkeys.backspaceSentence
         });
     };
     Delete.prototype.beforeDestruct = function (jodit) {
@@ -23580,9 +23608,9 @@ var Delete = (function (_super) {
             jodit.s.removeNode(node);
         }
     };
-    Delete.prototype.onDelete = function (backspace, block) {
+    Delete.prototype.onDelete = function (backspace, mode) {
         var _a;
-        if (block === void 0) { block = false; }
+        if (mode === void 0) { mode = 'char'; }
         var sel = this.j.selection;
         if (!sel.isFocused()) {
             sel.focus();
@@ -23600,7 +23628,7 @@ var Delete = (function (_super) {
             }
             (0, helpers_2.normalizeCursorPosition)(fakeNode, backspace);
             if (this.checkRemoveInseparableElement(fakeNode, backspace) ||
-                this.checkRemoveChar(fakeNode, backspace, block) ||
+                this.checkRemoveChar(fakeNode, backspace, mode) ||
                 this.checkTableCell(fakeNode) ||
                 this.checkRemoveEmptyParent(fakeNode, backspace) ||
                 this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
@@ -23626,7 +23654,7 @@ var Delete = (function (_super) {
             return true;
         }
     };
-    Delete.prototype.checkRemoveChar = function (fakeNode, backspace, block) {
+    Delete.prototype.checkRemoveChar = function (fakeNode, backspace, mode) {
         var _a, _b, _c;
         var step = backspace ? -1 : 1;
         var anotherSibling = (0, helpers_2.getSibling)(fakeNode, !backspace);
@@ -23683,8 +23711,11 @@ var Delete = (function (_super) {
             if (!(0, helpers_1.isVoid)(removed) && removed !== constants_1.INVISIBLE_SPACE) {
                 charRemoved = true;
                 (0, helpers_1.call)(backspace ? dom_1.Dom.after : dom_1.Dom.before, sibling, fakeNode);
-                if (block) {
-                    while (this.checkRemoveChar(fakeNode, backspace, false)) { }
+                if (mode === 'sentence' ||
+                    (mode === 'word' &&
+                        removed !== ' ' &&
+                        removed !== constants_1.NBSP_SPACE)) {
+                    this.checkRemoveChar(fakeNode, backspace, mode);
                 }
                 break;
             }
@@ -31727,14 +31758,15 @@ var source = (function (_super) {
                 (0, helpers_1.loadNext)(editor, editor.o.beautifyHTMLCDNUrlsJS).then(addEventListener_1);
             }
         }
-        this.syncValueFromWYSIWYG();
+        this.syncValueFromWYSIWYG(true);
         this.initSourceEditor(editor);
     };
-    source.prototype.syncValueFromWYSIWYG = function () {
+    source.prototype.syncValueFromWYSIWYG = function (force) {
+        if (force === void 0) { force = false; }
         var editor = this.j;
         if (editor.getMode() === constants_1.MODE_SPLIT ||
             editor.getMode() === constants_1.MODE_SOURCE) {
-            this.fromWYSIWYG(true);
+            this.fromWYSIWYG(force);
         }
     };
     source.prototype.initSourceEditor = function (editor) {
@@ -31746,14 +31778,14 @@ var source = (function (_super) {
                 var _a, _b;
                 (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.destruct();
                 _this.sourceEditor = sourceEditor_1;
-                _this.syncValueFromWYSIWYG();
+                _this.syncValueFromWYSIWYG(true);
                 (_b = editor.events) === null || _b === void 0 ? void 0 : _b.fire('sourceEditorReady', editor);
             });
         }
         else {
             (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.onReadyAlways(function () {
                 var _a;
-                _this.syncValueFromWYSIWYG();
+                _this.syncValueFromWYSIWYG(true);
                 (_a = editor.events) === null || _a === void 0 ? void 0 : _a.fire('sourceEditorReady', editor);
             });
         }
