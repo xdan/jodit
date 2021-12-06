@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { Nullable } from '../../types';
+import type { IJodit, Nullable } from '../../types';
 import { call } from '../../core/helpers/utils';
 import { Dom } from '../../core/dom';
 import { INSEPARABLE_TAGS } from '../../core/constants';
@@ -83,14 +83,18 @@ export function findMostNestedNeighbor(
  * Moves the fake node inside the adjacent element if it lies next to it but not inside.
  * When the cursor is positioned in its place, it must be inside the element and not outside its border.
  */
-export function normalizeCursorPosition(node: Node, backspace: boolean): void {
+export function normalizeCursorPosition(
+	jodit: IJodit,
+	node: Node,
+	backspace: boolean
+): void {
 	let sibling = Dom.findSibling(node, backspace),
 		anotherSibling = Dom.findSibling(node, !backspace);
 
 	while (
 		Dom.isElement(sibling) &&
 		!Dom.isTag(sibling, INSEPARABLE_TAGS) &&
-		!anotherSibling
+		(!anotherSibling || !Dom.closest(node, Dom.isElement, jodit.editor))
 	) {
 		if (backspace || !sibling.firstChild) {
 			sibling.appendChild(node);

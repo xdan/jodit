@@ -8,7 +8,7 @@ export { addNewLine } from './add-new-line/add-new-line';
 export { about } from './about/about';
 export { focus } from './focus';
 export { classSpan } from './class-span/class-span';
-export { Delete } from './keyboard/delete';
+export { Backspace } from './keyboard/backspace/backspace';
 export { bold } from './bold';
 export { cleanHtml } from './fix/clean-html';
 export { WrapTextNodes } from './fix/wrap-text-nodes';

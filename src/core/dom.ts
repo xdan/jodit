@@ -247,6 +247,22 @@ export class Dom {
 	}
 
 	/**
+	 * The node is editable
+	 */
+	static isContentEditable(node: Nullable<Node>, root: HTMLElement): boolean {
+		return (
+			Dom.isNode(node) &&
+			!Dom.closest(
+				node,
+				elm =>
+					Dom.isElement(elm) &&
+					elm.getAttribute('contenteditable') === 'false',
+				root
+			)
+		);
+	}
+
+	/**
 	 * Check if element is empty
 	 */
 	static isEmpty(
@@ -645,16 +661,15 @@ export class Dom {
 	}
 
 	/**
-	 * Get not empty  sibling
+	 * Get not empty sibling
 	 */
 	static findSibling(
 		node: Node,
 		left: boolean = true,
 		cond: (n: Node) => boolean = (n: Node) => !Dom.isEmptyTextNode(n)
 	): Nullable<Node> {
-		const getSibling = (node: Node): Nullable<Node> => {
-			return left ? node.previousSibling : node.nextSibling;
-		};
+		const getSibling = (node: Node): Nullable<Node> =>
+			left ? node.previousSibling : node.nextSibling;
 
 		let start = getSibling(node);
 
