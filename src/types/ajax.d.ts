@@ -28,6 +28,7 @@ export interface IResponse<T> {
 
 	json(): Promise<T>;
 	text(): Promise<string>;
+	blob(): Promise<Blob>;
 }
 
 export interface IAjax<T> extends IDestructible {
@@ -81,6 +82,8 @@ export interface AjaxOptions {
 	 * and {@link Uploader|Uploader}
 	 */
 	headers?: IDictionary<string> | null;
+
+	responseType?: XMLHttpRequestResponseType;
 
 	/**
 	 * Enable or disable Access-Control-Allow-Credentials client side. Useful for cross domain requests

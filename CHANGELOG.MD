@@ -13,11 +13,25 @@
 
 #### :boom: Breaking Change
 
-- Plugin `Delete` renamed to` Backspace`. And it is highly refractory.
+-   Plugin `Delete` renamed to` Backspace`. And it is highly refractory.
 
 #### :rocket: New Feature
 
-- Open localhost in browser on `npm start`
+-   Open localhost in browser on `npm start`
+-   Added `Async.prototype.delay` method
+
+```js
+await editor.async.delay(1000);
+alert('Alert after 1s');
+```
+
+-   Added `Ajax.options.responseType` option `XMLHttpRequestResponseType`
+-   Added `Response.prototype.blob()` method
+
+```js
+const ajax = new Jodit.modules.Ajax({ responseType: 'blob' });
+await ajax.send().then(resp => resp.blob());
+```
 
 #### :bug: Bug Fix
 
@@ -918,11 +932,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                   	{ value: "", text: "" },
--                                                                                                   	{ value: "val1", text: "text1" },
--                                                                                                   	{ value: "val2", text: "text2" },
--                                                                                                   	{ value: "val3", text: "text3" }
--                                                                                                   ]
+-                                                                                                     	{ value: "", text: "" },
+-                                                                                                     	{ value: "val1", text: "text1" },
+-                                                                                                     	{ value: "val2", text: "text2" },
+-                                                                                                     	{ value: "val3", text: "text3" }
+-                                                                                                     ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

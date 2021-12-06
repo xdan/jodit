@@ -15,13 +15,13 @@ export class Response<T> implements IResponse<T> {
 		return this.request.url;
 	}
 
-	private readonly body: string;
+	private readonly body: string | Blob;
 
 	constructor(
 		request: IRequest,
 		status: number,
 		statusText: string,
-		body: string
+		body: string | Blob
 	) {
 		this.request = request;
 		this.status = status;
@@ -30,10 +30,14 @@ export class Response<T> implements IResponse<T> {
 	}
 
 	async json(): Promise<T> {
-		return JSON.parse(this.body);
+		return JSON.parse(this.body as string);
 	}
 
 	text(): Promise<string> {
-		return Promise.resolve(this.body);
+		return Promise.resolve(this.body as string);
+	}
+
+	async blob(): Promise<Blob> {
+		return this.body as Blob;
 	}
 }

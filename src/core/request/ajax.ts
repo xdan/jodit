@@ -97,16 +97,19 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 						request,
 						xhr.status,
 						xhr.statusText,
-						xhr.responseText
+						!xhr.responseType ? xhr.responseText : xhr.response
 					)
 				);
 			};
 
+			xhr.onload = onResolve;
 			xhr.onabort = onReject;
 			xhr.onerror = onReject;
 			xhr.ontimeout = onReject;
 
-			xhr.onload = onResolve;
+			if (o.responseType) {
+				xhr.responseType = o.responseType;
+			}
 
 			xhr.onprogress = (e): void => {
 				let percentComplete = 0;

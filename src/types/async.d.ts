@@ -20,6 +20,8 @@ interface RejectablePromise<T> extends Promise<T> {
 }
 
 export interface IAsync extends IDestructible {
+	delay(timeout: number | IAsyncParams): Promise<void>;
+
 	setTimeout<T = any>(
 		callback: (...args: T[]) => void,
 		timeout: number | IAsyncParams,

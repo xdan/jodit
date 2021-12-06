@@ -24,6 +24,10 @@ import {
 export class Async implements IAsync {
 	private timers: Map<number | string | Function, number> = new Map();
 
+	delay(timeout: number | IAsyncParams): Promise<void> {
+		return this.promise((resolve) => this.setTimeout(resolve, timeout));
+	};
+
 	setTimeout(
 		callback: (...args: any[]) => void,
 		timeout: number | IAsyncParams,
