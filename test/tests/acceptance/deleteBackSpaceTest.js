@@ -919,6 +919,22 @@ describe('Backspace/Delete key', function () {
 		});
 	});
 
+	describe('After contenteditable false', () => {
+		it('Should remove this element', () => {
+			const editor = getJodit();
+			editor.value =
+				'<div data-jodit-page-break="true" contenteditable="false">Page break</div>';
+
+			const range = editor.s.createRange(true);
+			range.setStartAfter(editor.editor.firstChild);
+			editor.s.selectRange(range);
+
+			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+			expect('').equals(editor.value);
+		});
+	});
+
 	describe('On the edge of two tag', function () {
 		describe('Backspace', function () {
 			it('Should connect both elements in one element', function () {

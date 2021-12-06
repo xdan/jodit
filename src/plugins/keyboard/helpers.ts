@@ -94,6 +94,7 @@ export function normalizeCursorPosition(
 	while (
 		Dom.isElement(sibling) &&
 		!Dom.isTag(sibling, INSEPARABLE_TAGS) &&
+		Dom.isContentEditable(sibling, jodit.editor) &&
 		(!anotherSibling || !Dom.closest(node, Dom.isElement, jodit.editor))
 	) {
 		if (backspace || !sibling.firstChild) {

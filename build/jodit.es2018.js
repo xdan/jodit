@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.11.2
+ * Version: v3.11.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -15299,7 +15299,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.11.2";
+        this.version = "3.11.3";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -15397,10 +15397,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.11.2";
+        return "3.11.3";
     }
     static getVersion() {
-        return "3.11.2";
+        return "3.11.3";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -21879,6 +21879,7 @@ function normalizeCursorPosition(jodit, node, backspace) {
     let sibling = dom/* Dom.findSibling */.i.findSibling(node, backspace), anotherSibling = dom/* Dom.findSibling */.i.findSibling(node, !backspace);
     while (dom/* Dom.isElement */.i.isElement(sibling) &&
         !dom/* Dom.isTag */.i.isTag(sibling, constants.INSEPARABLE_TAGS) &&
+        dom/* Dom.isContentEditable */.i.isContentEditable(sibling, jodit.editor) &&
         (!anotherSibling || !dom/* Dom.closest */.i.closest(node, dom/* Dom.isElement */.i.isElement, jodit.editor))) {
         if (backspace || !sibling.firstChild) {
             sibling.appendChild(node);
