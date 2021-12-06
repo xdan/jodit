@@ -95,7 +95,7 @@ function getShadowRoot(jodit: IJodit): HTMLElement {
 		return dataBind(jodit, 'shadowRoot');
 	}
 
-	const container = getContainer(jodit, function Utils() {});
+	const container = getContainer(jodit);
 
 	const iframe = document.createElement('iframe');
 	css(iframe, {
