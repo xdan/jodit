@@ -21,6 +21,7 @@ import { Dom } from '../../dom';
 import {
 	attr,
 	css,
+	isFunction,
 	isString,
 	kebabCase,
 	markOwner,
@@ -362,12 +363,15 @@ export class Popup extends UIElement implements IPopup {
 			return;
 		}
 
-		if (!e.target) {
+		const target =
+			(isFunction(e.composedPath) && e.composedPath()[0]) ?? e.target;
+
+		if (!target) {
 			this.close();
 			return;
 		}
 
-		const box = UIElement.closestElement(e.target as Node, Popup);
+		const box = UIElement.closestElement(target as Node, Popup);
 
 		if (box && (this === box || box.closest(this))) {
 			return;
