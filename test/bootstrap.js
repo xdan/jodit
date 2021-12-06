@@ -892,7 +892,7 @@ function selectCells(editor, indexes) {
 function one(event, element, callback) {
 	const on = function () {
 		element.removeEventListener(event, on);
-		callback.apply(element, arguments);
+		callback(element, ...arguments);
 	};
 
 	element.addEventListener(event, on);

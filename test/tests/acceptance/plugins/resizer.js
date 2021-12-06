@@ -220,6 +220,183 @@ describe('Resize plugin', function () {
 						expect(sizer.style.opacity).equals('0');
 					});
 				});
+
+				describe('For styled image', () => {
+					function resizeImage(editor) {
+						const img = editor.editor.querySelector('img');
+
+						simulateEvent(['mousedown', 'mouseup', 'click'], img);
+
+						const resizer = document.querySelector(
+							'.jodit-resizer[data-editor_id=' + editor.id + ']'
+						);
+
+						const handle = resizer.getElementsByTagName('div')[1],
+							pos = offset(handle);
+
+						simulateEvent('mousedown', handle, data => {
+							data.clientX = pos.left;
+							data.clientY = pos.top;
+						});
+
+						simulateEvent('mousemove', editor.ow, data => {
+							data.clientX = pos.left + 10;
+							data.clientY = pos.top + 10;
+						});
+
+						simulateEvent('mouseup', editor.ow, data => {
+							data.clientX = pos.left + 10;
+							data.clientY = pos.top + 10;
+						});
+					}
+
+					describe('Disable forImageChangeAttributes', () => {
+						it('Should change only styles width and height', done => {
+							const editor = getJodit({
+								observer: {
+									timeout: 0
+								}
+							});
+
+							editor.value =
+								'<p><img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width: 301px;"/></p>';
+
+							onLoadImage(
+								editor.editor.querySelector('img'),
+								() => {
+									resizeImage(editor);
+
+									expect(sortAttributes(editor.value)).eq(
+										'<p><img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="height:175px;width:311px"></p>'
+									);
+									done();
+								}
+							);
+						});
+					});
+
+					describe('Enable forImageChangeAttributes', () => {
+						describe('Does not has width or height styles', () => {
+							it('Should change only attributes width and height', done => {
+								const editor = getJodit({
+									resizer: {
+										forImageChangeAttributes: true
+									},
+									observer: {
+										timeout: 0
+									}
+								});
+
+								editor.value =
+									'<p><img src="https://xdsoft.net/jodit/build/images/artio.jpg"/></p>';
+
+								onLoadImage(
+									editor.editor.querySelector('img'),
+									() => {
+										resizeImage(editor);
+
+										expect(sortAttributes(editor.value)).eq(
+											'<p><img height="287" src="https://xdsoft.net/jodit/build/images/artio.jpg" width="510"></p>'
+										);
+										done();
+									}
+								);
+							});
+						});
+
+						describe('Has width or height styles', () => {
+							describe('Has width style', () => {
+								it('Should change attributes width and height and width styles', done => {
+									const editor = getJodit({
+										resizer: {
+											forImageChangeAttributes: true
+										},
+										observer: {
+											timeout: 0
+										}
+									});
+
+									editor.value =
+										'<p><img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width:300px"/></p>';
+
+									onLoadImage(
+										editor.editor.querySelector('img'),
+										() => {
+											resizeImage(editor);
+
+											expect(
+												sortAttributes(editor.value)
+											).eq(
+												'<p><img height="175" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width:310px" width="310"></p>'
+											);
+											done();
+										}
+									);
+								});
+							});
+
+							describe('Has height style', () => {
+								it('Should change attributes width and height and height styles', done => {
+									const editor = getJodit({
+										resizer: {
+											forImageChangeAttributes: true
+										},
+										observer: {
+											timeout: 0
+										}
+									});
+
+									editor.value =
+										'<p><img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="height:300px"/></p>';
+
+									onLoadImage(
+										editor.editor.querySelector('img'),
+										() => {
+											resizeImage(editor);
+
+											expect(
+												sortAttributes(editor.value)
+											).eq(
+												'<p><img height="306" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="height:306px" width="544"></p>'
+											);
+											done();
+										}
+									);
+								});
+							});
+
+							describe('Has both height and width style', () => {
+								it('Should change attributes width and height and width and height styles', done => {
+									const editor = getJodit({
+										resizer: {
+											forImageChangeAttributes: true
+										},
+										observer: {
+											timeout: 0
+										}
+									});
+
+									editor.value =
+										'<p><img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width:300px;height:300px"/></p>';
+
+									onLoadImage(
+										editor.editor.querySelector('img'),
+										() => {
+											resizeImage(editor);
+
+											expect(
+												sortAttributes(editor.value)
+											).eq(
+												'<p><img height="310" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="height:310px;width:310px" width="310"></p>'
+											);
+											done();
+										}
+									);
+								});
+							});
+						});
+					});
+				});
 			});
 
 			it('Should not allow to resize image more then width of editor', function (done) {

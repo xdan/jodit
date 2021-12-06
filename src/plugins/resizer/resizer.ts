@@ -308,9 +308,14 @@ export class resizer extends Plugin {
 		key: 'width' | 'height',
 		value: number | string
 	): void {
-		if (Dom.isImage(element) && this.j.o.resizer.forImageChangeAttributes) {
+		const changeAttrs =
+			Dom.isImage(element) && this.j.o.resizer.forImageChangeAttributes;
+
+		if (changeAttrs) {
 			attr(element, key, value);
-		} else {
+		}
+
+		if (!changeAttrs || element.style[key]) {
 			css(element, key, value);
 		}
 	}

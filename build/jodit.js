@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.11.1
+ * Version: v3.11.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -13295,7 +13295,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.11.1";
+        _this.version = "3.11.2";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -13437,10 +13437,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.11.1";
+        return "3.11.2";
     };
     View.getVersion = function () {
-        return "3.11.1";
+        return "3.11.2";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -30725,10 +30725,11 @@ var resizer = (function (_super) {
         return (0, helpers_1.offset)((this.rect.parentNode || this.j.od.documentElement), this.j, this.j.od, true);
     };
     resizer.prototype.applySize = function (element, key, value) {
-        if (dom_1.Dom.isImage(element) && this.j.o.resizer.forImageChangeAttributes) {
+        var changeAttrs = dom_1.Dom.isImage(element) && this.j.o.resizer.forImageChangeAttributes;
+        if (changeAttrs) {
             (0, helpers_1.attr)(element, key, value);
         }
-        else {
+        if (!changeAttrs || element.style[key]) {
             (0, helpers_1.css)(element, key, value);
         }
     };
