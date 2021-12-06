@@ -106,5 +106,8 @@ app.listen(port, function (error) {
 			port,
 			port
 		);
+
+		const open = require('open');
+		open(`http://localhost:${port}/`);
 	}
 });

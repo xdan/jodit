@@ -9,13 +9,17 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
-## 3.10.3
+## 3.11.1
 
 #### :boom: Breaking Change
 
--   Plugin `Delete` renamed to` Backspace`. And it is highly refractory.
+- Plugin `Delete` renamed to` Backspace`. And it is highly refractory.
 
 #### :rocket: New Feature
+
+- Open localhost in browser on `npm start`
+
+#### :bug: Bug Fix
 
 -   Added handling of `contenteditable = false` elements to the plugin` Backspace`.
 -   [es2018 build don't works properly starting from jodit 3.9.4 #758](https://github.com/xdan/jodit/issues/758)
