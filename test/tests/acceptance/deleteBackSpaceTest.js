@@ -428,12 +428,9 @@ describe('Backspace/Delete key', function () {
 			describe('Previous element has contenteditable false', function () {
 				it('Should remove this element like simple char', function () {
 					editor.value =
-						'<p>test<a href="#" contenteditable="false">pop</a>test</p>';
+						'<p>test<a href="#" contenteditable="false">pop</a>|test</p>';
 
-					range.setStartAfter(
-						editor.editor.firstChild.firstChild.nextSibling
-					);
-					editor.s.selectRange(range);
+					setCursorToChar(editor);
 
 					simulateEvent(
 						'keydown',
@@ -441,7 +438,8 @@ describe('Backspace/Delete key', function () {
 						editor.editor
 					);
 
-					expect(editor.value).equals('<p>testtest</p>');
+					replaceCursorToChar(editor);
+					expect(editor.value).equals('<p>test|test</p>');
 				});
 			});
 		});
@@ -884,7 +882,7 @@ describe('Backspace/Delete key', function () {
 			'<p>ab<img src="tests/artio.jpg">|cd</p> => <p>ab|cd</p>',
 			'<p>ab<span contenteditable="false">test</span>|cd</p> => <p>ab|cd</p>',
 			'<p>ab<span contenteditable="false">test</span><strong>|cd</strong></p> => <p>ab|<strong>cd</strong></p>',
-			'<p>ab</p><div contenteditable="false">test</div><p>|cd</p> => <p>ab|	</p><p>cd</p>',
+			'<p>ab</p><div contenteditable="false">test</div><p>|cd</p> => <p>ab|</p><p>cd</p>',
 			'<p>ab</p>\n <p>|<br></p> => <p>ab|</p>\n ',
 			'<p>ab</p><p>|cd</p> => <p>ab|cd</p>',
 			'<p>ab</p>\n<blockquote>|cd</blockquote> => <p>ab|cd</p>\n',

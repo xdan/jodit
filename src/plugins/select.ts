@@ -70,7 +70,6 @@ export class select extends Plugin {
 	}
 
 	/**
-	 *
 	 * @event outsideClick(e) - when user clicked in the outside of editor
 	 */
 	@watch('ow:click')

@@ -10,7 +10,7 @@ import { Dom } from '../../../core/dom';
 import { INVISIBLE_SPACE } from '../../../core/constants';
 import { isFunction, trim } from '../../../core/helpers';
 import { normalizeCursorPosition } from '../helpers';
-import * as cases from './cases';
+import { cases } from './cases';
 import type { DeleteMode } from './interface';
 import { checkNotCollapsed } from './cases/check-not-collapsed';
 
@@ -129,14 +129,11 @@ export class Backspace extends Plugin {
 			normalizeCursorPosition(jodit, fakeNode, backspace);
 
 			if (
-				Object.keys(cases).some((key): void | boolean => {
-					const func = cases[key as keyof typeof cases];
-
-					return (
+				cases.some(
+					(func): void | boolean =>
 						isFunction(func) &&
 						func(jodit, fakeNode, backspace, mode)
-					);
-				})
+				)
 			) {
 				return false;
 			}

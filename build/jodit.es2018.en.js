@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.10.2
+ * Version: v3.11.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -2888,7 +2888,7 @@ const extendLang = (langs) => {
 };
 const boxes = new WeakMap();
 function getContainer(jodit, classFunc, tag = 'div', createInsideEditor = false) {
-    const name = (0,_helpers___WEBPACK_IMPORTED_MODULE_2__.getClassName)(classFunc.prototype);
+    const name = classFunc ? (0,_helpers___WEBPACK_IMPORTED_MODULE_2__.getClassName)(classFunc.prototype) : 'jodit-utils';
     const data = boxes.get(jodit) || {}, key = name + tag;
     const view = (0,_helpers___WEBPACK_IMPORTED_MODULE_2__.isViewObject)(jodit) ? jodit : jodit.j;
     if (!data[key]) {
@@ -3210,6 +3210,11 @@ class Dom {
     static isEmptyContent(node) {
         return Dom.each(node, (elm) => Dom.isEmptyTextNode(elm));
     }
+    static isContentEditable(node, root) {
+        return (Dom.isNode(node) &&
+            !Dom.closest(node, elm => Dom.isElement(elm) &&
+                elm.getAttribute('contenteditable') === 'false', root));
+    }
     static isEmpty(node, condNoEmptyElement = /^(img|svg|canvas|input|textarea|form)$/) {
         if (!node) {
             return true;
@@ -3404,9 +3409,7 @@ class Dom {
         return null;
     }
     static findSibling(node, left = true, cond = (n) => !Dom.isEmptyTextNode(n)) {
-        const getSibling = (node) => {
-            return left ? node.previousSibling : node.nextSibling;
-        };
+        const getSibling = (node) => left ? node.previousSibling : node.nextSibling;
         let start = getSibling(node);
         while (start && !cond(start)) {
             start = getSibling(start);
@@ -3655,7 +3658,7 @@ function getShadowRoot(jodit) {
     if ((0,helpers.dataBind)(jodit, 'shadowRoot') !== undefined) {
         return (0,helpers.dataBind)(jodit, 'shadowRoot');
     }
-    const container = (0,global/* getContainer */.ZO)(jodit, function Utils() { });
+    const container = (0,global/* getContainer */.ZO)(jodit);
     const iframe = document.createElement('iframe');
     (0,helpers.css)(iframe, {
         width: 0,
@@ -8319,14 +8322,16 @@ class Popup extends ui_element/* UIElement */.u {
         return this;
     }
     closeOnOutsideClick(e) {
+        var _a;
         if (!this.isOpened) {
             return;
         }
-        if (!e.target) {
+        const target = (_a = ((0,helpers.isFunction)(e.composedPath) && e.composedPath()[0])) !== null && _a !== void 0 ? _a : e.target;
+        if (!target) {
             this.close();
             return;
         }
-        const box = ui_element/* UIElement.closestElement */.u.closestElement(e.target, Popup);
+        const box = ui_element/* UIElement.closestElement */.u.closestElement(target, Popup);
         if (box && (this === box || box.closest(this))) {
             return;
         }
@@ -10322,7 +10327,7 @@ __webpack_require__.d(modules_namespaceObject, {
 var plugins_namespaceObject = {};
 __webpack_require__.r(plugins_namespaceObject);
 __webpack_require__.d(plugins_namespaceObject, {
-  "Delete": function() { return Delete; },
+  "Backspace": function() { return Backspace; },
   "DragAndDrop": function() { return DragAndDrop; },
   "DragAndDropElement": function() { return DragAndDropElement; },
   "KeyArrowOutside": function() { return KeyArrowOutside; },
@@ -10505,6 +10510,9 @@ class Async {
             this.clearTimeout(request);
         });
         this.isDestructed = false;
+    }
+    delay(timeout) {
+        return this.promise(resolve => this.setTimeout(resolve, timeout));
     }
     setTimeout(callback, timeout, ...args) {
         if (this.isDestructed) {
@@ -10691,6 +10699,9 @@ class response_Response {
     text() {
         return Promise.resolve(this.body);
     }
+    async blob() {
+        return this.body;
+    }
 }
 
 ;// CONCATENATED MODULE: ./src/core/request/config.ts
@@ -10770,12 +10781,15 @@ class Ajax {
             };
             const onResolve = () => {
                 this.resolved = true;
-                resolve(new response_Response(request, xhr.status, xhr.statusText, xhr.responseText));
+                resolve(new response_Response(request, xhr.status, xhr.statusText, !xhr.responseType ? xhr.responseText : xhr.response));
             };
+            xhr.onload = onResolve;
             xhr.onabort = onReject;
             xhr.onerror = onReject;
             xhr.ontimeout = onReject;
-            xhr.onload = onResolve;
+            if (o.responseType) {
+                xhr.responseType = o.responseType;
+            }
             xhr.onprogress = (e) => {
                 var _a, _b;
                 let percentComplete = 0;
@@ -11091,7 +11105,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.10.2";
+        this.version = "3.11.1";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -11189,10 +11203,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.10.2";
+        return "3.11.1";
     }
     static getVersion() {
-        return "3.10.2";
+        return "3.11.1";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -17627,11 +17641,11 @@ function findMostNestedNeighbor(node, right, root, onlyInlide = false) {
     }
     return null;
 }
-function normalizeCursorPosition(node, backspace) {
+function normalizeCursorPosition(jodit, node, backspace) {
     let sibling = dom/* Dom.findSibling */.i.findSibling(node, backspace), anotherSibling = dom/* Dom.findSibling */.i.findSibling(node, !backspace);
     while (dom/* Dom.isElement */.i.isElement(sibling) &&
         !dom/* Dom.isTag */.i.isTag(sibling, constants.INSEPARABLE_TAGS) &&
-        !anotherSibling) {
+        (!anotherSibling || !dom/* Dom.closest */.i.closest(node, dom/* Dom.isElement */.i.isElement, jodit.editor))) {
         if (backspace || !sibling.firstChild) {
             sibling.appendChild(node);
         }
@@ -17643,7 +17657,356 @@ function normalizeCursorPosition(node, backspace) {
     }
 }
 
-;// CONCATENATED MODULE: ./src/plugins/keyboard/delete.ts
+;// CONCATENATED MODULE: ./src/plugins/keyboard/backspace/cases/check-join-two-lists.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function checkJoinTwoLists(jodit, fakeNode, backspace) {
+    const next = dom/* Dom.findSibling */.i.findSibling(fakeNode, backspace), prev = dom/* Dom.findSibling */.i.findSibling(fakeNode, !backspace);
+    if (!dom/* Dom.closest */.i.closest(fakeNode, dom/* Dom.isElement */.i.isElement, jodit.editor) &&
+        dom/* Dom.isTag */.i.isTag(next, ['ul', 'ol']) &&
+        dom/* Dom.isTag */.i.isTag(prev, ['ul', 'ol']) &&
+        dom/* Dom.isTag */.i.isTag(next.lastElementChild, 'li') &&
+        dom/* Dom.isTag */.i.isTag(prev.firstElementChild, 'li')) {
+        const { setCursorBefore, setCursorAfter } = jodit.s;
+        const target = next.lastElementChild, second = prev.firstElementChild;
+        (0,helpers.call)(!backspace ? dom/* Dom.append */.i.append : dom/* Dom.prepend */.i.prepend, second, fakeNode);
+        dom/* Dom.moveContent */.i.moveContent(prev, next, !backspace);
+        dom/* Dom.safeRemove */.i.safeRemove(prev);
+        (0,helpers.call)(backspace ? dom/* Dom.append */.i.append : dom/* Dom.prepend */.i.prepend, target, fakeNode);
+        (0,helpers.call)(backspace ? setCursorBefore : setCursorAfter, fakeNode);
+        return true;
+    }
+    return false;
+}
+
+;// CONCATENATED MODULE: ./src/plugins/keyboard/backspace/cases/check-remove-empty-parent.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+function checkRemoveEmptyParent(jodit, fakeNode, backspace) {
+    let found = false;
+    const { setCursorBefore, setCursorIn } = jodit.s;
+    let prn = dom/* Dom.closest */.i.closest(fakeNode, dom/* Dom.isElement */.i.isElement, jodit.editor);
+    if (!prn || !dom/* Dom.isEmpty */.i.isEmpty(prn)) {
+        return false;
+    }
+    const neighbor = findNotEmptyNeighbor(fakeNode, backspace, jodit.editor);
+    do {
+        if (prn && dom/* Dom.isEmpty */.i.isEmpty(prn) && !dom/* Dom.isCell */.i.isCell(prn)) {
+            dom/* Dom.after */.i.after(prn, fakeNode);
+            const tmp = dom/* Dom.closest */.i.closest(prn, n => dom/* Dom.isElement */.i.isElement(n) && n !== prn, jodit.editor);
+            dom/* Dom.safeRemove */.i.safeRemove(prn);
+            found = true;
+            prn = tmp;
+        }
+        else {
+            break;
+        }
+    } while (prn);
+    if (found && checkJoinTwoLists(jodit, fakeNode, backspace)) {
+        return true;
+    }
+    if (neighbor &&
+        !dom/* Dom.isText */.i.isText(neighbor) &&
+        !dom/* Dom.isTag */.i.isTag(neighbor, constants.INSEPARABLE_TAGS)) {
+        setCursorIn(neighbor, !backspace);
+    }
+    else {
+        setCursorBefore(fakeNode);
+    }
+    return found;
+}
+
+;// CONCATENATED MODULE: ./src/plugins/keyboard/backspace/cases/check-remove-unbreakable-element.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function checkRemoveUnbreakableElement(jodit, fakeNode, backspace) {
+    const neighbor = dom/* Dom.findSibling */.i.findSibling(fakeNode, backspace);
+    if (dom/* Dom.isElement */.i.isElement(neighbor) &&
+        (dom/* Dom.isTag */.i.isTag(neighbor, constants.INSEPARABLE_TAGS) || dom/* Dom.isEmpty */.i.isEmpty(neighbor))) {
+        dom/* Dom.safeRemove */.i.safeRemove(neighbor);
+        jodit.s.setCursorBefore(fakeNode);
+        if (dom/* Dom.isTag */.i.isTag(neighbor, 'br')) {
+            checkRemoveEmptyParent(jodit, fakeNode, backspace);
+        }
+        return true;
+    }
+    return false;
+}
+
+;// CONCATENATED MODULE: ./src/plugins/keyboard/backspace/cases/check-remove-content-not-editable.ts
+
+
+
+function checkRemoveContentNotEditable(jodit, fakeNode, backspace) {
+    let neighbor = dom/* Dom.findSibling */.i.findSibling(fakeNode, backspace);
+    if (!neighbor &&
+        fakeNode.parentElement &&
+        fakeNode.parentElement !== jodit.editor) {
+        neighbor = dom/* Dom.findSibling */.i.findSibling(fakeNode.parentElement, backspace);
+    }
+    if (dom/* Dom.isElement */.i.isElement(neighbor) &&
+        !dom/* Dom.isContentEditable */.i.isContentEditable(neighbor, jodit.editor)) {
+        (0,helpers.call)(backspace ? dom/* Dom.before */.i.before : dom/* Dom.after */.i.after, neighbor, fakeNode);
+        dom/* Dom.safeRemove */.i.safeRemove(neighbor);
+        normalizeCursorPosition(jodit, fakeNode, backspace);
+        (0,helpers.call)(backspace ? jodit.s.setCursorBefore : jodit.s.setCursorAfter, fakeNode);
+        return true;
+    }
+    return false;
+}
+
+;// CONCATENATED MODULE: ./src/plugins/keyboard/backspace/cases/check-remove-char.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+function checkRemoveChar(jodit, fakeNode, backspace, mode) {
+    var _a, _b, _c;
+    const step = backspace ? -1 : 1;
+    const anotherSibling = getSibling(fakeNode, !backspace);
+    let sibling = getSibling(fakeNode, backspace), removeNeighbor = null;
+    let charRemoved = false, removed;
+    while (sibling && (dom/* Dom.isText */.i.isText(sibling) || dom/* Dom.isInlineBlock */.i.isInlineBlock(sibling))) {
+        while (dom/* Dom.isInlineBlock */.i.isInlineBlock(sibling)) {
+            sibling = (backspace ? sibling === null || sibling === void 0 ? void 0 : sibling.lastChild : sibling === null || sibling === void 0 ? void 0 : sibling.firstChild);
+        }
+        if (!sibling) {
+            break;
+        }
+        if ((_a = sibling.nodeValue) === null || _a === void 0 ? void 0 : _a.length) {
+            let value = (0,helpers.toArray)(sibling.nodeValue);
+            const length = value.length;
+            let index = backspace ? length - 1 : 0;
+            if (value[index] === constants.INVISIBLE_SPACE) {
+                while (value[index] === constants.INVISIBLE_SPACE) {
+                    index += step;
+                }
+            }
+            removed = value[index];
+            if (value[index + step] === constants.INVISIBLE_SPACE) {
+                index += step;
+                while (value[index] === constants.INVISIBLE_SPACE) {
+                    index += step;
+                }
+                index += backspace ? 1 : -1;
+            }
+            if (backspace && index < 0) {
+                value = [];
+            }
+            else {
+                value = value.slice(backspace ? 0 : index + 1, backspace ? index : length);
+            }
+            if (!anotherSibling ||
+                !dom/* Dom.isText */.i.isText(anotherSibling) ||
+                (!backspace ? / $/ : /^ /).test((_b = anotherSibling.nodeValue) !== null && _b !== void 0 ? _b : '') ||
+                !(0,helpers.trimInv)(anotherSibling.nodeValue || '').length) {
+                for (let i = backspace ? value.length - 1 : 0; backspace ? i >= 0 : i < value.length; i += backspace ? -1 : 1) {
+                    if (value[i] === ' ') {
+                        value[i] = constants.NBSP_SPACE;
+                    }
+                    else {
+                        break;
+                    }
+                }
+            }
+            sibling.nodeValue = value.join('');
+        }
+        if (!((_c = sibling.nodeValue) === null || _c === void 0 ? void 0 : _c.length)) {
+            removeNeighbor = sibling;
+        }
+        if (!(0,helpers.isVoid)(removed) && removed !== constants.INVISIBLE_SPACE) {
+            charRemoved = true;
+            (0,helpers.call)(backspace ? dom/* Dom.after */.i.after : dom/* Dom.before */.i.before, sibling, fakeNode);
+            if (mode === 'sentence' ||
+                (mode === 'word' && removed !== ' ' && removed !== constants.NBSP_SPACE)) {
+                checkRemoveChar(jodit, fakeNode, backspace, mode);
+            }
+            break;
+        }
+        let nextSibling = getSibling(sibling, backspace);
+        if (!nextSibling &&
+            sibling.parentNode &&
+            sibling.parentNode !== jodit.editor) {
+            nextSibling = findMostNestedNeighbor(sibling, !backspace, jodit.editor, true);
+        }
+        if (removeNeighbor) {
+            dom/* Dom.safeRemove */.i.safeRemove(removeNeighbor);
+            removeNeighbor = null;
+        }
+        sibling = nextSibling;
+    }
+    if (charRemoved) {
+        removeEmptyInlineParent(fakeNode);
+        addBRInsideEmptyBlock(jodit, fakeNode);
+        jodit.s.setCursorBefore(fakeNode);
+    }
+    return charRemoved;
+}
+function removeEmptyInlineParent(node) {
+    let parent = node.parentElement;
+    while (parent && dom/* Dom.isInlineBlock */.i.isInlineBlock(parent)) {
+        const p = parent.parentElement;
+        if (dom/* Dom.isEmpty */.i.isEmpty(parent)) {
+            dom/* Dom.after */.i.after(parent, node);
+            dom/* Dom.safeRemove */.i.safeRemove(parent);
+        }
+        parent = p;
+    }
+}
+function addBRInsideEmptyBlock(jodit, node) {
+    if (node.parentElement !== jodit.editor &&
+        dom/* Dom.isBlock */.i.isBlock(node.parentElement) &&
+        dom/* Dom.each */.i.each(node.parentElement, dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode)) {
+        dom/* Dom.after */.i.after(node, jodit.createInside.element('br'));
+    }
+}
+
+;// CONCATENATED MODULE: ./src/plugins/keyboard/backspace/cases/check-table-cell.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function checkTableCell(jodit, fakeNode) {
+    const cell = fakeNode.parentElement;
+    if (dom/* Dom.isCell */.i.isCell(cell)) {
+        return true;
+    }
+    return false;
+}
+
+;// CONCATENATED MODULE: ./src/plugins/keyboard/backspace/cases/check-remove-empty-neighbor.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function checkRemoveEmptyNeighbor(jodit, fakeNode, backspace) {
+    const parent = dom/* Dom.closest */.i.closest(fakeNode, dom/* Dom.isElement */.i.isElement, jodit.editor);
+    if (!parent) {
+        return false;
+    }
+    const neighbor = findNotEmptySibling(parent, backspace);
+    if (neighbor && dom/* Dom.isEmpty */.i.isEmpty(neighbor)) {
+        dom/* Dom.safeRemove */.i.safeRemove(neighbor);
+        jodit.s.setCursorBefore(fakeNode);
+        return true;
+    }
+    return false;
+}
+
+;// CONCATENATED MODULE: ./src/plugins/keyboard/backspace/cases/check-join-neighbors.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function checkJoinNeighbors(jodit, fakeNode, backspace) {
+    let nextBox = fakeNode, mainClosestBox = nextBox;
+    while (nextBox &&
+        !findNotEmptySibling(nextBox, backspace) &&
+        nextBox.parentElement !== jodit.editor) {
+        nextBox = nextBox.parentElement;
+        mainClosestBox = nextBox;
+    }
+    if (dom/* Dom.isElement */.i.isElement(mainClosestBox) &&
+        dom/* Dom.isContentEditable */.i.isContentEditable(mainClosestBox, jodit.editor)) {
+        const sibling = findNotEmptySibling(mainClosestBox, backspace);
+        if (sibling &&
+            (checkMoveListContent(jodit, mainClosestBox, sibling, backspace) ||
+                moveContentAndRemoveEmpty(jodit, mainClosestBox, sibling, backspace))) {
+            jodit.s.setCursorBefore(fakeNode);
+            return true;
+        }
+    }
+    return false;
+}
+function checkMoveListContent(jodit, mainClosestBox, sibling, backspace) {
+    const siblingIsList = dom/* Dom.isTag */.i.isTag(sibling, ['ol', 'ul']);
+    const boxIsList = dom/* Dom.isTag */.i.isTag(mainClosestBox, ['ol', 'ul']);
+    const elementChild = (elm, side) => side ? elm.firstElementChild : elm.lastElementChild;
+    if (boxIsList) {
+        sibling = jodit.createInside.element(jodit.o.enterBlock);
+        dom/* Dom.before */.i.before(mainClosestBox, sibling);
+        return moveContentAndRemoveEmpty(jodit, elementChild(mainClosestBox, backspace), sibling, backspace);
+    }
+    if (sibling && siblingIsList && !boxIsList) {
+        return moveContentAndRemoveEmpty(jodit, mainClosestBox, elementChild(sibling, !backspace), backspace);
+    }
+    return false;
+}
+function moveContentAndRemoveEmpty(jodit, mainClosestBox, sibling, backspace) {
+    if (mainClosestBox && dom/* Dom.isElement */.i.isElement(sibling)) {
+        dom/* Dom.moveContent */.i.moveContent(mainClosestBox, sibling, !backspace);
+        let remove = mainClosestBox;
+        while (remove && remove !== jodit.editor && dom/* Dom.isEmpty */.i.isEmpty(remove)) {
+            const parent = remove.parentElement;
+            dom/* Dom.safeRemove */.i.safeRemove(remove);
+            remove = parent;
+        }
+        return true;
+    }
+    return false;
+}
+
+;// CONCATENATED MODULE: ./src/plugins/keyboard/backspace/cases/check-unwrap-first-list-item.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function checkUnwrapFirstListItem(jodit, fakeNode, backspace) {
+    var _a;
+    const li = dom/* Dom.closest */.i.closest(fakeNode, dom/* Dom.isElement */.i.isElement, jodit.editor);
+    const { s } = jodit;
+    if (dom/* Dom.isTag */.i.isTag(li, 'li') &&
+        ((_a = li === null || li === void 0 ? void 0 : li.parentElement) === null || _a === void 0 ? void 0 : _a[backspace ? 'firstElementChild' : 'lastElementChild']) === li &&
+        s.cursorInTheEdge(backspace, li)) {
+        const ul = li.parentElement;
+        const p = jodit.createInside.element(jodit.o.enterBlock);
+        (0,helpers.call)(backspace ? dom/* Dom.before */.i.before : dom/* Dom.after */.i.after, ul, p);
+        dom/* Dom.moveContent */.i.moveContent(li, p);
+        dom/* Dom.safeRemove */.i.safeRemove(li);
+        if (dom/* Dom.isEmpty */.i.isEmpty(ul)) {
+            dom/* Dom.safeRemove */.i.safeRemove(ul);
+        }
+        (0,helpers.call)(backspace ? s.setCursorBefore : s.setCursorAfter, fakeNode);
+        return true;
+    }
+    return false;
+}
+
+;// CONCATENATED MODULE: ./src/plugins/keyboard/backspace/cases/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -17655,6 +18018,37 @@ function normalizeCursorPosition(node, backspace) {
 
 
 
+
+
+
+const cases = [
+    checkRemoveUnbreakableElement,
+    checkRemoveContentNotEditable,
+    checkRemoveChar,
+    checkTableCell,
+    checkRemoveEmptyParent,
+    checkRemoveEmptyNeighbor,
+    checkJoinTwoLists,
+    checkJoinNeighbors,
+    checkUnwrapFirstListItem
+];
+
+;// CONCATENATED MODULE: ./src/plugins/keyboard/backspace/cases/check-not-collapsed.ts
+function checkNotCollapsed(jodit) {
+    if (!jodit.s.isCollapsed()) {
+        jodit.execCommand('Delete');
+        return true;
+    }
+    return false;
+}
+
+;// CONCATENATED MODULE: ./src/plugins/keyboard/backspace/config.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
 config/* Config.prototype.delete */.D.prototype["delete"] = {
     hotkeys: {
         delete: ['delete', 'cmd+backspace'],
@@ -17665,13 +18059,25 @@ config/* Config.prototype.delete */.D.prototype["delete"] = {
         backspaceSentence: ['ctrl+shift+backspace', 'cmd+shift+backspace']
     }
 };
-class Delete extends Plugin {
+
+;// CONCATENATED MODULE: ./src/plugins/keyboard/backspace/backspace.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+
+class Backspace extends Plugin {
     constructor() {
         super(...arguments);
         this.requires = ['hotkeys'];
-    }
-    get root() {
-        return this.j.editor;
     }
     afterInit(jodit) {
         jodit.e.on('afterCommand.delete', (command) => {
@@ -17727,15 +18133,14 @@ class Delete extends Plugin {
         }
     }
     onDelete(backspace, mode = 'char') {
-        var _a;
-        const sel = this.j.selection;
+        const jodit = this.j;
+        const sel = jodit.selection;
         if (!sel.isFocused()) {
             sel.focus();
         }
-        if (!((_a = sel.sel) === null || _a === void 0 ? void 0 : _a.rangeCount) || this.checkNotCollapsed()) {
+        if (checkNotCollapsed(jodit)) {
             return false;
         }
-        const jodit = this.j;
         const range = sel.range;
         const fakeNode = jodit.createInside.text(constants.INVISIBLE_SPACE);
         try {
@@ -17743,15 +18148,9 @@ class Delete extends Plugin {
             if (!dom/* Dom.isOrContains */.i.isOrContains(jodit.editor, fakeNode)) {
                 return;
             }
-            normalizeCursorPosition(fakeNode, backspace);
-            if (this.checkRemoveInseparableElement(fakeNode, backspace) ||
-                this.checkRemoveChar(fakeNode, backspace, mode) ||
-                this.checkTableCell(fakeNode) ||
-                this.checkRemoveEmptyParent(fakeNode, backspace) ||
-                this.checkRemoveEmptyNeighbor(fakeNode, backspace) ||
-                this.checkJoinTwoLists(fakeNode, backspace) ||
-                this.checkJoinNeighbors(fakeNode, backspace) ||
-                this.checkRewrapListItem(fakeNode, backspace)) {
+            normalizeCursorPosition(jodit, fakeNode, backspace);
+            if (cases.some((func) => (0,helpers.isFunction)(func) &&
+                func(jodit, fakeNode, backspace, mode))) {
                 return false;
             }
         }
@@ -17763,264 +18162,6 @@ class Delete extends Plugin {
             this.safeRemoveEmptyNode(fakeNode);
         }
         return false;
-    }
-    checkNotCollapsed() {
-        const jodit = this.j;
-        if (!jodit.s.isCollapsed()) {
-            jodit.execCommand('Delete');
-            return true;
-        }
-    }
-    checkRemoveChar(fakeNode, backspace, mode) {
-        var _a, _b, _c;
-        const step = backspace ? -1 : 1;
-        const anotherSibling = getSibling(fakeNode, !backspace);
-        let sibling = getSibling(fakeNode, backspace), removeNeighbor = null;
-        let charRemoved = false, removed;
-        while (sibling && (dom/* Dom.isText */.i.isText(sibling) || dom/* Dom.isInlineBlock */.i.isInlineBlock(sibling))) {
-            while (dom/* Dom.isInlineBlock */.i.isInlineBlock(sibling)) {
-                sibling = (backspace ? sibling === null || sibling === void 0 ? void 0 : sibling.lastChild : sibling === null || sibling === void 0 ? void 0 : sibling.firstChild);
-            }
-            if (!sibling) {
-                break;
-            }
-            if ((_a = sibling.nodeValue) === null || _a === void 0 ? void 0 : _a.length) {
-                let value = (0,helpers.toArray)(sibling.nodeValue);
-                const length = value.length;
-                let index = backspace ? length - 1 : 0;
-                if (value[index] === constants.INVISIBLE_SPACE) {
-                    while (value[index] === constants.INVISIBLE_SPACE) {
-                        index += step;
-                    }
-                }
-                removed = value[index];
-                if (value[index + step] === constants.INVISIBLE_SPACE) {
-                    index += step;
-                    while (value[index] === constants.INVISIBLE_SPACE) {
-                        index += step;
-                    }
-                    index += backspace ? 1 : -1;
-                }
-                if (backspace && index < 0) {
-                    value = [];
-                }
-                else {
-                    value = value.slice(backspace ? 0 : index + 1, backspace ? index : length);
-                }
-                if (!anotherSibling ||
-                    !dom/* Dom.isText */.i.isText(anotherSibling) ||
-                    (!backspace ? / $/ : /^ /).test((_b = anotherSibling.nodeValue) !== null && _b !== void 0 ? _b : '') ||
-                    !(0,helpers.trimInv)(anotherSibling.nodeValue || '').length) {
-                    for (let i = backspace ? value.length - 1 : 0; backspace ? i >= 0 : i < value.length; i += backspace ? -1 : 1) {
-                        if (value[i] === ' ') {
-                            value[i] = constants.NBSP_SPACE;
-                        }
-                        else {
-                            break;
-                        }
-                    }
-                }
-                sibling.nodeValue = value.join('');
-            }
-            if (!((_c = sibling.nodeValue) === null || _c === void 0 ? void 0 : _c.length)) {
-                removeNeighbor = sibling;
-            }
-            if (!(0,helpers.isVoid)(removed) && removed !== constants.INVISIBLE_SPACE) {
-                charRemoved = true;
-                (0,helpers.call)(backspace ? dom/* Dom.after */.i.after : dom/* Dom.before */.i.before, sibling, fakeNode);
-                if (mode === 'sentence' ||
-                    (mode === 'word' &&
-                        removed !== ' ' &&
-                        removed !== constants.NBSP_SPACE)) {
-                    this.checkRemoveChar(fakeNode, backspace, mode);
-                }
-                break;
-            }
-            let nextSibling = getSibling(sibling, backspace);
-            if (!nextSibling &&
-                sibling.parentNode &&
-                sibling.parentNode !== this.root) {
-                nextSibling = findMostNestedNeighbor(sibling, !backspace, this.root, true);
-            }
-            if (removeNeighbor) {
-                dom/* Dom.safeRemove */.i.safeRemove(removeNeighbor);
-                removeNeighbor = null;
-            }
-            sibling = nextSibling;
-        }
-        if (charRemoved) {
-            this.removeEmptyInlineParent(fakeNode);
-            this.addBRInsideEmptyBlock(fakeNode);
-            this.j.s.setCursorBefore(fakeNode);
-        }
-        return charRemoved || undefined;
-    }
-    removeEmptyInlineParent(node) {
-        let parent = node.parentElement;
-        while (parent && dom/* Dom.isInlineBlock */.i.isInlineBlock(parent)) {
-            const p = parent.parentElement;
-            if (dom/* Dom.isEmpty */.i.isEmpty(parent)) {
-                dom/* Dom.after */.i.after(parent, node);
-                dom/* Dom.safeRemove */.i.safeRemove(parent);
-            }
-            parent = p;
-        }
-    }
-    addBRInsideEmptyBlock(node) {
-        if (node.parentElement !== this.root &&
-            dom/* Dom.isBlock */.i.isBlock(node.parentElement) &&
-            dom/* Dom.each */.i.each(node.parentElement, dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode)) {
-            dom/* Dom.after */.i.after(node, this.j.createInside.element('br'));
-        }
-    }
-    checkRemoveInseparableElement(fakeNode, backspace) {
-        const neighbor = dom/* Dom.findSibling */.i.findSibling(fakeNode, backspace);
-        if (dom/* Dom.isElement */.i.isElement(neighbor) &&
-            (dom/* Dom.isTag */.i.isTag(neighbor, constants.INSEPARABLE_TAGS) ||
-                dom/* Dom.isEmpty */.i.isEmpty(neighbor) ||
-                (0,helpers.attr)(neighbor, 'contenteditable') === 'false')) {
-            dom/* Dom.safeRemove */.i.safeRemove(neighbor);
-            this.j.s.setCursorBefore(fakeNode);
-            if (dom/* Dom.isTag */.i.isTag(neighbor, 'br')) {
-                this.checkRemoveEmptyParent(fakeNode, backspace);
-            }
-            return true;
-        }
-    }
-    checkTableCell(fakeNode) {
-        const cell = fakeNode.parentElement;
-        if (dom/* Dom.isCell */.i.isCell(cell)) {
-            return true;
-        }
-    }
-    checkRemoveEmptyParent(fakeNode, backspace) {
-        let found = false;
-        const { setCursorBefore, setCursorIn } = this.j.s;
-        let prn = dom/* Dom.closest */.i.closest(fakeNode, dom/* Dom.isElement */.i.isElement, this.root);
-        if (!prn || !dom/* Dom.isEmpty */.i.isEmpty(prn)) {
-            return;
-        }
-        const neighbor = findNotEmptyNeighbor(fakeNode, backspace, this.root);
-        do {
-            if (prn && dom/* Dom.isEmpty */.i.isEmpty(prn) && !dom/* Dom.isCell */.i.isCell(prn)) {
-                dom/* Dom.after */.i.after(prn, fakeNode);
-                const tmp = dom/* Dom.closest */.i.closest(prn, n => dom/* Dom.isElement */.i.isElement(n) && n !== prn, this.root);
-                dom/* Dom.safeRemove */.i.safeRemove(prn);
-                found = true;
-                prn = tmp;
-            }
-            else {
-                break;
-            }
-        } while (prn);
-        if (found && this.checkJoinTwoLists(fakeNode, backspace)) {
-            return true;
-        }
-        if (neighbor &&
-            !dom/* Dom.isText */.i.isText(neighbor) &&
-            !dom/* Dom.isTag */.i.isTag(neighbor, constants.INSEPARABLE_TAGS)) {
-            setCursorIn(neighbor, !backspace);
-        }
-        else {
-            setCursorBefore(fakeNode);
-        }
-        return found || undefined;
-    }
-    checkJoinTwoLists(fakeNode, backspace) {
-        const next = dom/* Dom.findSibling */.i.findSibling(fakeNode, backspace), prev = dom/* Dom.findSibling */.i.findSibling(fakeNode, !backspace);
-        if (!dom/* Dom.closest */.i.closest(fakeNode, dom/* Dom.isElement */.i.isElement, this.root) &&
-            dom/* Dom.isTag */.i.isTag(next, ['ul', 'ol']) &&
-            dom/* Dom.isTag */.i.isTag(prev, ['ul', 'ol']) &&
-            dom/* Dom.isTag */.i.isTag(next.lastElementChild, 'li') &&
-            dom/* Dom.isTag */.i.isTag(prev.firstElementChild, 'li')) {
-            const { setCursorBefore, setCursorAfter } = this.j.s;
-            const target = next.lastElementChild, second = prev.firstElementChild;
-            (0,helpers.call)(!backspace ? dom/* Dom.append */.i.append : dom/* Dom.prepend */.i.prepend, second, fakeNode);
-            dom/* Dom.moveContent */.i.moveContent(prev, next, !backspace);
-            dom/* Dom.safeRemove */.i.safeRemove(prev);
-            (0,helpers.call)(backspace ? dom/* Dom.append */.i.append : dom/* Dom.prepend */.i.prepend, target, fakeNode);
-            (0,helpers.call)(backspace ? setCursorBefore : setCursorAfter, fakeNode);
-            return true;
-        }
-    }
-    checkRemoveEmptyNeighbor(fakeNode, backspace) {
-        const parent = dom/* Dom.closest */.i.closest(fakeNode, dom/* Dom.isElement */.i.isElement, this.root);
-        if (!parent) {
-            return;
-        }
-        const neighbor = findNotEmptySibling(parent, backspace);
-        if (neighbor && dom/* Dom.isEmpty */.i.isEmpty(neighbor)) {
-            dom/* Dom.safeRemove */.i.safeRemove(neighbor);
-            this.j.s.setCursorBefore(fakeNode);
-            return true;
-        }
-    }
-    checkJoinNeighbors(fakeNode, backspace) {
-        const { jodit } = this;
-        let nextBox = fakeNode, mainClosestBox = nextBox;
-        while (nextBox &&
-            !findNotEmptySibling(nextBox, backspace) &&
-            nextBox.parentElement !== this.root) {
-            nextBox = nextBox.parentElement;
-            mainClosestBox = nextBox;
-        }
-        if (dom/* Dom.isElement */.i.isElement(mainClosestBox)) {
-            const sibling = findNotEmptySibling(mainClosestBox, backspace);
-            if (sibling &&
-                (this.checkMoveListContent(mainClosestBox, sibling, backspace) ||
-                    this.moveContentAndRemoveEmpty(mainClosestBox, sibling, backspace))) {
-                jodit.s.setCursorBefore(fakeNode);
-                return true;
-            }
-        }
-    }
-    checkMoveListContent(mainClosestBox, sibling, backspace) {
-        const { jodit } = this;
-        const siblingIsList = dom/* Dom.isTag */.i.isTag(sibling, ['ol', 'ul']);
-        const boxIsList = dom/* Dom.isTag */.i.isTag(mainClosestBox, ['ol', 'ul']);
-        const elementChild = (elm, side) => side ? elm.firstElementChild : elm.lastElementChild;
-        if (boxIsList) {
-            sibling = jodit.createInside.element(jodit.o.enterBlock);
-            dom/* Dom.before */.i.before(mainClosestBox, sibling);
-            return this.moveContentAndRemoveEmpty(elementChild(mainClosestBox, backspace), sibling, backspace);
-        }
-        if (sibling && siblingIsList && !boxIsList) {
-            return this.moveContentAndRemoveEmpty(mainClosestBox, elementChild(sibling, !backspace), backspace);
-        }
-        return false;
-    }
-    moveContentAndRemoveEmpty(mainClosestBox, sibling, backspace) {
-        if (mainClosestBox && dom/* Dom.isElement */.i.isElement(sibling)) {
-            dom/* Dom.moveContent */.i.moveContent(mainClosestBox, sibling, !backspace);
-            let remove = mainClosestBox;
-            while (remove && remove !== this.root && dom/* Dom.isEmpty */.i.isEmpty(remove)) {
-                const parent = remove.parentElement;
-                dom/* Dom.safeRemove */.i.safeRemove(remove);
-                remove = parent;
-            }
-            return true;
-        }
-        return false;
-    }
-    checkRewrapListItem(fakeNode, backspace) {
-        var _a;
-        if (backspace) {
-            const li = dom/* Dom.closest */.i.closest(fakeNode, dom/* Dom.isElement */.i.isElement, this.root);
-            if (dom/* Dom.isTag */.i.isTag(li, 'li') &&
-                ((_a = li === null || li === void 0 ? void 0 : li.parentElement) === null || _a === void 0 ? void 0 : _a.firstElementChild) === li &&
-                this.j.s.cursorInTheEdge(true, li)) {
-                const ul = li.parentElement;
-                const p = this.j.createInside.element(this.j.o.enterBlock);
-                dom/* Dom.before */.i.before(ul, p);
-                dom/* Dom.moveContent */.i.moveContent(li, p);
-                dom/* Dom.safeRemove */.i.safeRemove(li);
-                if (dom/* Dom.isEmpty */.i.isEmpty(ul)) {
-                    dom/* Dom.safeRemove */.i.safeRemove(ul);
-                }
-                this.j.s.setCursorBefore(fakeNode);
-                return true;
-            }
-        }
     }
     safeRemoveEmptyNode(fakeNode) {
         var _a, _b;
@@ -21524,12 +21665,12 @@ config/* Config.prototype.toolbarInlineForSelection */.D.prototype.toolbarInline
 config/* Config.prototype.toolbarInlineDisableFor */.D.prototype.toolbarInlineDisableFor = [];
 config/* Config.prototype.toolbarInlineDisabledButtons */.D.prototype.toolbarInlineDisabledButtons = ['source'];
 config/* Config.prototype.popup */.D.prototype.popup = {
-    a: __webpack_require__(49)/* ["default"] */ .Z,
-    img: __webpack_require__(50)/* ["default"] */ .Z,
-    cells: __webpack_require__(51)/* ["default"] */ .Z,
-    toolbar: __webpack_require__(52)/* ["default"] */ .Z,
-    jodit: __webpack_require__(53)/* ["default"] */ .Z,
-    'jodit-media': __webpack_require__(53)/* ["default"] */ .Z,
+    a: (__webpack_require__(49)/* ["default"] */ .Z),
+    img: (__webpack_require__(50)/* ["default"] */ .Z),
+    cells: (__webpack_require__(51)/* ["default"] */ .Z),
+    toolbar: (__webpack_require__(52)/* ["default"] */ .Z),
+    jodit: (__webpack_require__(53)/* ["default"] */ .Z),
+    'jodit-media': (__webpack_require__(53)/* ["default"] */ .Z),
     selection: [
         'bold',
         'underline',
