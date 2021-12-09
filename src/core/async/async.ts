@@ -10,7 +10,7 @@ import type {
 	IAsyncParams,
 	ITimeout,
 	RejectablePromise
-} from '../types';
+} from '../../types';
 import {
 	setTimeout,
 	clearTimeout,
@@ -19,7 +19,7 @@ import {
 	isPromise,
 	isString,
 	isNumber
-} from './helpers/';
+} from '../helpers/';
 
 export class Async implements IAsync {
 	private timers: Map<number | string | Function, number> = new Map();
