@@ -406,7 +406,7 @@ export class Select implements ISelect {
 			preventScroll: true
 		}
 	): boolean {
-		if (!this.isFocused() && !options.preventScroll) {
+		if (!this.isFocused()) {
 			const scrollParent = getScrollParent(this.j.container),
 				scrollTop = scrollParent?.scrollTop;
 
@@ -419,7 +419,7 @@ export class Select implements ISelect {
 			this.win.focus();
 			this.area.focus(options);
 
-			if (scrollTop && scrollParent?.scrollTo) {
+			if (scrollTop && scrollParent?.scrollTo && !options.preventScroll) {
 				scrollParent.scrollTo(0, scrollTop);
 			}
 
