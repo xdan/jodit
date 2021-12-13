@@ -20,6 +20,7 @@ import { getContainer } from '../../../../global';
 
 /**
  * Toggles css and classname
+ * @private
  */
 export function toggleCSS(
 	commitStyle: CommitStyle,

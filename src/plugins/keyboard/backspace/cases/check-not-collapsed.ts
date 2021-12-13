@@ -16,6 +16,7 @@ import type { IJodit } from '../../../../types';
  * ```html
  * <p>first | stop</p>
  * ```
+ * @private
  */
 export function checkNotCollapsed(jodit: IJodit): boolean {
 	if (!jodit.s.isCollapsed()) {

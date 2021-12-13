@@ -4,6 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:core/dom/README.md]]
+ * @packageDocumentation
+ * @module core/dom
+ */
+
 import type {
 	CanUndef,
 	HTMLTagNames,
@@ -12,8 +18,8 @@ import type {
 	NodeCondition,
 	Nullable,
 	IDictionary
-} from '../types';
-import * as consts from './constants';
+} from '../../types';
+import * as consts from '../constants';
 import {
 	$$,
 	asArray,
@@ -29,9 +35,9 @@ import {
 	isVoid,
 	toArray,
 	trim
-} from './helpers';
-import { Select } from './selection';
-import { TEMP_ATTR } from './constants';
+} from '../helpers';
+import { Select } from '../selection';
+import { TEMP_ATTR } from '../constants';
 
 /**
  * Module for working with DOM

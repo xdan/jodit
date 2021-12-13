@@ -4,6 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:core/ui/form/README.md]]
+ * @packageDocumentation
+ * @module core/ui/form
+ */
+
 import type { IDictionary, IUIForm, IUIInput, IUISelect } from '../../../types';
 import { UIGroup } from '../list/group';
 import { UIInput, UISelect } from './inputs';

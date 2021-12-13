@@ -8,6 +8,9 @@ import type { IJodit } from '../types';
 
 declare module '../config' {
 	interface Config {
+		/**
+		 * Hide the link to the Jodit site at the bottom of the editor
+		 */
 		hidePoweredByJodit: boolean;
 	}
 }

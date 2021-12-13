@@ -4,6 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:core/ui/README.md]]
+ * @packageDocumentation
+ * @module core/ui
+ */
+
 export * from './element';
 export * from './button';
 export * from './popup';

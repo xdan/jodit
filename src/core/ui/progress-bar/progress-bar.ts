@@ -4,6 +4,13 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:core/ui/progress-bar/README.md]]
+ * @packageDocumentation
+ * @module core/ui/progress-bar
+ */
+
+
 import './progress-bar.less';
 
 import type { IJodit, IProgressBar } from '../../../types';

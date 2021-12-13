@@ -16,6 +16,7 @@ import { isSuitElement } from './is-suit-element';
  * @param style - styles to be applied
  * @param node - checked item
  * @param root - editor root
+ * @private
  */
 export function getSuitParent(
 	style: CommitStyle,

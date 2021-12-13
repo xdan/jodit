@@ -13,6 +13,7 @@ import { wrapOrderedList } from './wrap-ordered-list';
 
 /**
  * Replaces the parent tag with the applicable one, or wraps the text and also replaces the tag
+ * @private
  */
 export function wrapAndCommitStyle(
 	commitStyle: CommitStyle,

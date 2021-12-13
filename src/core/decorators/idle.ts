@@ -3,6 +3,13 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
+/**
+ * Wrap function in [[Async.prototype.requestIdleCallback]] wrapper
+ *
+ * @module decorators/idle
+ */
+
 import type {
 	DecoratorHandler,
 	IDictionary,
@@ -12,9 +19,6 @@ import type {
 import { Component, STATUSES } from '../component';
 import { error, isFunction, isViewObject } from '../helpers';
 
-/**
- * Wrap function in requestIdleCallback wrapper*
- */
 export function idle<V = IViewComponent | IViewBased>(): DecoratorHandler {
 	return <T extends Component & IDictionary>(
 		target: IDictionary,

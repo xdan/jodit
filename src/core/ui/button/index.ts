@@ -4,5 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:core/ui/button/README.md]]
+ * @packageDocumentation
+ * @module core/ui/button
+ */
+
+
 export * from './button/button';
 export * from './group/group';

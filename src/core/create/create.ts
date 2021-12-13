@@ -4,6 +4,13 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:core/create/README.md]]
+ * @packageDocumentation
+ * @module core/create
+ */
+
+
 import type {
 	IDictionary,
 	Attributes,
@@ -11,7 +18,7 @@ import type {
 	ICreate,
 	CanUndef,
 	NodeFunction
-} from '../types';
+} from '../../types';
 
 import {
 	isPlainObject,
@@ -20,10 +27,10 @@ import {
 	refs,
 	isString,
 	attr
-} from './helpers/';
+} from '../helpers/';
 
-import { Dom } from './dom';
-import { INVISIBLE_SPACE } from './constants';
+import { Dom } from '../dom';
+import { INVISIBLE_SPACE } from '../constants';
 
 export class Create implements ICreate {
 	private get doc(): Document {

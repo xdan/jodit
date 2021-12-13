@@ -4,9 +4,15 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:plugins/README.md]]
+ * @packageDocumentation
+ * @module plugins
+ */
+
 export { addNewLine } from './add-new-line/add-new-line';
 export { about } from './about/about';
-export { focus } from './focus';
+export { focus } from './focus/focus';
 export { classSpan } from './class-span/class-span';
 export { Backspace } from './keyboard/backspace/backspace';
 export { bold } from './bold';

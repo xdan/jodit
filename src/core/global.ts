@@ -13,7 +13,7 @@ import type {
 	IViewComponent
 } from '../types';
 
-import { PluginSystem } from './plugin-system';
+import { PluginSystem } from './plugin/plugin-system';
 
 import { Dom } from './dom';
 
@@ -24,7 +24,7 @@ import {
 	kebabCase
 } from './helpers/';
 
-import { EventEmitter } from './events';
+import { EventEmitter } from './event-emitter';
 
 export const instances: IDictionary<IJodit> = {};
 

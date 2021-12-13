@@ -20,6 +20,7 @@ import { Dom } from '../../../dom';
  * @param commitStyle - style commit
  * @param elm - checked item
  * @param strict - strict mode - false - the default tag is suitable for us if it is also in the commit
+ * @private
  */
 export function isSuitElement(
 	commitStyle: CommitStyle,

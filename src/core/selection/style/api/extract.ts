@@ -23,6 +23,7 @@ import { Dom } from '../../../dom';
  * ```html
  * `<strong><span>some</span></strong><strong><span><font>SELECTED</font></span></strong><strong><span>test</span></strong>
  * ```
+ * @private
  */
 export function extractSelectedPart(
 	wrapper: HTMLElement,

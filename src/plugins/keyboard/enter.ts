@@ -4,6 +4,11 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @category Plugins
+ * @module plugins/enter
+ */
+
 import type { HTMLTagNames, IJodit, Nullable } from '../../types';
 import * as consts from '../../core/constants';
 import { Dom } from '../../core/dom';

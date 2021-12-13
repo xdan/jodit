@@ -18,6 +18,8 @@ import type { IJodit } from '../../../../types';
  * ```html
  * <table><tr><td>|test</td></tr></table>
  * ```
+ *
+ * @private
  */
 export function checkTableCell(jodit: IJodit, fakeNode: Node): boolean {
 	const cell = fakeNode.parentElement;

@@ -4,7 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-// eslint-disable-next-line max-classes-per-file
+/**
+ * [[include:core/event-emitter/README.md]]
+ * @packageDocumentation
+ * @module core/event-emitter
+ */
+
 import type {
 	CallbackFunction,
 	EventHandlerBlock,
@@ -699,8 +704,3 @@ export class EventEmitter implements IEventEmitter {
 		delete (this as any)[this.__key];
 	}
 }
-
-/**
- * @deprecated Use `EventEmitter` instead
- */
-export class EventsNative extends EventEmitter implements IEventEmitter {}

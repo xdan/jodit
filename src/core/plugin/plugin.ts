@@ -4,10 +4,16 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, IPlugin, IViewBased } from '../types';
-import { ViewComponent, STATUSES } from './component';
-import { autobind } from './decorators';
-import { isJoditObject } from './helpers';
+/**
+ * [[include:core/plugin/README.md]]
+ * @packageDocumentation
+ * @module core/plugin
+ */
+
+import type { IJodit, IPlugin, IViewBased } from '../../types';
+import { ViewComponent, STATUSES } from '../component';
+import { autobind } from '../decorators';
+import { isJoditObject } from '../helpers';
 
 export abstract class Plugin<T extends IViewBased = IJodit>
 	extends ViewComponent<T>

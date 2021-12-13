@@ -22,6 +22,7 @@ import { INVISIBLE_SPACE, NBSP_SPACE } from '../../../../core/constants';
  * ```html
  * t|st
  * ```
+ * @private
  */
 export function checkRemoveChar(
 	jodit: IJodit,

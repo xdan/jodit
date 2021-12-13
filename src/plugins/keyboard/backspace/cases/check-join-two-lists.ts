@@ -19,6 +19,7 @@ import { call } from '../../../../core/helpers';
  * ```html
  * <ul><li>one|</li><li>two</li></ul>
  * ```
+ * @private
  */
 export function checkJoinTwoLists(
 	jodit: IJodit,

@@ -19,6 +19,8 @@ import { call } from '../../../../core/helpers';
  * ```html
  * <p>|first</p><ul><li>second</li></ul>
  * ```
+ *
+ * @private
  */
 export function checkUnwrapFirstListItem(
 	jodit: IJodit,

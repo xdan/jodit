@@ -19,6 +19,7 @@ import { findNotEmptySibling } from '../../helpers';
  * ```html
  * <p>|second stop</p>
  * ```
+ * @private
  */
 export function checkRemoveEmptyNeighbor(
 	jodit: IJodit,

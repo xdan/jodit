@@ -10,6 +10,7 @@ import { Dom } from '../../../dom';
 
 /**
  * Wrap text or inline elements inside Block element
+ * @private
  */
 export function wrapUnwrappedText(
 	style: CommitStyle,

@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from '../core/events';
+export * from '../core/event-emitter';
 export { Async } from '../core/async';
 export * from '../core/request';
 export { Component, ViewComponent, STATUSES } from '../core/component';
@@ -43,4 +43,4 @@ export { ToolbarEditorCollection } from './toolbar/collection/editor-collection'
 export { ToolbarCollection } from './toolbar/collection/collection';
 export * from './toolbar/button';
 export { Uploader } from './uploader/uploader';
-export { PluginSystem } from '../core/plugin-system';
+export { PluginSystem } from '../core/plugin/plugin-system';

@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module core/event-emitter
+ */
+
 import type { CallbackFunction, CanUndef, IDictionary } from '../../types';
 import { isPlainObject, isFastEqual, isArray } from '../helpers';
 import { nonenumerable } from '../decorators';

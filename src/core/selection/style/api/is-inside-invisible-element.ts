@@ -8,6 +8,7 @@ import { Dom } from '../../../dom';
 
 /**
  * Check if FONT inside STYLE or SCRIPT element
+ * @private
  */
 export function isInsideInvisibleElement(
 	font: HTMLElement,

@@ -10,6 +10,7 @@ import { Dom } from '../../../dom';
 /**
  * Add or remove styles to element
  * @param elm - The element to switch styles
+ * @private
  */
 export function toggleCommitStyles(
 	commitStyle: CommitStyle,

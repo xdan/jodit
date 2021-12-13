@@ -9,7 +9,8 @@ import { call } from '../../../../core/helpers';
 import { normalizeCursorPosition } from '../../helpers';
 
 /**
- * Проверяет возможность удаления не редактируемго элемента
+ * Checks if a non-editable element can be deleted
+ * @private
  */
 export function checkRemoveContentNotEditable(
 	jodit: IJodit,

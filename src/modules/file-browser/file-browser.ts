@@ -35,7 +35,7 @@ import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 import './config';
 
 import { Dom } from '../../core/dom';
-import { ObserveObject } from '../../core/events/';
+import { ObserveObject } from '../../core/event-emitter/';
 import { makeDataProvider } from './factories';
 import { stateListeners } from './listeners/state-listeners';
 import { nativeListeners } from './listeners/native-listeners';

@@ -16,6 +16,7 @@ import { isSuitElement } from './is-suit-element';
  * If the child matches then returns it.
  * @example
  * `<font><strong>selected</strong></font>`
+ * @private
  */
 export function getSuitChild(
 	style: CommitStyle,

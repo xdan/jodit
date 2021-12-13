@@ -12,6 +12,7 @@ import type { IDictionary } from '../../../../types';
 
 /**
  * Unwrap all suit elements inside
+ * @private
  */
 export function unwrapChildren(style: CommitStyle, font: HTMLElement): boolean {
 	const needUnwrap: Node[] = [];

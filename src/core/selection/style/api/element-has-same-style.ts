@@ -10,6 +10,7 @@ import { Dom } from '../../../dom';
 
 /**
  * Element has the same styles as in the commit
+ * @private
  */
 export function elementHasSameStyle(elm: Node, rules: IStyle): boolean {
 	return Boolean(

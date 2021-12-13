@@ -4,6 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:core/view/README.md]]
+ * @packageDocumentation
+ * @module core/view
+ */
+
 import type {
 	IAsync,
 	IComponent,
@@ -13,7 +19,8 @@ import type {
 	IViewBased,
 	IViewOptions,
 	Nullable,
-	IDictionary
+	IDictionary,
+	IEventEmitter
 } from '../../types';
 import { Storage } from '../storage';
 import {
@@ -29,7 +36,6 @@ import { BASE_PATH } from '../constants';
 import {
 	Component,
 	STATUSES,
-	EventEmitter,
 	ProgressBar,
 	Create,
 	Dom,
@@ -39,6 +45,7 @@ import { Async } from '../async';
 import { modules } from '../global';
 import { hook } from '../decorators';
 import { Elms, Mods } from '../traits';
+import { EventEmitter } from '../event-emitter';
 
 export abstract class View extends Component implements IViewBased, Mods, Elms {
 	readonly isView: true = true;
@@ -124,7 +131,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		this.__container = container;
 	}
 
-	events!: EventEmitter;
+	events!: IEventEmitter;
 	get e(): this['events'] {
 		return this.events;
 	}

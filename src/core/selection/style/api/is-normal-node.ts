@@ -9,6 +9,7 @@ import { Dom } from '../../../dom';
 
 /**
  * Is normal usual element
+ * @private
  */
 export function isNormalNode(elm: Nullable<Node>): boolean {
 	return Boolean(elm && !Dom.isEmptyTextNode(elm) && !Dom.isTemporary(elm));

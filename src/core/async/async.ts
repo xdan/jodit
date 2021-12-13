@@ -4,6 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:core/async/README.md]]
+ * @packageDocumentation
+ * @module core/async
+ */
+
 import type {
 	CallbackFunction,
 	IAsync,
@@ -81,11 +87,10 @@ export class Async implements IAsync {
 	 * @example
 	 * ```javascript
 	 * var jodit = new Jodit('.editor');
-	 *	jodit.e.on('mousemove', jodit.async.debounce(function() {
-	 *     // Do expensive things
+	 * jodit.e.on('mousemove', jodit.async.debounce(() => {
+	 * 	// Do expensive things
 	 * }, 100));
 	 * ```
-	 *
 	 */
 	debounce(
 		fn: CallbackFunction,
@@ -156,7 +161,7 @@ export class Async implements IAsync {
 	 * ```javascript
 	 * var jodit = new Jodit('.editor');
 	 * jodit.e.on(document.body, 'scroll', jodit.async.throttle(function() {
-	 *     // Do expensive things
+	 * 	// Do expensive things
 	 * }, 100));
 	 * ```
 	 */

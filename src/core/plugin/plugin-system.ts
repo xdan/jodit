@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module core/plugin
+ */
+
 import type {
 	IExtraPlugin,
 	IDictionary,
@@ -14,7 +18,7 @@ import type {
 	PluginType,
 	CanPromise,
 	CanUndef
-} from '../types';
+} from '../../types';
 
 import {
 	isInitable,
@@ -27,7 +31,7 @@ import {
 	kebabCase,
 	callPromise,
 	isArray
-} from './helpers';
+} from '../helpers';
 
 /**
  * Jodit plugin system

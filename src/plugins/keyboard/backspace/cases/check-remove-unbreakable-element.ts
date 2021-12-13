@@ -20,6 +20,8 @@ import { checkRemoveEmptyParent } from './check-remove-empty-parent';
  * ```html
  * <p>first second | stop</p>
  * ```
+ *
+ * @private
  */
 export function checkRemoveUnbreakableElement(
 	jodit: IJodit,

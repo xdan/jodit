@@ -4,11 +4,18 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit } from '../types';
-import { Config } from '../config';
-import { Dom } from '../core/dom';
+/**
+ * [[include:plugins/focus/README.md]]
+ * @packageDocumentation
+ * @category Plugins
+ * @module plugins/focus
+ */
 
-declare module '../config' {
+import type { IJodit } from '../../types';
+import { Config } from '../../config';
+import { Dom } from '../../core/dom';
+
+declare module '../../config' {
 	interface Config {
 		autofocus: boolean;
 		cursorAfterAutofocus: 'start' | 'end';
@@ -31,9 +38,6 @@ Config.prototype.cursorAfterAutofocus = 'end';
  */
 Config.prototype.saveSelectionOnBlur = true;
 
-/**
- * Autofocus plugin - set focus inside the editor after reload
- */
 export function focus(editor: IJodit): void {
 	if (editor.o.saveSelectionOnBlur) {
 		editor.e

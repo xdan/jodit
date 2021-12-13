@@ -11,6 +11,7 @@ import type { CommitStyle } from '../commit-style';
 /**
  * Replaces non-leaf items with leaf items and either creates a new list or
  * adds a new item to the nearest old list
+ * @private
  */
 export function wrapOrderedList(
 	commitStyle: CommitStyle,

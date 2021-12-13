@@ -21,6 +21,8 @@ import { checkJoinTwoLists } from './check-join-two-lists';
  * ```html
  * <p>first stop|</p>
  * ```
+ *
+ * @private
  */
 export function checkRemoveEmptyParent(
 	jodit: IJodit,

@@ -13,6 +13,7 @@ import { toggleCSS } from './toggle-css';
 
 /**
  * Replaces `ul->ol` or `ol->ul`, apply styles to the list, or remove a list item from it
+ * @private
  */
 export function toggleOrderedList(
 	style: CommitStyle,
