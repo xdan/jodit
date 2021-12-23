@@ -7,7 +7,6 @@
 /**
  * [[include:core/ui/form/README.md]]
  * @packageDocumentation
- * @module core/ui/form
  */
 
 import type { IDictionary, IUIForm, IUIInput, IUISelect } from '../../../types';

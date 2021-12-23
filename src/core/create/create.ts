@@ -7,9 +7,7 @@
 /**
  * [[include:core/create/README.md]]
  * @packageDocumentation
- * @module core/create
  */
-
 
 import type {
 	IDictionary,

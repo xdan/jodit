@@ -4,10 +4,6 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-/**
- * @module Options
- */
-
 import type {
 	IExtraPlugin,
 	IDictionary,

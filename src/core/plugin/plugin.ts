@@ -7,7 +7,6 @@
 /**
  * [[include:core/plugin/README.md]]
  * @packageDocumentation
- * @module core/plugin
  */
 
 import type { IJodit, IPlugin, IViewBased } from '../../types';

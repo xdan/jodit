@@ -7,7 +7,6 @@
 /**
  * [[include:core/event-emitter/README.md]]
  * @packageDocumentation
- * @module core/event-emitter
  */
 
 import type {
@@ -555,7 +554,7 @@ export class EventEmitter implements IEventEmitter {
 	}
 
 	/**
-	 * Sets the handler for the specified event (Event List) for a given element .
+	 * Emits an event to all handlers and calls them
 	 *
 	 * @param subjectOrEvents - The object which is caused by certain events
 	 * @param eventsList - List of events , separated by a space or comma

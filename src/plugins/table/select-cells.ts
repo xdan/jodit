@@ -8,7 +8,7 @@ import type { IBound, IJodit, Nullable } from '../../types';
 import { Plugin } from '../../core/plugin';
 import { Dom, Table } from '../../modules';
 import { $$, position } from '../../core/helpers';
-import { alignElement } from '../justify';
+import { alignElement } from '../justify/justify';
 import { KEY_TAB } from '../../core/constants';
 import { autobind, watch } from '../../core/decorators';
 

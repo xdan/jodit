@@ -7,9 +7,7 @@
 /**
  * [[include:core/ui/button/README.md]]
  * @packageDocumentation
- * @module core/ui/button
  */
-
 
 export * from './button/button';
 export * from './group/group';

@@ -42,7 +42,7 @@ interface IEventEmitter extends IDestructible {
 	unmute(event?: string): IEventEmitter;
 
 	/**
-	 * Sets the handler for the specified event ( Event List ) for a given element .
+	 * Sets the handler for the specified event (Event List) for a given element .
 	 *
 	 * @param {object|string} subjectOrEvents - The object for which toWYSIWYG set an event handler
 	 * @param {string|Function} eventsOrCallback - List of events , separated by a space or comma
@@ -127,12 +127,12 @@ interface IEventEmitter extends IDestructible {
 	 * ```
 	 */
 	off(
-		subjectOrEvents: string,
+		events: string,
 		eventsOrCallback?: CallbackFunction
 	): IEventEmitter;
 	off(
-		subjectOrEvents: object,
-		eventsOrCallback?: string,
+		subject: object,
+		events?: string,
 		handler?: CallbackFunction
 	): IEventEmitter;
 	off(

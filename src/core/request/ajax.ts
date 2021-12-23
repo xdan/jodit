@@ -7,7 +7,6 @@
 /**
  * [[include:core/request/README.md]]
  * @packageDocumentation
- * @module core/request
  */
 
 import type {
@@ -36,6 +35,17 @@ import { Response } from './response';
 import './config';
 
 export class Ajax<T extends object = any> implements IAjax<T> {
+	constructor(readonly jodit: IViewBased, options: Partial<AjaxOptions>) {
+		this.options = ConfigProto(
+			options || {},
+			Config.prototype.defaultAjaxOptions
+		) as AjaxOptions;
+
+		this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
+
+		jodit && jodit.e && jodit.e.on('beforeDestruct', () => this.destruct());
+	}
+
 	static log: IRequest[] = [];
 
 	private readonly xhr!: XMLHttpRequest;
@@ -199,17 +209,6 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 		Ajax.log.push(request);
 
 		return request;
-	}
-
-	constructor(readonly jodit: IViewBased, options: Partial<AjaxOptions>) {
-		this.options = ConfigProto(
-			options || {},
-			Config.prototype.defaultAjaxOptions
-		) as AjaxOptions;
-
-		this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
-
-		jodit && jodit.e && jodit.e.on('beforeDestruct', () => this.destruct());
 	}
 
 	destruct(): void {

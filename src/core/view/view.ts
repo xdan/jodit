@@ -7,7 +7,6 @@
 /**
  * [[include:core/view/README.md]]
  * @packageDocumentation
- * @module core/view
  */
 
 import type {

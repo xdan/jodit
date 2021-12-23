@@ -1990,8 +1990,6 @@ Fix a few bugs in [JJE](http://xdsoft.net/jodit/#extesions)
 
 	/**
 	 * Ask before paste HTML source
-	 *
-	 * @module insertHTML
 	 */
 	Jodit.plugins.insertHTML = function (parent) {
 		if (parent.options.askBeforePasteHTML) {

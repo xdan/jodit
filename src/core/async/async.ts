@@ -7,7 +7,6 @@
 /**
  * [[include:core/async/README.md]]
  * @packageDocumentation
- * @module core/async
  */
 
 import type {

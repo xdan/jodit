@@ -7,16 +7,15 @@
 /**
  * [[include:core/decorators/README.md]]
  * @packageDocumentation
- * @module decorators
  */
 
-export * from './cache';
-export * from './component';
-export * from './debounce';
-export * from './idle';
-export * from './hook';
-export * from './nonenumerable';
-export * from './persistent';
-export * from './wait';
-export * from './watch';
+export * from './cache/cache';
+export * from './component/component';
+export * from './debounce/debounce';
+export * from './idle/idle';
+export * from './hook/hook';
+export * from './nonenumerable/nonenumerable';
+export * from './persistent/persistent';
+export * from './wait/wait';
+export * from './watch/watch';
 export { default as autobind } from 'autobind-decorator';

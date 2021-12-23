@@ -1,6 +1,117 @@
-# FileBrowser
+Module for working with remote images or just files. Allows you to upload / delete / rename files on the server.
 
-Image and file browser on the server.
+> A prerequisite for the module to work is the server side. Jodit offers its own implementation in php [jodit-connectors](https://github.com/xdan/jodit-connectors). The module will not work without the server side.
+
+You can write the backend yourself, it must support [API](https://github.com/xdan/jodit-connectors#api)
+Module settings allow you to override behavior for your server-side implementation.
+
+For example, by default, the server side returns a list of files in this format:
+
+```json
+{
+	"success": true,
+	"time": "2021-12-23 16:30:01",
+	"data": {
+		"sources": [
+			{
+				"baseurl": "https://xdsoft.net/jodit/finder/files/",
+				"path": "/folder/somepath/",
+				"files": [
+					{
+						"name": "pexels-sachin-c-nair-954929.jpg",
+						"type": "image"
+					},
+					{
+						"name": "pexels-james-wheeler-417074.jpg",
+						"type": "image"
+					}
+				],
+				"name": "default"
+			}
+		],
+		"code": 220
+	}
+}
+```
+
+But what if your server returns such data for example?
+
+```json
+[
+	{
+		"name": "pexels-sachin-c-nair-954929.jpg",
+		"type": "image"
+	},
+	{
+		"name": "pexels-james-wheeler-417074.jpg",
+		"type": "image"
+	}
+]
+```
+
+In this case, you can add the setting [[IFileBrowser.ajax.process]] or define the same setting for a specific handle,
+for example, to get a list [[IFileBrowser.items]]
+
+```js
+Jodit.make('#editor', {
+	filebrowser: {
+		ajax: {
+			url: 'https://sitename.com/connector/index.php', // this parameter is required
+			process: resp => {
+				return {
+					success: true,
+					time: '2021-12-23 16:30:01',
+					data: {
+						sources: [
+							{
+								baseurl:
+									'https://xdsoft.net/jodit/finder/files/',
+								path: '/folder/somepath/',
+								files: resp,
+								name: 'default'
+							}
+						],
+						code: 220
+					}
+				};
+			}
+		}
+	}
+});
+```
+
+but in that case all the responses of the all endpoints will be processed by this function. Better to handle the response for a specific handle:
+
+```js
+Jodit.make('#editor', {
+	filebrowser: {
+		ajax: {
+			url: 'https://sitename.com/connector/index.php'
+		},
+		// a request for a list of files will be handled in a special way
+		items: {
+			process: resp => {
+				return {
+					success: true,
+					time: '2021-12-23 16:30:01',
+					data: {
+						sources: [
+							{
+								baseurl:
+									'https://xdsoft.net/jodit/finder/files/',
+								path: '/folder/somepath/',
+								files: resp,
+								name: 'default'
+							}
+						],
+						code: 220
+					}
+				};
+			}
+		}
+	}
+});
+```
 
 ## Settings
 
@@ -80,14 +191,13 @@ Jodit.make('#editor', {
     data obtained after administration of the server. Must return this PlainObject format
 
 ```js
- {
-    files: resp.files || [], // {array} The names of files or folders, files can
-    be ['image.jpg', 'image.jpg2', 'image3.jpg' ...] and [{file: 'image.jpg', thumb: '_thumbs/image.jpg'},
-    {file: 'image2.jpg', thumb: '_thumbs/image2.jpg'} ...]
-    path: resp.path, // {string} Real relative path
-    baseurl: resp.baseurl, // {string} Base url for filebrowser
-    error: resp.error, // {int}
-    msg: resp.msg // {string}
+const response = {
+	files: resp.files || [], // {array} The names of files or folders,
+	// files canbe ['image.jpg', 'image.jpg2', 'image3.jpg' ...] and [{file: 'image.jpg', thumb: '_thumbs/image.jpg'}, {file: 'image2.jpg', thumb: '_thumbs/image2.jpg'} ...]
+	path: resp.path, // {string} Real relative path
+	baseurl: resp.baseurl, // {string} Base url for filebrowser
+	error: resp.error, // {int}
+	msg: resp.msg // {string}
 };
 ```
 
@@ -127,59 +237,59 @@ Example:
 
 ```js
 // default values
-{
-    isSuccess: function (resp) {
-        return !resp.error;
-    },
-    getMessage: function (resp) {
-        return resp.msg;
-    },
-    ajax: {
-        url: '',
-        async: true,
-        data: {},
-        contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-        headers : {},
-        method : 'POST',
-        processData  : true,
-        dataType: 'json',
-        headers: {},
-        prepareData: function (data) {
-            return data;
-        },
-        process: function (resp) {
-            return {
-                files: resp.files || [],
-                path: resp.path,
-                baseurl: resp.baseurl,
-                error: resp.error,
-                msg: resp.msg
-            };
-        }
-    },
-    resize: {
-        data: {action: 'imageResize'},
-    },
-    crop: {
-        data: {action: 'imageCrop'},
-    },
-    create: {
-        data: {action: 'folderCreate'},
-    },
-    move: {
-        data: {action: 'fileMove'},
-    },
-    remove: {
-        data: {action: 'fileRemove'},
-    },
-    items: {
-        data: {action: 'files'},
-    },
-    folders: {
-        data: {action: 'folders'},
-    },
-    uploader: null // use default Uploader's settings
-}
+const options = {
+	isSuccess: function (resp) {
+		return !resp.error;
+	},
+	getMessage: function (resp) {
+		return resp.msg;
+	},
+	ajax: {
+		url: '',
+		async: true,
+		data: {},
+		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		headers: {},
+		method: 'POST',
+		processData: true,
+		dataType: 'json',
+		headers: {},
+		prepareData: function (data) {
+			return data;
+		},
+		process: function (resp) {
+			return {
+				files: resp.files || [],
+				path: resp.path,
+				baseurl: resp.baseurl,
+				error: resp.error,
+				msg: resp.msg
+			};
+		}
+	},
+	resize: {
+		data: { action: 'imageResize' }
+	},
+	crop: {
+		data: { action: 'imageCrop' }
+	},
+	create: {
+		data: { action: 'folderCreate' }
+	},
+	move: {
+		data: { action: 'fileMove' }
+	},
+	remove: {
+		data: { action: 'fileRemove' }
+	},
+	items: {
+		data: { action: 'files' }
+	},
+	folders: {
+		data: { action: 'folders' }
+	},
+	uploader: null // use default Uploader's settings
+};
 ```
 
 Example:

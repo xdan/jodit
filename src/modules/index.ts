@@ -38,7 +38,7 @@ export { Observer } from './observer/observer';
 export { Select, CommitStyle } from '../core/selection';
 export { Snapshot } from './observer/snapshot';
 export { StatusBar } from './status-bar/status-bar';
-export { Table } from './table';
+export { Table } from './table/table';
 export { ToolbarEditorCollection } from './toolbar/collection/editor-collection';
 export { ToolbarCollection } from './toolbar/collection/collection';
 export * from './toolbar/button';

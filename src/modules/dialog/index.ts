@@ -4,6 +4,11 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:modules/dialog/README.md]]
+ * @packageDocumentation
+ */
+
 export { Dialog } from './dialog';
 export { Alert } from './alert';
 export { Prompt } from './prompt';

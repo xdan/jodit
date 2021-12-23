@@ -4,6 +4,11 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:plugins/add-new-line/README.md]]
+ * @packageDocumentation
+ */
+
 import './add-new-line.less';
 
 import type { IBound, IJodit, HTMLTagNames, Nullable } from '../../types';

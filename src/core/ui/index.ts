@@ -7,7 +7,6 @@
 /**
  * [[include:core/ui/README.md]]
  * @packageDocumentation
- * @module core/ui
  */
 
 export * from './element';
