@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/source
+ */
+
 import type { IJodit, ISourceEditor } from '../../../../types';
 import { css } from '../../../../core/helpers';
 import { Dom } from '../../../../modules';

@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/clipboard
+ */
+
 import type { IJodit, IPlugin } from '../../types';
 import type { Plugin } from '../../core/plugin';
 import { TEXT_HTML, TEXT_PLAIN } from '../../core/constants';

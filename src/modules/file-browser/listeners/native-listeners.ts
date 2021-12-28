@@ -4,13 +4,17 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module modules/file-browser
+ */
+
 import type {
 	HTMLTagNames,
 	IFileBrowserItem,
 	Nullable,
-	IDictionary
+	IDictionary,
+	IFileBrowser
 } from '../../../types';
-import type { FileBrowser } from '../file-browser';
 import { ctrlKey, attr } from '../../../core/helpers';
 import contextMenu from '../builders/context-menu';
 import { Dom } from '../../../core/dom';
@@ -35,7 +39,7 @@ export const elementToItem = (
 	return item;
 };
 
-export function nativeListeners(this: FileBrowser): void {
+export function nativeListeners(this: IFileBrowser): void {
 	let dragElement: false | HTMLElement = false;
 
 	const self = this;

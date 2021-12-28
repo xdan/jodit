@@ -5,6 +5,10 @@
  */
 
 /**
+ * @module plugins/clipboard
+ */
+
+/**
  * TODO: need remove `drag-and-drop-element` plugin and use full custom moving inside this plugin.
  */
 
@@ -15,7 +19,7 @@ import { attr, ctrlKey, dataBind } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';
 import { getDataTransfer } from './paste/helpers';
 import { autobind, throttle } from '../../core/decorators';
-import { FileBrowserFiles } from '../../modules/file-browser/ui';
+import { isFileBrowserFilesItem } from '../../modules/file-browser';
 
 /**
  * Process drag and drop image from FileBrowser and movev image inside the editor
@@ -67,12 +71,7 @@ export class DragAndDrop extends Plugin {
 		this.startDragPoint.x = event.clientX;
 		this.startDragPoint.y = event.clientY;
 
-		if (
-			Dom.isElement(target) &&
-			target.classList.contains(
-				FileBrowserFiles.prototype.getFullElName('item')
-			)
-		) {
+		if (isFileBrowserFilesItem(target)) {
 			target = target.querySelector('img') as HTMLElement;
 		}
 

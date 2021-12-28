@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/keyboard
+ */
+
 import type { IDictionary, IJodit } from '../../types';
 import { Config } from '../../config';
 import { Plugin } from '../../core/plugin';

@@ -7,6 +7,7 @@
 /**
  * [[include:core/decorators/nonenumerable/README.md]]
  * @packageDocumentation
+ * @module decorators/nonenumerable
  */
 
 export const nonenumerable = (target: object, propertyKey: string): void => {

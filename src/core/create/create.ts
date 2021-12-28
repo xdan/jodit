@@ -7,6 +7,7 @@
 /**
  * [[include:core/create/README.md]]
  * @packageDocumentation
+ * @module create
  */
 
 import type {

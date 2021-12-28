@@ -7,6 +7,7 @@
 /**
  * [[include:core/decorators/watch/README.md]]
  * @packageDocumentation
+ * @module decorators/watch
  */
 
 import type {
@@ -23,7 +24,7 @@ import {
 	isViewObject,
 	splitArray
 } from '../../helpers';
-import { ObserveObject } from '../../event-emitter';
+import { ObservableObject } from '../../event-emitter';
 import { STATUSES } from '../../component';
 
 export function getPropertyDescriptor(
@@ -99,10 +100,10 @@ export function watch(
 
 				let value: any = component[key];
 
-				if (value instanceof ObserveObject) {
+				if (value instanceof ObservableObject) {
 					value.on(`change.${field}`, callback);
 				} else if (isPlainObject(value) && parts.length > 1) {
-					const observe = ObserveObject.create(value, [key]);
+					const observe = ObservableObject.create(value, [key]);
 					observe.on(`change.${field}`, callback);
 					(component as any)[key] = observe;
 				} else {
@@ -123,7 +124,7 @@ export function watch(
 							}
 
 							if (isPlainObject(value)) {
-								value = ObserveObject.create(value, [key]);
+								value = ObservableObject.create(value, [key]);
 								value.on('change.' + field, callback);
 							}
 

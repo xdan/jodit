@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module storage
+ */
+
 export * from './engines/memory-storage-provider';
 export * from './engines/local-storage-provider';
 export * from './storage';

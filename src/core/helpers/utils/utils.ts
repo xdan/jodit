@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module helpers/utils
+ */
+
 import type {
 	CanPromise,
 	IControlType,
@@ -16,10 +20,10 @@ import type {
 import { isFunction } from '../checker/is-function';
 import { isPromise } from '../checker/is-promise';
 import { get } from './get';
-import { dataBind } from '../data-bind';
+import { dataBind } from './data-bind';
 import { isVoid } from '../checker/is-void';
 import { isPlainObject, isString } from '../checker';
-import { css } from '../css';
+import { css } from './css';
 import { CamelCaseToKebabCase } from '../string';
 
 /**

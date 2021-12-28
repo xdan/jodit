@@ -7,6 +7,7 @@
 /**
  * [[include:core/decorators/hook/README.md]]
  * @packageDocumentation
+ * @module decorators/hook
  */
 
 import type {

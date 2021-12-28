@@ -7,6 +7,7 @@
 /**
  * [[include:core/decorators/README.md]]
  * @packageDocumentation
+ * @module decorators
  */
 
 export * from './cache/cache';

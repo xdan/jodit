@@ -3,6 +3,13 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
+/**
+ * [[include:langs/README.md]]
+ * @packageDocumentation
+ * @module langs
+ */
+
 import type { IDictionary } from '../types';
 import { isArray } from '../core/helpers/checker';
 

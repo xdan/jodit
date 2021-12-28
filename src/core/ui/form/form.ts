@@ -7,10 +7,11 @@
 /**
  * [[include:core/ui/form/README.md]]
  * @packageDocumentation
+ * @module ui/form
  */
 
 import type { IDictionary, IUIForm, IUIInput, IUISelect } from '../../../types';
-import { UIGroup } from '../list/group';
+import { UIGroup } from '../group';
 import { UIInput, UISelect } from './inputs';
 import { attr } from '../../helpers/utils';
 import { component } from '../../decorators';

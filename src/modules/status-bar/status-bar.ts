@@ -4,6 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:modules/status-bar/README.md]]
+ * @packageDocumentation
+ * @module modules/status-bar
+ */
+
 import './status-bar.less';
 
 import type { IJodit, IStatusBar, IDictionary } from '../../types';

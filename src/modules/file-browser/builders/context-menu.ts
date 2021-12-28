@@ -4,7 +4,11 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { FileBrowser } from '../file-browser';
+/**
+ * @module modules/file-browser
+ */
+
+import type { IFileBrowser } from '../../../types';
 import { Dialog } from '../../dialog';
 
 import { Dom } from '../../../core/dom';
@@ -21,7 +25,7 @@ const CLASS_PREVIEW = 'jodit-filebrowser-preview',
 		Icon.get('angle-' + right) +
 		'</a>';
 
-export default (self: FileBrowser): ((e: DragEvent) => boolean | void) => {
+export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 	if (!self.o.contextMenu) {
 		return () => {};
 	}

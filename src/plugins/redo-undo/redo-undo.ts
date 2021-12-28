@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/redo-undo
+ */
+
 import type { IControlType, IJodit, IPlugin } from '../../types/';
 import { Config } from '../../config';
 import * as consts from '../../core/constants';

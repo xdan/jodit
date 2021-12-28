@@ -4,7 +4,9 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-/* eslint-disable tsdoc/syntax */
+/**
+ * @module types
+ */
 
 import type { IDictionary, IViewComponent } from './types';
 

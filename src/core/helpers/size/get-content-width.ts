@@ -5,8 +5,9 @@
  */
 
 /**
- *
+ * @module helpers/size
  */
+
 export const getContentWidth = (element: HTMLElement, win: Window): number => {
 	const pi = (value: string): number => parseInt(value, 10),
 		style: CSSStyleDeclaration = win.getComputedStyle(element),

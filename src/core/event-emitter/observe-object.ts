@@ -4,11 +4,20 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { CallbackFunction, CanUndef, IDictionary } from '../../types';
+/**
+ * @module event-emitter
+ */
+
+import type {
+	CallbackFunction,
+	CanUndef,
+	IDictionary,
+	IObservable
+} from '../../types';
 import { isPlainObject, isFastEqual, isArray } from '../helpers';
 import { nonenumerable } from '../decorators';
 
-export class ObserveObject {
+export class ObservableObject implements IObservable {
 	@nonenumerable
 	private readonly __data!: IDictionary;
 
@@ -45,7 +54,7 @@ export class ObserveObject {
 						);
 
 						if (isPlainObject(value)) {
-							value = new ObserveObject(
+							value = new ObservableObject(
 								value,
 								prefix,
 								this.__onEvents
@@ -81,7 +90,7 @@ export class ObserveObject {
 			});
 
 			if (isPlainObject(data[key])) {
-				data[key] = new ObserveObject(
+				data[key] = new ObservableObject(
 					data[key],
 					prefix,
 					this.__onEvents
@@ -135,14 +144,14 @@ export class ObserveObject {
 		}
 	}
 
-	static create<T, K extends T & ObserveObject = T & ObserveObject>(
+	static create<T, K extends T & ObservableObject = T & ObservableObject>(
 		data: T,
 		prefix: string[] = []
 	): K {
-		if (data instanceof ObserveObject) {
+		if (data instanceof ObservableObject) {
 			return data as any;
 		}
 
-		return new ObserveObject(data, prefix) as any;
+		return new ObservableObject(data, prefix) as any;
 	}
 }

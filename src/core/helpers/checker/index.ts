@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module helpers/checker
+ */
+
 export * from './has-browser-color-picker';
 export * from './is-array';
 export * from './is-boolean';

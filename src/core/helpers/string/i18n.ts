@@ -4,9 +4,13 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module helpers/string
+ */
+
 import type { IDictionary, ILanguageOptions } from '../../../types';
 import { Config } from '../../../config';
-import { defaultLanguage as defineLanguage } from '../default-language';
+import { defaultLanguage as defineLanguage } from '../utils';
 import { ucfirst, isString, error } from '../';
 import { lang } from '../../global';
 

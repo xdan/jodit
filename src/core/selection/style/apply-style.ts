@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module selection
+ */
+
 import type { IJodit, Nullable, CanUndef, CommitMode } from '../../../types';
 import type { CommitStyle } from './commit-style';
 import { normalizeNode } from '../../helpers';

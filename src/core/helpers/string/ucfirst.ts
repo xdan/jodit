@@ -5,6 +5,10 @@
  */
 
 /**
+ * @module helpers/string
+ */
+
+/**
  * Make a string's first character uppercase
  */
 export function ucfirst(value: string): string {

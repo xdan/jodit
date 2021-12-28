@@ -7,6 +7,7 @@
 /**
  * [[include:core/ui/button/README.md]]
  * @packageDocumentation
+ * @module ui/button
  */
 
 export * from './button/button';

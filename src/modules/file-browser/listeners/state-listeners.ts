@@ -4,8 +4,11 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IFileBrowserItem } from '../../../types';
-import type { FileBrowser } from '../file-browser';
+/**
+ * @module modules/file-browser
+ */
+
+import type { IFileBrowser, IFileBrowserItem } from '../../../types';
 import { Dom } from '../../../core/dom';
 import { normalizePath } from '../../../core/helpers/normalize';
 import { Button } from '../../../core/ui';
@@ -15,7 +18,7 @@ const DEFAULT_SOURCE_NAME = 'default';
 /**
  * Convert state to view
  */
-export function stateListeners(this: FileBrowser): void {
+export function stateListeners(this: IFileBrowser): void {
 	const { state, files, create, options, elementsMap } = this,
 		getDomElement = (item: IFileBrowserItem): HTMLElement => {
 			const key = item.uniqueHashKey;

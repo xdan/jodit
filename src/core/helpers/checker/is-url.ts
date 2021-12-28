@@ -5,6 +5,10 @@
  */
 
 /**
+ * @module helpers/checker
+ */
+
+/**
  * Check if a string is a url
  */
 export function isURL(str: string): boolean {

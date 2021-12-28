@@ -7,6 +7,7 @@
 /**
  * [[include:core/decorators/idle/README.md]]
  * @packageDocumentation
+ * @module decorators/idle
  */
 
 import type {

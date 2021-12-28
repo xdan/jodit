@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module helpers/string
+ */
+
 export const kebabCase = (key: string): string => {
 	return key
 		.replace(/([A-Z])([A-Z])([a-z])/g, '$1-$2$3')

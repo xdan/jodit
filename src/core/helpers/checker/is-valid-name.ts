@@ -5,6 +5,10 @@
  */
 
 /**
+ * @module helpers/checker
+ */
+
+/**
  * Check if name has normal format
  */
 export function isValidName(name: string): boolean {

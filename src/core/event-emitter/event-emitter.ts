@@ -7,6 +7,7 @@
 /**
  * [[include:core/event-emitter/README.md]]
  * @packageDocumentation
+ * @module event-emitter
  */
 
 import type {
@@ -18,7 +19,7 @@ import { defaultNameSpace, EventHandlersStore } from './store';
 import { isString } from '../helpers/checker/is-string';
 import { isFunction } from '../helpers/checker/is-function';
 import { isArray } from '../helpers/checker/is-array';
-import { error } from '../helpers/type';
+import { error } from '../helpers';
 
 /**
  * The module editor's event manager

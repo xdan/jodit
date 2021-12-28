@@ -7,6 +7,7 @@
 /**
  * [[include:core/request/README.md]]
  * @packageDocumentation
+ * @module request
  */
 
 import type {

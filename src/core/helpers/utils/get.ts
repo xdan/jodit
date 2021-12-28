@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module helpers/utils
+ */
+
 import type { IDictionary, Nullable } from '../../../types';
 import { isString } from '../checker/is-string';
 import { isVoid } from '../checker/is-void';

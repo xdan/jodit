@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/xpath
+ */
+
 import './xpath.less';
 
 import type { IControlTypeStrong, IToolbarButton } from '../../types';

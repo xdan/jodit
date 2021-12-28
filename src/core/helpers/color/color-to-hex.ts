@@ -5,6 +5,10 @@
  */
 
 /**
+ * @module helpers/color
+ */
+
+/**
  * Converts rgba text representation of color in hex
  *
  * @param color - string like rgba(red, green, blue, alpha) or rgb(red, green, blue)

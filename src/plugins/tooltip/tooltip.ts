@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/tooltip
+ */
+
 import './tooltip.less';
 
 import type { IJodit, IPoint } from '../../types';

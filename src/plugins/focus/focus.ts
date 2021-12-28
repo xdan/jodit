@@ -7,6 +7,7 @@
 /**
  * [[include:plugins/focus/README.md]]
  * @packageDocumentation
+ * @module plugins/focus
  */
 
 import type { IJodit } from '../../types';

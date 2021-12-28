@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/inline-popup
+ */
+
 import type { IControlType, IJodit } from '../../../../types';
 import { align } from './img';
 

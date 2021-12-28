@@ -4,6 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:README.md]]
+ * @packageDocumentation
+ * @module jodit
+ */
+
 import './styles';
 
 declare function require(moduleName: string): any;

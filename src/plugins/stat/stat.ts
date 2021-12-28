@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/stat
+ */
+
 import type { Nullable } from '../../types';
 import { Config } from '../../config';
 import { INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from '../../core/constants';

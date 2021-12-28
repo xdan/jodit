@@ -7,6 +7,7 @@
 /**
  * [[include:plugins/add-new-line/README.md]]
  * @packageDocumentation
+ * @module plugins/add-new-line
  */
 
 import './add-new-line.less';

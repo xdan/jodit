@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module helpers/normalize
+ */
+
 export * from './normalize-key-aliases';
 export * from './normalize-license';
 export * from './normalize-node';

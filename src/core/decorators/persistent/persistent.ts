@@ -7,6 +7,7 @@
 /**
  * [[include:core/decorators/persistent/README.md]]
  * @packageDocumentation
+ * @module decorators/persistent
  */
 
 import type { IComponent, IDictionary, IViewComponent } from '../../../types';

@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module helpers/size
+ */
+
 export * from './get-content-width';
 export * from './get-scroll-parent';
 export * from './inner-width';

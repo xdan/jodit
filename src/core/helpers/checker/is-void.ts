@@ -5,6 +5,10 @@
  */
 
 /**
+ * @module helpers/checker
+ */
+
+/**
  * Check value is undefined or null
  */
 export function isVoid(value: unknown): value is undefined | null {

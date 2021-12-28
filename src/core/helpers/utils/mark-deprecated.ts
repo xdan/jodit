@@ -5,6 +5,10 @@
  */
 
 /**
+ * @module helpers/utils
+ */
+
+/**
  * By default terser will remove all `console.*` but
  * if you use this object it will not be
  */

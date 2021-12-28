@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module types
+ */
+
 import { IViewOptions, IViewWithToolbar } from './view';
 import type { Config } from '../config';
 import type { CustomCommand, ICreate, IObserver, IStatusBar, Modes } from './';

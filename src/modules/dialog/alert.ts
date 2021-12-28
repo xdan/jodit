@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module modules/dialog
+ */
+
 import { Dialog } from './dialog';
 import { asArray, isFunction } from '../../core/helpers/';
 import { Dom } from '../../core/dom';

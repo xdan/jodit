@@ -4,6 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:modules/toolbar/collection/README.md]]
+ * @packageDocumentation
+ * @module modules/toolbar/collection
+ */
+
 import './collection.less';
 
 import type {

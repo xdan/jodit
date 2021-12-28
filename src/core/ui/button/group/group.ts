@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module ui/button
+ */
+
 import './group.less';
 
 import type {
@@ -12,7 +16,7 @@ import type {
 	IUIOption,
 	IViewBased
 } from '../../../../types';
-import { UIGroup } from '../../list/group';
+import { UIGroup } from '../../group';
 import { component } from '../../../decorators';
 import { UIButton } from '../button/button';
 

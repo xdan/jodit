@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module types
+ */
+
 import type { IComponent, IDictionary } from './types';
 
 export type DecoratorHandler = <T extends IComponent & IDictionary>(

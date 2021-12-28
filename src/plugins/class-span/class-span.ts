@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/class-span
+ */
+
 import type { IControlType, IJodit } from '../../types';
 import { Plugin } from '../../core/plugin';
 import { Config } from '../../config';

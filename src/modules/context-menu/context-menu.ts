@@ -7,6 +7,7 @@
 /**
  * [[include:modules/context-menu/README.md]]
  * @packageDocumentation
+ * @module modules/context-menu
  */
 
 import './context-menu.less';

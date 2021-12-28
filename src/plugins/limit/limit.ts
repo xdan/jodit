@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/limit
+ */
+
 import type { IJodit, SnapshotType } from '../../types';
 import { Config } from '../../config';
 import { Plugin } from '../../core/plugin';

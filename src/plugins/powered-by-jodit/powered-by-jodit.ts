@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/powered-by-jodit
+ */
+
 import type { IJodit } from '../../types';
 
 declare module '../../config' {

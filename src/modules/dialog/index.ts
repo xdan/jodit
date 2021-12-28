@@ -7,6 +7,7 @@
 /**
  * [[include:modules/dialog/README.md]]
  * @packageDocumentation
+ * @module modules/dialog
  */
 
 export { Dialog } from './dialog';

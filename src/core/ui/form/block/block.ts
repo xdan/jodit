@@ -4,10 +4,14 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module ui/form/block
+ */
+
 import './block.less';
 
 import type { IUIElement, IViewBased } from '../../../../types';
-import { UIGroup } from '../../list/group';
+import { UIGroup } from '../../group';
 import { attr } from '../../../helpers/utils';
 import { component } from '../../../decorators';
 

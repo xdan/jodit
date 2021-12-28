@@ -7,6 +7,7 @@
 /**
  * [[include:core/decorators/wait/README.md]]
  * @packageDocumentation
+ * @module decorators/wait
  */
 
 import type { IViewBased, IViewComponent } from '../../../types';

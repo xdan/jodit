@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/bold
+ */
+
 import type { IDictionary, IJodit, IControlType } from '../../types';
 import { Config } from '../../config';
 import { isArray } from '../../core/helpers';

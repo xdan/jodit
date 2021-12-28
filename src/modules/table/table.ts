@@ -5,9 +5,9 @@
  */
 
 /**
- * Module for working with tables . Delete, insert , merger, division of cells , rows and columns.
- * When creating elements such as <table> for each of them
- * creates a new instance Jodit.modules.TableProcessor and it can be accessed via $('table').data('table-processor')
+ * [[include:modules/table/README.md]]
+ * @packageDocumentation
+ * @module modules/table
  */
 
 import type { ICreate, IDictionary, IJodit } from '../../types';

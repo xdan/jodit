@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/image/image-properties
+ */
+
 export * from './form';
-export * from './mainTab';
-export * from './positionTab';
+export * from './main-tab';
+export * from './position-tab';

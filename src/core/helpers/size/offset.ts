@@ -5,6 +5,10 @@
  */
 
 /**
+ * @module helpers/size
+ */
+
+/**
  * Calc relative offset by start editor field
  * @returns returns an object containing the properties top and left.
  */

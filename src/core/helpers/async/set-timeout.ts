@@ -5,6 +5,10 @@
  */
 
 /**
+ * @module helpers/async
+ */
+
+/**
  * Create async callback if set timeout value - else call function immediately
  */
 export function setTimeout<T = any>(

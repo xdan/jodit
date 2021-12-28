@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/select
+ */
+
 import type { IJodit, Nullable } from '../../types';
 import { Plugin } from '../../core/plugin';
 import { autobind, watch } from '../../core/decorators';

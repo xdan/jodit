@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module modules/file-browser
+ */
+
 import './styles';
 
 import { Config } from '../../config';
@@ -25,7 +29,8 @@ import type {
 	IUploaderOptions,
 	IDialog,
 	CanUndef,
-	IViewOptions
+	IViewOptions,
+	IObservable
 } from '../../types/';
 
 import { Storage } from '../../core/storage/';
@@ -35,7 +40,6 @@ import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 import './config';
 
 import { Dom } from '../../core/dom';
-import { ObserveObject } from '../../core/event-emitter/';
 import { makeDataProvider } from './factories';
 import { stateListeners } from './listeners/state-listeners';
 import { nativeListeners } from './listeners/native-listeners';
@@ -43,6 +47,11 @@ import { selfListeners } from './listeners/self-listeners';
 import { DEFAULT_SOURCE_NAME } from './data-provider';
 import { autobind } from '../../core/decorators';
 import { FileBrowserFiles, FileBrowserTree } from './ui';
+import { ObservableObject } from '../../core/event-emitter';
+
+/**
+ * @module modules/file-browser
+ */
 
 export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	/** @override */
@@ -61,20 +70,21 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	tree = new FileBrowserTree(this);
 	files = new FileBrowserFiles(this);
 
-	state = ObserveObject.create<IFileBrowserState>({
-		currentPath: '',
-		currentSource: DEFAULT_SOURCE_NAME,
-		currentBaseUrl: '',
+	state: IFileBrowserState & IObservable =
+		ObservableObject.create<IFileBrowserState>({
+			currentPath: '',
+			currentSource: DEFAULT_SOURCE_NAME,
+			currentBaseUrl: '',
 
-		activeElements: [],
-		elements: [],
-		messages: [],
-		sources: [],
-		view: 'tiles',
-		sortBy: 'changed-desc',
-		filterWord: '',
-		onlyImages: false
-	});
+			activeElements: [],
+			elements: [],
+			messages: [],
+			sources: [],
+			view: 'tiles',
+			sortBy: 'changed-desc',
+			filterWord: '',
+			onlyImages: false
+		});
 
 	dataProvider!: IFileBrowserDataProvider;
 
@@ -466,4 +476,13 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 		super.destruct();
 	}
+}
+
+export function isFileBrowserFilesItem(target: unknown): boolean {
+	return (
+		Dom.isElement(target) &&
+		target.classList.contains(
+			FileBrowserFiles.prototype.getFullElName('item')
+		)
+	);
 }

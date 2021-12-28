@@ -4,13 +4,17 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module ui
+ */
+
 import type {
 	CanUndef,
 	IDictionary,
 	IUIIconState,
 	IViewBased
 } from '../../types';
-import { css } from '../helpers/css';
+import { css } from '../helpers';
 
 export class Icon {
 	private static icons: IDictionary<string> = {};

@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/fullsize
+ */
+
 import './fullsize.less';
 
 import type { IViewWithToolbar, IControlType, IViewBased } from '../../types';

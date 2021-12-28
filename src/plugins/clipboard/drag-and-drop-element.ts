@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/clipboard
+ */
+
 import type { IViewComponent, Nullable } from '../../types';
 import { css, ctrlKey, dataBind, splitArray } from '../../core/helpers';
 import { Plugin } from '../../core/plugin';

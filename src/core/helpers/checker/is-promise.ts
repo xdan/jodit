@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module helpers/checker
+ */
+
 export function isPromise(val: any | Promise<any>): val is Promise<any> {
 	return val && typeof (val as Promise<any>).then === 'function';
 }

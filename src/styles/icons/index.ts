@@ -4,6 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:styles/icons/README.md]]
+ * @packageDocumentation
+ * @module icons
+ */
+
 import * as about from './about.svg';
 import * as addcolumn from './addcolumn.svg';
 import * as addrow from './addrow.svg';

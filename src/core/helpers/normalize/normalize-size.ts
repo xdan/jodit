@@ -5,6 +5,10 @@
  */
 
 /**
+ * @module helpers/normalize
+ */
+
+/**
  * Normalize value to CSS meters
  */
 export const normalizeSize = (value: string | number): string => {

@@ -4,6 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:modules/widget/tabs/README.md]]
+ * @packageDocumentation
+ * @module modules/widget/tabs
+ */
+
 import './tabs.less';
 
 import type { IDictionary, IJodit, IUIButton } from '../../../types';

@@ -7,6 +7,7 @@
 /**
  * [[include:core/decorators/cache/README.md]]
  * @packageDocumentation
+ * @module decorators/cache
  */
 
 import { error } from '../../helpers';

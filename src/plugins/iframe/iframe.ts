@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/iframe
+ */
+
 import type { IJodit } from '../../types';
 import { Config } from '../../config';
 import { css, defaultLanguage, attr, callPromise } from '../../core/helpers/';

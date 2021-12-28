@@ -5,6 +5,10 @@
  */
 
 /**
+ * @module helpers/checker
+ */
+
+/**
  * Check if function or method was not replaced on some custom implementation
  */
 export function isNativeFunction(f: Function): boolean {

@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/clipboard/paste
+ */
+
 import type { IJodit, Nullable } from '../../../types';
 import type { PasteEvent } from '../config';
 import { isArray, isNumber, isString, isVoid } from '../../../core/helpers';

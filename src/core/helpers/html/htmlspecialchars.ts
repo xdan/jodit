@@ -5,6 +5,10 @@
  */
 
 /**
+ * @module helpers/html
+ */
+
+/**
  * Convert special characters to HTML entities
  */
 export function htmlspecialchars(html: string): string {

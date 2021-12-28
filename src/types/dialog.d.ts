@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module types
+ */
+
 import type { IViewBased, IViewOptions } from './view';
 import type { IComponent, IContainer } from './types';
 import type { IMods } from './traits';

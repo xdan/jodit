@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module event-emitter
+ */
+
 export * from './event-emitter';
 export * from './observe-object';
 export * from './store';

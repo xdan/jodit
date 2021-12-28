@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/table
+ */
+
 import type { IBound, IJodit, Nullable } from '../../types';
 import { Plugin } from '../../core/plugin';
 import { Dom, Table } from '../../modules';

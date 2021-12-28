@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module ui/button
+ */
+
 import './button.less';
 
 import type {
@@ -17,7 +21,7 @@ import { UIElement } from '../../element';
 import { Dom } from '../../../dom';
 import { attr, isString, isFunction } from '../../../helpers';
 import { Icon } from '../../icon';
-import { UIList } from '../../list/list';
+import { UIList } from '../../group';
 import { autobind, component, watch } from '../../../decorators';
 import { STATUSES } from '../../../component';
 

@@ -5,6 +5,10 @@
  */
 
 /**
+ * @module helpers/checker
+ */
+
+/**
  * Detect if string is HTML from MS Word or Excel
  */
 export function isHtmlFromWord(data: string): boolean {

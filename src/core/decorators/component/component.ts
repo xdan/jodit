@@ -7,6 +7,7 @@
 /**
  * [[include:core/decorators/component/README.md]]
  * @packageDocumentation
+ * @module decorators/component
  */
 
 import { isFunction } from '../../helpers';

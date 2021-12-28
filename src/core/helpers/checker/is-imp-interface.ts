@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module helpers/checker
+ */
+
 import type { IContainer, IDestructible, IInitable } from '../../../types';
 import { isFunction } from './is-function';
 import { Dom } from '../../dom';

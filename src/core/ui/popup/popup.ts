@@ -7,6 +7,7 @@
 /**
  * [[include:core/ui/popup/README.md]]
  * @packageDocumentation
+ * @module ui/popup
  */
 
 import './popup.less';

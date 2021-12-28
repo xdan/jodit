@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module traits
+ */
+
 import type { IComponent, IContainer, IDictionary, IMods } from '../../types';
 import { toArray } from '../helpers/array/to-array';
 

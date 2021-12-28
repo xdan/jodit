@@ -7,6 +7,7 @@
 /**
  * [[include:core/selection/README.md]]
  * @packageDocumentation
+ * @module selection
  */
 
 import type {

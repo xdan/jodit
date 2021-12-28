@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module types
+ */
+
 import type {
 	IDestructible,
 	IDictionary,
@@ -13,7 +17,9 @@ import type {
 } from './types';
 import type { IUploader, IUploaderOptions } from './uploader';
 import type { IViewBased, IViewOptions } from './view';
-import type { IUIElement } from './ui';
+import type { IUIGroup } from './ui';
+import type { IObservable } from './observer';
+import type { IDialog } from './dialog';
 
 /**
  * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new
@@ -244,10 +250,16 @@ export interface IFileBrowser<
 	T extends IFileBrowserOptions = IFileBrowserOptions
 > extends IViewBased<T> {
 	readonly dataProvider: IFileBrowserDataProvider;
-	readonly state: IFileBrowserState;
+	readonly state: IFileBrowserState & IObservable;
 
-	readonly tree: IUIElement;
-	readonly files: IUIElement;
+	readonly dialog: IDialog;
+	readonly tree: IUIGroup;
+	readonly files: IUIGroup;
+
+	readonly elementsMap: IDictionary<{
+		elm: HTMLElement;
+		item: IFileBrowserItem;
+	}>;
 
 	isOpened: boolean;
 
@@ -259,6 +271,10 @@ export interface IFileBrowser<
 	close(): void;
 
 	status(message: string | Error, success?: boolean): void;
+
+	loadItems(): Promise<void>;
+	loadTree(): Promise<void>;
+	deleteFile(path: string, source: string): Promise<void>;
 }
 
 export interface IFileBrowserMessage {

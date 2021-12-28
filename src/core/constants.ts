@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module constants
+ */
+
 import type { IDictionary } from '../types';
 
 export const INVISIBLE_SPACE = '\uFEFF';

@@ -7,6 +7,7 @@
 /**
  * [[include:plugins/README.md]]
  * @packageDocumentation
+ * @module plugins
  */
 
 export { addNewLine } from './add-new-line/add-new-line';

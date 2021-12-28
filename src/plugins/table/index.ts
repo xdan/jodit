@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/table
+ */
+
 import './config';
 export * from './resize-cells';
 export * from './select-cells';

@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/source
+ */
+
 export * from './area';
 export * from './ace';
 // export * from "./custom"; // You can add here another source editor

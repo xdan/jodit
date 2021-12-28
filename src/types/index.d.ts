@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module types
+ */
+
 export * from './ajax';
 export * from './async';
 export * from './context';
@@ -13,7 +17,7 @@ export * from './dialog';
 export * from './events';
 export * from './file-browser';
 export * from './jodit';
-export * from './observe';
+export * from './observer';
 export * from './select';
 export * from './plugin';
 export * from './popup';

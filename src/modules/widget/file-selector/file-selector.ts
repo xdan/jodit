@@ -4,6 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:modules/widget/file-selector/README.md]]
+ * @packageDocumentation
+ * @module modules/widget/file-selector
+ */
+
 import type {
 	IFileBrowserCallBackData,
 	IJodit,

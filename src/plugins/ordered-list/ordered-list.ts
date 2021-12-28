@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/ordered-list
+ */
+
 import type { IControlType, IJodit, Nullable } from '../../types';
 import { Config } from '../../config';
 import { Dom } from '../../core/dom';

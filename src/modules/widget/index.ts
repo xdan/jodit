@@ -4,6 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:modules/widget/README.md]]
+ * @packageDocumentation
+ * @module modules/widget
+ */
+
 export * from './color-picker/color-picker';
 export * from './tabs/tabs';
 export * from './file-selector/file-selector';

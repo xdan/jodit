@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/error-messages
+ */
+
 import './errors-messages.less';
 
 import type { IJodit } from '../../types';

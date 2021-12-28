@@ -4,8 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module helpers/size
+ */
+
 import type { Nullable } from '../../../types';
-import { css } from '../css';
+import { css } from '../utils';
 import { Dom } from '../../dom';
 
 export function getScrollParent(node: Nullable<Node>): Nullable<Element> {

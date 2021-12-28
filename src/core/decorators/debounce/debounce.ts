@@ -7,6 +7,7 @@
 /**
  * [[include:core/decorators/debounce/README.md]]
  * @packageDocumentation
+ * @module decorators/debounce
  */
 
 import type {

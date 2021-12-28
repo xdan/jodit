@@ -4,8 +4,12 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module helpers/html
+ */
+
 import { isString } from '../checker';
-import { $$ } from '../selector';
+import { $$ } from '../utils';
 import { trim } from '../string';
 import { Dom } from '../../dom';
 import { attr } from '../utils';

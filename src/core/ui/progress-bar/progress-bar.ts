@@ -7,6 +7,7 @@
 /**
  * [[include:core/ui/progress-bar/README.md]]
  * @packageDocumentation
+ * @module ui/progress-bar
  */
 
 

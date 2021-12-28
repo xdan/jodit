@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/image/image-properties
+ */
+
 import type { IJodit } from '../../../../types';
 import { Icon } from '../../../../core/ui';
 

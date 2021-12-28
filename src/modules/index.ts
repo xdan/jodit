@@ -4,12 +4,18 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:modules/README.md]]
+ * @packageDocumentation
+ * @module modules
+ */
+
 export * from '../core/event-emitter';
 export { Async } from '../core/async';
 export * from '../core/request';
 export { Component, ViewComponent, STATUSES } from '../core/component';
 export { ContextMenu } from './context-menu/context-menu';
-export { Alert, Confirm, Prompt, Dialog } from './dialog/';
+export * from './dialog/';
 export { Dom } from '../core/dom';
 export { Plugin } from '../core/plugin';
 export { Create } from '../core/create';
@@ -30,7 +36,7 @@ export {
 } from '../core/ui';
 export { View } from '../core/view/view';
 export { ViewWithToolbar } from '../core/view/view-with-toolbar';
-export { FileBrowser } from './file-browser/file-browser';
+export * from './file-browser';
 import * as Helpers from '../core/helpers/';
 export { Helpers };
 export { ImageEditor } from './image-editor/image-editor';

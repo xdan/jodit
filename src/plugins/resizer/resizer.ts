@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/resizer
+ */
+
 import './resizer.less';
 
 import type { HTMLTagNames, IBound, Nullable } from '../../types';

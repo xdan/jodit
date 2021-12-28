@@ -5,6 +5,10 @@
  */
 
 /**
+ * @module helpers/checker
+ */
+
+/**
  * Check value is String
  */
 export function isString(value: unknown): value is string {

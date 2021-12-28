@@ -4,15 +4,18 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IDictionary } from '../../../types';
-import type { FileBrowser } from '../file-browser';
+/**
+ * @module modules/file-browser
+ */
+
+import type { IDictionary, IFileBrowser } from '../../../types';
 import { Confirm, Prompt } from '../../dialog';
 import { isValidName } from '../../../core/helpers/checker';
 import { normalizePath } from '../../../core/helpers';
 import { DEFAULT_SOURCE_NAME } from '../data-provider';
 import { openImageEditor } from '../../image-editor/image-editor';
 
-export function selfListeners(this: FileBrowser): void {
+export function selfListeners(this: IFileBrowser): void {
 	const state = this.state,
 		dp = this.dataProvider,
 		self = this;

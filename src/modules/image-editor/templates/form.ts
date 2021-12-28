@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2021 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module modules/image-editor
+ */
+
 import type { ImageEditorOptions, IViewBased } from '../../../types';
 import { Icon } from '../../../core/ui';
 

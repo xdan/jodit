@@ -7,6 +7,7 @@
 /**
  * [[include:core/storage/README.md]]
  * @packageDocumentation
+ * @module storage
  */
 
 import type { IStorage, StorageValueType } from '../../types';
