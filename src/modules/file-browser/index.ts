@@ -5,6 +5,6 @@
  */
 
 /**
- * [[include:modules/file-browser/README2.md]]
+ * [[include:modules/file-browser/README.md]]
  * @packageDocumentation
  */
