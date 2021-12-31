@@ -4,7 +4,7 @@ This is the heart of Jodit. All processes inside Jodit mostly flow through event
 const jodit = Jodit.make('#editor');
 jodit.e.on('someEvent', (param) => alert(`Some event fired for ${param}!!!`));
 jodit.async.setTimeout(() => {
-  jodit.e.on('someEvent', 'you');
+  jodit.e.fire('someEvent', 'you');
 }, 1000);
 ```
 
