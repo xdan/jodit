@@ -252,7 +252,6 @@ export interface IFileBrowser<
 	readonly dataProvider: IFileBrowserDataProvider;
 	readonly state: IFileBrowserState & IObservable;
 
-	readonly dialog: IDialog;
 	readonly tree: IUIGroup;
 	readonly files: IUIGroup;
 

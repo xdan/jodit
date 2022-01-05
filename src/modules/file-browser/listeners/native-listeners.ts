@@ -46,7 +46,7 @@ export function nativeListeners(this: IFileBrowser): void {
 
 	self.e
 		.on(self.tree.container, 'dragstart', (e: MouseEvent): void => {
-			const a = getItem(e.target, self.dialog.container);
+			const a = getItem(e.target, self.container);
 
 			if (!a) {
 				return;
@@ -83,7 +83,7 @@ export function nativeListeners(this: IFileBrowser): void {
 					}
 				}
 
-				const a = getItem(e.target, self.dialog.container);
+				const a = getItem(e.target, self.container);
 
 				if (!a) {
 					return;
@@ -112,7 +112,7 @@ export function nativeListeners(this: IFileBrowser): void {
 			}
 		})
 		.on(self.files.container, 'click', (e: MouseEvent): false | void => {
-			const a = getItem(e.target, self.dialog.container);
+			const a = getItem(e.target, self.container);
 
 			if (!a) {
 				return;
@@ -139,7 +139,7 @@ export function nativeListeners(this: IFileBrowser): void {
 		})
 		.on(self.files.container, 'dragstart', (e: MouseEvent) => {
 			if (self.o.moveFile) {
-				const a = getItem(e.target, self.dialog.container);
+				const a = getItem(e.target, self.container);
 
 				if (!a) {
 					return;
@@ -148,7 +148,5 @@ export function nativeListeners(this: IFileBrowser): void {
 				dragElement = a;
 			}
 		})
-		.on(self.dialog.container, 'drop', (e: DragEvent) =>
-			e.preventDefault()
-		);
+		.on(self.container, 'drop', (e: DragEvent) => e.preventDefault());
 }

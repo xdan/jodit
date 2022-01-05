@@ -202,7 +202,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 	override OPTIONS!: IFileBrowserOptions;
 
-	dialog!: IDialog;
+	private dialog!: IDialog;
 
 	/**
 	 * Container for set/get value
@@ -378,14 +378,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			minHeight: 300,
 			buttons: this.o.headerButtons ?? ['fullsize', 'dialog.close']
 		});
-
-		['afterClose', 'beforeOpen'].forEach(proxyEvent => {
-			self.dialog.events.on(self.dialog, proxyEvent, () => {
-				this.e.fire(proxyEvent);
-			});
-		});
+		this.proxyDialogEvents(self);
 
 		self.browser.component = this;
+		self.container = self.browser;
 
 		if (self.o.showFoldersPanel) {
 			self.browser.appendChild(self.tree.container);
@@ -463,6 +459,14 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		}
 
 		self.initUploader(self);
+	}
+
+	private proxyDialogEvents(self: FileBrowser) {
+		['afterClose', 'beforeOpen'].forEach(proxyEvent => {
+			self.dialog.events.on(self.dialog, proxyEvent, () => {
+				this.e.fire(proxyEvent);
+			});
+		});
 	}
 
 	override destruct(): void {

@@ -33,7 +33,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 	const contextmenu = makeContextMenu(self);
 
 	return (e: DragEvent): boolean | void => {
-		const a = getItem(e.target, self.dialog.container);
+		const a = getItem(e.target, self.container);
 
 		if (!a) {
 			return;
@@ -253,7 +253,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 			]);
 		}, self.defaultTimeout);
 
-		self?.dialog.e
+		self.e
 			.on('beforeClose', () => contextmenu.close())
 			.on('beforeDestruct', () => contextmenu.destruct());
 
