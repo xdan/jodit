@@ -12,6 +12,7 @@ import type { IFileBrowser, IFileBrowserItem } from '../../../types';
 import { Dom } from '../../../core/dom';
 import { normalizePath } from '../../../core/helpers/normalize';
 import { Button } from '../../../core/ui';
+import { elementsMap } from '../builders/elements-map';
 
 const DEFAULT_SOURCE_NAME = 'default';
 
@@ -19,12 +20,14 @@ const DEFAULT_SOURCE_NAME = 'default';
  * Convert state to view
  */
 export function stateListeners(this: IFileBrowser): void {
-	const { state, files, create, options, elementsMap } = this,
+	const elmMap = elementsMap(this);
+
+	const { state, files, create, options } = this,
 		getDomElement = (item: IFileBrowserItem): HTMLElement => {
 			const key = item.uniqueHashKey;
 
-			if (elementsMap[key]) {
-				return elementsMap[key].elm;
+			if (elmMap[key]) {
+				return elmMap[key].elm;
 			}
 
 			const elm = create.fromHTML(
@@ -38,12 +41,12 @@ export function stateListeners(this: IFileBrowser): void {
 
 			elm.dataset.key = key;
 
-			elementsMap[key] = {
+			elmMap[key] = {
 				item,
 				elm
 			};
 
-			return elementsMap[key].elm;
+			return elmMap[key].elm;
 		};
 
 	state
@@ -65,7 +68,7 @@ export function stateListeners(this: IFileBrowser): void {
 		.on('beforeChange.activeElements', () => {
 			state.activeElements.forEach(item => {
 				const key = item.uniqueHashKey,
-					{ elm } = elementsMap[key];
+					{ elm } = elmMap[key];
 
 				elm &&
 					elm.classList.remove(
@@ -79,7 +82,7 @@ export function stateListeners(this: IFileBrowser): void {
 
 			state.activeElements.forEach(item => {
 				const key = item.uniqueHashKey,
-					{ elm } = elementsMap[key];
+					{ elm } = elmMap[key];
 
 				elm &&
 					elm.classList.add(

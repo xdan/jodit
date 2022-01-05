@@ -18,6 +18,7 @@ import type {
 import { ctrlKey, attr } from '../../../core/helpers';
 import contextMenu from '../builders/context-menu';
 import { Dom } from '../../../core/dom';
+import { elementsMap } from '../builders/elements-map';
 
 export const getItem = (
 	node: Nullable<EventTarget>,
@@ -41,6 +42,7 @@ export const elementToItem = (
 
 export function nativeListeners(this: IFileBrowser): void {
 	let dragElement: false | HTMLElement = false;
+	const elmMap = elementsMap(this);
 
 	const self = this;
 
@@ -118,7 +120,7 @@ export function nativeListeners(this: IFileBrowser): void {
 				return;
 			}
 
-			const item = elementToItem(a, self.elementsMap);
+			const item = elementToItem(a, elmMap);
 
 			if (!item) {
 				return;

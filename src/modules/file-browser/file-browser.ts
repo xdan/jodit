@@ -20,7 +20,6 @@ import type {
 	IFileBrowserCallBackData,
 	IFileBrowserOptions,
 	IFileBrowserState,
-	IFileBrowserItem,
 	IFileBrowserDataProvider,
 	IJodit,
 	IStorage,
@@ -321,11 +320,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			this.loadTree().then(resolve, reject);
 		});
 	}
-
-	elementsMap: IDictionary<{
-		elm: HTMLElement;
-		item: IFileBrowserItem;
-	}> = {};
 
 	private initUploader(editor?: IFileBrowser | IJodit) {
 		const self = this,

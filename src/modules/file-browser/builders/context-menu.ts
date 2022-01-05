@@ -17,6 +17,7 @@ import { makeContextMenu } from '../factories';
 import { Icon } from '../../../core/ui';
 import { elementToItem, getItem } from '../listeners/native-listeners';
 import { openImageEditor } from '../../image-editor/image-editor';
+import { elementsMap } from './elements-map';
 
 const CLASS_PREVIEW = 'jodit-filebrowser-preview',
 	preview_tpl_next = (next = 'next', right = 'right') =>
@@ -45,7 +46,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 			ga = (key: string) => attr(item, key) || '';
 
 		self.async.setTimeout(() => {
-			const selectedItem = elementToItem(a, self.elementsMap);
+			const selectedItem = elementToItem(a, elementsMap(self));
 
 			if (!selectedItem) {
 				return;

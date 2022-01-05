@@ -255,11 +255,6 @@ export interface IFileBrowser<
 	readonly tree: IUIGroup;
 	readonly files: IUIGroup;
 
-	readonly elementsMap: IDictionary<{
-		elm: HTMLElement;
-		item: IFileBrowserItem;
-	}>;
-
 	isOpened: boolean;
 
 	open(
