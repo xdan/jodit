@@ -10,28 +10,26 @@
 	width: 460px;
 	padding: var(--padding-default);
 
-	.jodit-symbols__container_table,
-	.jodit-symbols__container_preview {
-		display: inline-block;
-		vertical-align: top;
+	&__container {
+		display: flex;
 	}
 
-	.jodit-symbols__container_table {
+	&__container_table {
 		width: 88%;
 	}
 
-	.jodit-symbols__container_preview {
+	&__container_preview {
 		width: 12%;
-
-		.jodit-symbols__preview {
-			padding: 20px 0;
-			border: 1px solid var(--color-border);
-			font-size: 34px;
-			text-align: center;
-		}
 	}
 
-	table {
+	&__preview {
+		padding: 20px 0;
+		border: 1px solid var(--color-border);
+		font-size: 34px;
+		text-align: center;
+	}
+
+	&__table {
 		border: 0;
 		border-spacing: 0;
 		table-layout: fixed;

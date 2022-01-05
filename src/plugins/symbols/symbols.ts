@@ -43,7 +43,7 @@ export class symbols extends Plugin {
 			const container = jodit.c.fromHTML(
 					`<div class="jodit-symbols__container">
 						<div class="jodit-symbols__container_table">
-							<table><tbody></tbody></table>
+							<table class="jodit-symbols__table"><tbody></tbody></table>
 						</div>
 						<div class="jodit-symbols__container_preview">
 							<div class="jodit-symbols__preview"></div>
