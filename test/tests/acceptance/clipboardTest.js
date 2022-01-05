@@ -1199,7 +1199,7 @@ describe('Clipboard text', function () {
 		describe('plain text', function () {
 			it('Should Insert text with <br> instead of \\n', function () {
 				const editor = getJodit(),
-					pastedText = 'test\ntest\ntest\ntest\ntest\n',
+					pastedText = 'test\r\ntest\ntest\ntest\ntest\n',
 					emulatePasteEvent = function (data) {
 						data.clipboardData = {
 							types: ['text/plain'],
