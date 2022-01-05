@@ -418,7 +418,7 @@ export class Select implements ISelect {
 
 			if (this.j.iframe) {
 				if (this.doc.readyState === 'complete') {
-					this.j.iframe.focus();
+					this.j.iframe.focus(options);
 				}
 			}
 

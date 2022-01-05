@@ -13,14 +13,16 @@ import { css } from '../utils';
 import { Dom } from '../../dom';
 
 export function getScrollParent(node: Nullable<Node>): Nullable<Element> {
+	if (!node) {
+		return null;
+	}
+
 	const isElement = Dom.isHTMLElement(node);
 	const overflowY = isElement && css(node, 'overflowY');
 	const isScrollable =
 		isElement && overflowY !== 'visible' && overflowY !== 'hidden';
 
-	if (!node) {
-		return null;
-	} else if (isScrollable && node.scrollHeight >= node.clientHeight) {
+	if (isScrollable && node.scrollHeight >= node.clientHeight) {
 		return node;
 	}
 
