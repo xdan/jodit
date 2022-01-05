@@ -36,6 +36,12 @@ declare module '../../config' {
 
 		/**
 		 * On dbl click on empty space of editor it add new P element
+		 * @example
+		 * ```js
+		 * Jodit.make('#editor', {
+		 *   addNewLineOnDBLClick: false // disable
+		 * })
+		 * ```
 		 */
 		addNewLineOnDBLClick: boolean;
 
