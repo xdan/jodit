@@ -332,8 +332,8 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	/**
 	 * Move a file / directory on the server
 	 *
-	 * @param filepath - The relative path toWYSIWYG the file / folder source
-	 * @param path - Relative toWYSIWYG the directory where you want toWYSIWYG move the file / folder
+	 * @param filepath - The relative path to the file / folder source
+	 * @param path - Relative to the directory where you want to move the file / folder
 	 */
 	move(
 		filepath: string,

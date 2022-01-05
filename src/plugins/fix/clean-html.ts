@@ -33,7 +33,7 @@ declare module '../../config' {
 			timeout: number;
 
 			/**
-			 * Replace &amp;nbsp; toWYSIWYG plain space
+			 * Replace &amp;nbsp; to plain space
 			 */
 			replaceNBSP: boolean;
 			fillEmptyParagraph: boolean;

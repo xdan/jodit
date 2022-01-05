@@ -58,30 +58,30 @@ export interface AjaxOptions {
 	dataType?: string;
 
 	/**
-	 * The HTTP method toWYSIWYG use for the request
+	 * The HTTP method to use for the request
 	 * (e.g. "POST", "GET", "PUT")
 	 */
 	method?: string;
 
 	/**
-	 * A string containing the URL toWYSIWYG which the request is sent.
+	 * A string containing the URL which the request is sent.
 	 */
 	url?: string;
 
 	/**
-	 * Data toWYSIWYG be sent toWYSIWYG the server.
-	 * It is converted toWYSIWYG a query string, if not already a string. It's appended toWYSIWYG the url for GET-requests.
+	 * Data be sent to the server.
+	 * It is converted to a query string, if not already a string. It's appended to the url for GET-requests.
 	 */
 	data: DataVariant;
 
 	/**
-	 * When sending data toWYSIWYG the server, use this content type. Default is "application/x-www-form-urlencoded;
+	 * When sending data to the server, use this content type. Default is "application/x-www-form-urlencoded;
 	 * charset=UTF-8", which is fine for most cases
 	 */
 	contentType?: string | false;
 
 	/**
-	 * An object of additional header key/value pairs toWYSIWYG send along
+	 * An object of additional header key/value pairs to send along
 	 * with requests using the XMLHttpRequest transport. Uses in {@link FileBrowser|FileBrowser}
 	 * and {@link Uploader|Uploader}
 	 */

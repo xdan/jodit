@@ -37,7 +37,7 @@ export type BuildDataResult =
  * @property {object} uploader {@link Uploader|Uploader}'s settings
  * @property {string} uploader.url Point of entry for file uploader
  * @property {string} uploader.format='json' The format of the received data
- * @property {string} uploader.headers=null An object of additional header key/value pairs toWYSIWYG send along with
+ * @property {string} uploader.headers=null An object of additional header key/value pairs to send along with
  * requests using the XMLHttpRequest transport. See {@link Ajax.defaultAjaxOptions|Ajax.defaultAjaxOptions}
  * @property {function} uploader.prepareData Before send file will called this function. First argument it gets
  * [new FormData ()](https://developer.mozilla.org/en/docs/Web/API/FormData), you can use this if you want add some POST

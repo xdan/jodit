@@ -63,7 +63,7 @@ Config.prototype.iframeDoctype = '<!DOCTYPE html>';
 Config.prototype.iframeDefaultSrc = 'about:blank';
 
 /**
- * Custom style toWYSIWYG be used inside the iframe toWYSIWYG display content.
+ * Custom style to be used inside the iframe to display content.
  * @example
  * ```javascript
  * new Jodit('#editor', {
@@ -141,7 +141,7 @@ Config.prototype.iframeStyle =
 	'}';
 
 /**
- * Custom stylesheet files toWYSIWYG be used inside the iframe toWYSIWYG display content.
+ * Custom stylesheet files to be used inside the iframe to display content.
  *
  * @example
  * ```javascript

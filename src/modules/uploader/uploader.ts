@@ -159,7 +159,7 @@ export class Uploader extends ViewComponent implements IUploader {
 	 * Convert dataURI to Blob
 	 */
 	static dataURItoBlob(dataURI: string): Blob {
-		// convert base64 toWYSIWYG raw binary data held in a string
+		// convert base64 to raw binary data held in a string
 		// doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
 
 		const byteString: string = atob(dataURI.split(',')[1]),
@@ -168,7 +168,7 @@ export class Uploader extends ViewComponent implements IUploader {
 				.split(',')[0]
 				.split(':')[1]
 				.split(';')[0],
-			// write the bytes of the string toWYSIWYG an ArrayBuffer
+			// write the bytes of the string to an ArrayBuffer
 			ab: ArrayBuffer = new ArrayBuffer(byteString.length),
 			ia: Uint8Array = new Uint8Array(ab);
 
@@ -176,7 +176,7 @@ export class Uploader extends ViewComponent implements IUploader {
 			ia[i] = byteString.charCodeAt(i);
 		}
 
-		// write the ArrayBuffer toWYSIWYG a blob, and you're done
+		// write the ArrayBuffer to a blob, and you're done
 
 		return new Blob([ia], { type: mimeString });
 	}
@@ -512,12 +512,12 @@ export class Uploader extends ViewComponent implements IUploader {
 	}
 
 	/**
-	 * Set the handlers Drag and Drop toWYSIWYG `$form`
+	 * Set the handlers Drag and Drop to `$form`
 	 *
 	 * @param form - Form or any Node on which you can drag and drop the file. In addition will be processed
 	 * <code>&lt;input type="file" &gt;</code>
 	 * @param handlerSuccess - The function be called when a successful uploading files
-	 * toWYSIWYG the server
+	 * to the server
 	 * @param handlerError - The function that will be called during a failed download files a server
 	 * @example
 	 * ```javascript
@@ -704,7 +704,7 @@ export class Uploader extends ViewComponent implements IUploader {
 	}
 
 	/**
-	 * Upload images toWYSIWYG a server by its URL, making it through the connector server.
+	 * Upload images to a server by its URL, making it through the connector server.
 	 */
 	uploadRemoteImage(
 		url: string,

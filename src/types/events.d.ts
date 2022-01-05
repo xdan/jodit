@@ -48,7 +48,7 @@ interface IEventEmitter extends IDestructible {
 	/**
 	 * Sets the handler for the specified event (Event List) for a given element .
 	 *
-	 * @param {object|string} subjectOrEvents - The object for which toWYSIWYG set an event handler
+	 * @param {object|string} subjectOrEvents - The object for which to set an event handler
 	 * @param {string|Function} eventsOrCallback - List of events , separated by a space or comma
 	 * @param {function} [handlerOrSelector] - The event handler
 	 * @param {selector} [selector] - Selector for capturing
@@ -104,8 +104,8 @@ interface IEventEmitter extends IDestructible {
 	 *
 	 * @param {object} subjectOrEvents - The object which is disabled handlers
 	 * @param {string|Function} [eventsOrCallback] - List of events, separated by a space or comma , which is necessary
-	 * toWYSIWYG disable the handlers for a given object
-	 * @param {function} [handler] - Specific event handler toWYSIWYG be removed
+	 * to disable the handlers for a given object
+	 * @param {function} [handler] - Specific event handler to be removed
 	 *
 	 * @example
 	 * ```javascript

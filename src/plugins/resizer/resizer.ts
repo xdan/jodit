@@ -371,8 +371,8 @@ export class resizer extends Plugin {
 	}
 
 	/**
-	 * Bind an edit element toWYSIWYG element
-	 * @param element - The element that you want to add a function toWYSIWYG resize
+	 * Bind an edit element to element
+	 * @param element - The element that you want to add a function to resize
 	 */
 	@autobind
 	private bind(element: HTMLElement): void {

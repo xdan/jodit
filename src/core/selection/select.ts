@@ -166,7 +166,7 @@ export class Select implements ISelect {
 	}
 
 	/**
-	 * Insert the cursor toWYSIWYG any point x, y
+	 * Insert the cursor to any point x, y
 	 *
 	 * @param x - Coordinate by horizontal
 	 * @param y - Coordinate by vertical
@@ -623,7 +623,7 @@ export class Select implements ISelect {
 	/**
 	 * Inserts in the current cursor position some HTML snippet
 	 *
-	 * @param html - HTML The text toWYSIWYG be inserted into the document
+	 * @param html - HTML The text to be inserted into the document
 	 * @example
 	 * ```javascript
 	 * parent.s.insertHTML('<img src="image.png"/>');

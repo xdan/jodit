@@ -191,8 +191,8 @@ export class EventEmitter implements IEventEmitter {
 	/**
 	 * Sets the handler for the specified event ( Event List ) for a given element .
 	 *
-	 * @param subjectOrEvents - The object for which toWYSIWYG set an event handler
-	 * @param eventsOrCallback - List of events , separated by a space or comma
+	 * @param subjectOrEvents - The object for which to set an event handler
+	 * @param eventsOrCallback - List of events, separated by a space or comma
 	 * @param handlerOrSelector - The event handler
 	 * @param selector - Selector for capturing
 	 * @param onTop - Set handler in first
@@ -380,8 +380,8 @@ export class EventEmitter implements IEventEmitter {
 	 *
 	 * @param subjectOrEvents - The object which is disabled handlers
 	 * @param eventsOrCallback - List of events, separated by a space or comma , which is necessary
-	 * toWYSIWYG disable the handlers for a given object
-	 * @param handler - Specific event handler toWYSIWYG be removed
+	 * to disable the handlers for a given object
+	 * @param handler - Specific event handler to be removed
 	 *
 	 * @example
 	 * ```javascript
