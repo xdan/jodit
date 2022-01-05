@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.12.3
+ * Version: v3.12.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -1560,7 +1560,7 @@ function safeHTML(box, options) {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function nl2br(html) {
-    return html.replace(/[\n\r]/g, '<br/>');
+    return html.replace(/\r\n|\r|\n/g, '<br/>');
 }
 
 ;// CONCATENATED MODULE: ./src/core/helpers/html/index.ts
@@ -15333,7 +15333,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.12.3";
+        this.version = "3.12.4";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -15431,10 +15431,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.12.3";
+        return "3.12.4";
     }
     static getVersion() {
-        return "3.12.3";
+        return "3.12.4";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -17633,6 +17633,80 @@ function makeContextMenu(parent) {
 
 // EXTERNAL MODULE: ./src/core/helpers/normalize/index.ts + 9 modules
 var normalize = __webpack_require__(29);
+;// CONCATENATED MODULE: ./src/modules/file-browser/builders/elements-map.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const map = new WeakMap();
+const elementsMap = (view) => {
+    let result = map.get(view);
+    if (!result) {
+        result = {};
+        map.set(view, result);
+    }
+    return result;
+};
+
+// EXTERNAL MODULE: ./src/core/helpers/utils/error.ts
+var error = __webpack_require__(4);
+;// CONCATENATED MODULE: ./src/modules/file-browser/fetch/load-items.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+async function loadItems(fb) {
+    fb.files.setMod('active', true);
+    fb.files.setMod('loading', true);
+    return fb.dataProvider
+        .items(fb.state.currentPath, fb.state.currentSource, {
+        sortBy: fb.state.sortBy,
+        onlyImages: fb.state.onlyImages,
+        filterWord: fb.state.filterWord
+    })
+        .then(resp => {
+        fb.state.elements = resp;
+        fb.state.activeElements = [];
+    })
+        .catch(fb.status)
+        .finally(() => fb.files.setMod('loading', false));
+}
+
+;// CONCATENATED MODULE: ./src/modules/file-browser/fetch/load-tree.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+async function loadTree(fb) {
+    const errorUni = (e) => {
+        throw e instanceof Error ? e : (0,error/* error */.v)(e);
+    };
+    fb.tree.setMod('active', true);
+    dom/* Dom.detach */.i.detach(fb.tree.container);
+    const items = loadItems(fb);
+    if (fb.o.showFoldersPanel) {
+        fb.tree.setMod('loading', true);
+        const tree = fb.dataProvider
+            .tree(fb.state.currentPath, fb.state.currentSource)
+            .then(resp => {
+            fb.state.sources = resp;
+        })
+            .catch(e => {
+            errorUni(e);
+        })
+            .finally(() => fb.tree.setMod('loading', false));
+        return Promise.all([tree, items]).catch(error/* error */.v);
+    }
+    fb.tree.setMod('active', false);
+    return items.catch(error/* error */.v);
+}
+
 ;// CONCATENATED MODULE: ./src/modules/file-browser/listeners/state-listeners.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -17642,20 +17716,23 @@ var normalize = __webpack_require__(29);
 
 
 
+
+
 const state_listeners_DEFAULT_SOURCE_NAME = 'default';
 function stateListeners() {
-    const { state, files, create, options, elementsMap } = this, getDomElement = (item) => {
+    const elmMap = elementsMap(this);
+    const { state, files, create, options } = this, getDomElement = (item) => {
         const key = item.uniqueHashKey;
-        if (elementsMap[key]) {
-            return elementsMap[key].elm;
+        if (elmMap[key]) {
+            return elmMap[key].elm;
         }
         const elm = create.fromHTML(options.getThumbTemplate.call(this, item, item.source, item.sourceName.toString()));
         elm.dataset.key = key;
-        elementsMap[key] = {
+        elmMap[key] = {
             item,
             elm
         };
-        return elementsMap[key].elm;
+        return elmMap[key].elm;
     };
     state
         .on(['change.currentPath', 'change.currentSource'], this.async.debounce(() => {
@@ -17665,11 +17742,11 @@ function stateListeners() {
                 .set('currentPath', this.state.currentPath)
                 .set('currentSource', this.state.currentSource);
         }
-        this.loadTree();
+        loadTree(this).catch(this.status);
     }, this.defaultTimeout))
         .on('beforeChange.activeElements', () => {
         state.activeElements.forEach(item => {
-            const key = item.uniqueHashKey, { elm } = elementsMap[key];
+            const key = item.uniqueHashKey, { elm } = elmMap[key];
             elm &&
                 elm.classList.remove(files.getFullElName('item', 'active', true));
         });
@@ -17677,7 +17754,7 @@ function stateListeners() {
         .on('change.activeElements', () => {
         this.e.fire('changeSelection');
         state.activeElements.forEach(item => {
-            const key = item.uniqueHashKey, { elm } = elementsMap[key];
+            const key = item.uniqueHashKey, { elm } = elmMap[key];
             elm &&
                 elm.classList.add(files.getFullElName('item', 'active', true));
         });
@@ -18416,12 +18493,30 @@ function openImageEditor(href, name, path, source, onSuccess, onFailed) {
     });
 }
 
+;// CONCATENATED MODULE: ./src/modules/file-browser/fetch/delete-file.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function deleteFile(fb, name, source) {
+    return fb.dataProvider
+        .fileRemove(fb.state.currentPath, name, source)
+        .then(message => {
+        fb.status(message || fb.i18n('File "%s" was deleted', name), true);
+    })
+        .catch(fb.status);
+}
+
 ;// CONCATENATED MODULE: ./src/modules/file-browser/builders/context-menu.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
+
+
 
 
 
@@ -18439,14 +18534,14 @@ const CLASS_PREVIEW = 'jodit-filebrowser-preview', preview_tpl_next = (next = 'n
     }
     const contextmenu = makeContextMenu(self);
     return (e) => {
-        const a = getItem(e.target, self.dialog.container);
+        const a = getItem(e.target, self.container);
         if (!a) {
             return;
         }
         let item = a;
         const opt = self.options, ga = (key) => (0,helpers.attr)(item, key) || '';
         self.async.setTimeout(() => {
-            const selectedItem = elementToItem(a, self.elementsMap);
+            const selectedItem = elementToItem(a, elementsMap(self));
             if (!selectedItem) {
                 return;
             }
@@ -18478,9 +18573,14 @@ const CLASS_PREVIEW = 'jodit-filebrowser-preview', preview_tpl_next = (next = 'n
                         icon: 'bin',
                         title: 'Delete',
                         exec: async () => {
-                            await self.deleteFile(ga('data-name'), ga('data-source'));
+                            try {
+                                await deleteFile(self, ga('data-name'), ga('data-source'));
+                            }
+                            catch (e) {
+                                return self.status(e);
+                            }
                             self.state.activeElements = [];
-                            return self.loadTree();
+                            return loadTree(self).catch(self.status);
                         }
                     }
                     : false,
@@ -18565,7 +18665,9 @@ const CLASS_PREVIEW = 'jodit-filebrowser-preview', preview_tpl_next = (next = 'n
                 }
             ]);
         }, self.defaultTimeout);
-        self === null || self === void 0 ? void 0 : self.dialog.e.on('beforeClose', () => contextmenu.close()).on('beforeDestruct', () => contextmenu.destruct());
+        self.e
+            .on('beforeClose', () => contextmenu.close())
+            .on('beforeDestruct', () => contextmenu.destruct());
         e.stopPropagation();
         e.preventDefault();
         return false;
@@ -18581,6 +18683,8 @@ const CLASS_PREVIEW = 'jodit-filebrowser-preview', preview_tpl_next = (next = 'n
 
 
 
+
+
 const getItem = (node, root, tag = 'a') => dom/* Dom.closest */.i.closest(node, elm => dom/* Dom.isTag */.i.isTag(elm, tag), root);
 const elementToItem = (elm, elementsMap) => {
     const { key } = elm.dataset, { item } = elementsMap[key || ''];
@@ -18588,10 +18692,11 @@ const elementToItem = (elm, elementsMap) => {
 };
 function nativeListeners() {
     let dragElement = false;
+    const elmMap = elementsMap(this);
     const self = this;
     self.e
         .on(self.tree.container, 'dragstart', (e) => {
-        const a = getItem(e.target, self.dialog.container);
+        const a = getItem(e.target, self.container);
         if (!a) {
             return;
         }
@@ -18612,15 +18717,14 @@ function nativeListeners() {
                     return false;
                 }
             }
-            const a = getItem(e.target, self.dialog.container);
+            const a = getItem(e.target, self.container);
             if (!a) {
                 return;
             }
             self.dataProvider
                 .move(path, (0,helpers.attr)(a, '-path') || '', (0,helpers.attr)(a, '-source') || '', dragElement.classList.contains(this.files.getFullElName('item')))
-                .then(() => {
-                self.loadTree();
-            }, self.status);
+                .then(() => loadTree(this))
+                .catch(self.status);
             dragElement = false;
         }
     })
@@ -18631,11 +18735,11 @@ function nativeListeners() {
         }
     })
         .on(self.files.container, 'click', (e) => {
-        const a = getItem(e.target, self.dialog.container);
+        const a = getItem(e.target, self.container);
         if (!a) {
             return;
         }
-        const item = elementToItem(a, self.elementsMap);
+        const item = elementToItem(a, elmMap);
         if (!item) {
             return;
         }
@@ -18653,14 +18757,14 @@ function nativeListeners() {
     })
         .on(self.files.container, 'dragstart', (e) => {
         if (self.o.moveFile) {
-            const a = getItem(e.target, self.dialog.container);
+            const a = getItem(e.target, self.container);
             if (!a) {
                 return;
             }
             dragElement = a;
         }
     })
-        .on(self.dialog.container, 'drop', (e) => e.preventDefault());
+        .on(self.container, 'drop', (e) => e.preventDefault());
 }
 
 ;// CONCATENATED MODULE: ./src/modules/file-browser/listeners/self-listeners.ts
@@ -18669,6 +18773,9 @@ function nativeListeners() {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
+
+
 
 
 
@@ -18685,13 +18792,13 @@ function selfListeners() {
         .on('sort.filebrowser', (value) => {
         if (value !== state.sortBy) {
             state.sortBy = value;
-            self.loadItems();
+            loadItems(self).catch(self.status);
         }
     })
         .on('filter.filebrowser', (value) => {
         if (value !== state.filterWord) {
             state.filterWord = value;
-            self.loadItems();
+            loadItems(self).catch(self.status);
         }
     })
         .on('openFolder.filebrowser', (data) => {
@@ -18716,7 +18823,7 @@ function selfListeners() {
                 dp.folderRemove(data.path, data.name, data.source)
                     .then(message => {
                     self.status(message, true);
-                    self.loadTree();
+                    return loadTree(self);
                 })
                     .catch(self.status);
             }
@@ -18732,7 +18839,7 @@ function selfListeners() {
                 .then(message => {
                 self.state.activeElements = [];
                 self.status(message, true);
-                self.loadTree();
+                return loadTree(self);
             })
                 .catch(self.status);
             return;
@@ -18740,9 +18847,9 @@ function selfListeners() {
     })
         .on('addFolder.filebrowser', (data) => {
         Prompt(self.i18n('Enter Directory name'), self.i18n('Create directory'), (name) => {
-            dp.createFolder(name, data.path, data.source).then(() => {
-                self.loadTree();
-            }, self.status);
+            dp.createFolder(name, data.path, data.source)
+                .then(() => loadTree(self))
+                .catch(self.status);
         }, self.i18n('type name')).bindDestruct(self);
     })
         .on('fileRemove.filebrowser', () => {
@@ -18751,12 +18858,10 @@ function selfListeners() {
                 if (yes) {
                     const promises = [];
                     self.state.activeElements.forEach(item => {
-                        promises.push(self.deleteFile(item.file || item.name || '', item.sourceName));
+                        promises.push(deleteFile(self, item.file || item.name || '', item.sourceName));
                     });
                     self.state.activeElements = [];
-                    Promise.all(promises).then(() => {
-                        return self.loadTree();
-                    });
+                    Promise.all(promises).then(() => loadTree(self).catch(self.status), self.status);
                 }
             }).bindDestruct(self);
         }
@@ -18778,7 +18883,7 @@ function selfListeners() {
                     .then(message => {
                     self.state.activeElements = [];
                     self.status(message, true);
-                    self.loadItems();
+                    loadItems(self).catch(self.status);
                 })
                     .catch(self.status);
                 return;
@@ -18786,7 +18891,7 @@ function selfListeners() {
         }
     })
         .on('update.filebrowser', () => {
-        self.loadTree();
+        loadTree(this).then(this.status);
     });
 }
 
@@ -18851,11 +18956,13 @@ class FileBrowserTree extends ui/* UIGroup */.qe {
 
 
 
+
+
+
 class FileBrowser extends ViewWithToolbar {
     constructor(options) {
         var _a;
         super(options);
-        this.loader = this.c.div(this.getFullElName('loader'), '<div class="jodit-icon_loader"></div>');
         this.browser = this.c.div(this.componentName);
         this.status_line = this.c.div(this.getFullElName('status'));
         this.tree = new FileBrowserTree(this);
@@ -18884,7 +18991,6 @@ class FileBrowser extends ViewWithToolbar {
         this.close = () => {
             this.dialog.close();
         };
-        this.elementsMap = {};
         this.attachEvents(options);
         const self = this;
         self.options = (0,helpers.ConfigProto)(options || {}, config/* Config.defaultOptions.filebrowser */.D.defaultOptions.filebrowser);
@@ -18900,12 +19006,9 @@ class FileBrowser extends ViewWithToolbar {
             minHeight: 300,
             buttons: (_a = this.o.headerButtons) !== null && _a !== void 0 ? _a : ['fullsize', 'dialog.close']
         });
-        ['afterClose', 'beforeOpen'].forEach(proxyEvent => {
-            self.dialog.events.on(self.dialog, proxyEvent, () => {
-                this.e.fire(proxyEvent);
-            });
-        });
+        this.proxyDialogEvents(self);
         self.browser.component = this;
+        self.container = self.browser;
         if (self.o.showFoldersPanel) {
             self.browser.appendChild(self.tree.container);
         }
@@ -18965,61 +19068,10 @@ class FileBrowser extends ViewWithToolbar {
             self.state.currentSource = currentSource !== null && currentSource !== void 0 ? currentSource : '';
         }
         self.initUploader(self);
+        self.setStatus(component/* STATUSES.ready */.n$.ready);
     }
     className() {
         return 'Filebrowser';
-    }
-    async loadItems() {
-        this.files.setMod('active', true);
-        this.files.container.appendChild(this.loader.cloneNode(true));
-        return this.dataProvider
-            .items(this.state.currentPath, this.state.currentSource, {
-            sortBy: this.state.sortBy,
-            onlyImages: this.state.onlyImages,
-            filterWord: this.state.filterWord
-        })
-            .then(resp => {
-            this.state.elements = resp;
-            this.state.activeElements = [];
-        })
-            .catch(this.status);
-    }
-    async loadTree() {
-        const errorUni = (e) => {
-            throw e instanceof Error ? e : (0,helpers.error)(e);
-        };
-        if (this.uploader) {
-            this.uploader.setPath(this.state.currentPath);
-            this.uploader.setSource(this.state.currentSource);
-        }
-        this.tree.setMod('active', true);
-        dom/* Dom.detach */.i.detach(this.tree.container);
-        this.tree.container.appendChild(this.loader.cloneNode(true));
-        const items = this.loadItems();
-        if (this.o.showFoldersPanel) {
-            const tree = this.dataProvider
-                .tree(this.state.currentPath, this.state.currentSource)
-                .then(resp => {
-                this.state.sources = resp;
-            })
-                .catch(e => {
-                this.errorHandler(errorUni(this.i18n('Error on load folders')));
-                errorUni(e);
-            });
-            return Promise.all([tree, items]).catch(helpers.error);
-        }
-        else {
-            this.tree.setMod('active', false);
-        }
-        return items.catch(helpers.error);
-    }
-    deleteFile(name, source) {
-        return this.dataProvider
-            .fileRemove(this.state.currentPath, name, source)
-            .then(message => {
-            this.status(message || this.i18n('File "%s" was deleted', name), true);
-        })
-            .catch(this.status);
     }
     onSelect(callback) {
         return () => {
@@ -19053,6 +19105,9 @@ class FileBrowser extends ViewWithToolbar {
     status(message, success) {
         if (!(0,helpers.isString)(message)) {
             message = message.message;
+        }
+        if (!(0,helpers.isString)(message) || !(0,helpers.trim)(message).length) {
+            return;
         }
         const successClass = this.getFullElName('status', 'success', true), activeClass = this.getFullElName('status', 'active', true);
         this.status_line.classList.remove(successClass);
@@ -19096,21 +19151,30 @@ class FileBrowser extends ViewWithToolbar {
             this.toolbar.build((_a = this.o.buttons) !== null && _a !== void 0 ? _a : []).appendTo(header);
             this.dialog.open(this.browser, header);
             this.e.fire('sort.filebrowser', this.state.sortBy);
-            this.loadTree().then(resolve, reject);
+            loadTree(this).then(resolve, reject);
         });
     }
     initUploader(editor) {
         var _a;
         const self = this, options = (_a = editor === null || editor === void 0 ? void 0 : editor.options) === null || _a === void 0 ? void 0 : _a.uploader, uploaderOptions = (0,helpers.ConfigProto)(options || {}, config/* Config.defaultOptions.uploader */.D.defaultOptions.uploader);
-        const uploadHandler = () => {
-            return this.loadItems();
-        };
+        const uploadHandler = () => loadItems(this);
         self.uploader = self.getInstance('Uploader', uploaderOptions);
         self.uploader.setPath(self.state.currentPath);
         self.uploader.setSource(self.state.currentSource);
         self.uploader.bind(self.browser, uploadHandler, self.errorHandler);
+        this.state.on(['change.currentPath', 'change.currentSource'], () => {
+            this.uploader.setPath(this.state.currentPath);
+            this.uploader.setSource(this.state.currentSource);
+        });
         self.e.on('bindUploader.filebrowser', (button) => {
             self.uploader.bind(button, uploadHandler, self.errorHandler);
+        });
+    }
+    proxyDialogEvents(self) {
+        ['afterClose', 'beforeOpen'].forEach(proxyEvent => {
+            self.dialog.events.on(self.dialog, proxyEvent, () => {
+                this.e.fire(proxyEvent);
+            });
         });
     }
     destruct() {
@@ -23139,6 +23203,7 @@ class clipboard {
 config/* Config.prototype.askBeforePasteHTML */.D.prototype.askBeforePasteHTML = true;
 config/* Config.prototype.processPasteHTML */.D.prototype.processPasteHTML = true;
 config/* Config.prototype.askBeforePasteFromWord */.D.prototype.askBeforePasteFromWord = true;
+config/* Config.prototype.memorizeChoiceWhenPasteFragment */.D.prototype.memorizeChoiceWhenPasteFragment = false;
 config/* Config.prototype.processPasteFromWord */.D.prototype.processPasteFromWord = true;
 config/* Config.prototype.nl2brInPlainText */.D.prototype.nl2brInPlainText = true;
 config/* Config.prototype.defaultActionOnPaste */.D.prototype.defaultActionOnPaste = constants.INSERT_AS_HTML;
@@ -23308,10 +23373,12 @@ class paste extends Plugin {
     }
     processHTML(e, html) {
         if (this.j.o.askBeforePasteHTML) {
-            const cached = this.pasteStack.find(cachedItem => cachedItem.html === html);
-            if (cached) {
-                this.insertByType(e, html, cached.action || this.j.o.defaultActionOnPaste);
-                return true;
+            if (this.j.o.memorizeChoiceWhenPasteFragment) {
+                const cached = this.pasteStack.find(cachedItem => cachedItem.html === html);
+                if (cached) {
+                    this.insertByType(e, html, cached.action || this.j.o.defaultActionOnPaste);
+                    return true;
+                }
             }
             this.askInsertTypeDialog('Your code is similar to HTML. Keep as HTML?', 'Paste as HTML', (insertType) => {
                 this.insertByType(e, html, insertType);
@@ -24614,7 +24681,8 @@ config/* Config.prototype.controls.paragraph */.D.prototype.controls.paragraph =
         h2: 'Heading 2',
         h3: 'Heading 3',
         h4: 'Heading 4',
-        blockquote: 'Quote'
+        blockquote: 'Quote',
+        pre: 'Monospace'
     },
     isChildActive: (editor, control) => {
         const current = editor.s.current();
