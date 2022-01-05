@@ -33,34 +33,73 @@ describe('Clipboard text', function () {
 		});
 
 		describe('Two times times', function () {
-			it('Should not show dialog', function () {
-				const editor = getJodit({
-					defaultActionOnPaste: Jodit.INSERT_AS_HTML
-				});
+			describe('Enable memorizeChoiceWhenPasteFragment', () => {
+				it('Should not show dialog again', function () {
+					const editor = getJodit({
+						memorizeChoiceWhenPasteFragment: true
+					});
 
-				const pastedText = '<p>test</p>';
+					const pastedText = '<p>test</p>';
 
-				const emulatePasteEvent = function (data) {
-					data.clipboardData = {
-						types: ['text/html'],
-						getData: function () {
-							return pastedText;
-						}
+					const emulatePasteEvent = function (data) {
+						data.clipboardData = {
+							types: ['text/html'],
+							getData: function () {
+								return pastedText;
+							}
+						};
 					};
-				};
 
-				simulateEvent('paste', editor.editor, emulatePasteEvent);
+					simulateEvent('paste', editor.editor, emulatePasteEvent);
 
-				expect(editor.value).equals('');
+					expect(editor.value).equals('');
 
-				const dialog = getOpenedDialog(editor);
-				expect(dialog).is.not.null;
+					const dialog = getOpenedDialog(editor);
+					expect(dialog).is.not.null;
 
-				clickButton('keep', dialog);
+					clickButton('keep', dialog);
 
-				simulateEvent('paste', editor.editor, emulatePasteEvent);
+					simulateEvent('paste', editor.editor, emulatePasteEvent);
 
-				expect(getOpenedDialog(editor)).is.null;
+					expect(getOpenedDialog(editor)).is.null;
+				});
+			});
+
+			describe('Disable memorizeChoiceWhenPasteFragment', () => {
+				it('Should not show dialog again', function () {
+					const editor = getJodit({
+						memorizeChoiceWhenPasteFragment: false
+					});
+
+					const pastedText = '<p>test</p>';
+
+					const emulatePasteEvent = function (data) {
+						data.clipboardData = {
+							types: ['text/html'],
+							getData: function () {
+								return pastedText;
+							}
+						};
+					};
+
+					simulateEvent('paste', editor.editor, emulatePasteEvent);
+
+					expect(editor.value).equals('');
+
+					const dialog = getOpenedDialog(editor);
+					expect(dialog).is.not.null;
+
+					clickButton('keep', dialog);
+
+					simulateEvent('paste', editor.editor, emulatePasteEvent);
+
+					const dialog2 = getOpenedDialog(editor);
+					expect(dialog2).is.not.null;
+
+					clickButton('keep', dialog2);
+
+					expect(getOpenedDialog(editor)).is.null;
+				});
 			});
 
 			it('Should fire afterPaste two times', function () {
