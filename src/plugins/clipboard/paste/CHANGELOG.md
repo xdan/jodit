@@ -13,4 +13,5 @@ Changelog
 
 #### :rocket: New Feature
 
-Added PRE tag to the list of items
+Added `memorizeChoiceWhenPasteFragment` option: When the user inserts a piece of HTML, the plugin will ask - How to insert it.
+If after that user insert the same fragment again, the previous option will be used without extra question.

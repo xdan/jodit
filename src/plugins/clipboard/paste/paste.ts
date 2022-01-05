@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/clipboard/paste/README.md]]
+ * @packageDocumentation
  * @module plugins/clipboard/paste
  */
 
@@ -51,7 +53,7 @@ type PastedValue = {
  * Ask before paste HTML source
  */
 export class paste extends Plugin {
-	pasteStack: LimitedStack<PastedValue> = new LimitedStack(20);
+	private pasteStack: LimitedStack<PastedValue> = new LimitedStack(20);
 
 	/** @override **/
 	protected afterInit(jodit: IJodit): void {
@@ -169,17 +171,19 @@ export class paste extends Plugin {
 	 */
 	private processHTML(e: PasteEvent, html: string): boolean {
 		if (this.j.o.askBeforePasteHTML) {
-			const cached = this.pasteStack.find(
-				cachedItem => cachedItem.html === html
-			);
-
-			if (cached) {
-				this.insertByType(
-					e,
-					html,
-					cached.action || this.j.o.defaultActionOnPaste
+			if (this.j.o.memorizeChoiceWhenPasteFragment) {
+				const cached = this.pasteStack.find(
+					cachedItem => cachedItem.html === html
 				);
-				return true;
+
+				if (cached) {
+					this.insertByType(
+						e,
+						html,
+						cached.action || this.j.o.defaultActionOnPaste
+					);
+					return true;
+				}
 			}
 
 			this.askInsertTypeDialog(

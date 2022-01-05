@@ -16,6 +16,10 @@
 #### :rocket: New Feature
 
 * Added `monospace` button in format list https://github.com/xdan/jodit/issues/767
+* In plugin `paste` added `memorizeChoiceWhenPasteFragment` option: when the user inserts a piece of HTML, the plugin will ask - How to insert it.
+If after that user insert the same fragment again, the previous option will be used without extra question.
+
+> memorizeChoiceWhenPasteFragment = false, by default, it is Breaking change
 
 
 ## 3.12.1

@@ -35,6 +35,13 @@ declare module '../../config' {
 		 * Ask before paste HTML in WYSIWYG mode
 		 */
 		askBeforePasteHTML: boolean;
+
+		/**
+		 * When the user inserts a piece of HTML, the plugin will ask - How to insert it.
+		 * If after that user insert the same fragment again, the previous option will be used without extra question.
+		 */
+		memorizeChoiceWhenPasteFragment: boolean;
+
 		processPasteHTML: boolean;
 
 		askBeforePasteFromWord: boolean;
@@ -66,6 +73,7 @@ Config.prototype.askBeforePasteHTML = true;
 Config.prototype.processPasteHTML = true;
 
 Config.prototype.askBeforePasteFromWord = true;
+Config.prototype.memorizeChoiceWhenPasteFragment = false;
 Config.prototype.processPasteFromWord = true;
 
 Config.prototype.nl2brInPlainText = true;
