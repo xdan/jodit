@@ -5,6 +5,16 @@
 			"tagName": "@module",
 			"syntaxKind": "block",
 			"allowMultiple": false
-		}
+		},
+    {
+      "tagName": "@private",
+      "syntaxKind": "block",
+      "allowMultiple": false
+    },
+    {
+      "tagName": "@property",
+      "syntaxKind": "block",
+      "allowMultiple": false
+    }
 	]
 }

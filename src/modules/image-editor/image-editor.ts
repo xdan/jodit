@@ -656,15 +656,12 @@ export class ImageEditor extends ViewComponent {
 	/**
 	 * Open image editor
 	 *
-	 * @method open
-	 * @param {string} url
-	 * @param {function} save
-	 * @param {string} [save.name] new filename
-	 * @param {object} save.data Bound box for resize and crop operation
-	 * @param {string} save.data.action resize or crop
-	 * @param {object} save.data.box Bound box
-	 * @param {function} save.success called after success operation
-	 * @param {function} save.failed called after failed operation
+	 * @param [save.name] - new filename
+	 * @param save.data - Bound box for resize and crop operation
+	 * @param save.data.action - resize or crop
+	 * @param save.data.box - Bound box
+	 * @param save.success - called after success operation
+	 * @param save.failed - called after failed operation
 	 * @example
 	 * ```javascript
 	 * var jodit = new Jodit('.editor', {

@@ -1035,9 +1035,7 @@ describe('Clipboard text', function () {
 						};
 					});
 
-					expect(editor.value).equals(
-						'<p>test<br>test<br>test</p>'
-					);
+					expect(editor.value).equals('<p>test<br>test<br>test</p>');
 				});
 			});
 

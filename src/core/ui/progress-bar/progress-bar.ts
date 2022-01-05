@@ -10,7 +10,6 @@
  * @module ui/progress-bar
  */
 
-
 import './progress-bar.less';
 
 import type { IJodit, IProgressBar } from '../../../types';
