@@ -11,7 +11,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-          - uses: actions/checkout@v2
+          - name: Trigger documentation hook
             run: |
                 curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}"\
                   -H "Accept:application/vnd.github.everest-preview+json"\
