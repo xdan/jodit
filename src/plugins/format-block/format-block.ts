@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:src/plugins/format-block/README.md]]
+ * @packageDocumentation
  * @module plugins/format-block
  */
 
@@ -64,7 +66,8 @@ Config.prototype.controls.paragraph = {
 		h2: 'Heading 2',
 		h3: 'Heading 3',
 		h4: 'Heading 4',
-		blockquote: 'Quote'
+		blockquote: 'Quote',
+		pre: 'Monospace'
 	},
 
 	isChildActive: (editor: IJodit, control: IControlType): boolean => {
