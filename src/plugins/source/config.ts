@@ -8,14 +8,14 @@
  * @module plugins/source
  */
 
-import type { IControlType, IJodit } from '../../types';
+import type { IControlType, IJodit, ISourceEditor } from '../../types';
 import { Config } from '../../config';
 import * as consts from '../../core/constants';
 import { IS_IE } from '../../core/constants';
 
 declare module '../../config' {
 	interface Config {
-		sourceEditor: 'area' | 'ace';
+		sourceEditor: 'area' | 'ace' | ((jodit: IJodit) => ISourceEditor);
 
 		/**
 		 * Options for [ace](https://ace.c9.io/#config) editor

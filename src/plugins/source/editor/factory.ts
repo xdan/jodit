@@ -10,9 +10,10 @@
 
 import type { CallbackFunction, IJodit, ISourceEditor } from '../../../types';
 import { AceEditor, TextAreaEditor } from './engines';
+import { isFunction } from '../../../core/helpers';
 
 export function createSourceEditor(
-	type: 'ace' | 'mirror' | 'area',
+	type: 'ace' | 'mirror' | 'area' | ((jodit: IJodit) => ISourceEditor),
 	editor: IJodit,
 	container: HTMLElement,
 	toWYSIWYG: CallbackFunction,
@@ -20,25 +21,29 @@ export function createSourceEditor(
 ): ISourceEditor {
 	let sourceEditor: ISourceEditor;
 
-	switch (type) {
-		case 'ace':
-			if (!editor.o.shadowRoot) {
-				sourceEditor = new AceEditor(
+	if (isFunction(type)) {
+		sourceEditor = type(editor);
+	} else {
+		switch (type) {
+			case 'ace':
+				if (!editor.o.shadowRoot) {
+					sourceEditor = new AceEditor(
+						editor,
+						container,
+						toWYSIWYG,
+						fromWYSIWYG
+					);
+					break;
+				}
+
+			default:
+				sourceEditor = new TextAreaEditor(
 					editor,
 					container,
 					toWYSIWYG,
 					fromWYSIWYG
 				);
-				break;
-			}
-
-		default:
-			sourceEditor = new TextAreaEditor(
-				editor,
-				container,
-				toWYSIWYG,
-				fromWYSIWYG
-			);
+		}
 	}
 
 	sourceEditor.init(editor);
