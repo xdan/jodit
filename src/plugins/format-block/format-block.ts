@@ -5,7 +5,7 @@
  */
 
 /**
- * [[include:src/plugins/format-block/README.md]]
+ * [[include:plugins/format-block/README.md]]
  * @packageDocumentation
  * @module plugins/format-block
  */
