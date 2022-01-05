@@ -19,6 +19,7 @@ import { ctrlKey, attr } from '../../../core/helpers';
 import contextMenu from '../builders/context-menu';
 import { Dom } from '../../../core/dom';
 import { elementsMap } from '../builders/elements-map';
+import { loadTree } from '../fetch/load-tree';
 
 export const getItem = (
 	node: Nullable<EventTarget>,
@@ -100,9 +101,8 @@ export function nativeListeners(this: IFileBrowser): void {
 							this.files.getFullElName('item')
 						)
 					)
-					.then(() => {
-						self.loadTree();
-					}, self.status);
+					.then(() => loadTree(this))
+					.catch(self.status);
 
 				dragElement = false;
 			}

@@ -1,5 +1,6 @@
 @import (reference) '../../../../styles/variables';
 @import (reference) '../../../../styles/mixins';
+@import (reference) '../../styles/file-browser';
 
 .jodit-filebrowser-tree {
 	position: relative;
@@ -13,6 +14,10 @@
 
 	&_active_true {
 		display: flex;
+	}
+
+	&_loading_true {
+		.file-browser-loader();
 	}
 
 	.scrollbarSlim();

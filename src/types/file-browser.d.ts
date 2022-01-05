@@ -265,10 +265,6 @@ export interface IFileBrowser<
 	close(): void;
 
 	status(message: string | Error, success?: boolean): void;
-
-	loadItems(): Promise<void>;
-	loadTree(): Promise<void>;
-	deleteFile(path: string, source: string): Promise<void>;
 }
 
 export interface IFileBrowserMessage {

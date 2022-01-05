@@ -33,7 +33,13 @@ import type {
 } from '../../types/';
 
 import { Storage } from '../../core/storage/';
-import { error, isFunction, isString, ConfigProto } from '../../core/helpers/';
+import {
+	error,
+	isFunction,
+	isString,
+	ConfigProto,
+	trim
+} from '../../core/helpers/';
 import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
 
 import './config';
@@ -47,6 +53,9 @@ import { DEFAULT_SOURCE_NAME } from './data-provider';
 import { autobind } from '../../core/decorators';
 import { FileBrowserFiles, FileBrowserTree } from './ui';
 import { ObservableObject } from '../../core/event-emitter';
+import { loadTree } from './fetch/load-tree';
+import { loadItems } from './fetch/load-items';
+import { STATUSES } from '../../core/component';
 
 /**
  * @module modules/file-browser
@@ -57,11 +66,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	className(): string {
 		return 'Filebrowser';
 	}
-
-	private loader = this.c.div(
-		this.getFullElName('loader'),
-		'<div class="jodit-icon_loader"></div>'
-	);
 
 	private browser = this.c.div(this.componentName);
 	private status_line = this.c.div(this.getFullElName('status'));
@@ -86,75 +90,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		});
 
 	dataProvider!: IFileBrowserDataProvider;
-
-	async loadItems(): Promise<any> {
-		this.files.setMod('active', true);
-		this.files.container.appendChild(this.loader.cloneNode(true));
-
-		return this.dataProvider
-			.items(this.state.currentPath, this.state.currentSource, {
-				sortBy: this.state.sortBy,
-				onlyImages: this.state.onlyImages,
-				filterWord: this.state.filterWord
-			})
-			.then(resp => {
-				this.state.elements = resp;
-				this.state.activeElements = [];
-			})
-			.catch(this.status);
-	}
-
-	async loadTree(): Promise<any> {
-		const errorUni = (e: string | Error) => {
-			throw e instanceof Error ? e : error(e);
-		};
-
-		if (this.uploader) {
-			this.uploader.setPath(this.state.currentPath);
-			this.uploader.setSource(this.state.currentSource);
-		}
-
-		this.tree.setMod('active', true);
-
-		Dom.detach(this.tree.container);
-
-		this.tree.container.appendChild(this.loader.cloneNode(true));
-
-		const items = this.loadItems();
-
-		if (this.o.showFoldersPanel) {
-			const tree = this.dataProvider
-				.tree(this.state.currentPath, this.state.currentSource)
-				.then(resp => {
-					this.state.sources = resp;
-				})
-				.catch(e => {
-					this.errorHandler(
-						errorUni(this.i18n('Error on load folders'))
-					);
-
-					errorUni(e);
-				});
-
-			return Promise.all([tree, items]).catch(error);
-		} else {
-			this.tree.setMod('active', false);
-		}
-
-		return items.catch(error);
-	}
-
-	deleteFile(name: string, source: string): Promise<void> {
-		return this.dataProvider
-			.fileRemove(this.state.currentPath, name, source)
-			.then(message => {
-				this.status(
-					message || this.i18n('File "%s" was deleted', name),
-					true
-				);
-			})
-			.catch(this.status);
-	}
 
 	// eslint-disable-next-line no-unused-vars
 	private onSelect(callback?: (_: IFileBrowserCallBackData) => void) {
@@ -228,6 +163,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	status(message: string | Error, success?: boolean): void {
 		if (!isString(message)) {
 			message = message.message;
+		}
+
+		if (!isString(message) || !trim(message).length) {
+			return;
 		}
 
 		const successClass = this.getFullElName('status', 'success', true),
@@ -317,7 +256,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 			this.e.fire('sort.filebrowser', this.state.sortBy);
 
-			this.loadTree().then(resolve, reject);
+			loadTree(this).then(resolve, reject);
 		});
 	}
 
@@ -329,14 +268,17 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				Config.defaultOptions.uploader
 			) as IUploaderOptions<IUploader>;
 
-		const uploadHandler = () => {
-			return this.loadItems();
-		};
+		const uploadHandler = () => loadItems(this);
 
 		self.uploader = self.getInstance('Uploader', uploaderOptions);
 		self.uploader.setPath(self.state.currentPath);
 		self.uploader.setSource(self.state.currentSource);
 		self.uploader.bind(self.browser, uploadHandler, self.errorHandler);
+
+		this.state.on(['change.currentPath', 'change.currentSource'], () => {
+			this.uploader.setPath(this.state.currentPath);
+			this.uploader.setSource(this.state.currentSource);
+		});
 
 		self.e.on('bindUploader.filebrowser', (button: HTMLElement) => {
 			self.uploader.bind(button, uploadHandler, self.errorHandler);
@@ -453,6 +395,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		}
 
 		self.initUploader(self);
+		self.setStatus(STATUSES.ready);
 	}
 
 	private proxyDialogEvents(self: FileBrowser) {

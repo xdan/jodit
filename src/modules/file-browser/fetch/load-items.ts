@@ -1,0 +1,32 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+import type { IFileBrowser } from '../../../types';
+
+/**
+ * @module modules/file-browser
+ */
+
+/**
+ * Loads a list of files and adds them to the state
+ */
+export async function loadItems(fb: IFileBrowser): Promise<any> {
+	fb.files.setMod('active', true);
+	fb.files.setMod('loading', true);
+
+	return fb.dataProvider
+		.items(fb.state.currentPath, fb.state.currentSource, {
+			sortBy: fb.state.sortBy,
+			onlyImages: fb.state.onlyImages,
+			filterWord: fb.state.filterWord
+		})
+		.then(resp => {
+			fb.state.elements = resp;
+			fb.state.activeElements = [];
+		})
+		.catch(fb.status)
+		.finally(() => fb.files.setMod('loading', false));
+}

@@ -13,6 +13,7 @@ import { Dom } from '../../../core/dom';
 import { normalizePath } from '../../../core/helpers/normalize';
 import { Button } from '../../../core/ui';
 import { elementsMap } from '../builders/elements-map';
+import { loadTree } from '../fetch/load-tree';
 
 const DEFAULT_SOURCE_NAME = 'default';
 
@@ -62,7 +63,7 @@ export function stateListeners(this: IFileBrowser): void {
 						.set('currentSource', this.state.currentSource);
 				}
 
-				this.loadTree();
+				loadTree(this).catch(this.status);
 			}, this.defaultTimeout)
 		)
 		.on('beforeChange.activeElements', () => {

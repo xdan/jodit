@@ -14,6 +14,9 @@ import { isValidName } from '../../../core/helpers/checker';
 import { normalizePath } from '../../../core/helpers';
 import { DEFAULT_SOURCE_NAME } from '../data-provider';
 import { openImageEditor } from '../../image-editor/image-editor';
+import { loadTree } from '../fetch/load-tree';
+import { loadItems } from '../fetch/load-items';
+import { deleteFile } from '../fetch/delete-file';
 
 export function selfListeners(this: IFileBrowser): void {
 	const state = this.state,
@@ -29,13 +32,13 @@ export function selfListeners(this: IFileBrowser): void {
 		.on('sort.filebrowser', (value: string) => {
 			if (value !== state.sortBy) {
 				state.sortBy = value;
-				self.loadItems();
+				loadItems(self).catch(self.status);
 			}
 		})
 		.on('filter.filebrowser', (value: string) => {
 			if (value !== state.filterWord) {
 				state.filterWord = value;
-				self.loadItems();
+				loadItems(self).catch(self.status);
 			}
 		})
 		.on('openFolder.filebrowser', (data: IDictionary): void => {
@@ -64,7 +67,7 @@ export function selfListeners(this: IFileBrowser): void {
 						dp.folderRemove(data.path, data.name, data.source)
 							.then(message => {
 								self.status(message, true);
-								self.loadTree();
+								return loadTree(self);
 							})
 							.catch(self.status);
 					}
@@ -85,7 +88,7 @@ export function selfListeners(this: IFileBrowser): void {
 						.then(message => {
 							self.state.activeElements = [];
 							self.status(message, true);
-							self.loadTree();
+							return loadTree(self);
 						})
 						.catch(self.status);
 
@@ -100,9 +103,9 @@ export function selfListeners(this: IFileBrowser): void {
 				self.i18n('Enter Directory name'),
 				self.i18n('Create directory'),
 				(name: string) => {
-					dp.createFolder(name, data.path, data.source).then(() => {
-						self.loadTree();
-					}, self.status);
+					dp.createFolder(name, data.path, data.source)
+						.then(() => loadTree(self))
+						.catch(self.status);
 				},
 				self.i18n('type name')
 			).bindDestruct(self);
@@ -115,7 +118,8 @@ export function selfListeners(this: IFileBrowser): void {
 
 						self.state.activeElements.forEach(item => {
 							promises.push(
-								self.deleteFile(
+								deleteFile(
+									self,
 									item.file || item.name || '',
 									item.sourceName
 								)
@@ -124,9 +128,10 @@ export function selfListeners(this: IFileBrowser): void {
 
 						self.state.activeElements = [];
 
-						Promise.all(promises).then(() => {
-							return self.loadTree();
-						});
+						Promise.all(promises).then(
+							() => loadTree(self).catch(self.status),
+							self.status
+						);
 					}
 				}).bindDestruct(self);
 			}
@@ -162,7 +167,7 @@ export function selfListeners(this: IFileBrowser): void {
 									self.state.activeElements = [];
 									self.status(message, true);
 
-									self.loadItems();
+									loadItems(self).catch(self.status);
 								})
 								.catch(self.status);
 
@@ -175,6 +180,6 @@ export function selfListeners(this: IFileBrowser): void {
 			}
 		)
 		.on('update.filebrowser', () => {
-			self.loadTree();
+			loadTree(this).then(this.status);
 		});
 }

@@ -18,6 +18,8 @@ import { Icon } from '../../../core/ui';
 import { elementToItem, getItem } from '../listeners/native-listeners';
 import { openImageEditor } from '../../image-editor/image-editor';
 import { elementsMap } from './elements-map';
+import { loadTree } from '../fetch/load-tree';
+import { deleteFile } from '../fetch/delete-file';
 
 const CLASS_PREVIEW = 'jodit-filebrowser-preview',
 	preview_tpl_next = (next = 'next', right = 'right') =>
@@ -94,14 +96,19 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 							icon: 'bin',
 							title: 'Delete',
 							exec: async () => {
-								await self.deleteFile(
-									ga('data-name'),
-									ga('data-source')
-								);
+								try {
+									await deleteFile(
+										self,
+										ga('data-name'),
+										ga('data-source')
+									);
+								} catch (e: any) {
+									return self.status(e);
+								}
 
 								self.state.activeElements = [];
 
-								return self.loadTree();
+								return loadTree(self).catch(self.status);
 							}
 					  }
 					: false,

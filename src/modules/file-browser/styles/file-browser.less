@@ -6,6 +6,7 @@
 
 @import (reference) '../../../styles/variables';
 @import (reference) '../../../styles/mixins';
+@import (reference) '../../../styles/modules/icon';
 
 :root {
 	--first_column: 31%;
@@ -26,24 +27,6 @@
 
 	@media (max-width: @screen-xs) {
 		flex-flow: column-reverse;
-	}
-
-	&__loader {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-
-		div {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			margin-top: calc(var(--icon-loader-size) / -2);
-			margin-left: calc(var(--icon-loader-size) / -2);
-			font-style: normal;
-			opacity: 0.7;
-		}
 	}
 
 	&__status {
@@ -82,5 +65,28 @@
 		display: flex;
 		align-items: center;
 		padding-left: var(--padding-default);
+	}
+}
+
+.file-browser-loader() {
+	&:before {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		content: '';
+	}
+
+	&:after {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: calc(var(--icon-loader-size) / -2);
+		margin-left: calc(var(--icon-loader-size) / -2);
+		content: '';
+		opacity: 0.7;
+
+		.jodit-icon_loader();
 	}
 }
