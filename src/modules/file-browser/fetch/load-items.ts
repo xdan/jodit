@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IFileBrowser } from '../../../types';
-
 /**
  * @module modules/file-browser
  */
+
+import type { IFileBrowser } from '../../../types';
 
 /**
  * Loads a list of files and adds them to the state
