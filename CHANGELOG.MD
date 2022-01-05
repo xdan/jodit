@@ -27,6 +27,10 @@ observed.a = 5;
 
 * [New lines are removed when pasting plain text in the jodit editor #755](https://github.com/xdan/jodit/issues/755)
 
+#### :rocket: New Feature
+
+* In addition to the preinstalled editors, the source plugin adds the ability to use its own implementation. You can read more in the [documentation](https://xdsoft.net/jodit/docs/modules/plugins_source.html)
+
 ## 3.11.2
 
 #### :bug: Bug Fix

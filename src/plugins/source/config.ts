@@ -19,6 +19,16 @@ declare module '../../config' {
 
 		/**
 		 * Options for [ace](https://ace.c9.io/#config) editor
+		 * @example
+		 * ```js
+		 * Jodit.make('#editor', {
+		 * 	showGutter: true,
+		 * 	theme: 'ace/theme/idle_fingers',
+		 * 	mode: 'ace/mode/html',
+		 * 	wrap: true,
+§		 * 	highlightActiveLine: true
+		 * })
+		 * ```
 		 */
 		sourceEditorNativeOptions: {
 			showGutter: boolean;
@@ -27,6 +37,7 @@ declare module '../../config' {
 			wrap: string | boolean | number;
 			highlightActiveLine: boolean;
 		};
+
 		/**
 		 * Beautify HTML then it possible
 		 */

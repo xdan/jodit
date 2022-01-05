@@ -23,6 +23,8 @@ Jodit.make('#editor', {
 })
 ```
 
+## Custom editor
+
 You can implement your own text editor implementation, for example you can use [CodeMirror](https://codemirror.net/)
 To do this, you need to add a class that will implement the interface [[ISourceEditor]] and register it with the plugin.
 
