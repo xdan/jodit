@@ -7,6 +7,18 @@ on:
     branches: [ master ]
 
 jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Karma Tests
+
+      run: |
+        curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}"\
+          -H "Accept:application/vnd.github.everest-preview+json"\
+          -H "Content-Type: application/json"\
+          https://api.github.com/repos/xdan/jodit-autodoc/dispatches \
+          --data '{"event_type": "build_application" }'
 
   build:
 
@@ -20,4 +32,4 @@ jobs:
     - name: Run Karma Tests
       run: |
         npm install
-        npm run test        
+        npm run test
