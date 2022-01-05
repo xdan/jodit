@@ -54,7 +54,7 @@ export function isSuitElement(
 }
 
 /**
- * Внутри родительского элемента есть блок с теми же стилями
+ * Inside the parent element there is a block with the same styles
  * @example
  * For selection:
  * ```html

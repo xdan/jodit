@@ -547,7 +547,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 * It opens a dialog box to center it, and causes the two event.
 	 *
 	 * @param contentOrClose - specifies the contents of the dialog box.
-	 * Can be false или undefined. see `{@link Dialog~setContent|setContent}`
+	 * Can be false or undefined. see `{@link Dialog~setContent|setContent}`
 	 * @param title - specifies the title of the dialog box, @see setHeader
 	 * @param destroyAfterClose - true - After closing the window , the destructor will be called.
 	 * @param modal - true window will be opened in modal mode
