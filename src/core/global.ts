@@ -21,14 +21,10 @@ import { PluginSystem } from './plugin/plugin-system';
 
 import { Dom } from './dom';
 
-import {
-	getClassName,
-	isJoditObject,
-	isViewObject,
-	kebabCase
-} from './helpers/';
-
 import { EventEmitter } from './event-emitter';
+import { isJoditObject, isViewObject } from './helpers/checker';
+import { getClassName } from './helpers/utils/get-class-name';
+import { kebabCase } from './helpers/string';
 
 export const instances: IDictionary<IJodit> = {};
 

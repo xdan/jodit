@@ -9,6 +9,24 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.12.1
+
+#### :boom: Breaking Change
+
+* `ObserveObject` renamed to `ObservableObject`
+```js
+const obj = { a: 1, b: 2 };
+const observed = Jodit.modules.ObservableObject.create(obj);
+
+observed.on('change', (oldV, newV) => console.log(oldV, newV));
+observed.a = 5;
+```
+* [Replace additional newlines by HTML line breaks. #770](https://github.com/xdan/jodit/pull/770)
+
+#### :bug: Bug Fix
+
+* [New lines are removed when pasting plain text in the jodit editor #755](https://github.com/xdan/jodit/issues/755)
+
 ## 3.11.2
 
 #### :bug: Bug Fix

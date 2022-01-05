@@ -17,7 +17,8 @@ import type {
 	IViewComponent
 } from '../../../types';
 import type { Component } from '../../component';
-import { error, isFunction } from '../../helpers';
+import { isFunction } from '../../helpers/checker';
+import { error } from '../../helpers/utils/error';
 
 /**
  * Call on some component status

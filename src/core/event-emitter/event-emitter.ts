@@ -19,7 +19,7 @@ import { defaultNameSpace, EventHandlersStore } from './store';
 import { isString } from '../helpers/checker/is-string';
 import { isFunction } from '../helpers/checker/is-function';
 import { isArray } from '../helpers/checker/is-array';
-import { error } from '../helpers';
+import { error } from '../helpers/utils/error';
 
 /**
  * The module editor's event manager

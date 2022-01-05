@@ -18,13 +18,13 @@ import type {
 	DecoratorHandler
 } from '../../../types';
 import {
-	error,
 	isFunction,
 	isNumber,
 	isPlainObject,
 	isViewObject
-} from '../../helpers';
+} from '../../helpers/checker';
 import { Component, STATUSES } from '../../component';
+import { error } from '../../helpers/utils/error';
 
 export function debounce<V = IViewComponent | IViewBased>(
 	timeout?: number | ((ctx: V) => number | IAsyncParams) | IAsyncParams,

@@ -1019,7 +1019,7 @@ describe('Clipboard text', function () {
 
 		describe('nl2brInPlainText enable', function () {
 			describe('Enable', function () {
-				it('Should add BR element before \n', function () {
+				it('Should replace \n to BR element', function () {
 					const editor = getJodit({
 						nl2brInPlainText: true
 					});
@@ -1036,7 +1036,7 @@ describe('Clipboard text', function () {
 					});
 
 					expect(editor.value).equals(
-						'<p>test<br>\ntest<br>\ntest</p>'
+						'<p>test<br>test<br>test</p>'
 					);
 				});
 			});
@@ -1211,10 +1211,10 @@ describe('Clipboard text', function () {
 						};
 					};
 
-				simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
+				simulateEvent('paste', editor.editor, emulatePasteEvent);
 
 				expect(editor.value).equals(
-					'<p>test<br>\ntest<br>\ntest<br>\ntest<br>\ntest<br>\n</p>'
+					'<p>test<br>test<br>test<br>test<br>test<br></p>'
 				);
 			});
 		});

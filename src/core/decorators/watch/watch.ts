@@ -17,15 +17,11 @@ import type {
 	IDictionary,
 	IViewComponent
 } from '../../../types';
-import {
-	error,
-	isFunction,
-	isPlainObject,
-	isViewObject,
-	splitArray
-} from '../../helpers';
+import { isFunction, isPlainObject, isViewObject } from '../../helpers/checker';
 import { ObservableObject } from '../../event-emitter';
 import { STATUSES } from '../../component';
+import { splitArray } from '../../helpers/array/split-array';
+import { error } from '../../helpers/utils/error';
 
 export function getPropertyDescriptor(
 	obj: unknown,
