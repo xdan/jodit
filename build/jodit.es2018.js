@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.12.2
+ * Version: v3.12.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -15333,7 +15333,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.12.2";
+        this.version = "3.12.3";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -15431,10 +15431,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.12.2";
+        return "3.12.3";
     }
     static getVersion() {
-        return "3.12.2";
+        return "3.12.3";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -29770,7 +29770,7 @@ class symbols extends Plugin {
         jodit.e.on('generateSpecialCharactersTable.symbols', () => {
             const container = jodit.c.fromHTML(`<div class="jodit-symbols__container">
 						<div class="jodit-symbols__container_table">
-							<table><tbody></tbody></table>
+							<table class="jodit-symbols__table"><tbody></tbody></table>
 						</div>
 						<div class="jodit-symbols__container_preview">
 							<div class="jodit-symbols__preview"></div>

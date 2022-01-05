@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.12.2
+ * Version: v3.12.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -13293,7 +13293,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.12.2";
+        _this.version = "3.12.3";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -13435,10 +13435,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.12.2";
+        return "3.12.3";
     };
     View.getVersion = function () {
-        return "3.12.2";
+        return "3.12.3";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -32838,7 +32838,7 @@ var symbols = (function (_super) {
     symbols.prototype.afterInit = function (jodit) {
         var _this = this;
         jodit.e.on('generateSpecialCharactersTable.symbols', function () {
-            var container = jodit.c.fromHTML("<div class=\"jodit-symbols__container\">\n\t\t\t\t\t\t<div class=\"jodit-symbols__container_table\">\n\t\t\t\t\t\t\t<table><tbody></tbody></table>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"jodit-symbols__container_preview\">\n\t\t\t\t\t\t\t<div class=\"jodit-symbols__preview\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>"), preview = container.querySelector('.jodit-symbols__preview'), table = container.querySelector('table'), body = table.tBodies[0], chars = [];
+            var container = jodit.c.fromHTML("<div class=\"jodit-symbols__container\">\n\t\t\t\t\t\t<div class=\"jodit-symbols__container_table\">\n\t\t\t\t\t\t\t<table class=\"jodit-symbols__table\"><tbody></tbody></table>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"jodit-symbols__container_preview\">\n\t\t\t\t\t\t\t<div class=\"jodit-symbols__preview\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>"), preview = container.querySelector('.jodit-symbols__preview'), table = container.querySelector('table'), body = table.tBodies[0], chars = [];
             for (var i = 0; i < jodit.o.specialCharacters.length;) {
                 var tr = jodit.c.element('tr');
                 for (var j = 0; j < _this.countInRow && i < jodit.o.specialCharacters.length; j += 1, i += 1) {

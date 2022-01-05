@@ -1,14 +1,14 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.12.2
+ * Version: v3.12.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
 	/*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.12.2
+ * Version: v3.12.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -4944,7 +4944,7 @@ a + .jodit-filebrowser-tree__source-title {
 }
 html.jodit_fullsize-box_true,
 body.jodit_fullsize-box_true {
-  overflow: initial !important;
+  overflow: hidden !important;
   width: 0 !important;
   height: 0 !important;
 }
@@ -5447,32 +5447,32 @@ html.jodit_fullsize-box_true {
   width: 460px;
   padding: 8px;
 }
-.jodit-symbols .jodit-symbols__container_table,
-.jodit-symbols .jodit-symbols__container_preview {
-  display: inline-block;
-  vertical-align: top;
+.jodit-symbols__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
-.jodit-symbols .jodit-symbols__container_table {
+.jodit-symbols__container_table {
   width: 88%;
 }
-.jodit-symbols .jodit-symbols__container_preview {
+.jodit-symbols__container_preview {
   width: 12%;
 }
-.jodit-symbols .jodit-symbols__container_preview .jodit-symbols__preview {
+.jodit-symbols__preview {
   padding: 20px 0;
   border: 1px solid #dadada;
   font-size: 34px;
   text-align: center;
 }
-.jodit-symbols table {
+.jodit-symbols__table {
   border: 0;
   border-spacing: 0;
   table-layout: fixed;
 }
-.jodit-symbols table td {
+.jodit-symbols__table td {
   padding: 0;
 }
-.jodit-symbols table td a {
+.jodit-symbols__table td a {
   display: inline-block;
   width: calc(18px * 1.2);
   height: calc(18px * 1.2);
@@ -5487,10 +5487,10 @@ html.jodit_fullsize-box_true {
   text-decoration: none;
   vertical-align: top;
 }
-.jodit-symbols table td a:hover {
+.jodit-symbols__table td a:hover {
   outline: 2px solid #dadada;
 }
-.jodit-symbols table td a:focus {
+.jodit-symbols__table td a:focus {
   outline: 2px solid #dadada;
 }
 
