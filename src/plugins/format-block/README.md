@@ -37,4 +37,4 @@ Jodit.make('#editor', {
 });
 ```
 
--   [Changelog](plugins/format-block/CHANGELOG.md)
+[//]: # (-   [Changelog]&#40;plugins/format-block/CHANGELOG.md&#41;)
