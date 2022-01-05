@@ -14,7 +14,7 @@ Jodit.modules.Helpers.nl2br('hello\nworld') // hello<br>world
 
 > All helpers, regardless of the group, are in the namespace `Jodit.modules.Helpers`
 
-The most commonly used helpers are checkers [[helpers/checkers]]:
+The most commonly used helpers are checkers [[helpers/checker]]:
 
 ```js
 Jodit.modules.Helpers.isBoolean('hello') // false
