@@ -1,0 +1,20 @@
+name: Run tests
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
+
+jobs:
+    docs:
+        runs-on: ubuntu-latest
+
+        steps:
+          - uses: actions/checkout@v2
+            run: |
+                curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}"\
+                  -H "Accept:application/vnd.github.everest-preview+json"\
+                  -H "Content-Type: application/json"\
+                  https://api.github.com/repos/xdan/jodit-autodoc/dispatches \
+                  --data '{"event_type": "build_application" }'
