@@ -1,6 +1,7 @@
 ![Jodit WYSIWYG editor](https://raw.githubusercontent.com/xdan/jodit/master/examples/assets/logo.png)
 
 # Jodit Editor 3
+
 An excellent WYSIWYG editor written in pure TypeScript without the use of additional libraries. Its file editor and image editor.
 
 [![Build Status](https://github.com/xdan/jodit/workflows/Run%20tests/badge.svg)](https://github.com/xdan/jodit/actions/workflows/tests.yml)

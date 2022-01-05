@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:README.md]]
+ * @packageDocumentation
  * @module jodit
  */
 
