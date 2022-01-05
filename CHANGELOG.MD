@@ -13,6 +13,11 @@
 
 * [Fixed Full Screen showing elements not part of editable content #763](Issue: https://github.com/xdan/jodit/issues/763)
 
+#### :rocket: New Feature
+
+* Added `monospace` button in format list https://github.com/xdan/jodit/issues/767
+
+
 ## 3.12.1
 
 #### :boom: Breaking Change
