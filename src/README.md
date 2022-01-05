@@ -37,7 +37,7 @@ Jodit.make('#editor', {
 });
 ```
 
-Jodit instance has a module [[EventsEmitter]]
+Jodit instance has a module [[EventEmitter]]
 
 ```js
 const jodit = Jodit.make('#editor');
