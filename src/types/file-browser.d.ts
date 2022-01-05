@@ -246,6 +246,7 @@ export interface IFileBrowserDataProvider extends IDestructible {
 	onProgress(callback: (percentage: number) => void): void;
 }
 
+// TODO - Remove extending
 export interface IFileBrowser<
 	T extends IFileBrowserOptions = IFileBrowserOptions
 > extends IViewBased<T> {
