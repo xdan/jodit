@@ -8,7 +8,7 @@
  * @module plugins/source
  */
 
-import type { ISourceEditor } from '../../../../types';
+import type { ISourceEditor } from 'jodit/types';
 import { SourceEditor } from '../sourceEditor';
 
 export class CustomEditor

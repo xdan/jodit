@@ -8,11 +8,11 @@
  * @module helpers/html
  */
 
-import { isString } from '../checker';
-import { $$ } from '../utils';
-import { trim } from '../string';
-import { Dom } from '../../dom';
-import { attr } from '../utils';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { $$ } from 'jodit/core/helpers/utils';
+import { trim } from 'jodit/core/helpers/string/trim';
+import { Dom } from 'jodit/core/dom';
+import { attr } from 'jodit/core/helpers/utils';
 
 /**
  * Extract plain text from HTML text

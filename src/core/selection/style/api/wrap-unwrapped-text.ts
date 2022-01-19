@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, Nullable } from '../../../../types';
+import type { IJodit, Nullable } from 'jodit/types';
 import type { CommitStyle } from '../commit-style';
-import { Dom } from '../../../dom';
+import { Dom } from 'jodit/core/dom';
 
 /**
  * Wrap text or inline elements inside Block element

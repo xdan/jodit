@@ -5,10 +5,10 @@
  */
 
 import type { CommitStyle } from '../commit-style';
-import { Dom } from '../../../dom';
+import type { IDictionary } from 'jodit/types';
+import { Dom } from 'jodit/core/dom';
 import { isSameStyleChild, isSuitElement } from './is-suit-element';
-import { attr, css } from '../../../helpers';
-import type { IDictionary } from '../../../../types';
+import { attr, css } from 'jodit/core/helpers';
 
 /**
  * Unwrap all suit elements inside

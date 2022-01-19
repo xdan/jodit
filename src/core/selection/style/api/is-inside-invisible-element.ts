@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Dom } from '../../../dom';
+import { Dom } from 'jodit/core/dom';
 
 /**
  * Check if FONT inside STYLE or SCRIPT element

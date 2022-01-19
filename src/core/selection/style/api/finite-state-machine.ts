@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { CanUndef, IDictionary } from '../../../../types';
+import type { CanUndef, IDictionary } from 'jodit/types';
 
 /**
  * A state machine implementation for applying styles.

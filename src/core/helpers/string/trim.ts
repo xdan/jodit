@@ -13,7 +13,7 @@ import {
 	SPACE_REG_EXP_START,
 	INVISIBLE_SPACE_REG_EXP_END,
 	INVISIBLE_SPACE_REG_EXP_START
-} from '../../constants';
+} from 'jodit/core/constants';
 
 /**
  * It clears the line of all auxiliary invisible characters , from the spaces and line breaks , tabs

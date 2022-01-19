@@ -9,7 +9,7 @@
  */
 
 import { IViewOptions, IViewWithToolbar } from './view';
-import type { Config } from '../config';
+import type { Config } from 'jodit/config';
 import type { CustomCommand, ICreate, IObserver, IStatusBar, Modes } from './';
 import type { IUploader } from './uploader';
 import type { IFileBrowser } from './file-browser';

@@ -8,9 +8,9 @@
  * @module plugins/keyboard/backspace
  */
 
-import { Config } from '../../../config';
+import { Config } from 'jodit/config';
 
-declare module '../../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		delete: {
 			hotkeys: {

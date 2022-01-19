@@ -15,7 +15,7 @@ import type {
 	IJodit,
 	IViewBased,
 	IViewComponent
-} from '../types';
+} from 'jodit/types';
 
 import { PluginSystem } from './plugin/plugin-system';
 

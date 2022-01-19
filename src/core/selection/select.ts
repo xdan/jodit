@@ -21,15 +21,15 @@ import type {
 	Nullable
 } from 'jodit/types';
 
-import * as consts from '../constants';
+import * as consts from 'jodit/core/constants';
 
 import {
 	INSEPARABLE_TAGS,
 	INVISIBLE_SPACE,
 	INVISIBLE_SPACE_REG_EXP_END as INV_END,
 	INVISIBLE_SPACE_REG_EXP_START as INV_START
-} from '../constants';
-import { Dom } from '../dom';
+} from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom';
 
 import {
 	attr,
@@ -41,9 +41,9 @@ import {
 	call,
 	toArray,
 	getScrollParent
-} from '../helpers';
+} from 'jodit/core/helpers';
 import { CommitStyle } from './style/commit-style';
-import { autobind } from '../decorators';
+import { autobind } from 'jodit/core/decorators';
 
 export class Select implements ISelect {
 	constructor(readonly jodit: IJodit) {

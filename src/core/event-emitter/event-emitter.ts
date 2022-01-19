@@ -16,10 +16,10 @@ import type {
 	IEventEmitter
 } from 'jodit/types';
 import { defaultNameSpace, EventHandlersStore } from './store';
-import { isString } from '../helpers/checker/is-string';
-import { isFunction } from '../helpers/checker/is-function';
-import { isArray } from '../helpers/checker/is-array';
-import { error } from '../helpers/utils/error';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { isArray } from 'jodit/core/helpers/checker/is-array';
+import { error } from 'jodit/core/helpers/utils/error';
 
 /**
  * The module editor's event manager

@@ -5,7 +5,7 @@
  */
 
 import type { CommitMode, IJodit } from 'jodit/types';
-import type { CommitStyle } from '../../commit-style';
+import type { CommitStyle } from 'jodit/core/selection/style/commit-style';
 import {
 	attr,
 	css,
@@ -15,8 +15,8 @@ import {
 	size
 } from 'jodit/core/helpers';
 import { Dom } from 'jodit/core/dom';
-import { CHANGE, UNSET, UNWRAP } from '../../commit-style';
-import { getContainer } from '../../../../global';
+import { CHANGE, UNSET, UNWRAP } from 'jodit/core/selection/style/commit-style';
+import { getContainer } from 'jodit/core/global';
 
 /**
  * Toggles css and classname

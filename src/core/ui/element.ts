@@ -15,9 +15,9 @@ import type {
 	Nullable
 } from 'jodit/types';
 import { ViewComponent } from '../component';
-import { Dom } from '../dom';
+import { Dom } from 'jodit/core/dom';
 import { Elms, Mods } from '../traits';
-import { isString } from '../helpers';
+import { isString } from 'jodit/core/helpers';
 import { Icon } from './icon';
 
 export abstract class UIElement<T extends IViewBased = IViewBased>

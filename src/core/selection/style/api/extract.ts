@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit } from '../../../../types';
+import type { IJodit } from 'jodit/types';
 import { Select } from '../../select';
-import { call, trim } from '../../../helpers';
-import { Dom } from '../../../dom';
+import { call, trim } from 'jodit/core/helpers';
+import { Dom } from 'jodit/core/dom';
 
 /**
  * If the selection area is inside an element that matches the commit (suitable relative),

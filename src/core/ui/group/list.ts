@@ -20,16 +20,15 @@ import type {
 	Nullable,
 	ButtonsOption
 } from 'jodit/types';
-
-import { UIButton } from '../button';
-import { getStrongControlTypes } from '../helpers/get-strong-control-types';
-import { component, watch } from '../../decorators';
-import { UIGroup } from './group';
-import { UISpacer } from './spacer';
-import { UISeparator } from './separator';
-import { isButtonGroup } from '../helpers/buttons';
-import { getControlType } from '../helpers/get-control-type';
-import { splitArray } from '../../helpers';
+import { getStrongControlTypes } from 'jodit/core/ui/helpers/get-strong-control-types';
+import { component, watch } from 'jodit/core/decorators';
+import { UIGroup } from 'jodit/core/ui/group/group';
+import { UISeparator } from 'jodit/core/ui/group/separator';
+import { UISpacer } from 'jodit/core/ui/group/spacer';
+import { UIButton } from 'jodit/core/ui/button/button/button';
+import { isButtonGroup } from 'jodit/core/ui/helpers/buttons';
+import { getControlType } from 'jodit/core/ui/helpers/get-control-type';
+import { splitArray } from 'jodit/core/helpers/array';
 
 @component
 export class UIList<T extends IViewBased = IViewBased>
@@ -165,6 +164,11 @@ export class UIList<T extends IViewBased = IViewBased>
 						.forEach(addButton);
 				}
 			} else {
+				if (!group) {
+					group = this.makeGroup();
+					line.append(group);
+				}
+
 				const control = getControlType(item, this.j.o.controls);
 				isNotRemoved(control) && addButton(control);
 			}

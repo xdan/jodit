@@ -17,9 +17,13 @@ import type {
 	IDictionary,
 	IViewComponent
 } from 'jodit/types';
-import { isFunction, isPlainObject, isViewObject } from 'jodit/core/helpers/checker';
-import { ObservableObject } from '../../event-emitter';
-import { STATUSES } from '../../component';
+import {
+	isFunction,
+	isPlainObject,
+	isViewObject
+} from 'jodit/core/helpers/checker';
+import { ObservableObject } from 'jodit/core/event-emitter';
+import { STATUSES } from 'jodit/core/component';
 import { splitArray } from 'jodit/core/helpers/array/split-array';
 import { error } from 'jodit/core/helpers/utils/error';
 

@@ -20,12 +20,12 @@ import type {
 	ButtonsGroups
 } from 'jodit/types';
 import { View } from './view';
-import { isString, resolveElement, splitArray } from '../helpers';
-import { Dom } from '../dom';
+import { isString, resolveElement, splitArray } from 'jodit/core/helpers';
+import { Dom } from 'jodit/core/dom';
 import { makeCollection } from 'jodit/modules/toolbar/factory';
 import { STATUSES } from '../component';
 import { isButtonGroup } from '../ui/helpers/buttons';
-import { autobind } from '../decorators';
+import { autobind } from 'jodit/core/decorators';
 
 export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	TOOLBAR!: IToolbarCollection;

@@ -11,8 +11,8 @@
  */
 
 import type { IComponent, IDictionary, IViewComponent } from 'jodit/types';
-import { STATUSES } from '../../component';
-import { isViewObject } from '../../helpers';
+import { STATUSES } from 'jodit/core/component';
+import { isViewObject } from 'jodit/core/helpers';
 
 export function persistent<T extends IComponent>(
 	target: T,

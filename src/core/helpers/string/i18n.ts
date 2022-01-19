@@ -9,10 +9,14 @@
  */
 
 import type { IDictionary, ILanguageOptions } from 'jodit/types';
-import { Config } from '../../../config';
-import { defaultLanguage as defineLanguage } from '../utils';
-import { ucfirst, isString, error } from '../';
-import { lang } from '../../global';
+import { Config } from 'jodit/config';
+import {
+	defaultLanguage as defineLanguage,
+	error
+} from 'jodit/core/helpers/utils';
+import { isString } from 'jodit/core/helpers/checker';
+import { ucfirst } from 'jodit/core/helpers/string';
+import { lang } from 'jodit/core/global';
 
 /**
  * Simple variant sprintf function

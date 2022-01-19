@@ -10,7 +10,7 @@
  * @module plugins/clipboard/paste
  */
 
-import type { InsertMode, PasteEvent } from '../config';
+import type { InsertMode, PasteEvent } from 'jodit/plugins/clipboard/config';
 import type { IJodit } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin';
 import { getAllTypes, getDataTransfer, pasteInsertHtml } from './helpers';

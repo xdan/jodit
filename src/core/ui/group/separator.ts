@@ -9,7 +9,7 @@
  */
 
 import { UIElement } from '../element';
-import { component } from '../../decorators';
+import { component } from 'jodit/core/decorators';
 
 @component
 export class UISeparator extends UIElement {

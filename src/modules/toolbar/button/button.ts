@@ -26,7 +26,7 @@ import { UIButton, UIButtonState } from 'jodit/core/ui/button';
 import { component, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
 import { Popup } from 'jodit/core/ui/popup/';
-import { makeCollection } from '../factory';
+import { makeCollection } from 'jodit/modules/toolbar/factory';
 import {
 	isFunction,
 	isString,

@@ -17,7 +17,7 @@ import type {
 	Nullable
 } from 'jodit/types';
 
-import { kebabCase, get, getClassName, isFunction, isVoid } from '../helpers';
+import { kebabCase, get, getClassName, isFunction, isVoid } from 'jodit/core/helpers';
 import { uniqueUid } from '../global';
 import { STATUSES } from './statuses';
 

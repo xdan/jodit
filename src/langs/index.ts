@@ -10,7 +10,7 @@
  * @module langs
  */
 
-import type { IDictionary } from '../types';
+import type { IDictionary } from 'jodit/types';
 import { isArray } from '../core/helpers/checker';
 
 const en = require('./en');

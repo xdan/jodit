@@ -30,7 +30,7 @@ import {
 	isString,
 	isFunction,
 	ConfigProto
-} from '../helpers';
+} from 'jodit/core/helpers';
 import { Response } from './response';
 
 import './config';

@@ -13,15 +13,14 @@ import type {
 	IDictionary,
 	IUIElement,
 	Nullable
-} from '../../../types/';
-import { IS_IE } from '../../constants';
-import { isString } from '../checker';
-import { attr } from './utils';
-import { error } from './error';
-import { Dom } from '../../dom';
-import { camelCase } from '../string';
-import { toArray } from '../array';
-import { UIElement } from '../../ui';
+} from 'jodit/types/';
+import { IS_IE } from 'jodit/core/constants';
+import { isString } from 'jodit/core/helpers/checker';
+import { attr, error } from 'jodit/core/helpers/utils';
+import { Dom } from 'jodit/core/dom';
+import { camelCase } from 'jodit/core/helpers/string';
+import { toArray } from 'jodit/core/helpers/array';
+import { UIElement } from 'jodit/core/ui';
 
 let temp = 1;
 

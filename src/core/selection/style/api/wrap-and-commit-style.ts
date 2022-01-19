@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit } from '../../../../types';
+import type { IJodit } from 'jodit/types';
 import type { CommitStyle } from '../commit-style';
-import { Dom } from '../../../dom';
+import { Dom } from 'jodit/core/dom';
 import { wrapUnwrappedText } from './wrap-unwrapped-text';
-import { attr } from '../../../helpers';
+import { attr } from 'jodit/core/helpers';
 import { wrapOrderedList } from './wrap-ordered-list';
 
 /**

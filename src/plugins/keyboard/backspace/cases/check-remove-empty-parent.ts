@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, Nullable } from '../../../../types';
-import { Dom } from '../../../../core/dom';
-import { findNotEmptyNeighbor } from '../../helpers';
-import { INSEPARABLE_TAGS } from '../../../../core/constants';
-import { checkJoinTwoLists } from './check-join-two-lists';
+import type { IJodit, Nullable } from 'jodit/types';
+import { Dom } from 'jodit/core/dom';
+import { findNotEmptyNeighbor } from 'jodit/plugins/keyboard/helpers';
+import { INSEPARABLE_TAGS } from 'jodit/core/constants';
+import { checkJoinTwoLists } from 'jodit/plugins/keyboard/backspace/cases/check-join-two-lists';
 
 /**
  * Check if the current empty item can be removed

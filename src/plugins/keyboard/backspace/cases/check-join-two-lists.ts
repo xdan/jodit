@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit } from '../../../../types';
+import type { IJodit } from 'jodit/types';
 import { Dom } from '../../../../core/dom';
 import { call } from '../../../../core/helpers';
 

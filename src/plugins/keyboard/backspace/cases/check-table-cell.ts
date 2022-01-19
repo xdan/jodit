@@ -5,7 +5,7 @@
  */
 
 import { Dom } from '../../../../core/dom';
-import type { IJodit } from '../../../../types';
+import type { IJodit } from 'jodit/types';
 
 /**
  * Inside the CELL table - nothing to do

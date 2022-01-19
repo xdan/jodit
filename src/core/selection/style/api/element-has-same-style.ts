@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IStyle } from '../../../../types';
-import { css, isVoid, normalizeCssValue } from '../../../helpers';
-import { Dom } from '../../../dom';
+import type { IStyle } from 'jodit/types';
+import { css, isVoid, normalizeCssValue } from 'jodit/core/helpers';
+import { Dom } from 'jodit/core/dom';
 
 /**
  * Element has the same styles as in the commit

@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit } from '../../../../types';
-import { Dom } from '../../../dom';
+import type { IJodit } from 'jodit/types';
+import { Dom } from 'jodit/core/dom';
 import type { CommitStyle } from '../commit-style';
 
 /**

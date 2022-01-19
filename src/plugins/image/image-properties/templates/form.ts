@@ -8,7 +8,7 @@
  * @module plugins/image/image-properties
  */
 
-import type { IJodit } from '../../../../types';
+import type { IJodit } from 'jodit/types';
 import { Icon } from '../../../../core/ui';
 
 export function form(editor: IJodit): HTMLElement {

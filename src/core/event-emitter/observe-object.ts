@@ -14,8 +14,8 @@ import type {
 	IDictionary,
 	IObservable
 } from 'jodit/types';
-import { isPlainObject, isFastEqual, isArray } from '../helpers';
-import { nonenumerable } from '../decorators';
+import { isPlainObject, isFastEqual, isArray } from 'jodit/core/helpers';
+import { nonenumerable } from 'jodit/core/decorators';
 
 export class ObservableObject implements IObservable {
 	@nonenumerable

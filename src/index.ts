@@ -15,21 +15,18 @@ import './styles';
 declare function require(moduleName: string): any;
 
 if (process.env.TARGET_ES !== 'es2018' && typeof window !== 'undefined') {
-	require('./polyfills');
+	require('jodit/polyfills');
 }
 
-import { Jodit as DefaultJodit } from './jodit';
+import { Jodit as DefaultJodit } from 'jodit/jodit';
 
-import Languages from './langs/';
+import Languages from 'jodit/langs/';
 
-import * as decorators from './core/decorators';
-import * as consts from './core/constants';
-import * as Modules from './modules/';
-import * as Plugins from './plugins/';
-import * as Icons from './styles/icons/';
-import { assert } from './core/helpers/utils/assert';
-
-assert(false, 'yo');
+import * as decorators from 'jodit/core/decorators';
+import * as consts from 'jodit/core/constants';
+import * as Modules from 'jodit/modules/';
+import * as Plugins from 'jodit/plugins/';
+import * as Icons from 'jodit/styles/icons/';
 
 // copy constants in Jodit
 Object.keys(consts).forEach((key: string) => {

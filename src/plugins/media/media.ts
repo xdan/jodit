@@ -11,7 +11,7 @@
 import type { IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';
-import { $$, attr, dataBind } from 'jodit/core/helpers/';
+import { $$, attr, dataBind } from 'jodit/core/helpers';
 
 declare module 'jodit/config' {
 	interface Config {

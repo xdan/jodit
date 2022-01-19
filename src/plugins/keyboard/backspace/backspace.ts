@@ -8,12 +8,12 @@
  * @module plugins/keyboard/backspace
  */
 
-import { Plugin } from 'jodit/core/plugin';
 import type { IJodit } from 'jodit/types';
+import { Plugin } from 'jodit/core/plugin';
 import { Dom } from 'jodit/core/dom';
 import { INVISIBLE_SPACE } from 'jodit/core/constants';
 import { isFunction, trim } from 'jodit/core/helpers';
-import { normalizeCursorPosition } from '../helpers';
+import { normalizeCursorPosition } from 'jodit/plugins/keyboard/helpers';
 import { cases } from './cases';
 import type { DeleteMode } from './interface';
 import { checkNotCollapsed } from './cases/check-not-collapsed';

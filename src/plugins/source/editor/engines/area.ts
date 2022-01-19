@@ -8,7 +8,7 @@
  * @module plugins/source
  */
 
-import type { IJodit, ISourceEditor } from '../../../../types';
+import type { IJodit, ISourceEditor } from 'jodit/types';
 import { css } from '../../../../core/helpers';
 import { Dom } from '../../../../modules';
 import { SourceEditor } from '../sourceEditor';

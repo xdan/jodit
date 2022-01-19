@@ -8,8 +8,8 @@
  * @module ui/group
  */
 
-import { UIElement } from '../element';
-import { component } from '../../decorators';
+import { UIElement } from 'jodit/core/ui';
+import { component } from 'jodit/core/decorators';
 
 @component
 export class UISpacer extends UIElement {

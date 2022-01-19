@@ -15,9 +15,9 @@ import type {
 	IDictionary
 } from 'jodit/types';
 import { getControlType } from './get-control-type';
-import { Config } from '../../../config';
+import { Config } from 'jodit/config';
 import { isArray } from 'jodit/core/helpers/checker';
-import { ConfigProto, keys } from '../../helpers';
+import { ConfigProto, keys } from 'jodit/core/helpers';
 
 export function getStrongControlTypes(
 	items: Buttons | IDictionary<string>,

@@ -8,7 +8,7 @@
  * @module constants
  */
 
-import type { IDictionary } from '../types';
+import type { IDictionary } from 'jodit/types';
 
 export const INVISIBLE_SPACE = '\uFEFF';
 export const NBSP_SPACE = '\u00A0';

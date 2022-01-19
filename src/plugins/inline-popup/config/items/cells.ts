@@ -9,7 +9,7 @@
  */
 
 import type { Table } from '../../../../modules';
-import type { IControlType } from '../../../../types';
+import type { IControlType } from 'jodit/types';
 import { isJoditObject, isString } from '../../../../core/helpers/checker';
 import { css } from '../../../../core/helpers';
 import { ColorPickerWidget, TabsWidget } from '../../../../modules/widget';

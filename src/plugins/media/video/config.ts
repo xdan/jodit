@@ -9,7 +9,7 @@
  */
 
 import type { IControlType, IJodit, IUIForm } from 'jodit/types';
-import { Config } from '../../../config';
+import { Config } from 'jodit/config';
 import { TabOption, TabsWidget } from 'jodit/modules/widget';
 import { convertMediaUrlToVideoEmbed } from 'jodit/core/helpers';
 import { UIForm, UIInput, UITextArea, UIBlock } from 'jodit/core/ui/form';

@@ -31,8 +31,8 @@ import {
 	isDestructable,
 	isFunction,
 	isVoid
-} from '../helpers';
-import { BASE_PATH } from '../constants';
+} from 'jodit/core/helpers';
+import { BASE_PATH } from 'jodit/core/constants';
 import {
 	Component,
 	STATUSES,
@@ -43,7 +43,7 @@ import {
 } from '../../modules';
 import { Async } from '../async';
 import { modules } from '../global';
-import { hook } from '../decorators';
+import { hook } from 'jodit/core/decorators';
 import { Elms, Mods } from '../traits';
 import { EventEmitter } from '../event-emitter';
 

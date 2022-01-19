@@ -10,7 +10,7 @@
 
 import type { IJodit, Nullable, CanUndef, CommitMode } from 'jodit/types';
 import type { CommitStyle } from './commit-style';
-import { normalizeNode } from '../../helpers';
+import { normalizeNode } from 'jodit/core/helpers';
 import {
 	getSuitParent,
 	getSuitChild,
@@ -19,7 +19,7 @@ import {
 	unwrapChildren
 } from './api';
 import { CHANGE, INITIAL, REPLACE, UNWRAP, WRAP } from './commit-style';
-import { Dom } from '../../dom';
+import { Dom } from 'jodit/core/dom';
 import {
 	toggleOrderedList,
 	wrapAndCommitStyle,

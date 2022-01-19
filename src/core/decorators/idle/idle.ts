@@ -16,8 +16,8 @@ import type {
 	IViewBased,
 	IViewComponent
 } from 'jodit/types';
-import { Component, STATUSES } from '../../component';
-import { error, isFunction, isViewObject } from '../../helpers';
+import { Component, STATUSES } from 'jodit/core/component';
+import { error, isFunction, isViewObject } from 'jodit/core/helpers';
 
 export function idle<V = IViewComponent | IViewBased>(): DecoratorHandler {
 	return <T extends Component & IDictionary>(

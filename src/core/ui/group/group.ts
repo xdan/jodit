@@ -20,9 +20,9 @@ import type {
 } from 'jodit/types';
 import type { IDictionary } from 'jodit/types';
 import { UIElement } from '../element';
-import { component, watch } from '../../decorators';
-import { isArray } from '../../helpers';
-import { Dom } from '../../dom';
+import { component, watch } from 'jodit/core/decorators';
+import { isArray } from 'jodit/core/helpers';
+import { Dom } from 'jodit/core/dom';
 
 @component
 export class UIGroup<T extends IViewBased = IViewBased>

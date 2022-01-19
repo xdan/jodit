@@ -9,8 +9,8 @@
  */
 
 import type { IDictionary } from 'jodit/types';
-import { trim } from '../string';
-import { KEY_ALIASES } from '../../constants';
+import { trim } from 'jodit/core/helpers/string';
+import { KEY_ALIASES } from 'jodit/core/constants';
 
 /**
  * Normalize keys to some standard name

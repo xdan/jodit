@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit } from '../../../../types';
+import type { IJodit } from 'jodit/types';
 import { Dom } from '../../../../core/dom';
 import { INSEPARABLE_TAGS } from '../../../../core/constants';
 import { checkRemoveEmptyParent } from './check-remove-empty-parent';

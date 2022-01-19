@@ -5,7 +5,7 @@
  */
 
 import type { CommitStyle } from '../commit-style';
-import { Dom } from '../../../dom';
+import { Dom } from 'jodit/core/dom';
 
 /**
  * Add or remove styles to element

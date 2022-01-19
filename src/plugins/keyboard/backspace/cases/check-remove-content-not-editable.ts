@@ -3,10 +3,10 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import type { IJodit } from '../../../../types';
-import { Dom } from '../../../../core/dom';
-import { call } from '../../../../core/helpers';
-import { normalizeCursorPosition } from '../../helpers';
+import type { IJodit } from 'jodit/types';
+import { Dom } from 'jodit/core/dom';
+import { call } from 'jodit/core/helpers';
+import { normalizeCursorPosition } from 'jodit/plugins/keyboard/helpers';
 
 /**
  * Checks if a non-editable element can be deleted

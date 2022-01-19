@@ -9,7 +9,7 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import type { PasteEvent } from '../config';
+import type { PasteEvent } from 'jodit/plugins/clipboard/config';
 import { isArray, isNumber, isString, isVoid } from 'jodit/core/helpers';
 import { Dom } from 'jodit/core/dom';
 import { TEXT_PLAIN } from 'jodit/core/constants';

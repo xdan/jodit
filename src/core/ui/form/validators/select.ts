@@ -8,8 +8,8 @@
  * @module ui/form
  */
 
-import type { IUIInputValidator } from '../../../../types';
-import { trim } from '../../../helpers';
+import type { IUIInputValidator } from 'jodit/types';
+import { trim } from 'jodit/core/helpers';
 
 /**
  * Select is required

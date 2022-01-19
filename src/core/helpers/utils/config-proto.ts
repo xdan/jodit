@@ -11,7 +11,7 @@
 import type { IDictionary } from 'jodit/types';
 import { isAtom } from './extend';
 import { isArray, isPlainObject, isString, isVoid } from '../checker';
-import { Config } from '../../../config';
+import { Config } from 'jodit/config';
 import { keys } from './utils';
 /**
  * @example

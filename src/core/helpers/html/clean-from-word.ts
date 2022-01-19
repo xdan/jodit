@@ -8,9 +8,9 @@
  * @module helpers/html
  */
 
-import { Dom } from '../../dom';
-import { trim } from '../string';
-import { toArray } from '../array';
+import { Dom } from 'jodit/core/dom';
+import { trim } from 'jodit/core/helpers/string/trim';
+import { toArray } from 'jodit/core/helpers/array/to-array';
 
 /**
  * The method automatically cleans up content from Microsoft Word and other HTML sources to ensure clean, compliant

@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { Nullable } from '../../../../types';
+import type { Nullable } from 'jodit/types';
 import type { CommitStyle } from '../commit-style';
-import { Dom } from '../../../dom';
+import { Dom } from 'jodit/core/dom';
 import { isNormalNode } from './is-normal-node';
 import { isSuitElement } from './is-suit-element';
 

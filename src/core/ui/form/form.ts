@@ -11,10 +11,9 @@
  */
 
 import type { IDictionary, IUIForm, IUIInput, IUISelect } from 'jodit/types';
-import { UIGroup } from '../group';
-import { UIInput, UISelect } from './inputs';
+import { UIGroup, UIInput, UISelect } from 'jodit/core/ui';
 import { attr } from 'jodit/core/helpers/utils';
-import { component } from '../../decorators';
+import { component } from 'jodit/core/decorators';
 
 @component
 export class UIForm extends UIGroup implements IUIForm {

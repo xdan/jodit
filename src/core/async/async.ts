@@ -25,7 +25,7 @@ import {
 	isPromise,
 	isString,
 	isNumber
-} from '../helpers/';
+} from 'jodit/core/helpers/';
 
 export class Async implements IAsync {
 	private timers: Map<number | string | Function, number> = new Map();

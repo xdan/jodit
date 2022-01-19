@@ -23,7 +23,7 @@ import {
 	isPlainObject,
 	isViewObject
 } from 'jodit/core/helpers/checker';
-import { Component, STATUSES } from '../../component';
+import { Component, STATUSES } from 'jodit/core/component';
 import { error } from 'jodit/core/helpers/utils/error';
 
 export function debounce<V = IViewComponent | IViewBased>(

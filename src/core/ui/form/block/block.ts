@@ -10,10 +10,10 @@
 
 import './block.less';
 
-import type { IUIElement, IViewBased } from '../../../../types';
-import { UIGroup } from '../../group';
+import type { IUIElement, IViewBased } from 'jodit/types';
+import { UIGroup } from 'jodit/core/ui/group';
 import { attr } from 'jodit/core/helpers/utils';
-import { component } from '../../../decorators';
+import { component } from 'jodit/core/decorators';
 
 @component
 export class UIBlock extends UIGroup {

@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, Nullable } from '../../../../types';
-import { findNotEmptySibling } from '../../helpers';
-import { Dom } from '../../../../core/dom';
+import type { IJodit, Nullable } from 'jodit/types';
+import { findNotEmptySibling } from 'jodit/plugins/keyboard/helpers';
+import { Dom } from 'jodit/core/dom';
 
 /**
  * Check if two separate elements can be connected

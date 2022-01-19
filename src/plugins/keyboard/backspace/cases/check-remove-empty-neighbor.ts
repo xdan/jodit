@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit } from '../../../../types';
-import { Dom } from '../../../../core/dom';
-import { findNotEmptySibling } from '../../helpers';
+import type { IJodit } from 'jodit/types';
+import { Dom } from 'jodit/core/dom';
+import { findNotEmptySibling } from 'jodit/plugins/keyboard/helpers';
 
 /**
  * Check if it is possible to remove an empty adjacent element.

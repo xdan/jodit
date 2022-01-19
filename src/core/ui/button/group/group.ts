@@ -15,9 +15,9 @@ import type {
 	IUIButton,
 	IUIOption,
 	IViewBased
-} from '../../../../types';
+} from 'jodit/types';
 import { UIGroup } from '../../group';
-import { component } from '../../../decorators';
+import { component } from 'jodit/core/decorators';
 import { UIButton } from '../button/button';
 
 @component

@@ -14,7 +14,7 @@ import type {
 	IUIIconState,
 	IViewBased
 } from 'jodit/types';
-import { css } from '../helpers';
+import { css } from 'jodit/core/helpers';
 
 export class Icon {
 	private static icons: IDictionary<string> = {};

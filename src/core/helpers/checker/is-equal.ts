@@ -8,7 +8,7 @@
  * @module helpers/checker
  */
 
-import { stringify } from '../string/stringify';
+import { stringify } from 'jodit/core/helpers/string/stringify';
 
 /**
  * Check two element are equal

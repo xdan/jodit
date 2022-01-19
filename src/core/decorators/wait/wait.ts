@@ -11,8 +11,8 @@
  */
 
 import type { IViewBased, IViewComponent } from 'jodit/types';
-import { error, isFunction, isViewObject } from '../../helpers';
-import { STATUSES } from '../../component';
+import { error, isFunction, isViewObject } from 'jodit/core/helpers';
+import { STATUSES } from 'jodit/core/component';
 
 export function wait<T extends IViewBased>(
 	condition: (ctx: T) => boolean

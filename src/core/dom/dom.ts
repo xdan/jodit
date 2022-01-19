@@ -19,7 +19,7 @@ import type {
 	Nullable,
 	IDictionary
 } from 'jodit/types';
-import * as consts from '../constants';
+import * as consts from 'jodit/core/constants';
 import {
 	$$,
 	asArray,
@@ -35,9 +35,9 @@ import {
 	isVoid,
 	toArray,
 	trim
-} from '../helpers';
-import { Select } from '../selection';
-import { TEMP_ATTR } from '../constants';
+} from 'jodit/core/helpers';
+import { Select } from 'jodit/core/selection';
+import { TEMP_ATTR } from 'jodit/core/constants';
 
 /**
  * Module for working with DOM

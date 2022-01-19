@@ -10,7 +10,7 @@
  * @module decorators/cache
  */
 
-import { error } from '../../helpers';
+import { error } from 'jodit/core/helpers';
 import type { IDictionary } from 'jodit/types';
 
 export interface CachePropertyDescriptor<T, R> extends PropertyDescriptor {

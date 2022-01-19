@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { Nullable } from '../../../../types';
-import { Dom } from '../../../dom';
+import type { Nullable } from 'jodit/types';
+import { Dom } from 'jodit/core/dom';
 
 /**
  * Is normal usual element

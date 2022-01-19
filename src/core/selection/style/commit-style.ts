@@ -9,7 +9,7 @@
  */
 
 import type { HTMLTagNames, IJodit, IStyleOptions } from 'jodit/types';
-import { IS_BLOCK } from '../../constants';
+import { IS_BLOCK } from 'jodit/core/constants';
 import { ApplyStyle } from './apply-style';
 
 export const WRAP = 'wrap';

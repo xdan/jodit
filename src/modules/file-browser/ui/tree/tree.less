@@ -2,6 +2,10 @@
 @import (reference) '../../../../styles/mixins';
 @import (reference) '../../styles/file-browser';
 
+:root {
+	--color-folder-title: #b1b1b1;
+}
+
 .jodit-filebrowser-tree {
 	position: relative;
 	display: none;
@@ -50,8 +54,6 @@
 			background-color: rgba(127, 127, 127, 0.5);
 			outline: 1px solid slategrey;
 		}
-
-		--text-color: #b1b1b1;
 	}
 
 	&__item {
@@ -62,13 +64,14 @@
 		justify-content: space-between;
 		padding: calc(var(--padding-default) / 2) var(--padding-default);
 		border-bottom: 1px solid #474747;
-		color: var(--text-color);
+		color: var(--color-folder-title);
 		text-decoration: none;
 		transition: background-color 0.2s ease 0s;
 		word-break: break-all;
 
 		&-title {
 			flex: 1;
+			color: var(--color-folder-title);
 		}
 
 		.jodit-icon_folder {
@@ -86,8 +89,8 @@
 			& svg {
 				width: var(--icon-size);
 				height: var(--icon-size);
-				fill: var(--text-color) !important;
-				stroke: var(--text-color) !important;
+				fill: var(--color-folder-title) !important;
+				stroke: var(--color-folder-title) !important;
 			}
 
 			&:hover {
@@ -97,7 +100,9 @@
 
 		&:hover {
 			background-color: var(--color-background-button-hover);
-			color: #222;
+			&-title {
+				color: var(--color-text);
+			}
 
 			i.jodit-icon_folder {
 				opacity: 0.6;

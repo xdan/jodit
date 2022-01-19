@@ -15,8 +15,8 @@ import type {
 	IControlTypeStrong,
 	IDictionary
 } from 'jodit/types';
-import { ConfigFlatten, isString } from '../../helpers';
-import { Config } from '../../../config';
+import { ConfigFlatten, isString } from 'jodit/core/helpers';
+import { Config } from 'jodit/config';
 
 /**
  * Get control for button name

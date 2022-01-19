@@ -4,12 +4,15 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { CanUndef, IJodit, Nullable } from '../../../../types';
-import type { DeleteMode } from '../interface';
-import { findMostNestedNeighbor, getSibling } from '../../helpers';
-import { Dom } from '../../../../core/dom';
-import { call, isVoid, toArray, trimInv } from '../../../../core/helpers';
-import { INVISIBLE_SPACE, NBSP_SPACE } from '../../../../core/constants';
+import type { CanUndef, IJodit, Nullable } from 'jodit/types';
+import type { DeleteMode } from 'jodit/plugins/keyboard/backspace/interface';
+import {
+	findMostNestedNeighbor,
+	getSibling
+} from 'jodit/plugins/keyboard/helpers';
+import { Dom } from 'jodit/core/dom';
+import { call, isVoid, toArray, trimInv } from 'jodit/core/helpers';
+import { INVISIBLE_SPACE, NBSP_SPACE } from 'jodit/core/constants';
 
 /**
  * Check possibility the char can be removed

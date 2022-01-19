@@ -21,11 +21,11 @@ import {
 	IS_INLINE,
 	INSEPARABLE_TAGS
 } from 'jodit/core/constants';
-import { Dom } from '../../modules';
+import { Dom } from 'jodit/modules';
 import { attr, isString, keys, safeHTML, trim } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { watch, autobind, debounce } from 'jodit/core/decorators';
-import { findNotEmptySibling } from '../keyboard/helpers';
+import { findNotEmptySibling } from 'jodit/plugins/keyboard/helpers';
 
 declare module 'jodit/config' {
 	interface Config {

@@ -16,14 +16,14 @@ import type {
 	IUIButtonStatePartial,
 	IViewBased,
 	ButtonVariant
-} from '../../../../types';
-import { UIElement } from '../../element';
-import { Dom } from '../../../dom';
-import { attr, isString, isFunction } from '../../../helpers';
-import { Icon } from '../../icon';
-import { UIList } from '../../group';
-import { autobind, component, watch } from '../../../decorators';
-import { STATUSES } from '../../../component';
+} from 'jodit/types';
+import { UIElement } from 'jodit/core/ui';
+import { Dom } from 'jodit/core/dom';
+import { attr, isString, isFunction } from 'jodit/core/helpers';
+import { Icon } from 'jodit/core/ui';
+import { UIList } from 'jodit/core/ui';
+import { autobind, component, watch } from 'jodit/core/decorators';
+import { STATUSES } from 'jodit/core/component';
 
 export const UIButtonState = (): IUIButtonState => ({
 	size: 'middle',

@@ -16,7 +16,7 @@ import type {
 	IJodit,
 	IUploaderData
 } from 'jodit/types';
-import { Config } from '../../../config';
+import { Config } from 'jodit/config';
 
 import {
 	Alert,
@@ -45,7 +45,7 @@ import { Button } from 'jodit/core/ui/button';
 import { form, mainTab, positionTab } from './templates/';
 import { watch, autobind } from 'jodit/core/decorators';
 import { openImageEditor } from 'jodit/modules/image-editor/image-editor';
-import { hAlignElement } from '../helpers';
+import { hAlignElement } from 'jodit/plugins/image/helpers';
 
 /**
  * Plug-in for image editing window
@@ -61,7 +61,7 @@ import { hAlignElement } from '../helpers';
  * ```
  */
 
-declare module '../../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		image: {
 			dialogWidth: number;

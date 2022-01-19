@@ -26,10 +26,10 @@ import {
 	refs,
 	isString,
 	attr
-} from '../helpers/';
+} from 'jodit/core/helpers/';
 
-import { Dom } from '../dom';
-import { INVISIBLE_SPACE } from '../constants';
+import { Dom } from 'jodit/core/dom';
+import { INVISIBLE_SPACE } from 'jodit/core/constants';
 
 export class Create implements ICreate {
 	private get doc(): Document {

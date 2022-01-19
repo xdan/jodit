@@ -8,7 +8,7 @@
  * @module plugins/inline-popup
  */
 
-import type { IControlType, IJodit } from '../../../../types';
+import type { IControlType, IJodit } from 'jodit/types';
 import { attr } from '../../../../core/helpers/utils';
 
 export default [
