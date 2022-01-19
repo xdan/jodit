@@ -17,7 +17,8 @@ import type {
 	PluginInstance,
 	PluginType,
 	CanPromise,
-	CanUndef
+	CanUndef,
+	Nullable
 } from 'jodit/types';
 
 import {
@@ -31,7 +32,7 @@ import {
 	kebabCase,
 	callPromise,
 	isArray
-} from '../helpers';
+} from 'jodit/core/helpers';
 
 /**
  * Jodit plugin system
@@ -50,27 +51,37 @@ export class PluginSystem implements IPluginSystem {
 		return kebabCase(name).toLowerCase();
 	}
 
-	private items = new Map<string, PluginType>();
+	private _items = new Map<string, PluginType>();
+
+	private items(filter: Nullable<string[]>): Array<[string, PluginType]> {
+		const results: Array<[string, PluginType]> = [];
+
+		this._items.forEach((plugin, name) => {
+			results.push([name, plugin]);
+		});
+
+		return results.filter(([name]) => !filter || filter.includes(name));
+	}
 
 	/**
 	 * Add plugin in store
 	 */
 	add(name: string, plugin: PluginType): void {
-		this.items.set(this.normalizeName(name), plugin);
+		this._items.set(this.normalizeName(name), plugin);
 	}
 
 	/**
 	 * Get plugin from store
 	 */
 	get(name: string): PluginType | void {
-		return this.items.get(this.normalizeName(name));
+		return this._items.get(this.normalizeName(name));
 	}
 
 	/**
 	 * Remove plugin from store
 	 */
 	remove(name: string): void {
-		this.items.delete(this.normalizeName(name));
+		this._items.delete(this.normalizeName(name));
 	}
 
 	/**
@@ -87,7 +98,7 @@ export class PluginSystem implements IPluginSystem {
 			promiseList: IDictionary<PluginInstance | undefined> = {},
 			plugins: PluginInstance[] = [],
 			pluginsMap: IDictionary<PluginInstance> = {},
-			makeAndInit = (plugin: PluginType, name: string) => {
+			makeAndInit = ([name, plugin]: [string, PluginType]) => {
 				if (
 					disableList.includes(name) ||
 					doneList.includes(name) ||
@@ -110,10 +121,18 @@ export class PluginSystem implements IPluginSystem {
 
 				const instance = PluginSystem.makePluginInstance(jodit, plugin);
 
-				this.initOrWait(jodit, name, instance, doneList, promiseList);
+				if (instance) {
+					this.initOrWait(
+						jodit,
+						name,
+						instance,
+						doneList,
+						promiseList
+					);
 
-				plugins.push(instance);
-				pluginsMap[name] = instance;
+					plugins.push(instance);
+					pluginsMap[name] = instance;
+				}
 			};
 
 		const resultLoadExtras = this.loadExtras(jodit, extrasList);
@@ -123,7 +142,13 @@ export class PluginSystem implements IPluginSystem {
 				return;
 			}
 
-			this.items.forEach(makeAndInit);
+			this.items(
+				jodit.o.safeMode
+					? jodit.o.safePluginsList.concat(
+							extrasList.map(s => s.name)
+					  )
+					: null
+			).forEach(makeAndInit);
 
 			this.addListenerOnBeforeDestruct(jodit, plugins);
 
@@ -150,8 +175,17 @@ export class PluginSystem implements IPluginSystem {
 	static makePluginInstance(
 		jodit: IJodit,
 		plugin: PluginType
-	): PluginInstance {
-		return isFunction(plugin) ? new plugin(jodit) : plugin;
+	): Nullable<PluginInstance> {
+		try {
+			return isFunction(plugin) ? new plugin(jodit) : plugin;
+		} catch (e) {
+			console.error(e);
+			if (!isProd) {
+				throw e;
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -172,7 +206,14 @@ export class PluginSystem implements IPluginSystem {
 					!req?.length ||
 					req.every(name => doneList.includes(name))
 				) {
-					plugin.init(jodit);
+					try {
+						plugin.init(jodit);
+					} catch (e) {
+						console.error(e);
+						if (!isProd) {
+							throw e;
+						}
+					}
 					doneList.push(name);
 				} else {
 					promiseList[name] = plugin;
@@ -291,7 +332,7 @@ export class PluginSystem implements IPluginSystem {
 		if (extrasList && extrasList.length) {
 			try {
 				const needLoadExtras = extrasList.filter(
-					extra => !this.items.has(this.normalizeName(extra.name))
+					extra => !this._items.has(this.normalizeName(extra.name))
 				);
 
 				if (needLoadExtras.length) {

@@ -12,8 +12,8 @@
 
 import type { IJodit, IPlugin, IViewBased } from 'jodit/types';
 import { ViewComponent, STATUSES } from '../component';
-import { autobind } from '../decorators';
-import { isJoditObject } from '../helpers';
+import { autobind } from 'jodit/core/decorators';
+import { isJoditObject } from 'jodit/core/helpers';
 
 export abstract class Plugin<T extends IViewBased = IJodit>
 	extends ViewComponent<T>

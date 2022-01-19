@@ -131,3 +131,16 @@ Jodit.plugins.add('insertTimePlugin', insertTimePlugin);
 -   Default: []
 
 If your plugin depends on other plugins, then it must be initialized after them.
+
+
+## Debug
+
+Since version `3.12.4` you can disable all Jodit plugins during development and work only with your own plugin.
+This will allow you to find out if it works correctly and if it breaks the behavior of the editor or if it is caused by other plugins.
+
+```js
+Jodit.make('#editor', {
+	safeMode: true,
+	safePluginsList: ['about'],
+	extraPlugins: ['yourPluginDev']
+});

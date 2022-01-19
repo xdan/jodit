@@ -29,6 +29,24 @@ export class Config implements IViewOptions {
 	namespace: string = '';
 
 	/**
+	 * Editor loads completely without plugins. Useful when debugging your own plugin.
+	 */
+	safeMode: boolean = false;
+
+	/**
+	 * List of plugins that will be initialized in safe mode.
+	 *
+	 * ```js
+	 * Jodit.make('#editor', {
+	 * 	safeMode: true,
+	 * 	safePluginsList: ['about'],
+	 * 	extraPlugins: ['yourPluginDev']
+	 * });
+	 * ```
+	 */
+	safePluginsList: string[] = ['about', 'enter', 'backspace'];
+
+	/**
 	 * When this option is enabled, the editor's content will be placed in an iframe and isolated from the rest of the page.
 	 *
 	 * @example

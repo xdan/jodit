@@ -9,6 +9,26 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.12.4
+
+#### :rocket: New Feature
+
+* Добавлены опции `safeMode:boolean` и `safePluginsList:string[]` для отладки
+
+```js
+Jodit.make('#editor', {
+	safeMode: true,
+	safePluginsList: ['about']
+});
+
+```
+
+Будет активирован только один плагин. Удобно для отладки и своих плагинов, можно выключить все остальные.
+
+#### :bug: Bug Fix
+
+* Исправлена ошибка из-за которой Jodit не работала в ie11, + добавлен полифил для итератора
+
 ## 3.12.3
 
 * [Fixed Full Screen showing elements not part of editable content #763](Issue: https://github.com/xdan/jodit/issues/763)
