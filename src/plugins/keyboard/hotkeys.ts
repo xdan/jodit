@@ -8,18 +8,18 @@
  * @module plugins/keyboard
  */
 
-import type { IDictionary, IJodit } from '../../types';
-import { Config } from '../../config';
-import { Plugin } from '../../core/plugin';
+import type { IDictionary, IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Plugin } from 'jodit/core/plugin';
 import {
 	isArray,
 	isString,
 	keys,
 	normalizeKeyAliases
-} from '../../core/helpers';
-import { KEY_ESC } from '../../core/constants';
+} from 'jodit/core/helpers';
+import { KEY_ESC } from 'jodit/core/constants';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		commandToHotkeys: IDictionary<string | string[]>;
 	}

@@ -8,7 +8,7 @@
  * @module helpers/checker
  */
 
-import type { IDictionary } from '../../../types';
+import type { IDictionary } from 'jodit/types';
 import { isWindow } from './is-window';
 
 /**

@@ -16,7 +16,7 @@ import type {
 	IAsyncParams,
 	ITimeout,
 	RejectablePromise
-} from '../../types';
+} from 'jodit/types';
 import {
 	setTimeout,
 	clearTimeout,

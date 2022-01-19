@@ -10,9 +10,9 @@
 
 import './file.less';
 
-import type { IUIButton, IUIInput, IViewBased } from '../../../../../types';
+import type { IUIButton, IUIInput, IViewBased } from 'jodit/types';
 import { UIInput } from '../input/input';
-import { component } from '../../../../decorators';
+import { component } from 'jodit/core/decorators';
 import { UIButton } from '../../../button';
 
 @component

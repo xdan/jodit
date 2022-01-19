@@ -12,17 +12,17 @@
 
 import './add-new-line.less';
 
-import type { IBound, IJodit, HTMLTagNames, Nullable } from '../../types';
-import { Config } from '../../config';
-import { Dom, Icon, Plugin } from '../../modules';
+import type { IBound, IJodit, HTMLTagNames, Nullable } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Dom, Icon, Plugin } from 'jodit/modules';
 import {
 	offset,
 	position,
 	call,
 	scrollIntoViewIfNeeded
-} from '../../core/helpers';
+} from 'jodit/core/helpers';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		/**
 		 * Create helper

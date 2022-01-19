@@ -10,11 +10,11 @@
 
 import './about.less';
 
-import type { IControlType, IJodit } from '../../types';
-import { Config } from '../../config';
-import { css, isLicense, normalizeLicense } from '../../core/helpers/';
-import * as constants from '../../core/constants';
-import { Dialog } from '../../modules/dialog';
+import type { IControlType, IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { css, isLicense, normalizeLicense } from 'jodit/core/helpers/';
+import * as constants from 'jodit/core/constants';
+import { Dialog } from 'jodit/modules/dialog';
 
 Config.prototype.controls.about = {
 	exec: (editor: IJodit) => {

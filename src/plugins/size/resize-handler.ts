@@ -8,11 +8,11 @@
  * @module plugins/size
  */
 
-import type { IJodit, IPointBound } from '../../types';
-import { Plugin } from '../../core/plugin';
-import { Dom } from '../../core/dom';
-import { autobind } from '../../core/decorators';
-import { Icon } from '../../core/ui';
+import type { IJodit, IPointBound } from 'jodit/types';
+import { Plugin } from 'jodit/core/plugin';
+import { Dom } from 'jodit/core/dom';
+import { autobind } from 'jodit/core/decorators';
+import { Icon } from 'jodit/core/ui';
 
 @autobind
 export class resizeHandler extends Plugin {

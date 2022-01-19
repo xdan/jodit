@@ -10,14 +10,14 @@
 
 import './source.less';
 
-import type { IJodit, ISourceEditor } from '../../types';
-import * as consts from '../../core/constants';
-import { INVISIBLE_SPACE, MODE_SOURCE, MODE_SPLIT } from '../../core/constants';
-import { Plugin } from '../../core/plugin';
-import { Dom } from '../../core/dom';
-import { isString, loadNext } from '../../core/helpers';
+import type { IJodit, ISourceEditor } from 'jodit/types';
+import * as consts from 'jodit/core/constants';
+import { INVISIBLE_SPACE, MODE_SOURCE, MODE_SPLIT } from 'jodit/core/constants';
+import { Plugin } from 'jodit/core/plugin';
+import { Dom } from 'jodit/core/dom';
+import { isString, loadNext } from 'jodit/core/helpers';
 import { createSourceEditor } from './editor/factory';
-import { autobind, watch } from '../../core/decorators';
+import { autobind, watch } from 'jodit/core/decorators';
 import { SOURCE_CONSUMER } from './const';
 
 /**

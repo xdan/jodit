@@ -20,10 +20,10 @@ import type {
 	IToolbarCollection,
 	IViewComponent,
 	Nullable
-} from '../../types';
-import { Plugin } from '../../core/plugin';
-import { makeCollection } from '../../modules/toolbar/factory';
-import { Popup } from '../../core/ui/popup';
+} from 'jodit/types';
+import { Plugin } from 'jodit/core/plugin';
+import { makeCollection } from 'jodit/modules/toolbar/factory';
+import { Popup } from 'jodit/core/ui/popup';
 import {
 	splitArray,
 	isString,
@@ -33,9 +33,9 @@ import {
 	toArray,
 	keys,
 	camelCase
-} from '../../core/helpers';
+} from 'jodit/core/helpers';
 import { Dom, Table, ToolbarCollection, UIElement } from '../../modules';
-import { debounce, wait, autobind, watch } from '../../core/decorators';
+import { debounce, wait, autobind, watch } from 'jodit/core/decorators';
 
 /**
  * Plugin for show inline popup dialog

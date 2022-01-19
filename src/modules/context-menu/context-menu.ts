@@ -12,10 +12,10 @@
 
 import './context-menu.less';
 
-import type { IContextMenu, IContextMenuAction } from '../../types';
-import { Popup } from '../../core/ui/popup';
-import { Button } from '../../core/ui/button';
-import { isArray } from '../../core/helpers/checker';
+import type { IContextMenu, IContextMenuAction } from 'jodit/types';
+import { Popup } from 'jodit/core/ui/popup';
+import { Button } from 'jodit/core/ui/button';
+import { isArray } from 'jodit/core/helpers/checker';
 
 /**
  * Module to generate context menu

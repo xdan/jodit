@@ -16,15 +16,15 @@ import type {
 	IViewComponent,
 	IAsyncParams,
 	DecoratorHandler
-} from '../../../types';
+} from 'jodit/types';
 import {
 	isFunction,
 	isNumber,
 	isPlainObject,
 	isViewObject
-} from '../../helpers/checker';
+} from 'jodit/core/helpers/checker';
 import { Component, STATUSES } from '../../component';
-import { error } from '../../helpers/utils/error';
+import { error } from 'jodit/core/helpers/utils/error';
 
 export function debounce<V = IViewComponent | IViewBased>(
 	timeout?: number | ((ctx: V) => number | IAsyncParams) | IAsyncParams,

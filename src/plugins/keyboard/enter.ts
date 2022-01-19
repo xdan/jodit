@@ -8,12 +8,12 @@
  * @module plugins/keyboard
  */
 
-import type { HTMLTagNames, IJodit, Nullable } from '../../types';
-import * as consts from '../../core/constants';
-import { Dom } from '../../core/dom';
-import { $$, scrollIntoViewIfNeeded } from '../../core/helpers';
-import { Plugin } from '../../core/plugin';
-import { INVISIBLE_SPACE } from '../../core/constants';
+import type { HTMLTagNames, IJodit, Nullable } from 'jodit/types';
+import * as consts from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom';
+import { $$, scrollIntoViewIfNeeded } from 'jodit/core/helpers';
+import { Plugin } from 'jodit/core/plugin';
+import { INVISIBLE_SPACE } from 'jodit/core/constants';
 
 /**
  * Insert default paragraph

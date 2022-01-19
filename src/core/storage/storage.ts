@@ -10,7 +10,7 @@
  * @module storage
  */
 
-import type { IStorage, StorageValueType } from '../../types';
+import type { IStorage, StorageValueType } from 'jodit/types';
 import { camelCase } from '../helpers/';
 import {
 	canUsePersistentStorage,

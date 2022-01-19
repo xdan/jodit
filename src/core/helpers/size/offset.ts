@@ -13,7 +13,7 @@
  * @returns returns an object containing the properties top and left.
  */
 
-import type { IBound, IHasScroll, IJodit, IViewBased } from '../../../types';
+import type { IBound, IHasScroll, IJodit, IViewBased } from 'jodit/types';
 
 export const offset = (
 	elm: HTMLElement | Range,

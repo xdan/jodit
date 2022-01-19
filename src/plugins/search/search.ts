@@ -17,17 +17,17 @@ import type {
 	Nullable,
 	IControlType,
 	IPlugin
-} from '../../types';
-import { Config } from '../../config';
-import * as consts from '../../core/constants';
-import { MODE_WYSIWYG } from '../../core/constants';
-import { Dom } from '../../core/dom';
-import { Plugin } from '../../core/plugin';
-import { Icon } from '../../core/ui';
-import { css, position, refs, trim } from '../../core/helpers';
-import { autobind } from '../../core/decorators';
+} from 'jodit/types';
+import { Config } from 'jodit/config';
+import * as consts from 'jodit/core/constants';
+import { MODE_WYSIWYG } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom';
+import { Plugin } from 'jodit/core/plugin';
+import { Icon } from 'jodit/core/ui';
+import { css, position, refs, trim } from 'jodit/core/helpers';
+import { autobind } from 'jodit/core/decorators';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		/**
 		 * Enable custom search plugin

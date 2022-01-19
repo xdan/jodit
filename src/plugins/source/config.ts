@@ -8,12 +8,12 @@
  * @module plugins/source
  */
 
-import type { IControlType, IJodit, ISourceEditor } from '../../types';
-import { Config } from '../../config';
-import * as consts from '../../core/constants';
-import { IS_IE } from '../../core/constants';
+import type { IControlType, IJodit, ISourceEditor } from 'jodit/types';
+import { Config } from 'jodit/config';
+import * as consts from 'jodit/core/constants';
+import { IS_IE } from 'jodit/core/constants';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		sourceEditor: 'area' | 'ace' | ((jodit: IJodit) => ISourceEditor);
 

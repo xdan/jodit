@@ -12,7 +12,7 @@ import './block.less';
 
 import type { IUIElement, IViewBased } from '../../../../types';
 import { UIGroup } from '../../group';
-import { attr } from '../../../helpers/utils';
+import { attr } from 'jodit/core/helpers/utils';
 import { component } from '../../../decorators';
 
 @component

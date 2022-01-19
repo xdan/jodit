@@ -13,10 +13,10 @@ import type {
 	Controls,
 	IControlTypeStrong,
 	IDictionary
-} from '../../../types';
+} from 'jodit/types';
 import { getControlType } from './get-control-type';
 import { Config } from '../../../config';
-import { isArray } from '../../helpers/checker';
+import { isArray } from 'jodit/core/helpers/checker';
 import { ConfigProto, keys } from '../../helpers';
 
 export function getStrongControlTypes(

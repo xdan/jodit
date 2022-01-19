@@ -9,8 +9,8 @@
  */
 
 import { Dialog } from './dialog';
-import { isFunction } from '../../core/helpers';
-import { Button } from '../../core/ui';
+import { isFunction } from 'jodit/core/helpers';
+import { Button } from 'jodit/core/ui';
 
 /**
  * Show `confirm` dialog. Work without Jodit object

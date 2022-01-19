@@ -21,17 +21,17 @@ import type {
 	IUIButton,
 	IDictionary,
 	IFileBrowserDataProvider
-} from '../../types';
-import { Config } from '../../config';
-import { ViewComponent } from '../../core/component';
+} from 'jodit/types';
+import { Config } from 'jodit/config';
+import { ViewComponent } from 'jodit/core/component';
 import { Alert, Dialog, Prompt } from '../dialog';
-import { $$, attr, css, refs, toArray, trim } from '../../core/helpers';
-import { Dom } from '../../core/dom';
-import { Button } from '../../core/ui/button';
+import { $$, attr, css, refs, toArray, trim } from 'jodit/core/helpers';
+import { Dom } from 'jodit/core/dom';
+import { Button } from 'jodit/core/ui/button';
 import { form } from './templates/form';
-import { component, debounce, throttle, autobind } from '../../core/decorators';
+import { component, debounce, throttle, autobind } from 'jodit/core/decorators';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		imageeditor: ImageEditorOptions;
 	}

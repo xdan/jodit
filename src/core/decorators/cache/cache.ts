@@ -11,7 +11,7 @@
  */
 
 import { error } from '../../helpers';
-import type { IDictionary } from '../../../types';
+import type { IDictionary } from 'jodit/types';
 
 export interface CachePropertyDescriptor<T, R> extends PropertyDescriptor {
 	get?: (this: T) => R;

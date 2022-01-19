@@ -8,7 +8,7 @@
  * @module helpers/utils
  */
 
-import type { IDictionary } from '../../../types';
+import type { IDictionary } from 'jodit/types';
 import { isString } from '../checker/is-string';
 import { isNumeric } from '../checker/is-numeric';
 import { isArray } from '../checker/is-array';

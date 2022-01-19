@@ -8,7 +8,7 @@
  * @module selection
  */
 
-import type { HTMLTagNames, IJodit, IStyleOptions } from '../../../types';
+import type { HTMLTagNames, IJodit, IStyleOptions } from 'jodit/types';
 import { IS_BLOCK } from '../../constants';
 import { ApplyStyle } from './apply-style';
 

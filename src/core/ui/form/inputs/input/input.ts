@@ -15,13 +15,13 @@ import type {
 	IUIInput,
 	IUIInputValidator,
 	IViewBased
-} from '../../../../../types';
-import { UIElement } from '../../../element';
-import { attr, toArray } from '../../../../helpers';
-import { Dom } from '../../../../dom';
-import { autobind, component, debounce, watch } from '../../../../decorators';
-import { Icon } from '../../../icon';
-import { inputValidators } from '../../validators';
+} from 'jodit/types';
+import { UIElement } from 'jodit/core/ui/element';
+import { attr, toArray } from 'jodit/core/helpers';
+import { Dom } from 'jodit/core/dom';
+import { autobind, component, debounce, watch } from 'jodit/core/decorators';
+import { Icon } from 'jodit/core/ui/icon';
+import { inputValidators } from 'jodit/core/ui/form/validators';
 
 @component
 export class UIInput extends UIElement implements IUIInput {

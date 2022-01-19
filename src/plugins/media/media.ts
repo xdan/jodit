@@ -8,12 +8,12 @@
  * @module plugins/media
  */
 
-import type { IJodit } from '../../types';
-import { Config } from '../../config';
-import * as consts from '../../core/constants';
-import { $$, attr, dataBind } from '../../core/helpers/';
+import type { IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+import * as consts from 'jodit/core/constants';
+import { $$, attr, dataBind } from 'jodit/core/helpers/';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		/**
 		 * Decorate media elements

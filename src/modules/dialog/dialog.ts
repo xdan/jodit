@@ -19,9 +19,9 @@ import type {
 	ContentItem,
 	Content,
 	IDialogOptions
-} from '../../types/';
-import { Config } from '../../config';
-import { KEY_ESC } from '../../core/constants';
+} from 'jodit/types';
+import { Config } from 'jodit/config';
+import { KEY_ESC } from 'jodit/core/constants';
 import {
 	$$,
 	asArray,
@@ -36,16 +36,16 @@ import {
 	isVoid,
 	splitArray,
 	toArray
-} from '../../core/helpers/';
-import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
-import { Dom } from '../../core/dom';
-import { STATUSES } from '../../core/component';
-import { eventEmitter, pluginSystem } from '../../core/global';
-import { component, autobind, hook } from '../../core/decorators';
-import { View } from '../../core/view/view';
-import { Icon } from '../../core/ui';
+} from 'jodit/core/helpers/';
+import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
+import { Dom } from 'jodit/core/dom';
+import { STATUSES } from 'jodit/core/component';
+import { eventEmitter, pluginSystem } from 'jodit/core/global';
+import { component, autobind, hook } from 'jodit/core/decorators';
+import { View } from 'jodit/core/view/view';
+import { Icon } from 'jodit/core/ui';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		dialog: IDialogOptions;
 	}

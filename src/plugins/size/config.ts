@@ -8,9 +8,9 @@
  * @module plugins/size
  */
 
-import { Config } from '../../config';
+import { Config } from 'jodit/config';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		allowResizeX: boolean;
 		allowResizeY: boolean;

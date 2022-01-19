@@ -8,8 +8,8 @@
  * @module modules/image-editor
  */
 
-import type { ImageEditorOptions, IViewBased } from '../../../types';
-import { Icon } from '../../../core/ui';
+import type { ImageEditorOptions, IViewBased } from 'jodit/types';
+import { Icon } from 'jodit/core/ui';
 
 const jie = 'jodit-image-editor';
 const gi = Icon.get.bind(Icon);

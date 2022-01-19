@@ -10,12 +10,12 @@
 
 import './resizer.less';
 
-import type { HTMLTagNames, IBound, Nullable } from '../../types';
-import type { IJodit } from '../../types';
-import { Config } from '../../config';
-import * as consts from '../../core/constants';
-import { IS_IE } from '../../core/constants';
-import { Dom } from '../../core/dom';
+import type { HTMLTagNames, IBound, Nullable } from 'jodit/types';
+import type { IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+import * as consts from 'jodit/core/constants';
+import { IS_IE } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom';
 import {
 	$$,
 	attr,
@@ -23,16 +23,16 @@ import {
 	offset,
 	innerWidth,
 	markOwner
-} from '../../core/helpers';
-import { Plugin } from '../../core/plugin';
-import { eventEmitter } from '../../core/global';
-import { autobind, debounce, watch } from '../../core/decorators';
+} from 'jodit/core/helpers';
+import { Plugin } from 'jodit/core/plugin';
+import { eventEmitter } from 'jodit/core/global';
+import { autobind, debounce, watch } from 'jodit/core/decorators';
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table
  */
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		/**
 		 * Use true frame for editing iframe size

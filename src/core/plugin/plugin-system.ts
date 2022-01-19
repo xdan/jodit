@@ -18,7 +18,7 @@ import type {
 	PluginType,
 	CanPromise,
 	CanUndef
-} from '../../types';
+} from 'jodit/types';
 
 import {
 	isInitable,

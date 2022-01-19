@@ -8,7 +8,7 @@
  * @module helpers/utils
  */
 
-import type { IViewBased } from '../../../types';
+import type { IViewBased } from 'jodit/types';
 import { completeUrl } from './complete-url';
 import { isFunction, isString } from '../checker';
 

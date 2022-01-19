@@ -8,7 +8,7 @@
  * @module helpers/utils
  */
 
-import type { IEventEmitter, IViewComponent, Nullable } from '../../../types';
+import type { IEventEmitter, IViewComponent, Nullable } from 'jodit/types';
 import { ViewComponent } from '../../component';
 import { isViewObject } from '../checker';
 

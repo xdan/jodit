@@ -8,11 +8,11 @@
  * @module plugins/symbols
  */
 
-import type { IControlType, IJodit } from '../../types';
-import { Config } from '../../config';
-import { Alert } from '../../modules/dialog';
+import type { IControlType, IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Alert } from 'jodit/modules/dialog';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		specialCharacters: string[];
 		usePopupForSpecialCharacters: boolean;

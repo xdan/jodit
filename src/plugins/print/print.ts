@@ -8,12 +8,12 @@
  * @module plugins/print
  */
 
-import type { IControlType, IJodit } from '../../types';
-import { Config } from '../../config';
-import { getContainer } from '../../core/global';
-import { Dom } from '../../core/dom';
-import { defaultLanguage } from '../../core/helpers';
-import * as consts from '../../core/constants';
+import type { IControlType, IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { getContainer } from 'jodit/core/global';
+import { Dom } from 'jodit/core/dom';
+import { defaultLanguage } from 'jodit/core/helpers';
+import * as consts from 'jodit/core/constants';
 
 Config.prototype.controls.print = {
 	exec: (editor: IJodit) => {

@@ -14,7 +14,7 @@ import type {
 	IFileBrowserOptions,
 	IUIElement,
 	IViewBased
-} from '../../types';
+} from 'jodit/types';
 import DataProvider from './data-provider';
 import { ContextMenu } from '../context-menu/context-menu';
 

@@ -8,10 +8,10 @@
  * @module modules/file-browser
  */
 
-import type { IDictionary, IFileBrowser } from '../../../types';
+import type { IDictionary, IFileBrowser } from 'jodit/types';
 import { Confirm, Prompt } from '../../dialog';
-import { isValidName } from '../../../core/helpers/checker';
-import { normalizePath } from '../../../core/helpers';
+import { isValidName } from 'jodit/core/helpers/checker';
+import { normalizePath } from 'jodit/core/helpers';
 import { DEFAULT_SOURCE_NAME } from '../data-provider';
 import { openImageEditor } from '../../image-editor/image-editor';
 import { loadTree } from '../fetch/load-tree';

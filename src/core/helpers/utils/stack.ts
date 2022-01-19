@@ -8,7 +8,7 @@
  * @module helpers/utils
  */
 
-import type { CanUndef } from '../../../types';
+import type { CanUndef } from 'jodit/types';
 
 export class LimitedStack<T> {
 	private stack: T[] = [];

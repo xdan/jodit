@@ -8,7 +8,7 @@
  * @module modules/observer
  */
 
-import type { SnapshotType } from '../../types';
+import type { SnapshotType } from 'jodit/types';
 import type { Observer } from './observer';
 
 export class Command {

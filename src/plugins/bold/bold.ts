@@ -8,9 +8,9 @@
  * @module plugins/bold
  */
 
-import type { IDictionary, IJodit, IControlType } from '../../types';
-import { Config } from '../../config';
-import { isArray } from '../../core/helpers';
+import type { IDictionary, IJodit, IControlType } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { isArray } from 'jodit/core/helpers';
 
 Config.prototype.controls.subscript = {
 	tags: ['sub'],

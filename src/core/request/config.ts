@@ -8,10 +8,10 @@
  * @module request
  */
 
-import type { AjaxOptions } from '../../types';
-import { Config } from '../../config';
+import type { AjaxOptions } from 'jodit/types';
+import { Config } from 'jodit/config';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		/**
 		 * A set of key/value pairs that configure the Ajax request. All settings are optional

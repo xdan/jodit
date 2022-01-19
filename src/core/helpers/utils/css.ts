@@ -8,7 +8,7 @@
  * @module helpers/utils
  */
 
-import type { IStyle, StyleValue } from '../../../types';
+import type { IStyle, StyleValue } from 'jodit/types';
 import { isPlainObject, isNumeric, isVoid, isBoolean } from '../checker/';
 import { normalizeCssValue } from '../normalize/';
 import { camelCase, kebabCase } from '../string/';

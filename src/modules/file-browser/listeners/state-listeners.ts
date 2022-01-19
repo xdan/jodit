@@ -8,10 +8,10 @@
  * @module modules/file-browser
  */
 
-import type { IFileBrowser, IFileBrowserItem } from '../../../types';
-import { Dom } from '../../../core/dom';
-import { normalizePath } from '../../../core/helpers/normalize';
-import { Button } from '../../../core/ui';
+import type { IFileBrowser, IFileBrowserItem } from 'jodit/types';
+import { Dom } from 'jodit/core/dom';
+import { normalizePath } from 'jodit/core/helpers/normalize';
+import { Button } from 'jodit/core/ui';
 import { elementsMap } from '../builders/elements-map';
 import { loadTree } from '../fetch/load-tree';
 

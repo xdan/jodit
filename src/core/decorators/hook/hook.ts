@@ -15,10 +15,10 @@ import type {
 	IDictionary,
 	IViewBased,
 	IViewComponent
-} from '../../../types';
-import type { Component } from '../../component';
-import { isFunction } from '../../helpers/checker';
-import { error } from '../../helpers/utils/error';
+} from 'jodit/types';
+import type { Component } from 'jodit/core/component';
+import { isFunction } from 'jodit/core/helpers/checker';
+import { error } from 'jodit/core/helpers/utils/error';
 
 /**
  * Call on some component status

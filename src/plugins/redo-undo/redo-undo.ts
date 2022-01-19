@@ -8,10 +8,10 @@
  * @module plugins/redo-undo
  */
 
-import type { IControlType, IJodit, IPlugin } from '../../types/';
-import { Config } from '../../config';
-import * as consts from '../../core/constants';
-import { Plugin } from '../../core/plugin';
+import type { IControlType, IJodit, IPlugin } from 'jodit/types';
+import { Config } from 'jodit/config';
+import * as consts from 'jodit/core/constants';
+import { Plugin } from 'jodit/core/plugin';
 
 Config.prototype.controls.redo = {
 	mode: consts.MODE_SPLIT,

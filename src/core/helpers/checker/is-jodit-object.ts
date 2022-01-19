@@ -8,7 +8,7 @@
  * @module helpers/checker
  */
 
-import type { IJodit, IViewBased } from '../../../types';
+import type { IJodit, IViewBased } from 'jodit/types';
 import { isFunction } from './is-function';
 import { modules } from '../../global';
 

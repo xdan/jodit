@@ -21,11 +21,11 @@ import type {
 	IToolbarCollection,
 	IViewBased,
 	Nullable
-} from '../../../types';
-import { UIButton, UIButtonState } from '../../../core/ui/button';
-import { component, watch } from '../../../core/decorators';
-import { Dom } from '../../../core/dom';
-import { Popup } from '../../../core/ui/popup/';
+} from 'jodit/types';
+import { UIButton, UIButtonState } from 'jodit/core/ui/button';
+import { component, watch } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom';
+import { Popup } from 'jodit/core/ui/popup/';
 import { makeCollection } from '../factory';
 import {
 	isFunction,
@@ -37,11 +37,11 @@ import {
 	call,
 	isArray,
 	keys
-} from '../../../core/helpers/';
-import { Icon } from '../../../core/ui';
-import { ToolbarCollection } from '../../../modules/toolbar/collection/collection';
-import { STATUSES } from '../../../core/component';
-import { findControlType } from '../../../core/ui/helpers/get-control-type';
+} from 'jodit/core/helpers/';
+import { Icon } from 'jodit/core/ui';
+import { ToolbarCollection } from 'jodit/modules/toolbar/collection/collection';
+import { STATUSES } from 'jodit/core/component';
+import { findControlType } from 'jodit/core/ui/helpers/get-control-type';
 
 @component
 export class ToolbarButton<T extends IViewBased = IViewBased>

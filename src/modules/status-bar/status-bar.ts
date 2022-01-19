@@ -12,10 +12,10 @@
 
 import './status-bar.less';
 
-import type { IJodit, IStatusBar, IDictionary } from '../../types';
-import { ViewComponent, STATUSES } from '../../core/component';
-import { Dom } from '../../core/dom';
-import { Mods } from '../../core/traits';
+import type { IJodit, IStatusBar, IDictionary } from 'jodit/types';
+import { ViewComponent, STATUSES } from 'jodit/core/component';
+import { Dom } from 'jodit/core/dom';
+import { Mods } from 'jodit/core/traits';
 
 export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 	className(): string {

@@ -8,11 +8,11 @@
  * @module plugins/keyboard
  */
 
-import type { IJodit, Nullable } from '../../types';
-import { call } from '../../core/helpers/utils';
-import { Dom } from '../../core/dom';
-import { INSEPARABLE_TAGS } from '../../core/constants';
-import { trim } from '../../core/helpers/string';
+import type { IJodit, Nullable } from 'jodit/types';
+import { call } from 'jodit/core/helpers/utils';
+import { Dom } from 'jodit/core/dom';
+import { INSEPARABLE_TAGS } from 'jodit/core/constants';
+import { trim } from 'jodit/core/helpers/string';
 
 export function getSibling(node: Node, backspace: boolean): Nullable<Node> {
 	return backspace ? node.previousSibling : node.nextSibling;

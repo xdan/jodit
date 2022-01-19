@@ -8,7 +8,7 @@
  * @module modules/file-browser
  */
 
-import type { IFileBrowser } from '../../../types';
+import type { IFileBrowser } from 'jodit/types';
 
 /**
  * Removes a file from the server

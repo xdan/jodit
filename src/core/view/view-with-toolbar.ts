@@ -18,11 +18,11 @@ import type {
 	IPluginButton,
 	IViewOptions,
 	ButtonsGroups
-} from '../../types';
+} from 'jodit/types';
 import { View } from './view';
 import { isString, resolveElement, splitArray } from '../helpers';
 import { Dom } from '../dom';
-import { makeCollection } from '../../modules/toolbar/factory';
+import { makeCollection } from 'jodit/modules/toolbar/factory';
 import { STATUSES } from '../component';
 import { isButtonGroup } from '../ui/helpers/buttons';
 import { autobind } from '../decorators';

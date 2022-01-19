@@ -9,9 +9,9 @@
  */
 
 import { Dialog } from './dialog';
-import { asArray, isFunction } from '../../core/helpers/';
-import { Dom } from '../../core/dom';
-import { Button } from '../../core/ui';
+import { asArray, isFunction } from 'jodit/core/helpers/';
+import { Dom } from 'jodit/core/dom';
+import { Button } from 'jodit/core/ui';
 
 /**
  * Show `alert` dialog. Work without Jodit object

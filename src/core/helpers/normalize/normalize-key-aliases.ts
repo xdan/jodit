@@ -8,7 +8,7 @@
  * @module helpers/normalize
  */
 
-import type { IDictionary } from '../../../types';
+import type { IDictionary } from 'jodit/types';
 import { trim } from '../string';
 import { KEY_ALIASES } from '../../constants';
 

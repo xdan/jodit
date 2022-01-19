@@ -8,7 +8,7 @@
  * @module modules/file-browser
  */
 
-import type { IFileBrowser } from '../../../types';
+import type { IFileBrowser } from 'jodit/types';
 
 /**
  * Loads a list of files and adds them to the state

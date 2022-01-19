@@ -8,9 +8,9 @@
  * @module modules/observer
  */
 
-import type { IJodit, ISnapshot, SnapshotType } from '../../types';
-import { ViewComponent } from '../../core/component';
-import { Dom } from '../../core/dom';
+import type { IJodit, ISnapshot, SnapshotType } from 'jodit/types';
+import { ViewComponent } from 'jodit/core/component';
+import { Dom } from 'jodit/core/dom';
 
 // declare const isProd: boolean;
 /**

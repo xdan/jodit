@@ -21,7 +21,7 @@ import type {
 	Nullable,
 	IDictionary,
 	IEventEmitter
-} from '../../types';
+} from 'jodit/types';
 import { Storage } from '../storage';
 import {
 	camelCase,

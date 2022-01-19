@@ -8,7 +8,7 @@
  * @module plugins/media/video
  */
 
-import type { IJodit } from '../../../types';
+import type { IJodit } from 'jodit/types';
 import './config';
 
 export function video(editor: IJodit): void {

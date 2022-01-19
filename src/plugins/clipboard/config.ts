@@ -8,16 +8,16 @@
  * @module plugins/clipboard
  */
 
-import type { IControlType, IJodit } from '../../types';
-import { Config } from '../../config';
+import type { IControlType, IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
 import {
 	INSERT_AS_HTML,
 	INSERT_CLEAR_HTML,
 	INSERT_ONLY_TEXT,
 	INSERT_AS_TEXT,
 	TEXT_PLAIN
-} from '../../core/constants';
-import { Alert } from '../../modules/dialog';
+} from 'jodit/core/constants';
+import { Alert } from 'jodit/modules/dialog';
 import { pasteInsertHtml } from './paste/helpers';
 import { pluginKey as clipboardPluginKey } from './clipboard';
 
@@ -29,7 +29,7 @@ export type InsertMode =
 	| typeof INSERT_ONLY_TEXT
 	| typeof INSERT_AS_TEXT;
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		/**
 		 * Ask before paste HTML in WYSIWYG mode

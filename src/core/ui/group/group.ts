@@ -17,8 +17,8 @@ import type {
 	IUIElement,
 	IUIGroup,
 	IViewBased
-} from '../../../types';
-import type { IDictionary } from '../../../types';
+} from 'jodit/types';
+import type { IDictionary } from 'jodit/types';
 import { UIElement } from '../element';
 import { component, watch } from '../../decorators';
 import { isArray } from '../../helpers';

@@ -15,11 +15,11 @@ import type {
 	IToolbarButton,
 	IViewBased,
 	Nullable
-} from '../../../types';
-import { UIButton } from '../../../core/ui/button';
-import { Dom } from '../../../core/dom';
-import { isString, attr } from '../../../core/helpers';
-import { component } from '../../../core/decorators';
+} from 'jodit/types';
+import { UIButton } from 'jodit/core/ui/button';
+import { Dom } from 'jodit/core/dom';
+import { isString, attr } from 'jodit/core/helpers';
+import { component } from 'jodit/core/decorators';
 
 @component
 export class ToolbarContent<T extends IViewBased = IViewBased>

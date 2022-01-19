@@ -25,10 +25,10 @@ import type {
 	IUploaderOptions,
 	IViewBased,
 	Nullable
-} from '../../types';
-import { Config } from '../../config';
-import { IS_IE, TEXT_PLAIN } from '../../core/constants';
-import { Ajax } from '../../core/request';
+} from 'jodit/types';
+import { Config } from 'jodit/config';
+import { IS_IE, TEXT_PLAIN } from 'jodit/core/constants';
+import { Ajax } from 'jodit/core/request';
 import {
 	attr,
 	error,
@@ -39,12 +39,12 @@ import {
 	toArray,
 	isString,
 	ConfigProto
-} from '../../core/helpers';
-import { Dom } from '../../core/dom';
-import { ViewComponent, STATUSES } from '../../core/component/';
-import { getContainer } from '../../core/global';
+} from 'jodit/core/helpers';
+import { Dom } from 'jodit/core/dom';
+import { ViewComponent, STATUSES } from 'jodit/core/component/';
+import { getContainer } from 'jodit/core/global';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		/**
 		 * Enable drag and drop file editor

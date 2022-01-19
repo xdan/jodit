@@ -8,11 +8,11 @@
  * @module plugins/keyboard
  */
 
-import type { IJodit } from '../../types';
-import { Plugin } from '../../core/plugin';
-import { watch } from '../../core/decorators';
-import { KEY_RIGHT, NBSP_SPACE } from '../../core/constants';
-import { Dom } from '../../core/dom';
+import type { IJodit } from 'jodit/types';
+import { Plugin } from 'jodit/core/plugin';
+import { watch } from 'jodit/core/decorators';
+import { KEY_RIGHT, NBSP_SPACE } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom';
 import { findNotEmptyNeighbor } from './helpers';
 
 /**

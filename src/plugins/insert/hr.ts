@@ -8,9 +8,9 @@
  * @module plugins/insert
  */
 
-import type { IControlType, IJodit } from '../../types';
-import { Config } from '../../config';
-import { Dom } from '../../core/dom';
+import type { IControlType, IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Dom } from 'jodit/core/dom';
 
 Config.prototype.controls.hr = {
 	command: 'insertHorizontalRule',

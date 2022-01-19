@@ -10,10 +10,10 @@
  * @module ui/form
  */
 
-import type { IDictionary, IUIForm, IUIInput, IUISelect } from '../../../types';
+import type { IDictionary, IUIForm, IUIInput, IUISelect } from 'jodit/types';
 import { UIGroup } from '../group';
 import { UIInput, UISelect } from './inputs';
-import { attr } from '../../helpers/utils';
+import { attr } from 'jodit/core/helpers/utils';
 import { component } from '../../decorators';
 
 @component

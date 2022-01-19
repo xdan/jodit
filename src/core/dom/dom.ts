@@ -18,7 +18,7 @@ import type {
 	NodeCondition,
 	Nullable,
 	IDictionary
-} from '../../types';
+} from 'jodit/types';
 import * as consts from '../constants';
 import {
 	$$,

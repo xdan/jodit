@@ -8,7 +8,7 @@
  * @module helpers/checker
  */
 
-import type { IContainer, IDestructible, IInitable } from '../../../types';
+import type { IContainer, IDestructible, IInitable } from 'jodit/types';
 import { isFunction } from './is-function';
 import { Dom } from '../../dom';
 import { isVoid } from './is-void';

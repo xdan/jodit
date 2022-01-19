@@ -8,7 +8,7 @@
  * @module helpers/utils
  */
 
-import type { IDictionary } from '../../../types';
+import type { IDictionary } from 'jodit/types';
 import { isAtom } from './extend';
 import { isArray, isPlainObject, isString, isVoid } from '../checker';
 import { Config } from '../../../config';

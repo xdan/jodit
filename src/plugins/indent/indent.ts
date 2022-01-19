@@ -8,11 +8,11 @@
  * @module plugins/indent
  */
 
-import type { IControlType, IJodit } from '../../types/';
-import { Config } from '../../config';
-import { BR, PARAGRAPH } from '../../core/constants';
-import { Dom } from '../../core/dom';
-import { attr } from '../../core/helpers';
+import type { IControlType, IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { BR, PARAGRAPH } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom';
+import { attr } from 'jodit/core/helpers';
 
 Config.prototype.controls.indent = {
 	tooltip: 'Increase Indent'
@@ -50,7 +50,7 @@ Config.prototype.controls.outdent = {
 	tooltip: 'Decrease Indent'
 } as IControlType;
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		/**
 		 * The number of pixels to use for indenting the current line.

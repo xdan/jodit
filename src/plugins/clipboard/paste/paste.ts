@@ -11,8 +11,8 @@
  */
 
 import type { InsertMode, PasteEvent } from '../config';
-import type { IJodit } from '../../../types';
-import { Plugin } from '../../../core/plugin';
+import type { IJodit } from 'jodit/types';
+import { Plugin } from 'jodit/core/plugin';
 import { getAllTypes, getDataTransfer, pasteInsertHtml } from './helpers';
 
 import {
@@ -22,7 +22,7 @@ import {
 	INSERT_ONLY_TEXT,
 	TEXT_HTML,
 	TEXT_PLAIN
-} from '../../../core/constants';
+} from 'jodit/core/constants';
 
 import {
 	isHTML,
@@ -36,13 +36,13 @@ import {
 	markOwner,
 	nl2br,
 	stripTags
-} from '../../../core/helpers';
+} from 'jodit/core/helpers';
 
 import { pluginKey as clipboardPluginKey } from '../clipboard';
-import { Dom } from '../../../core/dom';
-import { Confirm, Dialog } from '../../../modules/dialog';
-import { Button } from '../../../core/ui/button';
-import { autobind } from '../../../core/decorators';
+import { Dom } from 'jodit/core/dom';
+import { Confirm, Dialog } from 'jodit/modules/dialog';
+import { Button } from 'jodit/core/ui/button';
+import { autobind } from 'jodit/core/decorators';
 
 type PastedValue = {
 	html: string | Node;

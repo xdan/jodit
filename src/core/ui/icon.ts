@@ -13,7 +13,7 @@ import type {
 	IDictionary,
 	IUIIconState,
 	IViewBased
-} from '../../types';
+} from 'jodit/types';
 import { css } from '../helpers';
 
 export class Icon {

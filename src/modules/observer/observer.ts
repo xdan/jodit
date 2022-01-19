@@ -10,15 +10,15 @@
  * @module modules/observer
  */
 
-import type { IJodit, SnapshotType, IObserver } from '../../types';
-import { Config } from '../../config';
-import { ViewComponent } from '../../core/component';
+import type { IJodit, SnapshotType, IObserver } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { ViewComponent } from 'jodit/core/component';
 import { Snapshot } from './snapshot';
 import { Stack } from './stack';
 import { Command } from './command';
-import { debounce } from '../../core/decorators';
+import { debounce } from 'jodit/core/decorators';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		observer: {
 			/**

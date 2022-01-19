@@ -12,11 +12,11 @@ import type {
 	IControlType,
 	IFileBrowserCallBackData,
 	IJodit
-} from '../../types';
-import { Dom } from '../../core/dom';
-import { $$ } from '../../core/helpers';
-import { FileSelectorWidget } from '../../modules/widget';
-import { Config } from '../../config';
+} from 'jodit/types';
+import { Dom } from 'jodit/core/dom';
+import { $$ } from 'jodit/core/helpers';
+import { FileSelectorWidget } from 'jodit/modules/widget';
+import { Config } from 'jodit/config';
 
 Config.prototype.controls.image = {
 	popup: (editor: IJodit, current, self, close) => {

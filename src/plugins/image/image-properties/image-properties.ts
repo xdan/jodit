@@ -15,7 +15,7 @@ import type {
 	IFileBrowserCallBackData,
 	IJodit,
 	IUploaderData
-} from '../../../types';
+} from 'jodit/types';
 import { Config } from '../../../config';
 
 import {
@@ -39,12 +39,12 @@ import {
 	refs,
 	kebabCase,
 	isNumeric
-} from '../../../core/helpers';
-import { FileSelectorWidget, TabsWidget } from '../../../modules/widget';
-import { Button } from '../../../core/ui/button';
+} from 'jodit/core/helpers';
+import { FileSelectorWidget, TabsWidget } from 'jodit/modules/widget';
+import { Button } from 'jodit/core/ui/button';
 import { form, mainTab, positionTab } from './templates/';
-import { watch, autobind } from '../../../core/decorators';
-import { openImageEditor } from '../../../modules/image-editor/image-editor';
+import { watch, autobind } from 'jodit/core/decorators';
+import { openImageEditor } from 'jodit/modules/image-editor/image-editor';
 import { hAlignElement } from '../helpers';
 
 /**

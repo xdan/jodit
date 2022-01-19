@@ -24,7 +24,7 @@ import type {
 	IFileBrowserItem,
 	ISourceFile,
 	ISourcesFiles
-} from '../../types';
+} from 'jodit/types';
 
 import {
 	ConfigProto,
@@ -32,9 +32,9 @@ import {
 	isFunction,
 	normalizeRelativePath,
 	set
-} from '../../core/helpers';
-import { Ajax } from '../../core/request';
-import { autobind } from '../../core/decorators';
+} from 'jodit/core/helpers';
+import { Ajax } from 'jodit/core/request';
+import { autobind } from 'jodit/core/decorators';
 import { FileBrowserItem } from './builders/item';
 
 export const DEFAULT_SOURCE_NAME = 'default';

@@ -14,7 +14,7 @@ import type {
 	IControlType,
 	IControlTypeStrong,
 	IDictionary
-} from '../../../types';
+} from 'jodit/types';
 import { ConfigFlatten, isString } from '../../helpers';
 import { Config } from '../../../config';
 

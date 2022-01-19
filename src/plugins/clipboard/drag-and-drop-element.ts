@@ -8,12 +8,12 @@
  * @module plugins/clipboard
  */
 
-import type { IViewComponent, Nullable } from '../../types';
-import { css, ctrlKey, dataBind, splitArray } from '../../core/helpers';
-import { Plugin } from '../../core/plugin';
-import { Dom } from '../../core/dom';
-import { getContainer } from '../../core/global';
-import { autobind, throttle } from '../../core/decorators';
+import type { IViewComponent, Nullable } from 'jodit/types';
+import { css, ctrlKey, dataBind, splitArray } from 'jodit/core/helpers';
+import { Plugin } from 'jodit/core/plugin';
+import { Dom } from 'jodit/core/dom';
+import { getContainer } from 'jodit/core/global';
+import { autobind, throttle } from 'jodit/core/decorators';
 
 /**
  * Process drag and drop image or another element inside the editor

@@ -8,10 +8,10 @@
  * @module plugins/clipboard
  */
 
-import type { IDictionary, IJodit, IControlType } from '../../types';
-import { Config } from '../../config';
-import { Dom } from '../../core/dom';
-import { css } from '../../core/helpers/';
+import type { IDictionary, IJodit, IControlType } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Dom } from 'jodit/core/dom';
+import { css } from 'jodit/core/helpers/';
 
 const pluginKey = 'copyformat';
 

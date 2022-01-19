@@ -8,10 +8,10 @@
  * @module plugins/print
  */
 
-import type { IControlType, IDialog, IJodit } from '../../types';
-import { Config } from '../../config';
-import { attr, css } from '../../core/helpers';
-import * as consts from '../../core/constants';
+import type { IControlType, IDialog, IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { attr, css } from 'jodit/core/helpers';
+import * as consts from 'jodit/core/constants';
 
 Config.prototype.controls.preview = {
 	icon: 'eye',

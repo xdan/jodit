@@ -8,11 +8,11 @@
  * @module plugins/table
  */
 
-import type { IControlType, IDictionary, IJodit } from '../../types';
-import { Config } from '../../config';
-import { Dom } from '../../core/dom';
-import { attr } from '../../core/helpers/utils';
-import { $$, css, scrollIntoViewIfNeeded } from '../../core/helpers';
+import type { IControlType, IDictionary, IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Dom } from 'jodit/core/dom';
+import { attr } from 'jodit/core/helpers/utils';
+import { $$, css, scrollIntoViewIfNeeded } from 'jodit/core/helpers';
 
 Config.prototype.table = {
 	allowCellSelection: true,

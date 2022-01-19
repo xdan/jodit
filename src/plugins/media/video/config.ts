@@ -8,12 +8,12 @@
  * @module plugins/media/video
  */
 
-import type { IControlType, IJodit, IUIForm } from '../../../types';
+import type { IControlType, IJodit, IUIForm } from 'jodit/types';
 import { Config } from '../../../config';
-import { TabOption, TabsWidget } from '../../../modules/widget';
-import { convertMediaUrlToVideoEmbed } from '../../../core/helpers';
-import { UIForm, UIInput, UITextArea, UIBlock } from '../../../core/ui/form';
-import { Button } from '../../../core/ui/button';
+import { TabOption, TabsWidget } from 'jodit/modules/widget';
+import { convertMediaUrlToVideoEmbed } from 'jodit/core/helpers';
+import { UIForm, UIInput, UITextArea, UIBlock } from 'jodit/core/ui/form';
+import { Button } from 'jodit/core/ui/button';
 
 Config.prototype.controls.video = {
 	popup: (editor: IJodit, current, control, close) => {

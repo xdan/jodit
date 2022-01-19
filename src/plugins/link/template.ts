@@ -8,15 +8,15 @@
  * @module plugins/link
  */
 
-import type { IJodit, IUIForm } from '../../types';
+import type { IJodit, IUIForm } from 'jodit/types';
 import {
 	UIBlock,
 	UICheckbox,
 	UIForm,
 	UIInput,
 	UISelect
-} from '../../core/ui/form';
-import { UIButton } from '../../core/ui/button';
+} from 'jodit/core/ui/form';
+import { UIButton } from 'jodit/core/ui/button';
 
 export const formTemplate = (editor: IJodit): IUIForm => {
 	const {

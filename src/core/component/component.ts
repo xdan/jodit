@@ -15,7 +15,7 @@ import type {
 	IComponent,
 	IDictionary,
 	Nullable
-} from '../../types';
+} from 'jodit/types';
 
 import { kebabCase, get, getClassName, isFunction, isVoid } from '../helpers';
 import { uniqueUid } from '../global';

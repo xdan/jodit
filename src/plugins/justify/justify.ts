@@ -8,10 +8,10 @@
  * @module plugins/justify
  */
 
-import type { IJodit, IControlType } from '../../types';
-import { Config } from '../../config';
-import { Dom } from '../../modules/';
-import { css } from '../../core/helpers/';
+import type { IJodit, IControlType } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Dom } from 'jodit/modules/';
+import { css } from 'jodit/core/helpers/';
 
 Config.prototype.controls.align = {
 	name: 'left',

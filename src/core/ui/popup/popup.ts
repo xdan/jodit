@@ -22,7 +22,7 @@ import type {
 	IViewBased,
 	Nullable,
 	PopupStrategy
-} from '../../../types';
+} from 'jodit/types';
 import { Dom } from '../../dom';
 import {
 	attr,

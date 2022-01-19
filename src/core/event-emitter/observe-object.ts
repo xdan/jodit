@@ -13,7 +13,7 @@ import type {
 	CanUndef,
 	IDictionary,
 	IObservable
-} from '../../types';
+} from 'jodit/types';
 import { isPlainObject, isFastEqual, isArray } from '../helpers';
 import { nonenumerable } from '../decorators';
 

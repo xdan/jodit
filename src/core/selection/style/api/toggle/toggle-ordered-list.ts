@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, CommitMode } from '../../../../../types';
+import type { IJodit, CommitMode } from 'jodit/types';
 import type { CommitStyle } from '../../commit-style';
-import { Dom } from '../../../../dom';
+import { Dom } from 'jodit/core/dom';
 import { extractSelectedPart } from '../extract';
 import { CHANGE, INITIAL, REPLACE } from '../../commit-style';
 import { toggleCSS } from './toggle-css';

@@ -27,6 +27,9 @@ import * as consts from './core/constants';
 import * as Modules from './modules/';
 import * as Plugins from './plugins/';
 import * as Icons from './styles/icons/';
+import { assert } from './core/helpers/utils/assert';
+
+assert(false, 'yo');
 
 // copy constants in Jodit
 Object.keys(consts).forEach((key: string) => {

@@ -8,7 +8,7 @@
  * @module component
  */
 
-import type { IViewBased, IViewComponent } from '../../types';
+import type { IViewBased, IViewComponent } from 'jodit/types';
 import { Component } from './component';
 
 export abstract class ViewComponent<T extends IViewBased = IViewBased>

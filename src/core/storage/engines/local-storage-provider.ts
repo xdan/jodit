@@ -12,7 +12,7 @@ import type {
 	BooleanFunction,
 	IStorage,
 	StorageValueType
-} from '../../../types';
+} from 'jodit/types';
 
 /**
  * Check if user disable local storages/cookie etc.

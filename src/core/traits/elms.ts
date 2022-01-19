@@ -8,7 +8,7 @@
  * @module traits
  */
 
-import type { IComponent, IContainer, IElms } from '../../types';
+import type { IComponent, IContainer, IElms } from 'jodit/types';
 import { toArray } from '../helpers/array/to-array';
 
 export abstract class Elms implements IElms {

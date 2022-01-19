@@ -15,12 +15,12 @@ import {
 	KEY_ENTER,
 	KEY_UP,
 	SPACE_REG_EXP
-} from '../../../core/constants';
-import { Dialog } from '../../../modules/dialog';
-import { Plugin } from '../../../core/plugin';
-import { Dom } from '../../../core/dom';
-import { attr, toArray } from '../../../core/helpers';
-import { Button } from '../../../core/ui';
+} from 'jodit/core/constants';
+import { Dialog } from 'jodit/modules/dialog';
+import { Plugin } from 'jodit/core/plugin';
+import { Dom } from 'jodit/core/dom';
+import { attr, toArray } from 'jodit/core/helpers';
+import { Button } from 'jodit/core/ui';
 
 /**
  * Show dialog choose content to paste

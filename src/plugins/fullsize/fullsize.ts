@@ -10,12 +10,12 @@
 
 import './fullsize.less';
 
-import type { IViewWithToolbar, IControlType, IViewBased } from '../../types';
-import { Config } from '../../config';
-import * as consts from '../../core/constants';
-import { css, isJoditObject } from '../../core/helpers';
+import type { IViewWithToolbar, IControlType, IViewBased } from 'jodit/types';
+import { Config } from 'jodit/config';
+import * as consts from 'jodit/core/constants';
+import { css, isJoditObject } from 'jodit/core/helpers';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		/**
 		 * Open WYSIWYG in full screen

@@ -12,10 +12,10 @@ import type {
 	IControlType,
 	IFileBrowserCallBackData,
 	IJodit
-} from '../../types';
-import { Config } from '../../config';
-import { Dom } from '../../core/dom';
-import { FileSelectorWidget } from '../../modules/widget';
+} from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Dom } from 'jodit/core/dom';
+import { FileSelectorWidget } from 'jodit/modules/widget';
 
 Config.prototype.controls.file = {
 	popup: (

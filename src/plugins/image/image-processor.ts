@@ -8,8 +8,8 @@
  * @module plugins/image
  */
 
-import type { IJodit } from '../../types';
-import { $$ } from '../../core/helpers';
+import type { IJodit } from 'jodit/types';
+import { $$ } from 'jodit/core/helpers';
 
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 

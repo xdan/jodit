@@ -14,15 +14,15 @@ import type {
 	IJodit,
 	CanUndef,
 	ButtonsGroups
-} from '../../types/';
-import { Config } from '../../config';
-import * as consts from '../../core/constants';
-import { splitArray, toArray } from '../../core/helpers/';
-import { makeCollection } from '../../modules/toolbar/factory';
-import { UIList } from '../../core/ui';
-import { flatButtonsSet } from '../../core/ui/helpers/buttons';
+} from 'jodit/types';
+import { Config } from 'jodit/config';
+import * as consts from 'jodit/core/constants';
+import { splitArray, toArray } from 'jodit/core/helpers/';
+import { makeCollection } from 'jodit/modules/toolbar/factory';
+import { UIList } from 'jodit/core/ui';
+import { flatButtonsSet } from 'jodit/core/ui/helpers/buttons';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		/**
 		 * Mobile timeout for CLICK emulation

@@ -12,7 +12,7 @@
 
 import './color-picker.less';
 
-import type { IDictionary, IJodit } from '../../../types';
+import type { IDictionary, IJodit } from 'jodit/types';
 import {
 	normalizeColor,
 	hasBrowserColorPicker,
@@ -21,9 +21,9 @@ import {
 	isFunction,
 	isArray,
 	refs
-} from '../../../core/helpers/';
-import { Icon } from '../../../core/ui';
-import { Dom } from '../../../core/dom';
+} from 'jodit/core/helpers/';
+import { Icon } from 'jodit/core/ui';
+import { Dom } from 'jodit/core/dom';
 
 /**
  * Build color picker

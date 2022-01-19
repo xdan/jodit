@@ -12,7 +12,7 @@ import type {
 	CallbackFunction,
 	EventHandlerBlock,
 	IDictionary
-} from '../../types';
+} from 'jodit/types';
 
 export const defaultNameSpace = 'JoditEventDefaultNamespace';
 

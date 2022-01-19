@@ -8,7 +8,7 @@
  * @module plugins/source
  */
 
-import type { CallbackFunction, IJodit } from '../../../types';
+import type { CallbackFunction, IJodit } from 'jodit/types';
 
 export abstract class SourceEditor<T> {
 	instance!: T;

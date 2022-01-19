@@ -8,6 +8,7 @@
  * @module helpers/utils
  */
 
+export * from './assert';
 export * from './mark-deprecated';
 export * from './utils';
 export * from './get';

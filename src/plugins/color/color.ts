@@ -8,11 +8,11 @@
  * @module plugins/color
  */
 
-import type { IJodit, IControlType } from '../../types';
-import { Config } from '../../config';
-import { Dom } from '../../modules/';
-import { css, dataBind, normalizeColor } from '../../core/helpers/';
-import { ColorPickerWidget, TabOption, TabsWidget } from '../../modules/widget';
+import type { IJodit, IControlType } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Dom } from 'jodit/modules/';
+import { css, dataBind, normalizeColor } from 'jodit/core/helpers/';
+import { ColorPickerWidget, TabOption, TabsWidget } from 'jodit/modules/widget';
 
 Config.prototype.controls.brush = {
 	update(button): void {

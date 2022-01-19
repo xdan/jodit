@@ -10,9 +10,9 @@
  * @module modules/table
  */
 
-import type { ICreate, IDictionary, IJodit } from '../../types';
-import * as consts from '../../core/constants';
-import { Dom } from '../../core/dom';
+import type { ICreate, IDictionary, IJodit } from 'jodit/types';
+import * as consts from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom';
 import {
 	$$,
 	attr,
@@ -20,12 +20,12 @@ import {
 	isNumber,
 	toArray,
 	trim
-} from '../../core/helpers/';
-import { ViewComponent } from '../../core/component';
-import { getContainer } from '../../core/global';
-import { debounce } from '../../core/decorators';
+} from 'jodit/core/helpers/';
+import { ViewComponent } from 'jodit/core/component';
+import { getContainer } from 'jodit/core/global';
+import { debounce } from 'jodit/core/decorators';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		table: {
 			allowCellSelection: boolean;

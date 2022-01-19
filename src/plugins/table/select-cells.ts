@@ -8,13 +8,13 @@
  * @module plugins/table
  */
 
-import type { IBound, IJodit, Nullable } from '../../types';
-import { Plugin } from '../../core/plugin';
+import type { IBound, IJodit, Nullable } from 'jodit/types';
+import { Plugin } from 'jodit/core/plugin';
 import { Dom, Table } from '../../modules';
-import { $$, position } from '../../core/helpers';
+import { $$, position } from 'jodit/core/helpers';
 import { alignElement } from '../justify/justify';
-import { KEY_TAB } from '../../core/constants';
-import { autobind, watch } from '../../core/decorators';
+import { KEY_TAB } from 'jodit/core/constants';
+import { autobind, watch } from 'jodit/core/decorators';
 
 const key = 'table_processor_observer';
 const MOUSE_MOVE_LABEL = 'onMoveTableSelectCell';

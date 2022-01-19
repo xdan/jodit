@@ -8,7 +8,7 @@
  * @module modules/file-browser
  */
 
-import type { IDictionary, IFileBrowserItem, IViewBased } from '../../../types';
+import type { IDictionary, IFileBrowserItem, IViewBased } from 'jodit/types';
 
 type ElementsMap = IDictionary<{
 	elm: HTMLElement;

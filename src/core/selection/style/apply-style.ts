@@ -8,7 +8,7 @@
  * @module selection
  */
 
-import type { IJodit, Nullable, CanUndef, CommitMode } from '../../../types';
+import type { IJodit, Nullable, CanUndef, CommitMode } from 'jodit/types';
 import type { CommitStyle } from './commit-style';
 import { normalizeNode } from '../../helpers';
 import {

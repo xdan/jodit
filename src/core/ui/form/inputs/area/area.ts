@@ -10,9 +10,9 @@
 
 import './area.less';
 
-import type { IUITextArea, IViewBased } from '../../../../../types';
+import type { IUITextArea, IViewBased } from 'jodit/types';
 import { UIInput } from '../input/input';
-import { component } from '../../../../decorators';
+import { component } from 'jodit/core/decorators';
 
 @component
 export class UITextArea extends UIInput implements IUITextArea {

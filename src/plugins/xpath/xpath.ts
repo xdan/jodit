@@ -10,16 +10,16 @@
 
 import './xpath.less';
 
-import type { IControlTypeStrong, IToolbarButton } from '../../types';
-import { Config } from '../../config';
-import { INVISIBLE_SPACE, MODE_WYSIWYG } from '../../core/constants';
-import { ContextMenu } from '../../modules/context-menu/context-menu';
-import { Dom } from '../../core/dom';
-import { getXPathByElement, trim, attr } from '../../core/helpers';
-import { Plugin } from '../../core/plugin';
-import { makeButton } from '../../modules/toolbar/factory';
+import type { IControlTypeStrong, IToolbarButton } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { INVISIBLE_SPACE, MODE_WYSIWYG } from 'jodit/core/constants';
+import { ContextMenu } from 'jodit/modules/context-menu/context-menu';
+import { Dom } from 'jodit/core/dom';
+import { getXPathByElement, trim, attr } from 'jodit/core/helpers';
+import { Plugin } from 'jodit/core/plugin';
+import { makeButton } from 'jodit/modules/toolbar/factory';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		showXPathInStatusbar: boolean;
 	}

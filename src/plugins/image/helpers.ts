@@ -8,7 +8,7 @@
  * @module plugins/image
  */
 
-import { clearCenterAlign, css } from '../../core/helpers';
+import { clearCenterAlign, css } from 'jodit/core/helpers';
 
 /**
  * Align image

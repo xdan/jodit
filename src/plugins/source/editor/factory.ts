@@ -8,9 +8,9 @@
  * @module plugins/source
  */
 
-import type { CallbackFunction, IJodit, ISourceEditor } from '../../../types';
+import type { CallbackFunction, IJodit, ISourceEditor } from 'jodit/types';
 import { AceEditor, TextAreaEditor } from './engines';
-import { isFunction } from '../../../core/helpers';
+import { isFunction } from 'jodit/core/helpers';
 
 export function createSourceEditor(
 	type: 'ace' | 'mirror' | 'area' | ((jodit: IJodit) => ISourceEditor),

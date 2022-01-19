@@ -8,11 +8,11 @@
  * @module plugins/clipboard/paste
  */
 
-import type { IJodit, Nullable } from '../../../types';
+import type { IJodit, Nullable } from 'jodit/types';
 import type { PasteEvent } from '../config';
-import { isArray, isNumber, isString, isVoid } from '../../../core/helpers';
-import { Dom } from '../../../core/dom';
-import { TEXT_PLAIN } from '../../../core/constants';
+import { isArray, isNumber, isString, isVoid } from 'jodit/core/helpers';
+import { Dom } from 'jodit/core/dom';
+import { TEXT_PLAIN } from 'jodit/core/constants';
 
 /**
  * Get DataTransfer from different event types

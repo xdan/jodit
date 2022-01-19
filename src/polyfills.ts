@@ -5,6 +5,7 @@
  */
 
 import type { IDictionary } from './types';
+
 import 'classlist-polyfill';
 import 'es6-promise/auto';
 

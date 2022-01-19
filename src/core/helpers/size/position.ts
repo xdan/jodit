@@ -8,7 +8,7 @@
  * @module helpers/size
  */
 
-import type { IBound, IViewBased } from '../../../types';
+import type { IBound, IViewBased } from 'jodit/types';
 import { isJoditObject } from '../checker';
 
 export function position(elm: HTMLElement): IBound;

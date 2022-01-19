@@ -9,17 +9,17 @@
  */
 
 import { ToolbarCollection } from './collection';
-import * as consts from '../../../core/constants';
-import { Dom } from '../../../core/dom';
+import * as consts from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom';
 import type {
 	IDictionary,
 	IToolbarButton,
 	IViewBased,
 	IJodit,
 	IBound
-} from '../../../types';
-import { css, isFunction, isJoditObject } from '../../../core/helpers';
-import { component } from '../../../core/decorators';
+} from 'jodit/types';
+import { css, isFunction, isJoditObject } from 'jodit/core/helpers';
+import { component } from 'jodit/core/decorators';
 
 @component
 export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {

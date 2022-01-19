@@ -8,7 +8,7 @@
  * @module modules/file-browser
  */
 
-import { Config } from '../../config';
+import { Config } from 'jodit/config';
 
 import type {
 	IFileBrowser,
@@ -21,12 +21,12 @@ import type {
 	IDictionary,
 	IUploader,
 	IViewBased
-} from '../../types/';
+} from 'jodit/types';
 
-import { humanSizeToBytes, isArray, isString } from '../../core/helpers';
-import { UIFileInput } from '../../core/ui';
+import { humanSizeToBytes, isArray, isString } from 'jodit/core/helpers';
+import { UIFileInput } from 'jodit/core/ui';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		filebrowser: IFileBrowserOptions;
 	}

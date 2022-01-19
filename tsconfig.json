@@ -31,8 +31,13 @@
 
 		"importHelpers": true,
 
-		"lib": ["es5", "esnext", "dom", "scripthost", "es2015.iterable"]
-	},
+		"lib": ["es5", "esnext", "dom", "scripthost", "es2015.iterable"],
+
+    "baseUrl": ".",
+    "paths": {
+      "jodit/*": ["./src/*"]
+    }
+  },
 	"include": [
     "./src/types/"
   ],

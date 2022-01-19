@@ -10,8 +10,8 @@
 
 import './styles';
 
-import { Config } from '../../config';
-import * as consts from '../../core/constants';
+import { Config } from 'jodit/config';
+import * as consts from 'jodit/core/constants';
 import { Dialog } from '../dialog/';
 
 import type {
@@ -30,32 +30,32 @@ import type {
 	CanUndef,
 	IViewOptions,
 	IObservable
-} from '../../types/';
+} from 'jodit/types';
 
-import { Storage } from '../../core/storage/';
+import { Storage } from 'jodit/core/storage/';
 import {
 	error,
 	isFunction,
 	isString,
 	ConfigProto,
 	trim
-} from '../../core/helpers/';
-import { ViewWithToolbar } from '../../core/view/view-with-toolbar';
+} from 'jodit/core/helpers/';
+import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
 
 import './config';
 
-import { Dom } from '../../core/dom';
+import { Dom } from 'jodit/core/dom';
 import { makeDataProvider } from './factories';
 import { stateListeners } from './listeners/state-listeners';
 import { nativeListeners } from './listeners/native-listeners';
 import { selfListeners } from './listeners/self-listeners';
 import { DEFAULT_SOURCE_NAME } from './data-provider';
-import { autobind } from '../../core/decorators';
+import { autobind } from 'jodit/core/decorators';
 import { FileBrowserFiles, FileBrowserTree } from './ui';
-import { ObservableObject } from '../../core/event-emitter';
+import { ObservableObject } from 'jodit/core/event-emitter';
 import { loadTree } from './fetch/load-tree';
 import { loadItems } from './fetch/load-items';
-import { STATUSES } from '../../core/component';
+import { STATUSES } from 'jodit/core/component';
 
 /**
  * @module modules/file-browser

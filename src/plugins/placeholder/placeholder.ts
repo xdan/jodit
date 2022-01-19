@@ -10,19 +10,19 @@
 
 import './placeholder.less';
 
-import type { IJodit } from '../../types';
-import { Config } from '../../config';
-import * as consts from '../../core/constants';
-import { css, attr } from '../../core/helpers';
-import { Dom } from '../../core/dom';
-import { Plugin } from '../../core/plugin';
-import { MAY_BE_REMOVED_WITH_KEY } from '../../core/constants';
-import { debounce } from '../../core/decorators';
+import type { IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+import * as consts from 'jodit/core/constants';
+import { css, attr } from 'jodit/core/helpers';
+import { Dom } from 'jodit/core/dom';
+import { Plugin } from 'jodit/core/plugin';
+import { MAY_BE_REMOVED_WITH_KEY } from 'jodit/core/constants';
+import { debounce } from 'jodit/core/decorators';
 
 /**
  * Show placeholder
  */
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		/**
 		 * Show placeholder

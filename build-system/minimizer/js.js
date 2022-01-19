@@ -29,6 +29,9 @@ module.exports = ({ ESNext, isTest, banner }) =>
 
 				pure_getters: true,
 				unsafe_comps: true,
+
+				pure_funcs: ['assert'],
+
 				passes: 7
 			},
 

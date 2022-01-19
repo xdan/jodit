@@ -12,7 +12,7 @@
 
 import './progress-bar.less';
 
-import type { IJodit, IProgressBar } from '../../../types';
+import type { IJodit, IProgressBar } from 'jodit/types';
 import { Dom } from '../../dom';
 import { UIElement } from '../element';
 

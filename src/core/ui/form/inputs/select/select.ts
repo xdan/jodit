@@ -10,9 +10,9 @@
 
 import './select.less';
 
-import type { IUISelect, IViewBased } from '../../../../../types';
-import { attr } from '../../../../helpers';
-import { component } from '../../../../decorators';
+import type { IUISelect, IViewBased } from 'jodit/types';
+import { attr } from 'jodit/core/helpers';
+import { component } from 'jodit/core/decorators';
 import { UIInput } from '../input/input';
 import { inputValidators, selectValidators } from '../../validators';
 

@@ -19,7 +19,7 @@ import type {
 	IStyle,
 	MarkerInfo,
 	Nullable
-} from '../../types';
+} from 'jodit/types';
 
 import * as consts from '../constants';
 

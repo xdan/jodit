@@ -12,16 +12,16 @@ import './symbols.less';
 
 import './config';
 
-import type { IJodit } from '../../types';
+import type { IJodit } from 'jodit/types';
 import {
 	KEY_DOWN,
 	KEY_ENTER,
 	KEY_LEFT,
 	KEY_RIGHT,
 	KEY_UP
-} from '../../core/constants';
+} from 'jodit/core/constants';
 import { Dom, Plugin } from '../../modules';
-import { attr } from '../../core/helpers/utils';
+import { attr } from 'jodit/core/helpers/utils';
 
 /**
  * The plugin inserts characters that are not part of the standard keyboard.

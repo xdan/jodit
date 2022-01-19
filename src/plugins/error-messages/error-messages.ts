@@ -10,12 +10,12 @@
 
 import './errors-messages.less';
 
-import type { IJodit } from '../../types';
-import { Config } from '../../config';
-import { Dom } from '../../core/dom';
-import { css, toArray } from '../../core/helpers';
+import type { IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Dom } from 'jodit/core/dom';
+import { css, toArray } from 'jodit/core/helpers';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		showMessageErrors: boolean;
 

@@ -8,7 +8,7 @@
  * @module plugins/table
  */
 
-import type { IJodit } from '../../types';
+import type { IJodit } from 'jodit/types';
 
 export function table(editor: IJodit): void {
 	editor.registerButton({

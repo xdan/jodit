@@ -8,11 +8,11 @@
  * @module plugins/fix
  */
 
-import type { IJodit, Nullable } from '../../types';
-import { Plugin } from '../../core/plugin';
-import { Dom } from '../../core/dom';
-import { isString } from '../../core/helpers/checker';
-import { autobind } from '../../core/decorators';
+import type { IJodit, Nullable } from 'jodit/types';
+import { Plugin } from 'jodit/core/plugin';
+import { Dom } from 'jodit/core/dom';
+import { isString } from 'jodit/core/helpers/checker';
+import { autobind } from 'jodit/core/decorators';
 
 /**
  * Wrap single text nodes in block wrapper

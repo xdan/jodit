@@ -8,10 +8,10 @@
  * @module plugins/clipboard
  */
 
-import type { IJodit, IPlugin } from '../../types';
-import type { Plugin } from '../../core/plugin';
-import { TEXT_HTML, TEXT_PLAIN } from '../../core/constants';
-import { stripTags } from '../../core/helpers';
+import type { IJodit, IPlugin } from 'jodit/types';
+import type { Plugin } from 'jodit/core/plugin';
+import { TEXT_HTML, TEXT_PLAIN } from 'jodit/core/constants';
+import { stripTags } from 'jodit/core/helpers';
 import { getDataTransfer } from './paste/helpers';
 
 export const pluginKey = 'clipboard';

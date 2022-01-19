@@ -25,11 +25,11 @@ import type {
 	IBound
 } from '../../../types/';
 
-import { error, isFunction } from '../../../core/helpers/';
+import { error, isFunction } from 'jodit/core/helpers/';
 
-import { UIList } from '../../../core/ui';
+import { UIList } from 'jodit/core/ui';
 import { makeButton } from '../factory';
-import { component, autobind } from '../../../core/decorators';
+import { component, autobind } from 'jodit/core/decorators';
 
 @component
 export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>

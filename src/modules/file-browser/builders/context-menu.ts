@@ -8,13 +8,13 @@
  * @module modules/file-browser
  */
 
-import type { IFileBrowser } from '../../../types';
+import type { IFileBrowser } from 'jodit/types';
 import { Dialog } from '../../dialog';
 
-import { Dom } from '../../../core/dom';
-import { attr, error } from '../../../core/helpers';
+import { Dom } from 'jodit/core/dom';
+import { attr, error } from 'jodit/core/helpers';
 import { makeContextMenu } from '../factories';
-import { Icon } from '../../../core/ui';
+import { Icon } from 'jodit/core/ui';
 import { elementToItem, getItem } from '../listeners/native-listeners';
 import { openImageEditor } from '../../image-editor/image-editor';
 import { elementsMap } from './elements-map';

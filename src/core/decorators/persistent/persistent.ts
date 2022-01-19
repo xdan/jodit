@@ -10,7 +10,7 @@
  * @module decorators/persistent
  */
 
-import type { IComponent, IDictionary, IViewComponent } from '../../../types';
+import type { IComponent, IDictionary, IViewComponent } from 'jodit/types';
 import { STATUSES } from '../../component';
 import { isViewObject } from '../../helpers';
 

@@ -8,13 +8,13 @@
  * @module plugins/iframe
  */
 
-import type { IJodit } from '../../types';
-import { Config } from '../../config';
-import { css, defaultLanguage, attr, callPromise } from '../../core/helpers/';
-import { error } from '../../core/helpers';
-import { MODE_SOURCE } from '../../core/constants';
+import type { IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { css, defaultLanguage, attr, callPromise } from 'jodit/core/helpers/';
+import { error } from 'jodit/core/helpers';
+import { MODE_SOURCE } from 'jodit/core/constants';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		editHTMLDocumentMode: boolean;
 		iframeDefaultSrc: string;

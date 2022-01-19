@@ -14,7 +14,7 @@ import type {
 	CallbackFunction,
 	EventHandlerBlock,
 	IEventEmitter
-} from '../../types';
+} from 'jodit/types';
 import { defaultNameSpace, EventHandlersStore } from './store';
 import { isString } from '../helpers/checker/is-string';
 import { isFunction } from '../helpers/checker/is-function';

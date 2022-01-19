@@ -8,12 +8,12 @@
  * @module plugins/ordered-list
  */
 
-import type { IControlType, IJodit, Nullable } from '../../types';
-import { Config } from '../../config';
-import { Dom } from '../../core/dom';
-import { dataBind, toArray } from '../../core/helpers';
-import { Plugin } from '../../core/plugin';
-import { autobind } from '../../core/decorators';
+import type { IControlType, IJodit, Nullable } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Dom } from 'jodit/core/dom';
+import { dataBind, toArray } from 'jodit/core/helpers';
+import { Plugin } from 'jodit/core/plugin';
+import { autobind } from 'jodit/core/decorators';
 
 const exec: IControlType<IJodit>['exec'] = (jodit, _, { control }): void => {
 	const key = `button${control.command}`;

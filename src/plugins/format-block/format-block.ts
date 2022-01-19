@@ -15,10 +15,10 @@ import type {
 	IJodit,
 	IControlType,
 	IDictionary
-} from '../../types';
-import { Config } from '../../config';
-import { Dom } from '../../modules/';
-import { memorizeExec } from '../../core/helpers';
+} from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Dom } from 'jodit/modules/';
+import { memorizeExec } from 'jodit/core/helpers';
 
 Config.prototype.controls.paragraph = {
 	command: 'formatBlock',

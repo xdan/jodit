@@ -16,7 +16,7 @@ import type {
 	Nullable,
 	IJodit,
 	RejectablePromise
-} from '../../../types';
+} from 'jodit/types';
 import { isFunction } from '../checker/is-function';
 import { isPromise } from '../checker/is-promise';
 import { get } from './get';

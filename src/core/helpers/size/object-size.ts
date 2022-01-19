@@ -9,7 +9,7 @@
  */
 
 import { isArray, isPlainObject, isString } from '../checker';
-import type { CanUndef } from '../../../types';
+import type { CanUndef } from 'jodit/types';
 
 export function size(
 	subject: CanUndef<object | string | Array<unknown>>

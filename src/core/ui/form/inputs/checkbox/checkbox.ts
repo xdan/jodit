@@ -10,10 +10,10 @@
 
 import './checkbox.less';
 
-import type { IViewBased, IUICheckBox } from '../../../../../types';
+import type { IViewBased, IUICheckBox } from 'jodit/types';
 import { UIInput } from '../input/input';
-import { component, watch, hook } from '../../../../decorators';
-import { Dom } from '../../../../dom';
+import { component, watch, hook } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom';
 
 @component
 export class UICheckbox extends UIInput implements IUICheckBox {

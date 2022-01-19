@@ -8,12 +8,12 @@
  * @module plugins/font
  */
 
-import type { IControlType, IJodit } from '../../types/';
-import { Config } from '../../config';
-import { Dom } from '../../core/dom';
-import { css, memorizeExec, normalizeSize } from '../../core/helpers/';
+import type { IControlType, IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Dom } from 'jodit/core/dom';
+import { css, memorizeExec, normalizeSize } from 'jodit/core/helpers/';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		defaultFontSizePoints: 'px' | 'pt';
 	}

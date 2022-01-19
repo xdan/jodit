@@ -16,12 +16,12 @@ import type {
 	IComponent,
 	IDictionary,
 	IViewComponent
-} from '../../../types';
-import { isFunction, isPlainObject, isViewObject } from '../../helpers/checker';
+} from 'jodit/types';
+import { isFunction, isPlainObject, isViewObject } from 'jodit/core/helpers/checker';
 import { ObservableObject } from '../../event-emitter';
 import { STATUSES } from '../../component';
-import { splitArray } from '../../helpers/array/split-array';
-import { error } from '../../helpers/utils/error';
+import { splitArray } from 'jodit/core/helpers/array/split-array';
+import { error } from 'jodit/core/helpers/utils/error';
 
 export function getPropertyDescriptor(
 	obj: unknown,

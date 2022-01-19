@@ -8,7 +8,7 @@
  * @module request
  */
 
-import type { IRequest, IResponse } from '../../types';
+import type { IRequest, IResponse } from 'jodit/types';
 
 export class Response<T> implements IResponse<T> {
 	readonly status: number;

@@ -14,10 +14,10 @@ import type {
 	Nullable,
 	IDictionary,
 	IFileBrowser
-} from '../../../types';
-import { ctrlKey, attr } from '../../../core/helpers';
+} from 'jodit/types';
+import { ctrlKey, attr } from 'jodit/core/helpers';
 import contextMenu from '../builders/context-menu';
-import { Dom } from '../../../core/dom';
+import { Dom } from 'jodit/core/dom';
 import { elementsMap } from '../builders/elements-map';
 import { loadTree } from '../fetch/load-tree';
 

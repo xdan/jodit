@@ -10,7 +10,7 @@
  * @module plugin
  */
 
-import type { IJodit, IPlugin, IViewBased } from '../../types';
+import type { IJodit, IPlugin, IViewBased } from 'jodit/types';
 import { ViewComponent, STATUSES } from '../component';
 import { autobind } from '../decorators';
 import { isJoditObject } from '../helpers';

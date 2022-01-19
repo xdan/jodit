@@ -13,8 +13,8 @@ import type {
 	IFileBrowserItemElement,
 	IFileBrowserItemWrapper,
 	ISource
-} from '../../../types';
-import { normalizePath, normalizeUrl } from '../../../core/helpers/';
+} from 'jodit/types';
+import { normalizePath, normalizeUrl } from 'jodit/core/helpers/';
 
 export class FileBrowserItem implements IFileBrowserItemWrapper {
 	source!: ISource;

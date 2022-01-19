@@ -8,7 +8,7 @@
  * @module helpers/string
  */
 
-import type { IDictionary, ILanguageOptions } from '../../../types';
+import type { IDictionary, ILanguageOptions } from 'jodit/types';
 import { Config } from '../../../config';
 import { defaultLanguage as defineLanguage } from '../utils';
 import { ucfirst, isString, error } from '../';

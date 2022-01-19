@@ -13,7 +13,7 @@ import type {
 	IUIElement,
 	IViewBased,
 	Nullable
-} from '../../types';
+} from 'jodit/types';
 import { ViewComponent } from '../component';
 import { Dom } from '../dom';
 import { Elms, Mods } from '../traits';

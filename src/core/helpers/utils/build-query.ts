@@ -8,7 +8,7 @@
  * @module helpers/utils
  */
 
-import type { IDictionary } from '../../../types';
+import type { IDictionary } from 'jodit/types';
 import { isPlainObject } from '../checker';
 
 /**

@@ -18,8 +18,8 @@ import type {
 	IUIElement,
 	IViewBased,
 	Nullable
-} from '../../types';
-import { isFunction, isJoditObject } from '../../core/helpers';
+} from 'jodit/types';
+import { isFunction, isJoditObject } from 'jodit/core/helpers';
 import { ToolbarCollection } from './collection/collection';
 import { ToolbarEditorCollection } from './collection/editor-collection';
 import { ToolbarButton } from './button/button';

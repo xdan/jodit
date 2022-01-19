@@ -8,7 +8,7 @@
  * @module plugins/inline-popup
  */
 
-import type { IControlType, IDictionary, IJodit } from '../../../types';
+import type { IControlType, IDictionary, IJodit } from 'jodit/types';
 import { Config } from '../../../config';
 
 declare module '../../../config' {

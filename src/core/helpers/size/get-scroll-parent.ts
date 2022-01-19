@@ -8,7 +8,7 @@
  * @module helpers/size
  */
 
-import type { Nullable } from '../../../types';
+import type { Nullable } from 'jodit/types';
 import { css } from '../utils';
 import { Dom } from '../../dom';
 

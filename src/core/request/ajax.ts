@@ -18,9 +18,9 @@ import type {
 	IAjax,
 	RejectablePromise,
 	IResponse
-} from '../../types';
+} from 'jodit/types';
 
-import { Config } from '../../config';
+import { Config } from 'jodit/config';
 
 import {
 	error,

@@ -10,7 +10,7 @@
  * @module decorators/wait
  */
 
-import type { IViewBased, IViewComponent } from '../../../types';
+import type { IViewBased, IViewComponent } from 'jodit/types';
 import { error, isFunction, isViewObject } from '../../helpers';
 import { STATUSES } from '../../component';
 

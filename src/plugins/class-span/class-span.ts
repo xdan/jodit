@@ -8,11 +8,11 @@
  * @module plugins/class-span
  */
 
-import type { IControlType, IJodit } from '../../types';
-import { Plugin } from '../../core/plugin';
-import { Config } from '../../config';
-import { Dom } from '../../core/dom';
-import { memorizeExec } from '../../core/helpers';
+import type { IControlType, IJodit } from 'jodit/types';
+import { Plugin } from 'jodit/core/plugin';
+import { Config } from 'jodit/config';
+import { Dom } from 'jodit/core/dom';
+import { memorizeExec } from 'jodit/core/helpers';
 
 Config.prototype.controls.classSpan = {
 	command: 'applyClassName',

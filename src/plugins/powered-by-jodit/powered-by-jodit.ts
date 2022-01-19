@@ -8,9 +8,9 @@
  * @module plugins/powered-by-jodit
  */
 
-import type { IJodit } from '../../types';
+import type { IJodit } from 'jodit/types';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		/**
 		 * Hide the link to the Jodit site at the bottom of the editor

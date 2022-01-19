@@ -15,9 +15,9 @@ import type {
 	IUIForm,
 	IUIOption,
 	Nullable
-} from '../../types';
-import { Config } from '../../config';
-import { Dom } from '../../core/dom';
+} from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Dom } from 'jodit/core/dom';
 import {
 	attr,
 	convertMediaUrlToVideoEmbed,
@@ -25,13 +25,13 @@ import {
 	isURL,
 	refs,
 	stripTags
-} from '../../core/helpers';
+} from 'jodit/core/helpers';
 import { formTemplate } from './template';
-import { Plugin } from '../../core/plugin';
-import { autobind } from '../../core/decorators';
+import { Plugin } from 'jodit/core/plugin';
+import { autobind } from 'jodit/core/decorators';
 import { Dialog, UIForm } from '../../modules';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		link: {
 			/**

@@ -8,7 +8,7 @@
  * @module helpers/utils
  */
 
-import type { IDictionary, Nullable } from '../../../types';
+import type { IDictionary, Nullable } from 'jodit/types';
 import { isString } from '../checker/is-string';
 import { isVoid } from '../checker/is-void';
 

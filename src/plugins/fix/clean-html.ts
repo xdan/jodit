@@ -14,20 +14,20 @@ import type {
 	IJodit,
 	Nullable,
 	IPlugin
-} from '../../types';
-import { Config } from '../../config';
+} from 'jodit/types';
+import { Config } from 'jodit/config';
 import {
 	INVISIBLE_SPACE_REG_EXP as INV_REG,
 	IS_INLINE,
 	INSEPARABLE_TAGS
-} from '../../core/constants';
+} from 'jodit/core/constants';
 import { Dom } from '../../modules';
-import { attr, isString, keys, safeHTML, trim } from '../../core/helpers';
-import { Plugin } from '../../core/plugin';
-import { watch, autobind, debounce } from '../../core/decorators';
+import { attr, isString, keys, safeHTML, trim } from 'jodit/core/helpers';
+import { Plugin } from 'jodit/core/plugin';
+import { watch, autobind, debounce } from 'jodit/core/decorators';
 import { findNotEmptySibling } from '../keyboard/helpers';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		cleanHTML: {
 			timeout: number;

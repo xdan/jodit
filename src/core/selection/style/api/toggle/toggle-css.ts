@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { CommitMode, IJodit } from '../../../../../types';
+import type { CommitMode, IJodit } from 'jodit/types';
 import type { CommitStyle } from '../../commit-style';
 import {
 	attr,
@@ -13,8 +13,8 @@ import {
 	kebabCase,
 	normalizeCssValue,
 	size
-} from '../../../../helpers';
-import { Dom } from '../../../../dom';
+} from 'jodit/core/helpers';
+import { Dom } from 'jodit/core/dom';
 import { CHANGE, UNSET, UNWRAP } from '../../commit-style';
 import { getContainer } from '../../../../global';
 

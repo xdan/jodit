@@ -12,9 +12,9 @@
 
 import './tabs.less';
 
-import type { IDictionary, IJodit, IUIButton } from '../../../types';
-import { $$, isFunction } from '../../../core/helpers';
-import { Button, UIElement } from '../../../core/ui';
+import type { IDictionary, IJodit, IUIButton } from 'jodit/types';
+import { $$, isFunction } from 'jodit/core/helpers';
+import { Button, UIElement } from 'jodit/core/ui';
 
 export interface TabOption {
 	icon?: string;

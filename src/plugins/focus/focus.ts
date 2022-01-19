@@ -10,11 +10,11 @@
  * @module plugins/focus
  */
 
-import type { IJodit } from '../../types';
-import { Config } from '../../config';
-import { Dom } from '../../core/dom';
+import type { IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Dom } from 'jodit/core/dom';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		autofocus: boolean;
 		cursorAfterAutofocus: 'start' | 'end';

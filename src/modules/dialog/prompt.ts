@@ -9,8 +9,8 @@
  */
 
 import { Dialog } from './dialog';
-import { Button } from '../../core/ui';
-import { attr, isFunction } from '../../core/helpers';
+import { Button } from 'jodit/core/ui';
+import { attr, isFunction } from 'jodit/core/helpers';
 
 /**
  * Show `Prompt` dialog. Work without Jodit object

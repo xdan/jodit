@@ -15,7 +15,7 @@ import type {
 	IDictionary,
 	IViewBased,
 	IViewComponent
-} from '../../../types';
+} from 'jodit/types';
 import { Component, STATUSES } from '../../component';
 import { error, isFunction, isViewObject } from '../../helpers';
 

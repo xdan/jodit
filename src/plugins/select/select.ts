@@ -8,12 +8,12 @@
  * @module plugins/select
  */
 
-import type { IJodit, Nullable } from '../../types';
-import { Plugin } from '../../core/plugin';
-import { autobind, watch } from '../../core/decorators';
-import { camelCase } from '../../core/helpers';
-import { Dom } from '../../core/dom';
-import { Popup, UIElement } from '../../core/ui';
+import type { IJodit, Nullable } from 'jodit/types';
+import { Plugin } from 'jodit/core/plugin';
+import { autobind, watch } from 'jodit/core/decorators';
+import { camelCase } from 'jodit/core/helpers';
+import { Dom } from 'jodit/core/dom';
+import { Popup, UIElement } from 'jodit/core/ui';
 
 /* eslint-disable tsdoc/syntax */
 

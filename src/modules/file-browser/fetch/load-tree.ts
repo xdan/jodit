@@ -8,9 +8,9 @@
  * @module modules/file-browser
  */
 
-import type { IFileBrowser } from '../../../types';
-import { error } from '../../../core/helpers/utils/error';
-import { Dom } from '../../../core/dom';
+import type { IFileBrowser } from 'jodit/types';
+import { error } from 'jodit/core/helpers/utils/error';
+import { Dom } from 'jodit/core/dom';
 import { loadItems } from './load-items';
 
 /**

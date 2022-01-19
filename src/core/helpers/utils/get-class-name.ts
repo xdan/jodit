@@ -8,7 +8,7 @@
  * @module helpers/utils
  */
 
-import type { IDictionary } from '../../../types';
+import type { IDictionary } from 'jodit/types';
 import { isFunction } from '../checker/is-function';
 
 export const keepNames = new Map<Function, string>();

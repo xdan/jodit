@@ -19,7 +19,7 @@ import type {
 	IViewBased,
 	Nullable,
 	ButtonsOption
-} from '../../../types';
+} from 'jodit/types';
 
 import { UIButton } from '../button';
 import { getStrongControlTypes } from '../helpers/get-strong-control-types';

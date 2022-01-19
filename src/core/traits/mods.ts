@@ -8,7 +8,7 @@
  * @module traits
  */
 
-import type { IComponent, IContainer, IDictionary, IMods } from '../../types';
+import type { IComponent, IContainer, IDictionary, IMods } from 'jodit/types';
 import { toArray } from '../helpers/array/to-array';
 
 export abstract class Mods implements IMods {

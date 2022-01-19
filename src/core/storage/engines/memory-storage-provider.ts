@@ -8,7 +8,7 @@
  * @module storage/memory
  */
 
-import type { IStorage, StorageValueType } from '../../../types';
+import type { IStorage, StorageValueType } from 'jodit/types';
 
 export class MemoryStorageProvider<T = StorageValueType>
 	implements IStorage<T>

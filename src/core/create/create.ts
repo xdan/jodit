@@ -17,7 +17,7 @@ import type {
 	ICreate,
 	CanUndef,
 	NodeFunction
-} from '../../types';
+} from 'jodit/types';
 
 import {
 	isPlainObject,

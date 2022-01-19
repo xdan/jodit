@@ -8,9 +8,9 @@
  * @module plugins/table
  */
 
-import type { IJodit } from '../../types';
-import * as consts from '../../core/constants';
-import { Dom } from '../../core/dom';
+import type { IJodit } from 'jodit/types';
+import * as consts from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom';
 import { Table } from '../../modules';
 
 /**

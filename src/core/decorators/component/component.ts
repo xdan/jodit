@@ -10,7 +10,7 @@
  * @module decorators/component
  */
 
-import { isFunction } from '../../helpers';
+import { isFunction } from 'jodit/core/helpers';
 
 interface ComponentCompatible {
 	className?: () => string;

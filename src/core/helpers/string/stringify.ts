@@ -8,7 +8,7 @@
  * @module helpers/string
  */
 
-import type { CanUndef } from '../../../types';
+import type { CanUndef } from 'jodit/types';
 
 /**
  * Safe stringify circular object

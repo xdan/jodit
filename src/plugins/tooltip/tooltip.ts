@@ -10,12 +10,12 @@
 
 import './tooltip.less';
 
-import type { IJodit, IPoint } from '../../types';
-import { css } from '../../core/helpers';
-import { Plugin } from '../../core/plugin';
-import { Dom } from '../../core/dom';
-import { getContainer } from '../../core/global';
-import { autobind } from '../../core/decorators';
+import type { IJodit, IPoint } from 'jodit/types';
+import { css } from 'jodit/core/helpers';
+import { Plugin } from 'jodit/core/plugin';
+import { Dom } from 'jodit/core/dom';
+import { getContainer } from 'jodit/core/global';
+import { autobind } from 'jodit/core/decorators';
 
 export class tooltip extends Plugin {
 	private isOpened = false;

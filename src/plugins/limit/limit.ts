@@ -8,18 +8,18 @@
  * @module plugins/limit
  */
 
-import type { IJodit, SnapshotType } from '../../types';
-import { Config } from '../../config';
-import { Plugin } from '../../core/plugin';
+import type { IJodit, SnapshotType } from 'jodit/types';
+import { Config } from 'jodit/config';
+import { Plugin } from 'jodit/core/plugin';
 import {
 	COMMAND_KEYS,
 	INVISIBLE_SPACE_REG_EXP,
 	SPACE_REG_EXP
-} from '../../core/constants';
-import { stripTags } from '../../core/helpers';
-import { autobind } from '../../core/decorators';
+} from 'jodit/core/constants';
+import { stripTags } from 'jodit/core/helpers';
+import { autobind } from 'jodit/core/decorators';
 
-declare module '../../config' {
+declare module 'jodit/config' {
 	interface Config {
 		/**
 		 * limit words count

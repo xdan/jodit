@@ -10,8 +10,8 @@
 
 import './table.less';
 
-import type { IBound, IJodit } from '../../types';
-import * as consts from '../../core/constants';
+import type { IBound, IJodit } from 'jodit/types';
+import * as consts from 'jodit/core/constants';
 import { Plugin, Dom, Table } from '../../modules';
 import {
 	$$,
@@ -19,8 +19,8 @@ import {
 	dataBind,
 	getContentWidth,
 	offset
-} from '../../core/helpers';
-import { autobind } from '../../core/decorators';
+} from 'jodit/core/helpers';
+import { autobind } from 'jodit/core/decorators';
 
 const key = 'table_processor_observer-resize';
 
