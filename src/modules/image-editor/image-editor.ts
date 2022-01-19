@@ -40,56 +40,15 @@ declare module 'jodit/config' {
 Config.prototype.imageeditor = {
 	min_width: 20,
 	min_height: 20,
-	/**
-	 * @property {boolean} imageeditor.closeAfterSave=false Close editor after save image
-	 */
 	closeAfterSave: false,
-
-	/**
-	 * @property {string|int} imageeditor.width=85% Default dialog width by screen
-	 */
 	width: '85%',
-
-	/**
-	 * @property {string|int} imageeditor.height=85% Default dialog height by screen
-	 */
 	height: '85%',
-
-	/**
-	 * @property {boolean} imageeditor.crop=true Show tab cropping
-	 */
 	crop: true,
-
-	/**
-	 * @property {boolean} imageeditor.resize=true Show tab resizing
-	 */
 	resize: true,
-
-	/**
-	 * @property {boolean} imageeditor.resizeUseRatio=true Keep aspect ratio on resize
-	 */
 	resizeUseRatio: true,
-
-	/**
-	 * @property {int} imageeditor.resizeMinWidth=20 minimal width on resize
-	 */
 	resizeMinWidth: 20,
-
-	/**
-	 * @property {boolean} imageeditor.resizeMinHeight=20 minimal height on resize
-	 */
 	resizeMinHeight: 20,
-
-	/**
-	 * @property {boolean} imageeditor.cropUseRatio=true Keep aspect ratio on crop
-	 */
 	cropUseRatio: true,
-
-	/**
-	 * @property {string} imageeditor.cropDefaultWidth=70% In the tab, crop the image is displayed not in real size.
-	 * Boxing default size for it
-	 * @property {string} imageeditor.cropDefaultHeight=70%
-	 */
 	cropDefaultWidth: '70%',
 	cropDefaultHeight: '70%'
 };
@@ -645,8 +604,6 @@ export class ImageEditor extends ViewComponent {
 
 	/**
 	 * Hide image editor
-	 *
-	 * @method hide
 	 */
 	@autobind
 	hide(): void {

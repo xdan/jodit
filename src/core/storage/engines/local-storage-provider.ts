@@ -8,11 +8,7 @@
  * @module storage/local
  */
 
-import type {
-	BooleanFunction,
-	IStorage,
-	StorageValueType
-} from 'jodit/types';
+import type { BooleanFunction, IStorage, StorageValueType } from 'jodit/types';
 
 /**
  * Check if user disable local storages/cookie etc.

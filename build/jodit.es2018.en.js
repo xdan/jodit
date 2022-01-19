@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.12.4
+ * Version: v3.12.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -36,6 +36,8 @@ return /******/ (function() { // webpackBootstrap
 class Config {
     constructor() {
         this.namespace = '';
+        this.safeMode = false;
+        this.safePluginsList = ['about', 'enter', 'backspace'];
         this.iframe = false;
         this.license = '';
         this.preset = 'custom';
@@ -1189,6 +1191,7 @@ __webpack_require__.d(__webpack_exports__, {
   "appendStyleAsync": function() { return /* reexport */ utils/* appendStyleAsync */.Nf; },
   "applyStyles": function() { return /* reexport */ applyStyles; },
   "asArray": function() { return /* reexport */ array/* asArray */._2; },
+  "assert": function() { return /* reexport */ utils/* assert */.hu; },
   "attr": function() { return /* reexport */ utils/* attr */.Lj; },
   "browser": function() { return /* reexport */ utils/* browser */.Xh; },
   "buildQuery": function() { return /* reexport */ utils/* buildQuery */.XP; },
@@ -1287,10 +1290,10 @@ __webpack_require__.d(__webpack_exports__, {
   "val": function() { return /* reexport */ utils/* val */.P0; }
 });
 
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 17 modules
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 18 modules
 var utils = __webpack_require__(9);
 // EXTERNAL MODULE: ./src/core/helpers/array/index.ts + 1 modules
-var array = __webpack_require__(32);
+var array = __webpack_require__(33);
 ;// CONCATENATED MODULE: ./src/core/helpers/async/set-timeout.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1321,7 +1324,7 @@ function set_timeout_clearTimeout(timer) {
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
 var checker = __webpack_require__(18);
 // EXTERNAL MODULE: ./src/core/helpers/color/color-to-hex.ts
-var color_to_hex = __webpack_require__(30);
+var color_to_hex = __webpack_require__(31);
 ;// CONCATENATED MODULE: ./src/core/helpers/color/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1332,7 +1335,7 @@ var color_to_hex = __webpack_require__(30);
 
 // EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
 var dom = __webpack_require__(15);
-// EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 5 modules
+// EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 4 modules
 var string = __webpack_require__(27);
 ;// CONCATENATED MODULE: ./src/core/helpers/html/apply-styles.ts
 /*!
@@ -1417,6 +1420,10 @@ function applyStyles(html) {
         .replace(/<!--[^>]*>/g, ''));
 }
 
+// EXTERNAL MODULE: ./src/core/helpers/string/trim.ts
+var trim = __webpack_require__(28);
+// EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
+var to_array = __webpack_require__(34);
 ;// CONCATENATED MODULE: ./src/core/helpers/html/clean-from-word.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1455,7 +1462,7 @@ function cleanFromWord(html) {
                                 dom/* Dom.unwrap */.i.unwrap(node);
                                 break;
                             default:
-                                (0,array/* toArray */.qo)(node.attributes).forEach((attr) => {
+                                (0,to_array/* toArray */.q)(node.attributes).forEach((attr) => {
                                     if ([
                                         'src',
                                         'href',
@@ -1481,7 +1488,7 @@ function cleanFromWord(html) {
     if (convertedString) {
         html = convertedString;
     }
-    html = html.split(/(\n)/).filter(string/* trim */.fy).join('\n');
+    html = html.split(/(\n)/).filter(trim/* trim */.f).join('\n');
     return html
         .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
         .replace(/<!--[^>]*>/g, '');
@@ -1499,6 +1506,8 @@ function htmlspecialchars(html) {
     return tmp.innerHTML;
 }
 
+// EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
+var is_string = __webpack_require__(5);
 ;// CONCATENATED MODULE: ./src/core/helpers/html/strip-tags.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1512,7 +1521,7 @@ function htmlspecialchars(html) {
 
 function stripTags(html, doc = document) {
     const tmp = doc.createElement('div');
-    if ((0,checker/* isString */.HD)(html)) {
+    if ((0,is_string/* isString */.H)(html)) {
         tmp.innerHTML = html;
     }
     else {
@@ -1531,7 +1540,7 @@ function stripTags(html, doc = document) {
             pr.insertBefore(doc.createTextNode(' '), nx);
         }
     });
-    return (0,string/* trim */.fy)(tmp.innerText) || '';
+    return (0,trim/* trim */.f)(tmp.innerText) || '';
 }
 function safeHTML(box, options) {
     if (!dom/* Dom.isElement */.i.isElement(box)) {
@@ -1576,7 +1585,7 @@ function nl2br(html) {
 
 
 // EXTERNAL MODULE: ./src/core/helpers/normalize/index.ts + 9 modules
-var normalize = __webpack_require__(29);
+var normalize = __webpack_require__(30);
 ;// CONCATENATED MODULE: ./src/core/helpers/size/get-content-width.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1757,6 +1766,7 @@ __webpack_require__.d(__webpack_exports__, {
   "uR": function() { return /* reexport */ appendScript; },
   "JL": function() { return /* reexport */ appendScriptAsync; },
   "Nf": function() { return /* reexport */ appendStyleAsync; },
+  "hu": function() { return /* reexport */ assert; },
   "Lj": function() { return /* reexport */ utils/* attr */.Lj; },
   "Xh": function() { return /* reexport */ browser; },
   "XP": function() { return /* reexport */ buildQuery; },
@@ -1797,6 +1807,25 @@ __webpack_require__.d(__webpack_exports__, {
   "P0": function() { return /* reexport */ val; }
 });
 
+;// CONCATENATED MODULE: ./src/core/helpers/utils/assert.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+class AssertionError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'AssertionError';
+    }
+}
+function assert(condition, message) {
+    if (!condition) {
+        throw new AssertionError(`Assertion failed: ${message}`);
+    }
+}
+
+
 ;// CONCATENATED MODULE: ./src/core/helpers/utils/mark-deprecated.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1815,7 +1844,7 @@ function markDeprecated(method, names = [''], ctx = null) {
 // EXTERNAL MODULE: ./src/core/helpers/utils/utils.ts
 var utils = __webpack_require__(10);
 // EXTERNAL MODULE: ./src/core/helpers/utils/get.ts
-var get = __webpack_require__(31);
+var get = __webpack_require__(32);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
 var is_string = __webpack_require__(5);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-numeric.ts
@@ -2162,7 +2191,7 @@ const convertMediaUrlToVideoEmbed = (url, width = 400, height = 345) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/css.ts
-var css = __webpack_require__(28);
+var css = __webpack_require__(29);
 ;// CONCATENATED MODULE: ./src/core/helpers/utils/ctrl-key.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2256,23 +2285,20 @@ const scrollIntoViewIfNeeded = (elm, root, doc) => {
 
 // EXTERNAL MODULE: ./src/core/constants.ts
 var constants = __webpack_require__(2);
-// EXTERNAL MODULE: ./src/core/helpers/utils/error.ts
-var error = __webpack_require__(4);
 // EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
 var dom = __webpack_require__(15);
-// EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 5 modules
+// EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 4 modules
 var string = __webpack_require__(27);
 // EXTERNAL MODULE: ./src/core/helpers/array/index.ts + 1 modules
-var array = __webpack_require__(32);
+var array = __webpack_require__(33);
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
-var ui = __webpack_require__(34);
+var ui = __webpack_require__(35);
 ;// CONCATENATED MODULE: ./src/core/helpers/utils/selector.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
 
 
 
@@ -2371,6 +2397,8 @@ function resolveElement(element, od) {
     return resolved;
 }
 
+// EXTERNAL MODULE: ./src/core/helpers/utils/error.ts
+var error = __webpack_require__(4);
 ;// CONCATENATED MODULE: ./src/core/helpers/utils/val.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2419,6 +2447,7 @@ const val = (elm, selector, value) => {
 
 
 
+
 /***/ }),
 /* 10 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -2436,11 +2465,11 @@ const val = (elm, selector, value) => {
 /* harmony export */ });
 /* harmony import */ var _checker_is_function__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6);
 /* harmony import */ var _checker_is_promise__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(23);
-/* harmony import */ var _get__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(31);
+/* harmony import */ var _get__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(32);
 /* harmony import */ var _data_bind__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
 /* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(20);
 /* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18);
-/* harmony import */ var _css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(28);
+/* harmony import */ var _css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(29);
 /* harmony import */ var _string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(27);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2583,7 +2612,7 @@ const memorizeExec = (editor, _, { control }, preProcessValue) => {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "q": function() { return /* binding */ dataBind; }
 /* harmony export */ });
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
 /* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2599,7 +2628,7 @@ const dataBind = (elm, key, value) => {
         itemStore = {};
         store.set(elm, itemStore);
         let e = null;
-        if (elm instanceof _component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent */ .Hr) {
+        if (elm instanceof jodit_core_component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent */ .Hr) {
             e = elm.j.e;
         }
         if ((0,_checker__WEBPACK_IMPORTED_MODULE_1__/* .isViewObject */ .f2)(elm)) {
@@ -2906,7 +2935,7 @@ const eventEmitter = new _event_emitter__WEBPACK_IMPORTED_MODULE_2__/* .EventEmi
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "h": function() { return /* binding */ PluginSystem; }
 /* harmony export */ });
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -2915,22 +2944,29 @@ const eventEmitter = new _event_emitter__WEBPACK_IMPORTED_MODULE_2__/* .EventEmi
 
 class PluginSystem {
     constructor() {
-        this.items = new Map();
+        this._items = new Map();
     }
     normalizeName(name) {
-        return (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.kebabCase)(name).toLowerCase();
+        return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.kebabCase)(name).toLowerCase();
+    }
+    items(filter) {
+        const results = [];
+        this._items.forEach((plugin, name) => {
+            results.push([name, plugin]);
+        });
+        return results.filter(([name]) => !filter || filter.includes(name));
     }
     add(name, plugin) {
-        this.items.set(this.normalizeName(name), plugin);
+        this._items.set(this.normalizeName(name), plugin);
     }
     get(name) {
-        return this.items.get(this.normalizeName(name));
+        return this._items.get(this.normalizeName(name));
     }
     remove(name) {
-        this.items.delete(this.normalizeName(name));
+        this._items.delete(this.normalizeName(name));
     }
     init(jodit) {
-        const extrasList = jodit.o.extraPlugins.map(s => (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.isString)(s) ? { name: s } : s), disableList = (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.splitArray)(jodit.o.disablePlugins).map(s => this.normalizeName(s)), doneList = [], promiseList = {}, plugins = [], pluginsMap = {}, makeAndInit = (plugin, name) => {
+        const extrasList = jodit.o.extraPlugins.map(s => (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isString)(s) ? { name: s } : s), disableList = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.splitArray)(jodit.o.disablePlugins).map(s => this.normalizeName(s)), doneList = [], promiseList = {}, plugins = [], pluginsMap = {}, makeAndInit = ([name, plugin]) => {
             var _a;
             if (disableList.includes(name) ||
                 doneList.includes(name) ||
@@ -2939,21 +2975,25 @@ class PluginSystem {
             }
             const requires = (_a = plugin) === null || _a === void 0 ? void 0 : _a.requires;
             if (requires &&
-                (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.isArray)(requires) &&
+                (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isArray)(requires) &&
                 this.hasDisabledRequires(disableList, requires)) {
                 return;
             }
             const instance = PluginSystem.makePluginInstance(jodit, plugin);
-            this.initOrWait(jodit, name, instance, doneList, promiseList);
-            plugins.push(instance);
-            pluginsMap[name] = instance;
+            if (instance) {
+                this.initOrWait(jodit, name, instance, doneList, promiseList);
+                plugins.push(instance);
+                pluginsMap[name] = instance;
+            }
         };
         const resultLoadExtras = this.loadExtras(jodit, extrasList);
-        return (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.callPromise)(resultLoadExtras, () => {
+        return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.callPromise)(resultLoadExtras, () => {
             if (jodit.isInDestruct) {
                 return;
             }
-            this.items.forEach(makeAndInit);
+            this.items(jodit.o.safeMode
+                ? jodit.o.safePluginsList.concat(extrasList.map(s => s.name))
+                : null).forEach(makeAndInit);
             this.addListenerOnBeforeDestruct(jodit, plugins);
             jodit.__plugins = pluginsMap;
         });
@@ -2963,15 +3003,28 @@ class PluginSystem {
             disableList.some(disabled => requires.includes(disabled)));
     }
     static makePluginInstance(jodit, plugin) {
-        return (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.isFunction)(plugin) ? new plugin(jodit) : plugin;
+        try {
+            return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isFunction)(plugin) ? new plugin(jodit) : plugin;
+        }
+        catch (e) {
+            console.error(e);
+            if (false) {}
+        }
+        return null;
     }
     initOrWait(jodit, pluginName, instance, doneList, promiseList) {
         const initPlugin = (name, plugin) => {
-            if ((0,_helpers__WEBPACK_IMPORTED_MODULE_0__.isInitable)(plugin)) {
+            if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isInitable)(plugin)) {
                 const req = plugin.requires;
                 if (!(req === null || req === void 0 ? void 0 : req.length) ||
                     req.every(name => doneList.includes(name))) {
-                    plugin.init(jodit);
+                    try {
+                        plugin.init(jodit);
+                    }
+                    catch (e) {
+                        console.error(e);
+                        if (false) {}
+                    }
                     doneList.push(name);
                 }
                 else {
@@ -3002,7 +3055,7 @@ class PluginSystem {
     addListenerOnBeforeDestruct(jodit, plugins) {
         jodit.e.on('beforeDestruct', () => {
             plugins.forEach(instance => {
-                if ((0,_helpers__WEBPACK_IMPORTED_MODULE_0__.isDestructable)(instance)) {
+                if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isDestructable)(instance)) {
                     instance.destruct(jodit);
                 }
             });
@@ -3015,7 +3068,7 @@ class PluginSystem {
         return Promise.all(pluginList.map(extra => {
             const url = extra.url ||
                 PluginSystem.getFullUrl(jodit, extra.name, true);
-            return reflect((0,_helpers__WEBPACK_IMPORTED_MODULE_0__.appendScriptAsync)(jodit, url));
+            return reflect((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.appendScriptAsync)(jodit, url));
         }));
     }
     static async loadStyle(jodit, pluginName) {
@@ -3024,10 +3077,10 @@ class PluginSystem {
             return;
         }
         this.styles.add(url);
-        return (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.appendStyleAsync)(jodit, url);
+        return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.appendStyleAsync)(jodit, url);
     }
     static getFullUrl(jodit, name, js) {
-        name = (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.kebabCase)(name);
+        name = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.kebabCase)(name);
         return (jodit.basePath +
             'plugins/' +
             name +
@@ -3039,7 +3092,7 @@ class PluginSystem {
     loadExtras(jodit, extrasList) {
         if (extrasList && extrasList.length) {
             try {
-                const needLoadExtras = extrasList.filter(extra => !this.items.has(this.normalizeName(extra.name)));
+                const needLoadExtras = extrasList.filter(extra => !this._items.has(this.normalizeName(extra.name)));
                 if (needLoadExtras.length) {
                     return this.load(jodit, needLoadExtras);
                 }
@@ -6363,8 +6416,8 @@ __webpack_require__.d(__webpack_exports__, {
   "GL": function() { return /* reexport */ kebabCase; },
   "gB": function() { return /* reexport */ sprintf; },
   "Pz": function() { return /* reexport */ stringify/* stringify */.P; },
-  "fy": function() { return /* reexport */ trim; },
-  "as": function() { return /* reexport */ trimInv; },
+  "fy": function() { return /* reexport */ trim/* trim */.f; },
+  "as": function() { return /* reexport */ trim/* trimInv */.a; },
   "Ps": function() { return /* reexport */ ucfirst; }
 });
 
@@ -6402,26 +6455,8 @@ const CamelCaseToKebabCase = (key) => {
         .toLowerCase();
 };
 
-// EXTERNAL MODULE: ./src/core/constants.ts
-var constants = __webpack_require__(2);
-;// CONCATENATED MODULE: ./src/core/helpers/string/trim.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function trim(value) {
-    return value
-        .replace((0,constants.SPACE_REG_EXP_END)(), '')
-        .replace((0,constants.SPACE_REG_EXP_START)(), '');
-}
-function trimInv(value) {
-    return value
-        .replace((0,constants.INVISIBLE_SPACE_REG_EXP_END)(), '')
-        .replace((0,constants.INVISIBLE_SPACE_REG_EXP_START)(), '');
-}
-
+// EXTERNAL MODULE: ./src/core/helpers/string/trim.ts
+var trim = __webpack_require__(28);
 ;// CONCATENATED MODULE: ./src/core/helpers/string/ucfirst.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6437,10 +6472,10 @@ function ucfirst(value) {
 
 // EXTERNAL MODULE: ./src/config.ts
 var config = __webpack_require__(1);
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 17 modules
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 18 modules
 var utils = __webpack_require__(9);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
-var helpers = __webpack_require__(8);
+// EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
+var checker = __webpack_require__(18);
 // EXTERNAL MODULE: ./src/core/global.ts
 var global = __webpack_require__(13);
 ;// CONCATENATED MODULE: ./src/core/helpers/string/i18n.ts
@@ -6449,6 +6484,7 @@ var global = __webpack_require__(13);
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 
 
 
@@ -6468,8 +6504,8 @@ const sprintf = (str, args) => {
     return res;
 };
 const i18n = (key, params, options) => {
-    if (!(0,helpers.isString)(key)) {
-        throw (0,helpers.error)('i18n: Need string in first argument');
+    if (!(0,checker/* isString */.HD)(key)) {
+        throw (0,utils/* error */.vU)('i18n: Need string in first argument');
     }
     if (!key.length) {
         return key;
@@ -6480,15 +6516,15 @@ const i18n = (key, params, options) => {
         if (!store) {
             return;
         }
-        if ((0,helpers.isString)(store[key])) {
+        if ((0,checker/* isString */.HD)(store[key])) {
             return parse(store[key]);
         }
         const lcKey = key.toLowerCase();
-        if ((0,helpers.isString)(store[lcKey])) {
+        if ((0,checker/* isString */.HD)(store[lcKey])) {
             return parse(store[lcKey]);
         }
-        const ucfKey = (0,helpers.ucfirst)(key);
-        if ((0,helpers.isString)(store[ucfKey])) {
+        const ucfKey = ucfirst(key);
+        if ((0,checker/* isString */.HD)(store[ucfKey])) {
             return parse(store[ucfKey]);
         }
         return;
@@ -6515,7 +6551,7 @@ const i18n = (key, params, options) => {
     if (result) {
         return result;
     }
-    if (global/* lang.en */.KQ.en && (0,helpers.isString)(global/* lang.en */.KQ.en[key]) && global/* lang.en */.KQ.en[key]) {
+    if (global/* lang.en */.KQ.en && (0,checker/* isString */.HD)(global/* lang.en */.KQ.en[key]) && global/* lang.en */.KQ.en[key]) {
         return parse(global/* lang.en */.KQ.en[key]);
     }
     if (debug) {
@@ -6545,11 +6581,39 @@ const i18n = (key, params, options) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "f": function() { return /* binding */ trim; },
+/* harmony export */   "a": function() { return /* binding */ trimInv; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function trim(value) {
+    return value
+        .replace((0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.SPACE_REG_EXP_END)(), '')
+        .replace((0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.SPACE_REG_EXP_START)(), '');
+}
+function trimInv(value) {
+    return value
+        .replace((0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE_REG_EXP_END)(), '')
+        .replace((0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE_REG_EXP_START)(), '');
+}
+
+
+/***/ }),
+/* 29 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "i": function() { return /* binding */ css; },
 /* harmony export */   "b": function() { return /* binding */ clearCenterAlign; }
 /* harmony export */ });
 /* harmony import */ var _checker___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(18);
-/* harmony import */ var _normalize___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(29);
+/* harmony import */ var _normalize___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(30);
 /* harmony import */ var _string___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(27);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6617,7 +6681,7 @@ const clearCenterAlign = (image) => {
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6635,7 +6699,7 @@ __webpack_require__.d(__webpack_exports__, {
   "D5": function() { return /* reexport */ normalizeUrl; }
 });
 
-// EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 5 modules
+// EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 4 modules
 var string = __webpack_require__(27);
 // EXTERNAL MODULE: ./src/core/constants.ts
 var constants = __webpack_require__(2);
@@ -6787,7 +6851,7 @@ const normalizeUrl = (...urls) => {
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
 var checker = __webpack_require__(18);
 // EXTERNAL MODULE: ./src/core/helpers/color/color-to-hex.ts
-var color_to_hex = __webpack_require__(30);
+var color_to_hex = __webpack_require__(31);
 ;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-css-value.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6866,7 +6930,7 @@ const normalizeColor = (colorInput) => {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6903,7 +6967,7 @@ const colorToHex = (color) => {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6939,7 +7003,7 @@ function get(chain, obj) {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6965,7 +7029,7 @@ const asArray = (a) => ((0,is_array/* isArray */.k)(a) ? a : [a]);
 // EXTERNAL MODULE: ./src/core/helpers/array/split-array.ts
 var split_array = __webpack_require__(24);
 // EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
-var to_array = __webpack_require__(33);
+var to_array = __webpack_require__(34);
 ;// CONCATENATED MODULE: ./src/core/helpers/array/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6978,7 +7042,7 @@ var to_array = __webpack_require__(33);
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7004,7 +7068,7 @@ const toArray = function toArray(...args) {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7024,24 +7088,25 @@ __webpack_require__.d(__webpack_exports__, {
   "qe": function() { return /* reexport */ group/* UIGroup */.qe; },
   "u3": function() { return /* reexport */ ui_form/* UIInput */.u3; },
   "bz": function() { return /* reexport */ group/* UIList */.bz; },
+  "Cj": function() { return /* reexport */ ui_form/* UISelect */.Cj; },
   "lU": function() { return /* reexport */ group/* UISeparator */.lU; },
   "GJ": function() { return /* reexport */ ui_form/* UITextArea */.GJ; }
 });
 
-// UNUSED EXPORTS: UIButtonGroup, UIButtonState, UISelect, UISpacer
+// UNUSED EXPORTS: UIButtonGroup, UIButtonState, UISpacer
 
 // EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(35);
-// EXTERNAL MODULE: ./src/core/ui/button/index.ts + 2 modules
-var ui_button = __webpack_require__(38);
+var ui_element = __webpack_require__(36);
+// EXTERNAL MODULE: ./src/core/ui/button/index.ts + 1 modules
+var ui_button = __webpack_require__(39);
 // EXTERNAL MODULE: ./src/core/ui/popup/index.ts + 1 modules
-var popup = __webpack_require__(42);
+var popup = __webpack_require__(44);
 // EXTERNAL MODULE: ./src/core/ui/group/index.ts + 5 modules
-var group = __webpack_require__(39);
+var group = __webpack_require__(41);
 // EXTERNAL MODULE: ./src/core/ui/form/index.ts + 11 modules
-var ui_form = __webpack_require__(43);
+var ui_form = __webpack_require__(45);
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
-var icon = __webpack_require__(37);
+var icon = __webpack_require__(38);
 // EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
 var dom = __webpack_require__(15);
 ;// CONCATENATED MODULE: ./src/core/ui/progress-bar/progress-bar.ts
@@ -7095,7 +7160,7 @@ class ProgressBar extends ui_element/* UIElement */.u {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7103,10 +7168,10 @@ class ProgressBar extends ui_element/* UIElement */.u {
 /* harmony export */   "u": function() { return /* binding */ UIElement; }
 /* harmony export */ });
 /* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
-/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
-/* harmony import */ var _traits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(36);
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
-/* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(37);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
+/* harmony import */ var _traits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(37);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
+/* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(38);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7174,7 +7239,7 @@ class UIElement extends _component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent
         return null;
     }
     static closestElement(node, type) {
-        const elm = _dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.up */ .i.up(node, elm => {
+        const elm = jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.up */ .i.up(node, elm => {
             if (elm) {
                 const { component } = elm;
                 return component && component instanceof type;
@@ -7210,7 +7275,7 @@ class UIElement extends _component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent
     }
     createContainer(options) {
         const result = this.render(options);
-        if ((0,_helpers__WEBPACK_IMPORTED_MODULE_3__.isString)(result)) {
+        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__.isString)(result)) {
             const elm = this.j.c.fromHTML(result
                 .replace(/\*([^*]+?)\*/g, (_, name) => _icon__WEBPACK_IMPORTED_MODULE_4__/* .Icon.get */ .J.get(name) || '')
                 .replace(/&__/g, this.componentName + '__')
@@ -7221,7 +7286,7 @@ class UIElement extends _component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent
         return result;
     }
     destruct() {
-        _dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove(this.container);
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove(this.container);
         this.parentElement = null;
         return super.destruct();
     }
@@ -7229,7 +7294,7 @@ class UIElement extends _component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7241,7 +7306,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
-var to_array = __webpack_require__(33);
+var to_array = __webpack_require__(34);
 ;// CONCATENATED MODULE: ./src/core/traits/elms.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -7299,14 +7364,14 @@ class Mods {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "J": function() { return /* binding */ Icon; }
 /* harmony export */ });
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7340,7 +7405,7 @@ class Icon {
             const clearName = icon.name.replace(/[^a-zA-Z0-9]/g, '_');
             if (icon.iconURL) {
                 iconElement = jodit.c.span();
-                (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(iconElement, 'backgroundImage', 'url(' +
+                (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(iconElement, 'backgroundImage', 'url(' +
                     icon.iconURL.replace('{basePath}', (jodit === null || jodit === void 0 ? void 0 : jodit.basePath) || '') +
                     ')');
             }
@@ -7367,242 +7432,28 @@ Icon.icons = {};
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
-  "zx": function() { return /* reexport */ Button; },
-  "y3": function() { return /* reexport */ UIButton; },
-  "Yc": function() { return /* reexport */ UIButtonState; }
+  "zx": function() { return /* reexport */ button_button/* Button */.zx; },
+  "y3": function() { return /* reexport */ button_button/* UIButton */.y3; },
+  "Yc": function() { return /* reexport */ button_button/* UIButtonState */.Yc; }
 });
 
 // UNUSED EXPORTS: UIButtonGroup
 
+// EXTERNAL MODULE: ./src/core/ui/button/button/button.ts
+var button_button = __webpack_require__(40);
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__(25);
-// EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(35);
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(15);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
-var helpers = __webpack_require__(8);
-// EXTERNAL MODULE: ./src/core/ui/icon.ts
-var icon = __webpack_require__(37);
 // EXTERNAL MODULE: ./src/core/ui/group/index.ts + 5 modules
-var group = __webpack_require__(39);
+var group = __webpack_require__(41);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
 var decorators = __webpack_require__(17);
-// EXTERNAL MODULE: ./src/core/component/index.ts + 3 modules
-var component = __webpack_require__(12);
-;// CONCATENATED MODULE: ./src/core/ui/button/button/button.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-const UIButtonState = () => ({
-    size: 'middle',
-    type: 'button',
-    name: '',
-    value: '',
-    variant: 'initial',
-    disabled: false,
-    activated: false,
-    icon: {
-        name: 'empty',
-        fill: '',
-        iconURL: ''
-    },
-    tooltip: '',
-    text: '',
-    tabIndex: undefined
-});
-let UIButton = class UIButton extends ui_element/* UIElement */.u {
-    constructor(jodit, state) {
-        super(jodit);
-        this.isButton = true;
-        this.state = UIButtonState();
-        this.actionHandlers = [];
-        this.updateSize();
-        this.onChangeSize();
-        this.onChangeStatus();
-        if (state) {
-            this.hookStatus(component/* STATUSES.ready */.n$.ready, () => {
-                this.setState(state);
-            });
-        }
-    }
-    className() {
-        return 'UIButton';
-    }
-    setState(state) {
-        Object.assign(this.state, state);
-        return this;
-    }
-    onChangeSize() {
-        this.setMod('size', this.state.size);
-    }
-    onChangeType() {
-        (0,helpers.attr)(this.container, 'type', this.state.type);
-    }
-    updateSize() {
-        const pe = this.closest(group/* UIList */.bz);
-        if (pe) {
-            this.state.size = pe.buttonSize;
-            return;
-        }
-    }
-    onChangeStatus() {
-        this.setMod('variant', this.state.variant);
-    }
-    onChangeText() {
-        this.text.textContent = this.jodit.i18n(this.state.text);
-    }
-    onChangeTextSetMode() {
-        this.setMod('text-icons', Boolean(this.state.text.trim().length));
-    }
-    onChangeDisabled() {
-        (0,helpers.attr)(this.container, 'disabled', this.state.disabled || null);
-    }
-    onChangeActivated() {
-        (0,helpers.attr)(this.container, 'aria-pressed', this.state.activated);
-    }
-    onChangeName() {
-        this.container.classList.add(`${this.componentName}_${this.clearName(this.state.name)}`);
-        this.name = this.state.name;
-        (0,helpers.attr)(this.container, 'data-ref', this.state.name);
-        (0,helpers.attr)(this.container, 'ref', this.state.name);
-    }
-    onChangeTooltip() {
-        if (this.get('j.o.useNativeTooltip')) {
-            (0,helpers.attr)(this.container, 'title', this.state.tooltip);
-        }
-        (0,helpers.attr)(this.container, 'aria-label', this.state.tooltip);
-    }
-    onChangeTabIndex() {
-        (0,helpers.attr)(this.container, 'tabindex', this.state.tabIndex);
-    }
-    onChangeIcon() {
-        const textIcons = this.get('j.o.textIcons');
-        if (textIcons === true ||
-            ((0,helpers.isFunction)(textIcons) && textIcons(this.state.name))) {
-            return;
-        }
-        dom/* Dom.detach */.i.detach(this.icon);
-        const iconElement = icon/* Icon.makeIcon */.J.makeIcon(this.j, this.state.icon);
-        iconElement && this.icon.appendChild(iconElement);
-    }
-    focus() {
-        this.container.focus();
-    }
-    isFocused() {
-        const { activeElement } = this.od;
-        return Boolean(activeElement && dom/* Dom.isOrContains */.i.isOrContains(this.container, activeElement));
-    }
-    createContainer() {
-        const cn = this.componentName;
-        const button = this.j.c.element('button', {
-            class: cn,
-            type: 'button',
-            role: 'button',
-            ariaPressed: false
-        });
-        this.icon = this.j.c.span(cn + '__icon');
-        this.text = this.j.c.span(cn + '__text');
-        button.appendChild(this.icon);
-        button.appendChild(this.text);
-        this.j.e.on(button, 'click', this.onActionFire);
-        return button;
-    }
-    destruct() {
-        this.j.e.off(this.container);
-        return super.destruct();
-    }
-    onAction(callback) {
-        this.actionHandlers.push(callback);
-        return this;
-    }
-    onActionFire(e) {
-        e.buffer = {
-            actionTrigger: this
-        };
-        this.actionHandlers.forEach(callback => callback.call(this, e));
-    }
-};
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.size')
-], UIButton.prototype, "onChangeSize", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.type')
-], UIButton.prototype, "onChangeType", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('parentElement')
-], UIButton.prototype, "updateSize", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.variant')
-], UIButton.prototype, "onChangeStatus", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.text')
-], UIButton.prototype, "onChangeText", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.text')
-], UIButton.prototype, "onChangeTextSetMode", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.disabled')
-], UIButton.prototype, "onChangeDisabled", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.activated')
-], UIButton.prototype, "onChangeActivated", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.name')
-], UIButton.prototype, "onChangeName", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.tooltip')
-], UIButton.prototype, "onChangeTooltip", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.tabIndex')
-], UIButton.prototype, "onChangeTabIndex", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.icon')
-], UIButton.prototype, "onChangeIcon", null);
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
-], UIButton.prototype, "onActionFire", null);
-UIButton = (0,tslib_es6/* __decorate */.gn)([
-    decorators.component
-], UIButton);
-
-function Button(jodit, stateOrText, text, variant) {
-    const button = new UIButton(jodit);
-    button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
-    if ((0,helpers.isString)(stateOrText)) {
-        button.state.icon.name = stateOrText;
-        button.state.name = stateOrText;
-        if (variant) {
-            button.state.variant = variant;
-        }
-        if (text) {
-            button.state.text = text;
-        }
-    }
-    else {
-        button.setState(stateOrText);
-    }
-    return button;
-}
-
 ;// CONCATENATED MODULE: ./src/core/ui/button/group/group.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -7620,7 +7471,7 @@ let UIButtonGroup = class UIButtonGroup extends group/* UIGroup */.qe {
     }) {
         var _a, _b;
         super(jodit, (_a = options.options) === null || _a === void 0 ? void 0 : _a.map(opt => {
-            const btn = new UIButton(jodit, {
+            const btn = new button_button/* UIButton */.y3(jodit, {
                 text: opt.text,
                 value: opt.value,
                 variant: 'primary'
@@ -7681,7 +7532,229 @@ UIButtonGroup = (0,tslib_es6/* __decorate */.gn)([
 
 
 /***/ }),
-/* 39 */
+/* 40 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Yc": function() { return /* binding */ UIButtonState; },
+/* harmony export */   "y3": function() { return /* binding */ UIButton; },
+/* harmony export */   "zx": function() { return /* binding */ Button; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(25);
+/* harmony import */ var jodit_core_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(35);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(17);
+/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(12);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+
+
+const UIButtonState = () => ({
+    size: 'middle',
+    type: 'button',
+    name: '',
+    value: '',
+    variant: 'initial',
+    disabled: false,
+    activated: false,
+    icon: {
+        name: 'empty',
+        fill: '',
+        iconURL: ''
+    },
+    tooltip: '',
+    text: '',
+    tabIndex: undefined
+});
+let UIButton = class UIButton extends jodit_core_ui__WEBPACK_IMPORTED_MODULE_0__/* .UIElement */ .u1 {
+    constructor(jodit, state) {
+        super(jodit);
+        this.isButton = true;
+        this.state = UIButtonState();
+        this.actionHandlers = [];
+        this.updateSize();
+        this.onChangeSize();
+        this.onChangeStatus();
+        if (state) {
+            this.hookStatus(jodit_core_component__WEBPACK_IMPORTED_MODULE_4__/* .STATUSES.ready */ .n$.ready, () => {
+                this.setState(state);
+            });
+        }
+    }
+    className() {
+        return 'UIButton';
+    }
+    setState(state) {
+        Object.assign(this.state, state);
+        return this;
+    }
+    onChangeSize() {
+        this.setMod('size', this.state.size);
+    }
+    onChangeType() {
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(this.container, 'type', this.state.type);
+    }
+    updateSize() {
+        const pe = this.closest(jodit_core_ui__WEBPACK_IMPORTED_MODULE_0__/* .UIList */ .bz);
+        if (pe) {
+            this.state.size = pe.buttonSize;
+            return;
+        }
+    }
+    onChangeStatus() {
+        this.setMod('variant', this.state.variant);
+    }
+    onChangeText() {
+        this.text.textContent = this.jodit.i18n(this.state.text);
+    }
+    onChangeTextSetMode() {
+        this.setMod('text-icons', Boolean(this.state.text.trim().length));
+    }
+    onChangeDisabled() {
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(this.container, 'disabled', this.state.disabled || null);
+    }
+    onChangeActivated() {
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(this.container, 'aria-pressed', this.state.activated);
+    }
+    onChangeName() {
+        this.container.classList.add(`${this.componentName}_${this.clearName(this.state.name)}`);
+        this.name = this.state.name;
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(this.container, 'data-ref', this.state.name);
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(this.container, 'ref', this.state.name);
+    }
+    onChangeTooltip() {
+        if (this.get('j.o.useNativeTooltip')) {
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(this.container, 'title', this.state.tooltip);
+        }
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(this.container, 'aria-label', this.state.tooltip);
+    }
+    onChangeTabIndex() {
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(this.container, 'tabindex', this.state.tabIndex);
+    }
+    onChangeIcon() {
+        const textIcons = this.get('j.o.textIcons');
+        if (textIcons === true ||
+            ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.isFunction)(textIcons) && textIcons(this.state.name))) {
+            return;
+        }
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.detach */ .i.detach(this.icon);
+        const iconElement = jodit_core_ui__WEBPACK_IMPORTED_MODULE_0__/* .Icon.makeIcon */ .JO.makeIcon(this.j, this.state.icon);
+        iconElement && this.icon.appendChild(iconElement);
+    }
+    focus() {
+        this.container.focus();
+    }
+    isFocused() {
+        const { activeElement } = this.od;
+        return Boolean(activeElement && jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isOrContains */ .i.isOrContains(this.container, activeElement));
+    }
+    createContainer() {
+        const cn = this.componentName;
+        const button = this.j.c.element('button', {
+            class: cn,
+            type: 'button',
+            role: 'button',
+            ariaPressed: false
+        });
+        this.icon = this.j.c.span(cn + '__icon');
+        this.text = this.j.c.span(cn + '__text');
+        button.appendChild(this.icon);
+        button.appendChild(this.text);
+        this.j.e.on(button, 'click', this.onActionFire);
+        return button;
+    }
+    destruct() {
+        this.j.e.off(this.container);
+        return super.destruct();
+    }
+    onAction(callback) {
+        this.actionHandlers.push(callback);
+        return this;
+    }
+    onActionFire(e) {
+        e.buffer = {
+            actionTrigger: this
+        };
+        this.actionHandlers.forEach(callback => callback.call(this, e));
+    }
+};
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)('state.size')
+], UIButton.prototype, "onChangeSize", null);
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)('state.type')
+], UIButton.prototype, "onChangeType", null);
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)('parentElement')
+], UIButton.prototype, "updateSize", null);
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)('state.variant')
+], UIButton.prototype, "onChangeStatus", null);
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)('state.text')
+], UIButton.prototype, "onChangeText", null);
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)('state.text')
+], UIButton.prototype, "onChangeTextSetMode", null);
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)('state.disabled')
+], UIButton.prototype, "onChangeDisabled", null);
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)('state.activated')
+], UIButton.prototype, "onChangeActivated", null);
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)('state.name')
+], UIButton.prototype, "onChangeName", null);
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)('state.tooltip')
+], UIButton.prototype, "onChangeTooltip", null);
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)('state.tabIndex')
+], UIButton.prototype, "onChangeTabIndex", null);
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)('state.icon')
+], UIButton.prototype, "onChangeIcon", null);
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.autobind
+], UIButton.prototype, "onActionFire", null);
+UIButton = (0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.component
+], UIButton);
+
+function Button(jodit, stateOrText, text, variant) {
+    const button = new UIButton(jodit);
+    button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
+    if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.isString)(stateOrText)) {
+        button.state.icon.name = stateOrText;
+        button.state.name = stateOrText;
+        if (variant) {
+            button.state.variant = variant;
+        }
+        if (text) {
+            button.state.text = text;
+        }
+    }
+    else {
+        button.setState(stateOrText);
+    }
+    return button;
+}
+
+
+/***/ }),
+/* 41 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7698,7 +7771,7 @@ __webpack_require__.d(__webpack_exports__, {
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__(25);
 // EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(35);
+var ui_element = __webpack_require__(36);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
 var decorators = __webpack_require__(17);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
@@ -7811,10 +7884,8 @@ UIGroup = UIGroup_1 = (0,tslib_es6/* __decorate */.gn)([
 ], UIGroup);
 
 
-// EXTERNAL MODULE: ./src/core/ui/button/index.ts + 2 modules
-var ui_button = __webpack_require__(38);
 // EXTERNAL MODULE: ./src/core/ui/helpers/get-control-type.ts
-var get_control_type = __webpack_require__(40);
+var get_control_type = __webpack_require__(42);
 // EXTERNAL MODULE: ./src/config.ts
 var config = __webpack_require__(1);
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
@@ -7839,25 +7910,6 @@ function getStrongControlTypes(items, controls) {
     return elements.map(item => (0,get_control_type/* getControlType */.Y)(item, controls || config/* Config.defaultOptions.controls */.D.defaultOptions.controls));
 }
 
-;// CONCATENATED MODULE: ./src/core/ui/group/spacer.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-let UISpacer = class UISpacer extends ui_element/* UIElement */.u {
-    className() {
-        return 'UISpacer';
-    }
-};
-UISpacer = (0,tslib_es6/* __decorate */.gn)([
-    decorators.component
-], UISpacer);
-
-
 ;// CONCATENATED MODULE: ./src/core/ui/group/separator.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -7877,8 +7929,33 @@ UISeparator = (0,tslib_es6/* __decorate */.gn)([
 ], UISeparator);
 
 
+// EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
+var ui = __webpack_require__(35);
+;// CONCATENATED MODULE: ./src/core/ui/group/spacer.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+let UISpacer = class UISpacer extends ui/* UIElement */.u1 {
+    className() {
+        return 'UISpacer';
+    }
+};
+UISpacer = (0,tslib_es6/* __decorate */.gn)([
+    decorators.component
+], UISpacer);
+
+
+// EXTERNAL MODULE: ./src/core/ui/button/button/button.ts
+var button_button = __webpack_require__(40);
 // EXTERNAL MODULE: ./src/core/ui/helpers/buttons.ts
-var buttons = __webpack_require__(41);
+var buttons = __webpack_require__(43);
+// EXTERNAL MODULE: ./src/core/helpers/array/index.ts + 1 modules
+var array = __webpack_require__(33);
 ;// CONCATENATED MODULE: ./src/core/ui/group/list.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -7913,11 +7990,11 @@ let UIList = class UIList extends UIGroup {
         return new UIGroup(this.jodit);
     }
     get buttons() {
-        return this.allChildren.filter(elm => elm instanceof ui_button/* UIButton */.y3);
+        return this.allChildren.filter(elm => elm instanceof button_button/* UIButton */.y3);
     }
     getButtonsNames() {
         return this.buttons
-            .map(a => (a instanceof ui_button/* UIButton */.y3 && a.state.name) || '')
+            .map(a => (a instanceof button_button/* UIButton */.y3 && a.state.name) || '')
             .filter(a => a !== '');
     }
     setRemoveButtons(removeButtons) {
@@ -7925,7 +8002,7 @@ let UIList = class UIList extends UIGroup {
         return this;
     }
     build(items, target = null) {
-        items = (0,helpers.splitArray)(items);
+        items = (0,array/* splitArray */.C1)(items);
         this.clear();
         let lastBtnSeparator = false;
         let line = this.makeGroup();
@@ -7983,6 +8060,10 @@ let UIList = class UIList extends UIGroup {
                 }
             }
             else {
+                if (!group) {
+                    group = this.makeGroup();
+                    line.append(group);
+                }
                 const control = (0,get_control_type/* getControlType */.Y)(item, this.j.o.controls);
                 isNotRemoved(control) && addButton(control);
             }
@@ -7991,7 +8072,7 @@ let UIList = class UIList extends UIGroup {
         return this;
     }
     makeButton(control, target) {
-        return new ui_button/* UIButton */.y3(this.j);
+        return new button_button/* UIButton */.y3(this.j);
     }
 };
 (0,tslib_es6/* __decorate */.gn)([
@@ -8015,7 +8096,7 @@ UIList = (0,tslib_es6/* __decorate */.gn)([
 
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8023,8 +8104,8 @@ UIList = (0,tslib_es6/* __decorate */.gn)([
 /* harmony export */   "Y": function() { return /* binding */ getControlType; },
 /* harmony export */   "z": function() { return /* binding */ findControlType; }
 /* harmony export */ });
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var jodit_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -8035,14 +8116,14 @@ UIList = (0,tslib_es6/* __decorate */.gn)([
 function getControlType(button, controls) {
     let buttonControl;
     if (!controls) {
-        controls = _config__WEBPACK_IMPORTED_MODULE_1__/* .Config.defaultOptions.controls */ .D.defaultOptions.controls;
+        controls = jodit_config__WEBPACK_IMPORTED_MODULE_1__/* .Config.defaultOptions.controls */ .D.defaultOptions.controls;
     }
-    if (!(0,_helpers__WEBPACK_IMPORTED_MODULE_0__.isString)(button)) {
-        buttonControl = { name: 'empty', ...(0,_helpers__WEBPACK_IMPORTED_MODULE_0__.ConfigFlatten)(button) };
+    if (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isString)(button)) {
+        buttonControl = { name: 'empty', ...(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.ConfigFlatten)(button) };
         if (controls[buttonControl.name] !== undefined) {
             buttonControl = {
-                ...(0,_helpers__WEBPACK_IMPORTED_MODULE_0__.ConfigFlatten)(controls[buttonControl.name]),
-                ...(0,_helpers__WEBPACK_IMPORTED_MODULE_0__.ConfigFlatten)(buttonControl)
+                ...(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.ConfigFlatten)(controls[buttonControl.name]),
+                ...(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.ConfigFlatten)(buttonControl)
             };
         }
     }
@@ -8069,14 +8150,14 @@ function findControlType(path, controls) {
     return store[key]
         ? {
             name: key,
-            ...(0,_helpers__WEBPACK_IMPORTED_MODULE_0__.ConfigFlatten)(store[key])
+            ...(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.ConfigFlatten)(store[key])
         }
         : undefined;
 }
 
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8084,7 +8165,7 @@ function findControlType(path, controls) {
 /* harmony export */   "A": function() { return /* binding */ isButtonGroup; },
 /* harmony export */   "q": function() { return /* binding */ flatButtonsSet; }
 /* harmony export */ });
-/* harmony import */ var _helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(18);
+/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(18);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -8092,7 +8173,7 @@ function findControlType(path, controls) {
  */
 
 const isButtonGroup = (item) => {
-    return (0,_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isArray */ .kJ)(item.buttons);
+    return (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isArray */ .kJ)(item.buttons);
 };
 function flatButtonsSet(buttons, jodit) {
     const groups = jodit.getRegisteredButtonGroups();
@@ -8113,7 +8194,7 @@ function flatButtonsSet(buttons, jodit) {
 
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8131,8 +8212,8 @@ var dom = __webpack_require__(15);
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/global.ts
 var global = __webpack_require__(13);
-// EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(35);
+// EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
+var ui = __webpack_require__(35);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
 var decorators = __webpack_require__(17);
 ;// CONCATENATED MODULE: ./src/core/ui/popup/popup.ts
@@ -8148,7 +8229,7 @@ var decorators = __webpack_require__(17);
 
 
 
-class Popup extends ui_element/* UIElement */.u {
+class Popup extends ui/* UIElement */.u1 {
     constructor(jodit, smart = true) {
         super(jodit);
         this.smart = smart;
@@ -8186,7 +8267,7 @@ class Popup extends ui_element/* UIElement */.u {
         dom/* Dom.detach */.i.detach(this.container);
         const box = this.j.c.div(`${this.componentName}__content`);
         let elm;
-        if (content instanceof ui_element/* UIElement */.u) {
+        if (content instanceof ui/* UIElement */.u1) {
             elm = content.container;
             content.parentElement = this;
         }
@@ -8242,7 +8323,7 @@ class Popup extends ui_element/* UIElement */.u {
                 return;
             }
             if (!pe.parentElement && pe.container.parentElement) {
-                const elm = ui_element/* UIElement.closestElement */.u.closestElement(pe.container.parentElement, ui_element/* UIElement */.u);
+                const elm = ui/* UIElement.closestElement */.u1.closestElement(pe.container.parentElement, ui/* UIElement */.u1);
                 if (elm) {
                     pe = elm;
                     continue;
@@ -8347,16 +8428,15 @@ class Popup extends ui_element/* UIElement */.u {
         return this;
     }
     closeOnOutsideClick(e) {
-        var _a;
         if (!this.isOpened) {
             return;
         }
-        const target = (_a = ((0,helpers.isFunction)(e.composedPath) && e.composedPath()[0])) !== null && _a !== void 0 ? _a : e.target;
+        const target = ((0,helpers.isFunction)(e.composedPath) && e.composedPath()[0]) || e.target;
         if (!target) {
             this.close();
             return;
         }
-        const box = ui_element/* UIElement.closestElement */.u.closestElement(target, Popup);
+        const box = ui/* UIElement.closestElement */.u1.closestElement(target, Popup);
         if (box && (this === box || box.closest(this))) {
             return;
         }
@@ -8432,7 +8512,7 @@ class Popup extends ui_element/* UIElement */.u {
 
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8458,18 +8538,84 @@ __webpack_require__.d(input_namespaceObject, {
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__(25);
-// EXTERNAL MODULE: ./src/core/ui/group/index.ts + 5 modules
-var group = __webpack_require__(39);
+// EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
+var ui = __webpack_require__(35);
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 18 modules
+var utils = __webpack_require__(9);
+// EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
+var decorators = __webpack_require__(17);
+;// CONCATENATED MODULE: ./src/core/ui/form/form.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+let UIForm = class UIForm extends ui/* UIGroup */.qe {
+    constructor(...args) {
+        var _a, _b;
+        super(...args);
+        if ((_a = this.options) === null || _a === void 0 ? void 0 : _a.className) {
+            this.container.classList.add((_b = this.options) === null || _b === void 0 ? void 0 : _b.className);
+        }
+    }
+    className() {
+        return 'UIForm';
+    }
+    submit() {
+        this.j.e.fire(this.container, 'submit');
+    }
+    validate() {
+        const inputs = this.allChildren.filter(elm => elm instanceof ui/* UIInput */.u3);
+        for (const input of inputs) {
+            if (!input.validate()) {
+                return false;
+            }
+        }
+        const selects = this.allChildren.filter(elm => elm instanceof ui/* UISelect */.Cj);
+        for (const select of selects) {
+            if (!select.validate()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    onSubmit(handler) {
+        this.j.e.on(this.container, 'submit', () => {
+            const inputs = this.allChildren.filter(elm => elm instanceof ui/* UIInput */.u3);
+            if (!this.validate()) {
+                return false;
+            }
+            handler(inputs.reduce((res, item) => {
+                res[item.state.name] = item.value;
+                return res;
+            }, {}));
+            return false;
+        });
+    }
+    createContainer() {
+        const form = this.j.c.element('form');
+        form.classList.add(this.componentName);
+        (0,utils/* attr */.Lj)(form, 'dir', this.j.o.direction || 'auto');
+        return form;
+    }
+};
+UIForm = (0,tslib_es6/* __decorate */.gn)([
+    decorators.component
+], UIForm);
+
+
 // EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(35);
+var ui_element = __webpack_require__(36);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
 var dom = __webpack_require__(15);
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(17);
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
-var ui_icon = __webpack_require__(37);
+var ui_icon = __webpack_require__(38);
 ;// CONCATENATED MODULE: ./src/core/ui/form/validators/input.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -8902,8 +9048,8 @@ UISelect = UISelect_1 = (0,tslib_es6/* __decorate */.gn)([
 ], UISelect);
 
 
-// EXTERNAL MODULE: ./src/core/ui/button/index.ts + 2 modules
-var ui_button = __webpack_require__(38);
+// EXTERNAL MODULE: ./src/core/ui/button/index.ts + 1 modules
+var ui_button = __webpack_require__(39);
 ;// CONCATENATED MODULE: ./src/core/ui/form/inputs/file/file.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -8973,73 +9119,8 @@ UIFileInput = (0,tslib_es6/* __decorate */.gn)([
 
 
 
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 17 modules
-var utils = __webpack_require__(9);
-;// CONCATENATED MODULE: ./src/core/ui/form/form.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-let UIForm = class UIForm extends group/* UIGroup */.qe {
-    constructor(...args) {
-        var _a, _b;
-        super(...args);
-        if ((_a = this.options) === null || _a === void 0 ? void 0 : _a.className) {
-            this.container.classList.add((_b = this.options) === null || _b === void 0 ? void 0 : _b.className);
-        }
-    }
-    className() {
-        return 'UIForm';
-    }
-    submit() {
-        this.j.e.fire(this.container, 'submit');
-    }
-    validate() {
-        const inputs = this.allChildren.filter(elm => elm instanceof UIInput);
-        for (const input of inputs) {
-            if (!input.validate()) {
-                return false;
-            }
-        }
-        const selects = this.allChildren.filter(elm => elm instanceof UISelect);
-        for (const select of selects) {
-            if (!select.validate()) {
-                return false;
-            }
-        }
-        return true;
-    }
-    onSubmit(handler) {
-        this.j.e.on(this.container, 'submit', () => {
-            const inputs = this.allChildren.filter(elm => elm instanceof UIInput);
-            if (!this.validate()) {
-                return false;
-            }
-            handler(inputs.reduce((res, item) => {
-                res[item.state.name] = item.value;
-                return res;
-            }, {}));
-            return false;
-        });
-    }
-    createContainer() {
-        const form = this.j.c.element('form');
-        form.classList.add(this.componentName);
-        (0,utils/* attr */.Lj)(form, 'dir', this.j.o.direction || 'auto');
-        return form;
-    }
-};
-UIForm = (0,tslib_es6/* __decorate */.gn)([
-    decorators.component
-], UIForm);
-
-
+// EXTERNAL MODULE: ./src/core/ui/group/index.ts + 5 modules
+var group = __webpack_require__(41);
 ;// CONCATENATED MODULE: ./src/core/ui/form/block/block.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -9084,7 +9165,7 @@ UIBlock = (0,tslib_es6/* __decorate */.gn)([
 
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module) {
 
 /*!
@@ -9101,13 +9182,13 @@ module.exports = {
 
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M36 4h-24c-2.21 0-4 1.79-4 4v32c0 2.21 1.79 4 4 4h24c2.21 0 4-1.79 4-4v-32c0-2.21-1.79-4-4-4zm-24 4h10v16l-5-3-5 3v-16z\"/> </svg>"
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9122,7 +9203,7 @@ __webpack_require__.d(__webpack_exports__, {
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
 var helpers = __webpack_require__(8);
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
-var ui = __webpack_require__(34);
+var ui = __webpack_require__(35);
 // EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
 var dom = __webpack_require__(15);
 ;// CONCATENATED MODULE: ./src/modules/widget/color-picker/color-picker.ts
@@ -9376,14 +9457,14 @@ const FileSelectorWidget = (editor, callbacks, elm, close, isImage = true) => {
 
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "z": function() { return /* binding */ hAlignElement; }
 /* harmony export */ });
-/* harmony import */ var _core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -9393,11 +9474,11 @@ const FileSelectorWidget = (editor, callbacks, elm, close, isImage = true) => {
 const hAlignElement = (image, align) => {
     if (align && align !== 'normal') {
         if (align !== 'center') {
-            (0,_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(image, 'float', align);
-            (0,_core_helpers__WEBPACK_IMPORTED_MODULE_0__.clearCenterAlign)(image);
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(image, 'float', align);
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.clearCenterAlign)(image);
         }
         else {
-            (0,_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(image, {
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(image, {
                 float: '',
                 display: 'block',
                 marginLeft: 'auto',
@@ -9406,17 +9487,17 @@ const hAlignElement = (image, align) => {
         }
     }
     else {
-        if ((0,_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(image, 'float') &&
-            ['right', 'left'].indexOf((0,_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(image, 'float').toString().toLowerCase()) !== -1) {
-            (0,_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(image, 'float', '');
+        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(image, 'float') &&
+            ['right', 'left'].indexOf((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(image, 'float').toString().toLowerCase()) !== -1) {
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(image, 'float', '');
         }
-        (0,_core_helpers__WEBPACK_IMPORTED_MODULE_0__.clearCenterAlign)(image);
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.clearCenterAlign)(image);
     }
 };
 
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9450,7 +9531,7 @@ const hAlignElement = (image, align) => {
 
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9460,7 +9541,7 @@ const hAlignElement = (image, align) => {
 /* harmony import */ var _core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 /* harmony import */ var _core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18);
 /* harmony import */ var _core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
-/* harmony import */ var _image_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(47);
+/* harmony import */ var _image_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(49);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -9535,13 +9616,13 @@ const align = {
 
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var _core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(18);
 /* harmony import */ var _core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8);
-/* harmony import */ var _modules_widget__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(46);
+/* harmony import */ var _modules_widget__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(48);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -9670,7 +9751,7 @@ const cmd = (control) => control.args && (0,_core_helpers_checker__WEBPACK_IMPOR
 
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(__unused_webpack_module, __webpack_exports__) {
 
 "use strict";
@@ -9709,11 +9790,11 @@ const cmd = (control) => control.args && (0,_core_helpers_checker__WEBPACK_IMPOR
 
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _img__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(49);
+/* harmony import */ var _img__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -9733,493 +9814,493 @@ const cmd = (control) => control.args && (0,_core_helpers_checker__WEBPACK_IMPOR
 
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 1792 1792\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z\"/> </svg>"
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 18.151 18.151\" xmlns=\"http://www.w3.org/2000/svg\"> <g> <path stroke-width=\"0\" d=\"M6.237,16.546H3.649V1.604h5.916v5.728c0.474-0.122,0.968-0.194,1.479-0.194 c0.042,0,0.083,0.006,0.125,0.006V0H2.044v18.15h5.934C7.295,17.736,6.704,17.19,6.237,16.546z\"/> <path stroke-width=\"0\" d=\"M11.169,8.275c-2.723,0-4.938,2.215-4.938,4.938s2.215,4.938,4.938,4.938s4.938-2.215,4.938-4.938 S13.892,8.275,11.169,8.275z M11.169,16.81c-1.983,0-3.598-1.612-3.598-3.598c0-1.983,1.614-3.597,3.598-3.597 s3.597,1.613,3.597,3.597C14.766,15.198,13.153,16.81,11.169,16.81z\"/> <polygon stroke-width=\"0\" points=\"11.792,11.073 10.502,11.073 10.502,12.578 9.03,12.578 9.03,13.868 10.502,13.868 10.502,15.352 11.792,15.352 11.792,13.868 13.309,13.868 13.309,12.578 11.792,12.578 \"/> </g> </svg>"
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176\"/> </g> </svg>"
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 60 */
+/* 62 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1411 541l-355 355 355 355 144-144q29-31 70-14 39 17 39 59v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l144-144-355-355-355 355 144 144q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l144 144 355-355-355-355-144 144q-19 19-45 19-12 0-24-5-40-17-40-59v-448q0-26 19-45t45-19h448q42 0 59 40 17 39-14 69l-144 144 355 355 355-355-144-144q-31-30-14-69 17-40 59-40h448q26 0 45 19t19 45v448q0 42-39 59-13 5-25 5-26 0-45-19z\"/> </svg>"
 
 /***/ }),
-/* 61 */
+/* 63 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 896q0 26-19 45l-256 256q-19 19-45 19t-45-19-19-45v-128h-1024v128q0 26-19 45t-45 19-45-19l-256-256q-19-19-19-45t19-45l256-256q19-19 45-19t45 19 19 45v128h1024v-128q0-26 19-45t45-19 45 19l256 256q19 19 19 45z\"/> </svg>"
 
 /***/ }),
-/* 62 */
+/* 64 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1596 1385q0 117-79 196t-196 79q-135 0-235-100l-777-776q-113-115-113-271 0-159 110-270t269-111q158 0 273 113l605 606q10 10 10 22 0 16-30.5 46.5t-46.5 30.5q-13 0-23-10l-606-607q-79-77-181-77-106 0-179 75t-73 181q0 105 76 181l776 777q63 63 145 63 64 0 106-42t42-106q0-82-63-145l-581-581q-26-24-60-24-29 0-48 19t-19 48q0 32 25 59l410 410q10 10 10 22 0 16-31 47t-47 31q-12 0-22-10l-410-410q-63-61-63-149 0-82 57-139t139-57q88 0 149 63l581 581q100 98 100 235z\"/> </svg>"
 
 /***/ }),
-/* 63 */
+/* 65 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z\"/> </svg>"
 
 /***/ }),
-/* 64 */
+/* 66 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z\"/> </svg>"
 
 /***/ }),
-/* 65 */
+/* 67 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 1152q0-36-20-69-1-1-15.5-22.5t-25.5-38-25-44-21-50.5q-4-16-21-16t-21 16q-7 23-21 50.5t-25 44-25.5 38-15.5 22.5q-20 33-20 69 0 53 37.5 90.5t90.5 37.5 90.5-37.5 37.5-90.5zm512-128q0 212-150 362t-362 150-362-150-150-362q0-145 81-275 6-9 62.5-90.5t101-151 99.5-178 83-201.5q9-30 34-47t51-17 51.5 17 33.5 47q28 93 83 201.5t99.5 178 101 151 62.5 90.5q81 127 81 275z\"/> </svg>"
 
 /***/ }),
-/* 66 */
+/* 68 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 14 14\" xmlns=\"http://www.w3.org/2000/svg\"> <g stroke=\"none\" stroke-width=\"1\"> <path d=\"M14,1.4 L12.6,0 L7,5.6 L1.4,0 L0,1.4 L5.6,7 L0,12.6 L1.4,14 L7,8.4 L12.6,14 L14,12.6 L8.4,7 L14,1.4 Z\"/> </g> </svg>"
 
 /***/ }),
-/* 67 */
+/* 69 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h896q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-640q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h640q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
-/* 68 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
-
-/***/ }),
-/* 69 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/> </svg>"
-
-/***/ }),
 /* 70 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
 
 /***/ }),
 /* 71 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/> </svg>"
 
 /***/ }),
 /* 72 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg>"
 
 /***/ }),
 /* 73 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg>"
 
 /***/ }),
 /* 74 */
 /***/ (function(module) {
 
-module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg>"
 
 /***/ }),
 /* 75 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg>"
 
 /***/ }),
 /* 76 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg>"
 
 /***/ }),
 /* 77 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg>"
 
 /***/ }),
 /* 78 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 79 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg>"
 
 /***/ }),
 /* 80 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125\"/> </svg>"
 
 /***/ }),
 /* 81 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg>"
 
 /***/ }),
 /* 82 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/> </svg>"
 
 /***/ }),
 /* 83 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg>"
 
 /***/ }),
 /* 84 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg>"
 
 /***/ }),
 /* 85 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/> </svg>"
 
 /***/ }),
 /* 86 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/> </svg>"
 
 /***/ }),
 /* 87 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg>"
 
 /***/ }),
 /* 88 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/> </svg>"
 
 /***/ }),
 /* 89 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/> </svg>"
 
 /***/ }),
 /* 90 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 91 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/> </svg>"
 
 /***/ }),
 /* 92 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/> </svg>"
 
 /***/ }),
 /* 93 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 /* 94 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 /* 95 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/> </svg>"
 
 /***/ }),
 /* 96 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg>"
 
 /***/ }),
 /* 97 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 32 32\"> <path d=\"M27 4l-15 15-7-7-5 5 12 12 20-20z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg>"
 
 /***/ }),
 /* 98 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg>"
 
 /***/ }),
 /* 99 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 32 32\"> <path d=\"M27 4l-15 15-7-7-5 5 12 12 20-20z\"/> </svg>"
 
 /***/ }),
 /* 100 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 101 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg>"
 
 /***/ }),
 /* 102 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 103 */
 /***/ (function(module) {
 
-module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </svg>"
 
 /***/ }),
 /* 104 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg>"
 
 /***/ }),
 /* 105 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg>"
 
 /***/ }),
 /* 106 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg>"
 
 /***/ }),
 /* 107 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg>"
 
 /***/ }),
 /* 108 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg>"
 
 /***/ }),
 /* 109 */
 /***/ (function(module) {
 
-module.exports = "<svg viewBox=\"0 0 13 13\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M5.9814 11.8049C5.59087 11.4144 5.59087 10.7812 5.9814 10.3907L10.224 6.14806C10.6146 5.75754 11.2477 5.75754 11.6383 6.14806C12.0288 6.53859 12.0288 7.17175 11.6383 7.56228L7.39561 11.8049C7.00509 12.1954 6.37192 12.1954 5.9814 11.8049Z\"/> <path d=\"M0.707107 12.0208C0.316582 11.6303 0.316582 10.9971 0.707107 10.6066L10.6066 0.707121C10.9971 0.316597 11.6303 0.316596 12.0208 0.707121C12.4113 1.09764 12.4113 1.73081 12.0208 2.12133L2.12132 12.0208C1.7308 12.4114 1.09763 12.4114 0.707107 12.0208Z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg>"
 
 /***/ }),
 /* 110 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </svg>"
 
 /***/ }),
 /* 111 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 13 13\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M5.9814 11.8049C5.59087 11.4144 5.59087 10.7812 5.9814 10.3907L10.224 6.14806C10.6146 5.75754 11.2477 5.75754 11.6383 6.14806C12.0288 6.53859 12.0288 7.17175 11.6383 7.56228L7.39561 11.8049C7.00509 12.1954 6.37192 12.1954 5.9814 11.8049Z\"/> <path d=\"M0.707107 12.0208C0.316582 11.6303 0.316582 10.9971 0.707107 10.6066L10.6066 0.707121C10.9971 0.316597 11.6303 0.316596 12.0208 0.707121C12.4113 1.09764 12.4113 1.73081 12.0208 2.12133L2.12132 12.0208C1.7308 12.4114 1.09763 12.4114 0.707107 12.0208Z\"/> </svg>"
 
 /***/ }),
 /* 112 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg>"
 
 /***/ }),
 /* 113 */
 /***/ (function(module) {
 
-module.exports = "<svg viewBox=\"0 0 500 500\" xmlns=\"http://www.w3.org/2000/svg\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 /* 114 */
 /***/ (function(module) {
 
-module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke=\"null\" d=\"m42.276011,26.302547c0.098397,-0.76605 0.172194,-1.54407 0.172194,-2.33406s-0.073797,-1.56801 -0.172194,-2.33406l5.202718,-3.961917c0.467384,-0.359086 0.602679,-1.005441 0.29519,-1.532101l-4.919828,-8.29489c-0.307489,-0.51469 -0.947067,-0.730142 -1.500548,-0.51469l-6.125186,2.405877c-1.266856,-0.945594 -2.656707,-1.747553 -4.157255,-2.357999l-0.922468,-6.343855c-0.110696,-0.562568 -0.614979,-1.005441 -1.229957,-1.005441l-9.839656,0c-0.614979,0 -1.119261,0.442873 -1.217657,1.005441l-0.922468,6.343855c-1.500548,0.610446 -2.890399,1.400436 -4.157255,2.357999l-6.125186,-2.405877c-0.553481,-0.203482 -1.193058,0 -1.500548,0.51469l-4.919828,8.29489c-0.307489,0.51469 -0.172194,1.161045 0.29519,1.532101l5.190419,3.961917c-0.098397,0.76605 -0.172194,1.54407 -0.172194,2.33406s0.073797,1.56801 0.172194,2.33406l-5.190419,3.961917c-0.467384,0.359086 -0.602679,1.005441 -0.29519,1.532101l4.919828,8.29489c0.307489,0.51469 0.947067,0.730142 1.500548,0.51469l6.125186,-2.405877c1.266856,0.945594 2.656707,1.747553 4.157255,2.357999l0.922468,6.343855c0.098397,0.562568 0.602679,1.005441 1.217657,1.005441l9.839656,0c0.614979,0 1.119261,-0.442873 1.217657,-1.005441l0.922468,-6.343855c1.500548,-0.610446 2.890399,-1.400436 4.157255,-2.357999l6.125186,2.405877c0.553481,0.203482 1.193058,0 1.500548,-0.51469l4.919828,-8.29489c0.307489,-0.51469 0.172194,-1.161045 -0.29519,-1.532101l-5.190419,-3.961917zm-18.277162,6.044617c-4.759934,0 -8.609699,-3.746465 -8.609699,-8.378677s3.849766,-8.378677 8.609699,-8.378677s8.609699,3.746465 8.609699,8.378677s-3.849766,8.378677 -8.609699,8.378677z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg>"
 
 /***/ }),
 /* 115 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg>"
+module.exports = "<svg viewBox=\"0 0 500 500\" xmlns=\"http://www.w3.org/2000/svg\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg>"
 
 /***/ }),
 /* 116 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke=\"null\" d=\"m42.276011,26.302547c0.098397,-0.76605 0.172194,-1.54407 0.172194,-2.33406s-0.073797,-1.56801 -0.172194,-2.33406l5.202718,-3.961917c0.467384,-0.359086 0.602679,-1.005441 0.29519,-1.532101l-4.919828,-8.29489c-0.307489,-0.51469 -0.947067,-0.730142 -1.500548,-0.51469l-6.125186,2.405877c-1.266856,-0.945594 -2.656707,-1.747553 -4.157255,-2.357999l-0.922468,-6.343855c-0.110696,-0.562568 -0.614979,-1.005441 -1.229957,-1.005441l-9.839656,0c-0.614979,0 -1.119261,0.442873 -1.217657,1.005441l-0.922468,6.343855c-1.500548,0.610446 -2.890399,1.400436 -4.157255,2.357999l-6.125186,-2.405877c-0.553481,-0.203482 -1.193058,0 -1.500548,0.51469l-4.919828,8.29489c-0.307489,0.51469 -0.172194,1.161045 0.29519,1.532101l5.190419,3.961917c-0.098397,0.76605 -0.172194,1.54407 -0.172194,2.33406s0.073797,1.56801 0.172194,2.33406l-5.190419,3.961917c-0.467384,0.359086 -0.602679,1.005441 -0.29519,1.532101l4.919828,8.29489c0.307489,0.51469 0.947067,0.730142 1.500548,0.51469l6.125186,-2.405877c1.266856,0.945594 2.656707,1.747553 4.157255,2.357999l0.922468,6.343855c0.098397,0.562568 0.602679,1.005441 1.217657,1.005441l9.839656,0c0.614979,0 1.119261,-0.442873 1.217657,-1.005441l0.922468,-6.343855c1.500548,-0.610446 2.890399,-1.400436 4.157255,-2.357999l6.125186,2.405877c0.553481,0.203482 1.193058,0 1.500548,-0.51469l4.919828,-8.29489c0.307489,-0.51469 0.172194,-1.161045 -0.29519,-1.532101l-5.190419,-3.961917zm-18.277162,6.044617c-4.759934,0 -8.609699,-3.746465 -8.609699,-8.378677s3.849766,-8.378677 8.609699,-8.378677s8.609699,3.746465 8.609699,8.378677s-3.849766,8.378677 -8.609699,8.378677z\"/> </svg>"
 
 /***/ }),
 /* 117 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg>"
 
 /***/ }),
 /* 118 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg>"
 
 /***/ }),
 /* 119 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg>"
 
 /***/ }),
 /* 120 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
 
 /***/ }),
 /* 121 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
 
 /***/ }),
 /* 122 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg>"
 
 /***/ }),
 /* 123 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg>"
 
 /***/ }),
 /* 124 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg>"
 
 /***/ }),
 /* 125 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg>"
 
 /***/ }),
 /* 126 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg>"
 
 /***/ }),
 /* 127 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg>"
 
 /***/ }),
 /* 128 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 129 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg>"
 
 /***/ }),
 /* 130 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg>"
 
 /***/ }),
 /* 131 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
 
 /***/ }),
 /* 132 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/> </svg>"
 
 /***/ }),
 /* 133 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/> </svg>"
 
 /***/ }),
 /* 134 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/> </svg>"
+
+/***/ }),
+/* 135 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/> </svg>"
+
+/***/ }),
+/* 136 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 352v1088q0 42-39 59-13 5-25 5-27 0-45-19l-403-403v166q0 119-84.5 203.5t-203.5 84.5h-704q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h704q119 0 203.5 84.5t84.5 203.5v165l403-402q18-19 45-19 12 0 25 5 39 17 39 59z\"/> </svg>"
@@ -10910,9 +10991,9 @@ Ajax.log = [];
 // EXTERNAL MODULE: ./src/core/component/index.ts + 3 modules
 var component = __webpack_require__(12);
 // EXTERNAL MODULE: ./src/core/ui/popup/index.ts + 1 modules
-var ui_popup = __webpack_require__(42);
-// EXTERNAL MODULE: ./src/core/ui/button/index.ts + 2 modules
-var ui_button = __webpack_require__(38);
+var ui_popup = __webpack_require__(44);
+// EXTERNAL MODULE: ./src/core/ui/button/index.ts + 1 modules
+var ui_button = __webpack_require__(39);
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
 var checker = __webpack_require__(18);
 ;// CONCATENATED MODULE: ./src/modules/context-menu/context-menu.ts
@@ -11115,7 +11196,7 @@ var global = __webpack_require__(13);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
 var decorators = __webpack_require__(17);
 // EXTERNAL MODULE: ./src/core/traits/index.ts + 2 modules
-var traits = __webpack_require__(36);
+var traits = __webpack_require__(37);
 ;// CONCATENATED MODULE: ./src/core/view/view.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -11139,7 +11220,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.12.4";
+        this.version = "3.12.5";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -11237,10 +11318,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.12.4";
+        return "3.12.5";
     }
     static getVersion() {
-        return "3.12.4";
+        return "3.12.5";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -11323,7 +11404,7 @@ View.defaultOptions = {
 // EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
 var dom = __webpack_require__(15);
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
-var ui = __webpack_require__(34);
+var ui = __webpack_require__(35);
 ;// CONCATENATED MODULE: ./src/modules/toolbar/collection/collection.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -11545,7 +11626,7 @@ ToolbarEditorCollection = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./src/core/ui/helpers/get-control-type.ts
-var get_control_type = __webpack_require__(40);
+var get_control_type = __webpack_require__(42);
 ;// CONCATENATED MODULE: ./src/modules/toolbar/button/button.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -11903,7 +11984,7 @@ function makeButton(jodit, control, target = null) {
 }
 
 // EXTERNAL MODULE: ./src/core/ui/helpers/buttons.ts
-var helpers_buttons = __webpack_require__(41);
+var helpers_buttons = __webpack_require__(43);
 ;// CONCATENATED MODULE: ./src/core/view/view-with-toolbar.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -13438,7 +13519,7 @@ function makeContextMenu(parent) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/normalize/index.ts + 9 modules
-var normalize = __webpack_require__(29);
+var normalize = __webpack_require__(30);
 ;// CONCATENATED MODULE: ./src/modules/file-browser/builders/elements-map.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -17327,7 +17408,7 @@ Jodit.core = {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const en = __webpack_require__(44);
+const en = __webpack_require__(46);
 let exp = {
     en
 };
@@ -17665,7 +17746,7 @@ function focus_focus(editor) {
 
 config/* Config.prototype.controls.classSpan */.D.prototype.controls.classSpan = {
     command: 'applyClassName',
-    icon: __webpack_require__(45),
+    icon: __webpack_require__(47),
     exec: helpers.memorizeExec,
     list: [
         'enabled',
@@ -17728,9 +17809,9 @@ class classSpan extends Plugin {
     beforeDestruct() { }
 }
 
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 17 modules
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 18 modules
 var utils = __webpack_require__(9);
-// EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 5 modules
+// EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 4 modules
 var string = __webpack_require__(27);
 ;// CONCATENATED MODULE: ./src/plugins/keyboard/helpers.ts
 /*!
@@ -18127,13 +18208,13 @@ function checkUnwrapFirstListItem(jodit, fakeNode, backspace) {
         s.cursorInTheEdge(backspace, li)) {
         const ul = li.parentElement;
         const p = jodit.createInside.element(jodit.o.enterBlock);
-        (0,helpers.call)(backspace ? dom/* Dom.before */.i.before : dom/* Dom.after */.i.after, ul, p);
+        (0,utils/* call */.RE)(backspace ? dom/* Dom.before */.i.before : dom/* Dom.after */.i.after, ul, p);
         dom/* Dom.moveContent */.i.moveContent(li, p);
         dom/* Dom.safeRemove */.i.safeRemove(li);
         if (dom/* Dom.isEmpty */.i.isEmpty(ul)) {
             dom/* Dom.safeRemove */.i.safeRemove(ul);
         }
-        (0,helpers.call)(backspace ? s.setCursorBefore : s.setCursorAfter, fakeNode);
+        (0,utils/* call */.RE)(backspace ? s.setCursorBefore : s.setCursorAfter, fakeNode);
         return true;
     }
     return false;
@@ -19535,7 +19616,7 @@ function copyFormat(editor) {
 
 
 // EXTERNAL MODULE: ./src/modules/widget/index.ts + 3 modules
-var widget = __webpack_require__(46);
+var widget = __webpack_require__(48);
 ;// CONCATENATED MODULE: ./src/plugins/color/color.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -21105,7 +21186,7 @@ function positionTab(editor) {
 
 
 // EXTERNAL MODULE: ./src/plugins/image/helpers.ts
-var image_helpers = __webpack_require__(47);
+var image_helpers = __webpack_require__(49);
 ;// CONCATENATED MODULE: ./src/plugins/image/image-properties/image-properties.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -21806,12 +21887,12 @@ config/* Config.prototype.toolbarInlineForSelection */.D.prototype.toolbarInline
 config/* Config.prototype.toolbarInlineDisableFor */.D.prototype.toolbarInlineDisableFor = [];
 config/* Config.prototype.toolbarInlineDisabledButtons */.D.prototype.toolbarInlineDisabledButtons = ['source'];
 config/* Config.prototype.popup */.D.prototype.popup = {
-    a: (__webpack_require__(48)/* ["default"] */ .Z),
-    img: (__webpack_require__(49)/* ["default"] */ .Z),
-    cells: (__webpack_require__(50)/* ["default"] */ .Z),
-    toolbar: (__webpack_require__(51)/* ["default"] */ .Z),
-    jodit: (__webpack_require__(52)/* ["default"] */ .Z),
-    'jodit-media': (__webpack_require__(52)/* ["default"] */ .Z),
+    a: (__webpack_require__(50)/* ["default"] */ .Z),
+    img: (__webpack_require__(51)/* ["default"] */ .Z),
+    cells: (__webpack_require__(52)/* ["default"] */ .Z),
+    toolbar: (__webpack_require__(53)/* ["default"] */ .Z),
+    jodit: (__webpack_require__(54)/* ["default"] */ .Z),
+    'jodit-media': (__webpack_require__(54)/* ["default"] */ .Z),
     selection: [
         'bold',
         'underline',
@@ -22255,7 +22336,7 @@ class limit extends Plugin {
 ], limit.prototype, "checkPreventChanging", null);
 
 // EXTERNAL MODULE: ./src/core/ui/form/index.ts + 11 modules
-var ui_form = __webpack_require__(43);
+var ui_form = __webpack_require__(45);
 ;// CONCATENATED MODULE: ./src/plugins/link/template.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -24950,7 +25031,7 @@ class source extends Plugin {
         this.__oldMirrorValue = value;
     }
     getNormalPosition(pos, str) {
-        str = str.replace(/<(script|style|iframe)[^>]*>.*?<\/\1>/is, m => {
+        str = str.replace(/<(script|style|iframe)[^>]*>[^]*?<\/\1>/im, m => {
             let res = '';
             for (let i = 0; i < m.length; i += 1) {
                 res += constants.INVISIBLE_SPACE;
@@ -26976,169 +27057,169 @@ class xpath extends Plugin {
 
 
 // EXTERNAL MODULE: ./src/styles/icons/about.svg
-var icons_about = __webpack_require__(53);
+var icons_about = __webpack_require__(55);
 // EXTERNAL MODULE: ./src/styles/icons/addcolumn.svg
-var addcolumn = __webpack_require__(54);
+var addcolumn = __webpack_require__(56);
 // EXTERNAL MODULE: ./src/styles/icons/addrow.svg
-var addrow = __webpack_require__(55);
+var addrow = __webpack_require__(57);
 // EXTERNAL MODULE: ./src/styles/icons/angle-down.svg
-var angle_down = __webpack_require__(56);
+var angle_down = __webpack_require__(58);
 // EXTERNAL MODULE: ./src/styles/icons/angle-left.svg
-var angle_left = __webpack_require__(57);
+var angle_left = __webpack_require__(59);
 // EXTERNAL MODULE: ./src/styles/icons/angle-right.svg
-var angle_right = __webpack_require__(58);
+var angle_right = __webpack_require__(60);
 // EXTERNAL MODULE: ./src/styles/icons/angle-up.svg
-var angle_up = __webpack_require__(59);
+var angle_up = __webpack_require__(61);
 // EXTERNAL MODULE: ./src/styles/icons/arrows-alt.svg
-var arrows_alt = __webpack_require__(60);
+var arrows_alt = __webpack_require__(62);
 // EXTERNAL MODULE: ./src/styles/icons/arrows-h.svg
-var arrows_h = __webpack_require__(61);
+var arrows_h = __webpack_require__(63);
 // EXTERNAL MODULE: ./src/styles/icons/attachment.svg
-var attachment = __webpack_require__(62);
+var attachment = __webpack_require__(64);
 // EXTERNAL MODULE: ./src/styles/icons/bin.svg
-var bin = __webpack_require__(63);
+var bin = __webpack_require__(65);
 // EXTERNAL MODULE: ./src/styles/icons/bold.svg
-var icons_bold = __webpack_require__(64);
+var icons_bold = __webpack_require__(66);
 // EXTERNAL MODULE: ./src/styles/icons/brush.svg
-var brush = __webpack_require__(65);
+var brush = __webpack_require__(67);
 // EXTERNAL MODULE: ./src/styles/icons/cancel.svg
-var cancel = __webpack_require__(66);
+var cancel = __webpack_require__(68);
 // EXTERNAL MODULE: ./src/styles/icons/center.svg
-var center = __webpack_require__(67);
+var center = __webpack_require__(69);
 // EXTERNAL MODULE: ./src/styles/icons/chain-broken.svg
-var chain_broken = __webpack_require__(68);
+var chain_broken = __webpack_require__(70);
 // EXTERNAL MODULE: ./src/styles/icons/check.svg
-var check = __webpack_require__(69);
+var check = __webpack_require__(71);
 // EXTERNAL MODULE: ./src/styles/icons/check-square.svg
-var check_square = __webpack_require__(70);
+var check_square = __webpack_require__(72);
 // EXTERNAL MODULE: ./src/styles/icons/chevron.svg
-var chevron = __webpack_require__(71);
+var chevron = __webpack_require__(73);
 // EXTERNAL MODULE: ./src/styles/icons/copyformat.svg
-var copyformat = __webpack_require__(72);
+var copyformat = __webpack_require__(74);
 // EXTERNAL MODULE: ./src/styles/icons/crop.svg
-var crop = __webpack_require__(73);
+var crop = __webpack_require__(75);
 // EXTERNAL MODULE: ./src/styles/icons/copy.svg
-var copy = __webpack_require__(74);
+var copy = __webpack_require__(76);
 // EXTERNAL MODULE: ./src/styles/icons/cut.svg
-var cut = __webpack_require__(75);
+var cut = __webpack_require__(77);
 // EXTERNAL MODULE: ./src/styles/icons/dedent.svg
-var dedent = __webpack_require__(76);
+var dedent = __webpack_require__(78);
 // EXTERNAL MODULE: ./src/styles/icons/dots.svg
-var dots = __webpack_require__(77);
+var dots = __webpack_require__(79);
 // EXTERNAL MODULE: ./src/styles/icons/enter.svg
-var icons_enter = __webpack_require__(78);
+var icons_enter = __webpack_require__(80);
 // EXTERNAL MODULE: ./src/styles/icons/eraser.svg
-var eraser = __webpack_require__(79);
+var eraser = __webpack_require__(81);
 // EXTERNAL MODULE: ./src/styles/icons/eye.svg
-var eye = __webpack_require__(80);
+var eye = __webpack_require__(82);
 // EXTERNAL MODULE: ./src/styles/icons/file.svg
-var icons_file = __webpack_require__(81);
+var icons_file = __webpack_require__(83);
 // EXTERNAL MODULE: ./src/styles/icons/folder.svg
-var folder = __webpack_require__(82);
+var folder = __webpack_require__(84);
 // EXTERNAL MODULE: ./src/styles/icons/font.svg
-var icons_font = __webpack_require__(83);
+var icons_font = __webpack_require__(85);
 // EXTERNAL MODULE: ./src/styles/icons/fontsize.svg
-var fontsize = __webpack_require__(84);
+var fontsize = __webpack_require__(86);
 // EXTERNAL MODULE: ./src/styles/icons/fullsize.svg
-var icons_fullsize = __webpack_require__(85);
+var icons_fullsize = __webpack_require__(87);
 // EXTERNAL MODULE: ./src/styles/icons/hr.svg
-var icons_hr = __webpack_require__(86);
+var icons_hr = __webpack_require__(88);
 // EXTERNAL MODULE: ./src/styles/icons/image.svg
-var icons_image = __webpack_require__(87);
+var icons_image = __webpack_require__(89);
 // EXTERNAL MODULE: ./src/styles/icons/indent.svg
-var icons_indent = __webpack_require__(88);
+var icons_indent = __webpack_require__(90);
 // EXTERNAL MODULE: ./src/styles/icons/info-circle.svg
-var info_circle = __webpack_require__(89);
+var info_circle = __webpack_require__(91);
 // EXTERNAL MODULE: ./src/styles/icons/italic.svg
-var italic = __webpack_require__(90);
+var italic = __webpack_require__(92);
 // EXTERNAL MODULE: ./src/styles/icons/justify.svg
-var icons_justify = __webpack_require__(91);
+var icons_justify = __webpack_require__(93);
 // EXTERNAL MODULE: ./src/styles/icons/left.svg
-var left = __webpack_require__(92);
+var left = __webpack_require__(94);
 // EXTERNAL MODULE: ./src/styles/icons/link.svg
-var icons_link = __webpack_require__(93);
+var icons_link = __webpack_require__(95);
 // EXTERNAL MODULE: ./src/styles/icons/lock.svg
-var lock = __webpack_require__(94);
+var lock = __webpack_require__(96);
 // EXTERNAL MODULE: ./src/styles/icons/menu.svg
-var menu = __webpack_require__(95);
+var menu = __webpack_require__(97);
 // EXTERNAL MODULE: ./src/styles/icons/merge.svg
-var merge = __webpack_require__(96);
+var merge = __webpack_require__(98);
 // EXTERNAL MODULE: ./src/styles/icons/ok.svg
-var ok = __webpack_require__(97);
+var ok = __webpack_require__(99);
 // EXTERNAL MODULE: ./src/styles/icons/ol.svg
-var ol = __webpack_require__(98);
+var ol = __webpack_require__(100);
 // EXTERNAL MODULE: ./src/styles/icons/omega.svg
-var omega = __webpack_require__(99);
+var omega = __webpack_require__(101);
 // EXTERNAL MODULE: ./src/styles/icons/outdent.svg
-var outdent = __webpack_require__(100);
+var outdent = __webpack_require__(102);
 // EXTERNAL MODULE: ./src/styles/icons/palette.svg
-var palette = __webpack_require__(101);
+var palette = __webpack_require__(103);
 // EXTERNAL MODULE: ./src/styles/icons/paragraph.svg
-var paragraph = __webpack_require__(102);
+var paragraph = __webpack_require__(104);
 // EXTERNAL MODULE: ./src/styles/icons/paste.svg
-var icons_paste = __webpack_require__(103);
+var icons_paste = __webpack_require__(105);
 // EXTERNAL MODULE: ./src/styles/icons/pencil.svg
-var pencil = __webpack_require__(104);
+var pencil = __webpack_require__(106);
 // EXTERNAL MODULE: ./src/styles/icons/plus.svg
-var plus = __webpack_require__(105);
+var plus = __webpack_require__(107);
 // EXTERNAL MODULE: ./src/styles/icons/print.svg
-var icons_print = __webpack_require__(106);
+var icons_print = __webpack_require__(108);
 // EXTERNAL MODULE: ./src/styles/icons/redo.svg
-var redo = __webpack_require__(107);
+var redo = __webpack_require__(109);
 // EXTERNAL MODULE: ./src/styles/icons/resize.svg
-var resize = __webpack_require__(108);
+var resize = __webpack_require__(110);
 // EXTERNAL MODULE: ./src/styles/icons/resize-handler.svg
-var resize_handler = __webpack_require__(109);
+var resize_handler = __webpack_require__(111);
 // EXTERNAL MODULE: ./src/styles/icons/resizer.svg
-var icons_resizer = __webpack_require__(110);
+var icons_resizer = __webpack_require__(112);
 // EXTERNAL MODULE: ./src/styles/icons/right.svg
-var right = __webpack_require__(111);
+var right = __webpack_require__(113);
 // EXTERNAL MODULE: ./src/styles/icons/save.svg
-var save = __webpack_require__(112);
+var save = __webpack_require__(114);
 // EXTERNAL MODULE: ./src/styles/icons/search.svg
-var icons_search = __webpack_require__(113);
+var icons_search = __webpack_require__(115);
 // EXTERNAL MODULE: ./src/styles/icons/settings.svg
-var settings = __webpack_require__(114);
+var settings = __webpack_require__(116);
 // EXTERNAL MODULE: ./src/styles/icons/select-all.svg
-var select_all = __webpack_require__(115);
+var select_all = __webpack_require__(117);
 // EXTERNAL MODULE: ./src/styles/icons/shrink.svg
-var shrink = __webpack_require__(116);
+var shrink = __webpack_require__(118);
 // EXTERNAL MODULE: ./src/styles/icons/source.svg
-var icons_source = __webpack_require__(117);
+var icons_source = __webpack_require__(119);
 // EXTERNAL MODULE: ./src/styles/icons/splitg.svg
-var splitg = __webpack_require__(118);
+var splitg = __webpack_require__(120);
 // EXTERNAL MODULE: ./src/styles/icons/splitv.svg
-var splitv = __webpack_require__(119);
+var splitv = __webpack_require__(121);
 // EXTERNAL MODULE: ./src/styles/icons/strikethrough.svg
-var strikethrough = __webpack_require__(120);
+var strikethrough = __webpack_require__(122);
 // EXTERNAL MODULE: ./src/styles/icons/subscript.svg
-var subscript = __webpack_require__(121);
+var subscript = __webpack_require__(123);
 // EXTERNAL MODULE: ./src/styles/icons/superscript.svg
-var superscript = __webpack_require__(122);
+var superscript = __webpack_require__(124);
 // EXTERNAL MODULE: ./src/styles/icons/table.svg
-var icons_table = __webpack_require__(123);
+var icons_table = __webpack_require__(125);
 // EXTERNAL MODULE: ./src/styles/icons/th.svg
-var th = __webpack_require__(124);
+var th = __webpack_require__(126);
 // EXTERNAL MODULE: ./src/styles/icons/th-list.svg
-var th_list = __webpack_require__(125);
+var th_list = __webpack_require__(127);
 // EXTERNAL MODULE: ./src/styles/icons/ul.svg
-var ul = __webpack_require__(126);
+var ul = __webpack_require__(128);
 // EXTERNAL MODULE: ./src/styles/icons/underline.svg
-var underline = __webpack_require__(127);
+var underline = __webpack_require__(129);
 // EXTERNAL MODULE: ./src/styles/icons/undo.svg
-var undo = __webpack_require__(128);
+var undo = __webpack_require__(130);
 // EXTERNAL MODULE: ./src/styles/icons/unlink.svg
-var unlink = __webpack_require__(129);
+var unlink = __webpack_require__(131);
 // EXTERNAL MODULE: ./src/styles/icons/unlock.svg
-var unlock = __webpack_require__(130);
+var unlock = __webpack_require__(132);
 // EXTERNAL MODULE: ./src/styles/icons/update.svg
-var update = __webpack_require__(131);
+var update = __webpack_require__(133);
 // EXTERNAL MODULE: ./src/styles/icons/upload.svg
-var upload = __webpack_require__(132);
+var upload = __webpack_require__(134);
 // EXTERNAL MODULE: ./src/styles/icons/valign.svg
-var valign = __webpack_require__(133);
+var valign = __webpack_require__(135);
 // EXTERNAL MODULE: ./src/styles/icons/video.svg
-var icons_video = __webpack_require__(134);
+var icons_video = __webpack_require__(136);
 ;// CONCATENATED MODULE: ./src/styles/icons/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)

@@ -1,14 +1,14 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.12.4
+ * Version: v3.12.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
 	/*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.12.4
+ * Version: v3.12.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -1741,6 +1741,44 @@ svg.jodit-icon {
   outline: 1px dashed #bd2130;
 }
 
+.jodit-ui-button-group {
+  margin-bottom: 8px;
+}
+.jodit-ui-button-group__label {
+  display: block;
+  margin-bottom: calc(8px / 4);
+  color: #a5a5a5;
+  font-size: 0.8em;
+}
+.jodit-ui-button-group__options {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+.jodit-ui-button-group .jodit-ui-button:not(:last-child) {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+.jodit-ui-button-group .jodit-ui-button + .jodit-ui-button {
+  border-left: 1px solid rgba(220, 220, 220, 0.4);
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+.jodit-ui-button-group .jodit-ui-button[aria-pressed='true']:not([disabled]) {
+  border-left: 0;
+  background-color: #dcdcdc;
+  -webkit-box-shadow: inset 0 0 3px 0 #4c4c4c;
+          box-shadow: inset 0 0 3px 0 #4c4c4c;
+  color: #4c4c4c;
+  outline: 0;
+}
+.jodit-ui-button-group .jodit-ui-button[aria-pressed='true']:not([disabled]) + .jodit-ui-button {
+  border: 0;
+}
+
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -1834,44 +1872,6 @@ svg.jodit-icon {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-}
-
-.jodit-ui-button-group {
-  margin-bottom: 8px;
-}
-.jodit-ui-button-group__label {
-  display: block;
-  margin-bottom: calc(8px / 4);
-  color: #a5a5a5;
-  font-size: 0.8em;
-}
-.jodit-ui-button-group__options {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-}
-.jodit-ui-button-group .jodit-ui-button:not(:last-child) {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-}
-.jodit-ui-button-group .jodit-ui-button + .jodit-ui-button {
-  border-left: 1px solid rgba(220, 220, 220, 0.4);
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-}
-.jodit-ui-button-group .jodit-ui-button[aria-pressed='true']:not([disabled]) {
-  border-left: 0;
-  background-color: #dcdcdc;
-  -webkit-box-shadow: inset 0 0 3px 0 #4c4c4c;
-          box-shadow: inset 0 0 3px 0 #4c4c4c;
-  color: #4c4c4c;
-  outline: 0;
-}
-.jodit-ui-button-group .jodit-ui-button[aria-pressed='true']:not([disabled]) + .jodit-ui-button {
-  border: 0;
 }
 
 /*!
@@ -4365,7 +4365,6 @@ svg.jodit-icon {
   content: '';
   vertical-align: middle;
 }
-
 .jodit-filebrowser-tree {
   position: relative;
   display: none;
@@ -4460,7 +4459,7 @@ svg.jodit-icon {
           justify-content: space-between;
   padding: calc(8px / 2) 8px;
   border-bottom: 1px solid #474747;
-  color: undefined;
+  color: #b1b1b1;
   text-decoration: none;
   -webkit-transition: background-color 0.2s ease 0s;
   -o-transition: background-color 0.2s ease 0s;
@@ -4471,6 +4470,7 @@ svg.jodit-icon {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
+  color: #b1b1b1;
 }
 .jodit-filebrowser-tree__item .jodit-icon_folder {
   display: -webkit-box;
@@ -4490,15 +4490,17 @@ svg.jodit-icon {
 .jodit-filebrowser-tree__item .jodit-icon_folder svg {
   width: 12px;
   height: 12px;
-  fill: undefined !important;
-  stroke: undefined !important;
+  fill: #b1b1b1 !important;
+  stroke: #b1b1b1 !important;
 }
 .jodit-filebrowser-tree__item .jodit-icon_folder:hover {
   background: #696969;
 }
 .jodit-filebrowser-tree__item:hover {
   background-color: #ecebe9;
-  color: #222;
+}
+.jodit-filebrowser-tree__item:hover-title {
+  color: #222222;
 }
 .jodit-filebrowser-tree__item:hover i.jodit-icon_folder {
   opacity: 0.6;

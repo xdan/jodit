@@ -9,7 +9,7 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
-## 3.12.4
+## 3.12.5
 
 #### :rocket: New Feature
 

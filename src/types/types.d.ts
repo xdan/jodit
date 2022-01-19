@@ -185,15 +185,54 @@ export interface SnapshotType {
 export interface ImageEditorOptions {
 	min_width: number;
 	min_height: number;
+	/**
+	 * Close editor after save image
+	 */
 	closeAfterSave: boolean;
+
+	/**
+	 * Default dialog width by screen
+	 */
 	width: string | number;
+
+	/**
+	 * Default dialog height by screen
+	 */
 	height: string | number;
+
+	/**
+	 * Show tab cropping
+	 */
 	crop: boolean;
+
+	/**
+	 * Show tab resizing
+	 */
 	resize: boolean;
+
+	/**
+	 * Keep aspect ratio on resize
+	 */
 	resizeUseRatio: boolean;
+
+	/**
+	 * Minimal width on resize
+	 */
 	resizeMinWidth: number;
+
+	/**
+	 * Minimal height on resize
+	 */
 	resizeMinHeight: number;
+
+	/**
+	 * Keep aspect ratio on crop
+	 */
 	cropUseRatio: boolean;
+
+	/**
+	 * In the tab, crop the image is displayed not in real size
+	 */
 	cropDefaultWidth: string | number;
 	cropDefaultHeight: string | number;
 }

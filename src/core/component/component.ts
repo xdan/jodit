@@ -17,9 +17,15 @@ import type {
 	Nullable
 } from 'jodit/types';
 
-import { kebabCase, get, getClassName, isFunction, isVoid } from 'jodit/core/helpers';
-import { uniqueUid } from '../global';
-import { STATUSES } from './statuses';
+import {
+	kebabCase,
+	get,
+	getClassName,
+	isFunction,
+	isVoid
+} from 'jodit/core/helpers';
+import { uniqueUid } from 'jodit/core/global';
+import { STATUSES } from 'jodit/core/component/statuses';
 
 const StatusListHandlers: Map<
 	Component,

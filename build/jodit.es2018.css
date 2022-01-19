@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.12.4
+ * Version: v3.12.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -1447,6 +1447,39 @@ svg.jodit-icon {
   outline: 1px dashed #bd2130;
 }
 
+.jodit-ui-button-group {
+  margin-bottom: var(--jd-padding-default);
+}
+.jodit-ui-button-group__label {
+  display: block;
+  margin-bottom: calc(var(--jd-padding-default) / 4);
+  color: var(--jd-color-label);
+  font-size: 0.8em;
+}
+.jodit-ui-button-group__options {
+  display: flex;
+  justify-content: flex-start;
+}
+.jodit-ui-button-group .jodit-ui-button:not(:last-child) {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+.jodit-ui-button-group .jodit-ui-button + .jodit-ui-button {
+  border-left: 1px solid var(--jd-color-button-background-hover_opacity40);
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+.jodit-ui-button-group .jodit-ui-button[aria-pressed='true']:not([disabled]) {
+  border-left: 0;
+  background-color: var(--jd-color-button-background-hover);
+  box-shadow: inset 0 0 3px 0 var(--jd-color-dark);
+  color: var(--jd-color-dark);
+  outline: 0;
+}
+.jodit-ui-button-group .jodit-ui-button[aria-pressed='true']:not([disabled]) + .jodit-ui-button {
+  border: 0;
+}
+
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -1517,39 +1550,6 @@ svg.jodit-icon {
 }
 .jodit-ui-spacer {
   flex: 1;
-}
-
-.jodit-ui-button-group {
-  margin-bottom: var(--jd-padding-default);
-}
-.jodit-ui-button-group__label {
-  display: block;
-  margin-bottom: calc(var(--jd-padding-default) / 4);
-  color: var(--jd-color-label);
-  font-size: 0.8em;
-}
-.jodit-ui-button-group__options {
-  display: flex;
-  justify-content: flex-start;
-}
-.jodit-ui-button-group .jodit-ui-button:not(:last-child) {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-}
-.jodit-ui-button-group .jodit-ui-button + .jodit-ui-button {
-  border-left: 1px solid var(--jd-color-button-background-hover_opacity40);
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-}
-.jodit-ui-button-group .jodit-ui-button[aria-pressed='true']:not([disabled]) {
-  border-left: 0;
-  background-color: var(--jd-color-button-background-hover);
-  box-shadow: inset 0 0 3px 0 var(--jd-color-dark);
-  color: var(--jd-color-dark);
-  outline: 0;
-}
-.jodit-ui-button-group .jodit-ui-button[aria-pressed='true']:not([disabled]) + .jodit-ui-button {
-  border: 0;
 }
 
 /*!
@@ -3576,6 +3576,9 @@ svg.jodit-icon {
   vertical-align: middle;
 }
 
+:root {
+  --jd-color-folder-title: #b1b1b1;
+}
 .jodit-filebrowser-tree {
   position: relative;
   display: none;
@@ -3632,7 +3635,6 @@ svg.jodit-icon {
   flex-direction: column;
   background-color: var(--jd-color-background-filebrowser-folders);
   overflow-y: auto;
-  --jd-text-color: #b1b1b1;
 }
 @media (max-width: 480px) {
   .jodit-filebrowser-tree_active_true {
@@ -3659,13 +3661,14 @@ svg.jodit-icon {
   justify-content: space-between;
   padding: calc(var(--jd-padding-default) / 2) var(--jd-padding-default);
   border-bottom: 1px solid #474747;
-  color: var(--jd-text-color);
+  color: var(--jd-color-folder-title);
   text-decoration: none;
   transition: background-color 0.2s ease 0s;
   word-break: break-all;
 }
 .jodit-filebrowser-tree__item-title {
   flex: 1;
+  color: var(--jd-color-folder-title);
 }
 .jodit-filebrowser-tree__item .jodit-icon_folder {
   display: flex;
@@ -3679,15 +3682,17 @@ svg.jodit-icon {
 .jodit-filebrowser-tree__item .jodit-icon_folder svg {
   width: var(--jd-icon-size);
   height: var(--jd-icon-size);
-  fill: var(--jd-text-color) !important;
-  stroke: var(--jd-text-color) !important;
+  fill: var(--jd-color-folder-title) !important;
+  stroke: var(--jd-color-folder-title) !important;
 }
 .jodit-filebrowser-tree__item .jodit-icon_folder:hover {
   background: #696969;
 }
 .jodit-filebrowser-tree__item:hover {
   background-color: var(--jd-color-background-button-hover);
-  color: #222;
+}
+.jodit-filebrowser-tree__item:hover-title {
+  color: var(--jd-color-text);
 }
 .jodit-filebrowser-tree__item:hover i.jodit-icon_folder {
   opacity: 0.6;
