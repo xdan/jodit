@@ -57,6 +57,7 @@ module.exports = (env, argv, dir = process.cwd(), onlyTS = false) => {
 		resolve: {
 			extensions: ['.js', '.ts', '.d.ts', '.json', '.less', '.svg'],
 			alias: {
+				'jodit/src': path.resolve(__dirname, '../src/'),
 				jodit: path.resolve(__dirname, '../src/')
 			}
 		},
