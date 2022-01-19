@@ -4,10 +4,11 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IDictionary } from './types';
+import type { IDictionary } from 'jodit/types';
 
 import 'classlist-polyfill';
 import 'es6-promise/auto';
+import 'core-js/es/symbol';
 
 if (!Array.from) {
 	Array.from = <T>(object: T[]): T[] => {
@@ -70,5 +71,11 @@ if (typeof Object.assign !== 'function') {
 if (!Array.prototype.find) {
 	Array.prototype.find = function (value: any) {
 		return this.indexOf(value) > -1 ? value : undefined;
+	};
+}
+
+if (!String.prototype.endsWith) {
+	String.prototype.endsWith = function (value: any) {
+		return this[this.length - 1] === value;
 	};
 }

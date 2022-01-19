@@ -93,7 +93,7 @@ export class source extends Plugin {
 
 	@autobind
 	private getNormalPosition(pos: number, str: string): number {
-		str = str.replace(/<(script|style|iframe)[^>]*>.*?<\/\1>/is, m => {
+		str = str.replace(/<(script|style|iframe)[^>]*>[^]*?<\/\1>/im, m => {
 			let res = '';
 
 			for (let i = 0; i < m.length; i += 1) {

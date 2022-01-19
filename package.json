@@ -6,7 +6,7 @@
 	"types": "./types/index.d.ts",
 	"scripts": {
 		"coverage": "npx type-coverage ./src --detail --ignore-files 'build/**' --ignore-files 'test/**' --ignore-files 'examples/**'",
-		"newversion": "npm run lint && npm run clean && npm test && npm version patch --no-git-tag-version && npm run build && npm run newversiongit && npm publish ./",
+		"newversion": "npm run lint && npm run clean && npm test && npm version patch --no-git-tag-version && npm run build && npm run newversiongit && npm publish ./ && rm -rf types/*",
 		"newversiongit": "git add --all  && git commit -m \"New version $npm_package_version. Read more https://github.com/xdan/jodit/blob/master/CHANGELOG.MD \" && git tag $npm_package_version && git push --tags origin HEAD:master",
 		"start": "node server.js --port=2000",
 		"clean": "rm -rf build/*",
@@ -55,6 +55,7 @@
 	"homepage": "https://xdsoft.net/jodit/",
 	"dependencies": {
 		"autobind-decorator": "^2.4.0",
+		"core-js": "^3.20.3",
 		"eslint-plugin-tsdoc": "^0.2.14",
 		"postcss-less": "^5.0.0"
 	},

@@ -23,7 +23,7 @@ import type {
 	Nullable,
 	PopupStrategy
 } from 'jodit/types';
-import { Dom } from '../../dom';
+import { Dom } from 'jodit/core/dom';
 import {
 	attr,
 	css,
@@ -33,10 +33,10 @@ import {
 	markOwner,
 	position,
 	ucfirst
-} from '../../helpers';
-import { eventEmitter, getContainer } from '../../global';
-import { UIElement } from '../element';
-import { autobind, throttle } from '../../decorators';
+} from 'jodit/core/helpers';
+import { eventEmitter, getContainer } from 'jodit/core/global';
+import { UIElement } from 'jodit/core/ui';
+import { autobind, throttle } from 'jodit/core/decorators';
 
 type getBoundFunc = () => IBound;
 
@@ -370,7 +370,7 @@ export class Popup extends UIElement implements IPopup {
 		}
 
 		const target =
-			(isFunction(e.composedPath) && e.composedPath()[0]) ?? e.target;
+			(isFunction(e.composedPath) && e.composedPath()[0]) || e.target;
 
 		if (!target) {
 			this.close();
