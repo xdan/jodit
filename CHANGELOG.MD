@@ -13,40 +13,39 @@
 
 #### :rocket: New Feature
 
-* Добавлены опции `safeMode:boolean` и `safePluginsList:string[]` для отладки
+-   Added options `safeMode:boolean` and `safePluginsList:string[]` for debugging
 
 ```js
 Jodit.make('#editor', {
 	safeMode: true,
 	safePluginsList: ['about']
 });
-
 ```
 
-Будет активирован только один плагин. Удобно для отладки и своих плагинов, можно выключить все остальные.
+Only one plugin will be activated. Convenient for debugging and your plugins, you can turn off all the others.
 
 #### :bug: Bug Fix
 
-* Исправлена ошибка из-за которой Jodit не работала в ie11, + добавлен полифил для итератора
+-   Fixed a bug due to which Jodit did not work in ie11, + added a polyfill for the iterator
 
 ## 3.12.3
 
-* [Fixed Full Screen showing elements not part of editable content #763](Issue: https://github.com/xdan/jodit/issues/763)
+-   [Fixed Full Screen showing elements not part of editable content #763](Issue: https://github.com/xdan/jodit/issues/763)
 
 #### :rocket: New Feature
 
-* Added `monospace` button in format list https://github.com/xdan/jodit/issues/767
-* In plugin `paste` added `memorizeChoiceWhenPasteFragment` option: when the user inserts a piece of HTML, the plugin will ask - How to insert it.
-If after that user insert the same fragment again, the previous option will be used without extra question.
+-   Added `monospace` button in format list https://github.com/xdan/jodit/issues/767
+-   In plugin `paste` added `memorizeChoiceWhenPasteFragment` option: when the user inserts a piece of HTML, the plugin will ask - How to insert it.
+    If after that user insert the same fragment again, the previous option will be used without extra question.
 
 > memorizeChoiceWhenPasteFragment = false, by default, it is Breaking change
-
 
 ## 3.12.1
 
 #### :boom: Breaking Change
 
-* `ObserveObject` renamed to `ObservableObject`
+-   `ObserveObject` renamed to `ObservableObject`
+
 ```js
 const obj = { a: 1, b: 2 };
 const observed = Jodit.modules.ObservableObject.create(obj);
@@ -54,15 +53,16 @@ const observed = Jodit.modules.ObservableObject.create(obj);
 observed.on('change', (oldV, newV) => console.log(oldV, newV));
 observed.a = 5;
 ```
-* [Replace additional newlines by HTML line breaks. #770](https://github.com/xdan/jodit/pull/770)
+
+-   [Replace additional newlines by HTML line breaks. #770](https://github.com/xdan/jodit/pull/770)
 
 #### :bug: Bug Fix
 
-* [New lines are removed when pasting plain text in the jodit editor #755](https://github.com/xdan/jodit/issues/755)
+-   [New lines are removed when pasting plain text in the jodit editor #755](https://github.com/xdan/jodit/issues/755)
 
 #### :rocket: New Feature
 
-* In addition to the preinstalled editors, the source plugin adds the ability to use its own implementation. You can read more in the [documentation](https://xdsoft.net/jodit/docs/modules/plugins_source.html)
+-   In addition to the preinstalled editors, the source plugin adds the ability to use its own implementation. You can read more in the [documentation](https://xdsoft.net/jodit/docs/modules/plugins_source.html)
 
 ## 3.11.2
 
@@ -993,11 +993,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                       	{ value: "", text: "" },
--                                                                                                       	{ value: "val1", text: "text1" },
--                                                                                                       	{ value: "val2", text: "text2" },
--                                                                                                       	{ value: "val3", text: "text3" }
--                                                                                                       ]
+-                                                                                                         	{ value: "", text: "" },
+-                                                                                                         	{ value: "val1", text: "text1" },
+-                                                                                                         	{ value: "val2", text: "text2" },
+-                                                                                                         	{ value: "val3", text: "text3" }
+-                                                                                                         ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
