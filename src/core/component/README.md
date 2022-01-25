@@ -18,7 +18,7 @@ console.log(jodit.componentStatus)
 ```
 
 You can work on changes in the status of a component through the decorator [[decorators/hook]]
-either through the method [[Component.prototype.hookStatus]]
+either through the method [[Component.hookStatus]]
 
 ```ts
 import { Component } from 'jodit/src/core/component'
