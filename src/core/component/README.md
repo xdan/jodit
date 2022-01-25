@@ -31,7 +31,7 @@ cmp.hookStatus('ready', () => {
 })
 ```
 
-To set the status, it is enough to call the method [[Component.prototype.setStatus]]
+To set the status, it is enough to call the method [[Component.setStatus]]
 
 ```ts
 import { Component } from 'jodit/src/core/component'
