@@ -14,7 +14,7 @@ import type {
 	IFileBrowserItemWrapper,
 	ISource
 } from 'jodit/types';
-import { normalizePath, normalizeUrl } from 'jodit/core/helpers/';
+import { normalizePath, normalizeUrl } from 'jodit/core/helpers';
 
 export class FileBrowserItem implements IFileBrowserItemWrapper {
 	source!: ISource;

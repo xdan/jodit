@@ -11,7 +11,7 @@
 import type { IFileBrowser } from 'jodit/types';
 import { error } from 'jodit/core/helpers/utils/error';
 import { Dom } from 'jodit/core/dom';
-import { loadItems } from './load-items';
+import { loadItems } from 'jodit/modules/file-browser/fetch/load-items';
 
 /**
  * Loads a list of directories

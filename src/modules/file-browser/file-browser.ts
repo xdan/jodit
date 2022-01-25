@@ -12,7 +12,7 @@ import './styles';
 
 import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';
-import { Dialog } from '../dialog/';
+import { Dialog } from 'jodit/modules/dialog/';
 
 import type {
 	IFileBrowser,
@@ -32,14 +32,14 @@ import type {
 	IObservable
 } from 'jodit/types';
 
-import { Storage } from 'jodit/core/storage/';
+import { Storage } from 'jodit/core/storage';
 import {
 	error,
 	isFunction,
 	isString,
 	ConfigProto,
 	trim
-} from 'jodit/core/helpers/';
+} from 'jodit/core/helpers';
 import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
 
 import './config';

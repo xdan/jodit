@@ -35,7 +35,7 @@ import {
 } from 'jodit/core/helpers';
 import { Ajax } from 'jodit/core/request';
 import { autobind } from 'jodit/core/decorators';
-import { FileBrowserItem } from './builders/item';
+import { FileBrowserItem } from 'jodit/modules/file-browser/builders/item';
 
 export const DEFAULT_SOURCE_NAME = 'default';
 

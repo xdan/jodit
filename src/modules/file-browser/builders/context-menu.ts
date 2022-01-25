@@ -9,17 +9,17 @@
  */
 
 import type { IFileBrowser } from 'jodit/types';
-import { Dialog } from '../../dialog';
+import { Dialog } from 'jodit/modules/dialog';
 
 import { Dom } from 'jodit/core/dom';
 import { attr, error } from 'jodit/core/helpers';
-import { makeContextMenu } from '../factories';
+import { makeContextMenu } from 'jodit/modules/file-browser/factories';
 import { Icon } from 'jodit/core/ui';
 import { elementToItem, getItem } from '../listeners/native-listeners';
 import { openImageEditor } from '../../image-editor/image-editor';
-import { elementsMap } from './elements-map';
-import { loadTree } from '../fetch/load-tree';
-import { deleteFile } from '../fetch/delete-file';
+import { elementsMap } from 'jodit/modules/file-browser/builders/elements-map';
+import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';
+import { deleteFile } from 'jodit/modules/file-browser/fetch/delete-file';
 
 const CLASS_PREVIEW = 'jodit-filebrowser-preview',
 	preview_tpl_next = (next = 'next', right = 'right') =>

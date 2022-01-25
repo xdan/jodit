@@ -9,14 +9,14 @@
  */
 
 import type { IDictionary, IFileBrowser } from 'jodit/types';
-import { Confirm, Prompt } from '../../dialog';
+import { Confirm, Prompt } from 'jodit/modules/dialog';
 import { isValidName } from 'jodit/core/helpers/checker';
 import { normalizePath } from 'jodit/core/helpers';
 import { DEFAULT_SOURCE_NAME } from '../data-provider';
-import { openImageEditor } from '../../image-editor/image-editor';
-import { loadTree } from '../fetch/load-tree';
-import { loadItems } from '../fetch/load-items';
-import { deleteFile } from '../fetch/delete-file';
+import { openImageEditor } from 'jodit/modules/image-editor/image-editor';
+import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';
+import { loadItems } from 'jodit/modules/file-browser/fetch/load-items';
+import { deleteFile } from 'jodit/modules/file-browser/fetch/delete-file';
 
 export function selfListeners(this: IFileBrowser): void {
 	const state = this.state,

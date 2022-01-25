@@ -24,7 +24,7 @@ import type {
 } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { ViewComponent } from 'jodit/core/component';
-import { Alert, Dialog, Prompt } from '../dialog';
+import { Alert, Dialog, Prompt } from 'jodit/modules/dialog';
 import { $$, attr, css, refs, toArray, trim } from 'jodit/core/helpers';
 import { Dom } from 'jodit/core/dom';
 import { Button } from 'jodit/core/ui/button';

@@ -8,8 +8,7 @@
  * @module types
  */
 
-import type { IDictionary } from './types';
-import { Nullable } from './types';
+import type { IDictionary, Nullable } from 'jodit/types';
 
 export type ModType = string | boolean | null;
 

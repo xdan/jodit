@@ -18,8 +18,8 @@ import type {
 import { ctrlKey, attr } from 'jodit/core/helpers';
 import contextMenu from '../builders/context-menu';
 import { Dom } from 'jodit/core/dom';
-import { elementsMap } from '../builders/elements-map';
-import { loadTree } from '../fetch/load-tree';
+import { elementsMap } from 'jodit/modules/file-browser/builders/elements-map';
+import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';
 
 export const getItem = (
 	node: Nullable<EventTarget>,

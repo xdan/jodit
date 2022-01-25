@@ -15,7 +15,7 @@ import type {
 	Nullable,
 	ModType
 } from 'jodit/types';
-import { ViewComponent } from '../component';
+import { ViewComponent } from 'jodit/core/component';
 import { Dom } from 'jodit/core/dom';
 import { Elms, Mods } from 'jodit/core/traits';
 import { isString } from 'jodit/core/helpers';

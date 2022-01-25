@@ -8,7 +8,7 @@
  * @module modules/dialog
  */
 
-import { Dialog } from './dialog';
+import { Dialog } from 'jodit/modules/dialog';
 import { isFunction } from 'jodit/core/helpers';
 import { Button } from 'jodit/core/ui';
 
