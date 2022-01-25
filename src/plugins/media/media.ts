@@ -84,7 +84,7 @@ export function media(editor: IJodit): void {
 		editor.e
 			.on('afterGetValueFromEditor', (data: { value: string }) => {
 				const rxp = new RegExp(
-					`<${mediaFakeTag}[^>]+data-${keyFake}[^>]+>(.+?)</${mediaFakeTag}>`,
+					`<${mediaFakeTag}[^>]+data-${keyFake}[^>]+>([^]+?)</${mediaFakeTag}>`,
 					'ig'
 				);
 

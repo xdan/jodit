@@ -11,3 +11,5 @@ Dom.before(elm, div);
 ```
 
 The rest of the methods can be found in the [[Dom | documentation]]
+
+> All module methods are static. So you don't need an instance to use them.

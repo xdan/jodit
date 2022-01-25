@@ -13,7 +13,7 @@ import { component } from 'jodit/core/decorators';
 
 @component
 export class UISpacer extends UIElement {
-	className(): string {
+	override className(): string {
 		return 'UISpacer';
 	}
 }

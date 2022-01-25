@@ -43,7 +43,11 @@ export abstract class Component implements IComponent {
 	get componentName(): string {
 		if (!this.__componentName) {
 			this.__componentName =
-				'jodit-' + kebabCase(this.className() || getClassName(this));
+				'jodit-' +
+				kebabCase(
+					(isFunction(this.className) ? this.className() : '') ||
+						getClassName(this)
+				);
 		}
 
 		return this.__componentName;

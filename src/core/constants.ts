@@ -111,9 +111,53 @@ export const MARKER_CLASS = 'jodit-selection_marker';
 
 export const EMULATE_DBLCLICK_TIMEOUT = 300;
 
+/**
+ * Paste the copied text as HTML, all content will be pasted exactly as it was on the clipboard.
+ * So how would you copy its code directly into the source document.
+ * ```
+ * <h1 style="color:red">test</h1>
+ * ```
+ * Will be inserted into the document as
+ * ```
+ * <h1 style="color:red">test</h1>
+ * ```
+ */
 export const INSERT_AS_HTML = 'insert_as_html';
+
+/**
+ * Same as [[INSERT_AS_HTML]], but content will be stripped of extra styles and empty tags
+ * ```
+ * <h1 style="color:red">test</h1>
+ * ```
+ * Will be inserted into the document as
+ * ```
+ * <h1>test</h1>
+ * ```
+ */
 export const INSERT_CLEAR_HTML = 'insert_clear_html';
+
+/**
+ * The contents of the clipboard will be pasted into the document as plain text, i.e. all tags will be displayed as text.
+ * ```
+ * <h1>test</h1>
+ * ```
+ * Will be inserted into the document as
+ * ```
+ * &gt;&lt;h1&gt;test&lt;/h1&gt;
+ * ```
+ */
 export const INSERT_AS_TEXT = 'insert_as_text';
+
+/**
+ * All tags will be stripped:
+ * ```
+ * <h1>test</h1>
+ * ```
+ * Will be inserted into the document as
+ * ```
+ * test
+ * ```
+ */
 export const INSERT_ONLY_TEXT = 'insert_only_text';
 
 export const SAFE_COUNT_CHANGE_CALL = 10;

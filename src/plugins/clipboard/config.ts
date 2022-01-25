@@ -42,9 +42,19 @@ declare module 'jodit/config' {
 		 */
 		memorizeChoiceWhenPasteFragment: boolean;
 
+		/**
+		 * Handle pasted text - similar to HTML
+		 */
 		processPasteHTML: boolean;
 
+		/**
+		 * Show the paste dialog if the html is similar to what MSWord gives when copying.
+		 */
 		askBeforePasteFromWord: boolean;
+
+		/**
+		 * Handle pasting of HTML - similar to a fragment copied from MSWord
+		 */
 		processPasteFromWord: boolean;
 
 		/**
@@ -59,6 +69,12 @@ declare module 'jodit/config' {
 
 		/**
 		 * Default insert method from word, if not define, it will use defaultActionOnPaste instead
+		 * @example
+		 * ```js
+		 * Jodit.make('#editor', {
+		 *   defaultActionOnPasteFromWord: 'insert_clear_html'
+		 * })
+		 * ```
 		 */
 		defaultActionOnPasteFromWord: InsertMode | null;
 

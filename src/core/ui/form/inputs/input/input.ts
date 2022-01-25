@@ -26,7 +26,7 @@ import { inputValidators } from 'jodit/core/ui/form/validators';
 @component
 export class UIInput extends UIElement implements IUIInput {
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'UIInput';
 	}
 

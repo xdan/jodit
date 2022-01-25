@@ -10,6 +10,7 @@
 
 import type { IComponent, IContainer, IElms } from 'jodit/types';
 import { toArray } from '../helpers/array/to-array';
+import { assert } from 'jodit/core/helpers';
 
 export abstract class Elms implements IElms {
 	abstract getElm(elementName: string): HTMLElement;
@@ -24,9 +25,13 @@ export abstract class Elms implements IElms {
 		elementName: string
 	): HTMLElement {
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		return this.container.querySelector<HTMLElement>(
+		const elm = this.container.querySelector<HTMLElement>(
 			`.${this.getFullElName(elementName)}`
 		)!;
+
+		assert(elm != null, 'Element does not exist');
+
+		return elm;
 	}
 
 	/**

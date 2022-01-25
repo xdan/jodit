@@ -47,7 +47,7 @@ export const sprintf = (str: string, args?: Array<string | number>): string => {
  * @example
  * ```javascript
  * var editor = new Jodit("#redactor", {
- *      langusage: 'ru'
+ *      language: 'ru'
  * });
  * console.log(editor.i18n('Cancel')) //Отмена;
  *

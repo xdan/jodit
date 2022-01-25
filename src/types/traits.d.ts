@@ -11,6 +11,9 @@
 import type { IDictionary } from './types';
 
 export interface IMods {
+	/**
+	 * Set/remove modification (null - remove)
+	 */
 	setMod(name: string, value: string | boolean | null): this;
 	getMod(name: string): string | boolean | null;
 	mods: IDictionary<string | boolean | null>;

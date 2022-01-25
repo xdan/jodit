@@ -8,13 +8,12 @@
  * @module ui/group
  */
 
-import { UIElement } from '../element';
+import { UIElement } from 'jodit/core/ui/element';
 import { component } from 'jodit/core/decorators';
 
 @component
 export class UISeparator extends UIElement {
-	/** @override */
-	className(): string {
+	override className(): string {
 		return 'UISeparator';
 	}
 }
