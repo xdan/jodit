@@ -729,13 +729,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 					</div>
 					<div class="${n('content')}"></div>
 					<div class="${n('footer')}"></div>
-					${
-						self.o.resizable
-							? `<div class="${n('resizer')}">${Icon.get(
-									'resize_handler'
-							  )}</div>`
-							: ''
-					}
+					<div class="${n('resizer')}">${Icon.get('resize_handler')}</div>
 				</div>
 			</div>`
 		) as HTMLDivElement;
@@ -746,7 +740,10 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			value: this
 		});
 
-		self.setMod('theme', self.o.theme || 'default');
+		self.setMod('theme', self.o.theme || 'default').setMod(
+			'resizable',
+			Boolean(self.o.resizable)
+		);
 
 		const dialog = self.getElm('panel');
 		assert(dialog != null, 'Panel element does not exist');
@@ -786,9 +783,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		headerBox && self.e.on(headerBox, 'mousedown', self.onHeaderMouseDown);
 
-		if (self.o.resizable) {
-			self.e.on(self.resizer, 'mousedown', self.onResizerMouseDown);
-		}
+		self.e.on(self.resizer, 'mousedown', self.onResizerMouseDown);
 
 		const fullSize = pluginSystem.get('fullsize') as Function;
 		isFunction(fullSize) && fullSize(self);

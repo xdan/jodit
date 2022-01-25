@@ -11,13 +11,15 @@
 import type { IDictionary } from './types';
 import { Nullable } from './types';
 
+export type ModType = string | boolean | null;
+
 export interface IMods {
 	/**
 	 * Set/remove modification (null - remove)
 	 */
-	setMod(name: string, value: string | boolean | null): this;
-	getMod(name: string): string | boolean | null;
-	mods: IDictionary<string | boolean | null>;
+	setMod(name: string, value: ModType): this;
+	getMod(name: string): ModType;
+	mods: IDictionary<ModType>;
 }
 
 export interface IElms {

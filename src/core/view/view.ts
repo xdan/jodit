@@ -53,7 +53,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	readonly mods: IDictionary<string | boolean | null> = {};
 
 	/** @see [[Mods.setMod]] */
-	setMod(name: string, value: string | boolean | null): this {
+	setMod(...[name, value]: Parameters<typeof Mods.setMod>): this {
 		Mods.setMod.call(this, name, value);
 		return this;
 	}

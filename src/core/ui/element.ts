@@ -12,13 +12,14 @@ import type {
 	IDictionary,
 	IUIElement,
 	IViewBased,
-	Nullable
+	Nullable,
+	ModType
 } from 'jodit/types';
 import { ViewComponent } from '../component';
 import { Dom } from 'jodit/core/dom';
-import { Elms, Mods } from '../traits';
+import { Elms, Mods } from 'jodit/core/traits';
 import { isString } from 'jodit/core/helpers';
-import { Icon } from './icon';
+import { Icon } from 'jodit/core/ui/icon';
 
 export abstract class UIElement<T extends IViewBased = IViewBased>
 	extends ViewComponent<T>
@@ -115,7 +116,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	/** @see [[Mods.setMod]] */
 	setMod(
 		name: string,
-		value: string | boolean | null,
+		value: ModType,
 		container: HTMLElement = this.container
 	): this {
 		Mods.setMod.call(this, name, value, container);
@@ -123,7 +124,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	}
 
 	/** @see [[Mods.getMod]] */
-	getMod(name: string): string | boolean | null {
+	getMod(name: string): ModType {
 		return Mods.getMod.call(this, name);
 	}
 

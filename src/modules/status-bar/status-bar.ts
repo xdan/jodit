@@ -12,7 +12,7 @@
 
 import './status-bar.less';
 
-import type { IJodit, IStatusBar, IDictionary } from 'jodit/types';
+import type { IJodit, IStatusBar, IDictionary, ModType } from 'jodit/types';
 import { ViewComponent, STATUSES } from 'jodit/core/component';
 import { Dom } from 'jodit/core/dom';
 import { Mods } from 'jodit/core/traits';
@@ -45,16 +45,16 @@ export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 		return !this.container.classList.contains('jodit_hidden');
 	}
 
-	readonly mods: IDictionary<string | boolean | null> = {};
+	readonly mods: IDictionary<ModType> = {};
 
 	/** @see [[Mods.setMod]] */
-	setMod(name: string, value: string | boolean | null): this {
+	setMod(name: string, value: ModType): this {
 		Mods.setMod.call(this, name, value);
 		return this;
 	}
 
 	/** @see [[Mods.getMod]] */
-	getMod(name: string): string | boolean | null {
+	getMod(name: string): ModType {
 		return Mods.getMod.call(this, name);
 	}
 

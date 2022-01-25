@@ -267,7 +267,12 @@
 	}
 
 	&__resizer {
+		display: none;
 		.resize-handle();
+	}
+
+	&_resizable_true &__resizer {
+		display: block;
 	}
 
 	@media (max-width: @screen-xs) {
