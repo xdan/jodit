@@ -19,6 +19,7 @@ import type {
 import { UIGroup } from '../../group';
 import { component } from 'jodit/core/decorators';
 import { UIButton } from '../button/button';
+import { assert } from 'jodit/core/helpers';
 
 @component
 export class UIButtonGroup extends UIGroup {
@@ -41,7 +42,9 @@ export class UIButtonGroup extends UIGroup {
 	protected override appendChildToContainer(
 		childContainer: HTMLElement
 	): void {
-		this.getElm('options').appendChild(childContainer);
+		const options = this.getElm('options');
+		assert(options != null, 'Options does not exist');
+		options.appendChild(childContainer);
 	}
 
 	constructor(

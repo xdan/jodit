@@ -9,6 +9,7 @@
  */
 
 import type { IDictionary } from './types';
+import { Nullable } from './types';
 
 export interface IMods {
 	/**
@@ -20,6 +21,6 @@ export interface IMods {
 }
 
 export interface IElms {
-	getElm(elementName: string): HTMLElement;
+	getElm(elementName: string): Nullable<HTMLElement>;
 	getElms(elementName: string): HTMLElement[];
 }

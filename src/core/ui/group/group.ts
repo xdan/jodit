@@ -21,7 +21,7 @@ import type {
 import type { IDictionary } from 'jodit/types';
 import { UIElement } from '../element';
 import { component, watch } from 'jodit/core/decorators';
-import { isArray } from 'jodit/core/helpers';
+import { assert, isArray } from 'jodit/core/helpers';
 import { Dom } from 'jodit/core/dom';
 
 @component
@@ -93,7 +93,9 @@ export class UIGroup<T extends IViewBased = IViewBased>
 		}
 
 		if (distElement) {
-			this.getElm(distElement).appendChild(elm.container);
+			const distElm = this.getElm(distElement);
+			assert(distElm != null, 'Element does not exist');
+			distElm.appendChild(elm.container);
 		} else {
 			this.appendChildToContainer(elm.container);
 		}

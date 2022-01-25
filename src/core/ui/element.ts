@@ -128,7 +128,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	}
 
 	/** @see [[Elms.getElm]]*/
-	getElm(elementName: string): HTMLElement {
+	getElm(elementName: string): Nullable<HTMLElement> {
 		return Elms.getElm.call(this, elementName);
 	}
 

@@ -25,6 +25,7 @@ import { KEY_ESC } from 'jodit/core/constants';
 import {
 	$$,
 	asArray,
+	assert,
 	attr,
 	ConfigProto,
 	css,
@@ -746,19 +747,40 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		});
 
 		self.setMod('theme', self.o.theme || 'default');
-		self.dialog = self.getElm('panel');
+
+		const dialog = self.getElm('panel');
+		assert(dialog != null, 'Panel element does not exist');
+
+		const resizer = self.getElm('resizer');
+		assert(resizer != null, 'Resizer element does not exist');
+
+		const dialogbox_header = self.getElm('header-title');
+		assert(dialogbox_header != null, 'header-title element does not exist');
+
+		const dialogbox_content = self.getElm('content');
+		assert(dialogbox_content != null, 'Content element does not exist');
+
+		const dialogbox_footer = self.getElm('footer');
+		assert(dialogbox_footer != null, 'Footer element does not exist');
+
+		const dialogbox_toolbar = self.getElm('header-toolbar');
+		assert(
+			dialogbox_toolbar != null,
+			'header-toolbar element does not exist'
+		);
+
+		self.dialog = dialog;
+		self.resizer = resizer;
+		self.dialogbox_header = dialogbox_header;
+		self.dialogbox_content = dialogbox_content;
+		self.dialogbox_footer = dialogbox_footer;
+		self.dialogbox_toolbar = dialogbox_toolbar;
 
 		css(self.dialog, {
 			maxWidth: self.options.maxWidth,
 			minHeight: self.options.minHeight,
 			minWidth: self.options.minWidth
 		});
-
-		self.resizer = self.getElm('resizer');
-		self.dialogbox_header = self.getElm('header-title');
-		self.dialogbox_content = self.getElm('content');
-		self.dialogbox_footer = self.getElm('footer');
-		self.dialogbox_toolbar = self.getElm('header-toolbar');
 
 		const headerBox = self.getElm('header');
 

@@ -64,7 +64,7 @@ export class UICheckbox extends UIInput implements IUICheckBox {
 	protected onChangeSwitch(): void {
 		this.setMod('switch', this.state.switch);
 
-		let slider: HTMLElement | null = this.getElm('switch-slider');
+		let slider = this.getElm('switch-slider');
 
 		if (this.state.switch) {
 			if (!slider) {

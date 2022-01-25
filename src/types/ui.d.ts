@@ -8,7 +8,7 @@
  * @module types
  */
 
-import type { IFocusable } from './form';
+import type { IFocusable } from 'jodit/types/form';
 import type {
 	CanUndef,
 	IContainer,
@@ -16,11 +16,12 @@ import type {
 	IDictionary,
 	IViewComponent,
 	Nullable
-} from './types';
-import type { IViewBased } from './view';
-import type { ButtonsOption } from './toolbar';
+} from 'jodit/types/types';
+import type { IViewBased } from 'jodit/types/view';
+import type { ButtonsOption } from 'jodit/types/toolbar';
+import type { IElms, IMods } from 'jodit/types/traits';
 
-export interface IUIElement extends IViewComponent, IContainer, IDestructible {
+export interface IUIElement extends IViewComponent, IContainer, IDestructible, IMods, IElms {
 	parentElement: Nullable<IUIElement>;
 	container: HTMLElement;
 	name: string;
@@ -35,17 +36,6 @@ export interface IUIElement extends IViewComponent, IContainer, IDestructible {
 	update(): void;
 	updateParentElement(target: IUIElement): this;
 	appendTo(element: HTMLElement): this;
-
-	mods: IDictionary<string | boolean | null>;
-
-	setMod(
-		name: string,
-		value: string | boolean | null,
-		container?: HTMLElement
-	): this;
-
-	getElm(elementName: string): HTMLElement;
-	getElms(elementName: string): HTMLElement[];
 }
 
 export interface IUIIconState {

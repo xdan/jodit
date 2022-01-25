@@ -8,12 +8,11 @@
  * @module traits
  */
 
-import type { IComponent, IContainer, IElms } from 'jodit/types';
-import { toArray } from '../helpers/array/to-array';
-import { assert } from 'jodit/core/helpers';
+import type { IComponent, IContainer, IElms, Nullable } from 'jodit/types';
+import { toArray } from 'jodit/core/helpers/array/to-array';
 
 export abstract class Elms implements IElms {
-	abstract getElm(elementName: string): HTMLElement;
+	abstract getElm(elementName: string): Nullable<HTMLElement>;
 
 	abstract getElms(elementName: string): HTMLElement[];
 
@@ -23,15 +22,10 @@ export abstract class Elms implements IElms {
 	static getElm(
 		this: IComponent & IContainer,
 		elementName: string
-	): HTMLElement {
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		const elm = this.container.querySelector<HTMLElement>(
+	): Nullable<HTMLElement> {
+		return this.container.querySelector(
 			`.${this.getFullElName(elementName)}`
-		)!;
-
-		assert(elm != null, 'Element does not exist');
-
-		return elm;
+		) as Nullable<HTMLElement>;
 	}
 
 	/**

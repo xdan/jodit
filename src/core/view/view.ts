@@ -64,7 +64,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	}
 
 	/** @see [[Elms.getElm]]*/
-	getElm(elementName: string): HTMLElement {
+	getElm(elementName: string): Nullable<HTMLElement> {
 		return Elms.getElm.call(this, elementName);
 	}
 
