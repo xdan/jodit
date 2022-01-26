@@ -331,7 +331,7 @@ describe('Test object observer', function () {
 		describe('Observed object', function () {
 			it('Should has only own object properties', function () {
 				const a = { a: 1, b: 2 };
-				const observed = Jodit.modules.ObservableObject.create(a);
+				const observed = Jodit.modules.observable(a);
 				expect(Object.keys(observed)).deep.equals(Object.keys(a));
 			});
 		});
@@ -412,7 +412,7 @@ describe('Test object observer', function () {
 		it('Should fire event when field value was changed', function () {
 			const counter = [];
 
-			const data = Jodit.modules.ObservableObject.create(getTestObject());
+			const data = Jodit.modules.observable(getTestObject());
 
 			data.on('change', function (key) {
 				counter.push(key);
@@ -431,9 +431,7 @@ describe('Test object observer', function () {
 			it('Should fire event.key when field value was changed', function () {
 				const counter = [];
 
-				const data = Jodit.modules.ObservableObject.create(
-					getTestObject()
-				);
+				const data = Jodit.modules.observable(getTestObject());
 
 				data.on('change.some.element.one', function (key) {
 					counter.push(key);
@@ -451,9 +449,7 @@ describe('Test object observer', function () {
 			it('Should fire event with old and new Value', function () {
 				const counter = [];
 
-				const data = Jodit.modules.ObservableObject.create(
-					getTestObject()
-				);
+				const data = Jodit.modules.observable(getTestObject());
 
 				data.on(
 					'change.some.element.one',
@@ -503,9 +499,7 @@ describe('Test object observer', function () {
 			it('Should fire event.key when field value was changed', function () {
 				const counter = [];
 
-				const data = Jodit.modules.ObservableObject.create(
-					getTestObject()
-				);
+				const data = Jodit.modules.observable(getTestObject());
 
 				data.on(
 					['change.some.element.test', 'change.some'],

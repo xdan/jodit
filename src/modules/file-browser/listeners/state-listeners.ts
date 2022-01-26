@@ -94,6 +94,7 @@ export function stateListeners(this: IFileBrowser): void {
 
 		.on('change.view', () => {
 			files.setMod('view', state.view);
+
 			if (
 				this.o.saveStateInStorage &&
 				this.o.saveStateInStorage.storeView

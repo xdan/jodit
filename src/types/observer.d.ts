@@ -8,11 +8,10 @@
  * @module types
  */
 
-import { CallbackFunction, CanUndef, IComponent, IDictionary, SnapshotType } from './types';
+import type { CallbackFunction, CanUndef, IComponent, SnapshotType } from './types';
 
 export interface IObservable {
 	on(event: string | string[], callback: CallbackFunction): this;
-	fire(event: string | string[], ...attr: any[]): void;
 }
 
 export interface ICommand {

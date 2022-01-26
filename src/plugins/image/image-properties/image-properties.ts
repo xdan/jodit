@@ -261,6 +261,9 @@ export class imageProperties extends Plugin {
 		this.state.marginIsLocked = true;
 		this.state.sizeIsLocked = true;
 
+		this.onChangeMarginIsLocked();
+		this.onChangeSizeIsLocked();
+
 		this.updateValues();
 
 		this.dialog.open().setModal(true).setPosition();

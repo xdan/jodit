@@ -9,5 +9,5 @@
  */
 
 export * from './event-emitter';
-export * from './observe-object';
+export * from './observable';
 export * from './store';

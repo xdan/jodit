@@ -28,8 +28,7 @@ import type {
 	IUploaderOptions,
 	IDialog,
 	CanUndef,
-	IViewOptions,
-	IObservable
+	IViewOptions
 } from 'jodit/types';
 
 import { Storage } from 'jodit/core/storage';
@@ -52,7 +51,7 @@ import { selfListeners } from './listeners/self-listeners';
 import { DEFAULT_SOURCE_NAME } from './data-provider';
 import { autobind } from 'jodit/core/decorators';
 import { FileBrowserFiles, FileBrowserTree } from './ui';
-import { ObservableObject } from 'jodit/core/event-emitter';
+import { observable } from 'jodit/core/event-emitter';
 import { loadTree } from './fetch/load-tree';
 import { loadItems } from './fetch/load-items';
 import { STATUSES } from 'jodit/core/component';
@@ -73,21 +72,20 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	tree = new FileBrowserTree(this);
 	files = new FileBrowserFiles(this);
 
-	state: IFileBrowserState & IObservable =
-		ObservableObject.create<IFileBrowserState>({
-			currentPath: '',
-			currentSource: DEFAULT_SOURCE_NAME,
-			currentBaseUrl: '',
+	state = observable({
+		currentPath: '',
+		currentSource: DEFAULT_SOURCE_NAME,
+		currentBaseUrl: '',
 
-			activeElements: [],
-			elements: [],
-			messages: [],
-			sources: [],
-			view: 'tiles',
-			sortBy: 'changed-desc',
-			filterWord: '',
-			onlyImages: false
-		});
+		activeElements: [],
+		elements: [],
+		messages: [],
+		sources: [],
+		view: 'tiles',
+		sortBy: 'changed-desc',
+		filterWord: '',
+		onlyImages: false
+	} as IFileBrowserState);
 
 	dataProvider!: IFileBrowserDataProvider;
 
@@ -372,7 +370,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			self.state.view = self.o.view === 'list' ? 'list' : 'tiles';
 		}
 
-		this.state.fire('change.view');
+		self.files.setMod('view', self.state.view);
 
 		const sortBy = storeSortBy && self.storage.get<string>('sortBy');
 

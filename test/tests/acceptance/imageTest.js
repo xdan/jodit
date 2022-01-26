@@ -771,7 +771,7 @@ describe('Test image', function () {
 					const img = editor.editor.querySelector('img');
 
 					const callback = function () {
-						simulateEvent('dblclick', 0, img);
+						simulateEvent('dblclick', img);
 
 						expect(area.id).equals(editor.id);
 
@@ -790,6 +790,7 @@ describe('Test image', function () {
 						expect(imageHeight.value).equals(
 							img.offsetHeight.toString()
 						);
+
 						expect(
 							lockSize.classList.contains(
 								'jodit-properties__lock'
@@ -797,13 +798,13 @@ describe('Test image', function () {
 						).is.true;
 
 						imageWidth.value = 100;
-						simulateEvent('change', 0, imageWidth);
+						simulateEvent('change', imageWidth);
 						expect(imageHeight.value).does.not.equal(
 							img.offsetHeight.toString()
 						);
 
 						imageHeight.value = 200;
-						simulateEvent('change', 0, imageHeight);
+						simulateEvent('change', imageHeight);
 						expect(imageWidth.value).does.not.equal('100');
 
 						clickButton('ok', dialog);

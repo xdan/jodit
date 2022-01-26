@@ -22,7 +22,7 @@ import {
 	isPlainObject,
 	isViewObject
 } from 'jodit/core/helpers/checker';
-import { ObservableObject } from 'jodit/core/event-emitter';
+import { observable } from 'jodit/core/event-emitter';
 import { STATUSES } from 'jodit/core/component';
 import { splitArray } from 'jodit/core/helpers/array/split-array';
 import { error } from 'jodit/core/helpers/utils/error';
@@ -96,49 +96,48 @@ export function watch(
 				}
 
 				const parts = field.split('.'),
-					[key] = parts as unknown as Array<keyof IComponent>;
+					[key] = parts as unknown as Array<keyof IComponent>,
+					teil = parts.slice(1);
 
 				let value: any = component[key];
 
-				if (value instanceof ObservableObject) {
-					value.on(`change.${field}`, callback);
-				} else if (isPlainObject(value) && parts.length > 1) {
-					const observe = ObservableObject.create(value, [key]);
-					observe.on(`change.${field}`, callback);
-					(component as any)[key] = observe;
-				} else {
-					const descriptor = getPropertyDescriptor(target, key);
-
-					Object.defineProperty(component, key, {
-						configurable: true,
-						set(v: any): void {
-							const oldValue = value;
-
-							if (oldValue === v) {
-								return;
-							}
-
-							value = v;
-							if (descriptor && descriptor.set) {
-								descriptor.set.call(component, v);
-							}
-
-							if (isPlainObject(value)) {
-								value = ObservableObject.create(value, [key]);
-								value.on('change.' + field, callback);
-							}
-
-							callback(key, oldValue, value);
-						},
-						get(): any {
-							if (descriptor && descriptor.get) {
-								return descriptor.get.call(component);
-							}
-
-							return value;
-						}
-					});
+				if (isPlainObject(value)) {
+					const observableValue = observable(value);
+					observableValue.on(`change.${teil.join('.')}`, callback);
 				}
+
+				const descriptor = getPropertyDescriptor(target, key);
+
+				Object.defineProperty(component, key, {
+					configurable: true,
+					set(v: any): void {
+						const oldValue = value;
+
+						if (oldValue === v) {
+							return;
+						}
+
+						value = v;
+						if (descriptor && descriptor.set) {
+							descriptor.set.call(component, v);
+						}
+
+						if (isPlainObject(value)) {
+							value = observable(value);
+							value.on(`change.${teil.join('.')}`, callback);
+						}
+
+						callback(key, oldValue, value);
+					},
+
+					get(): any {
+						if (descriptor && descriptor.get) {
+							return descriptor.get.call(component);
+						}
+
+						return value;
+					}
+				});
 			});
 		};
 

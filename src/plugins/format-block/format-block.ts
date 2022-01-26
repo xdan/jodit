@@ -67,7 +67,7 @@ Config.prototype.controls.paragraph = {
 		h3: 'Heading 3',
 		h4: 'Heading 4',
 		blockquote: 'Quote',
-		pre: 'Monospace'
+		pre: 'Code'
 	},
 
 	isChildActive: (editor: IJodit, control: IControlType): boolean => {
