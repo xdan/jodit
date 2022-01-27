@@ -406,12 +406,12 @@ if (String.prototype.repeat === undefined) {
 	};
 }
 
-var expect = typeof chai !== 'undefined' ? chai.expect : function () {},
+const expect = typeof chai !== 'undefined' ? chai.expect : function () {},
 	stuff = [];
 
-var stringify = Jodit.ns.Helpers.stringify;
-var box = document.createElement('div');
+const stringify = Jodit.ns.Helpers.stringify;
 
+const box = document.createElement('div');
 document.body.appendChild(box);
 
 function flatten(obj) {

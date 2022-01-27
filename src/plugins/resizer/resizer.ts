@@ -22,7 +22,8 @@ import {
 	css,
 	offset,
 	innerWidth,
-	markOwner
+	markOwner,
+	dataBind
 } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { eventEmitter } from 'jodit/core/global';
@@ -376,20 +377,21 @@ export class resizer extends Plugin {
 	 */
 	@autobind
 	private bind(element: HTMLElement): void {
-		if ((element as any)[keyBInd]) {
+		if (!Dom.isHTMLElement(element) || dataBind(element, keyBInd)) {
 			return;
 		}
 
-		(element as any)[keyBInd] = true;
+		dataBind(element, keyBInd, true);
 		let wrapper: HTMLElement;
 
 		if (Dom.isTag(element, 'iframe')) {
 			const iframe = element;
 
 			if (
-				attr(element.parentNode as HTMLElement, '-jodit_iframe_wrapper')
+				Dom.isHTMLElement(element.parentNode) &&
+				attr(element.parentNode, '-jodit_iframe_wrapper')
 			) {
-				element = element.parentNode as HTMLElement;
+				element = element.parentNode;
 			} else {
 				wrapper = this.j.createInside.fromHTML(
 					'<jodit ' +

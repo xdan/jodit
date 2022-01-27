@@ -2132,51 +2132,60 @@ describe('Tables Jodit Editor Tests', function () {
 				});
 			});
 
-			it('When move mouse over right edge of last cell and press mouse button and move cursor to right in 50 pixels - the width of the whole table should increase', function () {
-				const editor = getJodit();
+			describe('When move mouse over right edge of last cell and', function () {
+				describe('press mouse button and move cursor to right in 50 pixels', function () {
+					it('the width of the whole table should increase', function () {
+						const editor = getJodit();
 
-				getBox().style.width = '202px';
+						getBox().style.width = '202px';
 
-				editor.value =
-					'<table style="width: 100px; table-layout: fixed; border-collapse: separate;" cellspacing="0">' +
-					'<tr><td>1</td><td>2</td><td>3</td><td>5</td></tr>' +
-					'</table>';
-				const td = editor.editor.querySelectorAll('td')[3],
-					box = td.getBoundingClientRect();
+						editor.value =
+							'<table style="width: 100px; table-layout: fixed; border-collapse: separate;" cellspacing="0">' +
+							'<tr><td>1</td><td>2</td><td>3</td><td>5</td></tr>' +
+							'</table>';
+						const td = editor.editor.querySelectorAll('td')[3],
+							box = td.getBoundingClientRect();
 
-				simulateEvent('mousemove', 1, td, function (options) {
-					options.clientX = box.left + box.width;
-					options.offsetX = box.width;
+						simulateEvent('mousemove', td, function (options) {
+							options.clientX = box.left + box.width;
+							options.offsetX = box.width;
+						});
+
+						simulateEvent(
+							'mousedown',
+							editor.container.querySelector(
+								'.jodit-table-resizer'
+							),
+							function (options) {
+								options.clientX = box.left + box.width;
+							}
+						);
+
+						simulateEvent('mousemove', window, function (options) {
+							options.clientX = box.left + box.width + 50;
+						});
+						simulateEvent('mouseup', window, function (options) {
+							options.clientX = box.left + box.width + 50;
+						});
+
+						expect(
+							sortAttributes(
+								editor.editor.innerHTML
+									.toLowerCase()
+									.replace(/81\.[0-9]{2}/, '81.52') // For FF on Windows
+							)
+						).equals(
+							'<table cellspacing="0" style="border-collapse:separate;table-layout:fixed;width:81.52%"><tbody>' +
+								'<tr>' +
+								'<td>1</td>' +
+								'<td>2</td>' +
+								'<td>3</td>' +
+								'<td>5</td>' +
+								'</tr>' +
+								'</tbody></table>'
+						);
+					});
 				});
-
-				simulateEvent(
-					'mousedown',
-					1,
-					editor.container.querySelector('.jodit-table-resizer'),
-					function (options) {
-						options.clientX = box.left + box.width;
-					}
-				);
-
-				simulateEvent('mousemove', 1, window, function (options) {
-					options.clientX = box.left + box.width + 50;
-				});
-				simulateEvent('mouseup', 1, window, function (options) {
-					options.clientX = box.left + box.width + 50;
-				});
-
-				expect(
-					sortAttributes(editor.editor.innerHTML.toLowerCase())
-				).equals(
-					'<table cellspacing="0" style="border-collapse:separate;table-layout:fixed;width:81.52%"><tbody>' +
-						'<tr>' +
-						'<td>1</td>' +
-						'<td>2</td>' +
-						'<td>3</td>' +
-						'<td>5</td>' +
-						'</tr>' +
-						'</tbody></table>'
-				);
 			});
 
 			describe('When move mouse over left edge of first cell', function () {
@@ -2212,13 +2221,15 @@ describe('Tables Jodit Editor Tests', function () {
 						simulateEvent('mousemove', window, function (options) {
 							options.clientX = box.left + 50;
 						});
-						simulateEvent('mouseup', 1, window, function (options) {
+						simulateEvent('mouseup', window, function (options) {
 							options.clientX = box.left + 50;
 						});
 
 						expect(
 							sortAttributes(
-								editor.editor.innerHTML.toLowerCase()
+								editor.editor.innerHTML
+									.toLowerCase()
+									.replace(/27\.[0-9]{2}/g, '27.17') // FF for Windows
 							)
 						).equals(
 							'<table style="margin-left:27.17%;table-layout:fixed;width:27.17%">' +

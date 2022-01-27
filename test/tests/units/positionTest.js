@@ -28,17 +28,19 @@ describe('Test position/offset helpers', function () {
 
 			let content;
 
-			if (t === 'link' && elm.sheet) {
-				content = Array.from(elm.sheet.cssRules)
-					.map(function (f) {
-						return f.cssText;
-					})
-					.join('\n');
-			} else {
-				content = elm.innerHTML;
-			}
+			try {
+				if (t === 'link' && elm.sheet) {
+					content = Array.from(elm.sheet.cssRules)
+						.map(function (f) {
+							return f.cssText;
+						})
+						.join('\n');
+				} else {
+					content = elm.innerHTML;
+				}
 
-			lines.push('<style>' + content + '</style>');
+				lines.push('<style>' + content + '</style>');
+			} catch (e) {}
 		});
 
 		mainDoc.open();
@@ -128,8 +130,8 @@ describe('Test position/offset helpers', function () {
 
 			createPoint(pos.left, pos.top, '#cdf', true);
 
-			expect(pos.top).equals(254);
-			expect(pos.left).equals(240);
+			expect(Math.abs(pos.top - 254)).below(2);
+			expect(Math.abs(pos.left - 240)).below(2);
 		});
 
 		describe('In the out of the screen', function () {
@@ -142,7 +144,7 @@ describe('Test position/offset helpers', function () {
 				createPoint(pos.left, pos.top, '#cdf', true);
 
 				expect(pos.top).equals(-1246);
-				expect(pos.left).equals(240);
+				expect(Math.abs(pos.left - 240)).below(2);
 			});
 		});
 
@@ -165,10 +167,12 @@ describe('Test position/offset helpers', function () {
 
 				createPoint(pos.left, pos.top, '#cdf', true);
 
-				expect(pos.top - jodit.toolbar.container.offsetHeight).equals(
-					386
-				);
-				expect(pos.left).equals(251);
+				expect(
+					Math.abs(
+						pos.top - jodit.toolbar.container.offsetHeight - 386
+					)
+				).below(2);
+				expect(Math.abs(pos.left - 251)).below(2);
 			});
 		});
 	});
@@ -192,12 +196,15 @@ describe('Test position/offset helpers', function () {
 			createPoint(pos.left, pos.top, '#cdf');
 
 			expect(
-				pos.top -
-					box.offsetTop -
-					iframe.contentWindow.scrollY -
-					jodit.toolbar.container.offsetHeight
-			).equals(816);
-			expect(pos.left).equals(249);
+				Math.abs(
+					pos.top -
+						box.offsetTop -
+						iframe.contentWindow.scrollY -
+						jodit.toolbar.container.offsetHeight -
+						816
+				)
+			).below(3);
+			expect(Math.abs(pos.left - 249)).below(3);
 		});
 
 		describe('In iframe', function () {
@@ -218,13 +225,17 @@ describe('Test position/offset helpers', function () {
 				const pos = Jodit.modules.Helpers.offset(span, jodit, jodit.ed);
 
 				expect(
-					pos.top -
-						box.offsetTop -
-						jodit.ownerWindow.scrollY -
-						jodit.ew.scrollY -
-						jodit.toolbar.container.offsetHeight
-				).equals(256);
-				expect(pos.left).equals(251);
+					Math.abs(
+						pos.top -
+							box.offsetTop -
+							jodit.ownerWindow.scrollY -
+							jodit.ew.scrollY -
+							jodit.toolbar.container.offsetHeight -
+							256
+					)
+				).below(2);
+				expect(Math.abs(pos.left - 251)).below(2);
+
 
 				createPoint(pos.left, pos.top, '#cdf');
 			});
