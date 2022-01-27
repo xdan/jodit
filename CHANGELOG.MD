@@ -9,6 +9,49 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.13.1
+
+#### :boom: Breaking Change
+
+-   `ObserveObject` removed
+-   Added `observable` function which makes object observable. In this case, the function returns the same object.
+
+```js
+const obj = {
+	a: 1,
+	b: {
+		c: 5
+	}
+};
+
+const obsObj = Jodit.modules.observable(obj);
+console.log(obj === obsObj); // true
+obsObj.on('change', () => {
+	console.log('Object changed');
+});
+obsObj.on('change.a', () => {
+	console.log('Key a changed');
+});
+obsObj.on('change.b.c', () => {
+	console.log('Key b.c changed');
+});
+
+obj.a = 6;
+// Object changed
+// Key a changed
+
+obj.b = { c: 6 };
+// Object changed
+
+obj.b.c = 8;
+// Object changed
+// Key b.c changed
+```
+
+#### :bug: Bug Fix
+
+-   Fixed autotest in Chrome on Windows
+
 ## 3.12.5
 
 #### :rocket: New Feature
@@ -993,11 +1036,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                         	{ value: "", text: "" },
--                                                                                                         	{ value: "val1", text: "text1" },
--                                                                                                         	{ value: "val2", text: "text2" },
--                                                                                                         	{ value: "val3", text: "text3" }
--                                                                                                         ]
+-                                                                                                               	{ value: "", text: "" },
+-                                                                                                               	{ value: "val1", text: "text1" },
+-                                                                                                               	{ value: "val2", text: "text2" },
+-                                                                                                               	{ value: "val3", text: "text3" }
+-                                                                                                               ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

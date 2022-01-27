@@ -27,6 +27,38 @@ function isObservableObject<T extends Record<string | symbol, any>>(
 
 /**
  * Makes any object an observable object
+ * @example
+ * ```js
+ * const obj = {
+ *   a: 1,
+ *   b: {
+ *     c: 5
+ *   }
+ * }
+ *
+ * const obsObj = Jodit.modules.observable(obj);
+ * console.log(obj === obsObj); // true
+ * obsObj.on('change', () => {
+ *   console.log('Object changed');
+ * });
+ * obsObj.on('change.a', () => {
+ *   console.log('Key a changed');
+ * });
+ * obsObj.on('change.b.c', () => {
+ *   console.log('Key b.c changed');
+ * });
+ *
+ * obj.a = 6;
+ * // Object changed
+ * // Key a changed
+ *
+ * obj.b = {c: 6}
+ * // Object changed
+ *
+ * obj.b.c = 8
+ * // Object changed
+ * // Key b.c changed
+ * ```
  */
 export function observable<T extends IDictionary, O extends T & IObservable>(
 	obj: T

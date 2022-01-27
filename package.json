@@ -1,6 +1,6 @@
 {
 	"name": "jodit",
-	"version": "3.12.5",
+	"version": "3.13.1",
 	"description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
 	"main": "build/jodit.min.js",
 	"types": "./types/index.d.ts",
@@ -58,9 +58,9 @@
 		"core-js": "^3.20.3"
 	},
 	"devDependencies": {
-    "eslint-plugin-tsdoc": "^0.2.14",
-    "postcss-less": "^6.0.0",
-    "@types/ace": "^0.0.47",
+		"eslint-plugin-tsdoc": "^0.2.14",
+		"postcss-less": "^6.0.0",
+		"@types/ace": "^0.0.47",
 		"@types/node": "^17.0.12",
 		"@typescript-eslint/eslint-plugin": "^5.10.1",
 		"@typescript-eslint/parser": "^5.10.1",

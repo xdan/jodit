@@ -236,7 +236,6 @@ describe('Test position/offset helpers', function () {
 				).below(2);
 				expect(Math.abs(pos.left - 251)).below(2);
 
-
 				createPoint(pos.left, pos.top, '#cdf');
 			});
 		});
