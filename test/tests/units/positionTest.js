@@ -28,17 +28,19 @@ describe('Test position/offset helpers', function () {
 
 			let content;
 
-			if (t === 'link' && elm.sheet) {
-				content = Array.from(elm.sheet.cssRules)
-					.map(function (f) {
-						return f.cssText;
-					})
-					.join('\n');
-			} else {
-				content = elm.innerHTML;
-			}
+			try {
+				if (t === 'link' && elm.sheet) {
+					content = Array.from(elm.sheet.cssRules)
+						.map(function(f) {
+							return f.cssText;
+						})
+						.join('\n');
+				} else {
+					content = elm.innerHTML;
+				}
 
-			lines.push('<style>' + content + '</style>');
+				lines.push('<style>' + content + '</style>');
+			} catch (e) {}
 		});
 
 		mainDoc.open();
