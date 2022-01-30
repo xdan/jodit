@@ -37,7 +37,7 @@ import {
 	call,
 	isArray,
 	keys
-} from 'jodit/core/helpers/';
+} from 'jodit/core/helpers';
 import { Icon } from 'jodit/core/ui';
 import { ToolbarCollection } from 'jodit/modules/toolbar/collection/collection';
 import { STATUSES } from 'jodit/core/component';
@@ -83,16 +83,58 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		const { control, state } = this,
 			tc = this.closest(ToolbarCollection) as ToolbarCollection;
 
-		if (tc) {
-			state.disabled = Boolean(tc.shouldBeDisabled(this));
-			state.activated = Boolean(tc.shouldBeActive(this));
-		}
+		state.disabled = this.calculateDisabledStatus(tc);
+		state.activated = this.calculateActivatedStatus(tc);
 
 		if (isFunction(control.update)) {
 			control.update(this);
 		}
 
 		super.update();
+	}
+
+	/**
+	 * Calculates whether the button is active
+	 */
+	private calculateActivatedStatus(tc?: ToolbarCollection): boolean {
+		if (isJoditObject(this.j) && !this.j.editorIsActive) {
+			return false;
+		}
+
+		if (
+			isFunction(this.control.isActive) &&
+			this.control.isActive(this.j, this.control, this)
+		) {
+			return true;
+		}
+
+		return Boolean(tc && tc.shouldBeActive(this));
+	}
+
+	/**
+	 * Calculates whether an element is blocked for the user
+	 */
+	private calculateDisabledStatus(tc?: ToolbarCollection): boolean {
+		if (this.j.o.disabled) {
+			return true;
+		}
+
+		if (
+			this.j.o.readonly &&
+			(!this.j.o.activeButtonsInReadOnly ||
+				!this.j.o.activeButtonsInReadOnly.includes(this.control.name))
+		) {
+			return true;
+		}
+
+		if (
+			isFunction(this.control.isDisabled) &&
+			this.control.isDisabled(this.j, this.control, this)
+		) {
+			return true;
+		}
+
+		return Boolean(tc && tc.shouldBeDisabled(this));
 	}
 
 	/** @override */

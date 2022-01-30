@@ -7,14 +7,7 @@
 /** eslint-disable tsdoc/syntax */
 
 const path = require('path');
-const fs = require('fs');
 
-const webpack = require('webpack');
-
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const MinimizeJSPlugin = require('terser-webpack-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const postcss = require('postcss');
 const { variables } = require('./variables');
 const { fileName } = require('./utils/filename');
 

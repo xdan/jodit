@@ -23,9 +23,9 @@ import type {
 	CanUndef,
 	IViewWithToolbar,
 	IBound
-} from '../../../types/';
+} from 'jodit/types';
 
-import { error, isFunction } from 'jodit/core/helpers/';
+import { error } from 'jodit/core/helpers';
 
 import { UIList } from 'jodit/core/ui';
 import { makeButton } from '../factory';
@@ -66,10 +66,6 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 	 * Button should be active
 	 */
 	shouldBeActive(button: IToolbarButton): boolean | undefined {
-		if (isFunction(button.control.isActive)) {
-			return button.control.isActive(this.j, button.control, button);
-		}
-
 		return undefined;
 	}
 
@@ -77,29 +73,7 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 	 * Button should be disabled
 	 */
 	shouldBeDisabled(button: IToolbarButton): boolean | undefined {
-		if (this.j.o.disabled) {
-			return true;
-		}
-
-		if (
-			this.j.o.readonly &&
-			(!this.j.o.activeButtonsInReadOnly ||
-				!this.j.o.activeButtonsInReadOnly.includes(button.control.name))
-		) {
-			return true;
-		}
-
-		let isDisabled: boolean | undefined;
-
-		if (isFunction(button.control.isDisabled)) {
-			isDisabled = button.control.isDisabled(
-				this.j,
-				button.control,
-				button
-			);
-		}
-
-		return isDisabled;
+		return undefined;
 	}
 
 	/**

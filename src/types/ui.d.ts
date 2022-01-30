@@ -31,7 +31,8 @@ export interface IUIElement extends IViewComponent, IContainer, IDestructible, I
 	 */
 	bubble(callback: (parent: IUIElement) => void): this;
 
-	closest<T extends Function>(type: T | IUIElement): Nullable<IUIElement>;
+	closest<T extends IUIElement>(type: Function): Nullable<T>;
+	closest<T extends IUIElement>(type: Function | T): Nullable<T>;
 
 	update(): void;
 	updateParentElement(target: IUIElement): this;

@@ -676,7 +676,7 @@ describe('Test plugins', function () {
 									.querySelector(
 										'[data-area=crop].jodit-image-editor_active'
 									)
-									.querySelector('.jodi-switcher input');
+									.querySelector('.jodit-switcher input');
 
 								expect(disableRatioBtn).not.is.null;
 								disableRatioBtn.checked = false;
@@ -944,7 +944,7 @@ describe('Test plugins', function () {
 									.querySelector(
 										'[data-area=resize].jodit-image-editor_active'
 									)
-									.querySelector('.jodi-switcher input');
+									.querySelector('.jodit-switcher input');
 
 								expect(disableRatioBtn).not.is.null;
 								disableRatioBtn.checked = false;

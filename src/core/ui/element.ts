@@ -68,8 +68,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	/**
 	 * Find match parent
 	 */
-	// tslint:disable-next-line:ban-types
-	closest<T extends IUIElement>(type: Function | IUIElement): Nullable<T> {
+	closest<T extends IUIElement>(type: Function | T): Nullable<T> {
 		const c =
 			typeof type === 'object'
 				? (pe: IUIElement) => pe === type

@@ -30,9 +30,9 @@ export const form = (
 	) => `<div class="jodit-form__group">
 			<label>${i(label)}</label>
 
-			<label class='jodi-switcher'>
+			<label class='jodit-switcher'>
 				<input ${act(active, 'checked')} data-ref="${ref}" type="checkbox"/>
-				<span class="jodi-switcher__slider"></span>
+				<span class="jodit-switcher__slider"></span>
 			</label>
 	</div>`;
 
