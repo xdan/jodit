@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.13.1
+ * Version: v3.13.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -15422,7 +15422,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.13.1";
+        this.version = "3.13.2";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -15520,10 +15520,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.13.1";
+        return "3.13.2";
     }
     static getVersion() {
-        return "3.13.1";
+        return "3.13.2";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -15638,25 +15638,10 @@ let ToolbarCollection = class ToolbarCollection extends ui/* UIList */.bz {
         return makeButton(this.j, control, target);
     }
     shouldBeActive(button) {
-        if ((0,helpers.isFunction)(button.control.isActive)) {
-            return button.control.isActive(this.j, button.control, button);
-        }
         return undefined;
     }
     shouldBeDisabled(button) {
-        if (this.j.o.disabled) {
-            return true;
-        }
-        if (this.j.o.readonly &&
-            (!this.j.o.activeButtonsInReadOnly ||
-                !this.j.o.activeButtonsInReadOnly.includes(button.control.name))) {
-            return true;
-        }
-        let isDisabled;
-        if ((0,helpers.isFunction)(button.control.isDisabled)) {
-            isDisabled = button.control.isDisabled(this.j, button.control, button);
-        }
-        return isDisabled;
+        return undefined;
     }
     getTarget(button) {
         return button.target || null;
@@ -15761,9 +15746,6 @@ let ToolbarEditorCollection = class ToolbarEditorCollection extends ToolbarColle
         return !(mode === constants.MODE_SPLIT || mode === this.j.getRealMode());
     }
     shouldBeActive(button) {
-        if ((0,helpers.isJoditObject)(this.j) && !this.j.editorIsActive) {
-            return false;
-        }
         const active = super.shouldBeActive(button);
         if (active !== undefined) {
             return active;
@@ -15877,14 +15859,37 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
     }
     update() {
         const { control, state } = this, tc = this.closest(ToolbarCollection);
-        if (tc) {
-            state.disabled = Boolean(tc.shouldBeDisabled(this));
-            state.activated = Boolean(tc.shouldBeActive(this));
-        }
+        state.disabled = this.calculateDisabledStatus(tc);
+        state.activated = this.calculateActivatedStatus(tc);
         if ((0,helpers.isFunction)(control.update)) {
             control.update(this);
         }
         super.update();
+    }
+    calculateActivatedStatus(tc) {
+        if ((0,helpers.isJoditObject)(this.j) && !this.j.editorIsActive) {
+            return false;
+        }
+        if ((0,helpers.isFunction)(this.control.isActive) &&
+            this.control.isActive(this.j, this.control, this)) {
+            return true;
+        }
+        return Boolean(tc && tc.shouldBeActive(this));
+    }
+    calculateDisabledStatus(tc) {
+        if (this.j.o.disabled) {
+            return true;
+        }
+        if (this.j.o.readonly &&
+            (!this.j.o.activeButtonsInReadOnly ||
+                !this.j.o.activeButtonsInReadOnly.includes(this.control.name))) {
+            return true;
+        }
+        if ((0,helpers.isFunction)(this.control.isDisabled) &&
+            this.control.isDisabled(this.j, this.control, this)) {
+            return true;
+        }
+        return Boolean(tc && tc.shouldBeDisabled(this));
     }
     onChangeActivated() {
         (0,helpers.attr)(this.button, 'aria-pressed', this.state.activated);
@@ -17963,9 +17968,9 @@ const form_form = (editor, o) => {
     const switcher = (label, ref, active = true) => `<div class="jodit-form__group">
 			<label>${i(label)}</label>
 
-			<label class='jodi-switcher'>
+			<label class='jodit-switcher'>
 				<input ${act(active, 'checked')} data-ref="${ref}" type="checkbox"/>
-				<span class="jodi-switcher__slider"></span>
+				<span class="jodit-switcher__slider"></span>
 			</label>
 	</div>`;
     return editor.create.fromHTML(`<form class="${jie} jodit-properties">

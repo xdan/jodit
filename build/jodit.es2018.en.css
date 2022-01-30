@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.13.1
+ * Version: v3.13.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -306,18 +306,18 @@
   height: 16px;
   vertical-align: middle;
 }
-.jodi-switcher {
+.jodit-switcher {
   position: relative;
   display: inline-block;
   width: var(--jd-switche-width);
   height: var(--jd-switche-height);
 }
-.jodi-switcher input {
+.jodit-switcher input {
   width: 0;
   height: 0;
   opacity: 0;
 }
-.jodi-switcher .jodi-switcher__slider {
+.jodit-switcher .jodit-switcher__slider {
   position: absolute;
   top: 0;
   right: 0;
@@ -328,7 +328,7 @@
   cursor: pointer;
   transition: 0.4s;
 }
-.jodi-switcher .jodi-switcher__slider:before {
+.jodit-switcher .jodit-switcher__slider:before {
   position: absolute;
   bottom: var(--jd-switche-slider-margin);
   left: var(--jd-switche-slider-margin);
@@ -339,13 +339,13 @@
   content: '';
   transition: 0.4s;
 }
-input:checked + .jodi-switcher__slider {
+input:checked + .jodit-switcher__slider {
   background-color: var(--jd-color-background-active);
 }
-input:checked + .jodi-switcher__slider:before {
+input:checked + .jodit-switcher__slider:before {
   transform: translateX(calc(var(--jd-switche-width) - var(--jd-switche-slider-margin) * 2 - var(--jd-switche-slider-size)));
 }
-input:focus + .jodi-switcher__slider {
+input:focus + .jodit-switcher__slider {
   box-shadow: 0 0 1px var(--jd-color-background-active);
 }
 /*!

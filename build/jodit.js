@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.13.1
+ * Version: v3.13.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -15757,7 +15757,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.13.1";
+        _this.version = "3.13.2";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -15904,10 +15904,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.13.1";
+        return "3.13.2";
     };
     View.getVersion = function () {
-        return "3.13.1";
+        return "3.13.2";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -16276,25 +16276,10 @@ var ToolbarCollection = (function (_super) {
         return (0, factory_1.makeButton)(this.j, control, target);
     };
     ToolbarCollection.prototype.shouldBeActive = function (button) {
-        if ((0, helpers_1.isFunction)(button.control.isActive)) {
-            return button.control.isActive(this.j, button.control, button);
-        }
         return undefined;
     };
     ToolbarCollection.prototype.shouldBeDisabled = function (button) {
-        if (this.j.o.disabled) {
-            return true;
-        }
-        if (this.j.o.readonly &&
-            (!this.j.o.activeButtonsInReadOnly ||
-                !this.j.o.activeButtonsInReadOnly.includes(button.control.name))) {
-            return true;
-        }
-        var isDisabled;
-        if ((0, helpers_1.isFunction)(button.control.isDisabled)) {
-            isDisabled = button.control.isDisabled(this.j, button.control, button);
-        }
-        return isDisabled;
+        return undefined;
     };
     ToolbarCollection.prototype.getTarget = function (button) {
         return button.target || null;
@@ -16421,9 +16406,6 @@ var ToolbarEditorCollection = (function (_super) {
     };
     ToolbarEditorCollection.prototype.shouldBeActive = function (button) {
         var _this = this;
-        if ((0, helpers_1.isJoditObject)(this.j) && !this.j.editorIsActive) {
-            return false;
-        }
         var active = _super.prototype.shouldBeActive.call(this, button);
         if (active !== undefined) {
             return active;
@@ -16552,14 +16534,37 @@ var ToolbarButton = (function (_super) {
     });
     ToolbarButton.prototype.update = function () {
         var _a = this, control = _a.control, state = _a.state, tc = this.closest(collection_1.ToolbarCollection);
-        if (tc) {
-            state.disabled = Boolean(tc.shouldBeDisabled(this));
-            state.activated = Boolean(tc.shouldBeActive(this));
-        }
+        state.disabled = this.calculateDisabledStatus(tc);
+        state.activated = this.calculateActivatedStatus(tc);
         if ((0, helpers_1.isFunction)(control.update)) {
             control.update(this);
         }
         _super.prototype.update.call(this);
+    };
+    ToolbarButton.prototype.calculateActivatedStatus = function (tc) {
+        if ((0, helpers_1.isJoditObject)(this.j) && !this.j.editorIsActive) {
+            return false;
+        }
+        if ((0, helpers_1.isFunction)(this.control.isActive) &&
+            this.control.isActive(this.j, this.control, this)) {
+            return true;
+        }
+        return Boolean(tc && tc.shouldBeActive(this));
+    };
+    ToolbarButton.prototype.calculateDisabledStatus = function (tc) {
+        if (this.j.o.disabled) {
+            return true;
+        }
+        if (this.j.o.readonly &&
+            (!this.j.o.activeButtonsInReadOnly ||
+                !this.j.o.activeButtonsInReadOnly.includes(this.control.name))) {
+            return true;
+        }
+        if ((0, helpers_1.isFunction)(this.control.isDisabled) &&
+            this.control.isDisabled(this.j, this.control, this)) {
+            return true;
+        }
+        return Boolean(tc && tc.shouldBeDisabled(this));
     };
     ToolbarButton.prototype.onChangeActivated = function () {
         (0, helpers_1.attr)(this.button, 'aria-pressed', this.state.activated);
@@ -19456,7 +19461,7 @@ var form = function (editor, o) {
     var i = editor.i18n.bind(editor);
     var switcher = function (label, ref, active) {
         if (active === void 0) { active = true; }
-        return "<div class=\"jodit-form__group\">\n\t\t\t<label>".concat(i(label), "</label>\n\n\t\t\t<label class='jodi-switcher'>\n\t\t\t\t<input ").concat(act(active, 'checked'), " data-ref=\"").concat(ref, "\" type=\"checkbox\"/>\n\t\t\t\t<span class=\"jodi-switcher__slider\"></span>\n\t\t\t</label>\n\t</div>");
+        return "<div class=\"jodit-form__group\">\n\t\t\t<label>".concat(i(label), "</label>\n\n\t\t\t<label class='jodit-switcher'>\n\t\t\t\t<input ").concat(act(active, 'checked'), " data-ref=\"").concat(ref, "\" type=\"checkbox\"/>\n\t\t\t\t<span class=\"jodit-switcher__slider\"></span>\n\t\t\t</label>\n\t</div>");
     };
     return editor.create.fromHTML("<form class=\"".concat(jie, " jodit-properties\">\n\t\t<div class=\"jodit-grid jodit-grid_xs-column\">\n\t\t\t<div class=\"jodit_col-lg-3-4 jodit_col-sm-5-5\">\n\t\t\t").concat(o.resize
         ? "<div class=\"".concat(jie, "__area ").concat(jie, "__area_resize ").concat(jie, "_active\">\n\t\t\t\t\t\t\t<div data-ref=\"resizeBox\" class=\"").concat(jie, "__box\"></div>\n\t\t\t\t\t\t\t<div class=\"").concat(jie, "__resizer\">\n\t\t\t\t\t\t\t\t<i class=\"jodit_bottomright\"></i>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>")

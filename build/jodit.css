@@ -1,14 +1,14 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.13.1
+ * Version: v3.13.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
 	/*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.13.1
+ * Version: v3.13.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -310,18 +310,18 @@
   height: 16px;
   vertical-align: middle;
 }
-.jodi-switcher {
+.jodit-switcher {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 32px;
 }
-.jodi-switcher input {
+.jodit-switcher input {
   width: 0;
   height: 0;
   opacity: 0;
 }
-.jodi-switcher .jodi-switcher__slider {
+.jodit-switcher .jodit-switcher__slider {
   position: absolute;
   top: 0;
   right: 0;
@@ -334,7 +334,7 @@
   -o-transition: 0.4s;
   transition: 0.4s;
 }
-.jodi-switcher .jodi-switcher__slider:before {
+.jodit-switcher .jodit-switcher__slider:before {
   position: absolute;
   bottom: 4px;
   left: 4px;
@@ -347,15 +347,15 @@
   -o-transition: 0.4s;
   transition: 0.4s;
 }
-input:checked + .jodi-switcher__slider {
+input:checked + .jodit-switcher__slider {
   background-color: #2196f3;
 }
-input:checked + .jodi-switcher__slider:before {
+input:checked + .jodit-switcher__slider:before {
   -webkit-transform: translateX(calc(60px - 4px * 2 - calc(32px - 4px * 2)));
       -ms-transform: translateX(calc(60px - 4px * 2 - calc(32px - 4px * 2)));
           transform: translateX(calc(60px - 4px * 2 - calc(32px - 4px * 2)));
 }
-input:focus + .jodi-switcher__slider {
+input:focus + .jodit-switcher__slider {
   -webkit-box-shadow: 0 0 1px #2196f3;
           box-shadow: 0 0 1px #2196f3;
 }
