@@ -55,6 +55,7 @@ const possibleRules = [
 	'allowImageCrop'
 ];
 
+@autobind
 export default class DataProvider implements IFileBrowserDataProvider {
 	private __currentPermissions: Nullable<IPermissions> = null;
 
@@ -545,7 +546,6 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		return this.options.getMessage(resp);
 	}
 
-	@autobind
 	isSuccess(resp: IFileBrowserAnswer): boolean {
 		return this.options.isSuccess(resp);
 	}

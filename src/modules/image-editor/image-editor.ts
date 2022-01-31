@@ -25,7 +25,7 @@ import type {
 import { Config } from 'jodit/config';
 import { ViewComponent } from 'jodit/core/component';
 import { Alert, Dialog, Prompt } from 'jodit/modules/dialog';
-import { $$, attr, css, refs, toArray, trim } from 'jodit/core/helpers';
+import { $$, attr, call, css, refs, toArray, trim } from 'jodit/core/helpers';
 import { Dom } from 'jodit/core/dom';
 import { Button } from 'jodit/core/ui/button';
 import { form } from './templates/form';
@@ -834,28 +834,17 @@ export function openImageEditor(
 			box: ImageEditorActionBox,
 			success: () => void,
 			failed: (error: Error) => void
-		) => {
-			let promise: Promise<boolean>;
-
-			if (box.action === 'resize') {
-				promise = this.dataProvider.resize(
-					path,
-					source,
-					name,
-					newname,
-					box.box
-				);
-			} else {
-				promise = this.dataProvider.crop(
-					path,
-					source,
-					name,
-					newname,
-					box.box
-				);
-			}
-
-			promise
+		) =>
+			call(
+				box.action === 'resize'
+					? this.dataProvider.resize
+					: this.dataProvider.crop,
+				path,
+				source,
+				name,
+				newname,
+				box.box
+			)
 				.then(ok => {
 					if (ok) {
 						success();
@@ -871,7 +860,6 @@ export function openImageEditor(
 					if (onFailed) {
 						onFailed(error);
 					}
-				});
-		}
+				})
 	);
 }

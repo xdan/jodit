@@ -66,7 +66,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	 * Get parent toolbar
 	 */
 	protected get toolbar(): Nullable<IToolbarCollection> {
-		return this.closest(ToolbarCollection) as Nullable<ToolbarCollection>;
+		return this.closest<ToolbarCollection>(ToolbarCollection);
 	}
 
 	/**

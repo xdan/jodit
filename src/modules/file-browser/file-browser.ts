@@ -312,6 +312,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			minHeight: 300,
 			buttons: this.o.headerButtons ?? ['fullsize', 'dialog.close']
 		});
+
 		this.proxyDialogEvents(self);
 
 		self.browser.component = this;
