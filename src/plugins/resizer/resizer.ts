@@ -184,6 +184,7 @@ export class resizer extends Plugin {
 				}
 			})
 			.on(editor.ow, 'resize.resizer', this.updateSize)
+			.on('resize.resizer', this.updateSize)
 			.on(
 				editor.ow,
 				'mouseup.resizer keydown.resizer touchend.resizer',

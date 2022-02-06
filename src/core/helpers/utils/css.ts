@@ -15,6 +15,11 @@ import { camelCase, kebabCase } from '../string/';
 
 export function css(
 	element: HTMLElement,
+	key: keyof CSSStyleDeclaration
+): string | number;
+
+export function css(
+	element: HTMLElement,
 	key: string | IStyle
 ): string | number;
 
@@ -40,7 +45,7 @@ export function css(
  */
 export function css(
 	element: HTMLElement,
-	key: string | IStyle,
+	key: keyof CSSStyleDeclaration | string | IStyle,
 	value?: StyleValue | boolean,
 	onlyStyleMode: boolean = false
 ): string | number {

@@ -10,7 +10,7 @@
 
 import type { IViewBased } from './view';
 
-export interface IDictionary<T = any> {
+export interface IDictionary<T = any, K = string> {
 	[key: string]: T;
 }
 

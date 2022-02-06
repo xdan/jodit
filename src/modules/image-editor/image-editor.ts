@@ -421,7 +421,7 @@ export class ImageEditor extends ViewComponent {
 		);
 
 		slide.classList.add(`${jie}_active`);
-		self.activeTab = (attr(slide, '-area') as ImageAction) || TABS.resize;
+		this.activeTab = (attr(slide, '-area') as ImageAction) || TABS.resize;
 
 		const tab = self.editor.querySelector(
 			`.${jie}__area.${jie}__area_` + self.activeTab

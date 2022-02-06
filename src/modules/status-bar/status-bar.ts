@@ -12,11 +12,19 @@
 
 import './status-bar.less';
 
-import type { IJodit, IStatusBar, IDictionary, ModType } from 'jodit/types';
+import type {
+	IJodit,
+	IStatusBar,
+	IDictionary,
+	ModType,
+	CanUndef
+} from 'jodit/types';
 import { ViewComponent, STATUSES } from 'jodit/core/component';
 import { Dom } from 'jodit/core/dom';
-import { Mods } from 'jodit/core/traits';
+import { Elms, Mods } from 'jodit/core/traits';
+import { component } from 'jodit/core/decorators';
 
+@component
 export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 	className(): string {
 		return 'StatusBar';
@@ -65,19 +73,19 @@ export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 		return this.container?.offsetHeight ?? 0;
 	}
 
-	private findEmpty(inTheRight: boolean = false): HTMLDivElement | void {
-		const items = this.container?.querySelectorAll(
-			'.jodit-status-bar__item' +
-				(inTheRight ? '.jodit-status-bar__item-right' : '')
+	private findEmpty(inTheRight: boolean = false): CanUndef<HTMLElement> {
+		const items = Elms.getElms.call(
+			this,
+			inTheRight ? 'item-right' : 'item'
 		);
 
-		if (items) {
-			for (let i = 0; i < items.length; i += 1) {
-				if (!items[i].innerHTML.trim().length) {
-					return items[i] as HTMLDivElement;
-				}
+		for (let i = 0; i < items.length; i += 1) {
+			if (!items[i].innerHTML.trim().length) {
+				return items[i];
 			}
 		}
+
+		return;
 	}
 
 	/**
@@ -86,10 +94,10 @@ export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 	append(child: HTMLElement, inTheRight: boolean = false): void {
 		const wrapper =
 			this.findEmpty(inTheRight) ||
-			this.j.c.div('jodit-status-bar__item');
+			this.j.c.div(this.getFullElName('item'));
 
 		if (inTheRight) {
-			wrapper.classList.add('jodit-status-bar__item-right');
+			wrapper.classList.add(this.getFullElName('item-right'));
 		}
 
 		wrapper.appendChild(child);

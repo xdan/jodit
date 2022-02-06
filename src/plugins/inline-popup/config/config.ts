@@ -40,6 +40,7 @@ Config.prototype.popup = {
 	cells: require('./items/cells').default,
 	toolbar: require('./items/toolbar').default,
 	jodit: require('./items/iframe').default,
+	iframe: require('./items/iframe').default,
 	'jodit-media': require('./items/iframe').default,
 	selection: [
 		'bold',

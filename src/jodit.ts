@@ -1219,8 +1219,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		container.appendChild(workplace);
 
-		const statusbar = new StatusBar(this, container);
-
 		if (element.parentNode && element !== container) {
 			element.parentNode.insertBefore(container, element);
 		}
@@ -1244,7 +1242,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			element,
 			container,
 			workplace,
-			statusbar,
+			statusbar: new StatusBar(this, container),
 			options: this.isReady
 				? (ConfigProto(
 						options || {},

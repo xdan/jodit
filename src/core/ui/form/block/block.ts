@@ -26,6 +26,7 @@ export class UIBlock extends UIGroup {
 		jodit: IViewBased,
 		elements?: Array<IUIElement | void | null | false>,
 		override readonly options: {
+			className?: string;
 			align?: 'center' | 'left' | 'right' | 'full';
 			width?: 'full';
 			ref?: string;
@@ -39,6 +40,8 @@ export class UIBlock extends UIGroup {
 		this.setMod('align', this.options.align || 'left');
 		this.setMod('width', this.options.width || '');
 		this.options.mod && this.setMod(this.options.mod, true);
+		this.options.className &&
+			this.container.classList.add(this.options.className);
 
 		attr(this.container, 'data-ref', options.ref);
 		attr(this.container, 'ref', options.ref);
