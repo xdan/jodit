@@ -342,6 +342,13 @@ describe('Apply style', () => {
 						element: 'strong'
 					},
 					'<p>|<strong>pop test test test</strong>|</p>'
+				],
+				[
+					'<h3><span style="color:#00FF00">|pop test test test|</span></h3>',
+					{
+						element: 'p'
+					},
+					'<p><span style="color:#00FF00">|pop test test test|</span></p>'
 				]
 			].forEach(([input, opt, output, jSettings]) => {
 				describe(`For selection ${input} apply style ${JSON.stringify(
