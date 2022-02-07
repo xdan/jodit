@@ -26,11 +26,25 @@ export function getSuitParent(
 	const { parentNode } = node;
 
 	if (
-		Dom.isHTMLElement(parentNode) &&
-		!Dom.next(node, isNormalNode, parentNode) &&
-		!Dom.prev(node, isNormalNode, parentNode) &&
+		parentNode === root ||
+		!Dom.isHTMLElement(parentNode) ||
+		Dom.next(node, isNormalNode, parentNode) ||
+		Dom.prev(node, isNormalNode, parentNode)
+	) {
+		return null;
+	}
+
+	// <h3><span style="color:red">test</span></h3> => apply <h2>
+	if (
+		style.isElementCommit &&
+		style.elementIsBlock &&
+		!Dom.isBlock(parentNode)
+	) {
+		return getSuitParent(style, parentNode, root);
+	}
+
+	if (
 		isSuitElement(style, parentNode, false) &&
-		parentNode !== root &&
 		(!Dom.isBlock(parentNode) || style.elementIsBlock)
 	) {
 		return parentNode;

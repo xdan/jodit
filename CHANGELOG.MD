@@ -28,7 +28,8 @@ console.log(Jodit.isJoditAssigned(area)); // false
 
 #### :bug: Bug Fix
 
--   Fixed a bug  when switching between source and wysiwyg mode, the FORM tag was wrapped in P
+- Fixed a bug  when switching between source and wysiwyg mode, the FORM tag was wrapped in P
+- [Not maintaining styles set when switching format blocks #773](https://github.com/xdan/jodit/issues/773)
 
 ## 3.13.1
 

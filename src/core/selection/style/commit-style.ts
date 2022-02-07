@@ -39,6 +39,16 @@ export class CommitStyle {
 		);
 	}
 
+	/**
+	 * The commit applies the tag change
+	 */
+	get isElementCommit(): boolean {
+		return Boolean(
+			this.options.element &&
+				this.options.element !== this.options.defaultTag
+		);
+	}
+
 	get defaultTag(): HTMLTagNames {
 		if (this.options.defaultTag) {
 			return this.options.defaultTag;
