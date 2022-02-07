@@ -26,6 +26,10 @@ editor.destruct();
 console.log(Jodit.isJoditAssigned(area)); // false
 ```
 
+#### :bug: Bug Fix
+
+-   Fixed a bug  when switching between source and wysiwyg mode, the FORM tag was wrapped in P
+
 ## 3.13.1
 
 #### :boom: Breaking Change
@@ -1053,11 +1057,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                     	{ value: "", text: "" },
--                                                                                                                     	{ value: "val1", text: "text1" },
--                                                                                                                     	{ value: "val2", text: "text2" },
--                                                                                                                     	{ value: "val3", text: "text3" }
--                                                                                                                     ]
+-                                                                                                                       	{ value: "", text: "" },
+-                                                                                                                       	{ value: "val1", text: "text1" },
+-                                                                                                                       	{ value: "val2", text: "text2" },
+-                                                                                                                       	{ value: "val3", text: "text3" }
+-                                                                                                                       ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
