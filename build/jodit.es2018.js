@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.13.2
+ * Version: v3.13.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -412,7 +412,7 @@ const INVISIBLE_SPACE_REG_EXP_START = () => /^[\uFEFF]+/g;
 const SPACE_REG_EXP = () => /[\s\n\t\r\uFEFF\u200b]+/g;
 const SPACE_REG_EXP_START = () => /^[\s\n\t\r\uFEFF\u200b]+/g;
 const SPACE_REG_EXP_END = () => /[\s\n\t\r\uFEFF\u200b]+$/g;
-const IS_BLOCK = /^(ARTICLE|SCRIPT|STYLE|OBJECT|FOOTER|HEADER|NAV|SECTION|IFRAME|JODIT|JODIT-MEDIA|PRE|DIV|P|LI|UL|OL|H[1-6]|BLOCKQUOTE|TR|TD|TH|TBODY|THEAD|TABLE|BODY|HTML|FIGCAPTION|FIGURE|DT|DD|DL|DFN)$/i;
+const IS_BLOCK = /^(ARTICLE|SCRIPT|STYLE|OBJECT|FOOTER|HEADER|NAV|SECTION|IFRAME|JODIT|JODIT-MEDIA|PRE|DIV|P|LI|UL|OL|H[1-6]|BLOCKQUOTE|TR|TD|TH|TBODY|THEAD|TABLE|BODY|HTML|FIGCAPTION|FIGURE|DT|DD|DL|DFN|FORM)$/i;
 const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB|A|U)$/i;
 const INSEPARABLE_TAGS = [
     'img',
@@ -4768,11 +4768,18 @@ function getSuitChild(style, font) {
 
 function getSuitParent(style, node, root) {
     const { parentNode } = node;
-    if (dom/* Dom.isHTMLElement */.i.isHTMLElement(parentNode) &&
-        !dom/* Dom.next */.i.next(node, isNormalNode, parentNode) &&
-        !dom/* Dom.prev */.i.prev(node, isNormalNode, parentNode) &&
-        isSuitElement(style, parentNode, false) &&
-        parentNode !== root &&
+    if (parentNode === root ||
+        !dom/* Dom.isHTMLElement */.i.isHTMLElement(parentNode) ||
+        dom/* Dom.next */.i.next(node, isNormalNode, parentNode) ||
+        dom/* Dom.prev */.i.prev(node, isNormalNode, parentNode)) {
+        return null;
+    }
+    if (style.isElementCommit &&
+        style.elementIsBlock &&
+        !dom/* Dom.isBlock */.i.isBlock(parentNode)) {
+        return getSuitParent(style, parentNode, root);
+    }
+    if (isSuitElement(style, parentNode, false) &&
         (!dom/* Dom.isBlock */.i.isBlock(parentNode) || style.elementIsBlock)) {
         return parentNode;
     }
@@ -5163,6 +5170,10 @@ class CommitStyle {
     }
     get elementIsBlock() {
         return Boolean(this.options.element && constants.IS_BLOCK.test(this.options.element));
+    }
+    get isElementCommit() {
+        return Boolean(this.options.element &&
+            this.options.element !== this.options.defaultTag);
     }
     get defaultTag() {
         if (this.options.defaultTag) {
@@ -9149,6 +9160,8 @@ let UIBlock = class UIBlock extends group/* UIGroup */.qe {
         this.setMod('align', this.options.align || 'left');
         this.setMod('width', this.options.width || '');
         this.options.mod && this.setMod(this.options.mod, true);
+        this.options.className &&
+            this.container.classList.add(this.options.className);
         (0,utils/* attr */.Lj)(this.container, 'data-ref', options.ref);
         (0,utils/* attr */.Lj)(this.container, 'ref', options.ref);
     }
@@ -14687,6 +14700,7 @@ __webpack_require__.d(plugins_namespaceObject, {
   "stat": function() { return stat; },
   "sticky": function() { return sticky; },
   "symbols": function() { return symbols; },
+  "tab": function() { return tab; },
   "table": function() { return table; },
   "tableKeyboardNavigation": function() { return tableKeyboardNavigation; },
   "tooltip": function() { return tooltip; },
@@ -15422,7 +15436,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.13.2";
+        this.version = "3.13.3";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -15520,10 +15534,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.13.2";
+        return "3.13.3";
     }
     static getVersion() {
-        return "3.13.2";
+        return "3.13.3";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -17448,7 +17462,7 @@ const possibleRules = (/* unused pure expression or super */ null && ([
     'allowImageResize',
     'allowImageCrop'
 ]));
-class DataProvider {
+let DataProvider = class DataProvider {
     constructor(parent, options) {
         this.parent = parent;
         this.options = options;
@@ -17713,10 +17727,11 @@ class DataProvider {
         this.ajaxInstances.forEach(a => a.destruct());
         this.ajaxInstances.clear();
     }
-}
-(0,tslib_es6/* __decorate */.gn)([
+};
+DataProvider = (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
-], DataProvider.prototype, "isSuccess", null);
+], DataProvider);
+/* harmony default export */ var data_provider = (DataProvider);
 
 ;// CONCATENATED MODULE: ./src/modules/file-browser/factories.ts
 /*!
@@ -17727,7 +17742,7 @@ class DataProvider {
 
 
 function makeDataProvider(parent, options) {
-    return new DataProvider(parent, options);
+    return new data_provider(parent, options);
 }
 function makeContextMenu(parent) {
     return new ContextMenu(parent);
@@ -18328,7 +18343,7 @@ let ImageEditor = ImageEditor_1 = class ImageEditor extends component/* ViewComp
         }
         (0,helpers.$$)(`.${image_editor_jie}__slider,.${image_editor_jie}__area`, self.editor).forEach(elm => elm.classList.remove(`${image_editor_jie}_active`));
         slide.classList.add(`${image_editor_jie}_active`);
-        self.activeTab = (0,helpers.attr)(slide, '-area') || TABS.resize;
+        this.activeTab = (0,helpers.attr)(slide, '-area') || TABS.resize;
         const tab = self.editor.querySelector(`.${image_editor_jie}__area.${image_editor_jie}__area_` + self.activeTab);
         if (tab) {
             tab.classList.add(`${image_editor_jie}_active`);
@@ -18569,30 +18584,23 @@ ImageEditor = ImageEditor_1 = (0,tslib_es6/* __decorate */.gn)([
 ], ImageEditor);
 
 function openImageEditor(href, name, path, source, onSuccess, onFailed) {
-    return this.getInstance('ImageEditor', this.o).open(href, (newname, box, success, failed) => {
-        let promise;
-        if (box.action === 'resize') {
-            promise = this.dataProvider.resize(path, source, name, newname, box.box);
-        }
-        else {
-            promise = this.dataProvider.crop(path, source, name, newname, box.box);
-        }
-        promise
-            .then(ok => {
-            if (ok) {
-                success();
-                if (onSuccess) {
-                    onSuccess();
-                }
+    return this.getInstance('ImageEditor', this.o).open(href, (newname, box, success, failed) => (0,helpers.call)(box.action === 'resize'
+        ? this.dataProvider.resize
+        : this.dataProvider.crop, path, source, name, newname, box.box)
+        .then(ok => {
+        if (ok) {
+            success();
+            if (onSuccess) {
+                onSuccess();
             }
-        })
-            .catch(error => {
-            failed(error);
-            if (onFailed) {
-                onFailed(error);
-            }
-        });
-    });
+        }
+    })
+        .catch(error => {
+        failed(error);
+        if (onFailed) {
+            onFailed(error);
+        }
+    }));
 }
 
 ;// CONCATENATED MODULE: ./src/modules/file-browser/fetch/delete-file.ts
@@ -19667,7 +19675,9 @@ var selection = __webpack_require__(16);
 
 
 
-class StatusBar extends component/* ViewComponent */.Hr {
+
+
+let StatusBar = class StatusBar extends component/* ViewComponent */.Hr {
     constructor(jodit, target) {
         super(jodit);
         this.target = target;
@@ -19700,23 +19710,20 @@ class StatusBar extends component/* ViewComponent */.Hr {
         return (_b = (_a = this.container) === null || _a === void 0 ? void 0 : _a.offsetHeight) !== null && _b !== void 0 ? _b : 0;
     }
     findEmpty(inTheRight = false) {
-        var _a;
-        const items = (_a = this.container) === null || _a === void 0 ? void 0 : _a.querySelectorAll('.jodit-status-bar__item' +
-            (inTheRight ? '.jodit-status-bar__item-right' : ''));
-        if (items) {
-            for (let i = 0; i < items.length; i += 1) {
-                if (!items[i].innerHTML.trim().length) {
-                    return items[i];
-                }
+        const items = traits/* Elms.getElms.call */.F.getElms.call(this, inTheRight ? 'item-right' : 'item');
+        for (let i = 0; i < items.length; i += 1) {
+            if (!items[i].innerHTML.trim().length) {
+                return items[i];
             }
         }
+        return;
     }
     append(child, inTheRight = false) {
         var _a;
         const wrapper = this.findEmpty(inTheRight) ||
-            this.j.c.div('jodit-status-bar__item');
+            this.j.c.div(this.getFullElName('item'));
         if (inTheRight) {
-            wrapper.classList.add('jodit-status-bar__item-right');
+            wrapper.classList.add(this.getFullElName('item-right'));
         }
         wrapper.appendChild(child);
         (_a = this.container) === null || _a === void 0 ? void 0 : _a.appendChild(wrapper);
@@ -19730,7 +19737,11 @@ class StatusBar extends component/* ViewComponent */.Hr {
         dom/* Dom.safeRemove */.i.safeRemove(this.container);
         super.destruct();
     }
-}
+};
+StatusBar = (0,tslib_es6/* __decorate */.gn)([
+    decorators.component
+], StatusBar);
+
 
 ;// CONCATENATED MODULE: ./src/modules/table/table.ts
 /*!
@@ -20801,7 +20812,10 @@ class Jodit extends ViewWithToolbar {
         this.isSilentChange = false;
         this.elementToPlace = new Map();
         try {
-            (0,helpers.resolveElement)(element, this.o.shadowRoot || this.od);
+            const elementSource = (0,helpers.resolveElement)(element, this.o.shadowRoot || this.od);
+            if (Jodit.isJoditAssigned(elementSource)) {
+                return elementSource.component;
+            }
         }
         catch (e) {
             this.destruct();
@@ -20875,6 +20889,11 @@ class Jodit extends ViewWithToolbar {
     }
     static make(element, options) {
         return new Jodit(element, options);
+    }
+    static isJoditAssigned(element) {
+        return (element &&
+            (0,helpers.isJoditObject)(element.component) &&
+            !element.component.isInDestruct);
     }
     static get defaultOptions() {
         return config/* Config.defaultOptions */.D.defaultOptions;
@@ -21347,7 +21366,6 @@ class Jodit extends ViewWithToolbar {
             contenteditable: false
         });
         container.appendChild(workplace);
-        const statusbar = new StatusBar(this, container);
         if (element.parentNode && element !== container) {
             element.parentNode.insertBefore(container, element);
         }
@@ -21367,7 +21385,7 @@ class Jodit extends ViewWithToolbar {
             element,
             container,
             workplace,
-            statusbar,
+            statusbar: new StatusBar(this, container),
             options: this.isReady
                 ? (0,helpers.ConfigProto)(options || {}, config/* Config.defaultOptions */.D.defaultOptions)
                 : this.options,
@@ -26149,6 +26167,7 @@ config/* Config.prototype.popup */.D.prototype.popup = {
     cells: (__webpack_require__(70)/* ["default"] */ .Z),
     toolbar: (__webpack_require__(71)/* ["default"] */ .Z),
     jodit: (__webpack_require__(72)/* ["default"] */ .Z),
+    iframe: (__webpack_require__(72)/* ["default"] */ .Z),
     'jodit-media': (__webpack_require__(72)/* ["default"] */ .Z),
     selection: [
         'bold',
@@ -27874,6 +27893,7 @@ class resizer extends Plugin {
             }
         })
             .on(editor.ow, 'resize.resizer', this.updateSize)
+            .on('resize.resizer', this.updateSize)
             .on(editor.ow, 'mouseup.resizer keydown.resizer touchend.resizer', this.onClickOutside)
             .on([editor.ow, editor.editor], 'scroll.resizer', () => {
             if (this.isShown && !this.isResized) {
@@ -30953,6 +30973,79 @@ class tooltip extends Plugin {
     decorators.autobind
 ], tooltip.prototype, "close", null);
 
+;// CONCATENATED MODULE: ./src/plugins/keyboard/tab/cases/on-tab-inside-li.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function onTabInsideLi(jodit) {
+    if (!jodit.o.tab.tabInsideLiInsertNewList || !jodit.s.isCollapsed()) {
+        return false;
+    }
+    const fake = jodit.createInside.fake();
+    jodit.s.insertNode(fake);
+    const li = dom/* Dom.closest */.i.closest(fake, 'li', jodit.editor);
+    if (li &&
+        jodit.s.cursorOnTheLeft(li) &&
+        dom/* Dom.isTag */.i.isTag(li.previousElementSibling, 'li')) {
+        const list = dom/* Dom.closest */.i.closest(li, ['ol', 'ul'], jodit.editor);
+        if (list) {
+            const newList = jodit.createInside.element(list.tagName);
+            const previousLi = li.previousElementSibling;
+            newList.appendChild(li);
+            previousLi.appendChild(newList);
+            jodit.s.setCursorAfter(fake);
+            dom/* Dom.safeRemove */.i.safeRemove(fake);
+            return true;
+        }
+    }
+    dom/* Dom.safeRemove */.i.safeRemove(fake);
+    return false;
+}
+
+;// CONCATENATED MODULE: ./src/plugins/keyboard/tab/cases/index.ts
+
+
+;// CONCATENATED MODULE: ./src/plugins/keyboard/tab/config.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+config/* Config.prototype.tab */.D.prototype.tab = {
+    tabInsideLiInsertNewList: true
+};
+
+;// CONCATENATED MODULE: ./src/plugins/keyboard/tab/tab.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+class tab extends Plugin {
+    afterInit(jodit) { }
+    onTab(event) {
+        if (event.key === constants.KEY_TAB) {
+            if (onTabInsideLi(this.j)) {
+                return false;
+            }
+        }
+    }
+    beforeDestruct(jodit) { }
+}
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)(':keydown.tab')
+], tab.prototype, "onTab", null);
+
 ;// CONCATENATED MODULE: ./src/plugins/print/preview.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -31268,6 +31361,7 @@ class xpath extends Plugin {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 
 
 
