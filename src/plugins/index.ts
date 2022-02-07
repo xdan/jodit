@@ -53,5 +53,6 @@ export { sticky } from './sticky/sticky';
 export { symbols } from './symbols/symbols';
 export * from './table';
 export { tooltip } from './tooltip/tooltip';
+export { tab } from './keyboard/tab/tab';
 export * from './print';
 export { xpath } from './xpath/xpath';
