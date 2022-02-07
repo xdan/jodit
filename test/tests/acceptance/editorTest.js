@@ -118,6 +118,24 @@ describe('Jodit Editor Tests', function () {
 					document.body.removeChild(div);
 				});
 			});
+
+			describe('Double apply to one element', function () {
+				it('Should create only one instance', function () {
+					const div = document.createElement('div');
+					document.body.appendChild(div);
+
+					const editor3 = getJodit(undefined, div);
+
+					expect(editor3.element).equals(div);
+
+					const editor4 = getJodit(undefined, div);
+
+					expect(editor4.element).equals(div);
+					expect(editor4).equals(editor3);
+
+					document.body.removeChild(div);
+				});
+			});
 		});
 
 		it('Editor should replace and hide source textarea', function () {

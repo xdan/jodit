@@ -58,7 +58,8 @@ import {
 	toArray,
 	markAsAtomic,
 	ConfigProto,
-	kebabCase
+	kebabCase,
+	isJoditObject
 } from './core/helpers/';
 
 import { Storage } from './core/storage/';
@@ -139,6 +140,19 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 */
 	static make(element: HTMLElement | string, options?: object): Jodit {
 		return new Jodit(element, options);
+	}
+
+	/**
+	 * Checks if the element has already been initialized when for Jodit
+	 */
+	static isJoditAssigned(
+		element: HTMLElement
+	): element is HTMLElement & { component: Jodit } {
+		return (
+			element &&
+			isJoditObject(element.component) &&
+			!element.component.isInDestruct
+		);
 	}
 
 	/**
@@ -298,7 +312,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.setPlaceField('options', opt);
 	}
 
-	readonly selection: Select;
+	readonly selection!: Select;
 
 	/**
 	 * Alias for this.selection
@@ -1063,7 +1077,14 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		super(options as IViewOptions, true);
 
 		try {
-			resolveElement(element, this.o.shadowRoot || this.od); // check element valid
+			const elementSource = resolveElement(
+				element,
+				this.o.shadowRoot || this.od
+			);
+
+			if (Jodit.isJoditAssigned(elementSource)) {
+				return elementSource.component;
+			}
 		} catch (e) {
 			this.destruct();
 			throw e;
