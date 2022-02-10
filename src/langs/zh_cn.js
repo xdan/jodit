@@ -222,5 +222,6 @@ module.exports = {
 	Find: '搜索',
 	'Find Previous': '查找上一个',
 	'Find Next': '查找下一个',
-	'Insert className': '插入班级名称'
+	'Insert className': '插入班级名称',
+	'Line height': '线高'
 };

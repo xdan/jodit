@@ -84,9 +84,11 @@ console.log(editor.i18n('Type something')); //'Введите что-либо т
 ## UIElement
 
 For convenience, if in the [[UIElement]] descendant in the `render` method, return a string in the format:
+
 ```
 ~Some text~
 ```
+
 It will be automatically passed through [[Jodit.i18n]]
 
 For example:
@@ -96,29 +98,30 @@ class UIBox extends Jodit.modules.UIElement {
 	render() {
 		return `<div>
 		    <div class="&__some-element">~Some text~</div>
-		</div>`
-  }
+		</div>`;
+	}
 }
 
 const editor = Jodit.make('#editor', {
-  language: 'en',
-  i18n: {
-    en: {
-      'Some text': 'Another text'
-    }
-  }
-})
+	language: 'en',
+	i18n: {
+		en: {
+			'Some text': 'Another text'
+		}
+	}
+});
 const box = new UIBox(editor);
 console.log(box.container.outerHTML); //<div class="jodit-ui-box"><div class="jodit-ui-box__some-element">Another text</div></div>
 ```
 
 It's the same as doing this:
+
 ```js
 class UIBox extends Jodit.modules.UIElement {
 	render() {
 		return `<div>
 		    <div class="&__some-element">${this.jodit.i18n('Some text')}</div>
-		</div>`
-  }
+		</div>`;
+	}
 }
 ```

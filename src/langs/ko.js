@@ -221,5 +221,6 @@ module.exports = {
 	Find: '찾기',
 	'Find Previous': '이전 찾기',
 	'Find Next': '다음 찾기',
-	'Insert className': 'className 입력'
+	'Insert className': 'className 입력',
+	'Line height': '선 높이'
 };

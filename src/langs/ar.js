@@ -221,5 +221,6 @@ module.exports = {
 		'للصق المحتوى قادم من Microsoft Word/Excel الوثيقة. هل تريد أن تبقي شكل أو تنظيفه ؟ ',
 	'Word Paste Detected': 'كلمة لصق الكشف عن',
 	Clean: 'نظيفة',
-	'Insert className': 'أدخل اسم الفصل'
+	'Insert className': 'أدخل اسم الفصل',
+	'Line height': 'ارتفاع الخط'
 };

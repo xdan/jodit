@@ -220,5 +220,6 @@ module.exports = {
 	Find: 'ค้นหา',
 	'Find Previous': 'ค้นหาก่อนหน้านี้',
 	'Find Next': 'ค้นหาถัดไป',
-	'Insert className': 'ใส่ชื่อคลาส'
+	'Insert className': 'ใส่ชื่อคลาส',
+	'Line height': 'ความสูงเส้น'
 };

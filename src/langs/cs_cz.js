@@ -223,5 +223,6 @@ module.exports = {
 	Find: 'Najít',
 	'Find Previous': 'Najít Předchozí',
 	'Find Next': 'Najít Další',
-	'Insert className': 'Vložte název třídy'
+	'Insert className': 'Vložte název třídy',
+	'Line height': 'Výška čáry'
 };

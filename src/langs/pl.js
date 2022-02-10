@@ -224,5 +224,6 @@ module.exports = {
 	Find: 'Znaleźć',
 	'Find Previous': 'Znaleźć Poprzednie',
 	'Find Next': 'Znajdź Dalej',
-	'Insert className': 'Wstaw nazwę zajęć'
+	'Insert className': 'Wstaw nazwę zajęć',
+	'Line height': 'Wysokość linii'
 };

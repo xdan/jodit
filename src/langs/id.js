@@ -223,5 +223,6 @@ module.exports = {
 	Find: 'Menemukan',
 	'Find Previous': 'Menemukan Sebelumnya',
 	'Find Next': 'Menemukan Berikutnya',
-	'Insert className': 'Masukkan nama kelas'
+	'Insert className': 'Masukkan nama kelas',
+	'Line height': 'Tinggi baris'
 };

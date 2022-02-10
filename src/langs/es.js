@@ -219,7 +219,6 @@ module.exports = {
 	Circle: 'Círculo',
 	Dot: 'Punto',
 	Quadrate: 'Cuadro',
-	//Ordered list
 	'Lower Alpha': 'Letra Minúscula',
 	'Lower Greek': 'Griego Minúscula',
 	'Lower Roman': 'Romano Minúscula',
@@ -228,5 +227,6 @@ module.exports = {
 	Find: 'Encontrar',
 	'Find Previous': 'Buscar Anterior',
 	'Find Next': 'Buscar Siguiente',
-	'Insert className': 'Insertar nombre de clase'
+	'Insert className': 'Insertar nombre de clase',
+	'Line height': 'Altura de la línea'
 };

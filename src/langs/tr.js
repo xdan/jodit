@@ -222,5 +222,6 @@ module.exports = {
 	Find: 'Bul',
 	'Find Previous': 'Öncekini Bul',
 	'Find Next': 'Sonrakini Bul',
-	'Insert className': 'Sınıf adı girin'
+	'Insert className': 'Sınıf adı girin',
+	'Line height': 'Çizgi yüksekliği'
 };

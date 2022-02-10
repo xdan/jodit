@@ -218,5 +218,6 @@ module.exports = {
 	Find: 'Trouver',
 	'Find Previous': 'Trouvez Précédente',
 	'Find Next': 'Suivant',
-	'Insert className': 'Insérer un nom de classe'
+	'Insert className': 'Insérer un nom de classe',
+	'Line height': 'Hauteur de ligne'
 };

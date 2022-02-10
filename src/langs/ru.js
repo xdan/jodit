@@ -222,5 +222,6 @@ module.exports = {
 	Find: 'Найти',
 	'Find Previous': 'Найти Предыдущие',
 	'Find Next': 'Найти Далее',
-	'Insert className': 'Вставить название класса'
+	'Insert className': 'Вставить название класса',
+	'Line height': 'Высота линии'
 };

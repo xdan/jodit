@@ -223,5 +223,6 @@ module.exports = {
 	Find: 'پیدا کردن',
 	'Find Previous': 'پیدا کردن قبلی',
 	'Find Next': 'پیدا کردن بعدی',
-	'Insert className': 'Insertar nombre de clase'
+	'Insert className': 'Insertar nombre de clase',
+	'Line height': 'ارتفاع خط'
 };
