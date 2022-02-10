@@ -33,7 +33,7 @@ Config.prototype.controls.lineHeight = {
 	icon: 'line-height',
 	command: 'applyLineHeight',
 	tags: ['ol'],
-	tooltip: 'Line Height',
+	tooltip: 'Line height',
 	list: [1, 1.1, 1.2, 1.3, 1.4, 1.5, 2],
 	exec: (editor, event, { control }): void | false =>
 		memorizeExec(editor, event, { control }, (value: string) => value)
