@@ -210,12 +210,18 @@ export class PluginSystem implements IPluginSystem {
 						plugin.init(jodit);
 					} catch (e) {
 						console.error(e);
+
 						if (!isProd) {
 							throw e;
 						}
 					}
+
 					doneList.push(name);
 				} else {
+					if (!isProd) {
+						console.log('Await plugin: ', name);
+					}
+
 					promiseList[name] = plugin;
 					return false;
 				}
