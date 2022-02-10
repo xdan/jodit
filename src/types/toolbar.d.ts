@@ -143,7 +143,7 @@ interface IControlType<
 	 *  });
 	 * ```
 	 */
-	list?: IDictionary<string> | string[] | IControlType[];
+	list?: IDictionary<string> | string[] | number[] | IControlType[];
 
 	/**
 	 * The command executes when the button is pressed. Allowed all

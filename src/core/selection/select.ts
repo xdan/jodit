@@ -864,6 +864,10 @@ export class Select implements ISelect {
 				nodes.push(start);
 			}
 
+			if (nodes.length === 0 && start.firstChild) {
+				nodes.push(start.firstChild);
+			}
+
 			nodes.forEach(forEvery);
 		}
 	}

@@ -1,0 +1,83 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+/**
+ * [[include:plugins/line-height/README.md]]
+ * @packageDocumentation
+ * @module plugins/line-height
+ */
+
+import type { IJodit } from 'jodit/types';
+import { Plugin } from 'jodit/core/plugin';
+
+import './config';
+import { css } from '../../core/helpers';
+import { autobind } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom';
+
+export class lineHeight extends Plugin {
+	override buttons: Plugin['buttons'] = [
+		{
+			name: 'lineHeight',
+			group: 'font-style'
+		}
+	];
+
+	protected afterInit(jodit: IJodit): void {
+		css(jodit.editor, {
+			lineHeight: jodit.o.defaultLineHeight
+		});
+
+		jodit.registerCommand('applyLineHeight', this.applyLineHeight);
+	}
+
+	@autobind
+	private applyLineHeight(ignore: string, ignoreA: any, value: any) {
+		const { s, createInside: c, editor: root, o } = this.j;
+
+		if (!s.isFocused()) {
+			s.focus();
+		}
+		s.save();
+
+		let addStyle: boolean | undefined;
+
+		const apply = (node: Node): void => {
+			let parentBlock = Dom.closest(node, Dom.isBlock, root);
+
+			if (!parentBlock) {
+				parentBlock = Dom.wrap(node, o.enter, c);
+			}
+
+			const previousValue = css(parentBlock, 'lineHeight');
+
+			if (addStyle === undefined) {
+				addStyle = previousValue.toString() !== value.toString();
+			}
+
+			css(parentBlock, 'lineHeight', addStyle ? value : null);
+		};
+
+		try {
+			if (s.isCollapsed()) {
+				const fake = c.fake();
+				s.insertNode(fake, false, false);
+				apply(fake);
+				Dom.safeRemove(fake);
+			} else {
+				s.eachSelection(apply);
+			}
+		} finally {
+			s.restore();
+		}
+	}
+
+	protected beforeDestruct(jodit: IJodit): void {
+		css(jodit.editor, {
+			lineHeight: null
+		});
+	}
+}

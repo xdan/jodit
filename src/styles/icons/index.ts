@@ -50,6 +50,7 @@ import * as info_circle from './info-circle.svg';
 import * as italic from './italic.svg';
 import * as justify from './justify.svg';
 import * as left from './left.svg';
+import * as line_height from './line-height.svg';
 import * as link from './link.svg';
 import * as lock from './lock.svg';
 import * as menu from './menu.svg';
@@ -134,6 +135,7 @@ export {
 	italic,
 	justify,
 	left,
+	line_height,
 	link,
 	lock,
 	menu,

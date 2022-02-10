@@ -9,6 +9,12 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.13.4
+
+#### :rocket: New Feature
+
+-   Plugin for setting line spacing
+
 ## 3.13.2
 
 #### :rocket: New Feature
@@ -28,8 +34,8 @@ console.log(Jodit.isJoditAssigned(area)); // false
 
 #### :bug: Bug Fix
 
-- Fixed a bug  when switching between source and wysiwyg mode, the FORM tag was wrapped in P
-- [Not maintaining styles set when switching format blocks #773](https://github.com/xdan/jodit/issues/773)
+-   Fixed a bug when switching between source and wysiwyg mode, the FORM tag was wrapped in P
+-   [Not maintaining styles set when switching format blocks #773](https://github.com/xdan/jodit/issues/773)
 
 ## 3.13.1
 
@@ -1058,11 +1064,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                       	{ value: "", text: "" },
--                                                                                                                       	{ value: "val1", text: "text1" },
--                                                                                                                       	{ value: "val2", text: "text2" },
--                                                                                                                       	{ value: "val3", text: "text3" }
--                                                                                                                       ]
+-                                                                                                                         	{ value: "", text: "" },
+-                                                                                                                         	{ value: "val1", text: "text1" },
+-                                                                                                                         	{ value: "val2", text: "text2" },
+-                                                                                                                         	{ value: "val3", text: "text3" }
+-                                                                                                                         ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

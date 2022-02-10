@@ -50,7 +50,7 @@ export function css(
 	onlyStyleMode: boolean = false
 ): string | number {
 	const numberFieldsReg =
-		/^left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size/i;
+		/^(left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size)/i;
 
 	if (isBoolean(value)) {
 		onlyStyleMode = value;

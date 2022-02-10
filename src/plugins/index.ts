@@ -36,6 +36,7 @@ export { hr } from './insert';
 export { inlinePopup } from './inline-popup/inline-popup';
 export { justify } from './justify/justify';
 export { limit } from './limit/limit';
+export { lineHeight } from './line-height/line-height';
 export { link } from './link/link';
 export * from './media';
 export { mobile } from './mobile/mobile';
