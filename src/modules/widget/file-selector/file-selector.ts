@@ -10,11 +10,7 @@
  * @module modules/widget/file-selector
  */
 
-import type {
-	IFileBrowserCallBackData,
-	IJodit,
-	IUploaderData
-} from 'jodit/types';
+import type { IFileBrowserCallBackData, IJodit } from 'jodit/types';
 import { isFunction, $$, attr, val } from 'jodit/core/helpers';
 import { Dom } from 'jodit/core/dom';
 import { TabOption, TabsWidget } from '../tabs/tabs';
@@ -94,7 +90,7 @@ export const FileSelectorWidget = (
 
 		editor.uploader.bind(
 			dragBox,
-			(resp: IUploaderData) => {
+			resp => {
 				const handler = isFunction(callbacks.upload)
 					? callbacks.upload
 					: editor.o.uploader.defaultHandlerSuccess;
@@ -105,7 +101,7 @@ export const FileSelectorWidget = (
 
 				editor.e.fire('closeAllPopups');
 			},
-			(error: Error) => {
+			error => {
 				editor.e.fire('errorMessage', error.message);
 
 				editor.e.fire('closeAllPopups');

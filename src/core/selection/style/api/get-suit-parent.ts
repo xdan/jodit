@@ -34,7 +34,7 @@ export function getSuitParent(
 		return null;
 	}
 
-	// <h3><span style="color:red">test</span></h3> => apply <h2>
+	// <h3><span style="color:red">|test|</span></h3> => apply <h2>
 	if (
 		style.isElementCommit &&
 		style.elementIsBlock &&

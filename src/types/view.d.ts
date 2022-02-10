@@ -90,40 +90,40 @@ interface IViewBased<T = IViewOptions>
 		IComponent,
 		Mods,
 		Elms {
-	isView: true;
+	readonly isView: true;
 
 	/**
 	 * ID attribute for source element, id add \{id\}_editor it's editor's id
 	 */
-	id: string;
+	readonly id: string;
 
 	basePath: string;
 
-	isLocked: boolean;
+	readonly isLocked: boolean;
 	isLockedNotBy(name: string): boolean;
 	lock(name?: string): boolean;
 	unlock(): boolean;
 
-	isFullSize: boolean;
+	readonly isFullSize: boolean;
 	toggleFullSize(isFullSize?: boolean): void;
 
-	buffer: IStorage;
-	storage: IStorage;
+	readonly buffer: IStorage;
+	readonly storage: IStorage;
 
 	progressbar: IProgressBar;
 
 	events: IEventEmitter;
 	e: this['events'];
 
-	async: IAsync;
+	readonly async: IAsync;
 
-	create: ICreate;
-	c: this['create'];
+	readonly create: ICreate;
+	readonly c: this['create'];
 
-	OPTIONS: T;
-	options: this['OPTIONS'];
+	readonly OPTIONS: T;
+	readonly options: this['OPTIONS'];
 	// alias
-	o: this['options'];
+	readonly o: this['options'];
 
 	i18n: (text: string, ...params: Array<string | number>) => string;
 
@@ -131,7 +131,7 @@ interface IViewBased<T = IViewOptions>
 
 	getVersion: () => string;
 
-	components: Set<IComponent>;
+	readonly components: Set<IComponent>;
 	getInstance<T extends IComponent>(moduleName: string, options?: object): T;
 }
 

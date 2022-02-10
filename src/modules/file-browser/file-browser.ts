@@ -269,13 +269,15 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		const uploadHandler = () => loadItems(this);
 
 		self.uploader = self.getInstance('Uploader', uploaderOptions);
-		self.uploader.setPath(self.state.currentPath);
-		self.uploader.setSource(self.state.currentSource);
-		self.uploader.bind(self.browser, uploadHandler, self.errorHandler);
+		self.uploader
+			.setPath(self.state.currentPath)
+			.setSource(self.state.currentSource)
+			.bind(self.browser, uploadHandler, self.errorHandler);
 
 		this.state.on(['change.currentPath', 'change.currentSource'], () => {
-			this.uploader.setPath(this.state.currentPath);
-			this.uploader.setSource(this.state.currentSource);
+			this.uploader
+				.setPath(this.state.currentPath)
+				.setSource(this.state.currentSource);
 		});
 
 		self.e.on('bindUploader.filebrowser', (button: HTMLElement) => {

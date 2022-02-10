@@ -69,6 +69,9 @@ import { ViewWithToolbar } from './core/view/view-with-toolbar';
 import { instances, pluginSystem, modules, lang } from './core/global';
 import { autobind, cache } from './core/decorators';
 
+const __defaultStyleDisplayKey = 'data-jodit-default-style-display';
+const __defaultClassesKey = 'data-jodit-default-classes';
+
 /**
  * Class Jodit. Main class
  */
@@ -164,24 +167,22 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	static fatMode: boolean = false;
 
-	static plugins: IPluginSystem = pluginSystem;
+	static readonly plugins: IPluginSystem = pluginSystem;
 
-	static modules: IDictionary<Function> = modules;
-	static ns: IDictionary<Function> = modules;
+	static readonly modules: IDictionary<Function> = modules;
+	static readonly ns: IDictionary<Function> = modules;
 
-	static decorators: IDictionary<Function> = {};
-	static instances: IDictionary<IJodit> = instances;
+	static readonly decorators: IDictionary<Function> = {};
+	static readonly instances: IDictionary<IJodit> = instances;
 
-	static lang: any = lang;
+	static readonly lang: any = lang;
 
-	static core = {
+	static readonly core = {
 		Plugin
 	};
 
-	private __defaultStyleDisplayKey = 'data-jodit-default-style-display';
-	private __defaultClassesKey = 'data-jodit-default-classes';
-
-	private commands: IDictionary<Array<CustomCommand<IJodit>>> = {};
+	private readonly commands: Map<string, Array<CustomCommand<IJodit>>> =
+		new Map();
 
 	private __selectionLocked: MarkerInfo[] | null = null;
 
@@ -633,11 +634,13 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	): IJodit {
 		const commandName: string = commandNameOriginal.toLowerCase();
 
-		if (this.commands[commandName] === undefined) {
-			this.commands[commandName] = [];
+		let commands = this.commands.get(commandName);
+		if (commands === undefined) {
+			commands = [];
+			this.commands.set(commandName, commands);
 		}
 
-		this.commands[commandName].push(command);
+		commands.push(command);
 
 		if (!isFunction(command)) {
 			const hotkeys: string | string[] | void =
@@ -786,10 +789,12 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	): false | void {
 		commandName = commandName.toLowerCase();
 
-		if (this.commands[commandName] !== undefined) {
+		const commands = this.commands.get(commandName);
+
+		if (commands !== undefined) {
 			let result: any;
 
-			const exec = (command: CustomCommand<Jodit>) => {
+			commands.forEach((command: CustomCommand<Jodit>) => {
 				let callback: ExecCommandCallback<Jodit>;
 
 				if (isFunction(command)) {
@@ -808,11 +813,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				if (resultCurrent !== undefined) {
 					result = resultCurrent;
 				}
-			};
-
-			for (let i = 0; i < this.commands[commandName].length; i += 1) {
-				exec(this.commands[commandName][i]);
-			}
+			});
 
 			return result;
 		}
@@ -1152,7 +1153,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	currentPlace!: IWorkPlace;
 	places!: IWorkPlace[];
 
-	private elementToPlace: Map<HTMLElement, IWorkPlace> = new Map();
+	private readonly elementToPlace: Map<HTMLElement, IWorkPlace> = new Map();
 
 	/**
 	 * Create and init current editable place
@@ -1208,7 +1209,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			if (['TEXTAREA', 'INPUT'].indexOf(element.nodeName) === -1) {
 				container = element as HTMLDivElement;
 				element.setAttribute(
-					this.__defaultClassesKey,
+					__defaultClassesKey,
 					element.className.toString()
 				);
 
@@ -1226,7 +1227,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			// hide source element
 			if (element.style.display) {
 				element.setAttribute(
-					this.__defaultStyleDisplayKey,
+					__defaultStyleDisplayKey,
 					element.style.display
 				);
 			}
@@ -1529,10 +1530,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		const buffer = this.getEditorValue();
 
 		this.storage.clear();
-
 		this.buffer.clear();
-
-		this.commands = {};
+		this.commands.clear();
 
 		this.__selectionLocked = null;
 
@@ -1552,26 +1551,21 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				observer
 			}) => {
 				if (element !== container) {
-					if (element.hasAttribute(this.__defaultStyleDisplayKey)) {
-						const display = attr(
-							element,
-							this.__defaultStyleDisplayKey
-						);
+					if (element.hasAttribute(__defaultStyleDisplayKey)) {
+						const display = attr(element, __defaultStyleDisplayKey);
 
 						if (display) {
 							element.style.display = display;
-							element.removeAttribute(
-								this.__defaultStyleDisplayKey
-							);
+							element.removeAttribute(__defaultStyleDisplayKey);
 						}
 					} else {
 						element.style.display = '';
 					}
 				} else {
-					if (element.hasAttribute(this.__defaultClassesKey)) {
+					if (element.hasAttribute(__defaultClassesKey)) {
 						element.className =
-							attr(element, this.__defaultClassesKey) || '';
-						element.removeAttribute(this.__defaultClassesKey);
+							attr(element, __defaultClassesKey) || '';
+						element.removeAttribute(__defaultClassesKey);
 					}
 				}
 

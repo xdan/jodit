@@ -15,7 +15,11 @@ import { dataBind, toArray } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { autobind } from 'jodit/core/decorators';
 
-const exec: IControlType<IJodit>['exec'] = (jodit, _, { control }): void => {
+const memoExec: IControlType<IJodit>['exec'] = (
+	jodit,
+	_,
+	{ control }
+): void => {
 	const key = `button${control.command}`;
 
 	const value = (control.args && control.args[0]) || dataBind(jodit, key);
@@ -36,7 +40,7 @@ Config.prototype.controls.ul = {
 		disc: 'Dot',
 		square: 'Quadrate'
 	},
-	exec
+	exec: memoExec
 } as IControlType;
 
 Config.prototype.controls.ol = {
@@ -52,7 +56,7 @@ Config.prototype.controls.ol = {
 		'upper-alpha': 'Upper Alpha',
 		'upper-roman': 'Upper Roman'
 	},
-	exec
+	exec: memoExec
 } as IControlType;
 
 /**

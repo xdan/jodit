@@ -76,7 +76,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	/**
 	 * ID attribute for source element, id add `{id}_editor` it's editor's id
 	 */
-	id: string;
+	id!: string;
 
 	/**
 	 * All created ViewComponent inside this view
@@ -104,20 +104,20 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		return isVoid(this.o.defaultTimeout) ? 100 : this.o.defaultTimeout;
 	}
 
-	async: IAsync = new Async();
+	readonly async: IAsync = new Async();
 
 	/**
 	 * Some extra data inside editor
 	 * @see copyformat plugin
 	 */
-	buffer: IStorage = Storage.makeStorage();
+	readonly buffer: IStorage = Storage.makeStorage();
 
 	/**
 	 * Container for persistent set/get value
 	 */
 	readonly storage = Storage.makeStorage(true, this.componentName);
 
-	create!: ICreate;
+	readonly create!: ICreate;
 	get c(): this['create'] {
 		return this.create;
 	}
@@ -131,7 +131,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		this.__container = container;
 	}
 
-	events!: IEventEmitter;
+	readonly events!: IEventEmitter;
 	get e(): this['events'] {
 		return this.events;
 	}

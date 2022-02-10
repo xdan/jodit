@@ -10,12 +10,7 @@
 
 import './image-properties.less';
 
-import type {
-	IDialog,
-	IFileBrowserCallBackData,
-	IJodit,
-	IUploaderData
-} from 'jodit/types';
+import type { IDialog, IFileBrowserCallBackData, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 
 import {
@@ -712,11 +707,11 @@ export class imageProperties extends Plugin {
 						this.j.i18n(
 							'You can only edit your own images. Download this image on the host?'
 						),
-						(yes: boolean) => {
+						yes => {
 							if (yes && this.j.uploader) {
 								this.j.uploader.uploadRemoteImage(
 									a.href.toString(),
-									(resp: IUploaderData) => {
+									resp => {
 										Alert(
 											this.j.i18n(
 												'The image has been successfully uploaded to the host!'
@@ -737,7 +732,7 @@ export class imageProperties extends Plugin {
 											}
 										).bindDestruct(this.j);
 									},
-									(error: Error) => {
+									error => {
 										Alert(
 											this.j.i18n(
 												'There was an error loading %s',
@@ -749,6 +744,7 @@ export class imageProperties extends Plugin {
 							}
 						}
 					).bindDestruct(this.j);
+
 					return;
 				}
 			};

@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/tab/README.md]]
+ * @packageDocumentation
  * @module plugins/keyboard/tab
  */
 
@@ -21,10 +23,8 @@ export class tab extends Plugin {
 
 	@watch(':keydown.tab')
 	protected onTab(event: KeyboardEvent): false | void {
-		if (event.key === KEY_TAB) {
-			if (onTabInsideLi(this.j)) {
-				return false;
-			}
+		if (event.key === KEY_TAB && onTabInsideLi(this.j)) {
+			return false;
 		}
 	}
 

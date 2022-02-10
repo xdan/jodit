@@ -25,18 +25,6 @@ import { ViewComponent } from 'jodit/core/component';
 import { getContainer } from 'jodit/core/global';
 import { debounce } from 'jodit/core/decorators';
 
-declare module 'jodit/config' {
-	interface Config {
-		table: {
-			allowCellSelection: boolean;
-			selectionCellStyle: string;
-
-			allowCellResize: boolean;
-			useExtraClassesOptions: boolean;
-		};
-	}
-}
-
 const markedValue = new WeakMap<
 	HTMLElement,
 	IDictionary<string | number | null>
