@@ -1,14 +1,14 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.13.3
+ * Version: v3.13.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
 	/*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.13.3
+ * Version: v3.13.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -3858,9 +3858,6 @@ svg.jodit-icon {
   opacity: 1;
   visibility: visible;
 }
-.jodit_draghover {
-  background-color: #ecebe9;
-}
 .jodit-dialog .jodit-dialog__header-title.jodit-filebrowser__title-box {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -4671,6 +4668,9 @@ a + .jodit-filebrowser-tree__source-title {
     min-width: 180px;
     max-width: 100%;
   }
+}
+.jodit_drag_hover {
+  background-color: #ecebe9;
 }
 
 /*!
@@ -5577,11 +5577,20 @@ html.jodit_fullsize-box_true {
       -ms-user-select: none;
           user-select: none;
 }
-.jodit-wysiwyg table tr th,
+.jodit-wysiwyg table tr th {
+  min-width: 2em;
+  padding: 0.4em;
+  border: 1px solid #dadada;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+          user-select: text;
+  vertical-align: middle;
+}
 .jodit-wysiwyg table tr td {
   min-width: 2em;
   padding: 0.4em;
-  border: 1px solid #bfbfbf;
+  border: 1px solid #dadada;
   -webkit-user-select: text;
      -moz-user-select: text;
       -ms-user-select: text;
@@ -5680,6 +5689,41 @@ html.jodit_fullsize-box_true {
 }
 .jodit-tooltip.jodit-tooltip_visible {
   opacity: 1;
+}
+
+.jodit__preview-box table {
+  max-width: 100%;
+  border: none;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border-collapse: collapse;
+  empty-cells: show;
+}
+.jodit__preview-box table tr {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.jodit__preview-box table tr th {
+  min-width: 2em;
+  padding: 0.4em;
+  border: 1px solid #dadada;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+          user-select: text;
+  vertical-align: middle;
+}
+.jodit__preview-box table tr td {
+  min-width: 2em;
+  padding: 0.4em;
+  border: 1px solid #dadada;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+          user-select: text;
+  vertical-align: middle;
 }
 
 /*!
