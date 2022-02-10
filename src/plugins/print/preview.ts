@@ -8,10 +8,13 @@
  * @module plugins/print
  */
 
+import './preview.less';
+
 import type { IControlType, IDialog, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { attr, css } from 'jodit/core/helpers';
 import * as consts from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom';
 
 Config.prototype.controls.preview = {
 	icon: 'eye',
@@ -33,7 +36,7 @@ export function preview(editor: IJodit): void {
 				theme: editor.o.theme
 			});
 
-			const div = editor.c.div();
+			const div = editor.c.div('jodit__preview-box');
 			css(div, {
 				position: 'relative',
 				padding: 16
@@ -95,7 +98,10 @@ export function preview(editor: IJodit): void {
 							);
 						}
 
-						if (c.children.length === 0) {
+						if (
+							c.children.length === 0 ||
+							Dom.isTag(c, ['table'])
+						) {
 							switch (c.nodeName) {
 								case 'SCRIPT':
 									if (c.textContent) {
