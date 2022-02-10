@@ -5,7 +5,7 @@
  */
 
 /**
- * [[include:plugins/tab/README.md]]
+ * [[include:plugins/keyboard/tab/README.md]]
  * @packageDocumentation
  * @module plugins/keyboard/tab
  */
