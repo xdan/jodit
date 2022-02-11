@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.13.4
+ * Version: v3.13.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -6576,6 +6576,7 @@ var PluginSystem = (function () {
                     doneList.push(name);
                 }
                 else {
+                    if (false) {}
                     promiseList[name] = plugin;
                     return false;
                 }
@@ -15784,7 +15785,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.13.4";
+        _this.version = "3.13.5";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -15931,10 +15932,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.13.4";
+        return "3.13.5";
     };
     View.getVersion = function () {
-        return "3.13.4";
+        return "3.13.5";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -29196,7 +29197,9 @@ var DragAndDropElement = (function (_super) {
         }
         var parentElement = fragment.parentElement;
         this.j.s.insertNode(fragment, true, false);
-        if (parentElement && dom_1.Dom.isEmpty(parentElement)) {
+        if (parentElement &&
+            dom_1.Dom.isEmpty(parentElement) &&
+            !dom_1.Dom.isTag(parentElement, ['td', 'th'])) {
             dom_1.Dom.safeRemove(parentElement);
         }
         if (dom_1.Dom.isTag(fragment, 'img') && this.j.e) {

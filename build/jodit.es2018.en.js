@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.13.4
+ * Version: v3.13.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -3032,6 +3032,7 @@ class PluginSystem {
                     doneList.push(name);
                 }
                 else {
+                    if (false) {}
                     promiseList[name] = plugin;
                     return false;
                 }
@@ -11253,7 +11254,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.13.4";
+        this.version = "3.13.5";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -11351,10 +11352,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.13.4";
+        return "3.13.5";
     }
     static getVersion() {
-        return "3.13.4";
+        return "3.13.5";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -20164,7 +20165,9 @@ class DragAndDropElement extends Plugin {
         }
         const { parentElement } = fragment;
         this.j.s.insertNode(fragment, true, false);
-        if (parentElement && dom/* Dom.isEmpty */.i.isEmpty(parentElement)) {
+        if (parentElement &&
+            dom/* Dom.isEmpty */.i.isEmpty(parentElement) &&
+            !dom/* Dom.isTag */.i.isTag(parentElement, ['td', 'th'])) {
             dom/* Dom.safeRemove */.i.safeRemove(parentElement);
         }
         if (dom/* Dom.isTag */.i.isTag(fragment, 'img') && this.j.e) {
