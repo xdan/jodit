@@ -82,6 +82,7 @@ export class DragAndDropElement extends Plugin {
 
 		this.draggable = lastTarget.cloneNode(true) as HTMLElement;
 		dataBind(this.draggable, 'target', lastTarget);
+		this.j.lock('drag-and-drop-element');
 
 		this.addDragListeners();
 	}
@@ -154,6 +155,7 @@ export class DragAndDropElement extends Plugin {
 			this.wasMoved = false;
 
 			this.removeDragListeners();
+			this.j.unlock();
 		}
 	}
 

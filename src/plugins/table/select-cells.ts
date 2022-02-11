@@ -152,7 +152,7 @@ export class selectCells extends Plugin {
 	 * Mouse move inside the table
 	 */
 	private onMove(table: HTMLTableElement, e: MouseEvent): void {
-		if (this.j.o.readonly) {
+		if (this.j.o.readonly && !this.j.isLocked) {
 			return;
 		}
 
