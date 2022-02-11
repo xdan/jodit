@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.13.5
+ * Version: v3.13.6
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -15785,7 +15785,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.13.5";
+        _this.version = "3.13.6";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -15932,10 +15932,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.13.5";
+        return "3.13.6";
     };
     View.getVersion = function () {
-        return "3.13.5";
+        return "3.13.6";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -29139,6 +29139,7 @@ var DragAndDropElement = (function (_super) {
         this.onDragEnd();
         this.draggable = lastTarget.cloneNode(true);
         (0, helpers_1.dataBind)(this.draggable, 'target', lastTarget);
+        this.j.lock('drag-and-drop-element');
         this.addDragListeners();
     };
     DragAndDropElement.prototype.onDrag = function (event) {
@@ -29183,6 +29184,7 @@ var DragAndDropElement = (function (_super) {
             this.draggable = null;
             this.wasMoved = false;
             this.removeDragListeners();
+            this.j.unlock();
         }
     };
     DragAndDropElement.prototype.onDrop = function () {
@@ -36630,7 +36632,7 @@ var selectCells = (function (_super) {
     selectCells.prototype.onMove = function (table, e) {
         var _this = this;
         var _a;
-        if (this.j.o.readonly) {
+        if (this.j.o.readonly && !this.j.isLocked) {
             return;
         }
         if (this.j.isLockedNotBy(key)) {

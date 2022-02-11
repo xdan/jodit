@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.13.5
+ * Version: v3.13.6
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -11254,7 +11254,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.13.5";
+        this.version = "3.13.6";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -11352,10 +11352,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.13.5";
+        return "3.13.6";
     }
     static getVersion() {
-        return "3.13.5";
+        return "3.13.6";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -20107,6 +20107,7 @@ class DragAndDropElement extends Plugin {
         this.onDragEnd();
         this.draggable = lastTarget.cloneNode(true);
         (0,helpers.dataBind)(this.draggable, 'target', lastTarget);
+        this.j.lock('drag-and-drop-element');
         this.addDragListeners();
     }
     onDrag(event) {
@@ -20151,6 +20152,7 @@ class DragAndDropElement extends Plugin {
             this.draggable = null;
             this.wasMoved = false;
             this.removeDragListeners();
+            this.j.unlock();
         }
     }
     onDrop() {
@@ -26508,7 +26510,7 @@ class selectCells extends Plugin {
     }
     onMove(table, e) {
         var _a;
-        if (this.j.o.readonly) {
+        if (this.j.o.readonly && !this.j.isLocked) {
             return;
         }
         if (this.j.isLockedNotBy(select_cells_key)) {
