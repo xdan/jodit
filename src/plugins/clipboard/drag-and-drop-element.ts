@@ -179,7 +179,11 @@ export class DragAndDropElement extends Plugin {
 
 		this.j.s.insertNode(fragment, true, false);
 
-		if (parentElement && Dom.isEmpty(parentElement)) {
+		if (
+			parentElement &&
+			Dom.isEmpty(parentElement) &&
+			!Dom.isTag(parentElement, ['td', 'th'])
+		) {
 			Dom.safeRemove(parentElement);
 		}
 
