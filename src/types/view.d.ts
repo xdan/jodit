@@ -33,22 +33,22 @@ interface ILanguageOptions {
 }
 
 interface IToolbarOptions {
-	theme?: string;
 	toolbar?: boolean | string | HTMLElement;
-	toolbarButtonSize?: IUIButtonState['size'];
-	textIcons?: boolean | ((key: string) => boolean);
+	readonly theme?: string;
+	readonly toolbarButtonSize?: IUIButtonState['size'];
+	readonly textIcons?: boolean | ((key: string) => boolean);
 
-	extraButtons?: Buttons;
-	removeButtons?: string[];
-	extraIcons?: IDictionary<string>;
+	readonly extraButtons?: Buttons;
+	readonly removeButtons?: string[];
+	readonly extraIcons?: IDictionary<string>;
 
-	buttons?: ButtonsOption;
+	readonly buttons?: ButtonsOption;
 
-	showTooltip?: boolean;
-	showTooltipDelay?: number;
-	useNativeTooltip?: boolean;
+	readonly showTooltip?: boolean;
+	readonly showTooltipDelay?: number;
+	readonly useNativeTooltip?: boolean;
 
-	direction?: string;
+	readonly direction?: string;
 }
 
 type NodeFunction = (elm: HTMLElement) => void;
@@ -112,8 +112,8 @@ interface IViewBased<T = IViewOptions>
 
 	progressbar: IProgressBar;
 
-	events: IEventEmitter;
-	e: this['events'];
+	readonly events: IEventEmitter;
+	readonly e: this['events'];
 
 	readonly async: IAsync;
 

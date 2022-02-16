@@ -319,18 +319,20 @@ export class inlinePopup extends Plugin {
 		s => !this.isExcludedTarget(s)
 	);
 
+	private _eventsList(): string {
+		const el = this.elmsList;
+		return el
+			.map(e => camelCase(`click_${e}`))
+			.concat(el.map(e => camelCase(`touchstart_${e}`)))
+			.join(' ');
+	}
+
 	private addListenersForElements() {
-		this.j.e.on(
-			this.elmsList.map(e => camelCase(`click_${e}`)).join(' '),
-			this.onClick
-		);
+		this.j.e.on(this._eventsList(), this.onClick);
 	}
 
 	private removeListenersForElements() {
-		this.j.e.off(
-			this.elmsList.map(e => camelCase(`click_${e}`)).join(' '),
-			this.onClick
-		);
+		this.j.e.off(this._eventsList(), this.onClick);
 	}
 
 	/**

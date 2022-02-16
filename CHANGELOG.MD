@@ -9,6 +9,16 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.14.1
+
+#### :boom: Breaking Change
+
+* Changed the positions of some buttons on different resolutions for greater density
+
+#### :bug: Bug Fix
+
+* [Cannot format table cells in PRO version #786](https://github.com/xdan/jodit/issues/786)
+
 ## 3.13.5
 
 #### :bug: Bug Fix

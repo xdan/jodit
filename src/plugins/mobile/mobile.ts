@@ -8,87 +8,11 @@
  * @module plugins/mobile
  */
 
-import type {
-	IControlType,
-	IToolbarCollection,
-	IJodit,
-	CanUndef,
-	ButtonsGroups
-} from 'jodit/types';
-import { Config } from 'jodit/config';
-import * as consts from 'jodit/core/constants';
+import type { IToolbarCollection, IJodit, ButtonsGroups } from 'jodit/types';
 import { splitArray, toArray } from 'jodit/core/helpers/';
-import { makeCollection } from 'jodit/modules/toolbar/factory';
-import { UIList } from 'jodit/core/ui';
 import { flatButtonsSet } from 'jodit/core/ui/helpers/buttons';
 
-declare module 'jodit/config' {
-	interface Config {
-		/**
-		 * Mobile timeout for CLICK emulation
-		 */
-		mobileTapTimeout: number;
-
-		/**
-		 * After resize it will change buttons set for different sizes
-		 */
-		toolbarAdaptive: boolean;
-	}
-}
-
-Config.prototype.mobileTapTimeout = 300;
-Config.prototype.toolbarAdaptive = true;
-
-Config.prototype.controls.dots = {
-	mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
-	popup: (
-		editor: IJodit,
-		current: false | Node,
-		control: IControlType,
-		close,
-		button
-	) => {
-		let store:
-			| {
-					toolbar: IToolbarCollection;
-					rebuild: () => void;
-			  }
-			| undefined = control.data as any;
-
-		if (store === undefined) {
-			store = {
-				toolbar: makeCollection(editor),
-				rebuild: () => {
-					if (button) {
-						const buttons: CanUndef<Array<string | IControlType>> =
-							editor.e.fire(
-								'getDiffButtons.mobile',
-								button.closest(UIList)
-							);
-
-						if (buttons && store) {
-							store.toolbar.build(splitArray(buttons));
-
-							const w =
-								editor.toolbar.firstButton?.container
-									.offsetWidth || 36;
-
-							store.toolbar.container.style.width =
-								(w + 4) * 3 + 'px';
-						}
-					}
-				}
-			};
-
-			control.data = store;
-		}
-
-		store.rebuild();
-
-		return store.toolbar;
-	},
-	tooltip: 'Show all'
-} as IControlType;
+import './config';
 
 /**
  * Rebuild toolbar in depends of editor's width
@@ -98,7 +22,8 @@ export function mobile(editor: IJodit): void {
 		store: ButtonsGroups = splitArray(editor.o.buttons);
 
 	if (editor.o.mobileTapTimeout) {
-		editor.e.on('touchend', (e: TouchEvent) => {
+		// Emulate double tap
+		editor.e.on('touchend', (e: TouchEvent & MouseEvent): void | false => {
 			if (e.changedTouches && e.changedTouches.length) {
 				const now = new Date().getTime(),
 					diff = now - timeout;
@@ -107,10 +32,7 @@ export function mobile(editor: IJodit): void {
 					timeout = now;
 
 					if (diff < editor.o.mobileTapTimeout * 1.5) {
-						editor.s.insertCursorAtPoint(
-							e.changedTouches[0].clientX,
-							e.changedTouches[0].clientY
-						);
+						editor.s.insertCursorAtPoint(e.clientX, e.clientY);
 					}
 				}
 			}
@@ -147,7 +69,9 @@ export function mobile(editor: IJodit): void {
 						return;
 					}
 
-					const width = editor.container.offsetWidth;
+					const width = (
+						editor.container.parentElement ?? editor.container
+					).offsetWidth;
 
 					const newStore = (() => {
 						if (width >= editor.o.sizeLG) {
@@ -176,6 +100,8 @@ export function mobile(editor: IJodit): void {
 					}
 				}
 			)
-			.on(editor.ow, 'load', () => editor.e.fire('recalcAdaptive'));
+			.on(editor.ow, 'load resize', () =>
+				editor.e.fire('recalcAdaptive')
+			);
 	}
 }

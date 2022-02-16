@@ -96,7 +96,7 @@ Config.prototype.nl2brInPlainText = true;
 Config.prototype.defaultActionOnPaste = INSERT_AS_HTML;
 Config.prototype.defaultActionOnPasteFromWord = null;
 
-Config.prototype.draggableTags = ['img', 'a', 'jodit-media', 'jodit'];
+Config.prototype.draggableTags = ['img', 'jodit-media', 'jodit'];
 
 Config.prototype.controls.cut = {
 	command: 'cut',

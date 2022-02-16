@@ -826,7 +826,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		if (super.lock(name)) {
 			this.__selectionLocked = this.s.save();
 			this.s.clear();
-			this.editor.classList.add('jodit_disabled');
+			this.editor.classList.add('jodit_lock');
 			this.e.fire('lock', true);
 			return true;
 		}
@@ -839,7 +839,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 */
 	override unlock(): boolean {
 		if (super.unlock()) {
-			this.editor.classList.remove('jodit_disabled');
+			this.editor.classList.remove('jodit_lock');
 
 			if (this.__selectionLocked) {
 				this.s.restore();

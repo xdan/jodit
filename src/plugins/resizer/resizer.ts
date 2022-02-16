@@ -10,9 +10,8 @@
 
 import './resizer.less';
 
-import type { HTMLTagNames, IBound, Nullable } from 'jodit/types';
+import type { IBound, Nullable } from 'jodit/types';
 import type { IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';
 import { IS_IE } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
@@ -28,57 +27,12 @@ import {
 import { Plugin } from 'jodit/core/plugin';
 import { eventEmitter } from 'jodit/core/global';
 import { autobind, debounce, watch } from 'jodit/core/decorators';
-
-/**
- * The module creates a supporting frame for resizing of the elements img and table
- */
-
-declare module 'jodit/config' {
-	interface Config {
-		/**
-		 * Use true frame for editing iframe size
-		 */
-		allowResizeTags: HTMLTagNames[];
-
-		resizer: {
-			/**
-			 * Show size
-			 */
-			showSize: boolean;
-			hideSizeTimeout: number;
-
-			/**
-			 * When resizing images, change not the styles but the width and height attributes
-			 */
-			forImageChangeAttributes: boolean;
-
-			/**
-			 * The minimum width for the editable element
-			 */
-			min_width: number;
-
-			/**
-			 * The minimum height for the item being edited
-			 */
-			min_height: number;
-		};
-	}
-}
-
-Config.prototype.allowResizeTags = ['img', 'iframe', 'table', 'jodit'];
-
-Config.prototype.resizer = {
-	showSize: true,
-	hideSizeTimeout: 1000,
-	forImageChangeAttributes: true,
-	min_width: 10,
-	min_height: 10
-};
+import './config';
 
 const keyBInd = '__jodit-resizer_binded';
 
 /**
- * Resize table and img
+ * The module creates a supporting frame for resizing of the elements img and table
  */
 export class resizer extends Plugin {
 	private LOCK_KEY = 'resizer';
