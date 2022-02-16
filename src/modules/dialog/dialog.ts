@@ -159,7 +159,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	@autobind
 	private onMouseUp(): void {
 		if (this.draggable || this.resizable) {
-			this.removeGlobalResizeListeners()
+			this.removeGlobalResizeListeners();
 
 			this.draggable = false;
 			this.resizable = false;
@@ -784,9 +784,18 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		const headerBox = self.getElm('header');
 
-		headerBox && self.e.on(headerBox, 'pointerdown touchstart', self.onHeaderMouseDown);
+		headerBox &&
+			self.e.on(
+				headerBox,
+				'pointerdown touchstart',
+				self.onHeaderMouseDown
+			);
 
-		self.e.on(self.resizer, 'mousedown touchstart', self.onResizerMouseDown);
+		self.e.on(
+			self.resizer,
+			'mousedown touchstart',
+			self.onResizerMouseDown
+		);
 
 		const fullSize = pluginSystem.get('fullsize') as Function;
 		isFunction(fullSize) && fullSize(self);
