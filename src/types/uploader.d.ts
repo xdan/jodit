@@ -71,7 +71,7 @@ export interface IUploaderOptions<T> {
 
 export interface IUploader extends IViewComponent {
 	readonly options: IUploaderOptions<IUploader>;
-	get o(): this['options'];
+	readonly o: this['options'];
 
 	bind(
 		form: HTMLElement,

@@ -18,6 +18,7 @@
 #### :bug: Bug Fix
 
 * [Cannot format table cells in PRO version #786](https://github.com/xdan/jodit/issues/786)
+* [Build error: Property or signature expected. #174](https://github.com/jodit/jodit-react/issues/174)
 
 ## 3.13.5
 
