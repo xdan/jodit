@@ -654,15 +654,7 @@ export class Config implements IViewOptions {
 			buttons: []
 		},
 		{
-			group: 'indent',
-			buttons: []
-		},
-		{
 			group: 'font',
-			buttons: []
-		},
-		{
-			group: 'color',
 			buttons: []
 		},
 		'---',
@@ -685,6 +677,14 @@ export class Config implements IViewOptions {
 		},
 		{
 			group: 'insert',
+			buttons: []
+		},
+		{
+			group: 'indent',
+			buttons: []
+		},
+		{
+			group: 'color',
 			buttons: []
 		},
 		{
@@ -727,15 +727,16 @@ export class Config implements IViewOptions {
 		'|',
 		'font',
 		'fontsize',
-		'brush',
-		'paragraph',
-		'align',
 		'---',
 		'image',
 		'table',
 		'|',
 		'link',
 		'\n',
+		'brush',
+		'paragraph',
+		'align',
+		'|',
 		'hr',
 		'copyformat',
 		'fullsize',
@@ -785,12 +786,17 @@ export class Config implements IViewOptions {
 		'brush',
 		'paragraph',
 		'eraser',
+		'|',
+		'fontsize',
 		'---',
 		'image',
 		'\n',
 		'align',
 		'undo',
 		'redo',
+		'|',
+		'link',
+		'table',
 		'---',
 		'dots'
 	];
