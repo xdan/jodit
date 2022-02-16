@@ -159,7 +159,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	@autobind
 	private onMouseUp(): void {
 		if (this.draggable || this.resizable) {
-			this.e.off(this.ow, 'mousemove', this.onMouseMove);
+			this.removeGlobalResizeListeners()
 
 			this.draggable = false;
 			this.resizable = false;
@@ -197,7 +197,10 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		this.startPoint.y = css(this.dialog, 'top') as number;
 
 		this.setMaxZIndex();
-		e.preventDefault();
+
+		if (e.cancelable) {
+			e.preventDefault();
+		}
 
 		this.lockSelect();
 
@@ -311,16 +314,16 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		const self = this;
 
 		self.e
-			.on(self.ow, 'mousemove', self.onMouseMove)
-			.on(self.ow, 'mouseup', self.onMouseUp);
+			.on(self.ow, 'pointermove touchmove', self.onMouseMove)
+			.on(self.ow, 'pointerup touchend', self.onMouseUp);
 	}
 
 	private removeGlobalResizeListeners(): void {
 		const self = this;
 
 		self.e
-			.off(self.ow, 'mousemove', self.onMouseMove)
-			.off(self.ow, 'mouseup', self.onMouseUp);
+			.off(self.ow, 'mousemove pointermove', self.onMouseMove)
+			.off(self.ow, 'mouseup pointerup', self.onMouseUp);
 	}
 
 	override OPTIONS!: IDialogOptions;
@@ -781,9 +784,9 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		const headerBox = self.getElm('header');
 
-		headerBox && self.e.on(headerBox, 'mousedown', self.onHeaderMouseDown);
+		headerBox && self.e.on(headerBox, 'pointerdown touchstart', self.onHeaderMouseDown);
 
-		self.e.on(self.resizer, 'mousedown', self.onResizerMouseDown);
+		self.e.on(self.resizer, 'mousedown touchstart', self.onResizerMouseDown);
 
 		const fullSize = pluginSystem.get('fullsize') as Function;
 		isFunction(fullSize) && fullSize(self);

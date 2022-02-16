@@ -22,7 +22,7 @@ export class lineHeight extends Plugin {
 	override buttons: Plugin['buttons'] = [
 		{
 			name: 'lineHeight',
-			group: 'font-style'
+			group: 'font'
 		}
 	];
 

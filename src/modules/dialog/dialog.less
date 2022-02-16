@@ -82,7 +82,9 @@
 		text-align: left;
 
 		white-space: normal;
+	}
 
+	&:not(&_adaptive_false) &__panel {
 		@media (max-width: @screen-xs) {
 			top: 0 !important;
 			left: 0 !important;
@@ -120,10 +122,6 @@
 		border-bottom: 1px solid var(--color-border);
 		cursor: move;
 		text-align: left;
-
-		@media (max-width: @screen-xs) {
-			flex-direction: column;
-		}
 
 		&-toolbar,
 		&-title {
@@ -170,6 +168,12 @@
 					padding-left: var(--padding-default);
 				}
 			}
+		}
+	}
+
+	&:not(&_adaptive_false) &__header {
+		@media (max-width: @screen-xs) {
+			flex-direction: column;
 		}
 	}
 

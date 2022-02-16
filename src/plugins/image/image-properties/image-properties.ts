@@ -11,7 +11,6 @@
 import './image-properties.less';
 
 import type { IDialog, IFileBrowserCallBackData, IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
 
 import {
 	Alert,
@@ -42,6 +41,8 @@ import { watch, autobind } from 'jodit/core/decorators';
 import { openImageEditor } from 'jodit/modules/image-editor/image-editor';
 import { hAlignElement } from 'jodit/plugins/image/helpers';
 
+import './config';
+
 /**
  * Plug-in for image editing window
  *
@@ -55,104 +56,6 @@ import { hAlignElement } from 'jodit/plugins/image/helpers';
  * });
  * ```
  */
-
-declare module 'jodit/config' {
-	interface Config {
-		image: {
-			dialogWidth: number;
-
-			/**
-			 * Open editing dialog after double click on image
-			 */
-			openOnDblClick: boolean;
-
-			/**
-			 * Show edit 'src' input
-			 */
-			editSrc: boolean;
-
-			/**
-			 * Show crop/resize btn
-			 */
-			useImageEditor: boolean;
-
-			/**
-			 * Show edit 'title' input
-			 */
-			editTitle: boolean;
-
-			/**
-			 * Show edit 'alt' input
-			 */
-			editAlt: boolean;
-
-			/**
-			 * Show edit image link's options
-			 */
-			editLink: boolean;
-
-			/**
-			 * Show edit image size's inputs
-			 */
-			editSize: boolean;
-
-			/**
-			 * Show edit margin inputs
-			 */
-			editMargins: boolean;
-			editBorderRadius: boolean;
-
-			/**
-			 * Show edit classNames input
-			 */
-			editClass: boolean;
-
-			/**
-			 * Show style edit input
-			 */
-			editStyle: boolean;
-
-			/**
-			 * Show edit ID input
-			 */
-			editId: boolean;
-
-			/**
-			 * Show Alignment selector
-			 */
-			editAlign: boolean;
-
-			/**
-			 * Show preview image
-			 */
-			showPreview: boolean;
-
-			/**
-			 * Select image after close dialog
-			 */
-			selectImageAfterClose: boolean;
-		};
-	}
-}
-
-Config.prototype.image = {
-	dialogWidth: 600,
-	openOnDblClick: true,
-	editSrc: true,
-	useImageEditor: true,
-	editTitle: true,
-	editAlt: true,
-	editLink: true,
-	editSize: true,
-	editBorderRadius: true,
-	editMargins: true,
-	editClass: true,
-	editStyle: true,
-	editId: true,
-	editAlign: true,
-	showPreview: true,
-	selectImageAfterClose: true
-};
 
 const normalSizeToString = (value: string): string => {
 	value = trim(value);

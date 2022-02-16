@@ -9,7 +9,7 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { $$ } from 'jodit/core/helpers';
+import { $$, dataBind } from 'jodit/core/helpers';
 
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 
@@ -21,24 +21,21 @@ export function imageProcessor(editor: IJodit): void {
 		'change afterInit changePlace',
 		editor.async.debounce(() => {
 			if (editor.editor) {
-				$$('img', editor.editor).forEach((elm: HTMLElement) => {
-					if (!(elm as any)[JODIT_IMAGE_PROCESSOR_BINDED]) {
-						(elm as any)[JODIT_IMAGE_PROCESSOR_BINDED] = true;
-						if (!(elm as HTMLImageElement).complete) {
-							elm.addEventListener(
-								'load',
-								function ElementOnLoad() {
-									!editor.isInDestruct &&
-										editor.e?.fire('resize');
-									elm.removeEventListener(
-										'load',
-										ElementOnLoad
-									);
-								}
-							);
+				$$('img', editor.editor).forEach(elm => {
+					if (!dataBind(elm, JODIT_IMAGE_PROCESSOR_BINDED)) {
+						dataBind(elm, JODIT_IMAGE_PROCESSOR_BINDED, true);
+
+						if (!elm.complete) {
+							editor.e.on(elm, 'load', function ElementOnLoad() {
+								!editor.isInDestruct &&
+									editor.e?.fire('resize');
+
+								editor.e.off(elm, 'load', ElementOnLoad);
+							});
 						}
 
 						editor.e.on(elm, 'mousedown touchstart', () => {
+							console.log('mousedown touchstart', elm);
 							editor.s.select(elm);
 						});
 					}
