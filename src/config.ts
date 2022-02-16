@@ -46,20 +46,6 @@ export class Config implements IViewOptions {
 	 */
 	safePluginsList: string[] = ['about', 'enter', 'backspace'];
 
-	/**
-	 * When this option is enabled, the editor's content will be placed in an iframe and isolated from the rest of the page.
-	 *
-	 * @example
-	 * ```javascript
-	 * new Jodit('#editor', {
-	 *    iframe = true;
-	 *    iframeStyle = 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index:2;\
-	 *    user-select:auto;margin:0px;overflow:hidden;}body:after{content:"";clear:both;display:block}';
-	 * });
-	 * ```
-	 */
-	iframe: boolean = false;
-
 	commandToHotkeys!: IDictionary<string | string[]>;
 
 	license: string = '';

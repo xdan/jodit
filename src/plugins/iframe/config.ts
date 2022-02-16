@@ -13,6 +13,20 @@ import { Config } from 'jodit/config';
 declare module 'jodit/config' {
 	interface Config {
 		/**
+		 * When this option is enabled, the editor's content will be placed in an iframe and isolated from the rest of the page.
+		 *
+		 * @example
+		 * ```javascript
+		 * Jodit.make('#editor', {
+		 *    iframe: true,
+		 *    iframeStyle: 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index:2;\
+		 *    user-select:auto;margin:0px;overflow:hidden;}body:after{content:"";clear:both;display:block}';
+		 * });
+		 * ```
+		 */
+		iframe: boolean;
+
+		/**
 		 * Allow editing the entire HTML document(html, head)
 		 */
 		editHTMLDocumentMode: boolean;
@@ -80,6 +94,7 @@ declare module 'jodit/config' {
 	}
 }
 
+Config.prototype.iframe = false;
 Config.prototype.iframeBaseUrl = '';
 Config.prototype.iframeTitle = 'Jodit Editor';
 Config.prototype.iframeDoctype = '<!DOCTYPE html>';
