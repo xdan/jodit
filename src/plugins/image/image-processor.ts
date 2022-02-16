@@ -35,7 +35,6 @@ export function imageProcessor(editor: IJodit): void {
 						}
 
 						editor.e.on(elm, 'mousedown touchstart', () => {
-							console.log('mousedown touchstart', elm);
 							editor.s.select(elm);
 						});
 					}

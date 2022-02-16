@@ -162,7 +162,10 @@ export class resizer extends Plugin {
 
 		this.handle = resizeHandle;
 
-		e.preventDefault();
+		if (e.cancelable) {
+			e.preventDefault();
+		}
+
 		e.stopImmediatePropagation();
 
 		this.width = this.element.offsetWidth;

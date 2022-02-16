@@ -6,7 +6,7 @@
 describe('Drag and drop element inside Editor', function () {
 	const { position } = Jodit.modules.Helpers;
 
-	['mousedown|mousemove|mouseup', 'touchstart|touchmove|touchend']
+	['mousedown|mousemove|mouseup']
 		.map(function (item) {
 			return item.split('|');
 		})
