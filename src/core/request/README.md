@@ -5,7 +5,7 @@ const ajax = new Jodit.modules.Ajax(jodit, {
 	url: 'https://xdsoft.net'
 });
 
-ajax.send().then((resp) => console.log(resp.text()));
+ajax.send().then(resp => console.log(resp.text()));
 ```
 
 The second argument can be settings [[AjaxOptions]]

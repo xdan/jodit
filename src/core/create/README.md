@@ -43,10 +43,10 @@ const jodit = Jodit.make('#editor', {
 });
 
 const p = jodit.createInside.element('p');
-console.log(p.style.cssText) // color: red
+console.log(p.style.cssText); // color: red
 
 const a = jodit.createInside.element('a');
-console.log(a.title) // Some title
+console.log(a.title); // Some title
 ```
 
 To create DOM elements from text, you should also use this module:

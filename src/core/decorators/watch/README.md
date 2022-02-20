@@ -11,18 +11,18 @@ import { UIElement } from 'jodit/src/ui';
 class UISomeReactElement extends UIElement {
 	state = {
 		color: 'red'
-	}
+	};
 
 	render(): string {
 		return `<div>
 			This text must be colored
-		</div>`
+		</div>`;
 	}
 
 	@hook('ready')
 	@watch('state.color')
 	onChangeColor(): void {
-	  this.container.style.color = this.state.color;
+		this.container.style.color = this.state.color;
 	}
 }
 
@@ -33,9 +33,10 @@ elm.state.color = 'yellow';
 The decorator can also be used to hang event handlers [[EventEmitter]]
 
 Then the call signature has its own syntax:
-- `:{EVENT}`
-- `{CONTEXT}:{EVENT}`
-- `{CONTEXT}:{EVENT.NAMESPACE}`
+
+-   `:{EVENT}`
+-   `{CONTEXT}:{EVENT}`
+-   `{CONTEXT}:{EVENT.NAMESPACE}`
 
 For example, this is how you can hang a click handler on the component container:
 
@@ -44,10 +45,10 @@ For example, this is how you can hang a click handler on the component container
 class UIButtonElement extends UIElement {
 	state = {
 		counter: 0
-	}
+	};
 
 	render(): string {
-		return `<button>text</button>`
+		return `<button>text</button>`;
 	}
 
 	@watch('container:click') // Same this.j.e(this.container, 'click', this.onClick.bind(this))
@@ -57,7 +58,7 @@ class UIButtonElement extends UIElement {
 
 	@watch('state.counter')
 	onClick(): void {
-		this.container.innerText = `Clicked ` + this.state.counter
+		this.container.innerText = `Clicked ` + this.state.counter;
 	}
 }
 ```
@@ -69,13 +70,13 @@ The context can be specified as a path to an object, and even as the name of a B
 class UICard extends UIElement {
 	state = {
 		counter: 0
-	}
+	};
 
 	render(): string {
 		return `<div>
 		  Clicked <span class="&__counter"></span>
 		  <button class="&__card-button">Click</button>
-		</div>`
+		</div>`;
 	}
 
 	@watch('card-button:click') // As this.j.e.on(this.getElm('card-button'), 'click', this.onClick.bind(this))
@@ -85,17 +86,17 @@ class UICard extends UIElement {
 
 	@watch('jodit.editor:focus') // As this.j.e.on(this.j.editor, 'focus', this.onJoditEditorFocus.bind(this))
 	onJoditEditorFocus(): void {
-		alert('Focused')
+		alert('Focused');
 	}
 
 	@watch(':afterSetMode') // As this.j.e.on('afterSetMode', this.onAfterSetMode.bind(this))
 	onAfterSetMode(): void {
-		alert(this.jodit.mode)
+		alert(this.jodit.mode);
 	}
 
 	@watch('state.counter')
 	onClick(): void {
-		this.getElm('counter').innerText = this.state.counter
+		this.getElm('counter').innerText = this.state.counter;
 	}
 }
 ```
@@ -106,7 +107,7 @@ or by setting the function as the second parameter that will return the context
 ```ts
 @component()
 class UICardExt extends UICard {
-	@watch(':click', (ctx) => ctx.getElm('card-button')) // As this.j.e.on(this.getElm('card-button'), 'click', this.onClick.bind(this))
+	@watch(':click', ctx => ctx.getElm('card-button')) // As this.j.e.on(this.getElm('card-button'), 'click', this.onClick.bind(this))
 	onClick(): void {
 		this.state.counter++;
 	}
@@ -114,10 +115,15 @@ class UICardExt extends UICard {
 ```
 
 The first argument can be an array:
+
 ```ts
 @component()
 class UICardExt extends UICard {
-	@watch(['card-button:click','card-button:mouseup','card-button:mousedown'])
+	@watch([
+		'card-button:click',
+		'card-button:mouseup',
+		'card-button:mousedown'
+	])
 	onMouseEvents(e): void {
 		e.preventDefault();
 	}

@@ -23,7 +23,7 @@ The [EventEmiter](https://github.com/xdan/jodit/blob/master/src/types/events.d.t
 
 ```js
 Jodit.plugins.add('keyLogger', function (jodit) {
-	jodit.events.on('keydown', (e) => {
+	jodit.events.on('keydown', e => {
 		sendAnalytics('keydown', e.key);
 	});
 });
@@ -132,7 +132,6 @@ Jodit.plugins.add('insertTimePlugin', insertTimePlugin);
 
 If your plugin depends on other plugins, then it must be initialized after them.
 
-
 ## Debug
 
 Since version `3.12.4` you can disable all Jodit plugins during development and work only with your own plugin.
@@ -144,3 +143,4 @@ Jodit.make('#editor', {
 	safePluginsList: ['about'],
 	extraPlugins: ['yourPluginDev']
 });
+```

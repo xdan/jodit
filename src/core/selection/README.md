@@ -7,14 +7,14 @@ There is a family of methods for this.[[Select.prototype.insertHTML]], [[Select.
 
 ```js
 const jodit = Jodit.make('#editor');
-jodit.selection.insertHTML('<span>some html</span>')
-jodit.selection.insertNode(document.createElement('div')) // don't do that =) see [[core/create]]
-jodit.selection.insertImage('https://somesite.com/image.png')
+jodit.selection.insertHTML('<span>some html</span>');
+jodit.selection.insertNode(document.createElement('div')); // don't do that =) see [[core/create]]
+jodit.selection.insertImage('https://somesite.com/image.png');
 ```
 
 ## How to set focus in Jodit editor
 
 ```js
 const jodit = Jodit.make('#editor');
-jodit.selection.focus()
+jodit.selection.focus();
 ```

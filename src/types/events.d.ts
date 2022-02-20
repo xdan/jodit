@@ -130,10 +130,7 @@ interface IEventEmitter extends IDestructible {
 	 * parent.e.off('someGlobalEvents');
 	 * ```
 	 */
-	off(
-		events: string,
-		eventsOrCallback?: CallbackFunction
-	): IEventEmitter;
+	off(events: string, eventsOrCallback?: CallbackFunction): IEventEmitter;
 	off(
 		subject: object,
 		events?: string,

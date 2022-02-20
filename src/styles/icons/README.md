@@ -6,19 +6,23 @@ console.log(Jodit.modules.Icon.get('cancel')); // <svg ...
 ```
 
 You can add your own icons:
+
 ```js
-Jodit.modules.Icon.set('someIcon', '<svg ....')
+Jodit.modules.Icon.set('someIcon', '<svg ....');
 ```
 
 And then use this icon for example in a button in the toolbar
+
 ```js
 Jodit.make('#editor', {
-	buttons: [{
-		icon: 'someIcon',
-    name: 'someButton',
-    exec: (e) => alert(e.selection.html)
-  }]
-})
+	buttons: [
+		{
+			icon: 'someIcon',
+			name: 'someButton',
+			exec: e => alert(e.selection.html)
+		}
+	]
+});
 ```
 
 The list of icons from the build can be viewed [here](https://github.com/xdan/jodit/tree/master/src/styles/icons)
@@ -27,12 +31,14 @@ In addition to the added icons in the toolbar, you can also use a simple link to
 
 ```js
 Jodit.make('#editor', {
-	buttons: [{
-    iconURL: 'https://xdsoft.net/jodit/build/images/logo.png',
-    name: 'someButton',
-    exec: (e) => alert(e.selection.html)
-  }]
-})
+	buttons: [
+		{
+			iconURL: 'https://xdsoft.net/jodit/build/images/logo.png',
+			name: 'someButton',
+			exec: e => alert(e.selection.html)
+		}
+	]
+});
 ```
 
 ## Custom icons / Use Font awesome

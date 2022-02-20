@@ -36,10 +36,7 @@ interface IJodit extends IViewWithToolbar {
 	element: HTMLElement;
 
 	getNativeEditorValue(): string;
-	getEditorValue(
-		removeSelectionMarkers?: boolean,
-		consumer?: string
-	): string;
+	getEditorValue(removeSelectionMarkers?: boolean, consumer?: string): string;
 	setEditorValue(value?: string): void;
 
 	getReadOnly(): boolean;

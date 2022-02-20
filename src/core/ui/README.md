@@ -8,7 +8,7 @@ Each UI element must implement the interface [[IIUElement]], and should extend [
 > For each element to work, an instance is required when creating it [[IView]]
 
 ```ts
-import './style.less'
+import './style.less';
 
 import { UIElement } from 'jodit/src/core/ui';
 import { component } from 'jodit/src/core/decorators';
@@ -34,18 +34,19 @@ export class UISlider extends UIElement {
 Pay attention to the styles. They connect explicitly.
 
 File `style.less`
+
 ```less
 .jodit-ui-slider {
-  &__wrapper {
-    display: flex;
-    overflow: scroll;
-  }
+	&__wrapper {
+		display: flex;
+		overflow: scroll;
+	}
 
-  &__slider-item {
-    display: flex;
-    width: 200px;
-    height: 100px;
-    background-color: red;
-  }
+	&__slider-item {
+		display: flex;
+		width: 200px;
+		height: 100px;
+		background-color: red;
+	}
 }
 ```
