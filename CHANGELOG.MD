@@ -11,6 +11,10 @@
 
 ## 3.14.2
 
+#### :rocket: New Feature
+
+-   Added an experimental module for working with VDom<->Dom, an attempt to switch to this technology in the editor
+
 #### :house: Internal
 
 -   @types/node ^17.0.15 → ^17.0.18
@@ -1109,11 +1113,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                 	{ value: "", text: "" },
--                                                                                                                                 	{ value: "val1", text: "text1" },
--                                                                                                                                 	{ value: "val2", text: "text2" },
--                                                                                                                                 	{ value: "val3", text: "text3" }
--                                                                                                                                 ]
+-                                                                                                                                   	{ value: "", text: "" },
+-                                                                                                                                   	{ value: "val1", text: "text1" },
+-                                                                                                                                   	{ value: "val2", text: "text2" },
+-                                                                                                                                   	{ value: "val3", text: "text3" }
+-                                                                                                                                   ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
