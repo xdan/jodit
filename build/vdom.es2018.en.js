@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.14.2
+ * Version: v3.14.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -384,40 +384,6 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 }
 
-;// CONCATENATED MODULE: ./src/core/helpers/utils/assert.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-class AssertionError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = 'AssertionError';
-    }
-}
-function assert(condition, message) {
-    if (!condition) {
-        throw new AssertionError(`Assertion failed: ${message}`);
-    }
-}
-
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/mark-deprecated.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const cns = console;
-function markDeprecated(method, names = [''], ctx = null) {
-    return (...args) => {
-        cns.warn(`Method "${names[0]}" deprecated.` +
-            (names[1] ? ` Use "${names[1]}" instead` : ''));
-        return method.call(ctx, ...args);
-    };
-}
-
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-function.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -434,7 +400,7 @@ function is_function_isFunction(value) {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-function is_promise_isPromise(val) {
+function isPromise(val) {
     return val && typeof val.then === 'function';
 }
 
@@ -502,6 +468,197 @@ const statuses_STATUSES = {
     destructed: 'destructed'
 };
 
+;// CONCATENATED MODULE: ./src/core/helpers/utils/assert.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+class AssertionError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'AssertionError';
+    }
+}
+function assert(condition, message) {
+    if (!condition) {
+        throw new AssertionError(`Assertion failed: ${message}`);
+    }
+}
+
+
+;// CONCATENATED MODULE: ./src/core/helpers/utils/mark-deprecated.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const cns = console;
+function markDeprecated(method, names = [''], ctx = null) {
+    return (...args) => {
+        cns.warn(`Method "${names[0]}" deprecated.` +
+            (names[1] ? ` Use "${names[1]}" instead` : ''));
+        return method.call(ctx, ...args);
+    };
+}
+
+;// CONCATENATED MODULE: ./src/core/helpers/checker/is-array.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function is_array_isArray(elm) {
+    return Array.isArray(elm);
+}
+
+;// CONCATENATED MODULE: ./src/core/helpers/checker/is-boolean.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function isBoolean(elm) {
+    return typeof elm === 'boolean';
+}
+
+;// CONCATENATED MODULE: ./src/core/helpers/checker/is-equal.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function isEqual(a, b) {
+    return a === b || stringify(a) === stringify(b);
+}
+function isFastEqual(a, b) {
+    return a === b;
+}
+
+;// CONCATENATED MODULE: ./src/core/helpers/checker/is-html.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+const isHTML = (str) => is_string_isString(str) &&
+    /<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m.test(str.replace(/[\r\n]/g, ''));
+
+;// CONCATENATED MODULE: ./src/core/constants.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const INVISIBLE_SPACE = '\uFEFF';
+const NBSP_SPACE = '\u00A0';
+const INVISIBLE_SPACE_REG_EXP = () => /[\uFEFF]/g;
+const constants_INVISIBLE_SPACE_REG_EXP_END = () => /[\uFEFF]+$/g;
+const constants_INVISIBLE_SPACE_REG_EXP_START = () => /^[\uFEFF]+/g;
+const SPACE_REG_EXP = () => /[\s\n\t\r\uFEFF\u200b]+/g;
+const SPACE_REG_EXP_START = () => /^[\s\n\t\r\uFEFF\u200b]+/g;
+const SPACE_REG_EXP_END = () => /[\s\n\t\r\uFEFF\u200b]+$/g;
+const IS_BLOCK = /^(ARTICLE|SCRIPT|STYLE|OBJECT|FOOTER|HEADER|NAV|SECTION|IFRAME|JODIT|JODIT-MEDIA|PRE|DIV|P|LI|UL|OL|H[1-6]|BLOCKQUOTE|TR|TD|TH|TBODY|THEAD|TABLE|BODY|HTML|FIGCAPTION|FIGURE|DT|DD|DL|DFN|FORM)$/i;
+const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB|A|U)$/i;
+const INSEPARABLE_TAGS = [
+    'img',
+    'br',
+    'video',
+    'iframe',
+    'script',
+    'input',
+    'textarea',
+    'hr',
+    'link',
+    'jodit',
+    'jodit-media'
+];
+const MAY_BE_REMOVED_WITH_KEY = RegExp(`^${INSEPARABLE_TAGS.join('|')}$`, 'i');
+const KEY_BACKSPACE = 'Backspace';
+const KEY_TAB = 'Tab';
+const KEY_ENTER = 'Enter';
+const KEY_ESC = 'Escape';
+const KEY_LEFT = 'ArrowLeft';
+const KEY_UP = 'ArrowUp';
+const KEY_RIGHT = 'ArrowRight';
+const KEY_DOWN = 'ArrowDown';
+const KEY_SPACE = 'Space';
+const KEY_DELETE = 'Delete';
+const KEY_F3 = 'F3';
+const NEARBY = 5;
+const ACCURACY = 10;
+const COMMAND_KEYS = [
+    KEY_BACKSPACE,
+    KEY_DELETE,
+    KEY_UP,
+    KEY_DOWN,
+    KEY_RIGHT,
+    KEY_LEFT,
+    KEY_ENTER,
+    KEY_ESC,
+    KEY_F3,
+    KEY_TAB
+];
+const BR = 'br';
+const PARAGRAPH = 'p';
+const MODE_WYSIWYG = 1;
+const MODE_SOURCE = 2;
+const MODE_SPLIT = 3;
+const IS_IE = typeof navigator !== 'undefined' &&
+    (navigator.userAgent.indexOf('MSIE') !== -1 ||
+        /rv:11.0/i.test(navigator.userAgent));
+const TEXT_PLAIN = (/* unused pure expression or super */ null && (IS_IE ? 'text' : 'text/plain'));
+const TEXT_HTML = (/* unused pure expression or super */ null && (IS_IE ? 'html' : 'text/html'));
+const MARKER_CLASS = 'jodit-selection_marker';
+const EMULATE_DBLCLICK_TIMEOUT = 300;
+const INSERT_AS_HTML = 'insert_as_html';
+const INSERT_CLEAR_HTML = 'insert_clear_html';
+const INSERT_AS_TEXT = 'insert_as_text';
+const INSERT_ONLY_TEXT = 'insert_only_text';
+const SAFE_COUNT_CHANGE_CALL = 10;
+const IS_MAC = typeof window !== 'undefined' &&
+    /Mac|iPod|iPhone|iPad/.test(window.navigator.platform);
+const constants_KEY_ALIASES = {
+    add: '+',
+    break: 'pause',
+    cmd: 'meta',
+    command: 'meta',
+    ctl: 'control',
+    ctrl: 'control',
+    del: 'delete',
+    down: 'arrowdown',
+    esc: 'escape',
+    ins: 'insert',
+    left: 'arrowleft',
+    mod: IS_MAC ? 'meta' : 'control',
+    opt: 'alt',
+    option: 'alt',
+    return: 'enter',
+    right: 'arrowright',
+    space: ' ',
+    spacebar: ' ',
+    up: 'arrowup',
+    win: 'meta',
+    windows: 'meta'
+};
+const BASE_PATH = (() => {
+    if (typeof document === 'undefined') {
+        return '';
+    }
+    const script = document.currentScript, removeScriptName = (s) => s.replace(/\/[^/]+.js$/, '/');
+    if (script) {
+        return removeScriptName(script.src);
+    }
+    const scripts = document.querySelectorAll('script[src]');
+    if (scripts && scripts.length) {
+        return removeScriptName(scripts[scripts.length - 1].src);
+    }
+    return window.location.href;
+})();
+const TEMP_ATTR = 'data-jodit-temp';
+
 ;// CONCATENATED MODULE: ./src/core/plugin/plugin-system.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -542,7 +699,7 @@ class PluginSystem {
             }
             const requires = (_a = plugin) === null || _a === void 0 ? void 0 : _a.requires;
             if (requires &&
-                isArray(requires) &&
+                is_array_isArray(requires) &&
                 this.hasDisabledRequires(disableList, requires)) {
                 return;
             }
@@ -673,597 +830,6 @@ class PluginSystem {
 }
 PluginSystem.styles = new Set();
 
-;// CONCATENATED MODULE: ./src/core/constants.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const INVISIBLE_SPACE = '\uFEFF';
-const NBSP_SPACE = '\u00A0';
-const INVISIBLE_SPACE_REG_EXP = () => /[\uFEFF]/g;
-const constants_INVISIBLE_SPACE_REG_EXP_END = () => /[\uFEFF]+$/g;
-const constants_INVISIBLE_SPACE_REG_EXP_START = () => /^[\uFEFF]+/g;
-const SPACE_REG_EXP = () => /[\s\n\t\r\uFEFF\u200b]+/g;
-const SPACE_REG_EXP_START = () => /^[\s\n\t\r\uFEFF\u200b]+/g;
-const SPACE_REG_EXP_END = () => /[\s\n\t\r\uFEFF\u200b]+$/g;
-const IS_BLOCK = /^(ARTICLE|SCRIPT|STYLE|OBJECT|FOOTER|HEADER|NAV|SECTION|IFRAME|JODIT|JODIT-MEDIA|PRE|DIV|P|LI|UL|OL|H[1-6]|BLOCKQUOTE|TR|TD|TH|TBODY|THEAD|TABLE|BODY|HTML|FIGCAPTION|FIGURE|DT|DD|DL|DFN|FORM)$/i;
-const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB|A|U)$/i;
-const INSEPARABLE_TAGS = [
-    'img',
-    'br',
-    'video',
-    'iframe',
-    'script',
-    'input',
-    'textarea',
-    'hr',
-    'link',
-    'jodit',
-    'jodit-media'
-];
-const MAY_BE_REMOVED_WITH_KEY = RegExp(`^${INSEPARABLE_TAGS.join('|')}$`, 'i');
-const KEY_BACKSPACE = 'Backspace';
-const KEY_TAB = 'Tab';
-const KEY_ENTER = 'Enter';
-const KEY_ESC = 'Escape';
-const KEY_LEFT = 'ArrowLeft';
-const KEY_UP = 'ArrowUp';
-const KEY_RIGHT = 'ArrowRight';
-const KEY_DOWN = 'ArrowDown';
-const KEY_SPACE = 'Space';
-const KEY_DELETE = 'Delete';
-const KEY_F3 = 'F3';
-const NEARBY = 5;
-const ACCURACY = 10;
-const COMMAND_KEYS = [
-    KEY_BACKSPACE,
-    KEY_DELETE,
-    KEY_UP,
-    KEY_DOWN,
-    KEY_RIGHT,
-    KEY_LEFT,
-    KEY_ENTER,
-    KEY_ESC,
-    KEY_F3,
-    KEY_TAB
-];
-const BR = 'br';
-const PARAGRAPH = 'p';
-const MODE_WYSIWYG = 1;
-const MODE_SOURCE = 2;
-const MODE_SPLIT = 3;
-const constants_IS_IE = typeof navigator !== 'undefined' &&
-    (navigator.userAgent.indexOf('MSIE') !== -1 ||
-        /rv:11.0/i.test(navigator.userAgent));
-const constants_TEXT_PLAIN = (/* unused pure expression or super */ null && (constants_IS_IE ? 'text' : 'text/plain'));
-const TEXT_HTML = (/* unused pure expression or super */ null && (constants_IS_IE ? 'html' : 'text/html'));
-const MARKER_CLASS = 'jodit-selection_marker';
-const EMULATE_DBLCLICK_TIMEOUT = 300;
-const INSERT_AS_HTML = 'insert_as_html';
-const INSERT_CLEAR_HTML = 'insert_clear_html';
-const INSERT_AS_TEXT = 'insert_as_text';
-const INSERT_ONLY_TEXT = 'insert_only_text';
-const SAFE_COUNT_CHANGE_CALL = 10;
-const IS_MAC = typeof window !== 'undefined' &&
-    /Mac|iPod|iPhone|iPad/.test(window.navigator.platform);
-const constants_KEY_ALIASES = {
-    add: '+',
-    break: 'pause',
-    cmd: 'meta',
-    command: 'meta',
-    ctl: 'control',
-    ctrl: 'control',
-    del: 'delete',
-    down: 'arrowdown',
-    esc: 'escape',
-    ins: 'insert',
-    left: 'arrowleft',
-    mod: IS_MAC ? 'meta' : 'control',
-    opt: 'alt',
-    option: 'alt',
-    return: 'enter',
-    right: 'arrowright',
-    space: ' ',
-    spacebar: ' ',
-    up: 'arrowup',
-    win: 'meta',
-    windows: 'meta'
-};
-const BASE_PATH = (() => {
-    if (typeof document === 'undefined') {
-        return '';
-    }
-    const script = document.currentScript, removeScriptName = (s) => s.replace(/\/[^/]+.js$/, '/');
-    if (script) {
-        return removeScriptName(script.src);
-    }
-    const scripts = document.querySelectorAll('script[src]');
-    if (scripts && scripts.length) {
-        return removeScriptName(scripts[scripts.length - 1].src);
-    }
-    return window.location.href;
-})();
-const TEMP_ATTR = 'data-jodit-temp';
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/toggle/toggle-css.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-function toggleCSS(commitStyle, elm, jodit, mode, dry = false) {
-    const { style, className } = commitStyle.options;
-    if (style && size(style) > 0) {
-        Object.keys(style).forEach((rule) => {
-            const inlineValue = elm.style.getPropertyValue(kebabCase(rule));
-            if (inlineValue === '' && style[rule] == null) {
-                return;
-            }
-            if (getNativeCSSValue(jodit, elm, rule) ===
-                normalizeCssValue(rule, style[rule])) {
-                !dry && css(elm, rule, null);
-                mode = UNSET;
-                mode = removeExtraCSS(commitStyle, elm, mode);
-                return;
-            }
-            mode = CHANGE;
-            !dry && css(elm, rule, style[rule]);
-        });
-    }
-    if (className) {
-        if (elm.classList.contains(className)) {
-            elm.classList.remove(className);
-            mode = UNSET;
-        }
-        else {
-            elm.classList.add(className);
-            mode = CHANGE;
-        }
-    }
-    return mode;
-}
-function removeExtraCSS(commitStyle, elm, mode) {
-    if (!utils_attr(elm, 'style')) {
-        utils_attr(elm, 'style', null);
-        if (elm.tagName.toLowerCase() === commitStyle.defaultTag) {
-            dom_Dom.unwrap(elm);
-            mode = UNWRAP;
-        }
-    }
-    return mode;
-}
-function getShadowRoot(jodit) {
-    var _a;
-    if (data_bind_dataBind(jodit, 'shadowRoot') !== undefined) {
-        return data_bind_dataBind(jodit, 'shadowRoot');
-    }
-    const container = global_getContainer(jodit);
-    const iframe = document.createElement('iframe');
-    css(iframe, {
-        width: 0,
-        height: 0,
-        position: 'absolute',
-        border: 0
-    });
-    iframe.src = 'about:blank';
-    container.appendChild(iframe);
-    const doc = (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document;
-    const shadowRoot = !doc ? jodit.od.body : doc.body;
-    data_bind_dataBind(jodit, 'shadowRoot', shadowRoot);
-    return shadowRoot;
-}
-function getNativeCSSValue(jodit, elm, key) {
-    const newElm = jodit.create.element(elm.tagName.toLowerCase());
-    newElm.style.cssText = elm.style.cssText;
-    const root = getShadowRoot(jodit);
-    root.appendChild(newElm);
-    const result = css(newElm, key);
-    dom_Dom.safeRemove(newElm);
-    return result;
-}
-
-;// CONCATENATED MODULE: ./src/core/decorators/cache/cache.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function cache(target, name, descriptor) {
-    const getter = descriptor.get;
-    if (!getter) {
-        throw error('Getter property descriptor expected');
-    }
-    descriptor.get = function () {
-        const value = getter.call(this);
-        if (value && value.noCache === true) {
-            return value;
-        }
-        Object.defineProperty(this, name, {
-            configurable: descriptor.configurable,
-            enumerable: descriptor.enumerable,
-            writable: false,
-            value
-        });
-        return value;
-    };
-}
-
-;// CONCATENATED MODULE: ./src/core/decorators/component/component.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-const cn = (elm) => {
-    return is_function_isFunction(elm.className) ? elm.className() : NaN;
-};
-function component(constructorFunction) {
-    class newConstructorFunction extends constructorFunction {
-        constructor(...args) {
-            super(...args);
-            const isSamePrototype = Object.getPrototypeOf(this) ===
-                newConstructorFunction.prototype;
-            const isSameClassName = cn(this) ===
-                cn(newConstructorFunction.prototype);
-            if (false) {}
-            if (isSamePrototype || isSameClassName) {
-                this.setStatus('ready');
-            }
-        }
-    }
-    newConstructorFunction.prototype.constructor = constructorFunction;
-    return newConstructorFunction;
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-array.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isArray(elm) {
-    return Array.isArray(elm);
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-boolean.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isBoolean(elm) {
-    return typeof elm === 'boolean';
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-equal.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function isEqual(a, b) {
-    return a === b || stringify(a) === stringify(b);
-}
-function isFastEqual(a, b) {
-    return a === b;
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-html.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-const isHTML = (str) => is_string_isString(str) &&
-    /<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m.test(str.replace(/[\r\n]/g, ''));
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-imp-interface.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-function isInitable(value) {
-    return !is_void_isVoid(value) && is_function_isFunction(value.init);
-}
-function isDestructable(value) {
-    return !is_void_isVoid(value) && is_function_isFunction(value.destruct);
-}
-function hasContainer(value) {
-    return !is_void_isVoid(value) && dom_Dom.isElement(value.container);
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-jodit-object.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function is_jodit_object_isJoditObject(jodit) {
-    return Boolean(jodit &&
-        jodit instanceof Object &&
-        is_function_isFunction(jodit.constructor) &&
-        ((typeof Jodit !== 'undefined' && jodit instanceof Jodit) ||
-            jodit.isJodit));
-}
-function is_jodit_object_isViewObject(jodit) {
-    return Boolean(jodit &&
-        jodit instanceof Object &&
-        is_function_isFunction(jodit.constructor) &&
-        (jodit instanceof modules.View || jodit.isView));
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-number.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isNumber(value) {
-    return typeof value === 'number' && !isNaN(value) && isFinite(value);
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-numeric.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function isNumeric(value) {
-    if (is_string_isString(value)) {
-        if (!value.match(/^([+-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
-            return false;
-        }
-        value = parseFloat(value);
-    }
-    return typeof value === 'number' && !isNaN(value) && isFinite(value);
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-window.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isWindow(obj) {
-    return obj != null && obj === obj.window;
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-plain-object.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function is_plain_object_isPlainObject(obj) {
-    if (!obj || typeof obj !== 'object' || obj.nodeType || isWindow(obj)) {
-        return false;
-    }
-    return !(obj.constructor &&
-        !{}.hasOwnProperty.call(obj.constructor.prototype, 'isPrototypeOf'));
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-url.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function is_url_isURL(str) {
-    if (str.includes(' ')) {
-        return false;
-    }
-    if (typeof URL !== 'undefined') {
-        try {
-            const url = new URL(str);
-            return ['https:', 'http:', 'ftp:', 'file:', 'rtmp:'].includes(url.protocol);
-        }
-        catch (e) {
-            return false;
-        }
-    }
-    const a = document.createElement('a');
-    a.href = str;
-    return Boolean(a.hostname);
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-valid-name.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isValidName(name) {
-    if (!name.length) {
-        return false;
-    }
-    return !/[^0-9A-Za-zа-яА-ЯЁё\w\-_.]/.test(name);
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/error.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function error_error(message) {
-    return new TypeError(message);
-}
-
-;// CONCATENATED MODULE: ./src/core/decorators/debounce/debounce.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-function debounce(timeout, firstCallImmediately = false, method = 'debounce') {
-    return (target, propertyKey) => {
-        if (!is_function_isFunction(target[propertyKey])) {
-            throw error_error('Handler must be a Function');
-        }
-        target.hookStatus(statuses_STATUSES.ready, (component) => {
-            const view = is_jodit_object_isViewObject(component)
-                ? component
-                : component.jodit;
-            const realTimeout = is_function_isFunction(timeout)
-                ? timeout(component)
-                : timeout;
-            component[propertyKey] = view.async[method](component[propertyKey].bind(component), isNumber(realTimeout) || is_plain_object_isPlainObject(realTimeout)
-                ? realTimeout
-                : view.defaultTimeout, firstCallImmediately);
-        });
-    };
-}
-function throttle(timeout, firstCallImmediately = false) {
-    return debounce(timeout, firstCallImmediately, 'throttle');
-}
-
-;// CONCATENATED MODULE: ./src/core/decorators/idle/idle.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function idle() {
-    return (target, propertyKey) => {
-        if (!isFunction(target[propertyKey])) {
-            throw error('Handler must be a Function');
-        }
-        target.hookStatus(STATUSES.ready, (component) => {
-            const view = isViewObject(component)
-                ? component
-                : component.jodit;
-            const originalMethod = component[propertyKey];
-            component[propertyKey] = (...args) => view.async.requestIdleCallback(originalMethod.bind(component, ...args));
-        });
-    };
-}
-
-;// CONCATENATED MODULE: ./src/core/decorators/hook/hook.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function hook(status) {
-    return (target, propertyKey) => {
-        if (!is_function_isFunction(target[propertyKey])) {
-            throw error_error('Handler must be a Function');
-        }
-        target.hookStatus(status, (component) => {
-            target[propertyKey].call(component);
-        });
-    };
-}
-
-;// CONCATENATED MODULE: ./src/core/decorators/persistent/persistent.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function persistent(target, propertyKey) {
-    target.hookStatus(STATUSES.ready, (component) => {
-        const jodit = isViewObject(component)
-            ? component
-            : component.jodit, storageKey = `${jodit.options.namespace}${component.componentName}_prop_${propertyKey}`, initialValue = component[propertyKey];
-        Object.defineProperty(component, propertyKey, {
-            get() {
-                var _a;
-                return (_a = jodit.storage.get(storageKey)) !== null && _a !== void 0 ? _a : initialValue;
-            },
-            set(value) {
-                jodit.storage.set(storageKey, value);
-            }
-        });
-    });
-}
-
-;// CONCATENATED MODULE: ./src/core/decorators/wait/wait.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function wait(condition) {
-    return (target, propertyKey) => {
-        if (!isFunction(target[propertyKey])) {
-            throw error('Handler must be a Function');
-        }
-        target.hookStatus(STATUSES.ready, (component) => {
-            const async = isViewObject(component)
-                ? component.async
-                : component.j.async;
-            const realMethod = component[propertyKey];
-            let timeout = 0;
-            component[propertyKey] = function callProxy(...args) {
-                async.clearTimeout(timeout);
-                if (condition(component)) {
-                    realMethod.apply(component, args);
-                }
-                else {
-                    timeout = async.setTimeout(() => callProxy(...args), 10);
-                }
-            };
-        });
-    };
-}
-
 ;// CONCATENATED MODULE: ./src/core/event-emitter/store.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1317,6 +883,16 @@ class EventHandlersStore {
     clear() {
         this.__store = {};
     }
+}
+
+;// CONCATENATED MODULE: ./src/core/helpers/utils/error.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function error_error(message) {
+    return new TypeError(message);
 }
 
 ;// CONCATENATED MODULE: ./src/core/event-emitter/event-emitter.ts
@@ -1464,7 +1040,7 @@ class EventEmitter {
         if (!is_function_isFunction(callback)) {
             throw error_error('Need event handler');
         }
-        if (isArray(subject)) {
+        if (is_array_isArray(subject)) {
             subject.forEach((subj) => {
                 this.on(subj, events, callback, onTop);
             });
@@ -1706,117 +1282,62 @@ class EventEmitter {
     }
 }
 
-;// CONCATENATED MODULE: ./src/core/event-emitter/observable.ts
+;// CONCATENATED MODULE: ./src/core/decorators/cache/cache.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-
-const OBSERVABLE_OBJECT = Symbol('observable-object');
-function isObservableObject(obj) {
-    return obj[OBSERVABLE_OBJECT] !== undefined;
-}
-function observable(obj) {
-    if (isObservableObject(obj)) {
-        return obj;
+function cache(target, name, descriptor) {
+    const getter = descriptor.get;
+    if (!getter) {
+        throw error('Getter property descriptor expected');
     }
-    const __lockEvent = {};
-    const __onEvents = {};
-    const on = (event, callback) => {
-        if (isArray(event)) {
-            event.map(e => on(e, callback));
-            return obj;
+    descriptor.get = function () {
+        const value = getter.call(this);
+        if (value && value.noCache === true) {
+            return value;
         }
-        if (!__onEvents[event]) {
-            __onEvents[event] = [];
-        }
-        __onEvents[event].push(callback);
-        return obj;
-    };
-    const fire = (event, ...attr) => {
-        if (isArray(event)) {
-            event.map(e => fire(e, ...attr));
-            return;
-        }
-        try {
-            if (!__lockEvent[event] && __onEvents[event]) {
-                __lockEvent[event] = true;
-                __onEvents[event].forEach(clb => clb.call(obj, ...attr));
-            }
-        }
-        finally {
-            __lockEvent[event] = false;
-        }
-    };
-    const initAccessors = (dict, prefixes = []) => {
-        const store = {};
-        if (isObservableObject(dict)) {
-            return;
-        }
-        Object.defineProperty(dict, OBSERVABLE_OBJECT, {
-            enumerable: false,
-            value: true
+        Object.defineProperty(this, name, {
+            configurable: descriptor.configurable,
+            enumerable: descriptor.enumerable,
+            writable: false,
+            value
         });
-        Object.keys(dict).forEach(_key => {
-            const key = _key;
-            const prefix = prefixes.concat(key).filter(a => a.length);
-            store[key] = dict[key];
-            const descriptor = getPropertyDescriptor(dict, key);
-            Object.defineProperty(dict, key, {
-                set: (value) => {
-                    var _a;
-                    const oldValue = store[key];
-                    if (!isFastEqual(store[key], value)) {
-                        fire([
-                            'beforeChange',
-                            `beforeChange.${prefix.join('.')}`
-                        ], key, value);
-                        if (is_plain_object_isPlainObject(value)) {
-                            initAccessors(value, prefix);
-                        }
-                        if (descriptor && descriptor.set) {
-                            descriptor.set.call(obj, value);
-                        }
-                        else {
-                            store[key] = value;
-                        }
-                        const sum = [];
-                        fire([
-                            'change',
-                            ...prefix.reduce((rs, p) => {
-                                sum.push(p);
-                                rs.push(`change.${sum.join('.')}`);
-                                return rs;
-                            }, [])
-                        ], prefix.join('.'), oldValue, ((_a = value) === null || _a === void 0 ? void 0 : _a.valueOf)
-                            ? value.valueOf()
-                            : value);
-                    }
-                },
-                get: () => {
-                    if (descriptor && descriptor.get) {
-                        return descriptor.get.call(obj);
-                    }
-                    return store[key];
-                },
-                enumerable: true,
-                configurable: true
-            });
-            if (is_plain_object_isPlainObject(store[key])) {
-                initAccessors(store[key], prefix);
-            }
-        });
-        Object.defineProperty(obj, 'on', {
-            value: on
-        });
+        return value;
     };
-    initAccessors(obj);
-    return obj;
 }
 
-;// CONCATENATED MODULE: ./src/core/event-emitter/index.ts
+;// CONCATENATED MODULE: ./src/core/decorators/component/component.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+const cn = (elm) => {
+    return is_function_isFunction(elm.className) ? elm.className() : NaN;
+};
+function component(constructorFunction) {
+    class newConstructorFunction extends constructorFunction {
+        constructor(...args) {
+            super(...args);
+            const isSamePrototype = Object.getPrototypeOf(this) ===
+                newConstructorFunction.prototype;
+            const isSameClassName = cn(this) ===
+                cn(newConstructorFunction.prototype);
+            if (false) {}
+            if (isSamePrototype || isSameClassName) {
+                this.setStatus('ready');
+            }
+        }
+    }
+    newConstructorFunction.prototype.constructor = constructorFunction;
+    return newConstructorFunction;
+}
+
+;// CONCATENATED MODULE: ./src/core/decorators/debounce/debounce.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -1825,6 +1346,126 @@ function observable(obj) {
 
 
 
+function debounce(timeout, firstCallImmediately = false, method = 'debounce') {
+    return (target, propertyKey) => {
+        if (!is_function_isFunction(target[propertyKey])) {
+            throw error_error('Handler must be a Function');
+        }
+        target.hookStatus(statuses_STATUSES.ready, (component) => {
+            const view = is_jodit_object_isViewObject(component)
+                ? component
+                : component.jodit;
+            const realTimeout = is_function_isFunction(timeout)
+                ? timeout(component)
+                : timeout;
+            component[propertyKey] = view.async[method](component[propertyKey].bind(component), isNumber(realTimeout) || is_plain_object_isPlainObject(realTimeout)
+                ? realTimeout
+                : view.defaultTimeout, firstCallImmediately);
+        });
+    };
+}
+function throttle(timeout, firstCallImmediately = false) {
+    return debounce(timeout, firstCallImmediately, 'throttle');
+}
+
+;// CONCATENATED MODULE: ./src/core/decorators/idle/idle.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function idle() {
+    return (target, propertyKey) => {
+        if (!isFunction(target[propertyKey])) {
+            throw error('Handler must be a Function');
+        }
+        target.hookStatus(STATUSES.ready, (component) => {
+            const view = isViewObject(component)
+                ? component
+                : component.jodit;
+            const originalMethod = component[propertyKey];
+            component[propertyKey] = (...args) => view.async.requestIdleCallback(originalMethod.bind(component, ...args));
+        });
+    };
+}
+
+;// CONCATENATED MODULE: ./src/core/decorators/hook/hook.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function hook(status) {
+    return (target, propertyKey) => {
+        if (!is_function_isFunction(target[propertyKey])) {
+            throw error_error('Handler must be a Function');
+        }
+        target.hookStatus(status, (component) => {
+            target[propertyKey].call(component);
+        });
+    };
+}
+
+;// CONCATENATED MODULE: ./src/core/decorators/persistent/persistent.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function persistent(target, propertyKey) {
+    target.hookStatus(STATUSES.ready, (component) => {
+        const jodit = isViewObject(component)
+            ? component
+            : component.jodit, storageKey = `${jodit.options.namespace}${component.componentName}_prop_${propertyKey}`, initialValue = component[propertyKey];
+        Object.defineProperty(component, propertyKey, {
+            get() {
+                var _a;
+                return (_a = jodit.storage.get(storageKey)) !== null && _a !== void 0 ? _a : initialValue;
+            },
+            set(value) {
+                jodit.storage.set(storageKey, value);
+            }
+        });
+    });
+}
+
+;// CONCATENATED MODULE: ./src/core/decorators/wait/wait.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function wait(condition) {
+    return (target, propertyKey) => {
+        if (!isFunction(target[propertyKey])) {
+            throw error('Handler must be a Function');
+        }
+        target.hookStatus(STATUSES.ready, (component) => {
+            const async = isViewObject(component)
+                ? component.async
+                : component.j.async;
+            const realMethod = component[propertyKey];
+            let timeout = 0;
+            component[propertyKey] = function callProxy(...args) {
+                async.clearTimeout(timeout);
+                if (condition(component)) {
+                    realMethod.apply(component, args);
+                }
+                else {
+                    timeout = async.setTimeout(() => callProxy(...args), 10);
+                }
+            };
+        });
+    };
+}
 
 ;// CONCATENATED MODULE: ./src/core/helpers/array/split-array.ts
 /*!
@@ -2017,6 +1658,795 @@ function autobind() {
 
 
 
+
+;// CONCATENATED MODULE: ./src/core/event-emitter/observable.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+const OBSERVABLE_OBJECT = Symbol('observable-object');
+function isObservableObject(obj) {
+    return obj[OBSERVABLE_OBJECT] !== undefined;
+}
+function observable(obj) {
+    if (isObservableObject(obj)) {
+        return obj;
+    }
+    const __lockEvent = {};
+    const __onEvents = {};
+    const on = (event, callback) => {
+        if (is_array_isArray(event)) {
+            event.map(e => on(e, callback));
+            return obj;
+        }
+        if (!__onEvents[event]) {
+            __onEvents[event] = [];
+        }
+        __onEvents[event].push(callback);
+        return obj;
+    };
+    const fire = (event, ...attr) => {
+        if (is_array_isArray(event)) {
+            event.map(e => fire(e, ...attr));
+            return;
+        }
+        try {
+            if (!__lockEvent[event] && __onEvents[event]) {
+                __lockEvent[event] = true;
+                __onEvents[event].forEach(clb => clb.call(obj, ...attr));
+            }
+        }
+        finally {
+            __lockEvent[event] = false;
+        }
+    };
+    const initAccessors = (dict, prefixes = []) => {
+        const store = {};
+        if (isObservableObject(dict)) {
+            return;
+        }
+        Object.defineProperty(dict, OBSERVABLE_OBJECT, {
+            enumerable: false,
+            value: true
+        });
+        Object.keys(dict).forEach(_key => {
+            const key = _key;
+            const prefix = prefixes.concat(key).filter(a => a.length);
+            store[key] = dict[key];
+            const descriptor = getPropertyDescriptor(dict, key);
+            Object.defineProperty(dict, key, {
+                set: (value) => {
+                    var _a;
+                    const oldValue = store[key];
+                    if (!isFastEqual(store[key], value)) {
+                        fire([
+                            'beforeChange',
+                            `beforeChange.${prefix.join('.')}`
+                        ], key, value);
+                        if (is_plain_object_isPlainObject(value)) {
+                            initAccessors(value, prefix);
+                        }
+                        if (descriptor && descriptor.set) {
+                            descriptor.set.call(obj, value);
+                        }
+                        else {
+                            store[key] = value;
+                        }
+                        const sum = [];
+                        fire([
+                            'change',
+                            ...prefix.reduce((rs, p) => {
+                                sum.push(p);
+                                rs.push(`change.${sum.join('.')}`);
+                                return rs;
+                            }, [])
+                        ], prefix.join('.'), oldValue, ((_a = value) === null || _a === void 0 ? void 0 : _a.valueOf)
+                            ? value.valueOf()
+                            : value);
+                    }
+                },
+                get: () => {
+                    if (descriptor && descriptor.get) {
+                        return descriptor.get.call(obj);
+                    }
+                    return store[key];
+                },
+                enumerable: true,
+                configurable: true
+            });
+            if (is_plain_object_isPlainObject(store[key])) {
+                initAccessors(store[key], prefix);
+            }
+        });
+        Object.defineProperty(obj, 'on', {
+            value: on
+        });
+    };
+    initAccessors(obj);
+    return obj;
+}
+
+;// CONCATENATED MODULE: ./src/core/event-emitter/index.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+;// CONCATENATED MODULE: ./src/core/helpers/utils/get-class-name.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+const keepNames = new Map();
+const getClassName = (obj) => {
+    var _a;
+    if (is_function_isFunction(obj.className)) {
+        return obj.className();
+    }
+    const constructor = ((_a = obj.constructor) === null || _a === void 0 ? void 0 : _a.originalConstructor) || obj.constructor;
+    if (keepNames.has(constructor)) {
+        return keepNames.get(constructor);
+    }
+    if (constructor.name) {
+        return constructor.name;
+    }
+    const regex = new RegExp(/^\s*function\s*(\S*)\s*\(/);
+    const res = constructor.toString().match(regex);
+    return res ? res[1] : '';
+};
+
+;// CONCATENATED MODULE: ./src/core/helpers/string/camel-case.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const camel_case_camelCase = (key) => {
+    return key.replace(/([-_])(.)/g, (m, code, letter) => {
+        return letter.toUpperCase();
+    });
+};
+
+;// CONCATENATED MODULE: ./src/core/helpers/string/kebab-case.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const kebabCase = (key) => {
+    return key
+        .replace(/([A-Z])([A-Z])([a-z])/g, '$1-$2$3')
+        .replace(/([a-z])([A-Z])/g, '$1-$2')
+        .replace(/[\s_]+/g, '-')
+        .toLowerCase();
+};
+const CamelCaseToKebabCase = (key) => {
+    return key
+        .replace(/([A-Z])([A-Z])([a-z])/g, '$1-$2$3')
+        .replace(/([a-z])([A-Z])/g, '$1-$2')
+        .toLowerCase();
+};
+
+;// CONCATENATED MODULE: ./src/core/helpers/string/trim.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function trim_trim(value) {
+    return value
+        .replace(SPACE_REG_EXP_END(), '')
+        .replace(SPACE_REG_EXP_START(), '');
+}
+function trimInv(value) {
+    return value
+        .replace(INVISIBLE_SPACE_REG_EXP_END(), '')
+        .replace(INVISIBLE_SPACE_REG_EXP_START(), '');
+}
+
+;// CONCATENATED MODULE: ./src/core/helpers/string/ucfirst.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function ucfirst_ucfirst(value) {
+    if (!value.length) {
+        return '';
+    }
+    return value[0].toUpperCase() + value.substr(1);
+}
+
+;// CONCATENATED MODULE: ./src/config.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+class config_Config {
+    constructor() {
+        this.namespace = '';
+        this.safeMode = false;
+        this.safePluginsList = ['about', 'enter', 'backspace'];
+        this.license = '';
+        this.preset = 'custom';
+        this.presets = {
+            inline: {
+                inline: true,
+                toolbar: false,
+                toolbarInline: true,
+                toolbarInlineForSelection: true,
+                showXPathInStatusbar: false,
+                showCharsCounter: false,
+                showWordsCounter: false,
+                showPlaceholder: false
+            }
+        };
+        this.ownerDocument = (typeof document !== 'undefined'
+            ? document
+            : null);
+        this.ownerWindow = (typeof window !== 'undefined'
+            ? window
+            : null);
+        this.shadowRoot = null;
+        this.styleValues = {};
+        this.zIndex = 0;
+        this.readonly = false;
+        this.disabled = false;
+        this.activeButtonsInReadOnly = [
+            'source',
+            'fullsize',
+            'print',
+            'about',
+            'dots',
+            'selectall'
+        ];
+        this.toolbarButtonSize = 'middle';
+        this.allowTabNavigation = false;
+        this.inline = false;
+        this.theme = 'default';
+        this.saveModeInStorage = false;
+        this.spellcheck = true;
+        this.editorCssClass = false;
+        this.style = false;
+        this.triggerChangeEvent = true;
+        this.direction = '';
+        this.language = 'auto';
+        this.debugLanguage = false;
+        this.i18n = false;
+        this.tabIndex = -1;
+        this.toolbar = true;
+        this.statusbar = true;
+        this.showTooltip = true;
+        this.showTooltipDelay = 1000;
+        this.useNativeTooltip = false;
+        this.enter = PARAGRAPH;
+        this.enterBlock = this.enter !== 'br' ? this.enter : PARAGRAPH;
+        this.defaultMode = MODE_WYSIWYG;
+        this.useSplitMode = false;
+        this.colors = {
+            greyscale: [
+                '#000000',
+                '#434343',
+                '#666666',
+                '#999999',
+                '#B7B7B7',
+                '#CCCCCC',
+                '#D9D9D9',
+                '#EFEFEF',
+                '#F3F3F3',
+                '#FFFFFF'
+            ],
+            palette: [
+                '#980000',
+                '#FF0000',
+                '#FF9900',
+                '#FFFF00',
+                '#00F0F0',
+                '#00FFFF',
+                '#4A86E8',
+                '#0000FF',
+                '#9900FF',
+                '#FF00FF'
+            ],
+            full: [
+                '#E6B8AF',
+                '#F4CCCC',
+                '#FCE5CD',
+                '#FFF2CC',
+                '#D9EAD3',
+                '#D0E0E3',
+                '#C9DAF8',
+                '#CFE2F3',
+                '#D9D2E9',
+                '#EAD1DC',
+                '#DD7E6B',
+                '#EA9999',
+                '#F9CB9C',
+                '#FFE599',
+                '#B6D7A8',
+                '#A2C4C9',
+                '#A4C2F4',
+                '#9FC5E8',
+                '#B4A7D6',
+                '#D5A6BD',
+                '#CC4125',
+                '#E06666',
+                '#F6B26B',
+                '#FFD966',
+                '#93C47D',
+                '#76A5AF',
+                '#6D9EEB',
+                '#6FA8DC',
+                '#8E7CC3',
+                '#C27BA0',
+                '#A61C00',
+                '#CC0000',
+                '#E69138',
+                '#F1C232',
+                '#6AA84F',
+                '#45818E',
+                '#3C78D8',
+                '#3D85C6',
+                '#674EA7',
+                '#A64D79',
+                '#85200C',
+                '#990000',
+                '#B45F06',
+                '#BF9000',
+                '#38761D',
+                '#134F5C',
+                '#1155CC',
+                '#0B5394',
+                '#351C75',
+                '#733554',
+                '#5B0F00',
+                '#660000',
+                '#783F04',
+                '#7F6000',
+                '#274E13',
+                '#0C343D',
+                '#1C4587',
+                '#073763',
+                '#20124D',
+                '#4C1130'
+            ]
+        };
+        this.colorPickerDefaultTab = 'background';
+        this.imageDefaultWidth = 300;
+        this.removeButtons = [];
+        this.disablePlugins = [];
+        this.extraPlugins = [];
+        this.extraButtons = [];
+        this.extraIcons = {};
+        this.createAttributes = {};
+        this.sizeLG = 900;
+        this.sizeMD = 700;
+        this.sizeSM = 400;
+        this.buttons = [
+            {
+                group: 'font-style',
+                buttons: []
+            },
+            {
+                group: 'list',
+                buttons: []
+            },
+            {
+                group: 'font',
+                buttons: []
+            },
+            '---',
+            {
+                group: 'script',
+                buttons: []
+            },
+            {
+                group: 'media',
+                buttons: []
+            },
+            '\n',
+            {
+                group: 'state',
+                buttons: []
+            },
+            {
+                group: 'clipboard',
+                buttons: []
+            },
+            {
+                group: 'insert',
+                buttons: []
+            },
+            {
+                group: 'indent',
+                buttons: []
+            },
+            {
+                group: 'color',
+                buttons: []
+            },
+            {
+                group: 'form',
+                buttons: []
+            },
+            '---',
+            {
+                group: 'history',
+                buttons: []
+            },
+            {
+                group: 'search',
+                buttons: []
+            },
+            {
+                group: 'source',
+                buttons: []
+            },
+            {
+                group: 'other',
+                buttons: []
+            },
+            {
+                group: 'info',
+                buttons: []
+            }
+        ];
+        this.buttonsMD = [
+            'bold',
+            'italic',
+            '|',
+            'ul',
+            'ol',
+            'eraser',
+            '|',
+            'font',
+            'fontsize',
+            '---',
+            'image',
+            'table',
+            '|',
+            'link',
+            '\n',
+            'brush',
+            'paragraph',
+            'align',
+            '|',
+            'hr',
+            'copyformat',
+            'fullsize',
+            '---',
+            'undo',
+            'redo',
+            '|',
+            'dots'
+        ];
+        this.buttonsSM = [
+            'bold',
+            'italic',
+            '|',
+            'ul',
+            'ol',
+            'eraser',
+            '|',
+            'fontsize',
+            'brush',
+            'paragraph',
+            '---',
+            'image',
+            'table',
+            '\n',
+            'link',
+            '|',
+            'align',
+            '|',
+            'undo',
+            'redo',
+            '|',
+            'copyformat',
+            'fullsize',
+            '---',
+            'dots'
+        ];
+        this.buttonsXS = [
+            'bold',
+            'brush',
+            'paragraph',
+            'eraser',
+            '|',
+            'fontsize',
+            '---',
+            'image',
+            '\n',
+            'align',
+            'undo',
+            'redo',
+            '|',
+            'link',
+            'table',
+            '---',
+            'dots'
+        ];
+        this.events = {};
+        this.textIcons = false;
+        this.showBrowserColorPicker = true;
+    }
+    static get defaultOptions() {
+        if (!config_Config.__defaultOptions) {
+            config_Config.__defaultOptions = new config_Config();
+        }
+        return config_Config.__defaultOptions;
+    }
+}
+config_Config.prototype.controls = {};
+
+;// CONCATENATED MODULE: ./src/core/helpers/string/i18n.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+const sprintf = (str, args) => {
+    if (!args || !args.length) {
+        return str;
+    }
+    const reg = /%([sd])/g;
+    let fnd = reg.exec(str);
+    let res = str, i = 0;
+    while (fnd && args[i] !== undefined) {
+        res = res.replace(fnd[0], args[i].toString());
+        i += 1;
+        fnd = reg.exec(str);
+    }
+    return res;
+};
+const i18n = (key, params, options) => {
+    if (!isString(key)) {
+        throw error('i18n: Need string in first argument');
+    }
+    if (!key.length) {
+        return key;
+    }
+    const debug = Boolean(options !== undefined && options.debugLanguage);
+    let store;
+    const parse = (value) => params && params.length ? sprintf(value, params) : value, defaultLanguage = defineLanguage(Config.defaultOptions.language, Config.defaultOptions.language), language = defineLanguage(options === null || options === void 0 ? void 0 : options.language, defaultLanguage), tryGet = (store) => {
+        if (!store) {
+            return;
+        }
+        if (isString(store[key])) {
+            return parse(store[key]);
+        }
+        const lcKey = key.toLowerCase();
+        if (isString(store[lcKey])) {
+            return parse(store[lcKey]);
+        }
+        const ucfKey = ucfirst(key);
+        if (isString(store[ucfKey])) {
+            return parse(store[ucfKey]);
+        }
+        return;
+    };
+    if (lang[language] !== undefined) {
+        store = lang[language];
+    }
+    else {
+        if (lang[defaultLanguage] !== undefined) {
+            store = lang[defaultLanguage];
+        }
+        else {
+            store = lang.en;
+        }
+    }
+    const i18nOvr = options === null || options === void 0 ? void 0 : options.i18n;
+    if (i18nOvr && i18nOvr[language]) {
+        const result = tryGet(i18nOvr[language]);
+        if (result) {
+            return result;
+        }
+    }
+    const result = tryGet(store);
+    if (result) {
+        return result;
+    }
+    if (lang.en && isString(lang.en[key]) && lang.en[key]) {
+        return parse(lang.en[key]);
+    }
+    if (debug) {
+        return '{' + key + '}';
+    }
+    if (false) {}
+    return parse(key);
+};
+
+;// CONCATENATED MODULE: ./src/core/helpers/string/index.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+;// CONCATENATED MODULE: ./src/core/global.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+const instances = {};
+let counter = 1;
+const uuids = new Set();
+function uniqueUid() {
+    function gen() {
+        counter += 10 * (Math.random() + 1);
+        return Math.round(counter).toString(16);
+    }
+    let uid = gen();
+    while (uuids.has(uid)) {
+        uid = gen();
+    }
+    uuids.add(uid);
+    return uid;
+}
+const pluginSystem = new PluginSystem();
+const modules = {};
+const global_lang = {};
+const extendLang = (langs) => {
+    Object.keys(langs).forEach(key => {
+        if (global_lang[key]) {
+            Object.assign(global_lang[key], langs[key]);
+        }
+        else {
+            global_lang[key] = langs[key];
+        }
+    });
+};
+const boxes = new WeakMap();
+function getContainer(jodit, classFunc, tag = 'div', createInsideEditor = false) {
+    const name = classFunc ? getClassName(classFunc.prototype) : 'jodit-utils';
+    const data = boxes.get(jodit) || {}, key = name + tag;
+    const view = is_jodit_object_isViewObject(jodit) ? jodit : jodit.j;
+    if (!data[key]) {
+        let c = view.c, body = isJoditObject(jodit) && jodit.o.shadowRoot
+            ? jodit.o.shadowRoot
+            : jodit.od.body;
+        if (createInsideEditor &&
+            isJoditObject(jodit) &&
+            jodit.od !== jodit.ed) {
+            c = jodit.createInside;
+            const place = tag === 'style' ? jodit.ed.head : jodit.ed.body;
+            body =
+                isJoditObject(jodit) && jodit.o.shadowRoot
+                    ? jodit.o.shadowRoot
+                    : place;
+        }
+        const box = c.element(tag, {
+            className: `jodit jodit-${kebabCase(name)}-container jodit-box`
+        });
+        box.classList.add(`jodit_theme_${view.o.theme || 'default'}`);
+        body.appendChild(box);
+        data[key] = box;
+        jodit.hookStatus('beforeDestruct', () => {
+            dom_Dom.safeRemove(box);
+            delete data[key];
+            if (Object.keys(data).length) {
+                boxes.delete(jodit);
+            }
+        });
+        boxes.set(jodit, data);
+    }
+    data[key].classList.remove('jodit_theme_default', 'jodit_theme_dark');
+    data[key].classList.add(`jodit_theme_${view.o.theme || 'default'}`);
+    return data[key];
+}
+const eventEmitter = new EventEmitter();
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/toggle/toggle-css.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+function toggleCSS(commitStyle, elm, jodit, mode, dry = false) {
+    const { style, className } = commitStyle.options;
+    if (style && size(style) > 0) {
+        Object.keys(style).forEach((rule) => {
+            const inlineValue = elm.style.getPropertyValue(kebabCase(rule));
+            if (inlineValue === '' && style[rule] == null) {
+                return;
+            }
+            if (getNativeCSSValue(jodit, elm, rule) ===
+                normalizeCssValue(rule, style[rule])) {
+                !dry && css(elm, rule, null);
+                mode = UNSET;
+                mode = removeExtraCSS(commitStyle, elm, mode);
+                return;
+            }
+            mode = CHANGE;
+            !dry && css(elm, rule, style[rule]);
+        });
+    }
+    if (className) {
+        if (elm.classList.contains(className)) {
+            elm.classList.remove(className);
+            mode = UNSET;
+        }
+        else {
+            elm.classList.add(className);
+            mode = CHANGE;
+        }
+    }
+    return mode;
+}
+function removeExtraCSS(commitStyle, elm, mode) {
+    if (!utils_attr(elm, 'style')) {
+        utils_attr(elm, 'style', null);
+        if (elm.tagName.toLowerCase() === commitStyle.defaultTag) {
+            dom_Dom.unwrap(elm);
+            mode = UNWRAP;
+        }
+    }
+    return mode;
+}
+function getShadowRoot(jodit) {
+    var _a;
+    if (data_bind_dataBind(jodit, 'shadowRoot') !== undefined) {
+        return data_bind_dataBind(jodit, 'shadowRoot');
+    }
+    const container = getContainer(jodit);
+    const iframe = document.createElement('iframe');
+    css(iframe, {
+        width: 0,
+        height: 0,
+        position: 'absolute',
+        border: 0
+    });
+    iframe.src = 'about:blank';
+    container.appendChild(iframe);
+    const doc = (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document;
+    const shadowRoot = !doc ? jodit.od.body : doc.body;
+    data_bind_dataBind(jodit, 'shadowRoot', shadowRoot);
+    return shadowRoot;
+}
+function getNativeCSSValue(jodit, elm, key) {
+    const newElm = jodit.create.element(elm.tagName.toLowerCase());
+    newElm.style.cssText = elm.style.cssText;
+    const root = getShadowRoot(jodit);
+    root.appendChild(newElm);
+    const result = css(newElm, key);
+    dom_Dom.safeRemove(newElm);
+    return result;
+}
 
 ;// CONCATENATED MODULE: ./src/core/selection/select.ts
 /*!
@@ -3837,7 +4267,7 @@ class dom_Dom {
         if (is_function_isFunction(tagsOrCondition)) {
             condition = tagsOrCondition;
         }
-        else if (isArray(tagsOrCondition)) {
+        else if (is_array_isArray(tagsOrCondition)) {
             condition = (tag) => tag &&
                 tagsOrCondition.includes(tag.nodeName.toLowerCase());
         }
@@ -3888,7 +4318,7 @@ class dom_Dom {
         root.insertBefore(newElement, root.firstChild);
     }
     static append(root, newElement) {
-        if (isArray(newElement)) {
+        if (is_array_isArray(newElement)) {
             newElement.forEach(node => {
                 this.append(root, node);
             });
@@ -3984,1192 +4414,150 @@ class dom_Dom {
  */
 
 
-;// CONCATENATED MODULE: ./src/core/helpers/utils/get-class-name.ts
+;// CONCATENATED MODULE: ./src/core/helpers/checker/is-imp-interface.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const keepNames = new Map();
-const getClassName = (obj) => {
-    var _a;
-    if (is_function_isFunction(obj.className)) {
-        return obj.className();
-    }
-    const constructor = ((_a = obj.constructor) === null || _a === void 0 ? void 0 : _a.originalConstructor) || obj.constructor;
-    if (keepNames.has(constructor)) {
-        return keepNames.get(constructor);
-    }
-    if (constructor.name) {
-        return constructor.name;
-    }
-    const regex = new RegExp(/^\s*function\s*(\S*)\s*\(/);
-    const res = constructor.toString().match(regex);
-    return res ? res[1] : '';
-};
 
-;// CONCATENATED MODULE: ./src/core/helpers/string/camel-case.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const camelCase = (key) => {
-    return key.replace(/([-_])(.)/g, (m, code, letter) => {
-        return letter.toUpperCase();
-    });
-};
 
-;// CONCATENATED MODULE: ./src/core/helpers/string/kebab-case.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const kebabCase = (key) => {
-    return key
-        .replace(/([A-Z])([A-Z])([a-z])/g, '$1-$2$3')
-        .replace(/([a-z])([A-Z])/g, '$1-$2')
-        .replace(/[\s_]+/g, '-')
-        .toLowerCase();
-};
-const CamelCaseToKebabCase = (key) => {
-    return key
-        .replace(/([A-Z])([A-Z])([a-z])/g, '$1-$2$3')
-        .replace(/([a-z])([A-Z])/g, '$1-$2')
-        .toLowerCase();
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/string/trim.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function trim_trim(value) {
-    return value
-        .replace(SPACE_REG_EXP_END(), '')
-        .replace(SPACE_REG_EXP_START(), '');
+function isInitable(value) {
+    return !is_void_isVoid(value) && is_function_isFunction(value.init);
 }
-function trimInv(value) {
-    return value
-        .replace(INVISIBLE_SPACE_REG_EXP_END(), '')
-        .replace(INVISIBLE_SPACE_REG_EXP_START(), '');
+function isDestructable(value) {
+    return !is_void_isVoid(value) && is_function_isFunction(value.destruct);
+}
+function hasContainer(value) {
+    return !isVoid(value) && Dom.isElement(value.container);
 }
 
-;// CONCATENATED MODULE: ./src/core/helpers/string/ucfirst.ts
+;// CONCATENATED MODULE: ./src/core/helpers/checker/is-jodit-object.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-function ucfirst(value) {
-    if (!value.length) {
-        return '';
-    }
-    return value[0].toUpperCase() + value.substr(1);
+
+
+function isJoditObject(jodit) {
+    return Boolean(jodit &&
+        jodit instanceof Object &&
+        is_function_isFunction(jodit.constructor) &&
+        ((typeof Jodit !== 'undefined' && jodit instanceof Jodit) ||
+            jodit.isJodit));
+}
+function is_jodit_object_isViewObject(jodit) {
+    return Boolean(jodit &&
+        jodit instanceof Object &&
+        is_function_isFunction(jodit.constructor) &&
+        (jodit instanceof modules.View || jodit.isView));
 }
 
-;// CONCATENATED MODULE: ./src/config.ts
+;// CONCATENATED MODULE: ./src/core/helpers/checker/is-number.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
-class config_Config {
-    constructor() {
-        this.namespace = '';
-        this.safeMode = false;
-        this.safePluginsList = ['about', 'enter', 'backspace'];
-        this.license = '';
-        this.preset = 'custom';
-        this.presets = {
-            inline: {
-                inline: true,
-                toolbar: false,
-                toolbarInline: true,
-                toolbarInlineForSelection: true,
-                showXPathInStatusbar: false,
-                showCharsCounter: false,
-                showWordsCounter: false,
-                showPlaceholder: false
-            }
-        };
-        this.ownerDocument = (typeof document !== 'undefined'
-            ? document
-            : null);
-        this.ownerWindow = (typeof window !== 'undefined'
-            ? window
-            : null);
-        this.shadowRoot = null;
-        this.styleValues = {};
-        this.zIndex = 0;
-        this.readonly = false;
-        this.disabled = false;
-        this.activeButtonsInReadOnly = [
-            'source',
-            'fullsize',
-            'print',
-            'about',
-            'dots',
-            'selectall'
-        ];
-        this.toolbarButtonSize = 'middle';
-        this.allowTabNavigation = false;
-        this.inline = false;
-        this.theme = 'default';
-        this.saveModeInStorage = false;
-        this.spellcheck = true;
-        this.editorCssClass = false;
-        this.style = false;
-        this.triggerChangeEvent = true;
-        this.direction = '';
-        this.language = 'auto';
-        this.debugLanguage = false;
-        this.i18n = false;
-        this.tabIndex = -1;
-        this.toolbar = true;
-        this.statusbar = true;
-        this.showTooltip = true;
-        this.showTooltipDelay = 1000;
-        this.useNativeTooltip = false;
-        this.enter = PARAGRAPH;
-        this.enterBlock = this.enter !== 'br' ? this.enter : PARAGRAPH;
-        this.defaultMode = MODE_WYSIWYG;
-        this.useSplitMode = false;
-        this.colors = {
-            greyscale: [
-                '#000000',
-                '#434343',
-                '#666666',
-                '#999999',
-                '#B7B7B7',
-                '#CCCCCC',
-                '#D9D9D9',
-                '#EFEFEF',
-                '#F3F3F3',
-                '#FFFFFF'
-            ],
-            palette: [
-                '#980000',
-                '#FF0000',
-                '#FF9900',
-                '#FFFF00',
-                '#00F0F0',
-                '#00FFFF',
-                '#4A86E8',
-                '#0000FF',
-                '#9900FF',
-                '#FF00FF'
-            ],
-            full: [
-                '#E6B8AF',
-                '#F4CCCC',
-                '#FCE5CD',
-                '#FFF2CC',
-                '#D9EAD3',
-                '#D0E0E3',
-                '#C9DAF8',
-                '#CFE2F3',
-                '#D9D2E9',
-                '#EAD1DC',
-                '#DD7E6B',
-                '#EA9999',
-                '#F9CB9C',
-                '#FFE599',
-                '#B6D7A8',
-                '#A2C4C9',
-                '#A4C2F4',
-                '#9FC5E8',
-                '#B4A7D6',
-                '#D5A6BD',
-                '#CC4125',
-                '#E06666',
-                '#F6B26B',
-                '#FFD966',
-                '#93C47D',
-                '#76A5AF',
-                '#6D9EEB',
-                '#6FA8DC',
-                '#8E7CC3',
-                '#C27BA0',
-                '#A61C00',
-                '#CC0000',
-                '#E69138',
-                '#F1C232',
-                '#6AA84F',
-                '#45818E',
-                '#3C78D8',
-                '#3D85C6',
-                '#674EA7',
-                '#A64D79',
-                '#85200C',
-                '#990000',
-                '#B45F06',
-                '#BF9000',
-                '#38761D',
-                '#134F5C',
-                '#1155CC',
-                '#0B5394',
-                '#351C75',
-                '#733554',
-                '#5B0F00',
-                '#660000',
-                '#783F04',
-                '#7F6000',
-                '#274E13',
-                '#0C343D',
-                '#1C4587',
-                '#073763',
-                '#20124D',
-                '#4C1130'
-            ]
-        };
-        this.colorPickerDefaultTab = 'background';
-        this.imageDefaultWidth = 300;
-        this.removeButtons = [];
-        this.disablePlugins = [];
-        this.extraPlugins = [];
-        this.extraButtons = [];
-        this.extraIcons = {};
-        this.createAttributes = {};
-        this.sizeLG = 900;
-        this.sizeMD = 700;
-        this.sizeSM = 400;
-        this.buttons = [
-            {
-                group: 'font-style',
-                buttons: []
-            },
-            {
-                group: 'list',
-                buttons: []
-            },
-            {
-                group: 'font',
-                buttons: []
-            },
-            '---',
-            {
-                group: 'script',
-                buttons: []
-            },
-            {
-                group: 'media',
-                buttons: []
-            },
-            '\n',
-            {
-                group: 'state',
-                buttons: []
-            },
-            {
-                group: 'clipboard',
-                buttons: []
-            },
-            {
-                group: 'insert',
-                buttons: []
-            },
-            {
-                group: 'indent',
-                buttons: []
-            },
-            {
-                group: 'color',
-                buttons: []
-            },
-            {
-                group: 'form',
-                buttons: []
-            },
-            '---',
-            {
-                group: 'history',
-                buttons: []
-            },
-            {
-                group: 'search',
-                buttons: []
-            },
-            {
-                group: 'source',
-                buttons: []
-            },
-            {
-                group: 'other',
-                buttons: []
-            },
-            {
-                group: 'info',
-                buttons: []
-            }
-        ];
-        this.buttonsMD = [
-            'bold',
-            'italic',
-            '|',
-            'ul',
-            'ol',
-            'eraser',
-            '|',
-            'font',
-            'fontsize',
-            '---',
-            'image',
-            'table',
-            '|',
-            'link',
-            '\n',
-            'brush',
-            'paragraph',
-            'align',
-            '|',
-            'hr',
-            'copyformat',
-            'fullsize',
-            '---',
-            'undo',
-            'redo',
-            '|',
-            'dots'
-        ];
-        this.buttonsSM = [
-            'bold',
-            'italic',
-            '|',
-            'ul',
-            'ol',
-            'eraser',
-            '|',
-            'fontsize',
-            'brush',
-            'paragraph',
-            '---',
-            'image',
-            'table',
-            '\n',
-            'link',
-            '|',
-            'align',
-            '|',
-            'undo',
-            'redo',
-            '|',
-            'copyformat',
-            'fullsize',
-            '---',
-            'dots'
-        ];
-        this.buttonsXS = [
-            'bold',
-            'brush',
-            'paragraph',
-            'eraser',
-            '|',
-            'fontsize',
-            '---',
-            'image',
-            '\n',
-            'align',
-            'undo',
-            'redo',
-            '|',
-            'link',
-            'table',
-            '---',
-            'dots'
-        ];
-        this.events = {};
-        this.textIcons = false;
-        this.showBrowserColorPicker = true;
-    }
-    static get defaultOptions() {
-        if (!config_Config.__defaultOptions) {
-            config_Config.__defaultOptions = new config_Config();
-        }
-        return config_Config.__defaultOptions;
-    }
-}
-config_Config.prototype.controls = {};
-
-;// CONCATENATED MODULE: ./src/core/helpers/string/i18n.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-const sprintf = (str, args) => {
-    if (!args || !args.length) {
-        return str;
-    }
-    const reg = /%([sd])/g;
-    let fnd = reg.exec(str);
-    let res = str, i = 0;
-    while (fnd && args[i] !== undefined) {
-        res = res.replace(fnd[0], args[i].toString());
-        i += 1;
-        fnd = reg.exec(str);
-    }
-    return res;
-};
-const i18n = (key, params, options) => {
-    if (!is_string_isString(key)) {
-        throw error_error('i18n: Need string in first argument');
-    }
-    if (!key.length) {
-        return key;
-    }
-    const debug = Boolean(options !== undefined && options.debugLanguage);
-    let store;
-    const parse = (value) => params && params.length ? sprintf(value, params) : value, defaultLanguage = default_language_defaultLanguage(config_Config.defaultOptions.language, config_Config.defaultOptions.language), language = default_language_defaultLanguage(options === null || options === void 0 ? void 0 : options.language, defaultLanguage), tryGet = (store) => {
-        if (!store) {
-            return;
-        }
-        if (is_string_isString(store[key])) {
-            return parse(store[key]);
-        }
-        const lcKey = key.toLowerCase();
-        if (is_string_isString(store[lcKey])) {
-            return parse(store[lcKey]);
-        }
-        const ucfKey = ucfirst(key);
-        if (is_string_isString(store[ucfKey])) {
-            return parse(store[ucfKey]);
-        }
-        return;
-    };
-    if (lang[language] !== undefined) {
-        store = lang[language];
-    }
-    else {
-        if (lang[defaultLanguage] !== undefined) {
-            store = lang[defaultLanguage];
-        }
-        else {
-            store = lang.en;
-        }
-    }
-    const i18nOvr = options === null || options === void 0 ? void 0 : options.i18n;
-    if (i18nOvr && i18nOvr[language]) {
-        const result = tryGet(i18nOvr[language]);
-        if (result) {
-            return result;
-        }
-    }
-    const result = tryGet(store);
-    if (result) {
-        return result;
-    }
-    if (lang.en && is_string_isString(lang.en[key]) && lang.en[key]) {
-        return parse(lang.en[key]);
-    }
-    if (debug) {
-        return '{' + key + '}';
-    }
-    if (false) {}
-    return parse(key);
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/string/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-;// CONCATENATED MODULE: ./src/core/global.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-const instances = {};
-let counter = 1;
-const uuids = new Set();
-function uniqueUid() {
-    function gen() {
-        counter += 10 * (Math.random() + 1);
-        return Math.round(counter).toString(16);
-    }
-    let uid = gen();
-    while (uuids.has(uid)) {
-        uid = gen();
-    }
-    uuids.add(uid);
-    return uid;
-}
-const pluginSystem = new PluginSystem();
-const modules = {};
-const lang = {};
-const extendLang = (langs) => {
-    Object.keys(langs).forEach(key => {
-        if (lang[key]) {
-            Object.assign(lang[key], langs[key]);
-        }
-        else {
-            lang[key] = langs[key];
-        }
-    });
-};
-const boxes = new WeakMap();
-function global_getContainer(jodit, classFunc, tag = 'div', createInsideEditor = false) {
-    const name = classFunc ? getClassName(classFunc.prototype) : 'jodit-utils';
-    const data = boxes.get(jodit) || {}, key = name + tag;
-    const view = is_jodit_object_isViewObject(jodit) ? jodit : jodit.j;
-    if (!data[key]) {
-        let c = view.c, body = is_jodit_object_isJoditObject(jodit) && jodit.o.shadowRoot
-            ? jodit.o.shadowRoot
-            : jodit.od.body;
-        if (createInsideEditor &&
-            is_jodit_object_isJoditObject(jodit) &&
-            jodit.od !== jodit.ed) {
-            c = jodit.createInside;
-            const place = tag === 'style' ? jodit.ed.head : jodit.ed.body;
-            body =
-                is_jodit_object_isJoditObject(jodit) && jodit.o.shadowRoot
-                    ? jodit.o.shadowRoot
-                    : place;
-        }
-        const box = c.element(tag, {
-            className: `jodit jodit-${kebabCase(name)}-container jodit-box`
-        });
-        box.classList.add(`jodit_theme_${view.o.theme || 'default'}`);
-        body.appendChild(box);
-        data[key] = box;
-        jodit.hookStatus('beforeDestruct', () => {
-            dom_Dom.safeRemove(box);
-            delete data[key];
-            if (Object.keys(data).length) {
-                boxes.delete(jodit);
-            }
-        });
-        boxes.set(jodit, data);
-    }
-    data[key].classList.remove('jodit_theme_default', 'jodit_theme_dark');
-    data[key].classList.add(`jodit_theme_${view.o.theme || 'default'}`);
-    return data[key];
-}
-const eventEmitter = new EventEmitter();
-
-;// CONCATENATED MODULE: ./src/core/component/component.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-const StatusListHandlers = new Map();
-class Component {
-    constructor() {
-        this.ownerWindow = window;
-        this.__componentStatus = statuses_STATUSES.beforeInit;
-        this.uid = 'jodit-uid-' + uniqueUid();
-    }
-    get componentName() {
-        if (!this.__componentName) {
-            this.__componentName =
-                'jodit-' +
-                    kebabCase((is_function_isFunction(this.className) ? this.className() : '') ||
-                        getClassName(this));
-        }
-        return this.__componentName;
-    }
-    getFullElName(elementName, mod, modValue) {
-        const result = [this.componentName];
-        if (elementName) {
-            elementName = elementName.replace(/[^a-z0-9-]/gi, '-');
-            result.push(`__${elementName}`);
-        }
-        if (mod) {
-            result.push('_', mod);
-            result.push('_', is_void_isVoid(modValue) ? 'true' : modValue.toString());
-        }
-        return result.join('');
-    }
-    get ownerDocument() {
-        return this.ow.document;
-    }
-    get od() {
-        return this.ownerDocument;
-    }
-    get ow() {
-        return this.ownerWindow;
-    }
-    get(chain, obj) {
-        return get(chain, obj || this);
-    }
-    get isReady() {
-        return this.componentStatus === statuses_STATUSES.ready;
-    }
-    get isDestructed() {
-        return this.componentStatus === statuses_STATUSES.destructed;
-    }
-    get isInDestruct() {
-        return (statuses_STATUSES.beforeDestruct === this.componentStatus ||
-            statuses_STATUSES.destructed === this.componentStatus);
-    }
-    bindDestruct(component) {
-        component.hookStatus(statuses_STATUSES.beforeDestruct, () => !this.isInDestruct && this.destruct());
-        return this;
-    }
-    destruct() {
-        this.setStatus(statuses_STATUSES.destructed);
-        if (StatusListHandlers.get(this)) {
-            StatusListHandlers.delete(this);
-        }
-    }
-    get componentStatus() {
-        return this.__componentStatus;
-    }
-    set componentStatus(componentStatus) {
-        this.setStatus(componentStatus);
-    }
-    setStatus(componentStatus) {
-        return this.setStatusComponent(componentStatus, this);
-    }
-    setStatusComponent(componentStatus, component) {
-        if (componentStatus === this.__componentStatus) {
-            return;
-        }
-        const proto = Object.getPrototypeOf(this);
-        if (proto && is_function_isFunction(proto.setStatusComponent)) {
-            proto.setStatusComponent(componentStatus, component);
-        }
-        const statuses = StatusListHandlers.get(this), list = statuses === null || statuses === void 0 ? void 0 : statuses[componentStatus];
-        if (list && list.length) {
-            list.forEach(cb => cb(component));
-        }
-        if (component === this) {
-            this.__componentStatus = componentStatus;
-        }
-    }
-    hookStatus(status, callback) {
-        let list = StatusListHandlers.get(this);
-        if (!list) {
-            list = {};
-            StatusListHandlers.set(this, list);
-        }
-        if (!list[status]) {
-            list[status] = [];
-        }
-        list[status].push(callback);
-    }
-}
-Component.STATUSES = statuses_STATUSES;
-
-;// CONCATENATED MODULE: ./src/core/component/view-component.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-class view_component_ViewComponent extends Component {
-    constructor(jodit) {
-        super();
-        this.setParentView(jodit);
-    }
-    get defaultTimeout() {
-        return this.j.defaultTimeout;
-    }
-    get j() {
-        return this.jodit;
-    }
-    i18n(text, ...params) {
-        return this.j.i18n(text, ...params);
-    }
-    setParentView(jodit) {
-        this.jodit = jodit;
-        jodit.components.add(this);
-        return this;
-    }
-    destruct() {
-        this.j.components.delete(this);
-        return super.destruct();
-    }
+function isNumber(value) {
+    return typeof value === 'number' && !isNaN(value) && isFinite(value);
 }
 
-;// CONCATENATED MODULE: ./src/core/component/index.ts
+;// CONCATENATED MODULE: ./src/core/helpers/checker/is-numeric.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-
-
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/data-bind.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-const store = new WeakMap();
-const data_bind_dataBind = (elm, key, value) => {
-    let itemStore = store.get(elm);
-    if (!itemStore) {
-        itemStore = {};
-        store.set(elm, itemStore);
-        let e = null;
-        if (elm instanceof view_component_ViewComponent) {
-            e = elm.j.e;
+function is_numeric_isNumeric(value) {
+    if (is_string_isString(value)) {
+        if (!value.match(/^([+-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
+            return false;
         }
-        if (is_jodit_object_isViewObject(elm)) {
-            e = elm.e;
-        }
-        e &&
-            e.on('beforeDestruct', () => {
-                store.delete(elm);
-            });
+        value = parseFloat(value);
     }
-    if (value === undefined) {
-        return itemStore[key];
-    }
-    itemStore[key] = value;
-    return value;
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-key-aliases.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function normalizeKeyAliases(keys) {
-    const memory = {};
-    return keys
-        .replace(/\+\+/g, '+add')
-        .split(/[\s]*\+[\s]*/)
-        .map(key => trim(key.toLowerCase()))
-        .map(key => KEY_ALIASES[key] || key)
-        .sort()
-        .filter(key => !memory[key] && key !== '' && (memory[key] = true))
-        .join('+');
+    return typeof value === 'number' && !isNaN(value) && isFinite(value);
 }
 
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-node.ts
+;// CONCATENATED MODULE: ./src/core/helpers/checker/is-window.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function isWindow(obj) {
+    return obj != null && obj === obj.window;
+}
+
+;// CONCATENATED MODULE: ./src/core/helpers/checker/is-plain-object.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-
-const normalizeNode = (node) => {
-    if (!node) {
-        return;
-    }
-    if (dom_Dom.isText(node) && node.nodeValue != null && node.parentNode) {
-        while (dom_Dom.isText(node.nextSibling)) {
-            if (node.nextSibling.nodeValue != null) {
-                node.nodeValue += node.nextSibling.nodeValue;
-            }
-            node.nodeValue = node.nodeValue.replace(INVISIBLE_SPACE_REG_EXP(), '');
-            dom_Dom.safeRemove(node.nextSibling);
-        }
-    }
-    else {
-        normalizeNode(node.firstChild);
-    }
-    normalizeNode(node.nextSibling);
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-path.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-const normalizePath = (...path) => {
-    return path
-        .filter(part => trim_trim(part).length)
-        .map((part, index) => {
-        part = part.replace(/([^:])[\\/]+/g, '$1/');
-        if (index) {
-            part = part.replace(/^\//, '');
-        }
-        if (index !== path.length - 1) {
-            part = part.replace(/\/$/, '');
-        }
-        return part;
-    })
-        .join('/');
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-relative-path.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const normalizeRelativePath = (path) => {
-    const sections = path.split('/'), builder = sections.reduce((builder, section) => {
-        switch (section) {
-            case '': {
-                break;
-            }
-            case '.': {
-                break;
-            }
-            case '..': {
-                builder.pop();
-                break;
-            }
-            default: {
-                builder.push(section);
-                break;
-            }
-        }
-        return builder;
-    }, []);
-    return builder.join('/') + (path.endsWith('/') ? '/' : '');
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-url.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const normalizeUrl = (...urls) => {
-    return urls
-        .filter(url => url.length)
-        .map(url => url.replace(/\/$/, ''))
-        .join('/')
-        .replace(/([^:])[\\/]+/g, '$1/');
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/color/color-to-hex.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const color_to_hex_colorToHex = (color) => {
-    if (color === 'rgba(0, 0, 0, 0)' || color === '') {
+function is_plain_object_isPlainObject(obj) {
+    if (!obj || typeof obj !== 'object' || obj.nodeType || isWindow(obj)) {
         return false;
     }
-    if (!color) {
-        return '#000000';
-    }
-    if (color.substr(0, 1) === '#') {
-        return color;
-    }
-    const digits = /([\s\n\t\r]*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color) ||
-        /([\s\n\t\r]*?)rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/.exec(color);
-    if (!digits) {
-        return '#000000';
-    }
-    const red = parseInt(digits[2], 10), green = parseInt(digits[3], 10), blue = parseInt(digits[4], 10), rgb = blue | (green << 8) | (red << 16);
-    let hex = rgb.toString(16).toUpperCase();
-    while (hex.length < 6) {
-        hex = '0' + hex;
-    }
-    return digits[1] + '#' + hex;
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-css-value.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-function normalizeCssValue(key, value) {
-    switch (kebabCase(key)) {
-        case 'font-weight':
-            switch (value.toString().toLowerCase()) {
-                case '700':
-                case 'bold':
-                    return 700;
-                case '400':
-                case 'normal':
-                    return 400;
-                case '900':
-                case 'heavy':
-                    return 900;
-            }
-            return isNumeric(value) ? Number(value) : value;
-    }
-    if (/color/i.test(key) && /^rgb/i.test(value.toString())) {
-        return color_to_hex_colorToHex(value.toString()) || value;
-    }
-    return value;
+    return !(obj.constructor &&
+        !{}.hasOwnProperty.call(obj.constructor.prototype, 'isPrototypeOf'));
 }
 
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-color.ts
+;// CONCATENATED MODULE: ./src/core/helpers/checker/is-url.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
-
-const normalizeColor = (colorInput) => {
-    const newcolor = ['#'];
-    let color = colorToHex(colorInput);
-    if (!color) {
+function is_url_isURL(str) {
+    if (str.includes(' ')) {
         return false;
     }
-    color = trim(color.toUpperCase());
-    color = color.substr(1);
-    if (color.length === 3) {
-        for (let i = 0; i < 3; i += 1) {
-            newcolor.push(color[i]);
-            newcolor.push(color[i]);
-        }
-        return newcolor.join('');
-    }
-    if (color.length > 6) {
-        color = color.substr(0, 6);
-    }
-    return '#' + color;
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/css.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-function css(element, key, value, onlyStyleMode = false) {
-    const numberFieldsReg = /^(left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size)/i;
-    if (isBoolean(value)) {
-        onlyStyleMode = value;
-        value = undefined;
-    }
-    if (is_plain_object_isPlainObject(key) || value !== undefined) {
-        const setValue = (elm, _key, _value) => {
-            if (!is_void_isVoid(_value) &&
-                numberFieldsReg.test(_key) &&
-                isNumeric(_value.toString())) {
-                _value = parseInt(_value.toString(), 10) + 'px';
-            }
-            if (_value !== undefined &&
-                (_value == null ||
-                    css(elm, _key, true) !== normalizeCssValue(_key, _value))) {
-                elm.style[_key] = _value;
-            }
-        };
-        if (is_plain_object_isPlainObject(key)) {
-            const keys = Object.keys(key);
-            for (let j = 0; j < keys.length; j += 1) {
-                setValue(element, camelCase(keys[j]), key[keys[j]]);
-            }
-        }
-        else {
-            setValue(element, camelCase(key), value);
-        }
-        return '';
-    }
-    const key2 = kebabCase(key), doc = element.ownerDocument || document, win = doc ? doc.defaultView || doc.parentWindow : false;
-    const currentValue = element.style[key];
-    let result = '';
-    if (currentValue !== undefined && currentValue !== '') {
-        result = currentValue;
-    }
-    else if (win && !onlyStyleMode) {
-        result = win.getComputedStyle(element).getPropertyValue(key2);
-    }
-    if (numberFieldsReg.test(key) &&
-        /^[-+]?[0-9.]+px$/.test(result.toString())) {
-        result = parseInt(result.toString(), 10);
-    }
-    return normalizeCssValue(key, result);
-}
-const clearCenterAlign = (image) => {
-    if (css(image, 'display') === 'block') {
-        css(image, 'display', '');
-    }
-    const { style } = image;
-    if (style.marginLeft === 'auto' && style.marginRight === 'auto') {
-        style.marginLeft = '';
-        style.marginRight = '';
-    }
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/utils.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-function call(func, ...args) {
-    return func(...args);
-}
-function utils_attr(elm, keyOrAttributes, value) {
-    if (!elm || !is_function_isFunction(elm.getAttribute)) {
-        return null;
-    }
-    if (!is_string_isString(keyOrAttributes)) {
-        Object.keys(keyOrAttributes).forEach(key => {
-            const value = keyOrAttributes[key];
-            if (is_plain_object_isPlainObject(value) && key === 'style') {
-                css(elm, value);
-            }
-            else {
-                if (key === 'className') {
-                    key = 'class';
-                }
-                utils_attr(elm, key, value);
-            }
-        });
-        return null;
-    }
-    let key = CamelCaseToKebabCase(keyOrAttributes);
-    if (/^-/.test(key)) {
-        const res = utils_attr(elm, `data${key}`);
-        if (res) {
-            return res;
-        }
-        key = key.substr(1);
-    }
-    if (value !== undefined) {
-        if (value == null) {
-            elm.hasAttribute(key) && elm.removeAttribute(key);
-        }
-        else {
-            elm.setAttribute(key, value.toString());
-            return value.toString();
-        }
-    }
-    return elm.getAttribute(key);
-}
-function markOwner(jodit, elm) {
-    utils_attr(elm, 'data-editor_id', jodit.id);
-    !elm.component &&
-        Object.defineProperty(elm, 'jodit', {
-            value: jodit
-        });
-}
-function callPromise(condition, callback) {
-    if (is_promise_isPromise(condition)) {
-        return condition.finally(callback);
-    }
-    return callback();
-}
-const map = {};
-const utils_reset = function (key) {
-    var _a, _b;
-    if (!(key in map)) {
-        const iframe = document.createElement('iframe');
+    if (typeof URL !== 'undefined') {
         try {
-            iframe.src = 'about:blank';
-            document.body.appendChild(iframe);
-            if (!iframe.contentWindow) {
-                return null;
-            }
-            const func = get(key, iframe.contentWindow), bind = get(key.split('.').slice(0, -1).join('.'), iframe.contentWindow);
-            if (is_function_isFunction(func)) {
-                map[key] = func.bind(bind);
-            }
+            const url = new URL(str);
+            return ['https:', 'http:', 'ftp:', 'file:', 'rtmp:'].includes(url.protocol);
         }
         catch (e) {
-            if (false) {}
-        }
-        finally {
-            (_a = iframe.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(iframe);
+            return false;
         }
     }
-    return (_b = map[key]) !== null && _b !== void 0 ? _b : null;
-};
-const loadImage = (src, jodit) => jodit.async.promise((res, rej) => {
-    const image = new Image(), onError = () => {
-        jodit.e.off(image);
-        rej === null || rej === void 0 ? void 0 : rej();
-    }, onSuccess = () => {
-        jodit.e.off(image);
-        res(image);
-    };
-    jodit.e
-        .one(image, 'load', onSuccess)
-        .one(image, 'error', onError)
-        .one(image, 'abort', onError);
-    image.src = src;
-    if (image.complete) {
-        onSuccess();
-    }
-});
-const keys = (obj, own = true) => {
-    if (own) {
-        return Object.keys(obj);
-    }
-    const props = [];
-    for (const key in obj) {
-        props.push(key);
-    }
-    return props;
-};
-const memorizeExec = (editor, _, { control }, preProcessValue) => {
-    const key = `button${control.command}`;
-    let value = (control.args && control.args[0]) || dataBind(editor, key);
-    if (isVoid(value)) {
-        return false;
-    }
-    dataBind(editor, key, value);
-    if (preProcessValue) {
-        value = preProcessValue(value);
-    }
-    editor.execCommand(control.command, false, value || undefined);
-};
+    const a = document.createElement('a');
+    a.href = str;
+    return Boolean(a.hostname);
+}
+
+;// CONCATENATED MODULE: ./src/core/helpers/checker/index.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ;// CONCATENATED MODULE: ./src/core/helpers/utils/set.ts
 /*!
@@ -5182,14 +4570,14 @@ const memorizeExec = (editor, _, { control }, preProcessValue) => {
 
 
 function set(chain, value, obj) {
-    if (!is_string_isString(chain) || !chain.length) {
+    if (!isString(chain) || !chain.length) {
         return;
     }
     const parts = chain.split('.');
     let result = obj, key = parts[0];
     for (let i = 0; i < parts.length - 1; i += 1) {
         key = parts[i];
-        if (!isArray(result[key]) && !is_plain_object_isPlainObject(result[key])) {
+        if (!isArray(result[key]) && !isPlainObject(result[key])) {
             result[key] = isNumeric(parts[i + 1]) ? [] : {};
         }
         result = result[key];
@@ -5298,7 +4686,7 @@ const buildQuery = (data, prefix) => {
         if (Object.prototype.hasOwnProperty.call(data, dataKey)) {
             const k = prefix ? prefix + '[' + dataKey + ']' : dataKey;
             const v = data[dataKey];
-            str.push(is_plain_object_isPlainObject(v) ? buildQuery(v, k) : enc(k) + '=' + enc(v));
+            str.push(isPlainObject(v) ? buildQuery(v, k) : enc(k) + '=' + enc(v));
         }
     }
     return str.join('&');
@@ -5336,7 +4724,7 @@ function fastClone(object) {
 
 
 
-function config_proto_ConfigProto(options, proto, deep = 0) {
+function ConfigProto(options, proto, deep = 0) {
     if (Object.getPrototypeOf(options) !== Object.prototype) {
         return options;
     }
@@ -5356,10 +4744,10 @@ function config_proto_ConfigProto(options, proto, deep = 0) {
     Object.keys(options).forEach(key => {
         const opt = options[key], protoKey = proto ? proto[key] : null;
         if (is_plain_object_isPlainObject(opt) && is_plain_object_isPlainObject(protoKey) && !isAtom(opt)) {
-            newOpt[key] = config_proto_ConfigProto(opt, protoKey, deep + 1);
+            newOpt[key] = ConfigProto(opt, protoKey, deep + 1);
             return;
         }
-        if (deep !== 0 && isArray(opt) && !isAtom(opt) && isArray(protoKey)) {
+        if (deep !== 0 && is_array_isArray(opt) && !isAtom(opt) && is_array_isArray(protoKey)) {
             newOpt[key] = [...opt, ...protoKey.slice(opt.length)];
             return;
         }
@@ -5431,23 +4819,244 @@ const convertMediaUrlToVideoEmbed = (url, width = 400, height = 345) => {
     return url;
 };
 
-;// CONCATENATED MODULE: ./src/core/helpers/utils/ctrl-key.ts
+;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-key-aliases.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-const ctrlKey = (e) => {
-    if (typeof navigator !== 'undefined' &&
-        navigator.userAgent.indexOf('Mac OS X') !== -1) {
-        if (e.metaKey && !e.altKey) {
-            return true;
+
+
+function normalizeKeyAliases(keys) {
+    const memory = {};
+    return keys
+        .replace(/\+\+/g, '+add')
+        .split(/[\s]*\+[\s]*/)
+        .map(key => trim(key.toLowerCase()))
+        .map(key => KEY_ALIASES[key] || key)
+        .sort()
+        .filter(key => !memory[key] && key !== '' && (memory[key] = true))
+        .join('+');
+}
+
+;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-node.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+const normalizeNode = (node) => {
+    if (!node) {
+        return;
+    }
+    if (dom_Dom.isText(node) && node.nodeValue != null && node.parentNode) {
+        while (dom_Dom.isText(node.nextSibling)) {
+            if (node.nextSibling.nodeValue != null) {
+                node.nodeValue += node.nextSibling.nodeValue;
+            }
+            node.nodeValue = node.nodeValue.replace(INVISIBLE_SPACE_REG_EXP(), '');
+            dom_Dom.safeRemove(node.nextSibling);
         }
     }
-    else if (e.ctrlKey && !e.altKey) {
-        return true;
+    else {
+        normalizeNode(node.firstChild);
     }
-    return false;
+    normalizeNode(node.nextSibling);
+};
+
+;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-path.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+const normalizePath = (...path) => {
+    return path
+        .filter(part => trim(part).length)
+        .map((part, index) => {
+        part = part.replace(/([^:])[\\/]+/g, '$1/');
+        if (index) {
+            part = part.replace(/^\//, '');
+        }
+        if (index !== path.length - 1) {
+            part = part.replace(/\/$/, '');
+        }
+        return part;
+    })
+        .join('/');
+};
+
+;// CONCATENATED MODULE: ./src/core/helpers/color/color-to-hex.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const color_to_hex_colorToHex = (color) => {
+    if (color === 'rgba(0, 0, 0, 0)' || color === '') {
+        return false;
+    }
+    if (!color) {
+        return '#000000';
+    }
+    if (color.substr(0, 1) === '#') {
+        return color;
+    }
+    const digits = /([\s\n\t\r]*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color) ||
+        /([\s\n\t\r]*?)rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/.exec(color);
+    if (!digits) {
+        return '#000000';
+    }
+    const red = parseInt(digits[2], 10), green = parseInt(digits[3], 10), blue = parseInt(digits[4], 10), rgb = blue | (green << 8) | (red << 16);
+    let hex = rgb.toString(16).toUpperCase();
+    while (hex.length < 6) {
+        hex = '0' + hex;
+    }
+    return digits[1] + '#' + hex;
+};
+
+;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-css-value.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function normalizeCssValue(key, value) {
+    switch (kebabCase(key)) {
+        case 'font-weight':
+            switch (value.toString().toLowerCase()) {
+                case '700':
+                case 'bold':
+                    return 700;
+                case '400':
+                case 'normal':
+                    return 400;
+                case '900':
+                case 'heavy':
+                    return 900;
+            }
+            return is_numeric_isNumeric(value) ? Number(value) : value;
+    }
+    if (/color/i.test(key) && /^rgb/i.test(value.toString())) {
+        return color_to_hex_colorToHex(value.toString()) || value;
+    }
+    return value;
+}
+
+;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-color.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+const normalizeColor = (colorInput) => {
+    const newcolor = ['#'];
+    let color = colorToHex(colorInput);
+    if (!color) {
+        return false;
+    }
+    color = trim(color.toUpperCase());
+    color = color.substr(1);
+    if (color.length === 3) {
+        for (let i = 0; i < 3; i += 1) {
+            newcolor.push(color[i]);
+            newcolor.push(color[i]);
+        }
+        return newcolor.join('');
+    }
+    if (color.length > 6) {
+        color = color.substr(0, 6);
+    }
+    return '#' + color;
+};
+
+;// CONCATENATED MODULE: ./src/core/helpers/normalize/index.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+
+
+
+;// CONCATENATED MODULE: ./src/core/helpers/utils/css.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function css(element, key, value, onlyStyleMode = false) {
+    const numberFieldsReg = /^(left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size)/i;
+    if (isBoolean(value)) {
+        onlyStyleMode = value;
+        value = undefined;
+    }
+    if (is_plain_object_isPlainObject(key) || value !== undefined) {
+        const setValue = (elm, _key, _value) => {
+            if (!is_void_isVoid(_value) &&
+                numberFieldsReg.test(_key) &&
+                is_numeric_isNumeric(_value.toString())) {
+                _value = parseInt(_value.toString(), 10) + 'px';
+            }
+            if (_value !== undefined &&
+                (_value == null ||
+                    css(elm, _key, true) !== normalizeCssValue(_key, _value))) {
+                elm.style[_key] = _value;
+            }
+        };
+        if (is_plain_object_isPlainObject(key)) {
+            const keys = Object.keys(key);
+            for (let j = 0; j < keys.length; j += 1) {
+                setValue(element, camel_case_camelCase(keys[j]), key[keys[j]]);
+            }
+        }
+        else {
+            setValue(element, camel_case_camelCase(key), value);
+        }
+        return '';
+    }
+    const key2 = kebabCase(key), doc = element.ownerDocument || document, win = doc ? doc.defaultView || doc.parentWindow : false;
+    const currentValue = element.style[key];
+    let result = '';
+    if (currentValue !== undefined && currentValue !== '') {
+        result = currentValue;
+    }
+    else if (win && !onlyStyleMode) {
+        result = win.getComputedStyle(element).getPropertyValue(key2);
+    }
+    if (numberFieldsReg.test(key) &&
+        /^[-+]?[0-9.]+px$/.test(result.toString())) {
+        result = parseInt(result.toString(), 10);
+    }
+    return normalizeCssValue(key, result);
+}
+const clearCenterAlign = (image) => {
+    if (css(image, 'display') === 'block') {
+        css(image, 'display', '');
+    }
+    const { style } = image;
+    if (style.marginLeft === 'auto' && style.marginRight === 'auto') {
+        style.marginLeft = '';
+        style.marginRight = '';
+    }
 };
 
 ;// CONCATENATED MODULE: ./src/core/helpers/utils/default-language.ts
@@ -5457,8 +5066,8 @@ const ctrlKey = (e) => {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const default_language_defaultLanguage = (language, defaultLanguage = 'en') => {
-    if (language !== 'auto' && is_string_isString(language)) {
+const defaultLanguage = (language, defaultLanguage = 'en') => {
+    if (language !== 'auto' && isString(language)) {
         return language;
     }
     if (document.documentElement && document.documentElement.lang) {
@@ -5470,37 +5079,6 @@ const default_language_defaultLanguage = (language, defaultLanguage = 'en') => {
     return defaultLanguage;
 };
 
-;// CONCATENATED MODULE: ./src/core/helpers/utils/human-size-to-bytes.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const humanSizeToBytes = (human) => {
-    if (/^[0-9.]+$/.test(human.toString())) {
-        return parseFloat(human);
-    }
-    const format = human.substr(-2, 2).toUpperCase(), formats = ['KB', 'MB', 'GB', 'TB'], number = parseFloat(human.substr(0, human.length - 2));
-    return formats.indexOf(format) !== -1
-        ? number * Math.pow(1024, formats.indexOf(format) + 1)
-        : parseInt(human, 10);
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/parse-query.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const parse_query_parseQuery = (queryString) => {
-    const query = {}, a = queryString.substr(1).split('&');
-    for (let i = 0; i < a.length; i += 1) {
-        const keyValue = a[i].split('=');
-        query[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1] || '');
-    }
-    return query;
-};
-
 ;// CONCATENATED MODULE: ./src/core/helpers/array/as-array.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5508,36 +5086,7 @@ const parse_query_parseQuery = (queryString) => {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const asArray = (a) => (isArray(a) ? a : [a]);
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-native-function.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isNativeFunction(f) {
-    return (Boolean(f) &&
-        (typeof f).toLowerCase() === 'function' &&
-        (f === Function.prototype ||
-            /^\s*function\s*(\b[a-z$_][a-z0-9$_]*\b)*\s*\((|([a-z$_][a-z0-9$_]*)(\s*,[a-z$_][a-z0-9$_]*)*)\)\s*{\s*\[native code]\s*}\s*$/i.test(String(f))));
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/array/to-array.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-const to_array_toArray = function toArray(...args) {
-    var _a;
-    const func = isNativeFunction(Array.from)
-        ? Array.from
-        : (_a = utils_reset('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
-    return func.apply(Array, args);
-};
+const asArray = (a) => (is_array_isArray(a) ? a : [a]);
 
 ;// CONCATENATED MODULE: ./src/core/helpers/array/index.ts
 /*!
@@ -5675,7 +5224,7 @@ Icon.icons = {};
 
 
 
-class UIElement extends view_component_ViewComponent {
+class element_UIElement extends ViewComponent {
     constructor(jodit, options) {
         super(jodit);
         this.name = '';
@@ -5723,7 +5272,7 @@ class UIElement extends view_component_ViewComponent {
                 return pe;
             }
             if (!pe.parentElement && pe.container.parentElement) {
-                pe = UIElement.closestElement(pe.container.parentElement, UIElement);
+                pe = element_UIElement.closestElement(pe.container.parentElement, element_UIElement);
             }
             else {
                 pe = pe.parentElement;
@@ -5817,7 +5366,7 @@ const UIButtonState = () => ({
     text: '',
     tabIndex: undefined
 });
-let UIButton = class UIButton extends UIElement {
+let UIButton = class UIButton extends element_UIElement {
     constructor(jodit, state) {
         super(jodit);
         this.isButton = true;
@@ -5975,7 +5524,7 @@ UIButton = __decorate([
 function Button(jodit, stateOrText, text, variant) {
     const button = new UIButton(jodit);
     button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
-    if (is_string_isString(stateOrText)) {
+    if (isString(stateOrText)) {
         button.state.icon.name = stateOrText;
         button.state.name = stateOrText;
         if (variant) {
@@ -6004,7 +5553,7 @@ var UIGroup_1;
 
 
 
-let UIGroup = UIGroup_1 = class UIGroup extends UIElement {
+let UIGroup = UIGroup_1 = class UIGroup extends element_UIElement {
     constructor(jodit, elements, options) {
         super(jodit, options);
         this.options = options;
@@ -6026,7 +5575,7 @@ let UIGroup = UIGroup_1 = class UIGroup extends UIElement {
         ];
         while (stack.length) {
             const elm = stack.shift();
-            if (isArray(elm)) {
+            if (is_array_isArray(elm)) {
                 stack.push(...elm);
             }
             else if (elm instanceof UIGroup_1) {
@@ -6043,7 +5592,7 @@ let UIGroup = UIGroup_1 = class UIGroup extends UIElement {
         this.setMod('size', this.buttonSize);
     }
     append(elm, distElement) {
-        if (isArray(elm)) {
+        if (is_array_isArray(elm)) {
             elm.forEach(item => this.append(item, distElement));
             return this;
         }
@@ -6160,11 +5709,11 @@ function findControlType(path, controls) {
 
 
 function getStrongControlTypes(items, controls) {
-    const elements = isArray(items)
+    const elements = is_array_isArray(items)
         ? items
         : keys(items, false).map(key => {
             const value = items[key] || {};
-            return config_proto_ConfigProto({ name: key }, value);
+            return ConfigProto({ name: key }, value);
         });
     return elements.map(item => getControlType(item, controls || config_Config.defaultOptions.controls));
 }
@@ -6178,7 +5727,7 @@ function getStrongControlTypes(items, controls) {
 
 
 
-let UISeparator = class UISeparator extends UIElement {
+let UISeparator = class UISeparator extends element_UIElement {
     className() {
         return 'UISeparator';
     }
@@ -6197,7 +5746,7 @@ UISeparator = __decorate([
 
 
 
-let UISpacer = class UISpacer extends UIElement {
+let UISpacer = class UISpacer extends element_UIElement {
     className() {
         return 'UISpacer';
     }
@@ -6215,7 +5764,7 @@ UISpacer = __decorate([
  */
 
 const isButtonGroup = (item) => {
-    return isArray(item.buttons);
+    return is_array_isArray(item.buttons);
 };
 function flatButtonsSet(buttons, jodit) {
     const groups = jodit.getRegisteredButtonGroups();
@@ -6464,7 +6013,7 @@ UIButtonGroup = __decorate([
 
 
 
-class Popup extends UIElement {
+class Popup extends element_UIElement {
     constructor(jodit, smart = true) {
         super(jodit);
         this.smart = smart;
@@ -6502,7 +6051,7 @@ class Popup extends UIElement {
         dom_Dom.detach(this.container);
         const box = this.j.c.div(`${this.componentName}__content`);
         let elm;
-        if (content instanceof UIElement) {
+        if (content instanceof element_UIElement) {
             elm = content.container;
             content.parentElement = this;
         }
@@ -6525,7 +6074,7 @@ class Popup extends UIElement {
         this.targetBound = !keepPosition
             ? getBound
             : this.getKeepBound(getBound);
-        const parentContainer = global_getContainer(this.jodit, Popup);
+        const parentContainer = getContainer(this.jodit, Popup);
         if (parentContainer !== this.container.parentElement) {
             parentContainer.appendChild(this.container);
         }
@@ -6558,7 +6107,7 @@ class Popup extends UIElement {
                 return;
             }
             if (!pe.parentElement && pe.container.parentElement) {
-                const elm = UIElement.closestElement(pe.container.parentElement, UIElement);
+                const elm = element_UIElement.closestElement(pe.container.parentElement, element_UIElement);
                 if (elm) {
                     pe = elm;
                     continue;
@@ -6611,7 +6160,7 @@ class Popup extends UIElement {
             bottom: target.top + target.height,
             top: target.top - container.height
         };
-        const list = Object.keys(x).reduce((keys, xKey) => keys.concat(Object.keys(y).map(yKey => `${xKey}${ucfirst(yKey)}`)), []);
+        const list = Object.keys(x).reduce((keys, xKey) => keys.concat(Object.keys(y).map(yKey => `${xKey}${ucfirst_ucfirst(yKey)}`)), []);
         const getPointByStrategy = (strategy) => {
             const [xKey, yKey] = kebabCase(strategy).split('-');
             return {
@@ -6671,7 +6220,7 @@ class Popup extends UIElement {
             this.close();
             return;
         }
-        const box = UIElement.closestElement(target, Popup);
+        const box = element_UIElement.closestElement(target, Popup);
         if (box && (this === box || box.closest(this))) {
             return;
         }
@@ -6872,7 +6421,7 @@ var UIInput_1;
 
 
 
-let UIInput = UIInput_1 = class UIInput extends UIElement {
+let UIInput = UIInput_1 = class UIInput extends element_UIElement {
     constructor(jodit, options) {
         super(jodit, options);
         this.label = this.j.c.span(this.getFullElName('label'));
@@ -7363,7 +6912,7 @@ UIBlock = __decorate([
 
 
 
-class ProgressBar extends UIElement {
+class ProgressBar extends (/* unused pure expression or super */ null && (UIElement)) {
     className() {
         return 'ProgressBar';
     }
@@ -7376,7 +6925,7 @@ class ProgressBar extends UIElement {
         return this;
     }
     hide() {
-        dom_Dom.safeRemove(this.container);
+        Dom.safeRemove(this.container);
         return this;
     }
     progress(percentage) {
@@ -7452,8 +7001,8 @@ const refs = (root) => {
         root = root.container;
     }
     return selector_$$('[ref],[data-ref]', root).reduce((def, child) => {
-        const key = utils_attr(child, '-ref');
-        if (key && is_string_isString(key)) {
+        const key = attr(child, '-ref');
+        if (key && isString(key)) {
             def[camelCase(key)] = child;
             def[key] = child;
         }
@@ -7461,7 +7010,7 @@ const refs = (root) => {
     }, {});
 };
 const cssPath = (el) => {
-    if (!dom_Dom.isElement(el)) {
+    if (!Dom.isElement(el)) {
         return null;
     }
     const path = [];
@@ -7490,19 +7039,19 @@ const cssPath = (el) => {
 };
 function resolveElement(element, od) {
     let resolved = element;
-    if (is_string_isString(element)) {
+    if (isString(element)) {
         try {
             resolved = od.querySelector(element);
         }
         catch (_a) {
-            throw error_error('String "' + element + '" should be valid HTML selector');
+            throw error('String "' + element + '" should be valid HTML selector');
         }
     }
     if (!resolved ||
         typeof resolved !== 'object' ||
-        !dom_Dom.isElement(resolved) ||
+        !Dom.isElement(resolved) ||
         !resolved.cloneNode) {
-        throw error_error('Element "' + element + '" should be string or HTMLElement instance');
+        throw error('Element "' + element + '" should be string or HTMLElement instance');
     }
     return resolved;
 }
@@ -7817,7 +7366,7 @@ function getScrollParent(node) {
 function position(elm, jodit, recurse = false) {
     const rect = elm.getBoundingClientRect();
     let xPos = rect.left, yPos = rect.top;
-    if (is_jodit_object_isJoditObject(jodit) && jodit.iframe && !recurse) {
+    if (isJoditObject(jodit) && jodit.iframe && !recurse) {
         const { left, top } = position(jodit.iframe, jodit, true);
         xPos += left;
         yPos += top;
@@ -7838,7 +7387,7 @@ function position(elm, jodit, recurse = false) {
  */
 
 function size(subject) {
-    if (is_string_isString(subject) || isArray(subject)) {
+    if (is_string_isString(subject) || is_array_isArray(subject)) {
         return subject.length;
     }
     if (is_plain_object_isPlainObject(subject)) {
@@ -7875,6 +7424,398 @@ function size(subject) {
 
 
 
+
+;// CONCATENATED MODULE: ./src/core/component/component.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+const StatusListHandlers = new Map();
+class Component {
+    constructor() {
+        this.ownerWindow = window;
+        this.__componentStatus = statuses_STATUSES.beforeInit;
+        this.uid = 'jodit-uid-' + uniqueUid();
+    }
+    get componentName() {
+        if (!this.__componentName) {
+            this.__componentName =
+                'jodit-' +
+                    kebabCase((is_function_isFunction(this.className) ? this.className() : '') ||
+                        getClassName(this));
+        }
+        return this.__componentName;
+    }
+    getFullElName(elementName, mod, modValue) {
+        const result = [this.componentName];
+        if (elementName) {
+            elementName = elementName.replace(/[^a-z0-9-]/gi, '-');
+            result.push(`__${elementName}`);
+        }
+        if (mod) {
+            result.push('_', mod);
+            result.push('_', is_void_isVoid(modValue) ? 'true' : modValue.toString());
+        }
+        return result.join('');
+    }
+    get ownerDocument() {
+        return this.ow.document;
+    }
+    get od() {
+        return this.ownerDocument;
+    }
+    get ow() {
+        return this.ownerWindow;
+    }
+    get(chain, obj) {
+        return get(chain, obj || this);
+    }
+    get isReady() {
+        return this.componentStatus === statuses_STATUSES.ready;
+    }
+    get isDestructed() {
+        return this.componentStatus === statuses_STATUSES.destructed;
+    }
+    get isInDestruct() {
+        return (statuses_STATUSES.beforeDestruct === this.componentStatus ||
+            statuses_STATUSES.destructed === this.componentStatus);
+    }
+    bindDestruct(component) {
+        component.hookStatus(statuses_STATUSES.beforeDestruct, () => !this.isInDestruct && this.destruct());
+        return this;
+    }
+    destruct() {
+        this.setStatus(statuses_STATUSES.destructed);
+        if (StatusListHandlers.get(this)) {
+            StatusListHandlers.delete(this);
+        }
+    }
+    get componentStatus() {
+        return this.__componentStatus;
+    }
+    set componentStatus(componentStatus) {
+        this.setStatus(componentStatus);
+    }
+    setStatus(componentStatus) {
+        return this.setStatusComponent(componentStatus, this);
+    }
+    setStatusComponent(componentStatus, component) {
+        if (componentStatus === this.__componentStatus) {
+            return;
+        }
+        const proto = Object.getPrototypeOf(this);
+        if (proto && is_function_isFunction(proto.setStatusComponent)) {
+            proto.setStatusComponent(componentStatus, component);
+        }
+        const statuses = StatusListHandlers.get(this), list = statuses === null || statuses === void 0 ? void 0 : statuses[componentStatus];
+        if (list && list.length) {
+            list.forEach(cb => cb(component));
+        }
+        if (component === this) {
+            this.__componentStatus = componentStatus;
+        }
+    }
+    hookStatus(status, callback) {
+        let list = StatusListHandlers.get(this);
+        if (!list) {
+            list = {};
+            StatusListHandlers.set(this, list);
+        }
+        if (!list[status]) {
+            list[status] = [];
+        }
+        list[status].push(callback);
+    }
+}
+Component.STATUSES = statuses_STATUSES;
+
+;// CONCATENATED MODULE: ./src/core/component/view-component.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+class ViewComponent extends Component {
+    constructor(jodit) {
+        super();
+        this.setParentView(jodit);
+    }
+    get defaultTimeout() {
+        return this.j.defaultTimeout;
+    }
+    get j() {
+        return this.jodit;
+    }
+    i18n(text, ...params) {
+        return this.j.i18n(text, ...params);
+    }
+    setParentView(jodit) {
+        this.jodit = jodit;
+        jodit.components.add(this);
+        return this;
+    }
+    destruct() {
+        this.j.components.delete(this);
+        return super.destruct();
+    }
+}
+
+;// CONCATENATED MODULE: ./src/core/component/index.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+;// CONCATENATED MODULE: ./src/core/helpers/utils/data-bind.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+const store = new WeakMap();
+const data_bind_dataBind = (elm, key, value) => {
+    let itemStore = store.get(elm);
+    if (!itemStore) {
+        itemStore = {};
+        store.set(elm, itemStore);
+        let e = null;
+        if (elm instanceof ViewComponent) {
+            e = elm.j.e;
+        }
+        if (is_jodit_object_isViewObject(elm)) {
+            e = elm.e;
+        }
+        e &&
+            e.on('beforeDestruct', () => {
+                store.delete(elm);
+            });
+    }
+    if (value === undefined) {
+        return itemStore[key];
+    }
+    itemStore[key] = value;
+    return value;
+};
+
+;// CONCATENATED MODULE: ./src/core/helpers/utils/utils.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+
+function call(func, ...args) {
+    return func(...args);
+}
+function utils_attr(elm, keyOrAttributes, value) {
+    if (!elm || !is_function_isFunction(elm.getAttribute)) {
+        return null;
+    }
+    if (!is_string_isString(keyOrAttributes)) {
+        Object.keys(keyOrAttributes).forEach(key => {
+            const value = keyOrAttributes[key];
+            if (is_plain_object_isPlainObject(value) && key === 'style') {
+                css(elm, value);
+            }
+            else {
+                if (key === 'className') {
+                    key = 'class';
+                }
+                utils_attr(elm, key, value);
+            }
+        });
+        return null;
+    }
+    let key = CamelCaseToKebabCase(keyOrAttributes);
+    if (/^-/.test(key)) {
+        const res = utils_attr(elm, `data${key}`);
+        if (res) {
+            return res;
+        }
+        key = key.substr(1);
+    }
+    if (value !== undefined) {
+        if (value == null) {
+            elm.hasAttribute(key) && elm.removeAttribute(key);
+        }
+        else {
+            elm.setAttribute(key, value.toString());
+            return value.toString();
+        }
+    }
+    return elm.getAttribute(key);
+}
+function markOwner(jodit, elm) {
+    utils_attr(elm, 'data-editor_id', jodit.id);
+    !elm.component &&
+        Object.defineProperty(elm, 'jodit', {
+            value: jodit
+        });
+}
+function callPromise(condition, callback) {
+    if (isPromise(condition)) {
+        return condition.finally(callback);
+    }
+    return callback();
+}
+const map = {};
+const utils_reset = function (key) {
+    var _a, _b;
+    if (!(key in map)) {
+        const iframe = document.createElement('iframe');
+        try {
+            iframe.src = 'about:blank';
+            document.body.appendChild(iframe);
+            if (!iframe.contentWindow) {
+                return null;
+            }
+            const func = get(key, iframe.contentWindow), bind = get(key.split('.').slice(0, -1).join('.'), iframe.contentWindow);
+            if (is_function_isFunction(func)) {
+                map[key] = func.bind(bind);
+            }
+        }
+        catch (e) {
+            if (false) {}
+        }
+        finally {
+            (_a = iframe.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(iframe);
+        }
+    }
+    return (_b = map[key]) !== null && _b !== void 0 ? _b : null;
+};
+const loadImage = (src, jodit) => jodit.async.promise((res, rej) => {
+    const image = new Image(), onError = () => {
+        jodit.e.off(image);
+        rej === null || rej === void 0 ? void 0 : rej();
+    }, onSuccess = () => {
+        jodit.e.off(image);
+        res(image);
+    };
+    jodit.e
+        .one(image, 'load', onSuccess)
+        .one(image, 'error', onError)
+        .one(image, 'abort', onError);
+    image.src = src;
+    if (image.complete) {
+        onSuccess();
+    }
+});
+const keys = (obj, own = true) => {
+    if (own) {
+        return Object.keys(obj);
+    }
+    const props = [];
+    for (const key in obj) {
+        props.push(key);
+    }
+    return props;
+};
+const memorizeExec = (editor, _, { control }, preProcessValue) => {
+    const key = `button${control.command}`;
+    let value = (control.args && control.args[0]) || dataBind(editor, key);
+    if (isVoid(value)) {
+        return false;
+    }
+    dataBind(editor, key, value);
+    if (preProcessValue) {
+        value = preProcessValue(value);
+    }
+    editor.execCommand(control.command, false, value || undefined);
+};
+
+;// CONCATENATED MODULE: ./src/core/helpers/checker/is-native-function.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function isNativeFunction(f) {
+    return (Boolean(f) &&
+        (typeof f).toLowerCase() === 'function' &&
+        (f === Function.prototype ||
+            /^\s*function\s*(\b[a-z$_][a-z0-9$_]*\b)*\s*\((|([a-z$_][a-z0-9$_]*)(\s*,[a-z$_][a-z0-9$_]*)*)\)\s*{\s*\[native code]\s*}\s*$/i.test(String(f))));
+}
+
+;// CONCATENATED MODULE: ./src/core/helpers/array/to-array.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+const to_array_toArray = function toArray(...args) {
+    var _a;
+    const func = isNativeFunction(Array.from)
+        ? Array.from
+        : (_a = utils_reset('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
+    return func.apply(Array, args);
+};
+
+;// CONCATENATED MODULE: ./src/core/vdom/helpers/index.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function attrsToDict(elm) {
+    var _a, _b;
+    const result = {};
+    if (elm.nodeName === 'SCRIPT') {
+        result.textContent = (_a = elm.textContent) !== null && _a !== void 0 ? _a : '';
+    }
+    if (elm.nodeType === Node.TEXT_NODE) {
+        result.nodeValue = (_b = elm.nodeValue) !== null && _b !== void 0 ? _b : '';
+    }
+    if (dom_Dom.isElement(elm)) {
+        for (let i = 0; i < elm.attributes.length; i += 1) {
+            const attr = elm.attributes.item(i);
+            if (attr) {
+                result[attr.name] = attr.value;
+            }
+        }
+    }
+    return result;
+}
+function domToVDom(elm, noNode = true) {
+    var _a;
+    if (elm.nodeType === Node.TEXT_NODE) {
+        return {
+            type: 'TEXT_ELEMENT',
+            props: {
+                children: [],
+                nodeValue: (_a = elm.nodeValue) !== null && _a !== void 0 ? _a : ''
+            }
+        };
+    }
+    return {
+        type: elm.nodeName.toLowerCase(),
+        props: {
+            children: to_array_toArray(elm.childNodes).map(n => domToVDom(n, noNode)),
+            ...attrsToDict(elm)
+        }
+    };
+}
 
 ;// CONCATENATED MODULE: ./src/core/async/async.ts
 /*!
@@ -7948,7 +7889,7 @@ class Async {
                         promises.forEach(res => res());
                         promises.length = 0;
                     };
-                    is_promise_isPromise(res) ? res.finally(runPromises) : runPromises();
+                    isPromise(res) ? res.finally(runPromises) : runPromises();
                 }
             }
         };
@@ -8076,5886 +8017,6 @@ class Async {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-
-;// CONCATENATED MODULE: ./src/core/request/response.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-class Response {
-    constructor(request, status, statusText, body) {
-        this.request = request;
-        this.status = status;
-        this.statusText = statusText;
-        this.body = body;
-    }
-    get url() {
-        return this.request.url;
-    }
-    async json() {
-        return JSON.parse(this.body);
-    }
-    text() {
-        return Promise.resolve(this.body);
-    }
-    async blob() {
-        return this.body;
-    }
-}
-
-;// CONCATENATED MODULE: ./src/core/request/config.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-config_Config.prototype.defaultAjaxOptions = {
-    successStatuses: [200, 201, 202],
-    dataType: 'json',
-    method: 'GET',
-    url: '',
-    data: null,
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    headers: {
-        'X-REQUESTED-WITH': 'XMLHttpRequest'
-    },
-    withCredentials: false,
-    xhr() {
-        return new XMLHttpRequest();
-    }
-};
-
-;// CONCATENATED MODULE: ./src/core/request/ajax.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-class ajax_Ajax {
-    constructor(jodit, options) {
-        this.jodit = jodit;
-        this.resolved = false;
-        this.activated = false;
-        this.options = config_proto_ConfigProto(options || {}, config_Config.prototype.defaultAjaxOptions);
-        this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
-        jodit && jodit.e && jodit.e.on('beforeDestruct', () => this.destruct());
-    }
-    __buildParams(obj, prefix) {
-        if (is_function_isFunction(this.o.queryBuild)) {
-            return this.o.queryBuild.call(this, obj, prefix);
-        }
-        if (is_string_isString(obj) ||
-            (this.j.ow.FormData &&
-                obj instanceof this.j.ow.FormData)) {
-            return obj;
-        }
-        return buildQuery(obj);
-    }
-    get o() {
-        return this.options;
-    }
-    get j() {
-        return this.jodit;
-    }
-    abort() {
-        try {
-            this.xhr.abort();
-        }
-        catch (_a) { }
-        return this;
-    }
-    send() {
-        this.activated = true;
-        const { xhr, o } = this;
-        const request = this.prepareRequest();
-        return this.j.async.promise((resolve, reject) => {
-            var _a;
-            const onReject = () => {
-                reject(error_error('Connection error'));
-            };
-            const onResolve = () => {
-                this.resolved = true;
-                resolve(new Response(request, xhr.status, xhr.statusText, !xhr.responseType ? xhr.responseText : xhr.response));
-            };
-            xhr.onload = onResolve;
-            xhr.onabort = onReject;
-            xhr.onerror = onReject;
-            xhr.ontimeout = onReject;
-            if (o.responseType) {
-                xhr.responseType = o.responseType;
-            }
-            xhr.onprogress = (e) => {
-                var _a, _b;
-                let percentComplete = 0;
-                if (e.lengthComputable) {
-                    percentComplete = (e.loaded / e.total) * 100;
-                }
-                (_b = (_a = this.options).onProgress) === null || _b === void 0 ? void 0 : _b.call(_a, percentComplete);
-            };
-            xhr.onreadystatechange = () => {
-                var _a, _b;
-                (_b = (_a = this.options).onProgress) === null || _b === void 0 ? void 0 : _b.call(_a, 10);
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (o.successStatuses.includes(xhr.status)) {
-                        onResolve();
-                    }
-                    else {
-                        reject(error_error(xhr.statusText || 'Connection error'));
-                    }
-                }
-            };
-            xhr.withCredentials = (_a = o.withCredentials) !== null && _a !== void 0 ? _a : false;
-            const { url, data, method } = request;
-            xhr.open(method, url, true);
-            if (o.contentType && xhr.setRequestHeader) {
-                xhr.setRequestHeader('Content-type', o.contentType);
-            }
-            const { headers } = o;
-            if (headers && xhr.setRequestHeader) {
-                Object.keys(headers).forEach(key => {
-                    xhr.setRequestHeader(key, headers[key]);
-                });
-            }
-            this.j.async.setTimeout(() => {
-                xhr.send(data ? this.__buildParams(data) : undefined);
-            }, 0);
-        });
-    }
-    prepareRequest() {
-        if (!this.o.url) {
-            throw error_error('Need URL for AJAX request');
-        }
-        let url = this.o.url;
-        const data = this.o.data;
-        const method = (this.o.method || 'get').toLowerCase();
-        if (method === 'get' && data && is_plain_object_isPlainObject(data)) {
-            const qIndex = url.indexOf('?');
-            if (qIndex !== -1) {
-                const urlData = parse_query_parseQuery(url);
-                url =
-                    url.substr(0, qIndex) +
-                        '?' +
-                        buildQuery({ ...urlData, ...data });
-            }
-            else {
-                url += '?' + buildQuery(this.o.data);
-            }
-        }
-        const request = {
-            url,
-            method,
-            data
-        };
-        ajax_Ajax.log.splice(100);
-        ajax_Ajax.log.push(request);
-        return request;
-    }
-    destruct() {
-        if (this.activated && !this.resolved) {
-            this.abort();
-            this.resolved = true;
-        }
-    }
-}
-ajax_Ajax.log = [];
-
-;// CONCATENATED MODULE: ./src/core/request/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-;// CONCATENATED MODULE: ./src/modules/context-menu/context-menu.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-class ContextMenu extends Popup {
-    className() {
-        return 'ContextMenu';
-    }
-    show(x, y, actions) {
-        const self = this, content = this.j.c.div(this.getFullElName('actions'));
-        if (!isArray(actions)) {
-            return;
-        }
-        actions.forEach(item => {
-            if (!item) {
-                return;
-            }
-            const action = Button(this.jodit, item.icon || 'empty', item.title);
-            this.jodit && action.setParentView(this.jodit);
-            action.setMod('context', 'menu');
-            action.onAction((e) => {
-                var _a;
-                (_a = item.exec) === null || _a === void 0 ? void 0 : _a.call(self, e);
-                self.close();
-                return false;
-            });
-            content.appendChild(action.container);
-        });
-        super
-            .setContent(content)
-            .open(() => ({ left: x, top: y, width: 0, height: 0 }), true);
-    }
-}
-
-;// CONCATENATED MODULE: ./src/core/storage/engines/local-storage-provider.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const canUsePersistentStorage = (() => {
-    const canUse = () => {
-        const tmpKey = '___Jodit___' + Math.random().toString();
-        try {
-            localStorage.setItem(tmpKey, '1');
-            const result = localStorage.getItem(tmpKey) === '1';
-            localStorage.removeItem(tmpKey);
-            return result;
-        }
-        catch (_a) { }
-        return false;
-    };
-    let result;
-    return () => {
-        if (result === undefined) {
-            result = canUse();
-        }
-        return result;
-    };
-})();
-class LocalStorageProvider {
-    constructor(rootKey) {
-        this.rootKey = rootKey;
-    }
-    set(key, value) {
-        try {
-            const buffer = localStorage.getItem(this.rootKey);
-            const json = buffer ? JSON.parse(buffer) : {};
-            json[key] = value;
-            localStorage.setItem(this.rootKey, JSON.stringify(json));
-        }
-        catch (_a) { }
-        return this;
-    }
-    delete(key) {
-        try {
-            localStorage.removeItem(this.rootKey);
-        }
-        catch (_a) { }
-        return this;
-    }
-    get(key) {
-        try {
-            const buffer = localStorage.getItem(this.rootKey);
-            const json = buffer ? JSON.parse(buffer) : {};
-            return json[key] !== undefined ? json[key] : null;
-        }
-        catch (_a) { }
-    }
-    exists(key) {
-        return this.get(key) != null;
-    }
-    clear() {
-        try {
-            localStorage.removeItem(this.rootKey);
-        }
-        catch (_a) { }
-        return this;
-    }
-}
-
-;// CONCATENATED MODULE: ./src/core/storage/engines/memory-storage-provider.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-class MemoryStorageProvider {
-    constructor() {
-        this.data = new Map();
-    }
-    set(key, value) {
-        this.data.set(key, value);
-        return this;
-    }
-    delete(key) {
-        this.data.delete(key);
-        return this;
-    }
-    get(key) {
-        return this.data.get(key);
-    }
-    exists(key) {
-        return this.data.has(key);
-    }
-    clear() {
-        this.data.clear();
-        return this;
-    }
-}
-
-;// CONCATENATED MODULE: ./src/core/storage/storage.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-const StorageKey = 'Jodit_';
-class Storage {
-    constructor(provider, suffix) {
-        this.provider = provider;
-        this.prefix = StorageKey;
-        if (suffix) {
-            this.prefix += suffix;
-        }
-    }
-    set(key, value) {
-        this.provider.set(camelCase(this.prefix + key), value);
-        return this;
-    }
-    delete(key) {
-        this.provider.delete(camelCase(this.prefix + key));
-        return this;
-    }
-    get(key) {
-        return this.provider.get(camelCase(this.prefix + key));
-    }
-    exists(key) {
-        return this.provider.exists(camelCase(this.prefix + key));
-    }
-    clear() {
-        this.provider.clear();
-        return this;
-    }
-    static makeStorage(persistent = false, suffix) {
-        let provider;
-        if (persistent && canUsePersistentStorage()) {
-            provider = new LocalStorageProvider(StorageKey + suffix);
-        }
-        if (!provider) {
-            provider = new MemoryStorageProvider();
-        }
-        return new Storage(provider, suffix);
-    }
-}
-
-;// CONCATENATED MODULE: ./src/core/storage/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-;// CONCATENATED MODULE: ./src/core/view/view.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-
-class View extends Component {
-    constructor(options, isJodit = false) {
-        super();
-        this.isJodit = isJodit;
-        this.isView = true;
-        this.mods = {};
-        this.components = new Set();
-        this.version = "3.14.2";
-        this.async = new Async();
-        this.buffer = Storage.makeStorage();
-        this.storage = Storage.makeStorage(true, this.componentName);
-        this.OPTIONS = View.defaultOptions;
-        this.__isFullSize = false;
-        this.__whoLocked = '';
-        this.isLockedNotBy = (name) => this.isLocked && this.__whoLocked !== name;
-        this.__modulesInstances = new Map();
-        this.id = new Date().getTime().toString();
-        this.buffer = Storage.makeStorage();
-        this.initOptions(options);
-        this.initOwners();
-        this.events = new EventEmitter(this.od);
-        this.create = new Create(this.od);
-        this.container = this.c.div();
-        this.container.classList.add('jodit');
-        this.progressbar = new ProgressBar(this);
-    }
-    setMod(...[name, value]) {
-        Mods.setMod.call(this, name, value);
-        return this;
-    }
-    getMod(name) {
-        return Mods.getMod.call(this, name);
-    }
-    getElm(elementName) {
-        return Elms.getElm.call(this, elementName);
-    }
-    getElms(elementName) {
-        return Elms.getElms.call(this, elementName);
-    }
-    get basePath() {
-        if (this.o.basePath) {
-            return this.o.basePath;
-        }
-        return BASE_PATH;
-    }
-    get defaultTimeout() {
-        return is_void_isVoid(this.o.defaultTimeout) ? 100 : this.o.defaultTimeout;
-    }
-    get c() {
-        return this.create;
-    }
-    get container() {
-        return this.__container;
-    }
-    set container(container) {
-        this.__container = container;
-    }
-    get e() {
-        return this.events;
-    }
-    get options() {
-        return this.__options;
-    }
-    set options(options) {
-        this.__options = options;
-    }
-    get o() {
-        return this.options;
-    }
-    i18n(text, ...params) {
-        return i18n(text, params, this.options);
-    }
-    toggleFullSize(isFullSize) {
-        if (isFullSize === undefined) {
-            isFullSize = !this.__isFullSize;
-        }
-        if (isFullSize === this.__isFullSize) {
-            return;
-        }
-        this.__isFullSize = isFullSize;
-        if (this.events) {
-            this.e.fire('toggleFullSize', isFullSize);
-        }
-    }
-    get isLocked() {
-        return this.__whoLocked !== '';
-    }
-    lock(name = 'any') {
-        if (!this.isLocked) {
-            this.__whoLocked = name;
-            return true;
-        }
-        return false;
-    }
-    unlock() {
-        if (this.isLocked) {
-            this.__whoLocked = '';
-            return true;
-        }
-        return false;
-    }
-    get isFullSize() {
-        return this.__isFullSize;
-    }
-    getVersion() {
-        return "3.14.2";
-    }
-    static getVersion() {
-        return "3.14.2";
-    }
-    initOptions(options) {
-        this.options = config_proto_ConfigProto(options || {}, config_proto_ConfigProto(this.options || {}, View.defaultOptions));
-    }
-    initOwners() {
-        var _a;
-        this.ownerWindow = (_a = this.o.ownerWindow) !== null && _a !== void 0 ? _a : window;
-    }
-    attachEvents(options) {
-        if (!options) {
-            return;
-        }
-        const e = options === null || options === void 0 ? void 0 : options.events;
-        e && Object.keys(e).forEach((key) => this.e.on(key, e[key]));
-    }
-    getInstance(moduleName, options) {
-        const instance = this.e.fire(camelCase('getInstance_' + moduleName), options);
-        if (instance) {
-            return instance;
-        }
-        const module = modules[moduleName], mi = this.__modulesInstances;
-        if (!is_function_isFunction(module)) {
-            throw error_error('Need real module name');
-        }
-        if (!mi.has(moduleName)) {
-            const instance = module.prototype instanceof view_component_ViewComponent
-                ? new module(this, options)
-                : new module(options);
-            this.components.add(instance);
-            mi.set(moduleName, instance);
-        }
-        return mi.get(moduleName);
-    }
-    addDisclaimer(elm) {
-        this.container.appendChild(elm);
-    }
-    beforeDestruct() {
-        this.e.fire(statuses_STATUSES.beforeDestruct, this);
-        this.components.forEach(component => {
-            if (isDestructable(component) && !component.isInDestruct) {
-                component.destruct();
-            }
-        });
-        this.components.clear();
-    }
-    destruct() {
-        if (this.isDestructed) {
-            return;
-        }
-        if (this.async) {
-            this.async.destruct();
-        }
-        if (this.events) {
-            this.e.destruct();
-        }
-        if (this.buffer) {
-            this.buffer.clear();
-        }
-        dom_Dom.safeRemove(this.container);
-        super.destruct();
-    }
-}
-__decorate([
-    hook(statuses_STATUSES.beforeDestruct)
-], View.prototype, "beforeDestruct", null);
-View.defaultOptions = {
-    extraButtons: [],
-    textIcons: false,
-    namespace: '',
-    removeButtons: [],
-    zIndex: 100002,
-    defaultTimeout: 100,
-    fullsize: false,
-    showTooltip: true,
-    useNativeTooltip: false,
-    buttons: [],
-    globalFullSize: true
-};
-
-;// CONCATENATED MODULE: ./src/modules/toolbar/collection/collection.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-let ToolbarCollection = class ToolbarCollection extends UIList {
-    constructor(jodit) {
-        super(jodit);
-        this.listenEvents = 'updateToolbar changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
-            'selectionchange changeSelection focus afterSetMode touchstart focus blur';
-        this.update = this.j.async.debounce(this.immediateUpdate, () => this.j.defaultTimeout);
-        this.initEvents();
-    }
-    className() {
-        return 'ToolbarCollection';
-    }
-    get firstButton() {
-        const [button] = this.buttons;
-        return button || null;
-    }
-    makeButton(control, target = null) {
-        return makeButton(this.j, control, target);
-    }
-    shouldBeActive(button) {
-        return undefined;
-    }
-    shouldBeDisabled(button) {
-        return undefined;
-    }
-    getTarget(button) {
-        return button.target || null;
-    }
-    immediateUpdate() {
-        if (this.isDestructed || this.j.isLocked) {
-            return;
-        }
-        super.update();
-        this.j.e.fire('afterUpdateToolbar');
-    }
-    setDirection(direction) {
-        this.container.style.direction = direction;
-        this.container.setAttribute('dir', direction);
-    }
-    initEvents() {
-        this.j.e
-            .on(this.listenEvents, this.update)
-            .on('afterSetMode focus', this.immediateUpdate);
-    }
-    hide() {
-        this.container.remove();
-    }
-    show() {
-        this.appendTo(this.j.toolbarContainer);
-    }
-    showInline(bound) {
-        throw error_error('The method is not implemented for this class.');
-    }
-    build(items, target = null) {
-        const itemsWithGroupps = this.j.e.fire('beforeToolbarBuild', items);
-        if (itemsWithGroupps) {
-            items = itemsWithGroupps;
-        }
-        super.build(items, target);
-        return this;
-    }
-    destruct() {
-        if (this.isDestructed) {
-            return;
-        }
-        this.j.e
-            .off(this.listenEvents, this.update)
-            .off('afterSetMode focus', this.immediateUpdate);
-        super.destruct();
-    }
-};
-__decorate([
-    autobind
-], ToolbarCollection.prototype, "immediateUpdate", null);
-ToolbarCollection = __decorate([
-    component
-], ToolbarCollection);
-
-
-;// CONCATENATED MODULE: ./src/modules/toolbar/collection/editor-collection.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-let ToolbarEditorCollection = class ToolbarEditorCollection extends ToolbarCollection {
-    constructor(jodit) {
-        super(jodit);
-        this.checkActiveStatus = (cssObject, node) => {
-            let matches = 0, total = 0;
-            Object.keys(cssObject).forEach((cssProperty) => {
-                const cssValue = cssObject[cssProperty];
-                if (is_function_isFunction(cssValue)) {
-                    if (cssValue(this.j, css(node, cssProperty).toString())) {
-                        matches += 1;
-                    }
-                }
-                else {
-                    if (cssValue.indexOf(css(node, cssProperty).toString()) !== -1) {
-                        matches += 1;
-                    }
-                }
-                total += 1;
-            });
-            return total === matches;
-        };
-        this.prependInvisibleInput(this.container);
-    }
-    className() {
-        return 'ToolbarEditorCollection';
-    }
-    shouldBeDisabled(button) {
-        const disabled = super.shouldBeDisabled(button);
-        if (disabled !== undefined) {
-            return disabled;
-        }
-        const mode = button.control.mode === undefined
-            ? MODE_WYSIWYG
-            : button.control.mode;
-        return !(mode === MODE_SPLIT || mode === this.j.getRealMode());
-    }
-    shouldBeActive(button) {
-        const active = super.shouldBeActive(button);
-        if (active !== undefined) {
-            return active;
-        }
-        const element = this.j.selection ? this.j.s.current() : null;
-        if (!element) {
-            return false;
-        }
-        let elm;
-        if (button.control.tags) {
-            const tags = button.control.tags;
-            elm = element;
-            if (dom_Dom.up(elm, (node) => {
-                if (node &&
-                    tags.indexOf(node.nodeName.toLowerCase()) !== -1) {
-                    return true;
-                }
-            }, this.j.editor)) {
-                return true;
-            }
-        }
-        if (button.control.css) {
-            const css = button.control.css;
-            elm = element;
-            if (dom_Dom.up(elm, (node) => {
-                if (node && !dom_Dom.isText(node)) {
-                    return this.checkActiveStatus(css, node);
-                }
-            }, this.j.editor)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    getTarget(button) {
-        return button.target || this.j.s.current() || null;
-    }
-    prependInvisibleInput(container) {
-        const input = this.j.create.element('input', {
-            tabIndex: -1,
-            disabled: true,
-            style: 'width: 0; height:0; position: absolute; visibility: hidden;'
-        });
-        dom_Dom.appendChildFirst(container, input);
-    }
-    showInline(bound) {
-        this.jodit.e.fire('showInlineToolbar', bound);
-    }
-    hide() {
-        this.jodit.e.fire('hidePopup');
-        super.hide();
-        this.jodit.e.fire('toggleToolbar');
-    }
-    show() {
-        super.show();
-        this.jodit.e.fire('toggleToolbar');
-    }
-};
-ToolbarEditorCollection = __decorate([
-    component
-], ToolbarEditorCollection);
-
-
-;// CONCATENATED MODULE: ./src/modules/toolbar/button/button.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-
-
-
-let ToolbarButton = class ToolbarButton extends UIButton {
-    constructor(jodit, control, target = null) {
-        super(jodit);
-        this.control = control;
-        this.target = target;
-        this.state = {
-            ...UIButtonState(),
-            theme: 'toolbar',
-            currentValue: '',
-            hasTrigger: false
-        };
-        jodit.e.on([this.button, this.trigger], 'mousedown', (e) => e.preventDefault());
-        this.onAction(this.onClick);
-        this.hookStatus(statuses_STATUSES.ready, () => {
-            this.initFromControl();
-            this.initTooltip();
-            this.update();
-        });
-    }
-    className() {
-        return 'ToolbarButton';
-    }
-    get toolbar() {
-        return this.closest(ToolbarCollection);
-    }
-    get button() {
-        return this.container.querySelector(`button.${this.componentName}__button`);
-    }
-    update() {
-        const { control, state } = this, tc = this.closest(ToolbarCollection);
-        state.disabled = this.calculateDisabledStatus(tc);
-        state.activated = this.calculateActivatedStatus(tc);
-        if (is_function_isFunction(control.update)) {
-            control.update(this);
-        }
-        super.update();
-    }
-    calculateActivatedStatus(tc) {
-        if (is_jodit_object_isJoditObject(this.j) && !this.j.editorIsActive) {
-            return false;
-        }
-        if (is_function_isFunction(this.control.isActive) &&
-            this.control.isActive(this.j, this.control, this)) {
-            return true;
-        }
-        return Boolean(tc && tc.shouldBeActive(this));
-    }
-    calculateDisabledStatus(tc) {
-        if (this.j.o.disabled) {
-            return true;
-        }
-        if (this.j.o.readonly &&
-            (!this.j.o.activeButtonsInReadOnly ||
-                !this.j.o.activeButtonsInReadOnly.includes(this.control.name))) {
-            return true;
-        }
-        if (is_function_isFunction(this.control.isDisabled) &&
-            this.control.isDisabled(this.j, this.control, this)) {
-            return true;
-        }
-        return Boolean(tc && tc.shouldBeDisabled(this));
-    }
-    onChangeActivated() {
-        utils_attr(this.button, 'aria-pressed', this.state.activated);
-        super.onChangeActivated();
-    }
-    onChangeText() {
-        if (is_function_isFunction(this.control.template)) {
-            this.text.innerHTML = this.control.template(this.j, this.control.name, this.j.i18n(this.state.text));
-        }
-        else {
-            super.onChangeText();
-        }
-        this.setMod('text-icons', Boolean(this.text.innerText.trim().length));
-    }
-    onChangeTabIndex() {
-        utils_attr(this.button, 'tabindex', this.state.tabIndex);
-    }
-    onChangeTooltip() {
-        utils_attr(this.button, 'aria-label', this.state.tooltip);
-        super.onChangeTooltip();
-    }
-    createContainer() {
-        const cn = this.componentName;
-        const container = this.j.c.span(cn), button = super.createContainer();
-        utils_attr(container, 'role', 'listitem');
-        button.classList.remove(cn);
-        button.classList.add(cn + '__button');
-        Object.defineProperty(button, 'component', {
-            value: this
-        });
-        container.appendChild(button);
-        this.trigger = this.j.c.fromHTML(`<span role="trigger" class="${cn}__trigger">${Icon.get('chevron')}</span>`);
-        this.j.e.on(this.trigger, 'click', this.onTriggerClick.bind(this));
-        return container;
-    }
-    focus() {
-        var _a;
-        (_a = this.container.querySelector('button')) === null || _a === void 0 ? void 0 : _a.focus();
-    }
-    onChangeHasTrigger() {
-        if (this.state.hasTrigger) {
-            this.container.appendChild(this.trigger);
-        }
-        else {
-            dom_Dom.safeRemove(this.trigger);
-        }
-        this.setMod('with-trigger', this.state.hasTrigger || null);
-    }
-    onChangeDisabled() {
-        const dsb = this.state.disabled ? 'disabled' : null;
-        utils_attr(this.trigger, 'disabled', dsb);
-        utils_attr(this.button, 'disabled', dsb);
-        utils_attr(this.container, 'disabled', dsb);
-    }
-    initTooltip() {
-        if (!this.j.o.textIcons &&
-            this.j.o.showTooltip &&
-            !this.j.o.useNativeTooltip) {
-            this.j.e
-                .off(this.container, 'mouseenter mouseleave')
-                .on(this.container, 'mousemove', (e) => {
-                if (!this.state.tooltip) {
-                    return;
-                }
-                !this.state.disabled &&
-                    this.j.e.fire('delayShowTooltip', () => ({
-                        x: e.clientX + 10,
-                        y: e.clientY + 10
-                    }), this.state.tooltip);
-            })
-                .on(this.container, 'mouseleave', () => {
-                this.j.e.fire('hideTooltip');
-            });
-        }
-    }
-    initFromControl() {
-        var _a;
-        const { control: ctr, state } = this;
-        this.updateSize();
-        state.name = ctr.name;
-        const { textIcons } = this.j.o;
-        if (textIcons === true ||
-            (is_function_isFunction(textIcons) && textIcons(ctr.name)) ||
-            ctr.template) {
-            state.icon = UIButtonState().icon;
-            state.text = ctr.text || ctr.name;
-        }
-        else {
-            if (ctr.iconURL) {
-                state.icon.iconURL = ctr.iconURL;
-            }
-            else {
-                const name = ctr.icon || ctr.name;
-                state.icon.name =
-                    Icon.exists(name) || ((_a = this.j.o.extraIcons) === null || _a === void 0 ? void 0 : _a[name])
-                        ? name
-                        : '';
-            }
-            if (!ctr.iconURL && !state.icon.name) {
-                state.text = ctr.text || ctr.name;
-            }
-        }
-        if (ctr.tooltip) {
-            state.tooltip = this.j.i18n(is_function_isFunction(ctr.tooltip)
-                ? ctr.tooltip(this.j, ctr, this)
-                : ctr.tooltip);
-        }
-        state.hasTrigger = Boolean(ctr.list || (ctr.popup && ctr.exec));
-    }
-    onTriggerClick(e) {
-        var _a, _b, _c;
-        const { control: ctr } = this;
-        e.buffer = {
-            actionTrigger: this
-        };
-        if (ctr.list) {
-            return this.openControlList(ctr);
-        }
-        if (is_function_isFunction(ctr.popup)) {
-            const popup = new Popup(this.j);
-            popup.parentElement = this;
-            if (this.j.e.fire(camelCase(`before-${ctr.name}-open-popup`), this.target, ctr, popup) !== false) {
-                const target = (_c = (_b = (_a = this.toolbar) === null || _a === void 0 ? void 0 : _a.getTarget(this)) !== null && _b !== void 0 ? _b : this.target) !== null && _c !== void 0 ? _c : null;
-                const elm = ctr.popup(this.j, target, ctr, popup.close, this);
-                if (elm) {
-                    popup
-                        .setContent(is_string_isString(elm) ? this.j.c.fromHTML(elm) : elm)
-                        .open(() => position(this.container));
-                }
-            }
-            this.j.e.fire(camelCase(`after-${ctr.name}-open-popup`), popup.container);
-        }
-    }
-    openControlList(control) {
-        var _a;
-        const controls = (_a = this.jodit.options.controls) !== null && _a !== void 0 ? _a : {}, getControl = (key) => findControlType(key, controls);
-        const list = control.list, menu = new Popup(this.j), toolbar = makeCollection(this.j);
-        menu.parentElement = this;
-        toolbar.parentElement = menu;
-        toolbar.mode = 'vertical';
-        const getButton = (key, value) => {
-            if (is_string_isString(value) && getControl(value)) {
-                return {
-                    name: value.toString(),
-                    ...getControl(value)
-                };
-            }
-            if (is_string_isString(key) && getControl(key)) {
-                return {
-                    name: key.toString(),
-                    ...getControl(key),
-                    ...(typeof value === 'object' ? value : {})
-                };
-            }
-            const childControl = {
-                name: key.toString(),
-                template: control.childTemplate,
-                exec: control.exec,
-                data: control.data,
-                command: control.command,
-                isActive: control.isChildActive,
-                isDisabled: control.isChildDisabled,
-                mode: control.mode,
-                args: [...(control.args ? control.args : []), key, value]
-            };
-            if (is_string_isString(value)) {
-                childControl.text = value;
-            }
-            return childControl;
-        };
-        toolbar.build(isArray(list)
-            ? list.map(getButton)
-            : keys(list, false).map(key => getButton(key, list[key])), this.target);
-        menu.setContent(toolbar.container).open(() => position(this.container));
-        this.state.activated = true;
-        this.j.e.on(menu, 'afterClose', () => {
-            this.state.activated = false;
-        });
-    }
-    onClick(originalEvent) {
-        var _a, _b, _c, _d, _e, _f, _g;
-        const { control: ctr } = this;
-        if (is_function_isFunction(ctr.exec)) {
-            const target = (_c = (_b = (_a = this.toolbar) === null || _a === void 0 ? void 0 : _a.getTarget(this)) !== null && _b !== void 0 ? _b : this.target) !== null && _c !== void 0 ? _c : null;
-            const result = ctr.exec(this.j, target, {
-                control: ctr,
-                originalEvent,
-                button: this
-            });
-            if (result !== false && result !== true) {
-                (_e = (_d = this.j) === null || _d === void 0 ? void 0 : _d.e) === null || _e === void 0 ? void 0 : _e.fire('synchro');
-                if (this.parentElement) {
-                    this.parentElement.update();
-                }
-                (_g = (_f = this.j) === null || _f === void 0 ? void 0 : _f.e) === null || _g === void 0 ? void 0 : _g.fire('closeAllPopups afterExec');
-            }
-            if (result !== false) {
-                return;
-            }
-        }
-        if (ctr.list) {
-            return this.openControlList(ctr);
-        }
-        if (is_function_isFunction(ctr.popup)) {
-            return this.onTriggerClick(originalEvent);
-        }
-        if (ctr.command || ctr.name) {
-            call(is_jodit_object_isJoditObject(this.j)
-                ? this.j.execCommand.bind(this.j)
-                : this.j.od.execCommand.bind(this.j.od), ctr.command || ctr.name, false, ctr.args && ctr.args[0]);
-            this.j.e.fire('closeAllPopups');
-        }
-    }
-};
-__decorate([
-    watch('state.tooltip')
-], ToolbarButton.prototype, "onChangeTooltip", null);
-__decorate([
-    watch('state.hasTrigger')
-], ToolbarButton.prototype, "onChangeHasTrigger", null);
-ToolbarButton = __decorate([
-    component
-], ToolbarButton);
-
-
-;// CONCATENATED MODULE: ./src/modules/toolbar/button/content.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-let ToolbarContent = class ToolbarContent extends UIButton {
-    constructor(jodit, control, target = null) {
-        super(jodit);
-        this.control = control;
-        this.target = target;
-        this.container.classList.add(`${this.componentName}_${this.clearName(control.name)}`);
-        utils_attr(this.container, 'role', 'content');
-    }
-    className() {
-        return 'ToolbarContent';
-    }
-    update() {
-        const content = this.control.getContent(this.j, this.control, this);
-        if (is_string_isString(content) || content.parentNode !== this.container) {
-            dom_Dom.detach(this.container);
-            this.container.appendChild(is_string_isString(content) ? this.j.create.fromHTML(content) : content);
-        }
-        super.update();
-    }
-    createContainer() {
-        return this.j.c.span(this.componentName);
-    }
-};
-ToolbarContent = __decorate([
-    component
-], ToolbarContent);
-
-
-;// CONCATENATED MODULE: ./src/modules/toolbar/factory.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-function makeCollection(jodit, parentElement) {
-    const collection = is_jodit_object_isJoditObject(jodit)
-        ? new ToolbarEditorCollection(jodit)
-        : new ToolbarCollection(jodit);
-    if (jodit.o.textIcons) {
-        collection.container.classList.add('jodit_text_icons');
-    }
-    if (parentElement) {
-        collection.parentElement = parentElement;
-    }
-    if (jodit.o.toolbarButtonSize) {
-        collection.buttonSize = jodit.o.toolbarButtonSize;
-    }
-    return collection;
-}
-function makeButton(jodit, control, target = null) {
-    if (is_function_isFunction(control.getContent)) {
-        return new ToolbarContent(jodit, control, target);
-    }
-    const button = new ToolbarButton(jodit, control, target);
-    button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
-    return button;
-}
-
-;// CONCATENATED MODULE: ./src/core/view/view-with-toolbar.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-class ViewWithToolbar extends View {
-    constructor(options, isJodit = false) {
-        super(options, isJodit);
-        this.toolbar = makeCollection(this);
-        this.defaultToolbarContainer = this.c.div('jodit-toolbar__box');
-        this.registeredButtons = new Set();
-        this.groupToButtons = {};
-        this.isJodit = false;
-        this.isJodit = isJodit;
-        this.e.on('beforeToolbarBuild', this.beforeToolbarBuild);
-    }
-    get toolbarContainer() {
-        if (!this.o.fullsize &&
-            (is_string_isString(this.o.toolbar) || dom_Dom.isHTMLElement(this.o.toolbar))) {
-            return resolveElement(this.o.toolbar, this.o.shadowRoot || this.od);
-        }
-        this.o.toolbar &&
-            dom_Dom.appendChildFirst(this.container, this.defaultToolbarContainer);
-        return this.defaultToolbarContainer;
-    }
-    setPanel(element) {
-        this.o.toolbar = element;
-        this.buildToolbar();
-    }
-    buildToolbar() {
-        if (!this.o.toolbar) {
-            return;
-        }
-        const buttons = this.o.buttons
-            ? splitArray(this.o.buttons)
-            : [];
-        this.toolbar
-            .setRemoveButtons(this.o.removeButtons)
-            .build(buttons.concat(this.o.extraButtons || []))
-            .appendTo(this.toolbarContainer);
-    }
-    getRegisteredButtonGroups() {
-        return this.groupToButtons;
-    }
-    registerButton(btn) {
-        var _a;
-        this.registeredButtons.add(btn);
-        const group = (_a = btn.group) !== null && _a !== void 0 ? _a : 'other';
-        if (!this.groupToButtons[group]) {
-            this.groupToButtons[group] = [];
-        }
-        if (btn.position != null) {
-            this.groupToButtons[group][btn.position] = btn.name;
-        }
-        else {
-            this.groupToButtons[group].push(btn.name);
-        }
-        return this;
-    }
-    unregisterButton(btn) {
-        var _a;
-        this.registeredButtons.delete(btn);
-        const groupName = (_a = btn.group) !== null && _a !== void 0 ? _a : 'other', group = this.groupToButtons[groupName];
-        if (group) {
-            const index = group.indexOf(btn.name);
-            if (index !== -1) {
-                group.splice(index, 1);
-            }
-            if (group.length === 0) {
-                delete this.groupToButtons[groupName];
-            }
-        }
-        return this;
-    }
-    beforeToolbarBuild(items) {
-        if (Object.keys(this.groupToButtons).length) {
-            return items.map(item => {
-                if (isButtonGroup(item) &&
-                    item.group &&
-                    this.groupToButtons[item.group]) {
-                    return {
-                        group: item.group,
-                        buttons: [
-                            ...item.buttons,
-                            ...this.groupToButtons[item.group]
-                        ]
-                    };
-                }
-                return item;
-            });
-        }
-    }
-    destruct() {
-        if (this.isDestructed) {
-            return;
-        }
-        this.setStatus(statuses_STATUSES.beforeDestruct);
-        this.e.off('beforeToolbarBuild', this.beforeToolbarBuild);
-        this.toolbar.destruct();
-        super.destruct();
-    }
-}
-__decorate([
-    autobind
-], ViewWithToolbar.prototype, "beforeToolbarBuild", null);
-
-;// CONCATENATED MODULE: ./src/modules/dialog/dialog.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-
-
-
-config_Config.prototype.dialog = {
-    namespace: '',
-    extraButtons: [],
-    resizable: true,
-    draggable: true,
-    buttons: ['dialog.close'],
-    removeButtons: []
-};
-config_Config.prototype.controls.dialog = {
-    close: {
-        icon: 'cancel',
-        exec: dialog => {
-            dialog.close();
-            dialog.toggleFullSizeBox(false);
-        }
-    }
-};
-let Dialog = class Dialog extends ViewWithToolbar {
-    constructor(options) {
-        super(options);
-        this.destroyAfterClose = false;
-        this.moved = false;
-        this.iSetMaximization = false;
-        this.resizable = false;
-        this.draggable = false;
-        this.startX = 0;
-        this.startY = 0;
-        this.startPoint = { x: 0, y: 0, w: 0, h: 0 };
-        this.lockSelect = () => {
-            this.setMod('moved', true);
-        };
-        this.unlockSelect = () => {
-            this.setMod('moved', false);
-        };
-        this.onResize = () => {
-            if (this.options &&
-                this.o.resizable &&
-                !this.moved &&
-                this.isOpened &&
-                !this.offsetX &&
-                !this.offsetY) {
-                this.setPosition();
-            }
-        };
-        this.isModal = false;
-        this.isOpened = false;
-        const self = this;
-        self.options = config_proto_ConfigProto(options !== null && options !== void 0 ? options : {}, config_proto_ConfigProto({
-            toolbarButtonSize: 'middle'
-        }, config_proto_ConfigProto(config_Config.prototype.dialog, View.defaultOptions)));
-        dom_Dom.safeRemove(self.container);
-        const n = this.getFullElName.bind(this);
-        self.container = this.c.fromHTML(`<div style="z-index:${self.o.zIndex}" class="jodit jodit-dialog ${this.componentName}">
-				<div class="${n('overlay')}"></div>
-				<div class="${this.getFullElName('panel')}">
-					<div class="${n('header')}">
-						<div class="${n('header-title')}"></div>
-						<div class="${n('header-toolbar')}"></div>
-					</div>
-					<div class="${n('content')}"></div>
-					<div class="${n('footer')}"></div>
-					<div class="${n('resizer')}">${Icon.get('resize_handler')}</div>
-				</div>
-			</div>`);
-        utils_attr(self.container, 'role', 'dialog');
-        Object.defineProperty(self.container, 'component', {
-            value: this
-        });
-        self.setMod('theme', self.o.theme || 'default').setMod('resizable', Boolean(self.o.resizable));
-        const dialog = self.getElm('panel');
-        assert(dialog != null, 'Panel element does not exist');
-        const resizer = self.getElm('resizer');
-        assert(resizer != null, 'Resizer element does not exist');
-        const dialogbox_header = self.getElm('header-title');
-        assert(dialogbox_header != null, 'header-title element does not exist');
-        const dialogbox_content = self.getElm('content');
-        assert(dialogbox_content != null, 'Content element does not exist');
-        const dialogbox_footer = self.getElm('footer');
-        assert(dialogbox_footer != null, 'Footer element does not exist');
-        const dialogbox_toolbar = self.getElm('header-toolbar');
-        assert(dialogbox_toolbar != null, 'header-toolbar element does not exist');
-        self.dialog = dialog;
-        self.resizer = resizer;
-        self.dialogbox_header = dialogbox_header;
-        self.dialogbox_content = dialogbox_content;
-        self.dialogbox_footer = dialogbox_footer;
-        self.dialogbox_toolbar = dialogbox_toolbar;
-        css(self.dialog, {
-            maxWidth: self.options.maxWidth,
-            minHeight: self.options.minHeight,
-            minWidth: self.options.minWidth
-        });
-        const headerBox = self.getElm('header');
-        headerBox &&
-            self.e.on(headerBox, 'pointerdown touchstart', self.onHeaderMouseDown);
-        self.e.on(self.resizer, 'mousedown touchstart', self.onResizerMouseDown);
-        const fullSize = pluginSystem.get('fullsize');
-        is_function_isFunction(fullSize) && fullSize(self);
-        this.e
-            .on(self.container, 'close_dialog', self.close)
-            .on(this.ow, 'keydown', this.onEsc)
-            .on(this.ow, 'resize', this.onResize);
-    }
-    className() {
-        return 'Dialog';
-    }
-    get destination() {
-        return this.od.body;
-    }
-    setElements(root, elements) {
-        const elements_list = [];
-        asArray(elements).forEach((elm) => {
-            if (isArray(elm)) {
-                const div = this.c.div(this.getFullElName('column'));
-                elements_list.push(div);
-                root.appendChild(div);
-                return this.setElements(div, elm);
-            }
-            let element;
-            if (is_string_isString(elm)) {
-                element = this.c.fromHTML(elm);
-            }
-            else {
-                element = hasContainer(elm) ? elm.container : elm;
-            }
-            elements_list.push(element);
-            if (element.parentNode !== root) {
-                root.appendChild(element);
-            }
-        });
-        to_array_toArray(root.childNodes).forEach((elm) => {
-            if (elements_list.indexOf(elm) === -1) {
-                root.removeChild(elm);
-            }
-        });
-    }
-    onMouseUp() {
-        if (this.draggable || this.resizable) {
-            this.removeGlobalResizeListeners();
-            this.draggable = false;
-            this.resizable = false;
-            this.unlockSelect();
-            if (this.e) {
-                this.removeGlobalResizeListeners();
-                this.e.fire(this, 'endResize endMove');
-            }
-        }
-    }
-    onHeaderMouseDown(e) {
-        const target = e.target;
-        if (!this.o.draggable ||
-            (target && target.nodeName.match(/^(INPUT|SELECT)$/))) {
-            return;
-        }
-        this.draggable = true;
-        this.startX = e.clientX;
-        this.startY = e.clientY;
-        this.startPoint.x = css(this.dialog, 'left');
-        this.startPoint.y = css(this.dialog, 'top');
-        this.setMaxZIndex();
-        if (e.cancelable) {
-            e.preventDefault();
-        }
-        this.lockSelect();
-        this.addGlobalResizeListeners();
-        if (this.e) {
-            this.e.fire(this, 'startMove');
-        }
-    }
-    onMouseMove(e) {
-        if (this.draggable && this.o.draggable) {
-            this.setPosition(this.startPoint.x + e.clientX - this.startX, this.startPoint.y + e.clientY - this.startY);
-            if (this.e) {
-                this.e.fire(this, 'move', e.clientX - this.startX, e.clientY - this.startY);
-            }
-            e.stopImmediatePropagation();
-        }
-        if (this.resizable && this.o.resizable) {
-            this.setSize(this.startPoint.w + e.clientX - this.startX, this.startPoint.h + e.clientY - this.startY);
-            if (this.e) {
-                this.e.fire(this, 'resizeDialog', e.clientX - this.startX, e.clientY - this.startY);
-            }
-        }
-    }
-    onEsc(e) {
-        if (this.isOpened &&
-            e.key === KEY_ESC &&
-            this.getMod('static') !== true) {
-            const me = this.getMaxZIndexDialog();
-            if (me) {
-                me.close();
-            }
-            else {
-                this.close();
-            }
-            e.stopImmediatePropagation();
-        }
-    }
-    onResizerMouseDown(e) {
-        this.resizable = true;
-        this.startX = e.clientX;
-        this.startY = e.clientY;
-        this.startPoint.w = this.dialog.offsetWidth;
-        this.startPoint.h = this.dialog.offsetHeight;
-        this.lockSelect();
-        this.addGlobalResizeListeners();
-        if (this.e) {
-            this.e.fire(this, 'startResize');
-        }
-    }
-    addGlobalResizeListeners() {
-        const self = this;
-        self.e
-            .on(self.ow, 'pointermove touchmove', self.onMouseMove)
-            .on(self.ow, 'pointerup touchend', self.onMouseUp);
-    }
-    removeGlobalResizeListeners() {
-        const self = this;
-        self.e
-            .off(self.ow, 'mousemove pointermove', self.onMouseMove)
-            .off(self.ow, 'mouseup pointerup', self.onMouseUp);
-    }
-    setSize(w, h) {
-        if (w == null) {
-            w = this.dialog.offsetWidth;
-        }
-        if (h == null) {
-            h = this.dialog.offsetHeight;
-        }
-        css(this.dialog, {
-            width: w,
-            height: h
-        });
-        return this;
-    }
-    calcAutoSize() {
-        this.setSize('auto', 'auto');
-        this.setSize();
-        return this;
-    }
-    setPosition(x, y) {
-        const w = this.ow.innerWidth, h = this.ow.innerHeight;
-        let left = w / 2 - this.dialog.offsetWidth / 2, top = h / 2 - this.dialog.offsetHeight / 2;
-        if (left < 0) {
-            left = 0;
-        }
-        if (top < 0) {
-            top = 0;
-        }
-        if (x !== undefined && y !== undefined) {
-            this.offsetX = x;
-            this.offsetY = y;
-            this.moved = Math.abs(x - left) > 100 || Math.abs(y - top) > 100;
-        }
-        this.dialog.style.left = (x || left) + 'px';
-        this.dialog.style.top = (y || top) + 'px';
-        return this;
-    }
-    setHeader(content) {
-        this.setElements(this.dialogbox_header, content);
-        return this;
-    }
-    setContent(content) {
-        this.setElements(this.dialogbox_content, content);
-        return this;
-    }
-    setFooter(content) {
-        this.setElements(this.dialogbox_footer, content);
-        this.setMod('footer', Boolean(content));
-        return this;
-    }
-    getZIndex() {
-        return parseInt(css(this.container, 'zIndex'), 10) || 0;
-    }
-    getMaxZIndexDialog() {
-        let maxZi = 0, dlg, zIndex, res = this;
-        selector_$$('.jodit-dialog', this.destination).forEach((dialog) => {
-            dlg = dialog.component;
-            zIndex = parseInt(css(dialog, 'zIndex'), 10);
-            if (dlg.isOpened && !isNaN(zIndex) && zIndex > maxZi) {
-                res = dlg;
-                maxZi = zIndex;
-            }
-        });
-        return res;
-    }
-    setMaxZIndex() {
-        let maxZIndex = 20000004, zIndex = 0;
-        selector_$$('.jodit-dialog', this.destination).forEach(dialog => {
-            zIndex = parseInt(css(dialog, 'zIndex'), 10);
-            maxZIndex = Math.max(isNaN(zIndex) ? 0 : zIndex, maxZIndex);
-        });
-        this.container.style.zIndex = (maxZIndex + 1).toString();
-    }
-    maximization(condition) {
-        if (is_void_isVoid(condition)) {
-            condition = !this.getMod('fullsize');
-        }
-        this.setMod('fullsize', condition);
-        this.toggleFullSizeBox(condition);
-        this.iSetMaximization = condition;
-        return condition;
-    }
-    toggleFullSizeBox(condition) {
-        [this.destination, this.destination.parentNode].forEach(box => {
-            box &&
-                box.classList &&
-                box.classList.toggle('jodit_fullsize-box_true', condition);
-        });
-    }
-    open(contentOrClose, titleOrModal, destroyAfterClose, modal) {
-        eventEmitter.fire('closeAllPopups hideHelpers');
-        if (this.e.fire(this, 'beforeOpen') === false) {
-            return this;
-        }
-        if (isBoolean(contentOrClose)) {
-            destroyAfterClose = contentOrClose;
-        }
-        if (isBoolean(titleOrModal)) {
-            modal = titleOrModal;
-        }
-        this.destroyAfterClose = destroyAfterClose === true;
-        const content = isBoolean(contentOrClose) ? undefined : contentOrClose;
-        const title = isBoolean(titleOrModal) ? undefined : titleOrModal;
-        if (title !== undefined) {
-            this.setHeader(title);
-        }
-        if (content) {
-            this.setContent(content);
-        }
-        this.setMod('active', true);
-        this.isOpened = true;
-        this.setModal(modal);
-        this.destination.appendChild(this.container);
-        this.setPosition(this.offsetX, this.offsetY);
-        this.setMaxZIndex();
-        if (this.o.fullsize) {
-            this.maximization(true);
-        }
-        this.e.fire('afterOpen', this);
-        return this;
-    }
-    setModal(modal) {
-        this.isModal = Boolean(modal);
-        this.setMod('modal', this.isModal);
-        return this;
-    }
-    close(e) {
-        var _a, _b;
-        if (this.isDestructed ||
-            !this.isOpened ||
-            this.getMod('static') === true) {
-            return this;
-        }
-        if (e) {
-            e.stopImmediatePropagation();
-            e.preventDefault();
-        }
-        if (this.e && this.e.fire('beforeClose', this) === false) {
-            return this;
-        }
-        this.setMod('active', false);
-        this.isOpened = false;
-        this.e.fire('toggleFullSize', false);
-        if (this.iSetMaximization) {
-            this.maximization(false);
-        }
-        dom_Dom.safeRemove(this.container);
-        this.removeGlobalResizeListeners();
-        if (this.destroyAfterClose) {
-            this.destruct();
-        }
-        (_a = this.e) === null || _a === void 0 ? void 0 : _a.fire(this, 'afterClose');
-        (_b = this.e) === null || _b === void 0 ? void 0 : _b.fire(this.ow, 'joditCloseDialog');
-        return this;
-    }
-    buildToolbar() {
-        this.o.buttons &&
-            this.toolbar
-                .build(splitArray(this.o.buttons))
-                .setMod('mode', 'header')
-                .appendTo(this.dialogbox_toolbar);
-    }
-    destruct() {
-        if (this.isInDestruct) {
-            return;
-        }
-        this.setStatus(statuses_STATUSES.beforeDestruct);
-        if (this.isOpened) {
-            this.close();
-        }
-        if (this.events) {
-            this.removeGlobalResizeListeners();
-            this.events
-                .off(this.container, 'close_dialog', self.close)
-                .off(this.ow, 'keydown', this.onEsc)
-                .off(this.ow, 'resize', this.onResize);
-        }
-        super.destruct();
-    }
-};
-__decorate([
-    autobind
-], Dialog.prototype, "onMouseUp", null);
-__decorate([
-    autobind
-], Dialog.prototype, "onHeaderMouseDown", null);
-__decorate([
-    autobind
-], Dialog.prototype, "onMouseMove", null);
-__decorate([
-    autobind
-], Dialog.prototype, "onEsc", null);
-__decorate([
-    autobind
-], Dialog.prototype, "onResizerMouseDown", null);
-__decorate([
-    autobind
-], Dialog.prototype, "close", null);
-__decorate([
-    hook('ready')
-], Dialog.prototype, "buildToolbar", null);
-Dialog = __decorate([
-    component
-], Dialog);
-
-
-;// CONCATENATED MODULE: ./src/modules/dialog/alert.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-const Alert = (msg, title, callback, className = 'jodit-dialog_alert') => {
-    if (is_function_isFunction(title)) {
-        callback = title;
-        title = undefined;
-    }
-    const dialog = new Dialog(), container = dialog.c.div(className), okButton = Button(dialog, 'ok', 'Ok');
-    asArray(msg).forEach(oneMessage => {
-        container.appendChild(dom_Dom.isNode(oneMessage) ? oneMessage : dialog.c.fromHTML(oneMessage));
-    });
-    okButton.onAction(() => {
-        if (!callback || !is_function_isFunction(callback) || callback(dialog) !== false) {
-            dialog.close();
-        }
-    });
-    dialog.setFooter([okButton]);
-    dialog.open(container, title || '&nbsp;', true, true);
-    okButton.focus();
-    return dialog;
-};
-
-;// CONCATENATED MODULE: ./src/modules/dialog/prompt.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-const Prompt = (msg, title, callback, placeholder, defaultValue) => {
-    const dialog = new Dialog(), cancelButton = Button(dialog, 'cancel', 'Cancel'), okButton = Button(dialog, 'ok', 'Ok'), form = dialog.c.element('form', {
-        class: 'jodit-dialog_prompt'
-    }), inputElement = dialog.c.element('input', {
-        autofocus: true,
-        class: 'jodit-input'
-    }), labelElement = dialog.c.element('label');
-    if (is_function_isFunction(title)) {
-        callback = title;
-        title = undefined;
-    }
-    if (placeholder) {
-        utils_attr(inputElement, 'placeholder', placeholder);
-    }
-    labelElement.appendChild(dialog.c.text(msg));
-    form.appendChild(labelElement);
-    form.appendChild(inputElement);
-    cancelButton.onAction(dialog.close);
-    const onclick = () => {
-        if (!callback ||
-            !is_function_isFunction(callback) ||
-            callback(inputElement.value) !== false) {
-            dialog.close();
-        }
-    };
-    okButton.onAction(onclick);
-    dialog.e.on(form, 'submit', () => {
-        onclick();
-        return false;
-    });
-    dialog.setFooter([okButton, cancelButton]);
-    dialog.open(form, title || '&nbsp;', true, true);
-    inputElement.focus();
-    if (defaultValue !== undefined && defaultValue.length) {
-        inputElement.value = defaultValue;
-        inputElement.select();
-    }
-    return dialog;
-};
-
-;// CONCATENATED MODULE: ./src/modules/dialog/confirm.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-const Confirm = (msg, title, callback) => {
-    const dialog = new Dialog(), $div = dialog.c.fromHTML('<form class="jodit-dialog_prompt"></form>'), $label = dialog.c.element('label');
-    if (is_function_isFunction(title)) {
-        callback = title;
-        title = undefined;
-    }
-    $label.appendChild(dialog.c.fromHTML(msg));
-    $div.appendChild($label);
-    const action = (yes) => () => {
-        if (!callback || callback(yes) !== false) {
-            dialog.close();
-        }
-    };
-    const $cancel = Button(dialog, 'cancel', 'Cancel');
-    const $ok = Button(dialog, 'ok', 'Yes');
-    $cancel.onAction(action(false));
-    $ok.onAction(action(true));
-    dialog.e.on($div, 'submit', () => {
-        action(true)();
-        return false;
-    });
-    dialog.setFooter([$ok, $cancel]);
-    dialog.open($div, title || '&nbsp;', true, true);
-    $ok.focus();
-    return dialog;
-};
-
-;// CONCATENATED MODULE: ./src/modules/dialog/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-;// CONCATENATED MODULE: ./src/core/plugin/plugin.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-class Plugin extends view_component_ViewComponent {
-    constructor(jodit) {
-        super(jodit);
-        this.requires = [];
-        this.buttons = [];
-        this.hasStyle = false;
-        jodit.e
-            .on('afterPluginSystemInit', () => {
-            var _a;
-            if (is_jodit_object_isJoditObject(jodit)) {
-                (_a = this.buttons) === null || _a === void 0 ? void 0 : _a.forEach(btn => {
-                    jodit.registerButton(btn);
-                });
-            }
-        })
-            .on('afterInit', () => {
-            this.setStatus(statuses_STATUSES.ready);
-            this.afterInit(jodit);
-        })
-            .on('beforeDestruct', this.destruct);
-    }
-    className() {
-        return '';
-    }
-    init(jodit) {
-    }
-    destruct() {
-        var _a, _b, _c;
-        if (!this.isInDestruct) {
-            this.setStatus(statuses_STATUSES.beforeDestruct);
-            const { j } = this;
-            if (is_jodit_object_isJoditObject(j)) {
-                (_a = this.buttons) === null || _a === void 0 ? void 0 : _a.forEach(btn => {
-                    j === null || j === void 0 ? void 0 : j.unregisterButton(btn);
-                });
-            }
-            (_c = (_b = this.j) === null || _b === void 0 ? void 0 : _b.events) === null || _c === void 0 ? void 0 : _c.off('beforeDestruct', this.destruct);
-            this.beforeDestruct(this.j);
-            super.destruct();
-        }
-    }
-}
-__decorate([
-    autobind
-], Plugin.prototype, "destruct", null);
-
-;// CONCATENATED MODULE: ./src/core/plugin/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-;// CONCATENATED MODULE: ./src/core/create/create.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-class Create {
-    constructor(document, createAttributes) {
-        this.document = document;
-        this.createAttributes = createAttributes;
-    }
-    get doc() {
-        return is_function_isFunction(this.document) ? this.document() : this.document;
-    }
-    element(tagName, childrenOrAttributes, children) {
-        const elm = this.doc.createElement(tagName.toLowerCase());
-        this.applyCreateAttributes(elm);
-        if (childrenOrAttributes) {
-            if (is_plain_object_isPlainObject(childrenOrAttributes)) {
-                utils_attr(elm, childrenOrAttributes);
-            }
-            else {
-                children = childrenOrAttributes;
-            }
-        }
-        if (children) {
-            asArray(children).forEach((child) => elm.appendChild(is_string_isString(child) ? this.fromHTML(child) : child));
-        }
-        return elm;
-    }
-    div(className, childrenOrAttributes, children) {
-        const div = this.element('div', childrenOrAttributes, children);
-        if (className) {
-            div.className = className;
-        }
-        return div;
-    }
-    span(className, childrenOrAttributes, children) {
-        const span = this.element('span', childrenOrAttributes, children);
-        if (className) {
-            span.className = className;
-        }
-        return span;
-    }
-    a(className, childrenOrAttributes, children) {
-        const a = this.element('a', childrenOrAttributes, children);
-        if (className) {
-            a.className = className;
-        }
-        return a;
-    }
-    text(value) {
-        return this.doc.createTextNode(value);
-    }
-    fake() {
-        return this.text(INVISIBLE_SPACE);
-    }
-    fragment() {
-        return this.doc.createDocumentFragment();
-    }
-    fromHTML(html, refsToggleElement) {
-        const div = this.div();
-        div.innerHTML = html.toString();
-        const child = div.firstChild !== div.lastChild || !div.firstChild
-            ? div
-            : div.firstChild;
-        dom_Dom.safeRemove(child);
-        if (refsToggleElement) {
-            const refElements = refs(child);
-            Object.keys(refsToggleElement).forEach(key => {
-                const elm = refElements[key];
-                if (elm && refsToggleElement[key] === false) {
-                    dom_Dom.hide(elm);
-                }
-            });
-        }
-        return child;
-    }
-    applyCreateAttributes(elm) {
-        if (this.createAttributes) {
-            const ca = this.createAttributes;
-            if (ca && ca[elm.tagName.toLowerCase()]) {
-                const attrsOpt = ca[elm.tagName.toLowerCase()];
-                if (is_function_isFunction(attrsOpt)) {
-                    attrsOpt(elm);
-                }
-                else if (is_plain_object_isPlainObject(attrsOpt)) {
-                    utils_attr(elm, attrsOpt);
-                }
-            }
-        }
-    }
-}
-
-;// CONCATENATED MODULE: ./src/core/create/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/config.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-config_Config.prototype.filebrowser = {
-    namespace: '',
-    extraButtons: [],
-    filter(item, search) {
-        search = search.toLowerCase();
-        if (is_string_isString(item)) {
-            return item.toLowerCase().indexOf(search) !== -1;
-        }
-        if (is_string_isString(item.name)) {
-            return item.name.toLowerCase().indexOf(search) !== -1;
-        }
-        if (is_string_isString(item.file)) {
-            return item.file.toLowerCase().indexOf(search) !== -1;
-        }
-        return true;
-    },
-    sortBy: 'changed-desc',
-    sort(a, b, sortBy) {
-        const [sortAttr, arrow] = sortBy.toLowerCase().split('-'), asc = arrow === 'asc';
-        const compareStr = (f, s) => {
-            if (f < s) {
-                return asc ? -1 : 1;
-            }
-            if (f > s) {
-                return asc ? 1 : -1;
-            }
-            return 0;
-        };
-        if (is_string_isString(a)) {
-            return compareStr(a.toLowerCase(), b.toLowerCase());
-        }
-        if (a[sortAttr] === undefined || sortAttr === 'name') {
-            if (is_string_isString(a.name)) {
-                return compareStr(a.name.toLowerCase(), b.name.toLowerCase());
-            }
-            if (is_string_isString(a.file)) {
-                return compareStr(a.file.toLowerCase(), b.file.toLowerCase());
-            }
-            return 0;
-        }
-        switch (sortAttr) {
-            case 'changed': {
-                const f = new Date(a.changed).getTime(), s = new Date(b.changed).getTime();
-                return asc ? f - s : s - f;
-            }
-            case 'size': {
-                const f = humanSizeToBytes(a.size), s = humanSizeToBytes(b.size);
-                return asc ? f - s : s - f;
-            }
-        }
-        return 0;
-    },
-    editImage: true,
-    preview: true,
-    showPreviewNavigation: true,
-    showSelectButtonInPreview: true,
-    contextMenu: true,
-    howLongShowMsg: 3000,
-    createNewFolder: true,
-    deleteFolder: true,
-    renameFolder: true,
-    moveFolder: true,
-    moveFile: true,
-    showFoldersPanel: true,
-    storeLastOpenedFolder: true,
-    width: 859,
-    height: 400,
-    buttons: [
-        'filebrowser.upload',
-        'filebrowser.remove',
-        'filebrowser.update',
-        'filebrowser.select',
-        'filebrowser.edit',
-        '|',
-        'filebrowser.tiles',
-        'filebrowser.list',
-        '|',
-        'filebrowser.filter',
-        '|',
-        'filebrowser.sort'
-    ],
-    removeButtons: [],
-    fullsize: false,
-    showTooltip: true,
-    view: null,
-    isSuccess(resp) {
-        return resp.success;
-    },
-    getMessage(resp) {
-        return resp.data.messages !== undefined && isArray(resp.data.messages)
-            ? resp.data.messages.join(' ')
-            : '';
-    },
-    showFileName: true,
-    showFileSize: true,
-    showFileChangeTime: true,
-    saveStateInStorage: {
-        storeLastOpenedFolder: true,
-        storeView: true,
-        storeSortBy: true
-    },
-    pixelOffsetLoadNewChunk: 200,
-    getThumbTemplate(item, source, source_name) {
-        const opt = this.options, IC = this.files.getFullElName('item'), showName = opt.showFileName, showSize = opt.showFileSize && item.size, showTime = opt.showFileChangeTime && item.time;
-        let name = '';
-        if (item.file !== undefined) {
-            name = item.file;
-        }
-        const info = `<div class="${IC}-info">${showName ? `<span class="${IC}-info-filename">${name}</span>` : ''}${showSize
-            ? `<span class="${IC}-info-filesize">${item.size}</span>`
-            : ''}${showTime
-            ? `<span class="${IC}-info-filechanged">${showTime}</span>`
-            : ''}</div>`;
-        return `<a
-			data-jodit-filebrowser-item="true"
-			data-is-file="${item.isImage ? 0 : 1}"
-			draggable="true"
-			class="${IC}"
-			href="${item.fileURL}"
-			data-source="${source_name}"
-			data-path="${item.path}"
-			data-name="${name}"
-			title="${name}"
-			data-url="${item.fileURL}">
-				<img
-					data-is-file="${item.isImage ? 0 : 1}"
-					data-src="${item.fileURL}"
-					src="${item.imageURL}"
-					alt="${name}"
-					loading="lazy"
-				/>
-				${showName || showSize || showTime ? info : ''}
-			</a>`;
-    },
-    ajax: {
-        ...config_Config.prototype.defaultAjaxOptions,
-        url: '',
-        async: true,
-        data: {},
-        cache: true,
-        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-        method: 'POST',
-        processData: true,
-        dataType: 'json',
-        headers: {},
-        prepareData(data) {
-            return data;
-        },
-        process(resp) {
-            return resp;
-        }
-    },
-    create: {
-        data: { action: 'folderCreate' }
-    },
-    getLocalFileByUrl: {
-        data: { action: 'getLocalFileByUrl' }
-    },
-    resize: {
-        data: { action: 'imageResize' }
-    },
-    crop: {
-        data: { action: 'imageCrop' }
-    },
-    fileMove: {
-        data: { action: 'fileMove' }
-    },
-    folderMove: {
-        data: { action: 'folderMove' }
-    },
-    fileRename: {
-        data: { action: 'fileRename' }
-    },
-    folderRename: {
-        data: { action: 'folderRename' }
-    },
-    fileRemove: {
-        data: { action: 'fileRemove' }
-    },
-    folderRemove: {
-        data: { action: 'folderRemove' }
-    },
-    items: {
-        data: { action: 'files' }
-    },
-    folder: {
-        data: { action: 'folders' }
-    },
-    permissions: {
-        data: { action: 'permissions' }
-    }
-};
-config_Config.prototype.controls.filebrowser = {
-    upload: {
-        icon: 'plus',
-        isInput: true,
-        isDisabled: (browser) => !browser.dataProvider.canI('FileUpload'),
-        getContent: (filebrowser) => {
-            const btn = new UIFileInput(filebrowser, {
-                onlyImages: filebrowser.state.onlyImages
-            });
-            filebrowser.e.fire('bindUploader.filebrowser', btn.container);
-            return btn.container;
-        }
-    },
-    remove: {
-        icon: 'bin',
-        isDisabled: (browser) => {
-            return (!browser.state.activeElements.length ||
-                !browser.dataProvider.canI('FileRemove'));
-        },
-        exec: (editor) => {
-            editor.e.fire('fileRemove.filebrowser');
-        }
-    },
-    update: {
-        exec: (editor) => {
-            editor.e.fire('update.filebrowser');
-        }
-    },
-    select: {
-        icon: 'check',
-        isDisabled: (browser) => !browser.state.activeElements.length,
-        exec: (editor) => {
-            editor.e.fire('select.filebrowser');
-        }
-    },
-    edit: {
-        icon: 'pencil',
-        isDisabled: (browser) => {
-            const selected = browser.state.activeElements;
-            return (selected.length !== 1 ||
-                !selected[0].isImage ||
-                !(browser.dataProvider.canI('ImageCrop') ||
-                    browser.dataProvider.canI('ImageResize')));
-        },
-        exec: editor => {
-            editor.e.fire('edit.filebrowser');
-        }
-    },
-    tiles: {
-        icon: 'th',
-        isActive: (filebrowser) => filebrowser.state.view === 'tiles',
-        exec: (filebrowser) => {
-            filebrowser.e.fire('view.filebrowser', 'tiles');
-        }
-    },
-    list: {
-        icon: 'th-list',
-        isActive: (filebrowser) => filebrowser.state.view === 'list',
-        exec: (filebrowser) => {
-            filebrowser.e.fire('view.filebrowser', 'list');
-        }
-    },
-    filter: {
-        isInput: true,
-        getContent: (filebrowser, _, b) => {
-            const oldInput = b.container.querySelector('.jodit-input');
-            if (oldInput) {
-                return oldInput;
-            }
-            const input = filebrowser.c.element('input', {
-                class: 'jodit-input',
-                placeholder: filebrowser.i18n('Filter')
-            });
-            input.value = filebrowser.state.filterWord;
-            filebrowser.e.on(input, 'keydown mousedown', filebrowser.async.debounce(() => {
-                filebrowser.e.fire('filter.filebrowser', input.value);
-            }, filebrowser.defaultTimeout));
-            return input;
-        }
-    },
-    sort: {
-        isInput: true,
-        getContent: (fb) => {
-            const select = fb.c.fromHTML('<select class="jodit-input jodit-select">' +
-                `<option value="changed-asc">${fb.i18n('Sort by changed')} (⬆)</option>` +
-                `<option value="changed-desc">${fb.i18n('Sort by changed')} (⬇)</option>` +
-                `<option value="name-asc">${fb.i18n('Sort by name')} (⬆)</option>` +
-                `<option value="name-desc">${fb.i18n('Sort by name')} (⬇)</option>` +
-                `<option value="size-asc">${fb.i18n('Sort by size')} (⬆)</option>` +
-                `<option value="size-desc">${fb.i18n('Sort by size')} (⬇)</option>` +
-                '</select>');
-            select.value = fb.state.sortBy;
-            fb.e
-                .on('sort.filebrowser', (value) => {
-                if (select.value !== value) {
-                    select.value = value;
-                }
-            })
-                .on(select, 'change', () => {
-                fb.e.fire('sort.filebrowser', select.value);
-            });
-            return select;
-        }
-    }
-};
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/builders/item.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-class FileBrowserItem {
-    constructor(data) {
-        this.data = data;
-        Object.keys(data).forEach(key => {
-            this[key] = data[key];
-        });
-    }
-    static create(data) {
-        if (data instanceof FileBrowserItem) {
-            return data;
-        }
-        return new FileBrowserItem(data);
-    }
-    get path() {
-        return normalizePath(this.data.source.path ? this.data.source.path + '/' : '/');
-    }
-    get imageURL() {
-        const timestamp = new Date().getTime().toString(), { thumbIsAbsolute, source, thumb, file } = this.data, path = thumb || file;
-        return thumbIsAbsolute && path
-            ? path
-            : normalizeUrl(source.baseurl, source.path, path || '') +
-                '?_tmst=' +
-                timestamp;
-    }
-    get fileURL() {
-        let { name } = this.data;
-        const { file, fileIsAbsolute, source } = this.data;
-        if (file !== undefined) {
-            name = file;
-        }
-        return fileIsAbsolute && name
-            ? name
-            : normalizeUrl(source.baseurl, source.path, name || '');
-    }
-    get time() {
-        const { changed } = this.data;
-        return ((changed &&
-            (typeof changed === 'number'
-                ? new Date(changed).toLocaleString()
-                : changed)) ||
-            '');
-    }
-    get uniqueHashKey() {
-        const data = this.data;
-        let key = [
-            data.sourceName,
-            data.name,
-            data.file,
-            this.time,
-            data.thumb
-        ].join('_');
-        key = key.toLowerCase().replace(/[^0-9a-z\-.]/g, '-');
-        return key;
-    }
-    toJSON() {
-        return this.data;
-    }
-}
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/data-provider.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-const DEFAULT_SOURCE_NAME = 'default';
-const possibleRules = (/* unused pure expression or super */ null && ([
-    'allowFiles',
-    'allowFileMove',
-    'allowFileUpload',
-    'allowFileUploadRemote',
-    'allowFileRemove',
-    'allowFileRename',
-    'allowFolders',
-    'allowFolderMove',
-    'allowFolderCreate',
-    'allowFolderRemove',
-    'allowFolderRename',
-    'allowImageResize',
-    'allowImageCrop'
-]));
-let DataProvider = class DataProvider {
-    constructor(parent, options) {
-        this.parent = parent;
-        this.options = options;
-        this.__currentPermissions = null;
-        this.ajaxInstances = new Map();
-        this.progressHandler = (ignore) => { };
-    }
-    get o() {
-        return this.options;
-    }
-    get(name) {
-        const ai = this.ajaxInstances;
-        if (ai.has(name)) {
-            const ajax = ai.get(name);
-            ajax === null || ajax === void 0 ? void 0 : ajax.abort();
-            ai.delete(name);
-        }
-        const opts = config_proto_ConfigProto(this.options[name] !== undefined
-            ? this.options[name]
-            : {}, config_proto_ConfigProto({
-            onProgress: this.progressHandler
-        }, this.o.ajax));
-        if (opts.prepareData) {
-            opts.data = opts.prepareData.call(this, opts.data);
-        }
-        const ajax = new ajax_Ajax(this.parent, opts);
-        ai.set(name, ajax);
-        const promise = ajax.send();
-        promise.finally(() => {
-            ajax.destruct();
-            ai.delete(name);
-            this.progressHandler(100);
-        });
-        return promise
-            .then(resp => resp.json())
-            .then(resp => {
-            if (resp && !this.isSuccess(resp)) {
-                throw new Error(this.getMessage(resp));
-            }
-            return resp;
-        });
-    }
-    onProgress(callback) {
-        this.progressHandler = callback;
-    }
-    async permissions(path, source) {
-        if (!this.o.permissions) {
-            return null;
-        }
-        this.o.permissions.data.path = path;
-        this.o.permissions.data.source = source;
-        if (this.o.permissions.url) {
-            return this.get('permissions').then(resp => {
-                let process = this.o.permissions.process;
-                if (!process) {
-                    process = this.o.ajax.process;
-                }
-                if (process) {
-                    const respData = process.call(self, resp);
-                    if (respData.data.permissions) {
-                        this.__currentPermissions = respData.data.permissions;
-                    }
-                }
-                return this.__currentPermissions;
-            });
-        }
-        return null;
-    }
-    canI(action) {
-        const rule = 'allow' + action;
-        if (false) {}
-        return (this.__currentPermissions == null ||
-            this.__currentPermissions[rule] === undefined ||
-            this.__currentPermissions[rule]);
-    }
-    async items(path, source, mods = {}) {
-        const opt = this.options;
-        if (!opt.items) {
-            return Promise.reject('Set Items api options');
-        }
-        opt.items.data.path = path;
-        opt.items.data.source = source;
-        opt.items.data.mods = mods;
-        return this.get('items').then(resp => {
-            let process = this.o.items.process;
-            if (!process) {
-                process = this.o.ajax.process;
-            }
-            if (process) {
-                resp = process.call(self, resp);
-            }
-            return this.generateItemsList(resp.data.sources, mods);
-        });
-    }
-    generateItemsList(sources, mods = {}) {
-        const elements = [];
-        const canBeFile = (item) => !mods.onlyImages || item.isImage === undefined || item.isImage, inFilter = (item) => {
-            var _a;
-            return !((_a = mods.filterWord) === null || _a === void 0 ? void 0 : _a.length) ||
-                this.o.filter === undefined ||
-                this.o.filter(item, mods.filterWord);
-        };
-        sources.forEach(source => {
-            if (source.files && source.files.length) {
-                const { sort } = this.o;
-                if (is_function_isFunction(sort) && mods.sortBy) {
-                    source.files.sort((a, b) => sort(a, b, mods.sortBy));
-                }
-                source.files.forEach((item) => {
-                    if (inFilter(item) && canBeFile(item)) {
-                        elements.push(FileBrowserItem.create({
-                            ...item,
-                            sourceName: source.name,
-                            source
-                        }));
-                    }
-                });
-            }
-        });
-        return elements;
-    }
-    async tree(path, source) {
-        path = normalizeRelativePath(path);
-        await this.permissions(path, source);
-        if (!this.o.folder) {
-            return Promise.reject('Set Folder Api options');
-        }
-        this.o.folder.data.path = path;
-        this.o.folder.data.source = source;
-        return this.get('folder').then(resp => {
-            let process = this.o.folder.process;
-            if (!process) {
-                process = this.o.ajax.process;
-            }
-            if (process) {
-                resp = process.call(self, resp);
-            }
-            return resp.data.sources;
-        });
-    }
-    getPathByUrl(url) {
-        set('options.getLocalFileByUrl.data.url', url, this);
-        return this.get('getLocalFileByUrl').then(resp => {
-            if (this.isSuccess(resp)) {
-                return resp.data;
-            }
-            throw error_error(this.getMessage(resp));
-        });
-    }
-    createFolder(name, path, source) {
-        const { create } = this.o;
-        if (!create) {
-            throw error_error('Set Create api options');
-        }
-        create.data.source = source;
-        create.data.path = path;
-        create.data.name = name;
-        return this.get('create').then(resp => {
-            if (this.isSuccess(resp)) {
-                return true;
-            }
-            throw error_error(this.getMessage(resp));
-        });
-    }
-    move(filepath, path, source, isFile) {
-        const mode = isFile
-            ? 'fileMove'
-            : 'folderMove';
-        const option = this.options[mode];
-        if (!option) {
-            throw error_error('Set Move api options');
-        }
-        option.data.from = filepath;
-        option.data.path = path;
-        option.data.source = source;
-        return this.get(mode).then(resp => {
-            if (this.isSuccess(resp)) {
-                return true;
-            }
-            throw error_error(this.getMessage(resp));
-        });
-    }
-    remove(action, path, file, source) {
-        const fr = this.o[action];
-        if (!fr) {
-            throw error_error(`Set "${action}" api options`);
-        }
-        fr.data.path = path;
-        fr.data.name = file;
-        fr.data.source = source;
-        return this.get(action).then(resp => {
-            if (fr.process) {
-                resp = fr.process.call(this, resp);
-            }
-            return this.getMessage(resp);
-        });
-    }
-    fileRemove(path, file, source) {
-        return this.remove('fileRemove', path, file, source);
-    }
-    folderRemove(path, file, source) {
-        return this.remove('folderRemove', path, file, source);
-    }
-    rename(action, path, name, newname, source) {
-        const fr = this.o[action];
-        if (!fr) {
-            throw error_error(`Set "${action}" api options`);
-        }
-        fr.data.path = path;
-        fr.data.name = name;
-        fr.data.newname = newname;
-        fr.data.source = source;
-        return this.get(action).then(resp => {
-            if (fr.process) {
-                resp = fr.process.call(self, resp);
-            }
-            return this.getMessage(resp);
-        });
-    }
-    folderRename(path, name, newname, source) {
-        return this.rename('folderRename', path, name, newname, source);
-    }
-    fileRename(path, name, newname, source) {
-        return this.rename('fileRename', path, name, newname, source);
-    }
-    changeImage(type, path, source, name, newname, box) {
-        if (!this.o[type]) {
-            this.o[type] = {
-                data: {}
-            };
-        }
-        const query = this.o[type];
-        if (query.data === undefined) {
-            query.data = {
-                action: type
-            };
-        }
-        query.data.newname = newname || name;
-        if (box) {
-            query.data.box = box;
-        }
-        query.data.path = path;
-        query.data.name = name;
-        query.data.source = source;
-        return this.get(type).then(() => {
-            return true;
-        });
-    }
-    crop(path, source, name, newname, box) {
-        return this.changeImage('crop', path, source, name, newname, box);
-    }
-    resize(path, source, name, newname, box) {
-        return this.changeImage('resize', path, source, name, newname, box);
-    }
-    getMessage(resp) {
-        return this.options.getMessage(resp);
-    }
-    isSuccess(resp) {
-        return this.options.isSuccess(resp);
-    }
-    destruct() {
-        this.ajaxInstances.forEach(a => a.destruct());
-        this.ajaxInstances.clear();
-    }
-};
-DataProvider = __decorate([
-    autobind
-], DataProvider);
-/* harmony default export */ var data_provider = (DataProvider);
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/factories.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function makeDataProvider(parent, options) {
-    return new data_provider(parent, options);
-}
-function makeContextMenu(parent) {
-    return new ContextMenu(parent);
-}
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/builders/elements-map.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const elements_map_map = new WeakMap();
-const elementsMap = (view) => {
-    let result = elements_map_map.get(view);
-    if (!result) {
-        result = {};
-        elements_map_map.set(view, result);
-    }
-    return result;
-};
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/fetch/load-items.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-async function loadItems(fb) {
-    fb.files.setMod('active', true);
-    fb.files.setMod('loading', true);
-    return fb.dataProvider
-        .items(fb.state.currentPath, fb.state.currentSource, {
-        sortBy: fb.state.sortBy,
-        onlyImages: fb.state.onlyImages,
-        filterWord: fb.state.filterWord
-    })
-        .then(resp => {
-        fb.state.elements = resp;
-        fb.state.activeElements = [];
-    })
-        .catch(fb.status)
-        .finally(() => fb.files.setMod('loading', false));
-}
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/fetch/load-tree.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-async function loadTree(fb) {
-    const errorUni = (e) => {
-        throw e instanceof Error ? e : error_error(e);
-    };
-    fb.tree.setMod('active', true);
-    dom_Dom.detach(fb.tree.container);
-    const items = loadItems(fb);
-    if (fb.o.showFoldersPanel) {
-        fb.tree.setMod('loading', true);
-        const tree = fb.dataProvider
-            .tree(fb.state.currentPath, fb.state.currentSource)
-            .then(resp => {
-            fb.state.sources = resp;
-        })
-            .catch(e => {
-            errorUni(e);
-        })
-            .finally(() => fb.tree.setMod('loading', false));
-        return Promise.all([tree, items]).catch(error_error);
-    }
-    fb.tree.setMod('active', false);
-    return items.catch(error_error);
-}
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/listeners/state-listeners.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-const state_listeners_DEFAULT_SOURCE_NAME = 'default';
-function stateListeners() {
-    const elmMap = elementsMap(this);
-    const { state, files, create, options } = this, getDomElement = (item) => {
-        const key = item.uniqueHashKey;
-        if (elmMap[key]) {
-            return elmMap[key].elm;
-        }
-        const elm = create.fromHTML(options.getThumbTemplate.call(this, item, item.source, item.sourceName.toString()));
-        elm.dataset.key = key;
-        elmMap[key] = {
-            item,
-            elm
-        };
-        return elmMap[key].elm;
-    };
-    state
-        .on(['change.currentPath', 'change.currentSource'], this.async.debounce(() => {
-        if (this.o.saveStateInStorage &&
-            this.o.saveStateInStorage.storeLastOpenedFolder) {
-            this.storage
-                .set('currentPath', this.state.currentPath)
-                .set('currentSource', this.state.currentSource);
-        }
-        loadTree(this).catch(this.status);
-    }, this.defaultTimeout))
-        .on('beforeChange.activeElements', () => {
-        state.activeElements.forEach(item => {
-            const key = item.uniqueHashKey, { elm } = elmMap[key];
-            elm &&
-                elm.classList.remove(files.getFullElName('item', 'active', true));
-        });
-    })
-        .on('change.activeElements', () => {
-        this.e.fire('changeSelection');
-        state.activeElements.forEach(item => {
-            const key = item.uniqueHashKey, { elm } = elmMap[key];
-            elm &&
-                elm.classList.add(files.getFullElName('item', 'active', true));
-        });
-    })
-        .on('change.view', () => {
-        files.setMod('view', state.view);
-        if (this.o.saveStateInStorage &&
-            this.o.saveStateInStorage.storeView) {
-            this.storage.set('view', state.view);
-        }
-    })
-        .on('change.sortBy', () => {
-        if (this.o.saveStateInStorage &&
-            this.o.saveStateInStorage.storeSortBy) {
-            this.storage.set('sortBy', state.sortBy);
-        }
-    })
-        .on('change.elements', this.async.debounce(() => {
-        dom_Dom.detach(files.container);
-        if (state.elements.length) {
-            state.elements.forEach(item => {
-                this.files.container.appendChild(getDomElement(item));
-            });
-        }
-        else {
-            files.container.appendChild(create.div(this.componentName + '_no-files_true', this.i18n('There are no files')));
-        }
-    }, this.defaultTimeout))
-        .on('change.sources', this.async.debounce(() => {
-        dom_Dom.detach(this.tree.container);
-        state.sources.forEach(source => {
-            const sourceName = source.name;
-            if (sourceName && sourceName !== state_listeners_DEFAULT_SOURCE_NAME) {
-                this.tree.container.appendChild(create.div(this.tree.getFullElName('source-title'), sourceName));
-            }
-            source.folders.forEach((name) => {
-                const folderElm = create.a(this.tree.getFullElName('item'), {
-                    draggable: 'draggable',
-                    href: '#',
-                    'data-path': normalizePath(source.path, name + '/'),
-                    'data-name': name,
-                    'data-source': sourceName,
-                    'data-source-path': source.path
-                }, create.span(this.tree.getFullElName('item-title'), name));
-                const action = (actionName) => (e) => {
-                    this.e.fire(`${actionName}.filebrowser`, {
-                        name,
-                        path: normalizePath(source.path + '/'),
-                        source: sourceName
-                    });
-                    e.stopPropagation();
-                    e.preventDefault();
-                };
-                this.e.on(folderElm, 'click', action('openFolder'));
-                this.tree.container.appendChild(folderElm);
-                if (name === '..' || name === '.') {
-                    return;
-                }
-                if (options.renameFolder &&
-                    this.dataProvider.canI('FolderRename')) {
-                    const btn = Button(this, {
-                        icon: { name: 'pencil' },
-                        name: 'rename',
-                        tooltip: 'Rename',
-                        size: 'tiny'
-                    });
-                    btn.onAction(action('renameFolder'));
-                    folderElm.appendChild(btn.container);
-                }
-                if (options.deleteFolder &&
-                    this.dataProvider.canI('FolderRemove')) {
-                    const btn = Button(this, {
-                        icon: { name: 'cancel' },
-                        name: 'remove',
-                        tooltip: 'Delete',
-                        size: 'tiny'
-                    });
-                    btn.onAction(action('removeFolder'));
-                    folderElm.appendChild(btn.container);
-                }
-            });
-            if (options.createNewFolder &&
-                this.dataProvider.canI('FolderCreate')) {
-                const button = Button(this, 'plus', 'Add folder', 'secondary');
-                button.onAction(() => {
-                    this.e.fire('addFolder', {
-                        path: normalizePath(source.path + '/'),
-                        source: sourceName
-                    });
-                });
-                this.tree.append(button);
-            }
-        });
-    }, this.defaultTimeout));
-}
-
-;// CONCATENATED MODULE: ./src/modules/image-editor/templates/form.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-const jie = 'jodit-image-editor';
-const gi = Icon.get.bind(Icon);
-const act = (el, className = 'jodti-image-editor_active') => el ? className : '';
-const form_form = (editor, o) => {
-    const i = editor.i18n.bind(editor);
-    const switcher = (label, ref, active = true) => `<div class="jodit-form__group">
-			<label>${i(label)}</label>
-
-			<label class='jodit-switcher'>
-				<input ${act(active, 'checked')} data-ref="${ref}" type="checkbox"/>
-				<span class="jodit-switcher__slider"></span>
-			</label>
-	</div>`;
-    return editor.create.fromHTML(`<form class="${jie} jodit-properties">
-		<div class="jodit-grid jodit-grid_xs-column">
-			<div class="jodit_col-lg-3-4 jodit_col-sm-5-5">
-			${o.resize
-        ? `<div class="${jie}__area ${jie}__area_resize ${jie}_active">
-							<div data-ref="resizeBox" class="${jie}__box"></div>
-							<div class="${jie}__resizer">
-								<i class="jodit_bottomright"></i>
-							</div>
-						</div>`
-        : ''}
-			${o.crop
-        ? `<div class="${jie}__area ${jie}__area_crop ${act(!o.resize)}">
-							<div data-ref="cropBox" class="${jie}__box">
-								<div class="${jie}__croper">
-									<i class="jodit_bottomright"></i>
-									<i class="${jie}__sizes"></i>
-								</div>
-							</div>
-						</div>`
-        : ''}
-			</div>
-			<div class="jodit_col-lg-1-4 jodit_col-sm-5-5">
-			${o.resize
-        ? `<div data-area="resize" class="${jie}__slider ${jie}_active">
-							<div class="${jie}__slider-title">
-								${gi('resize')}
-								${i('Resize')}
-							</div>
-							<div class="${jie}__slider-content">
-								<div class="jodit-form__group">
-									<label>
-										${i('Width')}
-									</label>
-									<input type="number" data-ref="widthInput" class="jodit-input"/>
-								</div>
-								<div class="jodit-form__group">
-									<label>
-										${i('Height')}
-									</label>
-									<input type="number" data-ref="heightInput" class="jodit-input"/>
-								</div>
-								${switcher('Keep Aspect Ratio', 'keepAspectRatioResize')}
-							</div>
-						</div>`
-        : ''}
-			${o.crop
-        ? `<div data-area="crop" class="${jie}__slider ${act(!o.resize)}'">
-							<div class="${jie}__slider-title">
-								${gi('crop')}
-								${i('Crop')}
-							</div>
-							<div class="${jie}__slider-content">
-								${switcher('Keep Aspect Ratio', 'keepAspectRatioCrop')}
-							</div>
-						</div>`
-        : ''}
-			</div>
-		</div>
-	</form>`);
-};
-
-;// CONCATENATED MODULE: ./src/modules/image-editor/config.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-config_Config.prototype.imageeditor = {
-    min_width: 20,
-    min_height: 20,
-    closeAfterSave: false,
-    width: '85%',
-    height: '85%',
-    crop: true,
-    resize: true,
-    resizeUseRatio: true,
-    resizeMinWidth: 20,
-    resizeMinHeight: 20,
-    cropUseRatio: true,
-    cropDefaultWidth: '70%',
-    cropDefaultHeight: '70%'
-};
-
-;// CONCATENATED MODULE: ./src/modules/image-editor/image-editor.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-var ImageEditor_1;
-
-
-
-
-
-
-
-
-
-
-
-const image_editor_jie = 'jodit-image-editor';
-const TABS = {
-    resize: 'resize',
-    crop: 'crop'
-};
-let ImageEditor = ImageEditor_1 = class ImageEditor extends view_component_ViewComponent {
-    constructor(editor) {
-        super(editor);
-        this.resizeUseRatio = true;
-        this.cropUseRatio = true;
-        this.clicked = false;
-        this.start_x = 0;
-        this.start_y = 0;
-        this.top_x = 0;
-        this.top_y = 0;
-        this.width = 0;
-        this.height = 0;
-        this.activeTab = TABS.resize;
-        this.naturalWidth = 0;
-        this.naturalHeight = 0;
-        this.ratio = 0;
-        this.new_h = 0;
-        this.new_w = 0;
-        this.diff_x = 0;
-        this.diff_y = 0;
-        this.cropBox = {
-            x: 0,
-            y: 0,
-            w: 0,
-            h: 0
-        };
-        this.resizeBox = {
-            w: 0,
-            h: 0
-        };
-        this.calcCropBox = () => {
-            const node = this.crop_box.parentNode, w = node.offsetWidth * 0.8, h = node.offsetHeight * 0.8;
-            let wn = w, hn = h;
-            const { naturalWidth: nw, naturalHeight: nh } = this;
-            if (w > nw && h > nh) {
-                wn = nw;
-                hn = nh;
-            }
-            else if (this.ratio > w / h) {
-                wn = w;
-                hn = nh * (w / nw);
-            }
-            else {
-                wn = nw * (h / nh);
-                hn = h;
-            }
-            css(this.crop_box, {
-                width: wn,
-                height: hn
-            });
-        };
-        this.showCrop = () => {
-            if (!this.cropImage) {
-                return;
-            }
-            this.calcCropBox();
-            const w = this.cropImage.offsetWidth ||
-                this.image.offsetWidth ||
-                this.image.naturalWidth;
-            this.new_w = ImageEditor_1.calcValueByPercent(w, this.o.cropDefaultWidth);
-            const h = this.cropImage.offsetHeight ||
-                this.image.offsetHeight ||
-                this.image.naturalHeight;
-            if (this.cropUseRatio) {
-                this.new_h = this.new_w / this.ratio;
-            }
-            else {
-                this.new_h = ImageEditor_1.calcValueByPercent(h, this.o.cropDefaultHeight);
-            }
-            css(this.cropHandler, {
-                backgroundImage: 'url(' + utils_attr(this.cropImage, 'src') + ')',
-                width: this.new_w,
-                height: this.new_h,
-                left: w / 2 - this.new_w / 2,
-                top: h / 2 - this.new_h / 2
-            });
-            this.j.e.fire(this.cropHandler, 'updatesize');
-        };
-        this.updateCropBox = () => {
-            if (!this.cropImage) {
-                return;
-            }
-            const ratioX = this.cropImage.offsetWidth / this.naturalWidth, ratioY = this.cropImage.offsetHeight / this.naturalHeight;
-            this.cropBox.x = css(this.cropHandler, 'left') / ratioX;
-            this.cropBox.y = css(this.cropHandler, 'top') / ratioY;
-            this.cropBox.w = this.cropHandler.offsetWidth / ratioX;
-            this.cropBox.h = this.cropHandler.offsetHeight / ratioY;
-            this.sizes.textContent =
-                this.cropBox.w.toFixed(0) + 'x' + this.cropBox.h.toFixed(0);
-        };
-        this.updateResizeBox = () => {
-            this.resizeBox.w = this.image.offsetWidth || this.naturalWidth;
-            this.resizeBox.h = this.image.offsetHeight || this.naturalHeight;
-        };
-        this.setHandlers = () => {
-            const self = this;
-            const { widthInput, heightInput } = refs(this.editor);
-            self.j.e
-                .on([
-                self.editor.querySelector('.jodit_bottomright'),
-                self.cropHandler
-            ], `mousedown.${image_editor_jie}`, this.onResizeHandleMouseDown)
-                .on(this.j.ow, `resize.${image_editor_jie}`, () => {
-                this.j.e.fire(self.resizeHandler, 'updatesize');
-                self.showCrop();
-                this.j.e.fire(self.cropHandler, 'updatesize');
-            });
-            self.j.e
-                .on(to_array_toArray(this.editor.querySelectorAll(`.${image_editor_jie}__slider-title`)), 'click', this.onTitleModeClick)
-                .on([widthInput, heightInput], 'input', this.onChangeSizeInput);
-            const { keepAspectRatioResize, keepAspectRatioCrop } = refs(this.editor);
-            if (keepAspectRatioResize) {
-                keepAspectRatioResize.addEventListener('change', () => {
-                    this.resizeUseRatio = keepAspectRatioResize.checked;
-                });
-            }
-            if (keepAspectRatioCrop) {
-                keepAspectRatioCrop.addEventListener('change', () => {
-                    this.cropUseRatio = keepAspectRatioCrop.checked;
-                });
-            }
-            self.j.e
-                .on(self.resizeHandler, 'updatesize', () => {
-                css(self.resizeHandler, {
-                    top: 0,
-                    left: 0,
-                    width: self.image.offsetWidth || self.naturalWidth,
-                    height: self.image.offsetHeight || self.naturalHeight
-                });
-                this.updateResizeBox();
-            })
-                .on(self.cropHandler, 'updatesize', () => {
-                if (!self.cropImage) {
-                    return;
-                }
-                let new_x = css(self.cropHandler, 'left'), new_y = css(self.cropHandler, 'top'), new_width = self.cropHandler.offsetWidth, new_height = self.cropHandler.offsetHeight;
-                if (new_x < 0) {
-                    new_x = 0;
-                }
-                if (new_y < 0) {
-                    new_y = 0;
-                }
-                if (new_x + new_width > self.cropImage.offsetWidth) {
-                    new_width = self.cropImage.offsetWidth - new_x;
-                    if (self.cropUseRatio) {
-                        new_height = new_width / self.ratio;
-                    }
-                }
-                if (new_y + new_height > self.cropImage.offsetHeight) {
-                    new_height = self.cropImage.offsetHeight - new_y;
-                    if (self.cropUseRatio) {
-                        new_width = new_height * self.ratio;
-                    }
-                }
-                css(self.cropHandler, {
-                    width: new_width,
-                    height: new_height,
-                    left: new_x,
-                    top: new_y,
-                    backgroundPosition: -new_x - 1 + 'px ' + (-new_y - 1) + 'px',
-                    backgroundSize: self.cropImage.offsetWidth +
-                        'px ' +
-                        self.cropImage.offsetHeight +
-                        'px'
-                });
-                self.updateCropBox();
-            });
-            Object.values(self.buttons).forEach(button => {
-                button.onAction(() => {
-                    const data = {
-                        action: self.activeTab,
-                        box: self.activeTab === TABS.resize
-                            ? self.resizeBox
-                            : self.cropBox
-                    };
-                    switch (button) {
-                        case self.buttons.saveas:
-                            Prompt(self.j.i18n('Enter new name'), self.j.i18n('Save in new file'), (name) => {
-                                if (!trim_trim(name)) {
-                                    Alert(self.j.i18n('The name should not be empty')).bindDestruct(this.j);
-                                    return false;
-                                }
-                                self.onSave(name, data, self.hide, (e) => {
-                                    Alert(e.message).bindDestruct(self.j);
-                                });
-                            }).bindDestruct(this.j);
-                            break;
-                        case self.buttons.save:
-                            self.onSave(undefined, data, self.hide, (e) => {
-                                Alert(e.message).bindDestruct(self.j);
-                            });
-                            break;
-                        case self.buttons.reset:
-                            if (self.activeTab === TABS.resize) {
-                                css(self.image, {
-                                    width: null,
-                                    height: null
-                                });
-                                widthInput.value = self.naturalWidth.toString();
-                                heightInput.value = self.naturalHeight.toString();
-                                self.j.e.fire(self.resizeHandler, 'updatesize');
-                            }
-                            else {
-                                self.showCrop();
-                            }
-                            break;
-                    }
-                });
-            });
-        };
-        this.options =
-            editor && editor.o && editor.o.imageeditor
-                ? editor.o.imageeditor
-                : config_Config.defaultOptions.imageeditor;
-        const o = this.options;
-        this.resizeUseRatio = o.resizeUseRatio;
-        this.cropUseRatio = o.cropUseRatio;
-        this.buttons = {
-            reset: Button(this.j, 'update', 'Reset'),
-            save: Button(this.j, 'save', 'Save'),
-            saveas: Button(this.j, 'save', 'Save as ...')
-        };
-        this.activeTab = o.resize ? TABS.resize : TABS.crop;
-        this.editor = form_form(this.j, this.options);
-        const { resizeBox, cropBox } = refs(this.editor);
-        this.resize_box = resizeBox;
-        this.crop_box = cropBox;
-        this.sizes = this.editor.querySelector(`.${image_editor_jie}__area.${image_editor_jie}__area_crop .jodit-image-editor__sizes`);
-        this.resizeHandler = this.editor.querySelector(`.${image_editor_jie}__resizer`);
-        this.cropHandler = this.editor.querySelector(`.${image_editor_jie}__croper`);
-        this.dialog = new Dialog({
-            fullsize: this.j.o.fullsize,
-            globalFullSize: this.j.o.globalFullSize,
-            language: this.j.o.language,
-            buttons: ['fullsize', 'dialog.close']
-        });
-        this.dialog.setContent(this.editor);
-        this.dialog.setSize(this.o.width, this.o.height);
-        this.dialog.setHeader([
-            this.buttons.reset,
-            this.buttons.save,
-            this.buttons.saveas
-        ]);
-        this.setHandlers();
-    }
-    className() {
-        return 'ImageEditor';
-    }
-    onTitleModeClick(e) {
-        const self = this, title = e.target;
-        const slide = title === null || title === void 0 ? void 0 : title.parentElement;
-        if (!slide) {
-            return;
-        }
-        selector_$$(`.${image_editor_jie}__slider,.${image_editor_jie}__area`, self.editor).forEach(elm => elm.classList.remove(`${image_editor_jie}_active`));
-        slide.classList.add(`${image_editor_jie}_active`);
-        this.activeTab = utils_attr(slide, '-area') || TABS.resize;
-        const tab = self.editor.querySelector(`.${image_editor_jie}__area.${image_editor_jie}__area_` + self.activeTab);
-        if (tab) {
-            tab.classList.add(`${image_editor_jie}_active`);
-        }
-        if (self.activeTab === TABS.crop) {
-            self.showCrop();
-        }
-    }
-    onChangeSizeInput(e) {
-        const self = this, input = e.target, { widthInput, heightInput } = refs(this.editor), isWidth = utils_attr(input, 'data-ref') === 'widthInput', x = parseInt(input.value, 10), minX = isWidth ? self.o.min_width : self.o.min_height, minY = !isWidth ? self.o.min_width : self.o.min_height;
-        let y;
-        if (x > minX) {
-            css(self.image, isWidth ? 'width' : 'height', x);
-            if (self.resizeUseRatio) {
-                y = isWidth
-                    ? Math.round(x / self.ratio)
-                    : Math.round(x * self.ratio);
-                if (y > minY) {
-                    css(self.image, !isWidth ? 'width' : 'height', y);
-                    if (isWidth) {
-                        heightInput.value = y.toString();
-                    }
-                    else {
-                        widthInput.value = y.toString();
-                    }
-                }
-            }
-        }
-        this.j.e.fire(self.resizeHandler, 'updatesize');
-    }
-    onResizeHandleMouseDown(e) {
-        const self = this;
-        self.target = e.target;
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        self.clicked = true;
-        self.start_x = e.clientX;
-        self.start_y = e.clientY;
-        if (self.activeTab === TABS.crop) {
-            self.top_x = css(self.cropHandler, 'left');
-            self.top_y = css(self.cropHandler, 'top');
-            self.width = self.cropHandler.offsetWidth;
-            self.height = self.cropHandler.offsetHeight;
-        }
-        else {
-            self.width = self.image.offsetWidth;
-            self.height = self.image.offsetHeight;
-        }
-        self.j.e
-            .on(this.j.ow, 'mousemove', this.onGlobalMouseMove)
-            .one(this.j.ow, 'mouseup', this.onGlobalMouseUp);
-    }
-    onGlobalMouseUp(e) {
-        if (this.clicked) {
-            this.clicked = false;
-            e.stopImmediatePropagation();
-            this.j.e.off(this.j.ow, 'mousemove', this.onGlobalMouseMove);
-        }
-    }
-    onGlobalMouseMove(e) {
-        const self = this;
-        if (!self.clicked) {
-            return;
-        }
-        const { widthInput, heightInput } = refs(this.editor);
-        self.diff_x = e.clientX - self.start_x;
-        self.diff_y = e.clientY - self.start_y;
-        if ((self.activeTab === TABS.resize && self.resizeUseRatio) ||
-            (self.activeTab === TABS.crop && self.cropUseRatio)) {
-            if (self.diff_x) {
-                self.new_w = self.width + self.diff_x;
-                self.new_h = Math.round(self.new_w / self.ratio);
-            }
-            else {
-                self.new_h = self.height + self.diff_y;
-                self.new_w = Math.round(self.new_h * self.ratio);
-            }
-        }
-        else {
-            self.new_w = self.width + self.diff_x;
-            self.new_h = self.height + self.diff_y;
-        }
-        if (self.activeTab === TABS.resize) {
-            if (self.new_w > self.o.resizeMinWidth) {
-                css(self.image, 'width', self.new_w + 'px');
-                widthInput.value = self.new_w.toString();
-            }
-            if (self.new_h > self.o.resizeMinHeight) {
-                css(self.image, 'height', self.new_h + 'px');
-                heightInput.value = self.new_h.toString();
-            }
-            this.j.e.fire(self.resizeHandler, 'updatesize');
-        }
-        else {
-            if (self.target !== self.cropHandler) {
-                if (self.top_x + self.new_w > self.cropImage.offsetWidth) {
-                    self.new_w = self.cropImage.offsetWidth - self.top_x;
-                }
-                if (self.top_y + self.new_h > self.cropImage.offsetHeight) {
-                    self.new_h = self.cropImage.offsetHeight - self.top_y;
-                }
-                css(self.cropHandler, {
-                    width: self.new_w,
-                    height: self.new_h
-                });
-            }
-            else {
-                if (self.top_x + self.diff_x + self.cropHandler.offsetWidth >
-                    self.cropImage.offsetWidth) {
-                    self.diff_x =
-                        self.cropImage.offsetWidth -
-                            self.top_x -
-                            self.cropHandler.offsetWidth;
-                }
-                css(self.cropHandler, 'left', self.top_x + self.diff_x);
-                if (self.top_y + self.diff_y + self.cropHandler.offsetHeight >
-                    self.cropImage.offsetHeight) {
-                    self.diff_y =
-                        self.cropImage.offsetHeight -
-                            self.top_y -
-                            self.cropHandler.offsetHeight;
-                }
-                css(self.cropHandler, 'top', self.top_y + self.diff_y);
-            }
-            this.j.e.fire(self.cropHandler, 'updatesize');
-        }
-    }
-    get o() {
-        return this.options;
-    }
-    hide() {
-        this.dialog.close();
-    }
-    open(url, save) {
-        return this.j.async.promise((resolve) => {
-            const timestamp = new Date().getTime();
-            this.image = this.j.c.element('img');
-            selector_$$('img,.jodit-icon_loader', this.resize_box).forEach(dom_Dom.safeRemove);
-            selector_$$('img,.jodit-icon_loader', this.crop_box).forEach(dom_Dom.safeRemove);
-            css(this.cropHandler, 'background', 'transparent');
-            this.onSave = save;
-            this.resize_box.appendChild(this.j.c.element('i', { class: 'jodit-icon_loader' }));
-            this.crop_box.appendChild(this.j.c.element('i', { class: 'jodit-icon_loader' }));
-            if (/\?/.test(url)) {
-                url += '&_tst=' + timestamp;
-            }
-            else {
-                url += '?_tst=' + timestamp;
-            }
-            this.image.setAttribute('src', url);
-            this.dialog.open();
-            const { widthInput, heightInput } = refs(this.editor);
-            const onload = () => {
-                if (this.isDestructed) {
-                    return;
-                }
-                this.image.removeEventListener('load', onload);
-                this.naturalWidth = this.image.naturalWidth;
-                this.naturalHeight = this.image.naturalHeight;
-                widthInput.value = this.naturalWidth.toString();
-                heightInput.value = this.naturalHeight.toString();
-                this.ratio = this.naturalWidth / this.naturalHeight;
-                this.resize_box.appendChild(this.image);
-                this.cropImage = this.image.cloneNode(true);
-                this.crop_box.appendChild(this.cropImage);
-                selector_$$('.jodit-icon_loader', this.editor).forEach(dom_Dom.safeRemove);
-                if (this.activeTab === TABS.crop) {
-                    this.showCrop();
-                }
-                this.j.e.fire(this.resizeHandler, 'updatesize');
-                this.j.e.fire(this.cropHandler, 'updatesize');
-                this.dialog.setPosition();
-                this.j.e.fire('afterImageEditor');
-                resolve(this.dialog);
-            };
-            this.image.addEventListener('load', onload);
-            if (this.image.complete) {
-                onload();
-            }
-        });
-    }
-    destruct() {
-        if (this.isDestructed) {
-            return;
-        }
-        if (this.dialog && !this.dialog.isInDestruct) {
-            this.dialog.destruct();
-        }
-        dom_Dom.safeRemove(this.editor);
-        if (this.j.e) {
-            this.j.e
-                .off(this.j.ow, 'mousemove', this.onGlobalMouseMove)
-                .off(this.j.ow, 'mouseup', this.onGlobalMouseUp)
-                .off(this.ow, `.${image_editor_jie}`)
-                .off(`.${image_editor_jie}`);
-        }
-        super.destruct();
-    }
-};
-ImageEditor.calcValueByPercent = (value, percent) => {
-    const percentStr = percent.toString();
-    const valueNbr = parseFloat(value.toString());
-    let match;
-    match = /^[-+]?[0-9]+(px)?$/.exec(percentStr);
-    if (match) {
-        return parseInt(percentStr, 10);
-    }
-    match = /^([-+]?[0-9.]+)%$/.exec(percentStr);
-    if (match) {
-        return Math.round(valueNbr * (parseFloat(match[1]) / 100));
-    }
-    return valueNbr || 0;
-};
-__decorate([
-    autobind
-], ImageEditor.prototype, "onTitleModeClick", null);
-__decorate([
-    debounce(),
-    autobind
-], ImageEditor.prototype, "onChangeSizeInput", null);
-__decorate([
-    autobind
-], ImageEditor.prototype, "onResizeHandleMouseDown", null);
-__decorate([
-    autobind
-], ImageEditor.prototype, "onGlobalMouseUp", null);
-__decorate([
-    throttle(10)
-], ImageEditor.prototype, "onGlobalMouseMove", null);
-__decorate([
-    autobind
-], ImageEditor.prototype, "hide", null);
-__decorate([
-    autobind
-], ImageEditor.prototype, "open", null);
-ImageEditor = ImageEditor_1 = __decorate([
-    component
-], ImageEditor);
-
-function openImageEditor(href, name, path, source, onSuccess, onFailed) {
-    return this.getInstance('ImageEditor', this.o).open(href, (newname, box, success, failed) => call(box.action === 'resize'
-        ? this.dataProvider.resize
-        : this.dataProvider.crop, path, source, name, newname, box.box)
-        .then(ok => {
-        if (ok) {
-            success();
-            if (onSuccess) {
-                onSuccess();
-            }
-        }
-    })
-        .catch(error => {
-        failed(error);
-        if (onFailed) {
-            onFailed(error);
-        }
-    }));
-}
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/fetch/delete-file.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function deleteFile(fb, name, source) {
-    return fb.dataProvider
-        .fileRemove(fb.state.currentPath, name, source)
-        .then(message => {
-        fb.status(message || fb.i18n('File "%s" was deleted', name), true);
-    })
-        .catch(fb.status);
-}
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/builders/context-menu.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-
-const CLASS_PREVIEW = 'jodit-filebrowser-preview', preview_tpl_next = (next = 'next', right = 'right') => `<div class="${CLASS_PREVIEW}__navigation ${CLASS_PREVIEW}__navigation_arrow_${next}">` +
-    '' +
-    Icon.get('angle-' + right) +
-    '</a>';
-/* harmony default export */ var context_menu = ((self) => {
-    if (!self.o.contextMenu) {
-        return () => { };
-    }
-    const contextmenu = makeContextMenu(self);
-    return (e) => {
-        const a = getItem(e.target, self.container);
-        if (!a) {
-            return;
-        }
-        let item = a;
-        const opt = self.options, ga = (key) => utils_attr(item, key) || '';
-        self.async.setTimeout(() => {
-            const selectedItem = elementToItem(a, elementsMap(self));
-            if (!selectedItem) {
-                return;
-            }
-            self.state.activeElements = [selectedItem];
-            contextmenu.show(e.clientX, e.clientY, [
-                ga('data-is-file') !== '1' &&
-                    opt.editImage &&
-                    (self.dataProvider.canI('ImageResize') ||
-                        self.dataProvider.canI('ImageCrop'))
-                    ? {
-                        icon: 'pencil',
-                        title: 'Edit',
-                        exec: () => {
-                            return openImageEditor.call(self, ga('href'), ga('data-name'), ga('data-path'), ga('data-source'));
-                        }
-                    }
-                    : false,
-                self.dataProvider.canI('FileRename')
-                    ? {
-                        icon: 'italic',
-                        title: 'Rename',
-                        exec: async () => {
-                            self.e.fire('fileRename.filebrowser', ga('data-name'), ga('data-path'), ga('data-source'));
-                        }
-                    }
-                    : false,
-                self.dataProvider.canI('FileRemove')
-                    ? {
-                        icon: 'bin',
-                        title: 'Delete',
-                        exec: async () => {
-                            try {
-                                await deleteFile(self, ga('data-name'), ga('data-source'));
-                            }
-                            catch (e) {
-                                return self.status(e);
-                            }
-                            self.state.activeElements = [];
-                            return loadTree(self).catch(self.status);
-                        }
-                    }
-                    : false,
-                opt.preview
-                    ? {
-                        icon: 'eye',
-                        title: 'Preview',
-                        exec: () => {
-                            const preview = new Dialog({
-                                fullsize: self.o.fullsize,
-                                language: self.o.language,
-                                buttons: ['fullsize', 'dialog.close']
-                            }), temp_content = self.c.div(CLASS_PREVIEW, '<div class="jodit-icon_loader"></div>'), preview_box = self.c.div(CLASS_PREVIEW + '__box'), next = self.c.fromHTML(preview_tpl_next()), prev = self.c.fromHTML(preview_tpl_next('prev', 'left')), addLoadHandler = (src) => {
-                                const image = self.c.element('img');
-                                image.setAttribute('src', src);
-                                const onload = () => {
-                                    var _a;
-                                    if (self.isInDestruct) {
-                                        return;
-                                    }
-                                    self.e.off(image, 'load');
-                                    dom_Dom.detach(temp_content);
-                                    if (opt.showPreviewNavigation) {
-                                        if (dom_Dom.prevWithClass(item, self.files.getFullElName('item'))) {
-                                            temp_content.appendChild(prev);
-                                        }
-                                        if (dom_Dom.nextWithClass(item, self.files.getFullElName('item'))) {
-                                            temp_content.appendChild(next);
-                                        }
-                                    }
-                                    temp_content.appendChild(preview_box);
-                                    preview_box.appendChild(image);
-                                    preview.setPosition();
-                                    (_a = self === null || self === void 0 ? void 0 : self.events) === null || _a === void 0 ? void 0 : _a.fire('previewOpenedAndLoaded');
-                                };
-                                self.e.on(image, 'load', onload);
-                                if (image.complete) {
-                                    onload();
-                                }
-                            };
-                            self.e.on([next, prev], 'click', function () {
-                                if (this === next) {
-                                    item = dom_Dom.nextWithClass(item, self.files.getFullElName('item'));
-                                }
-                                else {
-                                    item = dom_Dom.prevWithClass(item, self.files.getFullElName('item'));
-                                }
-                                if (!item) {
-                                    throw error_error('Need element');
-                                }
-                                dom_Dom.detach(temp_content);
-                                dom_Dom.detach(preview_box);
-                                temp_content.innerHTML =
-                                    '<div class="jodit-icon_loader"></div>';
-                                addLoadHandler(ga('href'));
-                            });
-                            self.e.on('beforeDestruct', () => {
-                                preview.destruct();
-                            });
-                            preview.container.classList.add(CLASS_PREVIEW + '__dialog');
-                            preview.setContent(temp_content);
-                            preview.setPosition();
-                            preview.open();
-                            addLoadHandler(ga('href'));
-                            self.events
-                                .on('beforeDestruct', () => {
-                                preview.destruct();
-                            })
-                                .fire('previewOpened');
-                        }
-                    }
-                    : false,
-                {
-                    icon: 'upload',
-                    title: 'Download',
-                    exec: () => {
-                        const url = ga('href');
-                        if (url) {
-                            self.ow.open(url);
-                        }
-                    }
-                }
-            ]);
-        }, self.defaultTimeout);
-        self.e
-            .on('beforeClose', () => contextmenu.close())
-            .on('beforeDestruct', () => contextmenu.destruct());
-        e.stopPropagation();
-        e.preventDefault();
-        return false;
-    };
-});
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/listeners/native-listeners.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-const getItem = (node, root, tag = 'a') => dom_Dom.closest(node, elm => dom_Dom.isTag(elm, tag), root);
-const elementToItem = (elm, elementsMap) => {
-    const { key } = elm.dataset, { item } = elementsMap[key || ''];
-    return item;
-};
-function nativeListeners() {
-    let dragElement = false;
-    const elmMap = elementsMap(this);
-    const self = this;
-    self.e
-        .on(self.tree.container, 'dragstart', (e) => {
-        const a = getItem(e.target, self.container);
-        if (!a) {
-            return;
-        }
-        if (self.o.moveFolder) {
-            dragElement = a;
-        }
-    })
-        .on(self.tree.container, 'drop', (e) => {
-        if ((self.o.moveFile || self.o.moveFolder) && dragElement) {
-            let path = utils_attr(dragElement, '-path') || '';
-            if (!self.o.moveFolder &&
-                dragElement.classList.contains(this.tree.getFullElName('item'))) {
-                return false;
-            }
-            if (dragElement.classList.contains(this.files.getFullElName('item'))) {
-                path += utils_attr(dragElement, '-name');
-                if (!self.o.moveFile) {
-                    return false;
-                }
-            }
-            const a = getItem(e.target, self.container);
-            if (!a) {
-                return;
-            }
-            self.dataProvider
-                .move(path, utils_attr(a, '-path') || '', utils_attr(a, '-source') || '', dragElement.classList.contains(this.files.getFullElName('item')))
-                .then(() => loadTree(this))
-                .catch(self.status);
-            dragElement = false;
-        }
-    })
-        .on(self.files.container, 'contextmenu', context_menu(self))
-        .on(self.files.container, 'click', (e) => {
-        if (!ctrlKey(e)) {
-            this.state.activeElements = [];
-        }
-    })
-        .on(self.files.container, 'click', (e) => {
-        const a = getItem(e.target, self.container);
-        if (!a) {
-            return;
-        }
-        const item = elementToItem(a, elmMap);
-        if (!item) {
-            return;
-        }
-        if (!ctrlKey(e)) {
-            self.state.activeElements = [item];
-        }
-        else {
-            self.state.activeElements = [
-                ...self.state.activeElements,
-                item
-            ];
-        }
-        e.stopPropagation();
-        return false;
-    })
-        .on(self.files.container, 'dragstart', (e) => {
-        if (self.o.moveFile) {
-            const a = getItem(e.target, self.container);
-            if (!a) {
-                return;
-            }
-            dragElement = a;
-        }
-    })
-        .on(self.container, 'drop', (e) => e.preventDefault());
-}
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/listeners/self-listeners.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-function selfListeners() {
-    const state = this.state, dp = this.dataProvider, self = this;
-    self.e
-        .on('view.filebrowser', (view) => {
-        if (view !== state.view) {
-            state.view = view;
-        }
-    })
-        .on('sort.filebrowser', (value) => {
-        if (value !== state.sortBy) {
-            state.sortBy = value;
-            loadItems(self).catch(self.status);
-        }
-    })
-        .on('filter.filebrowser', (value) => {
-        if (value !== state.filterWord) {
-            state.filterWord = value;
-            loadItems(self).catch(self.status);
-        }
-    })
-        .on('openFolder.filebrowser', (data) => {
-        let path;
-        if (data.name === '..') {
-            path = data.path
-                .split('/')
-                .filter((p) => p.length)
-                .slice(0, -1)
-                .join('/');
-        }
-        else {
-            path = normalizePath(data.path, data.name);
-        }
-        self.state.currentPath = path;
-        self.state.currentSource =
-            data.name === '.' ? DEFAULT_SOURCE_NAME : data.source;
-    })
-        .on('removeFolder.filebrowser', (data) => {
-        Confirm(self.i18n('Are you sure?'), self.i18n('Delete'), (yes) => {
-            if (yes) {
-                dp.folderRemove(data.path, data.name, data.source)
-                    .then(message => {
-                    self.status(message, true);
-                    return loadTree(self);
-                })
-                    .catch(self.status);
-            }
-        }).bindDestruct(self);
-    })
-        .on('renameFolder.filebrowser', (data) => {
-        Prompt(self.i18n('Enter new name'), self.i18n('Rename'), (newName) => {
-            if (!isValidName(newName)) {
-                self.status(self.i18n('Enter new name'));
-                return false;
-            }
-            dp.folderRename(data.path, data.name, newName, data.source)
-                .then(message => {
-                self.state.activeElements = [];
-                self.status(message, true);
-                return loadTree(self);
-            })
-                .catch(self.status);
-            return;
-        }, self.i18n('type name'), data.name).bindDestruct(self);
-    })
-        .on('addFolder.filebrowser', (data) => {
-        Prompt(self.i18n('Enter Directory name'), self.i18n('Create directory'), (name) => {
-            dp.createFolder(name, data.path, data.source)
-                .then(() => loadTree(self))
-                .catch(self.status);
-        }, self.i18n('type name')).bindDestruct(self);
-    })
-        .on('fileRemove.filebrowser', () => {
-        if (self.state.activeElements.length) {
-            Confirm(self.i18n('Are you sure?'), '', (yes) => {
-                if (yes) {
-                    const promises = [];
-                    self.state.activeElements.forEach(item => {
-                        promises.push(deleteFile(self, item.file || item.name || '', item.sourceName));
-                    });
-                    self.state.activeElements = [];
-                    Promise.all(promises).then(() => loadTree(self).catch(self.status), self.status);
-                }
-            }).bindDestruct(self);
-        }
-    })
-        .on('edit.filebrowser', () => {
-        if (self.state.activeElements.length === 1) {
-            const [file] = this.state.activeElements;
-            openImageEditor.call(self, file.fileURL, file.file || '', file.path, file.sourceName);
-        }
-    })
-        .on('fileRename.filebrowser', (name, path, source) => {
-        if (self.state.activeElements.length === 1) {
-            Prompt(self.i18n('Enter new name'), self.i18n('Rename'), (newName) => {
-                if (!isValidName(newName)) {
-                    self.status(self.i18n('Enter new name'));
-                    return false;
-                }
-                dp.fileRename(path, name, newName, source)
-                    .then(message => {
-                    self.state.activeElements = [];
-                    self.status(message, true);
-                    loadItems(self).catch(self.status);
-                })
-                    .catch(self.status);
-                return;
-            }, self.i18n('type name'), name).bindDestruct(this);
-        }
-    })
-        .on('update.filebrowser', () => {
-        loadTree(this).then(this.status);
-    });
-}
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/ui/files/files.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-class files_FileBrowserFiles extends UIGroup {
-    className() {
-        return 'FilebrowserFiles';
-    }
-}
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/ui/tree/tree.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-class FileBrowserTree extends UIGroup {
-    className() {
-        return 'FilebrowserTree';
-    }
-}
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/ui/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/file-browser.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class FileBrowser extends ViewWithToolbar {
-    constructor(options) {
-        var _a;
-        super(options);
-        this.browser = this.c.div(this.componentName);
-        this.status_line = this.c.div(this.getFullElName('status'));
-        this.tree = new FileBrowserTree(this);
-        this.files = new files_FileBrowserFiles(this);
-        this.state = observable({
-            currentPath: '',
-            currentSource: DEFAULT_SOURCE_NAME,
-            currentBaseUrl: '',
-            activeElements: [],
-            elements: [],
-            messages: [],
-            sources: [],
-            view: 'tiles',
-            sortBy: 'changed-desc',
-            filterWord: '',
-            onlyImages: false
-        });
-        this.errorHandler = (resp) => {
-            if (resp instanceof Error) {
-                this.status(this.i18n(resp.message));
-            }
-            else {
-                this.status(this.dataProvider.getMessage(resp));
-            }
-        };
-        this.close = () => {
-            this.dialog.close();
-        };
-        this.attachEvents(options);
-        const self = this;
-        self.options = config_proto_ConfigProto(options || {}, config_Config.defaultOptions.filebrowser);
-        self.storage = Storage.makeStorage(Boolean(this.o.saveStateInStorage), this.componentName);
-        self.dataProvider = makeDataProvider(self, self.options);
-        self.dialog = new Dialog({
-            fullsize: self.o.fullsize,
-            ownerWindow: self.ownerWindow,
-            theme: self.o.theme,
-            globalFullSize: self.o.globalFullSize,
-            language: this.o.language,
-            minWidth: Math.min(700, screen.width),
-            minHeight: 300,
-            buttons: (_a = this.o.headerButtons) !== null && _a !== void 0 ? _a : ['fullsize', 'dialog.close']
-        });
-        this.proxyDialogEvents(self);
-        self.browser.component = this;
-        self.container = self.browser;
-        if (self.o.showFoldersPanel) {
-            self.browser.appendChild(self.tree.container);
-        }
-        self.browser.appendChild(self.files.container);
-        self.browser.appendChild(self.status_line);
-        selfListeners.call(self);
-        nativeListeners.call(self);
-        stateListeners.call(self);
-        self.dialog.setSize(self.o.width, self.o.height);
-        const keys = [
-            'getLocalFileByUrl',
-            'crop',
-            'resize',
-            'create',
-            'fileMove',
-            'folderMove',
-            'fileRename',
-            'folderRename',
-            'fileRemove',
-            'folderRemove',
-            'folder',
-            'items',
-            'permissions'
-        ];
-        keys.forEach(key => {
-            if (this.options[key] != null) {
-                this.options[key] = config_proto_ConfigProto(this.options[key], this.o.ajax);
-            }
-        });
-        const { storeView, storeSortBy, storeLastOpenedFolder } = this.o
-            .saveStateInStorage || {
-            storeLastOpenedFolder: false,
-            storeView: false,
-            storeSortBy: false
-        };
-        const view = storeView && this.storage.get('view');
-        if (view && this.o.view == null) {
-            self.state.view = view === 'list' ? 'list' : 'tiles';
-        }
-        else {
-            self.state.view = self.o.view === 'list' ? 'list' : 'tiles';
-        }
-        self.files.setMod('view', self.state.view);
-        const sortBy = storeSortBy && self.storage.get('sortBy');
-        if (sortBy) {
-            const parts = sortBy.split('-');
-            self.state.sortBy = ['changed', 'name', 'size'].includes(parts[0])
-                ? sortBy
-                : 'changed-desc';
-        }
-        else {
-            self.state.sortBy = self.o.sortBy || 'changed-desc';
-        }
-        if (storeLastOpenedFolder) {
-            const currentPath = self.storage.get('currentPath'), currentSource = self.storage.get('currentSource');
-            self.state.currentPath = currentPath !== null && currentPath !== void 0 ? currentPath : '';
-            self.state.currentSource = currentSource !== null && currentSource !== void 0 ? currentSource : '';
-        }
-        self.initUploader(self);
-        self.setStatus(statuses_STATUSES.ready);
-    }
-    className() {
-        return 'Filebrowser';
-    }
-    onSelect(callback) {
-        return () => {
-            if (this.state.activeElements.length) {
-                const files = [];
-                const isImages = [];
-                this.state.activeElements.forEach(elm => {
-                    const url = elm.fileURL;
-                    if (url) {
-                        files.push(url);
-                        isImages.push(elm.isImage || false);
-                    }
-                });
-                this.close();
-                const data = {
-                    baseurl: '',
-                    files,
-                    isImages
-                };
-                if (is_function_isFunction(callback)) {
-                    callback(data);
-                }
-                this.close();
-            }
-            return false;
-        };
-    }
-    get isOpened() {
-        return this.dialog.isOpened && this.browser.style.display !== 'none';
-    }
-    status(message, success) {
-        if (!is_string_isString(message)) {
-            message = message.message;
-        }
-        if (!is_string_isString(message) || !trim_trim(message).length) {
-            return;
-        }
-        const successClass = this.getFullElName('status', 'success', true), activeClass = this.getFullElName('status', 'active', true);
-        this.status_line.classList.remove(successClass);
-        this.status_line.classList.add(activeClass);
-        const messageBox = this.c.div();
-        messageBox.textContent = message;
-        this.status_line.appendChild(messageBox);
-        if (success) {
-            this.status_line.classList.add(successClass);
-        }
-        this.async.setTimeout(() => {
-            this.status_line.classList.remove(activeClass);
-            dom_Dom.detach(this.status_line);
-        }, {
-            timeout: this.o.howLongShowMsg,
-            label: 'fileBrowser.status'
-        });
-    }
-    open(callback = this.o
-        .defaultCallback, onlyImages = false) {
-        this.state.onlyImages = onlyImages;
-        return this.async.promise((resolve, reject) => {
-            var _a;
-            if (!this.o.items || !this.o.items.url) {
-                throw error_error('Need set options.filebrowser.ajax.url');
-            }
-            let localTimeout = 0;
-            this.e
-                .off(this.files.container, 'dblclick')
-                .on(this.files.container, 'dblclick', this.onSelect(callback))
-                .on(this.files.container, 'touchstart', () => {
-                const now = new Date().getTime();
-                if (now - localTimeout < EMULATE_DBLCLICK_TIMEOUT) {
-                    this.onSelect(callback)();
-                }
-                localTimeout = now;
-            })
-                .off('select.filebrowser')
-                .on('select.filebrowser', this.onSelect(callback));
-            const header = this.c.div();
-            this.toolbar.build((_a = this.o.buttons) !== null && _a !== void 0 ? _a : []).appendTo(header);
-            this.dialog.open(this.browser, header);
-            this.e.fire('sort.filebrowser', this.state.sortBy);
-            loadTree(this).then(resolve, reject);
-        });
-    }
-    initUploader(editor) {
-        var _a;
-        const self = this, options = (_a = editor === null || editor === void 0 ? void 0 : editor.options) === null || _a === void 0 ? void 0 : _a.uploader, uploaderOptions = config_proto_ConfigProto(options || {}, config_Config.defaultOptions.uploader);
-        const uploadHandler = () => loadItems(this);
-        self.uploader = self.getInstance('Uploader', uploaderOptions);
-        self.uploader
-            .setPath(self.state.currentPath)
-            .setSource(self.state.currentSource)
-            .bind(self.browser, uploadHandler, self.errorHandler);
-        this.state.on(['change.currentPath', 'change.currentSource'], () => {
-            this.uploader
-                .setPath(this.state.currentPath)
-                .setSource(this.state.currentSource);
-        });
-        self.e.on('bindUploader.filebrowser', (button) => {
-            self.uploader.bind(button, uploadHandler, self.errorHandler);
-        });
-    }
-    proxyDialogEvents(self) {
-        ['afterClose', 'beforeOpen'].forEach(proxyEvent => {
-            self.dialog.events.on(self.dialog, proxyEvent, () => {
-                this.e.fire(proxyEvent);
-            });
-        });
-    }
-    destruct() {
-        if (this.isInDestruct) {
-            return;
-        }
-        this.dialog.destruct();
-        this.events && this.e.off('.filebrowser');
-        this.uploader && this.uploader.destruct();
-        super.destruct();
-    }
-}
-__decorate([
-    autobind
-], FileBrowser.prototype, "status", null);
-__decorate([
-    autobind
-], FileBrowser.prototype, "open", null);
-function isFileBrowserFilesItem(target) {
-    return (Dom.isElement(target) &&
-        target.classList.contains(FileBrowserFiles.prototype.getFullElName('item')));
-}
-
-;// CONCATENATED MODULE: ./src/modules/file-browser/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-;// CONCATENATED MODULE: ./src/modules/observer/snapshot.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-class Snapshot extends view_component_ViewComponent {
-    constructor() {
-        super(...arguments);
-        this.isBlocked = false;
-    }
-    className() {
-        return 'Snapshot';
-    }
-    static equal(first, second) {
-        return (first.html === second.html &&
-            JSON.stringify(first.range) === JSON.stringify(second.range));
-    }
-    static countNodesBeforeInParent(elm) {
-        if (!elm.parentNode) {
-            return 0;
-        }
-        const elms = elm.parentNode.childNodes;
-        let count = 0, last = null, j;
-        for (j = 0; j < elms.length; j += 1) {
-            if (last &&
-                !(dom_Dom.isText(elms[j]) && elms[j].textContent === '') &&
-                !(dom_Dom.isText(last) && dom_Dom.isText(elms[j]))) {
-                count += 1;
-            }
-            if (elms[j] === elm) {
-                return count;
-            }
-            last = elms[j];
-        }
-        return 0;
-    }
-    static strokeOffset(elm, offset) {
-        while (dom_Dom.isText(elm)) {
-            elm = elm.previousSibling;
-            if (dom_Dom.isText(elm) && elm.textContent != null) {
-                offset += elm.textContent.length;
-            }
-        }
-        return offset;
-    }
-    calcHierarchyLadder(elm) {
-        const counts = [];
-        if (!elm || !elm.parentNode || !dom_Dom.isOrContains(this.j.editor, elm)) {
-            return [];
-        }
-        while (elm && elm !== this.j.editor) {
-            if (elm) {
-                counts.push(Snapshot.countNodesBeforeInParent(elm));
-            }
-            elm = elm.parentNode;
-        }
-        return counts.reverse();
-    }
-    getElementByLadder(ladder) {
-        let n = this.j.editor, i;
-        for (i = 0; n && i < ladder.length; i += 1) {
-            n = n.childNodes[ladder[i]];
-        }
-        return n;
-    }
-    make() {
-        const snapshot = {
-            html: '',
-            range: {
-                startContainer: [],
-                startOffset: 0,
-                endContainer: [],
-                endOffset: 0
-            }
-        };
-        snapshot.html = this.j.getNativeEditorValue();
-        const sel = this.j.s.sel;
-        if (sel && sel.rangeCount) {
-            const range = sel.getRangeAt(0), startContainer = this.calcHierarchyLadder(range.startContainer), endContainer = this.calcHierarchyLadder(range.endContainer);
-            let startOffset = Snapshot.strokeOffset(range.startContainer, range.startOffset), endOffset = Snapshot.strokeOffset(range.endContainer, range.endOffset);
-            if (!startContainer.length &&
-                range.startContainer !== this.j.editor) {
-                startOffset = 0;
-            }
-            if (!endContainer.length && range.endContainer !== this.j.editor) {
-                endOffset = 0;
-            }
-            snapshot.range = {
-                startContainer,
-                startOffset,
-                endContainer,
-                endOffset
-            };
-        }
-        return snapshot;
-    }
-    restore(snapshot) {
-        this.isBlocked = true;
-        const scroll = this.storeScrollState();
-        const value = this.j.getNativeEditorValue();
-        if (value !== snapshot.html) {
-            this.j.setEditorValue(snapshot.html);
-        }
-        this.restoreOnlySelection(snapshot);
-        this.restoreScrollState(scroll);
-        this.isBlocked = false;
-    }
-    storeScrollState() {
-        return [this.j.ow.scrollY, this.j.editor.scrollTop];
-    }
-    restoreScrollState(scrolls) {
-        const { j } = this, { ow } = j;
-        ow.scrollTo(ow.scrollX, scrolls[0]);
-        j.editor.scrollTop = scrolls[1];
-    }
-    restoreOnlySelection(snapshot) {
-        try {
-            if (snapshot.range) {
-                const range = this.j.ed.createRange();
-                range.setStart(this.getElementByLadder(snapshot.range.startContainer), snapshot.range.startOffset);
-                range.setEnd(this.getElementByLadder(snapshot.range.endContainer), snapshot.range.endOffset);
-                this.j.s.selectRange(range);
-            }
-        }
-        catch (__ignore) {
-            this.j.editor.lastChild &&
-                this.j.s.setCursorAfter(this.j.editor.lastChild);
-            if (false) {}
-        }
-    }
-    destruct() {
-        this.isBlocked = false;
-        super.destruct();
-    }
-}
-
-;// CONCATENATED MODULE: ./src/modules/observer/stack.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-class Stack {
-    constructor(size) {
-        this.size = size;
-        this.commands = [];
-        this.stackPosition = -1;
-    }
-    get length() {
-        return this.commands.length;
-    }
-    clearRedo() {
-        this.commands.length = this.stackPosition + 1;
-    }
-    clear() {
-        this.commands.length = 0;
-        this.stackPosition = -1;
-    }
-    push(command) {
-        this.clearRedo();
-        this.commands.push(command);
-        this.stackPosition += 1;
-        if (this.commands.length > this.size) {
-            this.commands.shift();
-            this.stackPosition -= 1;
-        }
-    }
-    replace(command) {
-        this.commands[this.stackPosition] = command;
-    }
-    current() {
-        return this.commands[this.stackPosition];
-    }
-    undo() {
-        if (this.canUndo()) {
-            if (this.commands[this.stackPosition]) {
-                this.commands[this.stackPosition].undo();
-            }
-            this.stackPosition -= 1;
-            return true;
-        }
-        return false;
-    }
-    redo() {
-        if (this.canRedo()) {
-            this.stackPosition += 1;
-            if (this.commands[this.stackPosition]) {
-                this.commands[this.stackPosition].redo();
-            }
-            return true;
-        }
-        return false;
-    }
-    canUndo() {
-        return this.stackPosition >= 0;
-    }
-    canRedo() {
-        return this.stackPosition < this.commands.length - 1;
-    }
-}
-
-;// CONCATENATED MODULE: ./src/modules/observer/command.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-class Command {
-    constructor(oldValue, newValue, observer, tick) {
-        this.oldValue = oldValue;
-        this.newValue = newValue;
-        this.observer = observer;
-        this.tick = tick;
-    }
-    undo() {
-        this.observer.snapshot.restore(this.oldValue);
-    }
-    redo() {
-        this.observer.snapshot.restore(this.newValue);
-    }
-}
-
-;// CONCATENATED MODULE: ./src/modules/observer/observer.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-config_Config.prototype.observer = {
-    maxHistoryLength: Infinity,
-    timeout: 100
-};
-class Observer extends view_component_ViewComponent {
-    constructor(editor) {
-        super(editor);
-        this.stack = new Stack(this.j.o.observer.maxHistoryLength);
-        this.snapshot = new Snapshot(this.j);
-        this.updateTick = 0;
-        editor.e.on('afterAddPlace.observer', () => {
-            if (this.isInDestruct) {
-                return;
-            }
-            this.startValue = this.snapshot.make();
-            editor.events
-                .on('internalChange', () => {
-                this.startValue = this.snapshot.make();
-            })
-                .on(editor.editor, [
-                'changeSelection',
-                'selectionstart',
-                'selectionchange',
-                'mousedown',
-                'mouseup',
-                'keydown',
-                'keyup'
-            ]
-                .map(f => f + '.observer')
-                .join(' '), () => {
-                if (this.startValue.html ===
-                    this.j.getNativeEditorValue()) {
-                    this.startValue = this.snapshot.make();
-                }
-            })
-                .on(this, 'change.observer', this.onChange);
-        });
-    }
-    className() {
-        return 'Observer';
-    }
-    get startValue() {
-        return this.__startValue;
-    }
-    set startValue(value) {
-        this.__startValue = value;
-    }
-    upTick() {
-        this.updateTick += 1;
-    }
-    onChange() {
-        if (this.snapshot.isBlocked) {
-            return;
-        }
-        this.updateStack();
-    }
-    updateStack(replace = false) {
-        const newValue = this.snapshot.make();
-        if (!Snapshot.equal(newValue, this.startValue)) {
-            const newCommand = new Command(this.startValue, newValue, this, this.updateTick);
-            if (replace) {
-                const command = this.stack.current();
-                if (command && this.updateTick === command.tick) {
-                    this.stack.replace(newCommand);
-                }
-            }
-            else {
-                this.stack.push(newCommand);
-            }
-            this.startValue = newValue;
-            this.fireChangeStack();
-        }
-    }
-    redo() {
-        if (this.stack.redo()) {
-            this.startValue = this.snapshot.make();
-            this.fireChangeStack();
-        }
-    }
-    undo() {
-        if (this.stack.undo()) {
-            this.startValue = this.snapshot.make();
-            this.fireChangeStack();
-        }
-    }
-    clear() {
-        this.startValue = this.snapshot.make();
-        this.stack.clear();
-        this.fireChangeStack();
-    }
-    replaceSnapshot() {
-        this.updateStack(true);
-    }
-    fireChangeStack() {
-        var _a;
-        this.j && !this.j.isInDestruct && ((_a = this.j.events) === null || _a === void 0 ? void 0 : _a.fire('changeStack'));
-    }
-    destruct() {
-        if (this.j.events) {
-            this.j.e.off('.observer');
-        }
-        this.snapshot.destruct();
-        super.destruct();
-    }
-}
-__decorate([
-    debounce()
-], Observer.prototype, "onChange", null);
-
-;// CONCATENATED MODULE: ./src/modules/status-bar/status-bar.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-let StatusBar = class StatusBar extends view_component_ViewComponent {
-    constructor(jodit, target) {
-        super(jodit);
-        this.target = target;
-        this.mods = {};
-        this.container = jodit.c.div('jodit-status-bar');
-        target.appendChild(this.container);
-        this.hide();
-    }
-    className() {
-        return 'StatusBar';
-    }
-    hide() {
-        this.container.classList.add('jodit_hidden');
-    }
-    show() {
-        this.container.classList.remove('jodit_hidden');
-    }
-    get isShown() {
-        return !this.container.classList.contains('jodit_hidden');
-    }
-    setMod(name, value) {
-        Mods.setMod.call(this, name, value);
-        return this;
-    }
-    getMod(name) {
-        return Mods.getMod.call(this, name);
-    }
-    getHeight() {
-        var _a, _b;
-        return (_b = (_a = this.container) === null || _a === void 0 ? void 0 : _a.offsetHeight) !== null && _b !== void 0 ? _b : 0;
-    }
-    findEmpty(inTheRight = false) {
-        const items = Elms.getElms.call(this, inTheRight ? 'item-right' : 'item');
-        for (let i = 0; i < items.length; i += 1) {
-            if (!items[i].innerHTML.trim().length) {
-                return items[i];
-            }
-        }
-        return;
-    }
-    append(child, inTheRight = false) {
-        var _a;
-        const wrapper = this.findEmpty(inTheRight) ||
-            this.j.c.div(this.getFullElName('item'));
-        if (inTheRight) {
-            wrapper.classList.add(this.getFullElName('item-right'));
-        }
-        wrapper.appendChild(child);
-        (_a = this.container) === null || _a === void 0 ? void 0 : _a.appendChild(wrapper);
-        if (this.j.o.statusbar) {
-            this.show();
-        }
-        this.j.e.fire('resize');
-    }
-    destruct() {
-        this.setStatus(statuses_STATUSES.beforeDestruct);
-        dom_Dom.safeRemove(this.container);
-        super.destruct();
-    }
-};
-StatusBar = __decorate([
-    component
-], StatusBar);
-
-
-;// CONCATENATED MODULE: ./src/modules/table/table.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-const markedValue = new WeakMap();
-class Table extends view_component_ViewComponent {
-    constructor() {
-        super(...arguments);
-        this.selected = new Set();
-    }
-    className() {
-        return 'Table';
-    }
-    recalculateStyles() {
-        const style = global_getContainer(this.j, Table, 'style', true);
-        const selectors = [];
-        this.selected.forEach(td => {
-            const selector = cssPath(td);
-            selector && selectors.push(selector);
-        });
-        style.innerHTML = selectors.length
-            ? selectors.join(',') +
-                `{${this.jodit.options.table.selectionCellStyle}}`
-            : '';
-    }
-    addSelection(td) {
-        this.selected.add(td);
-        this.recalculateStyles();
-        const table = dom_Dom.closest(td, 'table', this.j.editor);
-        if (table) {
-            const cells = Table.selectedByTable.get(table) || new Set();
-            cells.add(td);
-            Table.selectedByTable.set(table, cells);
-        }
-    }
-    removeSelection(td) {
-        this.selected.delete(td);
-        this.recalculateStyles();
-        const table = dom_Dom.closest(td, 'table', this.j.editor);
-        if (table) {
-            const cells = Table.selectedByTable.get(table);
-            if (cells) {
-                cells.delete(td);
-                if (!cells.size) {
-                    Table.selectedByTable.delete(table);
-                }
-            }
-        }
-    }
-    getAllSelectedCells() {
-        return to_array_toArray(this.selected);
-    }
-    static getSelectedCellsByTable(table) {
-        const cells = Table.selectedByTable.get(table);
-        return cells ? to_array_toArray(cells) : [];
-    }
-    destruct() {
-        this.selected.clear();
-        return super.destruct();
-    }
-    static getRowsCount(table) {
-        return table.rows.length;
-    }
-    static getColumnsCount(table) {
-        const matrix = Table.formalMatrix(table);
-        return matrix.reduce((max_count, cells) => Math.max(max_count, cells.length), 0);
-    }
-    static formalMatrix(table, callback) {
-        const matrix = [[]];
-        const rows = to_array_toArray(table.rows);
-        const setCell = (cell, i) => {
-            if (matrix[i] === undefined) {
-                matrix[i] = [];
-            }
-            const colSpan = cell.colSpan, rowSpan = cell.rowSpan;
-            let column, row, currentColumn = 0;
-            while (matrix[i][currentColumn]) {
-                currentColumn += 1;
-            }
-            for (row = 0; row < rowSpan; row += 1) {
-                for (column = 0; column < colSpan; column += 1) {
-                    if (matrix[i + row] === undefined) {
-                        matrix[i + row] = [];
-                    }
-                    if (callback &&
-                        callback(cell, i + row, currentColumn + column, colSpan, rowSpan) === false) {
-                        return false;
-                    }
-                    matrix[i + row][currentColumn + column] = cell;
-                }
-            }
-        };
-        for (let i = 0; i < rows.length; i += 1) {
-            const cells = to_array_toArray(rows[i].cells);
-            for (let j = 0; j < cells.length; j += 1) {
-                if (setCell(cells[j], i) === false) {
-                    return matrix;
-                }
-            }
-        }
-        return matrix;
-    }
-    static formalCoordinate(table, cell, max = false) {
-        let i = 0, j = 0, width = 1, height = 1;
-        Table.formalMatrix(table, (td, ii, jj, colSpan, rowSpan) => {
-            if (cell === td) {
-                i = ii;
-                j = jj;
-                width = colSpan || 1;
-                height = rowSpan || 1;
-                if (max) {
-                    j += (colSpan || 1) - 1;
-                    i += (rowSpan || 1) - 1;
-                }
-                return false;
-            }
-        });
-        return [i, j, width, height];
-    }
-    static appendRow(table, line, after, create) {
-        var _a;
-        let row;
-        if (!line) {
-            const columnsCount = Table.getColumnsCount(table);
-            row = create.element('tr');
-            for (let j = 0; j < columnsCount; j += 1) {
-                row.appendChild(create.element('td'));
-            }
-        }
-        else {
-            row = line.cloneNode(true);
-            selector_$$('td,th', line).forEach(cell => {
-                const rowspan = utils_attr(cell, 'rowspan');
-                if (rowspan && parseInt(rowspan, 10) > 1) {
-                    const newRowSpan = parseInt(rowspan, 10) - 1;
-                    utils_attr(cell, 'rowspan', newRowSpan > 1 ? newRowSpan : null);
-                }
-            });
-            selector_$$('td,th', row).forEach(cell => {
-                cell.innerHTML = '';
-            });
-        }
-        if (after && line && line.nextSibling) {
-            line.parentNode &&
-                line.parentNode.insertBefore(row, line.nextSibling);
-        }
-        else if (!after && line) {
-            line.parentNode && line.parentNode.insertBefore(row, line);
-        }
-        else {
-            (((_a = table.getElementsByTagName('tbody')) === null || _a === void 0 ? void 0 : _a[0]) || table).appendChild(row);
-        }
-    }
-    static removeRow(table, rowIndex) {
-        const box = Table.formalMatrix(table);
-        let dec;
-        const row = table.rows[rowIndex];
-        box[rowIndex].forEach((cell, j) => {
-            dec = false;
-            if (rowIndex - 1 >= 0 && box[rowIndex - 1][j] === cell) {
-                dec = true;
-            }
-            else if (box[rowIndex + 1] && box[rowIndex + 1][j] === cell) {
-                if (cell.parentNode === row && cell.parentNode.nextSibling) {
-                    dec = true;
-                    let nextCell = j + 1;
-                    while (box[rowIndex + 1][nextCell] === cell) {
-                        nextCell += 1;
-                    }
-                    const nextRow = dom_Dom.next(cell.parentNode, elm => dom_Dom.isTag(elm, 'tr'), table);
-                    if (nextRow) {
-                        if (box[rowIndex + 1][nextCell]) {
-                            nextRow.insertBefore(cell, box[rowIndex + 1][nextCell]);
-                        }
-                        else {
-                            nextRow.appendChild(cell);
-                        }
-                    }
-                }
-            }
-            else {
-                dom_Dom.safeRemove(cell);
-            }
-            if (dec &&
-                (cell.parentNode === row || cell !== box[rowIndex][j - 1])) {
-                const rowSpan = cell.rowSpan;
-                utils_attr(cell, 'rowspan', rowSpan - 1 > 1 ? rowSpan - 1 : null);
-            }
-        });
-        dom_Dom.safeRemove(row);
-    }
-    static appendColumn(table, j, after, create) {
-        const box = Table.formalMatrix(table);
-        let i;
-        if (j === undefined || j < 0) {
-            j = Table.getColumnsCount(table) - 1;
-        }
-        for (i = 0; i < box.length; i += 1) {
-            const cell = create.element('td');
-            const td = box[i][j];
-            let added = false;
-            if (after) {
-                if ((box[i] && td && j + 1 >= box[i].length) ||
-                    td !== box[i][j + 1]) {
-                    if (td.nextSibling) {
-                        dom_Dom.before(td.nextSibling, cell);
-                    }
-                    else {
-                        td.parentNode && td.parentNode.appendChild(cell);
-                    }
-                    added = true;
-                }
-            }
-            else {
-                if (j - 1 < 0 ||
-                    (box[i][j] !== box[i][j - 1] && box[i][j].parentNode)) {
-                    dom_Dom.before(box[i][j], cell);
-                    added = true;
-                }
-            }
-            if (!added) {
-                utils_attr(box[i][j], 'colspan', parseInt(utils_attr(box[i][j], 'colspan') || '1', 10) + 1);
-            }
-        }
-    }
-    static removeColumn(table, j) {
-        const box = Table.formalMatrix(table);
-        let dec;
-        box.forEach((cells, i) => {
-            const td = cells[j];
-            dec = false;
-            if (j - 1 >= 0 && box[i][j - 1] === td) {
-                dec = true;
-            }
-            else if (j + 1 < cells.length && box[i][j + 1] === td) {
-                dec = true;
-            }
-            else {
-                dom_Dom.safeRemove(td);
-            }
-            if (dec && (i - 1 < 0 || td !== box[i - 1][j])) {
-                const colSpan = td.colSpan;
-                utils_attr(td, 'colspan', colSpan - 1 > 1 ? (colSpan - 1).toString() : null);
-            }
-        });
-    }
-    static getSelectedBound(table, selectedCells) {
-        const bound = [
-            [Infinity, Infinity],
-            [0, 0]
-        ];
-        const box = Table.formalMatrix(table);
-        let i, j, k;
-        for (i = 0; i < box.length; i += 1) {
-            for (j = 0; box[i] && j < box[i].length; j += 1) {
-                if (selectedCells.includes(box[i][j])) {
-                    bound[0][0] = Math.min(i, bound[0][0]);
-                    bound[0][1] = Math.min(j, bound[0][1]);
-                    bound[1][0] = Math.max(i, bound[1][0]);
-                    bound[1][1] = Math.max(j, bound[1][1]);
-                }
-            }
-        }
-        for (i = bound[0][0]; i <= bound[1][0]; i += 1) {
-            for (k = 1, j = bound[0][1]; j <= bound[1][1]; j += 1) {
-                while (box[i] && box[i][j - k] && box[i][j] === box[i][j - k]) {
-                    bound[0][1] = Math.min(j - k, bound[0][1]);
-                    bound[1][1] = Math.max(j - k, bound[1][1]);
-                    k += 1;
-                }
-                k = 1;
-                while (box[i] && box[i][j + k] && box[i][j] === box[i][j + k]) {
-                    bound[0][1] = Math.min(j + k, bound[0][1]);
-                    bound[1][1] = Math.max(j + k, bound[1][1]);
-                    k += 1;
-                }
-                k = 1;
-                while (box[i - k] && box[i][j] === box[i - k][j]) {
-                    bound[0][0] = Math.min(i - k, bound[0][0]);
-                    bound[1][0] = Math.max(i - k, bound[1][0]);
-                    k += 1;
-                }
-                k = 1;
-                while (box[i + k] && box[i][j] === box[i + k][j]) {
-                    bound[0][0] = Math.min(i + k, bound[0][0]);
-                    bound[1][0] = Math.max(i + k, bound[1][0]);
-                    k += 1;
-                }
-            }
-        }
-        return bound;
-    }
-    static normalizeTable(table) {
-        let i, j, min, not;
-        const __marked = [], box = Table.formalMatrix(table);
-        for (j = 0; j < box[0].length; j += 1) {
-            min = 1000000;
-            not = false;
-            for (i = 0; i < box.length; i += 1) {
-                if (box[i][j] === undefined) {
-                    continue;
-                }
-                if (box[i][j].colSpan < 2) {
-                    not = true;
-                    break;
-                }
-                min = Math.min(min, box[i][j].colSpan);
-            }
-            if (!not) {
-                for (i = 0; i < box.length; i += 1) {
-                    if (box[i][j] === undefined) {
-                        continue;
-                    }
-                    Table.mark(box[i][j], 'colspan', box[i][j].colSpan - min + 1, __marked);
-                }
-            }
-        }
-        for (i = 0; i < box.length; i += 1) {
-            min = 1000000;
-            not = false;
-            for (j = 0; j < box[i].length; j += 1) {
-                if (box[i][j] === undefined) {
-                    continue;
-                }
-                if (box[i][j].rowSpan < 2) {
-                    not = true;
-                    break;
-                }
-                min = Math.min(min, box[i][j].rowSpan);
-            }
-            if (!not) {
-                for (j = 0; j < box[i].length; j += 1) {
-                    if (box[i][j] === undefined) {
-                        continue;
-                    }
-                    Table.mark(box[i][j], 'rowspan', box[i][j].rowSpan - min + 1, __marked);
-                }
-            }
-        }
-        for (i = 0; i < box.length; i += 1) {
-            for (j = 0; j < box[i].length; j += 1) {
-                if (box[i][j] === undefined) {
-                    continue;
-                }
-                if (box[i][j].hasAttribute('rowspan') &&
-                    box[i][j].rowSpan === 1) {
-                    utils_attr(box[i][j], 'rowspan', null);
-                }
-                if (box[i][j].hasAttribute('colspan') &&
-                    box[i][j].colSpan === 1) {
-                    utils_attr(box[i][j], 'colspan', null);
-                }
-                if (box[i][j].hasAttribute('class') &&
-                    !utils_attr(box[i][j], 'class')) {
-                    utils_attr(box[i][j], 'class', null);
-                }
-            }
-        }
-        Table.unmark(__marked);
-    }
-    static mergeSelected(table, jodit) {
-        const html = [], bound = Table.getSelectedBound(table, Table.getSelectedCellsByTable(table));
-        let w = 0, first = null, first_j = 0, td, cols = 0, rows = 0;
-        const alreadyMerged = new Set(), __marked = [];
-        if (bound && (bound[0][0] - bound[1][0] || bound[0][1] - bound[1][1])) {
-            Table.formalMatrix(table, (cell, i, j, cs, rs) => {
-                if (i >= bound[0][0] && i <= bound[1][0]) {
-                    if (j >= bound[0][1] && j <= bound[1][1]) {
-                        td = cell;
-                        if (alreadyMerged.has(td)) {
-                            return;
-                        }
-                        alreadyMerged.add(td);
-                        if (i === bound[0][0] && td.style.width) {
-                            w += td.offsetWidth;
-                        }
-                        if (trim_trim(cell.innerHTML.replace(/<br(\/)?>/g, '')) !== '') {
-                            html.push(cell.innerHTML);
-                        }
-                        if (cs > 1) {
-                            cols += cs - 1;
-                        }
-                        if (rs > 1) {
-                            rows += rs - 1;
-                        }
-                        if (!first) {
-                            first = cell;
-                            first_j = j;
-                        }
-                        else {
-                            Table.mark(td, 'remove', 1, __marked);
-                            instance(jodit).removeSelection(td);
-                        }
-                    }
-                }
-            });
-            cols = bound[1][1] - bound[0][1] + 1;
-            rows = bound[1][0] - bound[0][0] + 1;
-            if (first) {
-                if (cols > 1) {
-                    Table.mark(first, 'colspan', cols, __marked);
-                }
-                if (rows > 1) {
-                    Table.mark(first, 'rowspan', rows, __marked);
-                }
-                if (w) {
-                    Table.mark(first, 'width', ((w / table.offsetWidth) * 100).toFixed(ACCURACY) + '%', __marked);
-                    if (first_j) {
-                        Table.setColumnWidthByDelta(table, first_j, 0, true, __marked);
-                    }
-                }
-                first.innerHTML = html.join('<br/>');
-                instance(jodit).addSelection(first);
-                alreadyMerged.delete(first);
-                Table.unmark(__marked);
-                Table.normalizeTable(table);
-                to_array_toArray(table.rows).forEach((tr, index) => {
-                    if (!tr.cells.length) {
-                        dom_Dom.safeRemove(tr);
-                    }
-                });
-            }
-        }
-    }
-    static splitHorizontal(table, jodit) {
-        let coord, td, tr, parent, after;
-        const __marked = [];
-        Table.getSelectedCellsByTable(table).forEach((cell) => {
-            td = jodit.createInside.element('td');
-            td.appendChild(jodit.createInside.element('br'));
-            tr = jodit.createInside.element('tr');
-            coord = Table.formalCoordinate(table, cell);
-            if (cell.rowSpan < 2) {
-                Table.formalMatrix(table, (tdElm, i, j) => {
-                    if (coord[0] === i &&
-                        coord[1] !== j &&
-                        tdElm !== cell) {
-                        Table.mark(tdElm, 'rowspan', tdElm.rowSpan + 1, __marked);
-                    }
-                });
-                dom_Dom.after(dom_Dom.closest(cell, 'tr', table), tr);
-                tr.appendChild(td);
-            }
-            else {
-                Table.mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
-                Table.formalMatrix(table, (tdElm, i, j) => {
-                    if (i > coord[0] &&
-                        i < coord[0] + cell.rowSpan &&
-                        coord[1] > j &&
-                        tdElm.parentNode
-                            .rowIndex === i) {
-                        after = tdElm;
-                    }
-                    if (coord[0] < i && tdElm === cell) {
-                        parent = table.rows[i];
-                    }
-                });
-                if (after) {
-                    dom_Dom.after(after, td);
-                }
-                else {
-                    parent.insertBefore(td, parent.firstChild);
-                }
-            }
-            if (cell.colSpan > 1) {
-                Table.mark(td, 'colspan', cell.colSpan, __marked);
-            }
-            Table.unmark(__marked);
-            instance(jodit).removeSelection(cell);
-        });
-        this.normalizeTable(table);
-    }
-    static splitVertical(table, jodit) {
-        let coord, td, percentage;
-        const __marked = [];
-        Table.getSelectedCellsByTable(table).forEach(cell => {
-            coord = Table.formalCoordinate(table, cell);
-            if (cell.colSpan < 2) {
-                Table.formalMatrix(table, (tdElm, i, j) => {
-                    if (coord[1] === j && coord[0] !== i && tdElm !== cell) {
-                        Table.mark(tdElm, 'colspan', tdElm.colSpan + 1, __marked);
-                    }
-                });
-            }
-            else {
-                Table.mark(cell, 'colspan', cell.colSpan - 1, __marked);
-            }
-            td = jodit.createInside.element('td');
-            td.appendChild(jodit.createInside.element('br'));
-            if (cell.rowSpan > 1) {
-                Table.mark(td, 'rowspan', cell.rowSpan, __marked);
-            }
-            const oldWidth = cell.offsetWidth;
-            dom_Dom.after(cell, td);
-            percentage = oldWidth / table.offsetWidth / 2;
-            Table.mark(cell, 'width', (percentage * 100).toFixed(ACCURACY) + '%', __marked);
-            Table.mark(td, 'width', (percentage * 100).toFixed(ACCURACY) + '%', __marked);
-            Table.unmark(__marked);
-            instance(jodit).removeSelection(cell);
-        });
-        Table.normalizeTable(table);
-    }
-    static setColumnWidthByDelta(table, column, delta, noUnmark, marked) {
-        const box = Table.formalMatrix(table);
-        let clearWidthIndex = 0;
-        for (let i = 0; i < box.length; i += 1) {
-            const cell = box[i][column];
-            if (cell.colSpan > 1 && box.length > 1) {
-                continue;
-            }
-            const w = cell.offsetWidth;
-            const percent = ((w + delta) / table.offsetWidth) * 100;
-            Table.mark(cell, 'width', percent.toFixed(ACCURACY) + '%', marked);
-            clearWidthIndex = i;
-            break;
-        }
-        for (let i = clearWidthIndex + 1; i < box.length; i += 1) {
-            const cell = box[i][column];
-            Table.mark(cell, 'width', null, marked);
-        }
-        if (!noUnmark) {
-            Table.unmark(marked);
-        }
-    }
-    static mark(cell, key, value, marked) {
-        var _a;
-        marked.push(cell);
-        const dict = (_a = markedValue.get(cell)) !== null && _a !== void 0 ? _a : {};
-        dict[key] = value === undefined ? 1 : value;
-        markedValue.set(cell, dict);
-    }
-    static unmark(marked) {
-        marked.forEach(cell => {
-            const dict = markedValue.get(cell);
-            if (dict) {
-                Object.keys(dict).forEach((key) => {
-                    const value = dict[key];
-                    switch (key) {
-                        case 'remove':
-                            dom_Dom.safeRemove(cell);
-                            break;
-                        case 'rowspan':
-                            utils_attr(cell, 'rowspan', isNumber(value) && value > 1 ? value : null);
-                            break;
-                        case 'colspan':
-                            utils_attr(cell, 'colspan', isNumber(value) && value > 1 ? value : null);
-                            break;
-                        case 'width':
-                            if (value == null) {
-                                cell.style.removeProperty('width');
-                                if (!utils_attr(cell, 'style')) {
-                                    utils_attr(cell, 'style', null);
-                                }
-                            }
-                            else {
-                                cell.style.width = value.toString();
-                            }
-                            break;
-                    }
-                    delete dict[key];
-                });
-                markedValue.delete(cell);
-            }
-        });
-    }
-}
-Table.selectedByTable = new WeakMap();
-__decorate([
-    debounce()
-], Table.prototype, "recalculateStyles", null);
-const instance = (j) => j.getInstance('Table', j.o);
-
-;// CONCATENATED MODULE: ./src/modules/toolbar/button/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-;// CONCATENATED MODULE: ./src/modules/uploader/helpers/process-old-browser-drag.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-function processOldBrowserDrag(self, cData, handlerSuccess, handlerError, onFinally) {
-    if (cData && (!cData.types.length || cData.types[0] !== TEXT_PLAIN)) {
-        const div = self.j.c.div('', {
-            tabindex: -1,
-            style: 'left: -9999px; top: 0; width: 0; height: 100%;line-height: 140%; ' +
-                'overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;',
-            contenteditable: true
-        });
-        getContainer(self.j, self.constructor).appendChild(div);
-        const selection = isJoditObject(self.j) ? self.j.s.save() : null, restore = () => selection && isJoditObject(self.j) && self.j.s.restore();
-        div.focus();
-        self.j.async.setTimeout(() => {
-            const child = div.firstChild;
-            Dom.safeRemove(div);
-            if (child && child.hasAttribute('src')) {
-                const src = attr(child, 'src') || '';
-                restore();
-                sendFiles(self, [dataURItoBlob(src)], handlerSuccess, handlerError).finally(onFinally);
-            }
-        }, self.j.defaultTimeout);
-    }
-}
-
-;// CONCATENATED MODULE: ./src/modules/uploader/helpers/build-data.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function build_data_buildData(uploader, data) {
-    if (isFunction(uploader.o.buildData)) {
-        return uploader.o.buildData.call(uploader, data);
-    }
-    const FD = uploader.j.ow.FormData;
-    if (FD !== undefined) {
-        if (data instanceof FD) {
-            return data;
-        }
-        if (isString(data)) {
-            return data;
-        }
-        const newData = new FD();
-        Object.keys(data).forEach(key => {
-            newData.append(key, data[key]);
-        });
-        return newData;
-    }
-    return data;
-}
-
-;// CONCATENATED MODULE: ./src/modules/uploader/helpers/send.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-const send_ajaxInstances = new WeakMap();
-function send_send(uploader, data) {
-    const requestData = buildData(uploader, data);
-    const sendData = (request) => {
-        const ajax = new Ajax(uploader.j, {
-            xhr: () => {
-                const xhr = new XMLHttpRequest();
-                if (uploader.j.ow.FormData !== undefined &&
-                    xhr.upload) {
-                    uploader.j.progressbar.show().progress(10);
-                    xhr.upload.addEventListener('progress', evt => {
-                        if (evt.lengthComputable) {
-                            let percentComplete = evt.loaded / evt.total;
-                            percentComplete *= 100;
-                            console.log('progress', percentComplete);
-                            uploader.j.progressbar
-                                .show()
-                                .progress(percentComplete);
-                            if (percentComplete >= 100) {
-                                uploader.j.progressbar.hide();
-                            }
-                        }
-                    }, false);
-                }
-                else {
-                    uploader.j.progressbar.hide();
-                }
-                return xhr;
-            },
-            method: uploader.o.method || 'POST',
-            data: request,
-            url: isFunction(uploader.o.url)
-                ? uploader.o.url(request)
-                : uploader.o.url,
-            headers: uploader.o.headers,
-            queryBuild: uploader.o.queryBuild,
-            contentType: uploader.o.contentType.call(uploader, request),
-            dataType: uploader.o.format || 'json',
-            withCredentials: uploader.o.withCredentials || false
-        });
-        let instances = send_ajaxInstances.get(uploader);
-        if (!instances) {
-            instances = new Set();
-            send_ajaxInstances.set(uploader, instances);
-        }
-        instances.add(ajax);
-        return ajax
-            .send()
-            .then(resp => resp.json())
-            .catch(error => {
-            uploader.o.error.call(uploader, error);
-        })
-            .finally(() => {
-            instances === null || instances === void 0 ? void 0 : instances.delete(ajax);
-        });
-    };
-    if (isPromise(requestData)) {
-        return requestData.then(sendData).catch(error => {
-            uploader.o.error.call(uploader, error);
-        });
-    }
-    return sendData(requestData);
-}
-
-;// CONCATENATED MODULE: ./src/modules/uploader/helpers/send-files.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function send_files_sendFiles(uploader, files, handlerSuccess, handlerError, process) {
-    if (!files) {
-        return Promise.reject(error('Need files'));
-    }
-    const { o } = uploader;
-    let fileList = toArray(files);
-    if (!fileList.length) {
-        return Promise.reject(error('Need files'));
-    }
-    const promises = [];
-    if (o.insertImageAsBase64URI) {
-        let file, i;
-        for (i = 0; i < fileList.length; i += 1) {
-            file = fileList[i];
-            if (file && file.type) {
-                const mime = file.type.match(/\/([a-z0-9]+)/i);
-                const extension = mime[1] ? mime[1].toLowerCase() : '';
-                if (o.imagesExtensions.includes(extension)) {
-                    const reader = new FileReader();
-                    promises.push(uploader.j.async.promise((resolve, reject) => {
-                        reader.onerror = reject;
-                        reader.onloadend = () => {
-                            const resp = {
-                                baseurl: '',
-                                files: [reader.result],
-                                isImages: [true]
-                            };
-                            const handler = isFunction(handlerSuccess)
-                                ? handlerSuccess
-                                : o.defaultHandlerSuccess;
-                            handler.call(uploader, resp);
-                            resolve(resp);
-                        };
-                        reader.readAsDataURL(file);
-                    }));
-                    fileList[i] = null;
-                }
-            }
-        }
-    }
-    fileList = fileList.filter(a => a);
-    if (fileList.length) {
-        const form = new FormData();
-        form.append(o.pathVariableName, uploader.path);
-        form.append('source', uploader.source);
-        let file;
-        for (let i = 0; i < fileList.length; i += 1) {
-            file = fileList[i];
-            if (file) {
-                const mime = file.type.match(/\/([a-z0-9]+)/i);
-                const extension = mime && mime[1] ? mime[1].toLowerCase() : '';
-                let newName = fileList[i].name ||
-                    Math.random().toString().replace('.', '');
-                if (extension) {
-                    let extForReg = extension;
-                    if (['jpeg', 'jpg'].includes(extForReg)) {
-                        extForReg = 'jpeg|jpg';
-                    }
-                    const reEnd = new RegExp('.(' + extForReg + ')$', 'i');
-                    if (!reEnd.test(newName)) {
-                        newName += '.' + extension;
-                    }
-                }
-                form.append(o.filesVariableName(i), fileList[i], newName);
-            }
-        }
-        if (process) {
-            process(form);
-        }
-        if (o.data && isPlainObject(o.data)) {
-            Object.keys(o.data).forEach((key) => {
-                form.append(key, o.data[key]);
-            });
-        }
-        o.prepareData.call(uploader, form);
-        promises.push(send(uploader, form)
-            .then(resp => {
-            if (o.isSuccess.call(uploader, resp)) {
-                const handler = isFunction(handlerSuccess)
-                    ? handlerSuccess
-                    : o.defaultHandlerSuccess;
-                handler.call(uploader, o.process.call(uploader, resp));
-                return resp;
-            }
-            const handler = isFunction(handlerError)
-                ? handlerError
-                : o.defaultHandlerError;
-            handler.call(uploader, error(o.getMessage.call(uploader, resp)));
-            return resp;
-        })
-            .then(() => {
-            uploader.j.events && uploader.j.e.fire('filesWereUploaded');
-        }));
-    }
-    return Promise.all(promises);
-}
-
-;// CONCATENATED MODULE: ./src/modules/uploader/helpers/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-function helpers_hasFiles(data) {
-    return Boolean(data && data.files && data.files.length > 0);
-}
-function helpers_hasItems(data) {
-    return Boolean(data && data.items && data.items.length > 0);
-}
-
-;// CONCATENATED MODULE: ./src/modules/uploader/config.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-config_Config.prototype.enableDragAndDropFileToEditor = true;
-config_Config.prototype.uploader = {
-    url: '',
-    insertImageAsBase64URI: false,
-    imagesExtensions: ['jpg', 'png', 'jpeg', 'gif'],
-    headers: null,
-    data: null,
-    filesVariableName(i) {
-        return `files[${i}]`;
-    },
-    withCredentials: false,
-    pathVariableName: 'path',
-    format: 'json',
-    method: 'POST',
-    prepareData(formData) {
-        return formData;
-    },
-    isSuccess(resp) {
-        return resp.success;
-    },
-    getMessage(resp) {
-        return resp.data.messages !== undefined && isArray(resp.data.messages)
-            ? resp.data.messages.join(' ')
-            : '';
-    },
-    process(resp) {
-        return resp.data;
-    },
-    error(e) {
-        this.j.e.fire('errorMessage', e.message, 'error', 4000);
-    },
-    defaultHandlerSuccess(resp) {
-        const j = this.j || this;
-        if (!is_jodit_object_isJoditObject(j)) {
-            return;
-        }
-        if (resp.files && resp.files.length) {
-            resp.files.forEach((filename, index) => {
-                const [tagName, attr] = resp.isImages && resp.isImages[index]
-                    ? ['img', 'src']
-                    : ['a', 'href'];
-                const elm = j.createInside.element(tagName);
-                elm.setAttribute(attr, resp.baseurl + filename);
-                if (tagName === 'a') {
-                    elm.textContent = resp.baseurl + filename;
-                }
-                if (tagName === 'img') {
-                    j.s.insertImage(elm, null, j.o.imageDefaultWidth);
-                }
-                else {
-                    j.s.insertNode(elm);
-                }
-            });
-        }
-    },
-    defaultHandlerError(e) {
-        this.j.e.fire('errorMessage', e.message);
-    },
-    contentType(requestData) {
-        return this.j.ow.FormData !== undefined &&
-            typeof requestData !== 'string'
-            ? false
-            : 'application/x-www-form-urlencoded; charset=UTF-8';
-    }
-};
-
-;// CONCATENATED MODULE: ./src/modules/uploader/uploader.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-class Uploader extends (/* unused pure expression or super */ null && (ViewComponent)) {
-    constructor(editor, options) {
-        super(editor);
-        this.path = '';
-        this.source = 'default';
-        this.options = ConfigProto(options || {}, ConfigProto(Config.defaultOptions.uploader, isJoditObject(editor) ? editor.o.uploader : {}));
-    }
-    className() {
-        return 'Uploader';
-    }
-    get o() {
-        return this.options;
-    }
-    setPath(path) {
-        this.path = path;
-        return this;
-    }
-    setSource(source) {
-        this.source = source;
-        return this;
-    }
-    bind(form, handlerSuccess, handlerError) {
-        const onFinally = () => {
-            form.classList.remove('jodit_drag_hover');
-        };
-        const self = this, onPaste = (e) => {
-            let i, file, extension;
-            const cData = e.clipboardData;
-            const process = (formdata) => {
-                if (file) {
-                    formdata.append('extension', extension);
-                    formdata.append('mimetype', file.type);
-                }
-            };
-            if (!IS_IE && hasFiles(cData)) {
-                sendFiles(self, cData.files, handlerSuccess, handlerError).finally(onFinally);
-                return false;
-            }
-            if (IS_IE && !true) {}
-            if (hasItems(cData)) {
-                const { items } = cData;
-                for (i = 0; i < items.length; i += 1) {
-                    if (items[i].kind === 'file' &&
-                        items[i].type === 'image/png') {
-                        file = items[i].getAsFile();
-                        if (file) {
-                            const mime = file.type.match(/\/([a-z0-9]+)/i);
-                            extension = mime[1]
-                                ? mime[1].toLowerCase()
-                                : '';
-                            sendFiles(self, [file], handlerSuccess, handlerError, process).finally(onFinally);
-                        }
-                        e.preventDefault();
-                        break;
-                    }
-                }
-            }
-        };
-        if (self.j && self.j.editor !== form) {
-            self.j.e.on(form, 'paste', onPaste);
-        }
-        else {
-            self.j.e.on('beforePaste', onPaste);
-        }
-        this.attachEvents(form, handlerSuccess, handlerError, onFinally);
-    }
-    attachEvents(form, handlerSuccess, handlerError, onFinally) {
-        const self = this;
-        self.j.e
-            .on(form, 'dragend dragover dragenter dragleave drop', (e) => {
-            e.preventDefault();
-        })
-            .on(form, 'dragover', (event) => {
-            if (hasFiles(event.dataTransfer) ||
-                hasItems(event.dataTransfer)) {
-                form.classList.add('jodit_drag_hover');
-                event.preventDefault();
-            }
-        })
-            .on(form, 'dragend dragleave', (event) => {
-            form.classList.remove('jodit_drag_hover');
-            if (hasFiles(event.dataTransfer)) {
-                event.preventDefault();
-            }
-        })
-            .on(form, 'drop', (event) => {
-            form.classList.remove('jodit_drag_hover');
-            if (hasFiles(event.dataTransfer)) {
-                event.preventDefault();
-                event.stopImmediatePropagation();
-                sendFiles(self, event.dataTransfer.files, handlerSuccess, handlerError).finally(onFinally);
-            }
-        });
-        const inputFile = form.querySelector('input[type=file]');
-        if (inputFile) {
-            self.j.e.on(inputFile, 'change', () => {
-                sendFiles(self, inputFile.files, handlerSuccess, handlerError)
-                    .then(() => {
-                    inputFile.value = '';
-                    if (!/safari/i.test(navigator.userAgent)) {
-                        inputFile.type = '';
-                        inputFile.type = 'file';
-                    }
-                })
-                    .finally(onFinally);
-            });
-        }
-    }
-    uploadRemoteImage(url, handlerSuccess, handlerError) {
-        const uploader = this, { o } = uploader;
-        const handlerE = isFunction(handlerError)
-            ? handlerError
-            : o.defaultHandlerError;
-        send(uploader, {
-            action: 'fileUploadRemote',
-            url
-        })
-            .then(resp => {
-            if (o.isSuccess.call(uploader, resp)) {
-                const handler = isFunction(handlerSuccess)
-                    ? handlerSuccess
-                    : o.defaultHandlerSuccess;
-                handler.call(uploader, o.process.call(uploader, resp));
-                return;
-            }
-            handlerE.call(uploader, error(o.getMessage.call(uploader, resp)));
-        })
-            .catch(e => handlerE.call(uploader, e));
-    }
-    destruct() {
-        this.setStatus(STATUSES.beforeDestruct);
-        const instances = ajaxInstances.get(this);
-        if (instances) {
-            instances.forEach(ajax => {
-                try {
-                    ajax.destruct();
-                }
-                catch (_a) { }
-            });
-            instances.clear();
-        }
-        super.destruct();
-    }
-}
-
-;// CONCATENATED MODULE: ./src/modules/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;// CONCATENATED MODULE: ./src/core/vdom/helpers/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function attrsToDict(elm) {
-    var _a, _b;
-    const result = {};
-    if (elm.nodeName === 'SCRIPT') {
-        result.textContent = (_a = elm.textContent) !== null && _a !== void 0 ? _a : '';
-    }
-    if (elm.nodeType === Node.TEXT_NODE) {
-        result.nodeValue = (_b = elm.nodeValue) !== null && _b !== void 0 ? _b : '';
-    }
-    if (dom_Dom.isElement(elm)) {
-        for (let i = 0; i < elm.attributes.length; i += 1) {
-            const attr = elm.attributes.item(i);
-            if (attr) {
-                result[attr.name] = attr.value;
-            }
-        }
-    }
-    return result;
-}
-function domToVDom(elm, noNode = true) {
-    var _a;
-    if (elm.nodeType === Node.TEXT_NODE) {
-        return {
-            type: 'TEXT_ELEMENT',
-            props: {
-                children: [],
-                nodeValue: (_a = elm.nodeValue) !== null && _a !== void 0 ? _a : ''
-            }
-        };
-    }
-    return {
-        type: elm.nodeName.toLowerCase(),
-        props: {
-            children: to_array_toArray(elm.childNodes).map(n => domToVDom(n, noNode)),
-            ...attrsToDict(elm)
-        }
-    };
-}
 
 ;// CONCATENATED MODULE: ./src/core/vdom/render/index.ts
 /*!
