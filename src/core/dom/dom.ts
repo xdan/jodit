@@ -155,7 +155,7 @@ export class Dom {
 	}
 
 	/**
-	 * Call function for all nodes between `start` and `end`
+	 * Call functions for all nodes between `start` and `end`
 	 */
 	static between(
 		start: Node,
