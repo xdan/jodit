@@ -11,8 +11,8 @@
 import type { IFiber, IVDom } from '../interface';
 import type { CanUndef, IDictionary } from 'jodit/types';
 import { domToVDom } from '../helpers';
-import { autobind } from 'jodit/core/decorators';
 import { Async } from 'jodit/core/async';
+import autobind from 'autobind-decorator';
 
 const isProperty = (key: string) => key !== 'children';
 

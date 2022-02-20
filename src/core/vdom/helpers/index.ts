@@ -10,8 +10,8 @@
 
 import type { HTMLTagNames, IDictionary } from 'jodit/types';
 import type { IVDom } from '../interface';
-import { toArray } from 'jodit/core/helpers';
-import { Dom } from 'jodit/modules';
+import { toArray } from 'jodit/core/helpers/array/to-array';
+import { Dom } from 'jodit/core/dom/dom';
 
 export function attrsToDict(elm: Node): IDictionary<string> {
 	const result: IDictionary<string> = {};
