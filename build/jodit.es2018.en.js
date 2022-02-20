@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.14.1
+ * Version: v3.14.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -23,333 +23,139 @@ return /******/ (function() { // webpackBootstrap
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "D": function() { return /* binding */ Config; }
+/* harmony export */   "$$": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.$$; },
+/* harmony export */   "ConfigFlatten": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.tp; },
+/* harmony export */   "ConfigProto": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.II; },
+/* harmony export */   "LimitedStack": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.lI; },
+/* harmony export */   "appendScript": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.uR; },
+/* harmony export */   "appendScriptAsync": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.JL; },
+/* harmony export */   "appendStyleAsync": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.Nf; },
+/* harmony export */   "assert": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.hu; },
+/* harmony export */   "attr": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.Lj; },
+/* harmony export */   "browser": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.Xh; },
+/* harmony export */   "buildQuery": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.XP; },
+/* harmony export */   "call": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.RE; },
+/* harmony export */   "callPromise": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.C6; },
+/* harmony export */   "clearCenterAlign": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.bI; },
+/* harmony export */   "cns": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.H5; },
+/* harmony export */   "completeUrl": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.WO; },
+/* harmony export */   "convertMediaUrlToVideoEmbed": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.UU; },
+/* harmony export */   "css": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.iv; },
+/* harmony export */   "cssPath": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.iN; },
+/* harmony export */   "ctrlKey": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.kT; },
+/* harmony export */   "dataBind": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.qI; },
+/* harmony export */   "defaultLanguage": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.X9; },
+/* harmony export */   "error": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.vU; },
+/* harmony export */   "fastClone": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.V8; },
+/* harmony export */   "get": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.U2; },
+/* harmony export */   "getClassName": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.gj; },
+/* harmony export */   "getXPathByElement": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.BR; },
+/* harmony export */   "humanSizeToBytes": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.wx; },
+/* harmony export */   "inView": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.jF; },
+/* harmony export */   "isAtom": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.J8; },
+/* harmony export */   "keepNames": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.kc; },
+/* harmony export */   "keys": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.am; },
+/* harmony export */   "loadImage": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.po; },
+/* harmony export */   "loadNext": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.wY; },
+/* harmony export */   "loadNextStyle": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.GX; },
+/* harmony export */   "markAsAtomic": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.XT; },
+/* harmony export */   "markDeprecated": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.Q8; },
+/* harmony export */   "markOwner": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.MN; },
+/* harmony export */   "memorizeExec": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.u3; },
+/* harmony export */   "parseQuery": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.mB; },
+/* harmony export */   "refs": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.xL; },
+/* harmony export */   "reset": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.mc; },
+/* harmony export */   "resolveElement": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.W2; },
+/* harmony export */   "scrollIntoViewIfNeeded": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.n5; },
+/* harmony export */   "set": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.t8; },
+/* harmony export */   "val": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.P0; },
+/* harmony export */   "asArray": function() { return /* reexport safe */ _array__WEBPACK_IMPORTED_MODULE_1__._2; },
+/* harmony export */   "splitArray": function() { return /* reexport safe */ _array__WEBPACK_IMPORTED_MODULE_1__.C1; },
+/* harmony export */   "toArray": function() { return /* reexport safe */ _array__WEBPACK_IMPORTED_MODULE_1__.qo; },
+/* harmony export */   "clearTimeout": function() { return /* reexport safe */ _async__WEBPACK_IMPORTED_MODULE_2__.g; },
+/* harmony export */   "setTimeout": function() { return /* reexport safe */ _async__WEBPACK_IMPORTED_MODULE_2__.i; },
+/* harmony export */   "hasBrowserColorPicker": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.EO; },
+/* harmony export */   "hasContainer": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.Zt; },
+/* harmony export */   "isArray": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.kJ; },
+/* harmony export */   "isBoolean": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.jn; },
+/* harmony export */   "isDestructable": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.Z$; },
+/* harmony export */   "isEqual": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.Xy; },
+/* harmony export */   "isFastEqual": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.LP; },
+/* harmony export */   "isFunction": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.mf; },
+/* harmony export */   "isHTML": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.FP; },
+/* harmony export */   "isHtmlFromWord": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.I4; },
+/* harmony export */   "isInitable": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.Gu; },
+/* harmony export */   "isInt": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.GN; },
+/* harmony export */   "isJoditObject": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.Zu; },
+/* harmony export */   "isLicense": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.A1; },
+/* harmony export */   "isNativeFunction": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.QC; },
+/* harmony export */   "isNumber": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.hj; },
+/* harmony export */   "isNumeric": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.kE; },
+/* harmony export */   "isPlainObject": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.PO; },
+/* harmony export */   "isPromise": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.tI; },
+/* harmony export */   "isString": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.HD; },
+/* harmony export */   "isURL": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.PX; },
+/* harmony export */   "isValidName": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.r1; },
+/* harmony export */   "isViewObject": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.f2; },
+/* harmony export */   "isVoid": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.nj; },
+/* harmony export */   "isWindow": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.FJ; },
+/* harmony export */   "colorToHex": function() { return /* reexport safe */ _color__WEBPACK_IMPORTED_MODULE_4__.h; },
+/* harmony export */   "applyStyles": function() { return /* reexport safe */ _html__WEBPACK_IMPORTED_MODULE_5__.Zs; },
+/* harmony export */   "cleanFromWord": function() { return /* reexport safe */ _html__WEBPACK_IMPORTED_MODULE_5__.pQ; },
+/* harmony export */   "htmlspecialchars": function() { return /* reexport safe */ _html__WEBPACK_IMPORTED_MODULE_5__.$_; },
+/* harmony export */   "nl2br": function() { return /* reexport safe */ _html__WEBPACK_IMPORTED_MODULE_5__.hU; },
+/* harmony export */   "safeHTML": function() { return /* reexport safe */ _html__WEBPACK_IMPORTED_MODULE_5__.eV; },
+/* harmony export */   "stripTags": function() { return /* reexport safe */ _html__WEBPACK_IMPORTED_MODULE_5__.oN; },
+/* harmony export */   "normalizeColor": function() { return /* reexport safe */ _normalize__WEBPACK_IMPORTED_MODULE_6__.ut; },
+/* harmony export */   "normalizeCssValue": function() { return /* reexport safe */ _normalize__WEBPACK_IMPORTED_MODULE_6__.Zh; },
+/* harmony export */   "normalizeKeyAliases": function() { return /* reexport safe */ _normalize__WEBPACK_IMPORTED_MODULE_6__.T2; },
+/* harmony export */   "normalizeLicense": function() { return /* reexport safe */ _normalize__WEBPACK_IMPORTED_MODULE_6__.Pd; },
+/* harmony export */   "normalizeNode": function() { return /* reexport safe */ _normalize__WEBPACK_IMPORTED_MODULE_6__.Tz; },
+/* harmony export */   "normalizePath": function() { return /* reexport safe */ _normalize__WEBPACK_IMPORTED_MODULE_6__.AH; },
+/* harmony export */   "normalizeRelativePath": function() { return /* reexport safe */ _normalize__WEBPACK_IMPORTED_MODULE_6__.Jf; },
+/* harmony export */   "normalizeSize": function() { return /* reexport safe */ _normalize__WEBPACK_IMPORTED_MODULE_6__.aC; },
+/* harmony export */   "normalizeUrl": function() { return /* reexport safe */ _normalize__WEBPACK_IMPORTED_MODULE_6__.D5; },
+/* harmony export */   "getContentWidth": function() { return /* reexport safe */ _size__WEBPACK_IMPORTED_MODULE_7__.FK; },
+/* harmony export */   "getScrollParent": function() { return /* reexport safe */ _size__WEBPACK_IMPORTED_MODULE_7__.rP; },
+/* harmony export */   "innerWidth": function() { return /* reexport safe */ _size__WEBPACK_IMPORTED_MODULE_7__.x9; },
+/* harmony export */   "offset": function() { return /* reexport safe */ _size__WEBPACK_IMPORTED_MODULE_7__.cv; },
+/* harmony export */   "position": function() { return /* reexport safe */ _size__WEBPACK_IMPORTED_MODULE_7__.eL; },
+/* harmony export */   "size": function() { return /* reexport safe */ _size__WEBPACK_IMPORTED_MODULE_7__.dp; },
+/* harmony export */   "CamelCaseToKebabCase": function() { return /* reexport safe */ _string__WEBPACK_IMPORTED_MODULE_8__.gP; },
+/* harmony export */   "camelCase": function() { return /* reexport safe */ _string__WEBPACK_IMPORTED_MODULE_8__.eV; },
+/* harmony export */   "i18n": function() { return /* reexport safe */ _string__WEBPACK_IMPORTED_MODULE_8__.ag; },
+/* harmony export */   "kebabCase": function() { return /* reexport safe */ _string__WEBPACK_IMPORTED_MODULE_8__.GL; },
+/* harmony export */   "sprintf": function() { return /* reexport safe */ _string__WEBPACK_IMPORTED_MODULE_8__.gB; },
+/* harmony export */   "stringify": function() { return /* reexport safe */ _string__WEBPACK_IMPORTED_MODULE_8__.Pz; },
+/* harmony export */   "trim": function() { return /* reexport safe */ _string__WEBPACK_IMPORTED_MODULE_8__.fy; },
+/* harmony export */   "trimInv": function() { return /* reexport safe */ _string__WEBPACK_IMPORTED_MODULE_8__.as; },
+/* harmony export */   "ucfirst": function() { return /* reexport safe */ _string__WEBPACK_IMPORTED_MODULE_8__.Ps; }
 /* harmony export */ });
-/* harmony import */ var _core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var _array__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(101);
+/* harmony import */ var _async__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(137);
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(27);
+/* harmony import */ var _color__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(160);
+/* harmony import */ var _html__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(139);
+/* harmony import */ var _normalize__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(79);
+/* harmony import */ var _size__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(143);
+/* harmony import */ var _string__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(70);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-class Config {
-    constructor() {
-        this.namespace = '';
-        this.safeMode = false;
-        this.safePluginsList = ['about', 'enter', 'backspace'];
-        this.iframe = false;
-        this.license = '';
-        this.preset = 'custom';
-        this.presets = {
-            inline: {
-                inline: true,
-                toolbar: false,
-                toolbarInline: true,
-                toolbarInlineForSelection: true,
-                showXPathInStatusbar: false,
-                showCharsCounter: false,
-                showWordsCounter: false,
-                showPlaceholder: false
-            }
-        };
-        this.ownerDocument = (typeof document !== 'undefined'
-            ? document
-            : null);
-        this.ownerWindow = (typeof window !== 'undefined'
-            ? window
-            : null);
-        this.shadowRoot = null;
-        this.styleValues = {};
-        this.zIndex = 0;
-        this.readonly = false;
-        this.disabled = false;
-        this.activeButtonsInReadOnly = [
-            'source',
-            'fullsize',
-            'print',
-            'about',
-            'dots',
-            'selectall'
-        ];
-        this.toolbarButtonSize = 'middle';
-        this.allowTabNavigation = false;
-        this.inline = false;
-        this.theme = 'default';
-        this.saveModeInStorage = false;
-        this.spellcheck = true;
-        this.editorCssClass = false;
-        this.style = false;
-        this.triggerChangeEvent = true;
-        this.direction = '';
-        this.language = 'auto';
-        this.debugLanguage = false;
-        this.i18n = false;
-        this.tabIndex = -1;
-        this.toolbar = true;
-        this.statusbar = true;
-        this.showTooltip = true;
-        this.showTooltipDelay = 1000;
-        this.useNativeTooltip = false;
-        this.enter = _core_constants__WEBPACK_IMPORTED_MODULE_0__.PARAGRAPH;
-        this.enterBlock = this.enter !== 'br' ? this.enter : _core_constants__WEBPACK_IMPORTED_MODULE_0__.PARAGRAPH;
-        this.defaultMode = _core_constants__WEBPACK_IMPORTED_MODULE_0__.MODE_WYSIWYG;
-        this.useSplitMode = false;
-        this.colors = {
-            greyscale: [
-                '#000000',
-                '#434343',
-                '#666666',
-                '#999999',
-                '#B7B7B7',
-                '#CCCCCC',
-                '#D9D9D9',
-                '#EFEFEF',
-                '#F3F3F3',
-                '#FFFFFF'
-            ],
-            palette: [
-                '#980000',
-                '#FF0000',
-                '#FF9900',
-                '#FFFF00',
-                '#00F0F0',
-                '#00FFFF',
-                '#4A86E8',
-                '#0000FF',
-                '#9900FF',
-                '#FF00FF'
-            ],
-            full: [
-                '#E6B8AF',
-                '#F4CCCC',
-                '#FCE5CD',
-                '#FFF2CC',
-                '#D9EAD3',
-                '#D0E0E3',
-                '#C9DAF8',
-                '#CFE2F3',
-                '#D9D2E9',
-                '#EAD1DC',
-                '#DD7E6B',
-                '#EA9999',
-                '#F9CB9C',
-                '#FFE599',
-                '#B6D7A8',
-                '#A2C4C9',
-                '#A4C2F4',
-                '#9FC5E8',
-                '#B4A7D6',
-                '#D5A6BD',
-                '#CC4125',
-                '#E06666',
-                '#F6B26B',
-                '#FFD966',
-                '#93C47D',
-                '#76A5AF',
-                '#6D9EEB',
-                '#6FA8DC',
-                '#8E7CC3',
-                '#C27BA0',
-                '#A61C00',
-                '#CC0000',
-                '#E69138',
-                '#F1C232',
-                '#6AA84F',
-                '#45818E',
-                '#3C78D8',
-                '#3D85C6',
-                '#674EA7',
-                '#A64D79',
-                '#85200C',
-                '#990000',
-                '#B45F06',
-                '#BF9000',
-                '#38761D',
-                '#134F5C',
-                '#1155CC',
-                '#0B5394',
-                '#351C75',
-                '#733554',
-                '#5B0F00',
-                '#660000',
-                '#783F04',
-                '#7F6000',
-                '#274E13',
-                '#0C343D',
-                '#1C4587',
-                '#073763',
-                '#20124D',
-                '#4C1130'
-            ]
-        };
-        this.colorPickerDefaultTab = 'background';
-        this.imageDefaultWidth = 300;
-        this.removeButtons = [];
-        this.disablePlugins = [];
-        this.extraPlugins = [];
-        this.extraButtons = [];
-        this.extraIcons = {};
-        this.createAttributes = {};
-        this.sizeLG = 900;
-        this.sizeMD = 700;
-        this.sizeSM = 400;
-        this.buttons = [
-            {
-                group: 'font-style',
-                buttons: []
-            },
-            {
-                group: 'list',
-                buttons: []
-            },
-            {
-                group: 'font',
-                buttons: []
-            },
-            '---',
-            {
-                group: 'script',
-                buttons: []
-            },
-            {
-                group: 'media',
-                buttons: []
-            },
-            '\n',
-            {
-                group: 'state',
-                buttons: []
-            },
-            {
-                group: 'clipboard',
-                buttons: []
-            },
-            {
-                group: 'insert',
-                buttons: []
-            },
-            {
-                group: 'indent',
-                buttons: []
-            },
-            {
-                group: 'color',
-                buttons: []
-            },
-            {
-                group: 'form',
-                buttons: []
-            },
-            '---',
-            {
-                group: 'history',
-                buttons: []
-            },
-            {
-                group: 'search',
-                buttons: []
-            },
-            {
-                group: 'source',
-                buttons: []
-            },
-            {
-                group: 'other',
-                buttons: []
-            },
-            {
-                group: 'info',
-                buttons: []
-            }
-        ];
-        this.buttonsMD = [
-            'bold',
-            'italic',
-            '|',
-            'ul',
-            'ol',
-            'eraser',
-            '|',
-            'font',
-            'fontsize',
-            '---',
-            'image',
-            'table',
-            '|',
-            'link',
-            '\n',
-            'brush',
-            'paragraph',
-            'align',
-            '|',
-            'hr',
-            'copyformat',
-            'fullsize',
-            '---',
-            'undo',
-            'redo',
-            '|',
-            'dots'
-        ];
-        this.buttonsSM = [
-            'bold',
-            'italic',
-            '|',
-            'ul',
-            'ol',
-            'eraser',
-            '|',
-            'fontsize',
-            'brush',
-            'paragraph',
-            '---',
-            'image',
-            'table',
-            '\n',
-            'link',
-            '|',
-            'align',
-            '|',
-            'undo',
-            'redo',
-            '|',
-            'copyformat',
-            'fullsize',
-            '---',
-            'dots'
-        ];
-        this.buttonsXS = [
-            'bold',
-            'brush',
-            'paragraph',
-            'eraser',
-            '|',
-            'fontsize',
-            '---',
-            'image',
-            '\n',
-            'align',
-            'undo',
-            'redo',
-            '|',
-            'link',
-            'table',
-            '---',
-            'dots'
-        ];
-        this.events = {};
-        this.textIcons = false;
-        this.showBrowserColorPicker = true;
-    }
-    static get defaultOptions() {
-        if (!Config.__defaultOptions) {
-            Config.__defaultOptions = new Config();
-        }
-        return Config.__defaultOptions;
-    }
-}
-Config.prototype.controls = {};
+
+
+
+
+
+
+
+
 
 
 /***/ }),
@@ -357,165 +163,107 @@ Config.prototype.controls = {};
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "INVISIBLE_SPACE": function() { return /* binding */ INVISIBLE_SPACE; },
-/* harmony export */   "NBSP_SPACE": function() { return /* binding */ NBSP_SPACE; },
-/* harmony export */   "INVISIBLE_SPACE_REG_EXP": function() { return /* binding */ INVISIBLE_SPACE_REG_EXP; },
-/* harmony export */   "INVISIBLE_SPACE_REG_EXP_END": function() { return /* binding */ INVISIBLE_SPACE_REG_EXP_END; },
-/* harmony export */   "INVISIBLE_SPACE_REG_EXP_START": function() { return /* binding */ INVISIBLE_SPACE_REG_EXP_START; },
-/* harmony export */   "SPACE_REG_EXP": function() { return /* binding */ SPACE_REG_EXP; },
-/* harmony export */   "SPACE_REG_EXP_START": function() { return /* binding */ SPACE_REG_EXP_START; },
-/* harmony export */   "SPACE_REG_EXP_END": function() { return /* binding */ SPACE_REG_EXP_END; },
-/* harmony export */   "IS_BLOCK": function() { return /* binding */ IS_BLOCK; },
-/* harmony export */   "IS_INLINE": function() { return /* binding */ IS_INLINE; },
-/* harmony export */   "INSEPARABLE_TAGS": function() { return /* binding */ INSEPARABLE_TAGS; },
-/* harmony export */   "MAY_BE_REMOVED_WITH_KEY": function() { return /* binding */ MAY_BE_REMOVED_WITH_KEY; },
-/* harmony export */   "KEY_BACKSPACE": function() { return /* binding */ KEY_BACKSPACE; },
-/* harmony export */   "KEY_TAB": function() { return /* binding */ KEY_TAB; },
-/* harmony export */   "KEY_ENTER": function() { return /* binding */ KEY_ENTER; },
-/* harmony export */   "KEY_ESC": function() { return /* binding */ KEY_ESC; },
-/* harmony export */   "KEY_LEFT": function() { return /* binding */ KEY_LEFT; },
-/* harmony export */   "KEY_UP": function() { return /* binding */ KEY_UP; },
-/* harmony export */   "KEY_RIGHT": function() { return /* binding */ KEY_RIGHT; },
-/* harmony export */   "KEY_DOWN": function() { return /* binding */ KEY_DOWN; },
-/* harmony export */   "KEY_SPACE": function() { return /* binding */ KEY_SPACE; },
-/* harmony export */   "KEY_DELETE": function() { return /* binding */ KEY_DELETE; },
-/* harmony export */   "KEY_F3": function() { return /* binding */ KEY_F3; },
-/* harmony export */   "NEARBY": function() { return /* binding */ NEARBY; },
-/* harmony export */   "ACCURACY": function() { return /* binding */ ACCURACY; },
-/* harmony export */   "COMMAND_KEYS": function() { return /* binding */ COMMAND_KEYS; },
-/* harmony export */   "BR": function() { return /* binding */ BR; },
-/* harmony export */   "PARAGRAPH": function() { return /* binding */ PARAGRAPH; },
-/* harmony export */   "MODE_WYSIWYG": function() { return /* binding */ MODE_WYSIWYG; },
-/* harmony export */   "MODE_SOURCE": function() { return /* binding */ MODE_SOURCE; },
-/* harmony export */   "MODE_SPLIT": function() { return /* binding */ MODE_SPLIT; },
-/* harmony export */   "IS_IE": function() { return /* binding */ IS_IE; },
-/* harmony export */   "TEXT_PLAIN": function() { return /* binding */ TEXT_PLAIN; },
-/* harmony export */   "TEXT_HTML": function() { return /* binding */ TEXT_HTML; },
-/* harmony export */   "MARKER_CLASS": function() { return /* binding */ MARKER_CLASS; },
-/* harmony export */   "EMULATE_DBLCLICK_TIMEOUT": function() { return /* binding */ EMULATE_DBLCLICK_TIMEOUT; },
-/* harmony export */   "INSERT_AS_HTML": function() { return /* binding */ INSERT_AS_HTML; },
-/* harmony export */   "INSERT_CLEAR_HTML": function() { return /* binding */ INSERT_CLEAR_HTML; },
-/* harmony export */   "INSERT_AS_TEXT": function() { return /* binding */ INSERT_AS_TEXT; },
-/* harmony export */   "INSERT_ONLY_TEXT": function() { return /* binding */ INSERT_ONLY_TEXT; },
-/* harmony export */   "SAFE_COUNT_CHANGE_CALL": function() { return /* binding */ SAFE_COUNT_CHANGE_CALL; },
-/* harmony export */   "IS_MAC": function() { return /* binding */ IS_MAC; },
-/* harmony export */   "KEY_ALIASES": function() { return /* binding */ KEY_ALIASES; },
-/* harmony export */   "BASE_PATH": function() { return /* binding */ BASE_PATH; },
-/* harmony export */   "TEMP_ATTR": function() { return /* binding */ TEMP_ATTR; }
+/* harmony export */   "hu": function() { return /* reexport safe */ _assert__WEBPACK_IMPORTED_MODULE_0__.h; },
+/* harmony export */   "H5": function() { return /* reexport safe */ _mark_deprecated__WEBPACK_IMPORTED_MODULE_1__.H; },
+/* harmony export */   "Q8": function() { return /* reexport safe */ _mark_deprecated__WEBPACK_IMPORTED_MODULE_1__.Q; },
+/* harmony export */   "Lj": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_2__.Lj; },
+/* harmony export */   "RE": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_2__.RE; },
+/* harmony export */   "C6": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_2__.C6; },
+/* harmony export */   "am": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_2__.XP; },
+/* harmony export */   "po": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_2__.po; },
+/* harmony export */   "MN": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_2__.MN; },
+/* harmony export */   "u3": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_2__.u3; },
+/* harmony export */   "mc": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_2__.mc; },
+/* harmony export */   "U2": function() { return /* reexport safe */ _get__WEBPACK_IMPORTED_MODULE_3__.U; },
+/* harmony export */   "t8": function() { return /* reexport safe */ _set__WEBPACK_IMPORTED_MODULE_4__.t; },
+/* harmony export */   "gj": function() { return /* reexport safe */ _get_class_name__WEBPACK_IMPORTED_MODULE_5__.g; },
+/* harmony export */   "kc": function() { return /* reexport safe */ _get_class_name__WEBPACK_IMPORTED_MODULE_5__.k; },
+/* harmony export */   "lI": function() { return /* reexport safe */ _stack__WEBPACK_IMPORTED_MODULE_6__.l; },
+/* harmony export */   "uR": function() { return /* reexport safe */ _append_script__WEBPACK_IMPORTED_MODULE_7__.uR; },
+/* harmony export */   "JL": function() { return /* reexport safe */ _append_script__WEBPACK_IMPORTED_MODULE_7__.JL; },
+/* harmony export */   "Nf": function() { return /* reexport safe */ _append_script__WEBPACK_IMPORTED_MODULE_7__.Nf; },
+/* harmony export */   "wY": function() { return /* reexport safe */ _append_script__WEBPACK_IMPORTED_MODULE_7__.wY; },
+/* harmony export */   "GX": function() { return /* reexport safe */ _append_script__WEBPACK_IMPORTED_MODULE_7__.GX; },
+/* harmony export */   "Xh": function() { return /* reexport safe */ _browser__WEBPACK_IMPORTED_MODULE_8__.X; },
+/* harmony export */   "XP": function() { return /* reexport safe */ _build_query__WEBPACK_IMPORTED_MODULE_9__.X; },
+/* harmony export */   "WO": function() { return /* reexport safe */ _complete_url__WEBPACK_IMPORTED_MODULE_10__.W; },
+/* harmony export */   "tp": function() { return /* reexport safe */ _config_proto__WEBPACK_IMPORTED_MODULE_11__.t; },
+/* harmony export */   "II": function() { return /* reexport safe */ _config_proto__WEBPACK_IMPORTED_MODULE_11__.I; },
+/* harmony export */   "UU": function() { return /* reexport safe */ _convert_media_url_to_video_embed__WEBPACK_IMPORTED_MODULE_12__.U; },
+/* harmony export */   "bI": function() { return /* reexport safe */ _css__WEBPACK_IMPORTED_MODULE_13__.b; },
+/* harmony export */   "iv": function() { return /* reexport safe */ _css__WEBPACK_IMPORTED_MODULE_13__.i; },
+/* harmony export */   "kT": function() { return /* reexport safe */ _ctrl_key__WEBPACK_IMPORTED_MODULE_14__.k; },
+/* harmony export */   "qI": function() { return /* reexport safe */ _data_bind__WEBPACK_IMPORTED_MODULE_15__.q; },
+/* harmony export */   "X9": function() { return /* reexport safe */ _default_language__WEBPACK_IMPORTED_MODULE_16__.X; },
+/* harmony export */   "V8": function() { return /* reexport safe */ _extend__WEBPACK_IMPORTED_MODULE_17__.V8; },
+/* harmony export */   "J8": function() { return /* reexport safe */ _extend__WEBPACK_IMPORTED_MODULE_17__.J8; },
+/* harmony export */   "XT": function() { return /* reexport safe */ _extend__WEBPACK_IMPORTED_MODULE_17__.XT; },
+/* harmony export */   "wx": function() { return /* reexport safe */ _human_size_to_bytes__WEBPACK_IMPORTED_MODULE_18__.w; },
+/* harmony export */   "mB": function() { return /* reexport safe */ _parse_query__WEBPACK_IMPORTED_MODULE_19__.m; },
+/* harmony export */   "jF": function() { return /* reexport safe */ _scroll_into_view__WEBPACK_IMPORTED_MODULE_20__.j; },
+/* harmony export */   "n5": function() { return /* reexport safe */ _scroll_into_view__WEBPACK_IMPORTED_MODULE_20__.n; },
+/* harmony export */   "$$": function() { return /* reexport safe */ _selector__WEBPACK_IMPORTED_MODULE_21__.$$; },
+/* harmony export */   "iN": function() { return /* reexport safe */ _selector__WEBPACK_IMPORTED_MODULE_21__.iN; },
+/* harmony export */   "BR": function() { return /* reexport safe */ _selector__WEBPACK_IMPORTED_MODULE_21__.BR; },
+/* harmony export */   "xL": function() { return /* reexport safe */ _selector__WEBPACK_IMPORTED_MODULE_21__.xL; },
+/* harmony export */   "W2": function() { return /* reexport safe */ _selector__WEBPACK_IMPORTED_MODULE_21__.W2; },
+/* harmony export */   "vU": function() { return /* reexport safe */ _error__WEBPACK_IMPORTED_MODULE_22__.v; },
+/* harmony export */   "P0": function() { return /* reexport safe */ _val__WEBPACK_IMPORTED_MODULE_23__.P; }
 /* harmony export */ });
+/* harmony import */ var _assert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+/* harmony import */ var _mark_deprecated__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
+/* harmony import */ var _get__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(88);
+/* harmony import */ var _set__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(89);
+/* harmony import */ var _get_class_name__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(69);
+/* harmony import */ var _stack__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(156);
+/* harmony import */ var _append_script__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(90);
+/* harmony import */ var _browser__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(157);
+/* harmony import */ var _build_query__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(92);
+/* harmony import */ var _complete_url__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(91);
+/* harmony import */ var _config_proto__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(93);
+/* harmony import */ var _convert_media_url_to_video_embed__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(95);
+/* harmony import */ var _css__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(78);
+/* harmony import */ var _ctrl_key__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(96);
+/* harmony import */ var _data_bind__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(6);
+/* harmony import */ var _default_language__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(97);
+/* harmony import */ var _extend__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(94);
+/* harmony import */ var _human_size_to_bytes__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(98);
+/* harmony import */ var _parse_query__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(99);
+/* harmony import */ var _scroll_into_view__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(158);
+/* harmony import */ var _selector__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(100);
+/* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(44);
+/* harmony import */ var _val__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(159);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-const INVISIBLE_SPACE = '\uFEFF';
-const NBSP_SPACE = '\u00A0';
-const INVISIBLE_SPACE_REG_EXP = () => /[\uFEFF]/g;
-const INVISIBLE_SPACE_REG_EXP_END = () => /[\uFEFF]+$/g;
-const INVISIBLE_SPACE_REG_EXP_START = () => /^[\uFEFF]+/g;
-const SPACE_REG_EXP = () => /[\s\n\t\r\uFEFF\u200b]+/g;
-const SPACE_REG_EXP_START = () => /^[\s\n\t\r\uFEFF\u200b]+/g;
-const SPACE_REG_EXP_END = () => /[\s\n\t\r\uFEFF\u200b]+$/g;
-const IS_BLOCK = /^(ARTICLE|SCRIPT|STYLE|OBJECT|FOOTER|HEADER|NAV|SECTION|IFRAME|JODIT|JODIT-MEDIA|PRE|DIV|P|LI|UL|OL|H[1-6]|BLOCKQUOTE|TR|TD|TH|TBODY|THEAD|TABLE|BODY|HTML|FIGCAPTION|FIGURE|DT|DD|DL|DFN|FORM)$/i;
-const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB|A|U)$/i;
-const INSEPARABLE_TAGS = [
-    'img',
-    'br',
-    'video',
-    'iframe',
-    'script',
-    'input',
-    'textarea',
-    'hr',
-    'link',
-    'jodit',
-    'jodit-media'
-];
-const MAY_BE_REMOVED_WITH_KEY = RegExp(`^${INSEPARABLE_TAGS.join('|')}$`, 'i');
-const KEY_BACKSPACE = 'Backspace';
-const KEY_TAB = 'Tab';
-const KEY_ENTER = 'Enter';
-const KEY_ESC = 'Escape';
-const KEY_LEFT = 'ArrowLeft';
-const KEY_UP = 'ArrowUp';
-const KEY_RIGHT = 'ArrowRight';
-const KEY_DOWN = 'ArrowDown';
-const KEY_SPACE = 'Space';
-const KEY_DELETE = 'Delete';
-const KEY_F3 = 'F3';
-const NEARBY = 5;
-const ACCURACY = 10;
-const COMMAND_KEYS = [
-    KEY_BACKSPACE,
-    KEY_DELETE,
-    KEY_UP,
-    KEY_DOWN,
-    KEY_RIGHT,
-    KEY_LEFT,
-    KEY_ENTER,
-    KEY_ESC,
-    KEY_F3,
-    KEY_TAB
-];
-const BR = 'br';
-const PARAGRAPH = 'p';
-const MODE_WYSIWYG = 1;
-const MODE_SOURCE = 2;
-const MODE_SPLIT = 3;
-const IS_IE = typeof navigator !== 'undefined' &&
-    (navigator.userAgent.indexOf('MSIE') !== -1 ||
-        /rv:11.0/i.test(navigator.userAgent));
-const TEXT_PLAIN = IS_IE ? 'text' : 'text/plain';
-const TEXT_HTML = IS_IE ? 'html' : 'text/html';
-const MARKER_CLASS = 'jodit-selection_marker';
-const EMULATE_DBLCLICK_TIMEOUT = 300;
-const INSERT_AS_HTML = 'insert_as_html';
-const INSERT_CLEAR_HTML = 'insert_clear_html';
-const INSERT_AS_TEXT = 'insert_as_text';
-const INSERT_ONLY_TEXT = 'insert_only_text';
-const SAFE_COUNT_CHANGE_CALL = 10;
-const IS_MAC = typeof window !== 'undefined' &&
-    /Mac|iPod|iPhone|iPad/.test(window.navigator.platform);
-const KEY_ALIASES = {
-    add: '+',
-    break: 'pause',
-    cmd: 'meta',
-    command: 'meta',
-    ctl: 'control',
-    ctrl: 'control',
-    del: 'delete',
-    down: 'arrowdown',
-    esc: 'escape',
-    ins: 'insert',
-    left: 'arrowleft',
-    mod: IS_MAC ? 'meta' : 'control',
-    opt: 'alt',
-    option: 'alt',
-    return: 'enter',
-    right: 'arrowright',
-    space: ' ',
-    spacebar: ' ',
-    up: 'arrowup',
-    win: 'meta',
-    windows: 'meta'
-};
-const BASE_PATH = (() => {
-    if (typeof document === 'undefined') {
-        return '';
-    }
-    const script = document.currentScript, removeScriptName = (s) => s.replace(/\/[^/]+.js$/, '/');
-    if (script) {
-        return removeScriptName(script.src);
-    }
-    const scripts = document.querySelectorAll('script[src]');
-    if (scripts && scripts.length) {
-        return removeScriptName(scripts[scripts.length - 1].src);
-    }
-    return window.location.href;
-})();
-const TEMP_ATTR = 'data-jodit-temp';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /***/ }),
@@ -523,1299 +271,9 @@ const TEMP_ATTR = 'data-jodit-temp';
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "vp": function() { return /* reexport */ EventEmitter; },
-  "DG": function() { return /* reexport */ EventHandlersStore; },
-  "rO": function() { return /* reexport */ defaultNameSpace; },
-  "LO": function() { return /* reexport */ observable; }
-});
-
-;// CONCATENATED MODULE: ./src/core/event-emitter/store.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const defaultNameSpace = 'JoditEventDefaultNamespace';
-class EventHandlersStore {
-    constructor() {
-        this.__store = {};
-    }
-    get(event, namespace) {
-        if (this.__store[namespace] !== undefined) {
-            return this.__store[namespace][event];
-        }
-    }
-    indexOf(event, namespace, originalCallback) {
-        const blocks = this.get(event, namespace);
-        if (blocks) {
-            for (let i = 0; i < blocks.length; i += 1) {
-                if (blocks[i].originalCallback === originalCallback) {
-                    return i;
-                }
-            }
-        }
-        return false;
-    }
-    namespaces(withoutDefault = false) {
-        const nss = Object.keys(this.__store);
-        return withoutDefault ? nss.filter(ns => ns !== defaultNameSpace) : nss;
-    }
-    events(namespace) {
-        return this.__store[namespace]
-            ? Object.keys(this.__store[namespace])
-            : [];
-    }
-    set(event, namespace, data, onTop = false) {
-        if (this.__store[namespace] === undefined) {
-            this.__store[namespace] = {};
-        }
-        if (this.__store[namespace][event] === undefined) {
-            this.__store[namespace][event] = [];
-        }
-        if (!onTop) {
-            this.__store[namespace][event].push(data);
-        }
-        else {
-            this.__store[namespace][event].unshift(data);
-        }
-    }
-    clear() {
-        this.__store = {};
-    }
-}
-
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
-var is_string = __webpack_require__(5);
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-function.ts
-var is_function = __webpack_require__(6);
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-array.ts
-var is_array = __webpack_require__(7);
-// EXTERNAL MODULE: ./src/core/helpers/utils/error.ts
-var error = __webpack_require__(4);
-;// CONCATENATED MODULE: ./src/core/event-emitter/event-emitter.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-class EventEmitter {
-    constructor(doc) {
-        this.mutedEvents = new Set();
-        this.__key = '__JoditEventEmitterNamespaces';
-        this.doc = document;
-        this.prepareEvent = (event) => {
-            if (event.cancelBubble) {
-                return;
-            }
-            if (event.type.match(/^touch/) &&
-                event.changedTouches &&
-                event.changedTouches.length) {
-                ['clientX', 'clientY', 'pageX', 'pageY'].forEach((key) => {
-                    Object.defineProperty(event, key, {
-                        value: event.changedTouches[0][key],
-                        configurable: true,
-                        enumerable: true
-                    });
-                });
-            }
-            if (!event.originalEvent) {
-                event.originalEvent = event;
-            }
-            if (event.type === 'paste' &&
-                event.clipboardData === undefined &&
-                this.doc.defaultView.clipboardData) {
-                Object.defineProperty(event, 'clipboardData', {
-                    get: () => {
-                        return this.doc.defaultView.clipboardData;
-                    },
-                    configurable: true,
-                    enumerable: true
-                });
-            }
-        };
-        this.currents = [];
-        this.__stopped = [];
-        this.isDestructed = false;
-        if (doc) {
-            this.doc = doc;
-        }
-        this.__key += new Date().getTime();
-    }
-    mute(event) {
-        this.mutedEvents.add(event !== null && event !== void 0 ? event : '*');
-        return this;
-    }
-    isMuted(event) {
-        if (event && this.mutedEvents.has(event)) {
-            return true;
-        }
-        return this.mutedEvents.has('*');
-    }
-    unmute(event) {
-        this.mutedEvents.delete(event !== null && event !== void 0 ? event : '*');
-        return this;
-    }
-    eachEvent(events, callback) {
-        const eventParts = events.split(/[\s,]+/);
-        eventParts.forEach((eventNameSpace) => {
-            const eventAndNameSpace = eventNameSpace.split('.');
-            const namespace = eventAndNameSpace[1] || defaultNameSpace;
-            callback.call(this, eventAndNameSpace[0], namespace);
-        });
-    }
-    getStore(subject) {
-        if (!subject) {
-            throw (0,error/* error */.v)('Need subject');
-        }
-        if (subject[this.__key] === undefined) {
-            const store = new EventHandlersStore();
-            Object.defineProperty(subject, this.__key, {
-                enumerable: false,
-                configurable: true,
-                value: store
-            });
-        }
-        return subject[this.__key];
-    }
-    clearStore(subject) {
-        if (subject[this.__key] !== undefined) {
-            delete subject[this.__key];
-        }
-    }
-    triggerNativeEvent(element, event) {
-        const evt = this.doc.createEvent('HTMLEvents');
-        if (typeof event === 'string') {
-            evt.initEvent(event, true, true);
-        }
-        else {
-            evt.initEvent(event.type, event.bubbles, event.cancelable);
-            [
-                'screenX',
-                'screenY',
-                'clientX',
-                'clientY',
-                'target',
-                'srcElement',
-                'currentTarget',
-                'timeStamp',
-                'which',
-                'keyCode'
-            ].forEach(property => {
-                Object.defineProperty(evt, property, {
-                    value: event[property],
-                    enumerable: true
-                });
-            });
-            Object.defineProperty(evt, 'originalEvent', {
-                value: event,
-                enumerable: true
-            });
-        }
-        element.dispatchEvent(evt);
-    }
-    get current() {
-        return this.currents[this.currents.length - 1];
-    }
-    on(subjectOrEvents, eventsOrCallback, handlerOrSelector, onTop = false) {
-        const subject = (0,is_string/* isString */.H)(subjectOrEvents) ? this : subjectOrEvents;
-        const events = (0,is_string/* isString */.H)(eventsOrCallback)
-            ? eventsOrCallback
-            : subjectOrEvents;
-        let callback = handlerOrSelector;
-        if (callback === undefined && (0,is_function/* isFunction */.m)(eventsOrCallback)) {
-            callback = eventsOrCallback;
-        }
-        const store = this.getStore(subject);
-        if (!(0,is_string/* isString */.H)(events) || events === '') {
-            throw (0,error/* error */.v)('Need events names');
-        }
-        if (!(0,is_function/* isFunction */.m)(callback)) {
-            throw (0,error/* error */.v)('Need event handler');
-        }
-        if ((0,is_array/* isArray */.k)(subject)) {
-            subject.forEach((subj) => {
-                this.on(subj, events, callback, onTop);
-            });
-            return this;
-        }
-        const isDOMElement = (0,is_function/* isFunction */.m)(subject.addEventListener), self = this;
-        let syntheticCallback = function (event, ...args) {
-            if (self.isMuted(event)) {
-                return;
-            }
-            return callback && callback.call(this, ...args);
-        };
-        if (isDOMElement) {
-            syntheticCallback = function (event) {
-                if (self.isMuted(event.type)) {
-                    return;
-                }
-                self.prepareEvent(event);
-                if (callback && callback.call(this, event) === false) {
-                    event.preventDefault();
-                    event.stopImmediatePropagation();
-                    return false;
-                }
-                return;
-            };
-        }
-        this.eachEvent(events, (event, namespace) => {
-            if (event === '') {
-                throw (0,error/* error */.v)('Need event name');
-            }
-            if (store.indexOf(event, namespace, callback) === false) {
-                const block = {
-                    event,
-                    originalCallback: callback,
-                    syntheticCallback
-                };
-                store.set(event, namespace, block, onTop);
-                if (isDOMElement) {
-                    const options = [
-                        'touchstart',
-                        'touchend',
-                        'scroll',
-                        'mousewheel',
-                        'mousemove',
-                        'touchmove'
-                    ].includes(event)
-                        ? {
-                            passive: true
-                        }
-                        : false;
-                    subject.addEventListener(event, syntheticCallback, options);
-                }
-            }
-        });
-        return this;
-    }
-    one(subjectOrEvents, eventsOrCallback, handlerOrSelector, onTop = false) {
-        const subject = (0,is_string/* isString */.H)(subjectOrEvents) ? this : subjectOrEvents;
-        const events = (0,is_string/* isString */.H)(eventsOrCallback)
-            ? eventsOrCallback
-            : subjectOrEvents;
-        let callback = handlerOrSelector;
-        if (callback === undefined && (0,is_function/* isFunction */.m)(eventsOrCallback)) {
-            callback = eventsOrCallback;
-        }
-        const newCallback = (...args) => {
-            this.off(subject, events, newCallback);
-            return callback(...args);
-        };
-        this.on(subject, events, newCallback, onTop);
-        return this;
-    }
-    off(subjectOrEvents, eventsOrCallback, handler) {
-        const subject = (0,is_string/* isString */.H)(subjectOrEvents)
-            ? this
-            : subjectOrEvents;
-        const events = (0,is_string/* isString */.H)(eventsOrCallback)
-            ? eventsOrCallback
-            : subjectOrEvents;
-        const store = this.getStore(subject);
-        let callback = handler;
-        if (!(0,is_string/* isString */.H)(events) || !events) {
-            store.namespaces().forEach((namespace) => {
-                this.off(subject, '.' + namespace);
-            });
-            this.clearStore(subject);
-            return this;
-        }
-        if (callback === undefined && (0,is_function/* isFunction */.m)(eventsOrCallback)) {
-            callback = eventsOrCallback;
-        }
-        const isDOMElement = (0,is_function/* isFunction */.m)(subject.removeEventListener), removeEventListener = (block) => {
-            if (isDOMElement) {
-                subject.removeEventListener(block.event, block.syntheticCallback, false);
-            }
-        }, removeCallbackFromNameSpace = (event, namespace) => {
-            if (event !== '') {
-                const blocks = store.get(event, namespace);
-                if (blocks && blocks.length) {
-                    if (!(0,is_function/* isFunction */.m)(callback)) {
-                        blocks.forEach(removeEventListener);
-                        blocks.length = 0;
-                    }
-                    else {
-                        const index = store.indexOf(event, namespace, callback);
-                        if (index !== false) {
-                            removeEventListener(blocks[index]);
-                            blocks.splice(index, 1);
-                        }
-                    }
-                }
-            }
-            else {
-                store.events(namespace).forEach((eventName) => {
-                    if (eventName !== '') {
-                        removeCallbackFromNameSpace(eventName, namespace);
-                    }
-                });
-            }
-        };
-        this.eachEvent(events, (event, namespace) => {
-            if (namespace === defaultNameSpace) {
-                store.namespaces().forEach((name) => {
-                    removeCallbackFromNameSpace(event, name);
-                });
-            }
-            else {
-                removeCallbackFromNameSpace(event, namespace);
-            }
-        });
-        return this;
-    }
-    stopPropagation(subjectOrEvents, eventsList) {
-        const subject = (0,is_string/* isString */.H)(subjectOrEvents)
-            ? this
-            : subjectOrEvents;
-        const events = (0,is_string/* isString */.H)(subjectOrEvents)
-            ? subjectOrEvents
-            : eventsList;
-        if (typeof events !== 'string') {
-            throw (0,error/* error */.v)('Need event names');
-        }
-        const store = this.getStore(subject);
-        this.eachEvent(events, (event, namespace) => {
-            const blocks = store.get(event, namespace);
-            if (blocks) {
-                this.__stopped.push(blocks);
-            }
-            if (namespace === defaultNameSpace) {
-                store
-                    .namespaces(true)
-                    .forEach(ns => this.stopPropagation(subject, event + '.' + ns));
-            }
-        });
-    }
-    removeStop(currentBlocks) {
-        if (currentBlocks) {
-            const index = this.__stopped.indexOf(currentBlocks);
-            index !== -1 && this.__stopped.splice(0, index + 1);
-        }
-    }
-    isStopped(currentBlocks) {
-        return (currentBlocks !== undefined &&
-            this.__stopped.indexOf(currentBlocks) !== -1);
-    }
-    fire(subjectOrEvents, eventsList, ...args) {
-        let result, result_value;
-        const subject = (0,is_string/* isString */.H)(subjectOrEvents)
-            ? this
-            : subjectOrEvents;
-        const events = (0,is_string/* isString */.H)(subjectOrEvents)
-            ? subjectOrEvents
-            : eventsList;
-        const argumentsList = (0,is_string/* isString */.H)(subjectOrEvents)
-            ? [eventsList, ...args]
-            : args;
-        const isDOMElement = (0,is_function/* isFunction */.m)(subject.dispatchEvent);
-        if (!isDOMElement && !(0,is_string/* isString */.H)(events)) {
-            throw (0,error/* error */.v)('Need events names');
-        }
-        const store = this.getStore(subject);
-        if (!(0,is_string/* isString */.H)(events) && isDOMElement) {
-            this.triggerNativeEvent(subject, eventsList);
-        }
-        else {
-            this.eachEvent(events, (event, namespace) => {
-                if (isDOMElement) {
-                    this.triggerNativeEvent(subject, event);
-                }
-                else {
-                    const blocks = store.get(event, namespace);
-                    if (blocks) {
-                        try {
-                            [...blocks].every((block) => {
-                                if (this.isStopped(blocks)) {
-                                    return false;
-                                }
-                                this.currents.push(event);
-                                result_value = block.syntheticCallback.call(subject, event, ...argumentsList);
-                                this.currents.pop();
-                                if (result_value !== undefined) {
-                                    result = result_value;
-                                }
-                                return true;
-                            });
-                        }
-                        finally {
-                            this.removeStop(blocks);
-                        }
-                    }
-                    if (namespace === defaultNameSpace && !isDOMElement) {
-                        store
-                            .namespaces()
-                            .filter(ns => ns !== namespace)
-                            .forEach((ns) => {
-                            const result_second = this.fire.apply(this, [
-                                subject,
-                                event + '.' + ns,
-                                ...argumentsList
-                            ]);
-                            if (result_second !== undefined) {
-                                result = result_second;
-                            }
-                        });
-                    }
-                }
-            });
-        }
-        return result;
-    }
-    destruct() {
-        if (!this.isDestructed) {
-            return;
-        }
-        this.isDestructed = true;
-        this.off(this);
-        this.getStore(this).clear();
-        delete this[this.__key];
-    }
-}
-
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
-var helpers = __webpack_require__(8);
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(17);
-;// CONCATENATED MODULE: ./src/core/event-emitter/observable.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-const OBSERVABLE_OBJECT = Symbol('observable-object');
-function isObservableObject(obj) {
-    return obj[OBSERVABLE_OBJECT] !== undefined;
-}
-function observable(obj) {
-    if (isObservableObject(obj)) {
-        return obj;
-    }
-    const __lockEvent = {};
-    const __onEvents = {};
-    const on = (event, callback) => {
-        if ((0,helpers.isArray)(event)) {
-            event.map(e => on(e, callback));
-            return obj;
-        }
-        if (!__onEvents[event]) {
-            __onEvents[event] = [];
-        }
-        __onEvents[event].push(callback);
-        return obj;
-    };
-    const fire = (event, ...attr) => {
-        if ((0,helpers.isArray)(event)) {
-            event.map(e => fire(e, ...attr));
-            return;
-        }
-        try {
-            if (!__lockEvent[event] && __onEvents[event]) {
-                __lockEvent[event] = true;
-                __onEvents[event].forEach(clb => clb.call(obj, ...attr));
-            }
-        }
-        finally {
-            __lockEvent[event] = false;
-        }
-    };
-    const initAccessors = (dict, prefixes = []) => {
-        const store = {};
-        if (isObservableObject(dict)) {
-            return;
-        }
-        Object.defineProperty(dict, OBSERVABLE_OBJECT, {
-            enumerable: false,
-            value: true
-        });
-        Object.keys(dict).forEach(_key => {
-            const key = _key;
-            const prefix = prefixes.concat(key).filter(a => a.length);
-            store[key] = dict[key];
-            const descriptor = (0,decorators.getPropertyDescriptor)(dict, key);
-            Object.defineProperty(dict, key, {
-                set: (value) => {
-                    var _a;
-                    const oldValue = store[key];
-                    if (!(0,helpers.isFastEqual)(store[key], value)) {
-                        fire([
-                            'beforeChange',
-                            `beforeChange.${prefix.join('.')}`
-                        ], key, value);
-                        if ((0,helpers.isPlainObject)(value)) {
-                            initAccessors(value, prefix);
-                        }
-                        if (descriptor && descriptor.set) {
-                            descriptor.set.call(obj, value);
-                        }
-                        else {
-                            store[key] = value;
-                        }
-                        const sum = [];
-                        fire([
-                            'change',
-                            ...prefix.reduce((rs, p) => {
-                                sum.push(p);
-                                rs.push(`change.${sum.join('.')}`);
-                                return rs;
-                            }, [])
-                        ], prefix.join('.'), oldValue, ((_a = value) === null || _a === void 0 ? void 0 : _a.valueOf)
-                            ? value.valueOf()
-                            : value);
-                    }
-                },
-                get: () => {
-                    if (descriptor && descriptor.get) {
-                        return descriptor.get.call(obj);
-                    }
-                    return store[key];
-                },
-                enumerable: true,
-                configurable: true
-            });
-            if ((0,helpers.isPlainObject)(store[key])) {
-                initAccessors(store[key], prefix);
-            }
-        });
-        Object.defineProperty(obj, 'on', {
-            value: on
-        });
-    };
-    initAccessors(obj);
-    return obj;
-}
-
-;// CONCATENATED MODULE: ./src/core/event-emitter/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-/***/ }),
-/* 4 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "v": function() { return /* binding */ error; }
+/* harmony export */   "h": function() { return /* binding */ assert; }
 /* harmony export */ });
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function error(message) {
-    return new TypeError(message);
-}
-
-
-/***/ }),
-/* 5 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "H": function() { return /* binding */ isString; }
-/* harmony export */ });
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isString(value) {
-    return typeof value === 'string';
-}
-
-
-/***/ }),
-/* 6 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "m": function() { return /* binding */ isFunction; }
-/* harmony export */ });
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isFunction(value) {
-    return typeof value === 'function';
-}
-
-
-/***/ }),
-/* 7 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "k": function() { return /* binding */ isArray; }
-/* harmony export */ });
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isArray(elm) {
-    return Array.isArray(elm);
-}
-
-
-/***/ }),
-/* 8 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "$$": function() { return /* reexport */ utils.$$; },
-  "CamelCaseToKebabCase": function() { return /* reexport */ string/* CamelCaseToKebabCase */.gP; },
-  "ConfigFlatten": function() { return /* reexport */ utils/* ConfigFlatten */.tp; },
-  "ConfigProto": function() { return /* reexport */ utils/* ConfigProto */.II; },
-  "LimitedStack": function() { return /* reexport */ utils/* LimitedStack */.lI; },
-  "appendScript": function() { return /* reexport */ utils/* appendScript */.uR; },
-  "appendScriptAsync": function() { return /* reexport */ utils/* appendScriptAsync */.JL; },
-  "appendStyleAsync": function() { return /* reexport */ utils/* appendStyleAsync */.Nf; },
-  "applyStyles": function() { return /* reexport */ applyStyles; },
-  "asArray": function() { return /* reexport */ array/* asArray */._2; },
-  "assert": function() { return /* reexport */ utils/* assert */.hu; },
-  "attr": function() { return /* reexport */ utils/* attr */.Lj; },
-  "browser": function() { return /* reexport */ utils/* browser */.Xh; },
-  "buildQuery": function() { return /* reexport */ utils/* buildQuery */.XP; },
-  "call": function() { return /* reexport */ utils/* call */.RE; },
-  "callPromise": function() { return /* reexport */ utils/* callPromise */.C6; },
-  "camelCase": function() { return /* reexport */ string/* camelCase */.eV; },
-  "cleanFromWord": function() { return /* reexport */ cleanFromWord; },
-  "clearCenterAlign": function() { return /* reexport */ utils/* clearCenterAlign */.bI; },
-  "clearTimeout": function() { return /* reexport */ set_timeout_clearTimeout; },
-  "cns": function() { return /* reexport */ utils/* cns */.H5; },
-  "colorToHex": function() { return /* reexport */ color_to_hex/* colorToHex */.h; },
-  "completeUrl": function() { return /* reexport */ utils/* completeUrl */.WO; },
-  "convertMediaUrlToVideoEmbed": function() { return /* reexport */ utils/* convertMediaUrlToVideoEmbed */.UU; },
-  "css": function() { return /* reexport */ utils/* css */.iv; },
-  "cssPath": function() { return /* reexport */ utils/* cssPath */.iN; },
-  "ctrlKey": function() { return /* reexport */ utils/* ctrlKey */.kT; },
-  "dataBind": function() { return /* reexport */ utils/* dataBind */.qI; },
-  "defaultLanguage": function() { return /* reexport */ utils/* defaultLanguage */.X9; },
-  "error": function() { return /* reexport */ utils/* error */.vU; },
-  "fastClone": function() { return /* reexport */ utils/* fastClone */.V8; },
-  "get": function() { return /* reexport */ utils/* get */.U2; },
-  "getClassName": function() { return /* reexport */ utils/* getClassName */.gj; },
-  "getContentWidth": function() { return /* reexport */ getContentWidth; },
-  "getScrollParent": function() { return /* reexport */ getScrollParent; },
-  "getXPathByElement": function() { return /* reexport */ utils/* getXPathByElement */.BR; },
-  "hasBrowserColorPicker": function() { return /* reexport */ checker/* hasBrowserColorPicker */.EO; },
-  "hasContainer": function() { return /* reexport */ checker/* hasContainer */.Zt; },
-  "htmlspecialchars": function() { return /* reexport */ htmlspecialchars; },
-  "humanSizeToBytes": function() { return /* reexport */ utils/* humanSizeToBytes */.wx; },
-  "i18n": function() { return /* reexport */ string/* i18n */.ag; },
-  "inView": function() { return /* reexport */ utils/* inView */.jF; },
-  "innerWidth": function() { return /* reexport */ inner_width_innerWidth; },
-  "isArray": function() { return /* reexport */ checker/* isArray */.kJ; },
-  "isAtom": function() { return /* reexport */ utils/* isAtom */.J8; },
-  "isBoolean": function() { return /* reexport */ checker/* isBoolean */.jn; },
-  "isDestructable": function() { return /* reexport */ checker/* isDestructable */.Z$; },
-  "isEqual": function() { return /* reexport */ checker/* isEqual */.Xy; },
-  "isFastEqual": function() { return /* reexport */ checker/* isFastEqual */.LP; },
-  "isFunction": function() { return /* reexport */ checker/* isFunction */.mf; },
-  "isHTML": function() { return /* reexport */ checker/* isHTML */.FP; },
-  "isHtmlFromWord": function() { return /* reexport */ checker/* isHtmlFromWord */.I4; },
-  "isInitable": function() { return /* reexport */ checker/* isInitable */.Gu; },
-  "isInt": function() { return /* reexport */ checker/* isInt */.GN; },
-  "isJoditObject": function() { return /* reexport */ checker/* isJoditObject */.Zu; },
-  "isLicense": function() { return /* reexport */ checker/* isLicense */.A1; },
-  "isNativeFunction": function() { return /* reexport */ checker/* isNativeFunction */.QC; },
-  "isNumber": function() { return /* reexport */ checker/* isNumber */.hj; },
-  "isNumeric": function() { return /* reexport */ checker/* isNumeric */.kE; },
-  "isPlainObject": function() { return /* reexport */ checker/* isPlainObject */.PO; },
-  "isPromise": function() { return /* reexport */ checker/* isPromise */.tI; },
-  "isString": function() { return /* reexport */ checker/* isString */.HD; },
-  "isURL": function() { return /* reexport */ checker/* isURL */.PX; },
-  "isValidName": function() { return /* reexport */ checker/* isValidName */.r1; },
-  "isViewObject": function() { return /* reexport */ checker/* isViewObject */.f2; },
-  "isVoid": function() { return /* reexport */ checker/* isVoid */.nj; },
-  "isWindow": function() { return /* reexport */ checker/* isWindow */.FJ; },
-  "kebabCase": function() { return /* reexport */ string/* kebabCase */.GL; },
-  "keepNames": function() { return /* reexport */ utils/* keepNames */.kc; },
-  "keys": function() { return /* reexport */ utils/* keys */.am; },
-  "loadImage": function() { return /* reexport */ utils/* loadImage */.po; },
-  "loadNext": function() { return /* reexport */ utils/* loadNext */.wY; },
-  "loadNextStyle": function() { return /* reexport */ utils/* loadNextStyle */.GX; },
-  "markAsAtomic": function() { return /* reexport */ utils/* markAsAtomic */.XT; },
-  "markDeprecated": function() { return /* reexport */ utils/* markDeprecated */.Q8; },
-  "markOwner": function() { return /* reexport */ utils/* markOwner */.MN; },
-  "memorizeExec": function() { return /* reexport */ utils/* memorizeExec */.u3; },
-  "nl2br": function() { return /* reexport */ nl2br; },
-  "normalizeColor": function() { return /* reexport */ normalize/* normalizeColor */.ut; },
-  "normalizeCssValue": function() { return /* reexport */ normalize/* normalizeCssValue */.Zh; },
-  "normalizeKeyAliases": function() { return /* reexport */ normalize/* normalizeKeyAliases */.T2; },
-  "normalizeLicense": function() { return /* reexport */ normalize/* normalizeLicense */.Pd; },
-  "normalizeNode": function() { return /* reexport */ normalize/* normalizeNode */.Tz; },
-  "normalizePath": function() { return /* reexport */ normalize/* normalizePath */.AH; },
-  "normalizeRelativePath": function() { return /* reexport */ normalize/* normalizeRelativePath */.Jf; },
-  "normalizeSize": function() { return /* reexport */ normalize/* normalizeSize */.aC; },
-  "normalizeUrl": function() { return /* reexport */ normalize/* normalizeUrl */.D5; },
-  "offset": function() { return /* reexport */ offset; },
-  "parseQuery": function() { return /* reexport */ utils/* parseQuery */.mB; },
-  "position": function() { return /* reexport */ position; },
-  "refs": function() { return /* reexport */ utils/* refs */.xL; },
-  "reset": function() { return /* reexport */ utils/* reset */.mc; },
-  "resolveElement": function() { return /* reexport */ utils/* resolveElement */.W2; },
-  "safeHTML": function() { return /* reexport */ safeHTML; },
-  "scrollIntoViewIfNeeded": function() { return /* reexport */ utils/* scrollIntoViewIfNeeded */.n5; },
-  "set": function() { return /* reexport */ utils/* set */.t8; },
-  "setTimeout": function() { return /* reexport */ set_timeout_setTimeout; },
-  "size": function() { return /* reexport */ size; },
-  "splitArray": function() { return /* reexport */ array/* splitArray */.C1; },
-  "sprintf": function() { return /* reexport */ string/* sprintf */.gB; },
-  "stringify": function() { return /* reexport */ string/* stringify */.Pz; },
-  "stripTags": function() { return /* reexport */ stripTags; },
-  "toArray": function() { return /* reexport */ array/* toArray */.qo; },
-  "trim": function() { return /* reexport */ string/* trim */.fy; },
-  "trimInv": function() { return /* reexport */ string/* trimInv */.as; },
-  "ucfirst": function() { return /* reexport */ string/* ucfirst */.Ps; },
-  "val": function() { return /* reexport */ utils/* val */.P0; }
-});
-
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 18 modules
-var utils = __webpack_require__(9);
-// EXTERNAL MODULE: ./src/core/helpers/array/index.ts + 1 modules
-var array = __webpack_require__(33);
-;// CONCATENATED MODULE: ./src/core/helpers/async/set-timeout.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function set_timeout_setTimeout(callback, timeout, ...args) {
-    if (!timeout) {
-        callback.call(null, ...args);
-    }
-    else {
-        return window.setTimeout(callback, timeout, ...args);
-    }
-    return 0;
-}
-function set_timeout_clearTimeout(timer) {
-    window.clearTimeout(timer);
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/async/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-// EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
-var checker = __webpack_require__(18);
-// EXTERNAL MODULE: ./src/core/helpers/color/color-to-hex.ts
-var color_to_hex = __webpack_require__(31);
-;// CONCATENATED MODULE: ./src/core/helpers/color/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(15);
-// EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 4 modules
-var string = __webpack_require__(27);
-;// CONCATENATED MODULE: ./src/core/helpers/html/apply-styles.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-function normalizeCSS(s) {
-    return s
-        .replace(/mso-[a-z-]+:[\s]*[^;]+;/gi, '')
-        .replace(/mso-[a-z-]+:[\s]*[^";]+$/gi, '')
-        .replace(/border[a-z-]*:[\s]*[^;]+;/gi, '')
-        .replace(/([0-9.]+)(pt|cm)/gi, (match, units, metrics) => {
-        switch (metrics.toLowerCase()) {
-            case 'pt':
-                return (parseFloat(units) * 1.328).toFixed(0) + 'px';
-            case 'cm':
-                return (parseFloat(units) * 0.02645833).toFixed(0) + 'px';
-        }
-        return match;
-    });
-}
-function applyStyles(html) {
-    if (html.indexOf('<html ') === -1) {
-        return html;
-    }
-    html = html.substring(html.indexOf('<html '), html.length);
-    html = html.substring(0, html.lastIndexOf('</html>') + '</html>'.length);
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-    let convertedString = '', collection = [], rules = [];
-    try {
-        const iframeDoc = iframe.contentDocument ||
-            (iframe.contentWindow ? iframe.contentWindow.document : null);
-        if (iframeDoc) {
-            iframeDoc.open();
-            iframeDoc.write(html);
-            iframeDoc.close();
-            if (iframeDoc.styleSheets.length) {
-                rules = iframeDoc.styleSheets[iframeDoc.styleSheets.length - 1].cssRules;
-            }
-            for (let idx = 0; idx < rules.length; idx += 1) {
-                if (rules[idx].selectorText === '') {
-                    continue;
-                }
-                collection = (0,utils.$$)(rules[idx].selectorText, iframeDoc.body);
-                collection.forEach((elm) => {
-                    elm.style.cssText = normalizeCSS(rules[idx].style.cssText + ';' + elm.style.cssText);
-                });
-            }
-            dom/* Dom.each */.i.each(iframeDoc.body, node => {
-                if (dom/* Dom.isElement */.i.isElement(node)) {
-                    const elm = node;
-                    const css = elm.style.cssText;
-                    if (css) {
-                        elm.style.cssText = normalizeCSS(css);
-                    }
-                    if (elm.hasAttribute('lang')) {
-                        elm.removeAttribute('lang');
-                    }
-                }
-            });
-            convertedString = iframeDoc.firstChild
-                ? (0,string/* trim */.fy)(iframeDoc.body.innerHTML)
-                : '';
-        }
-    }
-    catch (_a) {
-    }
-    finally {
-        dom/* Dom.safeRemove */.i.safeRemove(iframe);
-    }
-    if (convertedString) {
-        html = convertedString;
-    }
-    return (0,string/* trim */.fy)(html
-        .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
-        .replace(/<!--[^>]*>/g, ''));
-}
-
-// EXTERNAL MODULE: ./src/core/helpers/string/trim.ts
-var trim = __webpack_require__(28);
-// EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
-var to_array = __webpack_require__(34);
-;// CONCATENATED MODULE: ./src/core/helpers/html/clean-from-word.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-function cleanFromWord(html) {
-    if (html.indexOf('<html ') !== -1) {
-        html = html.substring(html.indexOf('<html '), html.length);
-        html = html.substring(0, html.lastIndexOf('</html>') + '</html>'.length);
-    }
-    let convertedString = '';
-    try {
-        const div = document.createElement('div');
-        div.innerHTML = html;
-        const marks = [];
-        if (div.firstChild) {
-            dom/* Dom.all */.i.all(div, node => {
-                if (!node) {
-                    return;
-                }
-                switch (node.nodeType) {
-                    case Node.ELEMENT_NODE:
-                        switch (node.nodeName) {
-                            case 'STYLE':
-                            case 'LINK':
-                            case 'META':
-                                marks.push(node);
-                                break;
-                            case 'W:SDT':
-                            case 'W:SDTPR':
-                            case 'FONT':
-                                dom/* Dom.unwrap */.i.unwrap(node);
-                                break;
-                            default:
-                                (0,to_array/* toArray */.q)(node.attributes).forEach((attr) => {
-                                    if ([
-                                        'src',
-                                        'href',
-                                        'rel',
-                                        'content'
-                                    ].indexOf(attr.name.toLowerCase()) === -1) {
-                                        node.removeAttribute(attr.name);
-                                    }
-                                });
-                        }
-                        break;
-                    case Node.TEXT_NODE:
-                        break;
-                    default:
-                        marks.push(node);
-                }
-            });
-        }
-        marks.forEach(dom/* Dom.safeRemove */.i.safeRemove);
-        convertedString = div.innerHTML;
-    }
-    catch (e) { }
-    if (convertedString) {
-        html = convertedString;
-    }
-    html = html.split(/(\n)/).filter(trim/* trim */.f).join('\n');
-    return html
-        .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
-        .replace(/<!--[^>]*>/g, '');
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/html/htmlspecialchars.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function htmlspecialchars(html) {
-    const tmp = document.createElement('div');
-    tmp.textContent = html;
-    return tmp.innerHTML;
-}
-
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
-var is_string = __webpack_require__(5);
-;// CONCATENATED MODULE: ./src/core/helpers/html/strip-tags.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-function stripTags(html, doc = document) {
-    const tmp = doc.createElement('div');
-    if ((0,is_string/* isString */.H)(html)) {
-        tmp.innerHTML = html;
-    }
-    else {
-        tmp.appendChild(html);
-    }
-    (0,utils.$$)('DIV, P, BR, H1, H2, H3, H4, H5, H6, HR', tmp).forEach(p => {
-        const pr = p.parentNode;
-        if (!pr) {
-            return;
-        }
-        const nx = p.nextSibling;
-        if (dom/* Dom.isText */.i.isText(nx) && /^\s/.test(nx.nodeValue || '')) {
-            return;
-        }
-        if (nx) {
-            pr.insertBefore(doc.createTextNode(' '), nx);
-        }
-    });
-    return (0,trim/* trim */.f)(tmp.innerText) || '';
-}
-function safeHTML(box, options) {
-    if (!dom/* Dom.isElement */.i.isElement(box)) {
-        return;
-    }
-    const removeOnError = (elm) => (0,utils/* attr */.Lj)(elm, 'onerror', null), safeLink = (elm) => {
-        const href = elm.getAttribute('href');
-        if (href && href.trim().indexOf('javascript') === 0) {
-            (0,utils/* attr */.Lj)(elm, 'href', location.protocol + '//' + href);
-        }
-    };
-    if (options.removeOnError) {
-        removeOnError(box);
-        (0,utils.$$)('[onerror]', box).forEach(removeOnError);
-    }
-    if (options.safeJavaScriptLink) {
-        safeLink(box);
-        (0,utils.$$)('a[href^="javascript"]', box).forEach(safeLink);
-    }
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/html/nl2br.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function nl2br(html) {
-    return html.replace(/\r\n|\r|\n/g, '<br/>');
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/html/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-// EXTERNAL MODULE: ./src/core/helpers/normalize/index.ts + 9 modules
-var normalize = __webpack_require__(30);
-;// CONCATENATED MODULE: ./src/core/helpers/size/get-content-width.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const getContentWidth = (element, win) => {
-    const pi = (value) => parseInt(value, 10), style = win.getComputedStyle(element), width = element.offsetWidth, paddingLeft = pi(style.getPropertyValue('padding-left') || '0'), paddingRight = pi(style.getPropertyValue('padding-right') || '0');
-    return width - paddingLeft - paddingRight;
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/size/get-scroll-parent.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function getScrollParent(node) {
-    if (!node) {
-        return null;
-    }
-    const isElement = dom/* Dom.isHTMLElement */.i.isHTMLElement(node);
-    const overflowY = isElement && (0,utils/* css */.iv)(node, 'overflowY');
-    const isScrollable = isElement && overflowY !== 'visible' && overflowY !== 'hidden';
-    if (isScrollable && node.scrollHeight >= node.clientHeight) {
-        return node;
-    }
-    return (getScrollParent(node.parentNode) ||
-        document.scrollingElement ||
-        document.body);
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/size/inner-width.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const inner_width_innerWidth = (element, win) => {
-    const computedStyle = win.getComputedStyle(element);
-    let elementWidth = element.clientWidth;
-    elementWidth -=
-        parseFloat(computedStyle.paddingLeft || '0') +
-            parseFloat(computedStyle.paddingRight || '0');
-    return elementWidth;
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/size/offset.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const offset = (elm, jodit, doc, recurse = false) => {
-    let rect;
-    try {
-        rect = elm.getBoundingClientRect();
-    }
-    catch (e) {
-        rect = {
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            width: 0,
-            height: 0
-        };
-    }
-    const body = doc.body, docElem = doc.documentElement || {
-        clientTop: 0,
-        clientLeft: 0,
-        scrollTop: 0,
-        scrollLeft: 0
-    }, win = doc.defaultView || doc.parentWindow, scrollTop = win.pageYOffset || docElem.scrollTop || body.scrollTop, scrollLeft = win.pageXOffset || docElem.scrollLeft || body.scrollLeft, clientTop = docElem.clientTop || body.clientTop || 0, clientLeft = docElem.clientLeft || body.clientLeft || 0;
-    let topValue, leftValue;
-    const iframe = jodit.iframe;
-    if (!recurse && jodit && jodit.options && jodit.o.iframe && iframe) {
-        const { top, left } = offset(iframe, jodit, jodit.od, true);
-        topValue = rect.top + top;
-        leftValue = rect.left + left;
-    }
-    else {
-        topValue = rect.top + scrollTop - clientTop;
-        leftValue = rect.left + scrollLeft - clientLeft;
-    }
-    return {
-        top: Math.round(topValue),
-        left: Math.round(leftValue),
-        width: rect.width,
-        height: rect.height
-    };
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/size/position.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function position(elm, jodit, recurse = false) {
-    const rect = elm.getBoundingClientRect();
-    let xPos = rect.left, yPos = rect.top;
-    if ((0,checker/* isJoditObject */.Zu)(jodit) && jodit.iframe && !recurse) {
-        const { left, top } = position(jodit.iframe, jodit, true);
-        xPos += left;
-        yPos += top;
-    }
-    return {
-        left: Math.round(xPos),
-        top: Math.round(yPos),
-        width: Math.round(elm.offsetWidth),
-        height: Math.round(elm.offsetHeight)
-    };
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/size/object-size.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function size(subject) {
-    if ((0,checker/* isString */.HD)(subject) || (0,checker/* isArray */.kJ)(subject)) {
-        return subject.length;
-    }
-    if ((0,checker/* isPlainObject */.PO)(subject)) {
-        return Object.keys(subject).length;
-    }
-    return 0;
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/size/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-;// CONCATENATED MODULE: ./src/core/helpers/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-
-
-/***/ }),
-/* 9 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "$$": function() { return /* reexport */ $$; },
-  "tp": function() { return /* reexport */ ConfigFlatten; },
-  "II": function() { return /* reexport */ ConfigProto; },
-  "lI": function() { return /* reexport */ LimitedStack; },
-  "uR": function() { return /* reexport */ appendScript; },
-  "JL": function() { return /* reexport */ appendScriptAsync; },
-  "Nf": function() { return /* reexport */ appendStyleAsync; },
-  "hu": function() { return /* reexport */ assert; },
-  "Lj": function() { return /* reexport */ utils/* attr */.Lj; },
-  "Xh": function() { return /* reexport */ browser; },
-  "XP": function() { return /* reexport */ buildQuery; },
-  "RE": function() { return /* reexport */ utils/* call */.RE; },
-  "C6": function() { return /* reexport */ utils/* callPromise */.C6; },
-  "bI": function() { return /* reexport */ css/* clearCenterAlign */.b; },
-  "H5": function() { return /* reexport */ cns; },
-  "WO": function() { return /* reexport */ completeUrl; },
-  "UU": function() { return /* reexport */ convertMediaUrlToVideoEmbed; },
-  "iv": function() { return /* reexport */ css/* css */.i; },
-  "iN": function() { return /* reexport */ cssPath; },
-  "kT": function() { return /* reexport */ ctrlKey; },
-  "qI": function() { return /* reexport */ data_bind/* dataBind */.q; },
-  "X9": function() { return /* reexport */ defaultLanguage; },
-  "vU": function() { return /* reexport */ error/* error */.v; },
-  "V8": function() { return /* reexport */ fastClone; },
-  "U2": function() { return /* reexport */ get/* get */.U; },
-  "gj": function() { return /* reexport */ get_class_name/* getClassName */.g; },
-  "BR": function() { return /* reexport */ getXPathByElement; },
-  "wx": function() { return /* reexport */ humanSizeToBytes; },
-  "jF": function() { return /* reexport */ inView; },
-  "J8": function() { return /* reexport */ isAtom; },
-  "kc": function() { return /* reexport */ get_class_name/* keepNames */.k; },
-  "am": function() { return /* reexport */ utils/* keys */.XP; },
-  "po": function() { return /* reexport */ utils/* loadImage */.po; },
-  "wY": function() { return /* reexport */ loadNext; },
-  "GX": function() { return /* reexport */ loadNextStyle; },
-  "XT": function() { return /* reexport */ markAsAtomic; },
-  "Q8": function() { return /* reexport */ markDeprecated; },
-  "MN": function() { return /* reexport */ utils/* markOwner */.MN; },
-  "u3": function() { return /* reexport */ utils/* memorizeExec */.u3; },
-  "mB": function() { return /* reexport */ parseQuery; },
-  "xL": function() { return /* reexport */ refs; },
-  "mc": function() { return /* reexport */ utils/* reset */.mc; },
-  "W2": function() { return /* reexport */ resolveElement; },
-  "n5": function() { return /* reexport */ scrollIntoViewIfNeeded; },
-  "t8": function() { return /* reexport */ set; },
-  "P0": function() { return /* reexport */ val; }
-});
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/assert.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -1834,7 +292,16 @@ function assert(condition, message) {
 }
 
 
-;// CONCATENATED MODULE: ./src/core/helpers/utils/mark-deprecated.ts
+
+/***/ }),
+/* 4 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "H": function() { return /* binding */ cns; },
+/* harmony export */   "Q": function() { return /* binding */ markDeprecated; }
+/* harmony export */ });
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -1849,615 +316,9 @@ function markDeprecated(method, names = [''], ctx = null) {
     };
 }
 
-// EXTERNAL MODULE: ./src/core/helpers/utils/utils.ts
-var utils = __webpack_require__(10);
-// EXTERNAL MODULE: ./src/core/helpers/utils/get.ts
-var get = __webpack_require__(32);
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
-var is_string = __webpack_require__(5);
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-numeric.ts
-var is_numeric = __webpack_require__(21);
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-array.ts
-var is_array = __webpack_require__(7);
-// EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
-var checker = __webpack_require__(18);
-;// CONCATENATED MODULE: ./src/core/helpers/utils/set.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-function set(chain, value, obj) {
-    if (!(0,is_string/* isString */.H)(chain) || !chain.length) {
-        return;
-    }
-    const parts = chain.split('.');
-    let result = obj, key = parts[0];
-    for (let i = 0; i < parts.length - 1; i += 1) {
-        key = parts[i];
-        if (!(0,is_array/* isArray */.k)(result[key]) && !(0,checker/* isPlainObject */.PO)(result[key])) {
-            result[key] = (0,is_numeric/* isNumeric */.k)(parts[i + 1]) ? [] : {};
-        }
-        result = result[key];
-    }
-    if (result) {
-        result[parts[parts.length - 1]] = value;
-    }
-}
-
-// EXTERNAL MODULE: ./src/core/helpers/utils/get-class-name.ts
-var get_class_name = __webpack_require__(26);
-;// CONCATENATED MODULE: ./src/core/helpers/utils/stack.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-class LimitedStack {
-    constructor(limit) {
-        this.limit = limit;
-        this.stack = [];
-    }
-    push(item) {
-        this.stack.push(item);
-        if (this.stack.length > this.limit) {
-            this.stack.shift();
-        }
-        return this;
-    }
-    pop() {
-        return this.stack.pop();
-    }
-    find(clb) {
-        return this.stack.find(clb);
-    }
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/complete-url.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const completeUrl = (url) => {
-    if (window.location.protocol === 'file:' && /^\/\//.test(url)) {
-        url = 'https:' + url;
-    }
-    return url;
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/append-script.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-const alreadyLoadedList = new Map();
-const cacheLoaders = (loader) => {
-    return async (jodit, url) => {
-        if (alreadyLoadedList.has(url)) {
-            return alreadyLoadedList.get(url);
-        }
-        const promise = loader(jodit, url);
-        alreadyLoadedList.set(url, promise);
-        return promise;
-    };
-};
-const appendScript = (jodit, url, callback) => {
-    const script = jodit.c.element('script');
-    script.type = 'text/javascript';
-    script.async = true;
-    if ((0,checker/* isFunction */.mf)(callback) && !jodit.isInDestruct) {
-        jodit.e.on(script, 'load', callback);
-    }
-    if (!script.src) {
-        script.src = completeUrl(url);
-    }
-    jodit.od.body.appendChild(script);
-    return {
-        callback,
-        element: script
-    };
-};
-const appendScriptAsync = cacheLoaders((jodit, url) => {
-    return new Promise((resolve, reject) => {
-        const { element } = appendScript(jodit, url, resolve);
-        !jodit.isInDestruct && jodit.e.on(element, 'error', reject);
-    });
-});
-const appendStyleAsync = cacheLoaders((jodit, url) => {
-    return new Promise((resolve, reject) => {
-        const link = jodit.c.element('link');
-        link.rel = 'stylesheet';
-        link.media = 'all';
-        link.crossOrigin = 'anonymous';
-        const callback = () => resolve(link);
-        !jodit.isInDestruct &&
-            jodit.e.on(link, 'load', callback).on(link, 'error', reject);
-        link.href = completeUrl(url);
-        if (jodit.o.shadowRoot) {
-            jodit.o.shadowRoot.appendChild(link);
-        }
-        else {
-            jodit.od.body.appendChild(link);
-        }
-    });
-});
-const loadNext = (jodit, urls, i = 0) => {
-    if (!(0,checker/* isString */.HD)(urls[i])) {
-        return Promise.resolve();
-    }
-    return appendScriptAsync(jodit, urls[i]).then(() => loadNext(jodit, urls, i + 1));
-};
-const loadNextStyle = (jodit, urls, i = 0) => {
-    if (!(0,checker/* isString */.HD)(urls[i])) {
-        return Promise.resolve();
-    }
-    return appendStyleAsync(jodit, urls[i]).then(() => loadNextStyle(jodit, urls, i + 1));
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/browser.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const browser = (browser) => {
-    const ua = navigator.userAgent.toLowerCase(), match = /(firefox)[\s/]([\w.]+)/.exec(ua) ||
-        /(chrome)[\s/]([\w.]+)/.exec(ua) ||
-        /(webkit)[\s/]([\w.]+)/.exec(ua) ||
-        /(opera)(?:.*version)[\s/]([\w.]+)/.exec(ua) ||
-        /(msie)[\s]([\w.]+)/.exec(ua) ||
-        /(trident)\/([\w.]+)/.exec(ua) ||
-        ua.indexOf('compatible') < 0 ||
-        [];
-    if (browser === 'version') {
-        return match[2];
-    }
-    if (browser === 'webkit') {
-        return match[1] === 'chrome' || match[1] === 'webkit';
-    }
-    if (browser === 'ff') {
-        return match[1] === 'firefox';
-    }
-    if (browser === 'msie') {
-        return match[1] === 'trident' || match[1] === 'msie';
-    }
-    return match[1] === browser;
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/build-query.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-const buildQuery = (data, prefix) => {
-    const str = [];
-    const enc = encodeURIComponent;
-    for (const dataKey in data) {
-        if (Object.prototype.hasOwnProperty.call(data, dataKey)) {
-            const k = prefix ? prefix + '[' + dataKey + ']' : dataKey;
-            const v = data[dataKey];
-            str.push((0,checker/* isPlainObject */.PO)(v) ? buildQuery(v, k) : enc(k) + '=' + enc(v));
-        }
-    }
-    return str.join('&');
-};
-
-// EXTERNAL MODULE: ./src/core/helpers/string/stringify.ts
-var stringify = __webpack_require__(19);
-;// CONCATENATED MODULE: ./src/core/helpers/utils/extend.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function isAtom(obj) {
-    return obj && obj.isAtom;
-}
-function markAsAtomic(obj) {
-    Object.defineProperty(obj, 'isAtom', {
-        enumerable: false,
-        value: true,
-        configurable: false
-    });
-    return obj;
-}
-function fastClone(object) {
-    return JSON.parse((0,stringify/* stringify */.P)(object));
-}
-
-// EXTERNAL MODULE: ./src/config.ts
-var config = __webpack_require__(1);
-;// CONCATENATED MODULE: ./src/core/helpers/utils/config-proto.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-function ConfigProto(options, proto, deep = 0) {
-    if (Object.getPrototypeOf(options) !== Object.prototype) {
-        return options;
-    }
-    const def = config/* Config.defaultOptions */.D.defaultOptions;
-    if ((0,checker/* isString */.HD)(options.preset)) {
-        if (def.presets[options.preset] !== undefined) {
-            const preset = def.presets[options.preset];
-            Object.keys(preset).forEach(subKey => {
-                if ((0,checker/* isVoid */.nj)(options[subKey])) {
-                    options[subKey] = preset[subKey];
-                }
-            });
-        }
-        delete options.preset;
-    }
-    const newOpt = {};
-    Object.keys(options).forEach(key => {
-        const opt = options[key], protoKey = proto ? proto[key] : null;
-        if ((0,checker/* isPlainObject */.PO)(opt) && (0,checker/* isPlainObject */.PO)(protoKey) && !isAtom(opt)) {
-            newOpt[key] = ConfigProto(opt, protoKey, deep + 1);
-            return;
-        }
-        if (deep !== 0 && (0,checker/* isArray */.kJ)(opt) && !isAtom(opt) && (0,checker/* isArray */.kJ)(protoKey)) {
-            newOpt[key] = [...opt, ...protoKey.slice(opt.length)];
-            return;
-        }
-        newOpt[key] = opt;
-    });
-    Object.setPrototypeOf(newOpt, proto);
-    return newOpt;
-}
-function ConfigFlatten(obj) {
-    return (0,utils/* keys */.XP)(obj, false).reduce((app, key) => {
-        app[key] = obj[key];
-        return app;
-    }, {});
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/parse-query.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const parseQuery = (queryString) => {
-    const query = {}, a = queryString.substr(1).split('&');
-    for (let i = 0; i < a.length; i += 1) {
-        const keyValue = a[i].split('=');
-        query[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1] || '');
-    }
-    return query;
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/convert-media-url-to-video-embed.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-const convertMediaUrlToVideoEmbed = (url, width = 400, height = 345) => {
-    if (!(0,checker/* isURL */.PX)(url)) {
-        return url;
-    }
-    const parser = document.createElement('a'), pattern1 = /(?:http?s?:\/\/)?(?:www\.)?(?:vimeo\.com)\/?(.+)/g;
-    parser.href = url;
-    if (!width) {
-        width = 400;
-    }
-    if (!height) {
-        height = 345;
-    }
-    const protocol = parser.protocol || '';
-    switch (parser.hostname) {
-        case 'www.vimeo.com':
-        case 'vimeo.com':
-            return pattern1.test(url)
-                ? url.replace(pattern1, '<iframe width="' +
-                    width +
-                    '" height="' +
-                    height +
-                    '" src="' +
-                    protocol +
-                    '//player.vimeo.com/video/$1" frameborder="0" allowfullscreen></iframe>')
-                : url;
-        case 'youtube.com':
-        case 'www.youtube.com':
-        case 'youtu.be':
-        case 'www.youtu.be': {
-            const query = parser.search
-                ? parseQuery(parser.search)
-                : { v: parser.pathname.substr(1) };
-            return query.v
-                ? '<iframe width="' +
-                    width +
-                    '" height="' +
-                    height +
-                    '" src="' +
-                    protocol +
-                    '//www.youtube.com/embed/' +
-                    query.v +
-                    '" frameborder="0" allowfullscreen></iframe>'
-                : url;
-        }
-    }
-    return url;
-};
-
-// EXTERNAL MODULE: ./src/core/helpers/utils/css.ts
-var css = __webpack_require__(29);
-;// CONCATENATED MODULE: ./src/core/helpers/utils/ctrl-key.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const ctrlKey = (e) => {
-    if (typeof navigator !== 'undefined' &&
-        navigator.userAgent.indexOf('Mac OS X') !== -1) {
-        if (e.metaKey && !e.altKey) {
-            return true;
-        }
-    }
-    else if (e.ctrlKey && !e.altKey) {
-        return true;
-    }
-    return false;
-};
-
-// EXTERNAL MODULE: ./src/core/helpers/utils/data-bind.ts
-var data_bind = __webpack_require__(11);
-;// CONCATENATED MODULE: ./src/core/helpers/utils/default-language.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-const defaultLanguage = (language, defaultLanguage = 'en') => {
-    if (language !== 'auto' && (0,checker/* isString */.HD)(language)) {
-        return language;
-    }
-    if (document.documentElement && document.documentElement.lang) {
-        return document.documentElement.lang;
-    }
-    if (navigator.language) {
-        return navigator.language.substr(0, 2);
-    }
-    return defaultLanguage;
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/human-size-to-bytes.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const humanSizeToBytes = (human) => {
-    if (/^[0-9.]+$/.test(human.toString())) {
-        return parseFloat(human);
-    }
-    const format = human.substr(-2, 2).toUpperCase(), formats = ['KB', 'MB', 'GB', 'TB'], number = parseFloat(human.substr(0, human.length - 2));
-    return formats.indexOf(format) !== -1
-        ? number * Math.pow(1024, formats.indexOf(format) + 1)
-        : parseInt(human, 10);
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/scroll-into-view.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const inView = (elm, root, doc) => {
-    let rect = elm.getBoundingClientRect(), el = elm;
-    const top = rect.top, height = rect.height;
-    do {
-        if (el && el.parentNode) {
-            el = el.parentNode;
-            rect = el.getBoundingClientRect();
-            if (!(top <= rect.bottom)) {
-                return false;
-            }
-            if (top + height <= rect.top) {
-                return false;
-            }
-        }
-    } while (el && el !== root && el.parentNode);
-    return (top <= ((doc.documentElement && doc.documentElement.clientHeight) || 0));
-};
-const scrollIntoViewIfNeeded = (elm, root, doc) => {
-    if (!inView(elm, root, doc)) {
-        if (root.clientHeight !== root.scrollHeight) {
-            root.scrollTop = elm.offsetTop;
-        }
-        if (!inView(elm, root, doc)) {
-            elm.scrollIntoView();
-        }
-    }
-};
-
-// EXTERNAL MODULE: ./src/core/constants.ts
-var constants = __webpack_require__(2);
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(15);
-// EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 4 modules
-var string = __webpack_require__(27);
-// EXTERNAL MODULE: ./src/core/helpers/array/index.ts + 1 modules
-var array = __webpack_require__(33);
-// EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
-var ui = __webpack_require__(35);
-;// CONCATENATED MODULE: ./src/core/helpers/utils/selector.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-let temp = 1;
-const $$temp = () => {
-    temp++;
-    return temp;
-};
-function $$(selector, root) {
-    let result;
-    if (false) {}
-    else {
-        result = root.querySelectorAll(selector);
-    }
-    return [].slice.call(result);
-}
-const getXPathByElement = (element, root) => {
-    if (!element || element.nodeType !== Node.ELEMENT_NODE) {
-        return '';
-    }
-    if (!element.parentNode || root === element) {
-        return '';
-    }
-    if (element.id) {
-        return "//*[@id='" + element.id + "']";
-    }
-    const sames = [].filter.call(element.parentNode.childNodes, (x) => x.nodeName === element.nodeName);
-    return (getXPathByElement(element.parentNode, root) +
-        '/' +
-        element.nodeName.toLowerCase() +
-        (sames.length > 1
-            ? '[' + ((0,array/* toArray */.qo)(sames).indexOf(element) + 1) + ']'
-            : ''));
-};
-const refs = (root) => {
-    if (root instanceof ui/* UIElement */.u1) {
-        root = root.container;
-    }
-    return $$('[ref],[data-ref]', root).reduce((def, child) => {
-        const key = (0,utils/* attr */.Lj)(child, '-ref');
-        if (key && (0,checker/* isString */.HD)(key)) {
-            def[(0,string/* camelCase */.eV)(key)] = child;
-            def[key] = child;
-        }
-        return def;
-    }, {});
-};
-const cssPath = (el) => {
-    if (!dom/* Dom.isElement */.i.isElement(el)) {
-        return null;
-    }
-    const path = [];
-    let start = el;
-    while (start && start.nodeType === Node.ELEMENT_NODE) {
-        let selector = start.nodeName.toLowerCase();
-        if (start.id) {
-            selector += '#' + start.id;
-            path.unshift(selector);
-            break;
-        }
-        else {
-            let sib = start, nth = 1;
-            do {
-                sib = sib.previousElementSibling;
-                if (sib && sib.nodeName.toLowerCase() === selector) {
-                    nth++;
-                }
-            } while (sib);
-            selector += ':nth-of-type(' + nth + ')';
-        }
-        path.unshift(selector);
-        start = start.parentNode;
-    }
-    return path.join(' > ');
-};
-function resolveElement(element, od) {
-    let resolved = element;
-    if ((0,checker/* isString */.HD)(element)) {
-        try {
-            resolved = od.querySelector(element);
-        }
-        catch (_a) {
-            throw (0,error/* error */.v)('String "' + element + '" should be valid HTML selector');
-        }
-    }
-    if (!resolved ||
-        typeof resolved !== 'object' ||
-        !dom/* Dom.isElement */.i.isElement(resolved) ||
-        !resolved.cloneNode) {
-        throw (0,error/* error */.v)('Element "' + element + '" should be string or HTMLElement instance');
-    }
-    return resolved;
-}
-
-// EXTERNAL MODULE: ./src/core/helpers/utils/error.ts
-var error = __webpack_require__(4);
-;// CONCATENATED MODULE: ./src/core/helpers/utils/val.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const val = (elm, selector, value) => {
-    const child = elm.querySelector(selector);
-    if (!child) {
-        return '';
-    }
-    if (value) {
-        child.value = value;
-    }
-    return child.value;
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/utils/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /***/ }),
-/* 10 */
+/* 5 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2471,14 +332,14 @@ const val = (elm, selector, value) => {
 /* harmony export */   "XP": function() { return /* binding */ keys; },
 /* harmony export */   "u3": function() { return /* binding */ memorizeExec; }
 /* harmony export */ });
-/* harmony import */ var _checker_is_function__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6);
-/* harmony import */ var _checker_is_promise__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(23);
-/* harmony import */ var _get__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(32);
-/* harmony import */ var _data_bind__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
-/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(20);
-/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18);
-/* harmony import */ var _css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(29);
-/* harmony import */ var _string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(27);
+/* harmony import */ var _checker_is_function__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(31);
+/* harmony import */ var _checker_is_promise__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(41);
+/* harmony import */ var _get__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(88);
+/* harmony import */ var _data_bind__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(35);
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27);
+/* harmony import */ var _css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(78);
+/* harmony import */ var _string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(70);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -2613,15 +474,15 @@ const memorizeExec = (editor, _, { control }, preProcessValue) => {
 
 
 /***/ }),
-/* 11 */
+/* 6 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "q": function() { return /* binding */ dataBind; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
-/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18);
+/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -2656,19 +517,36 @@ const dataBind = (elm, key, value) => {
 
 
 /***/ }),
-/* 12 */
+/* 7 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "n$": function() { return /* reexport safe */ _statuses__WEBPACK_IMPORTED_MODULE_0__.n; },
+/* harmony export */   "wA": function() { return /* reexport safe */ _component__WEBPACK_IMPORTED_MODULE_1__.w; },
+/* harmony export */   "Hr": function() { return /* reexport safe */ _view_component__WEBPACK_IMPORTED_MODULE_2__.H; }
+/* harmony export */ });
+/* harmony import */ var _statuses__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9);
+/* harmony import */ var _view_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(77);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "wA": function() { return /* reexport */ Component; },
-  "n$": function() { return /* reexport */ STATUSES; },
-  "Hr": function() { return /* reexport */ ViewComponent; }
-});
 
-;// CONCATENATED MODULE: ./src/core/component/statuses.ts
+
+
+
+/***/ }),
+/* 8 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "n": function() { return /* binding */ STATUSES; }
+/* harmony export */ });
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -2681,11 +559,18 @@ const STATUSES = {
     destructed: 'destructed'
 };
 
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
-var helpers = __webpack_require__(8);
-// EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(13);
-;// CONCATENATED MODULE: ./src/core/component/component.ts
+
+/***/ }),
+/* 9 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "w": function() { return /* binding */ Component; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(10);
+/* harmony import */ var jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -2698,15 +583,15 @@ const StatusListHandlers = new Map();
 class Component {
     constructor() {
         this.ownerWindow = window;
-        this.__componentStatus = STATUSES.beforeInit;
-        this.uid = 'jodit-uid-' + (0,global/* uniqueUid */.fe)();
+        this.__componentStatus = jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__/* .STATUSES.beforeInit */ .n.beforeInit;
+        this.uid = 'jodit-uid-' + (0,jodit_core_global__WEBPACK_IMPORTED_MODULE_1__/* .uniqueUid */ .fe)();
     }
     get componentName() {
         if (!this.__componentName) {
             this.__componentName =
                 'jodit-' +
-                    (0,helpers.kebabCase)(((0,helpers.isFunction)(this.className) ? this.className() : '') ||
-                        (0,helpers.getClassName)(this));
+                    (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.kebabCase)(((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isFunction)(this.className) ? this.className() : '') ||
+                        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.getClassName)(this));
         }
         return this.__componentName;
     }
@@ -2718,7 +603,7 @@ class Component {
         }
         if (mod) {
             result.push('_', mod);
-            result.push('_', (0,helpers.isVoid)(modValue) ? 'true' : modValue.toString());
+            result.push('_', (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isVoid)(modValue) ? 'true' : modValue.toString());
         }
         return result.join('');
     }
@@ -2732,24 +617,24 @@ class Component {
         return this.ownerWindow;
     }
     get(chain, obj) {
-        return (0,helpers.get)(chain, obj || this);
+        return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.get)(chain, obj || this);
     }
     get isReady() {
-        return this.componentStatus === STATUSES.ready;
+        return this.componentStatus === jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__/* .STATUSES.ready */ .n.ready;
     }
     get isDestructed() {
-        return this.componentStatus === STATUSES.destructed;
+        return this.componentStatus === jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__/* .STATUSES.destructed */ .n.destructed;
     }
     get isInDestruct() {
-        return (STATUSES.beforeDestruct === this.componentStatus ||
-            STATUSES.destructed === this.componentStatus);
+        return (jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__/* .STATUSES.beforeDestruct */ .n.beforeDestruct === this.componentStatus ||
+            jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__/* .STATUSES.destructed */ .n.destructed === this.componentStatus);
     }
     bindDestruct(component) {
-        component.hookStatus(STATUSES.beforeDestruct, () => !this.isInDestruct && this.destruct());
+        component.hookStatus(jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__/* .STATUSES.beforeDestruct */ .n.beforeDestruct, () => !this.isInDestruct && this.destruct());
         return this;
     }
     destruct() {
-        this.setStatus(STATUSES.destructed);
+        this.setStatus(jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__/* .STATUSES.destructed */ .n.destructed);
         if (StatusListHandlers.get(this)) {
             StatusListHandlers.delete(this);
         }
@@ -2768,7 +653,7 @@ class Component {
             return;
         }
         const proto = Object.getPrototypeOf(this);
-        if (proto && (0,helpers.isFunction)(proto.setStatusComponent)) {
+        if (proto && (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isFunction)(proto.setStatusComponent)) {
             proto.setStatusComponent(componentStatus, component);
         }
         const statuses = StatusListHandlers.get(this), list = statuses === null || statuses === void 0 ? void 0 : statuses[componentStatus];
@@ -2791,53 +676,11 @@ class Component {
         list[status].push(callback);
     }
 }
-Component.STATUSES = STATUSES;
-
-;// CONCATENATED MODULE: ./src/core/component/view-component.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-class ViewComponent extends Component {
-    constructor(jodit) {
-        super();
-        this.setParentView(jodit);
-    }
-    get defaultTimeout() {
-        return this.j.defaultTimeout;
-    }
-    get j() {
-        return this.jodit;
-    }
-    i18n(text, ...params) {
-        return this.j.i18n(text, ...params);
-    }
-    setParentView(jodit) {
-        this.jodit = jodit;
-        jodit.components.add(this);
-        return this;
-    }
-    destruct() {
-        this.j.components.delete(this);
-        return super.destruct();
-    }
-}
-
-;// CONCATENATED MODULE: ./src/core/component/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
+Component.STATUSES = jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__/* .STATUSES */ .n;
 
 
 /***/ }),
-/* 13 */
+/* 10 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2851,12 +694,12 @@ class ViewComponent extends Component {
 /* harmony export */   "TB": function() { return /* binding */ eventEmitter; }
 /* harmony export */ });
 /* unused harmony export extendLang */
-/* harmony import */ var _plugin_plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
-/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
-/* harmony import */ var _event_emitter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
-/* harmony import */ var _helpers_checker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(18);
-/* harmony import */ var _helpers_utils_get_class_name__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(26);
-/* harmony import */ var _helpers_string__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(27);
+/* harmony import */ var _plugin_plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/* harmony import */ var _event_emitter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(50);
+/* harmony import */ var _helpers_checker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(27);
+/* harmony import */ var _helpers_utils_get_class_name__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(69);
+/* harmony import */ var _helpers_string__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(70);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -2938,14 +781,14 @@ const eventEmitter = new _event_emitter__WEBPACK_IMPORTED_MODULE_2__/* .EventEmi
 
 
 /***/ }),
-/* 14 */
+/* 11 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "h": function() { return /* binding */ PluginSystem; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -3118,23 +961,33 @@ PluginSystem.styles = new Set();
 
 
 /***/ }),
-/* 15 */
+/* 12 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "i": function() { return /* reexport safe */ _dom__WEBPACK_IMPORTED_MODULE_0__.i; }
+/* harmony export */ });
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "i": function() { return /* reexport */ Dom; }
-});
 
-// EXTERNAL MODULE: ./src/core/constants.ts
-var constants = __webpack_require__(2);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
-var helpers = __webpack_require__(8);
-// EXTERNAL MODULE: ./src/core/selection/index.ts + 19 modules
-var selection = __webpack_require__(16);
-;// CONCATENATED MODULE: ./src/core/dom/dom.ts
+
+/***/ }),
+/* 13 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "i": function() { return /* binding */ Dom; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var jodit_core_selection__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(15);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -3170,7 +1023,7 @@ class Dom {
                 last = tmp;
             }
         } while (needFindNext);
-        const wrapper = (0,helpers.isString)(tag) ? editor.createInside.element(tag) : tag;
+        const wrapper = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(tag) ? editor.createInside.element(tag) : tag;
         if (first.parentNode) {
             first.parentNode.insertBefore(wrapper, first);
         }
@@ -3187,9 +1040,9 @@ class Dom {
         return wrapper;
     }
     static wrap(current, tag, create) {
-        const wrapper = (0,helpers.isString)(tag) ? create.element(tag) : tag;
+        const wrapper = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(tag) ? create.element(tag) : tag;
         if (!current.parentNode) {
-            throw (0,helpers.error)('Element should be in DOM');
+            throw (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.error)('Element should be in DOM');
         }
         current.parentNode.insertBefore(wrapper, current);
         wrapper.appendChild(current);
@@ -3221,10 +1074,10 @@ class Dom {
         }
     }
     static replace(elm, newTagName, create, withAttributes = false, notMoveContent = false) {
-        if ((0,helpers.isHTML)(newTagName)) {
+        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isHTML)(newTagName)) {
             newTagName = create.fromHTML(newTagName);
         }
-        const tag = (0,helpers.isString)(newTagName)
+        const tag = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(newTagName)
             ? create.element(newTagName)
             : newTagName;
         if (!notMoveContent) {
@@ -3233,7 +1086,7 @@ class Dom {
             }
         }
         if (withAttributes) {
-            (0,helpers.toArray)(elm.attributes).forEach(attr => {
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.toArray)(elm.attributes).forEach(attr => {
                 tag.setAttribute(attr.name, attr.value);
             });
         }
@@ -3246,7 +1099,7 @@ class Dom {
         return (Dom.isText(node) &&
             (!node.nodeValue ||
                 node.nodeValue
-                    .replace(constants.INVISIBLE_SPACE_REG_EXP(), '')
+                    .replace(jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE_REG_EXP(), '')
                     .trim().length === 0));
     }
     static isEmptyContent(node) {
@@ -3262,13 +1115,13 @@ class Dom {
             return true;
         }
         if (Dom.isText(node)) {
-            return node.nodeValue == null || (0,helpers.trim)(node.nodeValue).length === 0;
+            return node.nodeValue == null || (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.trim)(node.nodeValue).length === 0;
         }
         return (!condNoEmptyElement.test(node.nodeName.toLowerCase()) &&
             Dom.each(node, (elm) => {
                 if ((Dom.isText(elm) &&
                     elm.nodeValue != null &&
-                    (0,helpers.trim)(elm.nodeValue).length !== 0) ||
+                    (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.trim)(elm.nodeValue).length !== 0) ||
                     (Dom.isElement(elm) &&
                         condNoEmptyElement.test(elm.nodeName.toLowerCase()))) {
                     return false;
@@ -3279,7 +1132,7 @@ class Dom {
         if (!object) {
             return false;
         }
-        const win = (0,helpers.get)('ownerDocument.defaultView', object);
+        const win = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.get)('ownerDocument.defaultView', object);
         if (typeof win === 'object' &&
             win &&
             (typeof win.Node === 'function' ||
@@ -3295,10 +1148,10 @@ class Dom {
         return (Dom.isNode(elm) && /^(img|svg|picture|canvas)$/i.test(elm.nodeName));
     }
     static isBlock(node) {
-        return (!(0,helpers.isVoid)(node) &&
+        return (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isVoid)(node) &&
             typeof node === 'object' &&
             Dom.isNode(node) &&
-            constants.IS_BLOCK.test(node.nodeName));
+            jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.IS_BLOCK.test(node.nodeName));
     }
     static isText(node) {
         return Boolean(node && node.nodeType === Node.TEXT_NODE);
@@ -3322,10 +1175,10 @@ class Dom {
     static isInlineBlock(node) {
         return (Dom.isElement(node) &&
             !/^(BR|HR)$/i.test(node.tagName) &&
-            ['inline', 'inline-block'].indexOf((0,helpers.css)(node, 'display').toString()) !== -1);
+            ['inline', 'inline-block'].indexOf((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.css)(node, 'display').toString()) !== -1);
     }
     static canSplitBlock(node) {
-        return (!(0,helpers.isVoid)(node) &&
+        return (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isVoid)(node) &&
             Dom.isHTMLElement(node) &&
             Dom.isBlock(node) &&
             !/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
@@ -3479,10 +1332,10 @@ class Dom {
     }
     static closest(node, tagsOrCondition, root) {
         let condition;
-        if ((0,helpers.isFunction)(tagsOrCondition)) {
+        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isFunction)(tagsOrCondition)) {
             condition = tagsOrCondition;
         }
-        else if ((0,helpers.isArray)(tagsOrCondition)) {
+        else if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isArray)(tagsOrCondition)) {
             condition = (tag) => tag &&
                 tagsOrCondition.includes(tag.nodeName.toLowerCase());
         }
@@ -3533,7 +1386,7 @@ class Dom {
         root.insertBefore(newElement, root.firstChild);
     }
     static append(root, newElement) {
-        if ((0,helpers.isArray)(newElement)) {
+        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isArray)(newElement)) {
             newElement.forEach(node => {
                 this.append(root, node);
             });
@@ -3544,7 +1397,7 @@ class Dom {
     }
     static moveContent(from, to, inStart = false) {
         const fragment = (from.ownerDocument || document).createDocumentFragment();
-        (0,helpers.toArray)(from.childNodes).forEach((node) => {
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.toArray)(from.childNodes).forEach((node) => {
             fragment.appendChild(node);
         });
         if (!inStart || !to.firstChild) {
@@ -3555,7 +1408,7 @@ class Dom {
         }
     }
     static all(node, condition, prev = false) {
-        let nodes = node.childNodes ? (0,helpers.toArray)(node.childNodes) : [];
+        let nodes = node.childNodes ? (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.toArray)(node.childNodes) : [];
         if (condition(node)) {
             return node;
         }
@@ -3580,20 +1433,20 @@ class Dom {
         if (!node) {
             return;
         }
-        (0,helpers.dataBind)(node, '__old_display', node.style.display);
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.dataBind)(node, '__old_display', node.style.display);
         node.style.display = 'none';
     }
     static show(node) {
         if (!node) {
             return;
         }
-        const display = (0,helpers.dataBind)(node, '__old_display');
+        const display = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.dataBind)(node, '__old_display');
         if (node.style.display === 'none') {
             node.style.display = display || '';
         }
     }
     static isTag(node, tagNames) {
-        const tags = (0,helpers.asArray)(tagNames).map(String);
+        const tags = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.asArray)(tagNames).map(String);
         for (let i = 0; i < tags.length; i += 1) {
             if (this.isElement(node) &&
                 node.tagName.toLowerCase() === tags[i].toLowerCase()) {
@@ -3603,25 +1456,202 @@ class Dom {
         return false;
     }
     static markTemporary(element, attributes) {
-        attributes && (0,helpers.attr)(element, attributes);
-        (0,helpers.attr)(element, constants.TEMP_ATTR, true);
+        attributes && (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(element, attributes);
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(element, jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.TEMP_ATTR, true);
         return element;
     }
     static isTemporary(element) {
         if (!Dom.isElement(element)) {
             return false;
         }
-        return selection/* Select.isMarker */.Ph.isMarker(element) || (0,helpers.attr)(element, constants.TEMP_ATTR) === 'true';
+        return jodit_core_selection__WEBPACK_IMPORTED_MODULE_2__/* .Select.isMarker */ .Ph.isMarker(element) || (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(element, jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.TEMP_ATTR) === 'true';
     }
     static replaceTemporaryFromString(value) {
         return value.replace(/<([a-z]+)[^>]+data-jodit-temp[^>]+>(.+?)<\/\1>/gi, '$2');
     }
     static temporaryList(root) {
-        return (0,helpers.$$)(`[${constants.TEMP_ATTR}]`, root);
+        return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.$$)(`[${jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.TEMP_ATTR}]`, root);
     }
 }
 
-;// CONCATENATED MODULE: ./src/core/dom/index.ts
+
+/***/ }),
+/* 14 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "INVISIBLE_SPACE": function() { return /* binding */ INVISIBLE_SPACE; },
+/* harmony export */   "NBSP_SPACE": function() { return /* binding */ NBSP_SPACE; },
+/* harmony export */   "INVISIBLE_SPACE_REG_EXP": function() { return /* binding */ INVISIBLE_SPACE_REG_EXP; },
+/* harmony export */   "INVISIBLE_SPACE_REG_EXP_END": function() { return /* binding */ INVISIBLE_SPACE_REG_EXP_END; },
+/* harmony export */   "INVISIBLE_SPACE_REG_EXP_START": function() { return /* binding */ INVISIBLE_SPACE_REG_EXP_START; },
+/* harmony export */   "SPACE_REG_EXP": function() { return /* binding */ SPACE_REG_EXP; },
+/* harmony export */   "SPACE_REG_EXP_START": function() { return /* binding */ SPACE_REG_EXP_START; },
+/* harmony export */   "SPACE_REG_EXP_END": function() { return /* binding */ SPACE_REG_EXP_END; },
+/* harmony export */   "IS_BLOCK": function() { return /* binding */ IS_BLOCK; },
+/* harmony export */   "IS_INLINE": function() { return /* binding */ IS_INLINE; },
+/* harmony export */   "INSEPARABLE_TAGS": function() { return /* binding */ INSEPARABLE_TAGS; },
+/* harmony export */   "MAY_BE_REMOVED_WITH_KEY": function() { return /* binding */ MAY_BE_REMOVED_WITH_KEY; },
+/* harmony export */   "KEY_BACKSPACE": function() { return /* binding */ KEY_BACKSPACE; },
+/* harmony export */   "KEY_TAB": function() { return /* binding */ KEY_TAB; },
+/* harmony export */   "KEY_ENTER": function() { return /* binding */ KEY_ENTER; },
+/* harmony export */   "KEY_ESC": function() { return /* binding */ KEY_ESC; },
+/* harmony export */   "KEY_LEFT": function() { return /* binding */ KEY_LEFT; },
+/* harmony export */   "KEY_UP": function() { return /* binding */ KEY_UP; },
+/* harmony export */   "KEY_RIGHT": function() { return /* binding */ KEY_RIGHT; },
+/* harmony export */   "KEY_DOWN": function() { return /* binding */ KEY_DOWN; },
+/* harmony export */   "KEY_SPACE": function() { return /* binding */ KEY_SPACE; },
+/* harmony export */   "KEY_DELETE": function() { return /* binding */ KEY_DELETE; },
+/* harmony export */   "KEY_F3": function() { return /* binding */ KEY_F3; },
+/* harmony export */   "NEARBY": function() { return /* binding */ NEARBY; },
+/* harmony export */   "ACCURACY": function() { return /* binding */ ACCURACY; },
+/* harmony export */   "COMMAND_KEYS": function() { return /* binding */ COMMAND_KEYS; },
+/* harmony export */   "BR": function() { return /* binding */ BR; },
+/* harmony export */   "PARAGRAPH": function() { return /* binding */ PARAGRAPH; },
+/* harmony export */   "MODE_WYSIWYG": function() { return /* binding */ MODE_WYSIWYG; },
+/* harmony export */   "MODE_SOURCE": function() { return /* binding */ MODE_SOURCE; },
+/* harmony export */   "MODE_SPLIT": function() { return /* binding */ MODE_SPLIT; },
+/* harmony export */   "IS_IE": function() { return /* binding */ IS_IE; },
+/* harmony export */   "TEXT_PLAIN": function() { return /* binding */ TEXT_PLAIN; },
+/* harmony export */   "TEXT_HTML": function() { return /* binding */ TEXT_HTML; },
+/* harmony export */   "MARKER_CLASS": function() { return /* binding */ MARKER_CLASS; },
+/* harmony export */   "EMULATE_DBLCLICK_TIMEOUT": function() { return /* binding */ EMULATE_DBLCLICK_TIMEOUT; },
+/* harmony export */   "INSERT_AS_HTML": function() { return /* binding */ INSERT_AS_HTML; },
+/* harmony export */   "INSERT_CLEAR_HTML": function() { return /* binding */ INSERT_CLEAR_HTML; },
+/* harmony export */   "INSERT_AS_TEXT": function() { return /* binding */ INSERT_AS_TEXT; },
+/* harmony export */   "INSERT_ONLY_TEXT": function() { return /* binding */ INSERT_ONLY_TEXT; },
+/* harmony export */   "SAFE_COUNT_CHANGE_CALL": function() { return /* binding */ SAFE_COUNT_CHANGE_CALL; },
+/* harmony export */   "IS_MAC": function() { return /* binding */ IS_MAC; },
+/* harmony export */   "KEY_ALIASES": function() { return /* binding */ KEY_ALIASES; },
+/* harmony export */   "BASE_PATH": function() { return /* binding */ BASE_PATH; },
+/* harmony export */   "TEMP_ATTR": function() { return /* binding */ TEMP_ATTR; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const INVISIBLE_SPACE = '\uFEFF';
+const NBSP_SPACE = '\u00A0';
+const INVISIBLE_SPACE_REG_EXP = () => /[\uFEFF]/g;
+const INVISIBLE_SPACE_REG_EXP_END = () => /[\uFEFF]+$/g;
+const INVISIBLE_SPACE_REG_EXP_START = () => /^[\uFEFF]+/g;
+const SPACE_REG_EXP = () => /[\s\n\t\r\uFEFF\u200b]+/g;
+const SPACE_REG_EXP_START = () => /^[\s\n\t\r\uFEFF\u200b]+/g;
+const SPACE_REG_EXP_END = () => /[\s\n\t\r\uFEFF\u200b]+$/g;
+const IS_BLOCK = /^(ARTICLE|SCRIPT|STYLE|OBJECT|FOOTER|HEADER|NAV|SECTION|IFRAME|JODIT|JODIT-MEDIA|PRE|DIV|P|LI|UL|OL|H[1-6]|BLOCKQUOTE|TR|TD|TH|TBODY|THEAD|TABLE|BODY|HTML|FIGCAPTION|FIGURE|DT|DD|DL|DFN|FORM)$/i;
+const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB|A|U)$/i;
+const INSEPARABLE_TAGS = [
+    'img',
+    'br',
+    'video',
+    'iframe',
+    'script',
+    'input',
+    'textarea',
+    'hr',
+    'link',
+    'jodit',
+    'jodit-media'
+];
+const MAY_BE_REMOVED_WITH_KEY = RegExp(`^${INSEPARABLE_TAGS.join('|')}$`, 'i');
+const KEY_BACKSPACE = 'Backspace';
+const KEY_TAB = 'Tab';
+const KEY_ENTER = 'Enter';
+const KEY_ESC = 'Escape';
+const KEY_LEFT = 'ArrowLeft';
+const KEY_UP = 'ArrowUp';
+const KEY_RIGHT = 'ArrowRight';
+const KEY_DOWN = 'ArrowDown';
+const KEY_SPACE = 'Space';
+const KEY_DELETE = 'Delete';
+const KEY_F3 = 'F3';
+const NEARBY = 5;
+const ACCURACY = 10;
+const COMMAND_KEYS = [
+    KEY_BACKSPACE,
+    KEY_DELETE,
+    KEY_UP,
+    KEY_DOWN,
+    KEY_RIGHT,
+    KEY_LEFT,
+    KEY_ENTER,
+    KEY_ESC,
+    KEY_F3,
+    KEY_TAB
+];
+const BR = 'br';
+const PARAGRAPH = 'p';
+const MODE_WYSIWYG = 1;
+const MODE_SOURCE = 2;
+const MODE_SPLIT = 3;
+const IS_IE = typeof navigator !== 'undefined' &&
+    (navigator.userAgent.indexOf('MSIE') !== -1 ||
+        /rv:11.0/i.test(navigator.userAgent));
+const TEXT_PLAIN = IS_IE ? 'text' : 'text/plain';
+const TEXT_HTML = IS_IE ? 'html' : 'text/html';
+const MARKER_CLASS = 'jodit-selection_marker';
+const EMULATE_DBLCLICK_TIMEOUT = 300;
+const INSERT_AS_HTML = 'insert_as_html';
+const INSERT_CLEAR_HTML = 'insert_clear_html';
+const INSERT_AS_TEXT = 'insert_as_text';
+const INSERT_ONLY_TEXT = 'insert_only_text';
+const SAFE_COUNT_CHANGE_CALL = 10;
+const IS_MAC = typeof window !== 'undefined' &&
+    /Mac|iPod|iPhone|iPad/.test(window.navigator.platform);
+const KEY_ALIASES = {
+    add: '+',
+    break: 'pause',
+    cmd: 'meta',
+    command: 'meta',
+    ctl: 'control',
+    ctrl: 'control',
+    del: 'delete',
+    down: 'arrowdown',
+    esc: 'escape',
+    ins: 'insert',
+    left: 'arrowleft',
+    mod: IS_MAC ? 'meta' : 'control',
+    opt: 'alt',
+    option: 'alt',
+    return: 'enter',
+    right: 'arrowright',
+    space: ' ',
+    spacebar: ' ',
+    up: 'arrowup',
+    win: 'meta',
+    windows: 'meta'
+};
+const BASE_PATH = (() => {
+    if (typeof document === 'undefined') {
+        return '';
+    }
+    const script = document.currentScript, removeScriptName = (s) => s.replace(/\/[^/]+.js$/, '/');
+    if (script) {
+        return removeScriptName(script.src);
+    }
+    const scripts = document.querySelectorAll('script[src]');
+    if (scripts && scripts.length) {
+        return removeScriptName(scripts[scripts.length - 1].src);
+    }
+    return window.location.href;
+})();
+const TEMP_ATTR = 'data-jodit-temp';
+
+
+/***/ }),
+/* 15 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "RP": function() { return /* reexport safe */ _style_commit_style__WEBPACK_IMPORTED_MODULE_0__.RP; },
+/* harmony export */   "Ph": function() { return /* reexport safe */ _select__WEBPACK_IMPORTED_MODULE_1__.P; }
+/* harmony export */ });
+/* harmony import */ var _style_commit_style__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(16);
+/* harmony import */ var _select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -3630,29 +1660,289 @@ class Dom {
 
 
 
+
 /***/ }),
 /* 16 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Qu": function() { return /* binding */ WRAP; },
+/* harmony export */   "Nc": function() { return /* binding */ UNWRAP; },
+/* harmony export */   "Ve": function() { return /* binding */ CHANGE; },
+/* harmony export */   "p": function() { return /* binding */ UNSET; },
+/* harmony export */   "_X": function() { return /* binding */ INITIAL; },
+/* harmony export */   "J5": function() { return /* binding */ REPLACE; },
+/* harmony export */   "RP": function() { return /* binding */ CommitStyle; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
+/* harmony import */ var _apply_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "RP": function() { return /* reexport */ CommitStyle; },
-  "Ph": function() { return /* reexport */ Select; }
-});
 
-// UNUSED EXPORTS: CHANGE, INITIAL, REPLACE, UNSET, UNWRAP, WRAP
+const WRAP = 'wrap';
+const UNWRAP = 'unwrap';
+const CHANGE = 'change';
+const UNSET = 'unset';
+const INITIAL = 'initial';
+const REPLACE = 'replace';
+class CommitStyle {
+    constructor(options) {
+        this.options = options;
+    }
+    get elementIsList() {
+        return Boolean(this.options.element && ['ul', 'ol'].includes(this.options.element));
+    }
+    get element() {
+        return this.options.element || this.defaultTag;
+    }
+    get elementIsBlock() {
+        return Boolean(this.options.element && jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.IS_BLOCK.test(this.options.element));
+    }
+    get isElementCommit() {
+        return Boolean(this.options.element &&
+            this.options.element !== this.options.defaultTag);
+    }
+    get defaultTag() {
+        if (this.options.defaultTag) {
+            return this.options.defaultTag;
+        }
+        return this.elementIsBlock ? 'p' : 'span';
+    }
+    get elementIsDefault() {
+        return this.element === this.defaultTag;
+    }
+    apply(jodit) {
+        (0,_apply_style__WEBPACK_IMPORTED_MODULE_1__/* .ApplyStyle */ .Y)(jodit, this);
+    }
+}
 
-// EXTERNAL MODULE: ./src/core/constants.ts
-var constants = __webpack_require__(2);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
-var helpers = __webpack_require__(8);
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(15);
-// EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(13);
-;// CONCATENATED MODULE: ./src/core/selection/style/api/toggle/toggle-css.ts
+
+/***/ }),
+/* 17 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Y": function() { return /* binding */ ApplyStyle; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18);
+/* harmony import */ var _commit_style__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(16);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(12);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+function ApplyStyle(jodit, cs) {
+    const { s: sel, editor } = jodit;
+    const fsm = new _api__WEBPACK_IMPORTED_MODULE_1__/* .FiniteStateMachine */ ._H('start', {
+        start: {
+            start() {
+                sel.save();
+                (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.normalizeNode)(editor.firstChild);
+                this.setState('generator');
+            }
+        },
+        generator: {
+            initGenerator() {
+                return jodit.s.wrapInTagGen();
+            },
+            nextFont(gen) {
+                const font = gen.next();
+                if (font.done) {
+                    this.setState('end');
+                    return;
+                }
+                if ((0,_api__WEBPACK_IMPORTED_MODULE_1__/* .isInsideInvisibleElement */ .D_)(font.value, editor) ||
+                    jodit_core_dom__WEBPACK_IMPORTED_MODULE_3__/* .Dom.isEmptyContent */ .i.isEmptyContent(font.value)) {
+                    return;
+                }
+                this.setState('check');
+                return font.value;
+            }
+        },
+        check: {
+            work(font) {
+                let elm = (0,_api__WEBPACK_IMPORTED_MODULE_1__/* .getSuitParent */ .HB)(cs, font, jodit.editor) ||
+                    (0,_api__WEBPACK_IMPORTED_MODULE_1__/* .getSuitChild */ .e)(cs, font);
+                if (elm) {
+                    this.setState('wholeElement');
+                    return elm;
+                }
+                elm = jodit_core_dom__WEBPACK_IMPORTED_MODULE_3__/* .Dom.closest */ .i.closest(font, node => (0,_api__WEBPACK_IMPORTED_MODULE_1__/* .isSuitElement */ .fB)(cs, node, true), jodit.editor);
+                if (elm) {
+                    if (!cs.elementIsBlock) {
+                        (0,_api__WEBPACK_IMPORTED_MODULE_1__/* .extractSelectedPart */ .ig)(elm, font, jodit);
+                    }
+                }
+                if (cs.elementIsList && jodit_core_dom__WEBPACK_IMPORTED_MODULE_3__/* .Dom.isTag */ .i.isTag(elm, ['ul', 'ol'])) {
+                    this.setState('orderList');
+                    return font;
+                }
+                if (elm) {
+                    this.setState('wholeElement');
+                    return elm;
+                }
+                if ((0,_api__WEBPACK_IMPORTED_MODULE_1__/* .unwrapChildren */ .Mh)(cs, font)) {
+                    this.setState('endProcess');
+                    return null;
+                }
+                this.setState('wrap');
+                return font;
+            }
+        },
+        wholeElement: {
+            toggleStyles(toggleElm) {
+                let mode = _commit_style__WEBPACK_IMPORTED_MODULE_2__/* .INITIAL */ ._X;
+                if ((0,_api__WEBPACK_IMPORTED_MODULE_1__/* .toggleCommitStyles */ .P$)(cs, toggleElm)) {
+                    mode = _commit_style__WEBPACK_IMPORTED_MODULE_2__/* .UNWRAP */ .Nc;
+                }
+                else {
+                    mode = (0,_api__WEBPACK_IMPORTED_MODULE_1__/* .toggleCSS */ .AH)(cs, toggleElm, jodit, mode);
+                }
+                this.setState('generator', mode);
+            }
+        },
+        orderList: {
+            toggleStyles(font) {
+                let mode = _commit_style__WEBPACK_IMPORTED_MODULE_2__/* .INITIAL */ ._X;
+                const li = jodit_core_dom__WEBPACK_IMPORTED_MODULE_3__/* .Dom.closest */ .i.closest(font, 'li', jodit.editor);
+                if (!li) {
+                    this.setState('generator');
+                    return;
+                }
+                const ul = jodit_core_dom__WEBPACK_IMPORTED_MODULE_3__/* .Dom.closest */ .i.closest(font, ['ul', 'ol'], jodit.editor);
+                if (!ul) {
+                    this.setState('generator');
+                    return;
+                }
+                mode = (0,_api__WEBPACK_IMPORTED_MODULE_1__/* .toggleOrderedList */ .JL)(cs, li, jodit, mode);
+                if (mode === _commit_style__WEBPACK_IMPORTED_MODULE_2__/* .REPLACE */ .J5 || mode === _commit_style__WEBPACK_IMPORTED_MODULE_2__/* .UNWRAP */ .Nc || mode === _commit_style__WEBPACK_IMPORTED_MODULE_2__/* .CHANGE */ .Ve) {
+                    this.setState('endWhile');
+                    return;
+                }
+                this.setState('generator');
+            }
+        },
+        wrap: {
+            toggleStyles(font) {
+                if (this.getSubState() !== 'unwrap') {
+                    const toggleElm = (0,_api__WEBPACK_IMPORTED_MODULE_1__/* .wrapAndCommitStyle */ .A6)(cs, font, jodit);
+                    (0,_api__WEBPACK_IMPORTED_MODULE_1__/* .toggleCSS */ .AH)(cs, toggleElm, jodit, _commit_style__WEBPACK_IMPORTED_MODULE_2__/* .WRAP */ .Qu);
+                }
+                this.setState('generator');
+            }
+        },
+        endWhile: {
+            nextFont(gen) {
+                const font = gen.next();
+                if (font.done) {
+                    this.setState('end');
+                }
+            }
+        },
+        endProcess: {
+            toggleStyles() {
+                this.setState('generator');
+            }
+        },
+        end: {
+            finalize() {
+                sel.restore();
+            }
+        }
+    });
+    fsm.dispatch('start');
+    const gen = fsm.dispatch('initGenerator');
+    while (fsm.getState() !== 'end') {
+        const font = fsm.dispatch('nextFont', gen);
+        if (font) {
+            const wrapper = fsm.dispatch('work', font);
+            fsm.dispatch('toggleStyles', wrapper);
+        }
+    }
+    fsm.dispatch('finalize', gen);
+}
+
+
+/***/ }),
+/* 18 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AH": function() { return /* reexport safe */ _toggle_toggle_css__WEBPACK_IMPORTED_MODULE_0__.A; },
+/* harmony export */   "JL": function() { return /* reexport safe */ _toggle_toggle_ordered_list__WEBPACK_IMPORTED_MODULE_1__.J; },
+/* harmony export */   "ig": function() { return /* reexport safe */ _extract__WEBPACK_IMPORTED_MODULE_3__.i; },
+/* harmony export */   "_H": function() { return /* reexport safe */ _finite_state_machine__WEBPACK_IMPORTED_MODULE_4__._; },
+/* harmony export */   "e": function() { return /* reexport safe */ _get_suit_child__WEBPACK_IMPORTED_MODULE_5__.e; },
+/* harmony export */   "HB": function() { return /* reexport safe */ _get_suit_parent__WEBPACK_IMPORTED_MODULE_6__.H; },
+/* harmony export */   "D_": function() { return /* reexport safe */ _is_inside_invisible_element__WEBPACK_IMPORTED_MODULE_7__.D; },
+/* harmony export */   "fB": function() { return /* reexport safe */ _is_suit_element__WEBPACK_IMPORTED_MODULE_9__.f; },
+/* harmony export */   "P$": function() { return /* reexport safe */ _toggle_commit_styles__WEBPACK_IMPORTED_MODULE_10__.P; },
+/* harmony export */   "Mh": function() { return /* reexport safe */ _unwrap_children__WEBPACK_IMPORTED_MODULE_11__.M; },
+/* harmony export */   "A6": function() { return /* reexport safe */ _wrap_and_commit_style__WEBPACK_IMPORTED_MODULE_12__.A; }
+/* harmony export */ });
+/* harmony import */ var _toggle_toggle_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
+/* harmony import */ var _toggle_toggle_ordered_list__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(20);
+/* harmony import */ var _element_has_same_style__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(57);
+/* harmony import */ var _extract__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(21);
+/* harmony import */ var _finite_state_machine__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(58);
+/* harmony import */ var _get_suit_child__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(59);
+/* harmony import */ var _get_suit_parent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(62);
+/* harmony import */ var _is_inside_invisible_element__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(63);
+/* harmony import */ var _is_normal_node__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(60);
+/* harmony import */ var _is_suit_element__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(61);
+/* harmony import */ var _toggle_commit_styles__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(64);
+/* harmony import */ var _unwrap_children__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(65);
+/* harmony import */ var _wrap_and_commit_style__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(66);
+/* harmony import */ var _wrap_ordered_list__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(68);
+/* harmony import */ var _wrap_unwrapped_text__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(67);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+/* 19 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "A": function() { return /* binding */ toggleCSS; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/* harmony import */ var jodit_core_selection_style_commit_style__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(16);
+/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(10);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -3664,53 +1954,53 @@ var global = __webpack_require__(13);
 
 function toggleCSS(commitStyle, elm, jodit, mode, dry = false) {
     const { style, className } = commitStyle.options;
-    if (style && (0,helpers.size)(style) > 0) {
+    if (style && (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.size)(style) > 0) {
         Object.keys(style).forEach((rule) => {
-            const inlineValue = elm.style.getPropertyValue((0,helpers.kebabCase)(rule));
+            const inlineValue = elm.style.getPropertyValue((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.kebabCase)(rule));
             if (inlineValue === '' && style[rule] == null) {
                 return;
             }
             if (getNativeCSSValue(jodit, elm, rule) ===
-                (0,helpers.normalizeCssValue)(rule, style[rule])) {
-                !dry && (0,helpers.css)(elm, rule, null);
-                mode = UNSET;
+                (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.normalizeCssValue)(rule, style[rule])) {
+                !dry && (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(elm, rule, null);
+                mode = jodit_core_selection_style_commit_style__WEBPACK_IMPORTED_MODULE_2__/* .UNSET */ .p;
                 mode = removeExtraCSS(commitStyle, elm, mode);
                 return;
             }
-            mode = CHANGE;
-            !dry && (0,helpers.css)(elm, rule, style[rule]);
+            mode = jodit_core_selection_style_commit_style__WEBPACK_IMPORTED_MODULE_2__/* .CHANGE */ .Ve;
+            !dry && (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(elm, rule, style[rule]);
         });
     }
     if (className) {
         if (elm.classList.contains(className)) {
             elm.classList.remove(className);
-            mode = UNSET;
+            mode = jodit_core_selection_style_commit_style__WEBPACK_IMPORTED_MODULE_2__/* .UNSET */ .p;
         }
         else {
             elm.classList.add(className);
-            mode = CHANGE;
+            mode = jodit_core_selection_style_commit_style__WEBPACK_IMPORTED_MODULE_2__/* .CHANGE */ .Ve;
         }
     }
     return mode;
 }
 function removeExtraCSS(commitStyle, elm, mode) {
-    if (!(0,helpers.attr)(elm, 'style')) {
-        (0,helpers.attr)(elm, 'style', null);
+    if (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.attr)(elm, 'style')) {
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.attr)(elm, 'style', null);
         if (elm.tagName.toLowerCase() === commitStyle.defaultTag) {
-            dom/* Dom.unwrap */.i.unwrap(elm);
-            mode = UNWRAP;
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.unwrap */ .i.unwrap(elm);
+            mode = jodit_core_selection_style_commit_style__WEBPACK_IMPORTED_MODULE_2__/* .UNWRAP */ .Nc;
         }
     }
     return mode;
 }
 function getShadowRoot(jodit) {
     var _a;
-    if ((0,helpers.dataBind)(jodit, 'shadowRoot') !== undefined) {
-        return (0,helpers.dataBind)(jodit, 'shadowRoot');
+    if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.dataBind)(jodit, 'shadowRoot') !== undefined) {
+        return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.dataBind)(jodit, 'shadowRoot');
     }
-    const container = (0,global/* getContainer */.ZO)(jodit);
+    const container = (0,jodit_core_global__WEBPACK_IMPORTED_MODULE_3__/* .getContainer */ .ZO)(jodit);
     const iframe = document.createElement('iframe');
-    (0,helpers.css)(iframe, {
+    (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(iframe, {
         width: 0,
         height: 0,
         position: 'absolute',
@@ -3720,7 +2010,7 @@ function getShadowRoot(jodit) {
     container.appendChild(iframe);
     const doc = (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document;
     const shadowRoot = !doc ? jodit.od.body : doc.body;
-    (0,helpers.dataBind)(jodit, 'shadowRoot', shadowRoot);
+    (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.dataBind)(jodit, 'shadowRoot', shadowRoot);
     return shadowRoot;
 }
 function getNativeCSSValue(jodit, elm, key) {
@@ -3728,16 +2018,116 @@ function getNativeCSSValue(jodit, elm, key) {
     newElm.style.cssText = elm.style.cssText;
     const root = getShadowRoot(jodit);
     root.appendChild(newElm);
-    const result = (0,helpers.css)(newElm, key);
-    dom/* Dom.safeRemove */.i.safeRemove(newElm);
+    const result = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(newElm, key);
+    jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove(newElm);
     return result;
 }
 
-// EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(25);
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(17);
-;// CONCATENATED MODULE: ./src/core/selection/select.ts
+
+/***/ }),
+/* 20 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "J": function() { return /* binding */ toggleOrderedList; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _extract__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
+/* harmony import */ var _commit_style__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(16);
+/* harmony import */ var _toggle_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(19);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+function toggleOrderedList(style, li, jodit, mode) {
+    if (!li) {
+        return mode;
+    }
+    const list = li.parentElement;
+    if (!list) {
+        return mode;
+    }
+    if (list.tagName.toLowerCase() !== style.element) {
+        const newList = jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.replace */ .i.replace(list, style.element, jodit.createInside);
+        (0,_toggle_css__WEBPACK_IMPORTED_MODULE_3__/* .toggleCSS */ .A)(style, newList, jodit, mode);
+        return _commit_style__WEBPACK_IMPORTED_MODULE_2__/* .REPLACE */ .J5;
+    }
+    if ((0,_toggle_css__WEBPACK_IMPORTED_MODULE_3__/* .toggleCSS */ .A)(style, li.parentElement, jodit, _commit_style__WEBPACK_IMPORTED_MODULE_2__/* .INITIAL */ ._X, true) === _commit_style__WEBPACK_IMPORTED_MODULE_2__/* .CHANGE */ .Ve) {
+        return (0,_toggle_css__WEBPACK_IMPORTED_MODULE_3__/* .toggleCSS */ .A)(style, li.parentElement, jodit, mode);
+    }
+    (0,_extract__WEBPACK_IMPORTED_MODULE_1__/* .extractSelectedPart */ .i)(list, li, jodit);
+    jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.unwrap */ .i.unwrap(li.parentElement);
+    jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.replace */ .i.replace(li, jodit.o.enter, jodit.createInside);
+    return mode;
+}
+
+
+/***/ }),
+/* 21 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "i": function() { return /* binding */ extractSelectedPart; }
+/* harmony export */ });
+/* harmony import */ var _select__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(22);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(12);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function extractSelectedPart(wrapper, font, jodit) {
+    const range = jodit.s.createRange();
+    const leftEdge = _select__WEBPACK_IMPORTED_MODULE_0__/* .Select.isMarker */ .P.isMarker(font.previousSibling)
+        ? font.previousSibling
+        : font;
+    range.setStartBefore(wrapper);
+    range.setEndBefore(leftEdge);
+    extractAndMove(wrapper, range, true);
+    const rightEdge = _select__WEBPACK_IMPORTED_MODULE_0__/* .Select.isMarker */ .P.isMarker(font.nextSibling)
+        ? font.nextSibling
+        : font;
+    range.setStartAfter(rightEdge);
+    range.setEndAfter(wrapper);
+    extractAndMove(wrapper, range, false);
+}
+function extractAndMove(wrapper, range, left) {
+    const fragment = range.extractContents();
+    if ((!fragment.textContent || !(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.trim)(fragment.textContent).length) &&
+        fragment.firstChild) {
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.unwrap */ .i.unwrap(fragment.firstChild);
+    }
+    if (wrapper.parentNode) {
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.call)(left ? jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.before */ .i.before : jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.after */ .i.after, wrapper, fragment);
+    }
+}
+
+
+/***/ }),
+/* 22 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "P": function() { return /* binding */ Select; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(56);
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
+/* harmony import */ var _style_commit_style__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(16);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(23);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -3761,8 +2151,8 @@ class Select {
         return this.jodit;
     }
     errorNode(node) {
-        if (!dom/* Dom.isNode */.i.isNode(node)) {
-            throw (0,helpers.error)('Parameter node must be instance of Node');
+        if (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isNode */ .i.isNode(node)) {
+            throw (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.error)('Parameter node must be instance of Node');
         }
     }
     get area() {
@@ -3776,7 +2166,7 @@ class Select {
     }
     get sel() {
         if (this.j.o.shadowRoot &&
-            (0,helpers.isFunction)(this.j.o.shadowRoot.getSelection)) {
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.isFunction)(this.j.o.shadowRoot.getSelection)) {
             return this.j.o.shadowRoot.getSelection();
         }
         return this.win.getSelection();
@@ -3808,10 +2198,10 @@ class Select {
         }
     }
     removeNode(node) {
-        if (!dom/* Dom.isOrContains */.i.isOrContains(this.j.editor, node, true)) {
-            throw (0,helpers.error)("Selection.removeNode can remove only editor's children");
+        if (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isOrContains */ .i.isOrContains(this.j.editor, node, true)) {
+            throw (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.error)("Selection.removeNode can remove only editor's children");
         }
-        dom/* Dom.safeRemove */.i.safeRemove(node);
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove(node);
         this.j.e.fire('afterRemoveNode', node);
     }
     insertCursorAtPoint(x, y) {
@@ -3839,18 +2229,18 @@ class Select {
         return false;
     }
     static isMarker(elm) {
-        return (dom/* Dom.isNode */.i.isNode(elm) &&
-            dom/* Dom.isTag */.i.isTag(elm, 'span') &&
-            elm.hasAttribute('data-' + constants.MARKER_CLASS));
+        return (jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isNode */ .i.isNode(elm) &&
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isTag */ .i.isTag(elm, 'span') &&
+            elm.hasAttribute('data-' + jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.MARKER_CLASS));
     }
     get hasMarkers() {
         return Boolean(this.markers.length);
     }
     get markers() {
-        return (0,helpers.$$)('span[data-' + constants.MARKER_CLASS + ']', this.area);
+        return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.$$)('span[data-' + jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.MARKER_CLASS + ']', this.area);
     }
     removeMarkers() {
-        this.markers.forEach(dom/* Dom.safeRemove */.i.safeRemove);
+        this.markers.forEach(jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove);
     }
     marker(atStart = false, range) {
         let newRange = null;
@@ -3860,17 +2250,17 @@ class Select {
         }
         const marker = this.j.createInside.span();
         marker.id =
-            constants.MARKER_CLASS +
+            jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.MARKER_CLASS +
                 '_' +
                 Number(new Date()) +
                 '_' +
                 String(Math.random()).slice(2);
         marker.style.lineHeight = '0';
         marker.style.display = 'none';
-        marker.setAttribute('data-' + constants.MARKER_CLASS, atStart ? 'start' : 'end');
-        marker.appendChild(this.j.createInside.text(constants.INVISIBLE_SPACE));
+        marker.setAttribute('data-' + jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.MARKER_CLASS, atStart ? 'start' : 'end');
+        marker.appendChild(this.j.createInside.text(jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE));
         if (newRange) {
-            if (dom/* Dom.isOrContains */.i.isOrContains(this.area, atStart ? newRange.startContainer : newRange.endContainer)) {
+            if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isOrContains */ .i.isOrContains(this.area, atStart ? newRange.startContainer : newRange.endContainer)) {
                 newRange.insertNode(marker);
             }
         }
@@ -3878,7 +2268,7 @@ class Select {
     }
     restore() {
         let range = false;
-        const markAttr = (start) => `span[data-${constants.MARKER_CLASS}=${start ? 'start' : 'end'}]`;
+        const markAttr = (start) => `span[data-${jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.MARKER_CLASS}=${start ? 'start' : 'end'}]`;
         const start = this.area.querySelector(markAttr(true)), end = this.area.querySelector(markAttr(false));
         if (!start) {
             return;
@@ -3886,20 +2276,20 @@ class Select {
         range = this.createRange();
         if (!end) {
             const previousNode = start.previousSibling;
-            if (dom/* Dom.isText */.i.isText(previousNode)) {
+            if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(previousNode)) {
                 range.setStart(previousNode, previousNode.nodeValue ? previousNode.nodeValue.length : 0);
             }
             else {
                 range.setStartBefore(start);
             }
-            dom/* Dom.safeRemove */.i.safeRemove(start);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove(start);
             range.collapse(true);
         }
         else {
             range.setStartAfter(start);
-            dom/* Dom.safeRemove */.i.safeRemove(start);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove(start);
             range.setEndBefore(end);
-            dom/* Dom.safeRemove */.i.safeRemove(end);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove(end);
         }
         if (range) {
             this.selectRange(range);
@@ -3968,7 +2358,7 @@ class Select {
     }) {
         var _a, _b;
         if (!this.isFocused()) {
-            const scrollParent = (0,helpers.getScrollParent)(this.j.container), scrollTop = scrollParent === null || scrollParent === void 0 ? void 0 : scrollParent.scrollTop;
+            const scrollParent = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.getScrollParent)(this.j.container), scrollTop = scrollParent === null || scrollParent === void 0 ? void 0 : scrollParent.scrollTop;
             if (this.j.iframe) {
                 if (this.doc.readyState === 'complete') {
                     this.j.iframe.focus(options);
@@ -3980,7 +2370,7 @@ class Select {
                 scrollParent.scrollTo(0, scrollTop);
             }
             const sel = this.sel, range = (sel === null || sel === void 0 ? void 0 : sel.rangeCount) ? sel === null || sel === void 0 ? void 0 : sel.getRangeAt(0) : null;
-            if (!range || !dom/* Dom.isOrContains */.i.isOrContains(this.area, range.startContainer)) {
+            if (!range || !jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isOrContains */ .i.isOrContains(this.area, range.startContainer)) {
                 const range = this.createRange();
                 range.setStart(this.area, 0);
                 range.collapse(true);
@@ -4008,7 +2398,7 @@ class Select {
             this.area === this.doc.activeElement);
     }
     current(checkChild = true) {
-        if (this.j.getRealMode() === constants.MODE_WYSIWYG) {
+        if (this.j.getRealMode() === jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.MODE_WYSIWYG) {
             const sel = this.sel;
             if (!sel || sel.rangeCount === 0) {
                 return null;
@@ -4016,24 +2406,24 @@ class Select {
             const range = sel.getRangeAt(0);
             let node = range.startContainer, rightMode = false;
             const child = (nd) => rightMode ? nd.lastChild : nd.firstChild;
-            if (dom/* Dom.isTag */.i.isTag(node, 'br') && sel.isCollapsed) {
+            if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isTag */ .i.isTag(node, 'br') && sel.isCollapsed) {
                 return node;
             }
-            if (!dom/* Dom.isText */.i.isText(node)) {
+            if (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(node)) {
                 node = range.startContainer.childNodes[range.startOffset];
                 if (!node) {
                     node =
                         range.startContainer.childNodes[range.startOffset - 1];
                     rightMode = true;
                 }
-                if (node && sel.isCollapsed && !dom/* Dom.isText */.i.isText(node)) {
-                    if (!rightMode && dom/* Dom.isText */.i.isText(node.previousSibling)) {
+                if (node && sel.isCollapsed && !jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(node)) {
+                    if (!rightMode && jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(node.previousSibling)) {
                         node = node.previousSibling;
                     }
                     else if (checkChild) {
                         let current = child(node);
                         while (current) {
-                            if (current && dom/* Dom.isText */.i.isText(current)) {
+                            if (current && jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(current)) {
                                 node = current;
                                 break;
                             }
@@ -4041,20 +2431,20 @@ class Select {
                         }
                     }
                 }
-                if (node && !sel.isCollapsed && !dom/* Dom.isText */.i.isText(node)) {
+                if (node && !sel.isCollapsed && !jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(node)) {
                     let leftChild = node, rightChild = node;
                     do {
                         leftChild = leftChild.firstChild;
                         rightChild = rightChild.lastChild;
-                    } while (leftChild && rightChild && !dom/* Dom.isText */.i.isText(leftChild));
+                    } while (leftChild && rightChild && !jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(leftChild));
                     if (leftChild === rightChild &&
                         leftChild &&
-                        dom/* Dom.isText */.i.isText(leftChild)) {
+                        jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(leftChild)) {
                         node = leftChild;
                     }
                 }
             }
-            if (node && dom/* Dom.isOrContains */.i.isOrContains(this.area, node)) {
+            if (node && jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isOrContains */ .i.isOrContains(this.area, node)) {
                 return node;
             }
         }
@@ -4074,8 +2464,8 @@ class Select {
         }
         if (sel && sel.rangeCount) {
             const range = sel.getRangeAt(0);
-            if (dom/* Dom.isOrContains */.i.isOrContains(this.area, range.commonAncestorContainer)) {
-                if (dom/* Dom.isTag */.i.isTag(range.startContainer, constants.INSEPARABLE_TAGS) &&
+            if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isOrContains */ .i.isOrContains(this.area, range.commonAncestorContainer)) {
+                if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isTag */ .i.isTag(range.startContainer, jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INSEPARABLE_TAGS) &&
                     range.collapsed) {
                     (_a = range.startContainer.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(node, range.startContainer);
                 }
@@ -4116,7 +2506,7 @@ class Select {
             this.focus();
             this.restore();
         }
-        if (!dom/* Dom.isNode */.i.isNode(html)) {
+        if (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isNode */ .i.isNode(html)) {
             node.innerHTML = html.toString();
         }
         else {
@@ -4146,8 +2536,8 @@ class Select {
         }
     }
     insertImage(url, styles = null, defaultWidth = null) {
-        const image = (0,helpers.isString)(url) ? this.j.createInside.element('img') : url;
-        if ((0,helpers.isString)(url)) {
+        const image = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.isString)(url) ? this.j.createInside.element('img') : url;
+        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.isString)(url)) {
             image.setAttribute('src', url);
         }
         if (defaultWidth != null) {
@@ -4158,10 +2548,10 @@ class Select {
                 String(dw).indexOf('%') < 0) {
                 dw += 'px';
             }
-            (0,helpers.call)(this.j.o.resizer.forImageChangeAttributes ? helpers.attr : helpers.css, image, 'width', dw);
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.call)(this.j.o.resizer.forImageChangeAttributes ? jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr : jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.css, image, 'width', dw);
         }
         if (styles && typeof styles === 'object') {
-            (0,helpers.css)(image, styles);
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.css)(image, styles);
         }
         const onload = () => {
             if (image.naturalHeight < image.offsetHeight ||
@@ -4184,7 +2574,7 @@ class Select {
         if (sel && sel.rangeCount) {
             const range = sel.getRangeAt(0);
             let root = range.commonAncestorContainer;
-            if (!dom/* Dom.isHTMLElement */.i.isHTMLElement(root)) {
+            if (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isHTMLElement */ .i.isHTMLElement(root)) {
                 root = root.parentElement;
             }
             const nodes = [], startOffset = range.startOffset, length = root.childNodes.length, elementOffset = startOffset < length ? startOffset : length - 1;
@@ -4193,13 +2583,13 @@ class Select {
                 : range.startContainer, end = range.endContainer === this.area
                 ? root.childNodes[range.endOffset - 1]
                 : range.endContainer;
-            if (dom/* Dom.isText */.i.isText(start) &&
+            if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(start) &&
                 start === range.startContainer &&
                 range.startOffset === ((_a = start.nodeValue) === null || _a === void 0 ? void 0 : _a.length) &&
                 start.nextSibling) {
                 start = start.nextSibling;
             }
-            if (dom/* Dom.isText */.i.isText(end) &&
+            if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(end) &&
                 end === range.endContainer &&
                 range.endOffset === 0 &&
                 end.previousSibling) {
@@ -4208,39 +2598,39 @@ class Select {
             const checkElm = (node) => {
                 if (node &&
                     node !== root &&
-                    !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(node) &&
+                    !jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isEmptyTextNode */ .i.isEmptyTextNode(node) &&
                     !Select.isMarker(node)) {
                     nodes.push(node);
                 }
             };
             checkElm(start);
             if (start !== end) {
-                dom/* Dom.find */.i.find(start, node => {
+                jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.find */ .i.find(start, node => {
                     checkElm(node);
                     return (node === end ||
                         (node && node.contains && node.contains(end)));
                 }, root, true, false);
             }
             const forEvery = (current) => {
-                if (!dom/* Dom.isOrContains */.i.isOrContains(this.j.editor, current, true)) {
+                if (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isOrContains */ .i.isOrContains(this.j.editor, current, true)) {
                     return;
                 }
                 if (current.nodeName.match(/^(UL|OL)$/)) {
-                    return (0,helpers.toArray)(current.childNodes).forEach(forEvery);
+                    return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.toArray)(current.childNodes).forEach(forEvery);
                 }
-                if (dom/* Dom.isTag */.i.isTag(current, 'li')) {
+                if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isTag */ .i.isTag(current, 'li')) {
                     if (current.firstChild) {
                         current = current.firstChild;
                     }
                     else {
-                        const currentB = this.j.createInside.text(constants.INVISIBLE_SPACE);
+                        const currentB = this.j.createInside.text(jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE);
                         current.appendChild(currentB);
                         current = currentB;
                     }
                 }
                 callback(current);
             };
-            if (nodes.length === 0 && dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(start)) {
+            if (nodes.length === 0 && jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isEmptyTextNode */ .i.isEmptyTextNode(start)) {
                 nodes.push(start);
             }
             if (nodes.length === 0 && start.firstChild) {
@@ -4254,25 +2644,25 @@ class Select {
         const end = !start, range = (_a = this.sel) === null || _a === void 0 ? void 0 : _a.getRangeAt(0), current = this.current(false);
         if (!range ||
             !current ||
-            !dom/* Dom.isOrContains */.i.isOrContains(parentBlock, current, true)) {
+            !jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isOrContains */ .i.isOrContains(parentBlock, current, true)) {
             return null;
         }
         const container = start ? range.startContainer : range.endContainer;
         const offset = start ? range.startOffset : range.endOffset;
-        const check = (elm) => elm && !dom/* Dom.isTag */.i.isTag(elm, 'br') && !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm);
-        if (dom/* Dom.isText */.i.isText(container)) {
+        const check = (elm) => elm && !jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isTag */ .i.isTag(elm, 'br') && !jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isEmptyTextNode */ .i.isEmptyTextNode(elm);
+        if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(container)) {
             const text = ((_b = container.nodeValue) === null || _b === void 0 ? void 0 : _b.length) ? container.nodeValue : '';
-            if (end && text.replace((0,constants.INVISIBLE_SPACE_REG_EXP_END)(), '').length > offset) {
+            if (end && text.replace((0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE_REG_EXP_END)(), '').length > offset) {
                 return false;
             }
-            const inv = (0,constants.INVISIBLE_SPACE_REG_EXP_START)().exec(text);
+            const inv = (0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE_REG_EXP_START)().exec(text);
             if (start &&
                 ((inv && inv[0].length < offset) || (!inv && offset > 0))) {
                 return false;
             }
         }
         else {
-            const children = (0,helpers.toArray)(container.childNodes);
+            const children = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.toArray)(container.childNodes);
             if (end) {
                 if (children.slice(offset).some(check)) {
                     return false;
@@ -4284,7 +2674,7 @@ class Select {
                 }
             }
         }
-        return !(0,helpers.call)(start ? dom/* Dom.prev */.i.prev : dom/* Dom.next */.i.next, current, check, parentBlock);
+        return !(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.call)(start ? jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.prev */ .i.prev : jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.next */ .i.next, current, check, parentBlock);
     }
     cursorOnTheLeft(parentBlock) {
         return this.cursorInTheEdge(true, parentBlock);
@@ -4301,13 +2691,13 @@ class Select {
     setCursorNearWith(node, inStart) {
         var _a, _b;
         this.errorNode(node);
-        if (!dom/* Dom.up */.i.up(node, (elm) => elm === this.area || (elm && elm.parentNode === this.area), this.area)) {
-            throw (0,helpers.error)('Node element must be in editor');
+        if (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.up */ .i.up(node, (elm) => elm === this.area || (elm && elm.parentNode === this.area), this.area)) {
+            throw (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.error)('Node element must be in editor');
         }
         const range = this.createRange();
         let fakeNode = null;
-        if (!dom/* Dom.isText */.i.isText(node)) {
-            fakeNode = this.j.createInside.text(constants.INVISIBLE_SPACE);
+        if (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(node)) {
+            fakeNode = this.j.createInside.text(jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE);
             inStart ? range.setStartBefore(node) : range.setEndAfter(node);
             range.collapse(inStart);
             range.insertNode(fakeNode);
@@ -4327,20 +2717,20 @@ class Select {
     }
     setCursorIn(node, inStart = false) {
         this.errorNode(node);
-        if (!dom/* Dom.up */.i.up(node, (elm) => elm === this.area || (elm && elm.parentNode === this.area), this.area)) {
-            throw (0,helpers.error)('Node element must be in editor');
+        if (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.up */ .i.up(node, (elm) => elm === this.area || (elm && elm.parentNode === this.area), this.area)) {
+            throw (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.error)('Node element must be in editor');
         }
         const range = this.createRange();
         let start = node, last = node;
         do {
-            if (dom/* Dom.isText */.i.isText(start)) {
+            if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(start)) {
                 break;
             }
             last = start;
             start = inStart ? start.firstChild : start.lastChild;
         } while (start);
         if (!start) {
-            const fakeNode = this.j.createInside.text(constants.INVISIBLE_SPACE);
+            const fakeNode = this.j.createInside.text(jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE);
             if (!/^(img|br|input)$/i.test(last.nodeName)) {
                 last.appendChild(fakeNode);
                 last = fakeNode;
@@ -4367,8 +2757,8 @@ class Select {
     }
     select(node, inward = false) {
         this.errorNode(node);
-        if (!dom/* Dom.up */.i.up(node, (elm) => elm === this.area || (elm && elm.parentNode === this.area), this.area)) {
-            throw (0,helpers.error)('Node element must be in editor');
+        if (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.up */ .i.up(node, (elm) => elm === this.area || (elm && elm.parentNode === this.area), this.area)) {
+            throw (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.error)('Node element must be in editor');
         }
         const range = this.createRange();
         range[inward ? 'selectNodeContents' : 'selectNode'](node);
@@ -4387,7 +2777,7 @@ class Select {
     }
     *wrapInTagGen() {
         if (this.isCollapsed()) {
-            const font = this.jodit.createInside.element('font', constants.INVISIBLE_SPACE);
+            const font = this.jodit.createInside.element('font', jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE);
             this.insertNode(font, false, false);
             const [marker] = this.markers;
             if (marker) {
@@ -4398,42 +2788,42 @@ class Select {
                 this.save();
             }
             yield font;
-            dom/* Dom.unwrap */.i.unwrap(font);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.unwrap */ .i.unwrap(font);
             return;
         }
-        (0,helpers.$$)('*[style*=font-size]', this.area).forEach(elm => (0,helpers.attr)(elm, 'data-font-size', elm.style.fontSize.toString()));
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.$$)('*[style*=font-size]', this.area).forEach(elm => (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(elm, 'data-font-size', elm.style.fontSize.toString()));
         if (!this.isCollapsed()) {
             this.j.nativeExecCommand('fontsize', false, '7');
         }
         else {
             const font = this.j.createInside.element('font');
-            (0,helpers.attr)(font, 'size', 7);
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(font, 'size', 7);
             this.insertNode(font, false, false);
         }
-        (0,helpers.$$)('*[data-font-size]', this.area).forEach(elm => {
-            const fontSize = (0,helpers.attr)(elm, 'data-font-size');
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.$$)('*[data-font-size]', this.area).forEach(elm => {
+            const fontSize = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(elm, 'data-font-size');
             if (fontSize) {
                 elm.style.fontSize = fontSize;
-                (0,helpers.attr)(elm, 'data-font-size', null);
+                (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(elm, 'data-font-size', null);
             }
         });
-        const elms = (0,helpers.$$)('font[size="7"]', this.area);
+        const elms = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.$$)('font[size="7"]', this.area);
         for (const font of elms) {
             const { firstChild, lastChild } = font;
             if (firstChild &&
                 firstChild === lastChild &&
                 Select.isMarker(firstChild)) {
-                dom/* Dom.unwrap */.i.unwrap(font);
+                jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.unwrap */ .i.unwrap(font);
                 continue;
             }
             if (firstChild && Select.isMarker(firstChild)) {
-                dom/* Dom.before */.i.before(font, firstChild);
+                jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.before */ .i.before(font, firstChild);
             }
             if (lastChild && Select.isMarker(lastChild)) {
-                dom/* Dom.after */.i.after(font, lastChild);
+                jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.after */ .i.after(font, lastChild);
             }
             yield font;
-            dom/* Dom.unwrap */.i.unwrap(font);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.unwrap */ .i.unwrap(font);
         }
     }
     wrapInTag(tagOrCallback) {
@@ -4445,19 +2835,19 @@ class Select {
                     Select.isMarker(font.firstChild)) {
                     continue;
                 }
-                if ((0,helpers.isFunction)(tagOrCallback)) {
+                if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.isFunction)(tagOrCallback)) {
                     tagOrCallback(font);
                 }
                 else {
-                    result.push(dom/* Dom.replace */.i.replace(font, tagOrCallback, this.j.createInside));
+                    result.push(jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.replace */ .i.replace(font, tagOrCallback, this.j.createInside));
                 }
             }
             finally {
                 const pn = font.parentNode;
                 if (pn) {
-                    dom/* Dom.unwrap */.i.unwrap(font);
-                    if (dom/* Dom.isEmpty */.i.isEmpty(pn)) {
-                        dom/* Dom.unwrap */.i.unwrap(pn);
+                    jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.unwrap */ .i.unwrap(font);
+                    if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isEmpty */ .i.isEmpty(pn)) {
+                        jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.unwrap */ .i.unwrap(pn);
                     }
                 }
             }
@@ -4465,7 +2855,7 @@ class Select {
         return result;
     }
     applyStyle(style, options = {}) {
-        const styleElm = new CommitStyle({
+        const styleElm = new _style_commit_style__WEBPACK_IMPORTED_MODULE_3__/* .CommitStyle */ .RP({
             style,
             element: options.element,
             className: options.className,
@@ -4482,7 +2872,7 @@ class Select {
         leftRange.setStartBefore(currentBox);
         const cursorOnTheRight = this.cursorOnTheRight(currentBox);
         const cursorOnTheLeft = this.cursorOnTheLeft(currentBox);
-        const br = this.j.createInside.element('br'), prevFake = this.j.createInside.text(constants.INVISIBLE_SPACE), nextFake = prevFake.cloneNode();
+        const br = this.j.createInside.element('br'), prevFake = this.j.createInside.text(jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE), nextFake = prevFake.cloneNode();
         try {
             if (cursorOnTheRight || cursorOnTheLeft) {
                 range.insertNode(br);
@@ -4491,8 +2881,8 @@ class Select {
                     while (next) {
                         const nextSib = getNext(next);
                         if (next &&
-                            (dom/* Dom.isTag */.i.isTag(next, 'br') || dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(next))) {
-                            dom/* Dom.safeRemove */.i.safeRemove(next);
+                            (jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isTag */ .i.isTag(next, 'br') || jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isEmptyTextNode */ .i.isEmptyTextNode(next))) {
+                            jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove(next);
                         }
                         else {
                             break;
@@ -4502,8 +2892,8 @@ class Select {
                 };
                 clearBR(br, (n) => n.nextSibling);
                 clearBR(br, (n) => n.previousSibling);
-                dom/* Dom.after */.i.after(br, nextFake);
-                dom/* Dom.before */.i.before(br, prevFake);
+                jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.after */ .i.after(br, nextFake);
+                jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.before */ .i.before(br, prevFake);
                 if (cursorOnTheRight) {
                     leftRange.setEndBefore(br);
                     range.setEndBefore(br);
@@ -4540,457 +2930,59 @@ class Select {
             fillFakeParent(nextFake);
         }
         finally {
-            dom/* Dom.safeRemove */.i.safeRemove(prevFake);
-            dom/* Dom.safeRemove */.i.safeRemove(nextFake);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove(prevFake);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove(nextFake);
         }
         return currentBox.previousElementSibling;
     }
 }
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__.autobind
 ], Select.prototype, "createRange", null);
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__.autobind
 ], Select.prototype, "focus", null);
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__.autobind
 ], Select.prototype, "setCursorAfter", null);
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__.autobind
 ], Select.prototype, "setCursorBefore", null);
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__.autobind
 ], Select.prototype, "setCursorIn", null);
 
-;// CONCATENATED MODULE: ./src/core/selection/style/api/extract.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
 
+/***/ }),
+/* 23 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-
-function extractSelectedPart(wrapper, font, jodit) {
-    const range = jodit.s.createRange();
-    const leftEdge = Select.isMarker(font.previousSibling)
-        ? font.previousSibling
-        : font;
-    range.setStartBefore(wrapper);
-    range.setEndBefore(leftEdge);
-    extractAndMove(wrapper, range, true);
-    const rightEdge = Select.isMarker(font.nextSibling)
-        ? font.nextSibling
-        : font;
-    range.setStartAfter(rightEdge);
-    range.setEndAfter(wrapper);
-    extractAndMove(wrapper, range, false);
-}
-function extractAndMove(wrapper, range, left) {
-    const fragment = range.extractContents();
-    if ((!fragment.textContent || !(0,helpers.trim)(fragment.textContent).length) &&
-        fragment.firstChild) {
-        dom/* Dom.unwrap */.i.unwrap(fragment.firstChild);
-    }
-    if (wrapper.parentNode) {
-        (0,helpers.call)(left ? dom/* Dom.before */.i.before : dom/* Dom.after */.i.after, wrapper, fragment);
-    }
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/toggle/toggle-ordered-list.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-function toggleOrderedList(style, li, jodit, mode) {
-    if (!li) {
-        return mode;
-    }
-    const list = li.parentElement;
-    if (!list) {
-        return mode;
-    }
-    if (list.tagName.toLowerCase() !== style.element) {
-        const newList = dom/* Dom.replace */.i.replace(list, style.element, jodit.createInside);
-        toggleCSS(style, newList, jodit, mode);
-        return REPLACE;
-    }
-    if (toggleCSS(style, li.parentElement, jodit, INITIAL, true) === CHANGE) {
-        return toggleCSS(style, li.parentElement, jodit, mode);
-    }
-    extractSelectedPart(list, li, jodit);
-    dom/* Dom.unwrap */.i.unwrap(li.parentElement);
-    dom/* Dom.replace */.i.replace(li, jodit.o.enter, jodit.createInside);
-    return mode;
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/element-has-same-style.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function elementHasSameStyle(elm, rules) {
-    return Boolean(!dom/* Dom.isTag */.i.isTag(elm, 'font') &&
-        dom/* Dom.isHTMLElement */.i.isHTMLElement(elm) &&
-        Object.keys(rules).every(property => {
-            const value = (0,helpers.css)(elm, property, true);
-            return (!(0,helpers.isVoid)(value) &&
-                value !== '' &&
-                !(0,helpers.isVoid)(rules[property]) &&
-                (0,helpers.normalizeCssValue)(property, rules[property])
-                    .toString()
-                    .toLowerCase() === value.toString().toLowerCase());
-        }));
-}
-function elementHasSameStyleKeys(elm, rules) {
-    return Boolean(!dom/* Dom.isTag */.i.isTag(elm, 'font') &&
-        dom/* Dom.isHTMLElement */.i.isHTMLElement(elm) &&
-        Object.keys(rules).every(property => !(0,helpers.isVoid)((0,helpers.css)(elm, property, true))));
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/finite-state-machine.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-class FiniteStateMachine {
-    constructor(state, transitions) {
-        this.state = state;
-        this.transitions = transitions;
-        this.subState = '';
-        this.silent = true;
-    }
-    setState(state, subState) {
-        this.state = state;
-        if (subState != null) {
-            this.subState = subState;
-        }
-    }
-    getState() {
-        return this.state;
-    }
-    getSubState() {
-        return this.subState;
-    }
-    disableSilent() {
-        this.silent = false;
-    }
-    dispatch(actionName, ...attrs) {
-        const action = this.transitions[this.state][actionName];
-        if (action) {
-            if (!this.silent) {
-                console.log('State: ' + this.state, 'Action: ' + actionName);
-            }
-            const res = action.call(this, ...attrs);
-            if (!this.silent) {
-                console.log('State: ' + this.state);
-            }
-            return res;
-        }
-        if (!this.silent) {
-            throw new Error('invalid action: ' + this.state + '.' + actionName);
-        }
-        return;
-    }
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/is-normal-node.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function isNormalNode(elm) {
-    return Boolean(elm && !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm) && !dom/* Dom.isTemporary */.i.isTemporary(elm));
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/is-suit-element.ts
-
-
-
-function isSuitElement(commitStyle, elm, strict) {
-    if (!elm) {
-        return false;
-    }
-    const { element, elementIsDefault, options } = commitStyle;
-    const elmHasSameStyle = Boolean(options.style && elementHasSameStyle(elm, options.style));
-    const elmIsSame = elm.nodeName.toLowerCase() === element ||
-        (dom/* Dom.isTag */.i.isTag(elm, ['ul', 'ol']) && commitStyle.elementIsList);
-    if (((!elementIsDefault || !strict) && elmIsSame) ||
-        (elmHasSameStyle && isNormalNode(elm))) {
-        return true;
-    }
-    return Boolean(!elmIsSame && !strict && elementIsDefault && dom/* Dom.isInlineBlock */.i.isInlineBlock(elm));
-}
-function isSameStyleChild(commitStyle, elm) {
-    const { element, options } = commitStyle;
-    if (!elm || !isNormalNode(elm)) {
-        return false;
-    }
-    const elmIsSame = elm.nodeName.toLowerCase() === element;
-    const elmHasSameStyle = Boolean(options.style && elementHasSameStyleKeys(elm, options.style));
-    return elmIsSame && elmHasSameStyle;
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/get-suit-child.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-function getSuitChild(style, font) {
-    let { firstChild: child } = font;
-    while (child && !isNormalNode(child)) {
-        child = child.nextSibling;
-        if (!child) {
-            return null;
-        }
-    }
-    if (child &&
-        !dom/* Dom.next */.i.next(child, isNormalNode, font) &&
-        isSuitElement(style, child, false)) {
-        return child;
-    }
-    return null;
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/get-suit-parent.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-function getSuitParent(style, node, root) {
-    const { parentNode } = node;
-    if (parentNode === root ||
-        !dom/* Dom.isHTMLElement */.i.isHTMLElement(parentNode) ||
-        dom/* Dom.next */.i.next(node, isNormalNode, parentNode) ||
-        dom/* Dom.prev */.i.prev(node, isNormalNode, parentNode)) {
-        return null;
-    }
-    if (style.isElementCommit &&
-        style.elementIsBlock &&
-        !dom/* Dom.isBlock */.i.isBlock(parentNode)) {
-        return getSuitParent(style, parentNode, root);
-    }
-    if (isSuitElement(style, parentNode, false) &&
-        (!dom/* Dom.isBlock */.i.isBlock(parentNode) || style.elementIsBlock)) {
-        return parentNode;
-    }
-    return null;
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/is-inside-invisible-element.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function isInsideInvisibleElement(font, root) {
-    return Boolean(dom/* Dom.closest */.i.closest(font, ['style', 'script'], root));
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/toggle-commit-styles.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function toggleCommitStyles(commitStyle, elm) {
-    if (commitStyle.elementIsBlock ||
-        (dom/* Dom.isTag */.i.isTag(elm, commitStyle.element) && !commitStyle.elementIsDefault)) {
-        dom/* Dom.unwrap */.i.unwrap(elm);
-        return true;
-    }
-    return false;
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/unwrap-children.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-function unwrapChildren(style, font) {
-    const needUnwrap = [];
-    const needChangeStyle = [];
-    let firstElementSuit;
-    const cssStyle = style.options.style;
-    if (font.firstChild) {
-        const gen = dom/* Dom.eachGen */.i.eachGen(font);
-        let item = gen.next();
-        while (!item.done) {
-            const elm = item.value;
-            if (isSuitElement(style, elm, true)) {
-                if (firstElementSuit === undefined) {
-                    firstElementSuit = true;
-                }
-                needUnwrap.push(elm);
-            }
-            else if (cssStyle && isSameStyleChild(style, elm)) {
-                if (firstElementSuit === undefined) {
-                    firstElementSuit = false;
-                }
-                needChangeStyle.push(() => {
-                    (0,helpers.css)(elm, Object.keys(cssStyle).reduce((acc, key) => {
-                        acc[key] = null;
-                        return acc;
-                    }, {}));
-                    if (!(0,helpers.attr)(elm, 'style')) {
-                        (0,helpers.attr)(elm, 'style', null);
-                    }
-                    if (elm.nodeName.toLowerCase() === style.element) {
-                        needUnwrap.push(elm);
-                    }
-                });
-            }
-            else if (!dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm)) {
-                if (firstElementSuit === undefined) {
-                    firstElementSuit = false;
-                }
-            }
-            item = gen.next();
-        }
-    }
-    needChangeStyle.forEach(clb => clb());
-    needUnwrap.forEach(dom/* Dom.unwrap */.i.unwrap);
-    return Boolean(firstElementSuit);
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/wrap-unwrapped-text.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function wrapUnwrappedText(style, elm, jodit, getRange) {
-    const root = jodit.editor, ci = jodit.createInside, edge = (n, key = 'previousSibling') => {
-        let edgeNode = n, node = n;
-        while (node) {
-            if (dom/* Dom.isTag */.i.isTag(node, jodit.o.enter)) {
-                break;
-            }
-            edgeNode = node;
-            if (node[key]) {
-                node = node[key];
-            }
-            else {
-                node =
-                    node.parentNode &&
-                        !dom/* Dom.isBlock */.i.isBlock(node.parentNode) &&
-                        node.parentNode !== root
-                        ? node.parentNode
-                        : null;
-            }
-            if (dom/* Dom.isBlock */.i.isBlock(node)) {
-                break;
-            }
-        }
-        return edgeNode;
-    };
-    const start = edge(elm), end = edge(elm, 'nextSibling');
-    const range = getRange();
-    range.setStartBefore(start);
-    range.setEndAfter(end);
-    const fragment = range.extractContents();
-    const wrapper = ci.element(style.element);
-    wrapper.appendChild(fragment);
-    range.insertNode(wrapper);
-    if (style.elementIsBlock) {
-        if (dom/* Dom.isEmpty */.i.isEmpty(wrapper) &&
-            !dom/* Dom.isTag */.i.isTag(wrapper.firstElementChild, 'br')) {
-            wrapper.appendChild(ci.element('br'));
-        }
-    }
-    return wrapper;
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/wrap-ordered-list.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function wrapOrderedList(commitStyle, wrapper, jodit) {
-    const newWrapper = dom/* Dom.replace */.i.replace(wrapper, 'li', jodit.createInside);
-    let list = newWrapper.previousElementSibling || newWrapper.nextElementSibling;
-    if (!dom/* Dom.isTag */.i.isTag(list, ['ul', 'ol'])) {
-        list = jodit.createInside.element(commitStyle.element);
-        dom/* Dom.before */.i.before(newWrapper, list);
-    }
-    if (newWrapper.previousElementSibling === list) {
-        dom/* Dom.append */.i.append(list, newWrapper);
-    }
-    else {
-        dom/* Dom.prepend */.i.prepend(list, newWrapper);
-    }
-    return list;
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/wrap-and-commit-style.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-function wrapAndCommitStyle(commitStyle, font, jodit) {
-    const wrapper = findOrCreateWrapper(commitStyle, font, jodit);
-    return commitStyle.elementIsList
-        ? wrapOrderedList(commitStyle, wrapper, jodit)
-        : dom/* Dom.replace */.i.replace(wrapper, commitStyle.element, jodit.createInside, true);
-}
-function findOrCreateWrapper(commitStyle, font, jodit) {
-    if (commitStyle.elementIsBlock) {
-        const box = dom/* Dom.up */.i.up(font, node => dom/* Dom.isBlock */.i.isBlock(node) &&
-            !dom/* Dom.isTag */.i.isTag(node, [
-                'td',
-                'th',
-                'tr',
-                'tbody',
-                'table',
-                'li',
-                'ul',
-                'ol'
-            ]), jodit.editor);
-        if (box) {
-            return box;
-        }
-    }
-    if (commitStyle.elementIsBlock) {
-        return wrapUnwrappedText(commitStyle, font, jodit, jodit.s.createRange);
-    }
-    (0,helpers.attr)(font, 'size', null);
-    return font;
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/index.ts
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cache": function() { return /* reexport safe */ _cache_cache__WEBPACK_IMPORTED_MODULE_0__.F; },
+/* harmony export */   "component": function() { return /* reexport safe */ _component_component__WEBPACK_IMPORTED_MODULE_1__.w; },
+/* harmony export */   "debounce": function() { return /* reexport safe */ _debounce_debounce__WEBPACK_IMPORTED_MODULE_2__.D; },
+/* harmony export */   "throttle": function() { return /* reexport safe */ _debounce_debounce__WEBPACK_IMPORTED_MODULE_2__.P; },
+/* harmony export */   "idle": function() { return /* reexport safe */ _idle_idle__WEBPACK_IMPORTED_MODULE_3__.N; },
+/* harmony export */   "hook": function() { return /* reexport safe */ _hook_hook__WEBPACK_IMPORTED_MODULE_4__.z; },
+/* harmony export */   "nonenumerable": function() { return /* reexport safe */ _nonenumerable_nonenumerable__WEBPACK_IMPORTED_MODULE_5__.h; },
+/* harmony export */   "persistent": function() { return /* reexport safe */ _persistent_persistent__WEBPACK_IMPORTED_MODULE_6__.a; },
+/* harmony export */   "wait": function() { return /* reexport safe */ _wait_wait__WEBPACK_IMPORTED_MODULE_7__.D; },
+/* harmony export */   "getPropertyDescriptor": function() { return /* reexport safe */ _watch_watch__WEBPACK_IMPORTED_MODULE_8__.w7; },
+/* harmony export */   "watch": function() { return /* reexport safe */ _watch_watch__WEBPACK_IMPORTED_MODULE_8__.YP; },
+/* harmony export */   "autobind": function() { return /* reexport safe */ autobind_decorator__WEBPACK_IMPORTED_MODULE_9__.ZP; }
+/* harmony export */ });
+/* harmony import */ var _cache_cache__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24);
+/* harmony import */ var _component_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(25);
+/* harmony import */ var _debounce_debounce__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(26);
+/* harmony import */ var _idle_idle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(45);
+/* harmony import */ var _hook_hook__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(46);
+/* harmony import */ var _nonenumerable_nonenumerable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(153);
+/* harmony import */ var _persistent_persistent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(47);
+/* harmony import */ var _wait_wait__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(48);
+/* harmony import */ var _watch_watch__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(49);
+/* harmony import */ var autobind_decorator__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(55);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5004,238 +2996,19 @@ function findOrCreateWrapper(commitStyle, font, jodit) {
 
 
 
-
-
-
-
-
-
-
-
-;// CONCATENATED MODULE: ./src/core/selection/style/apply-style.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-function ApplyStyle(jodit, cs) {
-    const { s: sel, editor } = jodit;
-    const fsm = new FiniteStateMachine('start', {
-        start: {
-            start() {
-                sel.save();
-                (0,helpers.normalizeNode)(editor.firstChild);
-                this.setState('generator');
-            }
-        },
-        generator: {
-            initGenerator() {
-                return jodit.s.wrapInTagGen();
-            },
-            nextFont(gen) {
-                const font = gen.next();
-                if (font.done) {
-                    this.setState('end');
-                    return;
-                }
-                if (isInsideInvisibleElement(font.value, editor) ||
-                    dom/* Dom.isEmptyContent */.i.isEmptyContent(font.value)) {
-                    return;
-                }
-                this.setState('check');
-                return font.value;
-            }
-        },
-        check: {
-            work(font) {
-                let elm = getSuitParent(cs, font, jodit.editor) ||
-                    getSuitChild(cs, font);
-                if (elm) {
-                    this.setState('wholeElement');
-                    return elm;
-                }
-                elm = dom/* Dom.closest */.i.closest(font, node => isSuitElement(cs, node, true), jodit.editor);
-                if (elm) {
-                    if (!cs.elementIsBlock) {
-                        extractSelectedPart(elm, font, jodit);
-                    }
-                }
-                if (cs.elementIsList && dom/* Dom.isTag */.i.isTag(elm, ['ul', 'ol'])) {
-                    this.setState('orderList');
-                    return font;
-                }
-                if (elm) {
-                    this.setState('wholeElement');
-                    return elm;
-                }
-                if (unwrapChildren(cs, font)) {
-                    this.setState('endProcess');
-                    return null;
-                }
-                this.setState('wrap');
-                return font;
-            }
-        },
-        wholeElement: {
-            toggleStyles(toggleElm) {
-                let mode = INITIAL;
-                if (toggleCommitStyles(cs, toggleElm)) {
-                    mode = UNWRAP;
-                }
-                else {
-                    mode = toggleCSS(cs, toggleElm, jodit, mode);
-                }
-                this.setState('generator', mode);
-            }
-        },
-        orderList: {
-            toggleStyles(font) {
-                let mode = INITIAL;
-                const li = dom/* Dom.closest */.i.closest(font, 'li', jodit.editor);
-                if (!li) {
-                    this.setState('generator');
-                    return;
-                }
-                const ul = dom/* Dom.closest */.i.closest(font, ['ul', 'ol'], jodit.editor);
-                if (!ul) {
-                    this.setState('generator');
-                    return;
-                }
-                mode = toggleOrderedList(cs, li, jodit, mode);
-                if (mode === REPLACE || mode === UNWRAP || mode === CHANGE) {
-                    this.setState('endWhile');
-                    return;
-                }
-                this.setState('generator');
-            }
-        },
-        wrap: {
-            toggleStyles(font) {
-                if (this.getSubState() !== 'unwrap') {
-                    const toggleElm = wrapAndCommitStyle(cs, font, jodit);
-                    toggleCSS(cs, toggleElm, jodit, WRAP);
-                }
-                this.setState('generator');
-            }
-        },
-        endWhile: {
-            nextFont(gen) {
-                const font = gen.next();
-                if (font.done) {
-                    this.setState('end');
-                }
-            }
-        },
-        endProcess: {
-            toggleStyles() {
-                this.setState('generator');
-            }
-        },
-        end: {
-            finalize() {
-                sel.restore();
-            }
-        }
-    });
-    fsm.dispatch('start');
-    const gen = fsm.dispatch('initGenerator');
-    while (fsm.getState() !== 'end') {
-        const font = fsm.dispatch('nextFont', gen);
-        if (font) {
-            const wrapper = fsm.dispatch('work', font);
-            fsm.dispatch('toggleStyles', wrapper);
-        }
-    }
-    fsm.dispatch('finalize', gen);
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/commit-style.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-const WRAP = 'wrap';
-const UNWRAP = 'unwrap';
-const CHANGE = 'change';
-const UNSET = 'unset';
-const INITIAL = 'initial';
-const REPLACE = 'replace';
-class CommitStyle {
-    constructor(options) {
-        this.options = options;
-    }
-    get elementIsList() {
-        return Boolean(this.options.element && ['ul', 'ol'].includes(this.options.element));
-    }
-    get element() {
-        return this.options.element || this.defaultTag;
-    }
-    get elementIsBlock() {
-        return Boolean(this.options.element && constants.IS_BLOCK.test(this.options.element));
-    }
-    get isElementCommit() {
-        return Boolean(this.options.element &&
-            this.options.element !== this.options.defaultTag);
-    }
-    get defaultTag() {
-        if (this.options.defaultTag) {
-            return this.options.defaultTag;
-        }
-        return this.elementIsBlock ? 'p' : 'span';
-    }
-    get elementIsDefault() {
-        return this.element === this.defaultTag;
-    }
-    apply(jodit) {
-        ApplyStyle(jodit, this);
-    }
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
 
 
 
 
 /***/ }),
-/* 17 */
+/* 24 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "autobind": function() { return /* reexport */ autobind; },
-  "cache": function() { return /* reexport */ cache; },
-  "component": function() { return /* reexport */ component; },
-  "debounce": function() { return /* reexport */ debounce; },
-  "getPropertyDescriptor": function() { return /* reexport */ getPropertyDescriptor; },
-  "hook": function() { return /* reexport */ hook; },
-  "idle": function() { return /* reexport */ idle; },
-  "nonenumerable": function() { return /* reexport */ nonenumerable; },
-  "persistent": function() { return /* reexport */ persistent; },
-  "throttle": function() { return /* reexport */ throttle; },
-  "wait": function() { return /* reexport */ wait; },
-  "watch": function() { return /* reexport */ watch; }
-});
-
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
-var helpers = __webpack_require__(8);
-;// CONCATENATED MODULE: ./src/core/decorators/cache/cache.ts
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "F": function() { return /* binding */ cache; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5245,7 +3018,7 @@ var helpers = __webpack_require__(8);
 function cache(target, name, descriptor) {
     const getter = descriptor.get;
     if (!getter) {
-        throw (0,helpers.error)('Getter property descriptor expected');
+        throw (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.error)('Getter property descriptor expected');
     }
     descriptor.get = function () {
         const value = getter.call(this);
@@ -5262,7 +3035,16 @@ function cache(target, name, descriptor) {
     };
 }
 
-;// CONCATENATED MODULE: ./src/core/decorators/component/component.ts
+
+/***/ }),
+/* 25 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "w": function() { return /* binding */ component; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5270,7 +3052,7 @@ function cache(target, name, descriptor) {
  */
 
 const cn = (elm) => {
-    return (0,helpers.isFunction)(elm.className) ? elm.className() : NaN;
+    return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isFunction)(elm.className) ? elm.className() : NaN;
 };
 function component(constructorFunction) {
     class newConstructorFunction extends constructorFunction {
@@ -5290,13 +3072,19 @@ function component(constructorFunction) {
     return newConstructorFunction;
 }
 
-// EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
-var checker = __webpack_require__(18);
-// EXTERNAL MODULE: ./src/core/component/index.ts + 3 modules
-var core_component = __webpack_require__(12);
-// EXTERNAL MODULE: ./src/core/helpers/utils/error.ts
-var error = __webpack_require__(4);
-;// CONCATENATED MODULE: ./src/core/decorators/debounce/debounce.ts
+
+/***/ }),
+/* 26 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "D": function() { return /* binding */ debounce; },
+/* harmony export */   "P": function() { return /* binding */ throttle; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
+/* harmony import */ var jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(44);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5307,17 +3095,17 @@ var error = __webpack_require__(4);
 
 function debounce(timeout, firstCallImmediately = false, method = 'debounce') {
     return (target, propertyKey) => {
-        if (!(0,checker/* isFunction */.mf)(target[propertyKey])) {
-            throw (0,error/* error */.v)('Handler must be a Function');
+        if (!(0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isFunction */ .mf)(target[propertyKey])) {
+            throw (0,jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_2__/* .error */ .v)('Handler must be a Function');
         }
-        target.hookStatus(core_component/* STATUSES.ready */.n$.ready, (component) => {
-            const view = (0,checker/* isViewObject */.f2)(component)
+        target.hookStatus(jodit_core_component__WEBPACK_IMPORTED_MODULE_1__/* .STATUSES.ready */ .n$.ready, (component) => {
+            const view = (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isViewObject */ .f2)(component)
                 ? component
                 : component.jodit;
-            const realTimeout = (0,checker/* isFunction */.mf)(timeout)
+            const realTimeout = (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isFunction */ .mf)(timeout)
                 ? timeout(component)
                 : timeout;
-            component[propertyKey] = view.async[method](component[propertyKey].bind(component), (0,checker/* isNumber */.hj)(realTimeout) || (0,checker/* isPlainObject */.PO)(realTimeout)
+            component[propertyKey] = view.async[method](component[propertyKey].bind(component), (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isNumber */ .hj)(realTimeout) || (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isPlainObject */ .PO)(realTimeout)
                 ? realTimeout
                 : view.defaultTimeout, firstCallImmediately);
         });
@@ -5327,7 +3115,471 @@ function throttle(timeout, firstCallImmediately = false) {
     return debounce(timeout, firstCallImmediately, 'throttle');
 }
 
-;// CONCATENATED MODULE: ./src/core/decorators/idle/idle.ts
+
+/***/ }),
+/* 27 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "EO": function() { return /* reexport safe */ _has_browser_color_picker__WEBPACK_IMPORTED_MODULE_0__.E; },
+/* harmony export */   "kJ": function() { return /* reexport safe */ _is_array__WEBPACK_IMPORTED_MODULE_1__.k; },
+/* harmony export */   "jn": function() { return /* reexport safe */ _is_boolean__WEBPACK_IMPORTED_MODULE_2__.j; },
+/* harmony export */   "Xy": function() { return /* reexport safe */ _is_equal__WEBPACK_IMPORTED_MODULE_3__.X; },
+/* harmony export */   "LP": function() { return /* reexport safe */ _is_equal__WEBPACK_IMPORTED_MODULE_3__.L; },
+/* harmony export */   "mf": function() { return /* reexport safe */ _is_function__WEBPACK_IMPORTED_MODULE_4__.m; },
+/* harmony export */   "FP": function() { return /* reexport safe */ _is_html__WEBPACK_IMPORTED_MODULE_5__.F; },
+/* harmony export */   "I4": function() { return /* reexport safe */ _is_html_from_word__WEBPACK_IMPORTED_MODULE_6__.I; },
+/* harmony export */   "Zt": function() { return /* reexport safe */ _is_imp_interface__WEBPACK_IMPORTED_MODULE_7__.Zt; },
+/* harmony export */   "Z$": function() { return /* reexport safe */ _is_imp_interface__WEBPACK_IMPORTED_MODULE_7__.Z$; },
+/* harmony export */   "Gu": function() { return /* reexport safe */ _is_imp_interface__WEBPACK_IMPORTED_MODULE_7__.Gu; },
+/* harmony export */   "GN": function() { return /* reexport safe */ _is_int__WEBPACK_IMPORTED_MODULE_8__.G; },
+/* harmony export */   "Zu": function() { return /* reexport safe */ _is_jodit_object__WEBPACK_IMPORTED_MODULE_9__.Z; },
+/* harmony export */   "f2": function() { return /* reexport safe */ _is_jodit_object__WEBPACK_IMPORTED_MODULE_9__.f; },
+/* harmony export */   "A1": function() { return /* reexport safe */ _is_license__WEBPACK_IMPORTED_MODULE_10__.A; },
+/* harmony export */   "QC": function() { return /* reexport safe */ _is_native_function__WEBPACK_IMPORTED_MODULE_11__.Q; },
+/* harmony export */   "hj": function() { return /* reexport safe */ _is_number__WEBPACK_IMPORTED_MODULE_12__.h; },
+/* harmony export */   "kE": function() { return /* reexport safe */ _is_numeric__WEBPACK_IMPORTED_MODULE_13__.k; },
+/* harmony export */   "PO": function() { return /* reexport safe */ _is_plain_object__WEBPACK_IMPORTED_MODULE_14__.P; },
+/* harmony export */   "tI": function() { return /* reexport safe */ _is_promise__WEBPACK_IMPORTED_MODULE_15__.t; },
+/* harmony export */   "HD": function() { return /* reexport safe */ _is_string__WEBPACK_IMPORTED_MODULE_16__.H; },
+/* harmony export */   "PX": function() { return /* reexport safe */ _is_url__WEBPACK_IMPORTED_MODULE_17__.P; },
+/* harmony export */   "r1": function() { return /* reexport safe */ _is_valid_name__WEBPACK_IMPORTED_MODULE_18__.r; },
+/* harmony export */   "nj": function() { return /* reexport safe */ _is_void__WEBPACK_IMPORTED_MODULE_19__.n; },
+/* harmony export */   "FJ": function() { return /* reexport safe */ _is_window__WEBPACK_IMPORTED_MODULE_20__.F; }
+/* harmony export */ });
+/* harmony import */ var _has_browser_color_picker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(148);
+/* harmony import */ var _is_array__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(28);
+/* harmony import */ var _is_boolean__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(29);
+/* harmony import */ var _is_equal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(30);
+/* harmony import */ var _is_function__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(31);
+/* harmony import */ var _is_html__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(32);
+/* harmony import */ var _is_html_from_word__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(150);
+/* harmony import */ var _is_imp_interface__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(34);
+/* harmony import */ var _is_int__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(151);
+/* harmony import */ var _is_jodit_object__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(36);
+/* harmony import */ var _is_license__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(152);
+/* harmony import */ var _is_native_function__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(104);
+/* harmony import */ var _is_number__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(37);
+/* harmony import */ var _is_numeric__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(38);
+/* harmony import */ var _is_plain_object__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(39);
+/* harmony import */ var _is_promise__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(41);
+/* harmony import */ var _is_string__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(33);
+/* harmony import */ var _is_url__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(42);
+/* harmony import */ var _is_valid_name__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(43);
+/* harmony import */ var _is_void__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(35);
+/* harmony import */ var _is_window__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(40);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+/* 28 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "k": function() { return /* binding */ isArray; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function isArray(elm) {
+    return Array.isArray(elm);
+}
+
+
+/***/ }),
+/* 29 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "j": function() { return /* binding */ isBoolean; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function isBoolean(elm) {
+    return typeof elm === 'boolean';
+}
+
+
+/***/ }),
+/* 30 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "X": function() { return /* binding */ isEqual; },
+/* harmony export */   "L": function() { return /* binding */ isFastEqual; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers_string_stringify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(149);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function isEqual(a, b) {
+    return a === b || (0,jodit_core_helpers_string_stringify__WEBPACK_IMPORTED_MODULE_0__/* .stringify */ .P)(a) === (0,jodit_core_helpers_string_stringify__WEBPACK_IMPORTED_MODULE_0__/* .stringify */ .P)(b);
+}
+function isFastEqual(a, b) {
+    return a === b;
+}
+
+
+/***/ }),
+/* 31 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "m": function() { return /* binding */ isFunction; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function isFunction(value) {
+    return typeof value === 'function';
+}
+
+
+/***/ }),
+/* 32 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "F": function() { return /* binding */ isHTML; }
+/* harmony export */ });
+/* harmony import */ var _is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(33);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+const isHTML = (str) => (0,_is_string__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .H)(str) &&
+    /<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m.test(str.replace(/[\r\n]/g, ''));
+
+
+/***/ }),
+/* 33 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "H": function() { return /* binding */ isString; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function isString(value) {
+    return typeof value === 'string';
+}
+
+
+/***/ }),
+/* 34 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Gu": function() { return /* binding */ isInitable; },
+/* harmony export */   "Z$": function() { return /* binding */ isDestructable; },
+/* harmony export */   "Zt": function() { return /* binding */ hasContainer; }
+/* harmony export */ });
+/* harmony import */ var _is_function__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(31);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _is_void__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(35);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function isInitable(value) {
+    return !(0,_is_void__WEBPACK_IMPORTED_MODULE_1__/* .isVoid */ .n)(value) && (0,_is_function__WEBPACK_IMPORTED_MODULE_2__/* .isFunction */ .m)(value.init);
+}
+function isDestructable(value) {
+    return !(0,_is_void__WEBPACK_IMPORTED_MODULE_1__/* .isVoid */ .n)(value) && (0,_is_function__WEBPACK_IMPORTED_MODULE_2__/* .isFunction */ .m)(value.destruct);
+}
+function hasContainer(value) {
+    return !(0,_is_void__WEBPACK_IMPORTED_MODULE_1__/* .isVoid */ .n)(value) && jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isElement */ .i.isElement(value.container);
+}
+
+
+/***/ }),
+/* 35 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "n": function() { return /* binding */ isVoid; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function isVoid(value) {
+    return value === undefined || value === null;
+}
+
+
+/***/ }),
+/* 36 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": function() { return /* binding */ isJoditObject; },
+/* harmony export */   "f": function() { return /* binding */ isViewObject; }
+/* harmony export */ });
+/* harmony import */ var _is_function__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
+/* harmony import */ var _global__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function isJoditObject(jodit) {
+    return Boolean(jodit &&
+        jodit instanceof Object &&
+        (0,_is_function__WEBPACK_IMPORTED_MODULE_1__/* .isFunction */ .m)(jodit.constructor) &&
+        ((typeof Jodit !== 'undefined' && jodit instanceof Jodit) ||
+            jodit.isJodit));
+}
+function isViewObject(jodit) {
+    return Boolean(jodit &&
+        jodit instanceof Object &&
+        (0,_is_function__WEBPACK_IMPORTED_MODULE_1__/* .isFunction */ .m)(jodit.constructor) &&
+        (jodit instanceof _global__WEBPACK_IMPORTED_MODULE_0__/* .modules.View */ .qz.View || jodit.isView));
+}
+
+
+/***/ }),
+/* 37 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "h": function() { return /* binding */ isNumber; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function isNumber(value) {
+    return typeof value === 'number' && !isNaN(value) && isFinite(value);
+}
+
+
+/***/ }),
+/* 38 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "k": function() { return /* binding */ isNumeric; }
+/* harmony export */ });
+/* harmony import */ var _is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(33);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function isNumeric(value) {
+    if ((0,_is_string__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .H)(value)) {
+        if (!value.match(/^([+-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
+            return false;
+        }
+        value = parseFloat(value);
+    }
+    return typeof value === 'number' && !isNaN(value) && isFinite(value);
+}
+
+
+/***/ }),
+/* 39 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "P": function() { return /* binding */ isPlainObject; }
+/* harmony export */ });
+/* harmony import */ var _is_window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function isPlainObject(obj) {
+    if (!obj || typeof obj !== 'object' || obj.nodeType || (0,_is_window__WEBPACK_IMPORTED_MODULE_0__/* .isWindow */ .F)(obj)) {
+        return false;
+    }
+    return !(obj.constructor &&
+        !{}.hasOwnProperty.call(obj.constructor.prototype, 'isPrototypeOf'));
+}
+
+
+/***/ }),
+/* 40 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "F": function() { return /* binding */ isWindow; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function isWindow(obj) {
+    return obj != null && obj === obj.window;
+}
+
+
+/***/ }),
+/* 41 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "t": function() { return /* binding */ isPromise; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function isPromise(val) {
+    return val && typeof val.then === 'function';
+}
+
+
+/***/ }),
+/* 42 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "P": function() { return /* binding */ isURL; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function isURL(str) {
+    if (str.includes(' ')) {
+        return false;
+    }
+    if (typeof URL !== 'undefined') {
+        try {
+            const url = new URL(str);
+            return ['https:', 'http:', 'ftp:', 'file:', 'rtmp:'].includes(url.protocol);
+        }
+        catch (e) {
+            return false;
+        }
+    }
+    const a = document.createElement('a');
+    a.href = str;
+    return Boolean(a.hostname);
+}
+
+
+/***/ }),
+/* 43 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "r": function() { return /* binding */ isValidName; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function isValidName(name) {
+    if (!name.length) {
+        return false;
+    }
+    return !/[^0-9A-Za-zа-яА-ЯЁё\w\-_.]/.test(name);
+}
+
+
+/***/ }),
+/* 44 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "v": function() { return /* binding */ error; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function error(message) {
+    return new TypeError(message);
+}
+
+
+/***/ }),
+/* 45 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "N": function() { return /* binding */ idle; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5337,11 +3589,11 @@ function throttle(timeout, firstCallImmediately = false) {
 
 function idle() {
     return (target, propertyKey) => {
-        if (!(0,helpers.isFunction)(target[propertyKey])) {
-            throw (0,helpers.error)('Handler must be a Function');
+        if (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isFunction)(target[propertyKey])) {
+            throw (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.error)('Handler must be a Function');
         }
-        target.hookStatus(core_component/* STATUSES.ready */.n$.ready, (component) => {
-            const view = (0,helpers.isViewObject)(component)
+        target.hookStatus(jodit_core_component__WEBPACK_IMPORTED_MODULE_0__/* .STATUSES.ready */ .n$.ready, (component) => {
+            const view = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isViewObject)(component)
                 ? component
                 : component.jodit;
             const originalMethod = component[propertyKey];
@@ -5350,7 +3602,17 @@ function idle() {
     };
 }
 
-;// CONCATENATED MODULE: ./src/core/decorators/hook/hook.ts
+
+/***/ }),
+/* 46 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "z": function() { return /* binding */ hook; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/* harmony import */ var jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(44);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5360,8 +3622,8 @@ function idle() {
 
 function hook(status) {
     return (target, propertyKey) => {
-        if (!(0,checker/* isFunction */.mf)(target[propertyKey])) {
-            throw (0,error/* error */.v)('Handler must be a Function');
+        if (!(0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isFunction */ .mf)(target[propertyKey])) {
+            throw (0,jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_1__/* .error */ .v)('Handler must be a Function');
         }
         target.hookStatus(status, (component) => {
             target[propertyKey].call(component);
@@ -5369,29 +3631,17 @@ function hook(status) {
     };
 }
 
-;// CONCATENATED MODULE: ./src/core/decorators/nonenumerable/nonenumerable.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const nonenumerable = (target, propertyKey) => {
-    const descriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {};
-    if (descriptor.enumerable !== false) {
-        Object.defineProperty(target, propertyKey, {
-            enumerable: false,
-            set(value) {
-                Object.defineProperty(this, propertyKey, {
-                    enumerable: false,
-                    writable: true,
-                    value
-                });
-            }
-        });
-    }
-};
 
-;// CONCATENATED MODULE: ./src/core/decorators/persistent/persistent.ts
+/***/ }),
+/* 47 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "a": function() { return /* binding */ persistent; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5400,8 +3650,8 @@ const nonenumerable = (target, propertyKey) => {
 
 
 function persistent(target, propertyKey) {
-    target.hookStatus(core_component/* STATUSES.ready */.n$.ready, (component) => {
-        const jodit = (0,helpers.isViewObject)(component)
+    target.hookStatus(jodit_core_component__WEBPACK_IMPORTED_MODULE_0__/* .STATUSES.ready */ .n$.ready, (component) => {
+        const jodit = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isViewObject)(component)
             ? component
             : component.jodit, storageKey = `${jodit.options.namespace}${component.componentName}_prop_${propertyKey}`, initialValue = component[propertyKey];
         Object.defineProperty(component, propertyKey, {
@@ -5416,7 +3666,17 @@ function persistent(target, propertyKey) {
     });
 }
 
-;// CONCATENATED MODULE: ./src/core/decorators/wait/wait.ts
+
+/***/ }),
+/* 48 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "D": function() { return /* binding */ wait; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5426,11 +3686,11 @@ function persistent(target, propertyKey) {
 
 function wait(condition) {
     return (target, propertyKey) => {
-        if (!(0,helpers.isFunction)(target[propertyKey])) {
-            throw (0,helpers.error)('Handler must be a Function');
+        if (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isFunction)(target[propertyKey])) {
+            throw (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.error)('Handler must be a Function');
         }
-        target.hookStatus(core_component/* STATUSES.ready */.n$.ready, (component) => {
-            const async = (0,helpers.isViewObject)(component)
+        target.hookStatus(jodit_core_component__WEBPACK_IMPORTED_MODULE_1__/* .STATUSES.ready */ .n$.ready, (component) => {
+            const async = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isViewObject)(component)
                 ? component.async
                 : component.j.async;
             const realMethod = component[propertyKey];
@@ -5448,11 +3708,21 @@ function wait(condition) {
     };
 }
 
-// EXTERNAL MODULE: ./src/core/event-emitter/index.ts + 3 modules
-var event_emitter = __webpack_require__(3);
-// EXTERNAL MODULE: ./src/core/helpers/array/split-array.ts
-var split_array = __webpack_require__(24);
-;// CONCATENATED MODULE: ./src/core/decorators/watch/watch.ts
+
+/***/ }),
+/* 49 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "w7": function() { return /* binding */ getPropertyDescriptor; },
+/* harmony export */   "YP": function() { return /* binding */ watch; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/* harmony import */ var jodit_core_event_emitter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(50);
+/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7);
+/* harmony import */ var jodit_core_helpers_array_split_array__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(54);
+/* harmony import */ var jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(44);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5473,8 +3743,8 @@ function getPropertyDescriptor(obj, prop) {
 }
 function watch(observeFields, context) {
     return (target, propertyKey) => {
-        if (!(0,checker/* isFunction */.mf)(target[propertyKey])) {
-            throw (0,error/* error */.v)('Handler must be a Function');
+        if (!(0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isFunction */ .mf)(target[propertyKey])) {
+            throw (0,jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_3__/* .error */ .v)('Handler must be a Function');
         }
         const process = (component) => {
             const callback = (key, ...args) => {
@@ -5482,16 +3752,16 @@ function watch(observeFields, context) {
                     return component[propertyKey](key, ...args);
                 }
             };
-            (0,split_array/* splitArray */.C)(observeFields).forEach(field => {
+            (0,jodit_core_helpers_array_split_array__WEBPACK_IMPORTED_MODULE_4__/* .splitArray */ .C)(observeFields).forEach(field => {
                 if (/:/.test(field)) {
                     const [objectPath, eventName] = field.split(':');
-                    const view = (0,checker/* isViewObject */.f2)(component)
+                    const view = (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isViewObject */ .f2)(component)
                         ? component
                         : component.jodit;
                     if (objectPath.length) {
                         context = component.get(objectPath);
                     }
-                    if ((0,checker/* isFunction */.mf)(context)) {
+                    if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isFunction */ .mf)(context)) {
                         context = context(component);
                     }
                     view.events.on(context || component, eventName, callback);
@@ -5507,8 +3777,8 @@ function watch(observeFields, context) {
                 }
                 const parts = field.split('.'), [key] = parts, teil = parts.slice(1);
                 let value = component[key];
-                if ((0,checker/* isPlainObject */.PO)(value)) {
-                    const observableValue = (0,event_emitter/* observable */.LO)(value);
+                if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isPlainObject */ .PO)(value)) {
+                    const observableValue = (0,jodit_core_event_emitter__WEBPACK_IMPORTED_MODULE_1__/* .observable */ .LO)(value);
                     observableValue.on(`change.${teil.join('.')}`, callback);
                 }
                 const descriptor = getPropertyDescriptor(target, key);
@@ -5523,8 +3793,8 @@ function watch(observeFields, context) {
                         if (descriptor && descriptor.set) {
                             descriptor.set.call(component, v);
                         }
-                        if ((0,checker/* isPlainObject */.PO)(value)) {
-                            value = (0,event_emitter/* observable */.LO)(value);
+                        if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isPlainObject */ .PO)(value)) {
+                            value = (0,jodit_core_event_emitter__WEBPACK_IMPORTED_MODULE_1__/* .observable */ .LO)(value);
                             value.on(`change.${teil.join('.')}`, callback);
                         }
                         callback(key, oldValue, value);
@@ -5538,17 +3808,654 @@ function watch(observeFields, context) {
                 });
             });
         };
-        if ((0,checker/* isFunction */.mf)(target.hookStatus)) {
-            target.hookStatus(core_component/* STATUSES.ready */.n$.ready, process);
+        if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isFunction */ .mf)(target.hookStatus)) {
+            target.hookStatus(jodit_core_component__WEBPACK_IMPORTED_MODULE_2__/* .STATUSES.ready */ .n$.ready, process);
         }
         else {
             process(target);
         }
     };
 }
-/* harmony default export */ var watch_watch = ((/* unused pure expression or super */ null && (watch)));
+/* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ((/* unused pure expression or super */ null && (watch)));
 
-;// CONCATENATED MODULE: ./node_modules/autobind-decorator/lib/esm/index.js
+
+/***/ }),
+/* 50 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "vp": function() { return /* reexport safe */ _event_emitter__WEBPACK_IMPORTED_MODULE_0__.v; },
+/* harmony export */   "LO": function() { return /* reexport safe */ _observable__WEBPACK_IMPORTED_MODULE_1__.L; },
+/* harmony export */   "DG": function() { return /* reexport safe */ _store__WEBPACK_IMPORTED_MODULE_2__.D; },
+/* harmony export */   "rO": function() { return /* reexport safe */ _store__WEBPACK_IMPORTED_MODULE_2__.r; }
+/* harmony export */ });
+/* harmony import */ var _event_emitter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51);
+/* harmony import */ var _observable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(53);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(52);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+/***/ }),
+/* 51 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "v": function() { return /* binding */ EventEmitter; }
+/* harmony export */ });
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(52);
+/* harmony import */ var jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(33);
+/* harmony import */ var jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(31);
+/* harmony import */ var jodit_core_helpers_checker_is_array__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(28);
+/* harmony import */ var jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(44);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+class EventEmitter {
+    constructor(doc) {
+        this.mutedEvents = new Set();
+        this.__key = '__JoditEventEmitterNamespaces';
+        this.doc = document;
+        this.prepareEvent = (event) => {
+            if (event.cancelBubble) {
+                return;
+            }
+            if (event.type.match(/^touch/) &&
+                event.changedTouches &&
+                event.changedTouches.length) {
+                ['clientX', 'clientY', 'pageX', 'pageY'].forEach((key) => {
+                    Object.defineProperty(event, key, {
+                        value: event.changedTouches[0][key],
+                        configurable: true,
+                        enumerable: true
+                    });
+                });
+            }
+            if (!event.originalEvent) {
+                event.originalEvent = event;
+            }
+            if (event.type === 'paste' &&
+                event.clipboardData === undefined &&
+                this.doc.defaultView.clipboardData) {
+                Object.defineProperty(event, 'clipboardData', {
+                    get: () => {
+                        return this.doc.defaultView.clipboardData;
+                    },
+                    configurable: true,
+                    enumerable: true
+                });
+            }
+        };
+        this.currents = [];
+        this.__stopped = [];
+        this.isDestructed = false;
+        if (doc) {
+            this.doc = doc;
+        }
+        this.__key += new Date().getTime();
+    }
+    mute(event) {
+        this.mutedEvents.add(event !== null && event !== void 0 ? event : '*');
+        return this;
+    }
+    isMuted(event) {
+        if (event && this.mutedEvents.has(event)) {
+            return true;
+        }
+        return this.mutedEvents.has('*');
+    }
+    unmute(event) {
+        this.mutedEvents.delete(event !== null && event !== void 0 ? event : '*');
+        return this;
+    }
+    eachEvent(events, callback) {
+        const eventParts = events.split(/[\s,]+/);
+        eventParts.forEach((eventNameSpace) => {
+            const eventAndNameSpace = eventNameSpace.split('.');
+            const namespace = eventAndNameSpace[1] || _store__WEBPACK_IMPORTED_MODULE_0__/* .defaultNameSpace */ .r;
+            callback.call(this, eventAndNameSpace[0], namespace);
+        });
+    }
+    getStore(subject) {
+        if (!subject) {
+            throw (0,jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_1__/* .error */ .v)('Need subject');
+        }
+        if (subject[this.__key] === undefined) {
+            const store = new _store__WEBPACK_IMPORTED_MODULE_0__/* .EventHandlersStore */ .D();
+            Object.defineProperty(subject, this.__key, {
+                enumerable: false,
+                configurable: true,
+                value: store
+            });
+        }
+        return subject[this.__key];
+    }
+    clearStore(subject) {
+        if (subject[this.__key] !== undefined) {
+            delete subject[this.__key];
+        }
+    }
+    triggerNativeEvent(element, event) {
+        const evt = this.doc.createEvent('HTMLEvents');
+        if (typeof event === 'string') {
+            evt.initEvent(event, true, true);
+        }
+        else {
+            evt.initEvent(event.type, event.bubbles, event.cancelable);
+            [
+                'screenX',
+                'screenY',
+                'clientX',
+                'clientY',
+                'target',
+                'srcElement',
+                'currentTarget',
+                'timeStamp',
+                'which',
+                'keyCode'
+            ].forEach(property => {
+                Object.defineProperty(evt, property, {
+                    value: event[property],
+                    enumerable: true
+                });
+            });
+            Object.defineProperty(evt, 'originalEvent', {
+                value: event,
+                enumerable: true
+            });
+        }
+        element.dispatchEvent(evt);
+    }
+    get current() {
+        return this.currents[this.currents.length - 1];
+    }
+    on(subjectOrEvents, eventsOrCallback, handlerOrSelector, onTop = false) {
+        const subject = (0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(subjectOrEvents) ? this : subjectOrEvents;
+        const events = (0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(eventsOrCallback)
+            ? eventsOrCallback
+            : subjectOrEvents;
+        let callback = handlerOrSelector;
+        if (callback === undefined && (0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .m)(eventsOrCallback)) {
+            callback = eventsOrCallback;
+        }
+        const store = this.getStore(subject);
+        if (!(0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(events) || events === '') {
+            throw (0,jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_1__/* .error */ .v)('Need events names');
+        }
+        if (!(0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .m)(callback)) {
+            throw (0,jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_1__/* .error */ .v)('Need event handler');
+        }
+        if ((0,jodit_core_helpers_checker_is_array__WEBPACK_IMPORTED_MODULE_4__/* .isArray */ .k)(subject)) {
+            subject.forEach((subj) => {
+                this.on(subj, events, callback, onTop);
+            });
+            return this;
+        }
+        const isDOMElement = (0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .m)(subject.addEventListener), self = this;
+        let syntheticCallback = function (event, ...args) {
+            if (self.isMuted(event)) {
+                return;
+            }
+            return callback && callback.call(this, ...args);
+        };
+        if (isDOMElement) {
+            syntheticCallback = function (event) {
+                if (self.isMuted(event.type)) {
+                    return;
+                }
+                self.prepareEvent(event);
+                if (callback && callback.call(this, event) === false) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    return false;
+                }
+                return;
+            };
+        }
+        this.eachEvent(events, (event, namespace) => {
+            if (event === '') {
+                throw (0,jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_1__/* .error */ .v)('Need event name');
+            }
+            if (store.indexOf(event, namespace, callback) === false) {
+                const block = {
+                    event,
+                    originalCallback: callback,
+                    syntheticCallback
+                };
+                store.set(event, namespace, block, onTop);
+                if (isDOMElement) {
+                    const options = [
+                        'touchstart',
+                        'touchend',
+                        'scroll',
+                        'mousewheel',
+                        'mousemove',
+                        'touchmove'
+                    ].includes(event)
+                        ? {
+                            passive: true
+                        }
+                        : false;
+                    subject.addEventListener(event, syntheticCallback, options);
+                }
+            }
+        });
+        return this;
+    }
+    one(subjectOrEvents, eventsOrCallback, handlerOrSelector, onTop = false) {
+        const subject = (0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(subjectOrEvents) ? this : subjectOrEvents;
+        const events = (0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(eventsOrCallback)
+            ? eventsOrCallback
+            : subjectOrEvents;
+        let callback = handlerOrSelector;
+        if (callback === undefined && (0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .m)(eventsOrCallback)) {
+            callback = eventsOrCallback;
+        }
+        const newCallback = (...args) => {
+            this.off(subject, events, newCallback);
+            return callback(...args);
+        };
+        this.on(subject, events, newCallback, onTop);
+        return this;
+    }
+    off(subjectOrEvents, eventsOrCallback, handler) {
+        const subject = (0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(subjectOrEvents)
+            ? this
+            : subjectOrEvents;
+        const events = (0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(eventsOrCallback)
+            ? eventsOrCallback
+            : subjectOrEvents;
+        const store = this.getStore(subject);
+        let callback = handler;
+        if (!(0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(events) || !events) {
+            store.namespaces().forEach((namespace) => {
+                this.off(subject, '.' + namespace);
+            });
+            this.clearStore(subject);
+            return this;
+        }
+        if (callback === undefined && (0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .m)(eventsOrCallback)) {
+            callback = eventsOrCallback;
+        }
+        const isDOMElement = (0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .m)(subject.removeEventListener), removeEventListener = (block) => {
+            if (isDOMElement) {
+                subject.removeEventListener(block.event, block.syntheticCallback, false);
+            }
+        }, removeCallbackFromNameSpace = (event, namespace) => {
+            if (event !== '') {
+                const blocks = store.get(event, namespace);
+                if (blocks && blocks.length) {
+                    if (!(0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .m)(callback)) {
+                        blocks.forEach(removeEventListener);
+                        blocks.length = 0;
+                    }
+                    else {
+                        const index = store.indexOf(event, namespace, callback);
+                        if (index !== false) {
+                            removeEventListener(blocks[index]);
+                            blocks.splice(index, 1);
+                        }
+                    }
+                }
+            }
+            else {
+                store.events(namespace).forEach((eventName) => {
+                    if (eventName !== '') {
+                        removeCallbackFromNameSpace(eventName, namespace);
+                    }
+                });
+            }
+        };
+        this.eachEvent(events, (event, namespace) => {
+            if (namespace === _store__WEBPACK_IMPORTED_MODULE_0__/* .defaultNameSpace */ .r) {
+                store.namespaces().forEach((name) => {
+                    removeCallbackFromNameSpace(event, name);
+                });
+            }
+            else {
+                removeCallbackFromNameSpace(event, namespace);
+            }
+        });
+        return this;
+    }
+    stopPropagation(subjectOrEvents, eventsList) {
+        const subject = (0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(subjectOrEvents)
+            ? this
+            : subjectOrEvents;
+        const events = (0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(subjectOrEvents)
+            ? subjectOrEvents
+            : eventsList;
+        if (typeof events !== 'string') {
+            throw (0,jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_1__/* .error */ .v)('Need event names');
+        }
+        const store = this.getStore(subject);
+        this.eachEvent(events, (event, namespace) => {
+            const blocks = store.get(event, namespace);
+            if (blocks) {
+                this.__stopped.push(blocks);
+            }
+            if (namespace === _store__WEBPACK_IMPORTED_MODULE_0__/* .defaultNameSpace */ .r) {
+                store
+                    .namespaces(true)
+                    .forEach(ns => this.stopPropagation(subject, event + '.' + ns));
+            }
+        });
+    }
+    removeStop(currentBlocks) {
+        if (currentBlocks) {
+            const index = this.__stopped.indexOf(currentBlocks);
+            index !== -1 && this.__stopped.splice(0, index + 1);
+        }
+    }
+    isStopped(currentBlocks) {
+        return (currentBlocks !== undefined &&
+            this.__stopped.indexOf(currentBlocks) !== -1);
+    }
+    fire(subjectOrEvents, eventsList, ...args) {
+        let result, result_value;
+        const subject = (0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(subjectOrEvents)
+            ? this
+            : subjectOrEvents;
+        const events = (0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(subjectOrEvents)
+            ? subjectOrEvents
+            : eventsList;
+        const argumentsList = (0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(subjectOrEvents)
+            ? [eventsList, ...args]
+            : args;
+        const isDOMElement = (0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .m)(subject.dispatchEvent);
+        if (!isDOMElement && !(0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(events)) {
+            throw (0,jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_1__/* .error */ .v)('Need events names');
+        }
+        const store = this.getStore(subject);
+        if (!(0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(events) && isDOMElement) {
+            this.triggerNativeEvent(subject, eventsList);
+        }
+        else {
+            this.eachEvent(events, (event, namespace) => {
+                if (isDOMElement) {
+                    this.triggerNativeEvent(subject, event);
+                }
+                else {
+                    const blocks = store.get(event, namespace);
+                    if (blocks) {
+                        try {
+                            [...blocks].every((block) => {
+                                if (this.isStopped(blocks)) {
+                                    return false;
+                                }
+                                this.currents.push(event);
+                                result_value = block.syntheticCallback.call(subject, event, ...argumentsList);
+                                this.currents.pop();
+                                if (result_value !== undefined) {
+                                    result = result_value;
+                                }
+                                return true;
+                            });
+                        }
+                        finally {
+                            this.removeStop(blocks);
+                        }
+                    }
+                    if (namespace === _store__WEBPACK_IMPORTED_MODULE_0__/* .defaultNameSpace */ .r && !isDOMElement) {
+                        store
+                            .namespaces()
+                            .filter(ns => ns !== namespace)
+                            .forEach((ns) => {
+                            const result_second = this.fire.apply(this, [
+                                subject,
+                                event + '.' + ns,
+                                ...argumentsList
+                            ]);
+                            if (result_second !== undefined) {
+                                result = result_second;
+                            }
+                        });
+                    }
+                }
+            });
+        }
+        return result;
+    }
+    destruct() {
+        if (!this.isDestructed) {
+            return;
+        }
+        this.isDestructed = true;
+        this.off(this);
+        this.getStore(this).clear();
+        delete this[this.__key];
+    }
+}
+
+
+/***/ }),
+/* 52 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "r": function() { return /* binding */ defaultNameSpace; },
+/* harmony export */   "D": function() { return /* binding */ EventHandlersStore; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const defaultNameSpace = 'JoditEventDefaultNamespace';
+class EventHandlersStore {
+    constructor() {
+        this.__store = {};
+    }
+    get(event, namespace) {
+        if (this.__store[namespace] !== undefined) {
+            return this.__store[namespace][event];
+        }
+    }
+    indexOf(event, namespace, originalCallback) {
+        const blocks = this.get(event, namespace);
+        if (blocks) {
+            for (let i = 0; i < blocks.length; i += 1) {
+                if (blocks[i].originalCallback === originalCallback) {
+                    return i;
+                }
+            }
+        }
+        return false;
+    }
+    namespaces(withoutDefault = false) {
+        const nss = Object.keys(this.__store);
+        return withoutDefault ? nss.filter(ns => ns !== defaultNameSpace) : nss;
+    }
+    events(namespace) {
+        return this.__store[namespace]
+            ? Object.keys(this.__store[namespace])
+            : [];
+    }
+    set(event, namespace, data, onTop = false) {
+        if (this.__store[namespace] === undefined) {
+            this.__store[namespace] = {};
+        }
+        if (this.__store[namespace][event] === undefined) {
+            this.__store[namespace][event] = [];
+        }
+        if (!onTop) {
+            this.__store[namespace][event].push(data);
+        }
+        else {
+            this.__store[namespace][event].unshift(data);
+        }
+    }
+    clear() {
+        this.__store = {};
+    }
+}
+
+
+/***/ }),
+/* 53 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "L": function() { return /* binding */ observable; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+const OBSERVABLE_OBJECT = Symbol('observable-object');
+function isObservableObject(obj) {
+    return obj[OBSERVABLE_OBJECT] !== undefined;
+}
+function observable(obj) {
+    if (isObservableObject(obj)) {
+        return obj;
+    }
+    const __lockEvent = {};
+    const __onEvents = {};
+    const on = (event, callback) => {
+        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isArray)(event)) {
+            event.map(e => on(e, callback));
+            return obj;
+        }
+        if (!__onEvents[event]) {
+            __onEvents[event] = [];
+        }
+        __onEvents[event].push(callback);
+        return obj;
+    };
+    const fire = (event, ...attr) => {
+        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isArray)(event)) {
+            event.map(e => fire(e, ...attr));
+            return;
+        }
+        try {
+            if (!__lockEvent[event] && __onEvents[event]) {
+                __lockEvent[event] = true;
+                __onEvents[event].forEach(clb => clb.call(obj, ...attr));
+            }
+        }
+        finally {
+            __lockEvent[event] = false;
+        }
+    };
+    const initAccessors = (dict, prefixes = []) => {
+        const store = {};
+        if (isObservableObject(dict)) {
+            return;
+        }
+        Object.defineProperty(dict, OBSERVABLE_OBJECT, {
+            enumerable: false,
+            value: true
+        });
+        Object.keys(dict).forEach(_key => {
+            const key = _key;
+            const prefix = prefixes.concat(key).filter(a => a.length);
+            store[key] = dict[key];
+            const descriptor = (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.getPropertyDescriptor)(dict, key);
+            Object.defineProperty(dict, key, {
+                set: (value) => {
+                    var _a;
+                    const oldValue = store[key];
+                    if (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isFastEqual)(store[key], value)) {
+                        fire([
+                            'beforeChange',
+                            `beforeChange.${prefix.join('.')}`
+                        ], key, value);
+                        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isPlainObject)(value)) {
+                            initAccessors(value, prefix);
+                        }
+                        if (descriptor && descriptor.set) {
+                            descriptor.set.call(obj, value);
+                        }
+                        else {
+                            store[key] = value;
+                        }
+                        const sum = [];
+                        fire([
+                            'change',
+                            ...prefix.reduce((rs, p) => {
+                                sum.push(p);
+                                rs.push(`change.${sum.join('.')}`);
+                                return rs;
+                            }, [])
+                        ], prefix.join('.'), oldValue, ((_a = value) === null || _a === void 0 ? void 0 : _a.valueOf)
+                            ? value.valueOf()
+                            : value);
+                    }
+                },
+                get: () => {
+                    if (descriptor && descriptor.get) {
+                        return descriptor.get.call(obj);
+                    }
+                    return store[key];
+                },
+                enumerable: true,
+                configurable: true
+            });
+            if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isPlainObject)(store[key])) {
+                initAccessors(store[key], prefix);
+            }
+        });
+        Object.defineProperty(obj, 'on', {
+            value: on
+        });
+    };
+    initAccessors(obj);
+    return obj;
+}
+
+
+/***/ }),
+/* 54 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "C": function() { return /* binding */ splitArray; }
+/* harmony export */ });
+/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(33);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function splitArray(a) {
+    return (0,_checker_is_string__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .H)(a) ? a.split(/[,\s]+/) : a;
+}
+
+
+/***/ }),
+/* 55 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ZP": function() { return /* binding */ autobind; }
+/* harmony export */ });
+/* unused harmony exports boundMethod, boundClass */
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function _typeof(obj) { return typeof obj; };
 }
@@ -5616,453 +4523,9 @@ function autobind() {
     return boundMethod.apply(void 0, arguments);
 }
 
-;// CONCATENATED MODULE: ./src/core/decorators/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-
-
 
 /***/ }),
-/* 18 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "EO": function() { return /* reexport */ hasBrowserColorPicker; },
-  "Zt": function() { return /* reexport */ hasContainer; },
-  "kJ": function() { return /* reexport */ is_array/* isArray */.k; },
-  "jn": function() { return /* reexport */ isBoolean; },
-  "Z$": function() { return /* reexport */ isDestructable; },
-  "Xy": function() { return /* reexport */ isEqual; },
-  "LP": function() { return /* reexport */ isFastEqual; },
-  "mf": function() { return /* reexport */ is_function/* isFunction */.m; },
-  "FP": function() { return /* reexport */ isHTML; },
-  "I4": function() { return /* reexport */ isHtmlFromWord; },
-  "Gu": function() { return /* reexport */ isInitable; },
-  "GN": function() { return /* reexport */ isInt; },
-  "Zu": function() { return /* reexport */ isJoditObject; },
-  "A1": function() { return /* reexport */ isLicense; },
-  "QC": function() { return /* reexport */ is_native_function/* isNativeFunction */.Q; },
-  "hj": function() { return /* reexport */ isNumber; },
-  "kE": function() { return /* reexport */ is_numeric/* isNumeric */.k; },
-  "PO": function() { return /* reexport */ isPlainObject; },
-  "tI": function() { return /* reexport */ is_promise/* isPromise */.t; },
-  "HD": function() { return /* reexport */ is_string/* isString */.H; },
-  "PX": function() { return /* reexport */ isURL; },
-  "r1": function() { return /* reexport */ isValidName; },
-  "f2": function() { return /* reexport */ isViewObject; },
-  "nj": function() { return /* reexport */ is_void/* isVoid */.n; },
-  "FJ": function() { return /* reexport */ isWindow; }
-});
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/has-browser-color-picker.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function hasBrowserColorPicker() {
-    let supportsColor = true;
-    try {
-        const a = document.createElement('input');
-        a.type = 'color';
-        supportsColor =
-            a.type === 'color' && typeof a.selectionStart !== 'number';
-    }
-    catch (e) {
-        supportsColor = false;
-    }
-    return supportsColor;
-}
-
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-array.ts
-var is_array = __webpack_require__(7);
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-boolean.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isBoolean(elm) {
-    return typeof elm === 'boolean';
-}
-
-// EXTERNAL MODULE: ./src/core/helpers/string/stringify.ts
-var stringify = __webpack_require__(19);
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-equal.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function isEqual(a, b) {
-    return a === b || (0,stringify/* stringify */.P)(a) === (0,stringify/* stringify */.P)(b);
-}
-function isFastEqual(a, b) {
-    return a === b;
-}
-
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-function.ts
-var is_function = __webpack_require__(6);
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
-var is_string = __webpack_require__(5);
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-html.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-const isHTML = (str) => (0,is_string/* isString */.H)(str) &&
-    /<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m.test(str.replace(/[\r\n]/g, ''));
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-html-from-word.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isHtmlFromWord(data) {
-    return (data.search(/<meta.*?Microsoft Excel\s[\d].*?>/) !== -1 ||
-        data.search(/<meta.*?Microsoft Word\s[\d].*?>/) !== -1 ||
-        (data.search(/style="[^"]*mso-/) !== -1 && data.search(/<font/) !== -1));
-}
-
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(15);
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-void.ts
-var is_void = __webpack_require__(20);
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-imp-interface.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-function isInitable(value) {
-    return !(0,is_void/* isVoid */.n)(value) && (0,is_function/* isFunction */.m)(value.init);
-}
-function isDestructable(value) {
-    return !(0,is_void/* isVoid */.n)(value) && (0,is_function/* isFunction */.m)(value.destruct);
-}
-function hasContainer(value) {
-    return !(0,is_void/* isVoid */.n)(value) && dom/* Dom.isElement */.i.isElement(value.container);
-}
-
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-numeric.ts
-var is_numeric = __webpack_require__(21);
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-int.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function isInt(value) {
-    if ((0,is_string/* isString */.H)(value) && (0,is_numeric/* isNumeric */.k)(value)) {
-        value = parseFloat(value);
-    }
-    return typeof value === 'number' && Number.isFinite(value) && !(value % 1);
-}
-
-// EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(13);
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-jodit-object.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function isJoditObject(jodit) {
-    return Boolean(jodit &&
-        jodit instanceof Object &&
-        (0,is_function/* isFunction */.m)(jodit.constructor) &&
-        ((typeof Jodit !== 'undefined' && jodit instanceof Jodit) ||
-            jodit.isJodit));
-}
-function isViewObject(jodit) {
-    return Boolean(jodit &&
-        jodit instanceof Object &&
-        (0,is_function/* isFunction */.m)(jodit.constructor) &&
-        (jodit instanceof global/* modules.View */.qz.View || jodit.isView));
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-license.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-const isLicense = (license) => (0,is_string/* isString */.H)(license) &&
-    license.length === 23 &&
-    /^[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}$/i.test(license);
-
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-native-function.ts
-var is_native_function = __webpack_require__(22);
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-number.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isNumber(value) {
-    return typeof value === 'number' && !isNaN(value) && isFinite(value);
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-window.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isWindow(obj) {
-    return obj != null && obj === obj.window;
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-plain-object.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function isPlainObject(obj) {
-    if (!obj || typeof obj !== 'object' || obj.nodeType || isWindow(obj)) {
-        return false;
-    }
-    return !(obj.constructor &&
-        !{}.hasOwnProperty.call(obj.constructor.prototype, 'isPrototypeOf'));
-}
-
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-promise.ts
-var is_promise = __webpack_require__(23);
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-url.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isURL(str) {
-    if (str.includes(' ')) {
-        return false;
-    }
-    if (typeof URL !== 'undefined') {
-        try {
-            const url = new URL(str);
-            return ['https:', 'http:', 'ftp:', 'file:', 'rtmp:'].includes(url.protocol);
-        }
-        catch (e) {
-            return false;
-        }
-    }
-    const a = document.createElement('a');
-    a.href = str;
-    return Boolean(a.hostname);
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/is-valid-name.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isValidName(name) {
-    if (!name.length) {
-        return false;
-    }
-    return !/[^0-9A-Za-zа-яА-ЯЁё\w\-_.]/.test(name);
-}
-
-;// CONCATENATED MODULE: ./src/core/helpers/checker/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/***/ }),
-/* 19 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "P": function() { return /* binding */ stringify; }
-/* harmony export */ });
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function stringify(value, options = {}) {
-    if (typeof value !== 'object') {
-        return String(value);
-    }
-    const excludeKeys = new Set(options.excludeKeys);
-    const map = new WeakMap();
-    const r = (k, v) => {
-        if (excludeKeys.has(k)) {
-            return;
-        }
-        if (typeof v === 'object' && v != null) {
-            if (map.get(v)) {
-                return '[refObject]';
-            }
-            map.set(v, true);
-        }
-        return v;
-    };
-    return JSON.stringify(value, r, options.prettify);
-}
-
-
-/***/ }),
-/* 20 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "n": function() { return /* binding */ isVoid; }
-/* harmony export */ });
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isVoid(value) {
-    return value === undefined || value === null;
-}
-
-
-/***/ }),
-/* 21 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "k": function() { return /* binding */ isNumeric; }
-/* harmony export */ });
-/* harmony import */ var _is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function isNumeric(value) {
-    if ((0,_is_string__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .H)(value)) {
-        if (!value.match(/^([+-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
-            return false;
-        }
-        value = parseFloat(value);
-    }
-    return typeof value === 'number' && !isNaN(value) && isFinite(value);
-}
-
-
-/***/ }),
-/* 22 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Q": function() { return /* binding */ isNativeFunction; }
-/* harmony export */ });
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isNativeFunction(f) {
-    return (Boolean(f) &&
-        (typeof f).toLowerCase() === 'function' &&
-        (f === Function.prototype ||
-            /^\s*function\s*(\b[a-z$_][a-z0-9$_]*\b)*\s*\((|([a-z$_][a-z0-9$_]*)(\s*,[a-z$_][a-z0-9$_]*)*)\)\s*{\s*\[native code]\s*}\s*$/i.test(String(f))));
-}
-
-
-/***/ }),
-/* 23 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "t": function() { return /* binding */ isPromise; }
-/* harmony export */ });
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function isPromise(val) {
-    return val && typeof val.then === 'function';
-}
-
-
-/***/ }),
-/* 24 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "C": function() { return /* binding */ splitArray; }
-/* harmony export */ });
-/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function splitArray(a) {
-    return (0,_checker_is_string__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .H)(a) ? a.split(/[,\s]+/) : a;
-}
-
-
-/***/ }),
-/* 25 */
+/* 56 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6387,7 +4850,489 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
 
 
 /***/ }),
-/* 26 */
+/* 57 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "C": function() { return /* binding */ elementHasSameStyle; },
+/* harmony export */   "c": function() { return /* binding */ elementHasSameStyleKeys; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function elementHasSameStyle(elm, rules) {
+    return Boolean(!jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isTag */ .i.isTag(elm, 'font') &&
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isHTMLElement */ .i.isHTMLElement(elm) &&
+        Object.keys(rules).every(property => {
+            const value = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(elm, property, true);
+            return (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isVoid)(value) &&
+                value !== '' &&
+                !(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isVoid)(rules[property]) &&
+                (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.normalizeCssValue)(property, rules[property])
+                    .toString()
+                    .toLowerCase() === value.toString().toLowerCase());
+        }));
+}
+function elementHasSameStyleKeys(elm, rules) {
+    return Boolean(!jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isTag */ .i.isTag(elm, 'font') &&
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isHTMLElement */ .i.isHTMLElement(elm) &&
+        Object.keys(rules).every(property => !(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isVoid)((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.css)(elm, property, true))));
+}
+
+
+/***/ }),
+/* 58 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "_": function() { return /* binding */ FiniteStateMachine; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+class FiniteStateMachine {
+    constructor(state, transitions) {
+        this.state = state;
+        this.transitions = transitions;
+        this.subState = '';
+        this.silent = true;
+    }
+    setState(state, subState) {
+        this.state = state;
+        if (subState != null) {
+            this.subState = subState;
+        }
+    }
+    getState() {
+        return this.state;
+    }
+    getSubState() {
+        return this.subState;
+    }
+    disableSilent() {
+        this.silent = false;
+    }
+    dispatch(actionName, ...attrs) {
+        const action = this.transitions[this.state][actionName];
+        if (action) {
+            if (!this.silent) {
+                console.log('State: ' + this.state, 'Action: ' + actionName);
+            }
+            const res = action.call(this, ...attrs);
+            if (!this.silent) {
+                console.log('State: ' + this.state);
+            }
+            return res;
+        }
+        if (!this.silent) {
+            throw new Error('invalid action: ' + this.state + '.' + actionName);
+        }
+        return;
+    }
+}
+
+
+/***/ }),
+/* 59 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "e": function() { return /* binding */ getSuitChild; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _is_normal_node__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(60);
+/* harmony import */ var _is_suit_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(61);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function getSuitChild(style, font) {
+    let { firstChild: child } = font;
+    while (child && !(0,_is_normal_node__WEBPACK_IMPORTED_MODULE_1__/* .isNormalNode */ .c)(child)) {
+        child = child.nextSibling;
+        if (!child) {
+            return null;
+        }
+    }
+    if (child &&
+        !jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.next */ .i.next(child, _is_normal_node__WEBPACK_IMPORTED_MODULE_1__/* .isNormalNode */ .c, font) &&
+        (0,_is_suit_element__WEBPACK_IMPORTED_MODULE_2__/* .isSuitElement */ .f)(style, child, false)) {
+        return child;
+    }
+    return null;
+}
+
+
+/***/ }),
+/* 60 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "c": function() { return /* binding */ isNormalNode; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function isNormalNode(elm) {
+    return Boolean(elm && !jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isEmptyTextNode */ .i.isEmptyTextNode(elm) && !jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isTemporary */ .i.isTemporary(elm));
+}
+
+
+/***/ }),
+/* 61 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "f": function() { return /* binding */ isSuitElement; },
+/* harmony export */   "D": function() { return /* binding */ isSameStyleChild; }
+/* harmony export */ });
+/* harmony import */ var _is_normal_node__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(60);
+/* harmony import */ var _element_has_same_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(57);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(12);
+
+
+
+function isSuitElement(commitStyle, elm, strict) {
+    if (!elm) {
+        return false;
+    }
+    const { element, elementIsDefault, options } = commitStyle;
+    const elmHasSameStyle = Boolean(options.style && (0,_element_has_same_style__WEBPACK_IMPORTED_MODULE_1__/* .elementHasSameStyle */ .C)(elm, options.style));
+    const elmIsSame = elm.nodeName.toLowerCase() === element ||
+        (jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.isTag */ .i.isTag(elm, ['ul', 'ol']) && commitStyle.elementIsList);
+    if (((!elementIsDefault || !strict) && elmIsSame) ||
+        (elmHasSameStyle && (0,_is_normal_node__WEBPACK_IMPORTED_MODULE_0__/* .isNormalNode */ .c)(elm))) {
+        return true;
+    }
+    return Boolean(!elmIsSame && !strict && elementIsDefault && jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.isInlineBlock */ .i.isInlineBlock(elm));
+}
+function isSameStyleChild(commitStyle, elm) {
+    const { element, options } = commitStyle;
+    if (!elm || !(0,_is_normal_node__WEBPACK_IMPORTED_MODULE_0__/* .isNormalNode */ .c)(elm)) {
+        return false;
+    }
+    const elmIsSame = elm.nodeName.toLowerCase() === element;
+    const elmHasSameStyle = Boolean(options.style && (0,_element_has_same_style__WEBPACK_IMPORTED_MODULE_1__/* .elementHasSameStyleKeys */ .c)(elm, options.style));
+    return elmIsSame && elmHasSameStyle;
+}
+
+
+/***/ }),
+/* 62 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "H": function() { return /* binding */ getSuitParent; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _is_normal_node__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(60);
+/* harmony import */ var _is_suit_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(61);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function getSuitParent(style, node, root) {
+    const { parentNode } = node;
+    if (parentNode === root ||
+        !jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isHTMLElement */ .i.isHTMLElement(parentNode) ||
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.next */ .i.next(node, _is_normal_node__WEBPACK_IMPORTED_MODULE_1__/* .isNormalNode */ .c, parentNode) ||
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.prev */ .i.prev(node, _is_normal_node__WEBPACK_IMPORTED_MODULE_1__/* .isNormalNode */ .c, parentNode)) {
+        return null;
+    }
+    if (style.isElementCommit &&
+        style.elementIsBlock &&
+        !jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isBlock */ .i.isBlock(parentNode)) {
+        return getSuitParent(style, parentNode, root);
+    }
+    if ((0,_is_suit_element__WEBPACK_IMPORTED_MODULE_2__/* .isSuitElement */ .f)(style, parentNode, false) &&
+        (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isBlock */ .i.isBlock(parentNode) || style.elementIsBlock)) {
+        return parentNode;
+    }
+    return null;
+}
+
+
+/***/ }),
+/* 63 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "D": function() { return /* binding */ isInsideInvisibleElement; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function isInsideInvisibleElement(font, root) {
+    return Boolean(jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.closest */ .i.closest(font, ['style', 'script'], root));
+}
+
+
+/***/ }),
+/* 64 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "P": function() { return /* binding */ toggleCommitStyles; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function toggleCommitStyles(commitStyle, elm) {
+    if (commitStyle.elementIsBlock ||
+        (jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isTag */ .i.isTag(elm, commitStyle.element) && !commitStyle.elementIsDefault)) {
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.unwrap */ .i.unwrap(elm);
+        return true;
+    }
+    return false;
+}
+
+
+/***/ }),
+/* 65 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "M": function() { return /* binding */ unwrapChildren; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _is_suit_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(61);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function unwrapChildren(style, font) {
+    const needUnwrap = [];
+    const needChangeStyle = [];
+    let firstElementSuit;
+    const cssStyle = style.options.style;
+    if (font.firstChild) {
+        const gen = jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.eachGen */ .i.eachGen(font);
+        let item = gen.next();
+        while (!item.done) {
+            const elm = item.value;
+            if ((0,_is_suit_element__WEBPACK_IMPORTED_MODULE_1__/* .isSuitElement */ .f)(style, elm, true)) {
+                if (firstElementSuit === undefined) {
+                    firstElementSuit = true;
+                }
+                needUnwrap.push(elm);
+            }
+            else if (cssStyle && (0,_is_suit_element__WEBPACK_IMPORTED_MODULE_1__/* .isSameStyleChild */ .D)(style, elm)) {
+                if (firstElementSuit === undefined) {
+                    firstElementSuit = false;
+                }
+                needChangeStyle.push(() => {
+                    (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.css)(elm, Object.keys(cssStyle).reduce((acc, key) => {
+                        acc[key] = null;
+                        return acc;
+                    }, {}));
+                    if (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(elm, 'style')) {
+                        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(elm, 'style', null);
+                    }
+                    if (elm.nodeName.toLowerCase() === style.element) {
+                        needUnwrap.push(elm);
+                    }
+                });
+            }
+            else if (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isEmptyTextNode */ .i.isEmptyTextNode(elm)) {
+                if (firstElementSuit === undefined) {
+                    firstElementSuit = false;
+                }
+            }
+            item = gen.next();
+        }
+    }
+    needChangeStyle.forEach(clb => clb());
+    needUnwrap.forEach(jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.unwrap */ .i.unwrap);
+    return Boolean(firstElementSuit);
+}
+
+
+/***/ }),
+/* 66 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "A": function() { return /* binding */ wrapAndCommitStyle; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _wrap_unwrapped_text__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(67);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
+/* harmony import */ var _wrap_ordered_list__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(68);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+function wrapAndCommitStyle(commitStyle, font, jodit) {
+    const wrapper = findOrCreateWrapper(commitStyle, font, jodit);
+    return commitStyle.elementIsList
+        ? (0,_wrap_ordered_list__WEBPACK_IMPORTED_MODULE_3__/* .wrapOrderedList */ .R)(commitStyle, wrapper, jodit)
+        : jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.replace */ .i.replace(wrapper, commitStyle.element, jodit.createInside, true);
+}
+function findOrCreateWrapper(commitStyle, font, jodit) {
+    if (commitStyle.elementIsBlock) {
+        const box = jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.up */ .i.up(font, node => jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isBlock */ .i.isBlock(node) &&
+            !jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isTag */ .i.isTag(node, [
+                'td',
+                'th',
+                'tr',
+                'tbody',
+                'table',
+                'li',
+                'ul',
+                'ol'
+            ]), jodit.editor);
+        if (box) {
+            return box;
+        }
+    }
+    if (commitStyle.elementIsBlock) {
+        return (0,_wrap_unwrapped_text__WEBPACK_IMPORTED_MODULE_1__/* .wrapUnwrappedText */ .h)(commitStyle, font, jodit, jodit.s.createRange);
+    }
+    (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(font, 'size', null);
+    return font;
+}
+
+
+/***/ }),
+/* 67 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "h": function() { return /* binding */ wrapUnwrappedText; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function wrapUnwrappedText(style, elm, jodit, getRange) {
+    const root = jodit.editor, ci = jodit.createInside, edge = (n, key = 'previousSibling') => {
+        let edgeNode = n, node = n;
+        while (node) {
+            if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isTag */ .i.isTag(node, jodit.o.enter)) {
+                break;
+            }
+            edgeNode = node;
+            if (node[key]) {
+                node = node[key];
+            }
+            else {
+                node =
+                    node.parentNode &&
+                        !jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isBlock */ .i.isBlock(node.parentNode) &&
+                        node.parentNode !== root
+                        ? node.parentNode
+                        : null;
+            }
+            if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isBlock */ .i.isBlock(node)) {
+                break;
+            }
+        }
+        return edgeNode;
+    };
+    const start = edge(elm), end = edge(elm, 'nextSibling');
+    const range = getRange();
+    range.setStartBefore(start);
+    range.setEndAfter(end);
+    const fragment = range.extractContents();
+    const wrapper = ci.element(style.element);
+    wrapper.appendChild(fragment);
+    range.insertNode(wrapper);
+    if (style.elementIsBlock) {
+        if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isEmpty */ .i.isEmpty(wrapper) &&
+            !jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isTag */ .i.isTag(wrapper.firstElementChild, 'br')) {
+            wrapper.appendChild(ci.element('br'));
+        }
+    }
+    return wrapper;
+}
+
+
+/***/ }),
+/* 68 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "R": function() { return /* binding */ wrapOrderedList; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function wrapOrderedList(commitStyle, wrapper, jodit) {
+    const newWrapper = jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.replace */ .i.replace(wrapper, 'li', jodit.createInside);
+    let list = newWrapper.previousElementSibling || newWrapper.nextElementSibling;
+    if (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isTag */ .i.isTag(list, ['ul', 'ol'])) {
+        list = jodit.createInside.element(commitStyle.element);
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.before */ .i.before(newWrapper, list);
+    }
+    if (newWrapper.previousElementSibling === list) {
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.append */ .i.append(list, newWrapper);
+    }
+    else {
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.prepend */ .i.prepend(list, newWrapper);
+    }
+    return list;
+}
+
+
+/***/ }),
+/* 69 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6395,7 +5340,7 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
 /* harmony export */   "k": function() { return /* binding */ keepNames; },
 /* harmony export */   "g": function() { return /* binding */ getClassName; }
 /* harmony export */ });
-/* harmony import */ var _checker_is_function__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _checker_is_function__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6422,25 +5367,48 @@ const getClassName = (obj) => {
 
 
 /***/ }),
-/* 27 */
+/* 70 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "eV": function() { return /* reexport safe */ _camel_case__WEBPACK_IMPORTED_MODULE_0__.e; },
+/* harmony export */   "Pz": function() { return /* reexport safe */ _stringify__WEBPACK_IMPORTED_MODULE_1__.P; },
+/* harmony export */   "gP": function() { return /* reexport safe */ _kebab_case__WEBPACK_IMPORTED_MODULE_2__.g; },
+/* harmony export */   "GL": function() { return /* reexport safe */ _kebab_case__WEBPACK_IMPORTED_MODULE_2__.G; },
+/* harmony export */   "fy": function() { return /* reexport safe */ _trim__WEBPACK_IMPORTED_MODULE_3__.f; },
+/* harmony export */   "as": function() { return /* reexport safe */ _trim__WEBPACK_IMPORTED_MODULE_3__.a; },
+/* harmony export */   "Ps": function() { return /* reexport safe */ _ucfirst__WEBPACK_IMPORTED_MODULE_4__.P; },
+/* harmony export */   "ag": function() { return /* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_5__.a; },
+/* harmony export */   "gB": function() { return /* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_5__.g; }
+/* harmony export */ });
+/* harmony import */ var _camel_case__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(71);
+/* harmony import */ var _stringify__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(149);
+/* harmony import */ var _kebab_case__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(72);
+/* harmony import */ var _trim__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(73);
+/* harmony import */ var _ucfirst__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(74);
+/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(75);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "gP": function() { return /* reexport */ CamelCaseToKebabCase; },
-  "eV": function() { return /* reexport */ camelCase; },
-  "ag": function() { return /* reexport */ i18n; },
-  "GL": function() { return /* reexport */ kebabCase; },
-  "gB": function() { return /* reexport */ sprintf; },
-  "Pz": function() { return /* reexport */ stringify/* stringify */.P; },
-  "fy": function() { return /* reexport */ trim/* trim */.f; },
-  "as": function() { return /* reexport */ trim/* trimInv */.a; },
-  "Ps": function() { return /* reexport */ ucfirst; }
-});
 
-;// CONCATENATED MODULE: ./src/core/helpers/string/camel-case.ts
+
+
+
+
+
+
+/***/ }),
+/* 71 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "e": function() { return /* binding */ camelCase; }
+/* harmony export */ });
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6452,9 +5420,16 @@ const camelCase = (key) => {
     });
 };
 
-// EXTERNAL MODULE: ./src/core/helpers/string/stringify.ts
-var stringify = __webpack_require__(19);
-;// CONCATENATED MODULE: ./src/core/helpers/string/kebab-case.ts
+
+/***/ }),
+/* 72 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "G": function() { return /* binding */ kebabCase; },
+/* harmony export */   "g": function() { return /* binding */ CamelCaseToKebabCase; }
+/* harmony export */ });
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6474,9 +5449,43 @@ const CamelCaseToKebabCase = (key) => {
         .toLowerCase();
 };
 
-// EXTERNAL MODULE: ./src/core/helpers/string/trim.ts
-var trim = __webpack_require__(28);
-;// CONCATENATED MODULE: ./src/core/helpers/string/ucfirst.ts
+
+/***/ }),
+/* 73 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "f": function() { return /* binding */ trim; },
+/* harmony export */   "a": function() { return /* binding */ trimInv; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function trim(value) {
+    return value
+        .replace((0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.SPACE_REG_EXP_END)(), '')
+        .replace((0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.SPACE_REG_EXP_START)(), '');
+}
+function trimInv(value) {
+    return value
+        .replace((0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE_REG_EXP_END)(), '')
+        .replace((0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE_REG_EXP_START)(), '');
+}
+
+
+/***/ }),
+/* 74 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "P": function() { return /* binding */ ucfirst; }
+/* harmony export */ });
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6489,15 +5498,21 @@ function ucfirst(value) {
     return value[0].toUpperCase() + value.substr(1);
 }
 
-// EXTERNAL MODULE: ./src/config.ts
-var config = __webpack_require__(1);
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 18 modules
-var utils = __webpack_require__(9);
-// EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
-var checker = __webpack_require__(18);
-// EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(13);
-;// CONCATENATED MODULE: ./src/core/helpers/string/i18n.ts
+
+/***/ }),
+/* 75 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "g": function() { return /* binding */ sprintf; },
+/* harmony export */   "a": function() { return /* binding */ i18n; }
+/* harmony export */ });
+/* harmony import */ var jodit_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(76);
+/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
+/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(27);
+/* harmony import */ var jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(70);
+/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(10);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6523,40 +5538,40 @@ const sprintf = (str, args) => {
     return res;
 };
 const i18n = (key, params, options) => {
-    if (!(0,checker/* isString */.HD)(key)) {
-        throw (0,utils/* error */.vU)('i18n: Need string in first argument');
+    if (!(0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .HD)(key)) {
+        throw (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_1__/* .error */ .vU)('i18n: Need string in first argument');
     }
     if (!key.length) {
         return key;
     }
     const debug = Boolean(options !== undefined && options.debugLanguage);
     let store;
-    const parse = (value) => params && params.length ? sprintf(value, params) : value, defaultLanguage = (0,utils/* defaultLanguage */.X9)(config/* Config.defaultOptions.language */.D.defaultOptions.language, config/* Config.defaultOptions.language */.D.defaultOptions.language), language = (0,utils/* defaultLanguage */.X9)(options === null || options === void 0 ? void 0 : options.language, defaultLanguage), tryGet = (store) => {
+    const parse = (value) => params && params.length ? sprintf(value, params) : value, defaultLanguage = (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_1__/* .defaultLanguage */ .X9)(jodit_config__WEBPACK_IMPORTED_MODULE_0__/* .Config.defaultOptions.language */ .D.defaultOptions.language, jodit_config__WEBPACK_IMPORTED_MODULE_0__/* .Config.defaultOptions.language */ .D.defaultOptions.language), language = (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_1__/* .defaultLanguage */ .X9)(options === null || options === void 0 ? void 0 : options.language, defaultLanguage), tryGet = (store) => {
         if (!store) {
             return;
         }
-        if ((0,checker/* isString */.HD)(store[key])) {
+        if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .HD)(store[key])) {
             return parse(store[key]);
         }
         const lcKey = key.toLowerCase();
-        if ((0,checker/* isString */.HD)(store[lcKey])) {
+        if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .HD)(store[lcKey])) {
             return parse(store[lcKey]);
         }
-        const ucfKey = ucfirst(key);
-        if ((0,checker/* isString */.HD)(store[ucfKey])) {
+        const ucfKey = (0,jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_3__/* .ucfirst */ .Ps)(key);
+        if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .HD)(store[ucfKey])) {
             return parse(store[ucfKey]);
         }
         return;
     };
-    if (global/* lang */.KQ[language] !== undefined) {
-        store = global/* lang */.KQ[language];
+    if (jodit_core_global__WEBPACK_IMPORTED_MODULE_4__/* .lang */ .KQ[language] !== undefined) {
+        store = jodit_core_global__WEBPACK_IMPORTED_MODULE_4__/* .lang */ .KQ[language];
     }
     else {
-        if (global/* lang */.KQ[defaultLanguage] !== undefined) {
-            store = global/* lang */.KQ[defaultLanguage];
+        if (jodit_core_global__WEBPACK_IMPORTED_MODULE_4__/* .lang */ .KQ[defaultLanguage] !== undefined) {
+            store = jodit_core_global__WEBPACK_IMPORTED_MODULE_4__/* .lang */ .KQ[defaultLanguage];
         }
         else {
-            store = global/* lang.en */.KQ.en;
+            store = jodit_core_global__WEBPACK_IMPORTED_MODULE_4__/* .lang.en */ .KQ.en;
         }
     }
     const i18nOvr = options === null || options === void 0 ? void 0 : options.i18n;
@@ -6570,8 +5585,8 @@ const i18n = (key, params, options) => {
     if (result) {
         return result;
     }
-    if (global/* lang.en */.KQ.en && (0,checker/* isString */.HD)(global/* lang.en */.KQ.en[key]) && global/* lang.en */.KQ.en[key]) {
-        return parse(global/* lang.en */.KQ.en[key]);
+    if (jodit_core_global__WEBPACK_IMPORTED_MODULE_4__/* .lang.en */ .KQ.en && (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .HD)(jodit_core_global__WEBPACK_IMPORTED_MODULE_4__/* .lang.en */ .KQ.en[key]) && jodit_core_global__WEBPACK_IMPORTED_MODULE_4__/* .lang.en */ .KQ.en[key]) {
+        return parse(jodit_core_global__WEBPACK_IMPORTED_MODULE_4__/* .lang.en */ .KQ.en[key]);
     }
     if (debug) {
         return '{' + key + '}';
@@ -6580,50 +5595,383 @@ const i18n = (key, params, options) => {
     return parse(key);
 };
 
-;// CONCATENATED MODULE: ./src/core/helpers/string/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
 
 /***/ }),
-/* 28 */
+/* 76 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "f": function() { return /* binding */ trim; },
-/* harmony export */   "a": function() { return /* binding */ trimInv; }
+/* harmony export */   "D": function() { return /* binding */ Config; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var _core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-function trim(value) {
-    return value
-        .replace((0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.SPACE_REG_EXP_END)(), '')
-        .replace((0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.SPACE_REG_EXP_START)(), '');
+class Config {
+    constructor() {
+        this.namespace = '';
+        this.safeMode = false;
+        this.safePluginsList = ['about', 'enter', 'backspace'];
+        this.license = '';
+        this.preset = 'custom';
+        this.presets = {
+            inline: {
+                inline: true,
+                toolbar: false,
+                toolbarInline: true,
+                toolbarInlineForSelection: true,
+                showXPathInStatusbar: false,
+                showCharsCounter: false,
+                showWordsCounter: false,
+                showPlaceholder: false
+            }
+        };
+        this.ownerDocument = (typeof document !== 'undefined'
+            ? document
+            : null);
+        this.ownerWindow = (typeof window !== 'undefined'
+            ? window
+            : null);
+        this.shadowRoot = null;
+        this.styleValues = {};
+        this.zIndex = 0;
+        this.readonly = false;
+        this.disabled = false;
+        this.activeButtonsInReadOnly = [
+            'source',
+            'fullsize',
+            'print',
+            'about',
+            'dots',
+            'selectall'
+        ];
+        this.toolbarButtonSize = 'middle';
+        this.allowTabNavigation = false;
+        this.inline = false;
+        this.theme = 'default';
+        this.saveModeInStorage = false;
+        this.spellcheck = true;
+        this.editorCssClass = false;
+        this.style = false;
+        this.triggerChangeEvent = true;
+        this.direction = '';
+        this.language = 'auto';
+        this.debugLanguage = false;
+        this.i18n = false;
+        this.tabIndex = -1;
+        this.toolbar = true;
+        this.statusbar = true;
+        this.showTooltip = true;
+        this.showTooltipDelay = 1000;
+        this.useNativeTooltip = false;
+        this.enter = _core_constants__WEBPACK_IMPORTED_MODULE_0__.PARAGRAPH;
+        this.enterBlock = this.enter !== 'br' ? this.enter : _core_constants__WEBPACK_IMPORTED_MODULE_0__.PARAGRAPH;
+        this.defaultMode = _core_constants__WEBPACK_IMPORTED_MODULE_0__.MODE_WYSIWYG;
+        this.useSplitMode = false;
+        this.colors = {
+            greyscale: [
+                '#000000',
+                '#434343',
+                '#666666',
+                '#999999',
+                '#B7B7B7',
+                '#CCCCCC',
+                '#D9D9D9',
+                '#EFEFEF',
+                '#F3F3F3',
+                '#FFFFFF'
+            ],
+            palette: [
+                '#980000',
+                '#FF0000',
+                '#FF9900',
+                '#FFFF00',
+                '#00F0F0',
+                '#00FFFF',
+                '#4A86E8',
+                '#0000FF',
+                '#9900FF',
+                '#FF00FF'
+            ],
+            full: [
+                '#E6B8AF',
+                '#F4CCCC',
+                '#FCE5CD',
+                '#FFF2CC',
+                '#D9EAD3',
+                '#D0E0E3',
+                '#C9DAF8',
+                '#CFE2F3',
+                '#D9D2E9',
+                '#EAD1DC',
+                '#DD7E6B',
+                '#EA9999',
+                '#F9CB9C',
+                '#FFE599',
+                '#B6D7A8',
+                '#A2C4C9',
+                '#A4C2F4',
+                '#9FC5E8',
+                '#B4A7D6',
+                '#D5A6BD',
+                '#CC4125',
+                '#E06666',
+                '#F6B26B',
+                '#FFD966',
+                '#93C47D',
+                '#76A5AF',
+                '#6D9EEB',
+                '#6FA8DC',
+                '#8E7CC3',
+                '#C27BA0',
+                '#A61C00',
+                '#CC0000',
+                '#E69138',
+                '#F1C232',
+                '#6AA84F',
+                '#45818E',
+                '#3C78D8',
+                '#3D85C6',
+                '#674EA7',
+                '#A64D79',
+                '#85200C',
+                '#990000',
+                '#B45F06',
+                '#BF9000',
+                '#38761D',
+                '#134F5C',
+                '#1155CC',
+                '#0B5394',
+                '#351C75',
+                '#733554',
+                '#5B0F00',
+                '#660000',
+                '#783F04',
+                '#7F6000',
+                '#274E13',
+                '#0C343D',
+                '#1C4587',
+                '#073763',
+                '#20124D',
+                '#4C1130'
+            ]
+        };
+        this.colorPickerDefaultTab = 'background';
+        this.imageDefaultWidth = 300;
+        this.removeButtons = [];
+        this.disablePlugins = [];
+        this.extraPlugins = [];
+        this.extraButtons = [];
+        this.extraIcons = {};
+        this.createAttributes = {};
+        this.sizeLG = 900;
+        this.sizeMD = 700;
+        this.sizeSM = 400;
+        this.buttons = [
+            {
+                group: 'font-style',
+                buttons: []
+            },
+            {
+                group: 'list',
+                buttons: []
+            },
+            {
+                group: 'font',
+                buttons: []
+            },
+            '---',
+            {
+                group: 'script',
+                buttons: []
+            },
+            {
+                group: 'media',
+                buttons: []
+            },
+            '\n',
+            {
+                group: 'state',
+                buttons: []
+            },
+            {
+                group: 'clipboard',
+                buttons: []
+            },
+            {
+                group: 'insert',
+                buttons: []
+            },
+            {
+                group: 'indent',
+                buttons: []
+            },
+            {
+                group: 'color',
+                buttons: []
+            },
+            {
+                group: 'form',
+                buttons: []
+            },
+            '---',
+            {
+                group: 'history',
+                buttons: []
+            },
+            {
+                group: 'search',
+                buttons: []
+            },
+            {
+                group: 'source',
+                buttons: []
+            },
+            {
+                group: 'other',
+                buttons: []
+            },
+            {
+                group: 'info',
+                buttons: []
+            }
+        ];
+        this.buttonsMD = [
+            'bold',
+            'italic',
+            '|',
+            'ul',
+            'ol',
+            'eraser',
+            '|',
+            'font',
+            'fontsize',
+            '---',
+            'image',
+            'table',
+            '|',
+            'link',
+            '\n',
+            'brush',
+            'paragraph',
+            'align',
+            '|',
+            'hr',
+            'copyformat',
+            'fullsize',
+            '---',
+            'undo',
+            'redo',
+            '|',
+            'dots'
+        ];
+        this.buttonsSM = [
+            'bold',
+            'italic',
+            '|',
+            'ul',
+            'ol',
+            'eraser',
+            '|',
+            'fontsize',
+            'brush',
+            'paragraph',
+            '---',
+            'image',
+            'table',
+            '\n',
+            'link',
+            '|',
+            'align',
+            '|',
+            'undo',
+            'redo',
+            '|',
+            'copyformat',
+            'fullsize',
+            '---',
+            'dots'
+        ];
+        this.buttonsXS = [
+            'bold',
+            'brush',
+            'paragraph',
+            'eraser',
+            '|',
+            'fontsize',
+            '---',
+            'image',
+            '\n',
+            'align',
+            'undo',
+            'redo',
+            '|',
+            'link',
+            'table',
+            '---',
+            'dots'
+        ];
+        this.events = {};
+        this.textIcons = false;
+        this.showBrowserColorPicker = true;
+    }
+    static get defaultOptions() {
+        if (!Config.__defaultOptions) {
+            Config.__defaultOptions = new Config();
+        }
+        return Config.__defaultOptions;
+    }
 }
-function trimInv(value) {
-    return value
-        .replace((0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE_REG_EXP_END)(), '')
-        .replace((0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE_REG_EXP_START)(), '');
+Config.prototype.controls = {};
+
+
+/***/ }),
+/* 77 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "H": function() { return /* binding */ ViewComponent; }
+/* harmony export */ });
+/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+class ViewComponent extends _component__WEBPACK_IMPORTED_MODULE_0__/* .Component */ .w {
+    constructor(jodit) {
+        super();
+        this.setParentView(jodit);
+    }
+    get defaultTimeout() {
+        return this.j.defaultTimeout;
+    }
+    get j() {
+        return this.jodit;
+    }
+    i18n(text, ...params) {
+        return this.j.i18n(text, ...params);
+    }
+    setParentView(jodit) {
+        this.jodit = jodit;
+        jodit.components.add(this);
+        return this;
+    }
+    destruct() {
+        this.j.components.delete(this);
+        return super.destruct();
+    }
 }
 
 
 /***/ }),
-/* 29 */
+/* 78 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6631,9 +5979,9 @@ function trimInv(value) {
 /* harmony export */   "i": function() { return /* binding */ css; },
 /* harmony export */   "b": function() { return /* binding */ clearCenterAlign; }
 /* harmony export */ });
-/* harmony import */ var _checker___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(18);
-/* harmony import */ var _normalize___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(30);
-/* harmony import */ var _string___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(27);
+/* harmony import */ var _checker___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/* harmony import */ var _normalize___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(79);
+/* harmony import */ var _string___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(70);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6700,29 +6048,56 @@ const clearCenterAlign = (image) => {
 
 
 /***/ }),
-/* 30 */
+/* 79 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "T2": function() { return /* reexport safe */ _normalize_key_aliases__WEBPACK_IMPORTED_MODULE_0__.T; },
+/* harmony export */   "Pd": function() { return /* reexport safe */ _normalize_license__WEBPACK_IMPORTED_MODULE_1__.P; },
+/* harmony export */   "Tz": function() { return /* reexport safe */ _normalize_node__WEBPACK_IMPORTED_MODULE_2__.T; },
+/* harmony export */   "AH": function() { return /* reexport safe */ _normalize_path__WEBPACK_IMPORTED_MODULE_3__.A; },
+/* harmony export */   "Jf": function() { return /* reexport safe */ _normalize_relative_path__WEBPACK_IMPORTED_MODULE_4__.J; },
+/* harmony export */   "aC": function() { return /* reexport safe */ _normalize_size__WEBPACK_IMPORTED_MODULE_5__.a; },
+/* harmony export */   "D5": function() { return /* reexport safe */ _normalize_url__WEBPACK_IMPORTED_MODULE_6__.D; },
+/* harmony export */   "Zh": function() { return /* reexport safe */ _normalize_css_value__WEBPACK_IMPORTED_MODULE_7__.Z; },
+/* harmony export */   "ut": function() { return /* reexport safe */ _normalize_color__WEBPACK_IMPORTED_MODULE_8__.u; }
+/* harmony export */ });
+/* harmony import */ var _normalize_key_aliases__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(80);
+/* harmony import */ var _normalize_license__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(154);
+/* harmony import */ var _normalize_node__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(81);
+/* harmony import */ var _normalize_path__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(82);
+/* harmony import */ var _normalize_relative_path__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(83);
+/* harmony import */ var _normalize_size__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(155);
+/* harmony import */ var _normalize_url__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(84);
+/* harmony import */ var _normalize_css_value__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(85);
+/* harmony import */ var _normalize_color__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(87);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "ut": function() { return /* reexport */ normalizeColor; },
-  "Zh": function() { return /* reexport */ normalizeCssValue; },
-  "T2": function() { return /* reexport */ normalizeKeyAliases; },
-  "Pd": function() { return /* reexport */ normalizeLicense; },
-  "Tz": function() { return /* reexport */ normalizeNode; },
-  "AH": function() { return /* reexport */ normalizePath; },
-  "Jf": function() { return /* reexport */ normalizeRelativePath; },
-  "aC": function() { return /* reexport */ normalizeSize; },
-  "D5": function() { return /* reexport */ normalizeUrl; }
-});
 
-// EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 4 modules
-var string = __webpack_require__(27);
-// EXTERNAL MODULE: ./src/core/constants.ts
-var constants = __webpack_require__(2);
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-key-aliases.ts
+
+
+
+
+
+
+
+
+
+/***/ }),
+/* 80 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "T": function() { return /* binding */ normalizeKeyAliases; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(70);
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6735,33 +6110,24 @@ function normalizeKeyAliases(keys) {
     return keys
         .replace(/\+\+/g, '+add')
         .split(/[\s]*\+[\s]*/)
-        .map(key => (0,string/* trim */.fy)(key.toLowerCase()))
-        .map(key => constants.KEY_ALIASES[key] || key)
+        .map(key => (0,jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_0__/* .trim */ .fy)(key.toLowerCase()))
+        .map(key => jodit_core_constants__WEBPACK_IMPORTED_MODULE_1__.KEY_ALIASES[key] || key)
         .sort()
         .filter(key => !memory[key] && key !== '' && (memory[key] = true))
         .join('+');
 }
 
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-license.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const normalizeLicense = (license, count = 8) => {
-    const parts = [];
-    while (license.length) {
-        parts.push(license.substr(0, count));
-        license = license.substr(count);
-    }
-    parts[1] = parts[1].replace(/./g, '*');
-    parts[2] = parts[2].replace(/./g, '*');
-    return parts.join('-');
-};
 
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(15);
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-node.ts
+/***/ }),
+/* 81 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "T": function() { return /* binding */ normalizeNode; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6773,13 +6139,13 @@ const normalizeNode = (node) => {
     if (!node) {
         return;
     }
-    if (dom/* Dom.isText */.i.isText(node) && node.nodeValue != null && node.parentNode) {
-        while (dom/* Dom.isText */.i.isText(node.nextSibling)) {
+    if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(node) && node.nodeValue != null && node.parentNode) {
+        while (jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(node.nextSibling)) {
             if (node.nextSibling.nodeValue != null) {
                 node.nodeValue += node.nextSibling.nodeValue;
             }
-            node.nodeValue = node.nodeValue.replace((0,constants.INVISIBLE_SPACE_REG_EXP)(), '');
-            dom/* Dom.safeRemove */.i.safeRemove(node.nextSibling);
+            node.nodeValue = node.nodeValue.replace((0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE_REG_EXP)(), '');
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove(node.nextSibling);
         }
     }
     else {
@@ -6788,7 +6154,16 @@ const normalizeNode = (node) => {
     normalizeNode(node.nextSibling);
 };
 
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-path.ts
+
+/***/ }),
+/* 82 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "A": function() { return /* binding */ normalizePath; }
+/* harmony export */ });
+/* harmony import */ var _string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(70);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6797,7 +6172,7 @@ const normalizeNode = (node) => {
 
 const normalizePath = (...path) => {
     return path
-        .filter(part => (0,string/* trim */.fy)(part).length)
+        .filter(part => (0,_string__WEBPACK_IMPORTED_MODULE_0__/* .trim */ .fy)(part).length)
         .map((part, index) => {
         part = part.replace(/([^:])[\\/]+/g, '$1/');
         if (index) {
@@ -6811,7 +6186,15 @@ const normalizePath = (...path) => {
         .join('/');
 };
 
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-relative-path.ts
+
+/***/ }),
+/* 83 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "J": function() { return /* binding */ normalizeRelativePath; }
+/* harmony export */ });
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6840,20 +6223,15 @@ const normalizeRelativePath = (path) => {
     return builder.join('/') + (path.endsWith('/') ? '/' : '');
 };
 
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-size.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const normalizeSize = (value) => {
-    if (/^[0-9]+$/.test(value.toString())) {
-        return value + 'px';
-    }
-    return value.toString();
-};
 
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-url.ts
+/***/ }),
+/* 84 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "D": function() { return /* binding */ normalizeUrl; }
+/* harmony export */ });
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6867,11 +6245,18 @@ const normalizeUrl = (...urls) => {
         .replace(/([^:])[\\/]+/g, '$1/');
 };
 
-// EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
-var checker = __webpack_require__(18);
-// EXTERNAL MODULE: ./src/core/helpers/color/color-to-hex.ts
-var color_to_hex = __webpack_require__(31);
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-css-value.ts
+
+/***/ }),
+/* 85 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": function() { return /* binding */ normalizeCssValue; }
+/* harmony export */ });
+/* harmony import */ var _checker___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/* harmony import */ var _string__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(70);
+/* harmony import */ var _color__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(86);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6881,7 +6266,7 @@ var color_to_hex = __webpack_require__(31);
 
 
 function normalizeCssValue(key, value) {
-    switch ((0,string/* kebabCase */.GL)(key)) {
+    switch ((0,_string__WEBPACK_IMPORTED_MODULE_1__/* .kebabCase */ .GL)(key)) {
         case 'font-weight':
             switch (value.toString().toLowerCase()) {
                 case '700':
@@ -6894,62 +6279,17 @@ function normalizeCssValue(key, value) {
                 case 'heavy':
                     return 900;
             }
-            return (0,checker/* isNumeric */.kE)(value) ? Number(value) : value;
+            return (0,_checker___WEBPACK_IMPORTED_MODULE_0__/* .isNumeric */ .kE)(value) ? Number(value) : value;
     }
     if (/color/i.test(key) && /^rgb/i.test(value.toString())) {
-        return (0,color_to_hex/* colorToHex */.h)(value.toString()) || value;
+        return (0,_color__WEBPACK_IMPORTED_MODULE_2__/* .colorToHex */ .h)(value.toString()) || value;
     }
     return value;
 }
 
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-color.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-const normalizeColor = (colorInput) => {
-    const newcolor = ['#'];
-    let color = (0,color_to_hex/* colorToHex */.h)(colorInput);
-    if (!color) {
-        return false;
-    }
-    color = (0,string/* trim */.fy)(color.toUpperCase());
-    color = color.substr(1);
-    if (color.length === 3) {
-        for (let i = 0; i < 3; i += 1) {
-            newcolor.push(color[i]);
-            newcolor.push(color[i]);
-        }
-        return newcolor.join('');
-    }
-    if (color.length > 6) {
-        color = color.substr(0, 6);
-    }
-    return '#' + color;
-};
-
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-
 
 /***/ }),
-/* 31 */
+/* 86 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6986,15 +6326,54 @@ const colorToHex = (color) => {
 
 
 /***/ }),
-/* 32 */
+/* 87 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "u": function() { return /* binding */ normalizeColor; }
+/* harmony export */ });
+/* harmony import */ var _color___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(86);
+/* harmony import */ var _string___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(70);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+const normalizeColor = (colorInput) => {
+    const newcolor = ['#'];
+    let color = (0,_color___WEBPACK_IMPORTED_MODULE_1__/* .colorToHex */ .h)(colorInput);
+    if (!color) {
+        return false;
+    }
+    color = (0,_string___WEBPACK_IMPORTED_MODULE_0__/* .trim */ .fy)(color.toUpperCase());
+    color = color.substr(1);
+    if (color.length === 3) {
+        for (let i = 0; i < 3; i += 1) {
+            newcolor.push(color[i]);
+            newcolor.push(color[i]);
+        }
+        return newcolor.join('');
+    }
+    if (color.length > 6) {
+        color = color.substr(0, 6);
+    }
+    return '#' + color;
+};
+
+
+/***/ }),
+/* 88 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "U": function() { return /* binding */ get; }
 /* harmony export */ });
-/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
-/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(20);
+/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(33);
+/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(35);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7008,11 +6387,16 @@ function get(chain, obj) {
     }
     const parts = chain.split('.');
     let result = obj;
-    for (const part of parts) {
-        if ((0,_checker_is_void__WEBPACK_IMPORTED_MODULE_1__/* .isVoid */ .n)(result[part])) {
-            return null;
+    try {
+        for (const part of parts) {
+            if ((0,_checker_is_void__WEBPACK_IMPORTED_MODULE_1__/* .isVoid */ .n)(result[part])) {
+                return null;
+            }
+            result = result[part];
         }
-        result = result[part];
+    }
+    catch (_a) {
+        return null;
     }
     if ((0,_checker_is_void__WEBPACK_IMPORTED_MODULE_1__/* .isVoid */ .n)(result)) {
         return null;
@@ -7022,34 +6406,581 @@ function get(chain, obj) {
 
 
 /***/ }),
-/* 33 */
+/* 89 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "_2": function() { return /* reexport */ asArray; },
-  "C1": function() { return /* reexport */ split_array/* splitArray */.C; },
-  "qo": function() { return /* reexport */ to_array/* toArray */.q; }
-});
-
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-array.ts
-var is_array = __webpack_require__(7);
-;// CONCATENATED MODULE: ./src/core/helpers/array/as-array.ts
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "t": function() { return /* binding */ set; }
+/* harmony export */ });
+/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(33);
+/* harmony import */ var _checker_is_numeric__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(38);
+/* harmony import */ var _checker_is_array__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(28);
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const asArray = (a) => ((0,is_array/* isArray */.k)(a) ? a : [a]);
 
-// EXTERNAL MODULE: ./src/core/helpers/array/split-array.ts
-var split_array = __webpack_require__(24);
-// EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
-var to_array = __webpack_require__(34);
-;// CONCATENATED MODULE: ./src/core/helpers/array/index.ts
+
+
+function set(chain, value, obj) {
+    if (!(0,_checker_is_string__WEBPACK_IMPORTED_MODULE_1__/* .isString */ .H)(chain) || !chain.length) {
+        return;
+    }
+    const parts = chain.split('.');
+    let result = obj, key = parts[0];
+    for (let i = 0; i < parts.length - 1; i += 1) {
+        key = parts[i];
+        if (!(0,_checker_is_array__WEBPACK_IMPORTED_MODULE_2__/* .isArray */ .k)(result[key]) && !(0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isPlainObject */ .PO)(result[key])) {
+            result[key] = (0,_checker_is_numeric__WEBPACK_IMPORTED_MODULE_3__/* .isNumeric */ .k)(parts[i + 1]) ? [] : {};
+        }
+        result = result[key];
+    }
+    if (result) {
+        result[parts[parts.length - 1]] = value;
+    }
+}
+
+
+/***/ }),
+/* 90 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "uR": function() { return /* binding */ appendScript; },
+/* harmony export */   "JL": function() { return /* binding */ appendScriptAsync; },
+/* harmony export */   "Nf": function() { return /* binding */ appendStyleAsync; },
+/* harmony export */   "wY": function() { return /* binding */ loadNext; },
+/* harmony export */   "GX": function() { return /* binding */ loadNextStyle; }
+/* harmony export */ });
+/* harmony import */ var _complete_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(91);
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+const alreadyLoadedList = new Map();
+const cacheLoaders = (loader) => {
+    return async (jodit, url) => {
+        if (alreadyLoadedList.has(url)) {
+            return alreadyLoadedList.get(url);
+        }
+        const promise = loader(jodit, url);
+        alreadyLoadedList.set(url, promise);
+        return promise;
+    };
+};
+const appendScript = (jodit, url, callback) => {
+    const script = jodit.c.element('script');
+    script.type = 'text/javascript';
+    script.async = true;
+    if ((0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isFunction */ .mf)(callback) && !jodit.isInDestruct) {
+        jodit.e.on(script, 'load', callback);
+    }
+    if (!script.src) {
+        script.src = (0,_complete_url__WEBPACK_IMPORTED_MODULE_1__/* .completeUrl */ .W)(url);
+    }
+    jodit.od.body.appendChild(script);
+    return {
+        callback,
+        element: script
+    };
+};
+const appendScriptAsync = cacheLoaders((jodit, url) => {
+    return new Promise((resolve, reject) => {
+        const { element } = appendScript(jodit, url, resolve);
+        !jodit.isInDestruct && jodit.e.on(element, 'error', reject);
+    });
+});
+const appendStyleAsync = cacheLoaders((jodit, url) => {
+    return new Promise((resolve, reject) => {
+        const link = jodit.c.element('link');
+        link.rel = 'stylesheet';
+        link.media = 'all';
+        link.crossOrigin = 'anonymous';
+        const callback = () => resolve(link);
+        !jodit.isInDestruct &&
+            jodit.e.on(link, 'load', callback).on(link, 'error', reject);
+        link.href = (0,_complete_url__WEBPACK_IMPORTED_MODULE_1__/* .completeUrl */ .W)(url);
+        if (jodit.o.shadowRoot) {
+            jodit.o.shadowRoot.appendChild(link);
+        }
+        else {
+            jodit.od.body.appendChild(link);
+        }
+    });
+});
+const loadNext = (jodit, urls, i = 0) => {
+    if (!(0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .HD)(urls[i])) {
+        return Promise.resolve();
+    }
+    return appendScriptAsync(jodit, urls[i]).then(() => loadNext(jodit, urls, i + 1));
+};
+const loadNextStyle = (jodit, urls, i = 0) => {
+    if (!(0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .HD)(urls[i])) {
+        return Promise.resolve();
+    }
+    return appendStyleAsync(jodit, urls[i]).then(() => loadNextStyle(jodit, urls, i + 1));
+};
+
+
+/***/ }),
+/* 91 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "W": function() { return /* binding */ completeUrl; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const completeUrl = (url) => {
+    if (window.location.protocol === 'file:' && /^\/\//.test(url)) {
+        url = 'https:' + url;
+    }
+    return url;
+};
+
+
+/***/ }),
+/* 92 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "X": function() { return /* binding */ buildQuery; }
+/* harmony export */ });
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+const buildQuery = (data, prefix) => {
+    const str = [];
+    const enc = encodeURIComponent;
+    for (const dataKey in data) {
+        if (Object.prototype.hasOwnProperty.call(data, dataKey)) {
+            const k = prefix ? prefix + '[' + dataKey + ']' : dataKey;
+            const v = data[dataKey];
+            str.push((0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isPlainObject */ .PO)(v) ? buildQuery(v, k) : enc(k) + '=' + enc(v));
+        }
+    }
+    return str.join('&');
+};
+
+
+/***/ }),
+/* 93 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "I": function() { return /* binding */ ConfigProto; },
+/* harmony export */   "t": function() { return /* binding */ ConfigFlatten; }
+/* harmony export */ });
+/* harmony import */ var _extend__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(94);
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/* harmony import */ var jodit_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(76);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+function ConfigProto(options, proto, deep = 0) {
+    if (Object.getPrototypeOf(options) !== Object.prototype) {
+        return options;
+    }
+    const def = jodit_config__WEBPACK_IMPORTED_MODULE_1__/* .Config.defaultOptions */ .D.defaultOptions;
+    if ((0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .HD)(options.preset)) {
+        if (def.presets[options.preset] !== undefined) {
+            const preset = def.presets[options.preset];
+            Object.keys(preset).forEach(subKey => {
+                if ((0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isVoid */ .nj)(options[subKey])) {
+                    options[subKey] = preset[subKey];
+                }
+            });
+        }
+        delete options.preset;
+    }
+    const newOpt = {};
+    Object.keys(options).forEach(key => {
+        const opt = options[key], protoKey = proto ? proto[key] : null;
+        if ((0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isPlainObject */ .PO)(opt) && (0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isPlainObject */ .PO)(protoKey) && !(0,_extend__WEBPACK_IMPORTED_MODULE_3__/* .isAtom */ .J8)(opt)) {
+            newOpt[key] = ConfigProto(opt, protoKey, deep + 1);
+            return;
+        }
+        if (deep !== 0 && (0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isArray */ .kJ)(opt) && !(0,_extend__WEBPACK_IMPORTED_MODULE_3__/* .isAtom */ .J8)(opt) && (0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isArray */ .kJ)(protoKey)) {
+            newOpt[key] = [...opt, ...protoKey.slice(opt.length)];
+            return;
+        }
+        newOpt[key] = opt;
+    });
+    Object.setPrototypeOf(newOpt, proto);
+    return newOpt;
+}
+function ConfigFlatten(obj) {
+    return (0,_utils__WEBPACK_IMPORTED_MODULE_2__/* .keys */ .XP)(obj, false).reduce((app, key) => {
+        app[key] = obj[key];
+        return app;
+    }, {});
+}
+
+
+/***/ }),
+/* 94 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "J8": function() { return /* binding */ isAtom; },
+/* harmony export */   "XT": function() { return /* binding */ markAsAtomic; },
+/* harmony export */   "V8": function() { return /* binding */ fastClone; }
+/* harmony export */ });
+/* harmony import */ var _string_stringify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(149);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function isAtom(obj) {
+    return obj && obj.isAtom;
+}
+function markAsAtomic(obj) {
+    Object.defineProperty(obj, 'isAtom', {
+        enumerable: false,
+        value: true,
+        configurable: false
+    });
+    return obj;
+}
+function fastClone(object) {
+    return JSON.parse((0,_string_stringify__WEBPACK_IMPORTED_MODULE_0__/* .stringify */ .P)(object));
+}
+
+
+/***/ }),
+/* 95 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "U": function() { return /* binding */ convertMediaUrlToVideoEmbed; }
+/* harmony export */ });
+/* harmony import */ var _checker___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/* harmony import */ var _parse_query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+const convertMediaUrlToVideoEmbed = (url, width = 400, height = 345) => {
+    if (!(0,_checker___WEBPACK_IMPORTED_MODULE_0__/* .isURL */ .PX)(url)) {
+        return url;
+    }
+    const parser = document.createElement('a'), pattern1 = /(?:http?s?:\/\/)?(?:www\.)?(?:vimeo\.com)\/?(.+)/g;
+    parser.href = url;
+    if (!width) {
+        width = 400;
+    }
+    if (!height) {
+        height = 345;
+    }
+    const protocol = parser.protocol || '';
+    switch (parser.hostname) {
+        case 'www.vimeo.com':
+        case 'vimeo.com':
+            return pattern1.test(url)
+                ? url.replace(pattern1, '<iframe width="' +
+                    width +
+                    '" height="' +
+                    height +
+                    '" src="' +
+                    protocol +
+                    '//player.vimeo.com/video/$1" frameborder="0" allowfullscreen></iframe>')
+                : url;
+        case 'youtube.com':
+        case 'www.youtube.com':
+        case 'youtu.be':
+        case 'www.youtu.be': {
+            const query = parser.search
+                ? (0,_parse_query__WEBPACK_IMPORTED_MODULE_1__/* .parseQuery */ .m)(parser.search)
+                : { v: parser.pathname.substr(1) };
+            return query.v
+                ? '<iframe width="' +
+                    width +
+                    '" height="' +
+                    height +
+                    '" src="' +
+                    protocol +
+                    '//www.youtube.com/embed/' +
+                    query.v +
+                    '" frameborder="0" allowfullscreen></iframe>'
+                : url;
+        }
+    }
+    return url;
+};
+
+
+/***/ }),
+/* 96 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "k": function() { return /* binding */ ctrlKey; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const ctrlKey = (e) => {
+    if (typeof navigator !== 'undefined' &&
+        navigator.userAgent.indexOf('Mac OS X') !== -1) {
+        if (e.metaKey && !e.altKey) {
+            return true;
+        }
+    }
+    else if (e.ctrlKey && !e.altKey) {
+        return true;
+    }
+    return false;
+};
+
+
+/***/ }),
+/* 97 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "X": function() { return /* binding */ defaultLanguage; }
+/* harmony export */ });
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+const defaultLanguage = (language, defaultLanguage = 'en') => {
+    if (language !== 'auto' && (0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .HD)(language)) {
+        return language;
+    }
+    if (document.documentElement && document.documentElement.lang) {
+        return document.documentElement.lang;
+    }
+    if (navigator.language) {
+        return navigator.language.substr(0, 2);
+    }
+    return defaultLanguage;
+};
+
+
+/***/ }),
+/* 98 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "w": function() { return /* binding */ humanSizeToBytes; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const humanSizeToBytes = (human) => {
+    if (/^[0-9.]+$/.test(human.toString())) {
+        return parseFloat(human);
+    }
+    const format = human.substr(-2, 2).toUpperCase(), formats = ['KB', 'MB', 'GB', 'TB'], number = parseFloat(human.substr(0, human.length - 2));
+    return formats.indexOf(format) !== -1
+        ? number * Math.pow(1024, formats.indexOf(format) + 1)
+        : parseInt(human, 10);
+};
+
+
+/***/ }),
+/* 99 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "m": function() { return /* binding */ parseQuery; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const parseQuery = (queryString) => {
+    const query = {}, a = queryString.substr(1).split('&');
+    for (let i = 0; i < a.length; i += 1) {
+        const keyValue = a[i].split('=');
+        query[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1] || '');
+    }
+    return query;
+};
+
+
+/***/ }),
+/* 100 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "$$": function() { return /* binding */ $$; },
+/* harmony export */   "BR": function() { return /* binding */ getXPathByElement; },
+/* harmony export */   "xL": function() { return /* binding */ refs; },
+/* harmony export */   "iN": function() { return /* binding */ cssPath; },
+/* harmony export */   "W2": function() { return /* binding */ resolveElement; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
+/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27);
+/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(12);
+/* harmony import */ var jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(70);
+/* harmony import */ var jodit_core_helpers_array__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(101);
+/* harmony import */ var jodit_core_ui__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(105);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+let temp = 1;
+const $$temp = () => {
+    temp++;
+    return temp;
+};
+function $$(selector, root) {
+    let result;
+    if (false) {}
+    else {
+        result = root.querySelectorAll(selector);
+    }
+    return [].slice.call(result);
+}
+const getXPathByElement = (element, root) => {
+    if (!element || element.nodeType !== Node.ELEMENT_NODE) {
+        return '';
+    }
+    if (!element.parentNode || root === element) {
+        return '';
+    }
+    if (element.id) {
+        return "//*[@id='" + element.id + "']";
+    }
+    const sames = [].filter.call(element.parentNode.childNodes, (x) => x.nodeName === element.nodeName);
+    return (getXPathByElement(element.parentNode, root) +
+        '/' +
+        element.nodeName.toLowerCase() +
+        (sames.length > 1
+            ? '[' + ((0,jodit_core_helpers_array__WEBPACK_IMPORTED_MODULE_5__/* .toArray */ .qo)(sames).indexOf(element) + 1) + ']'
+            : ''));
+};
+const refs = (root) => {
+    if (root instanceof jodit_core_ui__WEBPACK_IMPORTED_MODULE_6__/* .UIElement */ .u1) {
+        root = root.container;
+    }
+    return $$('[ref],[data-ref]', root).reduce((def, child) => {
+        const key = (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2__/* .attr */ .Lj)(child, '-ref');
+        if (key && (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isString */ .HD)(key)) {
+            def[(0,jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_4__/* .camelCase */ .eV)(key)] = child;
+            def[key] = child;
+        }
+        return def;
+    }, {});
+};
+const cssPath = (el) => {
+    if (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_3__/* .Dom.isElement */ .i.isElement(el)) {
+        return null;
+    }
+    const path = [];
+    let start = el;
+    while (start && start.nodeType === Node.ELEMENT_NODE) {
+        let selector = start.nodeName.toLowerCase();
+        if (start.id) {
+            selector += '#' + start.id;
+            path.unshift(selector);
+            break;
+        }
+        else {
+            let sib = start, nth = 1;
+            do {
+                sib = sib.previousElementSibling;
+                if (sib && sib.nodeName.toLowerCase() === selector) {
+                    nth++;
+                }
+            } while (sib);
+            selector += ':nth-of-type(' + nth + ')';
+        }
+        path.unshift(selector);
+        start = start.parentNode;
+    }
+    return path.join(' > ');
+};
+function resolveElement(element, od) {
+    let resolved = element;
+    if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isString */ .HD)(element)) {
+        try {
+            resolved = od.querySelector(element);
+        }
+        catch (_a) {
+            throw (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2__/* .error */ .vU)('String "' + element + '" should be valid HTML selector');
+        }
+    }
+    if (!resolved ||
+        typeof resolved !== 'object' ||
+        !jodit_core_dom__WEBPACK_IMPORTED_MODULE_3__/* .Dom.isElement */ .i.isElement(resolved) ||
+        !resolved.cloneNode) {
+        throw (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2__/* .error */ .vU)('Element "' + element + '" should be string or HTMLElement instance');
+    }
+    return resolved;
+}
+
+
+/***/ }),
+/* 101 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "_2": function() { return /* reexport safe */ _as_array__WEBPACK_IMPORTED_MODULE_0__._; },
+/* harmony export */   "C1": function() { return /* reexport safe */ _split_array__WEBPACK_IMPORTED_MODULE_1__.C; },
+/* harmony export */   "qo": function() { return /* reexport safe */ _to_array__WEBPACK_IMPORTED_MODULE_2__.q; }
+/* harmony export */ });
+/* harmony import */ var _as_array__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(102);
+/* harmony import */ var _split_array__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(54);
+/* harmony import */ var _to_array__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(103);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7061,15 +6992,33 @@ var to_array = __webpack_require__(34);
 
 
 /***/ }),
-/* 34 */
+/* 102 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "_": function() { return /* binding */ asArray; }
+/* harmony export */ });
+/* harmony import */ var _checker_is_array__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(28);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+const asArray = (a) => ((0,_checker_is_array__WEBPACK_IMPORTED_MODULE_0__/* .isArray */ .k)(a) ? a : [a]);
+
+
+/***/ }),
+/* 103 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "q": function() { return /* binding */ toArray; }
 /* harmony export */ });
-/* harmony import */ var _utils_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
-/* harmony import */ var _checker_is_native_function__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22);
+/* harmony import */ var _utils_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
+/* harmony import */ var _checker_is_native_function__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(104);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7087,83 +7036,56 @@ const toArray = function toArray(...args) {
 
 
 /***/ }),
-/* 35 */
+/* 104 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "zx": function() { return /* reexport */ ui_button/* Button */.zx; },
-  "JO": function() { return /* reexport */ icon/* Icon */.J; },
-  "GI": function() { return /* reexport */ popup/* Popup */.G; },
-  "ko": function() { return /* reexport */ ProgressBar; },
-  "eC": function() { return /* reexport */ ui_form/* UIBlock */.eC; },
-  "y3": function() { return /* reexport */ ui_button/* UIButton */.y3; },
-  "mA": function() { return /* reexport */ ui_form/* UICheckbox */.mA; },
-  "u1": function() { return /* reexport */ ui_element/* UIElement */.u; },
-  "Z": function() { return /* reexport */ ui_form/* UIFileInput */.Z; },
-  "x4": function() { return /* reexport */ ui_form/* UIForm */.x4; },
-  "qe": function() { return /* reexport */ group/* UIGroup */.qe; },
-  "u3": function() { return /* reexport */ ui_form/* UIInput */.u3; },
-  "bz": function() { return /* reexport */ group/* UIList */.bz; },
-  "Cj": function() { return /* reexport */ ui_form/* UISelect */.Cj; },
-  "lU": function() { return /* reexport */ group/* UISeparator */.lU; },
-  "GJ": function() { return /* reexport */ ui_form/* UITextArea */.GJ; }
-});
-
-// UNUSED EXPORTS: UIButtonGroup, UIButtonState, UISpacer
-
-// EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(36);
-// EXTERNAL MODULE: ./src/core/ui/button/index.ts + 1 modules
-var ui_button = __webpack_require__(39);
-// EXTERNAL MODULE: ./src/core/ui/popup/index.ts + 1 modules
-var popup = __webpack_require__(44);
-// EXTERNAL MODULE: ./src/core/ui/group/index.ts + 5 modules
-var group = __webpack_require__(41);
-// EXTERNAL MODULE: ./src/core/ui/form/index.ts + 11 modules
-var ui_form = __webpack_require__(45);
-// EXTERNAL MODULE: ./src/core/ui/icon.ts
-var icon = __webpack_require__(38);
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(15);
-;// CONCATENATED MODULE: ./src/core/ui/progress-bar/progress-bar.ts
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Q": function() { return /* binding */ isNativeFunction; }
+/* harmony export */ });
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
-
-
-class ProgressBar extends ui_element/* UIElement */.u {
-    className() {
-        return 'ProgressBar';
-    }
-    render() {
-        return '<div><div></div></div>';
-    }
-    show() {
-        const container = this.j.workplace || this.j.container;
-        container.appendChild(this.container);
-        return this;
-    }
-    hide() {
-        dom/* Dom.safeRemove */.i.safeRemove(this.container);
-        return this;
-    }
-    progress(percentage) {
-        this.container.style.width = percentage.toFixed(2) + '%';
-        return this;
-    }
-    destruct() {
-        this.hide();
-        return super.destruct();
-    }
+function isNativeFunction(f) {
+    return (Boolean(f) &&
+        (typeof f).toLowerCase() === 'function' &&
+        (f === Function.prototype ||
+            /^\s*function\s*(\b[a-z$_][a-z0-9$_]*\b)*\s*\((|([a-z$_][a-z0-9$_]*)(\s*,[a-z$_][a-z0-9$_]*)*)\)\s*{\s*\[native code]\s*}\s*$/i.test(String(f))));
 }
 
-;// CONCATENATED MODULE: ./src/core/ui/index.ts
+
+/***/ }),
+/* 105 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "u1": function() { return /* reexport safe */ _element__WEBPACK_IMPORTED_MODULE_0__.u; },
+/* harmony export */   "zx": function() { return /* reexport safe */ _button__WEBPACK_IMPORTED_MODULE_1__.zx; },
+/* harmony export */   "y3": function() { return /* reexport safe */ _button__WEBPACK_IMPORTED_MODULE_1__.y3; },
+/* harmony export */   "GI": function() { return /* reexport safe */ _popup__WEBPACK_IMPORTED_MODULE_2__.G; },
+/* harmony export */   "qe": function() { return /* reexport safe */ _group__WEBPACK_IMPORTED_MODULE_3__.qe; },
+/* harmony export */   "bz": function() { return /* reexport safe */ _group__WEBPACK_IMPORTED_MODULE_3__.bz; },
+/* harmony export */   "lU": function() { return /* reexport safe */ _group__WEBPACK_IMPORTED_MODULE_3__.lU; },
+/* harmony export */   "eC": function() { return /* reexport safe */ _form__WEBPACK_IMPORTED_MODULE_4__.eC; },
+/* harmony export */   "mA": function() { return /* reexport safe */ _form__WEBPACK_IMPORTED_MODULE_4__.mA; },
+/* harmony export */   "Z": function() { return /* reexport safe */ _form__WEBPACK_IMPORTED_MODULE_4__.Z; },
+/* harmony export */   "x4": function() { return /* reexport safe */ _form__WEBPACK_IMPORTED_MODULE_4__.x4; },
+/* harmony export */   "u3": function() { return /* reexport safe */ _form__WEBPACK_IMPORTED_MODULE_4__.u3; },
+/* harmony export */   "Cj": function() { return /* reexport safe */ _form__WEBPACK_IMPORTED_MODULE_4__.Cj; },
+/* harmony export */   "GJ": function() { return /* reexport safe */ _form__WEBPACK_IMPORTED_MODULE_4__.GJ; },
+/* harmony export */   "JO": function() { return /* reexport safe */ _icon__WEBPACK_IMPORTED_MODULE_5__.J; },
+/* harmony export */   "ko": function() { return /* reexport safe */ _progress_bar_progress_bar__WEBPACK_IMPORTED_MODULE_6__.k; }
+/* harmony export */ });
+/* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(106);
+/* harmony import */ var _button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(111);
+/* harmony import */ var _popup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(122);
+/* harmony import */ var _group__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(114);
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(124);
+/* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(110);
+/* harmony import */ var _progress_bar_progress_bar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(136);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7179,18 +7101,18 @@ class ProgressBar extends ui_element/* UIElement */.u {
 
 
 /***/ }),
-/* 36 */
+/* 106 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "u": function() { return /* binding */ UIElement; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
-/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
-/* harmony import */ var jodit_core_traits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(37);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
-/* harmony import */ var jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(38);
+/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/* harmony import */ var jodit_core_traits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(107);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
+/* harmony import */ var jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(110);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7313,20 +7235,34 @@ class UIElement extends jodit_core_component__WEBPACK_IMPORTED_MODULE_0__/* .Vie
 
 
 /***/ }),
-/* 37 */
+/* 107 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "F": function() { return /* reexport safe */ _elms__WEBPACK_IMPORTED_MODULE_0__.F; },
+/* harmony export */   "$": function() { return /* reexport safe */ _mods__WEBPACK_IMPORTED_MODULE_1__.$; }
+/* harmony export */ });
+/* harmony import */ var _elms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(108);
+/* harmony import */ var _mods__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(109);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "F": function() { return /* reexport */ Elms; },
-  "$": function() { return /* reexport */ Mods; }
-});
 
-// EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
-var to_array = __webpack_require__(34);
-;// CONCATENATED MODULE: ./src/core/traits/elms.ts
+
+
+/***/ }),
+/* 108 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "F": function() { return /* binding */ Elms; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers_array_to_array__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(103);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7338,13 +7274,21 @@ class Elms {
         return this.container.querySelector(`.${this.getFullElName(elementName)}`);
     }
     static getElms(elementName) {
-        return (0,to_array/* toArray */.q)(this.container.querySelectorAll(`.${this.getFullElName(elementName)}`));
+        return (0,jodit_core_helpers_array_to_array__WEBPACK_IMPORTED_MODULE_0__/* .toArray */ .q)(this.container.querySelectorAll(`.${this.getFullElName(elementName)}`));
     }
 }
 
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-void.ts
-var is_void = __webpack_require__(20);
-;// CONCATENATED MODULE: ./src/core/traits/mods.ts
+
+/***/ }),
+/* 109 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "$": function() { return /* binding */ Mods; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers_array_to_array__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(103);
+/* harmony import */ var jodit_core_helpers_checker_is_void__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(35);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7359,12 +7303,12 @@ class Mods {
             return;
         }
         const mod = `${this.componentName}_${name}`, cl = (container || this.container).classList;
-        (0,to_array/* toArray */.q)(cl).forEach(className => {
+        (0,jodit_core_helpers_array_to_array__WEBPACK_IMPORTED_MODULE_0__/* .toArray */ .q)(cl).forEach(className => {
             if (className.indexOf(mod) === 0) {
                 cl.remove(className);
             }
         });
-        !(0,is_void/* isVoid */.n)(value) &&
+        !(0,jodit_core_helpers_checker_is_void__WEBPACK_IMPORTED_MODULE_1__/* .isVoid */ .n)(value) &&
             value !== '' &&
             cl.add(`${mod}_${value.toString().toLowerCase()}`);
         this.mods[name] = value;
@@ -7375,25 +7319,16 @@ class Mods {
     }
 }
 
-;// CONCATENATED MODULE: ./src/core/traits/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
 
 /***/ }),
-/* 38 */
+/* 110 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "J": function() { return /* binding */ Icon; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7454,101 +7389,17 @@ Icon.icons = {};
 
 
 /***/ }),
-/* 39 */
+/* 111 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "zx": function() { return /* reexport */ button_button/* Button */.zx; },
-  "y3": function() { return /* reexport */ button_button/* UIButton */.y3; },
-  "Yc": function() { return /* reexport */ button_button/* UIButtonState */.Yc; }
-});
-
-// UNUSED EXPORTS: UIButtonGroup
-
-// EXTERNAL MODULE: ./src/core/ui/button/button/button.ts
-var button_button = __webpack_require__(40);
-// EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(25);
-// EXTERNAL MODULE: ./src/core/ui/group/index.ts + 5 modules
-var group = __webpack_require__(41);
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(17);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
-var helpers = __webpack_require__(8);
-;// CONCATENATED MODULE: ./src/core/ui/button/group/group.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-let UIButtonGroup = class UIButtonGroup extends group/* UIGroup */.qe {
-    constructor(jodit, options = {
-        radio: true
-    }) {
-        var _a, _b;
-        super(jodit, (_a = options.options) === null || _a === void 0 ? void 0 : _a.map(opt => {
-            const btn = new button_button/* UIButton */.y3(jodit, {
-                text: opt.text,
-                value: opt.value,
-                variant: 'primary'
-            });
-            btn.onAction(() => {
-                this.select(opt.value);
-            });
-            return btn;
-        }), options);
-        this.options = options;
-        this.select((_b = options.value) !== null && _b !== void 0 ? _b : 0);
-    }
-    className() {
-        return 'UIButtonGroup';
-    }
-    render(options) {
-        return `<div>
-			<div class="&__label">~${options.label}~</div>
-			<div class="&__options"></div>
-		</div>`;
-    }
-    appendChildToContainer(childContainer) {
-        const options = this.getElm('options');
-        (0,helpers.assert)(options != null, 'Options does not exist');
-        options.appendChild(childContainer);
-    }
-    select(indexOrValue) {
-        var _a, _b;
-        this.elements.forEach((elm, index) => {
-            if (index === indexOrValue || elm.state.value === indexOrValue) {
-                elm.state.activated = true;
-            }
-            else if (this.options.radio) {
-                elm.state.activated = false;
-            }
-        });
-        const result = this.elements
-            .filter(elm => elm.state.activated)
-            .map(elm => ({
-            text: elm.state.text,
-            value: elm.state.value
-        }));
-        this.jodit.e.fire(this, 'select', result);
-        (_b = (_a = this.options).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, result);
-    }
-};
-UIButtonGroup = (0,tslib_es6/* __decorate */.gn)([
-    decorators.component
-], UIButtonGroup);
-
-
-;// CONCATENATED MODULE: ./src/core/ui/button/index.ts
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "zx": function() { return /* reexport safe */ _button_button__WEBPACK_IMPORTED_MODULE_0__.zx; },
+/* harmony export */   "y3": function() { return /* reexport safe */ _button_button__WEBPACK_IMPORTED_MODULE_0__.y3; },
+/* harmony export */   "Yc": function() { return /* reexport safe */ _button_button__WEBPACK_IMPORTED_MODULE_0__.Yc; }
+/* harmony export */ });
+/* harmony import */ var _button_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(112);
+/* harmony import */ var _group_group__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(113);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7559,7 +7410,7 @@ UIButtonGroup = (0,tslib_es6/* __decorate */.gn)([
 
 
 /***/ }),
-/* 40 */
+/* 112 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7568,12 +7419,12 @@ UIButtonGroup = (0,tslib_es6/* __decorate */.gn)([
 /* harmony export */   "y3": function() { return /* binding */ UIButton; },
 /* harmony export */   "zx": function() { return /* binding */ Button; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(25);
-/* harmony import */ var jodit_core_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(35);
-/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(17);
-/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(12);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(56);
+/* harmony import */ var jodit_core_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(105);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(23);
+/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7781,31 +7632,124 @@ function Button(jodit, stateOrText, text, variant) {
 
 
 /***/ }),
-/* 41 */
+/* 113 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export UIButtonGroup */
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(56);
+/* harmony import */ var _group__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(114);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
+/* harmony import */ var _button_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(112);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "qe": function() { return /* reexport */ UIGroup; },
-  "bz": function() { return /* reexport */ UIList; },
-  "lU": function() { return /* reexport */ UISeparator; }
-});
 
-// UNUSED EXPORTS: UISpacer
 
-// EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(25);
-// EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(36);
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(17);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
-var helpers = __webpack_require__(8);
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(15);
-;// CONCATENATED MODULE: ./src/core/ui/group/group.ts
+
+
+
+let UIButtonGroup = class UIButtonGroup extends _group__WEBPACK_IMPORTED_MODULE_0__/* .UIGroup */ .qe {
+    constructor(jodit, options = {
+        radio: true
+    }) {
+        var _a, _b;
+        super(jodit, (_a = options.options) === null || _a === void 0 ? void 0 : _a.map(opt => {
+            const btn = new _button_button__WEBPACK_IMPORTED_MODULE_2__/* .UIButton */ .y3(jodit, {
+                text: opt.text,
+                value: opt.value,
+                variant: 'primary'
+            });
+            btn.onAction(() => {
+                this.select(opt.value);
+            });
+            return btn;
+        }), options);
+        this.options = options;
+        this.select((_b = options.value) !== null && _b !== void 0 ? _b : 0);
+    }
+    className() {
+        return 'UIButtonGroup';
+    }
+    render(options) {
+        return `<div>
+			<div class="&__label">~${options.label}~</div>
+			<div class="&__options"></div>
+		</div>`;
+    }
+    appendChildToContainer(childContainer) {
+        const options = this.getElm('options');
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__.assert)(options != null, 'Options does not exist');
+        options.appendChild(childContainer);
+    }
+    select(indexOrValue) {
+        var _a, _b;
+        this.elements.forEach((elm, index) => {
+            if (index === indexOrValue || elm.state.value === indexOrValue) {
+                elm.state.activated = true;
+            }
+            else if (this.options.radio) {
+                elm.state.activated = false;
+            }
+        });
+        const result = this.elements
+            .filter(elm => elm.state.activated)
+            .map(elm => ({
+            text: elm.state.text,
+            value: elm.state.value
+        }));
+        this.jodit.e.fire(this, 'select', result);
+        (_b = (_a = this.options).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, result);
+    }
+};
+UIButtonGroup = (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.component
+], UIButtonGroup);
+
+
+
+/***/ }),
+/* 114 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "qe": function() { return /* reexport safe */ _group__WEBPACK_IMPORTED_MODULE_0__.q; },
+/* harmony export */   "bz": function() { return /* reexport safe */ _list__WEBPACK_IMPORTED_MODULE_1__.b; },
+/* harmony export */   "lU": function() { return /* reexport safe */ _separator__WEBPACK_IMPORTED_MODULE_2__.l; }
+/* harmony export */ });
+/* harmony import */ var _group__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(115);
+/* harmony import */ var _list__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(116);
+/* harmony import */ var _separator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(119);
+/* harmony import */ var _spacer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(120);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+/***/ }),
+/* 115 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "q": function() { return /* binding */ UIGroup; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(56);
+/* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(106);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(12);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7818,7 +7762,7 @@ var UIGroup_1;
 
 
 
-let UIGroup = UIGroup_1 = class UIGroup extends ui_element/* UIElement */.u {
+let UIGroup = UIGroup_1 = class UIGroup extends _element__WEBPACK_IMPORTED_MODULE_0__/* .UIElement */ .u {
     constructor(jodit, elements, options) {
         super(jodit, options);
         this.options = options;
@@ -7840,7 +7784,7 @@ let UIGroup = UIGroup_1 = class UIGroup extends ui_element/* UIElement */.u {
         ];
         while (stack.length) {
             const elm = stack.shift();
-            if ((0,helpers.isArray)(elm)) {
+            if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.isArray)(elm)) {
                 stack.push(...elm);
             }
             else if (elm instanceof UIGroup_1) {
@@ -7857,7 +7801,7 @@ let UIGroup = UIGroup_1 = class UIGroup extends ui_element/* UIElement */.u {
         this.setMod('size', this.buttonSize);
     }
     append(elm, distElement) {
-        if ((0,helpers.isArray)(elm)) {
+        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.isArray)(elm)) {
             elm.forEach(item => this.append(item, distElement));
             return this;
         }
@@ -7867,7 +7811,7 @@ let UIGroup = UIGroup_1 = class UIGroup extends ui_element/* UIElement */.u {
         }
         if (distElement) {
             const distElm = this.getElm(distElement);
-            (0,helpers.assert)(distElm != null, 'Element does not exist');
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.assert)(distElm != null, 'Element does not exist');
             distElm.appendChild(elm.container);
         }
         else {
@@ -7890,7 +7834,7 @@ let UIGroup = UIGroup_1 = class UIGroup extends ui_element/* UIElement */.u {
         const index = this.elements.indexOf(elm);
         if (index !== -1) {
             this.elements.splice(index, 1);
-            dom/* Dom.safeRemove */.i.safeRemove(elm.container);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_3__/* .Dom.safeRemove */ .i.safeRemove(elm.container);
             elm.parentElement = null;
         }
         return this;
@@ -7905,87 +7849,33 @@ let UIGroup = UIGroup_1 = class UIGroup extends ui_element/* UIElement */.u {
         return super.destruct();
     }
 };
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('buttonSize')
+(0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.watch)('buttonSize')
 ], UIGroup.prototype, "update", null);
-UIGroup = UIGroup_1 = (0,tslib_es6/* __decorate */.gn)([
-    decorators.component
+UIGroup = UIGroup_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.component
 ], UIGroup);
 
 
-// EXTERNAL MODULE: ./src/core/ui/helpers/get-control-type.ts
-var get_control_type = __webpack_require__(42);
-// EXTERNAL MODULE: ./src/config.ts
-var config = __webpack_require__(1);
-// EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
-var checker = __webpack_require__(18);
-;// CONCATENATED MODULE: ./src/core/ui/helpers/get-strong-control-types.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
 
+/***/ }),
+/* 116 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-
-
-function getStrongControlTypes(items, controls) {
-    const elements = (0,checker/* isArray */.kJ)(items)
-        ? items
-        : (0,helpers.keys)(items, false).map(key => {
-            const value = items[key] || {};
-            return (0,helpers.ConfigProto)({ name: key }, value);
-        });
-    return elements.map(item => (0,get_control_type/* getControlType */.Y)(item, controls || config/* Config.defaultOptions.controls */.D.defaultOptions.controls));
-}
-
-;// CONCATENATED MODULE: ./src/core/ui/group/separator.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-let UISeparator = class UISeparator extends ui_element/* UIElement */.u {
-    className() {
-        return 'UISeparator';
-    }
-};
-UISeparator = (0,tslib_es6/* __decorate */.gn)([
-    decorators.component
-], UISeparator);
-
-
-// EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
-var ui = __webpack_require__(35);
-;// CONCATENATED MODULE: ./src/core/ui/group/spacer.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-let UISpacer = class UISpacer extends ui/* UIElement */.u1 {
-    className() {
-        return 'UISpacer';
-    }
-};
-UISpacer = (0,tslib_es6/* __decorate */.gn)([
-    decorators.component
-], UISpacer);
-
-
-// EXTERNAL MODULE: ./src/core/ui/button/button/button.ts
-var button_button = __webpack_require__(40);
-// EXTERNAL MODULE: ./src/core/ui/helpers/buttons.ts
-var buttons = __webpack_require__(43);
-// EXTERNAL MODULE: ./src/core/helpers/array/index.ts + 1 modules
-var array = __webpack_require__(33);
-;// CONCATENATED MODULE: ./src/core/ui/group/list.ts
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "b": function() { return /* binding */ UIList; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(56);
+/* harmony import */ var jodit_core_ui_helpers_get_strong_control_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(117);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
+/* harmony import */ var jodit_core_ui_group_group__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(115);
+/* harmony import */ var jodit_core_ui_group_separator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(119);
+/* harmony import */ var jodit_core_ui_group_spacer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(120);
+/* harmony import */ var jodit_core_ui_button_button_button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(112);
+/* harmony import */ var jodit_core_ui_helpers_buttons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(121);
+/* harmony import */ var jodit_core_ui_helpers_get_control_type__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(118);
+/* harmony import */ var jodit_core_helpers_array__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(101);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -8002,7 +7892,7 @@ var array = __webpack_require__(33);
 
 
 
-let UIList = class UIList extends UIGroup {
+let UIList = class UIList extends jodit_core_ui_group_group__WEBPACK_IMPORTED_MODULE_2__/* .UIGroup */ .q {
     constructor(jodit) {
         super(jodit);
         this.mode = 'horizontal';
@@ -8016,14 +7906,14 @@ let UIList = class UIList extends UIGroup {
         this.setMod('mode', this.mode);
     }
     makeGroup() {
-        return new UIGroup(this.jodit);
+        return new jodit_core_ui_group_group__WEBPACK_IMPORTED_MODULE_2__/* .UIGroup */ .q(this.jodit);
     }
     get buttons() {
-        return this.allChildren.filter(elm => elm instanceof button_button/* UIButton */.y3);
+        return this.allChildren.filter(elm => elm instanceof jodit_core_ui_button_button_button__WEBPACK_IMPORTED_MODULE_5__/* .UIButton */ .y3);
     }
     getButtonsNames() {
         return this.buttons
-            .map(a => (a instanceof button_button/* UIButton */.y3 && a.state.name) || '')
+            .map(a => (a instanceof jodit_core_ui_button_button_button__WEBPACK_IMPORTED_MODULE_5__/* .UIButton */ .y3 && a.state.name) || '')
             .filter(a => a !== '');
     }
     setRemoveButtons(removeButtons) {
@@ -8031,7 +7921,7 @@ let UIList = class UIList extends UIGroup {
         return this;
     }
     build(items, target = null) {
-        items = (0,array/* splitArray */.C1)(items);
+        items = (0,jodit_core_helpers_array__WEBPACK_IMPORTED_MODULE_8__/* .splitArray */ .C1)(items);
         this.clear();
         let lastBtnSeparator = false;
         let line = this.makeGroup();
@@ -8051,12 +7941,12 @@ let UIList = class UIList extends UIGroup {
                 case '|':
                     if (!lastBtnSeparator) {
                         lastBtnSeparator = true;
-                        elm = new UISeparator(this.j);
+                        elm = new jodit_core_ui_group_separator__WEBPACK_IMPORTED_MODULE_3__/* .UISeparator */ .l(this.j);
                     }
                     break;
                 case '---': {
                     group.setMod('before-spacer', true);
-                    const space = new UISpacer(this.j);
+                    const space = new jodit_core_ui_group_spacer__WEBPACK_IMPORTED_MODULE_4__/* .UISpacer */ .W(this.j);
                     line.append(space);
                     group = this.makeGroup();
                     line.append(group);
@@ -8077,13 +7967,13 @@ let UIList = class UIList extends UIGroup {
         };
         const isNotRemoved = (b) => !this.removeButtons.includes(b.name);
         items.forEach(item => {
-            if ((0,buttons/* isButtonGroup */.A)(item)) {
+            if ((0,jodit_core_ui_helpers_buttons__WEBPACK_IMPORTED_MODULE_6__/* .isButtonGroup */ .A)(item)) {
                 const buttons = item.buttons.filter(b => b);
                 if (buttons.length) {
                     group = this.makeGroup();
                     group.setMod('separated', true).setMod('group', item.group);
                     line.append(group);
-                    getStrongControlTypes(buttons, this.j.o.controls)
+                    (0,jodit_core_ui_helpers_get_strong_control_types__WEBPACK_IMPORTED_MODULE_0__/* .getStrongControlTypes */ .Q)(buttons, this.j.o.controls)
                         .filter(isNotRemoved)
                         .forEach(addButton);
                 }
@@ -8093,7 +7983,7 @@ let UIList = class UIList extends UIGroup {
                     group = this.makeGroup();
                     line.append(group);
                 }
-                const control = (0,get_control_type/* getControlType */.Y)(item, this.j.o.controls);
+                const control = (0,jodit_core_ui_helpers_get_control_type__WEBPACK_IMPORTED_MODULE_7__/* .getControlType */ .Y)(item, this.j.o.controls);
                 isNotRemoved(control) && addButton(control);
             }
         });
@@ -8101,18 +7991,30 @@ let UIList = class UIList extends UIGroup {
         return this;
     }
     makeButton(control, target) {
-        return new button_button/* UIButton */.y3(this.j);
+        return new jodit_core_ui_button_button_button__WEBPACK_IMPORTED_MODULE_5__/* .UIButton */ .y3(this.j);
     }
 };
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('mode')
+(0,tslib__WEBPACK_IMPORTED_MODULE_9__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.watch)('mode')
 ], UIList.prototype, "onChangeMode", null);
-UIList = (0,tslib_es6/* __decorate */.gn)([
-    decorators.component
+UIList = (0,tslib__WEBPACK_IMPORTED_MODULE_9__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.component
 ], UIList);
 
 
-;// CONCATENATED MODULE: ./src/core/ui/group/index.ts
+
+/***/ }),
+/* 117 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Q": function() { return /* binding */ getStrongControlTypes; }
+/* harmony export */ });
+/* harmony import */ var _get_control_type__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(118);
+/* harmony import */ var jodit_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(76);
+/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(27);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -8122,10 +8024,19 @@ UIList = (0,tslib_es6/* __decorate */.gn)([
 
 
 
+function getStrongControlTypes(items, controls) {
+    const elements = (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_2__/* .isArray */ .kJ)(items)
+        ? items
+        : (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__.keys)(items, false).map(key => {
+            const value = items[key] || {};
+            return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__.ConfigProto)({ name: key }, value);
+        });
+    return elements.map(item => (0,_get_control_type__WEBPACK_IMPORTED_MODULE_0__/* .getControlType */ .Y)(item, controls || jodit_config__WEBPACK_IMPORTED_MODULE_1__/* .Config.defaultOptions.controls */ .D.defaultOptions.controls));
+}
 
 
 /***/ }),
-/* 42 */
+/* 118 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8133,8 +8044,8 @@ UIList = (0,tslib_es6/* __decorate */.gn)([
 /* harmony export */   "Y": function() { return /* binding */ getControlType; },
 /* harmony export */   "z": function() { return /* binding */ findControlType; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
-/* harmony import */ var jodit_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var jodit_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(76);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -8186,7 +8097,67 @@ function findControlType(path, controls) {
 
 
 /***/ }),
-/* 43 */
+/* 119 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "l": function() { return /* binding */ UISeparator; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56);
+/* harmony import */ var jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(106);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+let UISeparator = class UISeparator extends jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_0__/* .UIElement */ .u {
+    className() {
+        return 'UISeparator';
+    }
+};
+UISeparator = (0,tslib__WEBPACK_IMPORTED_MODULE_2__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.component
+], UISeparator);
+
+
+
+/***/ }),
+/* 120 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "W": function() { return /* binding */ UISpacer; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56);
+/* harmony import */ var jodit_core_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(105);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+let UISpacer = class UISpacer extends jodit_core_ui__WEBPACK_IMPORTED_MODULE_0__/* .UIElement */ .u1 {
+    className() {
+        return 'UISpacer';
+    }
+};
+UISpacer = (0,tslib__WEBPACK_IMPORTED_MODULE_2__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.component
+], UISpacer);
+
+
+
+/***/ }),
+/* 121 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8194,7 +8165,7 @@ function findControlType(path, controls) {
 /* harmony export */   "A": function() { return /* binding */ isButtonGroup; },
 /* harmony export */   "q": function() { return /* binding */ flatButtonsSet; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(18);
+/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -8223,29 +8194,36 @@ function flatButtonsSet(buttons, jodit) {
 
 
 /***/ }),
-/* 44 */
+/* 122 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "G": function() { return /* reexport safe */ _popup__WEBPACK_IMPORTED_MODULE_0__.G; }
+/* harmony export */ });
+/* harmony import */ var _popup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(123);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "G": function() { return /* reexport */ Popup; }
-});
 
-// EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(25);
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(15);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
-var helpers = __webpack_require__(8);
-// EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(13);
-// EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
-var ui = __webpack_require__(35);
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(17);
-;// CONCATENATED MODULE: ./src/core/ui/popup/popup.ts
+
+/***/ }),
+/* 123 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "G": function() { return /* binding */ Popup; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(56);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(10);
+/* harmony import */ var jodit_core_ui__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(105);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(23);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -8258,7 +8236,7 @@ var decorators = __webpack_require__(17);
 
 
 
-class Popup extends ui/* UIElement */.u1 {
+class Popup extends jodit_core_ui__WEBPACK_IMPORTED_MODULE_3__/* .UIElement */ .u1 {
     constructor(jodit, smart = true) {
         super(jodit);
         this.smart = smart;
@@ -8271,7 +8249,7 @@ class Popup extends ui/* UIElement */.u1 {
             height: this.ow.innerHeight
         });
         this.childrenPopups = new Set();
-        (0,helpers.attr)(this.container, 'role', 'popup');
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(this.container, 'role', 'popup');
     }
     className() {
         return 'Popup';
@@ -8293,14 +8271,14 @@ class Popup extends ui/* UIElement */.u1 {
         return super.updateParentElement(target);
     }
     setContent(content) {
-        dom/* Dom.detach */.i.detach(this.container);
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.detach */ .i.detach(this.container);
         const box = this.j.c.div(`${this.componentName}__content`);
         let elm;
-        if (content instanceof ui/* UIElement */.u1) {
+        if (content instanceof jodit_core_ui__WEBPACK_IMPORTED_MODULE_3__/* .UIElement */ .u1) {
             elm = content.container;
             content.parentElement = this;
         }
-        else if ((0,helpers.isString)(content)) {
+        else if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(content)) {
             elm = this.j.c.fromHTML(content);
         }
         else {
@@ -8312,14 +8290,14 @@ class Popup extends ui/* UIElement */.u1 {
         return this;
     }
     open(getBound, keepPosition = false) {
-        (0,helpers.markOwner)(this.jodit, this.container);
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.markOwner)(this.jodit, this.container);
         this.calculateZIndex();
         this.isOpened = true;
         this.addGlobalListeners();
         this.targetBound = !keepPosition
             ? getBound
             : this.getKeepBound(getBound);
-        const parentContainer = (0,global/* getContainer */.ZO)(this.jodit, Popup);
+        const parentContainer = (0,jodit_core_global__WEBPACK_IMPORTED_MODULE_2__/* .getContainer */ .ZO)(this.jodit, Popup);
         if (parentContainer !== this.container.parentElement) {
             parentContainer.appendChild(this.container);
         }
@@ -8352,7 +8330,7 @@ class Popup extends ui/* UIElement */.u1 {
                 return;
             }
             if (!pe.parentElement && pe.container.parentElement) {
-                const elm = ui/* UIElement.closestElement */.u1.closestElement(pe.container.parentElement, ui/* UIElement */.u1);
+                const elm = jodit_core_ui__WEBPACK_IMPORTED_MODULE_3__/* .UIElement.closestElement */ .u1.closestElement(pe.container.parentElement, jodit_core_ui__WEBPACK_IMPORTED_MODULE_3__/* .UIElement */ .u1);
                 if (elm) {
                     pe = elm;
                     continue;
@@ -8367,13 +8345,13 @@ class Popup extends ui/* UIElement */.u1 {
         if (!elmUnderCursor) {
             return getBound;
         }
-        const element = dom/* Dom.isHTMLElement */.i.isHTMLElement(elmUnderCursor)
+        const element = jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isHTMLElement */ .i.isHTMLElement(elmUnderCursor)
             ? elmUnderCursor
             : elmUnderCursor.parentElement;
-        const oldPos = (0,helpers.position)(element, this.j);
+        const oldPos = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.position)(element, this.j);
         return () => {
             const bound = getBound();
-            const newPos = (0,helpers.position)(element, this.j);
+            const newPos = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.position)(element, this.j);
             return {
                 ...bound,
                 top: bound.top + (newPos.top - oldPos.top),
@@ -8385,9 +8363,9 @@ class Popup extends ui/* UIElement */.u1 {
         if (!this.isOpened) {
             return this;
         }
-        const [pos, strategy] = this.calculatePosition(this.targetBound(), this.viewBound(), (0,helpers.position)(this.container, this.j));
+        const [pos, strategy] = this.calculatePosition(this.targetBound(), this.viewBound(), (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.position)(this.container, this.j));
         this.setMod('strategy', strategy);
-        (0,helpers.css)(this.container, {
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.css)(this.container, {
             left: pos.left,
             top: pos.top
         });
@@ -8405,9 +8383,9 @@ class Popup extends ui/* UIElement */.u1 {
             bottom: target.top + target.height,
             top: target.top - container.height
         };
-        const list = Object.keys(x).reduce((keys, xKey) => keys.concat(Object.keys(y).map(yKey => `${xKey}${(0,helpers.ucfirst)(yKey)}`)), []);
+        const list = Object.keys(x).reduce((keys, xKey) => keys.concat(Object.keys(y).map(yKey => `${xKey}${(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ucfirst)(yKey)}`)), []);
         const getPointByStrategy = (strategy) => {
-            const [xKey, yKey] = (0,helpers.kebabCase)(strategy).split('-');
+            const [xKey, yKey] = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.kebabCase)(strategy).split('-');
             return {
                 left: x[xKey],
                 top: y[yKey],
@@ -8431,7 +8409,7 @@ class Popup extends ui/* UIElement */.u1 {
             }
             return strategy;
         };
-        let strategy = getMatchStrategy((0,helpers.position)(this.j.container, this.j));
+        let strategy = getMatchStrategy((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.position)(this.j.container, this.j));
         if (!strategy || !Popup.boxInView(getPointByStrategy(strategy), view)) {
             strategy = getMatchStrategy(view) || strategy || defaultStrategy;
         }
@@ -8453,19 +8431,19 @@ class Popup extends ui/* UIElement */.u1 {
         this.j.e.fire(this, 'beforeClose');
         this.j.e.fire('beforePopupClose', this);
         this.removeGlobalListeners();
-        dom/* Dom.safeRemove */.i.safeRemove(this.container);
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.safeRemove */ .i.safeRemove(this.container);
         return this;
     }
     closeOnOutsideClick(e) {
         if (!this.isOpened) {
             return;
         }
-        const target = ((0,helpers.isFunction)(e.composedPath) && e.composedPath()[0]) || e.target;
+        const target = ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isFunction)(e.composedPath) && e.composedPath()[0]) || e.target;
         if (!target) {
             this.close();
             return;
         }
-        const box = ui/* UIElement.closestElement */.u1.closestElement(target, Popup);
+        const box = jodit_core_ui__WEBPACK_IMPORTED_MODULE_3__/* .UIElement.closestElement */ .u1.closestElement(target, Popup);
         if (box && (this === box || box.closest(this))) {
             return;
         }
@@ -8473,7 +8451,7 @@ class Popup extends ui/* UIElement */.u1 {
     }
     addGlobalListeners() {
         const up = this.throttleUpdatePosition, ow = this.ow;
-        global/* eventEmitter.on */.TB.on('closeAllPopups', this.close);
+        jodit_core_global__WEBPACK_IMPORTED_MODULE_2__/* .eventEmitter.on */ .TB.on('closeAllPopups', this.close);
         if (this.smart) {
             this.j.e
                 .on('escape', this.close)
@@ -8486,13 +8464,13 @@ class Popup extends ui/* UIElement */.u1 {
             .on(this.container, 'scroll mousewheel', up)
             .on(ow, 'scroll', up)
             .on(ow, 'resize', up);
-        dom/* Dom.up */.i.up(this.j.container, box => {
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.up */ .i.up(this.j.container, box => {
             box && this.j.e.on(box, 'scroll mousewheel', up);
         });
     }
     removeGlobalListeners() {
         const up = this.throttleUpdatePosition, ow = this.ow;
-        global/* eventEmitter.off */.TB.off('closeAllPopups', this.close);
+        jodit_core_global__WEBPACK_IMPORTED_MODULE_2__/* .eventEmitter.off */ .TB.off('closeAllPopups', this.close);
         if (this.smart) {
             this.j.e
                 .off('escape', this.close)
@@ -8505,7 +8483,7 @@ class Popup extends ui/* UIElement */.u1 {
             .off(this.container, 'scroll mousewheel', up)
             .off(ow, 'scroll', up)
             .off(ow, 'resize', up);
-        dom/* Dom.up */.i.up(this.j.container, box => {
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.up */ .i.up(this.j.container, box => {
             box && this.j.e.off(box, 'scroll mousewheel', up);
         });
     }
@@ -8517,63 +8495,60 @@ class Popup extends ui/* UIElement */.u1 {
         return super.destruct();
     }
 }
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__.autobind
 ], Popup.prototype, "updatePosition", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.throttle)(10),
-    decorators.autobind
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__.throttle)(10),
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__.autobind
 ], Popup.prototype, "throttleUpdatePosition", null);
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__.autobind
 ], Popup.prototype, "close", null);
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__.autobind
 ], Popup.prototype, "closeOnOutsideClick", null);
 
-;// CONCATENATED MODULE: ./src/core/ui/popup/index.ts
+
+/***/ }),
+/* 124 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "x4": function() { return /* reexport safe */ _form__WEBPACK_IMPORTED_MODULE_0__.x; },
+/* harmony export */   "mA": function() { return /* reexport safe */ _inputs__WEBPACK_IMPORTED_MODULE_1__.mA; },
+/* harmony export */   "Z": function() { return /* reexport safe */ _inputs__WEBPACK_IMPORTED_MODULE_1__.Z; },
+/* harmony export */   "u3": function() { return /* reexport safe */ _inputs__WEBPACK_IMPORTED_MODULE_1__.u3; },
+/* harmony export */   "Cj": function() { return /* reexport safe */ _inputs__WEBPACK_IMPORTED_MODULE_1__.Cj; },
+/* harmony export */   "GJ": function() { return /* reexport safe */ _inputs__WEBPACK_IMPORTED_MODULE_1__.GJ; },
+/* harmony export */   "eC": function() { return /* reexport safe */ _block_block__WEBPACK_IMPORTED_MODULE_2__.e; }
+/* harmony export */ });
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(125);
+/* harmony import */ var _inputs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(126);
+/* harmony import */ var _block_block__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(135);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
+
 
 
 
 /***/ }),
-/* 45 */
+/* 125 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "eC": function() { return /* reexport */ UIBlock; },
-  "mA": function() { return /* reexport */ UICheckbox; },
-  "Z": function() { return /* reexport */ UIFileInput; },
-  "x4": function() { return /* reexport */ UIForm; },
-  "u3": function() { return /* reexport */ UIInput; },
-  "Cj": function() { return /* reexport */ UISelect; },
-  "GJ": function() { return /* reexport */ UITextArea; }
-});
-
-// NAMESPACE OBJECT: ./src/core/ui/form/validators/input.ts
-var input_namespaceObject = {};
-__webpack_require__.r(input_namespaceObject);
-__webpack_require__.d(input_namespaceObject, {
-  "required": function() { return required; },
-  "url": function() { return url; }
-});
-
-// EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(25);
-// EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
-var ui = __webpack_require__(35);
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 18 modules
-var utils = __webpack_require__(9);
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(17);
-;// CONCATENATED MODULE: ./src/core/ui/form/form.ts
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "x": function() { return /* binding */ UIForm; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(56);
+/* harmony import */ var jodit_core_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(105);
+/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(23);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -8583,7 +8558,7 @@ var decorators = __webpack_require__(17);
 
 
 
-let UIForm = class UIForm extends ui/* UIGroup */.qe {
+let UIForm = class UIForm extends jodit_core_ui__WEBPACK_IMPORTED_MODULE_0__/* .UIGroup */ .qe {
     constructor(...args) {
         var _a, _b;
         super(...args);
@@ -8598,13 +8573,13 @@ let UIForm = class UIForm extends ui/* UIGroup */.qe {
         this.j.e.fire(this.container, 'submit');
     }
     validate() {
-        const inputs = this.allChildren.filter(elm => elm instanceof ui/* UIInput */.u3);
+        const inputs = this.allChildren.filter(elm => elm instanceof jodit_core_ui__WEBPACK_IMPORTED_MODULE_0__/* .UIInput */ .u3);
         for (const input of inputs) {
             if (!input.validate()) {
                 return false;
             }
         }
-        const selects = this.allChildren.filter(elm => elm instanceof ui/* UISelect */.Cj);
+        const selects = this.allChildren.filter(elm => elm instanceof jodit_core_ui__WEBPACK_IMPORTED_MODULE_0__/* .UISelect */ .Cj);
         for (const select of selects) {
             if (!select.validate()) {
                 return false;
@@ -8614,7 +8589,7 @@ let UIForm = class UIForm extends ui/* UIGroup */.qe {
     }
     onSubmit(handler) {
         this.j.e.on(this.container, 'submit', () => {
-            const inputs = this.allChildren.filter(elm => elm instanceof ui/* UIInput */.u3);
+            const inputs = this.allChildren.filter(elm => elm instanceof jodit_core_ui__WEBPACK_IMPORTED_MODULE_0__/* .UIInput */ .u3);
             if (!this.validate()) {
                 return false;
             }
@@ -8628,61 +8603,33 @@ let UIForm = class UIForm extends ui/* UIGroup */.qe {
     createContainer() {
         const form = this.j.c.element('form');
         form.classList.add(this.componentName);
-        (0,utils/* attr */.Lj)(form, 'dir', this.j.o.direction || 'auto');
+        (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_1__/* .attr */ .Lj)(form, 'dir', this.j.o.direction || 'auto');
         return form;
     }
 };
-UIForm = (0,tslib_es6/* __decorate */.gn)([
-    decorators.component
+UIForm = (0,tslib__WEBPACK_IMPORTED_MODULE_3__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_2__.component
 ], UIForm);
 
 
-// EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(36);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
-var helpers = __webpack_require__(8);
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(15);
-// EXTERNAL MODULE: ./src/core/ui/icon.ts
-var ui_icon = __webpack_require__(38);
-;// CONCATENATED MODULE: ./src/core/ui/form/validators/input.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
 
-const required = function (input) {
-    if (!(0,helpers.trim)(input.value).length) {
-        input.error = 'Please fill out this field';
-        return false;
-    }
-    return true;
-};
-const url = function (input) {
-    if (!(0,helpers.isURL)((0,helpers.trim)(input.value))) {
-        input.error = 'Please enter a web address';
-        return false;
-    }
-    return true;
-};
+/***/ }),
+/* 126 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-;// CONCATENATED MODULE: ./src/core/ui/form/validators/select.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-const select_required = function (select) {
-    if (!(0,helpers.trim)(select.value).length) {
-        select.error = 'Please fill out this field';
-        return false;
-    }
-    return true;
-};
-
-;// CONCATENATED MODULE: ./src/core/ui/form/validators/index.ts
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "u3": function() { return /* reexport safe */ _input_input__WEBPACK_IMPORTED_MODULE_0__.u; },
+/* harmony export */   "GJ": function() { return /* reexport safe */ _area_area__WEBPACK_IMPORTED_MODULE_1__.G; },
+/* harmony export */   "mA": function() { return /* reexport safe */ _checkbox_checkbox__WEBPACK_IMPORTED_MODULE_2__.m; },
+/* harmony export */   "Cj": function() { return /* reexport safe */ _select_select__WEBPACK_IMPORTED_MODULE_3__.C; },
+/* harmony export */   "Z": function() { return /* reexport safe */ _file_file__WEBPACK_IMPORTED_MODULE_4__.Z; }
+/* harmony export */ });
+/* harmony import */ var _input_input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(127);
+/* harmony import */ var _area_area__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(131);
+/* harmony import */ var _checkbox_checkbox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(132);
+/* harmony import */ var _select_select__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(133);
+/* harmony import */ var _file_file__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(134);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -8693,7 +8640,23 @@ const select_required = function (select) {
 
 
 
-;// CONCATENATED MODULE: ./src/core/ui/form/inputs/input/input.ts
+
+
+/***/ }),
+/* 127 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "u": function() { return /* binding */ UIInput; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(56);
+/* harmony import */ var jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(106);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(12);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(23);
+/* harmony import */ var jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(110);
+/* harmony import */ var jodit_core_ui_form_validators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(128);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -8708,12 +8671,12 @@ var UIInput_1;
 
 
 
-let UIInput = UIInput_1 = class UIInput extends ui_element/* UIElement */.u {
+let UIInput = UIInput_1 = class UIInput extends jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_0__/* .UIElement */ .u {
     constructor(jodit, options) {
         super(jodit, options);
         this.label = this.j.c.span(this.getFullElName('label'));
         this.icon = this.j.c.span(this.getFullElName('icon'));
-        this.clearButton = this.j.c.span(this.getFullElName('clear'), ui_icon/* Icon.get */.J.get('cancel'));
+        this.clearButton = this.j.c.span(this.getFullElName('clear'), jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_4__/* .Icon.get */ .J.get('cancel'));
         this.state = { ...UIInput_1.defaultState };
         this.__errorBox = this.j.c.span(this.getFullElName('error'));
         this.validators = new Set([]);
@@ -8748,10 +8711,10 @@ let UIInput = UIInput_1 = class UIInput extends ui_element/* UIElement */.u {
     }
     onChangeClear() {
         if (this.state.clearButton) {
-            dom/* Dom.after */.i.after(this.nativeInput, this.clearButton);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.after */ .i.after(this.nativeInput, this.clearButton);
         }
         else {
-            dom/* Dom.safeRemove */.i.safeRemove(this.clearButton);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.safeRemove */ .i.safeRemove(this.clearButton);
         }
     }
     onChangeClassName(ignore, oldClassName) {
@@ -8762,26 +8725,26 @@ let UIInput = UIInput_1 = class UIInput extends ui_element/* UIElement */.u {
     onChangeState() {
         this.name = this.state.name;
         const input = this.nativeInput, { name, icon, type, ref, required, placeholder, autocomplete, label } = this.state;
-        (0,helpers.attr)(input, 'name', name);
-        (0,helpers.attr)(input, 'type', type);
-        (0,helpers.attr)(input, 'data-ref', ref || name);
-        (0,helpers.attr)(input, 'ref', ref || name);
-        (0,helpers.attr)(input, 'required', required || null);
-        (0,helpers.attr)(input, 'autocomplete', !autocomplete ? 'off' : null);
-        (0,helpers.attr)(input, 'placeholder', placeholder ? this.j.i18n(placeholder) : '');
-        if (icon && ui_icon/* Icon.exists */.J.exists(icon)) {
-            dom/* Dom.before */.i.before(input, this.icon);
-            this.icon.innerHTML = ui_icon/* Icon.get */.J.get(icon);
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(input, 'name', name);
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(input, 'type', type);
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(input, 'data-ref', ref || name);
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(input, 'ref', ref || name);
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(input, 'required', required || null);
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(input, 'autocomplete', !autocomplete ? 'off' : null);
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(input, 'placeholder', placeholder ? this.j.i18n(placeholder) : '');
+        if (icon && jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_4__/* .Icon.exists */ .J.exists(icon)) {
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.before */ .i.before(input, this.icon);
+            this.icon.innerHTML = jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_4__/* .Icon.get */ .J.get(icon);
         }
         else {
-            dom/* Dom.safeRemove */.i.safeRemove(this.icon);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.safeRemove */ .i.safeRemove(this.icon);
         }
         if (label) {
-            dom/* Dom.before */.i.before(this.wrapper, this.label);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.before */ .i.before(this.wrapper, this.label);
             this.label.innerText = this.j.i18n(label);
         }
         else {
-            dom/* Dom.safeRemove */.i.safeRemove(this.label);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.safeRemove */ .i.safeRemove(this.label);
         }
         this.updateValidators();
     }
@@ -8789,17 +8752,17 @@ let UIInput = UIInput_1 = class UIInput extends ui_element/* UIElement */.u {
         var _a;
         this.validators.clear();
         if (this.state.required) {
-            this.validators.add(required);
+            this.validators.add(jodit_core_ui_form_validators__WEBPACK_IMPORTED_MODULE_5__/* .inputValidators.required */ .g.required);
         }
         (_a = this.state.validators) === null || _a === void 0 ? void 0 : _a.forEach(name => {
-            const validator = input_namespaceObject[name];
+            const validator = jodit_core_ui_form_validators__WEBPACK_IMPORTED_MODULE_5__/* .inputValidators */ .g[name];
             validator && this.validators.add(validator);
         });
     }
     set error(value) {
         this.setMod('has-error', Boolean(value));
         if (!value) {
-            dom/* Dom.safeRemove */.i.safeRemove(this.__errorBox);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.safeRemove */ .i.safeRemove(this.__errorBox);
         }
         else {
             this.__errorBox.innerText = this.j.i18n(value, this.j.i18n(this.state.label || ''));
@@ -8832,7 +8795,7 @@ let UIInput = UIInput_1 = class UIInput extends ui_element/* UIElement */.u {
     }
     validate() {
         this.error = '';
-        return (0,helpers.toArray)(this.validators).every(validator => validator(this));
+        return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.toArray)(this.validators).every(validator => validator(this));
     }
     createContainer(options) {
         const container = super.createContainer();
@@ -8844,7 +8807,7 @@ let UIInput = UIInput_1 = class UIInput extends ui_element/* UIElement */.u {
         nativeInput.classList.add(this.getFullElName('input'));
         this.wrapper.appendChild(nativeInput);
         container.appendChild(this.wrapper);
-        (0,helpers.attr)(nativeInput, 'dir', this.j.o.direction || 'auto');
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(nativeInput, 'dir', this.j.o.direction || 'auto');
         return container;
     }
     createNativeInput(options) {
@@ -8873,14 +8836,14 @@ UIInput.defaultState = {
     required: false,
     validators: []
 };
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.clearButton')
+(0,tslib__WEBPACK_IMPORTED_MODULE_6__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)('state.clearButton')
 ], UIInput.prototype, "onChangeClear", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.className')
+(0,tslib__WEBPACK_IMPORTED_MODULE_6__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)('state.className')
 ], UIInput.prototype, "onChangeClassName", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)([
+(0,tslib__WEBPACK_IMPORTED_MODULE_6__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)([
         'state.name',
         'state.type',
         'state.label',
@@ -8888,20 +8851,110 @@ UIInput.defaultState = {
         'state.autocomplete',
         'state.icon'
     ]),
-    (0,decorators.debounce)()
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.debounce)()
 ], UIInput.prototype, "onChangeState", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.value')
+(0,tslib__WEBPACK_IMPORTED_MODULE_6__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.watch)('state.value')
 ], UIInput.prototype, "onChangeStateValue", null);
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
+(0,tslib__WEBPACK_IMPORTED_MODULE_6__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.autobind
 ], UIInput.prototype, "onChangeValue", null);
-UIInput = UIInput_1 = (0,tslib_es6/* __decorate */.gn)([
-    decorators.component
+UIInput = UIInput_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_6__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.component
 ], UIInput);
 
 
-;// CONCATENATED MODULE: ./src/core/ui/form/inputs/area/area.ts
+
+/***/ }),
+/* 128 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "g": function() { return /* reexport module object */ _input__WEBPACK_IMPORTED_MODULE_0__; },
+/* harmony export */   "s": function() { return /* reexport module object */ _select__WEBPACK_IMPORTED_MODULE_1__; }
+/* harmony export */ });
+/* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(129);
+/* harmony import */ var _select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(130);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+/***/ }),
+/* 129 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "required": function() { return /* binding */ required; },
+/* harmony export */   "url": function() { return /* binding */ url; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+const required = function (input) {
+    if (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.trim)(input.value).length) {
+        input.error = 'Please fill out this field';
+        return false;
+    }
+    return true;
+};
+const url = function (input) {
+    if (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.isURL)((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.trim)(input.value))) {
+        input.error = 'Please enter a web address';
+        return false;
+    }
+    return true;
+};
+
+
+/***/ }),
+/* 130 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "C": function() { return /* binding */ required; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+const required = function (select) {
+    if (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.trim)(select.value).length) {
+        select.error = 'Please fill out this field';
+        return false;
+    }
+    return true;
+};
+
+
+/***/ }),
+/* 131 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "G": function() { return /* binding */ UITextArea; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56);
+/* harmony import */ var jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(127);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -8912,7 +8965,7 @@ var UITextArea_1;
 
 
 
-let UITextArea = UITextArea_1 = class UITextArea extends UIInput {
+let UITextArea = UITextArea_1 = class UITextArea extends jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_0__/* .UIInput */ .u {
     constructor(jodit, state) {
         super(jodit, state);
         this.state = { ...UITextArea_1.defaultState };
@@ -8930,16 +8983,28 @@ let UITextArea = UITextArea_1 = class UITextArea extends UIInput {
     }
 };
 UITextArea.defaultState = {
-    ...UIInput.defaultState,
+    ...jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_0__/* .UIInput.defaultState */ .u.defaultState,
     size: 5,
     resizable: true
 };
-UITextArea = UITextArea_1 = (0,tslib_es6/* __decorate */.gn)([
-    decorators.component
+UITextArea = UITextArea_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_2__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.component
 ], UITextArea);
 
 
-;// CONCATENATED MODULE: ./src/core/ui/form/inputs/checkbox/checkbox.ts
+
+/***/ }),
+/* 132 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "m": function() { return /* binding */ UICheckbox; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(56);
+/* harmony import */ var jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(127);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(12);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -8951,7 +9016,7 @@ var UICheckbox_1;
 
 
 
-let UICheckbox = UICheckbox_1 = class UICheckbox extends UIInput {
+let UICheckbox = UICheckbox_1 = class UICheckbox extends jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_0__/* .UIInput */ .u {
     constructor(jodit, options) {
         super(jodit, { ...options, type: 'checkbox' });
         this.state = { ...UICheckbox_1.defaultState };
@@ -8980,35 +9045,48 @@ let UICheckbox = UICheckbox_1 = class UICheckbox extends UIInput {
             if (!slider) {
                 slider = this.j.c.div(this.getFullElName('switch-slider'));
             }
-            dom/* Dom.after */.i.after(this.nativeInput, slider);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.after */ .i.after(this.nativeInput, slider);
         }
         else {
-            dom/* Dom.safeRemove */.i.safeRemove(slider);
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.safeRemove */ .i.safeRemove(slider);
         }
     }
 };
 UICheckbox.defaultState = {
-    ...UIInput.defaultState,
+    ...jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_0__/* .UIInput.defaultState */ .u.defaultState,
     checked: false,
     switch: false
 };
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.checked'),
-    (0,decorators.hook)('ready')
+(0,tslib__WEBPACK_IMPORTED_MODULE_3__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.watch)('state.checked'),
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.hook)('ready')
 ], UICheckbox.prototype, "onChangeChecked", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('nativeInput:change')
+(0,tslib__WEBPACK_IMPORTED_MODULE_3__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.watch)('nativeInput:change')
 ], UICheckbox.prototype, "onChangeNativeCheckBox", null);
-(0,tslib_es6/* __decorate */.gn)([
-    (0,decorators.watch)('state.switch'),
-    (0,decorators.hook)('ready')
+(0,tslib__WEBPACK_IMPORTED_MODULE_3__/* .__decorate */ .gn)([
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.watch)('state.switch'),
+    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.hook)('ready')
 ], UICheckbox.prototype, "onChangeSwitch", null);
-UICheckbox = UICheckbox_1 = (0,tslib_es6/* __decorate */.gn)([
-    decorators.component
+UICheckbox = UICheckbox_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_3__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.component
 ], UICheckbox);
 
 
-;// CONCATENATED MODULE: ./src/core/ui/form/inputs/select/select.ts
+
+/***/ }),
+/* 133 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "C": function() { return /* binding */ UISelect; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(56);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
+/* harmony import */ var jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(127);
+/* harmony import */ var jodit_core_ui_form_validators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(128);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -9021,7 +9099,7 @@ var UISelect_1;
 
 
 
-let UISelect = UISelect_1 = class UISelect extends UIInput {
+let UISelect = UISelect_1 = class UISelect extends jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_2__/* .UIInput */ .u {
     constructor(jodit, state) {
         super(jodit, state);
         this.state = { ...UISelect_1.defaultState };
@@ -9048,10 +9126,10 @@ let UISelect = UISelect_1 = class UISelect extends UIInput {
             nativeInput.add(option);
         });
         if (state.size && state.size > 0) {
-            (0,helpers.attr)(nativeInput, 'size', state.size);
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.attr)(nativeInput, 'size', state.size);
         }
         if (state.multiple) {
-            (0,helpers.attr)(nativeInput, 'multiple', '');
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__.attr)(nativeInput, 'multiple', '');
         }
         return container;
     }
@@ -9061,25 +9139,35 @@ let UISelect = UISelect_1 = class UISelect extends UIInput {
     updateValidators() {
         super.updateValidators();
         if (this.state.required) {
-            this.validators.delete(required);
-            this.validators.add(select_required);
+            this.validators.delete(jodit_core_ui_form_validators__WEBPACK_IMPORTED_MODULE_3__/* .inputValidators.required */ .g.required);
+            this.validators.add(jodit_core_ui_form_validators__WEBPACK_IMPORTED_MODULE_3__/* .selectValidators.required */ .s.C);
         }
     }
 };
 UISelect.defaultState = {
-    ...UIInput.defaultState,
+    ...jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_2__/* .UIInput.defaultState */ .u.defaultState,
     options: [],
     size: 1,
     multiple: false
 };
-UISelect = UISelect_1 = (0,tslib_es6/* __decorate */.gn)([
-    decorators.component
+UISelect = UISelect_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.component
 ], UISelect);
 
 
-// EXTERNAL MODULE: ./src/core/ui/button/index.ts + 1 modules
-var ui_button = __webpack_require__(39);
-;// CONCATENATED MODULE: ./src/core/ui/form/inputs/file/file.ts
+
+/***/ }),
+/* 134 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": function() { return /* binding */ UIFileInput; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(56);
+/* harmony import */ var jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(127);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
+/* harmony import */ var jodit_core_ui_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(111);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -9090,14 +9178,14 @@ var ui_button = __webpack_require__(39);
 
 
 
-let UIFileInput = class UIFileInput extends UIInput {
+let UIFileInput = class UIFileInput extends jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_0__/* .UIInput */ .u {
     constructor(jodit, options) {
         super(jodit, {
             type: 'file',
             ...options
         });
         this.state = {
-            ...UIInput.defaultState,
+            ...jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_0__/* .UIInput.defaultState */ .u.defaultState,
             type: 'file',
             onlyImages: true
         };
@@ -9106,7 +9194,7 @@ let UIFileInput = class UIFileInput extends UIInput {
         return 'UIFileInput';
     }
     createContainer(options) {
-        this.button = new ui_button/* UIButton */.y3(this.j, {
+        this.button = new jodit_core_ui_button__WEBPACK_IMPORTED_MODULE_2__/* .UIButton */ .y3(this.j, {
             icon: {
                 name: 'plus'
             }
@@ -9131,12 +9219,24 @@ let UIFileInput = class UIFileInput extends UIInput {
 		/>`);
     }
 };
-UIFileInput = (0,tslib_es6/* __decorate */.gn)([
-    decorators.component
+UIFileInput = (0,tslib__WEBPACK_IMPORTED_MODULE_3__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__.component
 ], UIFileInput);
 
 
-;// CONCATENATED MODULE: ./src/core/ui/form/inputs/index.ts
+
+/***/ }),
+/* 135 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "e": function() { return /* binding */ UIBlock; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(56);
+/* harmony import */ var jodit_core_ui_group__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(114);
+/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(23);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -9147,21 +9247,7 @@ UIFileInput = (0,tslib_es6/* __decorate */.gn)([
 
 
 
-
-// EXTERNAL MODULE: ./src/core/ui/group/index.ts + 5 modules
-var group = __webpack_require__(41);
-;// CONCATENATED MODULE: ./src/core/ui/form/block/block.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-let UIBlock = class UIBlock extends group/* UIGroup */.qe {
+let UIBlock = class UIBlock extends jodit_core_ui_group__WEBPACK_IMPORTED_MODULE_0__/* .UIGroup */ .qe {
     constructor(jodit, elements, options = {
         align: 'left'
     }) {
@@ -9172,19 +9258,128 @@ let UIBlock = class UIBlock extends group/* UIGroup */.qe {
         this.options.mod && this.setMod(this.options.mod, true);
         this.options.className &&
             this.container.classList.add(this.options.className);
-        (0,utils/* attr */.Lj)(this.container, 'data-ref', options.ref);
-        (0,utils/* attr */.Lj)(this.container, 'ref', options.ref);
+        (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_1__/* .attr */ .Lj)(this.container, 'data-ref', options.ref);
+        (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_1__/* .attr */ .Lj)(this.container, 'ref', options.ref);
     }
     className() {
         return 'UIBlock';
     }
 };
-UIBlock = (0,tslib_es6/* __decorate */.gn)([
-    decorators.component
+UIBlock = (0,tslib__WEBPACK_IMPORTED_MODULE_3__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_2__.component
 ], UIBlock);
 
 
-;// CONCATENATED MODULE: ./src/core/ui/form/index.ts
+
+/***/ }),
+/* 136 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "k": function() { return /* binding */ ProgressBar; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(106);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+class ProgressBar extends _element__WEBPACK_IMPORTED_MODULE_1__/* .UIElement */ .u {
+    className() {
+        return 'ProgressBar';
+    }
+    render() {
+        return '<div><div></div></div>';
+    }
+    show() {
+        const container = this.j.workplace || this.j.container;
+        container.appendChild(this.container);
+        return this;
+    }
+    hide() {
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.safeRemove */ .i.safeRemove(this.container);
+        return this;
+    }
+    progress(percentage) {
+        this.container.style.width = percentage.toFixed(2) + '%';
+        return this;
+    }
+    destruct() {
+        this.hide();
+        return super.destruct();
+    }
+}
+
+
+/***/ }),
+/* 137 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "g": function() { return /* reexport safe */ _set_timeout__WEBPACK_IMPORTED_MODULE_0__.g; },
+/* harmony export */   "i": function() { return /* reexport safe */ _set_timeout__WEBPACK_IMPORTED_MODULE_0__.i; }
+/* harmony export */ });
+/* harmony import */ var _set_timeout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(138);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+/***/ }),
+/* 138 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "i": function() { return /* binding */ setTimeout; },
+/* harmony export */   "g": function() { return /* binding */ clearTimeout; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function setTimeout(callback, timeout, ...args) {
+    if (!timeout) {
+        callback.call(null, ...args);
+    }
+    else {
+        return window.setTimeout(callback, timeout, ...args);
+    }
+    return 0;
+}
+function clearTimeout(timer) {
+    window.clearTimeout(timer);
+}
+
+
+/***/ }),
+/* 139 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Zs": function() { return /* reexport safe */ _apply_styles__WEBPACK_IMPORTED_MODULE_0__.Z; },
+/* harmony export */   "pQ": function() { return /* reexport safe */ _clean_from_word__WEBPACK_IMPORTED_MODULE_1__.p; },
+/* harmony export */   "$_": function() { return /* reexport safe */ _htmlspecialchars__WEBPACK_IMPORTED_MODULE_2__.$; },
+/* harmony export */   "eV": function() { return /* reexport safe */ _strip_tags__WEBPACK_IMPORTED_MODULE_3__.e; },
+/* harmony export */   "oN": function() { return /* reexport safe */ _strip_tags__WEBPACK_IMPORTED_MODULE_3__.o; },
+/* harmony export */   "hU": function() { return /* reexport safe */ _nl2br__WEBPACK_IMPORTED_MODULE_4__.h; }
+/* harmony export */ });
+/* harmony import */ var _apply_styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(140);
+/* harmony import */ var _clean_from_word__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(141);
+/* harmony import */ var _htmlspecialchars__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(161);
+/* harmony import */ var _strip_tags__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(142);
+/* harmony import */ var _nl2br__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(162);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -9195,8 +9390,871 @@ UIBlock = (0,tslib_es6/* __decorate */.gn)([
 
 
 
+
+
 /***/ }),
-/* 46 */
+/* 140 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": function() { return /* binding */ applyStyles; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
+/* harmony import */ var _string__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(70);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function normalizeCSS(s) {
+    return s
+        .replace(/mso-[a-z-]+:[\s]*[^;]+;/gi, '')
+        .replace(/mso-[a-z-]+:[\s]*[^";]+$/gi, '')
+        .replace(/border[a-z-]*:[\s]*[^;]+;/gi, '')
+        .replace(/([0-9.]+)(pt|cm)/gi, (match, units, metrics) => {
+        switch (metrics.toLowerCase()) {
+            case 'pt':
+                return (parseFloat(units) * 1.328).toFixed(0) + 'px';
+            case 'cm':
+                return (parseFloat(units) * 0.02645833).toFixed(0) + 'px';
+        }
+        return match;
+    });
+}
+function applyStyles(html) {
+    if (html.indexOf('<html ') === -1) {
+        return html;
+    }
+    html = html.substring(html.indexOf('<html '), html.length);
+    html = html.substring(0, html.lastIndexOf('</html>') + '</html>'.length);
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    let convertedString = '', collection = [], rules = [];
+    try {
+        const iframeDoc = iframe.contentDocument ||
+            (iframe.contentWindow ? iframe.contentWindow.document : null);
+        if (iframeDoc) {
+            iframeDoc.open();
+            iframeDoc.write(html);
+            iframeDoc.close();
+            if (iframeDoc.styleSheets.length) {
+                rules = iframeDoc.styleSheets[iframeDoc.styleSheets.length - 1].cssRules;
+            }
+            for (let idx = 0; idx < rules.length; idx += 1) {
+                if (rules[idx].selectorText === '') {
+                    continue;
+                }
+                collection = (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_1__.$$)(rules[idx].selectorText, iframeDoc.body);
+                collection.forEach((elm) => {
+                    elm.style.cssText = normalizeCSS(rules[idx].style.cssText + ';' + elm.style.cssText);
+                });
+            }
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.each */ .i.each(iframeDoc.body, node => {
+                if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isElement */ .i.isElement(node)) {
+                    const elm = node;
+                    const css = elm.style.cssText;
+                    if (css) {
+                        elm.style.cssText = normalizeCSS(css);
+                    }
+                    if (elm.hasAttribute('lang')) {
+                        elm.removeAttribute('lang');
+                    }
+                }
+            });
+            convertedString = iframeDoc.firstChild
+                ? (0,_string__WEBPACK_IMPORTED_MODULE_2__/* .trim */ .fy)(iframeDoc.body.innerHTML)
+                : '';
+        }
+    }
+    catch (_a) {
+    }
+    finally {
+        jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.safeRemove */ .i.safeRemove(iframe);
+    }
+    if (convertedString) {
+        html = convertedString;
+    }
+    return (0,_string__WEBPACK_IMPORTED_MODULE_2__/* .trim */ .fy)(html
+        .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
+        .replace(/<!--[^>]*>/g, ''));
+}
+
+
+/***/ }),
+/* 141 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "p": function() { return /* binding */ cleanFromWord; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var jodit_core_helpers_string_trim__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(73);
+/* harmony import */ var jodit_core_helpers_array_to_array__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(103);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function cleanFromWord(html) {
+    if (html.indexOf('<html ') !== -1) {
+        html = html.substring(html.indexOf('<html '), html.length);
+        html = html.substring(0, html.lastIndexOf('</html>') + '</html>'.length);
+    }
+    let convertedString = '';
+    try {
+        const div = document.createElement('div');
+        div.innerHTML = html;
+        const marks = [];
+        if (div.firstChild) {
+            jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.all */ .i.all(div, node => {
+                if (!node) {
+                    return;
+                }
+                switch (node.nodeType) {
+                    case Node.ELEMENT_NODE:
+                        switch (node.nodeName) {
+                            case 'STYLE':
+                            case 'LINK':
+                            case 'META':
+                                marks.push(node);
+                                break;
+                            case 'W:SDT':
+                            case 'W:SDTPR':
+                            case 'FONT':
+                                jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.unwrap */ .i.unwrap(node);
+                                break;
+                            default:
+                                (0,jodit_core_helpers_array_to_array__WEBPACK_IMPORTED_MODULE_2__/* .toArray */ .q)(node.attributes).forEach((attr) => {
+                                    if ([
+                                        'src',
+                                        'href',
+                                        'rel',
+                                        'content'
+                                    ].indexOf(attr.name.toLowerCase()) === -1) {
+                                        node.removeAttribute(attr.name);
+                                    }
+                                });
+                        }
+                        break;
+                    case Node.TEXT_NODE:
+                        break;
+                    default:
+                        marks.push(node);
+                }
+            });
+        }
+        marks.forEach(jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.safeRemove */ .i.safeRemove);
+        convertedString = div.innerHTML;
+    }
+    catch (e) { }
+    if (convertedString) {
+        html = convertedString;
+    }
+    html = html.split(/(\n)/).filter(jodit_core_helpers_string_trim__WEBPACK_IMPORTED_MODULE_1__/* .trim */ .f).join('\n');
+    return html
+        .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
+        .replace(/<!--[^>]*>/g, '');
+}
+
+
+/***/ }),
+/* 142 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "o": function() { return /* binding */ stripTags; },
+/* harmony export */   "e": function() { return /* binding */ safeHTML; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(33);
+/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var jodit_core_helpers_string_trim__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(73);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(12);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+function stripTags(html, doc = document) {
+    const tmp = doc.createElement('div');
+    if ((0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_3__/* .isString */ .H)(html)) {
+        tmp.innerHTML = html;
+    }
+    else {
+        tmp.appendChild(html);
+    }
+    (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__.$$)('DIV, P, BR, H1, H2, H3, H4, H5, H6, HR', tmp).forEach(p => {
+        const pr = p.parentNode;
+        if (!pr) {
+            return;
+        }
+        const nx = p.nextSibling;
+        if (jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.isText */ .i.isText(nx) && /^\s/.test(nx.nodeValue || '')) {
+            return;
+        }
+        if (nx) {
+            pr.insertBefore(doc.createTextNode(' '), nx);
+        }
+    });
+    return (0,jodit_core_helpers_string_trim__WEBPACK_IMPORTED_MODULE_1__/* .trim */ .f)(tmp.innerText) || '';
+}
+function safeHTML(box, options) {
+    if (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.isElement */ .i.isElement(box)) {
+        return;
+    }
+    const removeOnError = (elm) => (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__/* .attr */ .Lj)(elm, 'onerror', null), safeLink = (elm) => {
+        const href = elm.getAttribute('href');
+        if (href && href.trim().indexOf('javascript') === 0) {
+            (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__/* .attr */ .Lj)(elm, 'href', location.protocol + '//' + href);
+        }
+    };
+    if (options.removeOnError) {
+        removeOnError(box);
+        (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__.$$)('[onerror]', box).forEach(removeOnError);
+    }
+    if (options.safeJavaScriptLink) {
+        safeLink(box);
+        (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__.$$)('a[href^="javascript"]', box).forEach(safeLink);
+    }
+}
+
+
+/***/ }),
+/* 143 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FK": function() { return /* reexport safe */ _get_content_width__WEBPACK_IMPORTED_MODULE_0__.F; },
+/* harmony export */   "rP": function() { return /* reexport safe */ _get_scroll_parent__WEBPACK_IMPORTED_MODULE_1__.r; },
+/* harmony export */   "x9": function() { return /* reexport safe */ _inner_width__WEBPACK_IMPORTED_MODULE_2__.x; },
+/* harmony export */   "cv": function() { return /* reexport safe */ _offset__WEBPACK_IMPORTED_MODULE_3__.c; },
+/* harmony export */   "eL": function() { return /* reexport safe */ _position__WEBPACK_IMPORTED_MODULE_4__.F; },
+/* harmony export */   "dp": function() { return /* reexport safe */ _object_size__WEBPACK_IMPORTED_MODULE_5__.d; }
+/* harmony export */ });
+/* harmony import */ var _get_content_width__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(163);
+/* harmony import */ var _get_scroll_parent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(144);
+/* harmony import */ var _inner_width__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(164);
+/* harmony import */ var _offset__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(165);
+/* harmony import */ var _position__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(145);
+/* harmony import */ var _object_size__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(146);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+
+/***/ }),
+/* 144 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "r": function() { return /* binding */ getScrollParent; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function getScrollParent(node) {
+    if (!node) {
+        return null;
+    }
+    const isElement = jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isHTMLElement */ .i.isHTMLElement(node);
+    const overflowY = isElement && (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__/* .css */ .iv)(node, 'overflowY');
+    const isScrollable = isElement && overflowY !== 'visible' && overflowY !== 'hidden';
+    if (isScrollable && node.scrollHeight >= node.clientHeight) {
+        return node;
+    }
+    return (getScrollParent(node.parentNode) ||
+        document.scrollingElement ||
+        document.body);
+}
+
+
+/***/ }),
+/* 145 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "F": function() { return /* binding */ position; }
+/* harmony export */ });
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function position(elm, jodit, recurse = false) {
+    const rect = elm.getBoundingClientRect();
+    let xPos = rect.left, yPos = rect.top;
+    if ((0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isJoditObject */ .Zu)(jodit) && jodit.iframe && !recurse) {
+        const { left, top } = position(jodit.iframe, jodit, true);
+        xPos += left;
+        yPos += top;
+    }
+    return {
+        left: Math.round(xPos),
+        top: Math.round(yPos),
+        width: Math.round(elm.offsetWidth),
+        height: Math.round(elm.offsetHeight)
+    };
+}
+
+
+/***/ }),
+/* 146 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "d": function() { return /* binding */ size; }
+/* harmony export */ });
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function size(subject) {
+    if ((0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .HD)(subject) || (0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isArray */ .kJ)(subject)) {
+        return subject.length;
+    }
+    if ((0,_checker__WEBPACK_IMPORTED_MODULE_0__/* .isPlainObject */ .PO)(subject)) {
+        return Object.keys(subject).length;
+    }
+    return 0;
+}
+
+
+/***/ }),
+/* 147 */,
+/* 148 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "E": function() { return /* binding */ hasBrowserColorPicker; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function hasBrowserColorPicker() {
+    let supportsColor = true;
+    try {
+        const a = document.createElement('input');
+        a.type = 'color';
+        supportsColor =
+            a.type === 'color' && typeof a.selectionStart !== 'number';
+    }
+    catch (e) {
+        supportsColor = false;
+    }
+    return supportsColor;
+}
+
+
+/***/ }),
+/* 149 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "P": function() { return /* binding */ stringify; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function stringify(value, options = {}) {
+    if (typeof value !== 'object') {
+        return String(value);
+    }
+    const excludeKeys = new Set(options.excludeKeys);
+    const map = new WeakMap();
+    const r = (k, v) => {
+        if (excludeKeys.has(k)) {
+            return;
+        }
+        if (typeof v === 'object' && v != null) {
+            if (map.get(v)) {
+                return '[refObject]';
+            }
+            map.set(v, true);
+        }
+        return v;
+    };
+    return JSON.stringify(value, r, options.prettify);
+}
+
+
+/***/ }),
+/* 150 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "I": function() { return /* binding */ isHtmlFromWord; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function isHtmlFromWord(data) {
+    return (data.search(/<meta.*?Microsoft Excel\s[\d].*?>/) !== -1 ||
+        data.search(/<meta.*?Microsoft Word\s[\d].*?>/) !== -1 ||
+        (data.search(/style="[^"]*mso-/) !== -1 && data.search(/<font/) !== -1));
+}
+
+
+/***/ }),
+/* 151 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "G": function() { return /* binding */ isInt; }
+/* harmony export */ });
+/* harmony import */ var _is_numeric__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(38);
+/* harmony import */ var _is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(33);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function isInt(value) {
+    if ((0,_is_string__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .H)(value) && (0,_is_numeric__WEBPACK_IMPORTED_MODULE_1__/* .isNumeric */ .k)(value)) {
+        value = parseFloat(value);
+    }
+    return typeof value === 'number' && Number.isFinite(value) && !(value % 1);
+}
+
+
+/***/ }),
+/* 152 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "A": function() { return /* binding */ isLicense; }
+/* harmony export */ });
+/* harmony import */ var _is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(33);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+const isLicense = (license) => (0,_is_string__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .H)(license) &&
+    license.length === 23 &&
+    /^[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}$/i.test(license);
+
+
+/***/ }),
+/* 153 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "h": function() { return /* binding */ nonenumerable; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const nonenumerable = (target, propertyKey) => {
+    const descriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {};
+    if (descriptor.enumerable !== false) {
+        Object.defineProperty(target, propertyKey, {
+            enumerable: false,
+            set(value) {
+                Object.defineProperty(this, propertyKey, {
+                    enumerable: false,
+                    writable: true,
+                    value
+                });
+            }
+        });
+    }
+};
+
+
+/***/ }),
+/* 154 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "P": function() { return /* binding */ normalizeLicense; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const normalizeLicense = (license, count = 8) => {
+    const parts = [];
+    while (license.length) {
+        parts.push(license.substr(0, count));
+        license = license.substr(count);
+    }
+    parts[1] = parts[1].replace(/./g, '*');
+    parts[2] = parts[2].replace(/./g, '*');
+    return parts.join('-');
+};
+
+
+/***/ }),
+/* 155 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "a": function() { return /* binding */ normalizeSize; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const normalizeSize = (value) => {
+    if (/^[0-9]+$/.test(value.toString())) {
+        return value + 'px';
+    }
+    return value.toString();
+};
+
+
+/***/ }),
+/* 156 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "l": function() { return /* binding */ LimitedStack; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+class LimitedStack {
+    constructor(limit) {
+        this.limit = limit;
+        this.stack = [];
+    }
+    push(item) {
+        this.stack.push(item);
+        if (this.stack.length > this.limit) {
+            this.stack.shift();
+        }
+        return this;
+    }
+    pop() {
+        return this.stack.pop();
+    }
+    find(clb) {
+        return this.stack.find(clb);
+    }
+}
+
+
+/***/ }),
+/* 157 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "X": function() { return /* binding */ browser; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const browser = (browser) => {
+    const ua = navigator.userAgent.toLowerCase(), match = /(firefox)[\s/]([\w.]+)/.exec(ua) ||
+        /(chrome)[\s/]([\w.]+)/.exec(ua) ||
+        /(webkit)[\s/]([\w.]+)/.exec(ua) ||
+        /(opera)(?:.*version)[\s/]([\w.]+)/.exec(ua) ||
+        /(msie)[\s]([\w.]+)/.exec(ua) ||
+        /(trident)\/([\w.]+)/.exec(ua) ||
+        ua.indexOf('compatible') < 0 ||
+        [];
+    if (browser === 'version') {
+        return match[2];
+    }
+    if (browser === 'webkit') {
+        return match[1] === 'chrome' || match[1] === 'webkit';
+    }
+    if (browser === 'ff') {
+        return match[1] === 'firefox';
+    }
+    if (browser === 'msie') {
+        return match[1] === 'trident' || match[1] === 'msie';
+    }
+    return match[1] === browser;
+};
+
+
+/***/ }),
+/* 158 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "j": function() { return /* binding */ inView; },
+/* harmony export */   "n": function() { return /* binding */ scrollIntoViewIfNeeded; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const inView = (elm, root, doc) => {
+    let rect = elm.getBoundingClientRect(), el = elm;
+    const top = rect.top, height = rect.height;
+    do {
+        if (el && el.parentNode) {
+            el = el.parentNode;
+            rect = el.getBoundingClientRect();
+            if (!(top <= rect.bottom)) {
+                return false;
+            }
+            if (top + height <= rect.top) {
+                return false;
+            }
+        }
+    } while (el && el !== root && el.parentNode);
+    return (top <= ((doc.documentElement && doc.documentElement.clientHeight) || 0));
+};
+const scrollIntoViewIfNeeded = (elm, root, doc) => {
+    if (!inView(elm, root, doc)) {
+        if (root.clientHeight !== root.scrollHeight) {
+            root.scrollTop = elm.offsetTop;
+        }
+        if (!inView(elm, root, doc)) {
+            elm.scrollIntoView();
+        }
+    }
+};
+
+
+/***/ }),
+/* 159 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "P": function() { return /* binding */ val; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const val = (elm, selector, value) => {
+    const child = elm.querySelector(selector);
+    if (!child) {
+        return '';
+    }
+    if (value) {
+        child.value = value;
+    }
+    return child.value;
+};
+
+
+/***/ }),
+/* 160 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "h": function() { return /* reexport safe */ _color_to_hex__WEBPACK_IMPORTED_MODULE_0__.h; }
+/* harmony export */ });
+/* harmony import */ var _color_to_hex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+/***/ }),
+/* 161 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "$": function() { return /* binding */ htmlspecialchars; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function htmlspecialchars(html) {
+    const tmp = document.createElement('div');
+    tmp.textContent = html;
+    return tmp.innerHTML;
+}
+
+
+/***/ }),
+/* 162 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "h": function() { return /* binding */ nl2br; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function nl2br(html) {
+    return html.replace(/\r\n|\r|\n/g, '<br/>');
+}
+
+
+/***/ }),
+/* 163 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "F": function() { return /* binding */ getContentWidth; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const getContentWidth = (element, win) => {
+    const pi = (value) => parseInt(value, 10), style = win.getComputedStyle(element), width = element.offsetWidth, paddingLeft = pi(style.getPropertyValue('padding-left') || '0'), paddingRight = pi(style.getPropertyValue('padding-right') || '0');
+    return width - paddingLeft - paddingRight;
+};
+
+
+/***/ }),
+/* 164 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "x": function() { return /* binding */ innerWidth; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const innerWidth = (element, win) => {
+    const computedStyle = win.getComputedStyle(element);
+    let elementWidth = element.clientWidth;
+    elementWidth -=
+        parseFloat(computedStyle.paddingLeft || '0') +
+            parseFloat(computedStyle.paddingRight || '0');
+    return elementWidth;
+};
+
+
+/***/ }),
+/* 165 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "c": function() { return /* binding */ offset; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const offset = (elm, jodit, doc, recurse = false) => {
+    let rect;
+    try {
+        rect = elm.getBoundingClientRect();
+    }
+    catch (e) {
+        rect = {
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            width: 0,
+            height: 0
+        };
+    }
+    const body = doc.body, docElem = doc.documentElement || {
+        clientTop: 0,
+        clientLeft: 0,
+        scrollTop: 0,
+        scrollLeft: 0
+    }, win = doc.defaultView || doc.parentWindow, scrollTop = win.pageYOffset || docElem.scrollTop || body.scrollTop, scrollLeft = win.pageXOffset || docElem.scrollLeft || body.scrollLeft, clientTop = docElem.clientTop || body.clientTop || 0, clientLeft = docElem.clientLeft || body.clientLeft || 0;
+    let topValue, leftValue;
+    const iframe = jodit.iframe;
+    if (!recurse && jodit && jodit.options && jodit.o.iframe && iframe) {
+        const { top, left } = offset(iframe, jodit, jodit.od, true);
+        topValue = rect.top + top;
+        leftValue = rect.left + left;
+    }
+    else {
+        topValue = rect.top + scrollTop - clientTop;
+        leftValue = rect.left + scrollLeft - clientLeft;
+    }
+    return {
+        top: Math.round(topValue),
+        left: Math.round(leftValue),
+        width: rect.width,
+        height: rect.height
+    };
+};
+
+
+/***/ }),
+/* 166 */
 /***/ (function(module) {
 
 /*!
@@ -9213,13 +10271,13 @@ module.exports = {
 
 
 /***/ }),
-/* 47 */
+/* 167 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M36 4h-24c-2.21 0-4 1.79-4 4v32c0 2.21 1.79 4 4 4h24c2.21 0 4-1.79 4-4v-32c0-2.21-1.79-4-4-4zm-24 4h10v16l-5-3-5 3v-16z\"/> </svg>"
 
 /***/ }),
-/* 48 */
+/* 168 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9231,12 +10289,12 @@ __webpack_require__.d(__webpack_exports__, {
   "IL": function() { return /* reexport */ TabsWidget; }
 });
 
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
-var helpers = __webpack_require__(8);
-// EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
-var ui = __webpack_require__(35);
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(15);
+// EXTERNAL MODULE: ./src/core/helpers/index.ts
+var helpers = __webpack_require__(1);
+// EXTERNAL MODULE: ./src/core/ui/index.ts
+var ui = __webpack_require__(105);
+// EXTERNAL MODULE: ./src/core/dom/index.ts
+var dom = __webpack_require__(12);
 ;// CONCATENATED MODULE: ./src/modules/widget/color-picker/color-picker.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -9488,14 +10546,14 @@ const FileSelectorWidget = (editor, callbacks, elm, close, isImage = true) => {
 
 
 /***/ }),
-/* 49 */
+/* 169 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "z": function() { return /* binding */ hAlignElement; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -9528,11 +10586,11 @@ const hAlignElement = (image, align) => {
 
 
 /***/ }),
-/* 50 */
+/* 170 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+/* harmony import */ var _core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -9562,17 +10620,17 @@ const hAlignElement = (image, align) => {
 
 
 /***/ }),
-/* 51 */
+/* 171 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "A": function() { return /* binding */ align; }
 /* harmony export */ });
-/* harmony import */ var _core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
-/* harmony import */ var _core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18);
-/* harmony import */ var _core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
-/* harmony import */ var _image_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(49);
+/* harmony import */ var _core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27);
+/* harmony import */ var _core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
+/* harmony import */ var _image_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(169);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -9647,13 +10705,13 @@ const align = {
 
 
 /***/ }),
-/* 52 */
+/* 172 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(18);
-/* harmony import */ var _core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8);
-/* harmony import */ var _modules_widget__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(48);
+/* harmony import */ var _core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/* harmony import */ var _core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var _modules_widget__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(168);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -9782,7 +10840,7 @@ const cmd = (control) => control.args && (0,_core_helpers_checker__WEBPACK_IMPOR
 
 
 /***/ }),
-/* 53 */
+/* 173 */
 /***/ (function(__unused_webpack_module, __webpack_exports__) {
 
 "use strict";
@@ -9821,11 +10879,11 @@ const cmd = (control) => control.args && (0,_core_helpers_checker__WEBPACK_IMPOR
 
 
 /***/ }),
-/* 54 */
+/* 174 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _img__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51);
+/* harmony import */ var _img__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(171);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -9845,499 +10903,499 @@ const cmd = (control) => control.args && (0,_core_helpers_checker__WEBPACK_IMPOR
 
 
 /***/ }),
-/* 55 */
+/* 175 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 1792 1792\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z\"/> </svg>"
 
 /***/ }),
-/* 56 */
+/* 176 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 18.151 18.151\" xmlns=\"http://www.w3.org/2000/svg\"> <g> <path stroke-width=\"0\" d=\"M6.237,16.546H3.649V1.604h5.916v5.728c0.474-0.122,0.968-0.194,1.479-0.194 c0.042,0,0.083,0.006,0.125,0.006V0H2.044v18.15h5.934C7.295,17.736,6.704,17.19,6.237,16.546z\"/> <path stroke-width=\"0\" d=\"M11.169,8.275c-2.723,0-4.938,2.215-4.938,4.938s2.215,4.938,4.938,4.938s4.938-2.215,4.938-4.938 S13.892,8.275,11.169,8.275z M11.169,16.81c-1.983,0-3.598-1.612-3.598-3.598c0-1.983,1.614-3.597,3.598-3.597 s3.597,1.613,3.597,3.597C14.766,15.198,13.153,16.81,11.169,16.81z\"/> <polygon stroke-width=\"0\" points=\"11.792,11.073 10.502,11.073 10.502,12.578 9.03,12.578 9.03,13.868 10.502,13.868 10.502,15.352 11.792,15.352 11.792,13.868 13.309,13.868 13.309,12.578 11.792,12.578 \"/> </g> </svg>"
 
 /***/ }),
-/* 57 */
+/* 177 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176\"/> </g> </svg>"
 
 /***/ }),
-/* 58 */
+/* 178 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 59 */
+/* 179 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 60 */
+/* 180 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 61 */
+/* 181 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 62 */
+/* 182 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1411 541l-355 355 355 355 144-144q29-31 70-14 39 17 39 59v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l144-144-355-355-355 355 144 144q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l144 144 355-355-355-355-144 144q-19 19-45 19-12 0-24-5-40-17-40-59v-448q0-26 19-45t45-19h448q42 0 59 40 17 39-14 69l-144 144 355 355 355-355-144-144q-31-30-14-69 17-40 59-40h448q26 0 45 19t19 45v448q0 42-39 59-13 5-25 5-26 0-45-19z\"/> </svg>"
 
 /***/ }),
-/* 63 */
+/* 183 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 896q0 26-19 45l-256 256q-19 19-45 19t-45-19-19-45v-128h-1024v128q0 26-19 45t-45 19-45-19l-256-256q-19-19-19-45t19-45l256-256q19-19 45-19t45 19 19 45v128h1024v-128q0-26 19-45t45-19 45 19l256 256q19 19 19 45z\"/> </svg>"
 
 /***/ }),
-/* 64 */
+/* 184 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1596 1385q0 117-79 196t-196 79q-135 0-235-100l-777-776q-113-115-113-271 0-159 110-270t269-111q158 0 273 113l605 606q10 10 10 22 0 16-30.5 46.5t-46.5 30.5q-13 0-23-10l-606-607q-79-77-181-77-106 0-179 75t-73 181q0 105 76 181l776 777q63 63 145 63 64 0 106-42t42-106q0-82-63-145l-581-581q-26-24-60-24-29 0-48 19t-19 48q0 32 25 59l410 410q10 10 10 22 0 16-31 47t-47 31q-12 0-22-10l-410-410q-63-61-63-149 0-82 57-139t139-57q88 0 149 63l581 581q100 98 100 235z\"/> </svg>"
 
 /***/ }),
-/* 65 */
+/* 185 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z\"/> </svg>"
 
 /***/ }),
-/* 66 */
+/* 186 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z\"/> </svg>"
 
 /***/ }),
-/* 67 */
+/* 187 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 1152q0-36-20-69-1-1-15.5-22.5t-25.5-38-25-44-21-50.5q-4-16-21-16t-21 16q-7 23-21 50.5t-25 44-25.5 38-15.5 22.5q-20 33-20 69 0 53 37.5 90.5t90.5 37.5 90.5-37.5 37.5-90.5zm512-128q0 212-150 362t-362 150-362-150-150-362q0-145 81-275 6-9 62.5-90.5t101-151 99.5-178 83-201.5q9-30 34-47t51-17 51.5 17 33.5 47q28 93 83 201.5t99.5 178 101 151 62.5 90.5q81 127 81 275z\"/> </svg>"
 
 /***/ }),
-/* 68 */
+/* 188 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 14 14\" xmlns=\"http://www.w3.org/2000/svg\"> <g stroke=\"none\" stroke-width=\"1\"> <path d=\"M14,1.4 L12.6,0 L7,5.6 L1.4,0 L0,1.4 L5.6,7 L0,12.6 L1.4,14 L7,8.4 L12.6,14 L14,12.6 L8.4,7 L14,1.4 Z\"/> </g> </svg>"
 
 /***/ }),
-/* 69 */
+/* 189 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h896q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-640q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h640q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
-/* 70 */
+/* 190 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
 
 /***/ }),
-/* 71 */
+/* 191 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/> </svg>"
 
 /***/ }),
-/* 72 */
+/* 192 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg>"
 
 /***/ }),
-/* 73 */
+/* 193 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg>"
 
 /***/ }),
-/* 74 */
+/* 194 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg>"
 
 /***/ }),
-/* 75 */
+/* 195 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg>"
 
 /***/ }),
-/* 76 */
+/* 196 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg>"
 
 /***/ }),
-/* 77 */
+/* 197 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg>"
 
 /***/ }),
-/* 78 */
+/* 198 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
-/* 79 */
+/* 199 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg>"
 
 /***/ }),
-/* 80 */
+/* 200 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125\"/> </svg>"
 
 /***/ }),
-/* 81 */
+/* 201 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg>"
 
 /***/ }),
-/* 82 */
+/* 202 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/> </svg>"
 
 /***/ }),
-/* 83 */
+/* 203 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg>"
 
 /***/ }),
-/* 84 */
+/* 204 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg>"
 
 /***/ }),
-/* 85 */
+/* 205 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/> </svg>"
 
 /***/ }),
-/* 86 */
+/* 206 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/> </svg>"
 
 /***/ }),
-/* 87 */
+/* 207 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg>"
 
 /***/ }),
-/* 88 */
+/* 208 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/> </svg>"
 
 /***/ }),
-/* 89 */
+/* 209 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/> </svg>"
 
 /***/ }),
-/* 90 */
+/* 210 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
-/* 91 */
+/* 211 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/> </svg>"
 
 /***/ }),
-/* 92 */
+/* 212 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/> </svg>"
 
 /***/ }),
-/* 93 */
+/* 213 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
-/* 94 */
+/* 214 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
-/* 95 */
+/* 215 */
 /***/ (function(module) {
 
 module.exports = "<svg fill=\"none\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M5.09668 6.99707H7.17358L4.17358 3.99707L1.17358 6.99707H3.09668V17.0031H1.15881L4.15881 20.0031L7.15881 17.0031H5.09668V6.99707Z\"/> <path d=\"M22.8412 7H8.84119V5H22.8412V7Z\"/> <path d=\"M22.8412 11H8.84119V9H22.8412V11Z\"/> <path d=\"M8.84119 15H22.8412V13H8.84119V15Z\"/> <path d=\"M22.8412 19H8.84119V17H22.8412V19Z\"/> </svg>"
 
 /***/ }),
-/* 96 */
+/* 216 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/> </svg>"
 
 /***/ }),
-/* 97 */
+/* 217 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg>"
 
 /***/ }),
-/* 98 */
+/* 218 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg>"
 
 /***/ }),
-/* 99 */
+/* 219 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg>"
 
 /***/ }),
-/* 100 */
+/* 220 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 32 32\"> <path d=\"M27 4l-15 15-7-7-5 5 12 12 20-20z\"/> </svg>"
 
 /***/ }),
-/* 101 */
+/* 221 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
-/* 102 */
+/* 222 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg>"
 
 /***/ }),
-/* 103 */
+/* 223 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
-/* 104 */
+/* 224 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </svg>"
 
 /***/ }),
-/* 105 */
+/* 225 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg>"
 
 /***/ }),
-/* 106 */
+/* 226 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg>"
 
 /***/ }),
-/* 107 */
+/* 227 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg>"
 
 /***/ }),
-/* 108 */
+/* 228 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg>"
 
 /***/ }),
-/* 109 */
+/* 229 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg>"
 
 /***/ }),
-/* 110 */
+/* 230 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg>"
 
 /***/ }),
-/* 111 */
+/* 231 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </svg>"
 
 /***/ }),
-/* 112 */
+/* 232 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 13 13\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M5.9814 11.8049C5.59087 11.4144 5.59087 10.7812 5.9814 10.3907L10.224 6.14806C10.6146 5.75754 11.2477 5.75754 11.6383 6.14806C12.0288 6.53859 12.0288 7.17175 11.6383 7.56228L7.39561 11.8049C7.00509 12.1954 6.37192 12.1954 5.9814 11.8049Z\"/> <path d=\"M0.707107 12.0208C0.316582 11.6303 0.316582 10.9971 0.707107 10.6066L10.6066 0.707121C10.9971 0.316597 11.6303 0.316596 12.0208 0.707121C12.4113 1.09764 12.4113 1.73081 12.0208 2.12133L2.12132 12.0208C1.7308 12.4114 1.09763 12.4114 0.707107 12.0208Z\"/> </svg>"
 
 /***/ }),
-/* 113 */
+/* 233 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg>"
 
 /***/ }),
-/* 114 */
+/* 234 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
-/* 115 */
+/* 235 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg>"
 
 /***/ }),
-/* 116 */
+/* 236 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 500 500\" xmlns=\"http://www.w3.org/2000/svg\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg>"
 
 /***/ }),
-/* 117 */
+/* 237 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke=\"null\" d=\"m42.276011,26.302547c0.098397,-0.76605 0.172194,-1.54407 0.172194,-2.33406s-0.073797,-1.56801 -0.172194,-2.33406l5.202718,-3.961917c0.467384,-0.359086 0.602679,-1.005441 0.29519,-1.532101l-4.919828,-8.29489c-0.307489,-0.51469 -0.947067,-0.730142 -1.500548,-0.51469l-6.125186,2.405877c-1.266856,-0.945594 -2.656707,-1.747553 -4.157255,-2.357999l-0.922468,-6.343855c-0.110696,-0.562568 -0.614979,-1.005441 -1.229957,-1.005441l-9.839656,0c-0.614979,0 -1.119261,0.442873 -1.217657,1.005441l-0.922468,6.343855c-1.500548,0.610446 -2.890399,1.400436 -4.157255,2.357999l-6.125186,-2.405877c-0.553481,-0.203482 -1.193058,0 -1.500548,0.51469l-4.919828,8.29489c-0.307489,0.51469 -0.172194,1.161045 0.29519,1.532101l5.190419,3.961917c-0.098397,0.76605 -0.172194,1.54407 -0.172194,2.33406s0.073797,1.56801 0.172194,2.33406l-5.190419,3.961917c-0.467384,0.359086 -0.602679,1.005441 -0.29519,1.532101l4.919828,8.29489c0.307489,0.51469 0.947067,0.730142 1.500548,0.51469l6.125186,-2.405877c1.266856,0.945594 2.656707,1.747553 4.157255,2.357999l0.922468,6.343855c0.098397,0.562568 0.602679,1.005441 1.217657,1.005441l9.839656,0c0.614979,0 1.119261,-0.442873 1.217657,-1.005441l0.922468,-6.343855c1.500548,-0.610446 2.890399,-1.400436 4.157255,-2.357999l6.125186,2.405877c0.553481,0.203482 1.193058,0 1.500548,-0.51469l4.919828,-8.29489c0.307489,-0.51469 0.172194,-1.161045 -0.29519,-1.532101l-5.190419,-3.961917zm-18.277162,6.044617c-4.759934,0 -8.609699,-3.746465 -8.609699,-8.378677s3.849766,-8.378677 8.609699,-8.378677s8.609699,3.746465 8.609699,8.378677s-3.849766,8.378677 -8.609699,8.378677z\"/> </svg>"
 
 /***/ }),
-/* 118 */
+/* 238 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg>"
 
 /***/ }),
-/* 119 */
+/* 239 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 120 */
+/* 240 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg>"
 
 /***/ }),
-/* 121 */
+/* 241 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
 
 /***/ }),
-/* 122 */
+/* 242 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
 
 /***/ }),
-/* 123 */
+/* 243 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg>"
 
 /***/ }),
-/* 124 */
+/* 244 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg>"
 
 /***/ }),
-/* 125 */
+/* 245 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg>"
 
 /***/ }),
-/* 126 */
+/* 246 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg>"
 
 /***/ }),
-/* 127 */
+/* 247 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg>"
 
 /***/ }),
-/* 128 */
+/* 248 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg>"
 
 /***/ }),
-/* 129 */
+/* 249 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
-/* 130 */
+/* 250 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg>"
 
 /***/ }),
-/* 131 */
+/* 251 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg>"
 
 /***/ }),
-/* 132 */
+/* 252 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
 
 /***/ }),
-/* 133 */
+/* 253 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/> </svg>"
 
 /***/ }),
-/* 134 */
+/* 254 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/> </svg>"
 
 /***/ }),
-/* 135 */
+/* 255 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/> </svg>"
 
 /***/ }),
-/* 136 */
+/* 256 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/> </svg>"
 
 /***/ }),
-/* 137 */
+/* 257 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 352v1088q0 42-39 59-13 5-25 5-27 0-45-19l-403-403v166q0 119-84.5 203.5t-203.5 84.5h-704q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h704q119 0 203.5 84.5t84.5 203.5v165l403-402q18-19 45-19 12 0 25 5 39 17 39 59z\"/> </svg>"
@@ -10621,15 +11679,15 @@ __webpack_require__.d(icons_namespaceObject, {
 });
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(25);
+var tslib_es6 = __webpack_require__(56);
 // EXTERNAL MODULE: ./src/config.ts
-var config = __webpack_require__(1);
+var config = __webpack_require__(76);
 // EXTERNAL MODULE: ./src/core/constants.ts
-var constants = __webpack_require__(2);
-// EXTERNAL MODULE: ./src/core/event-emitter/index.ts + 3 modules
-var event_emitter = __webpack_require__(3);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
-var helpers = __webpack_require__(8);
+var constants = __webpack_require__(14);
+// EXTERNAL MODULE: ./src/core/event-emitter/index.ts
+var event_emitter = __webpack_require__(50);
+// EXTERNAL MODULE: ./src/core/helpers/index.ts
+var helpers = __webpack_require__(1);
 ;// CONCATENATED MODULE: ./src/core/async/async.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -11028,14 +12086,14 @@ Ajax.log = [];
 
 
 
-// EXTERNAL MODULE: ./src/core/component/index.ts + 3 modules
-var component = __webpack_require__(12);
-// EXTERNAL MODULE: ./src/core/ui/popup/index.ts + 1 modules
-var ui_popup = __webpack_require__(44);
-// EXTERNAL MODULE: ./src/core/ui/button/index.ts + 1 modules
-var ui_button = __webpack_require__(39);
-// EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 14 modules
-var checker = __webpack_require__(18);
+// EXTERNAL MODULE: ./src/core/component/index.ts
+var component = __webpack_require__(7);
+// EXTERNAL MODULE: ./src/core/ui/popup/index.ts
+var ui_popup = __webpack_require__(122);
+// EXTERNAL MODULE: ./src/core/ui/button/index.ts
+var ui_button = __webpack_require__(111);
+// EXTERNAL MODULE: ./src/core/helpers/checker/index.ts
+var checker = __webpack_require__(27);
 ;// CONCATENATED MODULE: ./src/modules/context-menu/context-menu.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -11232,11 +12290,11 @@ class Storage {
 
 
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(13);
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(17);
-// EXTERNAL MODULE: ./src/core/traits/index.ts + 2 modules
-var traits = __webpack_require__(37);
+var global = __webpack_require__(10);
+// EXTERNAL MODULE: ./src/core/decorators/index.ts
+var decorators = __webpack_require__(23);
+// EXTERNAL MODULE: ./src/core/traits/index.ts
+var traits = __webpack_require__(107);
 ;// CONCATENATED MODULE: ./src/core/view/view.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -11260,7 +12318,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.14.1";
+        this.version = "3.14.2";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -11358,10 +12416,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.14.1";
+        return "3.14.2";
     }
     static getVersion() {
-        return "3.14.1";
+        return "3.14.2";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -11441,10 +12499,10 @@ View.defaultOptions = {
     globalFullSize: true
 };
 
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(15);
-// EXTERNAL MODULE: ./src/core/ui/index.ts + 1 modules
-var ui = __webpack_require__(35);
+// EXTERNAL MODULE: ./src/core/dom/index.ts
+var dom = __webpack_require__(12);
+// EXTERNAL MODULE: ./src/core/ui/index.ts
+var ui = __webpack_require__(105);
 ;// CONCATENATED MODULE: ./src/modules/toolbar/collection/collection.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -11648,7 +12706,7 @@ ToolbarEditorCollection = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./src/core/ui/helpers/get-control-type.ts
-var get_control_type = __webpack_require__(42);
+var get_control_type = __webpack_require__(118);
 ;// CONCATENATED MODULE: ./src/modules/toolbar/button/button.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -12029,7 +13087,7 @@ function makeButton(jodit, control, target = null) {
 }
 
 // EXTERNAL MODULE: ./src/core/ui/helpers/buttons.ts
-var helpers_buttons = __webpack_require__(43);
+var helpers_buttons = __webpack_require__(121);
 ;// CONCATENATED MODULE: ./src/core/view/view-with-toolbar.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -12718,7 +13776,7 @@ const Confirm = (msg, title, callback) => {
 
 
 // EXTERNAL MODULE: ./src/core/plugin/plugin-system.ts
-var plugin_system = __webpack_require__(14);
+var plugin_system = __webpack_require__(11);
 ;// CONCATENATED MODULE: ./src/core/plugin/plugin.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -13575,8 +14633,8 @@ function makeContextMenu(parent) {
     return new ContextMenu(parent);
 }
 
-// EXTERNAL MODULE: ./src/core/helpers/normalize/index.ts + 9 modules
-var normalize = __webpack_require__(30);
+// EXTERNAL MODULE: ./src/core/helpers/normalize/index.ts
+var normalize = __webpack_require__(79);
 ;// CONCATENATED MODULE: ./src/modules/file-browser/builders/elements-map.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -13594,7 +14652,7 @@ const elementsMap = (view) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/error.ts
-var error = __webpack_require__(4);
+var error = __webpack_require__(44);
 ;// CONCATENATED MODULE: ./src/modules/file-browser/fetch/load-items.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -13877,6 +14935,29 @@ const form_form = (editor, o) => {
 	</form>`);
 };
 
+;// CONCATENATED MODULE: ./src/modules/image-editor/config.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+config/* Config.prototype.imageeditor */.D.prototype.imageeditor = {
+    min_width: 20,
+    min_height: 20,
+    closeAfterSave: false,
+    width: '85%',
+    height: '85%',
+    crop: true,
+    resize: true,
+    resizeUseRatio: true,
+    resizeMinWidth: 20,
+    resizeMinHeight: 20,
+    cropUseRatio: true,
+    cropDefaultWidth: '70%',
+    cropDefaultHeight: '70%'
+};
+
 ;// CONCATENATED MODULE: ./src/modules/image-editor/image-editor.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -13894,21 +14975,7 @@ var ImageEditor_1;
 
 
 
-config/* Config.prototype.imageeditor */.D.prototype.imageeditor = {
-    min_width: 20,
-    min_height: 20,
-    closeAfterSave: false,
-    width: '85%',
-    height: '85%',
-    crop: true,
-    resize: true,
-    resizeUseRatio: true,
-    resizeMinWidth: 20,
-    resizeMinHeight: 20,
-    cropUseRatio: true,
-    cropDefaultWidth: '70%',
-    cropDefaultHeight: '70%'
-};
+
 const image_editor_jie = 'jodit-image-editor';
 const TABS = {
     resize: 'resize',
@@ -15492,8 +16559,8 @@ class Observer extends component/* ViewComponent */.Hr {
     (0,decorators.debounce)()
 ], Observer.prototype, "onChange", null);
 
-// EXTERNAL MODULE: ./src/core/selection/index.ts + 19 modules
-var selection = __webpack_require__(16);
+// EXTERNAL MODULE: ./src/core/selection/index.ts
+var selection = __webpack_require__(15);
 ;// CONCATENATED MODULE: ./src/modules/status-bar/status-bar.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -17545,7 +18612,7 @@ Jodit.core = {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const en = __webpack_require__(46);
+const en = __webpack_require__(166);
 let exp = {
     en
 };
@@ -17883,7 +18950,7 @@ function focus_focus(editor) {
 
 config/* Config.prototype.controls.classSpan */.D.prototype.controls.classSpan = {
     command: 'applyClassName',
-    icon: __webpack_require__(47),
+    icon: __webpack_require__(167),
     exec: helpers.memorizeExec,
     list: [
         'enabled',
@@ -17946,10 +19013,10 @@ class classSpan extends Plugin {
     beforeDestruct() { }
 }
 
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 18 modules
-var utils = __webpack_require__(9);
-// EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 4 modules
-var string = __webpack_require__(27);
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts
+var utils = __webpack_require__(2);
+// EXTERNAL MODULE: ./src/core/helpers/string/index.ts
+var string = __webpack_require__(70);
 ;// CONCATENATED MODULE: ./src/plugins/keyboard/helpers.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -19753,7 +20820,7 @@ function copyFormat(editor) {
 
 
 // EXTERNAL MODULE: ./src/modules/widget/index.ts + 3 modules
-var widget = __webpack_require__(48);
+var widget = __webpack_require__(168);
 ;// CONCATENATED MODULE: ./src/plugins/color/color.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -20969,16 +22036,14 @@ class hotkeys extends Plugin {
     }
 }
 
-;// CONCATENATED MODULE: ./src/plugins/iframe/iframe.ts
+;// CONCATENATED MODULE: ./src/plugins/iframe/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-
-
-
+config/* Config.prototype.iframe */.D.prototype.iframe = false;
 config/* Config.prototype.iframeBaseUrl */.D.prototype.iframeBaseUrl = '';
 config/* Config.prototype.iframeTitle */.D.prototype.iframeTitle = 'Jodit Editor';
 config/* Config.prototype.iframeDoctype */.D.prototype.iframeDoctype = '<!DOCTYPE html>';
@@ -21051,6 +22116,17 @@ config/* Config.prototype.iframeStyle */.D.prototype.iframeStyle =
         '}';
 config/* Config.prototype.iframeCSSLinks */.D.prototype.iframeCSSLinks = [];
 config/* Config.prototype.editHTMLDocumentMode */.D.prototype.editHTMLDocumentMode = false;
+
+;// CONCATENATED MODULE: ./src/plugins/iframe/iframe.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
 function iframe(editor) {
     const opt = editor.options;
     editor.e
@@ -21344,7 +22420,7 @@ function positionTab(editor) {
 
 
 // EXTERNAL MODULE: ./src/plugins/image/helpers.ts
-var image_helpers = __webpack_require__(49);
+var image_helpers = __webpack_require__(169);
 ;// CONCATENATED MODULE: ./src/plugins/image/image-properties/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -22055,13 +23131,13 @@ config/* Config.prototype.toolbarInlineForSelection */.D.prototype.toolbarInline
 config/* Config.prototype.toolbarInlineDisableFor */.D.prototype.toolbarInlineDisableFor = [];
 config/* Config.prototype.toolbarInlineDisabledButtons */.D.prototype.toolbarInlineDisabledButtons = ['source'];
 config/* Config.prototype.popup */.D.prototype.popup = {
-    a: (__webpack_require__(50)/* ["default"] */ .Z),
-    img: (__webpack_require__(51)/* ["default"] */ .Z),
-    cells: (__webpack_require__(52)/* ["default"] */ .Z),
-    toolbar: (__webpack_require__(53)/* ["default"] */ .Z),
-    jodit: (__webpack_require__(54)/* ["default"] */ .Z),
-    iframe: (__webpack_require__(54)/* ["default"] */ .Z),
-    'jodit-media': (__webpack_require__(54)/* ["default"] */ .Z),
+    a: (__webpack_require__(170)/* ["default"] */ .Z),
+    img: (__webpack_require__(171)/* ["default"] */ .Z),
+    cells: (__webpack_require__(172)/* ["default"] */ .Z),
+    toolbar: (__webpack_require__(173)/* ["default"] */ .Z),
+    jodit: (__webpack_require__(174)/* ["default"] */ .Z),
+    iframe: (__webpack_require__(174)/* ["default"] */ .Z),
+    'jodit-media': (__webpack_require__(174)/* ["default"] */ .Z),
     selection: [
         'bold',
         'underline',
@@ -22600,8 +23676,8 @@ class lineHeight extends Plugin {
     decorators.autobind
 ], lineHeight.prototype, "applyLineHeight", null);
 
-// EXTERNAL MODULE: ./src/core/ui/form/index.ts + 11 modules
-var ui_form = __webpack_require__(45);
+// EXTERNAL MODULE: ./src/core/ui/form/index.ts
+var ui_form = __webpack_require__(124);
 ;// CONCATENATED MODULE: ./src/plugins/link/template.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -27066,85 +28142,116 @@ class tab extends Plugin {
  */
 
 
+function fixedAssetsSizeAndAbsoluteLinks(editor, points) {
+    const restoreAttributes = [];
+    try {
+        (0,helpers.$$)('img', editor.editor).forEach(item => {
+            const previousAttrs = [
+                (0,helpers.attr)(item, 'width'),
+                (0,helpers.attr)(item, 'height'),
+                item.src
+            ];
+            (0,helpers.attr)(item, {
+                width: item.offsetWidth + points,
+                height: item.offsetHeight + points
+            });
+            const a = editor.createInside.a();
+            editor.ed.body.appendChild(a);
+            a.href = item.src;
+            item.src = a.href;
+            dom/* Dom.safeRemove */.i.safeRemove(a);
+            restoreAttributes.push(() => {
+                var _a;
+                item.src = (_a = previousAttrs[2]) !== null && _a !== void 0 ? _a : '';
+                (0,helpers.attr)(item, {
+                    width: previousAttrs[0] || null,
+                    height: previousAttrs[1] || null
+                });
+            });
+        });
+    }
+    catch (e) {
+        restoreAttributes.forEach(c => c());
+        restoreAttributes.length = 0;
+        throw e;
+    }
+    return restoreAttributes;
+}
 function previewBox(editor, defaultValue, points = 'px') {
-    const div = editor.c.div('jodit__preview-box');
-    (0,helpers.css)(div, {
-        position: 'relative',
-        padding: 16
-    });
-    const value = defaultValue ||
-        editor.editor ||
-        `<div style='position: absolute;left:50%;top:50%;transform: translateX(-50%) translateY(-50%);color:#ccc;'>${editor.i18n('Empty')}</div>`;
-    if (editor.iframe) {
-        const iframe = editor.create.element('iframe');
-        (0,helpers.css)(iframe, {
-            minWidth: 800,
-            minHeight: 600,
-            border: 0
-        });
-        div.appendChild(iframe);
-        const mywindow = iframe.contentWindow;
-        if (mywindow) {
-            editor.e.fire('generateDocumentStructure.iframe', mywindow.document, editor);
+    const restoreAttributes = fixedAssetsSizeAndAbsoluteLinks(editor, points);
+    try {
+        const res = editor.e.fire('beforePreviewBox', defaultValue, points);
+        if (res != null) {
+            return res;
         }
-    }
-    else {
+        const div = editor.c.div('jodit__preview-box');
         (0,helpers.css)(div, {
-            minWidth: 1024,
-            minHeight: 600,
-            border: 0
+            position: 'relative',
+            padding: 16
         });
-    }
-    const setHTML = (box, value) => {
-        const dv = (0,helpers.isString)(value) ? editor.c.div() : value;
-        if ((0,helpers.isString)(value)) {
-            dv.innerHTML = value;
-        }
-        for (let i = 0; i < dv.children.length; i += 1) {
-            const c = dv.children[i];
-            const newNode = document.createElement(c.nodeName);
-            for (let j = 0; j < c.attributes.length; j += 1) {
-                (0,helpers.attr)(newNode, c.attributes[j].nodeName, c.attributes[j].nodeValue);
+        const value = editor.value ||
+            `<div style='position: absolute;left:50%;top:50%;transform: translateX(-50%) translateY(-50%);color:#ccc;'>${editor.i18n('Empty')}</div>`;
+        if (editor.iframe) {
+            const iframe = editor.create.element('iframe');
+            (0,helpers.css)(iframe, {
+                minWidth: 800,
+                minHeight: 600,
+                border: 0
+            });
+            div.appendChild(iframe);
+            const mywindow = iframe.contentWindow;
+            if (mywindow) {
+                editor.e.fire('generateDocumentStructure.iframe', mywindow.document, editor);
             }
-            if (c.children.length === 0 || dom/* Dom.isTag */.i.isTag(c, ['table'])) {
-                switch (c.nodeName) {
-                    case 'IMG': {
-                        if (!dom/* Dom.isTag */.i.isTag(c, 'img') ||
-                            !dom/* Dom.isTag */.i.isTag(newNode, 'img')) {
-                            break;
-                        }
-                        const a = editor.createInside.a();
-                        a.href = c.src;
-                        newNode.src = a.href;
-                        (0,helpers.attr)(newNode, {
-                            width: c.offsetWidth + points,
-                            height: c.offsetHeight + points
-                        });
-                        break;
-                    }
-                    case 'SCRIPT':
-                        if (c.textContent) {
-                            newNode.textContent = c.textContent;
-                        }
-                        break;
-                    default:
-                        if (c.innerHTML) {
-                            newNode.innerHTML = c.innerHTML;
-                        }
-                        break;
+        }
+        else {
+            (0,helpers.css)(div, {
+                minWidth: 1024,
+                minHeight: 600,
+                border: 0
+            });
+        }
+        const setHTML = (box, value) => {
+            const dv = (0,helpers.isString)(value) ? editor.c.div() : value;
+            if ((0,helpers.isString)(value)) {
+                dv.innerHTML = value;
+            }
+            for (let i = 0; i < dv.children.length; i += 1) {
+                const c = dv.children[i];
+                const newNode = document.createElement(c.nodeName);
+                for (let j = 0; j < c.attributes.length; j += 1) {
+                    (0,helpers.attr)(newNode, c.attributes[j].nodeName, c.attributes[j].nodeValue);
                 }
+                if (c.children.length === 0 || dom/* Dom.isTag */.i.isTag(c, ['table'])) {
+                    switch (c.nodeName) {
+                        case 'SCRIPT':
+                            if (c.textContent) {
+                                newNode.textContent = c.textContent;
+                            }
+                            break;
+                        default:
+                            if (c.innerHTML) {
+                                newNode.innerHTML = c.innerHTML;
+                            }
+                            break;
+                    }
+                }
+                else {
+                    setHTML(newNode, c);
+                }
+                try {
+                    box.appendChild(newNode);
+                }
+                catch (_a) { }
             }
-            else {
-                setHTML(newNode, c);
-            }
-            try {
-                box.appendChild(newNode);
-            }
-            catch (_a) { }
-        }
-    };
-    setHTML(div, value);
-    return div;
+        };
+        setHTML(div, value);
+        editor.e.fire('afterPreviewBox', div);
+        return div;
+    }
+    finally {
+        restoreAttributes.forEach(clb => clb());
+    }
 }
 
 ;// CONCATENATED MODULE: ./src/plugins/print/preview.ts
@@ -27452,171 +28559,171 @@ class xpath extends Plugin {
 
 
 // EXTERNAL MODULE: ./src/styles/icons/about.svg
-var icons_about = __webpack_require__(55);
+var icons_about = __webpack_require__(175);
 // EXTERNAL MODULE: ./src/styles/icons/addcolumn.svg
-var addcolumn = __webpack_require__(56);
+var addcolumn = __webpack_require__(176);
 // EXTERNAL MODULE: ./src/styles/icons/addrow.svg
-var addrow = __webpack_require__(57);
+var addrow = __webpack_require__(177);
 // EXTERNAL MODULE: ./src/styles/icons/angle-down.svg
-var angle_down = __webpack_require__(58);
+var angle_down = __webpack_require__(178);
 // EXTERNAL MODULE: ./src/styles/icons/angle-left.svg
-var angle_left = __webpack_require__(59);
+var angle_left = __webpack_require__(179);
 // EXTERNAL MODULE: ./src/styles/icons/angle-right.svg
-var angle_right = __webpack_require__(60);
+var angle_right = __webpack_require__(180);
 // EXTERNAL MODULE: ./src/styles/icons/angle-up.svg
-var angle_up = __webpack_require__(61);
+var angle_up = __webpack_require__(181);
 // EXTERNAL MODULE: ./src/styles/icons/arrows-alt.svg
-var arrows_alt = __webpack_require__(62);
+var arrows_alt = __webpack_require__(182);
 // EXTERNAL MODULE: ./src/styles/icons/arrows-h.svg
-var arrows_h = __webpack_require__(63);
+var arrows_h = __webpack_require__(183);
 // EXTERNAL MODULE: ./src/styles/icons/attachment.svg
-var attachment = __webpack_require__(64);
+var attachment = __webpack_require__(184);
 // EXTERNAL MODULE: ./src/styles/icons/bin.svg
-var bin = __webpack_require__(65);
+var bin = __webpack_require__(185);
 // EXTERNAL MODULE: ./src/styles/icons/bold.svg
-var icons_bold = __webpack_require__(66);
+var icons_bold = __webpack_require__(186);
 // EXTERNAL MODULE: ./src/styles/icons/brush.svg
-var brush = __webpack_require__(67);
+var brush = __webpack_require__(187);
 // EXTERNAL MODULE: ./src/styles/icons/cancel.svg
-var cancel = __webpack_require__(68);
+var cancel = __webpack_require__(188);
 // EXTERNAL MODULE: ./src/styles/icons/center.svg
-var center = __webpack_require__(69);
+var center = __webpack_require__(189);
 // EXTERNAL MODULE: ./src/styles/icons/chain-broken.svg
-var chain_broken = __webpack_require__(70);
+var chain_broken = __webpack_require__(190);
 // EXTERNAL MODULE: ./src/styles/icons/check.svg
-var check = __webpack_require__(71);
+var check = __webpack_require__(191);
 // EXTERNAL MODULE: ./src/styles/icons/check-square.svg
-var check_square = __webpack_require__(72);
+var check_square = __webpack_require__(192);
 // EXTERNAL MODULE: ./src/styles/icons/chevron.svg
-var chevron = __webpack_require__(73);
+var chevron = __webpack_require__(193);
 // EXTERNAL MODULE: ./src/styles/icons/copyformat.svg
-var copyformat = __webpack_require__(74);
+var copyformat = __webpack_require__(194);
 // EXTERNAL MODULE: ./src/styles/icons/crop.svg
-var crop = __webpack_require__(75);
+var crop = __webpack_require__(195);
 // EXTERNAL MODULE: ./src/styles/icons/copy.svg
-var copy = __webpack_require__(76);
+var copy = __webpack_require__(196);
 // EXTERNAL MODULE: ./src/styles/icons/cut.svg
-var cut = __webpack_require__(77);
+var cut = __webpack_require__(197);
 // EXTERNAL MODULE: ./src/styles/icons/dedent.svg
-var dedent = __webpack_require__(78);
+var dedent = __webpack_require__(198);
 // EXTERNAL MODULE: ./src/styles/icons/dots.svg
-var dots = __webpack_require__(79);
+var dots = __webpack_require__(199);
 // EXTERNAL MODULE: ./src/styles/icons/enter.svg
-var icons_enter = __webpack_require__(80);
+var icons_enter = __webpack_require__(200);
 // EXTERNAL MODULE: ./src/styles/icons/eraser.svg
-var eraser = __webpack_require__(81);
+var eraser = __webpack_require__(201);
 // EXTERNAL MODULE: ./src/styles/icons/eye.svg
-var eye = __webpack_require__(82);
+var eye = __webpack_require__(202);
 // EXTERNAL MODULE: ./src/styles/icons/file.svg
-var icons_file = __webpack_require__(83);
+var icons_file = __webpack_require__(203);
 // EXTERNAL MODULE: ./src/styles/icons/folder.svg
-var folder = __webpack_require__(84);
+var folder = __webpack_require__(204);
 // EXTERNAL MODULE: ./src/styles/icons/font.svg
-var icons_font = __webpack_require__(85);
+var icons_font = __webpack_require__(205);
 // EXTERNAL MODULE: ./src/styles/icons/fontsize.svg
-var fontsize = __webpack_require__(86);
+var fontsize = __webpack_require__(206);
 // EXTERNAL MODULE: ./src/styles/icons/fullsize.svg
-var icons_fullsize = __webpack_require__(87);
+var icons_fullsize = __webpack_require__(207);
 // EXTERNAL MODULE: ./src/styles/icons/hr.svg
-var icons_hr = __webpack_require__(88);
+var icons_hr = __webpack_require__(208);
 // EXTERNAL MODULE: ./src/styles/icons/image.svg
-var icons_image = __webpack_require__(89);
+var icons_image = __webpack_require__(209);
 // EXTERNAL MODULE: ./src/styles/icons/indent.svg
-var icons_indent = __webpack_require__(90);
+var icons_indent = __webpack_require__(210);
 // EXTERNAL MODULE: ./src/styles/icons/info-circle.svg
-var info_circle = __webpack_require__(91);
+var info_circle = __webpack_require__(211);
 // EXTERNAL MODULE: ./src/styles/icons/italic.svg
-var italic = __webpack_require__(92);
+var italic = __webpack_require__(212);
 // EXTERNAL MODULE: ./src/styles/icons/justify.svg
-var icons_justify = __webpack_require__(93);
+var icons_justify = __webpack_require__(213);
 // EXTERNAL MODULE: ./src/styles/icons/left.svg
-var left = __webpack_require__(94);
+var left = __webpack_require__(214);
 // EXTERNAL MODULE: ./src/styles/icons/line-height.svg
-var line_height = __webpack_require__(95);
+var line_height = __webpack_require__(215);
 // EXTERNAL MODULE: ./src/styles/icons/link.svg
-var icons_link = __webpack_require__(96);
+var icons_link = __webpack_require__(216);
 // EXTERNAL MODULE: ./src/styles/icons/lock.svg
-var lock = __webpack_require__(97);
+var lock = __webpack_require__(217);
 // EXTERNAL MODULE: ./src/styles/icons/menu.svg
-var menu = __webpack_require__(98);
+var menu = __webpack_require__(218);
 // EXTERNAL MODULE: ./src/styles/icons/merge.svg
-var merge = __webpack_require__(99);
+var merge = __webpack_require__(219);
 // EXTERNAL MODULE: ./src/styles/icons/ok.svg
-var ok = __webpack_require__(100);
+var ok = __webpack_require__(220);
 // EXTERNAL MODULE: ./src/styles/icons/ol.svg
-var ol = __webpack_require__(101);
+var ol = __webpack_require__(221);
 // EXTERNAL MODULE: ./src/styles/icons/omega.svg
-var omega = __webpack_require__(102);
+var omega = __webpack_require__(222);
 // EXTERNAL MODULE: ./src/styles/icons/outdent.svg
-var outdent = __webpack_require__(103);
+var outdent = __webpack_require__(223);
 // EXTERNAL MODULE: ./src/styles/icons/palette.svg
-var palette = __webpack_require__(104);
+var palette = __webpack_require__(224);
 // EXTERNAL MODULE: ./src/styles/icons/paragraph.svg
-var paragraph = __webpack_require__(105);
+var paragraph = __webpack_require__(225);
 // EXTERNAL MODULE: ./src/styles/icons/paste.svg
-var icons_paste = __webpack_require__(106);
+var icons_paste = __webpack_require__(226);
 // EXTERNAL MODULE: ./src/styles/icons/pencil.svg
-var pencil = __webpack_require__(107);
+var pencil = __webpack_require__(227);
 // EXTERNAL MODULE: ./src/styles/icons/plus.svg
-var plus = __webpack_require__(108);
+var plus = __webpack_require__(228);
 // EXTERNAL MODULE: ./src/styles/icons/print.svg
-var icons_print = __webpack_require__(109);
+var icons_print = __webpack_require__(229);
 // EXTERNAL MODULE: ./src/styles/icons/redo.svg
-var redo = __webpack_require__(110);
+var redo = __webpack_require__(230);
 // EXTERNAL MODULE: ./src/styles/icons/resize.svg
-var resize = __webpack_require__(111);
+var resize = __webpack_require__(231);
 // EXTERNAL MODULE: ./src/styles/icons/resize-handler.svg
-var resize_handler = __webpack_require__(112);
+var resize_handler = __webpack_require__(232);
 // EXTERNAL MODULE: ./src/styles/icons/resizer.svg
-var icons_resizer = __webpack_require__(113);
+var icons_resizer = __webpack_require__(233);
 // EXTERNAL MODULE: ./src/styles/icons/right.svg
-var right = __webpack_require__(114);
+var right = __webpack_require__(234);
 // EXTERNAL MODULE: ./src/styles/icons/save.svg
-var save = __webpack_require__(115);
+var save = __webpack_require__(235);
 // EXTERNAL MODULE: ./src/styles/icons/search.svg
-var icons_search = __webpack_require__(116);
+var icons_search = __webpack_require__(236);
 // EXTERNAL MODULE: ./src/styles/icons/settings.svg
-var settings = __webpack_require__(117);
+var settings = __webpack_require__(237);
 // EXTERNAL MODULE: ./src/styles/icons/select-all.svg
-var select_all = __webpack_require__(118);
+var select_all = __webpack_require__(238);
 // EXTERNAL MODULE: ./src/styles/icons/shrink.svg
-var shrink = __webpack_require__(119);
+var shrink = __webpack_require__(239);
 // EXTERNAL MODULE: ./src/styles/icons/source.svg
-var icons_source = __webpack_require__(120);
+var icons_source = __webpack_require__(240);
 // EXTERNAL MODULE: ./src/styles/icons/splitg.svg
-var splitg = __webpack_require__(121);
+var splitg = __webpack_require__(241);
 // EXTERNAL MODULE: ./src/styles/icons/splitv.svg
-var splitv = __webpack_require__(122);
+var splitv = __webpack_require__(242);
 // EXTERNAL MODULE: ./src/styles/icons/strikethrough.svg
-var strikethrough = __webpack_require__(123);
+var strikethrough = __webpack_require__(243);
 // EXTERNAL MODULE: ./src/styles/icons/subscript.svg
-var subscript = __webpack_require__(124);
+var subscript = __webpack_require__(244);
 // EXTERNAL MODULE: ./src/styles/icons/superscript.svg
-var superscript = __webpack_require__(125);
+var superscript = __webpack_require__(245);
 // EXTERNAL MODULE: ./src/styles/icons/table.svg
-var icons_table = __webpack_require__(126);
+var icons_table = __webpack_require__(246);
 // EXTERNAL MODULE: ./src/styles/icons/th.svg
-var th = __webpack_require__(127);
+var th = __webpack_require__(247);
 // EXTERNAL MODULE: ./src/styles/icons/th-list.svg
-var th_list = __webpack_require__(128);
+var th_list = __webpack_require__(248);
 // EXTERNAL MODULE: ./src/styles/icons/ul.svg
-var ul = __webpack_require__(129);
+var ul = __webpack_require__(249);
 // EXTERNAL MODULE: ./src/styles/icons/underline.svg
-var underline = __webpack_require__(130);
+var underline = __webpack_require__(250);
 // EXTERNAL MODULE: ./src/styles/icons/undo.svg
-var undo = __webpack_require__(131);
+var undo = __webpack_require__(251);
 // EXTERNAL MODULE: ./src/styles/icons/unlink.svg
-var unlink = __webpack_require__(132);
+var unlink = __webpack_require__(252);
 // EXTERNAL MODULE: ./src/styles/icons/unlock.svg
-var unlock = __webpack_require__(133);
+var unlock = __webpack_require__(253);
 // EXTERNAL MODULE: ./src/styles/icons/update.svg
-var update = __webpack_require__(134);
+var update = __webpack_require__(254);
 // EXTERNAL MODULE: ./src/styles/icons/upload.svg
-var upload = __webpack_require__(135);
+var upload = __webpack_require__(255);
 // EXTERNAL MODULE: ./src/styles/icons/valign.svg
-var valign = __webpack_require__(136);
+var valign = __webpack_require__(256);
 // EXTERNAL MODULE: ./src/styles/icons/video.svg
-var icons_video = __webpack_require__(137);
+var icons_video = __webpack_require__(257);
 ;// CONCATENATED MODULE: ./src/styles/icons/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
