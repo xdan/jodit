@@ -13,21 +13,21 @@
 
 #### :house: Internal
 
-* @types/node                       ^17.0.15  →  ^17.0.18
-* @typescript-eslint/eslint-plugin   ^5.10.2  →   ^5.12.0
-* @typescript-eslint/parser          ^5.10.2  →   ^5.12.0
-* axios                              ^0.25.0  →   ^0.26.0
-* cssnano-preset-advanced            ^5.1.11  →   ^5.1.12
-* eslint                              ^8.8.0  →    ^8.9.0
-* eslint-config-prettier              ^8.3.0  →    ^8.4.0
-* express                            ^4.17.2  →   ^4.17.3
-* karma                              ^6.3.15  →   ^6.3.16
-* lint-staged                        ^12.3.3  →   ^12.3.4
-* mocha                               ^9.2.0  →    ^9.2.1
-* stylelint                          ^14.3.0  →   ^14.5.1
-* stylelint-config-standard          ^24.0.0  →   ^25.0.0
-* webpack                            ^5.68.0  →   ^5.69.1
-* core-js                            ^3.21.0  →   ^3.21.1
+-   @types/node ^17.0.15 → ^17.0.18
+-   @typescript-eslint/eslint-plugin ^5.10.2 → ^5.12.0
+-   @typescript-eslint/parser ^5.10.2 → ^5.12.0
+-   axios ^0.25.0 → ^0.26.0
+-   cssnano-preset-advanced ^5.1.11 → ^5.1.12
+-   eslint ^8.8.0 → ^8.9.0
+-   eslint-config-prettier ^8.3.0 → ^8.4.0
+-   express ^4.17.2 → ^4.17.3
+-   karma ^6.3.15 → ^6.3.16
+-   lint-staged ^12.3.3 → ^12.3.4
+-   mocha ^9.2.0 → ^9.2.1
+-   stylelint ^14.3.0 → ^14.5.1
+-   stylelint-config-standard ^24.0.0 → ^25.0.0
+-   webpack ^5.68.0 → ^5.69.1
+-   core-js ^3.21.0 → ^3.21.1
 
 ## 3.14.1
 
@@ -1109,11 +1109,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                               	{ value: "", text: "" },
--                                                                                                                               	{ value: "val1", text: "text1" },
--                                                                                                                               	{ value: "val2", text: "text2" },
--                                                                                                                               	{ value: "val3", text: "text3" }
--                                                                                                                               ]
+-                                                                                                                                 	{ value: "", text: "" },
+-                                                                                                                                 	{ value: "val1", text: "text1" },
+-                                                                                                                                 	{ value: "val2", text: "text2" },
+-                                                                                                                                 	{ value: "val3", text: "text3" }
+-                                                                                                                                 ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
