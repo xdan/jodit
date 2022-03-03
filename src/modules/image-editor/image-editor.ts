@@ -694,7 +694,10 @@ export class ImageEditor extends ViewComponent {
 
 				this.crop_box.appendChild(this.cropImage);
 
-				$$('.jodit-icon_loader', this.editor).forEach(Dom.safeRemove);
+				Dom.safeRemove.apply(
+					null,
+					$$('.jodit-icon_loader', this.editor)
+				);
 
 				if (this.activeTab === TABS.crop) {
 					this.showCrop();

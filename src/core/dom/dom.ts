@@ -27,7 +27,6 @@ import {
 	css,
 	dataBind,
 	error,
-	get,
 	isArray,
 	isFunction,
 	isHTML,
@@ -303,22 +302,14 @@ export class Dom {
 	 * Returns true if it is a DOM node
 	 */
 	static isNode(object: unknown): object is Node {
-		if (!object) {
-			return false;
-		}
-
-		const win = get<Window>('ownerDocument.defaultView', <object>object);
-
-		if (
-			typeof win === 'object' &&
-			win &&
-			(typeof (win as any).Node === 'function' ||
-				typeof (win as any).Node === 'object')
-		) {
-			return object instanceof (win as any).Node; // for Iframe Node !== iframe.contentWindow.Node
-		}
-
-		return false;
+		// Duck-typing
+		return Boolean(
+			object &&
+				(object as Node).nodeName &&
+				(object as Node).nodeType &&
+				(object as Node).childNodes &&
+				isFunction((object as Node).appendChild)
+		);
 	}
 
 	/**
@@ -674,16 +665,17 @@ export class Dom {
 		left: boolean = true,
 		cond: (n: Node) => boolean = (n: Node) => !Dom.isEmptyTextNode(n)
 	): Nullable<Node> {
-		const getSibling = (node: Node): Nullable<Node> =>
-			left ? node.previousSibling : node.nextSibling;
+		let sibling = Dom.sibling(node, left);
 
-		let start = getSibling(node);
-
-		while (start && !cond(start)) {
-			start = getSibling(start);
+		while (sibling && !cond(sibling)) {
+			sibling = Dom.sibling(sibling, left);
 		}
 
-		return start && cond(start) ? start : null;
+		return sibling && cond(sibling) ? sibling : null;
+	}
+
+	static sibling(node: Node, left: boolean): Nullable<Node> {
+		return left ? node.previousSibling : node.nextSibling;
 	}
 
 	/**
@@ -928,8 +920,13 @@ export class Dom {
 	/**
 	 * Safe remove element from DOM
 	 */
-	static safeRemove(node: Node | false | null | void): void {
-		node && node.parentNode && node.parentNode.removeChild(node);
+	static safeRemove(...nodes: unknown[]): void {
+		nodes.forEach(
+			node =>
+				Dom.isNode(node) &&
+				node.parentNode &&
+				node.parentNode.removeChild(node)
+		);
 	}
 
 	/**

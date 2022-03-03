@@ -6,7 +6,7 @@
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { call } from 'jodit/core/helpers';
-import { normalizeCursorPosition } from 'jodit/plugins/keyboard/helpers';
+import { moveNodeInsideStart } from 'jodit/core/selection/helpers';
 
 /**
  * Checks if a non-editable element can be deleted
@@ -33,7 +33,7 @@ export function checkRemoveContentNotEditable(
 	) {
 		call(backspace ? Dom.before : Dom.after, neighbor, fakeNode);
 		Dom.safeRemove(neighbor);
-		normalizeCursorPosition(jodit, fakeNode, backspace);
+		moveNodeInsideStart(jodit, fakeNode, backspace);
 
 		call(
 			backspace ? jodit.s.setCursorBefore : jodit.s.setCursorAfter,

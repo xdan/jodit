@@ -82,7 +82,7 @@ export function cleanFromWord(html: string): string {
 			});
 		}
 
-		marks.forEach(Dom.safeRemove);
+		Dom.safeRemove.apply(null, marks);
 
 		convertedString = div.innerHTML;
 	} catch (e) {}

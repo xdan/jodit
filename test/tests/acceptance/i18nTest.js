@@ -8,6 +8,7 @@ describe('Test i18n functionality', function () {
 		const filter = [
 			'customxxx',
 			'customxxx',
+			'lineHeight',
 			'Ok',
 			'Link',
 			'Code',
@@ -47,7 +48,7 @@ describe('Test i18n functionality', function () {
 							.filter(function (key) {
 								return (
 									filter.indexOf(key) === -1 &&
-									!/^[0-9]+(pt|px)?$/.test(key)
+									!/^[0-9]+(\.[0-9]+)?(pt|px)?$/.test(key)
 								);
 							})
 							.forEach(function (key) {

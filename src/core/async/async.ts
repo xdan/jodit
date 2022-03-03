@@ -17,15 +17,13 @@ import type {
 	ITimeout,
 	RejectablePromise
 } from 'jodit/types';
-import {
-	setTimeout,
-	clearTimeout,
-	isFunction,
-	isPlainObject,
-	isPromise,
-	isString,
-	isNumber
-} from 'jodit/core/helpers/';
+import { setTimeout, clearTimeout } from 'jodit/core/helpers/async';
+
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
+import { isPromise } from 'jodit/core/helpers/checker/is-promise';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { isNumber } from 'jodit/core/helpers/checker/is-number';
 
 export class Async implements IAsync {
 	private timers: Map<number | string | Function, number> = new Map();

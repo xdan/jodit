@@ -1,0 +1,12 @@
+.jodit-v-dom-container {
+	min-height: 100px;
+	padding: 10px;
+	border: 1px solid #ccc;
+
+	&:empty {
+		&:before {
+			content: 'Test';
+			opacity: 0.6;
+		}
+	}
+}

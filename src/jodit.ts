@@ -736,6 +736,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 			if (command === 'selectall') {
 				this.s.select(this.editor, true);
+				this.s.expandSelection();
 			} else {
 				try {
 					result = this.nativeExecCommand(command, showUI, value);

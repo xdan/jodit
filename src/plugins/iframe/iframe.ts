@@ -16,7 +16,7 @@ import { MODE_SOURCE } from 'jodit/core/constants';
 import './config';
 
 /**
- * Iframe plugin - use `iframe` instead of DIV in editor. It can be need when you want attach custom styles in editor
+ * Iframe plugin - use `iframe` instead of DIV in editor. It can be need when you want to attach custom styles in editor
  * in backend of you system
  */
 export function iframe(editor: IJodit): void {
@@ -240,10 +240,17 @@ export function iframe(editor: IJodit): void {
 							editor.iframe &&
 							opt.height === 'auto'
 						) {
+							const style = editor.ew.getComputedStyle(
+									editor.editor
+								),
+								marginOffset =
+									parseInt(style.marginTop || '0', 10) +
+									parseInt(style.marginBottom || '0', 10);
+
 							css(
 								editor.iframe,
 								'height',
-								editor.editor.offsetHeight
+								editor.editor.offsetHeight + marginOffset
 							);
 						}
 					}, editor.defaultTimeout / 2);

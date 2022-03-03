@@ -35,7 +35,9 @@ module.exports = (env, argv, dir = process.cwd(), onlyTS = false) => {
 		devtool: debug ? 'inline-source-map' : false,
 
 		entry: {
-			vdom: ['./src/core/vdom/index'],
+			...(!isProd || (!uglify && !ESNext)
+				? { vdom: ['./src/core/vdom/index'] }
+				: {}),
 			jodit: debug
 				? ['webpack-hot-middleware/client.js', './src/index']
 				: ['./src/index']
@@ -49,7 +51,15 @@ module.exports = (env, argv, dir = process.cwd(), onlyTS = false) => {
 		},
 
 		resolve: {
-			extensions: ['.js', '.ts', '.d.ts', '.json', '.less', '.svg'],
+			extensions: [
+				'.js',
+				'.ts',
+				'.d.ts',
+				'.json',
+				'.less',
+				'.css',
+				'.svg'
+			],
 			alias: {
 				'jodit/src': path.resolve(__dirname, '../src/'),
 				jodit: path.resolve(__dirname, '../src/')

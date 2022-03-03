@@ -1182,3 +1182,22 @@ if (typeof window.chai !== 'undefined') {
 Object.defineProperty(navigator, 'userAgent', {
 	value: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 YaBrowser/18.9.0.3363 Yowser/2.5 Safari/537.36'
 });
+
+/**
+ *
+ * @param {string} str1
+ * @param {string} str2
+ * @return {string[]}
+ */
+function strCompare(str1, str2, len = 30) {
+	for (let i = 0; i < Math.max(str1.length, str2.length); i += 1) {
+		if (str1[i] !== str2[i]) {
+			console.log(str1.substring(i - len, i + len));
+			console.log(str2.substring(i - len, i + len));
+
+			return false;
+		}
+	}
+
+	return true;
+}

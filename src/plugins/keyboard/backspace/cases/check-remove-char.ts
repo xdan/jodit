@@ -6,10 +6,7 @@
 
 import type { CanUndef, IJodit, Nullable } from 'jodit/types';
 import type { DeleteMode } from 'jodit/plugins/keyboard/backspace/interface';
-import {
-	findMostNestedNeighbor,
-	getSibling
-} from 'jodit/plugins/keyboard/helpers';
+import { findMostNestedNeighbor } from 'jodit/plugins/keyboard/helpers';
 import { Dom } from 'jodit/core/dom';
 import { call, isVoid, toArray, trimInv } from 'jodit/core/helpers';
 import { INVISIBLE_SPACE, NBSP_SPACE } from 'jodit/core/constants';
@@ -34,9 +31,9 @@ export function checkRemoveChar(
 	mode: DeleteMode
 ): boolean {
 	const step = backspace ? -1 : 1;
-	const anotherSibling: Nullable<Node> = getSibling(fakeNode, !backspace);
+	const anotherSibling = Dom.sibling(fakeNode, !backspace);
 
-	let sibling: Nullable<Node> = getSibling(fakeNode, backspace),
+	let sibling: Nullable<Node> = Dom.sibling(fakeNode, backspace),
 		removeNeighbor: Nullable<Node> = null;
 
 	let charRemoved: boolean = false,
@@ -131,7 +128,7 @@ export function checkRemoveChar(
 			break;
 		}
 
-		let nextSibling = getSibling(sibling, backspace);
+		let nextSibling = Dom.sibling(sibling, backspace);
 
 		if (
 			!nextSibling &&

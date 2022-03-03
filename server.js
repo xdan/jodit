@@ -5,6 +5,7 @@
  */
 
 const webpack = require('webpack');
+const express = require('express');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 
@@ -77,6 +78,8 @@ app.get('/test.html', (req, res) => {
 app.get('/fake.html', (req, res) => {
 	res.sendFile(cwd + '/fake.html');
 });
+
+app.use(express.static('./'));
 
 app.get('/build/*.*', (req, res) => {
 	const filename = cwd + '/' + req.url;

@@ -28,7 +28,6 @@ export interface ISelect {
 
 	range: Range;
 	createRange(select?: boolean): Range;
-	selectRange(range: Range, focus?: boolean): void;
 	clear(): void;
 
 	html: string;
@@ -67,14 +66,16 @@ export interface ISelect {
 	cursorOnTheLeft(parentBlock: HTMLElement): Nullable<boolean>;
 	cursorOnTheRight(parentBlock: HTMLElement): Nullable<boolean>;
 
+	expandSelection(): ISelect;
 	insertCursorAtPoint(x: number, y: number): boolean;
 	setCursorAfter(node: Node): Nullable<Text>;
 	setCursorBefore(node: Node): Nullable<Text>;
 	setCursorIn(node: Node, inStart?: boolean): Node;
+	selectRange(range: Range, focus?: boolean): ISelect;
 	select(
 		node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement,
 		inward?: boolean
-	): void;
+	): ISelect;
 
 	wrapInTagGen(): Generator<HTMLElement>;
 	wrapInTag(

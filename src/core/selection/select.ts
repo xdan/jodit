@@ -44,6 +44,7 @@ import {
 } from 'jodit/core/helpers';
 import { CommitStyle } from './style/commit-style';
 import { autobind } from 'jodit/core/decorators';
+import { moveTheNodeAlongTheEdgeOutward } from 'jodit/core/selection/helpers';
 
 export class Select implements ISelect {
 	constructor(readonly jodit: IJodit) {
@@ -232,7 +233,7 @@ export class Select implements ISelect {
 	 * Remove all markers
 	 */
 	removeMarkers(): void {
-		this.markers.forEach(Dom.safeRemove);
+		Dom.safeRemove.apply(null, this.markers);
 	}
 
 	/**
@@ -1064,7 +1065,7 @@ export class Select implements ISelect {
 	/**
 	 * Set range selection
 	 */
-	selectRange(range: Range, focus: boolean = true): void {
+	selectRange(range: Range, focus: boolean = true): this {
 		const sel = this.sel;
 
 		if (focus && !this.isFocused()) {
@@ -1080,6 +1081,8 @@ export class Select implements ISelect {
 		 * Fired after change selection
 		 */
 		this.j.e.fire('changeSelection');
+
+		return this;
 	}
 
 	/**
@@ -1089,7 +1092,7 @@ export class Select implements ISelect {
 	select(
 		node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement,
 		inward = false
-	): void {
+	): this {
 		this.errorNode(node);
 
 		if (
@@ -1107,7 +1110,7 @@ export class Select implements ISelect {
 
 		range[inward ? 'selectNodeContents' : 'selectNode'](node);
 
-		this.selectRange(range);
+		return this.selectRange(range);
 	}
 
 	/**
@@ -1386,5 +1389,89 @@ export class Select implements ISelect {
 		}
 
 		return currentBox.previousElementSibling;
+	}
+
+	expandSelection(): this {
+		if (this.isCollapsed()) {
+			return this;
+		}
+
+		const { range } = this,
+			c = range.cloneRange();
+
+		if (
+			!Dom.isOrContains(
+				this.j.editor,
+				range.commonAncestorContainer,
+				true
+			)
+		) {
+			return this;
+		}
+
+		const moveMaxEdgeFake = (start: boolean): Node => {
+			const fake = this.j.createInside.fake();
+			const r = range.cloneRange();
+
+			r.collapse(start);
+			r.insertNode(fake);
+
+			moveTheNodeAlongTheEdgeOutward(fake, start, this.j.editor);
+
+			return fake;
+		};
+
+		const leftFake = moveMaxEdgeFake(true);
+		const rightFake = moveMaxEdgeFake(false);
+
+		c.setStartAfter(leftFake);
+		c.setEndBefore(rightFake);
+
+		const leftBox = Dom.findSibling(leftFake, false);
+		const rightBox = Dom.findSibling(rightFake, true);
+
+		if (leftBox !== rightBox) {
+			const rightInsideLeft =
+					Dom.isElement(leftBox) &&
+					Dom.isOrContains(leftBox, rightFake),
+				leftInsideRight =
+					!rightInsideLeft &&
+					Dom.isElement(rightBox) &&
+					Dom.isOrContains(rightBox, leftFake);
+
+			if (rightInsideLeft || leftInsideRight) {
+				let child: Nullable<Element> = (
+						rightInsideLeft ? leftBox : rightBox
+					) as Element,
+					container = child;
+
+				while (Dom.isElement(child)) {
+					child = rightInsideLeft
+						? child.firstElementChild
+						: child.lastElementChild;
+
+					if (child) {
+						const isInside = rightInsideLeft
+							? Dom.isOrContains(child, rightFake)
+							: Dom.isOrContains(child, leftFake);
+
+						if (isInside) {
+							container = child;
+						}
+					}
+				}
+
+				if (rightInsideLeft) {
+					c.setStart(container, 0);
+				} else {
+					c.setEnd(container, container.childNodes.length);
+				}
+			}
+		}
+
+		this.selectRange(c);
+
+		Dom.safeRemove(leftFake, rightFake);
+		return this;
 	}
 }

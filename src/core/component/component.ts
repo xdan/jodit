@@ -226,6 +226,10 @@ export abstract class Component implements IComponent {
 			return;
 		}
 
+		if (component === this) {
+			this.__componentStatus = componentStatus;
+		}
+
 		const proto = Object.getPrototypeOf(this);
 
 		if (proto && isFunction(proto.setStatusComponent)) {
@@ -237,10 +241,6 @@ export abstract class Component implements IComponent {
 
 		if (list && list.length) {
 			list.forEach(cb => cb(component));
-		}
-
-		if (component === this) {
-			this.__componentStatus = componentStatus;
 		}
 	}
 

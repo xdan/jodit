@@ -9,6 +9,17 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.15.1
+
+#### :rocket: New Feature
+
+-   When copying elements, their hierarchy is taken into, for example, if you selected `<ul><li><span>|test|</span></li></ul>`,
+    then when copying to the clipboard, the selection will be expanded to root element `UL`.
+    For this, the [[Select.expandSelection]] method has been added to the [[Select]] class.
+    [Ordered Bullets are getting changed to unordered bullets after copy and pasting within the editor #789](https://github.com/xdan/jodit/issues/789)
+
+> Method called before copy/cut/selectall operations
+
 ## 3.14.2
 
 #### :rocket: New Feature
@@ -1113,11 +1124,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                   	{ value: "", text: "" },
--                                                                                                                                   	{ value: "val1", text: "text1" },
--                                                                                                                                   	{ value: "val2", text: "text2" },
--                                                                                                                                   	{ value: "val3", text: "text3" }
--                                                                                                                                   ]
+-                                                                                                                                           	{ value: "", text: "" },
+-                                                                                                                                           	{ value: "val1", text: "text1" },
+-                                                                                                                                           	{ value: "val2", text: "text2" },
+-                                                                                                                                           	{ value: "val3", text: "text3" }
+-                                                                                                                                           ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

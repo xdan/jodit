@@ -21,7 +21,8 @@ export const SPACE_REG_EXP_START = (): RegExp => /^[\s\n\t\r\uFEFF\u200b]+/g;
 export const SPACE_REG_EXP_END = (): RegExp => /[\s\n\t\r\uFEFF\u200b]+$/g;
 
 export const IS_BLOCK =
-	/^(ARTICLE|SCRIPT|STYLE|OBJECT|FOOTER|HEADER|NAV|SECTION|IFRAME|JODIT|JODIT-MEDIA|PRE|DIV|P|LI|UL|OL|H[1-6]|BLOCKQUOTE|TR|TD|TH|TBODY|THEAD|TABLE|BODY|HTML|FIGCAPTION|FIGURE|DT|DD|DL|DFN|FORM)$/i;
+	/^(ADDRESS|ARTICLE|ASIDE|BLOCKQUOTE|CANVAS|DD|DFN|DIV|DL|DT|FIELDSET|FIGCAPTION|FIGURE|FOOTER|FORM|H[1-6]|HEADER|HGROUP|HR|LI|MAIN|NAV|NOSCRIPT|OUTPUT|P|PRE|RUBY|SCRIPT|STYLE|OBJECT|OL|SECTION|IFRAME|JODIT|JODIT-MEDIA|UL|TR|TD|TH|TBODY|THEAD|TFOOT|TABLE|BODY|HTML|VIDEO)$/i;
+
 export const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB|A|U)$/i;
 
 export const INSEPARABLE_TAGS: Array<keyof HTMLElementTagNameMap> = [
@@ -196,7 +197,15 @@ export const BASE_PATH: string = ((): string => {
 	}
 
 	const script = document.currentScript as HTMLScriptElement,
-		removeScriptName = (s: string) => s.replace(/\/[^/]+.js$/, '/');
+		removeScriptName = (s: string): string => {
+			const parts = s.split('/');
+
+			if (/\.js/.test(parts[parts.length - 1])) {
+				return parts.slice(0, parts.length - 1).join('/') + '/';
+			}
+
+			return s;
+		};
 
 	if (script) {
 		return removeScriptName(script.src);

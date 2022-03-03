@@ -202,19 +202,19 @@ describe('Test Dom module', function () {
 	});
 
 	describe('Method isNode', function () {
-		it('Should return true then it gets node element', function () {
-			[
-				[null, false],
-				[document.createElement('br'), true],
-				[document.createElement('div'), true],
-				[document.createTextNode('test'), true],
-				[document.createTextNode(''), true],
-				[false, false],
-				[document, false],
-				[document.body, true],
-				['', false],
-				[{}, false]
-			].forEach(([value, result]) => {
+		[
+			[null, false],
+			[document.createElement('br'), true],
+			[document.createElement('div'), true],
+			[document.createTextNode('test'), true],
+			[document.createTextNode(''), true],
+			[false, false],
+			[document, true],
+			[document.body, true],
+			['', false],
+			[{}, false]
+		].forEach(([value, result], i) => {
+			it(`Should return true then it gets node element for index: ${i}`, function () {
 				expect(Dom.isNode(value)).to.eq(result);
 			});
 		});

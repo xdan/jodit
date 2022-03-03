@@ -50,6 +50,8 @@ export class WrapTextNodes extends Plugin {
 			isChanged: boolean = false;
 
 		while (child) {
+			this.checkAloneListLeaf(child, jodit);
+
 			if (this.isSuitableStart(child)) {
 				if (!isChanged) {
 					jodit.s.save();
@@ -78,6 +80,19 @@ export class WrapTextNodes extends Plugin {
 			if (jodit.e.current === 'afterInit') {
 				jodit.e.fire('internalChange');
 			}
+		}
+	}
+
+	private checkAloneListLeaf(
+		child: Node | Element | HTMLLIElement,
+		jodit: IJodit
+	): void {
+		if (
+			Dom.isElement(child) &&
+			Dom.isTag(child, 'li') &&
+			!Dom.isTag(child.parentElement, ['ul', 'ol'])
+		) {
+			Dom.wrap(child, 'ul', jodit.createInside);
 		}
 	}
 

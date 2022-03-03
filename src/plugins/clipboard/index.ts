@@ -11,5 +11,6 @@
 import './config';
 export * from './clipboard';
 export * from './paste/paste';
+export * from './paste-from-word/paste-from-word';
 export * from './paste-storage/paste-storage';
 export * from './copy-format';

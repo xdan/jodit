@@ -13,12 +13,12 @@ import { Plugin } from 'jodit/core/plugin';
 import { Dom } from 'jodit/core/dom';
 import { INVISIBLE_SPACE } from 'jodit/core/constants';
 import { isFunction, trim } from 'jodit/core/helpers';
-import { normalizeCursorPosition } from 'jodit/plugins/keyboard/helpers';
 import { cases } from './cases';
 import type { DeleteMode } from './interface';
 import { checkNotCollapsed } from './cases/check-not-collapsed';
 
 import './config';
+import { moveNodeInsideStart } from 'jodit/src/core/selection/helpers';
 
 export class Backspace extends Plugin {
 	/** @override */
@@ -130,7 +130,7 @@ export class Backspace extends Plugin {
 				return;
 			}
 
-			normalizeCursorPosition(jodit, fakeNode, backspace);
+			moveNodeInsideStart(jodit, fakeNode, backspace);
 
 			if (
 				cases.some(

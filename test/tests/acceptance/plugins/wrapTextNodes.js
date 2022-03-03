@@ -12,6 +12,12 @@ describe('WrapTextNodes plugin test', function () {
 			expect(editor.value).equals('<p>test</p>');
 		});
 
+		it('Should wrap alone LI element', function () {
+			const editor = getJodit();
+			editor.value = '<li>test</li>';
+			expect(editor.value).equals('<ul><li>test</li></ul>');
+		});
+
 		describe('For STYLE/SCRIPT elements', function () {
 			it('Should not wrap it', function () {
 				const editor = getJodit();

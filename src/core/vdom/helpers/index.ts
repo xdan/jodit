@@ -10,8 +10,6 @@
 
 import type { HTMLTagNames, IDictionary } from 'jodit/types';
 import type { IVDom } from '../interface';
-import { toArray } from 'jodit/core/helpers/array/to-array';
-import { Dom } from 'jodit/core/dom/dom';
 
 export function attrsToDict(elm: Node): IDictionary<string> {
 	const result: IDictionary<string> = {};
@@ -24,7 +22,7 @@ export function attrsToDict(elm: Node): IDictionary<string> {
 		result.nodeValue = elm.nodeValue ?? '';
 	}
 
-	if (Dom.isElement(elm)) {
+	if (elm instanceof HTMLElement) {
 		for (let i = 0; i < elm.attributes.length; i += 1) {
 			const attr = elm.attributes.item(i);
 
@@ -51,7 +49,7 @@ export function domToVDom(elm: Node, noNode: boolean = true): IVDom {
 	return {
 		type: elm.nodeName.toLowerCase() as HTMLTagNames,
 		props: {
-			children: toArray(elm.childNodes).map(n => domToVDom(n, noNode)),
+			children: Array.from(elm.childNodes).map(n => domToVDom(n, noNode)),
 			...attrsToDict(elm)
 		}
 	};

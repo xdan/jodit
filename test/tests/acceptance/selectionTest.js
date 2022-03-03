@@ -40,6 +40,7 @@ describe('Selection Module Tests', function () {
 				); //one
 			});
 		});
+
 		describe('Cursor inside the text node ', function () {
 			it('Should return text', function () {
 				const editor = getJodit();
@@ -54,6 +55,7 @@ describe('Selection Module Tests', function () {
 				); // test
 			});
 		});
+
 		describe('Cursor after h1', function () {
 			it('Should return text inside h1', function () {
 				const editor = getJodit();
@@ -84,6 +86,7 @@ describe('Selection Module Tests', function () {
 				});
 			});
 		});
+
 		describe('Select img', function () {
 			it('Should return this image', function () {
 				const editor = getJodit();
@@ -927,5 +930,56 @@ describe('Selection Module Tests', function () {
 		});
 
 		describe('If selected element is UL or LI or content in LI', function () {});
+	});
+
+	describe('expandSelection', () => {
+		[
+			['<p>|test</p>', '<p>|test</p>'],
+			['<p>test</p><p>|test|</p>', '<p>test</p>|<p>test</p>|'],
+			['<p>|test|</p>', '|<p>test</p>|'],
+			[
+				'<ul><li><span>|test|</span>test<s>ss</s></li></ul>',
+				'<ul><li>|<span>test</span>|test<s>ss</s></li></ul>'
+			],
+			[
+				'<ul><li><span>test|</span>test<s>ss|</s></li></ul>',
+				'<ul><li><span>test|</span>test<s>ss</s>|</li></ul>'
+			],
+			[
+				'<ul><li><span>|test</span>test<s>ss|</s></li></ul>',
+				'|<ul><li><span>test</span>test<s>ss</s></li></ul>|'
+			],
+			[
+				'<ul><li><span>|test</span>test<s>ss|</s>pop</li></ul>',
+				'<ul><li>|<span>test</span>test<s>ss</s>|pop</li></ul>'
+			],
+			[
+				'<ul><li><span>|test</span>test<s>|ss</s></li></ul>',
+				'<ul><li>|<span>test</span>test<s>|ss</s></li></ul>'
+			],
+			[
+				'<ul><li><span>test|</span>test<s>|ss</s></li></ul>',
+				'<ul><li><span>test|</span>test<s>|ss</s></li></ul>'
+			],
+			[
+				'<ul><li><span>te|st</span>test<s>|ss</s></li></ul>',
+				'<ul><li><span>te|st</span>test<s>|ss</s></li></ul>'
+			],
+			[
+				'<ul><li><span>|test</span>test<s>ss|</s></li><li><span>test</span>test<s>ss</s></li></ul>',
+				'<ul>|<li><span>test</span>test<s>ss</s></li>|<li><span>test</span>test<s>ss</s></li></ul>'
+			],
+		].forEach(([source, result], i) => {
+			describe(`For index ${i}  source: ${source}`, () => {
+				it('Should move cursor selection', () => {
+					const jodit = getJodit();
+					jodit.value = source;
+					setCursorToChar(jodit);
+					jodit.s.expandSelection();
+					replaceCursorToChar(jodit);
+					expect(jodit.value).eq(result);
+				});
+			});
+		});
 	});
 });
