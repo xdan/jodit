@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module selection
+ */
+
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { INSEPARABLE_TAGS } from 'jodit/core/constants';

@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module selection
+ */
+
 import type { Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 

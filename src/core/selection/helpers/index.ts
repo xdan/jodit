@@ -4,5 +4,9 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module selection
+ */
+
 export * from './move-node-inside-start';
 export * from './move-the-node-along-the-edge-outward';
