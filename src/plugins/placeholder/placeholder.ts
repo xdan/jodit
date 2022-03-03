@@ -11,58 +11,15 @@
 import './placeholder.less';
 
 import type { IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';
 import { css, attr } from 'jodit/core/helpers';
 import { Dom } from 'jodit/core/dom';
 import { Plugin } from 'jodit/core/plugin';
 import { MAY_BE_REMOVED_WITH_KEY } from 'jodit/core/constants';
 import { debounce } from 'jodit/core/decorators';
+import { Select } from 'jodit/core/selection';
 
-/**
- * Show placeholder
- */
-declare module 'jodit/config' {
-	interface Config {
-		/**
-		 * Show placeholder
-		 * @example
-		 * ```javascript
-		 * var editor = new Jodit('#editor', {
-		 *    showPlaceholder: false
-		 * });
-		 * ```
-		 */
-		showPlaceholder: boolean;
-
-		/**
-		 * Use a placeholder from original input field, if it was set
-		 * @example
-		 * ```javascript
-		 * //<textarea id="editor" placeholder="start typing text ..." cols="30" rows="10"></textarea>
-		 * var editor = new Jodit('#editor', {
-		 *    useInputsPlaceholder: true
-		 * });
-		 * ```
-		 */
-		useInputsPlaceholder: boolean;
-
-		/**
-		 * Default placeholder
-		 * @example
-		 * ```javascript
-		 * var editor = new Jodit('#editor', {
-		 *    placeholder: 'start typing text ...'
-		 * });
-		 * ```
-		 */
-		placeholder: string;
-	}
-}
-
-Config.prototype.showPlaceholder = true;
-Config.prototype.useInputsPlaceholder = true;
-Config.prototype.placeholder = 'Type something';
+import './config';
 
 /**
  * Check if root node is empty
@@ -175,7 +132,7 @@ export class placeholder extends Plugin {
 		this.toggle();
 	};
 
-	private show() {
+	private show(): void {
 		const editor = this.j;
 
 		if (editor.o.readonly) {
@@ -194,13 +151,12 @@ export class placeholder extends Plugin {
 
 		editor.workplace.appendChild(this.placeholderElm);
 
-		if (Dom.isElement(editor.editor.firstChild)) {
-			const style2 = editor.ew.getComputedStyle(
-				editor.editor.firstChild as Element
-			);
+		const { firstChild } = editor.editor;
+
+		if (Dom.isElement(firstChild) && !Select.isMarker(firstChild)) {
+			const style2 = editor.ew.getComputedStyle(firstChild);
 
 			marginTop = parseInt(style2.getPropertyValue('margin-top'), 10);
-
 			marginLeft = parseInt(style2.getPropertyValue('margin-left'), 10);
 
 			this.placeholderElm.style.fontSize =
