@@ -968,7 +968,7 @@ describe('Selection Module Tests', function () {
 			[
 				'<ul><li><span>|test</span>test<s>ss|</s></li><li><span>test</span>test<s>ss</s></li></ul>',
 				'<ul>|<li><span>test</span>test<s>ss</s></li>|<li><span>test</span>test<s>ss</s></li></ul>'
-			],
+			]
 		].forEach(([source, result], i) => {
 			describe(`For index ${i}  source: ${source}`, () => {
 				it('Should move cursor selection', () => {

@@ -18,7 +18,13 @@ export { Backspace } from './keyboard/backspace/backspace';
 export { bold } from './bold/bold';
 export { cleanHtml } from './fix/clean-html';
 export { WrapTextNodes } from './fix/wrap-text-nodes';
-export { copyFormat, clipboard, paste, pasteStorage, PasteFromWord } from './clipboard';
+export {
+	copyFormat,
+	clipboard,
+	paste,
+	pasteStorage,
+	PasteFromWord
+} from './clipboard';
 export { color } from './color/color';
 export { DragAndDrop } from './clipboard/drag-and-drop';
 export { DragAndDropElement } from './clipboard/drag-and-drop-element';
