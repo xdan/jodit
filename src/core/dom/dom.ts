@@ -305,8 +305,8 @@ export class Dom {
 		// Duck-typing
 		return Boolean(
 			object &&
-				(object as Node).nodeName &&
-				(object as Node).nodeType &&
+				isString((object as Node).nodeName) &&
+				typeof (object as Node).nodeType === 'number' &&
 				(object as Node).childNodes &&
 				isFunction((object as Node).appendChild)
 		);
