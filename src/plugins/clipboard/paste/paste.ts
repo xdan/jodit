@@ -10,13 +10,18 @@
  * @module plugins/clipboard/paste
  */
 
-import type { InsertMode, PasteEvent } from 'jodit/plugins/clipboard/config';
 import type { IJodit } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin';
-import { getAllTypes, getDataTransfer, pasteInsertHtml } from './helpers';
+import {
+	askInsertTypeDialog,
+	getAllTypes,
+	getDataTransfer,
+	pasteInsertHtml
+} from './helpers';
+
+import './config';
 
 import {
-	INSERT_AS_HTML,
 	INSERT_AS_TEXT,
 	INSERT_CLEAR_HTML,
 	INSERT_ONLY_TEXT,
@@ -26,28 +31,19 @@ import {
 
 import {
 	isHTML,
-	isHtmlFromWord,
 	isString,
 	trim,
-	applyStyles,
 	cleanFromWord,
 	htmlspecialchars,
 	LimitedStack,
-	markOwner,
 	nl2br,
 	stripTags
 } from 'jodit/core/helpers';
 
 import { pluginKey as clipboardPluginKey } from '../clipboard';
 import { Dom } from 'jodit/core/dom';
-import { Confirm, Dialog } from 'jodit/modules/dialog';
-import { Button } from 'jodit/core/ui/button';
 import { autobind } from 'jodit/core/decorators';
-
-type PastedValue = {
-	html: string | Node;
-	action?: InsertMode;
-};
+import type { InsertMode, PastedValue, PasteEvent } from './interface';
 
 /**
  * Ask before paste HTML source
@@ -102,7 +98,8 @@ export class paste extends Plugin {
 		for (const text of texts) {
 			if (
 				isHTML(text) &&
-				(this.processWordHTML(e, text) || this.processHTML(e, text))
+				(this.j.e.fire('processHTML', e, text) ||
+					this.processHTML(e, text))
 			) {
 				return false;
 			}
@@ -138,35 +135,6 @@ export class paste extends Plugin {
 	}
 
 	/**
-	 * Try if text is Word's document fragment and try process this
-	 */
-	private processWordHTML(e: PasteEvent, text: string): boolean {
-		if (this.j.o.processPasteFromWord && isHtmlFromWord(text)) {
-			if (this.j.o.askBeforePasteFromWord) {
-				this.askInsertTypeDialog(
-					'The pasted content is coming from a Microsoft Word/Excel document. ' +
-						'Do you want to keep the format or clean it up?',
-					'Word Paste Detected',
-					insertType => {
-						this.insertFromWordByType(e, text, insertType);
-					}
-				);
-			} else {
-				this.insertFromWordByType(
-					e,
-					text,
-					this.j.o.defaultActionOnPasteFromWord ||
-						this.j.o.defaultActionOnPaste
-				);
-			}
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Process usual HTML text fragment
 	 */
 	private processHTML(e: PasteEvent, html: string): boolean {
@@ -186,10 +154,11 @@ export class paste extends Plugin {
 				}
 			}
 
-			this.askInsertTypeDialog(
+			askInsertTypeDialog(
+				this.j,
 				'Your code is similar to HTML. Keep as HTML?',
 				'Paste as HTML',
-				(insertType: InsertMode) => {
+				insertType => {
 					this.insertByType(e, html, insertType);
 				},
 				'Insert as Text'
@@ -199,43 +168,6 @@ export class paste extends Plugin {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Clear extra styles and tags from Word's pasted text
-	 */
-	private insertFromWordByType(
-		e: PasteEvent,
-		html: string,
-		insertType: InsertMode
-	) {
-		switch (insertType) {
-			case INSERT_AS_HTML: {
-				html = applyStyles(html);
-
-				if (this.j.o.beautifyHTML) {
-					const value = this.j.events?.fire('beautifyHTML', html);
-
-					if (isString(value)) {
-						html = value;
-					}
-				}
-
-				break;
-			}
-
-			case INSERT_AS_TEXT: {
-				html = cleanFromWord(html);
-				break;
-			}
-
-			case INSERT_ONLY_TEXT: {
-				html = stripTags(cleanFromWord(html));
-				break;
-			}
-		}
-
-		pasteInsertHtml(e, this.j, html);
 	}
 
 	/**
@@ -265,98 +197,6 @@ export class paste extends Plugin {
 		}
 
 		pasteInsertHtml(e, this.j, html);
-	}
-
-	/**
-	 * Make command dialog
-	 */
-	private askInsertTypeDialog(
-		msg: string,
-		title: string,
-		callback: (yes: InsertMode) => void,
-		clearButton: string = 'Clean',
-		insertText: string = 'Insert only Text'
-	): Dialog | void {
-		if (
-			this.j?.e?.fire(
-				'beforeOpenPasteDialog',
-				msg,
-				title,
-				callback,
-				clearButton,
-				insertText
-			) === false
-		) {
-			return;
-		}
-
-		const dialog = Confirm(
-			`<div style="word-break: normal; white-space: normal">${this.j.i18n(
-				msg
-			)}</div>`,
-			this.j.i18n(title)
-		);
-
-		dialog.bindDestruct(this.j);
-
-		markOwner(this.j, dialog.container);
-
-		const keep = Button(this.j, {
-			text: 'Keep',
-			name: 'keep',
-			variant: 'primary',
-			tabIndex: 0
-		});
-
-		const clear = Button(this.j, {
-			text: clearButton,
-			tabIndex: 0
-		});
-
-		const clear2 = Button(this.j, {
-			text: insertText,
-			tabIndex: 0
-		});
-
-		const cancel = Button(this.j, {
-			text: 'Cancel',
-			tabIndex: 0
-		});
-
-		keep.onAction(() => {
-			dialog.close();
-			callback && callback(INSERT_AS_HTML);
-		});
-
-		clear.onAction(() => {
-			dialog.close();
-			callback && callback(INSERT_AS_TEXT);
-		});
-
-		clear2.onAction(() => {
-			dialog.close();
-			callback && callback(INSERT_ONLY_TEXT);
-		});
-
-		cancel.onAction(() => {
-			dialog.close();
-		});
-
-		dialog.setFooter([keep, clear, insertText ? clear2 : '', cancel]);
-
-		keep.focus();
-
-		this.j?.e?.fire(
-			'afterOpenPasteDialog',
-			dialog,
-			msg,
-			title,
-			callback,
-			clearButton,
-			insertText
-		);
-
-		return dialog;
 	}
 
 	/**

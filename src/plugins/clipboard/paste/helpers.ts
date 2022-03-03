@@ -9,10 +9,28 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import type { PasteEvent } from 'jodit/plugins/clipboard/config';
-import { isArray, isNumber, isString, isVoid } from 'jodit/core/helpers';
+import type {
+	PasteEvent,
+	InsertMode
+} from 'jodit/plugins/clipboard/paste/interface';
+import {
+	isArray,
+	isNumber,
+	isString,
+	isVoid
+} from 'jodit/core/helpers/checker';
+
 import { Dom } from 'jodit/core/dom';
-import { TEXT_PLAIN } from 'jodit/core/constants';
+import {
+	INSERT_AS_HTML,
+	INSERT_AS_TEXT,
+	INSERT_ONLY_TEXT,
+	TEXT_PLAIN
+} from 'jodit/core/constants';
+
+import { Confirm, Dialog } from 'jodit/modules';
+import { Button } from 'jodit/core/ui';
+import { markOwner } from 'jodit/src/core/helpers/utils/utils';
 
 /**
  * Get DataTransfer from different event types
@@ -40,16 +58,20 @@ function removeExtraFragments(html: string): string {
 	const start = html.search(/<!--StartFragment-->/i);
 
 	if (start !== -1) {
-		html = html.substr(start + 20);
+		html = html.substring(start + 20);
 	}
 
 	const end = html.search(/<!--EndFragment-->/i);
 
 	if (end !== -1) {
-		html = html.substr(0, end);
+		html = html.substring(0, end);
 	}
 
 	return html;
+}
+
+function isDragEvent(e: Nullable<PasteEvent>): e is DragEvent {
+	return Boolean(e && e.type === 'drop');
 }
 
 /**
@@ -64,11 +86,8 @@ export function pasteInsertHtml(
 		return;
 	}
 
-	if (e?.type === 'drop') {
-		editor.s.insertCursorAtPoint(
-			(e as DragEvent).clientX,
-			(e as DragEvent).clientY
-		);
+	if (isDragEvent(e)) {
+		editor.s.insertCursorAtPoint(e.clientX, e.clientY);
 	}
 
 	const result = editor.e.fire('beforePasteInsert', html);
@@ -107,4 +126,97 @@ export function getAllTypes(dt: DataTransfer): string {
 	}
 
 	return types_str;
+}
+
+/**
+ * Make command dialog
+ */
+export function askInsertTypeDialog(
+	jodit: IJodit,
+	msg: string,
+	title: string,
+	callback: (yes: InsertMode) => void,
+	clearButton: string = 'Clean',
+	insertText: string = 'Insert only Text'
+): Dialog | void {
+	if (
+		jodit.e.fire(
+			'beforeOpenPasteDialog',
+			msg,
+			title,
+			callback,
+			clearButton,
+			insertText
+		) === false
+	) {
+		return;
+	}
+
+	const dialog = Confirm(
+		`<div style="word-break: normal; white-space: normal">${jodit.i18n(
+			msg
+		)}</div>`,
+		jodit.i18n(title)
+	);
+
+	dialog.bindDestruct(jodit);
+
+	markOwner(jodit, dialog.container);
+
+	const keep = Button(jodit, {
+		text: 'Keep',
+		name: 'keep',
+		variant: 'primary',
+		tabIndex: 0
+	});
+
+	const clear = Button(jodit, {
+		text: clearButton,
+		tabIndex: 0
+	});
+
+	const clear2 = Button(jodit, {
+		text: insertText,
+		tabIndex: 0
+	});
+
+	const cancel = Button(jodit, {
+		text: 'Cancel',
+		tabIndex: 0
+	});
+
+	keep.onAction(() => {
+		dialog.close();
+		callback && callback(INSERT_AS_HTML);
+	});
+
+	clear.onAction(() => {
+		dialog.close();
+		callback && callback(INSERT_AS_TEXT);
+	});
+
+	clear2.onAction(() => {
+		dialog.close();
+		callback && callback(INSERT_ONLY_TEXT);
+	});
+
+	cancel.onAction(() => {
+		dialog.close();
+	});
+
+	dialog.setFooter([keep, clear, insertText ? clear2 : '', cancel]);
+
+	keep.focus();
+
+	jodit.e.fire(
+		'afterOpenPasteDialog',
+		dialog,
+		msg,
+		title,
+		callback,
+		clearButton,
+		insertText
+	);
+
+	return dialog;
 }
