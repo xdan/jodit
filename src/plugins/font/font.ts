@@ -113,7 +113,7 @@ Config.prototype.controls.font = {
 		'Georgia,serif': 'Georgia',
 		'Impact,Charcoal,sans-serif': 'Impact',
 		'Tahoma,Geneva,sans-serif': 'Tahoma',
-		"'Times New Roman',Times,serif": 'Times New Roman',
+		'"Times New Roman",Times,serif': 'Times New Roman',
 		'Verdana,Geneva,sans-serif': 'Verdana'
 	},
 

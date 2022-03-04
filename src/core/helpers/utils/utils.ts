@@ -246,7 +246,7 @@ export const memorizeExec = <T extends IJodit = IJodit>(
 ): void | false => {
 	const key = `button${control.command}`;
 
-	let value = (control.args && control.args[0]) || dataBind(editor, key);
+	let value = (control.args && control.args[0]) ?? dataBind(editor, key);
 
 	if (isVoid(value)) {
 		return false;
@@ -258,5 +258,5 @@ export const memorizeExec = <T extends IJodit = IJodit>(
 		value = preProcessValue(value);
 	}
 
-	editor.execCommand(control.command as string, false, value || undefined);
+	editor.execCommand(control.command as string, false, value ?? undefined);
 };

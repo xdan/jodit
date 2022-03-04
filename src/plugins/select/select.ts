@@ -95,17 +95,32 @@ export class select extends Plugin {
 		}
 	}
 
+	@watch([':beforeCommand'])
+	protected beforeCommandCut(command: string): void {
+		const { s } = this.j;
+
+		if (command === 'cut' && !s.isCollapsed()) {
+			const current = s.current();
+			if (current && Dom.isOrContains(this.j.editor, current)) {
+				this.onCopyNormalizeSelectionBound();
+			}
+		}
+	}
+
 	@watch([':copy', ':cut'])
 	protected onCopyNormalizeSelectionBound(e?: ClipboardEvent): void {
 		const { s, editor, o } = this.j;
 
+		console.log(e)
+		if (!o.select.normalizeSelectionBeforeCutAndCopy || s.isCollapsed()) {
+			return;
+		}
+
 		if (
-			!o.select.normalizeSelectionBeforeCutAndCopy ||
-			!e ||
-			!e.isTrusted ||
-			s.isCollapsed() ||
-			!Dom.isNode(e.target) ||
-			!Dom.isOrContains(editor, e.target)
+			e &&
+			(!e.isTrusted ||
+				!Dom.isNode(e.target) ||
+				!Dom.isOrContains(editor, e.target))
 		) {
 			return;
 		}

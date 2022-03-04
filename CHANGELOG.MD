@@ -9,6 +9,10 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.15.2
+
+-   Fixed a bug when it was impossible to select a normal font after selecting any other
+
 ## 3.15.1
 
 #### :rocket: New Feature
@@ -24,18 +28,18 @@
 -   The [[Dom.isNode]] method now uses Duck Typing instead of inctanceof, this seems to be enough
 -   Update
     @types/node ^17.0.18 → ^17.0.21
-     @typescript-eslint/eslint-plugin ^5.12.0 → ^5.13.0
-     @typescript-eslint/parser ^5.12.0 → ^5.13.0
-     cssnano-preset-advanced ^5.1.12 → ^5.2.1
-     eslint ^8.9.0 → ^8.10.0
-     eslint-config-prettier ^8.4.0 → ^8.5.0
-     karma ^6.3.16 → ^6.3.17
-     mini-css-extract-plugin ^2.5.3 → ^2.6.0
-     postcss >=8.4.6 → >=8.4.7
-     stylelint ^14.5.1 → ^14.5.3
-     ts-loader ^9.2.6 → ^9.2.7
-     typescript ^4.5.5 → ^4.6.2
-     webpack ^5.69.1 → ^5.70.0
+    @typescript-eslint/eslint-plugin ^5.12.0 → ^5.13.0
+    @typescript-eslint/parser ^5.12.0 → ^5.13.0
+    cssnano-preset-advanced ^5.1.12 → ^5.2.1
+    eslint ^8.9.0 → ^8.10.0
+    eslint-config-prettier ^8.4.0 → ^8.5.0
+    karma ^6.3.16 → ^6.3.17
+    mini-css-extract-plugin ^2.5.3 → ^2.6.0
+    postcss >=8.4.6 → >=8.4.7
+    stylelint ^14.5.1 → ^14.5.3
+    ts-loader ^9.2.6 → ^9.2.7
+    typescript ^4.5.5 → ^4.6.2
+    webpack ^5.69.1 → ^5.70.0
 
 ## 3.14.2
 
@@ -1141,11 +1145,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                   	{ value: "", text: "" },
--                                                                                                                                                   	{ value: "val1", text: "text1" },
--                                                                                                                                                   	{ value: "val2", text: "text2" },
--                                                                                                                                                   	{ value: "val3", text: "text3" }
--                                                                                                                                                   ]
+-                                                                                                                                                     	{ value: "", text: "" },
+-                                                                                                                                                     	{ value: "val1", text: "text1" },
+-                                                                                                                                                     	{ value: "val2", text: "text2" },
+-                                                                                                                                                     	{ value: "val3", text: "text3" }
+-                                                                                                                                                     ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
