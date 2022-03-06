@@ -111,7 +111,6 @@ export class select extends Plugin {
 	protected onCopyNormalizeSelectionBound(e?: ClipboardEvent): void {
 		const { s, editor, o } = this.j;
 
-		console.log(e)
 		if (!o.select.normalizeSelectionBeforeCutAndCopy || s.isCollapsed()) {
 			return;
 		}

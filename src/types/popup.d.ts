@@ -30,6 +30,7 @@ export interface IPopup extends IUIElement, IDestructible {
 	updatePosition(): this;
 
 	close(): this;
+	isOwnClick(e: MouseEvent): boolean;
 
 	setZIndex(index: number): void;
 }

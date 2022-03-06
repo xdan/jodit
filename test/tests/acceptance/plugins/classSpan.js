@@ -31,6 +31,8 @@ describe('classSpan test', function () {
 
 			expect(openClassNameList()).is.not.null;
 
+			simulateEvent('mousedown', editor.editor); // Close previous
+
 			Array.from(openClassNameList()).map(function (classNames) {
 				editor.value = '<p>test</p>';
 				editor.s.select(editor.editor.firstChild.firstChild);

@@ -24,6 +24,8 @@ describe('Font test', function () {
 
 				expect(openFontNameList()).is.not.null;
 
+				simulateEvent('mousedown', editor.editor);
+
 				Array.from(openFontNameList()).map(function (font) {
 					simulateEvent('click', 0, font);
 

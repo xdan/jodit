@@ -270,33 +270,18 @@ describe('Test orderedList plugin', function () {
 				it('should return ul to first state', function () {
 					const editor = getJodit();
 
-					editor.value = '<p>Text to text</p>';
-
-					const range = editor.s.createRange();
-
-					range.setStart(editor.editor.firstChild.firstChild, 0);
-					range.collapse(true);
-					editor.s.selectRange(range);
+					editor.value = '<p>|Text to text</p>';
+					setCursorToChar(editor);
 
 					clickTrigger('ul', editor);
-					clickButton(
-						'circle',
-						document.querySelector(
-							'[role="popup"][data-editor_id="' + editor.id + '"]'
-						)
-					);
+					clickButton('circle', getOpenedPopup(editor));
 
 					expect(sortAttributes(editor.value)).equals(
 						'<ul style="list-style-type:circle"><li>Text to text</li></ul>'
 					);
 
 					clickTrigger('ul', editor);
-					clickButton(
-						'circle',
-						document.querySelector(
-							'[role="popup"][data-editor_id="' + editor.id + '"]'
-						)
-					);
+					clickButton('circle', getOpenedPopup(editor));;
 
 					editor.s.insertHTML('test ');
 

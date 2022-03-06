@@ -365,25 +365,24 @@ export class Popup extends UIElement implements IPopup {
 	 */
 	@autobind
 	private closeOnOutsideClick(e: MouseEvent): void {
-		if (!this.isOpened) {
-			return;
-		}
-
-		const target =
-			(isFunction(e.composedPath) && e.composedPath()[0]) || e.target;
-
-		if (!target) {
-			this.close();
-			return;
-		}
-
-		const box = UIElement.closestElement(target as Node, Popup);
-
-		if (box && (this === box || box.closest(this))) {
+		if (!this.isOpened || this.isOwnClick(e)) {
 			return;
 		}
 
 		this.close();
+	}
+
+	isOwnClick(e: MouseEvent): boolean {
+		const target =
+			(isFunction(e.composedPath) && e.composedPath()[0]) || e.target;
+
+		if (!target) {
+			return false;
+		}
+
+		const box = UIElement.closestElement(target as Node, Popup);
+
+		return Boolean(box && (this === box || box.closest(this)));
 	}
 
 	private addGlobalListeners(): void {

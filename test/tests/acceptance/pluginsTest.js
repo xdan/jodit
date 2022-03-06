@@ -1241,7 +1241,7 @@ describe('Test plugins', function () {
 
 					const btn = getButton('symbol', editor);
 
-					simulateEvent('click', 0, btn);
+					simulateEvent('click', btn);
 					let dialog = getOpenedDialog(editor);
 
 					expect(dialog).is.not.null;
@@ -1252,7 +1252,8 @@ describe('Test plugins', function () {
 
 					expect(editor.value).equals('<p>&amp;</p>');
 
-					simulateEvent('click', 0, btn);
+					simulateEvent('click', btn); //  close previous
+					simulateEvent('click', btn);
 					dialog = getOpenedDialog(editor);
 
 					expect(dialog).is.not.null;

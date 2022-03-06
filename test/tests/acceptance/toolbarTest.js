@@ -438,6 +438,37 @@ describe('Toolbar', function () {
 			expect(popup && popup.parentNode == null).is.true;
 		});
 
+		describe('Double open list or popup', () => {
+			it('should close previous popup', () => {
+				const jodit = getJodit();
+				clickButton('image', jodit);
+				expect(getOpenedPopup(jodit)).is.not.null;
+				clickButton('image', jodit);
+				expect(getOpenedPopup(jodit)).is.null;
+			});
+
+			describe('and click another', () => {
+				it('should close previous popup and show own', () => {
+					const jodit = getJodit();
+					clickButton('image', jodit);
+					const popup = getOpenedPopup(jodit);
+					expect(popup).is.not.null;
+					clickButton('video', jodit);
+					expect(getOpenedPopup(jodit).innerText !== popup.innerText).is.true;
+				});
+			});
+
+			describe('and click outside', () => {
+				it('should close previous popup', () => {
+					const jodit = getJodit();
+					clickButton('image', jodit);
+					expect(getOpenedPopup(jodit)).is.not.null;
+					simulateEvent('mousedown', jodit.editor);
+					expect(getOpenedPopup(jodit)).is.null;
+				});
+			});
+		});
+
 		describe('Open list', function () {
 			it('Should Open list in toolbar', function () {
 				const editor = getJodit({

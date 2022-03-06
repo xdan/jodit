@@ -24,7 +24,7 @@ import type {
 	Nullable
 } from 'jodit/types';
 import { UIButton, UIButtonState } from 'jodit/core/ui/button';
-import { component, watch } from 'jodit/core/decorators';
+import { autobind, component, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
 import { Popup } from 'jodit/core/ui/popup/';
 import { makeCollection } from 'jodit/modules/toolbar/factory';
@@ -355,7 +355,13 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 				const target =
 					this.toolbar?.getTarget(this) ?? this.target ?? null;
 
-				const elm = ctr.popup(this.j, target, ctr, popup.close, this);
+				const elm = ctr.popup(
+					this.j,
+					target,
+					ctr,
+					this.closePopup,
+					this
+				);
 
 				if (elm) {
 					popup
@@ -447,17 +453,19 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		menu.setContent(toolbar.container).open(() => position(this.container));
 
 		this.state.activated = true;
-
-		this.j.e.on(menu, 'afterClose', () => {
-			this.state.activated = false;
-		});
 	}
 
-	@watch(':outsideClick')
+	@autobind
 	protected onOutsideClick(e: MouseEvent): void {
+		if (!this.openedPopup) {
+			return;
+		}
+
 		if (
+			!e ||
 			!Dom.isNode(e.target) ||
-			!Dom.isOrContains(this.container, e.target)
+			(!Dom.isOrContains(this.container, e.target) &&
+				!this.openedPopup.isOwnClick(e))
 		) {
 			this.closePopup();
 		}
@@ -466,13 +474,21 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	private openPopup(): IPopup {
 		this.closePopup();
 		this.openedPopup = new Popup(this.j, false);
+		this.j.e
+			.on(this.ow, 'mousedown touchstart', this.onOutsideClick)
+			.on('escape closeAllPopups', this.onOutsideClick);
 		return this.openedPopup;
 	}
 
+	@autobind
 	private closePopup(): void {
 		if (this.openedPopup) {
+			this.j.e
+				.off(this.ow, 'mousedown touchstart', this.onOutsideClick)
+				.off('escape closeAllPopups', this.onOutsideClick);
 			this.state.activated = false;
 			this.openedPopup.close();
+			this.openedPopup.destruct();
 			this.openedPopup = null;
 		}
 	}
@@ -531,5 +547,10 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 			this.j.e.fire('closeAllPopups');
 		}
+	}
+
+	override destruct(): any {
+		this.closePopup();
+		return super.destruct();
 	}
 }
