@@ -11,7 +11,8 @@
 
 ## 3.15.2
 
--   Fixed a bug when it was impossible to select a normal font after selecting any other
+- Fixed a bug when it was impossible to select a normal font after selecting any other
+- [The problem that the selected text disappears #790](https://github.com/xdan/jodit/issues/790)
 
 ## 3.15.1
 

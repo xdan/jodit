@@ -700,6 +700,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		showUI: boolean = false,
 		value: null | any = null
 	): void {
+		if (!this.s.isFocused()) {
+			this.s.focus();
+		}
+
 		if (this.o.readonly && command !== 'selectall') {
 			return;
 		}
