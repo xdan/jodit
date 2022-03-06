@@ -187,17 +187,17 @@ export function askInsertTypeDialog(
 
 	keep.onAction(() => {
 		dialog.close();
-		callback && callback(INSERT_AS_HTML);
+		callback(INSERT_AS_HTML);
 	});
 
 	clear.onAction(() => {
 		dialog.close();
-		callback && callback(INSERT_AS_TEXT);
+		callback(INSERT_AS_TEXT);
 	});
 
 	clear2.onAction(() => {
 		dialog.close();
-		callback && callback(INSERT_ONLY_TEXT);
+		callback(INSERT_ONLY_TEXT);
 	});
 
 	cancel.onAction(() => {

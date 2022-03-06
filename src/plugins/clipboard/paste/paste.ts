@@ -11,6 +11,7 @@
  */
 
 import type { IJodit } from 'jodit/types';
+import type { InsertMode, PastedValue, PasteEvent } from './interface';
 import { Plugin } from 'jodit/core/plugin';
 import {
 	askInsertTypeDialog,
@@ -43,7 +44,6 @@ import {
 import { pluginKey as clipboardPluginKey } from '../clipboard';
 import { Dom } from 'jodit/core/dom';
 import { autobind } from 'jodit/core/decorators';
-import type { InsertMode, PastedValue, PasteEvent } from './interface';
 
 /**
  * Ask before paste HTML source

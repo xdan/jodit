@@ -30,13 +30,13 @@ export interface TabOption {
  *
  * @example
  * ```javascript
- * let tabs = widget.c('Tabs', {
- *    'Images': '<div>Images</div>',
- *    'Title 2': Jodit.modules.Helpers.dom('<div>Some content</div>'),
- *    'Color Picker': ColorPickerWidget(editor, function (color) {
+ * let tabs = Jodit.modules.TabsWidget(editor, [
+ *    {name: 'Images', content: '<div>Images</div>'},
+ *    {name: 'Title 2': Jodit.modules.Helpers.dom('<div>Some content</div>')},
+ *    {name: 'Color Picker': ColorPickerWidget(editor, function (color) {
  *         box.style.color = color;
- *     }, box.style.color),
- * });
+ *     }, box.style.color)},
+ * ]);
  * ```
  */
 export const TabsWidget = (
@@ -58,6 +58,23 @@ export const TabsWidget = (
 
 	box.appendChild(buttons);
 	box.appendChild(tabBox);
+
+	const setActive = (tab: string): void => {
+		if (!nameToTab[tab]) {
+			return;
+		}
+
+		buttonList.forEach(b => {
+			b.state.activated = false;
+		});
+
+		$$('.jodit-tab', tabBox).forEach(a => {
+			a.classList.remove('jodit-tab_active');
+		});
+
+		nameToTab[tab].button.state.activated = true;
+		nameToTab[tab].tab.classList.add('jodit-tab_active');
+	};
 
 	tabs.forEach(({ icon, name, content }) => {
 		const tab = editor.c.div('jodit-tab'),
@@ -86,16 +103,7 @@ export const TabsWidget = (
 		tabBox.appendChild(tab);
 
 		button.onAction(() => {
-			buttonList.forEach(b => {
-				b.state.activated = false;
-			});
-
-			$$('.jodit-tab', tabBox).forEach(a => {
-				a.classList.remove('jodit-tab_active');
-			});
-
-			button.state.activated = true;
-			tab.classList.add('jodit-tab_active');
+			setActive(name);
 
 			if (isFunction(content)) {
 				content.call(editor);
@@ -129,8 +137,21 @@ export const TabsWidget = (
 			? firstTab
 			: state.__activeTab;
 
-	nameToTab[tab].button.state.activated = true;
-	nameToTab[tab].tab.classList.add('jodit-tab_active');
+	setActive(tab);
+
+	if (state) {
+		let __activeTab = state.__activeTab;
+		Object.defineProperty(state, '__activeTab', {
+			get() {
+				return __activeTab;
+			},
+			set(value: string) {
+				__activeTab = value;
+
+				setActive(value);
+			}
+		});
+	}
 
 	return box;
 };

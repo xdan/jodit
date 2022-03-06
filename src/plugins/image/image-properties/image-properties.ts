@@ -86,6 +86,10 @@ export class imageProperties extends Plugin {
 		marginIsLocked: true
 	};
 
+	private activeTabState: { __activeTab: 'Image' | 'Advanced' } = {
+		__activeTab: 'Image'
+	};
+
 	@watch('state.marginIsLocked')
 	onChangeMarginIsLocked(): void {
 		if (!this.form) {
@@ -151,6 +155,7 @@ export class imageProperties extends Plugin {
 	 */
 	protected open(): void | false {
 		this.makeForm();
+		this.activeTabState.__activeTab = 'Image';
 
 		this.j.e.fire('hidePopup');
 
@@ -183,7 +188,7 @@ export class imageProperties extends Plugin {
 			theme: this.j.o.theme,
 			language: this.j.o.language,
 			minWidth: Math.min(400, screen.width),
-			minHeight: 400,
+			minHeight: 590,
 			buttons: ['fullsize', 'dialog.close']
 		});
 
@@ -191,7 +196,7 @@ export class imageProperties extends Plugin {
 			opt = editor.o,
 			i18n = editor.i18n.bind(editor),
 			buttons = {
-				check: Button(editor, 'ok', 'Apply'),
+				check: Button(editor, 'ok', 'Apply', 'primary'),
 				remove: Button(editor, 'bin', 'Delete')
 			};
 
@@ -222,10 +227,14 @@ export class imageProperties extends Plugin {
 
 		if (tabsBox) {
 			tabsBox.appendChild(
-				TabsWidget(editor, [
-					{ name: 'Image', content: mainTab(editor) },
-					{ name: 'Advanced', content: positionTab(editor) }
-				])
+				TabsWidget(
+					editor,
+					[
+						{ name: 'Image', content: mainTab(editor) },
+						{ name: 'Advanced', content: positionTab(editor) }
+					],
+					this.activeTabState
+				)
 			);
 		}
 

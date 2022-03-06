@@ -38,6 +38,18 @@ export function positionTab(editor: IJodit): HTMLElement {
 				)}"/>
 			</div>
 		</div>
+		<div
+			style="${!opt.image.editAlign ? 'display:none' : ''}"
+			class="jodit-form__group"
+		>
+			<label>${i18n('Align')}</label>
+			<select data-ref="align" class="jodit-select">
+				<option value="">${i18n('--Not Set--')}</option>
+				<option value="left">${i18n('Left')}</option>
+				<option value="center">${i18n('Center')}</option>
+				<option value="right">${i18n('Right')}</option>
+			</select>
+		</div>
 		<div style="${
 			!opt.image.editStyle ? 'display:none' : ''
 		}" class="jodit-form__group">
@@ -62,17 +74,5 @@ export function positionTab(editor: IJodit): HTMLElement {
 		>
 			<label>${i18n('Border radius')}</label>
 				<input data-ref="borderRadius" type="number" class="jodit-input"/>
-		</div>
-		<div
-			style="${!opt.image.editAlign ? 'display:none' : ''}"
-			class="jodit-form__group"
-		>
-			<label>${i18n('Align')}</label>
-			<select data-ref="align" class="jodit-select">
-				<option value="">${i18n('--Not Set--')}</option>
-				<option value="left">${i18n('Left')}</option>
-				<option value="center">${i18n('Center')}</option>
-				<option value="right">${i18n('Right')}</option>
-			</select>
 		</div>`);
 }
