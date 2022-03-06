@@ -454,7 +454,8 @@ describe('Toolbar', function () {
 					const popup = getOpenedPopup(jodit);
 					expect(popup).is.not.null;
 					clickButton('video', jodit);
-					expect(getOpenedPopup(jodit).innerText !== popup.innerText).is.true;
+					expect(getOpenedPopup(jodit).innerText !== popup.innerText)
+						.is.true;
 				});
 			});
 

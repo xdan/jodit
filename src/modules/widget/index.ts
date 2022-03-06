@@ -7,7 +7,6 @@
 /**
  * [[include:modules/widget/README.md]]
  * @packageDocumentation
- * @deprecated
  * @module modules/widget
  */
 

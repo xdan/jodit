@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.15.1
+ * Version: v3.15.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -2594,8 +2594,9 @@ const keys = (obj, own = true) => {
     return props;
 };
 const memorizeExec = (editor, _, { control }, preProcessValue) => {
+    var _a;
     const key = `button${control.command}`;
-    let value = (control.args && control.args[0]) || (0,_data_bind__WEBPACK_IMPORTED_MODULE_0__/* .dataBind */ .q)(editor, key);
+    let value = (_a = (control.args && control.args[0])) !== null && _a !== void 0 ? _a : (0,_data_bind__WEBPACK_IMPORTED_MODULE_0__/* .dataBind */ .q)(editor, key);
     if ((0,_checker_is_void__WEBPACK_IMPORTED_MODULE_7__/* .isVoid */ .n)(value)) {
         return false;
     }
@@ -2603,7 +2604,7 @@ const memorizeExec = (editor, _, { control }, preProcessValue) => {
     if (preProcessValue) {
         value = preProcessValue(value);
     }
-    editor.execCommand(control.command, false, value || undefined);
+    editor.execCommand(control.command, false, value !== null && value !== void 0 ? value : undefined);
 };
 
 
@@ -8626,19 +8627,18 @@ class Popup extends ui/* UIElement */.u1 {
         return this;
     }
     closeOnOutsideClick(e) {
-        if (!this.isOpened) {
-            return;
-        }
-        const target = ((0,helpers.isFunction)(e.composedPath) && e.composedPath()[0]) || e.target;
-        if (!target) {
-            this.close();
-            return;
-        }
-        const box = ui/* UIElement.closestElement */.u1.closestElement(target, Popup);
-        if (box && (this === box || box.closest(this))) {
+        if (!this.isOpened || this.isOwnClick(e)) {
             return;
         }
         this.close();
+    }
+    isOwnClick(e) {
+        const target = ((0,helpers.isFunction)(e.composedPath) && e.composedPath()[0]) || e.target;
+        if (!target) {
+            return false;
+        }
+        const box = ui/* UIElement.closestElement */.u1.closestElement(target, Popup);
+        return Boolean(box && (this === box || box.closest(this)));
     }
     addGlobalListeners() {
         const up = this.throttleUpdatePosition, ow = this.ow;
@@ -13736,6 +13736,19 @@ const TabsWidget = (editor, tabs, state) => {
     let firstTab = '', tabcount = 0;
     box.appendChild(buttons);
     box.appendChild(tabBox);
+    const setActive = (tab) => {
+        if (!nameToTab[tab]) {
+            return;
+        }
+        buttonList.forEach(b => {
+            b.state.activated = false;
+        });
+        (0,helpers.$$)('.jodit-tab', tabBox).forEach(a => {
+            a.classList.remove('jodit-tab_active');
+        });
+        nameToTab[tab].button.state.activated = true;
+        nameToTab[tab].tab.classList.add('jodit-tab_active');
+    };
     tabs.forEach(({ icon, name, content }) => {
         const tab = editor.c.div('jodit-tab'), button = (0,ui/* Button */.zx)(editor, icon || name, name);
         if (!firstTab) {
@@ -13752,14 +13765,7 @@ const TabsWidget = (editor, tabs, state) => {
         }
         tabBox.appendChild(tab);
         button.onAction(() => {
-            buttonList.forEach(b => {
-                b.state.activated = false;
-            });
-            (0,helpers.$$)('.jodit-tab', tabBox).forEach(a => {
-                a.classList.remove('jodit-tab_active');
-            });
-            button.state.activated = true;
-            tab.classList.add('jodit-tab_active');
+            setActive(name);
             if ((0,helpers.isFunction)(content)) {
                 content.call(editor);
             }
@@ -13783,8 +13789,19 @@ const TabsWidget = (editor, tabs, state) => {
     const tab = !state || !state.__activeTab || !nameToTab[state.__activeTab]
         ? firstTab
         : state.__activeTab;
-    nameToTab[tab].button.state.activated = true;
-    nameToTab[tab].tab.classList.add('jodit-tab_active');
+    setActive(tab);
+    if (state) {
+        let __activeTab = state.__activeTab;
+        Object.defineProperty(state, '__activeTab', {
+            get() {
+                return __activeTab;
+            },
+            set(value) {
+                __activeTab = value;
+                setActive(value);
+            }
+        });
+    }
     return box;
 };
 
@@ -15453,7 +15470,7 @@ Ajax.log = [];
 // EXTERNAL MODULE: ./src/core/component/index.ts + 3 modules
 var component = __webpack_require__(12);
 // EXTERNAL MODULE: ./src/core/ui/popup/index.ts + 1 modules
-var ui_popup = __webpack_require__(49);
+var popup = __webpack_require__(49);
 // EXTERNAL MODULE: ./src/core/ui/button/index.ts + 1 modules
 var ui_button = __webpack_require__(44);
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 11 modules
@@ -15468,7 +15485,7 @@ var checker = __webpack_require__(18);
 
 
 
-class ContextMenu extends ui_popup/* Popup */.G {
+class ContextMenu extends popup/* Popup */.G {
     className() {
         return 'ContextMenu';
     }
@@ -15682,7 +15699,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.15.1";
+        this.version = "3.15.2";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -15780,10 +15797,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.15.1";
+        return "3.15.2";
     }
     static getVersion() {
-        return "3.15.1";
+        return "3.15.2";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -16100,6 +16117,7 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
             currentValue: '',
             hasTrigger: false
         };
+        this.openedPopup = null;
         jodit.e.on([this.button, this.trigger], 'mousedown', (e) => e.preventDefault());
         this.onAction(this.onClick);
         this.hookStatus(component/* STATUSES.ready */.n$.ready, () => {
@@ -16182,7 +16200,6 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
         });
         container.appendChild(button);
         this.trigger = this.j.c.fromHTML(`<span role="trigger" class="${cn}__trigger">${ui/* Icon.get */.JO.get('chevron')}</span>`);
-        this.j.e.on(this.trigger, 'click', this.onTriggerClick.bind(this));
         return container;
     }
     focus() {
@@ -16261,6 +16278,10 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
     }
     onTriggerClick(e) {
         var _a, _b, _c;
+        if (this.openedPopup) {
+            this.closePopup();
+            return;
+        }
         const { control: ctr } = this;
         e.buffer = {
             actionTrigger: this
@@ -16269,11 +16290,11 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
             return this.openControlList(ctr);
         }
         if ((0,helpers.isFunction)(ctr.popup)) {
-            const popup = new ui_popup/* Popup */.G(this.j);
+            const popup = this.openPopup();
             popup.parentElement = this;
             if (this.j.e.fire((0,helpers.camelCase)(`before-${ctr.name}-open-popup`), this.target, ctr, popup) !== false) {
                 const target = (_c = (_b = (_a = this.toolbar) === null || _a === void 0 ? void 0 : _a.getTarget(this)) !== null && _b !== void 0 ? _b : this.target) !== null && _c !== void 0 ? _c : null;
-                const elm = ctr.popup(this.j, target, ctr, popup.close, this);
+                const elm = ctr.popup(this.j, target, ctr, this.closePopup, this);
                 if (elm) {
                     popup
                         .setContent((0,helpers.isString)(elm) ? this.j.c.fromHTML(elm) : elm)
@@ -16286,7 +16307,7 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
     openControlList(control) {
         var _a;
         const controls = (_a = this.jodit.options.controls) !== null && _a !== void 0 ? _a : {}, getControl = (key) => (0,get_control_type/* findControlType */.z)(key, controls);
-        const list = control.list, menu = new ui_popup/* Popup */.G(this.j), toolbar = makeCollection(this.j);
+        const list = control.list, menu = this.openPopup(), toolbar = makeCollection(this.j);
         menu.parentElement = this;
         toolbar.parentElement = menu;
         toolbar.mode = 'vertical';
@@ -16325,9 +16346,36 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
             : (0,helpers.keys)(list, false).map(key => getButton(key, list[key])), this.target);
         menu.setContent(toolbar.container).open(() => (0,helpers.position)(this.container));
         this.state.activated = true;
-        this.j.e.on(menu, 'afterClose', () => {
+    }
+    onOutsideClick(e) {
+        if (!this.openedPopup) {
+            return;
+        }
+        if (!e ||
+            !dom/* Dom.isNode */.i.isNode(e.target) ||
+            (!dom/* Dom.isOrContains */.i.isOrContains(this.container, e.target) &&
+                !this.openedPopup.isOwnClick(e))) {
+            this.closePopup();
+        }
+    }
+    openPopup() {
+        this.closePopup();
+        this.openedPopup = new popup/* Popup */.G(this.j, false);
+        this.j.e
+            .on(this.ow, 'mousedown touchstart', this.onOutsideClick)
+            .on('escape closeAllPopups', this.onOutsideClick);
+        return this.openedPopup;
+    }
+    closePopup() {
+        if (this.openedPopup) {
+            this.j.e
+                .off(this.ow, 'mousedown touchstart', this.onOutsideClick)
+                .off('escape closeAllPopups', this.onOutsideClick);
             this.state.activated = false;
-        });
+            this.openedPopup.close();
+            this.openedPopup.destruct();
+            this.openedPopup = null;
+        }
     }
     onClick(originalEvent) {
         var _a, _b, _c, _d, _e, _f, _g;
@@ -16363,6 +16411,10 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
             this.j.e.fire('closeAllPopups');
         }
     }
+    destruct() {
+        this.closePopup();
+        return super.destruct();
+    }
 };
 (0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.tooltip')
@@ -16370,6 +16422,15 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
 (0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.hasTrigger')
 ], ToolbarButton.prototype, "onChangeHasTrigger", null);
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)('trigger:click')
+], ToolbarButton.prototype, "onTriggerClick", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], ToolbarButton.prototype, "onOutsideClick", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], ToolbarButton.prototype, "closePopup", null);
 ToolbarButton = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], ToolbarButton);
@@ -21468,6 +21529,9 @@ class Jodit extends ViewWithToolbar {
         });
     }
     execCommand(command, showUI = false, value = null) {
+        if (!this.s.isFocused()) {
+            this.s.focus();
+        }
         if (this.o.readonly && command !== 'selectall') {
             return;
         }
@@ -23626,15 +23690,15 @@ function askInsertTypeDialog(jodit, msg, title, callback, clearButton = 'Clean',
     });
     keep.onAction(() => {
         dialog.close();
-        callback && callback(constants.INSERT_AS_HTML);
+        callback(constants.INSERT_AS_HTML);
     });
     clear.onAction(() => {
         dialog.close();
-        callback && callback(constants.INSERT_AS_TEXT);
+        callback(constants.INSERT_AS_TEXT);
     });
     clear2.onAction(() => {
         dialog.close();
-        callback && callback(constants.INSERT_ONLY_TEXT);
+        callback(constants.INSERT_ONLY_TEXT);
     });
     cancel.onAction(() => {
         dialog.close();
@@ -25096,7 +25160,7 @@ config/* Config.prototype.controls.font */.D.prototype.controls.font = {
         'Georgia,serif': 'Georgia',
         'Impact,Charcoal,sans-serif': 'Impact',
         'Tahoma,Geneva,sans-serif': 'Tahoma',
-        "'Times New Roman',Times,serif": 'Times New Roman',
+        'Times New Roman,Times,serif': 'Times New Roman',
         'Verdana,Geneva,sans-serif': 'Verdana'
     },
     childTemplate: (editor, key, value) => {
@@ -25818,6 +25882,18 @@ function positionTab(editor) {
 				<input disabled="true" class="jodit_col-lg-1-5 jodit-input" data-ref="marginLeft" type="text" placeholder="${i18n('left')}"/>
 			</div>
 		</div>
+		<div
+			style="${!opt.image.editAlign ? 'display:none' : ''}"
+			class="jodit-form__group"
+		>
+			<label>${i18n('Align')}</label>
+			<select data-ref="align" class="jodit-select">
+				<option value="">${i18n('--Not Set--')}</option>
+				<option value="left">${i18n('Left')}</option>
+				<option value="center">${i18n('Center')}</option>
+				<option value="right">${i18n('Right')}</option>
+			</select>
+		</div>
 		<div style="${!opt.image.editStyle ? 'display:none' : ''}" class="jodit-form__group">
 			<label>${i18n('Styles')}</label>
 			<input data-ref="style" type="text" class="jodit-input"/>
@@ -25836,18 +25912,6 @@ function positionTab(editor) {
 		>
 			<label>${i18n('Border radius')}</label>
 				<input data-ref="borderRadius" type="number" class="jodit-input"/>
-		</div>
-		<div
-			style="${!opt.image.editAlign ? 'display:none' : ''}"
-			class="jodit-form__group"
-		>
-			<label>${i18n('Align')}</label>
-			<select data-ref="align" class="jodit-select">
-				<option value="">${i18n('--Not Set--')}</option>
-				<option value="left">${i18n('Left')}</option>
-				<option value="center">${i18n('Center')}</option>
-				<option value="right">${i18n('Right')}</option>
-			</select>
 		</div>`);
 }
 
@@ -25926,6 +25990,9 @@ class imageProperties extends Plugin {
             sizeIsLocked: true,
             marginIsLocked: true
         };
+        this.activeTabState = {
+            __activeTab: 'Image'
+        };
     }
     onChangeMarginIsLocked() {
         if (!this.form) {
@@ -25952,6 +26019,7 @@ class imageProperties extends Plugin {
     }
     open() {
         this.makeForm();
+        this.activeTabState.__activeTab = 'Image';
         this.j.e.fire('hidePopup');
         (0,helpers.markOwner)(this.j, this.dialog.container);
         this.state.marginIsLocked = true;
@@ -25972,11 +26040,11 @@ class imageProperties extends Plugin {
             theme: this.j.o.theme,
             language: this.j.o.language,
             minWidth: Math.min(400, screen.width),
-            minHeight: 400,
+            minHeight: 590,
             buttons: ['fullsize', 'dialog.close']
         });
         const editor = this.j, opt = editor.o, i18n = editor.i18n.bind(editor), buttons = {
-            check: (0,ui_button/* Button */.zx)(editor, 'ok', 'Apply'),
+            check: (0,ui_button/* Button */.zx)(editor, 'ok', 'Apply', 'primary'),
             remove: (0,ui_button/* Button */.zx)(editor, 'bin', 'Delete')
         };
         editor.e.on(this.dialog, 'afterClose', () => {
@@ -25999,7 +26067,7 @@ class imageProperties extends Plugin {
             tabsBox.appendChild((0,widget/* TabsWidget */.IL)(editor, [
                 { name: 'Image', content: mainTab(editor) },
                 { name: 'Advanced', content: positionTab(editor) }
-            ]));
+            ], this.activeTabState));
         }
         buttons.check.onAction(this.onApply);
         const { changeImage, editImage } = (0,helpers.refs)(this.form);
@@ -26620,7 +26688,7 @@ class inlinePopup extends Plugin {
         super(...arguments);
         this.requires = ['select'];
         this.type = null;
-        this.popup = new ui_popup/* Popup */.G(this.jodit, false);
+        this.popup = new popup/* Popup */.G(this.jodit, false);
         this.toolbar = makeCollection(this.jodit, this.popup);
         this.snapRange = null;
         this.elmsList = (0,helpers.keys)(this.j.o.popup, false).filter(s => !this.isExcludedTarget(s));
@@ -26719,7 +26787,7 @@ class inlinePopup extends Plugin {
     onSelectionEnd(e) {
         if (e &&
             e.target &&
-            ui/* UIElement.closestElement */.u1.closestElement(e.target, ui_popup/* Popup */.G)) {
+            ui/* UIElement.closestElement */.u1.closestElement(e.target, popup/* Popup */.G)) {
             return;
         }
         const { snapRange } = this, { range } = this.j.s;
@@ -29129,14 +29197,24 @@ class select_select extends Plugin {
             this.j.e.fire('outsideClick', e);
         }
     }
+    beforeCommandCut(command) {
+        const { s } = this.j;
+        if (command === 'cut' && !s.isCollapsed()) {
+            const current = s.current();
+            if (current && dom/* Dom.isOrContains */.i.isOrContains(this.j.editor, current)) {
+                this.onCopyNormalizeSelectionBound();
+            }
+        }
+    }
     onCopyNormalizeSelectionBound(e) {
         const { s, editor, o } = this.j;
-        if (!o.select.normalizeSelectionBeforeCutAndCopy ||
-            !e ||
-            !e.isTrusted ||
-            s.isCollapsed() ||
-            !dom/* Dom.isNode */.i.isNode(e.target) ||
-            !dom/* Dom.isOrContains */.i.isOrContains(editor, e.target)) {
+        if (!o.select.normalizeSelectionBeforeCutAndCopy || s.isCollapsed()) {
+            return;
+        }
+        if (e &&
+            (!e.isTrusted ||
+                !dom/* Dom.isNode */.i.isNode(e.target) ||
+                !dom/* Dom.isOrContains */.i.isOrContains(editor, e.target))) {
             return;
         }
         this.jodit.s.expandSelection();
@@ -29148,6 +29226,9 @@ class select_select extends Plugin {
 (0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('ow:click')
 ], select_select.prototype, "onOutsideClick", null);
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)([':beforeCommand'])
+], select_select.prototype, "beforeCommandCut", null);
 (0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)([':copy', ':cut'])
 ], select_select.prototype, "onCopyNormalizeSelectionBound", null);

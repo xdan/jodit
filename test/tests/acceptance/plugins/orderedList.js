@@ -281,7 +281,7 @@ describe('Test orderedList plugin', function () {
 					);
 
 					clickTrigger('ul', editor);
-					clickButton('circle', getOpenedPopup(editor));;
+					clickButton('circle', getOpenedPopup(editor));
 
 					editor.s.insertHTML('test ');
 
