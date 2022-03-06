@@ -12,6 +12,7 @@
 ## 3.15.2
 
 -   Fixed a bug when it was impossible to select a normal font after selecting any other
+-   [Dropdowns not hiding when clicking again on the arrow #791](https://github.com/xdan/jodit/issues/791)
 -   [The problem that the selected text disappears #790](https://github.com/xdan/jodit/issues/790)
 
 ## 3.15.1
@@ -1146,11 +1147,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                       	{ value: "", text: "" },
--                                                                                                                                                       	{ value: "val1", text: "text1" },
--                                                                                                                                                       	{ value: "val2", text: "text2" },
--                                                                                                                                                       	{ value: "val3", text: "text3" }
--                                                                                                                                                       ]
+-                                                                                                                                                         	{ value: "", text: "" },
+-                                                                                                                                                         	{ value: "val1", text: "text1" },
+-                                                                                                                                                         	{ value: "val2", text: "text2" },
+-                                                                                                                                                         	{ value: "val3", text: "text3" }
+-                                                                                                                                                         ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

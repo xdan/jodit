@@ -159,7 +159,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 	private prependInvisibleInput(container: HTMLElement): void {
 		const input = this.j.create.element('input', {
 			tabIndex: -1,
-			disabled: true, // Becouse <label> can trigger click
+			disabled: true, // Because <label> can trigger click
 			style: 'width: 0; height:0; position: absolute; visibility: hidden;'
 		});
 

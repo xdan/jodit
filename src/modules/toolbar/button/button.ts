@@ -17,6 +17,7 @@ import type {
 	IControlType,
 	IControlTypeStrong,
 	IControlTypeStrongList,
+	IPopup,
 	IToolbarButton,
 	IToolbarCollection,
 	IViewBased,
@@ -192,8 +193,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			)}</span>`
 		);
 
-		this.j.e.on(this.trigger, 'click', this.onTriggerClick.bind(this));
-
 		return container;
 	}
 
@@ -325,7 +324,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	/**
 	 * Click on trigger button
 	 */
+	@watch('trigger:click')
 	protected onTriggerClick(e: MouseEvent): void {
+		if (this.openedPopup) {
+			this.closePopup();
+			return;
+		}
 		const { control: ctr } = this;
 
 		e.buffer = {
@@ -337,7 +341,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		}
 
 		if (isFunction(ctr.popup)) {
-			const popup = new Popup(this.j);
+			const popup = this.openPopup();
 			popup.parentElement = this;
 
 			if (
@@ -376,6 +380,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		}
 	}
 
+	private openedPopup: Nullable<IPopup> = null;
+
 	/**
 	 * Create and open popup list
 	 */
@@ -385,7 +391,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 				findControlType(key, controls);
 
 		const list = control.list,
-			menu = new Popup(this.j),
+			menu = this.openPopup(),
 			toolbar = makeCollection(this.j);
 
 		menu.parentElement = this;
@@ -445,6 +451,30 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		this.j.e.on(menu, 'afterClose', () => {
 			this.state.activated = false;
 		});
+	}
+
+	@watch(':outsideClick')
+	protected onOutsideClick(e: MouseEvent): void {
+		if (
+			!Dom.isNode(e.target) ||
+			!Dom.isOrContains(this.container, e.target)
+		) {
+			this.closePopup();
+		}
+	}
+
+	private openPopup(): IPopup {
+		this.closePopup();
+		this.openedPopup = new Popup(this.j, false);
+		return this.openedPopup;
+	}
+
+	private closePopup(): void {
+		if (this.openedPopup) {
+			this.state.activated = false;
+			this.openedPopup.close();
+			this.openedPopup = null;
+		}
 	}
 
 	/**
