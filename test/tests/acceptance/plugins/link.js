@@ -491,7 +491,7 @@ describe('Link plugin', function () {
 								popup_opened += 1;
 							}
 						},
-						observer: {
+						history: {
 							timeout: 0
 						}
 					});
@@ -740,7 +740,7 @@ describe('Link plugin', function () {
 							it('Should hide text input', function () {
 								const editor = getJodit({
 									toolbarAdaptive: false,
-									observer: {
+									history: {
 										timeout: 0
 									}
 								});
@@ -770,7 +770,7 @@ describe('Link plugin', function () {
 						it('Should wrap selected image in link', function () {
 							const editor = getJodit({
 								toolbarAdaptive: false,
-								observer: {
+								history: {
 									timeout: 0
 								}
 							});
@@ -818,7 +818,7 @@ describe('Link plugin', function () {
 
 				it('Should restore source text after user clicked on Unlink button', function () {
 					const editor = getJodit({
-						observer: {
+						history: {
 							timeout: 0
 						}
 					});

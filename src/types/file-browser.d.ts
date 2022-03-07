@@ -18,8 +18,7 @@ import type {
 import type { IUploader, IUploaderOptions } from './uploader';
 import type { IViewBased, IViewOptions } from './view';
 import type { IUIGroup } from './ui';
-import type { IObservable } from './observer';
-import type { IDialog } from './dialog';
+import type { IObservable } from './events';
 
 /**
  * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new

@@ -54,7 +54,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		return 'ToolbarButton';
 	}
 
-	override state = {
+	override readonly state = {
 		...UIButtonState(),
 		theme: 'toolbar',
 		currentValue: '',
@@ -160,7 +160,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	}
 
 	/** @override */
-	override onChangeTabIndex(): void {
+	protected override onChangeTabIndex(): void {
 		attr(this.button, 'tabindex', this.state.tabIndex);
 	}
 

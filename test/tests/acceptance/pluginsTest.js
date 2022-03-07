@@ -459,7 +459,7 @@ describe('Test plugins', function () {
 					it('Should deny crop image without ratio', function (done) {
 						const area = appendTestArea();
 						const editor = new Jodit(area, {
-							observer: {
+							history: {
 								timeout: 0
 							},
 							uploader: {
@@ -602,7 +602,7 @@ describe('Test plugins', function () {
 						const area = appendTestArea();
 
 						const editor = new Jodit(area, {
-							observer: {
+							history: {
 								timeout: 0
 							},
 							uploader: {
@@ -753,7 +753,7 @@ describe('Test plugins', function () {
 					it('Should deny resize image without ratio', function (done) {
 						const area = appendTestArea();
 						const editor = new Jodit(area, {
-							observer: {
+							history: {
 								timeout: 0
 							},
 							uploader: {
@@ -888,7 +888,7 @@ describe('Test plugins', function () {
 					it('Should allow resize image without ratio', function (done) {
 						const area = appendTestArea();
 						const editor = new Jodit(area, {
-							observer: {
+							history: {
 								timeout: 0
 							},
 							uploader: {
@@ -1696,7 +1696,7 @@ describe('Test plugins', function () {
 		describe('Toggle fullsize', function () {
 			it('Should resize all boxes to first state', function () {
 				const editor = getJodit({
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});
@@ -1735,7 +1735,7 @@ describe('Test plugins', function () {
 						showXPathInStatusbar: true,
 						showCharsCounter: false,
 						showWordsCounter: false,
-						observer: {
+						history: {
 							timeout: 0
 						}
 					});
@@ -1754,7 +1754,7 @@ describe('Test plugins', function () {
 					const editor = getJodit({
 						language: 'en',
 						showXPathInStatusbar: true,
-						observer: {
+						history: {
 							timeout: 0
 						}
 					});
@@ -1777,7 +1777,7 @@ describe('Test plugins', function () {
 						const editor = getJodit({
 							language: 'en',
 							showXPathInStatusbar: true,
-							observer: {
+							history: {
 								timeout: 0
 							}
 						});
@@ -1812,7 +1812,7 @@ describe('Test plugins', function () {
 						const editor = getJodit({
 							language: 'en',
 							showXPathInStatusbar: true,
-							observer: {
+							history: {
 								timeout: 0
 							}
 						});
@@ -1859,7 +1859,7 @@ describe('Test plugins', function () {
 						const editor = getJodit({
 							language: 'en',
 							showXPathInStatusbar: true,
-							observer: {
+							history: {
 								timeout: 0
 							}
 						});

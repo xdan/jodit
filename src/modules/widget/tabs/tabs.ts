@@ -40,13 +40,13 @@ export interface TabOption {
  * ```
  */
 export const TabsWidget = (
-	editor: IJodit,
+	jodit: IJodit,
 	tabs: TabOption[],
 	state?: { __activeTab: string }
 ): HTMLDivElement => {
-	const box: HTMLDivElement = editor.c.div('jodit-tabs'),
-		tabBox: HTMLDivElement = editor.c.div('jodit-tabs__wrapper'),
-		buttons: HTMLDivElement = editor.c.div('jodit-tabs__buttons'),
+	const box: HTMLDivElement = jodit.c.div('jodit-tabs'),
+		tabBox: HTMLDivElement = jodit.c.div('jodit-tabs__wrapper'),
+		buttons: HTMLDivElement = jodit.c.div('jodit-tabs__buttons'),
 		nameToTab: IDictionary<{
 			button: IUIButton;
 			tab: HTMLElement;
@@ -54,7 +54,7 @@ export const TabsWidget = (
 		buttonList: IUIButton[] = [];
 
 	let firstTab: string = '',
-		tabcount: number = 0;
+		tabCount: number = 0;
 
 	box.appendChild(buttons);
 	box.appendChild(tabBox);
@@ -77,8 +77,13 @@ export const TabsWidget = (
 	};
 
 	tabs.forEach(({ icon, name, content }) => {
-		const tab = editor.c.div('jodit-tab'),
-			button = Button(editor, icon || name, name);
+		const tab = jodit.c.div('jodit-tab'),
+			button = Button(jodit, icon || name, name);
+
+		// Stop lose the focus
+		jodit.e.on(button.container, 'mousedown', (e: MouseEvent) =>
+			e.preventDefault()
+		);
 
 		if (!firstTab) {
 			firstTab = name;
@@ -97,7 +102,7 @@ export const TabsWidget = (
 				content instanceof UIElement ? content.container : content
 			);
 		} else {
-			tab.appendChild(editor.c.div('jodit-tab_empty'));
+			tab.appendChild(jodit.c.div('jodit-tab_empty'));
 		}
 
 		tabBox.appendChild(tab);
@@ -106,7 +111,7 @@ export const TabsWidget = (
 			setActive(name);
 
 			if (isFunction(content)) {
-				content.call(editor);
+				content.call(jodit);
 			}
 
 			if (state) {
@@ -121,15 +126,15 @@ export const TabsWidget = (
 			tab
 		};
 
-		tabcount += 1;
+		tabCount += 1;
 	});
 
-	if (!tabcount) {
+	if (!tabCount) {
 		return box;
 	}
 
 	$$('a', buttons).forEach(a => {
-		a.style.width = (100 / tabcount).toFixed(10) + '%';
+		a.style.width = (100 / tabCount).toFixed(10) + '%';
 	});
 
 	const tab =

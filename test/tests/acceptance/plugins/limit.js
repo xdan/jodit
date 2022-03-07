@@ -9,7 +9,7 @@ describe('Limit plugin', function () {
 			it('should deny insert any chars', function (done) {
 				const editor = getJodit({
 					limitChars: 5,
-					observer: {
+					history: {
 						timeout: 5
 					}
 				});
@@ -27,7 +27,7 @@ describe('Limit plugin', function () {
 				it('should show chars count', function (done) {
 					const editor = getJodit({
 						limitChars: 5,
-						observer: {
+						history: {
 							timeout: 5
 						}
 					});
@@ -51,7 +51,7 @@ describe('Limit plugin', function () {
 					it('should show chars count', function (done) {
 						const editor = getJodit({
 							limitChars: 5,
-							observer: {
+							history: {
 								timeout: 5
 							}
 						});
@@ -90,7 +90,7 @@ describe('Limit plugin', function () {
 			it('should deny insert any chars', function (done) {
 				const editor = getJodit({
 					limitChars: 5,
-					observer: {
+					history: {
 						timeout: 5
 					}
 				});
@@ -120,7 +120,7 @@ describe('Limit plugin', function () {
 				it('should deny insert any chars', function (done) {
 					const editor = getJodit({
 						limitWords: 3,
-						observer: {
+						history: {
 							timeout: 5
 						}
 					});

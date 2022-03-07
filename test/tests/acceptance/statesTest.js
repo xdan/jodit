@@ -68,7 +68,7 @@ describe('Test states', function () {
 				const editor = getJodit({
 					readonly: true,
 					toolbarAdaptive: false,
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});
@@ -124,7 +124,7 @@ describe('Test states', function () {
 						it('Should be deny', function () {
 							const editor = getJodit({
 								readonly: true,
-								observer: {
+								history: {
 									timeout: 0
 								}
 							});

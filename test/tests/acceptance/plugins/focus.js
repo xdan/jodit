@@ -8,7 +8,7 @@ describe('Focus test', () => {
 		it('Should set focus inside editor after init', () => {
 			const editor = getJodit({
 				autofocus: true,
-				observer: {
+				history: {
 					defaultTimeout: 0
 				}
 			});
@@ -28,7 +28,7 @@ describe('Focus test', () => {
 					const editor = getJodit(
 						{
 							autofocus: true,
-							observer: {
+							history: {
 								defaultTimeout: 0
 							}
 						},
@@ -51,7 +51,7 @@ describe('Focus test', () => {
 						{
 							autofocus: true,
 							cursorAfterAutofocus: 'start',
-							observer: {
+							history: {
 								defaultTimeout: 0
 							}
 						},

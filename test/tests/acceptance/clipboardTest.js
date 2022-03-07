@@ -1266,7 +1266,7 @@ describe('Clipboard text', function () {
 						it('should be selected text', () => {
 							const editor = getJodit({
 								toolbarAdaptive: false,
-								observer: {
+								history: {
 									timeout: 0
 								}
 							});

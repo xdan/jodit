@@ -42,7 +42,7 @@ describe('Test uploader module', function () {
 			it('Should upload file and insert image with SRC from server', function (done) {
 				const file = new FileImage(),
 					editor = getJodit({
-						observer: {
+						history: {
 							timeout: 0
 						},
 						uploader: {
@@ -81,7 +81,7 @@ describe('Test uploader module', function () {
 					const file = new FileImage(),
 						editor = getJodit({
 							iframe: true,
-							observer: {
+							history: {
 								timeout: 0
 							},
 							uploader: {
@@ -124,7 +124,7 @@ describe('Test uploader module', function () {
 			it('Should upload file and insert A element with HREF to file on server', function (done) {
 				const file = new FileXLS(),
 					editor = getJodit({
-						observer: {
+						history: {
 							timeout: 0
 						},
 						uploader: {
@@ -156,7 +156,7 @@ describe('Test uploader module', function () {
 				it('Should upload file and insert A element with HREF to file on server', function (done) {
 					const file = new FileXLS(),
 						editor = getJodit({
-							observer: {
+							history: {
 								timeout: 0
 							},
 							uploader: {

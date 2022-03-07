@@ -27,7 +27,7 @@ import type {
 	IFileBrowserCallBackData,
 	IStorage,
 	CanPromise,
-	IObserver
+	IHistory
 } from './types';
 
 import { Config } from './config';
@@ -36,7 +36,7 @@ import * as consts from './core/constants';
 import {
 	Create,
 	Dom,
-	Observer,
+	History,
 	Plugin,
 	Select,
 	StatusBar,
@@ -123,12 +123,12 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/**
 	 * Return default timeout period in milliseconds for some debounce or throttle functions.
-	 * By default return `{observer.timeout}` options
+	 * By default, `{history.timeout}` options
 	 */
 	override get defaultTimeout(): number {
-		return this.options && this.o.observer
-			? this.o.observer.timeout
-			: Config.defaultOptions.observer.timeout;
+		return this.options && this.o.history
+			? this.o.history.timeout
+			: Config.defaultOptions.history.timeout;
 	}
 
 	/**
@@ -266,8 +266,15 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.setPlaceField('iframe', iframe);
 	}
 
-	get observer(): IObserver {
-		return this.currentPlace.observer;
+	get history(): IHistory {
+		return this.currentPlace.history;
+	}
+
+	/**
+	 * @deprecated Instead use `Jodit.history`
+	 */
+	get observer(): IHistory {
+		return this.history;
 	}
 
 	/**
@@ -551,9 +558,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.__callChangeCount += 1;
 
 			try {
-				this.observer.upTick();
+				this.history.upTick();
 				this.e.fire('change', new_value, old_value);
-				this.e.fire(this.observer, 'change', new_value, old_value);
+				this.e.fire(this.history, 'change', new_value, old_value);
 			} finally {
 				this.__callChangeCount = 0;
 			}
@@ -1276,7 +1283,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 						Config.defaultOptions
 				  ) as IWorkPlace['options'])
 				: this.options,
-			observer: new Observer(this),
+			history: new History(this),
 			editorWindow: this.ow
 		};
 
@@ -1553,7 +1560,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				element,
 				iframe,
 				editor,
-				observer
+				history
 			}) => {
 				if (element !== container) {
 					if (element.hasAttribute(__defaultStyleDisplayKey)) {
@@ -1578,7 +1585,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 					element.removeAttribute('style');
 				}
 
-				!statusbar.isInDestruct && statusbar.destruct();
+				statusbar.destruct();
 
 				this.e.off(container);
 				this.e.off(element);
@@ -1604,7 +1611,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 					element.innerHTML = buffer;
 				}
 
-				!observer.isInDestruct && observer.destruct();
+				history.destruct();
 			}
 		);
 

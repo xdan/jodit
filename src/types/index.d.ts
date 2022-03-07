@@ -17,7 +17,7 @@ export * from './dialog';
 export * from './events';
 export * from './file-browser';
 export * from './jodit';
-export * from './observer';
+export * from './history';
 export * from './select';
 export * from './plugin';
 export * from './popup';

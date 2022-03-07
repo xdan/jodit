@@ -10,7 +10,7 @@
 
 import { IViewOptions, IViewWithToolbar } from './view';
 import type { Config } from 'jodit/config';
-import type { CustomCommand, ICreate, IObserver, IStatusBar, Modes } from './';
+import type { CustomCommand, ICreate, IDestructible, IHistory, IStatusBar, Modes } from './';
 import type { IUploader } from './uploader';
 import type { IFileBrowser } from './file-browser';
 import { ISelect } from './select';
@@ -23,7 +23,7 @@ interface IWorkPlace {
 	statusbar: IStatusBar;
 	iframe?: HTMLIFrameElement | void;
 	editorWindow: Window;
-	observer: IObserver;
+	history: IHistory & IDestructible;
 	options: IViewOptions;
 }
 
@@ -31,7 +31,14 @@ interface IJodit extends IViewWithToolbar {
 	isJodit: true;
 
 	options: Config;
-	observer: IObserver;
+
+	history: IHistory;
+
+	/**
+	 * @deprecated Instead use `Jodit.history`
+	 */
+	observer: IHistory;
+
 	editor: HTMLElement;
 	element: HTMLElement;
 

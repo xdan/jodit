@@ -5,17 +5,17 @@
  */
 
 /**
- * @module modules/observer
+ * @module modules/history
  */
 
 import type { CanUndef, IStack } from 'jodit/types';
 import type { Command } from './command';
 
 export class Stack implements IStack {
-	private commands: Command[] = [];
+	private readonly commands: Command[] = [];
 	private stackPosition: number = -1;
 
-	constructor(private size: number) {}
+	constructor(private readonly size: number) {}
 
 	get length(): number {
 		return this.commands.length;

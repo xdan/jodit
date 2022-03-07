@@ -1420,7 +1420,7 @@ describe('Test image', function () {
 
 				document.body.appendChild(div);
 				const editor = new Jodit('#text__area0', {
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});

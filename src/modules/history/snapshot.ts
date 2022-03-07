@@ -5,20 +5,19 @@
  */
 
 /**
- * @module modules/observer
+ * @module modules/history
  */
 
 import type { IJodit, ISnapshot, SnapshotType } from 'jodit/types';
 import { ViewComponent } from 'jodit/core/component';
 import { Dom } from 'jodit/core/dom';
 
-// declare const isProd: boolean;
 /**
  * Module for creating snapshot of editor which includes html content and the current selection
  */
 export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'Snapshot';
 	}
 

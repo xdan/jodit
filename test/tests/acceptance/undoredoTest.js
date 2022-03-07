@@ -8,7 +8,7 @@ describe('Undo/Redo behaviors', function () {
 	describe('Do some changes', function () {
 		it('Should change redo/undo stack', function () {
 			const editor = getJodit({
-				observer: {
+				history: {
 					timeout: 0
 				}
 			});
@@ -87,7 +87,7 @@ describe('Undo/Redo behaviors', function () {
 	describe('Commands', function () {
 		it('Undo. Enter text wait and again enter text. After execute "undo" command. First text should be returned', function () {
 			const editor = getJodit({
-				observer: {
+				history: {
 					timeout: 0 // disable delay
 				}
 			});
@@ -100,7 +100,7 @@ describe('Undo/Redo behaviors', function () {
 
 		it('Redo. Enter text wait and again enter text. After execute "undo" + "redo" command in editor should be second text', function () {
 			const editor = getJodit({
-				observer: {
+				history: {
 					timeout: 0
 				}
 			});
@@ -115,7 +115,7 @@ describe('Undo/Redo behaviors', function () {
 
 		it('Check react UndoRedo to another changes', function () {
 			const editor = getJodit({
-				observer: {
+				history: {
 					timeout: 0
 				}
 			});
@@ -141,7 +141,7 @@ describe('Undo/Redo behaviors', function () {
 		it('Should disable both buttons in toolbar and all calls redo and undo must do nothing', function () {
 			const editor = getJodit({
 				toolbarAdaptive: false,
-				observer: {
+				history: {
 					timeout: 0
 				}
 			});
@@ -170,7 +170,7 @@ describe('Undo/Redo behaviors', function () {
 			expect(undo.hasAttribute('disabled')).is.false;
 			expect(redo.hasAttribute('disabled')).is.true;
 
-			editor.observer.clear();
+			editor.history.clear();
 
 			expect(undo.hasAttribute('disabled')).is.true;
 			expect(redo.hasAttribute('disabled')).is.true;
@@ -186,7 +186,7 @@ describe('Undo/Redo behaviors', function () {
 	describe('Limited history', function () {
 		it('Should store only limited history', function () {
 			const editor = getJodit({
-				observer: {
+				history: {
 					maxHistoryLength: 3
 				}
 			});

@@ -5,12 +5,19 @@
  */
 
 /**
- * [[include:modules/observer/README.md]]
+ * [[include:modules/history/README.md]]
  * @packageDocumentation
- * @module modules/observer
+ * @module modules/history
  */
 
-import type { IJodit, SnapshotType, IObserver } from 'jodit/types';
+import type {
+	IJodit,
+	SnapshotType,
+	IHistory,
+	ISnapshot,
+	IStack,
+	IDestructible
+} from 'jodit/types';
 import { Config } from 'jodit/config';
 import { ViewComponent } from 'jodit/core/component';
 import { Snapshot } from './snapshot';
@@ -20,7 +27,7 @@ import { debounce } from 'jodit/core/decorators';
 
 declare module 'jodit/config' {
 	interface Config {
-		observer: {
+		history: {
 			/**
 			 * Limit of history length
 			 */
@@ -31,21 +38,28 @@ declare module 'jodit/config' {
 			 */
 			timeout: number;
 		};
+
+		/**
+		 * @deprecated Instead use `history`
+		 */
+		observer: this['history'];
 	}
 }
 
-Config.prototype.observer = {
+Config.prototype.history = {
 	maxHistoryLength: Infinity,
 	timeout: 100
 };
 
+Config.prototype.observer = Config.prototype.history;
+
 /**
  * The module monitors the status of the editor and creates / deletes the required number of Undo / Redo shots .
  */
-export class Observer extends ViewComponent<IJodit> implements IObserver {
+export class History extends ViewComponent<IJodit> implements IHistory {
 	/** @override */
-	className(): string {
-		return 'Observer';
+	override className(): string {
+		return 'History';
 	}
 
 	private __startValue!: SnapshotType;
@@ -58,8 +72,56 @@ export class Observer extends ViewComponent<IJodit> implements IObserver {
 		this.__startValue = value;
 	}
 
-	stack: Stack = new Stack(this.j.o.observer.maxHistoryLength);
-	snapshot: Snapshot = new Snapshot(this.j);
+	private readonly stack: IStack;
+	public snapshot: ISnapshot & IDestructible;
+
+	constructor(
+		editor: IJodit,
+		stack = new Stack(editor.o.history.maxHistoryLength),
+		snapshot = new Snapshot(editor)
+	) {
+		super(editor);
+
+		this.stack = stack;
+		this.snapshot = snapshot;
+
+		editor.e.on('afterAddPlace.history', () => {
+			if (this.isInDestruct) {
+				return;
+			}
+
+			this.startValue = this.snapshot.make();
+
+			editor.events
+				// save selection
+				.on('internalChange', () => {
+					this.startValue = this.snapshot.make();
+				})
+				.on(
+					editor.editor,
+					[
+						'changeSelection',
+						'selectionstart',
+						'selectionchange',
+						'mousedown',
+						'mouseup',
+						'keydown',
+						'keyup'
+					]
+						.map(f => f + '.history')
+						.join(' '),
+					() => {
+						if (
+							this.startValue.html ===
+							this.j.getNativeEditorValue()
+						) {
+							this.startValue = this.snapshot.make();
+						}
+					}
+				)
+				.on(this, 'change.history', this.onChange);
+		});
+	}
 
 	private updateTick: number = 0;
 
@@ -118,6 +180,10 @@ export class Observer extends ViewComponent<IJodit> implements IObserver {
 		}
 	}
 
+	canRedo(): boolean {
+		return this.stack.canRedo();
+	}
+
 	/**
 	 * Return the state of the WYSIWYG editor to step forward
 	 */
@@ -128,64 +194,31 @@ export class Observer extends ViewComponent<IJodit> implements IObserver {
 		}
 	}
 
+	canUndo(): boolean {
+		return this.stack.canUndo();
+	}
+
 	clear(): void {
 		this.startValue = this.snapshot.make();
 		this.stack.clear();
 		this.fireChangeStack();
 	}
 
-	replaceSnapshot(): void {
-		this.updateStack(true);
+	get length(): number {
+		return this.stack.length;
 	}
 
 	private fireChangeStack(): void {
 		this.j && !this.j.isInDestruct && this.j.events?.fire('changeStack');
 	}
 
-	constructor(editor: IJodit) {
-		super(editor);
-
-		editor.e.on('afterAddPlace.observer', () => {
-			if (this.isInDestruct) {
-				return;
-			}
-
-			this.startValue = this.snapshot.make();
-
-			editor.events
-				// save selection
-				.on('internalChange', () => {
-					this.startValue = this.snapshot.make();
-				})
-				.on(
-					editor.editor,
-					[
-						'changeSelection',
-						'selectionstart',
-						'selectionchange',
-						'mousedown',
-						'mouseup',
-						'keydown',
-						'keyup'
-					]
-						.map(f => f + '.observer')
-						.join(' '),
-					() => {
-						if (
-							this.startValue.html ===
-							this.j.getNativeEditorValue()
-						) {
-							this.startValue = this.snapshot.make();
-						}
-					}
-				)
-				.on(this, 'change.observer', this.onChange);
-		});
-	}
-
 	override destruct(): void {
+		if (this.isInDestruct) {
+			return;
+		}
+
 		if (this.j.events) {
-			this.j.e.off('.observer');
+			this.j.e.off('.history');
 		}
 
 		this.snapshot.destruct();

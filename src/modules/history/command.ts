@@ -5,25 +5,25 @@
  */
 
 /**
- * @module modules/observer
+ * @module modules/history
  */
 
 import type { SnapshotType } from 'jodit/types';
-import type { Observer } from './observer';
+import type { History } from './history';
 
 export class Command {
 	undo(): void {
-		this.observer.snapshot.restore(this.oldValue);
+		this.history.snapshot.restore(this.oldValue);
 	}
 
 	redo(): void {
-		this.observer.snapshot.restore(this.newValue);
+		this.history.snapshot.restore(this.newValue);
 	}
 
 	constructor(
 		readonly oldValue: SnapshotType,
 		readonly newValue: SnapshotType,
-		readonly observer: Observer,
+		private readonly history: History,
 		readonly tick: number
 	) {}
 }

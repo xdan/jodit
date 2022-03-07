@@ -121,6 +121,10 @@ export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 	}
 
 	override destruct(): void {
+		if (this.isInDestruct) {
+			return;
+		}
+
 		this.setStatus(STATUSES.beforeDestruct);
 		Dom.safeRemove(this.container);
 		super.destruct();

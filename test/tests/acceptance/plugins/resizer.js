@@ -99,7 +99,7 @@ describe('Resize plugin', function () {
 			describe('Size box', function () {
 				it('Should show size for image', function (done) {
 					const editor = getJodit({
-						observer: {
+						history: {
 							timeout: 0
 						},
 						resizer: {
@@ -163,7 +163,7 @@ describe('Resize plugin', function () {
 				describe('For small state', function () {
 					it('Should hide size', function () {
 						const editor = getJodit({
-							observer: {
+							history: {
 								timeout: 0
 							},
 							resizer: {
@@ -253,7 +253,7 @@ describe('Resize plugin', function () {
 					describe('Disable forImageChangeAttributes', () => {
 						it('Should change only styles width and height', done => {
 							const editor = getJodit({
-								observer: {
+								history: {
 									timeout: 0
 								}
 							});
@@ -282,7 +282,7 @@ describe('Resize plugin', function () {
 									resizer: {
 										forImageChangeAttributes: true
 									},
-									observer: {
+									history: {
 										timeout: 0
 									}
 								});
@@ -311,7 +311,7 @@ describe('Resize plugin', function () {
 										resizer: {
 											forImageChangeAttributes: true
 										},
-										observer: {
+										history: {
 											timeout: 0
 										}
 									});
@@ -341,7 +341,7 @@ describe('Resize plugin', function () {
 										resizer: {
 											forImageChangeAttributes: true
 										},
-										observer: {
+										history: {
 											timeout: 0
 										}
 									});
@@ -371,7 +371,7 @@ describe('Resize plugin', function () {
 										resizer: {
 											forImageChangeAttributes: true
 										},
-										observer: {
+										history: {
 											timeout: 0
 										}
 									});

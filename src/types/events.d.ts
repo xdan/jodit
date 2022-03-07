@@ -183,3 +183,7 @@ interface IEventEmitter extends IDestructible {
 		...args: any[]
 	): any;
 }
+
+export interface IObservable {
+	on(event: string | string[], callback: CallbackFunction): this;
+}

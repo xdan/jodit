@@ -242,7 +242,7 @@ describe('Font test', function () {
 			describe('Fontsize button', function () {
 				it('Should be activated then element has some style value', function () {
 					const editor = getJodit({
-						observer: {
+						history: {
 							timeout: 0
 						}
 					});
@@ -279,7 +279,7 @@ describe('Font test', function () {
 				it('Should be activated then element has some style value', function () {
 					const editor = getJodit({
 						toolbarAdaptive: false,
-						observer: {
+						history: {
 							timeout: 0
 						}
 					});

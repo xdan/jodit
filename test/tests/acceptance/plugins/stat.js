@@ -11,7 +11,7 @@ describe('Stat plugin', function () {
 				showCharsCounter: true,
 				countHTMLChars: false,
 				showHTMLCharsCounter: true,
-				observer: {
+				history: {
 					timeout: 0
 				}
 			});
@@ -36,7 +36,7 @@ describe('Stat plugin', function () {
 					showCharsCounter: true,
 					countHTMLChars: true,
 					showHTMLCharsCounter: true,
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});
@@ -55,7 +55,7 @@ describe('Stat plugin', function () {
 					language: 'en',
 					showCharsCounter: false,
 					showWordsCounter: true,
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});
@@ -77,7 +77,7 @@ describe('Stat plugin', function () {
 					language: 'en',
 					showCharsCounter: true,
 					showWordsCounter: false,
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});
@@ -100,7 +100,7 @@ describe('Stat plugin', function () {
 					showCharsCounter: false,
 					showWordsCounter: false,
 					showXPathInStatusbar: false,
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});

@@ -15,16 +15,14 @@ import type {
 	SnapshotType
 } from './types';
 
-export interface IObservable {
-	on(event: string | string[], callback: CallbackFunction): this;
-}
-
 export interface ICommand {
+	tick: number;
 	undo(): void;
 	redo(): void;
 }
 
 export interface IStack {
+	readonly length: number;
 	clear(): void;
 	push(command: ICommand): void;
 	replace(command: ICommand): void;
@@ -36,17 +34,22 @@ export interface IStack {
 }
 
 export interface ISnapshot {
+	isBlocked: boolean;
 	make(): SnapshotType;
 	restoreOnlySelection(snapshot: SnapshotType): void;
 	restore(snapshot: SnapshotType): void;
 }
 
-export interface IObserver extends IComponent {
-	stack: IStack;
+export interface IHistory {
+	// stack: IStack;
 	snapshot: ISnapshot;
+
 	redo(): void;
+	canRedo(): boolean;
 	undo(): void;
+	canUndo(): boolean;
+	readonly length: number;
+
 	clear(): void;
-	replaceSnapshot(): void;
 	upTick(): void;
 }

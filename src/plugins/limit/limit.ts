@@ -56,7 +56,7 @@ export class limit extends Plugin {
 			jodit.e
 				.off('.limit')
 				.on('beforePaste.limit', () => {
-					snapshot = jodit.observer.snapshot.make();
+					snapshot = jodit.history.snapshot.make();
 				})
 				.on(
 					'keydown.limit keyup.limit beforeEnter.limit beforePaste.limit',
@@ -65,7 +65,7 @@ export class limit extends Plugin {
 				.on('change.limit', this.checkPreventChanging)
 				.on('afterPaste.limit', (): false | void => {
 					if (this.shouldPreventInsertHTML() && snapshot) {
-						jodit.observer.snapshot.restore(snapshot);
+						jodit.history.snapshot.restore(snapshot);
 						return false;
 					}
 				});

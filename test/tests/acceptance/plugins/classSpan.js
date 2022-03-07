@@ -172,7 +172,7 @@ describe('classSpan test', function () {
 				it('Should be activated then element has some className', function () {
 					const editor = getJodit({
 						toolbarAdaptive: false,
-						observer: {
+						history: {
 							timeout: 0
 						},
 						controls: {

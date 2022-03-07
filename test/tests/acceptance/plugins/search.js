@@ -10,7 +10,7 @@ describe('Search plugin', function () {
 		it('Should not init plugin', function () {
 			const editor = getJodit({
 				useSearch: false,
-				observer: {
+				history: {
 					timeout: 0
 				}
 			});
@@ -28,7 +28,7 @@ describe('Search plugin', function () {
 	describe('CTRL + F', function () {
 		it('Should show search form and query field must have focus', function () {
 			const editor = getJodit({
-				observer: {
+				history: {
 					timeout: 0
 				}
 			});
@@ -57,7 +57,7 @@ describe('Search plugin', function () {
 	describe('CTRL + H', function () {
 		it('Should show search and replace form and query field must have focus', function () {
 			const editor = getJodit({
-				observer: {
+				history: {
 					timeout: 0
 				}
 			});
@@ -88,7 +88,7 @@ describe('Search plugin', function () {
 		describe('Press Replace button', function () {
 			it('Should replace value form query field to value from replace field in editor', function () {
 				const editor = getJodit({
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});
@@ -143,7 +143,7 @@ describe('Search plugin', function () {
 	describe('F3 after search', function () {
 		it('Should find a next match', function () {
 			const editor = getJodit({
-				observer: {
+				history: {
 					timeout: 0
 				}
 			});
@@ -196,7 +196,7 @@ describe('Search plugin', function () {
 			const editor = getJodit({
 				disablePlugins: ['WrapTextNodes'],
 
-				observer: {
+				history: {
 					timeout: 0
 				}
 			});
@@ -257,7 +257,7 @@ describe('Search plugin', function () {
 		describe('with SHIFT key', function () {
 			it('Should find a previous match', function () {
 				const editor = getJodit({
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});
@@ -557,7 +557,7 @@ describe('Search plugin', function () {
 	describe('Fire search event', function () {
 		it('Should select some elements which consists query string', function () {
 			const editor = getJodit({
-				observer: {
+				history: {
 					timeout: 0
 				}
 			});
@@ -586,7 +586,7 @@ describe('Search plugin', function () {
 		describe('Press Search button', function () {
 			it('Should open search dialog', function () {
 				const editor = getJodit({
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});
@@ -604,7 +604,7 @@ describe('Search plugin', function () {
 		describe('Press Replace button', function () {
 			it('Should open search dialog', function () {
 				const editor = getJodit({
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});

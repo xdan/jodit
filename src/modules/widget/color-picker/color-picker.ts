@@ -119,6 +119,7 @@ export const ColorPickerWidget = (
 
 	editor.e.on(form, 'mousedown touchend', (e: MouseEvent) => {
 		e.stopPropagation();
+		e.preventDefault();
 
 		let target = e.target as HTMLElement;
 
@@ -148,8 +149,6 @@ export const ColorPickerWidget = (
 		if (callback && isFunction(callback)) {
 			callback(color);
 		}
-
-		e.preventDefault();
 	});
 
 	editor.e.fire('afterGenerateColorPicker', form, extra, callback, valueHex);

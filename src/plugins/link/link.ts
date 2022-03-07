@@ -360,12 +360,12 @@ export class link extends Plugin {
 		}
 
 		jodit.editor.normalize();
-		const snapshot = jodit.observer.snapshot.make();
+		const snapshot = jodit.history.snapshot.make();
 
 		if (unlink) {
 			jodit.e.on(unlink, 'click', (e: MouseEvent) => {
 				jodit.s.restore();
-				jodit.observer.snapshot.restore(snapshot);
+				jodit.history.snapshot.restore(snapshot);
 
 				if (link) {
 					Dom.unwrap(link);
@@ -390,7 +390,7 @@ export class link extends Plugin {
 			jodit.s.restore();
 			jodit.s.removeMarkers();
 			jodit.editor.normalize();
-			jodit.observer.snapshot.restore(snapshot);
+			jodit.history.snapshot.restore(snapshot);
 
 			const textWasChanged =
 				getSelectionText() !== content_input.value.trim();

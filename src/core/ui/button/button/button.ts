@@ -49,16 +49,16 @@ export const UIButtonState = (): IUIButtonState => ({
 @component
 export class UIButton extends UIElement implements IUIButton {
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'UIButton';
 	}
 
 	/**
 	 * Marker for buttons
 	 */
-	isButton: true = true;
+	readonly isButton: true = true;
 
-	state = UIButtonState();
+	readonly state = UIButtonState();
 
 	/**
 	 * Set state
@@ -148,7 +148,7 @@ export class UIButton extends UIElement implements IUIButton {
 	}
 
 	@watch('state.tabIndex')
-	onChangeTabIndex(): void {
+	protected onChangeTabIndex(): void {
 		attr(this.container, 'tabindex', this.state.tabIndex);
 	}
 
@@ -228,7 +228,7 @@ export class UIButton extends UIElement implements IUIButton {
 		return super.destruct();
 	}
 
-	private actionHandlers: Function[] = [];
+	private readonly actionHandlers: Function[] = [];
 
 	/**
 	 * Add action handler

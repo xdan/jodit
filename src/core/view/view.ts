@@ -98,7 +98,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 	/**
 	 * Return default timeout period in milliseconds for some debounce or throttle functions.
-	 * By default return `{observer.timeout}` options
+	 * By default, `{history.timeout}` options
 	 */
 	get defaultTimeout(): number {
 		return isVoid(this.o.defaultTimeout) ? 100 : this.o.defaultTimeout;

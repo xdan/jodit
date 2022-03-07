@@ -649,7 +649,7 @@ describe('Toolbar', function () {
 		describe('Click inside the link', function () {
 			it('Should open link popup', function () {
 				const editor = getJodit({
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});
@@ -666,7 +666,7 @@ describe('Toolbar', function () {
 			describe('Click on pencil', function () {
 				it('Should open edit link popup', function () {
 					const editor = getJodit({
-						observer: {
+						history: {
 							timeout: 0
 						}
 					});
@@ -932,7 +932,7 @@ describe('Toolbar', function () {
 
 		it('When cursor inside STRONG tag, Bold button should be selected', function () {
 			const editor = getJodit({
-					observer: {
+					history: {
 						timeout: 0 // disable delay
 					}
 				}),
@@ -1001,7 +1001,7 @@ describe('Toolbar', function () {
 		describe('Disable for mode', function () {
 			it('Should disable buttons which can not be used in that mode', function () {
 				const editor = getJodit({
-					observer: {
+					history: {
 						timeout: 0 // disable delay
 					}
 				});
@@ -1028,7 +1028,7 @@ describe('Toolbar', function () {
 				describe('enable', function () {
 					it('Should enable buttons which can be used in this mode', function () {
 						const editor = getJodit({
-							observer: {
+							history: {
 								timeout: 0 // disable delay
 							},
 							defaultMode: Jodit.MODE_SOURCE,
@@ -1079,7 +1079,7 @@ describe('Toolbar', function () {
 				describe('disable', function () {
 					it('Should disable buttons which can not be used in that mode', function () {
 						const editor = getJodit({
-							observer: {
+							history: {
 								timeout: 0 // disable delay
 							},
 							defaultMode: Jodit.MODE_SOURCE,
@@ -1145,7 +1145,7 @@ describe('Toolbar', function () {
 				describe('enable', function () {
 					it('Should enable buttons which can be used in this mode', function () {
 						const editor = getJodit({
-							observer: {
+							history: {
 								timeout: 0 // disable delay
 							},
 							defaultMode: Jodit.MODE_SOURCE,
@@ -1196,7 +1196,7 @@ describe('Toolbar', function () {
 				describe('disable', function () {
 					it('Should disable buttons which can not be used in that mode', function () {
 						const editor = getJodit({
-							observer: {
+							history: {
 								timeout: 0 // disable delay
 							},
 							defaultMode: Jodit.MODE_SOURCE,
@@ -1270,7 +1270,7 @@ describe('Toolbar', function () {
 
 		it('When cursor inside SPAN tag with style="font-weight: bold" or style="font-weight: 700", Bold button should be selected', function () {
 			const editor = getJodit({
-					observer: {
+					history: {
 						timeout: 0 // disable delay
 					}
 				}),
@@ -1296,7 +1296,7 @@ describe('Toolbar', function () {
 				const area = appendTestArea();
 				area.value = 'top';
 				const editor = new Jodit(area, {
-					observer: {
+					history: {
 						timeout: 0 // disable delay
 					}
 				});
@@ -1321,7 +1321,7 @@ describe('Toolbar', function () {
 
 		it('Full size button', function () {
 			const editor = getJodit({
-				observer: {
+				history: {
 					timeout: 0 // disable delay
 				}
 			});
@@ -1457,7 +1457,7 @@ describe('Toolbar', function () {
 		describe('Active button', function () {
 			it('Should not be activated then element has default style', function () {
 				const editor = getJodit({
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});
@@ -1492,7 +1492,7 @@ describe('Toolbar', function () {
 				describe('Format block button', function () {
 					it('Should be activated then element has some tagname', function () {
 						const editor = getJodit({
-							observer: {
+							history: {
 								timeout: 0
 							}
 						});
@@ -1533,7 +1533,7 @@ describe('Toolbar', function () {
 			describe('Select text with several properties', function () {
 				it('Should select all buttons with conditions', function () {
 					const editor = getJodit({
-						observer: {
+						history: {
 							timeout: 0
 						}
 					});
@@ -1569,7 +1569,7 @@ describe('Toolbar', function () {
 					it('Should be activated editor has some selected text', function () {
 						const editor = getJodit({
 							toolbarAdaptive: false,
-							observer: {
+							history: {
 								timeout: 0
 							}
 						});
@@ -1593,7 +1593,7 @@ describe('Toolbar', function () {
 					it('Should be activated editor has some selected text', function () {
 						const editor = getJodit({
 							toolbarAdaptive: false,
-							observer: {
+							history: {
 								timeout: 0
 							}
 						});

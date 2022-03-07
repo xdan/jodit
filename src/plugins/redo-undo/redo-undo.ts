@@ -15,13 +15,13 @@ import { Plugin } from 'jodit/core/plugin';
 
 Config.prototype.controls.redo = {
 	mode: consts.MODE_SPLIT,
-	isDisabled: (editor: IJodit): boolean => !editor.observer.stack.canRedo(),
+	isDisabled: (editor: IJodit): boolean => !editor.history.canRedo(),
 	tooltip: 'Redo'
 } as IControlType;
 
 Config.prototype.controls.undo = {
 	mode: consts.MODE_SPLIT,
-	isDisabled: (editor: IJodit): boolean => !editor.observer.stack.canUndo(),
+	isDisabled: (editor: IJodit): boolean => !editor.history.canUndo(),
 	tooltip: 'Undo'
 } as IControlType;
 
@@ -47,7 +47,7 @@ export class redoUndo extends Plugin {
 
 	protected override afterInit(editor: IJodit): void {
 		const callback = (command: string): void | false => {
-			editor.observer[command as 'redo' | 'undo']();
+			editor.history[command as 'redo' | 'undo']();
 
 			return false;
 		};

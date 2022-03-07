@@ -31,7 +31,7 @@ describe('Test Inline mode', function () {
 
 				const editor = new Jodit(div, {
 					inline: true,
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});
@@ -62,7 +62,7 @@ describe('Test Inline mode', function () {
 				const editor = new Jodit(div, {
 					disablePlugins: ['WrapTextNodes'],
 					inline: true,
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});
@@ -106,7 +106,7 @@ describe('Test Inline mode', function () {
 
 				const editor = new Jodit(div, {
 					inline: true,
-					observer: {
+					history: {
 						timeout: 0
 					}
 				});
@@ -498,13 +498,13 @@ describe('Test Inline mode', function () {
 				it('Should hide inline popup in first', function () {
 					const editor = new Jodit(appendTestDiv(), {
 							preset: 'inline',
-							observer: {
+							history: {
 								timeout: 0
 							}
 						}),
 						editor2 = new Jodit(appendTestDiv(), {
 							preset: 'inline',
-							observer: {
+							history: {
 								timeout: 0
 							}
 						});

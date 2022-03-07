@@ -92,8 +92,8 @@ describe('WrapTextNodes plugin test', function () {
 			const editor = getJodit();
 			editor.value = 'test';
 			expect(editor.value).equals('<p>test</p>');
-			expect(editor.observer.stack.length).equals(1);
-			editor.observer.undo();
+			expect(editor.history.length).equals(1);
+			editor.history.undo();
 			expect(editor.value).equals('');
 		});
 	});

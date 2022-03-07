@@ -133,7 +133,7 @@ describe('Dialog system tests', function () {
 		describe('Opened dialog image', function () {
 			it('Should disable margin inputs for left, bottom, right if element has equals margins(margin:10px;)', function () {
 				const editor = getJodit({
-					observer: {
+					history: {
 						timeout: 0
 					},
 					image: {
@@ -160,7 +160,7 @@ describe('Dialog system tests', function () {
 
 			it('Should enable margin inputs for left, bottom, right if element has not equals margins(margin:10px 5px;)', function () {
 				const editor = getJodit({
-					observer: {
+					history: {
 						timeout: 0
 					},
 					image: {

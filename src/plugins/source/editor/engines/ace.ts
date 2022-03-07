@@ -270,13 +270,13 @@ export class AceEditor
 	}
 
 	replaceUndoManager(): void {
-		const { observer } = this.jodit;
+		const { history } = this.jodit;
 
 		this.instance.commands.addCommand({
 			name: 'Undo',
 			bindKey: { win: 'Ctrl-Z', mac: 'Command-Z' },
 			exec: () => {
-				observer.undo();
+				history.undo();
 			}
 		});
 
@@ -284,7 +284,7 @@ export class AceEditor
 			name: 'Redo',
 			bindKey: { win: 'Ctrl-Shift-Z', mac: 'Command-Shift-Z' },
 			exec: () => {
-				observer.redo();
+				history.redo();
 			}
 		});
 	}

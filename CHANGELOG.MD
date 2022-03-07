@@ -9,6 +9,43 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.16.1
+
+#### :boom: Breaking Change
+
+-   `Observer` module renamed to `History`, accessed via `Jodit.history`
+-   `Jodit.observer` field deprecated and will be removed in future releases
+-   Changed to `history` in `observer` settings. The `observer` field has been deprecated.
+-   Removed `stack` field from `History` class (former `Observer`).
+
+Before:
+
+```js
+const editor = Jodit.make({
+	observer: {
+		timeout: 1000,
+		maxHistoryLength: 100
+	}
+});
+editor.observer.stack.clear();
+```
+
+Now:
+
+```js
+const editor = Jodit.make({
+	history: {
+		timeout: 1000,
+		maxHistoryLength: 100
+	}
+});
+editor.history.clear();
+```
+
+#### :bug: Bug Fix
+
+-   [Colors popup closes when I select the secondary tab (Text) #171](https://github.com/jodit/jodit-react/issues/171)
+
 ## 3.15.2
 
 -   Fixed a bug when it was impossible to select a normal font after selecting any other
@@ -1147,11 +1184,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                         	{ value: "", text: "" },
--                                                                                                                                                         	{ value: "val1", text: "text1" },
--                                                                                                                                                         	{ value: "val2", text: "text2" },
--                                                                                                                                                         	{ value: "val3", text: "text3" }
--                                                                                                                                                         ]
+-                                                                                                                                                                     	{ value: "", text: "" },
+-                                                                                                                                                                     	{ value: "val1", text: "text1" },
+-                                                                                                                                                                     	{ value: "val2", text: "text2" },
+-                                                                                                                                                                     	{ value: "val3", text: "text3" }
+-                                                                                                                                                                     ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
