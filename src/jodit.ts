@@ -59,7 +59,8 @@ import {
 	markAsAtomic,
 	ConfigProto,
 	kebabCase,
-	isJoditObject
+	isJoditObject,
+	isNumber
 } from './core/helpers/';
 
 import { Storage } from './core/storage/';
@@ -126,9 +127,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * By default, `{history.timeout}` options
 	 */
 	override get defaultTimeout(): number {
-		return this.options && this.o.history
-			? this.o.history.timeout
-			: Config.defaultOptions.history.timeout;
+		return isNumber(this.o.defaultTimeout)
+			? this.o.defaultTimeout
+			: Config.defaultOptions.defaultTimeout;
 	}
 
 	/**

@@ -369,7 +369,8 @@ Jodit.defaultOptions.events.afterInit = function (editor) {
 		editor.container.setAttribute('data-test-case', window.mochaTestName);
 };
 Jodit.defaultOptions.filebrowser.saveStateInStorage = false;
-Jodit.defaultOptions.observer.timeout = 0;
+Jodit.defaultOptions.history.timeout = 0;
+Jodit.defaultOptions.defaultTimeout = 0;
 Jodit.defaultOptions.filebrowser.defaultTimeout = 0;
 Jodit.modules.View.defaultOptions.defaultTimeout = 0;
 

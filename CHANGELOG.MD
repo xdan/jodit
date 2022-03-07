@@ -17,16 +17,19 @@
 -   `Jodit.observer` field deprecated and will be removed in future releases
 -   Changed to `history` in `observer` settings. The `observer` field has been deprecated.
 -   Removed `stack` field from `History` class (former `Observer`).
+-   Separated default editor timeout and `history.timeout`. Now the second setting is just for history.
+    Timeouts for all asynchronous operations in Jodit now apply the `defaultTimeout` setting
 
 Before:
 
 ```js
 const editor = Jodit.make({
 	observer: {
-		timeout: 1000,
+		timeout: 122,
 		maxHistoryLength: 100
 	}
 });
+console.log(editor.defaultTimeout); // 122
 editor.observer.stack.clear();
 ```
 
@@ -34,11 +37,13 @@ Now:
 
 ```js
 const editor = Jodit.make({
+	defaultTimeout: 122,
 	history: {
 		timeout: 1000,
 		maxHistoryLength: 100
 	}
 });
+console.log(editor.defaultTimeout); // 122
 editor.history.clear();
 ```
 
@@ -1187,11 +1192,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                           	{ value: "", text: "" },
--                                                                                                                                                                           	{ value: "val1", text: "text1" },
--                                                                                                                                                                           	{ value: "val2", text: "text2" },
--                                                                                                                                                                           	{ value: "val3", text: "text3" }
--                                                                                                                                                                           ]
+-                                                                                                                                                                             	{ value: "", text: "" },
+-                                                                                                                                                                             	{ value: "val1", text: "text1" },
+-                                                                                                                                                                             	{ value: "val2", text: "text2" },
+-                                                                                                                                                                             	{ value: "val3", text: "text3" }
+-                                                                                                                                                                             ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

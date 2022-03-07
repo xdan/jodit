@@ -26,6 +26,11 @@ import * as consts from './core/constants';
  * Default Editor's Configuration
  */
 export class Config implements IViewOptions {
+	/**
+	 * Timeout of all asynchronous methods
+	 */
+	defaultTimeout: number = 100;
+
 	namespace: string = '';
 
 	/**
