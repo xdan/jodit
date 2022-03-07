@@ -41,7 +41,6 @@ export interface ISnapshot {
 }
 
 export interface IHistory {
-	// stack: IStack;
 	snapshot: ISnapshot;
 
 	redo(): void;
@@ -49,6 +48,8 @@ export interface IHistory {
 	undo(): void;
 	canUndo(): boolean;
 	readonly length: number;
+
+	processChanges(): void;
 
 	clear(): void;
 	upTick(): void;

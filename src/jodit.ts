@@ -432,6 +432,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	set value(html: string) {
 		this.setEditorValue(html);
+		this.history.processChanges();
 	}
 
 	/**

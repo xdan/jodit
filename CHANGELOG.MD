@@ -42,6 +42,9 @@ const editor = Jodit.make({
 editor.history.clear();
 ```
 
+-   When adding information to the editor via `Jodit.value`, the history of changes will be process immediately,
+    without a timeout. Read more https://github.com/xdan/jodit/issues/792
+
 #### :bug: Bug Fix
 
 -   [Colors popup closes when I select the secondary tab (Text) #171](https://github.com/jodit/jodit-react/issues/171)
@@ -1184,11 +1187,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                     	{ value: "", text: "" },
--                                                                                                                                                                     	{ value: "val1", text: "text1" },
--                                                                                                                                                                     	{ value: "val2", text: "text2" },
--                                                                                                                                                                     	{ value: "val3", text: "text3" }
--                                                                                                                                                                     ]
+-                                                                                                                                                                           	{ value: "", text: "" },
+-                                                                                                                                                                           	{ value: "val1", text: "text1" },
+-                                                                                                                                                                           	{ value: "val2", text: "text2" },
+-                                                                                                                                                                           	{ value: "val3", text: "text3" }
+-                                                                                                                                                                           ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

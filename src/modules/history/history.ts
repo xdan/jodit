@@ -134,6 +134,10 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 	 */
 	@debounce()
 	private onChange(): void {
+		this.processChanges();
+	}
+
+	processChanges(): void {
 		if (this.snapshot.isBlocked) {
 			return;
 		}
