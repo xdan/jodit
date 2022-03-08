@@ -45,12 +45,15 @@ export function toggleCSS(
 			) {
 				!dry && css(elm, rule, null);
 				mode = UNSET;
-				mode = removeExtraCSS(commitStyle, elm, mode);
+				mode = removeExtraStyleAttribute(commitStyle, elm, mode);
 				return;
 			}
 
 			mode = CHANGE;
 			!dry && css(elm, rule, style[rule]);
+			if (!dry) {
+				mode = removeExtraStyleAttribute(commitStyle, elm, mode);
+			}
 		});
 	}
 
@@ -71,7 +74,7 @@ export function toggleCSS(
  * If the element has an empty style attribute, it removes the attribute,
  * and if it is default, it removes the element itself
  */
-function removeExtraCSS(
+function removeExtraStyleAttribute(
 	commitStyle: CommitStyle,
 	elm: HTMLElement,
 	mode: CommitMode

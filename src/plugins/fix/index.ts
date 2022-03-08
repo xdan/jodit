@@ -4,5 +4,9 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/fix
+ */
+
 export * from './clean-html/clean-html';
 export * from './wrap-nodes/wrap-nodes';

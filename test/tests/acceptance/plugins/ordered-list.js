@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Test orderedList plugin', function () {
 	describe('Commands', function () {
 		describe('Unordered', function () {
@@ -223,13 +224,9 @@ describe('Test orderedList plugin', function () {
 				it('should wrap current box in new <ul><li> element', function () {
 					const editor = getJodit();
 
-					editor.value = '<p>Text to text</p>';
+					editor.value = '<p>|Text to text</p>';
 
-					const range = editor.s.createRange();
-
-					range.setStart(editor.editor.firstChild.firstChild, 0);
-					range.collapse(true);
-					editor.s.selectRange(range);
+					setCursorToChar(editor);
 
 					clickButton('ul', editor);
 
@@ -247,13 +244,8 @@ describe('Test orderedList plugin', function () {
 				it('should wrap current box in new <ul><li> element with list-style-type', function () {
 					const editor = getJodit();
 
-					editor.value = '<p>Text to text</p>';
-
-					const range = editor.s.createRange();
-
-					range.setStart(editor.editor.firstChild.firstChild, 0);
-					range.collapse(true);
-					editor.s.selectRange(range);
+					editor.value = '<p>|Text to text</p>';
+					setCursorToChar(editor);
 
 					clickTrigger('ul', editor);
 					clickButton('circle', getOpenedPopup(editor));
@@ -263,6 +255,31 @@ describe('Test orderedList plugin', function () {
 					expect(sortAttributes(editor.value)).equals(
 						'<ul style="list-style-type:circle"><li>test Text to text</li></ul>'
 					);
+				});
+
+				describe('click on default after this', function () {
+					it('should remove extra list style', function () {
+						const editor = getJodit();
+
+						editor.value = '<p>|Text to text</p>';
+						setCursorToChar(editor);
+
+						clickTrigger('ul', editor);
+						clickButton('circle', getOpenedPopup(editor));
+
+						expect(sortAttributes(editor.value)).equals(
+							'<ul style="list-style-type:circle"><li>Text to text</li></ul>'
+						);
+
+						clickTrigger('ul', editor);
+						clickButton('default', getOpenedPopup(editor));
+						expect(getOpenedPopup(editor)).is.null;
+
+						replaceCursorToChar(editor);
+						expect(sortAttributes(editor.value)).equals(
+							'<ul><li>|Text to text</li></ul>'
+						);
+					});
 				});
 			});
 
