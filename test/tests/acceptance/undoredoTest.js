@@ -81,6 +81,21 @@ describe('Undo/Redo behaviors', function () {
 					'<p>test</p><ul><li>test2</li><li>test3</li><li><a>test4</a></li></ul>'
 				);
 			});
+
+			describe('Several changes from autside with editor.value', function () {
+				it('Should change redo/undo stack immediately', function () {
+					const editor = getJodit();
+
+					editor.value = '<p>test1<p>';
+					expect(editor.history.length).eq(1);
+					editor.value = '<p>test2<p>';
+					expect(editor.history.length).eq(2);
+					editor.value = '<p>test3<p>';
+					expect(editor.history.length).eq(3);
+					editor.value = '<p>test3<p>';
+					expect(editor.history.length).eq(3);
+				});
+			});
 		});
 	});
 
