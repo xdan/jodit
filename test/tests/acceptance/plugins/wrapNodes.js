@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('WrapTextNodes plugin test', function () {
+describe('WrapNodes plugin test', function () {
 	describe('Simple text', function () {
 		it('Should wrap inside default block element', function () {
 			const editor = getJodit();
@@ -98,10 +98,22 @@ describe('WrapTextNodes plugin test', function () {
 		});
 	});
 
+	describe('Exclude tags', function () {
+		it('Should not wrap this tags', function () {
+			const editor = getJodit({
+				wrapNodes: {
+					exclude: ['img']
+				}
+			});
+			editor.value = 'test <img>';
+			expect(editor.value).equals('<p>test </p><img>');
+		});
+	});
+
 	describe('Disable plugin', function () {
 		it('Should not change anything', function () {
 			const editor = getJodit({
-				disablePlugins: ['WrapTextNodes']
+				disablePlugins: ['WrapNodes']
 			});
 
 			editor.value = 'test';
