@@ -56,7 +56,7 @@ describe('Commands Jodit Editor Tests', function () {
 
 		it('Try exec the command "formatBlock" in text node then selection is collapsed it should wrap it node in H1', function () {
 			const editor = getJodit({
-				disablePlugins: ['WrapTextNodes']
+				disablePlugins: ['WrapNodes']
 			});
 			editor.value = 'test';
 
@@ -77,7 +77,7 @@ describe('Commands Jodit Editor Tests', function () {
 
 		it('Try exec the command "formatBlock" in the end of text node then selection is collapsed it should wrap it node in H1', function () {
 			const editor = getJodit({
-				disablePlugins: ['WrapTextNodes']
+				disablePlugins: ['WrapNodes']
 			});
 			editor.value = 'test';
 
@@ -301,7 +301,7 @@ describe('Commands Jodit Editor Tests', function () {
 
 		it('Should wrap text into H1 tag near Table, but table must be after this tag', function () {
 			const editor = getJodit({
-				disablePlugins: ['WrapTextNodes']
+				disablePlugins: ['WrapNodes']
 			});
 			editor.value = 'test<table><tr><td>post</td></tr></table>';
 
@@ -324,7 +324,7 @@ describe('Commands Jodit Editor Tests', function () {
 		describe('justifyLeft', function () {
 			it('Should set align for element which was created using formatBlock', function () {
 				const editor = getJodit({
-					disablePlugins: ['WrapTextNodes']
+					disablePlugins: ['WrapNodes']
 				});
 				editor.value = 'testy oprst <span>lets go</span>';
 
@@ -386,7 +386,7 @@ describe('Commands Jodit Editor Tests', function () {
 
 		it('Set colour to collapsed position should create empty span and insert inward cursor', function () {
 			const editor = getJodit({
-				disablePlugins: ['WrapTextNodes']
+				disablePlugins: ['WrapNodes']
 			});
 			editor.value = 'testy oprst <span>lets go</span>';
 
@@ -422,7 +422,7 @@ describe('Commands Jodit Editor Tests', function () {
 
 		it('Justify to center', function () {
 			const editor = getJodit({
-				disablePlugins: ['WrapTextNodes']
+				disablePlugins: ['WrapNodes']
 			});
 			editor.value = 'te|st';
 
@@ -437,7 +437,7 @@ describe('Commands Jodit Editor Tests', function () {
 
 		it('Justify to left', () => {
 			const editor = getJodit({
-				disablePlugins: ['WrapTextNodes']
+				disablePlugins: ['WrapNodes']
 			});
 
 			editor.value = 'test som|e text <span>test</span><br><p>data</p>';
@@ -581,7 +581,7 @@ describe('Commands Jodit Editor Tests', function () {
 	describe('Register sustom command', function () {
 		it('Should register command and hotkeys for it', function () {
 			const editor = getJodit({
-				disablePlugins: ['WrapTextNodes']
+				disablePlugins: ['WrapNodes']
 			});
 
 			editor.value = 'test test test';

@@ -194,7 +194,7 @@ describe('Search plugin', function () {
 
 		it('Should find the next match in a circle', function () {
 			const editor = getJodit({
-				disablePlugins: ['WrapTextNodes'],
+				disablePlugins: ['WrapNodes'],
 
 				history: {
 					timeout: 0

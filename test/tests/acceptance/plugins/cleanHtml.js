@@ -126,7 +126,7 @@ describe('Clean html plugin', function () {
 						test[1]
 					)}"`, function () {
 						const editor = getJodit({
-							disablePlugins: ['WrapTextNodes']
+							disablePlugins: ['WrapNodes']
 						});
 
 						editor.value = test[0];

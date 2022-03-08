@@ -60,7 +60,7 @@ describe('Test Inline mode', function () {
 				getBox().appendChild(div);
 
 				const editor = new Jodit(div, {
-					disablePlugins: ['WrapTextNodes'],
+					disablePlugins: ['WrapNodes'],
 					inline: true,
 					history: {
 						timeout: 0

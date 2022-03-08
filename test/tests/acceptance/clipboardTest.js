@@ -940,7 +940,7 @@ describe('Clipboard text', function () {
 			describe('Keep format', function () {
 				it('Should paste as is', function () {
 					const editor = getJodit({
-						disablePlugins: ['WrapTextNodes']
+						disablePlugins: ['WrapNodes']
 					});
 
 					simulateEvent('paste', editor.editor, emulatePasteEvent);

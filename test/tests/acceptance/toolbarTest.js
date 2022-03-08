@@ -1733,7 +1733,7 @@ describe('Toolbar', function () {
 					secondEditPlace = appendTestDiv('secondEditPlace'),
 					thirdEditPlace = appendTestDiv('thirdEditPlace'),
 					editor = Jodit.make(firstEditPlace, {
-						disablePlugins: ['WrapTextNodes']
+						disablePlugins: ['WrapNodes']
 					});
 
 				editor.setPanel(toolbarBox);

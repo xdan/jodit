@@ -862,7 +862,7 @@ describe('Selection Module Tests', function () {
 	describe('Method eachSelection', function () {
 		it('Should call callback for each node in selection', function () {
 			const editor = getJodit({
-				disablePlugins: ['WrapTextNodes']
+				disablePlugins: ['WrapNodes']
 			});
 			editor.value =
 				'|<p>1</p><p>2</p><strong><span>22</span></strong><p>4</p>stop|';
@@ -880,7 +880,7 @@ describe('Selection Module Tests', function () {
 		});
 
 		it('Should call callback for each node in selection range', function () {
-			const editor = getJodit({ disablePlugins: ['WrapTextNodes'] });
+			const editor = getJodit({ disablePlugins: ['WrapNodes'] });
 			editor.value =
 				'<p>1</p>|<p>2</p><strong><span>22</span></strong><p>4</p>|stop';
 
