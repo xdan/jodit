@@ -16,8 +16,7 @@ export { focus } from './focus/focus';
 export { classSpan } from './class-span/class-span';
 export { Backspace } from './keyboard/backspace/backspace';
 export { bold } from './bold/bold';
-export { cleanHtml } from './fix/clean-html';
-export { WrapTextNodes } from './fix/wrap-text-nodes';
+export { WrapNodes, cleanHtml } from './fix';
 export {
 	copyFormat,
 	clipboard,
