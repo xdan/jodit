@@ -99,9 +99,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		return this.async.promise(resolve => {
-			this.hookStatus('ready', () => {
-				resolve(this);
-			});
+			this.hookStatus('ready', () => resolve(this));
 		});
 	}
 
