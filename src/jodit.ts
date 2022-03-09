@@ -68,7 +68,7 @@ import { Storage } from './core/storage/';
 import { ViewWithToolbar } from './core/view/view-with-toolbar';
 
 import { instances, pluginSystem, modules, lang } from './core/global';
-import { autobind, cache } from './core/decorators';
+import { autobind, cache, throttle, watch } from './core/decorators';
 
 const __defaultStyleDisplayKey = 'data-jodit-default-style-display';
 const __defaultClassesKey = 'data-jodit-default-classes';
@@ -78,7 +78,7 @@ const __defaultClassesKey = 'data-jodit-default-classes';
  */
 export class Jodit extends ViewWithToolbar implements IJodit {
 	/** @override */
-	className(): string {
+	override className(): string {
 		return 'Jodit';
 	}
 
@@ -99,7 +99,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		return this.async.promise(resolve => {
-			this.hookStatus('ready', () => resolve(this));
+			this.hookStatus('ready', () => {
+				resolve(this);
+			});
 		});
 	}
 
@@ -499,6 +501,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	private __callChangeCount = 0;
 
+	@throttle()
+	synchronizeValues(): void {
+		this.setEditorValue();
+	}
+
 	/**
 	 * Set editor html value and if set sync fill source element value
 	 * When method was called without arguments - it is simple way to synchronize editor to element
@@ -567,6 +574,14 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				this.__callChangeCount = 0;
 			}
 		}
+	}
+
+	/**
+	 * If some plugin changes the DOM directly, then you need to update the content of the original element
+	 */
+	@watch(':internalChange')
+	protected updateElementValue(): void {
+		this.setElementValue(this.getEditorValue());
 	}
 
 	/**
@@ -1470,12 +1485,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	private prepareWYSIWYGEditor() {
 		const { editor } = this;
 
-		if (this.o.spellcheck) {
-			this.editor.setAttribute('spellcheck', 'true');
-		} else {
-			this.editor.setAttribute('spellcheck', 'false');
-		}
-
 		// direction
 		if (this.o.direction) {
 			const direction =
@@ -1494,9 +1503,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 					this.setCurrentPlace(place);
 				}
 			})
-			.on(editor, 'compositionend', () => {
-				this.setEditorValue();
-			})
+			.on(editor, 'compositionend', this.synchronizeValues)
 			.on(
 				editor,
 				'selectionchange selectionstart keydown keyup input keypress dblclick mousedown mouseup ' +
@@ -1519,7 +1526,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 							return false;
 						}
 
-						this.setEditorValue();
+						this.synchronizeValues();
 					}
 				}
 			);

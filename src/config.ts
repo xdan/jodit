@@ -162,11 +162,6 @@ export class Config implements IViewOptions {
 	 */
 	saveModeInStorage: boolean = false;
 
-	/**
-	 * Options specifies whether the editor is to have its spelling and grammar checked or not
-	 * @see {@link http://www.w3schools.com/tags/att_global_spellcheck.asp}
-	 */
-	spellcheck: boolean = true;
 
 	/**
 	 * Class name that can be appended to the editor

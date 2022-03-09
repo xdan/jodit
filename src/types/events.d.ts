@@ -171,9 +171,9 @@ interface IEventEmitter extends IDestructible {
 	 *  events.fire(document.body.querySelector('div'), 'click');
 	 * ```
 	 */
-	fire(subjectOrEvents: string, ...args: any[]): any;
+	fire(eventsList: string, ...args: any[]): any;
 	fire(
-		subjectOrEvents: object,
+		subject: object,
 		eventsList: string | Event,
 		...args: any[]
 	): any;
