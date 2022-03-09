@@ -1,0 +1,34 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+/**
+ * @module plugins/spellcheck
+ */
+
+import type { IControlType, IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
+
+declare module 'jodit/config' {
+	interface Config {
+		/**
+		 * Options specifies whether the editor is to have its spelling and grammar checked or not
+		 * @see {@link http://www.w3schools.com/tags/att_global_spellcheck.asp}
+		 */
+		spellcheck: boolean;
+	}
+}
+
+Config.prototype.spellcheck = false;
+
+Config.prototype.controls.spellcheck = {
+	isActive(e: IJodit): boolean {
+		return e.o.spellcheck;
+	},
+	icon: require('./spellcheck.svg'),
+	name: 'spellcheck',
+	command: 'toggleSpellcheck',
+	tooltip: 'Spellchecking'
+} as IControlType;

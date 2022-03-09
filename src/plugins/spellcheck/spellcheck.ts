@@ -1,0 +1,45 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+/**
+ * [[include:plugins/spellcheck/README.md]]
+ * @packageDocumentation
+ * @module plugins/spellcheck
+ */
+
+import type { IJodit } from 'jodit/types';
+import { Plugin } from 'jodit/core/plugin';
+import { attr } from 'jodit/core/helpers/utils/utils';
+import { autobind } from 'jodit/core/decorators';
+
+import './config';
+
+export class spellcheck extends Plugin {
+	override buttons: Plugin['buttons'] = [
+		{
+			group: 'state',
+			name: 'spellcheck'
+		}
+	];
+
+	protected afterInit(jodit: IJodit): void {
+		jodit.e.on('afterInit afterAddPlace', this.toggleSpellcheck);
+		this.toggleSpellcheck();
+
+		jodit.registerCommand('toggleSpellcheck', () => {
+			this.jodit.o.spellcheck = !this.jodit.o.spellcheck;
+			this.toggleSpellcheck();
+			this.j.e.fire('updateToolbar');
+		});
+	}
+
+	@autobind
+	private toggleSpellcheck(): void {
+		attr(this.jodit.editor, 'spellcheck', this.jodit.o.spellcheck);
+	}
+
+	protected beforeDestruct(jodit: IJodit): void {}
+}
