@@ -15,7 +15,8 @@ import type {
 	IDictionary,
 	IJodit,
 	Nullable,
-	IPlugin
+	IPlugin,
+	CanUndef
 } from 'jodit/types';
 import {
 	INVISIBLE_SPACE_REG_EXP as INV_REG,
@@ -25,7 +26,7 @@ import {
 import { Dom } from 'jodit/modules';
 import { attr, isString, keys, safeHTML, trim } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
-import { watch, autobind, debounce } from 'jodit/core/decorators';
+import { watch, autobind, debounce, hook } from 'jodit/core/decorators';
 import { findNotEmptySibling } from 'jodit/plugins/keyboard/helpers';
 
 import './config';
@@ -112,20 +113,47 @@ export class cleanHtml extends Plugin {
 			}
 		}
 
-		let node: Node | null = null;
+		this.hasChangesAfterWork = false;
+		this.workNodes = [editor.editor.firstChild];
+		this.currentSelectionNode = current;
+	}
 
-		if (editor.editor.firstChild) {
-			node = editor.editor.firstChild as Element;
+	private workNodes: Nullable<Node>[] = [];
+	private hasChangesAfterWork: boolean = false;
+	private isWorked: boolean = false;
+	private currentSelectionNode: Nullable<Node> = null;
+
+	@hook('ready')
+	protected restartWorker(): void {
+		const { timeout } = this.j.o.cleanHTML;
+		this.j.async.requestIdleCallback(this.workPerform, {
+			timeout
+		});
+	}
+
+	@autobind
+	protected workPerform(deadline: IdleDeadline): void {
+		if (this.workNodes.length) {
+			this.isWorked = true;
+
+			while (
+				(deadline.timeRemaining() > 0 || deadline.didTimeout) &&
+				this.workNodes.length
+			) {
+				if (this.visitNode(this.workNodes.pop())) {
+					this.hasChangesAfterWork = true;
+				}
+			}
+		} else if (this.hasChangesAfterWork) {
+			this.hasChangesAfterWork = false;
+			this.isWorked = false;
+			this.j.e.fire('internalChange finishedCleanHTMLWorker');
+		} else if (this.isWorked) {
+			this.isWorked = false;
+			this.j.e.fire('finishedCleanHTMLWorker');
 		}
 
-		const remove: Node[] = [];
-		const work = this.visitNode(node, current, remove);
-
-		remove.forEach(Dom.safeRemove);
-
-		if (remove.length || work) {
-			editor.events && editor.e.fire('synchro');
-		}
+		this.restartWorker();
 	}
 
 	private allowEdit(): boolean {
@@ -136,22 +164,23 @@ export class cleanHtml extends Plugin {
 		);
 	}
 
-	private visitNode = (
-		nodeElm: Nullable<Element | Node>,
-		current: Nullable<Node>,
-		remove: Node[]
-	): boolean => {
-		let work = false;
+	private visitNode(nodeElm: CanUndef<Nullable<Element | Node>>): boolean {
+		let hasChanges = false;
 
 		if (!nodeElm) {
-			return work;
+			return hasChanges;
 		}
 
-		nodeElm = this.replaceIfMatched(nodeElm);
+		const newNodeElm = this.replaceIfMatched(nodeElm);
+		if (nodeElm !== newNodeElm) {
+			nodeElm = newNodeElm;
+			hasChanges = true;
+		}
 
-		if (this.isRemovableNode(nodeElm, current)) {
-			remove.push(nodeElm);
-			return this.visitNode(nodeElm.nextSibling, current, remove);
+		if (this.isRemovableNode(nodeElm, this.currentSelectionNode)) {
+			this.workNodes.push(nodeElm.nextSibling);
+			Dom.safeRemove(nodeElm);
+			return true;
 		}
 
 		if (
@@ -160,14 +189,17 @@ export class cleanHtml extends Plugin {
 			Dom.isEmpty(nodeElm, /^(img|svg|canvas|input|textarea|form|br)$/)
 		) {
 			const br = this.j.createInside.element('br');
-
 			nodeElm.appendChild(br);
-			work = true;
+			hasChanges = true;
 		}
 
 		const allow = this.allowTagsHash;
 
-		if (allow && allow[nodeElm.nodeName] !== true) {
+		if (
+			allow &&
+			Dom.isElement(nodeElm) &&
+			allow[nodeElm.nodeName] !== true
+		) {
 			const attrs: NamedNodeMap = (nodeElm as Element).attributes;
 
 			if (attrs && attrs.length) {
@@ -182,7 +214,7 @@ export class cleanHtml extends Plugin {
 				}
 
 				if (removeAttrs.length) {
-					work = true;
+					hasChanges = true;
 				}
 
 				removeAttrs.forEach(attr => {
@@ -191,22 +223,21 @@ export class cleanHtml extends Plugin {
 			}
 		}
 
-		work = this.visitNode(nodeElm.firstChild, current, remove) || work;
-		work = this.visitNode(nodeElm.nextSibling, current, remove) || work;
-
-		return work;
-	};
+		this.workNodes.push(nodeElm.firstChild, nodeElm.nextSibling);
+		return hasChanges;
+	}
 
 	private static getHash(
 		tags: false | string | IDictionary<string>
 	): IDictionary | false {
 		const attributesReg = /([^[]*)\[([^\]]+)]/;
-		const seperator = /[\s]*,[\s]*/,
+		const separator = /[\s]*,[\s]*/,
 			attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
+
 		const tagsHash: IDictionary = {};
 
 		if (isString(tags)) {
-			tags.split(seperator).map((elm: string) => {
+			tags.split(separator).map((elm: string) => {
 				elm = trim(elm);
 				const attr: RegExpExecArray | null = attributesReg.exec(elm),
 					allowAttributes: IDictionary<string | boolean> = {},
@@ -223,7 +254,8 @@ export class cleanHtml extends Plugin {
 					};
 
 				if (attr) {
-					const attr2: string[] = attr[2].split(seperator);
+					const attr2: string[] = attr[2].split(separator);
+
 					if (attr[1]) {
 						attr2.forEach(attributeMap);
 						tagsHash[attr[1].toUpperCase()] = allowAttributes;

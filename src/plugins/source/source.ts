@@ -86,7 +86,7 @@ export class source extends Plugin {
 		}
 
 		this.__lock = true;
-		this.j.setEditorValue(value);
+		this.j.value = value;
 		this.__lock = false;
 		this.__oldMirrorValue = value;
 	}
@@ -168,7 +168,7 @@ export class source extends Plugin {
 	protected saveSelection(): void {
 		if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
 			this.j.s.save();
-			this.j.setEditorValue();
+			this.j.synchronizeValues();
 			this.fromWYSIWYG(true);
 		} else {
 			if (this.j.o.editHTMLDocumentMode) {

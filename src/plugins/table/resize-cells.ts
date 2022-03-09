@@ -235,7 +235,7 @@ export class resizeCells extends Plugin {
 			}
 		}
 
-		this.j.setEditorValue();
+		this.j.synchronizeValues();
 		this.j.s.focus();
 	}
 

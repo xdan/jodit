@@ -209,7 +209,7 @@ export function color(editor: IJodit): void {
 				break;
 		}
 
-		editor.setEditorValue();
+		editor.synchronizeValues();
 		return false;
 	};
 

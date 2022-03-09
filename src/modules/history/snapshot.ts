@@ -185,7 +185,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 
 		const value = this.j.getNativeEditorValue();
 		if (value !== snapshot.html) {
-			this.j.setEditorValue(snapshot.html);
+			this.j.value = snapshot.html;
 		}
 
 		this.restoreOnlySelection(snapshot);

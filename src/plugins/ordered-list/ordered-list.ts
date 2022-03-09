@@ -46,7 +46,7 @@ export class orderedList extends Plugin {
 			}
 		);
 
-		this.jodit.setEditorValue();
+		this.jodit.synchronizeValues();
 
 		return false;
 	}

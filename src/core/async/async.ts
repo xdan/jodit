@@ -277,7 +277,10 @@ export class Async implements IAsync {
 
 	private requestIdleCallbackNative =
 		(window as any)['requestIdleCallback']?.bind(window) ??
-		((callback: IdleRequestCallback): number => {
+		((
+			callback: IdleRequestCallback,
+			options?: { timeout: number }
+		): number => {
 			const start = Date.now();
 
 			return this.setTimeout(() => {
@@ -285,7 +288,7 @@ export class Async implements IAsync {
 					didTimeout: false,
 					timeRemaining: () => Math.max(0, 50 - (Date.now() - start))
 				});
-			}, 1);
+			}, options?.timeout ?? 1);
 		});
 
 	private cancelIdleCallbackNative =
@@ -294,15 +297,23 @@ export class Async implements IAsync {
 			this.clearTimeout(request);
 		});
 
-	requestIdleCallback(callback: IdleRequestCallback): number {
-		const request = this.requestIdleCallbackNative(callback);
+	requestIdleCallback(
+		callback: IdleRequestCallback,
+		options?: { timeout: number }
+	): number {
+		const request = this.requestIdleCallbackNative(callback, options);
 		this.requestsIdle.add(request);
 		return request;
 	}
 
-	requestIdlePromise(): RejectablePromise<number> {
+	requestIdlePromise(options?: {
+		timeout: number;
+	}): RejectablePromise<number> {
 		return this.promise<number>(res => {
-			const request = this.requestIdleCallback(() => res(request));
+			const request = this.requestIdleCallback(
+				() => res(request),
+				options
+			);
 		});
 	}
 

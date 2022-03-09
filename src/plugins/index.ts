@@ -56,6 +56,7 @@ export { size, resizeHandler } from './size';
 export { source } from './source';
 export { stat } from './stat/stat';
 export { sticky } from './sticky/sticky';
+export { spellcheck } from './spellcheck/spellcheck';
 export { symbols } from './symbols/symbols';
 export * from './table';
 export { tooltip } from './tooltip/tooltip';

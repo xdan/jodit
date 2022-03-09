@@ -87,8 +87,8 @@ describe('WrapNodes plugin test', function () {
 		});
 	});
 
-	describe('Undo/redo stack', function () {
-		it('Should not change', function () {
+	describe('History', function () {
+		it('Should not change history stack length', function () {
 			const editor = getJodit();
 			editor.value = 'test';
 			expect(editor.value).equals('<p>test</p>');

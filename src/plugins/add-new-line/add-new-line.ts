@@ -230,7 +230,7 @@ export class addNewLine extends Plugin {
 			}
 
 			editor.s.setCursorIn(p);
-			editor.setEditorValue();
+			editor.synchronizeValues();
 
 			this.hideForce();
 			e.preventDefault();

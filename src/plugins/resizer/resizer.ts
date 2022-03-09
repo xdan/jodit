@@ -288,7 +288,7 @@ export class resizer extends Plugin {
 			if (this.isResized) {
 				this.j.unlock();
 				this.isResized = false;
-				this.j.setEditorValue();
+				this.j.synchronizeValues();
 				e.stopImmediatePropagation();
 
 				this.j.e.off(

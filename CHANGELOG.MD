@@ -11,9 +11,22 @@
 
 ## 3.16.1
 
+#### :rocket: New Feature
+
+- Added `spellcheck` plugin.
+
 #### :boom: Breaking Change
 
 -   Renamed `wrap-text-nodes` plugin to `wrap-nodes`
+-   Option `spellcheck` = false by default. This is due to the fact that the built-in spell check slows down the editor very much on large tests.
+
+#### :bug: Bug Fix
+
+-   [Default is not working for insert ordered list and insert unordered list #799](https://github.com/xdan/jodit/issues/799)
+
+#### :house: Internal
+
+- `clean-html` plugin now works via `requestIdleCallback` and doesn't slow down the browser
 
 ## 3.15.3
 
@@ -1198,11 +1211,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                               	{ value: "", text: "" },
--                                                                                                                                                                               	{ value: "val1", text: "text1" },
--                                                                                                                                                                               	{ value: "val2", text: "text2" },
--                                                                                                                                                                               	{ value: "val3", text: "text3" }
--                                                                                                                                                                               ]
+-                                                                                                                                                                                 	{ value: "", text: "" },
+-                                                                                                                                                                                 	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                 	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                 	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                 ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

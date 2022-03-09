@@ -46,7 +46,7 @@ export class xpath extends Plugin {
 					} else {
 						this.j.value = '';
 					}
-					this.j.setEditorValue();
+					this.j.synchronizeValues();
 				}
 			},
 			{

@@ -43,7 +43,7 @@ export default [
 						});
 
 						editor.lock();
-						editor.setEditorValue();
+						editor.synchronizeValues();
 						close();
 						editor.unlock();
 					},

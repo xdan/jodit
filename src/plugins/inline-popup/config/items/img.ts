@@ -38,7 +38,7 @@ export const align: IControlType<IJodit> = {
 			hAlignElement(elm.firstElementChild as HTMLElement, command);
 		}
 
-		editor.setEditorValue();
+		editor.synchronizeValues();
 
 		editor.e.fire('recalcPositionPopup');
 	},

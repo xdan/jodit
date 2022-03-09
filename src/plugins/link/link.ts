@@ -116,7 +116,7 @@ Config.prototype.controls.unlink = {
 			Dom.unwrap(anchor);
 		}
 
-		editor.setEditorValue();
+		editor.synchronizeValues();
 		editor.e.fire('hidePopup');
 	},
 	tooltip: 'Unlink'
@@ -371,7 +371,7 @@ export class link extends Plugin {
 					Dom.unwrap(link);
 				}
 
-				jodit.setEditorValue();
+				jodit.synchronizeValues();
 
 				close();
 				e.preventDefault();
@@ -487,7 +487,7 @@ export class link extends Plugin {
 				}
 			});
 
-			jodit.setEditorValue();
+			jodit.synchronizeValues();
 
 			close();
 

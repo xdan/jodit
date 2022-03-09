@@ -131,7 +131,7 @@ export function formatBlock(editor: IJodit): void {
 				element: third as HTMLTagNames
 			});
 
-			editor.setEditorValue();
+			editor.synchronizeValues();
 
 			return false;
 		}

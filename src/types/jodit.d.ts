@@ -45,6 +45,7 @@ interface IJodit extends IViewWithToolbar {
 	getNativeEditorValue(): string;
 	getEditorValue(removeSelectionMarkers?: boolean, consumer?: string): string;
 	setEditorValue(value?: string): void;
+	synchronizeValues(): void;
 
 	getReadOnly(): boolean;
 	setReadOnly(enable: boolean): void;

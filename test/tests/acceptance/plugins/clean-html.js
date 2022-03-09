@@ -152,23 +152,52 @@ describe('Clean html plugin', function () {
 		});
 	});
 
-	describe('Replace old tags', function () {
-		it('Should replace old tags to new', function () {
+	describe('History', function () {
+		it('Should not change history stack length', function (done) {
 			const editor = getJodit({
 				cleanHTML: {
 					timeout: 0
 				}
 			});
 
-			editor.value = 'test <b>old</b> test';
+			editor.value = '<p>test <b>old</b> test</p>';
+			expect(editor.history.length).eq(1);
 
-			expect(editor.value).equals(
-				'<p>test <strong>old</strong> test</p>'
-			);
+			editor.e.on('finishedCleanHTMLWorker', () => {
+				expect(editor.value).equals(
+					'<p>test <strong>old</strong> test</p>'
+				);
+
+				expect(editor.history.length).eq(1);
+				done();
+			});
+		});
+
+		describe('Replace old tags', function () {
+			it('Should replace old tags to new', function (done) {
+				const editor = getJodit({
+					cleanHTML: {
+						timeout: 0
+					}
+				});
+
+				editor.value = 'test <b>old</b> test';
+
+				editor.e.on('finishedCleanHTMLWorker', () => {
+					expect(editor.value).equals(
+						'<p>test <strong>old</strong> test</p>'
+					);
+
+					expect(editor.element.value).equals(
+						'<p>test <strong>old</strong> test</p>'
+					);
+					done();
+				});
+			});
 		});
 
 		describe('Replace custom tags', function () {
-			it('Should replace tags', function () {
+			it('Should replace tags', function (done) {
 				const editor = getJodit({
 					cleanHTML: {
 						replaceOldTags: {
@@ -185,14 +214,17 @@ describe('Clean html plugin', function () {
 
 				editor.s.insertHTML(' some ');
 
-				expect(editor.value).equals(
-					'<div>test <strong>ol some d</strong> test</div>'
-				);
+				editor.e.on('finishedCleanHTMLWorker', () => {
+					expect(editor.value).equals(
+						'<div>test <strong>ol some d</strong> test</div>'
+					);
+					done();
+				});
 			});
 		});
 
 		describe('Disable', function () {
-			it('Should not replace old tags to new', function () {
+			it('Should not replace old tags to new', function (done) {
 				const editor = getJodit({
 					cleanHTML: {
 						replaceOldTags: false,
@@ -210,16 +242,19 @@ describe('Clean html plugin', function () {
 
 				editor.s.insertHTML(' some ');
 
-				expect(editor.value).equals(
-					'<p>test <b>ol some d</b> test</p>'
-				);
+				editor.e.on('finishedCleanHTMLWorker', () => {
+					expect(editor.value).equals(
+						'<p>test <b>ol some d</b> test</p>'
+					);
+					done();
+				});
 			});
 		});
 	});
 
 	describe('Deny tags', function () {
 		describe('Parameter like string', function () {
-			it('Should remove all tags in denyTags options', function () {
+			it('Should remove all tags in denyTags options', function (done) {
 				const editor = getJodit({
 					cleanHTML: {
 						denyTags: 'p'
@@ -228,42 +263,52 @@ describe('Clean html plugin', function () {
 
 				editor.value = '<p>te<strong>stop</strong>st</p><h1>pop</h1>';
 
-				expect(editor.value).equals('<h1>pop</h1>');
+				editor.e.on('finishedCleanHTMLWorker', () => {
+					expect(editor.value).equals('<h1>pop</h1>');
+					done();
+				});
 			});
 		});
 	});
 
 	describe('Allow tags', function () {
 		describe('Parameter like string', function () {
-			it('Should remove all tags not in allowTags options', function () {
+			it('Should remove all tags not in allowTags options', function (done) {
 				const editor = getJodit({
 					cleanHTML: {
+						timeout: 0,
 						allowTags: 'p'
 					}
 				});
 
 				editor.value = '<p>te<strong>stop</strong>st</p><h1>pop</h1>';
-
-				expect(editor.value).equals('<p>test</p>');
+				editor.e.on('finishedCleanHTMLWorker', () => {
+					expect(editor.value).equals('<p>test</p>');
+					done();
+				});
 			});
 		});
 
 		describe('Parameter like hash', function () {
-			it('Should remove all tags not in allowTags options', function () {
+			it('Should remove all tags not in allowTags options', function (done) {
 				const editor = getJodit({
 					cleanHTML: {
+						timeout: 0,
 						allowTags: {
 							p: true
 						}
 					}
 				});
 				editor.value = '<p>te<strong>stop</strong>st</p><h1>pop</h1>';
-				expect(editor.value).equals('<p>test</p>');
+				editor.e.on('finishedCleanHTMLWorker', () => {
+					expect(editor.value).equals('<p>test</p>');
+					done();
+				});
 			});
 		});
 
 		describe('Allow attributes', function () {
-			it('Should remove all attributes from element and remove not in allowTags options', function () {
+			it('Should remove all attributes from element and remove not in allowTags options', function (done) {
 				const editor = getJodit({
 					cleanHTML: {
 						allowTags: {
@@ -273,14 +318,21 @@ describe('Clean html plugin', function () {
 						}
 					}
 				});
+
 				editor.value =
 					'<p style="color: red;" data-id="111">te<strong>stop</strong>st</p><h1>pop</h1>';
-				expect(editor.value).equals('<p style="color: red;">test</p>');
+
+				editor.e.on('finishedCleanHTMLWorker', () => {
+					expect(editor.value).equals(
+						'<p style="color: red;">test</p>'
+					);
+					done();
+				});
 			});
 		});
 
 		describe('Time checking', function () {
-			it('Should work fast', function () {
+			it('Should work fast', function (done) {
 				const editor = getJodit({
 					cleanHTML: {
 						allowTags: {
@@ -290,39 +342,51 @@ describe('Clean html plugin', function () {
 						}
 					}
 				});
+
 				editor.value =
 					'<p style="color: red;" data-id="111">te<strong>stop</strong>st</p><h1>pop</h1>'.repeat(
 						500
 					);
-				expect(editor.value).equals(
-					'<p style="color: red;">test</p>'.repeat(500)
-				);
+
+				editor.e.on('finishedCleanHTMLWorker', () => {
+					expect(editor.value).equals(
+						'<p style="color: red;">test</p>'.repeat(500)
+					);
+					done();
+				});
 			}).timeout(1500);
 		});
 	});
 
 	describe('Fullfill empty paragraph', function () {
-		it('Should fill in empty paragraph', function () {
+		it('Should fill in empty paragraph', function (done) {
 			const editor = getJodit({
 				cleanHTML: {
+					timeout: 0,
 					fillEmptyParagraph: true
 				}
 			});
 			editor.value = '<p></p><p></p><div></div>';
-			expect(editor.value).equals(
-				'<p><br></p><p><br></p><div><br></div>'
-			);
+			editor.e.on('finishedCleanHTMLWorker', () => {
+				expect(editor.value).equals(
+					'<p><br></p><p><br></p><div><br></div>'
+				);
+				done();
+			});
 		});
 
 		describe('Switch off fillEmptyParagraph option', function () {
-			it('Should not fill in empty paragraph', function () {
+			it('Should not fill in empty paragraph', function (done) {
 				const editor = getJodit({
 					cleanHTML: {
 						fillEmptyParagraph: false
 					}
 				});
 				editor.value = '<p></p><p></p><div></div>';
-				expect(editor.value).equals('<p></p><p></p><div></div>');
+				editor.e.on('finishedCleanHTMLWorker', () => {
+					expect(editor.value).equals('<p></p><p></p><div></div>');
+					done();
+				});
 			});
 		});
 	});

@@ -48,7 +48,7 @@ export class pasteStorage extends Plugin {
 		}
 
 		this.dialog && this.dialog.close();
-		this.j.setEditorValue();
+		this.j.synchronizeValues();
 
 		this.j.e.fire('afterPaste');
 	};

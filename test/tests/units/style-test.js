@@ -1446,31 +1446,31 @@ describe('Apply style', () => {
 			});
 
 			describe('Exec bold for collapsed range and move cursor in another place', function () {
-				it('Should remove STRONG element', function () {
+				it('Should remove STRONG element', function (done) {
 					const editor = getJodit({
 						cleanHTML: {
 							timeout: 0
 						}
 					});
 
-					editor.value = 'testtest';
+					editor.value = 'test|test';
 
-					const range = editor.s.createRange();
-					range.setStart(editor.editor.firstChild.firstChild, 4);
-					range.collapse(true);
-					editor.s.selectRange(range);
+					setCursorToChar(editor);
 
 					editor.execCommand('bold');
 					expect(editor.value).equals(
 						'<p>test<strong></strong>test</p>'
 					);
 
+					const range = editor.ed.createRange();
 					range.setStart(editor.editor.firstChild.lastChild, 2);
 					range.collapse(true);
 					editor.s.selectRange(range);
-					simulateEvent('mousedown', 0, editor.editor);
-
-					expect(editor.value).equals('<p>testtest</p>');
+					simulateEvent('mousedown', editor.editor);
+					editor.async.requestIdleCallback(() => {
+						expect(editor.value).equals('<p>testtest</p>');
+						done();
+					});
 				});
 			});
 

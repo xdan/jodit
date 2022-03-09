@@ -91,9 +91,15 @@ export class PluginSystem implements IPluginSystem {
 		const extrasList: IExtraPlugin[] = jodit.o.extraPlugins.map(s =>
 				isString(s) ? { name: s } : s
 			),
-			disableList = splitArray(jodit.o.disablePlugins).map(s =>
-				this.normalizeName(s)
-			),
+			disableList = splitArray(jodit.o.disablePlugins).map(s => {
+				const name = this.normalizeName(s);
+
+				if (!isProd && !this._items.has(name)) {
+					console.error(TypeError(`Unknown plugin disabled:${name}`));
+				}
+
+				return name;
+			}),
 			doneList: string[] = [],
 			promiseList: IDictionary<PluginInstance | undefined> = {},
 			plugins: PluginInstance[] = [],
@@ -218,7 +224,7 @@ export class PluginSystem implements IPluginSystem {
 
 					doneList.push(name);
 				} else {
-					if (!isProd) {
+					if (!isProd && !promiseList[name]) {
 						console.log('Await plugin: ', name);
 					}
 

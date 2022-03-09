@@ -28,6 +28,8 @@ import { debounce } from 'jodit/core/decorators';
 declare module 'jodit/config' {
 	interface Config {
 		history: {
+			enable: boolean;
+
 			/**
 			 * Limit of history length
 			 */
@@ -47,8 +49,9 @@ declare module 'jodit/config' {
 }
 
 Config.prototype.history = {
+	enable: true,
 	maxHistoryLength: Infinity,
-	timeout: 100
+	timeout: 1000
 };
 
 Config.prototype.observer = Config.prototype.history;
@@ -85,42 +88,44 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 		this.stack = stack;
 		this.snapshot = snapshot;
 
-		editor.e.on('afterAddPlace.history', () => {
-			if (this.isInDestruct) {
-				return;
-			}
+		if (editor.o.history.enable) {
+			editor.e.on('afterAddPlace.history', () => {
+				if (this.isInDestruct) {
+					return;
+				}
 
-			this.startValue = this.snapshot.make();
+				this.startValue = this.snapshot.make();
 
-			editor.events
-				// save selection
-				.on('internalChange', () => {
-					this.startValue = this.snapshot.make();
-				})
-				.on(
-					editor.editor,
-					[
-						'changeSelection',
-						'selectionstart',
-						'selectionchange',
-						'mousedown',
-						'mouseup',
-						'keydown',
-						'keyup'
-					]
-						.map(f => f + '.history')
-						.join(' '),
-					() => {
-						if (
-							this.startValue.html ===
-							this.j.getNativeEditorValue()
-						) {
-							this.startValue = this.snapshot.make();
+				editor.events
+					// save selection
+					.on('internalChange', () => {
+						this.startValue = this.snapshot.make();
+					})
+					.on(
+						editor.editor,
+						[
+							'changeSelection',
+							'selectionstart',
+							'selectionchange',
+							'mousedown',
+							'mouseup',
+							'keydown',
+							'keyup'
+						]
+							.map(f => f + '.history')
+							.join(' '),
+						() => {
+							if (
+								this.startValue.html ===
+								this.j.getNativeEditorValue()
+							) {
+								this.startValue = this.snapshot.make();
+							}
 						}
-					}
-				)
-				.on(this, 'change.history', this.onChange);
-		});
+					)
+					.on(this, 'change.history', this.onChange);
+			});
+		}
 	}
 
 	private updateTick: number = 0;

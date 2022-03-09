@@ -601,8 +601,7 @@ export class imageProperties extends Plugin {
 			);
 		}
 
-		this.j.setEditorValue();
-
+		this.j.synchronizeValues();
 		this.dialog.close();
 	}
 
