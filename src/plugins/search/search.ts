@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/search/README.md]]
+ * @packageDocumentation
  * @module plugins/search
  */
 
@@ -15,64 +17,21 @@ import type {
 	MarkerInfo,
 	IJodit,
 	Nullable,
-	IControlType,
 	IPlugin
 } from 'jodit/types';
-import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';
 import { MODE_WYSIWYG } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import { Plugin } from 'jodit/core/plugin';
-import { Icon } from 'jodit/core/ui';
 import { css, position, refs, trim } from 'jodit/core/helpers';
 import { autobind } from 'jodit/core/decorators';
+import {
+	findSomePartOfString,
+	getSomePartOfStringIndex,
+	template
+} from 'jodit/plugins/search/helpers';
 
-declare module 'jodit/config' {
-	interface Config {
-		/**
-		 * Enable custom search plugin
-		 * ![search](https://user-images.githubusercontent.com/794318/34545433-cd0a9220-f10e-11e7-8d26-7e22f66e266d.gif)
-		 */
-		useSearch: boolean;
-		// searchByInput: boolean,
-	}
-}
-
-Config.prototype.useSearch = true;
-
-Config.prototype.controls.find = {
-	tooltip: 'Find',
-	icon: 'search',
-	exec(jodit: IJodit, _, { control }) {
-		const value = control.args && control.args[0];
-
-		switch (value) {
-			case 'findPrevious':
-				jodit.e.fire('searchPrevious');
-				break;
-
-			case 'findNext':
-				jodit.e.fire('searchNext');
-				break;
-
-			case 'replace':
-				jodit.execCommand('openReplaceDialog');
-				break;
-
-			default:
-				jodit.execCommand('openSearchDialog');
-		}
-	},
-
-	list: {
-		search: 'Find',
-		findNext: 'Find Next',
-		findPrevious: 'Find Previous',
-		replace: 'Replace'
-	},
-
-	childTemplate: (_, k, v) => v
-} as IControlType;
+import './config';
 
 /**
  * Search plugin. it is used for custom search in text
@@ -97,127 +56,28 @@ export class search extends Plugin {
 		}
 	];
 
-	static getSomePartOfStringIndex(
-		needle: string,
-		haystack: string,
-		start: boolean = true
-	): number | false {
-		return this.findSomePartOfString(needle, haystack, start, true) as
-			| number
-			| false;
-	}
-
-	static findSomePartOfString(
-		needle: string,
-		haystack: string,
-		start: boolean = true,
-		getIndex: boolean = false
-	): boolean | string | number {
-		needle = trim(
-			needle.toLowerCase().replace(consts.SPACE_REG_EXP(), ' ')
-		);
-		haystack = haystack.toLowerCase();
-
-		let i: number = start ? 0 : haystack.length - 1,
-			needleStart: number = start ? 0 : needle.length - 1,
-			tmpEqualLength: number = 0,
-			startAtIndex: number | null = null;
-
-		const inc = start ? 1 : -1,
-			tmp: string[] = [];
-
-		for (; haystack[i] !== undefined; i += inc) {
-			const some: boolean = needle[needleStart] === haystack[i];
-			if (
-				some ||
-				(startAtIndex != null &&
-					consts.SPACE_REG_EXP().test(haystack[i]))
-			) {
-				if (startAtIndex == null || !start) {
-					startAtIndex = i;
-				}
-
-				tmp.push(haystack[i]);
-
-				if (some) {
-					tmpEqualLength += 1;
-					needleStart += inc;
-				}
-			} else {
-				startAtIndex = null;
-				tmp.length = 0;
-				tmpEqualLength = 0;
-				needleStart = start ? 0 : needle.length - 1;
-			}
-
-			if (tmpEqualLength === needle.length) {
-				return getIndex ? (startAtIndex as number) : true;
-			}
-		}
-
-		if (getIndex) {
-			return startAtIndex ?? false;
-		}
-
-		if (tmp.length) {
-			return start ? tmp.join('') : tmp.reverse().join('');
-		}
-
-		return false;
-	}
-
-	private template = `<div class="jodit-search">
-			<div class="jodit-search__box">
-				<div class="jodit-search__inputs">
-					<input data-ref="query" tabindex="0" placeholder="${this.j.i18n(
-						'Search for'
-					)}" type="text"/>
-					<input data-ref="replace" tabindex="0" placeholder="${this.j.i18n(
-						'Replace with'
-					)}" type="text"/>
-				</div>
-				<div class="jodit-search__counts">
-					<span data-ref="counter-box">0/0</span>
-				</div>
-				<div class="jodit-search__buttons">
-					<button data-ref="next" tabindex="0" type="button">${Icon.get(
-						'angle-down'
-					)}</button>
-					<button data-ref="prev" tabindex="0" type="button">${Icon.get(
-						'angle-up'
-					)}</button>
-					<button data-ref="cancel" tabindex="0" type="button">${Icon.get(
-						'cancel'
-					)}</button>
-					<button data-ref="replace-btn" tabindex="0" type="button" class="jodit-ui-button">${this.j.i18n(
-						'Replace'
-					)}</button>
-				</div>
-			</div>
-		</div>`;
-
 	private isOpened: boolean = false;
 
 	private selInfo: Nullable<MarkerInfo[]> = null;
 	private current: Nullable<Node> = null;
 
-	private eachMap = (
+	@autobind
+	private eachMap(
 		node: Node,
 		callback: (elm: Node) => boolean,
 		next: boolean
-	) => {
+	): void {
 		Dom.findWithCurrent(
 			node,
-			(child: Node | null): boolean => {
-				return Boolean(child && callback(child));
-			},
+			(child: Node | null): boolean => Boolean(child && callback(child)),
 			this.j.editor,
 			next ? 'nextSibling' : 'previousSibling',
 			next ? 'firstChild' : 'lastChild'
 		);
-	};
+	}
 
-	private updateCounters = () => {
+	@autobind
+	private updateCounters(): void {
 		if (!this.isOpened) {
 			return;
 		}
@@ -233,7 +93,7 @@ export class search extends Plugin {
 			);
 
 		this.counterBox.textContent = counts.join('/');
-	};
+	}
 
 	private boundAlreadyWas(
 		current: ISelectionRange,
@@ -249,7 +109,7 @@ export class search extends Plugin {
 		}, false);
 	}
 
-	private tryScrollToElement(startContainer: Node) {
+	private tryScrollToElement(startContainer: Node): void {
 		// find scrollable element
 		let parentBox: HTMLElement | false = Dom.closest(
 			startContainer,
@@ -268,19 +128,19 @@ export class search extends Plugin {
 		parentBox && parentBox !== this.j.editor && parentBox.scrollIntoView();
 	}
 
-	searchBox!: HTMLDivElement;
-	queryInput!: HTMLInputElement;
-	replaceInput!: HTMLInputElement;
-	closeButton!: HTMLButtonElement;
-	nextButton!: HTMLButtonElement;
-	prevButton!: HTMLButtonElement;
-	replaceButton!: HTMLButtonElement;
-	counterBox!: HTMLSpanElement;
+	private searchBox!: HTMLDivElement;
+	private queryInput!: HTMLInputElement;
+	private replaceInput!: HTMLInputElement;
+	private closeButton!: HTMLButtonElement;
+	private nextButton!: HTMLButtonElement;
+	private prevButton!: HTMLButtonElement;
+	private replaceButton!: HTMLButtonElement;
+	private counterBox!: HTMLSpanElement;
 
-	calcCounts = (
+	protected calcCounts(
 		query: string,
 		current: ISelectionRange | false = false
-	): [number, number] => {
+	): [number, number] {
 		const bounds: ISelectionRange[] = [];
 
 		let currentIndex: number = 0,
@@ -312,9 +172,10 @@ export class search extends Plugin {
 		}
 
 		return [currentIndex, count];
-	};
+	}
 
-	findAndReplace = (start: Node | null, query: string): boolean => {
+	@autobind
+	findAndReplace(start: Node | null, query: string): boolean {
 		const range = this.j.s.range,
 			bound: ISelectionRange | false = this.find(
 				start,
@@ -351,13 +212,10 @@ export class search extends Plugin {
 		}
 
 		return false;
-	};
+	}
 
-	findAndSelect = (
-		start: Node | null,
-		query: string,
-		next: boolean
-	): boolean => {
+	@autobind
+	findAndSelect(start: Node | null, query: string, next: boolean): boolean {
 		const range = this.j.s.range,
 			bound: ISelectionRange | false = this.find(
 				start,
@@ -385,15 +243,16 @@ export class search extends Plugin {
 		}
 
 		return false;
-	};
+	}
 
-	find = (
+	@autobind
+	find(
 		start: Node | null,
 		query: string,
 		next: boolean,
 		deep: number,
 		range: Range
-	): false | ISelectionRange => {
+	): false | ISelectionRange {
 		if (start && query.length) {
 			let sentence: string = '',
 				bound: ISelectionRange = {
@@ -406,46 +265,39 @@ export class search extends Plugin {
 			this.eachMap(
 				start,
 				(elm: Node): boolean => {
-					if (
-						Dom.isText(elm) &&
-						elm.nodeValue != null &&
-						elm.nodeValue.length
-					) {
+					if (Dom.isText(elm) && elm.nodeValue?.length) {
 						let value: string = elm.nodeValue;
 
 						if (!next && elm === range.startContainer) {
 							value = !deep
-								? value.substr(0, range.startOffset)
-								: value.substr(range.endOffset);
+								? value.substring(0, range.startOffset)
+								: value.substring(range.endOffset);
 						} else if (next && elm === range.endContainer) {
 							value = !deep
-								? value.substr(range.endOffset)
-								: value.substr(0, range.startOffset);
+								? value.substring(range.endOffset)
+								: value.substring(0, range.startOffset);
 						}
 
 						const tmpSentence: string = next
 							? sentence + value
 							: value + sentence;
 
-						const part: boolean | string =
-							search.findSomePartOfString(
-								query,
-								tmpSentence,
-								next
-							) as boolean | string;
+						const part: boolean | string = findSomePartOfString(
+							query,
+							tmpSentence,
+							next
+						) as boolean | string;
 
 						if (part !== false) {
 							let currentPart: string | boolean =
-								search.findSomePartOfString(
-									query,
-									value,
-									next
-								) as string | boolean;
+								findSomePartOfString(query, value, next) as
+									| string
+									| boolean;
 
 							if (currentPart === true) {
 								currentPart = trim(query);
 							} else if (currentPart === false) {
-								currentPart = search.findSomePartOfString(
+								currentPart = findSomePartOfString(
 									value,
 									query,
 									next
@@ -456,11 +308,8 @@ export class search extends Plugin {
 							}
 
 							let currentPartIndex: number =
-								search.getSomePartOfStringIndex(
-									query,
-									value,
-									next
-								) || 0;
+								getSomePartOfStringIndex(query, value, next) ||
+								0;
 
 							if (
 								((next && !deep) || (!next && deep)) &&
@@ -511,16 +360,18 @@ export class search extends Plugin {
 				this.current = next
 					? (this.j.editor.firstChild as Node)
 					: (this.j.editor.lastChild as Node);
+
 				return this.find(this.current, query, next, deep + 1, range);
 			}
 		}
 
 		return false;
-	};
+	}
 
-	open = (searchAndReplace: boolean = false): void => {
+	@autobind
+	protected open(searchAndReplace: boolean = false): void {
 		if (!this.isOpened) {
-			this.searchBox.classList.add('jodit-search_active');
+			this.j.workplace.appendChild(this.searchBox);
 			this.isOpened = true;
 		}
 
@@ -548,25 +399,28 @@ export class search extends Plugin {
 		} else {
 			this.queryInput.focus();
 		}
-	};
+	}
 
-	close = (): void => {
+	@autobind
+	protected close(): void {
 		if (!this.isOpened) {
 			return;
 		}
 
 		this.j.s.restore();
 
-		this.searchBox.classList.remove('jodit-search_active');
+		Dom.safeRemove(this.searchBox);
 		this.isOpened = false;
-	};
+	}
 
 	/** @override */
 	afterInit(editor: IJodit): void {
 		if (editor.o.useSearch) {
 			const self: search = this;
 
-			self.searchBox = editor.c.fromHTML(self.template) as HTMLDivElement;
+			self.searchBox = editor.c.fromHTML(
+				template(editor)
+			) as HTMLDivElement;
 
 			const {
 				query,
@@ -593,8 +447,6 @@ export class search extends Plugin {
 			self.counterBox = counterBox as HTMLButtonElement;
 
 			const onInit = () => {
-				editor.workplace.appendChild(this.searchBox);
-
 				editor.e
 					.off(this.j.container, 'keydown.search')
 					.on(
@@ -747,7 +599,7 @@ export class search extends Plugin {
 	/** @override */
 	beforeDestruct(jodit: IJodit): void {
 		Dom.safeRemove(this.searchBox);
-		jodit.events?.off('.search');
+		jodit.e.off('.search');
 	}
 
 	/**
