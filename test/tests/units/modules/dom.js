@@ -3,8 +3,11 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Test Dom module', function () {
 	const Dom = Jodit.modules.Dom;
+	const LazyWalker = Jodit.modules.LazyWalker;
+	const Async = Jodit.modules.Async;
 
 	describe('Iterate over', function () {
 		const names = [],
@@ -398,6 +401,199 @@ describe('Test Dom module', function () {
 				expect(Dom.last(html, variants[str][0])).eq(
 					variants[str][1](html)
 				);
+			});
+		});
+	});
+
+	describe('Lazy walk', () => {
+		it('should run through the element tree in the correct order', done => {
+			const walker = new LazyWalker(new Async());
+			const names = [];
+
+			walker
+				.on('visit', node => {
+					names.push(node.nodeName.toLowerCase());
+				})
+				.on('end', () => {
+					expect(names).deep.eq([
+						'ul',
+						'li',
+						'strong',
+						'#text',
+						'span',
+						'#text',
+						'u',
+						'#text',
+						'li',
+						'i',
+						'#text',
+						'b',
+						'#text',
+						'u',
+						'#text',
+						'img'
+					]);
+					done();
+				});
+
+			const div = document.createElement('div');
+			div.innerHTML =
+				"<ul><li><strong>test</strong><span>test</span><u>test</u></li><li><i>test</i><b>test</b><u>test</u><img src='' alt=''></li></ul>";
+			walker.setWork(div);
+		});
+
+		describe('Fast work', () => {
+			it('should work fast', done => {
+				const walker = new LazyWalker(new Async());
+				const names = [];
+				const ls = [
+					'ul',
+					'li',
+					'strong',
+					'#text',
+					'span',
+					'#text',
+					'u',
+					'#text',
+					'li',
+					'i',
+					'#text',
+					'b',
+					'#text',
+					'u',
+					'#text',
+					'img'
+				];
+				walker
+					.on('visit', node => {
+						names.push(node.nodeName.toLowerCase());
+					})
+					.on('end', () => {
+						console.log(names);
+						for (let i = 0; i < 8000; i += 1) {
+							if (names[i] !== ls[i % 16]) {
+								console.log(i, ls[i % 16], names[i]);
+								break;
+							}
+						}
+						expect(names.length).eq(8000);
+						done();
+					});
+
+				const div = document.createElement('div');
+				div.innerHTML =
+					"<ul><li><strong>test</strong><span>test</span><u>test</u></li><li><i>test</i><b>test</b><u>test</u><img src='' alt=''></li></ul>".repeat(
+						500
+					);
+				walker.setWork(div);
+			});
+		});
+
+		describe('In reverse order', () => {
+			it('should run through the element tree in the correct order', done => {
+				const walker = new LazyWalker(new Async(), {
+					reverse: true,
+					whatToShow: Node.ELEMENT_NODE
+				});
+				const names = [];
+
+				walker
+					.on('visit', node => {
+						names.push(node.nodeName.toLowerCase());
+					})
+					.on('end', () => {
+						expect(names).deep.eq([
+							'ul',
+							'li',
+							'img',
+							'u',
+							'b',
+							'i',
+							'li',
+							'u',
+							'span',
+							'strong'
+						]);
+						done();
+					});
+
+				const div = document.createElement('div');
+				div.innerHTML =
+					"<ul><li><strong>test</strong><span>test</span><u>test</u></li><li><i>test</i><b>test</b><u>test</u><img src='' alt=''></li></ul>";
+				walker.setWork(div);
+			});
+		});
+
+		describe('With filter', () => {
+			it('should visit only defined node types', done => {
+				const walker = new LazyWalker(new Async(), {
+					timeout: 100,
+					whatToShow: Node.ELEMENT_NODE
+				});
+				const names = [];
+
+				walker
+					.on('visit', node => {
+						names.push(node.nodeName.toLowerCase());
+					})
+					.on('end', () => {
+						expect(names).deep.eq([
+							'ul',
+							'li',
+							'strong',
+							'span',
+							'u',
+							'li',
+							'i',
+							'b',
+							'u',
+							'img'
+						]);
+						done();
+					});
+
+				const div = document.createElement('div');
+				div.innerHTML =
+					"<ul><li><strong>test</strong><span>test</span><u>test</u></li><li><i>test</i><b>test</b><u>test</u><img src='' alt=''></li></ul>";
+				walker.setWork(div);
+			});
+		});
+
+		describe('After remove element', () => {
+			it('should walk normal', done => {
+				const walker = new LazyWalker(new Async(), {
+					timeout: 100,
+					whatToShow: Node.ELEMENT_NODE
+				});
+				const names = [];
+
+				walker
+					.on('visit', node => {
+						const name = node.nodeName.toLowerCase();
+						if (name === 'span' || name === 'i') {
+							Dom.safeRemove(node);
+						} else {
+							names.push(name);
+						}
+					})
+					.on('end', () => {
+						expect(names).deep.eq([
+							'ul',
+							'li',
+							'strong',
+							'u',
+							'li',
+							'b',
+							'u',
+							'img'
+						]);
+						done();
+					});
+
+				const div = document.createElement('div');
+				div.innerHTML =
+					"<ul><li><strong>test</strong><span>test</span><u>test</u></li><li><i>test</i><b>test</b><u>test</u><img src='' alt=''></li></ul>";
+				walker.setWork(div);
 			});
 		});
 	});

@@ -15,8 +15,7 @@ import type {
 	IDictionary,
 	IJodit,
 	Nullable,
-	IPlugin,
-	CanUndef
+	IPlugin
 } from 'jodit/types';
 import {
 	INVISIBLE_SPACE_REG_EXP as INV_REG,
@@ -28,6 +27,7 @@ import { attr, isString, keys, safeHTML, trim } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { watch, autobind, debounce, hook } from 'jodit/core/decorators';
 import { findNotEmptySibling } from 'jodit/plugins/keyboard/helpers';
+import { LazyWalker } from 'jodit/core/dom/lazy-walker';
 
 import './config';
 
@@ -113,63 +113,32 @@ export class cleanHtml extends Plugin {
 			}
 		}
 
-		this.hasChangesAfterWork = false;
-		this.workNodes = [editor.editor.firstChild];
+		this.walker.setWork(editor.editor);
 		this.currentSelectionNode = current;
 	}
 
-	private workNodes: Nullable<Node>[] = [];
-	private hasChangesAfterWork: boolean = false;
-	private isWorked: boolean = false;
 	private currentSelectionNode: Nullable<Node> = null;
 
+	private walker: LazyWalker = new LazyWalker(this.j.async, {
+		timeout: this.j.o.cleanHTML.timeout
+	});
+
 	@hook('ready')
-	protected restartWorker(): void {
-		const { timeout } = this.j.o.cleanHTML;
-		this.j.async.requestIdleCallback(this.workPerform, {
-			timeout
-		});
+	protected startWalker(): void {
+		this.walker
+			.on('visit', this.visitNode)
+			.on('end', (affected: boolean): void => {
+				this.j.e.fire(
+					affected
+						? 'internalChange finishedCleanHTMLWorker'
+						: 'finishedCleanHTMLWorker'
+				);
+			});
 	}
 
 	@autobind
-	protected workPerform(deadline: IdleDeadline): void {
-		if (this.workNodes.length) {
-			this.isWorked = true;
-
-			while (
-				(deadline.timeRemaining() > 0 || deadline.didTimeout) &&
-				this.workNodes.length
-			) {
-				if (this.visitNode(this.workNodes.pop())) {
-					this.hasChangesAfterWork = true;
-				}
-			}
-		} else if (this.hasChangesAfterWork) {
-			this.hasChangesAfterWork = false;
-			this.isWorked = false;
-			this.j.e.fire('internalChange finishedCleanHTMLWorker');
-		} else if (this.isWorked) {
-			this.isWorked = false;
-			this.j.e.fire('finishedCleanHTMLWorker');
-		}
-
-		this.restartWorker();
-	}
-
-	private allowEdit(): boolean {
-		return !(
-			this.j.isInDestruct ||
-			!this.j.isEditorMode() ||
-			this.j.getReadOnly()
-		);
-	}
-
-	private visitNode(nodeElm: CanUndef<Nullable<Element | Node>>): boolean {
+	private visitNode(nodeElm: Node): boolean {
 		let hasChanges = false;
-
-		if (!nodeElm) {
-			return hasChanges;
-		}
 
 		const newNodeElm = this.replaceIfMatched(nodeElm);
 		if (nodeElm !== newNodeElm) {
@@ -178,7 +147,6 @@ export class cleanHtml extends Plugin {
 		}
 
 		if (this.isRemovableNode(nodeElm, this.currentSelectionNode)) {
-			this.workNodes.push(nodeElm.nextSibling);
 			Dom.safeRemove(nodeElm);
 			return true;
 		}
@@ -223,8 +191,15 @@ export class cleanHtml extends Plugin {
 			}
 		}
 
-		this.workNodes.push(nodeElm.firstChild, nodeElm.nextSibling);
 		return hasChanges;
+	}
+
+	private allowEdit(): boolean {
+		return !(
+			this.j.isInDestruct ||
+			!this.j.isEditorMode() ||
+			this.j.getReadOnly()
+		);
 	}
 
 	private static getHash(
@@ -530,5 +505,6 @@ export class cleanHtml extends Plugin {
 	/** @override */
 	protected override beforeDestruct(): void {
 		this.j.e.off('.cleanHtml');
+		this.walker.destruct();
 	}
 }

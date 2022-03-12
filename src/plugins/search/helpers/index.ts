@@ -8,6 +8,6 @@
  * @module plugins/search
  */
 
-export * from './find-some-part-of-string';
-export * from './get-some-part-of-string-index';
-export * from './template';
+// export * from './find-some-part-of-string';
+export * from './sentence-finder';
+// export * from './find-in-string';

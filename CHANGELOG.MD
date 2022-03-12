@@ -13,7 +13,12 @@
 
 #### :rocket: New Feature
 
-- Added `spellcheck` plugin.
+-   Added `spellcheck` plugin.
+-   Added `Jodit.synchronizeValues()` method. The method synchronizes the WYSIWYG values of the editor
+-   and the original input field. The method works through `Async.throttle`.
+-   Added a new class for working with DOM without blocking the main thread `LazyWalker`
+-   Search engine replace on `LazyWalker`
+-   CleanHTML plugin engine replace on `LazyWalker`
 
 #### :boom: Breaking Change
 
@@ -26,7 +31,7 @@
 
 #### :house: Internal
 
-- `clean-html` plugin now works via `requestIdleCallback` and doesn't slow down the browser
+-   `clean-html` plugin now works via `requestIdleCallback` and doesn't slow down the browser
 
 ## 3.15.3
 
@@ -1211,11 +1216,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                 	{ value: "", text: "" },
--                                                                                                                                                                                 	{ value: "val1", text: "text1" },
--                                                                                                                                                                                 	{ value: "val2", text: "text2" },
--                                                                                                                                                                                 	{ value: "val3", text: "text3" }
--                                                                                                                                                                                 ]
+-                                                                                                                                                                                       	{ value: "", text: "" },
+-                                                                                                                                                                                       	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                       	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                       	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                       ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

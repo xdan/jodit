@@ -9,6 +9,7 @@ import type { IDictionary } from 'jodit/types';
 import 'classlist-polyfill';
 import 'es6-promise/auto';
 import 'core-js/es/symbol';
+import 'core-js/es/array/find-index';
 
 if (!Array.from) {
 	Array.from = <T>(object: T[]): T[] => {

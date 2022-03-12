@@ -16,7 +16,7 @@ export * from '../core/request';
 export { Component, ViewComponent, STATUSES } from '../core/component';
 export { ContextMenu } from './context-menu/context-menu';
 export * from './dialog/';
-export { Dom } from '../core/dom';
+export { Dom, LazyWalker } from '../core/dom';
 export { Plugin } from '../core/plugin';
 export { Create } from '../core/create';
 export {

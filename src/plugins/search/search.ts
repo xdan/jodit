@@ -10,26 +10,19 @@
  * @module plugins/search
  */
 
-import './search.less';
-
 import type {
 	ISelectionRange,
-	MarkerInfo,
 	IJodit,
 	Nullable,
-	IPlugin
+	IPlugin,
+	IDictionary,
+	CanUndef
 } from 'jodit/types';
-import * as consts from 'jodit/core/constants';
-import { MODE_WYSIWYG } from 'jodit/core/constants';
-import { Dom } from 'jodit/core/dom';
+import { Dom, LazyWalker } from 'jodit/core/dom';
 import { Plugin } from 'jodit/core/plugin';
-import { css, position, refs, trim } from 'jodit/core/helpers';
-import { autobind } from 'jodit/core/decorators';
-import {
-	findSomePartOfString,
-	getSomePartOfStringIndex,
-	template
-} from 'jodit/plugins/search/helpers';
+import { autobind, watch } from 'jodit/core/decorators';
+import { SentenceFinder } from 'jodit/plugins/search/helpers';
+import { UISearch } from 'jodit/plugins/search/ui/search';
 
 import './config';
 
@@ -56,57 +49,21 @@ export class search extends Plugin {
 		}
 	];
 
-	private isOpened: boolean = false;
+	private ui: UISearch = new UISearch(this.j);
 
-	private selInfo: Nullable<MarkerInfo[]> = null;
-	private current: Nullable<Node> = null;
-
-	@autobind
-	private eachMap(
-		node: Node,
-		callback: (elm: Node) => boolean,
-		next: boolean
-	): void {
-		Dom.findWithCurrent(
-			node,
-			(child: Node | null): boolean => Boolean(child && callback(child)),
-			this.j.editor,
-			next ? 'nextSibling' : 'previousSibling',
-			next ? 'firstChild' : 'lastChild'
-		);
-	}
-
-	@autobind
-	private updateCounters(): void {
-		if (!this.isOpened) {
+	@watch('ui:needUpdateCounters')
+	private async updateCounters(): Promise<void> {
+		if (!this.ui.isOpened) {
 			return;
 		}
 
-		this.counterBox.style.display = this.queryInput.value.length
-			? 'inline-block'
-			: 'none';
-
-		const range = this.j.s.range,
-			counts: [number, number] = this.calcCounts(
-				this.queryInput.value,
-				range
-			);
-
-		this.counterBox.textContent = counts.join('/');
+		this.ui.count = await this.calcCounts(this.ui.queryInput.value);
 	}
 
-	private boundAlreadyWas(
-		current: ISelectionRange,
-		bounds: ISelectionRange[]
-	): boolean {
-		return bounds.some((bound: ISelectionRange) => {
-			return (
-				bound.startContainer === current.startContainer &&
-				bound.endContainer === current.endContainer &&
-				bound.startOffset === current.startOffset &&
-				bound.endOffset === current.endOffset
-			);
-		}, false);
+	@watch('ui:pressReplaceButton')
+	protected onPressReplaceButton(): void {
+		this.findAndReplace(this.ui.queryInput.value);
+		this.updateCounters();
 	}
 
 	private tryScrollToElement(startContainer: Node): void {
@@ -128,62 +85,45 @@ export class search extends Plugin {
 		parentBox && parentBox !== this.j.editor && parentBox.scrollIntoView();
 	}
 
-	private searchBox!: HTMLDivElement;
-	private queryInput!: HTMLInputElement;
-	private replaceInput!: HTMLInputElement;
-	private closeButton!: HTMLButtonElement;
-	private nextButton!: HTMLButtonElement;
-	private prevButton!: HTMLButtonElement;
-	private replaceButton!: HTMLButtonElement;
-	private counterBox!: HTMLSpanElement;
-
-	protected calcCounts(
-		query: string,
-		current: ISelectionRange | false = false
-	): [number, number] {
-		const bounds: ISelectionRange[] = [];
-
-		let currentIndex: number = 0,
-			count: number = 0,
-			bound: ISelectionRange | false = false,
-			start: Node | null = this.j.editor.firstChild;
-
-		while (start && query.length) {
-			bound = this.find(
-				start,
-				query,
-				true,
-				0,
-				(bound as Range) || this.j.ed.createRange()
-			);
-			if (bound) {
-				if (this.boundAlreadyWas(bound, bounds)) {
-					break;
-				}
-				bounds.push(bound);
-				start = bound.startContainer;
-				count += 1;
-				if (current && this.boundAlreadyWas(current, [bound])) {
-					currentIndex = count;
-				}
-			} else {
-				start = null;
-			}
+	protected async calcCounts(query: string): Promise<number> {
+		if (this.walkerCount) {
+			this.walkerCount.break();
 		}
 
-		return [currentIndex, count];
+		this.walkerCount = new LazyWalker(this.j.async, {
+			timeout: 1
+		});
+
+		const result = await this.find(this.walkerCount, query);
+		return result.length;
 	}
 
 	@autobind
-	findAndReplace(start: Node | null, query: string): boolean {
+	async findAndReplace(query: string): Promise<boolean> {
+		if (this.walker) {
+			this.walker.break();
+		}
+
+		this.walker = new LazyWalker(this.j.async, {
+			timeout: this.j.defaultTimeout
+		});
+
 		const range = this.j.s.range,
-			bound: ISelectionRange | false = this.find(
-				start,
-				query,
-				true,
-				0,
-				range
-			);
+			bounds = await this.find(this.walker, query);
+
+		let currentIndex = bounds.findIndex(
+			bound =>
+				bound.startContainer === range.startContainer &&
+				bound.startOffset === range.startOffset &&
+				bound.endContainer === range.startContainer &&
+				bound.endOffset === range.endOffset
+		);
+
+		if (currentIndex === -1) {
+			currentIndex = 0;
+		}
+
+		const bound = bounds[currentIndex];
 
 		if (bound && bound.startContainer && bound.endContainer) {
 			const rng = this.j.ed.createRange();
@@ -198,8 +138,8 @@ export class search extends Plugin {
 					rng.setEnd(bound.endContainer, bound.endOffset as number);
 					rng.deleteContents();
 
-					const textNode: Node = this.j.createInside.text(
-						this.replaceInput.value
+					const textNode = this.j.createInside.text(
+						this.ui.replaceInput.value
 					);
 
 					rng.insertNode(textNode);
@@ -215,18 +155,48 @@ export class search extends Plugin {
 	}
 
 	@autobind
-	findAndSelect(start: Node | null, query: string, next: boolean): boolean {
+	async findAndSelect(query: string, next: boolean): Promise<boolean> {
+		if (this.walker) {
+			this.walker.break();
+		}
+
+		this.walker = new LazyWalker(this.j.async, {
+			timeout: this.j.defaultTimeout
+		});
+
 		const range = this.j.s.range,
-			bound: ISelectionRange | false = this.find(
-				start,
-				query,
-				next,
-				0,
-				range
-			);
+			bounds = await this.find(this.walker, query);
+
+		if (!bounds.length) {
+			return false;
+		}
+
+		let currentIndex = bounds.findIndex(
+			bound =>
+				bound.startContainer === range.startContainer &&
+				bound.startOffset === range.startOffset &&
+				bound.endContainer === range.startContainer &&
+				bound.endOffset === range.endOffset
+		);
+
+		if (currentIndex === -1) {
+			currentIndex = 0;
+		} else {
+			if (next) {
+				currentIndex =
+					currentIndex === bounds.length - 1 ? 0 : currentIndex + 1;
+			} else {
+				currentIndex =
+					currentIndex === 0 ? bounds.length - 1 : currentIndex - 1;
+			}
+		}
+
+		this.ui.currentIndex = currentIndex + 1;
+
+		const bound = bounds[currentIndex];
 
 		if (bound && bound.startContainer && bound.endContainer) {
-			const rng: Range = this.j.ed.createRange();
+			const rng = this.j.ed.createRange();
 
 			try {
 				rng.setStart(bound.startContainer, bound.startOffset as number);
@@ -236,8 +206,7 @@ export class search extends Plugin {
 
 			this.tryScrollToElement(bound.startContainer);
 
-			this.current = bound.startContainer;
-			this.updateCounters();
+			await this.updateCounters();
 
 			return true;
 		}
@@ -245,172 +214,41 @@ export class search extends Plugin {
 		return false;
 	}
 
+	walker: Nullable<LazyWalker> = null;
+	walkerCount: Nullable<LazyWalker> = null;
+
+	private cache: IDictionary<CanUndef<Promise<ISelectionRange[]>>> = {};
+
 	@autobind
-	find(
-		start: Node | null,
-		query: string,
-		next: boolean,
-		deep: number,
-		range: Range
-	): false | ISelectionRange {
-		if (start && query.length) {
-			let sentence: string = '',
-				bound: ISelectionRange = {
-					startContainer: null,
-					startOffset: null,
-					endContainer: null,
-					endOffset: null
-				};
+	async find(walker: LazyWalker, query: string): Promise<ISelectionRange[]> {
+		if (!query.length) {
+			return [];
+		}
 
-			this.eachMap(
-				start,
-				(elm: Node): boolean => {
-					if (Dom.isText(elm) && elm.nodeValue?.length) {
-						let value: string = elm.nodeValue;
+		if (this.cache[query]) {
+			return this.cache[query] as Promise<ISelectionRange[]>;
+		}
 
-						if (!next && elm === range.startContainer) {
-							value = !deep
-								? value.substring(0, range.startOffset)
-								: value.substring(range.endOffset);
-						} else if (next && elm === range.endContainer) {
-							value = !deep
-								? value.substring(range.endOffset)
-								: value.substring(0, range.startOffset);
-						}
+		const sentence = new SentenceFinder();
 
-						const tmpSentence: string = next
-							? sentence + value
-							: value + sentence;
-
-						const part: boolean | string = findSomePartOfString(
-							query,
-							tmpSentence,
-							next
-						) as boolean | string;
-
-						if (part !== false) {
-							let currentPart: string | boolean =
-								findSomePartOfString(query, value, next) as
-									| string
-									| boolean;
-
-							if (currentPart === true) {
-								currentPart = trim(query);
-							} else if (currentPart === false) {
-								currentPart = findSomePartOfString(
-									value,
-									query,
-									next
-								) as string | true;
-								if (currentPart === true) {
-									currentPart = trim(value);
-								}
-							}
-
-							let currentPartIndex: number =
-								getSomePartOfStringIndex(query, value, next) ||
-								0;
-
-							if (
-								((next && !deep) || (!next && deep)) &&
-								elm.nodeValue.length - value.length > 0
-							) {
-								currentPartIndex +=
-									elm.nodeValue.length - value.length;
-							}
-
-							if (bound.startContainer == null) {
-								bound.startContainer = elm;
-								bound.startOffset = currentPartIndex;
-							}
-							if (part !== true) {
-								sentence = tmpSentence;
-							} else {
-								bound.endContainer = elm;
-								bound.endOffset = currentPartIndex;
-								bound.endOffset += (
-									currentPart as string
-								).length;
-
-								return true;
-							}
-						} else {
-							sentence = '';
-							bound = {
-								startContainer: null,
-								startOffset: null,
-								endContainer: null,
-								endOffset: null
-							};
-						}
-					} else if (Dom.isBlock(elm) && sentence !== '') {
-						sentence = next ? sentence + ' ' : ' ' + sentence;
+		this.cache[query] = this.j.async.promise(resolve => {
+			walker
+				.on('break', (): void => {
+					resolve([]);
+				})
+				.on('visit', (elm: Node): boolean => {
+					if (Dom.isText(elm)) {
+						sentence.add(elm);
 					}
-
 					return false;
-				},
-				next
-			);
+				})
+				.on('end', (): void => {
+					resolve(sentence.ranges(query) ?? []);
+				})
+				.setWork(this.j.editor);
+		});
 
-			if (bound.startContainer && bound.endContainer) {
-				return bound;
-			}
-
-			if (!deep) {
-				this.current = next
-					? (this.j.editor.firstChild as Node)
-					: (this.j.editor.lastChild as Node);
-
-				return this.find(this.current, query, next, deep + 1, range);
-			}
-		}
-
-		return false;
-	}
-
-	@autobind
-	protected open(searchAndReplace: boolean = false): void {
-		if (!this.isOpened) {
-			this.j.workplace.appendChild(this.searchBox);
-			this.isOpened = true;
-		}
-
-		this.calcSticky(this.j.e.fire('getStickyState.sticky') || false);
-
-		this.j.e.fire('hidePopup');
-
-		this.searchBox.classList.toggle(
-			'jodit-search_replace',
-			searchAndReplace
-		);
-
-		this.current = this.j.s.current();
-
-		const selStr: string = (this.j.s.sel || '').toString();
-
-		if (selStr) {
-			this.queryInput.value = selStr;
-		}
-
-		this.updateCounters();
-
-		if (selStr) {
-			this.queryInput.select();
-		} else {
-			this.queryInput.focus();
-		}
-	}
-
-	@autobind
-	protected close(): void {
-		if (!this.isOpened) {
-			return;
-		}
-
-		this.j.s.restore();
-
-		Dom.safeRemove(this.searchBox);
-		this.isOpened = false;
+		return this.cache[query] as Promise<ISelectionRange[]>;
 	}
 
 	/** @override */
@@ -418,148 +256,39 @@ export class search extends Plugin {
 		if (editor.o.useSearch) {
 			const self: search = this;
 
-			self.searchBox = editor.c.fromHTML(
-				template(editor)
-			) as HTMLDivElement;
-
-			const {
-				query,
-				replace,
-				cancel,
-				next,
-				prev,
-				replaceBtn,
-				counterBox
-			} = refs(self.searchBox);
-
-			self.queryInput = query as HTMLInputElement;
-
-			self.replaceInput = replace as HTMLInputElement;
-
-			self.closeButton = cancel as HTMLButtonElement;
-
-			self.nextButton = next as HTMLButtonElement;
-
-			self.prevButton = prev as HTMLButtonElement;
-
-			self.replaceButton = replaceBtn as HTMLButtonElement;
-
-			self.counterBox = counterBox as HTMLButtonElement;
-
-			const onInit = () => {
-				editor.e
-					.off(this.j.container, 'keydown.search')
-					.on(
-						this.j.container,
-						'keydown.search',
-						(e: KeyboardEvent) => {
-							if (editor.getRealMode() !== MODE_WYSIWYG) {
-								return;
-							}
-
-							switch (e.key) {
-								case consts.KEY_ESC:
-									this.close();
-									break;
-
-								case consts.KEY_F3:
-									if (self.queryInput.value) {
-										editor.e.fire(
-											!e.shiftKey
-												? 'searchNext'
-												: 'searchPrevious'
-										);
-
-										e.preventDefault();
-									}
-									break;
-							}
-						}
-					);
-			};
-			onInit();
-
 			editor.e
-				.on('changePlace', onInit)
-				.on(self.closeButton, 'click', this.close)
-				.on(self.queryInput, 'mousedown', () => {
-					if (editor.s.isFocused()) {
-						editor.s.removeMarkers();
-						self.selInfo = editor.s.save();
-					}
-				})
-				.on(self.replaceButton, 'click', (e: MouseEvent) => {
-					self.findAndReplace(
-						editor.s.current() || editor.editor.firstChild,
-						self.queryInput.value
-					);
-
-					this.updateCounters();
-
-					e.preventDefault();
-					e.stopImmediatePropagation();
-				})
-				.on(
-					[self.nextButton, self.prevButton],
-					'click',
-					function (this: HTMLButtonElement, e: MouseEvent) {
-						editor.e.fire(
-							self.nextButton === this
-								? 'searchNext'
-								: 'searchPrevious'
-						);
-						e.preventDefault();
-						e.stopImmediatePropagation();
-					}
-				)
-				.on(
-					this.queryInput,
-					'keydown',
-					this.j.async.debounce((e: KeyboardEvent) => {
-						switch (e.key) {
-							case consts.KEY_ENTER:
-								e.preventDefault();
-								e.stopImmediatePropagation();
-								if (editor.e.fire('searchNext')) {
-									this.close();
-								}
-
-								break;
-
-							default:
-								this.updateCounters();
-								break;
-						}
-					}, this.j.defaultTimeout)
-				)
 				.on('beforeSetMode.search', () => {
-					this.close();
+					this.ui.close();
+				})
+				.on('change.search', () => {
+					this.cache = {};
 				})
 				.on('keydown.search mousedown.search', () => {
-					if (this.selInfo) {
+					if (this.ui.selInfo) {
 						editor.s.removeMarkers();
-						this.selInfo = null;
+						this.ui.selInfo = null;
 					}
-					if (this.isOpened) {
-						this.current = this.j.s.current();
+
+					if (this.ui.isOpened) {
+						// this.current = this.j.s.current();
 						this.updateCounters();
 					}
 				})
 				.on('searchNext.search searchPrevious.search', () => {
-					if (!self.isOpened) {
-						return self.open();
+					if (!this.ui.isOpened) {
+						return this.ui.open();
 					}
 
-					return self.findAndSelect(
-						editor.s.current() || editor.editor.firstChild,
-						self.queryInput.value,
-						editor.e.current === 'searchNext'
-					);
+					return self
+						.findAndSelect(
+							self.ui.queryInput.value,
+							editor.e.current === 'searchNext'
+						)
+						.catch(() => {});
 				})
 				.on('search.search', (value: string, next: boolean = true) => {
 					editor.execCommand('search', value, next);
-				})
-				.on('toggleSticky.search', this.calcSticky);
+				});
 
 			editor
 				.registerCommand('search', {
@@ -568,18 +297,14 @@ export class search extends Plugin {
 						value?: string,
 						next: boolean = true
 					) => {
-						self.findAndSelect(
-							editor.s.current() || editor.editor.firstChild,
-							value || '',
-							next
-						);
+						self.findAndSelect(value || '', next).catch(() => {});
 
 						return false;
 					}
 				})
 				.registerCommand('openSearchDialog', {
 					exec: () => {
-						self.open();
+						self.ui.open();
 						return false;
 					},
 					hotkeys: ['ctrl+f', 'cmd+f']
@@ -587,7 +312,7 @@ export class search extends Plugin {
 				.registerCommand('openReplaceDialog', {
 					exec: () => {
 						if (!editor.o.readonly) {
-							self.open(true);
+							self.ui.open(true);
 						}
 						return false;
 					},
@@ -598,31 +323,7 @@ export class search extends Plugin {
 
 	/** @override */
 	beforeDestruct(jodit: IJodit): void {
-		Dom.safeRemove(this.searchBox);
+		this.ui.destruct();
 		jodit.e.off('.search');
-	}
-
-	/**
-	 * Calculate position if sticky is enabled
-	 */
-	@autobind
-	private calcSticky(enabled: boolean): void {
-		if (this.isOpened) {
-			this.searchBox.classList.toggle('jodit-search_sticky', enabled);
-
-			if (enabled) {
-				const pos = position(this.j.toolbarContainer);
-
-				css(this.searchBox, {
-					top: pos.top + pos.height,
-					left: pos.left + pos.width
-				});
-			} else {
-				css(this.searchBox, {
-					top: null,
-					left: null
-				});
-			}
-		}
 	}
 }

@@ -110,10 +110,10 @@ export interface IPointBound extends IPoint {
 }
 
 export interface ISelectionRange {
-	startContainer: Node | null;
-	startOffset: number | null;
-	endContainer: Node | null;
-	endOffset: number | null;
+	startContainer: Text;
+	startOffset: number;
+	endContainer: Text;
+	endOffset: number;
 }
 
 export interface IRGB {

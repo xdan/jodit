@@ -674,7 +674,7 @@ export class Dom {
 		return sibling && cond(sibling) ? sibling : null;
 	}
 
-	static sibling(node: Node, left: boolean): Nullable<Node> {
+	static sibling(node: Node, left?: boolean): Nullable<Node> {
 		return left ? node.previousSibling : node.nextSibling;
 	}
 
