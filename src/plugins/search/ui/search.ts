@@ -135,8 +135,12 @@ export class UISearch extends UIElement<IJodit> {
 			);
 	}
 
-	@watch('j.container:keydown')
+	@watch([':keydown', 'queryInput:keydown'])
 	protected onEditorKeyDown(e: KeyboardEvent): void {
+		if (!this.isOpened) {
+			return;
+		}
+
 		const { j } = this;
 		if (j.getRealMode() !== MODE_WYSIWYG) {
 			return;

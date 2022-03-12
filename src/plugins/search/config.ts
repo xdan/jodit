@@ -18,15 +18,22 @@ declare module 'jodit/config' {
 		 * ![search](https://user-images.githubusercontent.com/794318/34545433-cd0a9220-f10e-11e7-8d26-7e22f66e266d.gif)
 		 */
 		useSearch: boolean;
-		// searchByInput: boolean,
+
+		search: {
+			lazyIdleTimeout: number;
+		};
 	}
 }
 
 Config.prototype.useSearch = true;
+Config.prototype.search = {
+	lazyIdleTimeout: 0
+};
 
 Config.prototype.controls.find = {
 	tooltip: 'Find',
 	icon: 'search',
+
 	exec(jodit: IJodit, _, { control }) {
 		const value = control.args && control.args[0];
 

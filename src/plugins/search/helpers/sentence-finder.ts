@@ -27,7 +27,8 @@ export class SentenceFinder {
 	private value: string = '';
 
 	add(node: Text): void {
-		const value = n(node.nodeValue ?? '');
+		const value = node.nodeValue ?? '';
+
 		if (!value.length) {
 			return;
 		}

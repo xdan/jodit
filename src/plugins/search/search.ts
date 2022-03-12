@@ -20,7 +20,7 @@ import type {
 } from 'jodit/types';
 import { Dom, LazyWalker } from 'jodit/core/dom';
 import { Plugin } from 'jodit/core/plugin';
-import { autobind, watch } from 'jodit/core/decorators';
+import { autobind, cache, watch } from 'jodit/core/decorators';
 import { SentenceFinder } from 'jodit/plugins/search/helpers';
 import { UISearch } from 'jodit/plugins/search/ui/search';
 
@@ -49,7 +49,10 @@ export class search extends Plugin {
 		}
 	];
 
-	private ui: UISearch = new UISearch(this.j);
+	@cache
+	private get ui(): UISearch {
+		return new UISearch(this.j);
+	}
 
 	@watch('ui:needUpdateCounters')
 	private async updateCounters(): Promise<void> {
@@ -91,7 +94,7 @@ export class search extends Plugin {
 		}
 
 		this.walkerCount = new LazyWalker(this.j.async, {
-			timeout: 1
+			timeout: this.j.o.search.lazyIdleTimeout
 		});
 
 		const result = await this.find(this.walkerCount, query);
@@ -105,7 +108,7 @@ export class search extends Plugin {
 		}
 
 		this.walker = new LazyWalker(this.j.async, {
-			timeout: this.j.defaultTimeout
+			timeout: this.j.o.search.lazyIdleTimeout
 		});
 
 		const range = this.j.s.range,
@@ -125,28 +128,26 @@ export class search extends Plugin {
 
 		const bound = bounds[currentIndex];
 
-		if (bound && bound.startContainer && bound.endContainer) {
-			const rng = this.j.ed.createRange();
-
+		if (bound) {
 			try {
-				if (bound && bound.startContainer && bound.endContainer) {
-					rng.setStart(
-						bound.startContainer,
-						bound.startOffset as number
-					);
+				const rng = this.j.ed.createRange();
 
-					rng.setEnd(bound.endContainer, bound.endOffset as number);
-					rng.deleteContents();
+				rng.setStart(bound.startContainer, bound.startOffset);
+				rng.setEnd(bound.endContainer, bound.endOffset);
+				rng.deleteContents();
 
-					const textNode = this.j.createInside.text(
-						this.ui.replaceInput.value
-					);
+				const textNode = this.j.createInside.text(
+					this.ui.replaceInput.value
+				);
 
-					rng.insertNode(textNode);
-					this.j.s.select(textNode);
-					this.tryScrollToElement(textNode);
-				}
+				rng.insertNode(textNode);
+				this.j.s.select(textNode);
+				this.tryScrollToElement(textNode);
+				this.cache = {};
+				this.j.synchronizeValues();
 			} catch {}
+
+			this.j.e.fire('afterFindAndReplace');
 
 			return true;
 		}
@@ -199,14 +200,16 @@ export class search extends Plugin {
 			const rng = this.j.ed.createRange();
 
 			try {
-				rng.setStart(bound.startContainer, bound.startOffset as number);
-				rng.setEnd(bound.endContainer, bound.endOffset as number);
+				rng.setStart(bound.startContainer, bound.startOffset);
+				rng.setEnd(bound.endContainer, bound.endOffset);
 				this.j.s.selectRange(rng);
 			} catch (e) {}
 
 			this.tryScrollToElement(bound.startContainer);
 
 			await this.updateCounters();
+
+			this.j.e.fire('afterFindAndSelect');
 
 			return true;
 		}
@@ -219,14 +222,31 @@ export class search extends Plugin {
 
 	private cache: IDictionary<CanUndef<Promise<ISelectionRange[]>>> = {};
 
+	private async isValidCache(
+		promise: Promise<ISelectionRange[]>
+	): Promise<boolean> {
+		const res = await promise;
+		return res.every(
+			r =>
+				r.startContainer.isConnected &&
+				r.startOffset <= (r.startContainer.nodeValue?.length ?? 0) &&
+				r.endContainer.isConnected &&
+				r.endOffset <= (r.endContainer.nodeValue?.length ?? 0)
+		);
+	}
+
 	@autobind
-	async find(walker: LazyWalker, query: string): Promise<ISelectionRange[]> {
+	private async find(
+		walker: LazyWalker,
+		query: string
+	): Promise<ISelectionRange[]> {
 		if (!query.length) {
 			return [];
 		}
 
-		if (this.cache[query]) {
-			return this.cache[query] as Promise<ISelectionRange[]>;
+		const cache = this.cache[query];
+		if (cache && (await this.isValidCache(cache))) {
+			return cache;
 		}
 
 		const sentence = new SentenceFinder();
@@ -263,17 +283,19 @@ export class search extends Plugin {
 				.on('change.search', () => {
 					this.cache = {};
 				})
-				.on('keydown.search mousedown.search', () => {
-					if (this.ui.selInfo) {
-						editor.s.removeMarkers();
-						this.ui.selInfo = null;
-					}
+				.on(
+					'keydown.search mousedown.search',
+					editor.async.debounce(() => {
+						if (this.ui.selInfo) {
+							editor.s.removeMarkers();
+							this.ui.selInfo = null;
+						}
 
-					if (this.ui.isOpened) {
-						// this.current = this.j.s.current();
-						this.updateCounters();
-					}
-				})
+						if (this.ui.isOpened) {
+							this.updateCounters();
+						}
+					}, editor.defaultTimeout)
+				)
 				.on('searchNext.search searchPrevious.search', () => {
 					if (!this.ui.isOpened) {
 						return this.ui.open();

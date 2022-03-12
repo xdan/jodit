@@ -66,6 +66,7 @@ export function watch(
 			splitArray(observeFields).forEach(field => {
 				if (/:/.test(field)) {
 					const [objectPath, eventName] = field.split(':');
+					let ctx = context;
 
 					const view = isViewObject(component)
 						? component
@@ -73,22 +74,22 @@ export function watch(
 
 					if (objectPath.length) {
 						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-						context = component.get<CanUndef<object>>(objectPath)!;
+						ctx = component.get<CanUndef<object>>(objectPath)!;
 					}
 
-					if (isFunction(context)) {
-						context = context(component);
+					if (isFunction(ctx)) {
+						ctx = ctx(component);
 					}
 
-					view.events.on(context || component, eventName, callback);
+					view.events.on(ctx || component, eventName, callback);
 
-					if (!context) {
+					if (!ctx) {
 						view.events.on(eventName, callback);
 					}
 
 					view.hookStatus('beforeDestruct', () => {
 						view.events
-							.off(context || component, eventName, callback)
+							.off(ctx || component, eventName, callback)
 							.off(eventName, callback);
 					});
 
