@@ -224,5 +224,6 @@ module.exports = {
 	'Find Previous': 'Menemukan Sebelumnya',
 	'Find Next': 'Menemukan Berikutnya',
 	'Insert className': 'Masukkan nama kelas',
-	'Line height': 'Tinggi baris'
+	'Line height': 'Tinggi baris',
+	Spellchecking: 'Spellchecking'
 };

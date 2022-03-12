@@ -224,5 +224,6 @@ module.exports = {
 	'Find Previous': 'پیدا کردن قبلی',
 	'Find Next': 'پیدا کردن بعدی',
 	'Insert className': 'Insertar nombre de clase',
-	'Line height': 'ارتفاع خط'
+	'Line height': 'ارتفاع خط',
+	Spellchecking: 'غلطیابی املایی'
 };

@@ -229,5 +229,6 @@ module.exports = {
 	'Find Previous': 'Suche vorherige',
 	'Find Next': 'Weitersuchen',
 	'Insert className': 'className (CSS) einfügen',
-	'Line height': 'Zeilenhöhe'
+	'Line height': 'Zeilenhöhe',
+	Spellchecking: 'Rechtschreibprüfung'
 };

@@ -222,5 +222,6 @@ module.exports = {
 	'Find Previous': '이전 찾기',
 	'Find Next': '다음 찾기',
 	'Insert className': 'className 입력',
-	'Line height': '선 높이'
+	'Line height': '선 높이',
+	Spellchecking: '맞춤법 검사'
 };

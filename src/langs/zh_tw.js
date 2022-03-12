@@ -221,5 +221,6 @@ module.exports = {
 	'Find Previous': 'ค้นหาก่อนหน้านี้',
 	'Find Next': 'ค้นหาถัดไป',
 	'Insert className': 'ใส่ชื่อคลาส',
-	'Line height': 'ความสูงเส้น'
+	'Line height': 'ความสูงเส้น',
+	Spellchecking: 'สะกดคำ'
 };

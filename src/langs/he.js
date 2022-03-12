@@ -223,5 +223,6 @@ module.exports = {
 	'Find Previous': 'מצא את הקודם',
 	'Find Next': 'חפש את הבא',
 	'Insert className': 'הכנס את שם הכיתה',
-	'Line height': 'גובה שורה'
+	'Line height': 'גובה שורה',
+	Spellchecking: 'בדיקת איות'
 };

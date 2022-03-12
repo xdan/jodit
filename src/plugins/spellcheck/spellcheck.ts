@@ -26,7 +26,10 @@ export class spellcheck extends Plugin {
 	];
 
 	protected afterInit(jodit: IJodit): void {
-		jodit.e.on('afterInit afterAddPlace', this.toggleSpellcheck);
+		jodit.e.on(
+			'afterInit afterAddPlace prepareWYSIWYGEditor',
+			this.toggleSpellcheck
+		);
 		this.toggleSpellcheck();
 
 		jodit.registerCommand('toggleSpellcheck', () => {

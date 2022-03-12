@@ -227,5 +227,6 @@ module.exports = {
 	'Upper Alpha': '英大文字',
 	'Upper Roman': 'ローマ数字大文字',
 	'Insert className': 'クラス名を挿入',
-	'Line height': 'ラインの高さ'
+	'Line height': 'ラインの高さ',
+	Spellchecking: 'スペルチェック'
 };

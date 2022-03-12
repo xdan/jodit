@@ -228,5 +228,6 @@ module.exports = {
 	'Find Previous': 'Buscar Anterior',
 	'Find Next': 'Buscar Siguiente',
 	'Insert className': 'Insertar nombre de clase',
-	'Line height': 'Altura de la línea'
+	'Line height': 'Altura de la línea',
+	Spellchecking: 'Corrección ortográfica'
 };

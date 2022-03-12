@@ -223,5 +223,6 @@ module.exports = {
 	'Find Previous': 'Найти Предыдущие',
 	'Find Next': 'Найти Далее',
 	'Insert className': 'Вставить название класса',
-	'Line height': 'Высота линии'
+	'Line height': 'Высота линии',
+	Spellchecking: 'Проверка орфографии'
 };
