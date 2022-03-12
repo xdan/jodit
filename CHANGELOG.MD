@@ -27,6 +27,7 @@
 
 #### :bug: Bug Fix
 
+-   Fixed a bug in the `watch` decorator, when multiple watchers were set, it used only one context
 -   [Default is not working for insert ordered list and insert unordered list #799](https://github.com/xdan/jodit/issues/799)
 
 #### :house: Internal
@@ -1216,11 +1217,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                       	{ value: "", text: "" },
--                                                                                                                                                                                       	{ value: "val1", text: "text1" },
--                                                                                                                                                                                       	{ value: "val2", text: "text2" },
--                                                                                                                                                                                       	{ value: "val3", text: "text3" }
--                                                                                                                                                                                       ]
+-                                                                                                                                                                                           	{ value: "", text: "" },
+-                                                                                                                                                                                           	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                           	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                           	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                           ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
