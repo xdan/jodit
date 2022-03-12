@@ -26,6 +26,7 @@ describe('Test i18n functionality', function () {
 			'Classes',
 			'Alternative',
 			'Image',
+			'spellcheck',
 			'Border'
 		];
 

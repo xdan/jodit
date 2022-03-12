@@ -179,7 +179,7 @@ describe('Jodit Editor Tests', function () {
 				});
 
 				expect(editor.options.zIndex).equals(1986);
-				expect(editor.options.spellcheck).is.true;
+				expect(editor.options.spellcheck).is.false;
 			});
 
 			describe('Set nested array', function () {

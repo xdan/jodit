@@ -129,11 +129,6 @@ describe('Test states', function () {
 								}
 							});
 
-							const search =
-								editor.container.querySelector('.jodit-search');
-							expect(false).equals(
-								search.classList.contains('jodit-search_active')
-							);
 							simulateEvent(
 								'keydown',
 								Jodit.KEY_H,
@@ -142,18 +137,11 @@ describe('Test states', function () {
 									options.ctrlKey = true;
 								}
 							);
-							expect(false).equals(
-								search.classList.contains('jodit-search_active')
-							);
-							expect(false).equals(
-								search.classList.contains(
-									'jodit-search_replace'
-								)
-							);
-							expect(false).equals(
-								editor.ownerDocument.activeElement ===
-									search.querySelector('.jodit-search__query')
-							);
+
+							const search =
+								editor.container.querySelector('.jodit-search');
+
+							expect(search).is.null;
 						});
 					});
 				});

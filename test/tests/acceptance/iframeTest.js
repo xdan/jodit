@@ -114,7 +114,7 @@ describe('Iframe mode', function () {
 						).equals(
 							'<!DOCTYPE html><html lang="en">' +
 								'<head><title>Hi</title></head>' +
-								'<body spellcheck="true" ></body>' +
+								'<body  spellcheck="false"></body>' +
 								'</html>'
 						);
 					});
@@ -133,7 +133,7 @@ describe('Iframe mode', function () {
 							).equals(
 								'<!DOCTYPE html><html lang="en">' +
 									'<head><title>Hi</title></head>' +
-									'<body spellcheck="true" >' +
+									'<body  spellcheck="false">' +
 									'<p><strong>Test</strong></p></body></html>'
 							);
 						});
@@ -153,7 +153,7 @@ describe('Iframe mode', function () {
 										.replace(/[\s]+>/g, '>')
 								)
 							).equals(
-								'<!DOCTYPE html><html lang="en"><head><title>Hi</title></head><body spellcheck="true"><p><strong>Test1</strong></p></body></html>'
+								'<!DOCTYPE html><html lang="en"><head><title>Hi</title></head><body spellcheck="false"><p><strong>Test1</strong></p></body></html>'
 							);
 						});
 					});

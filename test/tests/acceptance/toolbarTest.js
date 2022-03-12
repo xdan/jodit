@@ -12,7 +12,7 @@ describe('Toolbar', function () {
 		expect(
 			editor.toolbar.container.querySelectorAll('.jodit-toolbar-button')
 				.length
-		).equals(38);
+		).equals(39);
 	});
 
 	describe('Custom buttons', function () {
